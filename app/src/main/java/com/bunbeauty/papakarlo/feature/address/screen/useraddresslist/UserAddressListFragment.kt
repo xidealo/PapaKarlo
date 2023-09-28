@@ -2,6 +2,7 @@ package com.bunbeauty.papakarlo.feature.address.screen.useraddresslist
 
 import android.os.Bundle
 import android.view.View
+import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -84,24 +85,32 @@ class UserAddressListFragment : BaseFragmentWithSharedViewModel(R.layout.layout_
                 }
             }
         ) {
-            when (userAddressListState.state) {
-                UserAddressListState.State.SUCCESS -> {
-                    UserAddressListSuccessScreen(userAddressListState.userAddressItems)
-                }
-                UserAddressListState.State.EMPTY -> {
-                    EmptyScreen(
-                        imageId = R.drawable.ic_address,
-                        imageDescriptionId = R.string.description_cafe_addresses_empty,
-                        mainTextId = R.string.title_my_addresses_empty,
-                        extraTextId = R.string.msg_my_addresses_empty,
-                        buttonTextId = R.string.action_add_addresses,
-                        onClick = viewModel::update
-                    )
-                }
-                UserAddressListState.State.LOADING -> {
-                    LoadingScreen()
+            Crossfade(
+                targetState = userAddressListState.state,
+                label = "UserAddressListScreen"
+            ) { state ->
+                when (state) {
+                    UserAddressListState.State.SUCCESS -> {
+                        UserAddressListSuccessScreen(userAddressListState.userAddressItems)
+                    }
+
+                    UserAddressListState.State.EMPTY -> {
+                        EmptyScreen(
+                            imageId = R.drawable.ic_address,
+                            imageDescriptionId = R.string.description_cafe_addresses_empty,
+                            mainTextId = R.string.title_my_addresses_empty,
+                            extraTextId = R.string.msg_my_addresses_empty,
+                            buttonTextId = R.string.action_add_addresses,
+                            onClick = viewModel::update
+                        )
+                    }
+
+                    UserAddressListState.State.LOADING -> {
+                        LoadingScreen()
+                    }
                 }
             }
+
         }
     }
 
@@ -140,6 +149,7 @@ class UserAddressListFragment : BaseFragmentWithSharedViewModel(R.layout.layout_
                 UserAddressListState.Event.OpenCreateAddressEvent -> {
                     findNavController().navigateSafe(toCreateAddressFragment())
                 }
+
                 UserAddressListState.Event.GoBack -> {
                     // this event are used for ios
                 }
