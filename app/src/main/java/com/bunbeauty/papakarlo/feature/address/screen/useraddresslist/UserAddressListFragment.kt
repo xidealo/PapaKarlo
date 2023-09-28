@@ -110,7 +110,6 @@ class UserAddressListFragment : BaseFragmentWithSharedViewModel(R.layout.layout_
                     }
                 }
             }
-
         }
     }
 
