@@ -7,6 +7,7 @@ import com.bunbeauty.shared.data.di.networkModule
 import com.bunbeauty.shared.data.di.repositoryModule
 import com.bunbeauty.shared.data.mapper.user_address.UserAddressMapper
 import com.bunbeauty.shared.data.network.api.NetworkConnector
+import com.bunbeauty.shared.di.usecase.authUseCaseModule
 import com.bunbeauty.shared.di.usecase.cafeUseCaseModule
 import com.bunbeauty.shared.di.usecase.cartUseCaseModule
 import com.bunbeauty.shared.di.usecase.cityUseCaseModule
@@ -66,6 +67,7 @@ fun initKoin(appDeclaration: KoinAppDeclaration = {}) = startKoin {
         cartUseCaseModule(),
         cafeUseCaseModule(),
         paymentUseCaseModule(),
+        authUseCaseModule(),
         useCaseModules()
     )
 }
@@ -86,6 +88,7 @@ fun initKoin() = startKoin {
         cartUseCaseModule(),
         cafeUseCaseModule(),
         paymentUseCaseModule(),
+        authUseCaseModule(),
         useCaseModules()
     )
 }
