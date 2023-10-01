@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Kingfisher
+import shared
 
 struct CartProductView: View {
     

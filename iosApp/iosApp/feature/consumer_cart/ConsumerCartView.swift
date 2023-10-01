@@ -11,7 +11,7 @@ import shared
 
 struct ConsumerCartView: View {
     
-    var viewModel: ConsumerCartViewModel =  ConsumerCartViewModel(
+    @State var viewModel: ConsumerCartViewModel = ConsumerCartViewModel(
         userInteractor: iosComponent.provideIUserInteractor(),
         cartProductInteractor: iosComponent.provideCartProductInteractor(),
         addCartProductUseCase: iosComponent.provideAddCartProductUseCase(),
@@ -19,9 +19,12 @@ struct ConsumerCartView: View {
     )
     
     @State var consumerCartUIState = ConsumerCartUIState(
-        consumerCartState: ConsumerCartUIStateConsumerCartState(),
+        consumerCartState: ConsumerCartUIStateConsumerCartStateLoading(),
         eventList: []
     )
+    
+    @State var listener: Closeable? = nil
+    
     
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     
@@ -60,46 +63,106 @@ struct ConsumerCartView: View {
             ){
                 EmptyView()
             }
-            
-            switch viewModel.consumerCartViewState.consumerCartState{
-            case .loading: LoadingView()
-            case .notAuthorized: EmptyView()
-            case .empty: ConsumerCartEmptyScreen(
+            switch consumerCartUIState.consumerCartState{
+            case is ConsumerCartUIStateConsumerCartStateSuccess:
+                let data = (consumerCartUIState.consumerCartState as! ConsumerCartUIStateConsumerCartStateSuccess).data
+                ConsumerCartSuccessScreen(
+                    consumerCartUI: data,
+                    plusAction: { uuid in
+                        viewModel.onAddCardProductClicked(menuProductUuid: uuid)
+                    },
+                    minusAction: { uuid in
+                        viewModel.onRemoveCardProductClicked(menuProductUuid: uuid)
+                    },
+                    mainButtonAction: {
+                        viewModel.onCreateOrderClicked()
+                    }
+                )
+            case is ConsumerCartUIStateConsumerCartStateLoading: LoadingView()
+            case is ConsumerCartUIStateConsumerCartStateEmpty: ConsumerCartEmptyScreen(
                 isRootActive: $isRootActive, selection: $selection
             )
-            case .hasData: ConsumerCartSuccessScreen(consumerCartUI: viewModel.consumerCartViewState, viewModel: viewModel)
+            case is ConsumerCartUIStateConsumerCartStateError: EmptyView()
+            default:
+                EmptyView()
             }
         }
         .background(AppColor.background)
         .hiddenNavigationBarStyle()
-        .onAppear() {
-            viewModel.fetchData()
+        .onAppear(){
+            subscribe()
         }
-        .onReceive(viewModel.$consumerCartViewState, perform: { consumerCartViewState in
-            consumerCartViewState.actions.forEach { action in
-                switch(action){
-                case ConsumerCartAction.openLoginAction : openLogin = true
-                case ConsumerCartAction.openCreateOrderAction : openCreateOrder = true
-                }
-                
-                if !consumerCartViewState.actions.isEmpty{
-                    viewModel.consumeActions()
+        .onDisappear(){
+            unsubscribe()
+        }
+        .onChange(of : consumerCartUIState, perform: { creationOrderViewState in
+         
+            print(creationOrderViewState.eventList)
+            
+            consumerCartUIState.eventList.forEach { event in
+                switch(event){
+                case is ConsumerCartEventNavigateToMenuEvent : self.mode.wrappedValue.dismiss()
+                case is ConsumerCartEventNavigateToCreateOrderEvent : openCreateOrder = true
+                case is ConsumerCartEventNavigateToLoginEvent : openLogin = true
+                case is ConsumerCartEventNavigateToProductEvent : openLogin = true
+                default:
+                    print("def")
                 }
             }
+            
+            if !consumerCartUIState.eventList.isEmpty{
+                viewModel.consumeEventList(eventList: consumerCartUIState.eventList)
+            }
         })
+        //        .onReceive(viewModel.$consumerCartViewState, perform: { consumerCartViewState in
+        //            consumerCartViewState.actions.forEach { action in
+        //                switch(action){
+        //                case ConsumerCartAction.openLoginAction : openLogin = true
+        //                case ConsumerCartAction.openCreateOrderAction : openCreateOrder = true
+        //                }
+        //
+        //                if !consumerCartViewState.actions.isEmpty{
+        //                    viewModel.consumeActions()
+        //                }
+        //            }
+        //        })
     }
-}
-
-struct ConsumerCartSuccess_Previews: PreviewProvider {
-    static var previews: some View {
-        ConsumerCartSuccessScreen(consumerCartUI: ConsumerCartViewState(forFreeDelivery: "100", cartProductList: [CartProductItem(id: "1", name: "Burger", newCost: "100", oldCost: nil, photoLink: "https://canapeclub.ru/buffet-sets/burger/bolshoy-burger", count: 10, menuProductUuid: "uuid")], oldTotalCost: nil, newTotalCost: "100", consumerCartState: ConsumerCartState.hasData, actions: []), viewModel: ConsumerCartViewModel())
+    
+    func subscribe(){
+        viewModel.getConsumerCart()
+        listener = viewModel.consumerCartState.watch { consumerCartStateVM in
+            if(consumerCartStateVM != nil ){
+                consumerCartUIState = consumerCartStateVM!
+            }
+        }
+    }
+    
+    func unsubscribe(){
+        listener?.close()
+        listener = nil
     }
 }
 
 struct ConsumerCartSuccessScreen: View {
     
-    let consumerCartUI : ConsumerCartViewState
-    @ObservedObject var viewModel : ConsumerCartViewModel
+    let consumerCartUI : ConsumerCartData
+    let cartProductListIos : [CartProductItemIos]
+    let plusAction: (String) -> Void
+    let minusAction: (String) -> Void
+    let mainButtonAction: () -> Void
+
+    init(consumerCartUI: ConsumerCartData, plusAction: @escaping (String) -> Void, minusAction: @escaping (String) -> Void, mainButtonAction : @escaping () -> Void) {
+        self.consumerCartUI = consumerCartUI
+        self.cartProductListIos = consumerCartUI.cartProductList.map({ cartProductItem in
+            CartProductItemIos(
+                id: cartProductItem.uuid,
+                cartProductItem: cartProductItem
+            )
+        })
+        self.plusAction = plusAction
+        self.minusAction = minusAction
+        self.mainButtonAction = mainButtonAction
+    }
     
     var body: some View {
         VStack(spacing:0){
@@ -111,13 +174,13 @@ struct ConsumerCartSuccessScreen: View {
                             .frame(maxWidth: .infinity, alignment: .center)
                             .padding(.bottom, Diems.MEDIUM_PADDING)
                             .padding(.top, Diems.SMALL_PADDING)
-
+                        
                         VStack(spacing: 0){
-                            ForEach(consumerCartUI.cartProductList){ cartProductItem in
-                                CartProductView(cartProductItem: cartProductItem, plusAction: {
-                                    viewModel.plusProduct(productUuid: cartProductItem.menuProductUuid)
+                            ForEach(cartProductListIos){ cartProductItemIos in
+                                CartProductView(cartProductItem: cartProductItemIos.cartProductItem, plusAction: {
+                                    plusAction(cartProductItemIos.cartProductItem.menuProductUuid)
                                 }, minusAction: {
-                                    viewModel.minusProduct(productUuid: cartProductItem.menuProductUuid)
+                                    minusAction(cartProductItemIos.cartProductItem.menuProductUuid)
                                 })
                                 .padding(.horizontal, Diems.MEDIUM_PADDING)
                                 .padding(.bottom, Diems.SMALL_PADDING)
@@ -133,7 +196,7 @@ struct ConsumerCartSuccessScreen: View {
                     Text("consumer_cart_total")
                         .bodyMedium(weight: .bold)
                         .foregroundColor(AppColor.onSurface)
-
+                    
                     Spacer()
                     
                     if let oldTotalCost = consumerCartUI.oldTotalCost{
@@ -143,14 +206,14 @@ struct ConsumerCartSuccessScreen: View {
                             .foregroundColor(AppColor.onSurfaceVariant)
                             .padding(.trailing, 4)
                     }
-
+                    
                     Text(consumerCartUI.newTotalCost)
                         .bodyMedium(weight: .bold)
                         .foregroundColor(AppColor.onSurface)
                 }.padding(16)
                 
                 Button {
-                    viewModel.checkAuthorization()
+                    mainButtonAction()
                 } label: {
                     ButtonText(text: Strings.ACTION_CART_PRODUCT_CREATE_ORDER)
                 }
@@ -159,6 +222,7 @@ struct ConsumerCartSuccessScreen: View {
             }.background(AppColor.surface)
         }
     }
+    
 }
 
 struct ConsumerCartEmptyScreen: View {
@@ -176,7 +240,7 @@ struct ConsumerCartEmptyScreen: View {
                 title: "emptyCartTitleProfile",
                 secondText: "emptyCartSecondProfile"
             )
-
+            
             Spacer()
             
             Button {
@@ -187,4 +251,9 @@ struct ConsumerCartEmptyScreen: View {
             }.padding(Diems.MEDIUM_PADDING)
         }
     }
+}
+
+struct CartProductItemIos : Identifiable {
+    var id: String
+    var cartProductItem : CartProductItem
 }

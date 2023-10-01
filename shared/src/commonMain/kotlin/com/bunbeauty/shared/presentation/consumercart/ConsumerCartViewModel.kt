@@ -2,6 +2,7 @@ package com.bunbeauty.shared.presentation.consumercart
 
 import com.bunbeauty.shared.Constants.PERCENT
 import com.bunbeauty.shared.Constants.RUBLE_CURRENCY
+import com.bunbeauty.shared.Logger
 import com.bunbeauty.shared.domain.feature.cart.AddCartProductUseCase
 import com.bunbeauty.shared.domain.feature.cart.RemoveCartProductUseCase
 import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
@@ -34,31 +35,23 @@ class ConsumerCartViewModel(
     private var observeConsumerCartJob: Job? = null
 
     fun getConsumerCart() {
-        sharedScope.launchSafe(
-            block = {
-                observeConsumerCartJob?.cancel()
-                observeConsumerCartJob =
-                    cartProductInteractor.observeConsumerCart().onEach { consumerCart ->
-                        consumerCartDataState.update { dataState ->
-                            if (consumerCart == null) {
-                                dataState.copy(state = ConsumerCartDataState.State.ERROR)
-                            } else {
-                                dataState.copy(
-                                    state = getConsumerCartDataState(consumerCart),
-                                    consumerCartData = getConsumerCartData(
-                                        consumerCart = consumerCart
-                                    )
-                                )
-                            }
-                        }
-                    }.launchIn(sharedScope)
-            },
-            onError = {
+        observeConsumerCartJob?.cancel()
+        observeConsumerCartJob =
+            cartProductInteractor.observeConsumerCart().onEach { consumerCart ->
+                Logger.logD("getConsumerCart", "getConsumerCart $consumerCart")
                 consumerCartDataState.update { dataState ->
-                    dataState.copy(state = ConsumerCartDataState.State.ERROR)
+                    if (consumerCart == null) {
+                        dataState.copy(state = ConsumerCartDataState.State.ERROR)
+                    } else {
+                        dataState.copy(
+                            state = getConsumerCartDataState(consumerCart),
+                            consumerCartData = getConsumerCartData(
+                                consumerCart = consumerCart
+                            )
+                        )
+                    }
                 }
-            }
-        )
+            }.launchIn(sharedScope)
     }
 
     fun onMenuClicked() {
