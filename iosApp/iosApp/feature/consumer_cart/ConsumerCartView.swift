@@ -7,9 +7,22 @@
 
 import SwiftUI
 
+import shared
+
 struct ConsumerCartView: View {
     
-    @StateObject var viewModel: ConsumerCartViewModel = ConsumerCartViewModel()
+    var viewModel: ConsumerCartViewModel =  ConsumerCartViewModel(
+        userInteractor: iosComponent.provideIUserInteractor(),
+        cartProductInteractor: iosComponent.provideCartProductInteractor(),
+        addCartProductUseCase: iosComponent.provideAddCartProductUseCase(),
+        removeCartProductUseCase: iosComponent.provideRemoveCartProductUseCase()
+    )
+    
+    @State var consumerCartUIState = ConsumerCartUIState(
+        consumerCartState: ConsumerCartUIStateConsumerCartState(),
+        eventList: []
+    )
+    
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     
     @State var openCreateOrder:Bool = false

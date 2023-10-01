@@ -355,7 +355,7 @@ struct CreateOrderSuccessView: View {
                         .foregroundColor(AppColor.onSurface)
                     Spacer()
                     
-                    if let finalCost = viewModel.creationOrderViewState.finalCost{
+                    if let finalCost = viewModel.creationOrderViewState.newFinalCost {
                         Text("\(finalCost)" + Strings.CURRENCY)
                             .bodyMedium(weight: .bold)
                             .foregroundColor(AppColor.onSurface)

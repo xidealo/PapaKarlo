@@ -27,8 +27,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.common.BaseFragment
+import com.bunbeauty.papakarlo.common.BaseFragmentWithSharedViewModel
 import com.bunbeauty.papakarlo.common.extension.navigateSafe
+import com.bunbeauty.papakarlo.common.model.SuccessLoginDirection
 import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
 import com.bunbeauty.papakarlo.common.ui.element.card.DiscountCard
@@ -44,13 +45,17 @@ import com.bunbeauty.papakarlo.feature.consumercart.ConsumerCartFragmentDirectio
 import com.bunbeauty.papakarlo.feature.consumercart.ConsumerCartFragmentDirections.toLoginFragment
 import com.bunbeauty.papakarlo.feature.consumercart.ConsumerCartFragmentDirections.toMenuFragment
 import com.bunbeauty.papakarlo.feature.consumercart.ConsumerCartFragmentDirections.toProductFragment
-import com.bunbeauty.papakarlo.feature.consumercart.model.CartProductItem
+import com.bunbeauty.shared.presentation.consumercart.CartProductItem
 import com.bunbeauty.papakarlo.feature.consumercart.ui.CartProductItem
+import com.bunbeauty.shared.presentation.consumercart.ConsumerCartData
+import com.bunbeauty.shared.presentation.consumercart.ConsumerCartEvent
+import com.bunbeauty.shared.presentation.consumercart.ConsumerCartUIState
+import com.bunbeauty.shared.presentation.consumercart.ConsumerCartViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class ConsumerCartFragment : BaseFragment(R.layout.layout_compose) {
+class ConsumerCartFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
 
-    override val viewModel: ConsumerCartViewModel by viewModel()
+    val viewModel: ConsumerCartViewModel by viewModel()
     override val viewBinding by viewBinding(LayoutComposeBinding::bind)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -235,7 +240,7 @@ class ConsumerCartFragment : BaseFragment(R.layout.layout_compose) {
                 }
 
                 is ConsumerCartEvent.NavigateToLoginEvent -> {
-                    findNavController().navigateSafe(toLoginFragment(event.successLoginDirection))
+                    findNavController().navigateSafe(toLoginFragment(SuccessLoginDirection.TO_CREATE_ORDER))
                 }
 
                 is ConsumerCartEvent.NavigateToProductEvent -> {

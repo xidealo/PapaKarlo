@@ -1,9 +1,5 @@
-package com.bunbeauty.papakarlo.feature.consumercart
+package com.bunbeauty.shared.presentation.consumercart
 
-import androidx.lifecycle.viewModelScope
-import com.bunbeauty.papakarlo.common.model.SuccessLoginDirection
-import com.bunbeauty.papakarlo.common.viewmodel.BaseViewModel
-import com.bunbeauty.papakarlo.feature.consumercart.model.CartProductItem
 import com.bunbeauty.shared.Constants.PERCENT
 import com.bunbeauty.shared.Constants.RUBLE_CURRENCY
 import com.bunbeauty.shared.domain.feature.cart.AddCartProductUseCase
@@ -14,6 +10,7 @@ import com.bunbeauty.shared.domain.model.cart.ConsumerCart
 import com.bunbeauty.shared.domain.model.cart.LightCartProduct
 import com.bunbeauty.shared.extension.launchSafe
 import com.bunbeauty.shared.extension.mapToStateFlow
+import com.bunbeauty.shared.presentation.SharedViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn
@@ -25,19 +22,19 @@ class ConsumerCartViewModel(
     private val cartProductInteractor: ICartProductInteractor,
     private val addCartProductUseCase: AddCartProductUseCase,
     private val removeCartProductUseCase: RemoveCartProductUseCase
-) : BaseViewModel() {
+) : SharedViewModel() {
 
     private val consumerCartDataState = MutableStateFlow(
         ConsumerCartDataState()
     )
-    val consumerCartState = consumerCartDataState.mapToStateFlow(viewModelScope) { dataState ->
+    val consumerCartState = consumerCartDataState.mapToStateFlow(sharedScope) { dataState ->
         mapState(dataState)
     }
 
     private var observeConsumerCartJob: Job? = null
 
     fun getConsumerCart() {
-        viewModelScope.launchSafe(
+        sharedScope.launchSafe(
             block = {
                 observeConsumerCartJob?.cancel()
                 observeConsumerCartJob =
@@ -54,7 +51,7 @@ class ConsumerCartViewModel(
                                 )
                             }
                         }
-                    }.launchIn(viewModelScope)
+                    }.launchIn(sharedScope)
             },
             onError = {
                 consumerCartDataState.update { dataState ->
@@ -71,12 +68,12 @@ class ConsumerCartViewModel(
     }
 
     fun onCreateOrderClicked() {
-        viewModelScope.launchSafe(
+        sharedScope.launchSafe(
             block = {
                 val navigateEvent = if (userInteractor.isUserAuthorize()) {
                     ConsumerCartEvent.NavigateToCreateOrderEvent
                 } else {
-                    ConsumerCartEvent.NavigateToLoginEvent(SuccessLoginDirection.TO_CREATE_ORDER)
+                    ConsumerCartEvent.NavigateToLoginEvent
                 }
                 consumerCartDataState.update { dataState ->
                     dataState + navigateEvent
@@ -95,7 +92,7 @@ class ConsumerCartViewModel(
     }
 
     fun onAddCardProductClicked(menuProductUuid: String) {
-        viewModelScope.launchSafe(
+        sharedScope.launchSafe(
             block = {
                 addCartProductUseCase(menuProductUuid)
             },
@@ -106,7 +103,7 @@ class ConsumerCartViewModel(
     }
 
     fun onRemoveCardProductClicked(menuProductUuid: String) {
-        viewModelScope.launchSafe(
+        sharedScope.launchSafe(
             block = {
                 removeCartProductUseCase(menuProductUuid)
             },

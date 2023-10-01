@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.common.ui.element.card
+ package com.bunbeauty.papakarlo.common.ui.element.card
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
