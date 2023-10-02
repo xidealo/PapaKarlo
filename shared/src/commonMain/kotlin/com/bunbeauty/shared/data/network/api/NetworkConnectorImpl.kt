@@ -34,6 +34,7 @@ import com.bunbeauty.shared.data.network.model.profile.get.ProfileServer
 import com.bunbeauty.shared.data.network.model.profile.patch.PatchUserServer
 import com.bunbeauty.shared.data.network.socket.SocketService
 import io.ktor.client.HttpClient
+import io.ktor.client.call.NoTransformationFoundException
 import io.ktor.client.call.body
 import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.request.HttpRequestBuilder
@@ -333,12 +334,15 @@ class NetworkConnectorImpl(
     private suspend inline fun <reified R> safeCall(
         networkCall: () -> HttpResponse
     ): ApiResult<R> {
+        val call = networkCall()
         return try {
-            ApiResult.Success(networkCall().body())
+            ApiResult.Success(call.body())
         } catch (exception: ClientRequestException) {
             ApiResult.Error(ApiError(exception.response.status.value, exception.message))
+        } catch (exception: NoTransformationFoundException) {
+            ApiResult.Error(ApiError(call.status.value, call.status.description))
         } catch (exception: Throwable) {
-            ApiResult.Error(ApiError(0, exception.message ?: "Bad Internet"))
+            ApiResult.Error(ApiError(0, exception.message.toString()))
         }
     }
 

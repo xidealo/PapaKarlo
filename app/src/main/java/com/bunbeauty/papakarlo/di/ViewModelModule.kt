@@ -115,12 +115,9 @@ fun viewModelModule() = module {
             getLinkListUseCase = get()
         )
     }
-    viewModel { parameters ->
+    viewModel {
         LoginViewModel(
-            textValidator = get(),
-            userInteractor = get(),
-            firebaseAuthRepository = get(),
-            savedStateHandle = parameters.get()
+            requestCodeUseCase = get(),
         )
     }
     viewModel { parameters ->

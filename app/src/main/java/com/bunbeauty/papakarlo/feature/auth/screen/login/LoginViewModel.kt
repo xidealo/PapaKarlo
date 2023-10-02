@@ -1,53 +1,49 @@
 package com.bunbeauty.papakarlo.feature.auth.screen.login
 
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.viewModelScope
-import com.bunbeauty.papakarlo.common.model.SuccessLoginDirection
-import com.bunbeauty.papakarlo.common.model.SuccessLoginDirection.BACK_TO_PROFILE
-import com.bunbeauty.papakarlo.common.model.SuccessLoginDirection.TO_CREATE_ORDER
-import com.bunbeauty.papakarlo.common.viewmodel.BaseViewModel
-import com.bunbeauty.papakarlo.util.textvalidator.ITextValidator
 import com.bunbeauty.shared.Constants.PHONE_CODE
-import com.bunbeauty.shared.data.FirebaseAuthRepository
-import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
-import kotlinx.coroutines.CoroutineExceptionHandler
+import com.bunbeauty.shared.domain.exeptions.InvalidPhoneNumberException
+import com.bunbeauty.shared.domain.exeptions.TooManyRequestsException
+import com.bunbeauty.shared.domain.use_case.auth.RequestCodeUseCase
+import com.bunbeauty.shared.extension.launchSafe
+import com.bunbeauty.shared.presentation.SharedViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 
 class LoginViewModel(
-    private val textValidator: ITextValidator,
-    private val userInteractor: IUserInteractor,
-    private val firebaseAuthRepository: FirebaseAuthRepository,
-    savedStateHandle: SavedStateHandle
-) : BaseViewModel() {
+    private val requestCodeUseCase: RequestCodeUseCase,
+) : SharedViewModel() {
 
     private val mutableLoginState = MutableStateFlow(LoginState())
     val loginState = mutableLoginState.asStateFlow()
 
-    private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
-        mutableLoginState.update { oldState ->
-            oldState.copy(
-                state = LoginState.State.Error(throwable)
+    fun handleAction(action: LoginAction) {
+        when (action) {
+            LoginAction.Init -> init()
+            is LoginAction.ChangePhoneNumber -> updatePhoneNumber(action.phoneNumber, action.cursorPosition)
+            LoginAction.NextClick -> requestCode()
+            is LoginAction.BackClick -> navigateBack()
+            is LoginAction.ConsumeEvents -> consumeEventList(action.eventList)
+        }
+    }
+
+    private fun init() {
+        mutableLoginState.update { state ->
+            state.copy(isLoading = false)
+        }
+    }
+
+    private fun updatePhoneNumber(phoneNumber: String, cursorPosition: Int) {
+        mutableLoginState.update { state ->
+            state.copy(
+                phoneNumber = formatPhoneNumber(phoneNumber),
+                phoneNumberCursorPosition = getNewPosition(phoneNumber, cursorPosition)
             )
         }
     }
 
-    private val successLoginDirection: SuccessLoginDirection by lazy {
-        savedStateHandle["successLoginDirection"] ?: BACK_TO_PROFILE
-    }
-
-    fun setSuccessState() {
-        mutableLoginState.update { oldState ->
-            oldState.copy(
-                state = LoginState.State.Success
-            )
-        }
-    }
-
-    fun formatPhoneNumber(inputPhoneNumber: String): String {
-        val numbers = inputPhoneNumber.run {
+    private fun formatPhoneNumber(phoneNumber: String): String {
+        val numbers = phoneNumber.run {
             if (!contains(PHONE_CODE) && isNotEmpty()) {
                 ""
             } else {
@@ -76,120 +72,95 @@ class LoginViewModel(
         return result
     }
 
-    fun getNewPosition(inputPhoneNumber: String, cursorPosition: Int): Int {
+    private fun getNewPosition(phoneNumber: String, cursorPosition: Int): Int {
         var newPosition = cursorPosition
         when (cursorPosition) {
             0, 1 -> {
                 newPosition = 2
             }
+
             3 -> {
                 // "+70" -> "+7 (0"
-                if (inputPhoneNumber[2].isNumber()) {
+                if (phoneNumber[2].isNumber()) {
                     newPosition = 5
                 }
             }
+
             8 -> {
                 // "+7 (0000" -> "+7 (000) 0"
-                if (inputPhoneNumber[7].isNumber()) {
+                if (phoneNumber[7].isNumber()) {
                     newPosition = 10
                 }
             }
+
             13 -> {
                 // "+7 (000) 0000" -> "+7 (000) 000-0"
-                if (inputPhoneNumber[12].isNumber()) {
+                if (phoneNumber[12].isNumber()) {
                     newPosition = 14
                 }
             }
+
             16 -> {
                 // "+7 (000) 000-000" -> "+7 (000) 000-00-0"
-                if (inputPhoneNumber[15].isNumber()) {
+                if (phoneNumber[15].isNumber()) {
                     newPosition = 17
                 }
             }
         }
 
-        val phoneNumber = formatPhoneNumber(inputPhoneNumber)
-        return if (newPosition > phoneNumber.length) {
-            phoneNumber.length
+        val formatPhoneNumber = formatPhoneNumber(phoneNumber)
+        return if (newPosition > formatPhoneNumber.length) {
+            formatPhoneNumber.length
         } else {
             newPosition
         }
     }
 
-    fun onPhoneTextChanged(phone: String) {
-        mutableLoginState.update { oldState ->
-            oldState.copy(
-                phone = phone
-            )
-        }
-    }
-
-    fun onNextClick() {
-        val phone = mutableLoginState.value.phone
-
-        mutableLoginState.update { oldState ->
-            oldState.copy(
-                hasPhoneError = false
-            )
-        }
-
-        if (!textValidator.isPhoneNumberCorrect(phone)) {
-            mutableLoginState.update { oldState ->
-                oldState.copy(
-                    hasPhoneError = true
-                )
-            }
-            return
-        }
-
-        mutableLoginState.update { oldState ->
-            oldState.copy(
-                state = LoginState.State.Loading,
-                eventList = oldState.eventList + LoginState.Event.SendCodeEvent(phone = phone)
-            )
-        }
-    }
-
-    fun onSuccessVerified() {
-        viewModelScope.launch(exceptionHandler) {
-            userInteractor.login(
-                firebaseUserUuid = firebaseAuthRepository.firebaseUserUuid,
-                firebaseUserPhone = firebaseAuthRepository.firebaseUserPhone
-            )
-
-            when (successLoginDirection) {
-                BACK_TO_PROFILE -> mutableLoginState.update { state ->
-                    state.copy(
-                        eventList = state.eventList + LoginState.Event.NavigateBackToProfileEvent
-                    )
-                }
-                TO_CREATE_ORDER -> mutableLoginState.update { state ->
-                    state.copy(
-                        eventList = state.eventList + LoginState.Event.NavigateToCreateOrderEvent
-                    )
-                }
-            }
-        }
-    }
-
-    fun onVerificationError(error: String) {
-        mutableLoginState.update { state ->
-            state.copy(state = LoginState.State.Success) + LoginState.Event.ShowErrorEvent(error)
-        }
-    }
-
-    fun onCodeSent(phone: String) {
+    private fun requestCode() {
         mutableLoginState.update { state ->
             state.copy(
-                eventList = state.eventList + LoginState.Event.NavigateToConfirmEvent(
-                    phone = phone,
-                    successLoginDirection = successLoginDirection
-                )
+                hasPhoneError = false,
+                isLoading = true
             )
+        }
+
+        sharedScope.launchSafe(
+            block =  {
+                requestCodeUseCase(mutableLoginState.value.phoneNumber)
+                mutableLoginState.update { state ->
+                    state + LoginEvent.NavigateToConfirmEvent(mutableLoginState.value.phoneNumber)
+                }
+            },
+            onError = ::handleException
+        )
+    }
+
+    private fun navigateBack() {
+        mutableLoginState.update { state ->
+            state + LoginEvent.NavigateBack
         }
     }
 
-    fun consumeEventList(eventList: List<LoginState.Event>) {
+    private fun handleException(throwable : Throwable) {
+        mutableLoginState.update { state ->
+            val updatedState = state.copy(isLoading = false)
+            when (throwable) {
+                is InvalidPhoneNumberException -> {
+                    updatedState.copy(hasPhoneError = true)
+                }
+
+                is TooManyRequestsException -> {
+                    updatedState + LoginEvent.ShowTooManyRequestsErrorEvent
+                }
+
+                else -> {
+                    updatedState + LoginEvent.ShowSomethingWentWrongErrorEvent
+                }
+            }
+        }
+    }
+
+    private fun consumeEventList(eventList: List<LoginEvent>) {
         mutableLoginState.update { state ->
             state.copy(eventList = state.eventList - eventList.toSet())
         }

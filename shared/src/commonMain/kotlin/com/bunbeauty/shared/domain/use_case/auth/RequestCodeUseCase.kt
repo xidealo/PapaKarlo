@@ -11,12 +11,14 @@ class RequestCodeUseCase(
 ) {
 
     suspend operator fun invoke(phoneNumber: String) {
+        val formattedPhoneNumber = phoneNumber.replace(Regex("[ ()-]"), "")
+
         val phoneNumberRegex = Regex("^\\+7[0-9]{10}$")
-        if (!phoneNumberRegex.matches(phoneNumber)) {
+        if (!phoneNumberRegex.matches(formattedPhoneNumber)) {
             throw InvalidPhoneNumberException()
         }
 
-        when (authRepo.requestCode(phoneNumber)) {
+        when (authRepo.requestCode(formattedPhoneNumber)) {
             CodeResponse.SUCCESS -> Unit
             CodeResponse.TOO_MANY_REQUESTS_ERROR -> throw TooManyRequestsException()
             CodeResponse.SOMETHING_WENT_WRONG_ERROR -> throw SomethingWentWrongException()
