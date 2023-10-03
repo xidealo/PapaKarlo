@@ -336,24 +336,49 @@ struct CreateOrderSuccessView: View {
                 .padding(.top, Diems.SMALL_PADDING)
                 .padding(.horizontal, Diems.MEDIUM_PADDING)
                 
-                if(viewModel.creationOrderViewState.isDelivery){
+                if let discount = viewModel.creationOrderViewState.discount{
                     HStack(spacing:0){
-                        Text(Strings.MSG_CREATION_ORDER_DELIVERY)
+                        Text("create_order_discount")
                             .bodyMedium()
                             .foregroundColor(AppColor.onSurface)
+                        
                         Spacer()
-                        Text("\(viewModel.creationOrderViewState.deliveryCost ?? 0)\(Strings.CURRENCY)")
-                            .bodyMedium()
-                            .foregroundColor(AppColor.onSurface)
-                    }
-                    .padding(.top, Diems.SMALL_PADDING)
-                    .padding(.horizontal, Diems.MEDIUM_PADDING)
+                        
+                        DiscountCard(text:discount)
+                    }.padding(.top, 8)
+                        .padding(.horizontal, 16)
                 }
+                
+                if(viewModel.creationOrderViewState.isDelivery){
+                    if let deliveryCost = viewModel.creationOrderViewState.deliveryCost {
+                        HStack(spacing:0){
+                            Text(Strings.MSG_CREATION_ORDER_DELIVERY)
+                                .bodyMedium()
+                                .foregroundColor(AppColor.onSurface)
+                            Spacer()
+                            Text("\(deliveryCost)\(Strings.CURRENCY)")
+                                .bodyMedium()
+                                .foregroundColor(AppColor.onSurface)
+                        }
+                        .padding(.top, Diems.SMALL_PADDING)
+                        .padding(.horizontal, Diems.MEDIUM_PADDING)
+                    }
+                }
+                
                 HStack(spacing:0){
                     Text(Strings.MSG_CREATION_ORDER_FINAL_AMOUNT)
                         .bodyMedium(weight: .bold)
                         .foregroundColor(AppColor.onSurface)
                     Spacer()
+                    
+                    
+                    if let oldFinalCost = viewModel.creationOrderViewState.oldFinalCost{
+                        Text("\(oldFinalCost)" + Strings.CURRENCY)
+                            .strikethrough()
+                            .bodyMedium(weight: .bold)
+                            .foregroundColor(AppColor.onSurfaceVariant)
+                            .padding(.trailing, 4)
+                    }
                     
                     if let finalCost = viewModel.creationOrderViewState.newFinalCost {
                         Text("\(finalCost)" + Strings.CURRENCY)
@@ -364,6 +389,7 @@ struct CreateOrderSuccessView: View {
                 }
                 .padding(.top, Diems.SMALL_PADDING)
                 .padding(.horizontal, Diems.MEDIUM_PADDING)
+                
                 Button(
                     action: {
                         viewModel.createOrder()

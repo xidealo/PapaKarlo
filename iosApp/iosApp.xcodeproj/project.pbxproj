@@ -102,6 +102,10 @@
 		024E8781287A160500728CB3 /* SpalshViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024E8780287A160500728CB3 /* SpalshViewState.swift */; };
 		0253930A29AB92A800C8B04B /* ButtonText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0253930929AB92A800C8B04B /* ButtonText.swift */; };
 		02542938287F39060089B45E /* CreateOrderHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02542937287F39060089B45E /* CreateOrderHolder.swift */; };
+		025775152ACCA01600DDBC94 /* DiscountCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025775142ACCA01600DDBC94 /* DiscountCard.swift */; };
+		025775162ACCA01600DDBC94 /* DiscountCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025775142ACCA01600DDBC94 /* DiscountCard.swift */; };
+		025775172ACCA01600DDBC94 /* DiscountCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025775142ACCA01600DDBC94 /* DiscountCard.swift */; };
+		025775182ACCA01600DDBC94 /* DiscountCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025775142ACCA01600DDBC94 /* DiscountCard.swift */; };
 		0265D2A02AC9B1BF00B862FF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0265D29C2AC9B14A00B862FF /* GoogleService-Info.plist */; };
 		0265D2A12AC9B1C200B862FF /* pepe.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0251DCA029DE11680008DBA5 /* pepe.plist */; };
 		026C1F532A2690B900838266 /* ButtonText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0253930929AB92A800C8B04B /* ButtonText.swift */; };
@@ -557,6 +561,7 @@
 		0251DCA229DE11990008DBA5 /* yuliar.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = yuliar.plist; sourceTree = "<group>"; };
 		0253930929AB92A800C8B04B /* ButtonText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonText.swift; sourceTree = "<group>"; };
 		02542937287F39060089B45E /* CreateOrderHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateOrderHolder.swift; sourceTree = "<group>"; };
+		025775142ACCA01600DDBC94 /* DiscountCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscountCard.swift; sourceTree = "<group>"; };
 		0265D29C2AC9B14A00B862FF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		026643F02A22AF3C000310BF /* papakarlo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = papakarlo.entitlements; sourceTree = "<group>"; };
 		026C1FCB2A2690B900838266 /* djan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = djan.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -934,6 +939,7 @@
 				023234BC28787A180048CF39 /* StatusChip.swift */,
 				02C21FF828D265E900DCF537 /* ActionTextCardView.swift */,
 				022A868428D79D5F00DBE5EC /* CardView.swift */,
+				025775142ACCA01600DDBC94 /* DiscountCard.swift */,
 			);
 			path = card;
 			sourceTree = "<group>";
@@ -1546,6 +1552,7 @@
 				026C1F5D2A2690B900838266 /* ToolbarWithCartView.swift in Sources */,
 				026C1F5E2A2690B900838266 /* AppTypography.swift in Sources */,
 				026C1F5F2A2690B900838266 /* SelectCityView.swift in Sources */,
+				025775172ACCA01600DDBC94 /* DiscountCard.swift in Sources */,
 				026C1F602A2690B900838266 /* CommentView.swift in Sources */,
 				026C1F612A2690B900838266 /* MenuView.swift in Sources */,
 				026C1F622A2690B900838266 /* CafeItemView.swift in Sources */,
@@ -1658,6 +1665,7 @@
 				027CB0202A346F7B00350EB2 /* ToolbarWithCartView.swift in Sources */,
 				027CB0212A346F7B00350EB2 /* AppTypography.swift in Sources */,
 				027CB0222A346F7B00350EB2 /* SelectCityView.swift in Sources */,
+				025775182ACCA01600DDBC94 /* DiscountCard.swift in Sources */,
 				027CB0232A346F7B00350EB2 /* CommentView.swift in Sources */,
 				027CB0242A346F7B00350EB2 /* MenuView.swift in Sources */,
 				027CB0252A346F7B00350EB2 /* CafeItemView.swift in Sources */,
@@ -1770,6 +1778,7 @@
 				02ADC34129D9D0880062A141 /* ToolbarWithCartView.swift in Sources */,
 				0294FD7E29E35E8300568A10 /* AppTypography.swift in Sources */,
 				02ADC34229D9D0880062A141 /* SelectCityView.swift in Sources */,
+				025775162ACCA01600DDBC94 /* DiscountCard.swift in Sources */,
 				02ADC34329D9D0880062A141 /* CommentView.swift in Sources */,
 				02ADC34529D9D0880062A141 /* MenuView.swift in Sources */,
 				02ADC34629D9D0880062A141 /* CafeItemView.swift in Sources */,
@@ -1882,6 +1891,7 @@
 				0220B1022953A6E000CD93B4 /* ToolbarWithCartView.swift in Sources */,
 				0294FD7D29E35E8300568A10 /* AppTypography.swift in Sources */,
 				0232347F287879EF0048CF39 /* SelectCityView.swift in Sources */,
+				025775152ACCA01600DDBC94 /* DiscountCard.swift in Sources */,
 				023E247528BFE49200F19676 /* CommentView.swift in Sources */,
 				023234A5287879EF0048CF39 /* MenuView.swift in Sources */,
 				02323495287879EF0048CF39 /* CafeItemView.swift in Sources */,

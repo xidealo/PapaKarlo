@@ -31,7 +31,7 @@ struct CartProductView: View {
 
                 HStack(spacing:0){
                     if let oldCost = cartProductItem.oldCost {
-                        Text(String(oldCost) + Strings.CURRENCY)
+                        Text(oldCost)
                             .strikethrough()
                             .bodySmall()
                             .foregroundColor(AppColor.onSurfaceVariant)

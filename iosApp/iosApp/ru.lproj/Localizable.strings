@@ -26,6 +26,7 @@
 "emptyCartTitleProfile" = "Корзина пуста";
 "emptyCartSecondProfile" = "Добавьте товар из «Меню»";
 "consumer_cart_total" = "Итого";
+"consumer_cart_discount" = "Скидка";
 
 //User address list
 "emptyAddressListTitleProfile" = "Список адресов пуст";
@@ -70,9 +71,12 @@
 
 //OrderDetails
 "title_order_details_sum" = "Сумма заказа";
+"title_order_details_discount" = "Скидка";
 
 //CafeAddressListView
 "title_pickup_addresses" = "Адрес самовывоза";
 
 //SelectablePaymentMethod
 "selectable_payment_method" = "Спопсоб оплаты";
+
+"create_order_discount" = "Скидка";

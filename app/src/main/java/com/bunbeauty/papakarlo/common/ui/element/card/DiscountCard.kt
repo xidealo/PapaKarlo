@@ -19,7 +19,7 @@ fun DiscountCard(discount: String) {
         Text(
             modifier = Modifier.padding(horizontal = 4.dp),
             text = discount,
-            style = FoodDeliveryTheme.typography.bodyMedium.bold,
+            style = FoodDeliveryTheme.typography.bodyMedium,
             color = FoodDeliveryTheme.colors.statusColors.onStatus
         )
     }

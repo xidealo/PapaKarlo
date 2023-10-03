@@ -9,13 +9,13 @@ import Foundation
 import shared
 
 class MenuViewModel : ObservableObject {
-    @Published var menuViewState:MenuViewState = MenuViewState(
+    @Published var menuViewState: MenuViewState = MenuViewState(
         menuItems: [],
         categoryItemModels: [],
         isLoading: true,
         scrollToPostion: "",
         scrollToHorizontalPostion: "",
-        discount: "10"
+        discount: nil
     )
     
     var lastDisappearIndex = 1
@@ -23,17 +23,25 @@ class MenuViewModel : ObservableObject {
     var canCalculate = true
     
     init(){
+        
         iosComponent.provideMenuInteractor().getMenuSectionList { menuSectionList, error in
             if(error != nil){
                 print("")
                 return
             }
-            (self.menuViewState.copy() as! MenuViewState).apply { copiedState in
-                copiedState.isLoading = false
-                copiedState.menuItems = self.getMenuItems(menuSectionList: menuSectionList ?? [])
-                copiedState.categoryItemModels = self.getCategoryItems(menuSectionList: menuSectionList ?? [])
-                DispatchQueue.main.async {
-                    self.menuViewState = copiedState
+            DispatchQueue.main.async {
+                iosComponent.provideGetDiscountUseCase().invoke { discount, err in
+                    (self.menuViewState.copy() as! MenuViewState).apply { copiedState in
+                        copiedState.isLoading = false
+                        copiedState.menuItems = self.getMenuItems(menuSectionList: menuSectionList ?? [])
+                        copiedState.categoryItemModels = self.getCategoryItems(menuSectionList: menuSectionList ?? [])
+                        if let notNullDiscount = discount?.firstOrderDiscount {
+                            copiedState.discount = "\(notNullDiscount)"
+                        }
+                        DispatchQueue.main.async {
+                            self.menuViewState = copiedState
+                        }
+                    }
                 }
             }
         }
@@ -97,7 +105,7 @@ class MenuViewModel : ObservableObject {
                 if(tagName == categoryItem.name){
                     newState.scrollToPostion = categoryItem.id
                     newState.scrollToHorizontalPostion = categoryItem.id
-
+                    
                     return CategoryItemModel(
                         key: categoryItem.key,
                         id: categoryItem.id,
@@ -118,7 +126,7 @@ class MenuViewModel : ObservableObject {
     }
     
     func checkAppear(index:Int){
-
+        
         if(menuViewState.scrollToPostion ==  menuViewState.categoryItemModels[index].id){
             DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500), execute: {
                 self.canCalculate = true
@@ -136,7 +144,7 @@ class MenuViewModel : ObservableObject {
     }
     
     func checkDisappear(index:Int){
-
+        
         if !canCalculate {
             return
         }

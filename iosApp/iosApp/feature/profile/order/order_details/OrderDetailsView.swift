@@ -87,12 +87,27 @@ struct OrderDetailsView: View {
                 
                 
                 VStack(spacing:0){
-                    if(orderDetailsState.deliveryCost != nil){
+                    
+                    if let discount = orderDetailsState.discount{
+                        HStack(spacing:0){
+                            Text("title_order_details_discount")
+                                .bodyMedium()
+                                .foregroundColor(AppColor.onSurface)
+                            
+                            Spacer()
+                            
+                            DiscountCard(text:discount)
+                        }.padding(.top, 8)
+                            .padding(.horizontal, 16)
+                    }
+                    
+                    
+                    if let deliveryCost = orderDetailsState.deliveryCost{
                         HStack(spacing:0){
                             Text(Strings.MSG_CREATION_ORDER_DELIVERY)
                                 .bodyMedium()
                             Spacer()
-                            Text((orderDetailsState.deliveryCost ?? "0") + Strings.CURRENCY)
+                            Text(deliveryCost + Strings.CURRENCY)
                                 .bodyMedium()
                         }
                         .padding(.horizontal, Diems.MEDIUM_PADDING)

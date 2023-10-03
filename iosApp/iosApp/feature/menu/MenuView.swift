@@ -56,8 +56,9 @@ struct MenuView: View {
                 .background(AppColor.surface)
                 
                 ScrollView {
-                    if(viewModel.menuViewState.discount != nil){
-                        DiscountView(discount: viewModel.menuViewState.discount ?? "")
+                    
+                    if let discount = viewModel.menuViewState.discount {
+                        DiscountView(discount: discount)
                     }
                     
                     ScrollViewReader{ scrollReader in
@@ -109,8 +110,6 @@ struct MenuView: View {
         .hiddenNavigationBarStyle()
         .preferredColorScheme(.light)
     }
-    
-    
     
     func DiscountView(discount:String) -> some View {
         VStack(spacing:0){

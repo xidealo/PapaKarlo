@@ -25,7 +25,8 @@
 //consumer cart
 "emptyCartTitleProfile" = "Cart is empty";
 "emptyCartSecondProfile" = "Add a product from the “Menu”";
-"consumer_cart_total" = "totla";
+"consumer_cart_total" = "total";
+"consumer_cart_discount" = "discount";
 
 //user address
 "emptyAddressListTitleProfile" = "Address list is empty";
@@ -64,9 +65,13 @@
 
 //OrderDetails
 "title_order_details_sum" = "Orders sum";
+"title_order_details_discount" = "Discount";
 
 //CafeAddressListView
 "title_pickup_addresses" = "Pickup addresses";
 
 //SelectablePaymentMethod
 "selectable_payment_method" = "Payment method";
+
+//CreateOrder
+"create_order_discount" = "Discount";

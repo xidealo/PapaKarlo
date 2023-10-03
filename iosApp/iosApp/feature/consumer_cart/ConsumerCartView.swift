@@ -96,7 +96,7 @@ struct ConsumerCartView: View {
             unsubscribe()
         }
         .onChange(of : consumerCartUIState, perform: { creationOrderViewState in
-         
+            
             print(creationOrderViewState.eventList)
             
             consumerCartUIState.eventList.forEach { event in
@@ -114,18 +114,6 @@ struct ConsumerCartView: View {
                 viewModel.consumeEventList(eventList: consumerCartUIState.eventList)
             }
         })
-        //        .onReceive(viewModel.$consumerCartViewState, perform: { consumerCartViewState in
-        //            consumerCartViewState.actions.forEach { action in
-        //                switch(action){
-        //                case ConsumerCartAction.openLoginAction : openLogin = true
-        //                case ConsumerCartAction.openCreateOrderAction : openCreateOrder = true
-        //                }
-        //
-        //                if !consumerCartViewState.actions.isEmpty{
-        //                    viewModel.consumeActions()
-        //                }
-        //            }
-        //        })
     }
     
     func subscribe(){
@@ -150,7 +138,7 @@ struct ConsumerCartSuccessScreen: View {
     let plusAction: (String) -> Void
     let minusAction: (String) -> Void
     let mainButtonAction: () -> Void
-
+    
     init(consumerCartUI: ConsumerCartData, plusAction: @escaping (String) -> Void, minusAction: @escaping (String) -> Void, mainButtonAction : @escaping () -> Void) {
         self.consumerCartUI = consumerCartUI
         self.cartProductListIos = consumerCartUI.cartProductList.map({ cartProductItem in
@@ -192,6 +180,19 @@ struct ConsumerCartSuccessScreen: View {
             }
             
             VStack(spacing:0){
+                if let discount = consumerCartUI.firstOrderDiscount{
+                    HStack(spacing:0){
+                        Text("consumer_cart_discount")
+                            .bodyMedium()
+                            .foregroundColor(AppColor.onSurface)
+                        
+                        Spacer()
+                        
+                        DiscountCard(text:discount)
+                    }.padding(.top, 16)
+                        .padding(.horizontal, 16)
+                }
+                
                 HStack(spacing:0){
                     Text("consumer_cart_total")
                         .bodyMedium(weight: .bold)
@@ -200,7 +201,7 @@ struct ConsumerCartSuccessScreen: View {
                     Spacer()
                     
                     if let oldTotalCost = consumerCartUI.oldTotalCost{
-                        Text(String(oldTotalCost) + Strings.CURRENCY)
+                        Text(oldTotalCost)
                             .strikethrough()
                             .bodyMedium(weight: .bold)
                             .foregroundColor(AppColor.onSurfaceVariant)
@@ -210,15 +211,16 @@ struct ConsumerCartSuccessScreen: View {
                     Text(consumerCartUI.newTotalCost)
                         .bodyMedium(weight: .bold)
                         .foregroundColor(AppColor.onSurface)
-                }.padding(16)
-                
+                }.padding(.top, 8)
+                    .padding(.horizontal, 16)
+
                 Button {
                     mainButtonAction()
                 } label: {
                     ButtonText(text: Strings.ACTION_CART_PRODUCT_CREATE_ORDER)
                 }
                 .padding(.horizontal, Diems.MEDIUM_PADDING)
-                .padding(.bottom, Diems.MEDIUM_PADDING)
+                .padding(.vertical, Diems.MEDIUM_PADDING)
             }.background(AppColor.surface)
         }
     }
