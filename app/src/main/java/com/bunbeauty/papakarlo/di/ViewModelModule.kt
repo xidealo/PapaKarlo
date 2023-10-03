@@ -1,7 +1,7 @@
 package com.bunbeauty.papakarlo.di
 
 import com.bunbeauty.papakarlo.feature.auth.screen.confirm.ConfirmViewModel
-import com.bunbeauty.papakarlo.feature.auth.screen.login.LoginViewModel
+import com.bunbeauty.shared.presentation.login.LoginViewModel
 import com.bunbeauty.papakarlo.feature.cafe.screen.cafeoptions.CafeOptionsViewModel
 import com.bunbeauty.papakarlo.feature.city.screen.selectcity.SelectCityViewModel
 import com.bunbeauty.papakarlo.feature.consumercart.ConsumerCartViewModel
@@ -117,7 +117,9 @@ fun viewModelModule() = module {
     }
     viewModel {
         LoginViewModel(
-            requestCodeUseCase = get(),
+            requestCode = get(),
+            formatPhoneNumber = get(),
+            getPhoneNumberCursorPosition = get(),
         )
     }
     viewModel { parameters ->

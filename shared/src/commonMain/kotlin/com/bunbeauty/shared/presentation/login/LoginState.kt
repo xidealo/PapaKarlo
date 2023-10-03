@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.feature.auth.screen.login
+package com.bunbeauty.shared.presentation.login
 
 import com.bunbeauty.shared.Constants.PHONE_CODE
 
@@ -25,12 +25,9 @@ sealed interface LoginAction {
     data object NextClick : LoginAction
     data class ConsumeEvents(val eventList: List<LoginEvent>) : LoginAction
     data object BackClick : LoginAction
-
 }
 
 sealed interface LoginEvent {
-
-    // New
     data class NavigateToConfirmEvent(val phoneNumber: String) : LoginEvent
     data object ShowTooManyRequestsErrorEvent : LoginEvent
     data object ShowSomethingWentWrongErrorEvent : LoginEvent

@@ -16,7 +16,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -29,82 +28,41 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.common.BaseFragmentWithSharedViewModel
+import com.bunbeauty.papakarlo.common.BaseComposeFragment
 import com.bunbeauty.papakarlo.common.extension.navigateSafe
 import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.papakarlo.common.ui.element.button.LoadingButton
 import com.bunbeauty.papakarlo.common.ui.element.textfield.FoodDeliveryTextField
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.LayoutComposeBinding
-import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.main.IMessageHost
+import com.bunbeauty.shared.presentation.login.LoginAction
+import com.bunbeauty.shared.presentation.login.LoginEvent
+import com.bunbeauty.shared.presentation.login.LoginState
+import com.bunbeauty.shared.presentation.login.LoginViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class LoginFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
+class LoginFragment : BaseComposeFragment<LoginState, LoginAction, LoginEvent>() {
 
-    private val viewModel: LoginViewModel by viewModel()
+    override val viewModel: LoginViewModel by viewModel()
     override val viewBinding by viewBinding(LayoutComposeBinding::bind)
 
     private val args: LoginFragmentArgs by navArgs()
+
+    override val eventHandler: (LoginEvent) -> Unit = ::handleEvent
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.handleAction(LoginAction.Init)
-        viewBinding.root.setContentWithTheme {
-            val loginState by viewModel.loginState.collectAsStateWithLifecycle()
-            LoginScreen(
-                loginState = loginState,
-                onAction = viewModel::handleAction
-            )
-            LaunchedEffect(loginState.eventList) {
-                handleEventList(loginState.eventList)
-            }
-        }
-    }
-
-    private fun handleEventList(eventList: List<LoginEvent>) {
-        eventList.forEach { event ->
-            when (event) {
-                is LoginEvent.NavigateToConfirmEvent -> {
-                    findNavController().navigateSafe(
-                        LoginFragmentDirections.toConfirmFragment(
-                            event.phoneNumber,
-                            args.successLoginDirection
-                        )
-                    )
-                }
-
-                LoginEvent.ShowTooManyRequestsErrorEvent -> {
-                    (activity as? IMessageHost)?.showErrorMessage(
-                        resources.getString(R.string.error_login_too_many_requests)
-                    )
-                }
-
-                LoginEvent.ShowSomethingWentWrongErrorEvent -> {
-                    (activity as? IMessageHost)?.showErrorMessage(
-                        resources.getString(R.string.error_something_went_wrong)
-                    )
-                }
-
-                LoginEvent.NavigateBack -> {
-                    findNavController().popBackStack()
-                }
-            }
-        }
-        viewModel.handleAction(LoginAction.ConsumeEvents(eventList))
     }
 
     @Composable
-    private fun LoginScreen(
-        loginState: LoginState,
-        onAction: (LoginAction) -> Unit,
-    ) {
+    override fun Screen(state: LoginState, onAction: (LoginAction) -> Unit) {
         FoodDeliveryScaffold(
             backActionClick = {
                 onAction(LoginAction.BackClick)
@@ -115,7 +73,7 @@ class LoginFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
                     modifier = Modifier
                         .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
                     textStringId = R.string.action_login_continue,
-                    isLoading = loginState.isLoading,
+                    isLoading = state.isLoading,
                     onClick = {
                         onAction(LoginAction.NextClick)
                     }
@@ -153,8 +111,8 @@ class LoginFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
                         .padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
                     focusRequester = focusRequester,
                     value = TextFieldValue(
-                        text = loginState.phoneNumber,
-                        selection = TextRange(loginState.phoneNumberCursorPosition)
+                        text = state.phoneNumber,
+                        selection = TextRange(state.phoneNumberCursorPosition)
                     ),
                     labelStringId = R.string.hint_login_phone,
                     keyboardType = KeyboardType.Phone,
@@ -162,7 +120,7 @@ class LoginFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
                     onValueChange = { value ->
                         onAction(LoginAction.ChangePhoneNumber(value.text, value.selection.start))
                     },
-                    errorMessageId = if (loginState.hasPhoneError) {
+                    errorMessageId = if (state.hasPhoneError) {
                         R.string.error_login_phone
                     } else {
                         null
@@ -179,12 +137,41 @@ class LoginFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
         }
     }
 
+    private fun handleEvent(event: LoginEvent) {
+        when (event) {
+            is LoginEvent.NavigateToConfirmEvent -> {
+                findNavController().navigateSafe(
+                    LoginFragmentDirections.toConfirmFragment(
+                        event.phoneNumber,
+                        args.successLoginDirection
+                    )
+                )
+            }
+
+            LoginEvent.ShowTooManyRequestsErrorEvent -> {
+                (activity as? IMessageHost)?.showErrorMessage(
+                    resources.getString(R.string.error_login_too_many_requests)
+                )
+            }
+
+            LoginEvent.ShowSomethingWentWrongErrorEvent -> {
+                (activity as? IMessageHost)?.showErrorMessage(
+                    resources.getString(R.string.error_something_went_wrong)
+                )
+            }
+
+            LoginEvent.NavigateBack -> {
+                findNavController().popBackStack()
+            }
+        }
+    }
+
     @Preview(showSystemUi = true)
     @Composable
     private fun LoginScreenPreview() {
         FoodDeliveryTheme {
-            LoginScreen(
-                loginState = LoginState(
+            Screen(
+                state = LoginState(
                     phoneNumber = "+7 (900) 900-90-90",
                     phoneNumberCursorPosition = 18,
                     hasPhoneError = false,
