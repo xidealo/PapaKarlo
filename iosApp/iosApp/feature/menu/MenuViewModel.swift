@@ -101,9 +101,20 @@ class MenuViewModel : ObservableObject {
         canCalculate = false
         (menuViewState.copy() as! MenuViewState).apply { newState in
             print("seletTagWithScroll canCalculate \(canCalculate)")
+            
             newState.categoryItemModels = newState.categoryItemModels.map { categoryItem in
                 if(tagName == categoryItem.name){
-                    newState.scrollToPostion = categoryItem.id
+                    
+                    let isFirstItem = newState.categoryItemModels.firstIndex(where: { categoryItem in
+                        categoryItem.name == tagName
+                    }) == 0
+                    
+                    if (newState.discount != nil && isFirstItem) {
+                        newState.scrollToPostion = DISCOUNT_ID
+                    }else{
+                        newState.scrollToPostion = categoryItem.id
+                    }
+                    
                     newState.scrollToHorizontalPostion = categoryItem.id
                     
                     return CategoryItemModel(

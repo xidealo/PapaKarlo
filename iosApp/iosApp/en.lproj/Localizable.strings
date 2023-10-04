@@ -75,3 +75,6 @@
 
 //CreateOrder
 "create_order_discount" = "Discount";
+
+//Settings
+"action_settings_log_out" = "Log out";

@@ -80,3 +80,6 @@
 "selectable_payment_method" = "Спопсоб оплаты";
 
 "create_order_discount" = "Скидка";
+
+//Settings
+"action_settings_log_out" = "Выйти";
