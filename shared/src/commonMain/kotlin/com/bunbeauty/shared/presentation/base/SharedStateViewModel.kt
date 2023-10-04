@@ -1,10 +1,10 @@
-package com.bunbeauty.shared.presentation
+package com.bunbeauty.shared.presentation.base
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
-abstract class SharedStateViewModel<State, Action, Event>(
+abstract class SharedStateViewModel<State: BaseState, Action: BaseAction, Event: BaseEvent>(
     initState: State
 ) : SharedViewModel() {
 

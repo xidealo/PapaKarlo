@@ -1,6 +1,6 @@
 package com.bunbeauty.papakarlo.di
 
-import com.bunbeauty.papakarlo.feature.auth.screen.confirm.ConfirmViewModel
+import com.bunbeauty.shared.presentation.confirm.ConfirmViewModel
 import com.bunbeauty.shared.presentation.login.LoginViewModel
 import com.bunbeauty.papakarlo.feature.cafe.screen.cafeoptions.CafeOptionsViewModel
 import com.bunbeauty.papakarlo.feature.city.screen.selectcity.SelectCityViewModel
@@ -122,12 +122,11 @@ fun viewModelModule() = module {
             getPhoneNumberCursorPosition = get(),
         )
     }
-    viewModel { parameters ->
+    viewModel {
         ConfirmViewModel(
-            userInteractor = get(),
-            firebaseAuthRepository = get(),
-            successLoginDirection = parameters[0],
-            phoneNumber = parameters[1]
+            formatPhoneNumber = get(),
+            checkCode = get(),
+            resendCode =get(),
         )
     }
     viewModel {

@@ -6,21 +6,21 @@ import com.bunbeauty.shared.domain.feature.login.FormatPhoneNumberUseCase
 import com.bunbeauty.shared.domain.feature.login.GetPhoneNumberCursorPositionUseCase
 import com.bunbeauty.shared.domain.use_case.auth.RequestCodeUseCase
 import com.bunbeauty.shared.extension.launchSafe
-import com.bunbeauty.shared.presentation.SharedStateViewModel
+import com.bunbeauty.shared.presentation.base.SharedStateViewModel
 
 class LoginViewModel(
     private val requestCode: RequestCodeUseCase,
     private val formatPhoneNumber: FormatPhoneNumberUseCase,
     private val getPhoneNumberCursorPosition: GetPhoneNumberCursorPositionUseCase,
-) : SharedStateViewModel<LoginState, LoginAction, LoginEvent>(LoginState()) {
+) : SharedStateViewModel<Login.State, Login.Action, Login.Event>(Login.State()) {
 
-    override fun handleAction(action: LoginAction) {
+    override fun handleAction(action: Login.Action) {
         when (action) {
-            LoginAction.Init -> init()
-            is LoginAction.ChangePhoneNumber -> updatePhoneNumber(action.phoneNumber, action.cursorPosition)
-            LoginAction.NextClick -> requestCode()
-            is LoginAction.BackClick -> navigateBack()
-            is LoginAction.ConsumeEvents -> consumeEvents(action.eventList)
+            Login.Action.Init -> init()
+            is Login.Action.ChangePhoneNumber -> updatePhoneNumber(action.phoneNumber, action.cursorPosition)
+            Login.Action.NextClick -> requestCode()
+            is Login.Action.BackClick -> navigateBack()
+            is Login.Action.ConsumeEvents -> consumeEvents(action.eventList)
         }
     }
 
@@ -51,7 +51,7 @@ class LoginViewModel(
             block = {
                 requestCode(mutableState.value.phoneNumber)
                 event { state ->
-                    LoginEvent.NavigateToConfirmEvent(state.phoneNumber)
+                    Login.Event.NavigateToConfirm(state.phoneNumber)
                 }
             },
             onError = ::handleException
@@ -60,7 +60,7 @@ class LoginViewModel(
 
     private fun navigateBack() {
         event {
-            LoginEvent.NavigateBack
+            Login.Event.NavigateBack
         }
     }
 
@@ -78,13 +78,13 @@ class LoginViewModel(
 
             is TooManyRequestsException -> {
                 event {
-                    LoginEvent.ShowTooManyRequestsErrorEvent
+                    Login.Event.ShowTooManyRequestsError
                 }
             }
 
             else -> {
                 event {
-                    LoginEvent.ShowSomethingWentWrongErrorEvent
+                    Login.Event.ShowSomethingWentWrongError
                 }
             }
         }

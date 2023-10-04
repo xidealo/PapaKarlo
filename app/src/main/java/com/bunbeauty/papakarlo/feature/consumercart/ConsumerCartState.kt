@@ -1,6 +1,6 @@
 package com.bunbeauty.papakarlo.feature.consumercart
 
-import com.bunbeauty.papakarlo.common.model.SuccessLoginDirection
+import com.bunbeauty.shared.domain.model.SuccessLoginDirection
 import com.bunbeauty.papakarlo.feature.consumercart.model.CartProductItem
 
 data class ConsumerCartDataState(

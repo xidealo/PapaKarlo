@@ -1,5 +1,6 @@
-package com.bunbeauty.shared.presentation
+package com.bunbeauty.shared.presentation.base
 
+import com.bunbeauty.shared.presentation.UIDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
@@ -14,6 +15,7 @@ internal var createViewModelScope: () -> CoroutineScope = {
 }
 
 internal fun createUIDispatcher(): CoroutineDispatcher = UIDispatcher()
+
 
 @Suppress("EmptyDefaultConstructor")
 actual open class SharedViewModel actual constructor() {

@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.feature.auth.screen.login
+package com.bunbeauty.papakarlo.feature.auth.screen
 
 import android.os.Bundle
 import android.view.View
@@ -30,7 +30,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseComposeFragment
 import com.bunbeauty.papakarlo.common.extension.navigateSafe
@@ -38,34 +37,28 @@ import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.papakarlo.common.ui.element.button.LoadingButton
 import com.bunbeauty.papakarlo.common.ui.element.textfield.FoodDeliveryTextField
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.databinding.LayoutComposeBinding
 import com.bunbeauty.papakarlo.feature.main.IMessageHost
-import com.bunbeauty.shared.presentation.login.LoginAction
-import com.bunbeauty.shared.presentation.login.LoginEvent
-import com.bunbeauty.shared.presentation.login.LoginState
+import com.bunbeauty.shared.presentation.login.Login
 import com.bunbeauty.shared.presentation.login.LoginViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class LoginFragment : BaseComposeFragment<LoginState, LoginAction, LoginEvent>() {
+class LoginFragment : BaseComposeFragment<Login.State, Login.Action, Login.Event>() {
 
     override val viewModel: LoginViewModel by viewModel()
-    override val viewBinding by viewBinding(LayoutComposeBinding::bind)
 
     private val args: LoginFragmentArgs by navArgs()
-
-    override val eventHandler: (LoginEvent) -> Unit = ::handleEvent
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.handleAction(LoginAction.Init)
+        viewModel.handleAction(Login.Action.Init)
     }
 
     @Composable
-    override fun Screen(state: LoginState, onAction: (LoginAction) -> Unit) {
+    override fun Screen(state: Login.State, onAction: (Login.Action) -> Unit) {
         FoodDeliveryScaffold(
             backActionClick = {
-                onAction(LoginAction.BackClick)
+                onAction(Login.Action.BackClick)
             },
             backgroundColor = FoodDeliveryTheme.colors.mainColors.surface,
             actionButton = {
@@ -75,7 +68,7 @@ class LoginFragment : BaseComposeFragment<LoginState, LoginAction, LoginEvent>()
                     textStringId = R.string.action_login_continue,
                     isLoading = state.isLoading,
                     onClick = {
-                        onAction(LoginAction.NextClick)
+                        onAction(Login.Action.NextClick)
                     }
                 )
             }
@@ -118,7 +111,7 @@ class LoginFragment : BaseComposeFragment<LoginState, LoginAction, LoginEvent>()
                     keyboardType = KeyboardType.Phone,
                     imeAction = ImeAction.Done,
                     onValueChange = { value ->
-                        onAction(LoginAction.ChangePhoneNumber(value.text, value.selection.start))
+                        onAction(Login.Action.ChangePhoneNumber(value.text, value.selection.start))
                     },
                     errorMessageId = if (state.hasPhoneError) {
                         R.string.error_login_phone
@@ -137,9 +130,9 @@ class LoginFragment : BaseComposeFragment<LoginState, LoginAction, LoginEvent>()
         }
     }
 
-    private fun handleEvent(event: LoginEvent) {
+    override fun handleEvent(event: Login.Event) {
         when (event) {
-            is LoginEvent.NavigateToConfirmEvent -> {
+            is Login.Event.NavigateToConfirm -> {
                 findNavController().navigateSafe(
                     LoginFragmentDirections.toConfirmFragment(
                         event.phoneNumber,
@@ -148,19 +141,19 @@ class LoginFragment : BaseComposeFragment<LoginState, LoginAction, LoginEvent>()
                 )
             }
 
-            LoginEvent.ShowTooManyRequestsErrorEvent -> {
+            Login.Event.ShowTooManyRequestsError -> {
                 (activity as? IMessageHost)?.showErrorMessage(
                     resources.getString(R.string.error_login_too_many_requests)
                 )
             }
 
-            LoginEvent.ShowSomethingWentWrongErrorEvent -> {
+            Login.Event.ShowSomethingWentWrongError -> {
                 (activity as? IMessageHost)?.showErrorMessage(
                     resources.getString(R.string.error_something_went_wrong)
                 )
             }
 
-            LoginEvent.NavigateBack -> {
+            Login.Event.NavigateBack -> {
                 findNavController().popBackStack()
             }
         }
@@ -171,7 +164,7 @@ class LoginFragment : BaseComposeFragment<LoginState, LoginAction, LoginEvent>()
     private fun LoginScreenPreview() {
         FoodDeliveryTheme {
             Screen(
-                state = LoginState(
+                state = Login.State(
                     phoneNumber = "+7 (900) 900-90-90",
                     phoneNumberCursorPosition = 18,
                     hasPhoneError = false,

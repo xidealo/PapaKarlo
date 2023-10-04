@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.common.model
+package com.bunbeauty.shared.domain.model
 
 enum class SuccessLoginDirection {
     BACK_TO_PROFILE,

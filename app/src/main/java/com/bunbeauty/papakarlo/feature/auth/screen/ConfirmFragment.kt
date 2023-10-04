@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.feature.auth.screen.confirm
+package com.bunbeauty.papakarlo.feature.auth.screen
 
 import android.os.Bundle
 import android.view.View
@@ -12,111 +12,126 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.common.BaseFragment
+import com.bunbeauty.papakarlo.common.BaseComposeFragment
 import com.bunbeauty.papakarlo.common.extension.navigateSafe
 import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.LayoutComposeBinding
-import com.bunbeauty.papakarlo.extensions.setContentWithTheme
-import com.bunbeauty.papakarlo.feature.auth.model.ConfirmState
-import com.bunbeauty.papakarlo.feature.auth.phoneverification.IPhoneVerificationUtil
-import com.bunbeauty.papakarlo.feature.auth.screen.confirm.ConfirmFragmentDirections.backToProfileFragment
-import com.bunbeauty.papakarlo.feature.auth.screen.confirm.ConfirmFragmentDirections.toCreateOrderFragment
 import com.bunbeauty.papakarlo.feature.auth.ui.SmsEditText
 import com.bunbeauty.papakarlo.feature.main.IMessageHost
-import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.stateViewModel
-import org.koin.core.parameter.parametersOf
+import com.bunbeauty.shared.presentation.confirm.Confirm
+import com.bunbeauty.shared.presentation.confirm.ConfirmViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class ConfirmFragment : BaseFragment(R.layout.layout_compose) {
+class ConfirmFragment : BaseComposeFragment<Confirm.State, Confirm.Action, Confirm.Event>() {
 
     private val args: ConfirmFragmentArgs by navArgs()
 
-    override val viewModel: ConfirmViewModel by stateViewModel(
-        parameters = {
-            parametersOf(
-                args.successLoginDirection,
-                args.phone
-            )
-        }
-    )
+    override val viewModel: ConfirmViewModel by viewModel()
 
     override val viewBinding by viewBinding(LayoutComposeBinding::bind)
-
-    private val phoneVerificationUtil: IPhoneVerificationUtil by inject()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewBinding.root.setContentWithTheme {
-            val confirmState by viewModel.confirmState.collectAsStateWithLifecycle()
-
-            LaunchedEffect(confirmState.eventList) {
-                handleEventList(confirmState.eventList)
-            }
-            ConfirmScreen(confirmState)
-        }
-        phoneVerificationUtil.authErrorEvent.startedLaunch { authErrorEvent ->
-            viewModel.onVerificationError(authErrorEvent.error)
-        }
-        phoneVerificationUtil.authSuccessEvent.startedLaunch {
-            viewModel.onSuccessVerified()
-        }
+        viewModel.handleAction(Confirm.Action.Init(args.phone, args.successLoginDirection))
     }
 
     @Composable
-    private fun ConfirmScreen(confirmState: ConfirmState) {
+    override fun Screen(state: Confirm.State, onAction: (Confirm.Action) -> Unit) {
         FoodDeliveryScaffold(
             backActionClick = {
-                findNavController().popBackStack()
+                onAction(Confirm.Action.BackClick)
             },
             backgroundColor = FoodDeliveryTheme.colors.mainColors.surface,
             actionButton = {
-                if (!confirmState.isCodeChecking) {
-                    val buttonText = if (confirmState.isResendEnable) {
+                if (!state.isLoading) {
+                    val buttonText = if (state.isResendEnable) {
                         stringResource(R.string.msg_request_code)
                     } else {
-                        stringResource(R.string.msg_request_code_sec, confirmState.resendSeconds)
+                        stringResource(R.string.msg_request_code_sec, state.resendSeconds)
                     }
                     MainButton(
                         modifier = Modifier
                             .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
                         text = buttonText,
-                        isEnabled = confirmState.isResendEnable
+                        isEnabled = state.isResendEnable
                     ) {
-                        viewModel.onResendCodeClicked()
-                        phoneVerificationUtil.resendVerificationCode(
-                            phone = confirmState.formattedPhoneNumber,
-                            activity = requireActivity()
-                        )
+                        onAction(Confirm.Action.ResendCode)
                     }
                 }
             }
         ) {
-            if (confirmState.isCodeChecking) {
+            if (state.isLoading) {
                 LoadingScreen()
             } else {
-                ConfirmScreenSuccess(confirmState)
+                ConfirmScreenSuccess(
+                    state = state,
+                    onAction = onAction
+                )
+            }
+        }
+    }
+
+    override fun handleEvent(event: Confirm.Event) {
+        when (event) {
+            Confirm.Event.ShowTooManyRequestsError -> {
+                (activity as? IMessageHost)?.showErrorMessage(
+                    resources.getString(R.string.error_login_too_many_requests)
+                )
+            }
+
+            Confirm.Event.ShowNoAttemptsError -> {
+                (activity as? IMessageHost)?.showErrorMessage(
+                    resources.getString(R.string.error_no_attempts)
+                )
+            }
+
+            Confirm.Event.ShowInvalidCodeError -> {
+                (activity as? IMessageHost)?.showErrorMessage(
+                    resources.getString(R.string.error_invalid_code)
+                )
+            }
+
+            Confirm.Event.ShowAuthSessionTimeoutError -> {
+                (activity as? IMessageHost)?.showErrorMessage(
+                    resources.getString(R.string.error_code_confirmation_timeout)
+                )
+            }
+
+            Confirm.Event.ShowSomethingWentWrongError -> {
+                (activity as? IMessageHost)?.showErrorMessage(
+                    resources.getString(R.string.error_something_went_wrong)
+                )
+            }
+
+            Confirm.Event.NavigateBackToProfile -> {
+                findNavController().navigateSafe(ConfirmFragmentDirections.backToProfileFragment())
+            }
+
+            Confirm.Event.NavigateToCreateOrder -> {
+                findNavController().navigateSafe(ConfirmFragmentDirections.toCreateOrderFragment())
+            }
+
+            Confirm.Event.NavigateBack -> {
+                findNavController().popBackStack()
             }
         }
     }
 
     @Composable
-    private fun ConfirmScreenSuccess(confirmState: ConfirmState) {
+    private fun ConfirmScreenSuccess(state: Confirm.State, onAction: (Confirm.Action) -> Unit) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -134,7 +149,7 @@ class ConfirmFragment : BaseFragment(R.layout.layout_compose) {
             Text(
                 modifier = Modifier
                     .padding(top = FoodDeliveryTheme.dimensions.smallSpace),
-                text = stringResource(R.string.msg_confirm_phone_info) + confirmState.phoneNumber,
+                text = stringResource(R.string.msg_confirm_phone_info) + state.phoneNumber,
                 style = FoodDeliveryTheme.typography.bodyLarge,
                 color = FoodDeliveryTheme.colors.mainColors.onSurface,
                 textAlign = TextAlign.Center
@@ -144,48 +159,24 @@ class ConfirmFragment : BaseFragment(R.layout.layout_compose) {
                     .widthIn(max = FoodDeliveryTheme.dimensions.smsEditTextWidth)
                     .padding(top = FoodDeliveryTheme.dimensions.mediumSpace)
             ) { code ->
-                viewModel.onCodeEntered()
-                phoneVerificationUtil.verifyCode(code)
+                onAction(Confirm.Action.CheckCode(code))
             }
             Spacer(modifier = Modifier.weight(1f))
-            Spacer(
-                modifier = Modifier
-                    .height(FoodDeliveryTheme.dimensions.scrollScreenBottomSpace)
-            )
+            Spacer(modifier = Modifier.height(FoodDeliveryTheme.dimensions.scrollScreenBottomSpace))
         }
-    }
-
-    private fun handleEventList(eventList: List<ConfirmState.Event>) {
-        eventList.forEach { event ->
-            when (event) {
-                is ConfirmState.Event.ShowErrorMessageEvent -> {
-                    val messageId = when (event.error) {
-                        ConfirmState.ConfirmError.SOMETHING_WENT_WRONG_ERROR -> R.string.error_something_went_wrong
-                        ConfirmState.ConfirmError.WRONG_CODE_ERROR -> R.string.error_confirm_wrong_code
-                    }
-                    (activity as? IMessageHost)?.showErrorMessage(resources.getString(messageId))
-                }
-                ConfirmState.Event.NavigateBackToProfileEvent -> {
-                    findNavController().navigateSafe(backToProfileFragment())
-                }
-                ConfirmState.Event.NavigateToCreateOrderEvent -> {
-                    findNavController().navigateSafe(toCreateOrderFragment())
-                }
-            }
-        }
-        viewModel.consumeEventList(eventList)
     }
 
     @Preview(showSystemUi = true)
     @Composable
     private fun ConfirmScreenResendCodeDisableSuccessPreview() {
         FoodDeliveryTheme {
-            ConfirmScreen(
-                ConfirmState(
+            Screen(
+                state = Confirm.State(
                     phoneNumber = "+7 (900) 900-90-90",
                     resendSeconds = 59,
-                    isCodeChecking = false
-                )
+                    isLoading = false
+                ),
+                onAction = {}
             )
         }
     }
@@ -194,12 +185,13 @@ class ConfirmFragment : BaseFragment(R.layout.layout_compose) {
     @Composable
     private fun ConfirmScreenResendCodeEnableSuccessPreview() {
         FoodDeliveryTheme {
-            ConfirmScreen(
-                ConfirmState(
+            Screen(
+                state = Confirm.State(
                     phoneNumber = "+7 (900) 900-90-90",
                     resendSeconds = 0,
-                    isCodeChecking = false
-                )
+                    isLoading = false
+                ),
+                onAction = {}
             )
         }
     }
@@ -208,12 +200,13 @@ class ConfirmFragment : BaseFragment(R.layout.layout_compose) {
     @Composable
     private fun ConfirmScreenResendLoadingPreview() {
         FoodDeliveryTheme {
-            ConfirmScreen(
-                ConfirmState(
+            Screen(
+                state = Confirm.State(
                     phoneNumber = "+7 (900) 900-90-90",
                     resendSeconds = 0,
-                    isCodeChecking = true
-                )
+                    isLoading = true
+                ),
+                onAction = {}
             )
         }
     }

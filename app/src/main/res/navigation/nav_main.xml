@@ -138,7 +138,7 @@
             app:destination="@id/nav_login">
             <argument
                 android:name="successLoginDirection"
-                app:argType="com.bunbeauty.papakarlo.common.model.SuccessLoginDirection" />
+                app:argType="com.bunbeauty.shared.domain.model.SuccessLoginDirection" />
         </action>
     </fragment>
 
@@ -216,7 +216,7 @@
             app:destination="@id/nav_login">
             <argument
                 android:name="successLoginDirection"
-                app:argType="com.bunbeauty.papakarlo.common.model.SuccessLoginDirection" />
+                app:argType="com.bunbeauty.shared.domain.model.SuccessLoginDirection" />
         </action>
         <action
             android:id="@+id/to_productFragment"

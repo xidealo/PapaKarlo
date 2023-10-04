@@ -1,7 +1,7 @@
 package com.bunbeauty.papakarlo.feature.consumercart
 
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.papakarlo.common.model.SuccessLoginDirection
+import com.bunbeauty.shared.domain.model.SuccessLoginDirection
 import com.bunbeauty.papakarlo.common.viewmodel.BaseViewModel
 import com.bunbeauty.papakarlo.feature.consumercart.model.CartProductItem
 import com.bunbeauty.shared.Constants.PERCENT

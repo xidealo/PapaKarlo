@@ -1,4 +1,4 @@
-package com.bunbeauty.shared.presentation
+package com.bunbeauty.shared.presentation.base
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

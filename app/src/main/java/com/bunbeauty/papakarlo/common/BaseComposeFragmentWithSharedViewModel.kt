@@ -10,9 +10,13 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.LayoutComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
-import com.bunbeauty.shared.presentation.SharedStateViewModel
+import com.bunbeauty.shared.presentation.base.BaseAction
+import com.bunbeauty.shared.presentation.base.BaseEvent
+import com.bunbeauty.shared.presentation.base.BaseState
+import com.bunbeauty.shared.presentation.base.SharedStateViewModel
 
-abstract class BaseComposeFragment<State, Action, Event> : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
+abstract class BaseComposeFragment<State : BaseState, Action : BaseAction, Event : BaseEvent> :
+    BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
 
     abstract val viewModel: SharedStateViewModel<State, Action, Event>
 
@@ -31,14 +35,14 @@ abstract class BaseComposeFragment<State, Action, Event> : BaseFragmentWithShare
             val events by viewModel.events.collectAsStateWithLifecycle()
             LaunchedEffect(events) {
                 events.forEach { event ->
-                    eventHandler(event)
+                    handleEvent(event)
                 }
                 viewModel.consumeEvents(events)
             }
         }
     }
 
-    abstract val eventHandler: (Event) -> Unit
+    abstract fun handleEvent(event: Event)
 
     @Composable
     abstract fun Screen(state: State, onAction: (Action) -> Unit)
