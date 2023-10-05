@@ -1,7 +1,6 @@
 package com.bunbeauty.papakarlo.feature.consumercart
 
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.shared.domain.model.SuccessLoginDirection
 import com.bunbeauty.papakarlo.common.viewmodel.BaseViewModel
 import com.bunbeauty.papakarlo.feature.consumercart.model.CartProductItem
 import com.bunbeauty.shared.Constants.PERCENT
@@ -10,6 +9,7 @@ import com.bunbeauty.shared.domain.feature.cart.AddCartProductUseCase
 import com.bunbeauty.shared.domain.feature.cart.RemoveCartProductUseCase
 import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
+import com.bunbeauty.shared.domain.model.SuccessLoginDirection
 import com.bunbeauty.shared.domain.model.cart.ConsumerCart
 import com.bunbeauty.shared.domain.model.cart.LightCartProduct
 import com.bunbeauty.shared.extension.launchSafe

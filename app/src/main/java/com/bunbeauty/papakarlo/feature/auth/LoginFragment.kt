@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.feature.auth.screen
+package com.bunbeauty.papakarlo.feature.auth
 
 import android.os.Bundle
 import android.view.View
@@ -168,7 +168,7 @@ class LoginFragment : BaseComposeFragment<Login.State, Login.Action, Login.Event
                     phoneNumber = "+7 (900) 900-90-90",
                     phoneNumberCursorPosition = 18,
                     hasPhoneError = false,
-                    isLoading = false,
+                    isLoading = false
                 ),
                 onAction = {}
             )

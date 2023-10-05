@@ -46,5 +46,4 @@ abstract class BaseComposeFragment<State : BaseState, Action : BaseAction, Event
 
     @Composable
     abstract fun Screen(state: State, onAction: (Action) -> Unit)
-
 }

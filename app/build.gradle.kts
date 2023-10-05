@@ -14,7 +14,6 @@ plugins {
     id("org.jlleitschuh.gradle.ktlint") version "11.5.1"
 }
 
-@Suppress("UnstableApiUsage")
 android {
     namespace = Namespace.app
 
@@ -174,7 +173,6 @@ dependencies {
     implementation(platform(Firebase.bom))
     implementation(Firebase.crashlyticsKtx)
     implementation(Firebase.analyticsKtx)
-    implementation(Firebase.authKtx)
     implementation(Firebase.messaging)
 
     implementation(Coil.coil)

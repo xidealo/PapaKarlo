@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.feature.auth.screen
+package com.bunbeauty.papakarlo.feature.auth
 
 import android.os.Bundle
 import android.view.View
@@ -45,7 +45,7 @@ class ConfirmFragment : BaseComposeFragment<Confirm.State, Confirm.Action, Confi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.handleAction(Confirm.Action.Init(args.phone, args.successLoginDirection))
+        viewModel.handleAction(Confirm.Action.Init(args.phoneNumber, args.successLoginDirection))
     }
 
     @Composable

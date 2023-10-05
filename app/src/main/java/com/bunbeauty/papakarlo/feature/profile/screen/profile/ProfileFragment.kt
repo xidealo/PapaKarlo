@@ -34,7 +34,6 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragmentWithSharedViewModel
 import com.bunbeauty.papakarlo.common.extension.navigateSafe
-import com.bunbeauty.shared.domain.model.SuccessLoginDirection
 import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
 import com.bunbeauty.papakarlo.common.ui.element.card.NavigationIconCard
@@ -53,6 +52,7 @@ import com.bunbeauty.papakarlo.feature.profile.screen.feedback.FeedbackBottomShe
 import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentBottomSheet
 import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentMethodsArgument
 import com.bunbeauty.papakarlo.feature.topcart.TopCartUi
+import com.bunbeauty.shared.domain.model.SuccessLoginDirection
 import com.bunbeauty.shared.domain.model.order.OrderStatus
 import com.bunbeauty.shared.presentation.profile.ProfileState
 import com.bunbeauty.shared.presentation.profile.ProfileViewModel

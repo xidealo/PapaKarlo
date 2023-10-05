@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_login"
     app:startDestination="@id/loginFragment">
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.bunbeauty.papakarlo.feature.auth.screen.LoginFragment"
+        android:name="com.bunbeauty.papakarlo.feature.auth.LoginFragment"
         android:label="">
         <argument
             android:name="successLoginDirection"
@@ -29,10 +28,10 @@
 
     <fragment
         android:id="@+id/confirmFragment"
-        android:name="com.bunbeauty.papakarlo.feature.auth.screen.ConfirmFragment"
+        android:name="com.bunbeauty.papakarlo.feature.auth.ConfirmFragment"
         android:label="">
         <argument
-            android:name="phone"
+            android:name="phoneNumber"
             app:argType="string" />
         <argument
             android:name="successLoginDirection"

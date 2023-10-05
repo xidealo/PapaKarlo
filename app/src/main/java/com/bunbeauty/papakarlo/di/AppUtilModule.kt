@@ -1,7 +1,5 @@
 package com.bunbeauty.papakarlo.di
 
-import com.bunbeauty.papakarlo.feature.auth.phoneverification.IPhoneVerificationUtil
-import com.bunbeauty.papakarlo.feature.auth.phoneverification.PhoneVerificationUtil
 import com.bunbeauty.papakarlo.feature.main.network.INetworkUtil
 import com.bunbeauty.papakarlo.feature.main.network.NetworkUtil
 import com.bunbeauty.papakarlo.util.resources.IResourcesProvider
@@ -17,7 +15,6 @@ fun appUtilModule() = module {
     single<IResourcesProvider> { ResourcesProvider(androidContext()) }
     single<ITextValidator> { TextValidator() }
 
-    single<IPhoneVerificationUtil> { PhoneVerificationUtil() }
     single<INetworkUtil> {
         NetworkUtil(
             connectivityManager = get()
