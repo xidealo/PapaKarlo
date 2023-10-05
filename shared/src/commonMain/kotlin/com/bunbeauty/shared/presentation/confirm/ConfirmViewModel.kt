@@ -106,12 +106,14 @@ class ConfirmViewModel(
     }
 
     private fun handleException(throwable: Throwable) {
-        when (throwable) {
-            is TooManyRequestsException -> Confirm.Event.ShowTooManyRequestsError
-            is NoAttemptsException -> Confirm.Event.ShowNoAttemptsError
-            is InvalidCodeException -> Confirm.Event.ShowInvalidCodeError
-            is AuthSessionTimeoutException -> Confirm.Event.ShowAuthSessionTimeoutError
-            else -> Confirm.Event.ShowSomethingWentWrongError
+        event {
+            when (throwable) {
+                is TooManyRequestsException -> Confirm.Event.ShowTooManyRequestsError
+                is NoAttemptsException -> Confirm.Event.ShowNoAttemptsError
+                is InvalidCodeException -> Confirm.Event.ShowInvalidCodeError
+                is AuthSessionTimeoutException -> Confirm.Event.ShowAuthSessionTimeoutError
+                else -> Confirm.Event.ShowSomethingWentWrongError
+            }
         }
     }
 
