@@ -205,7 +205,6 @@
     <string name="msg_confirm_phone_info">Код был отправлен на номер&#160;</string>
     <string name="msg_request_code">Запросить код повторно</string>
     <string name="msg_request_code_sec">Запросить код повторно %1$d сек.</string>
-    <string name="error_confirm_wrong_code">Неправильный код</string>
     <string name="error_no_attempts">Превышено количество попыток ввода кода</string>
     <string name="error_invalid_code">Неверный код</string>
     <string name="error_code_confirmation_timeout">Истекло время на ввод кода</string>
