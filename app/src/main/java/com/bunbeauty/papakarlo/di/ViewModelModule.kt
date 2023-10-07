@@ -2,11 +2,11 @@ package com.bunbeauty.papakarlo.di
 
 import com.bunbeauty.papakarlo.feature.cafe.screen.cafeoptions.CafeOptionsViewModel
 import com.bunbeauty.papakarlo.feature.city.screen.selectcity.SelectCityViewModel
-import com.bunbeauty.papakarlo.feature.consumercart.ConsumerCartViewModel
 import com.bunbeauty.papakarlo.feature.main.MainViewModel
 import com.bunbeauty.papakarlo.feature.splash.SplashViewModel
 import com.bunbeauty.shared.presentation.cafe_list.CafeListViewModel
 import com.bunbeauty.shared.presentation.confirm.ConfirmViewModel
+import com.bunbeauty.shared.presentation.consumercart.ConsumerCartViewModel
 import com.bunbeauty.shared.presentation.create_address.CreateAddressViewModel
 import com.bunbeauty.shared.presentation.create_order.CreateOrderViewModel
 import com.bunbeauty.shared.presentation.login.LoginViewModel

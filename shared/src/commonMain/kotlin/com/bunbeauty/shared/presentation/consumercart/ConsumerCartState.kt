@@ -1,7 +1,4 @@
-package com.bunbeauty.papakarlo.feature.consumercart
-
-import com.bunbeauty.papakarlo.feature.consumercart.model.CartProductItem
-import com.bunbeauty.shared.domain.model.SuccessLoginDirection
+package com.bunbeauty.shared.presentation.consumercart
 
 data class ConsumerCartDataState(
     val consumerCartData: ConsumerCartData? = null,
@@ -32,7 +29,7 @@ data class ConsumerCartData(
 sealed interface ConsumerCartEvent {
     data object NavigateToMenuEvent : ConsumerCartEvent
     data object NavigateToCreateOrderEvent : ConsumerCartEvent
-    class NavigateToLoginEvent(val successLoginDirection: SuccessLoginDirection) : ConsumerCartEvent
+    data object NavigateToLoginEvent : ConsumerCartEvent
     class NavigateToProductEvent(val cartProductItem: CartProductItem) : ConsumerCartEvent
 }
 

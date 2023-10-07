@@ -37,7 +37,7 @@ struct OrderListView: View {
             switch(orderListState.state){
             case OrderListState.State.loading : LoadingView()
             case OrderListState.State.empty : EmptyOrderListView()
-            case OrderListState.State.success :   SuccessOrderListView(
+            case OrderListState.State.success : SuccessOrderListView(
                 orderList: orderListState.orderList.map({ lightOrder in
                     OrderItem(
                         id: lightOrder.uuid,

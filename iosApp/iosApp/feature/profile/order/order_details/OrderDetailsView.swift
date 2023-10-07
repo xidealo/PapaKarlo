@@ -16,9 +16,9 @@ struct OrderDetailsView: View {
     @State var orderDetailsState = OrderDetailsState(
         orderProductItemList: [],
         orderInfo: nil,
-        totalCost: nil,
+        oldTotalCost: nil,
         deliveryCost: nil,
-        finalCost: nil,
+        newTotalCost: nil,
         isLoading: true,
         discount: nil
     )
@@ -87,12 +87,27 @@ struct OrderDetailsView: View {
                 
                 
                 VStack(spacing:0){
-                    if(orderDetailsState.deliveryCost != nil){
+                    
+                    if let discount = orderDetailsState.discount{
+                        HStack(spacing:0){
+                            Text("title_order_details_discount")
+                                .bodyMedium()
+                                .foregroundColor(AppColor.onSurface)
+                            
+                            Spacer()
+                            
+                            DiscountCard(text:discount)
+                        }.padding(.top, 8)
+                            .padding(.horizontal, 16)
+                    }
+                    
+                    
+                    if let deliveryCost = orderDetailsState.deliveryCost{
                         HStack(spacing:0){
                             Text(Strings.MSG_CREATION_ORDER_DELIVERY)
                                 .bodyMedium()
                             Spacer()
-                            Text((orderDetailsState.deliveryCost ?? "0") + Strings.CURRENCY)
+                            Text(deliveryCost + Strings.CURRENCY)
                                 .bodyMedium()
                         }
                         .padding(.horizontal, Diems.MEDIUM_PADDING)
@@ -103,14 +118,15 @@ struct OrderDetailsView: View {
                         Text("title_order_details_sum")
                             .bodyMedium(weight: .bold)
                         Spacer()
-                        if orderDetailsState.totalCost != nil {
-                            Text((orderDetailsState.totalCost ?? "") + Strings.CURRENCY)
+                        if let oldTotalCost = orderDetailsState.oldTotalCost{
+                            Text(oldTotalCost + Strings.CURRENCY)
                                 .strikethrough()
                                 .bodyMedium(weight: .bold)
                                 .foregroundColor(AppColor.onSurfaceVariant)
                                 .padding(.trailing, 4)
                         }
-                        Text((orderDetailsState.finalCost ?? "") + Strings.CURRENCY)
+                
+                        Text((orderDetailsState.newTotalCost ?? "") + Strings.CURRENCY)
                             .bodyMedium(weight: .bold)
                     }
                     .padding(.horizontal, Diems.MEDIUM_PADDING)

@@ -39,9 +39,6 @@ struct SettingsView: View {
         VStack(spacing:0){
             ToolbarView(
                 title: "titleSettings",
-                logout : {
-                    viewModel.logout()
-                },
                 back: {
                     self.mode.wrappedValue.dismiss()
                 }
@@ -85,6 +82,14 @@ struct SettingsView: View {
                 .padding(Diems.MEDIUM_PADDING)
 
                 Spacer()
+                
+                Button(
+                    action: {
+                        viewModel.logout()
+                    }, label: {
+                        ButtonText(text: "action_settings_log_out")
+                    }
+                ).padding(16)
             }
         }
         .frame(maxWidth:.infinity, maxHeight: .infinity)

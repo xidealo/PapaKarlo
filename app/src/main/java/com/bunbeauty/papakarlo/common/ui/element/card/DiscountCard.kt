@@ -7,7 +7,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.common.ui.theme.bold
 
 @Composable
 fun DiscountCard(discount: String) {
@@ -19,7 +18,7 @@ fun DiscountCard(discount: String) {
         Text(
             modifier = Modifier.padding(horizontal = 4.dp),
             text = discount,
-            style = FoodDeliveryTheme.typography.bodyMedium.bold,
+            style = FoodDeliveryTheme.typography.bodyMedium,
             color = FoodDeliveryTheme.colors.statusColors.onStatus
         )
     }
