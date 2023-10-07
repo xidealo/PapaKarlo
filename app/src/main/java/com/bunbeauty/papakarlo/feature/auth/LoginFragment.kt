@@ -27,6 +27,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -47,6 +48,8 @@ class LoginFragment : BaseComposeFragment<Login.State, Login.Action, Login.Event
     override val viewModel: LoginViewModel by viewModel()
 
     private val args: LoginFragmentArgs by navArgs()
+
+    private val LogoBoxHeightLimit: Dp = 200.dp
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -82,7 +85,7 @@ class LoginFragment : BaseComposeFragment<Login.State, Login.Action, Login.Event
                 verticalArrangement = Arrangement.Center
             ) {
                 BoxWithConstraints {
-                    if (maxHeight > 200.dp) {
+                    if (maxHeight > LogoBoxHeightLimit) {
                         Image(
                             modifier = Modifier.height(156.dp),
                             painter = painterResource(R.drawable.logo_medium),

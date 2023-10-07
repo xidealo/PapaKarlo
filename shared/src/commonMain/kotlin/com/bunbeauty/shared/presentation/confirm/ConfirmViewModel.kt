@@ -23,7 +23,7 @@ class ConfirmViewModel(
     private val resendCode: ResendCodeUseCase,
 ) : SharedStateViewModel<Confirm.State, Confirm.Action, Confirm.Event>(
     initState = Confirm.State(
-        phoneNumber = null,
+        phoneNumber = "",
         resendSeconds = TIMER_SECONDS,
         isLoading = false,
     )
@@ -40,7 +40,7 @@ class ConfirmViewModel(
     override fun handleAction(action: Confirm.Action) {
         when (action) {
             is Confirm.Action.Init -> {
-                init(action.direction, action.phoneNumber)
+                init(direction = action.direction, phoneNumber = action.phoneNumber)
             }
 
             is Confirm.Action.CheckCode -> {
@@ -60,9 +60,7 @@ class ConfirmViewModel(
     private fun init(direction: SuccessLoginDirection, phoneNumber: String) {
         this.direction = direction
         state { state ->
-            state.copy(
-                phoneNumber = formatPhoneNumber(phoneNumber)
-            )
+            state.copy(phoneNumber = formatPhoneNumber(phoneNumber))
         }
     }
 

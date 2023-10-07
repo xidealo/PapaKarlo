@@ -141,15 +141,7 @@ class ConfirmFragment : BaseComposeFragment<Confirm.State, Confirm.Action, Confi
         ) {
             Spacer(modifier = Modifier.weight(1f))
             Text(
-                text = stringResource(R.string.msg_confirm_enter_code),
-                style = FoodDeliveryTheme.typography.bodyLarge,
-                color = FoodDeliveryTheme.colors.mainColors.onSurface,
-                textAlign = TextAlign.Center
-            )
-            Text(
-                modifier = Modifier
-                    .padding(top = FoodDeliveryTheme.dimensions.smallSpace),
-                text = stringResource(R.string.msg_confirm_phone_info) + state.phoneNumber,
+                text = stringResource(R.string.msg_confirm_enter_code, state.phoneNumber),
                 style = FoodDeliveryTheme.typography.bodyLarge,
                 color = FoodDeliveryTheme.colors.mainColors.onSurface,
                 textAlign = TextAlign.Center

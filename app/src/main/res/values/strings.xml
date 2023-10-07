@@ -201,8 +201,7 @@
     <string name="error_login_too_many_requests">Превышен лимит на отправку сообщений</string>
 
     <!-- CONFIRM -->
-    <string name="msg_confirm_enter_code">Введите код подтверждения ✉</string>
-    <string name="msg_confirm_phone_info">Код был отправлен на номер&#160;</string>
+    <string name="msg_confirm_enter_code">Введите код подтверждения ✉\nКод был отправлен на номер\n%s</string>
     <string name="msg_request_code">Запросить код повторно</string>
     <string name="msg_request_code_sec">Запросить код повторно %1$d сек.</string>
     <string name="error_no_attempts">Превышено количество попыток ввода кода</string>

@@ -8,7 +8,7 @@ import com.bunbeauty.shared.presentation.base.BaseState
 interface Confirm {
 
     data class State(
-        val phoneNumber: String?,
+        val phoneNumber: String,
         val resendSeconds: Int,
         val isLoading: Boolean,
     ): BaseState {
