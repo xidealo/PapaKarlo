@@ -1,4 +1,4 @@
-package com.bunbeauty.shared.domain.feature.login
+package com.bunbeauty.shared.domain.feature.auth
 
 class GetPhoneNumberCursorPositionUseCase(
     private val formatPhoneNumber: FormatPhoneNumberUseCase

@@ -1,4 +1,4 @@
-package com.bunbeauty.shared.domain.use_case.auth
+package com.bunbeauty.shared.domain.feature.auth
 
 import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.domain.exeptions.AuthSessionTimeoutException
