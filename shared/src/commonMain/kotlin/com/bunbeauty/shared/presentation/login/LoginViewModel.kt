@@ -2,9 +2,9 @@ package com.bunbeauty.shared.presentation.login
 
 import com.bunbeauty.shared.domain.exeptions.InvalidPhoneNumberException
 import com.bunbeauty.shared.domain.exeptions.TooManyRequestsException
-import com.bunbeauty.shared.domain.feature.login.FormatPhoneNumberUseCase
-import com.bunbeauty.shared.domain.feature.login.GetPhoneNumberCursorPositionUseCase
-import com.bunbeauty.shared.domain.use_case.auth.RequestCodeUseCase
+import com.bunbeauty.shared.domain.feature.auth.FormatPhoneNumberUseCase
+import com.bunbeauty.shared.domain.feature.auth.GetPhoneNumberCursorPositionUseCase
+import com.bunbeauty.shared.domain.feature.auth.RequestCodeUseCase
 import com.bunbeauty.shared.extension.launchSafe
 import com.bunbeauty.shared.presentation.base.SharedStateViewModel
 
@@ -17,7 +17,10 @@ class LoginViewModel(
     override fun handleAction(action: Login.Action) {
         when (action) {
             Login.Action.Init -> init()
-            is Login.Action.ChangePhoneNumber -> updatePhoneNumber(action.phoneNumber, action.cursorPosition)
+            is Login.Action.ChangePhoneNumber -> updatePhoneNumber(
+                phoneNumber = action.phoneNumber,
+                cursorPosition = action.cursorPosition
+            )
             Login.Action.NextClick -> requestCode()
             is Login.Action.BackClick -> navigateBack()
             is Login.Action.ConsumeEvents -> consumeEvents(action.eventList)

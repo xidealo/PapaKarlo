@@ -1,6 +1,6 @@
 package com.bunbeauty.shared.domain.model
 
-sealed interface AuthResponseNew {
+interface AuthResponseNew {
 
     data class Success(
         val token: String,
