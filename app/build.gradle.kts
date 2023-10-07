@@ -14,7 +14,6 @@ plugins {
     id("org.jlleitschuh.gradle.ktlint") version "11.5.1"
 }
 
-@Suppress("UnstableApiUsage")
 android {
     namespace = Namespace.app
 
