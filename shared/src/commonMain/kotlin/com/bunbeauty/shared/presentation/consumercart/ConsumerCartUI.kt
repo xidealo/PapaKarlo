@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.feature.consumercart.model
+package com.bunbeauty.shared.presentation.consumercart
 
 data class ConsumerCartUI(
     val forFreeDelivery: String,

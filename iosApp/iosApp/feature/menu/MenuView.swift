@@ -8,6 +8,8 @@
 import SwiftUI
 import shared
 
+let DISCOUNT_ID = "discount_id"
+
 struct MenuView: View {
     
     @StateObject private var viewModel = MenuViewModel()
@@ -18,6 +20,7 @@ struct MenuView: View {
     @Binding var isRootActive:Bool
     @Binding var selection:Int
     @Binding var showOrderCreated:Bool
+    
     
     let columns = [
         GridItem(.flexible(), spacing: 8, alignment: .top),
@@ -56,11 +59,11 @@ struct MenuView: View {
                 .background(AppColor.surface)
                 
                 ScrollView {
-                    if(viewModel.menuViewState.discount != nil){
-                        DiscountView(discount: viewModel.menuViewState.discount ?? "")
-                    }
-                    
                     ScrollViewReader{ scrollReader in
+                        if let discount = viewModel.menuViewState.discount {
+                            DiscountView(discount: discount)
+                                .id(DISCOUNT_ID)
+                        }
                         LazyVGrid(columns: columns, spacing: 8) {
                             ForEach(viewModel.menuViewState.menuItems.indices){  i in
                                 Section(
@@ -109,8 +112,6 @@ struct MenuView: View {
         .hiddenNavigationBarStyle()
         .preferredColorScheme(.light)
     }
-    
-    
     
     func DiscountView(discount:String) -> some View {
         VStack(spacing:0){

@@ -7,6 +7,7 @@ import com.bunbeauty.shared.domain.model.Payment
 import com.bunbeauty.shared.domain.model.Settings
 import com.bunbeauty.shared.domain.model.UserCityUuid
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
 import org.koin.core.component.KoinComponent
@@ -83,18 +84,30 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
     }
 
     override suspend fun saveSelectedPaymentMethodUuid(selectedPaymentMethodUuid: String) {
-        NSUserDefaults.standardUserDefaults.setObject(selectedPaymentMethodUuid, SELECTED_PAYMENT_METHOD_UUID_KEY)
+        NSUserDefaults.standardUserDefaults.setObject(
+            selectedPaymentMethodUuid,
+            SELECTED_PAYMENT_METHOD_UUID_KEY
+        )
     }
 
-    override val discount: Flow<Discount?>
-        get() = TODO("Not yet implemented")
+    override val discount: Flow<Discount?> = flow {
+        emit(
+            Discount(
+                firstOrderDiscount = NSUserDefaults.standardUserDefaults
+                    .integerForKey(FIRST_DISCOUNT_KEY).toInt()
+            )
+        )
+    }
 
     override suspend fun getDiscount(): Discount? {
-        TODO("Not yet implemented")
+        return discount.firstOrNull()
     }
 
     override suspend fun saveDiscount(discount: Discount) {
-        TODO("Not yet implemented")
+        NSUserDefaults.standardUserDefaults.setObject(
+            discount.firstOrderDiscount,
+            FIRST_DISCOUNT_KEY
+        )
     }
 
     actual override fun observeUserAndCityUuid(): Flow<UserCityUuid> {
@@ -142,7 +155,10 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
 
     actual override suspend fun saveSettings(settings: Settings) {
         NSUserDefaults.standardUserDefaults.setObject(settings.userUuid, SETTINGS_USER_UUID_KEY)
-        NSUserDefaults.standardUserDefaults.setObject(settings.phoneNumber, SETTINGS_PHONE_NUMBER_KEY)
+        NSUserDefaults.standardUserDefaults.setObject(
+            settings.phoneNumber,
+            SETTINGS_PHONE_NUMBER_KEY
+        )
         NSUserDefaults.standardUserDefaults.setObject(settings.email, SETTINGS_EMAIL_KEY)
     }
 
@@ -152,7 +168,7 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
         removeUserSettings()
     }
 
-    private fun removeUserSettings(){
+    private fun removeUserSettings() {
         NSUserDefaults.standardUserDefaults.removeObjectForKey(SETTINGS_USER_UUID_KEY)
         NSUserDefaults.standardUserDefaults.removeObjectForKey(SETTINGS_PHONE_NUMBER_KEY)
         NSUserDefaults.standardUserDefaults.removeObjectForKey(SETTINGS_EMAIL_KEY)
@@ -169,8 +185,7 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
         private const val SETTINGS_PHONE_NUMBER_KEY = "SETTINGS_PHONE_NUMBER_KEY"
         private const val SETTINGS_EMAIL_KEY = "SETTINGS_EMAIL_KEY"
         private const val SELECTED_PAYMENT_METHOD_UUID_KEY = "SELECTED_PAYMENT_METHOD_UUID_KEY"
-
+        private const val FIRST_DISCOUNT_KEY = "FIRST_DISCOUNT_KEY"
     }
-
 
 }
