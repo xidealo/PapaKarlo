@@ -16,16 +16,22 @@ struct LoginView: View {
     @State var goToConfirm:Bool = false
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
 
-    @State var viewModel: LoginViewModel = LoginViewModel(
+    @State var showSomethigWrongError:Bool = false
+    @State var showTooManyRequestsError:Bool = false
+
+    
+    let viewModel: LoginViewModel = LoginViewModel(
         requestCode: iosComponent.provideRequestCodeUseCase(),
         formatPhoneNumber: iosComponent.provideFormatPhoneNumberUseCase(),
         getPhoneNumberCursorPosition: iosComponent.provideGetPhoneNumberCursorPositionUseCase()
     )
     
+    //State
     @State var isLoading: Bool = false
     @State var hasPhoneError: Bool = false
     @State var phone = ""
     @State var phoneNumberCursorPosition = Int32(shared.Constants().PHONE_CODE.count)
+    //
     
     @State var stateListener: Closeable? = nil
     @State var eventsListener: Closeable? = nil
@@ -60,6 +66,24 @@ struct LoginView: View {
         .onDisappear(){
             unsubscribe()
         }
+        .overlay(
+            overlayView: ToastView(
+                toast: Toast(title: "Что-то пошло не так")
+                , show: $showSomethigWrongError,
+                backgroundColor:AppColor.error,
+                foregaroundColor: AppColor.onError
+            ),
+            show: $showSomethigWrongError
+        )
+        .overlay(
+            overlayView: ToastView(
+                toast: Toast(title: "Превышен лимит на отправку сообщений")
+                , show: $showTooManyRequestsError,
+                backgroundColor:AppColor.error,
+                foregaroundColor: AppColor.onError
+            ),
+            show: $showTooManyRequestsError
+        )
     }
     
     func subscribe(){
