@@ -32,9 +32,7 @@
 		0232347F287879EF0048CF39 /* SelectCityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323431287879EF0048CF39 /* SelectCityView.swift */; };
 		02323480287879EF0048CF39 /* CityItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323432287879EF0048CF39 /* CityItem.swift */; };
 		02323481287879EF0048CF39 /* ConfirmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323435287879EF0048CF39 /* ConfirmView.swift */; };
-		02323482287879EF0048CF39 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323437287879EF0048CF39 /* LoginViewModel.swift */; };
 		02323483287879EF0048CF39 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323438287879EF0048CF39 /* LoginView.swift */; };
-		02323484287879EF0048CF39 /* LoginViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323439287879EF0048CF39 /* LoginViewState.swift */; };
 		02323485287879EF0048CF39 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0232343A287879EF0048CF39 /* AuthManager.swift */; };
 		02323486287879EF0048CF39 /* OrderDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0232343E287879EF0048CF39 /* OrderDetailsView.swift */; };
 		02323487287879EF0048CF39 /* OrderListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323440287879EF0048CF39 /* OrderListView.swift */; };
@@ -127,13 +125,11 @@
 		026C1F642A2690B900838266 /* LightOrderItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A3B739294FAFDB00C18221 /* LightOrderItemView.swift */; };
 		026C1F652A2690B900838266 /* SelectableElementCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023234B828787A180048CF39 /* SelectableElementCard.swift */; };
 		026C1F662A2690B900838266 /* CityItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323432287879EF0048CF39 /* CityItem.swift */; };
-		026C1F672A2690B900838266 /* LoginViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323439287879EF0048CF39 /* LoginViewState.swift */; };
 		026C1F682A2690B900838266 /* StreetItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023149A5288C060600068094 /* StreetItem.swift */; };
 		026C1F692A2690B900838266 /* AddressItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0232345C287879EF0048CF39 /* AddressItem.swift */; };
 		026C1F6A2A2690B900838266 /* ElementCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023234B228787A180048CF39 /* ElementCard.swift */; };
 		026C1F6B2A2690B900838266 /* ChangeCityItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323446287879EF0048CF39 /* ChangeCityItemView.swift */; };
 		026C1F6C2A2690B900838266 /* MenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323462287879EF0048CF39 /* MenuViewModel.swift */; };
-		026C1F6D2A2690B900838266 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323437287879EF0048CF39 /* LoginViewModel.swift */; };
 		026C1F6E2A2690B900838266 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0280BE2A29A0ED14007F7416 /* ErrorView.swift */; };
 		026C1F6F2A2690B900838266 /* MenuViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323464287879EF0048CF39 /* MenuViewState.swift */; };
 		026C1F702A2690B900838266 /* SpalshViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024E877E287A15D000728CB3 /* SpalshViewModel.swift */; };
@@ -236,13 +232,11 @@
 		027CB0272A346F7B00350EB2 /* LightOrderItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A3B739294FAFDB00C18221 /* LightOrderItemView.swift */; };
 		027CB0282A346F7B00350EB2 /* SelectableElementCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023234B828787A180048CF39 /* SelectableElementCard.swift */; };
 		027CB0292A346F7B00350EB2 /* CityItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323432287879EF0048CF39 /* CityItem.swift */; };
-		027CB02A2A346F7B00350EB2 /* LoginViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323439287879EF0048CF39 /* LoginViewState.swift */; };
 		027CB02B2A346F7B00350EB2 /* StreetItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023149A5288C060600068094 /* StreetItem.swift */; };
 		027CB02C2A346F7B00350EB2 /* AddressItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0232345C287879EF0048CF39 /* AddressItem.swift */; };
 		027CB02D2A346F7B00350EB2 /* ElementCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023234B228787A180048CF39 /* ElementCard.swift */; };
 		027CB02E2A346F7B00350EB2 /* ChangeCityItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323446287879EF0048CF39 /* ChangeCityItemView.swift */; };
 		027CB02F2A346F7B00350EB2 /* MenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323462287879EF0048CF39 /* MenuViewModel.swift */; };
-		027CB0302A346F7B00350EB2 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323437287879EF0048CF39 /* LoginViewModel.swift */; };
 		027CB0312A346F7B00350EB2 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0280BE2A29A0ED14007F7416 /* ErrorView.swift */; };
 		027CB0322A346F7B00350EB2 /* MenuViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323464287879EF0048CF39 /* MenuViewState.swift */; };
 		027CB0332A346F7B00350EB2 /* SpalshViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024E877E287A15D000728CB3 /* SpalshViewModel.swift */; };
@@ -352,13 +346,11 @@
 		02ADC34829D9D0880062A141 /* LightOrderItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A3B739294FAFDB00C18221 /* LightOrderItemView.swift */; };
 		02ADC34929D9D0880062A141 /* SelectableElementCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023234B828787A180048CF39 /* SelectableElementCard.swift */; };
 		02ADC34A29D9D0880062A141 /* CityItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323432287879EF0048CF39 /* CityItem.swift */; };
-		02ADC34B29D9D0880062A141 /* LoginViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323439287879EF0048CF39 /* LoginViewState.swift */; };
 		02ADC34C29D9D0880062A141 /* StreetItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023149A5288C060600068094 /* StreetItem.swift */; };
 		02ADC34D29D9D0880062A141 /* AddressItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0232345C287879EF0048CF39 /* AddressItem.swift */; };
 		02ADC34E29D9D0880062A141 /* ElementCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023234B228787A180048CF39 /* ElementCard.swift */; };
 		02ADC34F29D9D0880062A141 /* ChangeCityItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323446287879EF0048CF39 /* ChangeCityItemView.swift */; };
 		02ADC35029D9D0880062A141 /* MenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323462287879EF0048CF39 /* MenuViewModel.swift */; };
-		02ADC35129D9D0880062A141 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323437287879EF0048CF39 /* LoginViewModel.swift */; };
 		02ADC35229D9D0880062A141 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0280BE2A29A0ED14007F7416 /* ErrorView.swift */; };
 		02ADC35329D9D0880062A141 /* MenuViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323464287879EF0048CF39 /* MenuViewState.swift */; };
 		02ADC35429D9D0880062A141 /* SpalshViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024E877E287A15D000728CB3 /* SpalshViewModel.swift */; };
@@ -489,9 +481,7 @@
 		02323431287879EF0048CF39 /* SelectCityView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectCityView.swift; sourceTree = "<group>"; };
 		02323432287879EF0048CF39 /* CityItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityItem.swift; sourceTree = "<group>"; };
 		02323435287879EF0048CF39 /* ConfirmView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmView.swift; sourceTree = "<group>"; };
-		02323437287879EF0048CF39 /* LoginViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		02323438287879EF0048CF39 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
-		02323439287879EF0048CF39 /* LoginViewState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewState.swift; sourceTree = "<group>"; };
 		0232343A287879EF0048CF39 /* AuthManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		0232343E287879EF0048CF39 /* OrderDetailsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderDetailsView.swift; sourceTree = "<group>"; };
 		02323440287879EF0048CF39 /* OrderListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderListView.swift; sourceTree = "<group>"; };
@@ -723,9 +713,7 @@
 		02323436287879EF0048CF39 /* login */ = {
 			isa = PBXGroup;
 			children = (
-				02323437287879EF0048CF39 /* LoginViewModel.swift */,
 				02323438287879EF0048CF39 /* LoginView.swift */,
-				02323439287879EF0048CF39 /* LoginViewState.swift */,
 				0232343A287879EF0048CF39 /* AuthManager.swift */,
 			);
 			path = login;
@@ -1560,14 +1548,12 @@
 				026C1F642A2690B900838266 /* LightOrderItemView.swift in Sources */,
 				026C1F652A2690B900838266 /* SelectableElementCard.swift in Sources */,
 				026C1F662A2690B900838266 /* CityItem.swift in Sources */,
-				026C1F672A2690B900838266 /* LoginViewState.swift in Sources */,
 				02E4FEEB2AC9FEB60060C827 /* CartProductView.swift in Sources */,
 				026C1F682A2690B900838266 /* StreetItem.swift in Sources */,
 				026C1F692A2690B900838266 /* AddressItem.swift in Sources */,
 				026C1F6A2A2690B900838266 /* ElementCard.swift in Sources */,
 				026C1F6B2A2690B900838266 /* ChangeCityItemView.swift in Sources */,
 				026C1F6C2A2690B900838266 /* MenuViewModel.swift in Sources */,
-				026C1F6D2A2690B900838266 /* LoginViewModel.swift in Sources */,
 				026C1F6E2A2690B900838266 /* ErrorView.swift in Sources */,
 				026C1F6F2A2690B900838266 /* MenuViewState.swift in Sources */,
 				026C1F702A2690B900838266 /* SpalshViewModel.swift in Sources */,
@@ -1673,14 +1659,12 @@
 				027CB0272A346F7B00350EB2 /* LightOrderItemView.swift in Sources */,
 				027CB0282A346F7B00350EB2 /* SelectableElementCard.swift in Sources */,
 				027CB0292A346F7B00350EB2 /* CityItem.swift in Sources */,
-				027CB02A2A346F7B00350EB2 /* LoginViewState.swift in Sources */,
 				02E4FEEC2AC9FEB60060C827 /* CartProductView.swift in Sources */,
 				027CB02B2A346F7B00350EB2 /* StreetItem.swift in Sources */,
 				027CB02C2A346F7B00350EB2 /* AddressItem.swift in Sources */,
 				027CB02D2A346F7B00350EB2 /* ElementCard.swift in Sources */,
 				027CB02E2A346F7B00350EB2 /* ChangeCityItemView.swift in Sources */,
 				027CB02F2A346F7B00350EB2 /* MenuViewModel.swift in Sources */,
-				027CB0302A346F7B00350EB2 /* LoginViewModel.swift in Sources */,
 				027CB0312A346F7B00350EB2 /* ErrorView.swift in Sources */,
 				027CB0322A346F7B00350EB2 /* MenuViewState.swift in Sources */,
 				027CB0332A346F7B00350EB2 /* SpalshViewModel.swift in Sources */,
@@ -1786,14 +1770,12 @@
 				02ADC34829D9D0880062A141 /* LightOrderItemView.swift in Sources */,
 				02ADC34929D9D0880062A141 /* SelectableElementCard.swift in Sources */,
 				02ADC34A29D9D0880062A141 /* CityItem.swift in Sources */,
-				02ADC34B29D9D0880062A141 /* LoginViewState.swift in Sources */,
 				02E4FEEA2AC9FEB60060C827 /* CartProductView.swift in Sources */,
 				02ADC34C29D9D0880062A141 /* StreetItem.swift in Sources */,
 				02ADC34D29D9D0880062A141 /* AddressItem.swift in Sources */,
 				02ADC34E29D9D0880062A141 /* ElementCard.swift in Sources */,
 				02ADC34F29D9D0880062A141 /* ChangeCityItemView.swift in Sources */,
 				02ADC35029D9D0880062A141 /* MenuViewModel.swift in Sources */,
-				02ADC35129D9D0880062A141 /* LoginViewModel.swift in Sources */,
 				02ADC35229D9D0880062A141 /* ErrorView.swift in Sources */,
 				02ADC35329D9D0880062A141 /* MenuViewState.swift in Sources */,
 				02ADC35429D9D0880062A141 /* SpalshViewModel.swift in Sources */,
@@ -1899,14 +1881,12 @@
 				02A3B73A294FAFDB00C18221 /* LightOrderItemView.swift in Sources */,
 				023234CD28787A180048CF39 /* SelectableElementCard.swift in Sources */,
 				02323480287879EF0048CF39 /* CityItem.swift in Sources */,
-				02323484287879EF0048CF39 /* LoginViewState.swift in Sources */,
 				02E4FEE92AC9FEB60060C827 /* CartProductView.swift in Sources */,
 				023149A6288C060600068094 /* StreetItem.swift in Sources */,
 				0232349C287879EF0048CF39 /* AddressItem.swift in Sources */,
 				023234C728787A180048CF39 /* ElementCard.swift in Sources */,
 				0232348B287879EF0048CF39 /* ChangeCityItemView.swift in Sources */,
 				023234A0287879EF0048CF39 /* MenuViewModel.swift in Sources */,
-				02323482287879EF0048CF39 /* LoginViewModel.swift in Sources */,
 				0280BE2B29A0ED14007F7416 /* ErrorView.swift in Sources */,
 				023234A1287879EF0048CF39 /* MenuViewState.swift in Sources */,
 				024E877F287A15D000728CB3 /* SpalshViewModel.swift in Sources */,

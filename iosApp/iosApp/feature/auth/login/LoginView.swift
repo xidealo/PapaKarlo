@@ -7,28 +7,36 @@
 
 import SwiftUI
 import Combine
-
-let auth = AuthManager()
+import shared
 
 struct LoginView: View {
-    
-    @State private var phone:String = "+7"
-    
+        
     @Binding var rootIsActive:Bool
     @Binding var isGoToCreateOrder:Bool
     @State var goToConfirm:Bool = false
+    @Environment(\.presentationMode) var mode: Binding<PresentationMode>
+
+    @State var viewModel: LoginViewModel = LoginViewModel(
+        requestCode: iosComponent.provideRequestCodeUseCase(),
+        formatPhoneNumber: iosComponent.provideFormatPhoneNumberUseCase(),
+        getPhoneNumberCursorPosition: iosComponent.provideGetPhoneNumberCursorPositionUseCase()
+    )
     
-    @State var hasError:Bool = false
-    @ObservedObject private var viewModel : LoginViewModel = LoginViewModel(auth: auth)
+    @State var isLoading: Bool = false
+    @State var hasPhoneError: Bool = false
+    @State var phone = ""
+    @State var phoneNumberCursorPosition = Int32(shared.Constants().PHONE_CODE.count)
     
+    @State var stateListener: Closeable? = nil
+    @State var eventsListener: Closeable? = nil
+
     var body: some View {
         VStack(spacing:0){
-            if(viewModel.loginViewState.isLoading){
+            if(isLoading){
                 LoadingView()
             }else{
                 NavigationLink(
                     destination:ConfirmView(
-                        auth: auth,
                         phone: phone,
                         rootIsActive: self.$rootIsActive,
                         isGoToCreateOrder: $isGoToCreateOrder
@@ -38,37 +46,79 @@ struct LoginView: View {
                     EmptyView()
                 }
                 
-                LoginViewSuccessView(phone: $phone,hasError: $hasError, viewModel: viewModel)
+                LoginViewSuccessView(
+                    phone: $phone,
+                    hasError: $hasPhoneError,
+                    action: viewModel.handleAction
+                )
             }
         }
-        .onReceive(viewModel.$loginViewState, perform: { loginViewState in
-            loginViewState.actionList.forEach { action in
-                switch(action){
-                case LoginAction.hasError : hasError = true
-                case LoginAction.goToConfirm : goToConfirm = true
+        .onAppear(){
+            subscribe()
+            eventsSubscribe()
+        }
+        .onDisappear(){
+            unsubscribe()
+        }
+    }
+    
+    func subscribe(){
+        viewModel.handleAction(action: LoginActionInit())
+        stateListener = viewModel.state.watch { loginStateVM in
+            if let loginState = loginStateVM{
+                phone = loginState.phoneNumber
+                hasPhoneError = loginState.hasPhoneError
+                isLoading = loginState.isLoading
+                phoneNumberCursorPosition = loginState.phoneNumberCursorPosition
+            }
+        }
+    }
+    
+    func eventsSubscribe(){
+        eventsListener = viewModel.events.watch(block: { _events in
+            if let events = _events{
+                let loginEvents = events as? [LoginEvent] ?? []
+                
+                
+                loginEvents.forEach { event in
+                    switch(event){
+                    case is LoginEventNavigateBack : self.mode.wrappedValue.dismiss()
+                    case is LoginEventNavigateToConfirm : goToConfirm = true
+                    case is LoginEventShowTooManyRequestsError: print("show err")
+                    case is LoginEventShowSomethingWentWrongError: print("show err")
+                    default:
+                        print("def")
+                    }
+                }
+                
+                if !loginEvents.isEmpty {
+                    viewModel.consumeEvents(events: loginEvents)
                 }
             }
-            
-            if !loginViewState.actionList.isEmpty{
-                viewModel.clearActions()
-            }
         })
+    }
+    
+    func unsubscribe(){
+        stateListener?.close()
+        stateListener = nil
+        eventsListener?.close()
+        eventsListener = nil
     }
 }
 
 struct LoginViewSuccessView: View {
     @Binding var phone:String
     @Binding var hasError:Bool
-    @ObservedObject var viewModel : LoginViewModel
-    @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     @State var isSelected:Bool = false
 
+    let action: (LoginAction) -> Void
+    
     var body: some View {
         VStack(spacing:0){
             ToolbarView(
                 title:"",
                 back: {
-                    self.mode.wrappedValue.dismiss()
+                    action(LoginActionBackClick())
                 }
             )
             
@@ -87,12 +137,13 @@ struct LoginViewSuccessView: View {
                 
                 EditTextView(
                     hint: Strings.HINT_LOGIN_PHONE,
-                    text:$phone, limit: 18,
+                    text: $phone,
+                    limit: 18,
                     keyBoadrType: UIKeyboardType.phonePad,
                     hasError: $hasError,
                     errorMessage: "Введите номер телефона",
                     textChanged: { str in
-                        
+                        action(LoginActionChangePhoneNumber(phoneNumber: str, cursorPosition: 0))
                     }
                 )
                 .padding(.top, 16)
@@ -105,7 +156,7 @@ struct LoginViewSuccessView: View {
                 
                 Button {
                     hasError = false
-                    viewModel.sendCodeToPhone(phone: phone)
+                    action(LoginActionNextClick())
                 } label: {
                     ButtonText(text: Strings.ACTION_LOGIN_LOGIN)
                 }
@@ -118,22 +169,6 @@ struct LoginViewSuccessView: View {
     func minCode() {
         if phone.count < 2 {
             phone = String("+7")
-        }else{
-            phone = phone.applyPatternOnNumbers(pattern: "+# (###) ###-##-##", replacementCharacter: "#")
         }
-    }
-}
-
-extension String {
-    func applyPatternOnNumbers(pattern: String, replacementCharacter: Character) -> String {
-        var pureNumber = self.replacingOccurrences( of: "[^0-9]", with: "", options: .regularExpression)
-        for index in 0 ..< pattern.count {
-            guard index < pureNumber.count else { return pureNumber }
-            let stringIndex = String.Index(utf16Offset: index, in: pattern)
-            let patternCharacter = pattern[stringIndex]
-            guard patternCharacter != replacementCharacter else { continue }
-            pureNumber.insert(patternCharacter, at: stringIndex)
-        }
-        return pureNumber
     }
 }

@@ -39,11 +39,14 @@ import com.bunbeauty.shared.domain.interactor.menu_product.IMenuProductInteracto
 import com.bunbeauty.shared.domain.feature.address.GetStreetsUseCase
 import com.bunbeauty.shared.domain.feature.cart.AddCartProductUseCase
 import com.bunbeauty.shared.domain.feature.discount.GetDiscountUseCase
+import com.bunbeauty.shared.domain.feature.login.FormatPhoneNumberUseCase
+import com.bunbeauty.shared.domain.feature.login.GetPhoneNumberCursorPositionUseCase
 import com.bunbeauty.shared.domain.feature.payment.GetSelectablePaymentMethodListUseCase
 import com.bunbeauty.shared.domain.feature.payment.SavePaymentMethodUseCase
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
 import com.bunbeauty.shared.domain.use_case.DisableUserUseCase
 import com.bunbeauty.shared.domain.use_case.address.*
+import com.bunbeauty.shared.domain.use_case.auth.RequestCodeUseCase
 import com.bunbeauty.shared.domain.use_case.cafe.GetSelectableCafeListUseCase
 import com.bunbeauty.shared.presentation.create_order.CreateOrderStateMapper
 import com.bunbeauty.shared.presentation.create_order.TimeMapper
@@ -130,16 +133,18 @@ class IosComponent : KoinComponent {
     fun provideObserveCartUseCase(): ObserveCartUseCase = get()
     fun provideRemoveCartProductUseCase(): RemoveCartProductUseCase = get()
     fun provideGetLinkListUseCase(): GetLinkListUseCase = get()
-
     fun provideGetPaymentMethodListUseCase(): GetPaymentMethodListUseCase = get()
-
     fun provideSubscribeToNotificationUseCase(): SubscribeToNotificationUseCase = get()
     fun provideGetSelectablePaymentMethodListUseCase(): GetSelectablePaymentMethodListUseCase =
         get()
+
     fun provideAddCartProductUseCase(): AddCartProductUseCase = get()
     fun provideGetDiscountUseCase(): GetDiscountUseCase = get()
-
     fun provideSavePaymentMethodUseCase(): SavePaymentMethodUseCase = get()
+    fun provideRequestCodeUseCase(): RequestCodeUseCase = get()
+    fun provideFormatPhoneNumberUseCase(): FormatPhoneNumberUseCase = get()
+    fun provideGetPhoneNumberCursorPositionUseCase(): GetPhoneNumberCursorPositionUseCase = get()
+
 
     //Mapper
     fun provideTimeMapper(): TimeMapper = get()
