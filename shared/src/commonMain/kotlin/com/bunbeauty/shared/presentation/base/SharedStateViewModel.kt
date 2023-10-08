@@ -1,5 +1,6 @@
 package com.bunbeauty.shared.presentation.base
 
+import com.bunbeauty.shared.domain.asCommonStateFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -9,10 +10,10 @@ abstract class SharedStateViewModel<State: BaseState, Action: BaseAction, Event:
 ) : SharedViewModel() {
 
     protected val mutableState = MutableStateFlow(initState)
-    val state = mutableState.asStateFlow()
+    val state = mutableState.asCommonStateFlow()
 
     protected val mutableEvents = MutableStateFlow<List<Event>>(emptyList())
-    val events = mutableEvents.asStateFlow()
+    val events = mutableEvents.asCommonStateFlow()
 
     abstract fun handleAction(action: Action)
 

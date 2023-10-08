@@ -11,7 +11,7 @@ import shared
 
 struct ConsumerCartView: View {
     
-    @State var viewModel: ConsumerCartViewModel = ConsumerCartViewModel(
+    let viewModel: ConsumerCartViewModel = ConsumerCartViewModel(
         userInteractor: iosComponent.provideIUserInteractor(),
         cartProductInteractor: iosComponent.provideCartProductInteractor(),
         addCartProductUseCase: iosComponent.provideAddCartProductUseCase(),

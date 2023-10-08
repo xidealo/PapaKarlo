@@ -19,8 +19,8 @@ struct ConfirmView: View {
     
     @State var showLoginError:Bool = false
 
-    init(auth:AuthManager, phone:String, rootIsActive: Binding<Bool>, isGoToCreateOrder: Binding<Bool>){
-        viewModel = ConfirmViewModel(auth: auth)
+    init(phone:String, rootIsActive: Binding<Bool>, isGoToCreateOrder: Binding<Bool>){
+        viewModel = ConfirmViewModel()
         self.phone = phone
         self._rootIsActive = rootIsActive
         self._isGoToCreateOrder = isGoToCreateOrder
