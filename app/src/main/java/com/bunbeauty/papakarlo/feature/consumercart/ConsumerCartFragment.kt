@@ -29,7 +29,6 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragmentWithSharedViewModel
 import com.bunbeauty.papakarlo.common.extension.navigateSafe
-import com.bunbeauty.papakarlo.common.model.SuccessLoginDirection
 import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
 import com.bunbeauty.papakarlo.common.ui.element.card.DiscountCard
@@ -46,6 +45,7 @@ import com.bunbeauty.papakarlo.feature.consumercart.ConsumerCartFragmentDirectio
 import com.bunbeauty.papakarlo.feature.consumercart.ConsumerCartFragmentDirections.toMenuFragment
 import com.bunbeauty.papakarlo.feature.consumercart.ConsumerCartFragmentDirections.toProductFragment
 import com.bunbeauty.papakarlo.feature.consumercart.ui.CartProductItem
+import com.bunbeauty.shared.domain.model.SuccessLoginDirection
 import com.bunbeauty.shared.presentation.consumercart.CartProductItem
 import com.bunbeauty.shared.presentation.consumercart.ConsumerCartData
 import com.bunbeauty.shared.presentation.consumercart.ConsumerCartEvent
