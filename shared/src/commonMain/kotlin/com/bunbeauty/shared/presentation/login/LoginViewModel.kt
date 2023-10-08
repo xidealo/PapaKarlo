@@ -37,7 +37,10 @@ class LoginViewModel(
         state { state ->
             state.copy(
                 phoneNumber = formatPhoneNumber(phoneNumber),
-                phoneNumberCursorPosition = getPhoneNumberCursorPosition(phoneNumber, cursorPosition)
+                phoneNumberCursorPosition = getPhoneNumberCursorPosition(
+                    phoneNumber = phoneNumber,
+                    cursorPosition = cursorPosition
+                )
             )
         }
     }
