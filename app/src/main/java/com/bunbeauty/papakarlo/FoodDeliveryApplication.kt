@@ -15,6 +15,7 @@ import com.bunbeauty.papakarlo.di.viewModelModule
 import com.bunbeauty.shared.Constants.CHANNEL_ID
 import com.bunbeauty.shared.di.initKoin
 import com.bunbeauty.shared.domain.feature.notification.SubscribeToNotificationUseCase
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.component.KoinComponent
@@ -30,6 +31,8 @@ class FoodDeliveryApplication : Application(), KoinComponent {
     override fun onCreate() {
         setTheme(R.style.AppTheme)
         super.onCreate()
+
+        FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(!BuildConfig.DEBUG)
 
         initKoin {
             androidLogger(if (BuildConfig.DEBUG) Level.ERROR else Level.NONE)
