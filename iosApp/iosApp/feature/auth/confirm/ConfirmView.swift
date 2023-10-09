@@ -14,8 +14,8 @@ struct ConfirmView: View {
     @State private var code:String = ""
     
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
-
-    private let viewModel = ConfirmViewModel(
+    
+    @State var viewModel = ConfirmViewModel(
         formatPhoneNumber: iosComponent.provideFormatPhoneNumberUseCase(),
         checkCode: iosComponent.provideCheckCodeUseCase(),
         resendCode: iosComponent.provideResendCodeUseCase()
@@ -27,35 +27,80 @@ struct ConfirmView: View {
     @State var isLoading:Bool = false
     // ---
     
+    
+    //Events
+    @State var showTooManyRequestsError:Bool = false
+    @State var showNoAttemptsError:Bool = false
+    @State var showInvalidCodeError:Bool = false
+    @State var showAuthSessionTimeoutError:Bool = false
+    @State var showSomethingWentWrongError:Bool = false
+    
     @Binding var rootIsActive:Bool
     @Binding var isGoToCreateOrder:Bool
     
     @State var showLoginError:Bool = false
-
+    
     @State var stateListener: Closeable? = nil
     @State var eventsListener: Closeable? = nil
     
     init(phone:String, rootIsActive: Binding<Bool>, isGoToCreateOrder: Binding<Bool>){
-        viewModel.handleAction(action: ConfirmActionInit(phoneNumber: phone, direction: SuccessLoginDirection.backToProfile))
         self._rootIsActive = rootIsActive
         self._isGoToCreateOrder = isGoToCreateOrder
-    }
+        self.viewModel.handleAction(action: ConfirmActionInit(phoneNumber: phone, direction: SuccessLoginDirection.backToProfile))
+        }
     
     var body: some View {
         VStack(spacing:0){
             if(isLoading){
                 LoadingView()
             }else{
-                ConfirmViewSuccessView(code: $code, phone: phoneNumber, action: viewModel.handleAction)
+                ConfirmViewSuccessView(
+                    code: $code,
+                    phone: $phoneNumber,
+                    resendSeconds: $resendSeconds,
+                    action: viewModel.handleAction
+                )
             }
         }
         .overlay(
             overlayView: ToastView(
-                toast: Toast(title: "Ошибка от сервера, попробуйте позже"),
-                show: $showLoginError,
+                toast: Toast(title: "Превышен лимит на отправку сообщений"),
+                show: $showTooManyRequestsError,
                 backgroundColor: AppColor.error,
                 foregaroundColor: AppColor.onError
-            ), show: $showLoginError
+            ), show: $showTooManyRequestsError
+        )
+        .overlay(
+            overlayView: ToastView(
+                toast: Toast(title: "Превышено количество попыток ввода кода"),
+                show: $showNoAttemptsError,
+                backgroundColor: AppColor.error,
+                foregaroundColor: AppColor.onError
+            ), show: $showNoAttemptsError
+        )
+        .overlay(
+            overlayView: ToastView(
+                toast: Toast(title: "Неверный код"),
+                show: $showInvalidCodeError,
+                backgroundColor: AppColor.error,
+                foregaroundColor: AppColor.onError
+            ), show: $showInvalidCodeError
+        )
+        .overlay(
+            overlayView: ToastView(
+                toast: Toast(title: "Истекло время на ввод кода"),
+                show: $showAuthSessionTimeoutError,
+                backgroundColor: AppColor.error,
+                foregaroundColor: AppColor.onError
+            ), show: $showAuthSessionTimeoutError
+        )
+        .overlay(
+            overlayView: ToastView(
+                toast: Toast(title: "Что-то пошло не так"),
+                show: $showSomethingWentWrongError,
+                backgroundColor: AppColor.error,
+                foregaroundColor: AppColor.onError
+            ), show: $showSomethingWentWrongError
         )
         .onAppear(){
             subscribe()
@@ -64,7 +109,7 @@ struct ConfirmView: View {
         .onDisappear(){
             unsubscribe()
         }
-
+        .hiddenNavigationBarStyle()
     }
     
     func subscribe(){
@@ -85,20 +130,15 @@ struct ConfirmView: View {
                 confirmEvents.forEach { event in
                     switch(event){
                     case is ConfirmEventShowTooManyRequestsError : self.mode.wrappedValue.dismiss()
-                    case is ConfirmEventShowNoAttemptsError : print("add error")
-                    case is ConfirmEventShowInvalidCodeError : print("add error")
-                    case is ConfirmEventShowAuthSessionTimeoutError : print("add error")
-                    case is ConfirmEventShowSomethingWentWrongError : print("add error")
+                    case is ConfirmEventShowNoAttemptsError : showNoAttemptsError = true
+                    case is ConfirmEventShowInvalidCodeError : showInvalidCodeError = true
+                    case is ConfirmEventShowAuthSessionTimeoutError : showAuthSessionTimeoutError = true
+                    case is ConfirmEventShowSomethingWentWrongError : showSomethingWentWrongError = true
                     case is ConfirmEventNavigateBackToProfile : rootIsActive = false
                         isGoToCreateOrder = true
                     case is ConfirmEventNavigateToCreateOrder : rootIsActive = false
                         isGoToCreateOrder = true
                     case is ConfirmEventNavigateBack : self.mode.wrappedValue.dismiss()
-                    
-//                    case ConfirmAction.back :
-//                                  case ConfirmAction.showCodeError: showLoginError = true
-//                                  case ConfirmAction.showLoginError : showLoginError = true
-//
                     default:
                         print("not checked event")
                     }
@@ -121,16 +161,12 @@ struct ConfirmView: View {
 
 struct ConfirmViewSuccessView: View {
     @Binding var code:String
-    @State var show:Bool = false
     
-    @State private var timeRemaining = 60
-    @State private var isEnabled = false
-    
-    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
-    let phone:String
-    
-    let action: (ConfirmAction) -> Void
+    @Binding var phone: String
+    @Binding var resendSeconds: Int
 
+    let action: (ConfirmAction) -> Void
+    
     var body: some View {
         VStack(spacing:0){
             ToolbarView(
@@ -139,17 +175,17 @@ struct ConfirmViewSuccessView: View {
                     action(ConfirmActionBackClick())
                 }
             )
-
+            
             VStack(spacing:0){
                 
                 Spacer()
-
+                
                 Text(Strings.MSG_CONFIRM_ENTER_CODE + phone)
                     .bodyLarge()
                     .multilineTextAlignment(.center)
                     .foregroundColor(AppColor.onSurface)
                     .padding(.bottom, Diems.MEDIUM_PADDING)
-
+                
                 //SmsTextField(count: 6)
                 
                 EditTextView(
@@ -173,44 +209,24 @@ struct ConfirmViewSuccessView: View {
                 
                 Button(
                     action: {
-                        isEnabled = false
-                        timeRemaining = 60
                         action(ConfirmActionResendCode())
                     }
                 ){
-                    if(isEnabled){
+                    if(resendSeconds == 0){
                         ButtonText(text: Strings.ACTION_CONFIRM_GET_CODE)
                     }
                     else{
                         ButtonText(
-                            text: "Запросить код повторно \(timeRemaining) сек.",
+                            text: "Запросить код повторно \(resendSeconds) сек.",
                             background: AppColor.disabled,
                             foregroundColor: AppColor.onDisabled
                         )
                     }
                     
-                }.disabled(!isEnabled)
+                }.disabled(resendSeconds != 0)
             }
             .padding(Diems.MEDIUM_PADDING)
         }
         .background(AppColor.surface)
-        .overlay(
-            overlayView: ToastView(
-                toast: Toast(title: "Неправильный код"),
-                show: $show,
-                backgroundColor: AppColor.error,
-                foregaroundColor: AppColor.onError
-            ), show: $show)
-        .onReceive(timer){ time in
-            if timeRemaining > 0{
-                timeRemaining -= 1
-            }
-            
-            if(timeRemaining == 0){
-                isEnabled = true
-            }
-            print(isEnabled)
-        }
-        .hiddenNavigationBarStyle()
     }
 }
