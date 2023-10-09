@@ -10,17 +10,16 @@ import Combine
 import shared
 
 struct LoginView: View {
-        
+    
     @Binding var rootIsActive:Bool
     @Binding var isGoToCreateOrder:Bool
     @State var goToConfirm:Bool = false
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
-
+    
     @State var showSomethigWrongError:Bool = false
     @State var showTooManyRequestsError:Bool = false
-
     
-    let viewModel: LoginViewModel = LoginViewModel(
+    @State var viewModel: LoginViewModel = LoginViewModel(
         requestCode: iosComponent.provideRequestCodeUseCase(),
         formatPhoneNumber: iosComponent.provideFormatPhoneNumberUseCase(),
         getPhoneNumberCursorPosition: iosComponent.provideGetPhoneNumberCursorPositionUseCase()
@@ -31,27 +30,26 @@ struct LoginView: View {
     @State var hasPhoneError: Bool = false
     @State var phone = ""
     @State var phoneNumberCursorPosition = Int32(shared.Constants().PHONE_CODE.count)
-    //
+    // ---
     
     @State var stateListener: Closeable? = nil
     @State var eventsListener: Closeable? = nil
-
+    
     var body: some View {
         VStack(spacing:0){
+            NavigationLink(
+                destination:ConfirmView(
+                    phone: phone,
+                    rootIsActive: self.$rootIsActive,
+                    isGoToCreateOrder: $isGoToCreateOrder
+                ),
+                isActive: $goToConfirm
+            ){
+                EmptyView()
+            }
             if(isLoading){
                 LoadingView()
             }else{
-                NavigationLink(
-                    destination:ConfirmView(
-                        phone: phone,
-                        rootIsActive: self.$rootIsActive,
-                        isGoToCreateOrder: $isGoToCreateOrder
-                    ),
-                    isActive: $goToConfirm
-                ){
-                    EmptyView()
-                }
-                
                 LoginViewSuccessView(
                     phone: $phone,
                     hasError: $hasPhoneError,
@@ -60,6 +58,7 @@ struct LoginView: View {
             }
         }
         .onAppear(){
+            viewModel.handleAction(action: LoginActionInit())
             subscribe()
             eventsSubscribe()
         }
@@ -68,8 +67,8 @@ struct LoginView: View {
         }
         .overlay(
             overlayView: ToastView(
-                toast: Toast(title: "Что-то пошло не так")
-                , show: $showSomethigWrongError,
+                toast: Toast(title: "Что-то пошло не так"),
+                show: $showSomethigWrongError,
                 backgroundColor:AppColor.error,
                 foregaroundColor: AppColor.onError
             ),
@@ -77,8 +76,8 @@ struct LoginView: View {
         )
         .overlay(
             overlayView: ToastView(
-                toast: Toast(title: "Превышен лимит на отправку сообщений")
-                , show: $showTooManyRequestsError,
+                toast: Toast(title: "Превышен лимит на отправку сообщений"),
+                show: $showTooManyRequestsError,
                 backgroundColor:AppColor.error,
                 foregaroundColor: AppColor.onError
             ),
@@ -87,14 +86,15 @@ struct LoginView: View {
     }
     
     func subscribe(){
-        viewModel.handleAction(action: LoginActionInit())
-        stateListener = viewModel.state.watch { loginStateVM in
-            if let loginState = loginStateVM{
+        stateListener = viewModel.state.watch {  loginStateVM in
+            if let loginState = loginStateVM {
+                print(loginState.phoneNumber)
                 phone = loginState.phoneNumber
                 hasPhoneError = loginState.hasPhoneError
                 isLoading = loginState.isLoading
                 phoneNumberCursorPosition = loginState.phoneNumberCursorPosition
             }
+            
         }
     }
     
@@ -103,13 +103,13 @@ struct LoginView: View {
             if let events = _events{
                 let loginEvents = events as? [LoginEvent] ?? []
                 
-                
                 loginEvents.forEach { event in
+                    print(event)
                     switch(event){
                     case is LoginEventNavigateBack : self.mode.wrappedValue.dismiss()
                     case is LoginEventNavigateToConfirm : goToConfirm = true
-                    case is LoginEventShowTooManyRequestsError: print("show err")
-                    case is LoginEventShowSomethingWentWrongError: print("show err")
+                    case is LoginEventShowTooManyRequestsError: showTooManyRequestsError = true
+                    case is LoginEventShowSomethingWentWrongError: showSomethigWrongError = true
                     default:
                         print("def")
                     }
@@ -134,7 +134,7 @@ struct LoginViewSuccessView: View {
     @Binding var phone:String
     @Binding var hasError:Bool
     @State var isSelected:Bool = false
-
+    
     let action: (LoginAction) -> Void
     
     var body: some View {

@@ -11,7 +11,7 @@ interface Login {
         val phoneNumber: String = PHONE_CODE,
         val phoneNumberCursorPosition: Int = PHONE_CODE.length,
         val hasPhoneError: Boolean = false,
-        val isLoading: Boolean = false,
+        val isLoading: Boolean = true,
     ): BaseState
 
     sealed interface Action: BaseAction {
