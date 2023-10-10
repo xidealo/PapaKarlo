@@ -8,7 +8,6 @@
 
 import Foundation
 import shared
-import FirebaseAuth
 
 class ConfirmViewModel: ObservableObject {
     
@@ -16,42 +15,8 @@ class ConfirmViewModel: ObservableObject {
         confirmState: ConfirmState.success, actionList: []
     )
     
-    let auth : AuthManager
-
-    init(auth:AuthManager){
-        self.auth = auth
-    }
-    
     func checkCode(code:String){
-        confirmViewState = ConfirmViewState(confirmState: ConfirmState.loading, actionList: [])
-        
-        auth.verifyCode(smsCode: code) { result in
-            if(result){
-               iosComponent.provideIUserInteractor().login(firebaseUserUuid: self.auth.getCurrentUserUuid(), firebaseUserPhone: self.auth.getCurrentUserPhone()) { err  in
-                        if(err == nil){
-                            DispatchQueue.main.async{
-                                self.confirmViewState = ConfirmViewState(confirmState: ConfirmState.success, actionList: [ConfirmAction.back])
-                            }
-                        }else{
-                            if(err is NotAuthorizeException){
-                                self.confirmViewState  = ConfirmViewState(
-                                    confirmState: ConfirmState.error,
-                                    actionList: [ConfirmAction.showLoginError]
-                                )
-                            }else{
-                                self.confirmViewState  = ConfirmViewState(
-                                    confirmState: ConfirmState.success,
-                                    actionList: [ConfirmAction.showCodeError]
-                                )
-                            }
-                            
-                        }
-                    }
-            
-            }else{
-                self.confirmViewState  = ConfirmViewState(confirmState: ConfirmState.error, actionList: [])
-            }
-        }
+       
     }
     
     func clearActions(){
@@ -60,18 +25,6 @@ class ConfirmViewModel: ObservableObject {
     
     func resendCode(phone:String){
         //combine with func on Login
-        let formattedPhone = phone.replace(string: "(", replacement: "")
-            .replace(string: ")", replacement: "")
-            .replace(string: "-", replacement: "")
-            .replace(string: " ", replacement: "")
-        
-        auth.startAuth(phoneNumber: formattedPhone) { result in
-            if(result){
-                print("resend success")
-            }else{
-                print("resend rejected")
-            }
-        }
     }
 }
 

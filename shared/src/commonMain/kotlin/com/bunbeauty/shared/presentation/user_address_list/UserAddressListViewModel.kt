@@ -3,7 +3,7 @@ package com.bunbeauty.shared.presentation.user_address_list
 import com.bunbeauty.shared.domain.asCommonStateFlow
 import com.bunbeauty.shared.domain.use_case.address.GetSelectableUserAddressListUseCase
 import com.bunbeauty.shared.domain.use_case.address.SaveSelectedUserAddressUseCase
-import com.bunbeauty.shared.presentation.SharedViewModel
+import com.bunbeauty.shared.presentation.base.SharedViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch

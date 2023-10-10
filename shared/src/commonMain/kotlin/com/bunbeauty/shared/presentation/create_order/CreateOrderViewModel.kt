@@ -16,7 +16,7 @@ import com.bunbeauty.shared.domain.use_case.cafe.GetSelectableCafeListUseCase
 import com.bunbeauty.shared.domain.use_case.deferred_time.GetMinTimeUseCase
 import com.bunbeauty.shared.extension.launchSafe
 import com.bunbeauty.shared.extension.mapToStateFlow
-import com.bunbeauty.shared.presentation.SharedViewModel
+import com.bunbeauty.shared.presentation.base.SharedViewModel
 import com.bunbeauty.shared.presentation.cafe_address_list.SelectableCafeAddressItemMapper
 import com.bunbeauty.shared.presentation.create_order.model.TimeUI
 import kotlinx.coroutines.flow.MutableStateFlow

@@ -5,7 +5,7 @@ import com.bunbeauty.shared.domain.feature.cart.AddCartProductUseCase
 import com.bunbeauty.shared.domain.feature.cart.ObserveCartUseCase
 import com.bunbeauty.shared.domain.feature.menu_product.GetMenuProductByUuidUseCase
 import com.bunbeauty.shared.domain.model.product.MenuProduct
-import com.bunbeauty.shared.presentation.SharedViewModel
+import com.bunbeauty.shared.presentation.base.SharedViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest

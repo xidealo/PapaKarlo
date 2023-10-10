@@ -7,6 +7,7 @@ import com.bunbeauty.shared.data.di.networkModule
 import com.bunbeauty.shared.data.di.repositoryModule
 import com.bunbeauty.shared.data.mapper.user_address.UserAddressMapper
 import com.bunbeauty.shared.data.network.api.NetworkConnector
+import com.bunbeauty.shared.di.usecase.authUseCaseModule
 import com.bunbeauty.shared.di.usecase.cafeUseCaseModule
 import com.bunbeauty.shared.di.usecase.cartUseCaseModule
 import com.bunbeauty.shared.di.usecase.cityUseCaseModule
@@ -36,6 +37,9 @@ import com.bunbeauty.shared.domain.interactor.city.ICityInteractor
 import com.bunbeauty.shared.domain.use_case.deferred_time.GetMinTimeUseCase
 import com.bunbeauty.shared.domain.interactor.menu_product.IMenuProductInteractor
 import com.bunbeauty.shared.domain.feature.address.GetStreetsUseCase
+import com.bunbeauty.shared.domain.feature.auth.FormatPhoneNumberUseCase
+import com.bunbeauty.shared.domain.feature.auth.GetPhoneNumberCursorPositionUseCase
+import com.bunbeauty.shared.domain.feature.auth.RequestCodeUseCase
 import com.bunbeauty.shared.domain.feature.cart.AddCartProductUseCase
 import com.bunbeauty.shared.domain.feature.discount.GetDiscountUseCase
 import com.bunbeauty.shared.domain.feature.payment.GetSelectablePaymentMethodListUseCase
@@ -68,6 +72,7 @@ fun initKoin(appDeclaration: KoinAppDeclaration = {}) = startKoin {
         cartUseCaseModule(),
         cafeUseCaseModule(),
         paymentUseCaseModule(),
+        authUseCaseModule(),
         useCaseModules()
     )
 }
@@ -88,6 +93,7 @@ fun initKoin() = startKoin {
         cartUseCaseModule(),
         cafeUseCaseModule(),
         paymentUseCaseModule(),
+        authUseCaseModule(),
         useCaseModules()
     )
 }
@@ -127,16 +133,18 @@ class IosComponent : KoinComponent {
     fun provideObserveCartUseCase(): ObserveCartUseCase = get()
     fun provideRemoveCartProductUseCase(): RemoveCartProductUseCase = get()
     fun provideGetLinkListUseCase(): GetLinkListUseCase = get()
-
     fun provideGetPaymentMethodListUseCase(): GetPaymentMethodListUseCase = get()
-
     fun provideSubscribeToNotificationUseCase(): SubscribeToNotificationUseCase = get()
     fun provideGetSelectablePaymentMethodListUseCase(): GetSelectablePaymentMethodListUseCase =
         get()
+
     fun provideAddCartProductUseCase(): AddCartProductUseCase = get()
     fun provideGetDiscountUseCase(): GetDiscountUseCase = get()
-
     fun provideSavePaymentMethodUseCase(): SavePaymentMethodUseCase = get()
+    fun provideRequestCodeUseCase(): RequestCodeUseCase = get()
+    fun provideFormatPhoneNumberUseCase(): FormatPhoneNumberUseCase = get()
+    fun provideGetPhoneNumberCursorPositionUseCase(): GetPhoneNumberCursorPositionUseCase = get()
+
 
     //Mapper
     fun provideTimeMapper(): TimeMapper = get()

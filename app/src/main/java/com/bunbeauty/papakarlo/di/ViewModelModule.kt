@@ -1,15 +1,15 @@
 package com.bunbeauty.papakarlo.di
 
-import com.bunbeauty.papakarlo.feature.auth.screen.confirm.ConfirmViewModel
-import com.bunbeauty.papakarlo.feature.auth.screen.login.LoginViewModel
 import com.bunbeauty.papakarlo.feature.cafe.screen.cafeoptions.CafeOptionsViewModel
 import com.bunbeauty.papakarlo.feature.city.screen.selectcity.SelectCityViewModel
 import com.bunbeauty.papakarlo.feature.main.MainViewModel
 import com.bunbeauty.papakarlo.feature.splash.SplashViewModel
 import com.bunbeauty.shared.presentation.cafe_list.CafeListViewModel
+import com.bunbeauty.shared.presentation.confirm.ConfirmViewModel
 import com.bunbeauty.shared.presentation.consumercart.ConsumerCartViewModel
 import com.bunbeauty.shared.presentation.create_address.CreateAddressViewModel
 import com.bunbeauty.shared.presentation.create_order.CreateOrderViewModel
+import com.bunbeauty.shared.presentation.login.LoginViewModel
 import com.bunbeauty.shared.presentation.menu.MenuViewModel
 import com.bunbeauty.shared.presentation.order_details.OrderDetailsViewModel
 import com.bunbeauty.shared.presentation.order_list.OrderListViewModel
@@ -115,20 +115,18 @@ fun viewModelModule() = module {
             getLinkListUseCase = get()
         )
     }
-    viewModel { parameters ->
+    viewModel {
         LoginViewModel(
-            textValidator = get(),
-            userInteractor = get(),
-            firebaseAuthRepository = get(),
-            savedStateHandle = parameters.get()
+            requestCode = get(),
+            formatPhoneNumber = get(),
+            getPhoneNumberCursorPosition = get()
         )
     }
-    viewModel { parameters ->
+    viewModel {
         ConfirmViewModel(
-            userInteractor = get(),
-            firebaseAuthRepository = get(),
-            successLoginDirection = parameters[0],
-            phoneNumber = parameters[1]
+            formatPhoneNumber = get(),
+            checkCode = get(),
+            resendCode = get()
         )
     }
     viewModel {

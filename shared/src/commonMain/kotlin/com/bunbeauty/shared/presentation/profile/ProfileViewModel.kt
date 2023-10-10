@@ -8,7 +8,7 @@ import com.bunbeauty.shared.domain.feature.order.ObserveLastOrderUseCase
 import com.bunbeauty.shared.domain.feature.order.StopObserveOrdersUseCase
 import com.bunbeauty.shared.domain.feature.payment.GetPaymentMethodListUseCase
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
-import com.bunbeauty.shared.presentation.SharedViewModel
+import com.bunbeauty.shared.presentation.base.SharedViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
