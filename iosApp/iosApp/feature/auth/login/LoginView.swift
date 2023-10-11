@@ -35,9 +35,6 @@ struct LoginView: View {
     @State var stateListener: Closeable? = nil
     @State var eventsListener: Closeable? = nil
     
-    @State var stateListener: Closeable? = nil
-    @State var eventsListener: Closeable? = nil
-
     var body: some View {
         VStack(spacing:0){
             NavigationLink(
