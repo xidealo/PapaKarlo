@@ -1,6 +1,5 @@
 package com.bunbeauty.domain.feature.auth
 
-import com.bunbeauty.shared.domain.exeptions.InvalidPhoneNumberException
 import com.bunbeauty.shared.domain.exeptions.SomethingWentWrongException
 import com.bunbeauty.shared.domain.exeptions.TooManyRequestsException
 import com.bunbeauty.shared.domain.feature.auth.RequestCodeUseCase
@@ -27,19 +26,9 @@ class RequestCodeUseCaseTest {
     }
 
     @Test
-    fun `should throw InvalidPhoneNumberException when phone number is not complete`() = runTest {
-        val phoneNumber = "+7 (123) 456-78-9"
-
-        assertFailsWith<InvalidPhoneNumberException> {
-            requestCode(phoneNumber)
-        }
-    }
-
-    @Test
     fun `should return Unit when code is requested successfully`() = runTest {
-        val phoneNumber = "+7 (123) 456-78-90"
-        val formattedPhoneNumber = "+71234567890"
-        coEvery { authRepo.requestCode(formattedPhoneNumber) } returns CodeResponse.SUCCESS
+        val phoneNumber = "+71234567890"
+        coEvery { authRepo.requestCode(phoneNumber) } returns CodeResponse.SUCCESS
 
         val result = requestCode(phoneNumber)
 
@@ -48,9 +37,8 @@ class RequestCodeUseCaseTest {
 
     @Test
     fun `should throw TooManyRequestsException when code request failed`() = runTest {
-        val phoneNumber = "+7 (123) 456-78-90"
-        val formattedPhoneNumber = "+71234567890"
-        coEvery { authRepo.requestCode(formattedPhoneNumber) } returns CodeResponse.TOO_MANY_REQUESTS_ERROR
+        val phoneNumber = "+71234567890"
+        coEvery { authRepo.requestCode(phoneNumber) } returns CodeResponse.TOO_MANY_REQUESTS_ERROR
 
         assertFailsWith<TooManyRequestsException> {
             requestCode(phoneNumber)
@@ -59,9 +47,8 @@ class RequestCodeUseCaseTest {
 
     @Test
     fun `should throw SomethingWentWrongException when code request failed`() = runTest {
-        val phoneNumber = "+7 (123) 456-78-90"
-        val formattedPhoneNumber = "+71234567890"
-        coEvery { authRepo.requestCode(formattedPhoneNumber) } returns CodeResponse.SOMETHING_WENT_WRONG_ERROR
+        val phoneNumber = "+71234567890"
+        coEvery { authRepo.requestCode(phoneNumber) } returns CodeResponse.SOMETHING_WENT_WRONG_ERROR
 
         assertFailsWith<SomethingWentWrongException> {
             requestCode(phoneNumber)

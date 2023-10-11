@@ -1,6 +1,5 @@
 package com.bunbeauty.shared.domain.feature.auth
 
-import com.bunbeauty.shared.domain.exeptions.InvalidPhoneNumberException
 import com.bunbeauty.shared.domain.exeptions.SomethingWentWrongException
 import com.bunbeauty.shared.domain.exeptions.TooManyRequestsException
 import com.bunbeauty.shared.domain.model.CodeResponse
@@ -11,14 +10,7 @@ class RequestCodeUseCase(
 ) {
 
     suspend operator fun invoke(phoneNumber: String) {
-        val formattedPhoneNumber = phoneNumber.replace(Regex("[ ()-]"), "")
-
-        val phoneNumberRegex = Regex("^\\+7[0-9]{10}$")
-        if (!phoneNumberRegex.matches(formattedPhoneNumber)) {
-            throw InvalidPhoneNumberException()
-        }
-
-        when (authRepo.requestCode(formattedPhoneNumber)) {
+        when (authRepo.requestCode(phoneNumber)) {
             CodeResponse.SUCCESS -> Unit
             CodeResponse.TOO_MANY_REQUESTS_ERROR -> throw TooManyRequestsException()
             CodeResponse.SOMETHING_WENT_WRONG_ERROR -> throw SomethingWentWrongException()

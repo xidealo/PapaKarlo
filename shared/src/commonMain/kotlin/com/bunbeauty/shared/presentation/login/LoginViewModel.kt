@@ -2,6 +2,7 @@ package com.bunbeauty.shared.presentation.login
 
 import com.bunbeauty.shared.domain.exeptions.InvalidPhoneNumberException
 import com.bunbeauty.shared.domain.exeptions.TooManyRequestsException
+import com.bunbeauty.shared.domain.feature.auth.CheckPhoneNumberUseCase
 import com.bunbeauty.shared.domain.feature.auth.FormatPhoneNumberUseCase
 import com.bunbeauty.shared.domain.feature.auth.GetPhoneNumberCursorPositionUseCase
 import com.bunbeauty.shared.domain.feature.auth.RequestCodeUseCase
@@ -12,6 +13,7 @@ class LoginViewModel(
     private val requestCode: RequestCodeUseCase,
     private val formatPhoneNumber: FormatPhoneNumberUseCase,
     private val getPhoneNumberCursorPosition: GetPhoneNumberCursorPositionUseCase,
+    private val checkPhoneNumber: CheckPhoneNumberUseCase,
 ) : SharedStateViewModel<Login.State, Login.Action, Login.Event>(Login.State()) {
 
     override fun handleAction(action: Login.Action) {
@@ -21,6 +23,7 @@ class LoginViewModel(
                 phoneNumber = action.phoneNumber,
                 cursorPosition = action.cursorPosition
             )
+
             Login.Action.NextClick -> requestCode()
             is Login.Action.BackClick -> navigateBack()
             is Login.Action.ConsumeEvents -> consumeEvents(action.eventList)
@@ -46,18 +49,29 @@ class LoginViewModel(
     }
 
     private fun requestCode() {
-        state { state ->
-            state.copy(
-                hasPhoneError = false,
-                isLoading = true
-            )
+        val phoneNumber = mutableState.value.phoneNumber.replace(
+            regex = Regex("[ ()-]"),
+            replacement = ""
+        )
+        if (checkPhoneNumber(phoneNumber)) {
+            state { state ->
+                state.copy(
+                    hasPhoneError = false,
+                    isLoading = true
+                )
+            }
+        } else {
+            state { state ->
+                state.copy(hasPhoneError = true)
+            }
+            return
         }
 
         sharedScope.launchSafe(
             block = {
-                requestCode(mutableState.value.phoneNumber)
-                event { state ->
-                    Login.Event.NavigateToConfirm(state.phoneNumber)
+                requestCode(phoneNumber)
+                event {
+                    Login.Event.NavigateToConfirm(phoneNumber)
                 }
             },
             onError = ::handleException
