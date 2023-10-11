@@ -35,24 +35,6 @@ struct ToolbarView: View {
                 .padding(.vertical, Diems.MEDIUM_PADDING)
             
             Spacer()
-            
-            if logout != nil{
-                Button(action:{
-                    showingAlert = true
-                }){
-                    Image("LogoutIcon")
-                        .resizable()
-                        .frame(width: 24, height: 24)
-                        .padding(Diems.MEDIUM_PADDING)
-                        .foregroundColor(AppColor.onSurface)
-                }.alert("Выйти из профиля?", isPresented: $showingAlert) {
-                    Button("Выйти") {
-                        logout!()
-                    }
-                    Button("Отмена", role: .cancel) { }
-                }
-            }
-            
         }.background(AppColor.surface)
     }
 }

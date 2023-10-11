@@ -32,7 +32,7 @@ struct SettingsView: View {
     @State private var showingAlert = false
     
     @State var listener: Closeable? = nil
-    
+
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     
     var body: some View {
@@ -85,11 +85,17 @@ struct SettingsView: View {
                 
                 Button(
                     action: {
-                        viewModel.logout()
+                        showingAlert = true
                     }, label: {
-                        ButtonText(text: "action_settings_log_out")
+                        ButtonText(text: "Выйти")
                     }
                 ).padding(16)
+                    .alert("Выйти из профиля?", isPresented: $showingAlert) {
+                        Button("Выйти") {
+                            viewModel.logout()
+                        }
+                        Button("Отмена", role: .cancel) { }
+                    }
             }
         }
         .frame(maxWidth:.infinity, maxHeight: .infinity)

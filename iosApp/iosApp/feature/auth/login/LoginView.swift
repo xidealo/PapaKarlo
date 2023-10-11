@@ -165,7 +165,7 @@ struct LoginViewSuccessView: View {
                     limit: 18,
                     keyBoadrType: UIKeyboardType.phonePad,
                     hasError: $hasError,
-                    errorMessage: "Введите номер телефона",
+                    errorMessage: "Введите корректный номер телефона",
                     textChanged: { str in
                         action(LoginActionChangePhoneNumber(phoneNumber: str, cursorPosition: 0))
                     }
