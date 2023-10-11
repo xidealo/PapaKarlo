@@ -120,7 +120,7 @@ fun viewModelModule() = module {
             requestCode = get(),
             formatPhoneNumber = get(),
             getPhoneNumberCursorPosition = get(),
-            checkPhoneNumber = get(),
+            checkPhoneNumber = get()
         )
     }
     viewModel {
