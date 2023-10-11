@@ -14,35 +14,35 @@ struct ConfirmView: View {
     @State private var code:String = ""
     
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
-    
+
     @State var viewModel = ConfirmViewModel(
         formatPhoneNumber: iosComponent.provideFormatPhoneNumberUseCase(),
         checkCode: iosComponent.provideCheckCodeUseCase(),
         resendCode: iosComponent.provideResendCodeUseCase()
     )
-    
+
     //State
     @State var phoneNumber:String = ""
     @State var resendSeconds:Int = 60
     @State var isLoading:Bool = false
     // ---
-    
-    
+
+
     //Events
     @State var showTooManyRequestsError:Bool = false
     @State var showNoAttemptsError:Bool = false
     @State var showInvalidCodeError:Bool = false
     @State var showAuthSessionTimeoutError:Bool = false
     @State var showSomethingWentWrongError:Bool = false
-    
+
     @Binding var rootIsActive:Bool
     @Binding var isGoToCreateOrder:Bool
     
     @State var showLoginError:Bool = false
-    
+
     @State var stateListener: Closeable? = nil
     @State var eventsListener: Closeable? = nil
-    
+
     init(phone:String, rootIsActive: Binding<Bool>, isGoToCreateOrder: Binding<Bool>){
         self._rootIsActive = rootIsActive
         self._isGoToCreateOrder = isGoToCreateOrder
@@ -111,7 +111,7 @@ struct ConfirmView: View {
         }
         .hiddenNavigationBarStyle()
     }
-    
+
     func subscribe(){
         stateListener = viewModel.state.watch { confirmStateVM in
             if let confirmState = confirmStateVM{
@@ -121,12 +121,12 @@ struct ConfirmView: View {
             }
         }
     }
-    
+
     func eventsSubscribe(){
         eventsListener = viewModel.events.watch(block: { _events in
             if let events = _events{
                 let confirmEvents = events as? [ConfirmEvent] ?? []
-                
+
                 confirmEvents.forEach { event in
                     switch(event){
                     case is ConfirmEventShowTooManyRequestsError : self.mode.wrappedValue.dismiss()
@@ -143,14 +143,14 @@ struct ConfirmView: View {
                         print("not checked event")
                     }
                 }
-                
+
                 if !confirmEvents.isEmpty {
                     viewModel.consumeEvents(events: confirmEvents)
                 }
             }
         })
     }
-    
+
     func unsubscribe(){
         stateListener?.close()
         stateListener = nil
@@ -166,7 +166,7 @@ struct ConfirmViewSuccessView: View {
     @Binding var resendSeconds: Int
 
     let action: (ConfirmAction) -> Void
-    
+
     var body: some View {
         VStack(spacing:0){
             ToolbarView(
@@ -175,17 +175,17 @@ struct ConfirmViewSuccessView: View {
                     action(ConfirmActionBackClick())
                 }
             )
-            
+
             VStack(spacing:0){
                 
                 Spacer()
-                
+
                 Text(Strings.MSG_CONFIRM_ENTER_CODE + phone)
                     .bodyLarge()
                     .multilineTextAlignment(.center)
                     .foregroundColor(AppColor.onSurface)
                     .padding(.bottom, Diems.MEDIUM_PADDING)
-                
+
                 //SmsTextField(count: 6)
                 
                 EditTextView(

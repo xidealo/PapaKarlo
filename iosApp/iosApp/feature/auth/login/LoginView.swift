@@ -10,31 +10,34 @@ import Combine
 import shared
 
 struct LoginView: View {
-    
+
     @Binding var rootIsActive:Bool
     @Binding var isGoToCreateOrder:Bool
     @State var goToConfirm:Bool = false
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
-    
+
     @State var showSomethigWrongError:Bool = false
     @State var showTooManyRequestsError:Bool = false
-    
+
     @State var viewModel: LoginViewModel = LoginViewModel(
         requestCode: iosComponent.provideRequestCodeUseCase(),
         formatPhoneNumber: iosComponent.provideFormatPhoneNumberUseCase(),
         getPhoneNumberCursorPosition: iosComponent.provideGetPhoneNumberCursorPositionUseCase()
     )
-    
+
     //State
     @State var isLoading: Bool = false
     @State var hasPhoneError: Bool = false
     @State var phone = ""
     @State var phoneNumberCursorPosition = Int32(shared.Constants().PHONE_CODE.count)
     // ---
-    
+
     @State var stateListener: Closeable? = nil
     @State var eventsListener: Closeable? = nil
     
+    @State var stateListener: Closeable? = nil
+    @State var eventsListener: Closeable? = nil
+
     var body: some View {
         VStack(spacing:0){
             NavigationLink(
@@ -84,7 +87,7 @@ struct LoginView: View {
             show: $showTooManyRequestsError
         )
     }
-    
+
     func subscribe(){
         stateListener = viewModel.state.watch {  loginStateVM in
             if let loginState = loginStateVM {
@@ -94,15 +97,15 @@ struct LoginView: View {
                 isLoading = loginState.isLoading
                 phoneNumberCursorPosition = loginState.phoneNumberCursorPosition
             }
-            
+
         }
     }
-    
+
     func eventsSubscribe(){
         eventsListener = viewModel.events.watch(block: { _events in
             if let events = _events{
                 let loginEvents = events as? [LoginEvent] ?? []
-                
+
                 loginEvents.forEach { event in
                     print(event)
                     switch(event){
@@ -114,14 +117,14 @@ struct LoginView: View {
                         print("def")
                     }
                 }
-                
+
                 if !loginEvents.isEmpty {
                     viewModel.consumeEvents(events: loginEvents)
                 }
             }
         })
     }
-    
+
     func unsubscribe(){
         stateListener?.close()
         stateListener = nil
@@ -134,9 +137,9 @@ struct LoginViewSuccessView: View {
     @Binding var phone:String
     @Binding var hasError:Bool
     @State var isSelected:Bool = false
-    
+
     let action: (LoginAction) -> Void
-    
+
     var body: some View {
         VStack(spacing:0){
             ToolbarView(
