@@ -32,6 +32,4 @@ abstract class SharedStateViewModel<State: BaseState, Action: BaseAction, Event:
             list + block(mutableState.value)
         }
     }
-
-
 }

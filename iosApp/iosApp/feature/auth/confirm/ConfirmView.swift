@@ -7,77 +7,172 @@
 
 import SwiftUI
 import Combine
+import shared
 
 struct ConfirmView: View {
     
     @State private var code:String = ""
     
-    @ObservedObject private var viewModel : ConfirmViewModel
-    private let phone:String
+    @Environment(\.presentationMode) var mode: Binding<PresentationMode>
+
+    @State var viewModel = ConfirmViewModel(
+        formatPhoneNumber: iosComponent.provideFormatPhoneNumberUseCase(),
+        checkCode: iosComponent.provideCheckCodeUseCase(),
+        resendCode: iosComponent.provideResendCodeUseCase()
+    )
+
+    //State
+    @State var phoneNumber:String = ""
+    @State var resendSeconds:Int = 60
+    @State var isLoading:Bool = false
+    // ---
+
+
+    //Events
+    @State var showTooManyRequestsError:Bool = false
+    @State var showNoAttemptsError:Bool = false
+    @State var showInvalidCodeError:Bool = false
+    @State var showAuthSessionTimeoutError:Bool = false
+    @State var showSomethingWentWrongError:Bool = false
+
     @Binding var rootIsActive:Bool
     @Binding var isGoToCreateOrder:Bool
     
     @State var showLoginError:Bool = false
 
+    @State var stateListener: Closeable? = nil
+    @State var eventsListener: Closeable? = nil
+
     init(phone:String, rootIsActive: Binding<Bool>, isGoToCreateOrder: Binding<Bool>){
-        viewModel = ConfirmViewModel()
-        self.phone = phone
         self._rootIsActive = rootIsActive
         self._isGoToCreateOrder = isGoToCreateOrder
-    }
+        self.viewModel.handleAction(action: ConfirmActionInit(phoneNumber: phone, direction: SuccessLoginDirection.backToProfile))
+        }
     
     var body: some View {
         VStack(spacing:0){
-            switch(viewModel.confirmViewState.confirmState){
-            case ConfirmState.loading: LoadingView()
-            case ConfirmState.success: ConfirmViewSuccessView(code: $code, viewModel: viewModel, phone: phone)
-            default : ConfirmViewSuccessView(code: $code, viewModel: viewModel, phone: phone)
+            if(isLoading){
+                LoadingView()
+            }else{
+                ConfirmViewSuccessView(
+                    code: $code,
+                    phone: $phoneNumber,
+                    resendSeconds: $resendSeconds,
+                    action: viewModel.handleAction
+                )
             }
         }
-        .onReceive(viewModel.$confirmViewState, perform: { confirmViewState in
-            confirmViewState.actionList.forEach { action in
-                switch(action){
-                case ConfirmAction.back : rootIsActive = false
-                    isGoToCreateOrder = true
-                case ConfirmAction.showCodeError: showLoginError = true
-                case ConfirmAction.showLoginError : showLoginError = true
-                }
-                
-            }
-            
-            if !confirmViewState.actionList.isEmpty{
-                viewModel.clearActions()
-            }
-        })
         .overlay(
             overlayView: ToastView(
-                toast: Toast(title: "Ошибка от сервера, попробуйте позже"),
-                show: $showLoginError,
+                toast: Toast(title: "Превышен лимит на отправку сообщений"),
+                show: $showTooManyRequestsError,
                 backgroundColor: AppColor.error,
                 foregaroundColor: AppColor.onError
-            ), show: $showLoginError)
+            ), show: $showTooManyRequestsError
+        )
+        .overlay(
+            overlayView: ToastView(
+                toast: Toast(title: "Превышено количество попыток ввода кода"),
+                show: $showNoAttemptsError,
+                backgroundColor: AppColor.error,
+                foregaroundColor: AppColor.onError
+            ), show: $showNoAttemptsError
+        )
+        .overlay(
+            overlayView: ToastView(
+                toast: Toast(title: "Неверный код"),
+                show: $showInvalidCodeError,
+                backgroundColor: AppColor.error,
+                foregaroundColor: AppColor.onError
+            ), show: $showInvalidCodeError
+        )
+        .overlay(
+            overlayView: ToastView(
+                toast: Toast(title: "Истекло время на ввод кода"),
+                show: $showAuthSessionTimeoutError,
+                backgroundColor: AppColor.error,
+                foregaroundColor: AppColor.onError
+            ), show: $showAuthSessionTimeoutError
+        )
+        .overlay(
+            overlayView: ToastView(
+                toast: Toast(title: "Что-то пошло не так"),
+                show: $showSomethingWentWrongError,
+                backgroundColor: AppColor.error,
+                foregaroundColor: AppColor.onError
+            ), show: $showSomethingWentWrongError
+        )
+        .onAppear(){
+            subscribe()
+            eventsSubscribe()
+        }
+        .onDisappear(){
+            unsubscribe()
+        }
+        .hiddenNavigationBarStyle()
+    }
 
+    func subscribe(){
+        stateListener = viewModel.state.watch { confirmStateVM in
+            if let confirmState = confirmStateVM{
+                phoneNumber = confirmState.phoneNumber
+                resendSeconds = Int(confirmState.resendSeconds)
+                isLoading = confirmState.isLoading
+            }
+        }
+    }
+
+    func eventsSubscribe(){
+        eventsListener = viewModel.events.watch(block: { _events in
+            if let events = _events{
+                let confirmEvents = events as? [ConfirmEvent] ?? []
+
+                confirmEvents.forEach { event in
+                    switch(event){
+                    case is ConfirmEventShowTooManyRequestsError : self.mode.wrappedValue.dismiss()
+                    case is ConfirmEventShowNoAttemptsError : showNoAttemptsError = true
+                    case is ConfirmEventShowInvalidCodeError : showInvalidCodeError = true
+                    case is ConfirmEventShowAuthSessionTimeoutError : showAuthSessionTimeoutError = true
+                    case is ConfirmEventShowSomethingWentWrongError : showSomethingWentWrongError = true
+                    case is ConfirmEventNavigateBackToProfile : rootIsActive = false
+                        isGoToCreateOrder = true
+                    case is ConfirmEventNavigateToCreateOrder : rootIsActive = false
+                        isGoToCreateOrder = true
+                    case is ConfirmEventNavigateBack : self.mode.wrappedValue.dismiss()
+                    default:
+                        print("not checked event")
+                    }
+                }
+
+                if !confirmEvents.isEmpty {
+                    viewModel.consumeEvents(events: confirmEvents)
+                }
+            }
+        })
+    }
+
+    func unsubscribe(){
+        stateListener?.close()
+        stateListener = nil
+        eventsListener?.close()
+        eventsListener = nil
     }
 }
 
 struct ConfirmViewSuccessView: View {
     @Binding var code:String
-    @ObservedObject var viewModel : ConfirmViewModel
-    @State var show:Bool = false
     
-    @State private var timeRemaining = 60
-    @State private var isEnabled = false
-    
-    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
-    let phone:String
-    @Environment(\.presentationMode) var mode: Binding<PresentationMode>
+    @Binding var phone: String
+    @Binding var resendSeconds: Int
+
+    let action: (ConfirmAction) -> Void
 
     var body: some View {
         VStack(spacing:0){
             ToolbarView(
                 title: "",
                 back: {
-                    self.mode.wrappedValue.dismiss()
+                    action(ConfirmActionBackClick())
                 }
             )
 
@@ -105,7 +200,7 @@ struct ConfirmViewSuccessView: View {
                 )
                 .onReceive(Just(code)) { _ in
                     if(code.count == 6){
-                        viewModel.checkCode(code: code)
+                        action(ConfirmActionCheckCode(code: code))
                         code = ""
                     }
                 }
@@ -114,49 +209,24 @@ struct ConfirmViewSuccessView: View {
                 
                 Button(
                     action: {
-                        isEnabled = false
-                        timeRemaining = 60
-                        viewModel.resendCode(phone: phone)
+                        action(ConfirmActionResendCode())
                     }
                 ){
-                    if(isEnabled){
+                    if(resendSeconds == 0){
                         ButtonText(text: Strings.ACTION_CONFIRM_GET_CODE)
                     }
                     else{
                         ButtonText(
-                            text: "Запросить код повторно \(timeRemaining) сек.",
+                            text: "Запросить код повторно \(resendSeconds) сек.",
                             background: AppColor.disabled,
                             foregroundColor: AppColor.onDisabled
                         )
                     }
                     
-                }.disabled(!isEnabled)
+                }.disabled(resendSeconds != 0)
             }
             .padding(Diems.MEDIUM_PADDING)
         }
         .background(AppColor.surface)
-        .overlay(
-            overlayView: ToastView(
-                toast: Toast(title: "Неправильный код"),
-                show: $show,
-                backgroundColor: AppColor.error,
-                foregaroundColor: AppColor.onError
-            ), show: $show)
-        .onReceive(timer){ time in
-            if timeRemaining > 0{
-                timeRemaining -= 1
-            }
-            
-            if(timeRemaining == 0){
-                isEnabled = true
-            }
-            print(isEnabled)
-        }
-        .onReceive(viewModel.$confirmViewState) { confirmViewState in
-            if(confirmViewState.confirmState == ConfirmState.error){
-                self.show = true
-            }
-        }
-        .hiddenNavigationBarStyle()
     }
 }
