@@ -1,6 +1,7 @@
 package com.bunbeauty.shared.di.usecase
 
 import com.bunbeauty.shared.domain.feature.auth.CheckCodeUseCase
+import com.bunbeauty.shared.domain.feature.auth.CheckPhoneNumberUseCase
 import com.bunbeauty.shared.domain.feature.auth.FormatPhoneNumberUseCase
 import com.bunbeauty.shared.domain.feature.auth.GetPhoneNumberCursorPositionUseCase
 import com.bunbeauty.shared.domain.feature.auth.RequestCodeUseCase
@@ -31,5 +32,8 @@ internal fun authUseCaseModule() = module {
         GetPhoneNumberCursorPositionUseCase(
             formatPhoneNumber = get(),
         )
+    }
+    factory {
+        CheckPhoneNumberUseCase()
     }
 }

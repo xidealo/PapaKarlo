@@ -119,7 +119,8 @@ fun viewModelModule() = module {
         LoginViewModel(
             requestCode = get(),
             formatPhoneNumber = get(),
-            getPhoneNumberCursorPosition = get()
+            getPhoneNumberCursorPosition = get(),
+            checkPhoneNumber = get()
         )
     }
     viewModel {
