@@ -38,6 +38,7 @@ import com.bunbeauty.shared.domain.use_case.deferred_time.GetMinTimeUseCase
 import com.bunbeauty.shared.domain.interactor.menu_product.IMenuProductInteractor
 import com.bunbeauty.shared.domain.feature.address.GetStreetsUseCase
 import com.bunbeauty.shared.domain.feature.auth.CheckCodeUseCase
+import com.bunbeauty.shared.domain.feature.auth.CheckPhoneNumberUseCase
 import com.bunbeauty.shared.domain.feature.auth.FormatPhoneNumberUseCase
 import com.bunbeauty.shared.domain.feature.auth.GetPhoneNumberCursorPositionUseCase
 import com.bunbeauty.shared.domain.feature.auth.RequestCodeUseCase
@@ -148,6 +149,7 @@ class IosComponent : KoinComponent {
     fun provideGetPhoneNumberCursorPositionUseCase(): GetPhoneNumberCursorPositionUseCase = get()
     fun provideCheckCodeUseCase(): CheckCodeUseCase = get()
     fun provideResendCodeUseCase(): ResendCodeUseCase = get()
+    fun provideCheckPhoneNumberUseCase(): CheckPhoneNumberUseCase = get()
 
     //Mapper
     fun provideTimeMapper(): TimeMapper = get()

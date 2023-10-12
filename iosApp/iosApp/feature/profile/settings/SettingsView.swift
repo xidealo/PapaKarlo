@@ -29,7 +29,8 @@ struct SettingsView: View {
         eventList: []
     )
     
-    @State private var showingAlert = false
+    @State private var showingDeleteAlert = false
+    @State private var showingLogoutAlert = false
     
     @State var listener: Closeable? = nil
 
@@ -62,7 +63,7 @@ struct SettingsView: View {
                     .padding(.top, Diems.SMALL_PADDING)
                                         
                     Button(action: {
-                        showingAlert = true
+                        showingDeleteAlert = true
                     }) {
                         Text(Strings.ACTION_SETTINGS_REMOVE_ACCOUNT)
                             .frame(maxWidth: .infinity)
@@ -70,7 +71,7 @@ struct SettingsView: View {
                             .foregroundColor(AppColor.error)
                             .cornerRadius(Diems.MEDIUM_RADIUS)
                             .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default).smallCaps())
-                    }.alert("Вы уверены, что хотите удалить аккаунт?", isPresented: $showingAlert) {
+                    }.alert("Вы уверены, что хотите удалить аккаунт?", isPresented: $showingDeleteAlert) {
                         Button("Да") {
                             viewModel.disableUser()
                         }
@@ -85,12 +86,12 @@ struct SettingsView: View {
                 
                 Button(
                     action: {
-                        showingAlert = true
+                        showingLogoutAlert = true
                     }, label: {
                         ButtonText(text: "Выйти")
                     }
                 ).padding(16)
-                    .alert("Выйти из профиля?", isPresented: $showingAlert) {
+                    .alert("Выйти из профиля?", isPresented: $showingLogoutAlert) {
                         Button("Выйти") {
                             viewModel.logout()
                         }

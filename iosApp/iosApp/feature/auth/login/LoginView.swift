@@ -22,7 +22,8 @@ struct LoginView: View {
     @State var viewModel: LoginViewModel = LoginViewModel(
         requestCode: iosComponent.provideRequestCodeUseCase(),
         formatPhoneNumber: iosComponent.provideFormatPhoneNumberUseCase(),
-        getPhoneNumberCursorPosition: iosComponent.provideGetPhoneNumberCursorPositionUseCase()
+        getPhoneNumberCursorPosition: iosComponent.provideGetPhoneNumberCursorPositionUseCase(),
+        checkPhoneNumber: iosComponent.provideCheckPhoneNumberUseCase()
     )
 
     //State
@@ -88,7 +89,7 @@ struct LoginView: View {
     func subscribe(){
         stateListener = viewModel.state.watch {  loginStateVM in
             if let loginState = loginStateVM {
-                print(loginState.phoneNumber)
+                print(loginState)
                 phone = loginState.phoneNumber
                 hasPhoneError = loginState.hasPhoneError
                 isLoading = loginState.isLoading
@@ -179,7 +180,6 @@ struct LoginViewSuccessView: View {
                 Spacer()
                 
                 Button {
-                    hasError = false
                     action(LoginActionNextClick())
                 } label: {
                     ButtonText(text: Strings.ACTION_LOGIN_LOGIN)
