@@ -23,12 +23,12 @@ class MenuViewModel : ObservableObject {
     var canCalculate = true
     
     init(){
-        
         iosComponent.provideMenuInteractor().getMenuSectionList { menuSectionList, error in
             if(error != nil){
-                print("")
+                print("error")
                 return
             }
+            
             DispatchQueue.main.async {
                 iosComponent.provideGetDiscountUseCase().invoke { discount, err in
                     (self.menuViewState.copy() as! MenuViewState).apply { copiedState in
@@ -50,15 +50,28 @@ class MenuViewModel : ObservableObject {
     private func getMenuItems(menuSectionList:[MenuSection]) -> [MenuItem] {
         return menuSectionList.map { menuSection in
             MenuItem(categorySectionItem: CategorySectionItem(id: menuSection.category.uuid, name: menuSection.category.name, menuProdctItems: menuSection.menuProductList.map({ menuProduct in
-                MenuProductItem(id: menuProduct.uuid + menuSection.category.uuid, productUuid: menuProduct.uuid, name: menuProduct.name, newPrice: String(menuProduct.newPrice) + Strings.CURRENCY, oldPrice: menuProduct.oldPrice as? Int, photoLink: menuProduct.photoLink)
+                MenuProductItem(
+                    id: menuProduct.uuid + menuSection.category.uuid,
+                    productUuid: menuProduct.uuid,
+                    name: menuProduct.name,
+                    newPrice: String(menuProduct.newPrice) + Strings.CURRENCY,
+                    oldPrice: menuProduct.oldPrice as? Int,
+                    photoLink: menuProduct.photoLink
+                )
             }))
             )
         }
     }
     
     private func getCategoryItems(menuSectionList:[MenuSection]) -> [CategoryItemModel] {
+        
         return menuSectionList.map { menuSection in
-            CategoryItemModel(key: "MenuCategoryHeaderItemModel "  + menuSection.category.uuid, id: menuSection.category.uuid, name: menuSection.category.name, isSelected: false)
+            CategoryItemModel(
+                key: "MenuCategoryHeaderItemModel "  + menuSection.category.uuid,
+                id: menuSection.category.uuid,
+                name: menuSection.category.name,
+                isSelected: false
+            )
         }
     }
     
@@ -111,8 +124,10 @@ class MenuViewModel : ObservableObject {
                     
                     if (newState.discount != nil && isFirstItem) {
                         newState.scrollToPostion = DISCOUNT_ID
+                        print("scroll to discount")
                     }else{
                         newState.scrollToPostion = categoryItem.id
+                        print("scroll categoryItem.id \(categoryItem.id)")
                     }
                     
                     newState.scrollToHorizontalPostion = categoryItem.id
@@ -138,7 +153,11 @@ class MenuViewModel : ObservableObject {
     
     func checkAppear(index:Int){
         
-        if(menuViewState.scrollToPostion ==  menuViewState.categoryItemModels[index].id){
+        let isItemWichToScrolled = menuViewState.scrollToPostion ==  menuViewState.categoryItemModels[index].id
+        let isItDiscountItem = menuViewState.scrollToPostion == DISCOUNT_ID
+        let isItNoPositionItem = menuViewState.scrollToPostion == NO_POSITION
+        
+        if(isItemWichToScrolled || isItDiscountItem || isItNoPositionItem){
             DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500), execute: {
                 self.canCalculate = true
             })
@@ -155,7 +174,6 @@ class MenuViewModel : ObservableObject {
     }
     
     func checkDisappear(index:Int){
-        
         if !canCalculate {
             return
         }
@@ -165,6 +183,12 @@ class MenuViewModel : ObservableObject {
         if(lastAppearIndex > lastDisappearIndex){
             selectTagWithHorizontalScroll(selectIndex: index + 1 )
         }
-        
+    }
+    
+    func dropScrollPostion(){
+        (menuViewState.copy() as! MenuViewState).apply { newState in
+            newState.scrollToPostion = NO_POSITION
+            menuViewState = newState
+        }
     }
 }

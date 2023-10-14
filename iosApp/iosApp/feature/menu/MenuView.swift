@@ -10,17 +10,18 @@ import shared
 
 let DISCOUNT_ID = "discount_id"
 
+//Необходимо, чтобы сбрасывать значение с scrollToPosition, чтобы тригерился паблишер
+let NO_POSITION = "no_pos"
+
 struct MenuView: View {
     
     @StateObject private var viewModel = MenuViewModel()
-    @State var lastShowCategory = ""
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     
     //for back after createOrder
     @Binding var isRootActive:Bool
     @Binding var selection:Int
     @Binding var showOrderCreated:Bool
-    
     
     let columns = [
         GridItem(.flexible(), spacing: 8, alignment: .top),
@@ -47,8 +48,6 @@ struct MenuView: View {
                             }
                         }
                         .onChange(of: viewModel.menuViewState, perform: { menuState in
-                            print("select horizontal tag")
-                            print(menuState.scrollToPostion)
                             withAnimation(.spring()){
                                 scrollReader.scrollTo(menuState.scrollToHorizontalPostion)
                             }
@@ -83,24 +82,25 @@ struct MenuView: View {
                                                 viewModel.addCartProductToCart(menuProductUuid: menuProductItem.productUuid)
                                             })
                                         .onAppear(){
-                                            print("onAppear \(i)")
+                                            //print("onAppear \(i)")
                                             viewModel.checkAppear(index: i)
                                         }
                                         .onDisappear(){
-                                            print("onDisappear \(i)")
+                                            //print("onDisappear \(i)")
                                             viewModel.checkDisappear(index: i)
                                         }
                                     }
                                 }
                             }
                         }
+                        .padding(.bottom, 8)
                         .padding(.horizontal, 16)
-                        .onChange(of: viewModel.menuViewState, perform: { menuState in
-                            if(menuState.scrollToPostion != lastShowCategory){
-                                self.lastShowCategory = menuState.scrollToPostion
+                        .onChange(of: viewModel.menuViewState.scrollToPostion, perform: { scrollToPostion in
+                            if(scrollToPostion != NO_POSITION){
                                 withAnimation(.spring()){
-                                    scrollReader.scrollTo(menuState.scrollToPostion, anchor: .top)
+                                    scrollReader.scrollTo(scrollToPostion, anchor: .top)
                                 }
+                                viewModel.dropScrollPostion()
                             }
                         })
                     }
