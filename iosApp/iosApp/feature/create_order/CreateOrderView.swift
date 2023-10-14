@@ -106,7 +106,7 @@ struct CreateOrderView: View {
                 toast: Toast(title: "Адрес добавлен"),
                 show: $showCreatedAddress,
                 backgroundColor:AppColor.primary,
-                foregaroundColor: AppColor.onPrimary
+                foregroundColor: AppColor.onPrimary
             ),
             show: $showCreatedAddress
         )
@@ -115,7 +115,7 @@ struct CreateOrderView: View {
                 toast: Toast(title: "Не указан адрес"),
                 show: $showAddressError,
                 backgroundColor:AppColor.error,
-                foregaroundColor: AppColor.onError
+                foregroundColor: AppColor.onError
             ),
             show: $showAddressError
         )
@@ -124,7 +124,7 @@ struct CreateOrderView: View {
                 toast: Toast(title: "Что-то пошло не так")
                 , show: $showCommonError,
                 backgroundColor:AppColor.error,
-                foregaroundColor: AppColor.onError
+                foregroundColor: AppColor.onError
             ),
             show: $showCommonError
         )
@@ -133,7 +133,7 @@ struct CreateOrderView: View {
                 toast: Toast(title: "Способ оплаты не выбран"),
                 show: $showPaymentMethodError,
                 backgroundColor:AppColor.error,
-                foregaroundColor: AppColor.onError
+                foregroundColor: AppColor.onError
             ),
             show: $showPaymentMethodError
         )

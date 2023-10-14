@@ -70,7 +70,7 @@ struct LoginView: View {
                 toast: Toast(title: "Что-то пошло не так"),
                 show: $showSomethigWrongError,
                 backgroundColor:AppColor.error,
-                foregaroundColor: AppColor.onError
+                foregroundColor: AppColor.onError
             ),
             show: $showSomethigWrongError
         )
@@ -79,7 +79,7 @@ struct LoginView: View {
                 toast: Toast(title: "Превышен лимит на отправку сообщений"),
                 show: $showTooManyRequestsError,
                 backgroundColor:AppColor.error,
-                foregaroundColor: AppColor.onError
+                foregroundColor: AppColor.onError
             ),
             show: $showTooManyRequestsError
         )

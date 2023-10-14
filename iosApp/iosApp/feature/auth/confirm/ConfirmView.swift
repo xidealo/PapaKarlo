@@ -67,7 +67,7 @@ struct ConfirmView: View {
                 toast: Toast(title: "Превышен лимит на отправку сообщений"),
                 show: $showTooManyRequestsError,
                 backgroundColor: AppColor.error,
-                foregaroundColor: AppColor.onError
+                foregroundColor: AppColor.onError
             ), show: $showTooManyRequestsError
         )
         .overlay(
@@ -75,7 +75,7 @@ struct ConfirmView: View {
                 toast: Toast(title: "Превышено количество попыток ввода кода"),
                 show: $showNoAttemptsError,
                 backgroundColor: AppColor.error,
-                foregaroundColor: AppColor.onError
+                foregroundColor: AppColor.onError
             ), show: $showNoAttemptsError
         )
         .overlay(
@@ -83,7 +83,7 @@ struct ConfirmView: View {
                 toast: Toast(title: "Неверный код"),
                 show: $showInvalidCodeError,
                 backgroundColor: AppColor.error,
-                foregaroundColor: AppColor.onError
+                foregroundColor: AppColor.onError
             ), show: $showInvalidCodeError
         )
         .overlay(
@@ -91,7 +91,7 @@ struct ConfirmView: View {
                 toast: Toast(title: "Истекло время на ввод кода"),
                 show: $showAuthSessionTimeoutError,
                 backgroundColor: AppColor.error,
-                foregaroundColor: AppColor.onError
+                foregroundColor: AppColor.onError
             ), show: $showAuthSessionTimeoutError
         )
         .overlay(
@@ -99,7 +99,7 @@ struct ConfirmView: View {
                 toast: Toast(title: "Что-то пошло не так"),
                 show: $showSomethingWentWrongError,
                 backgroundColor: AppColor.error,
-                foregaroundColor: AppColor.onError
+                foregroundColor: AppColor.onError
             ), show: $showSomethingWentWrongError
         )
         .onAppear(){

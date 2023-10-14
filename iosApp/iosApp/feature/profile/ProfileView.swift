@@ -227,7 +227,7 @@ struct SuccessProfileView: View {
                     toast: Toast(title: "Код заказа: \(profileViewState.lastOrder?.code ?? "")"),
                     show: $showOrderCreated,
                     backgroundColor: AppColor.primary,
-                    foregaroundColor: AppColor.onPrimary
+                    foregroundColor: AppColor.onPrimary
                 ),
                 show: $showOrderCreated
             )
@@ -236,7 +236,7 @@ struct SuccessProfileView: View {
                     toast: Toast(title: "Адрес добавлен"),
                     show: $showCreatedAddress,
                     backgroundColor:AppColor.primary,
-                    foregaroundColor: AppColor.onPrimary),
+                    foregroundColor: AppColor.onPrimary),
                 show: $showCreatedAddress
             )
     }
