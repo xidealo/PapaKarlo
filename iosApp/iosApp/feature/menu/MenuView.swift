@@ -10,9 +10,6 @@ import shared
 
 let DISCOUNT_ID = "discount_id"
 
-//Необходимо, чтобы сбрасывать значение с scrollToPosition, чтобы тригерился паблишер
-let NO_POSITION = "no_pos"
-
 struct MenuView: View {
     
     @StateObject private var viewModel = MenuViewModel()
@@ -95,12 +92,9 @@ struct MenuView: View {
                         }
                         .padding(.bottom, 8)
                         .padding(.horizontal, 16)
-                        .onChange(of: viewModel.menuViewState.scrollToPostion, perform: { scrollToPostion in
-                            if(scrollToPostion != NO_POSITION){
-                                withAnimation(.spring()){
-                                    scrollReader.scrollTo(scrollToPostion, anchor: .top)
-                                }
-                                viewModel.dropScrollPostion()
+                        .onReceive(viewModel.$scrollToPostion, perform: { scrollToPostion in
+                            withAnimation(.spring()){
+                                scrollReader.scrollTo(scrollToPostion, anchor: .top)
                             }
                         })
                     }

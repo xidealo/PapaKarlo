@@ -15,7 +15,6 @@ struct LoginView: View {
     @Binding var isGoToCreateOrder:Bool
     @State var goToConfirm:Bool = false
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
-
     @State var showSomethigWrongError:Bool = false
     @State var showTooManyRequestsError:Bool = false
 

@@ -43,6 +43,13 @@ struct ContainerView: View {
             viewModel.unsubFromFlows()
         }.onChange(of: selection) { newValue in
             isShowLogo = newValue == 1
+            
+            switch(newValue){
+                case 0: title = "title_restaurants"
+                case 1: title = "title_menu"
+                default: title = "title_profile"
+            }
+            
         }
     }
 }

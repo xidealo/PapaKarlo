@@ -9,15 +9,17 @@ import Foundation
 import shared
 
 class MenuViewModel : ObservableObject {
+    
     @Published var menuViewState: MenuViewState = MenuViewState(
         menuItems: [],
         categoryItemModels: [],
         isLoading: true,
-        scrollToPostion: "",
         scrollToHorizontalPostion: "",
         discount: nil
     )
     
+    @Published var scrollToPostion = ""
+
     var lastDisappearIndex = 1
     var lastAppearIndex = 2
     var canCalculate = true
@@ -123,10 +125,10 @@ class MenuViewModel : ObservableObject {
                     }) == 0
                     
                     if (newState.discount != nil && isFirstItem) {
-                        newState.scrollToPostion = DISCOUNT_ID
+                        scrollToPostion = DISCOUNT_ID
                         print("scroll to discount")
                     }else{
-                        newState.scrollToPostion = categoryItem.id
+                        scrollToPostion = categoryItem.id
                         print("scroll categoryItem.id \(categoryItem.id)")
                     }
                     
@@ -153,11 +155,10 @@ class MenuViewModel : ObservableObject {
     
     func checkAppear(index:Int){
         
-        let isItemWichToScrolled = menuViewState.scrollToPostion ==  menuViewState.categoryItemModels[index].id
-        let isItDiscountItem = menuViewState.scrollToPostion == DISCOUNT_ID
-        let isItNoPositionItem = menuViewState.scrollToPostion == NO_POSITION
+        let isItemWichToScrolled = scrollToPostion ==  menuViewState.categoryItemModels[index].id
+        let isItDiscountItem = scrollToPostion == DISCOUNT_ID
         
-        if(isItemWichToScrolled || isItDiscountItem || isItNoPositionItem){
+        if(isItemWichToScrolled || isItDiscountItem){
             DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500), execute: {
                 self.canCalculate = true
             })
@@ -182,13 +183,6 @@ class MenuViewModel : ObservableObject {
         
         if(lastAppearIndex > lastDisappearIndex){
             selectTagWithHorizontalScroll(selectIndex: index + 1 )
-        }
-    }
-    
-    func dropScrollPostion(){
-        (menuViewState.copy() as! MenuViewState).apply { newState in
-            newState.scrollToPostion = NO_POSITION
-            menuViewState = newState
         }
     }
 }

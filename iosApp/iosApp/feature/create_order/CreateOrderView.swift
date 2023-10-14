@@ -128,7 +128,7 @@ struct CreateOrderView: View {
             ),
             show: $showCommonError
         )
-         .overlay(
+        .overlay(
             overlayView: ToastView(
                 toast: Toast(title: "Способ оплаты не выбран"),
                 show: $showPaymentMethodError,
@@ -137,7 +137,7 @@ struct CreateOrderView: View {
             ),
             show: $showPaymentMethodError
         )
-       
+        
     }
 }
 
@@ -162,7 +162,7 @@ struct CreateOrderSuccessView: View {
     @Binding var showOrderCreated:Bool
     @Binding var addressList: [SelectableCafeAddressItem]
     @Binding var paymentList: [SelectablePaymentMethod]
-
+    
     let calendar = Calendar.current
     
     var body: some View{
