@@ -63,7 +63,7 @@ struct PaymentView: View {
                 toast: Toast(title: "Номер карты скопирован"),
                 show: $showCardCopy,
                 backgroundColor: AppColor.primary,
-                foregaroundColor: AppColor.onPrimary
+                foregroundColor: AppColor.onPrimary
             ), show: $showCardCopy
         )
         .overlay(
@@ -71,7 +71,7 @@ struct PaymentView: View {
                 toast: Toast(title: "Значение скопировано"),
                 show: $showCopy,
                 backgroundColor:AppColor.primary,
-                foregaroundColor: AppColor.onPrimary
+                foregroundColor: AppColor.onPrimary
             ), show: $showCopy
         )
     }
