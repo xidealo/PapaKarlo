@@ -18,7 +18,7 @@ class MenuViewModel : ObservableObject {
         discount: nil
     )
     
-    @Published var scrollToPostion = ""
+    @Published var scrollToPostion = "no pos"
 
     var lastDisappearIndex = 1
     var lastAppearIndex = 2
