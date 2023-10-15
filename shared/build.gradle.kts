@@ -20,7 +20,6 @@ kotlin {
         ios.deploymentTarget = "14.1"
         podfile = project.file("../iosApp/Podfile")
 
-        pod("FirebaseAuth")
         pod("FirebaseMessaging")
 
         framework {
@@ -71,8 +70,6 @@ kotlin {
                 implementation(Lifecycle.viewmodel)
 
                 implementation(project.dependencies.platform(Firebase.bom))
-
-                implementation(Firebase.authKtx)
                 implementation(Firebase.messaging)
 
                 implementation(SqlDelight.androidDriver)
