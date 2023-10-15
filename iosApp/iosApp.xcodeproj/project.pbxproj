@@ -433,13 +433,13 @@
 		02FFD2E42A3509E3000B03E8 /* gustoPubAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 027CB0932A34713400350EB2 /* gustoPubAssets.xcassets */; };
 		058557BB273AAA24004C7B11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557BA273AAA24004C7B11 /* Assets.xcassets */; };
 		058557D9273AAEEB004C7B11 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */; };
-		085C60A1FA0300AE43832F37 /* Pods_yuliar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A63DBC48114650569052C0C /* Pods_yuliar.framework */; };
+		08E3BCB476D837D4A19A7CA8 /* Pods_djan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49D906390D05B053EB66BB3D /* Pods_djan.framework */; };
 		2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp.swift */; };
-		42262007967FD10B420F4236 /* Pods_gustopub.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55743AD7364AF2F6E59B9257 /* Pods_gustopub.framework */; };
+		44FCBB444DCE0D80ABF307DF /* Pods_papakarlo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC0C6D33B1777DD7A03CE92E /* Pods_papakarlo.framework */; };
 		4A0B25C2EBE3215D0FC6C121 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		5939E23174B9B837C69EF1E2 /* Pods_gustopub.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05E79FC9FB378C7D1185BA37 /* Pods_gustopub.framework */; };
 		7555FF83242A565900829871 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* ContentView.swift */; };
-		A9362AB2610EDF355C8AD23C /* Pods_papakarlo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D1CD0BCD06F7106F15F4855 /* Pods_papakarlo.framework */; };
-		BEF335160F3076A3BA82BFFB /* Pods_djan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4C21F5379139124B6361286 /* Pods_djan.framework */; };
+		EDAAE40634FEC9987E972FE9 /* Pods_yuliar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11D4B84A7D1BAAFE723E1EA6 /* Pods_yuliar.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -564,21 +564,21 @@
 		02FFD2E22A350902000B03E8 /* gustoPub.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = gustoPub.plist; sourceTree = "<group>"; };
 		058557BA273AAA24004C7B11 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		0A63DBC48114650569052C0C /* Pods_yuliar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_yuliar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		05E79FC9FB378C7D1185BA37 /* Pods_gustopub.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_gustopub.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		11D4B84A7D1BAAFE723E1EA6 /* Pods_yuliar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_yuliar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D1FCD3A9ACB791EBE8EC3EB /* Pods-djan.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-djan.release.xcconfig"; path = "Target Support Files/Pods-djan/Pods-djan.release.xcconfig"; sourceTree = "<group>"; };
 		2152FB032600AC8F00CF470E /* iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSApp.swift; sourceTree = "<group>"; };
-		38845FE25ECA73A7EFAA37FC /* Pods-papakarlo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-papakarlo.debug.xcconfig"; path = "Target Support Files/Pods-papakarlo/Pods-papakarlo.debug.xcconfig"; sourceTree = "<group>"; };
-		3AD4B2878774E1B4EEBF7588 /* Pods-gustopub.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-gustopub.release.xcconfig"; path = "Target Support Files/Pods-gustopub/Pods-gustopub.release.xcconfig"; sourceTree = "<group>"; };
-		5149BE1E5553681D23AA1D6A /* Pods-djan.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-djan.debug.xcconfig"; path = "Target Support Files/Pods-djan/Pods-djan.debug.xcconfig"; sourceTree = "<group>"; };
-		55743AD7364AF2F6E59B9257 /* Pods_gustopub.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_gustopub.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		49D906390D05B053EB66BB3D /* Pods_djan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_djan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4A6CB921D08D7787A6E0D2EB /* Pods-gustopub.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-gustopub.release.xcconfig"; path = "Target Support Files/Pods-gustopub/Pods-gustopub.release.xcconfig"; sourceTree = "<group>"; };
+		642662E8F49FD63D8CA8DE78 /* Pods-papakarlo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-papakarlo.debug.xcconfig"; path = "Target Support Files/Pods-papakarlo/Pods-papakarlo.debug.xcconfig"; sourceTree = "<group>"; };
 		7555FF7B242A565900829871 /* papakarlo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = papakarlo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7555FF82242A565900829871 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		7D1CD0BCD06F7106F15F4855 /* Pods_papakarlo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_papakarlo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		A2D97DD77264F421D0D22998 /* Pods-yuliar.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-yuliar.debug.xcconfig"; path = "Target Support Files/Pods-yuliar/Pods-yuliar.debug.xcconfig"; sourceTree = "<group>"; };
-		B126DD6FD735AA7823AD71D4 /* Pods-djan.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-djan.release.xcconfig"; path = "Target Support Files/Pods-djan/Pods-djan.release.xcconfig"; sourceTree = "<group>"; };
-		B68BF2129DF6C7EC761D4935 /* Pods-yuliar.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-yuliar.release.xcconfig"; path = "Target Support Files/Pods-yuliar/Pods-yuliar.release.xcconfig"; sourceTree = "<group>"; };
-		C4C21F5379139124B6361286 /* Pods_djan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_djan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C746B5BBF1CD65F0C979E0E0 /* Pods-gustopub.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-gustopub.debug.xcconfig"; path = "Target Support Files/Pods-gustopub/Pods-gustopub.debug.xcconfig"; sourceTree = "<group>"; };
-		DE5AA12677339D6224F0957E /* Pods-papakarlo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-papakarlo.release.xcconfig"; path = "Target Support Files/Pods-papakarlo/Pods-papakarlo.release.xcconfig"; sourceTree = "<group>"; };
+		7BF2AE5430253A5292218EF7 /* Pods-yuliar.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-yuliar.debug.xcconfig"; path = "Target Support Files/Pods-yuliar/Pods-yuliar.debug.xcconfig"; sourceTree = "<group>"; };
+		AA45968515CDD29727444593 /* Pods-djan.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-djan.debug.xcconfig"; path = "Target Support Files/Pods-djan/Pods-djan.debug.xcconfig"; sourceTree = "<group>"; };
+		AC0C6D33B1777DD7A03CE92E /* Pods_papakarlo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_papakarlo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B1F8B2E2A0B800A5E994C09B /* Pods-papakarlo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-papakarlo.release.xcconfig"; path = "Target Support Files/Pods-papakarlo/Pods-papakarlo.release.xcconfig"; sourceTree = "<group>"; };
+		C0042060C4B1BDBB30EB9CC6 /* Pods-gustopub.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-gustopub.debug.xcconfig"; path = "Target Support Files/Pods-gustopub/Pods-gustopub.debug.xcconfig"; sourceTree = "<group>"; };
+		D5C8D25BB231895FFEC2183A /* Pods-yuliar.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-yuliar.release.xcconfig"; path = "Target Support Files/Pods-yuliar/Pods-yuliar.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -587,7 +587,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4A0B25C2EBE3215D0FC6C121 /* (null) in Frameworks */,
-				BEF335160F3076A3BA82BFFB /* Pods_djan.framework in Frameworks */,
+				08E3BCB476D837D4A19A7CA8 /* Pods_djan.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -595,7 +595,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				42262007967FD10B420F4236 /* Pods_gustopub.framework in Frameworks */,
+				5939E23174B9B837C69EF1E2 /* Pods_gustopub.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -603,7 +603,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				085C60A1FA0300AE43832F37 /* Pods_yuliar.framework in Frameworks */,
+				EDAAE40634FEC9987E972FE9 /* Pods_yuliar.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -611,7 +611,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A9362AB2610EDF355C8AD23C /* Pods_papakarlo.framework in Frameworks */,
+				44FCBB444DCE0D80ABF307DF /* Pods_papakarlo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1024,28 +1024,17 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		5049073CD427BA4D5990DFA2 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				C4C21F5379139124B6361286 /* Pods_djan.framework */,
-				55743AD7364AF2F6E59B9257 /* Pods_gustopub.framework */,
-				7D1CD0BCD06F7106F15F4855 /* Pods_papakarlo.framework */,
-				0A63DBC48114650569052C0C /* Pods_yuliar.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		50DE2F3B6643F72B29F5DDAC /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				5149BE1E5553681D23AA1D6A /* Pods-djan.debug.xcconfig */,
-				B126DD6FD735AA7823AD71D4 /* Pods-djan.release.xcconfig */,
-				C746B5BBF1CD65F0C979E0E0 /* Pods-gustopub.debug.xcconfig */,
-				3AD4B2878774E1B4EEBF7588 /* Pods-gustopub.release.xcconfig */,
-				38845FE25ECA73A7EFAA37FC /* Pods-papakarlo.debug.xcconfig */,
-				DE5AA12677339D6224F0957E /* Pods-papakarlo.release.xcconfig */,
-				A2D97DD77264F421D0D22998 /* Pods-yuliar.debug.xcconfig */,
-				B68BF2129DF6C7EC761D4935 /* Pods-yuliar.release.xcconfig */,
+				AA45968515CDD29727444593 /* Pods-djan.debug.xcconfig */,
+				1D1FCD3A9ACB791EBE8EC3EB /* Pods-djan.release.xcconfig */,
+				C0042060C4B1BDBB30EB9CC6 /* Pods-gustopub.debug.xcconfig */,
+				4A6CB921D08D7787A6E0D2EB /* Pods-gustopub.release.xcconfig */,
+				642662E8F49FD63D8CA8DE78 /* Pods-papakarlo.debug.xcconfig */,
+				B1F8B2E2A0B800A5E994C09B /* Pods-papakarlo.release.xcconfig */,
+				7BF2AE5430253A5292218EF7 /* Pods-yuliar.debug.xcconfig */,
+				D5C8D25BB231895FFEC2183A /* Pods-yuliar.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -1058,8 +1047,8 @@
 				7555FF7D242A565900829871 /* iosApp */,
 				7555FF7C242A565900829871 /* Products */,
 				50DE2F3B6643F72B29F5DDAC /* Pods */,
-				5049073CD427BA4D5990DFA2 /* Frameworks */,
 				0275EBC92A9B380D00F8ECE2 /* Recovered References */,
+				E3FD14A7B54C81DAB975DE21 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1095,6 +1084,17 @@
 			path = iosApp;
 			sourceTree = "<group>";
 		};
+		E3FD14A7B54C81DAB975DE21 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				49D906390D05B053EB66BB3D /* Pods_djan.framework */,
+				05E79FC9FB378C7D1185BA37 /* Pods_gustopub.framework */,
+				AC0C6D33B1777DD7A03CE92E /* Pods_papakarlo.framework */,
+				11D4B84A7D1BAAFE723E1EA6 /* Pods_yuliar.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1102,12 +1102,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 026C1FC82A2690B900838266 /* Build configuration list for PBXNativeTarget "djan" */;
 			buildPhases = (
-				FF4872DB663AD4DFF374D49C /* [CP] Check Pods Manifest.lock */,
+				D3381AB7D550907BFEEAE4EA /* [CP] Check Pods Manifest.lock */,
 				026C1F522A2690B900838266 /* Sources */,
 				026C1FBE2A2690B900838266 /* Resources */,
 				026C1FC42A2690B900838266 /* Frameworks */,
 				026C1FC62A2690B900838266 /* ShellScript */,
-				8DBB70C3D15FA7A490B7A0E6 /* [CP] Embed Pods Frameworks */,
+				DDD3E1C6869F0082DAFB6373 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1122,12 +1122,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 027CB08C2A346F7B00350EB2 /* Build configuration list for PBXNativeTarget "gustopub" */;
 			buildPhases = (
-				27997D1C576B07F337411160 /* [CP] Check Pods Manifest.lock */,
+				EAF64BE9D63A8B0D7A28DA57 /* [CP] Check Pods Manifest.lock */,
 				027CB0152A346F7B00350EB2 /* Sources */,
 				027CB0812A346F7B00350EB2 /* Resources */,
 				027CB0882A346F7B00350EB2 /* Frameworks */,
 				027CB08A2A346F7B00350EB2 /* ShellScript */,
-				A1D747666E71203715014345 /* [CP] Embed Pods Frameworks */,
+				13406E87158CD70F3DD5D48C /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1142,12 +1142,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 02ADC3AB29D9D0880062A141 /* Build configuration list for PBXNativeTarget "yuliar" */;
 			buildPhases = (
-				DD96DA664592ABAAB44B6CCC /* [CP] Check Pods Manifest.lock */,
+				50837543C5127841AB6A8556 /* [CP] Check Pods Manifest.lock */,
 				02ADC33729D9D0880062A141 /* Sources */,
 				02ADC3A229D9D0880062A141 /* Resources */,
 				02ADC3A729D9D0880062A141 /* Frameworks */,
 				02ADC3A929D9D0880062A141 /* ShellScript */,
-				7A08DC03226FC071535009FB /* [CP] Embed Pods Frameworks */,
+				FCF00AB1F38B7343A29ED6AA /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1162,12 +1162,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7555FFA5242A565B00829871 /* Build configuration list for PBXNativeTarget "papakarlo" */;
 			buildPhases = (
-				99452F4BAE0B7A48D9208220 /* [CP] Check Pods Manifest.lock */,
+				C9E220CD5706F7B86BB65261 /* [CP] Check Pods Manifest.lock */,
 				7555FF77242A565900829871 /* Sources */,
 				7555FF79242A565900829871 /* Resources */,
 				FAB66D7FD21CA0242210288D /* Frameworks */,
 				0221D3A62958964C002E4F20 /* ShellScript */,
-				CE37650021CB937E1FC3536E /* [CP] Embed Pods Frameworks */,
+				739ADAD84B38323F4D7B36B2 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1347,85 +1347,7 @@
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
 		};
-		27997D1C576B07F337411160 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-gustopub-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		7A08DC03226FC071535009FB /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-yuliar/Pods-yuliar-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-yuliar/Pods-yuliar-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-yuliar/Pods-yuliar-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		8DBB70C3D15FA7A490B7A0E6 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-djan/Pods-djan-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-djan/Pods-djan-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-djan/Pods-djan-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		99452F4BAE0B7A48D9208220 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-papakarlo-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		A1D747666E71203715014345 /* [CP] Embed Pods Frameworks */ = {
+		13406E87158CD70F3DD5D48C /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1442,24 +1364,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-gustopub/Pods-gustopub-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		CE37650021CB937E1FC3536E /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-papakarlo/Pods-papakarlo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-papakarlo/Pods-papakarlo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-papakarlo/Pods-papakarlo-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		DD96DA664592ABAAB44B6CCC /* [CP] Check Pods Manifest.lock */ = {
+		50837543C5127841AB6A8556 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1481,7 +1386,46 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		FF4872DB663AD4DFF374D49C /* [CP] Check Pods Manifest.lock */ = {
+		739ADAD84B38323F4D7B36B2 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-papakarlo/Pods-papakarlo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-papakarlo/Pods-papakarlo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-papakarlo/Pods-papakarlo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C9E220CD5706F7B86BB65261 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-papakarlo-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D3381AB7D550907BFEEAE4EA /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1501,6 +1445,62 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DDD3E1C6869F0082DAFB6373 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-djan/Pods-djan-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-djan/Pods-djan-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-djan/Pods-djan-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EAF64BE9D63A8B0D7A28DA57 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-gustopub-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FCF00AB1F38B7343A29ED6AA /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-yuliar/Pods-yuliar-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-yuliar/Pods-yuliar-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-yuliar/Pods-yuliar-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1955,7 +1955,7 @@
 /* Begin XCBuildConfiguration section */
 		026C1FC92A2690B900838266 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5149BE1E5553681D23AA1D6A /* Pods-djan.debug.xcconfig */;
+			baseConfigurationReference = AA45968515CDD29727444593 /* Pods-djan.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = yuliar.entitlements;
@@ -1990,8 +1990,6 @@
 					"-framework",
 					"\"FirebaseAnalytics\"",
 					"-framework",
-					"\"FirebaseAuth\"",
-					"-framework",
 					"\"FirebaseCore\"",
 					"-framework",
 					"\"FirebaseCoreDiagnostics\"",
@@ -2003,8 +2001,6 @@
 					"\"FirebaseInstallations\"",
 					"-framework",
 					"\"Foundation\"",
-					"-framework",
-					"\"GTMSessionFetcher\"",
 					"-framework",
 					"\"GoogleAppMeasurement\"",
 					"-framework",
@@ -2048,7 +2044,7 @@
 		};
 		026C1FCA2A2690B900838266 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B126DD6FD735AA7823AD71D4 /* Pods-djan.release.xcconfig */;
+			baseConfigurationReference = 1D1FCD3A9ACB791EBE8EC3EB /* Pods-djan.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = yuliar.entitlements;
@@ -2083,8 +2079,6 @@
 					"-framework",
 					"\"FirebaseAnalytics\"",
 					"-framework",
-					"\"FirebaseAuth\"",
-					"-framework",
 					"\"FirebaseCore\"",
 					"-framework",
 					"\"FirebaseCoreDiagnostics\"",
@@ -2096,8 +2090,6 @@
 					"\"FirebaseInstallations\"",
 					"-framework",
 					"\"Foundation\"",
-					"-framework",
-					"\"GTMSessionFetcher\"",
 					"-framework",
 					"\"GoogleAppMeasurement\"",
 					"-framework",
@@ -2141,7 +2133,7 @@
 		};
 		027CB08D2A346F7B00350EB2 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C746B5BBF1CD65F0C979E0E0 /* Pods-gustopub.debug.xcconfig */;
+			baseConfigurationReference = C0042060C4B1BDBB30EB9CC6 /* Pods-gustopub.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = yuliar.entitlements;
@@ -2176,8 +2168,6 @@
 					"-framework",
 					"\"FirebaseAnalytics\"",
 					"-framework",
-					"\"FirebaseAuth\"",
-					"-framework",
 					"\"FirebaseCore\"",
 					"-framework",
 					"\"FirebaseCoreDiagnostics\"",
@@ -2189,8 +2179,6 @@
 					"\"FirebaseInstallations\"",
 					"-framework",
 					"\"Foundation\"",
-					"-framework",
-					"\"GTMSessionFetcher\"",
 					"-framework",
 					"\"GoogleAppMeasurement\"",
 					"-framework",
@@ -2234,7 +2222,7 @@
 		};
 		027CB08E2A346F7B00350EB2 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3AD4B2878774E1B4EEBF7588 /* Pods-gustopub.release.xcconfig */;
+			baseConfigurationReference = 4A6CB921D08D7787A6E0D2EB /* Pods-gustopub.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = yuliar.entitlements;
@@ -2269,8 +2257,6 @@
 					"-framework",
 					"\"FirebaseAnalytics\"",
 					"-framework",
-					"\"FirebaseAuth\"",
-					"-framework",
 					"\"FirebaseCore\"",
 					"-framework",
 					"\"FirebaseCoreDiagnostics\"",
@@ -2282,8 +2268,6 @@
 					"\"FirebaseInstallations\"",
 					"-framework",
 					"\"Foundation\"",
-					"-framework",
-					"\"GTMSessionFetcher\"",
 					"-framework",
 					"\"GoogleAppMeasurement\"",
 					"-framework",
@@ -2327,7 +2311,7 @@
 		};
 		02ADC3AC29D9D0880062A141 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A2D97DD77264F421D0D22998 /* Pods-yuliar.debug.xcconfig */;
+			baseConfigurationReference = 7BF2AE5430253A5292218EF7 /* Pods-yuliar.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = yuliar.entitlements;
@@ -2362,8 +2346,6 @@
 					"-framework",
 					"\"FirebaseAnalytics\"",
 					"-framework",
-					"\"FirebaseAuth\"",
-					"-framework",
 					"\"FirebaseCore\"",
 					"-framework",
 					"\"FirebaseCoreDiagnostics\"",
@@ -2375,8 +2357,6 @@
 					"\"FirebaseInstallations\"",
 					"-framework",
 					"\"Foundation\"",
-					"-framework",
-					"\"GTMSessionFetcher\"",
 					"-framework",
 					"\"GoogleAppMeasurement\"",
 					"-framework",
@@ -2420,7 +2400,7 @@
 		};
 		02ADC3AD29D9D0880062A141 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B68BF2129DF6C7EC761D4935 /* Pods-yuliar.release.xcconfig */;
+			baseConfigurationReference = D5C8D25BB231895FFEC2183A /* Pods-yuliar.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = yuliar.entitlements;
@@ -2455,8 +2435,6 @@
 					"-framework",
 					"\"FirebaseAnalytics\"",
 					"-framework",
-					"\"FirebaseAuth\"",
-					"-framework",
 					"\"FirebaseCore\"",
 					"-framework",
 					"\"FirebaseCoreDiagnostics\"",
@@ -2468,8 +2446,6 @@
 					"\"FirebaseInstallations\"",
 					"-framework",
 					"\"Foundation\"",
-					"-framework",
-					"\"GTMSessionFetcher\"",
 					"-framework",
 					"\"GoogleAppMeasurement\"",
 					"-framework",
@@ -2631,7 +2607,7 @@
 		};
 		7555FFA6242A565B00829871 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 38845FE25ECA73A7EFAA37FC /* Pods-papakarlo.debug.xcconfig */;
+			baseConfigurationReference = 642662E8F49FD63D8CA8DE78 /* Pods-papakarlo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = papakarlo.entitlements;
@@ -2666,8 +2642,6 @@
 					"-framework",
 					"\"FirebaseAnalytics\"",
 					"-framework",
-					"\"FirebaseAuth\"",
-					"-framework",
 					"\"FirebaseCore\"",
 					"-framework",
 					"\"FirebaseCoreDiagnostics\"",
@@ -2679,8 +2653,6 @@
 					"\"FirebaseInstallations\"",
 					"-framework",
 					"\"Foundation\"",
-					"-framework",
-					"\"GTMSessionFetcher\"",
 					"-framework",
 					"\"GoogleAppMeasurement\"",
 					"-framework",
@@ -2724,7 +2696,7 @@
 		};
 		7555FFA7242A565B00829871 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DE5AA12677339D6224F0957E /* Pods-papakarlo.release.xcconfig */;
+			baseConfigurationReference = B1F8B2E2A0B800A5E994C09B /* Pods-papakarlo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = papakarlo.entitlements;
@@ -2759,8 +2731,6 @@
 					"-framework",
 					"\"FirebaseAnalytics\"",
 					"-framework",
-					"\"FirebaseAuth\"",
-					"-framework",
 					"\"FirebaseCore\"",
 					"-framework",
 					"\"FirebaseCoreDiagnostics\"",
@@ -2772,8 +2742,6 @@
 					"\"FirebaseInstallations\"",
 					"-framework",
 					"\"Foundation\"",
-					"-framework",
-					"\"GTMSessionFetcher\"",
 					"-framework",
 					"\"GoogleAppMeasurement\"",
 					"-framework",
