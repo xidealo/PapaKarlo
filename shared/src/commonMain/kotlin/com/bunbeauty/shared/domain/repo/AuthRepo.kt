@@ -4,7 +4,7 @@ import com.bunbeauty.shared.domain.model.AuthResponse
 
 interface AuthRepo {
 
-    suspend fun requestCode(phoneNumber: String)
-    suspend fun resendCode()
+    suspend fun requestCode(phoneNumber: String): Boolean
+    suspend fun resendCode(): Boolean
     suspend fun checkCode(code: String): AuthResponse?
 }
