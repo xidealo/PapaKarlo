@@ -33,8 +33,8 @@ import com.bunbeauty.shared.data.network.model.order.post.OrderPostServer
 import com.bunbeauty.shared.data.network.model.profile.get.ProfileServer
 import com.bunbeauty.shared.data.network.model.profile.patch.PatchUserServer
 import com.bunbeauty.shared.data.network.socket.SocketService
+import com.bunbeauty.shared.domain.exeptions.FoodDeliveryNetworkException
 import io.ktor.client.HttpClient
-import io.ktor.client.call.NoTransformationFoundException
 import io.ktor.client.call.body
 import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.request.HttpRequestBuilder
@@ -52,7 +52,7 @@ import org.koin.core.component.KoinComponent
 
 class NetworkConnectorImpl(
     private val client: HttpClient,
-    private val socketService: SocketService
+    private val socketService: SocketService,
 ) : KoinComponent, NetworkConnector {
 
     // GET
@@ -115,7 +115,7 @@ class NetworkConnectorImpl(
 
     override suspend fun getUserAddressListByCityUuid(
         token: String,
-        cityUuid: String
+        cityUuid: String,
     ): ApiResult<ListServer<AddressServer>> {
         return getData(
             path = "address",
@@ -190,7 +190,7 @@ class NetworkConnectorImpl(
 
     override suspend fun postUserAddress(
         token: String,
-        userAddress: UserAddressPostServer
+        userAddress: UserAddressPostServer,
     ): ApiResult<AddressServer> {
         return postData(
             path = "address",
@@ -219,7 +219,7 @@ class NetworkConnectorImpl(
 
     override suspend fun patchSettings(
         token: String,
-        patchUserServer: PatchUserServer
+        patchUserServer: PatchUserServer,
     ): ApiResult<SettingsServer> {
         return patchData(
             path = "client/settings",
@@ -264,7 +264,7 @@ class NetworkConnectorImpl(
     private suspend inline fun <reified R> getData(
         path: String,
         parameters: Map<String, Any> = mapOf(),
-        token: String? = null
+        token: String? = null,
     ): ApiResult<R> {
         return safeCall {
             client.get {
@@ -281,7 +281,7 @@ class NetworkConnectorImpl(
         path: String,
         parameters: Map<String, String> = mapOf(),
         body: Any,
-        token: String? = null
+        token: String? = null,
     ): ApiResult<R> {
         return safeCall {
             client.post {
@@ -299,7 +299,7 @@ class NetworkConnectorImpl(
         path: String,
         body: Any,
         parameters: Map<String, String> = mapOf(),
-        token: String? = null
+        token: String? = null,
     ): ApiResult<R> {
         return safeCall {
             client.patch {
@@ -317,7 +317,7 @@ class NetworkConnectorImpl(
         path: String,
         body: Any? = null,
         parameters: Map<String, String> = mapOf(),
-        token: String? = null
+        token: String? = null,
     ): ApiResult<R> {
         return safeCall {
             client.put {
@@ -332,15 +332,15 @@ class NetworkConnectorImpl(
     }
 
     private suspend inline fun <reified R> safeCall(
-        networkCall: () -> HttpResponse
+        networkCall: () -> HttpResponse,
     ): ApiResult<R> {
-        val call = networkCall()
         return try {
+            val call = networkCall()
             ApiResult.Success(call.body())
+        } catch (exception: FoodDeliveryNetworkException) {
+            throw exception
         } catch (exception: ClientRequestException) {
             ApiResult.Error(ApiError(exception.response.status.value, exception.message))
-        } catch (exception: NoTransformationFoundException) {
-            ApiResult.Error(ApiError(call.status.value, call.status.description))
         } catch (exception: Throwable) {
             ApiResult.Error(ApiError(0, exception.message.toString()))
         }
@@ -350,7 +350,7 @@ class NetworkConnectorImpl(
         path: String,
         parameters: Map<String, Any> = mapOf(),
         body: Any? = null,
-        token: String? = null
+        token: String? = null,
     ) {
         if (body != null) {
             setBody(body)
