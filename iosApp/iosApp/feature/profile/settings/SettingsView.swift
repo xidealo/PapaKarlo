@@ -17,8 +17,7 @@ struct SettingsView: View {
         getCityListUseCase: iosComponent.provideGetCityListUseCase(),
         saveSelectedCityUseCase: iosComponent.provideSaveSelectedCityUseCase(),
         disableUserUseCase: iosComponent.provideDisableUserUseCase(),
-        userInteractor: iosComponent.provideIUserInteractor(),
-        firebaseAuthRepository: iosComponent.provideFirebaseAuthRepository()
+        userInteractor: iosComponent.provideIUserInteractor()
     )
     
     @State var state = SettingsState(

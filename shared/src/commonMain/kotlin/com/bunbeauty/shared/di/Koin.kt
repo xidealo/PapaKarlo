@@ -1,6 +1,5 @@
 package com.bunbeauty.shared.di
 
-import com.bunbeauty.shared.data.FirebaseAuthRepository
 import com.bunbeauty.shared.data.di.dataMapperModule
 import com.bunbeauty.shared.data.di.databaseModule
 import com.bunbeauty.shared.data.di.networkModule
@@ -157,7 +156,6 @@ class IosComponent : KoinComponent {
     fun provideCreateOrderStateMapper(): CreateOrderStateMapper = get()
 
     //Other
-    fun provideFirebaseAuthRepository(): FirebaseAuthRepository = get()
     fun provideApiRepo(): NetworkConnector = get()
 
 }

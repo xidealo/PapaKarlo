@@ -227,7 +227,6 @@ object Firebase {
     const val bom = "com.google.firebase:firebase-bom:${Versions.firebase}"
     const val crashlyticsKtx = "com.google.firebase:firebase-crashlytics-ktx"
     const val analyticsKtx = "com.google.firebase:firebase-analytics-ktx"
-    const val authKtx = "com.google.firebase:firebase-auth-ktx"
     const val messaging = "com.google.firebase:firebase-messaging-ktx"
 }
 
