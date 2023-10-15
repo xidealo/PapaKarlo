@@ -433,16 +433,17 @@
 		02FFD2E42A3509E3000B03E8 /* gustoPubAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 027CB0932A34713400350EB2 /* gustoPubAssets.xcassets */; };
 		058557BB273AAA24004C7B11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557BA273AAA24004C7B11 /* Assets.xcassets */; };
 		058557D9273AAEEB004C7B11 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */; };
-		08E3BCB476D837D4A19A7CA8 /* Pods_djan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49D906390D05B053EB66BB3D /* Pods_djan.framework */; };
+		1FFEB65F3A120527902AAB84 /* Pods_djan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D919A5E08BD3E13A2CF6DFF /* Pods_djan.framework */; };
 		2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp.swift */; };
-		44FCBB444DCE0D80ABF307DF /* Pods_papakarlo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC0C6D33B1777DD7A03CE92E /* Pods_papakarlo.framework */; };
+		357A4957800C7DEDC9BC620D /* Pods_papakarlo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FB64B850D7523D123993736 /* Pods_papakarlo.framework */; };
 		4A0B25C2EBE3215D0FC6C121 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
-		5939E23174B9B837C69EF1E2 /* Pods_gustopub.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05E79FC9FB378C7D1185BA37 /* Pods_gustopub.framework */; };
 		7555FF83242A565900829871 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* ContentView.swift */; };
-		EDAAE40634FEC9987E972FE9 /* Pods_yuliar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11D4B84A7D1BAAFE723E1EA6 /* Pods_yuliar.framework */; };
+		E3BDFE3201731FF2315FEF62 /* Pods_gustopub.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47B49FB8157F3D5B84A2EDB0 /* Pods_gustopub.framework */; };
+		FF923BF1FCEC1A967E797B48 /* Pods_yuliar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADC1390934F0405FE2822432 /* Pods_yuliar.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		005A83AD4A3D287BCC0225D3 /* Pods-yuliar.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-yuliar.debug.xcconfig"; path = "Target Support Files/Pods-yuliar/Pods-yuliar.debug.xcconfig"; sourceTree = "<group>"; };
 		020097112A23C40E00CA65F5 /* yuliar.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = yuliar.entitlements; sourceTree = "<group>"; };
 		020FEEBE28D3AEF7002B3D69 /* CafeAddressListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CafeAddressListView.swift; sourceTree = "<group>"; };
 		020FEEC028D3AF14002B3D69 /* CafeAddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CafeAddressViewModel.swift; sourceTree = "<group>"; };
@@ -564,21 +565,20 @@
 		02FFD2E22A350902000B03E8 /* gustoPub.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = gustoPub.plist; sourceTree = "<group>"; };
 		058557BA273AAA24004C7B11 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		05E79FC9FB378C7D1185BA37 /* Pods_gustopub.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_gustopub.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		11D4B84A7D1BAAFE723E1EA6 /* Pods_yuliar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_yuliar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		1D1FCD3A9ACB791EBE8EC3EB /* Pods-djan.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-djan.release.xcconfig"; path = "Target Support Files/Pods-djan/Pods-djan.release.xcconfig"; sourceTree = "<group>"; };
+		1418AB6B9108617B3DD856EA /* Pods-yuliar.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-yuliar.release.xcconfig"; path = "Target Support Files/Pods-yuliar/Pods-yuliar.release.xcconfig"; sourceTree = "<group>"; };
+		1F1E5C1A075997C17E688CD8 /* Pods-djan.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-djan.release.xcconfig"; path = "Target Support Files/Pods-djan/Pods-djan.release.xcconfig"; sourceTree = "<group>"; };
 		2152FB032600AC8F00CF470E /* iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSApp.swift; sourceTree = "<group>"; };
-		49D906390D05B053EB66BB3D /* Pods_djan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_djan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		4A6CB921D08D7787A6E0D2EB /* Pods-gustopub.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-gustopub.release.xcconfig"; path = "Target Support Files/Pods-gustopub/Pods-gustopub.release.xcconfig"; sourceTree = "<group>"; };
-		642662E8F49FD63D8CA8DE78 /* Pods-papakarlo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-papakarlo.debug.xcconfig"; path = "Target Support Files/Pods-papakarlo/Pods-papakarlo.debug.xcconfig"; sourceTree = "<group>"; };
+		458F21EFDABBF27ADCBB05F5 /* Pods-gustopub.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-gustopub.release.xcconfig"; path = "Target Support Files/Pods-gustopub/Pods-gustopub.release.xcconfig"; sourceTree = "<group>"; };
+		47B49FB8157F3D5B84A2EDB0 /* Pods_gustopub.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_gustopub.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		64D6A89E78E067B930E8A642 /* Pods-gustopub.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-gustopub.debug.xcconfig"; path = "Target Support Files/Pods-gustopub/Pods-gustopub.debug.xcconfig"; sourceTree = "<group>"; };
 		7555FF7B242A565900829871 /* papakarlo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = papakarlo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7555FF82242A565900829871 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		7BF2AE5430253A5292218EF7 /* Pods-yuliar.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-yuliar.debug.xcconfig"; path = "Target Support Files/Pods-yuliar/Pods-yuliar.debug.xcconfig"; sourceTree = "<group>"; };
-		AA45968515CDD29727444593 /* Pods-djan.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-djan.debug.xcconfig"; path = "Target Support Files/Pods-djan/Pods-djan.debug.xcconfig"; sourceTree = "<group>"; };
-		AC0C6D33B1777DD7A03CE92E /* Pods_papakarlo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_papakarlo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B1F8B2E2A0B800A5E994C09B /* Pods-papakarlo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-papakarlo.release.xcconfig"; path = "Target Support Files/Pods-papakarlo/Pods-papakarlo.release.xcconfig"; sourceTree = "<group>"; };
-		C0042060C4B1BDBB30EB9CC6 /* Pods-gustopub.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-gustopub.debug.xcconfig"; path = "Target Support Files/Pods-gustopub/Pods-gustopub.debug.xcconfig"; sourceTree = "<group>"; };
-		D5C8D25BB231895FFEC2183A /* Pods-yuliar.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-yuliar.release.xcconfig"; path = "Target Support Files/Pods-yuliar/Pods-yuliar.release.xcconfig"; sourceTree = "<group>"; };
+		8D919A5E08BD3E13A2CF6DFF /* Pods_djan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_djan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9FB64B850D7523D123993736 /* Pods_papakarlo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_papakarlo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A20BAFA2994B0495E9636979 /* Pods-djan.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-djan.debug.xcconfig"; path = "Target Support Files/Pods-djan/Pods-djan.debug.xcconfig"; sourceTree = "<group>"; };
+		ADC1390934F0405FE2822432 /* Pods_yuliar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_yuliar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FAF453BD812CC84C69787043 /* Pods-papakarlo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-papakarlo.release.xcconfig"; path = "Target Support Files/Pods-papakarlo/Pods-papakarlo.release.xcconfig"; sourceTree = "<group>"; };
+		FD0B141E3AFCFE6D70339A87 /* Pods-papakarlo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-papakarlo.debug.xcconfig"; path = "Target Support Files/Pods-papakarlo/Pods-papakarlo.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -587,7 +587,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4A0B25C2EBE3215D0FC6C121 /* (null) in Frameworks */,
-				08E3BCB476D837D4A19A7CA8 /* Pods_djan.framework in Frameworks */,
+				1FFEB65F3A120527902AAB84 /* Pods_djan.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -595,7 +595,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5939E23174B9B837C69EF1E2 /* Pods_gustopub.framework in Frameworks */,
+				E3BDFE3201731FF2315FEF62 /* Pods_gustopub.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -603,7 +603,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EDAAE40634FEC9987E972FE9 /* Pods_yuliar.framework in Frameworks */,
+				FF923BF1FCEC1A967E797B48 /* Pods_yuliar.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -611,7 +611,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				44FCBB444DCE0D80ABF307DF /* Pods_papakarlo.framework in Frameworks */,
+				357A4957800C7DEDC9BC620D /* Pods_papakarlo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1024,17 +1024,28 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		1C2DCF1E1C9F54EDF0BE0B31 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8D919A5E08BD3E13A2CF6DFF /* Pods_djan.framework */,
+				47B49FB8157F3D5B84A2EDB0 /* Pods_gustopub.framework */,
+				9FB64B850D7523D123993736 /* Pods_papakarlo.framework */,
+				ADC1390934F0405FE2822432 /* Pods_yuliar.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		50DE2F3B6643F72B29F5DDAC /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				AA45968515CDD29727444593 /* Pods-djan.debug.xcconfig */,
-				1D1FCD3A9ACB791EBE8EC3EB /* Pods-djan.release.xcconfig */,
-				C0042060C4B1BDBB30EB9CC6 /* Pods-gustopub.debug.xcconfig */,
-				4A6CB921D08D7787A6E0D2EB /* Pods-gustopub.release.xcconfig */,
-				642662E8F49FD63D8CA8DE78 /* Pods-papakarlo.debug.xcconfig */,
-				B1F8B2E2A0B800A5E994C09B /* Pods-papakarlo.release.xcconfig */,
-				7BF2AE5430253A5292218EF7 /* Pods-yuliar.debug.xcconfig */,
-				D5C8D25BB231895FFEC2183A /* Pods-yuliar.release.xcconfig */,
+				A20BAFA2994B0495E9636979 /* Pods-djan.debug.xcconfig */,
+				1F1E5C1A075997C17E688CD8 /* Pods-djan.release.xcconfig */,
+				64D6A89E78E067B930E8A642 /* Pods-gustopub.debug.xcconfig */,
+				458F21EFDABBF27ADCBB05F5 /* Pods-gustopub.release.xcconfig */,
+				FD0B141E3AFCFE6D70339A87 /* Pods-papakarlo.debug.xcconfig */,
+				FAF453BD812CC84C69787043 /* Pods-papakarlo.release.xcconfig */,
+				005A83AD4A3D287BCC0225D3 /* Pods-yuliar.debug.xcconfig */,
+				1418AB6B9108617B3DD856EA /* Pods-yuliar.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -1048,7 +1059,7 @@
 				7555FF7C242A565900829871 /* Products */,
 				50DE2F3B6643F72B29F5DDAC /* Pods */,
 				0275EBC92A9B380D00F8ECE2 /* Recovered References */,
-				E3FD14A7B54C81DAB975DE21 /* Frameworks */,
+				1C2DCF1E1C9F54EDF0BE0B31 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1084,17 +1095,6 @@
 			path = iosApp;
 			sourceTree = "<group>";
 		};
-		E3FD14A7B54C81DAB975DE21 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				49D906390D05B053EB66BB3D /* Pods_djan.framework */,
-				05E79FC9FB378C7D1185BA37 /* Pods_gustopub.framework */,
-				AC0C6D33B1777DD7A03CE92E /* Pods_papakarlo.framework */,
-				11D4B84A7D1BAAFE723E1EA6 /* Pods_yuliar.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1102,12 +1102,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 026C1FC82A2690B900838266 /* Build configuration list for PBXNativeTarget "djan" */;
 			buildPhases = (
-				D3381AB7D550907BFEEAE4EA /* [CP] Check Pods Manifest.lock */,
+				8A923DC596B9394740DA1A76 /* [CP] Check Pods Manifest.lock */,
 				026C1F522A2690B900838266 /* Sources */,
 				026C1FBE2A2690B900838266 /* Resources */,
 				026C1FC42A2690B900838266 /* Frameworks */,
 				026C1FC62A2690B900838266 /* ShellScript */,
-				DDD3E1C6869F0082DAFB6373 /* [CP] Embed Pods Frameworks */,
+				2ADE3439918CB036971A45D2 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1122,12 +1122,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 027CB08C2A346F7B00350EB2 /* Build configuration list for PBXNativeTarget "gustopub" */;
 			buildPhases = (
-				EAF64BE9D63A8B0D7A28DA57 /* [CP] Check Pods Manifest.lock */,
+				DE4A6F2BF04E5ACC2B353EBC /* [CP] Check Pods Manifest.lock */,
 				027CB0152A346F7B00350EB2 /* Sources */,
 				027CB0812A346F7B00350EB2 /* Resources */,
 				027CB0882A346F7B00350EB2 /* Frameworks */,
 				027CB08A2A346F7B00350EB2 /* ShellScript */,
-				13406E87158CD70F3DD5D48C /* [CP] Embed Pods Frameworks */,
+				A72246312E89B7819ED3AE22 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1142,12 +1142,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 02ADC3AB29D9D0880062A141 /* Build configuration list for PBXNativeTarget "yuliar" */;
 			buildPhases = (
-				50837543C5127841AB6A8556 /* [CP] Check Pods Manifest.lock */,
+				F2676C29D8381B0112FAE795 /* [CP] Check Pods Manifest.lock */,
 				02ADC33729D9D0880062A141 /* Sources */,
 				02ADC3A229D9D0880062A141 /* Resources */,
 				02ADC3A729D9D0880062A141 /* Frameworks */,
 				02ADC3A929D9D0880062A141 /* ShellScript */,
-				FCF00AB1F38B7343A29ED6AA /* [CP] Embed Pods Frameworks */,
+				BA28D7D06895C021BB9C9C9C /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1162,12 +1162,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7555FFA5242A565B00829871 /* Build configuration list for PBXNativeTarget "papakarlo" */;
 			buildPhases = (
-				C9E220CD5706F7B86BB65261 /* [CP] Check Pods Manifest.lock */,
+				5ECF0C73B7BB6EA54038838C /* [CP] Check Pods Manifest.lock */,
 				7555FF77242A565900829871 /* Sources */,
 				7555FF79242A565900829871 /* Resources */,
 				FAB66D7FD21CA0242210288D /* Frameworks */,
 				0221D3A62958964C002E4F20 /* ShellScript */,
-				739ADAD84B38323F4D7B36B2 /* [CP] Embed Pods Frameworks */,
+				EBB3C2A7C34418F5D9A7FE1C /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1347,63 +1347,24 @@
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
 		};
-		13406E87158CD70F3DD5D48C /* [CP] Embed Pods Frameworks */ = {
+		2ADE3439918CB036971A45D2 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-gustopub/Pods-gustopub-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-djan/Pods-djan-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-gustopub/Pods-gustopub-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-djan/Pods-djan-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-gustopub/Pods-gustopub-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-djan/Pods-djan-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		50837543C5127841AB6A8556 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-yuliar-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		739ADAD84B38323F4D7B36B2 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-papakarlo/Pods-papakarlo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-papakarlo/Pods-papakarlo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-papakarlo/Pods-papakarlo-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		C9E220CD5706F7B86BB65261 /* [CP] Check Pods Manifest.lock */ = {
+		5ECF0C73B7BB6EA54038838C /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1425,7 +1386,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		D3381AB7D550907BFEEAE4EA /* [CP] Check Pods Manifest.lock */ = {
+		8A923DC596B9394740DA1A76 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1447,24 +1408,41 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		DDD3E1C6869F0082DAFB6373 /* [CP] Embed Pods Frameworks */ = {
+		A72246312E89B7819ED3AE22 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-djan/Pods-djan-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-gustopub/Pods-gustopub-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-djan/Pods-djan-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-gustopub/Pods-gustopub-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-djan/Pods-djan-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-gustopub/Pods-gustopub-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		EAF64BE9D63A8B0D7A28DA57 /* [CP] Check Pods Manifest.lock */ = {
+		BA28D7D06895C021BB9C9C9C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-yuliar/Pods-yuliar-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-yuliar/Pods-yuliar-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-yuliar/Pods-yuliar-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DE4A6F2BF04E5ACC2B353EBC /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1486,21 +1464,43 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		FCF00AB1F38B7343A29ED6AA /* [CP] Embed Pods Frameworks */ = {
+		EBB3C2A7C34418F5D9A7FE1C /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-yuliar/Pods-yuliar-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-papakarlo/Pods-papakarlo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-yuliar/Pods-yuliar-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-papakarlo/Pods-papakarlo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-yuliar/Pods-yuliar-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-papakarlo/Pods-papakarlo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F2676C29D8381B0112FAE795 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-yuliar-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1955,13 +1955,13 @@
 /* Begin XCBuildConfiguration section */
 		026C1FC92A2690B900838266 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = AA45968515CDD29727444593 /* Pods-djan.debug.xcconfig */;
+			baseConfigurationReference = A20BAFA2994B0495E9636979 /* Pods-djan.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = yuliar.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 23;
+				CURRENT_PROJECT_VERSION = 24;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
 				DEVELOPMENT_TEAM = 77HLJ933B9;
 				ENABLE_PREVIEWS = YES;
@@ -1972,7 +1972,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5.0;
+				MARKETING_VERSION = 1.6.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -2044,13 +2044,13 @@
 		};
 		026C1FCA2A2690B900838266 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1D1FCD3A9ACB791EBE8EC3EB /* Pods-djan.release.xcconfig */;
+			baseConfigurationReference = 1F1E5C1A075997C17E688CD8 /* Pods-djan.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = yuliar.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 23;
+				CURRENT_PROJECT_VERSION = 24;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
 				DEVELOPMENT_TEAM = 77HLJ933B9;
 				ENABLE_PREVIEWS = YES;
@@ -2061,7 +2061,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5.0;
+				MARKETING_VERSION = 1.6.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -2133,13 +2133,13 @@
 		};
 		027CB08D2A346F7B00350EB2 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C0042060C4B1BDBB30EB9CC6 /* Pods-gustopub.debug.xcconfig */;
+			baseConfigurationReference = 64D6A89E78E067B930E8A642 /* Pods-gustopub.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = yuliar.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 23;
+				CURRENT_PROJECT_VERSION = 24;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
 				DEVELOPMENT_TEAM = 77HLJ933B9;
 				ENABLE_PREVIEWS = YES;
@@ -2150,7 +2150,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5.0;
+				MARKETING_VERSION = 1.6.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -2222,13 +2222,13 @@
 		};
 		027CB08E2A346F7B00350EB2 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4A6CB921D08D7787A6E0D2EB /* Pods-gustopub.release.xcconfig */;
+			baseConfigurationReference = 458F21EFDABBF27ADCBB05F5 /* Pods-gustopub.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = yuliar.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 23;
+				CURRENT_PROJECT_VERSION = 24;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
 				DEVELOPMENT_TEAM = 77HLJ933B9;
 				ENABLE_PREVIEWS = YES;
@@ -2239,7 +2239,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5.0;
+				MARKETING_VERSION = 1.6.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -2311,13 +2311,13 @@
 		};
 		02ADC3AC29D9D0880062A141 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7BF2AE5430253A5292218EF7 /* Pods-yuliar.debug.xcconfig */;
+			baseConfigurationReference = 005A83AD4A3D287BCC0225D3 /* Pods-yuliar.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = yuliar.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 23;
+				CURRENT_PROJECT_VERSION = 24;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
 				DEVELOPMENT_TEAM = 77HLJ933B9;
 				ENABLE_PREVIEWS = YES;
@@ -2328,7 +2328,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5.0;
+				MARKETING_VERSION = 1.6.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -2400,13 +2400,13 @@
 		};
 		02ADC3AD29D9D0880062A141 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D5C8D25BB231895FFEC2183A /* Pods-yuliar.release.xcconfig */;
+			baseConfigurationReference = 1418AB6B9108617B3DD856EA /* Pods-yuliar.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = yuliar.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 23;
+				CURRENT_PROJECT_VERSION = 24;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
 				DEVELOPMENT_TEAM = 77HLJ933B9;
 				ENABLE_PREVIEWS = YES;
@@ -2417,7 +2417,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5.0;
+				MARKETING_VERSION = 1.6.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -2607,13 +2607,13 @@
 		};
 		7555FFA6242A565B00829871 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 642662E8F49FD63D8CA8DE78 /* Pods-papakarlo.debug.xcconfig */;
+			baseConfigurationReference = FD0B141E3AFCFE6D70339A87 /* Pods-papakarlo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = papakarlo.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 23;
+				CURRENT_PROJECT_VERSION = 24;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
 				DEVELOPMENT_TEAM = 77HLJ933B9;
 				ENABLE_PREVIEWS = YES;
@@ -2624,7 +2624,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5.0;
+				MARKETING_VERSION = 1.6.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -2696,13 +2696,13 @@
 		};
 		7555FFA7242A565B00829871 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B1F8B2E2A0B800A5E994C09B /* Pods-papakarlo.release.xcconfig */;
+			baseConfigurationReference = FAF453BD812CC84C69787043 /* Pods-papakarlo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = papakarlo.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 23;
+				CURRENT_PROJECT_VERSION = 24;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
 				DEVELOPMENT_TEAM = 77HLJ933B9;
 				ENABLE_PREVIEWS = YES;
@@ -2713,7 +2713,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5.0;
+				MARKETING_VERSION = 1.6.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
