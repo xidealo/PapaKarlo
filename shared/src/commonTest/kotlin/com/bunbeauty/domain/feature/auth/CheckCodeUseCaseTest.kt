@@ -1,6 +1,7 @@
 package com.bunbeauty.domain.feature.auth
 
 import com.bunbeauty.shared.DataStoreRepo
+import com.bunbeauty.shared.domain.exeptions.SomethingWentWrongException
 import com.bunbeauty.shared.domain.feature.auth.CheckCodeUseCase
 import com.bunbeauty.shared.domain.model.AuthResponse
 import com.bunbeauty.shared.domain.repo.AuthRepo
@@ -10,6 +11,7 @@ import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
+import kotlin.test.assertFailsWith
 
 class CheckCodeUseCaseTest {
 
@@ -41,6 +43,19 @@ class CheckCodeUseCaseTest {
 
         coVerify(exactly = 1) { dataStoreRepo.saveToken(token) }
         coVerify(exactly = 1) { dataStoreRepo.saveUserUuid(userUuid) }
+    }
+
+    @Test
+    fun `should throw SomethingWentWrongException when checking code is failed`() = runTest {
+        val code = "123456"
+        coEvery{ authRepo.checkCode(code) } returns null
+
+        assertFailsWith(
+            exceptionClass = SomethingWentWrongException::class,
+            block = {
+                checkCodeUseCase(code)
+            }
+        )
     }
 
 }

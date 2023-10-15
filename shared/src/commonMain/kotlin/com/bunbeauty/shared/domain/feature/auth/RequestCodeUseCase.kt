@@ -1,5 +1,6 @@
 package com.bunbeauty.shared.domain.feature.auth
 
+import com.bunbeauty.shared.domain.exeptions.SomethingWentWrongException
 import com.bunbeauty.shared.domain.repo.AuthRepo
 
 class RequestCodeUseCase(
@@ -7,7 +8,10 @@ class RequestCodeUseCase(
 ) {
 
     suspend operator fun invoke(phoneNumber: String) {
-        authRepo.requestCode(phoneNumber)
+        val isSuccess = authRepo.requestCode(phoneNumber)
+        if (!isSuccess) {
+            throw SomethingWentWrongException()
+        }
     }
 
 }

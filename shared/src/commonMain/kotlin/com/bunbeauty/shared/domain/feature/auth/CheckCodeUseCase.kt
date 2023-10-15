@@ -1,6 +1,7 @@
 package com.bunbeauty.shared.domain.feature.auth
 
 import com.bunbeauty.shared.DataStoreRepo
+import com.bunbeauty.shared.domain.exeptions.SomethingWentWrongException
 import com.bunbeauty.shared.domain.repo.AuthRepo
 
 class CheckCodeUseCase(
@@ -12,7 +13,7 @@ class CheckCodeUseCase(
         authRepo.checkCode(code)?.let { authResponse ->
             dataStoreRepo.saveToken(authResponse.token)
             dataStoreRepo.saveUserUuid(authResponse.userUuid)
-        }
+        } ?: throw SomethingWentWrongException()
     }
 
 }
