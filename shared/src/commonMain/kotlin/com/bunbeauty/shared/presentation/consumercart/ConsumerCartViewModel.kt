@@ -4,6 +4,7 @@ import com.bunbeauty.shared.Constants.PERCENT
 import com.bunbeauty.shared.Constants.RUBLE_CURRENCY
 import com.bunbeauty.shared.Logger
 import com.bunbeauty.shared.domain.feature.cart.AddCartProductUseCase
+import com.bunbeauty.shared.domain.feature.cart.GetRecommendationsUseCase
 import com.bunbeauty.shared.domain.feature.cart.RemoveCartProductUseCase
 import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
@@ -11,6 +12,7 @@ import com.bunbeauty.shared.domain.model.cart.ConsumerCart
 import com.bunbeauty.shared.domain.model.cart.LightCartProduct
 import com.bunbeauty.shared.extension.launchSafe
 import com.bunbeauty.shared.presentation.base.SharedStateViewModel
+import com.bunbeauty.shared.presentation.menu.MenuProductItem
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -20,6 +22,7 @@ class ConsumerCartViewModel(
     private val cartProductInteractor: ICartProductInteractor,
     private val addCartProductUseCase: AddCartProductUseCase,
     private val removeCartProductUseCase: RemoveCartProductUseCase,
+    private val getRecommendationsUseCase: GetRecommendationsUseCase,
 ) : SharedStateViewModel<ConsumerCartState.State, ConsumerCartState.Action, ConsumerCartState.Event>(
     ConsumerCartState.State(
         consumerCartData = ConsumerCartData(
@@ -27,7 +30,8 @@ class ConsumerCartViewModel(
             cartProductList = listOf(),
             oldTotalCost = null,
             newTotalCost = "",
-            firstOrderDiscount = null
+            firstOrderDiscount = null,
+            recommendations = emptyList()
         ),
         screenState = ConsumerCartState.ScreenState.LOADING,
     )
@@ -41,15 +45,29 @@ class ConsumerCartViewModel(
             is ConsumerCartState.Action.AddProductToCartClick -> onAddCardProductClicked(
                 menuProductUuid = action.menuProductUuid
             )
+
             ConsumerCartState.Action.BackClick -> navigateBack()
             is ConsumerCartState.Action.ConsumeEvents -> consumeEvents(action.eventList)
             ConsumerCartState.Action.Init -> init()
             ConsumerCartState.Action.OnCreateOrderClick -> onCreateOrderClicked()
             ConsumerCartState.Action.OnErrorButtonClick -> init()
             ConsumerCartState.Action.OnMenuClick -> onMenuClicked()
-            is ConsumerCartState.Action.OnProductClick -> onProductClicked(cartProductItem = action.cartProductItem)
+            is ConsumerCartState.Action.OnProductClick -> onProductClicked(
+                uuid = action.cartProductItem.menuProductUuid,
+                name = action.cartProductItem.name
+            )
+
             is ConsumerCartState.Action.RemoveProductFromCartClick -> onRemoveCardProductClicked(
                 menuProductUuid = action.menuProductUuid
+            )
+
+            is ConsumerCartState.Action.AddProductToRecommendationClick -> onAddCardProductClicked(
+                menuProductUuid = action.menuProductUuid
+            )
+
+            is ConsumerCartState.Action.RecommendationClick -> onProductClicked(
+                uuid = action.menuProductUuid,
+                name = action.name
             )
         }
     }
@@ -79,7 +97,7 @@ class ConsumerCartViewModel(
                             screenState = getConsumerCartDataState(consumerCart),
                             consumerCartData = getConsumerCartData(
                                 consumerCart = consumerCart
-                            )
+                            ),
                         )
                     }
                 }
@@ -109,9 +127,9 @@ class ConsumerCartViewModel(
         )
     }
 
-    private fun onProductClicked(cartProductItem: CartProductItem) {
+    private fun onProductClicked(uuid: String, name: String) {
         event {
-            ConsumerCartState.Event.NavigateToProduct(cartProductItem)
+            ConsumerCartState.Event.NavigateToProduct(uuid = uuid, name = name)
         }
     }
 
@@ -137,7 +155,7 @@ class ConsumerCartViewModel(
         )
     }
 
-    private fun getConsumerCartData(
+    private suspend fun getConsumerCartData(
         consumerCart: ConsumerCart,
     ): ConsumerCartData? {
         return when (consumerCart) {
@@ -151,6 +169,15 @@ class ConsumerCartViewModel(
                 newTotalCost = consumerCart.newTotalCost.toString() + RUBLE_CURRENCY,
                 firstOrderDiscount = consumerCart.discount?.let { discount ->
                     discount.toString() + PERCENT
+                },
+                recommendations = getRecommendationsUseCase().map { menuProduct ->
+                    MenuProductItem(
+                        uuid = menuProduct.uuid,
+                        photoLink = menuProduct.photoLink,
+                        name = menuProduct.name,
+                        oldPrice = menuProduct.oldPrice,
+                        newPrice = menuProduct.newPrice
+                    )
                 }
             )
         }

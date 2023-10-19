@@ -14,6 +14,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -105,7 +106,7 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
     private fun MenuScreen(
         menuUi: MenuUi,
         onMenuPositionChanged: (Int) -> Unit,
-        errorAction: () -> Unit
+        errorAction: () -> Unit,
     ) {
         FoodDeliveryScaffold(
             title = stringResource(R.string.title_menu),
@@ -165,7 +166,7 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
     @Composable
     private fun CategoryRow(
         categoryItemList: List<CategoryItem>,
-        menuLazyListState: LazyGridState
+        menuLazyListState: LazyGridState,
     ) {
         val coroutineScope = rememberCoroutineScope()
         val categoryLazyListState = rememberLazyListState()
@@ -218,7 +219,7 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
     @Composable
     private fun MenuColumn(
         menu: MenuUi,
-        menuLazyListState: LazyGridState
+        menuLazyListState: LazyGridState,
     ) {
         LazyVerticalGrid(
             modifier = Modifier.fillMaxSize(),
@@ -228,50 +229,46 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
             state = menuLazyListState,
             userScrollEnabled = menu.userScrollEnabled
         ) {
-            menu.menuItemList.forEachIndexed { index, menuItemModel ->
+            itemsIndexed(
+                items = menu.menuItemList,
+                key = { index, menuItemModel -> menuItemModel.key },
+                span = { index, menuItemModel ->
+                    when (menuItemModel) {
+                        is MenuItem.DiscountItem, is MenuItem.MenuCategoryHeaderItem ->
+                            GridItemSpan(maxLineSpan)
+                        else -> GridItemSpan(1)
+                    }
+                }
+            ) { index, menuItemModel ->
                 when (menuItemModel) {
                     is MenuItem.DiscountItem -> {
-                        item(
-                            span = { GridItemSpan(maxLineSpan) },
-                            key = menuItemModel.key
-                        ) {
-                            FirstOrderDiscountItem(
-                                discount = menuItemModel.discount
-                            )
-                        }
+                        FirstOrderDiscountItem(
+                            discount = menuItemModel.discount
+                        )
                     }
 
                     is MenuItem.MenuCategoryHeaderItem -> {
-                        item(
-                            span = { GridItemSpan(maxLineSpan) },
-                            key = menuItemModel.key
-                        ) {
-                            Text(
-                                modifier = Modifier.padding(
-                                    top = if (index == 0) {
-                                        0.dp
-                                    } else {
-                                        16.dp
-                                    }
-                                ),
-                                text = menuItemModel.name,
-                                style = FoodDeliveryTheme.typography.titleMedium.bold,
-                                color = FoodDeliveryTheme.colors.mainColors.onSurface
-                            )
-                        }
+                        Text(
+                            modifier = Modifier.padding(
+                                top = if (index == 0) {
+                                    0.dp
+                                } else {
+                                    16.dp
+                                }
+                            ),
+                            text = menuItemModel.name,
+                            style = FoodDeliveryTheme.typography.titleMedium.bold,
+                            color = FoodDeliveryTheme.colors.mainColors.onSurface
+                        )
                     }
 
                     is MenuItem.MenuProductListItem -> {
-                        item(
-                            key = menuItemModel.key
-                        ) {
-                            MenuProductItem(
-                                modifier = Modifier.padding(top = 8.dp),
-                                menuProductItem = menuItemModel.product,
-                                onAddProductClick = viewModel::onAddProductClicked,
-                                onProductClick = viewModel::onMenuItemClicked
-                            )
-                        }
+                        MenuProductItem(
+                            modifier = Modifier.padding(top = 8.dp),
+                            menuProductItem = menuItemModel.product,
+                            onAddProductClick = viewModel::onAddProductClicked,
+                            onProductClick = viewModel::onMenuItemClicked
+                        )
                     }
                 }
             }

@@ -13,6 +13,7 @@ import com.bunbeauty.shared.data.network.model.ListServer
 import com.bunbeauty.shared.data.network.model.MenuProductServer
 import com.bunbeauty.shared.data.network.model.PaymentMethodServer
 import com.bunbeauty.shared.data.network.model.PaymentServer
+import com.bunbeauty.shared.data.network.model.RecommendationServer
 import com.bunbeauty.shared.data.network.model.SettingsServer
 import com.bunbeauty.shared.data.network.model.StreetServer
 import com.bunbeauty.shared.data.network.model.UserAddressPostServer
@@ -40,13 +41,23 @@ interface NetworkConnector {
     suspend fun getDelivery(): ApiResult<DeliveryServer>
     suspend fun getDiscount(): ApiResult<DiscountServer>
 
-    suspend fun getUserAddressListByCityUuid(token: String, cityUuid: String): ApiResult<ListServer<AddressServer>>
+    suspend fun getUserAddressListByCityUuid(
+        token: String,
+        cityUuid: String,
+    ): ApiResult<ListServer<AddressServer>>
+
     suspend fun getPayment(token: String): ApiResult<PaymentServer>
     suspend fun getProfile(token: String): ApiResult<ProfileServer>
-    suspend fun getOrderList(token: String, count: Int? = null, uuid: String? = null): ApiResult<ListServer<OrderServer>>
+    suspend fun getOrderList(
+        token: String,
+        count: Int? = null,
+        uuid: String? = null,
+    ): ApiResult<ListServer<OrderServer>>
+
     suspend fun getSettings(token: String): ApiResult<SettingsServer>
     suspend fun getPaymentMethodList(): ApiResult<ListServer<PaymentMethodServer>>
     suspend fun getLinkList(): ApiResult<ListServer<LinkServer>>
+    suspend fun getRecommendationList(): ApiResult<ListServer<RecommendationServer>>
 
     @Deprecated("Outdated login method")
     suspend fun postLogin(loginPostServer: LoginPostServer): ApiResult<AuthResponseServer>
@@ -60,7 +71,7 @@ interface NetworkConnector {
 
     suspend fun patchSettings(
         token: String,
-        patchUserServer: PatchUserServer
+        patchUserServer: PatchUserServer,
     ): ApiResult<SettingsServer>
 
     suspend fun putCodeResend(uuid: String): ApiResult<Unit>

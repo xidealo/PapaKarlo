@@ -20,8 +20,8 @@ class AddCartProductUseCase(
             cartProductRepo.saveAsCartProduct(menuProductUuid)
         } else {
             cartProductRepo.updateCartProductCount(
-                initialCartProduct.uuid,
-                initialCartProduct.count + 1
+                cartProductUuid = initialCartProduct.uuid,
+                count = initialCartProduct.count + 1
             )
         }
         return cartProduct != null
