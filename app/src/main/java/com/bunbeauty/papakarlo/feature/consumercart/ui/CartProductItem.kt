@@ -6,16 +6,21 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.bunbeauty.papakarlo.R
@@ -31,17 +36,24 @@ fun CartProductItem(
     cartProductItem: CartProductItem,
     onCountIncreased: () -> Unit,
     onCountDecreased: () -> Unit,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     FoodDeliveryCard(
         modifier = modifier.fillMaxWidth(),
-        onClick = onClick
+        onClick = onClick,
+        elevated = false,
+        shape = RoundedCornerShape(0.dp)
     ) {
-        Row {
+        Row(
+            modifier = Modifier
+                .padding(horizontal = 16.dp)
+                .padding(vertical = 8.dp)
+        ) {
             AsyncImage(
                 modifier = Modifier
                     .heightIn(max = FoodDeliveryTheme.dimensions.productImageSmallHeight)
-                    .width(FoodDeliveryTheme.dimensions.productImageSmallWidth),
+                    .width(FoodDeliveryTheme.dimensions.productImageSmallWidth)
+                    .clip(RoundedCornerShape(8.dp)),
                 model = ImageRequest.Builder(LocalContext.current)
                     .data(cartProductItem.photoLink)
                     .crossfade(true)
@@ -53,15 +65,19 @@ fun CartProductItem(
             Column(
                 modifier = Modifier
                     .weight(1f)
-                    .padding(FoodDeliveryTheme.dimensions.smallSpace)
+                    .padding(top = FoodDeliveryTheme.dimensions.smallSpace)
+                    .padding(start = FoodDeliveryTheme.dimensions.smallSpace)
             ) {
                 OverflowingText(
                     text = cartProductItem.name,
                     style = FoodDeliveryTheme.typography.titleSmall.bold,
                     color = FoodDeliveryTheme.colors.mainColors.onSurface,
-                    maxLines = 1
+                    maxLines = 2
                 )
-                Row(modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace)) {
+                Row(
+                    modifier = Modifier
+                        .padding(top = FoodDeliveryTheme.dimensions.smallSpace)
+                ) {
                     cartProductItem.oldCost?.let { oldCost ->
                         Text(
                             modifier = Modifier
@@ -73,20 +89,23 @@ fun CartProductItem(
                         )
                     }
                     Text(
+                        modifier = Modifier
+                            .weight(1f),
                         text = cartProductItem.newCost,
                         style = FoodDeliveryTheme.typography.bodySmall.bold,
                         color = FoodDeliveryTheme.colors.mainColors.onSurface
                     )
+
+                    CountPicker(
+                        modifier = Modifier
+                            .padding()
+                            .align(CenterVertically),
+                        count = cartProductItem.count,
+                        onCountIncreased = onCountIncreased,
+                        onCountDecreased = onCountDecreased
+                    )
                 }
             }
-            CountPicker(
-                modifier = Modifier
-                    .padding(end = FoodDeliveryTheme.dimensions.smallSpace)
-                    .align(CenterVertically),
-                count = cartProductItem.count,
-                onCountIncreased = onCountIncreased,
-                onCountDecreased = onCountDecreased
-            )
         }
     }
 }

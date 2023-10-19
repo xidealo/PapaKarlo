@@ -1,48 +1,49 @@
 package com.bunbeauty.shared.presentation.consumercart
 
-data class ConsumerCartDataState(
-    val consumerCartData: ConsumerCartData? = null,
-    val state: State = State.LOADING,
-    val eventList: List<ConsumerCartEvent> = emptyList()
-) {
-
-    enum class State {
-        LOADING,
-        SUCCESS,
-        EMPTY,
-        ERROR
-    }
-
-    operator fun plus(event: ConsumerCartEvent) = copy(eventList = eventList + event)
-    operator fun minus(events: List<ConsumerCartEvent>) =
-        copy(eventList = eventList - events.toSet())
-}
+import com.bunbeauty.shared.presentation.base.BaseAction
+import com.bunbeauty.shared.presentation.base.BaseEvent
+import com.bunbeauty.shared.presentation.base.BaseState
 
 data class ConsumerCartData(
     val forFreeDelivery: String,
     val cartProductList: List<CartProductItem>,
     val oldTotalCost: String?,
     val newTotalCost: String,
-    val firstOrderDiscount: String?
+    val firstOrderDiscount: String?,
 )
 
-sealed interface ConsumerCartEvent {
-    data object NavigateToMenuEvent : ConsumerCartEvent
-    data object NavigateToCreateOrderEvent : ConsumerCartEvent
-    data object NavigateToLoginEvent : ConsumerCartEvent
-    class NavigateToProductEvent(val cartProductItem: CartProductItem) : ConsumerCartEvent
-}
+interface ConsumerCartState {
 
-data class ConsumerCartUIState(
-    val consumerCartState: ConsumerCartState = ConsumerCartState.Loading,
-    val eventList: List<ConsumerCartEvent> = emptyList()
-) {
+    enum class ScreenState {
+        LOADING,
+        SUCCESS,
+        EMPTY,
+        ERROR
+    }
 
-    sealed interface ConsumerCartState {
-        data object Loading : ConsumerCartState
-        data class Success(val data: ConsumerCartData) : ConsumerCartState
+    data class State(
+        val consumerCartData: ConsumerCartData?,
+        val screenState: ScreenState,
+    ) : BaseState
 
-        data object Empty : ConsumerCartState
-        data object Error : ConsumerCartState
+    sealed interface Action : BaseAction {
+        data object Init : Action
+        data class ConsumeEvents(val eventList: List<Event>) : Action
+        data object BackClick : Action
+        data class AddProductToCartClick(val menuProductUuid: String) : Action
+        data class RemoveProductFromCartClick(val menuProductUuid: String) : Action
+        data class OnProductClick(val cartProductItem: CartProductItem) : Action
+        data object OnCreateOrderClick : Action
+        data object OnMenuClick : Action
+        data object OnErrorButtonClick : Action
+    }
+
+    sealed interface Event : BaseEvent {
+        data object NavigateToMenu : Event
+        data object NavigateToCreateOrder : Event
+        data object NavigateToLogin : Event
+        data class NavigateToProduct(val cartProductItem: CartProductItem) : Event
+        data object NavigateBack : Event
     }
 }
+

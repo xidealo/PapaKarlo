@@ -49,7 +49,7 @@ class LoginFragment : BaseComposeFragment<Login.State, Login.Action, Login.Event
 
     private val args: LoginFragmentArgs by navArgs()
 
-    private val LogoBoxHeightLimit: Dp = 200.dp
+    private val logoBoxHeightLimit: Dp = 200.dp
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -85,7 +85,7 @@ class LoginFragment : BaseComposeFragment<Login.State, Login.Action, Login.Event
                 verticalArrangement = Arrangement.Center
             ) {
                 BoxWithConstraints {
-                    if (maxHeight > LogoBoxHeightLimit) {
+                    if (maxHeight > logoBoxHeightLimit) {
                         Image(
                             modifier = Modifier.height(156.dp),
                             painter = painterResource(R.drawable.logo_medium),

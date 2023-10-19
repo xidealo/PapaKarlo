@@ -10,41 +10,73 @@ import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
 import com.bunbeauty.shared.domain.model.cart.ConsumerCart
 import com.bunbeauty.shared.domain.model.cart.LightCartProduct
 import com.bunbeauty.shared.extension.launchSafe
-import com.bunbeauty.shared.extension.mapToStateFlow
-import com.bunbeauty.shared.presentation.base.SharedViewModel
+import com.bunbeauty.shared.presentation.base.SharedStateViewModel
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.update
 
 class ConsumerCartViewModel(
     private val userInteractor: IUserInteractor,
     private val cartProductInteractor: ICartProductInteractor,
     private val addCartProductUseCase: AddCartProductUseCase,
-    private val removeCartProductUseCase: RemoveCartProductUseCase
-) : SharedViewModel() {
-
-    private val consumerCartDataState = MutableStateFlow(
-        ConsumerCartDataState()
+    private val removeCartProductUseCase: RemoveCartProductUseCase,
+) : SharedStateViewModel<ConsumerCartState.State, ConsumerCartState.Action, ConsumerCartState.Event>(
+    ConsumerCartState.State(
+        consumerCartData = ConsumerCartData(
+            forFreeDelivery = "",
+            cartProductList = listOf(),
+            oldTotalCost = null,
+            newTotalCost = "",
+            firstOrderDiscount = null
+        ),
+        screenState = ConsumerCartState.ScreenState.LOADING,
     )
-    val consumerCartState = consumerCartDataState.mapToStateFlow(sharedScope) { dataState ->
-        mapState(dataState)
-    }
+) {
 
     private var observeConsumerCartJob: Job? = null
 
-    fun getConsumerCart() {
+    override fun handleAction(action: ConsumerCartState.Action) {
+
+        when (action) {
+            is ConsumerCartState.Action.AddProductToCartClick -> onAddCardProductClicked(
+                menuProductUuid = action.menuProductUuid
+            )
+            ConsumerCartState.Action.BackClick -> navigateBack()
+            is ConsumerCartState.Action.ConsumeEvents -> consumeEvents(action.eventList)
+            ConsumerCartState.Action.Init -> init()
+            ConsumerCartState.Action.OnCreateOrderClick -> onCreateOrderClicked()
+            ConsumerCartState.Action.OnErrorButtonClick -> init()
+            ConsumerCartState.Action.OnMenuClick -> onMenuClicked()
+            is ConsumerCartState.Action.OnProductClick -> onProductClicked(cartProductItem = action.cartProductItem)
+            is ConsumerCartState.Action.RemoveProductFromCartClick -> onRemoveCardProductClicked(
+                menuProductUuid = action.menuProductUuid
+            )
+        }
+    }
+
+
+    private fun navigateBack() {
+        event {
+            ConsumerCartState.Event.NavigateBack
+        }
+    }
+
+    private fun init() {
+        state { oldState ->
+            oldState.copy(
+                screenState = ConsumerCartState.ScreenState.LOADING
+            )
+        }
         observeConsumerCartJob?.cancel()
         observeConsumerCartJob =
             cartProductInteractor.observeConsumerCart().onEach { consumerCart ->
                 Logger.logD("getConsumerCart", "getConsumerCart $consumerCart")
-                consumerCartDataState.update { dataState ->
+                state { dataState ->
                     if (consumerCart == null) {
-                        dataState.copy(state = ConsumerCartDataState.State.ERROR)
+                        dataState.copy(screenState = ConsumerCartState.ScreenState.ERROR)
                     } else {
                         dataState.copy(
-                            state = getConsumerCartDataState(consumerCart),
+                            screenState = getConsumerCartDataState(consumerCart),
                             consumerCartData = getConsumerCartData(
                                 consumerCart = consumerCart
                             )
@@ -54,22 +86,21 @@ class ConsumerCartViewModel(
             }.launchIn(sharedScope)
     }
 
-    fun onMenuClicked() {
-        consumerCartDataState.update { dataState ->
-            dataState + ConsumerCartEvent.NavigateToMenuEvent
+    private fun onMenuClicked() {
+        event {
+            ConsumerCartState.Event.NavigateToMenu
         }
     }
 
-    fun onCreateOrderClicked() {
+    private fun onCreateOrderClicked() {
         sharedScope.launchSafe(
             block = {
-                val navigateEvent = if (userInteractor.isUserAuthorize()) {
-                    ConsumerCartEvent.NavigateToCreateOrderEvent
-                } else {
-                    ConsumerCartEvent.NavigateToLoginEvent
-                }
-                consumerCartDataState.update { dataState ->
-                    dataState + navigateEvent
+                event {
+                    if (userInteractor.isUserAuthorize()) {
+                        ConsumerCartState.Event.NavigateToCreateOrder
+                    } else {
+                        ConsumerCartState.Event.NavigateToLogin
+                    }
                 }
             },
             onError = {
@@ -78,13 +109,13 @@ class ConsumerCartViewModel(
         )
     }
 
-    fun onProductClicked(cartProductItem: CartProductItem) {
-        consumerCartDataState.update { dataState ->
-            dataState + ConsumerCartEvent.NavigateToProductEvent(cartProductItem)
+    private fun onProductClicked(cartProductItem: CartProductItem) {
+        event {
+            ConsumerCartState.Event.NavigateToProduct(cartProductItem)
         }
     }
 
-    fun onAddCardProductClicked(menuProductUuid: String) {
+    private fun onAddCardProductClicked(menuProductUuid: String) {
         sharedScope.launchSafe(
             block = {
                 addCartProductUseCase(menuProductUuid)
@@ -95,7 +126,7 @@ class ConsumerCartViewModel(
         )
     }
 
-    fun onRemoveCardProductClicked(menuProductUuid: String) {
+    private fun onRemoveCardProductClicked(menuProductUuid: String) {
         sharedScope.launchSafe(
             block = {
                 removeCartProductUseCase(menuProductUuid)
@@ -106,46 +137,8 @@ class ConsumerCartViewModel(
         )
     }
 
-    fun consumeEventList(eventList: List<ConsumerCartEvent>) {
-        consumerCartDataState.update { state ->
-            state - eventList
-        }
-    }
-
-    private fun mapState(dataState: ConsumerCartDataState): ConsumerCartUIState {
-        return when (dataState.state) {
-            ConsumerCartDataState.State.LOADING -> ConsumerCartUIState(
-                consumerCartState = ConsumerCartUIState.ConsumerCartState.Loading,
-                eventList = dataState.eventList
-            )
-
-            ConsumerCartDataState.State.SUCCESS -> {
-                if (dataState.consumerCartData == null) {
-                    ConsumerCartUIState(ConsumerCartUIState.ConsumerCartState.Error)
-                } else {
-                    ConsumerCartUIState(
-                        consumerCartState = ConsumerCartUIState.ConsumerCartState.Success(
-                            data = dataState.consumerCartData
-                        ),
-                        eventList = dataState.eventList
-                    )
-                }
-            }
-
-            ConsumerCartDataState.State.EMPTY -> ConsumerCartUIState(
-                consumerCartState = ConsumerCartUIState.ConsumerCartState.Empty,
-                eventList = dataState.eventList
-            )
-
-            ConsumerCartDataState.State.ERROR -> ConsumerCartUIState(
-                consumerCartState = ConsumerCartUIState.ConsumerCartState.Error,
-                eventList = dataState.eventList
-            )
-        }
-    }
-
     private fun getConsumerCartData(
-        consumerCart: ConsumerCart
+        consumerCart: ConsumerCart,
     ): ConsumerCartData? {
         return when (consumerCart) {
             is ConsumerCart.Empty -> null
@@ -163,10 +156,10 @@ class ConsumerCartViewModel(
         }
     }
 
-    private fun getConsumerCartDataState(consumerCart: ConsumerCart): ConsumerCartDataState.State {
+    private fun getConsumerCartDataState(consumerCart: ConsumerCart): ConsumerCartState.ScreenState {
         return when (consumerCart) {
-            is ConsumerCart.Empty -> ConsumerCartDataState.State.EMPTY
-            is ConsumerCart.WithProducts -> ConsumerCartDataState.State.SUCCESS
+            is ConsumerCart.Empty -> ConsumerCartState.ScreenState.EMPTY
+            is ConsumerCart.WithProducts -> ConsumerCartState.ScreenState.SUCCESS
         }
     }
 
@@ -181,4 +174,5 @@ class ConsumerCartViewModel(
             menuProductUuid = lightCartProduct.menuProductUuid
         )
     }
+
 }
