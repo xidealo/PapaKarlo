@@ -73,7 +73,7 @@ private fun StartIconTextCardPreview() {
         StartIconTextCard(
             hint = "Информация",
             label = "Важная информация",
-            iconId = R.drawable.ic_info,
+            iconId = R.drawable.ic_info
         )
     }
 }
@@ -85,7 +85,7 @@ private fun StartIconTextCardLongContentPreview() {
         StartIconTextCard(
             hint = "Длиииииииииииииииииииииииииииииииииииииииииииииииинный текст",
             label = "Длиииииииииииииииииииииииииииииииииииииииииииииииинный текст",
-            iconId = R.drawable.ic_info,
+            iconId = R.drawable.ic_info
         )
     }
 }

@@ -1,4 +1,6 @@
 import com.android.build.gradle.internal.api.BaseVariantOutputImpl
+import java.io.FileInputStream
+import java.util.Properties
 
 plugins {
     kotlin(Plugin.android)
@@ -9,18 +11,21 @@ plugins {
     id(Plugin.googleService)
     id(Plugin.kotlinParcelize)
     id(Plugin.crashlytics)
-    id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
+    id("org.jlleitschuh.gradle.ktlint") version "11.5.1"
 }
 
-@Suppress("UnstableApiUsage")
 android {
+    namespace = Namespace.app
 
     signingConfigs {
         create("release") {
-            storeFile = file("keystore")
-            storePassword = "itisBB15092019"
-            keyAlias = "papakarloKey"
-            keyPassword = "Itispapakarlo08062004"
+            storeFile = file(getProperty("RELEASE_STORE_FILE"))
+            storePassword = getProperty("RELEASE_STORE_PASSWORD")
+            keyAlias = getProperty("RELEASE_KEY_ALIAS")
+            keyPassword = getProperty("RELEASE_KEY_PASSWORD")
+
+            enableV1Signing = true
+            enableV2Signing = true
         }
     }
 
@@ -62,21 +67,31 @@ android {
             versionCode = CommonApplication.versionCode
             versionName = PapaKarloApplication.versionName
         }
-
         create("yuliar") {
             applicationId = YuliarApplication.applicationId
             versionCode = CommonApplication.versionCode
             versionName = YuliarApplication.versionName
         }
+        create("djan") {
+            applicationId = DjanApplication.applicationId
+            versionCode = CommonApplication.versionCode
+            versionName = DjanApplication.versionName
+        }
+        create("gustopub") {
+            applicationId = GustoPubApplication.applicationId
+            versionCode = CommonApplication.versionCode
+            versionName = GustoPubApplication.versionName
+        }
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_11.toString()
+        jvmTarget = JavaVersion.VERSION_17.toString()
     }
 
     buildFeatures {
         viewBinding = true
         compose = true
+        buildConfig = true
     }
 
     composeOptions {
@@ -85,6 +100,8 @@ android {
 
     compileOptions {
         isCoreLibraryDesugaringEnabled = true
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     lint {
@@ -101,16 +118,26 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
     )
 }
 
+fun getProperty(key: String): String {
+    val propertiesFile = rootProject.file("./local.properties")
+    val properties = Properties()
+    properties.load(FileInputStream(propertiesFile))
+    val property = properties.getProperty(key)
+    if (property == null) {
+        println("Property with key $key not found")
+    }
+    return property
+}
+
 dependencies {
     implementation(project(":shared"))
 
-    implementation(Google.material)
     implementation(AndroidX.appCompat)
     implementation(AndroidX.coreKtx)
-    implementation(AndroidX.constraintLayout)
 
-    implementation(Compose.bom)
+    implementation(platform(Compose.bom))
     implementation(Compose.foundation)
+    implementation(Compose.foundationLayout)
     implementation(Compose.ui)
     implementation(Compose.material3)
     implementation(Compose.uiTooling)
@@ -132,7 +159,6 @@ dependencies {
     implementation(Lifecycle.activity)
     implementation(Lifecycle.fragment)
     implementation(Lifecycle.runtime)
-    implementation(Lifecycle.livedate)
 
     implementation(ViewBindingDelegate.viewBindingDelegate)
 
@@ -147,18 +173,17 @@ dependencies {
     implementation(platform(Firebase.bom))
     implementation(Firebase.crashlyticsKtx)
     implementation(Firebase.analyticsKtx)
-    implementation(Firebase.authKtx)
     implementation(Firebase.messaging)
 
     implementation(Coil.coil)
     implementation(Coil.coilCompose)
 
-    implementation(PinEntryEditText.pinEntryEditText) {
-        exclude(group = PinEntryEditText.group, module = PinEntryEditText.module)
-    }
-
     implementation(MaterialDialogs.datetime)
     coreLibraryDesugaring(AndroidTools.desugar)
 
     debugImplementation(Leakcanary.android)
+
+    androidTestImplementation(Kaspresso.kaspresso)
+    androidTestImplementation(Kaspresso.kaspressoAllureSupport)
+    androidTestImplementation(Kaspresso.kaspressoComposeSupport)
 }

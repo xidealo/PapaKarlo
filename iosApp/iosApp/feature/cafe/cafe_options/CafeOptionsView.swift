@@ -47,7 +47,7 @@ struct CafeOptionsView: View {
             Spacer()
         }
         .frame(maxWidth:.infinity, maxHeight: .infinity)
-        .background(Color("background"))
+        .background(AppColor.background)
         .hiddenNavigationBarStyle()
 
     }

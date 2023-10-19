@@ -16,8 +16,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import com.bunbeauty.papakarlo.common.ui.element.top_bar.FoodDeliveryToolbar
-import com.bunbeauty.papakarlo.common.ui.element.top_bar.FoodDeliveryToolbarActions
+import com.bunbeauty.papakarlo.common.ui.element.topbar.FoodDeliveryToolbar
+import com.bunbeauty.papakarlo.common.ui.element.topbar.FoodDeliveryToolbarActions
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -29,7 +29,7 @@ fun FoodDeliveryScaffold(
     backgroundColor: Color = FoodDeliveryTheme.colors.mainColors.background,
     @DrawableRes drawableId: Int? = null,
     actionButton: @Composable () -> Unit = {},
-    content: (@Composable () -> Unit),
+    content: (@Composable () -> Unit)
 ) {
     val appBarState = rememberTopAppBarState()
     val behavior = TopAppBarDefaults.pinnedScrollBehavior(appBarState)
@@ -49,7 +49,7 @@ fun FoodDeliveryScaffold(
         containerColor = FoodDeliveryTheme.colors.mainColors.background,
         floatingActionButton = actionButton,
         floatingActionButtonPosition = FabPosition.Center,
-        contentWindowInsets = WindowInsets(0, 0, 0, 0),
+        contentWindowInsets = WindowInsets(0, 0, 0, 0)
     ) { padding ->
         Box(
             modifier = Modifier

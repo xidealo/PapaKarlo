@@ -16,14 +16,20 @@ struct ToastView: View {
     let toast:Toast
     @Binding var show :Bool
     let backgroundColor: Color
-    let foregaroundColor: Color
+    let foregroundColor: Color
     
     var body: some View {
         VStack(spacing:0){
             Spacer()
-            ButtonText(text: toast.title, background: backgroundColor)
-                .padding(.vertical, Diems.MEDIUM_PADDING)
-                .padding(.horizontal, Diems.MEDIUM_PADDING)
+            Text(toast.title)
+                .labelLarge()
+                .padding(.vertical, 12)
+                .padding(.horizontal, 16)
+                .frame(maxWidth: .infinity, maxHeight: 48, alignment: .leading)
+                .foregroundColor(foregroundColor)
+                .background(backgroundColor)
+                .cornerRadius(Diems.MEDIUM_RADIUS)
+                .padding(16)
         }
         .frame(maxWidth: .infinity)
         .transition(AnyTransition.move(edge: .bottom).combined(with: .opacity))
@@ -59,10 +65,10 @@ extension View {
 struct ToastView_Previews: PreviewProvider {
     static var previews: some View {
         ToastView(
-            toast: Toast(title: "title"),
+            toast: Toast(title: "Message"),
             show: .constant(true),
             backgroundColor: Color.blue,
-            foregaroundColor: Color.brown
+            foregroundColor: Color.white
         )
     }
 }

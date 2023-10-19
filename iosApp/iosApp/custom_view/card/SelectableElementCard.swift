@@ -8,14 +8,24 @@
 import SwiftUI
 
 struct SelectableElementCard: View {
-    let text:String
+    var text:String? = nil
+    var locolized:LocalizedStringKey? = nil
+    
     let isSelected:Bool
-
+    
     var body: some View {
         HStack(spacing: 0){
-            Text(text)
-                .foregroundColor(AppColor.onSurface)
-                .multilineTextAlignment(.leading)
+            
+            if(text == nil){
+                Text(locolized ?? LocalizedStringKey(""))
+                    .foregroundColor(AppColor.onSurface)
+                    .multilineTextAlignment(.leading)
+            }else{
+                Text(text ?? "")
+                    .foregroundColor(AppColor.onSurface)
+                    .multilineTextAlignment(.leading)
+            }
+   
             Spacer()
             if(isSelected){
                 IconImage(

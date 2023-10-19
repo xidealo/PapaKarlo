@@ -2,9 +2,14 @@ package com.bunbeauty.shared.data.di
 
 import com.bunbeauty.shared.Logger
 import com.bunbeauty.shared.Logger.NETWORK_TAG
+import com.bunbeauty.shared.domain.exeptions.AuthSessionTimeoutException
+import com.bunbeauty.shared.domain.exeptions.InvalidCodeException
+import com.bunbeauty.shared.domain.exeptions.NoAttemptsException
+import com.bunbeauty.shared.domain.exeptions.TooManyRequestsException
 import com.bunbeauty.shared.httpClientEngine
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.DefaultRequest
+import io.ktor.client.plugins.HttpResponseValidator
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logging
@@ -27,6 +32,16 @@ fun networkModule() = module {
     }
     single {
         HttpClient(httpClientEngine) {
+            HttpResponseValidator {
+                validateResponse { response ->
+                    when (response.status.value) {
+                        800 -> throw TooManyRequestsException()
+                        801 -> throw NoAttemptsException()
+                        802 -> throw InvalidCodeException()
+                        803 ->  throw AuthSessionTimeoutException()
+                    }
+                }
+            }
 
             install(ContentNegotiation) {
                 json(

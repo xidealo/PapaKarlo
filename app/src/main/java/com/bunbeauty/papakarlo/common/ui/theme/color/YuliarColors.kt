@@ -15,7 +15,7 @@ import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.LightBlu
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.LightGreen
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.LightRed
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Purple
-import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Red
+import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Red1
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.White
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Yellow
 
@@ -26,14 +26,14 @@ val YuliarLightColors = AppColors(
         secondary = White,
         background = Cream,
         surface = White,
-        error = Red,
+        error = Red1,
         onPrimary = White,
         onDisabled = Grey3,
         onSecondary = Grey3,
         onBackground = Black1,
         onSurface = Black1,
         onSurfaceVariant = Grey2,
-        onError = White,
+        onError = White
     ),
     orderColors = OrderColors(
         notAccepted = Purple,
@@ -43,14 +43,14 @@ val YuliarLightColors = AppColors(
         done = LightGreen,
         delivered = Green,
         canceled = DarkGrey,
-        onOrder = White,
+        onOrder = White
     ),
     statusColors = StatusColors(
         positive = Green,
         warning = Yellow,
         negative = LightRed,
         info = Gold,
-        onStatus = White,
+        onStatus = White
     ),
     bunBeautyBrandColor = LightBlue,
     isLight = true
@@ -63,14 +63,14 @@ val YuliarDarkColors = AppColors(
         secondary = Black2,
         background = Black1,
         surface = Black2,
-        error = Red,
+        error = Red1,
         onPrimary = White,
         onDisabled = Grey3,
         onSecondary = Grey3,
         onBackground = White,
         onSurface = White,
         onSurfaceVariant = Grey2,
-        onError = White,
+        onError = White
     ),
     orderColors = OrderColors(
         notAccepted = Purple,
@@ -80,14 +80,14 @@ val YuliarDarkColors = AppColors(
         done = LightGreen,
         delivered = Green,
         canceled = DarkGrey,
-        onOrder = White,
+        onOrder = White
     ),
     statusColors = StatusColors(
         positive = Green,
         warning = Yellow,
         negative = LightRed,
         info = Gold,
-        onStatus = White,
+        onStatus = White
     ),
     bunBeautyBrandColor = LightBlue,
     isLight = false

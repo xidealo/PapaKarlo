@@ -28,6 +28,7 @@ class CreateOrderUseCase(
         comment: String?,
         deferredTime: Time?,
         timeZone: String,
+        paymentMethod: String?,
     ): OrderCode? {
         val token = dataStoreRepo.getToken() ?: return null
         val cartProductList = cartProductRepo.getCartProductList()
@@ -63,7 +64,8 @@ class CreateOrderUseCase(
                     menuProductUuid = cartProduct.product.uuid,
                     count = cartProduct.count
                 )
-            }
+            },
+            paymentMethod = paymentMethod
         )
 
         return orderRepo.createOrder(token, createdOrder)

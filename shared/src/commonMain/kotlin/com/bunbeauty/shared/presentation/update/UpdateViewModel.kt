@@ -3,7 +3,7 @@ package com.bunbeauty.shared.presentation.update
 import com.bunbeauty.shared.domain.feature.link.GetLinkListUseCase
 import com.bunbeauty.shared.domain.model.link.LinkType
 import com.bunbeauty.shared.extension.launchSafe
-import com.bunbeauty.shared.presentation.SharedViewModel
+import com.bunbeauty.shared.presentation.base.SharedViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 

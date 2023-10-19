@@ -17,7 +17,7 @@ import com.bunbeauty.papakarlo.common.ui.theme.medium
 fun CafeItem(
     modifier: Modifier = Modifier,
     cafeItem: CafeItemAndroid,
-    onClick: () -> Unit,
+    onClick: () -> Unit
 ) {
     FoodDeliveryCard(
         modifier = modifier.fillMaxWidth(),
@@ -39,7 +39,7 @@ fun CafeItem(
                 Text(
                     text = cafeItem.workingHours,
                     style = FoodDeliveryTheme.typography.labelMedium.medium,
-                    color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
+                    color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
                 )
 
                 Text(
@@ -47,7 +47,7 @@ fun CafeItem(
                         .padding(start = FoodDeliveryTheme.dimensions.smallSpace),
                     text = cafeItem.cafeStatusText,
                     style = FoodDeliveryTheme.typography.labelMedium.medium,
-                    color = getCafeStatusColor(cafeItem.cafeOpenState),
+                    color = getCafeStatusColor(cafeItem.cafeOpenState)
                 )
             }
         }
@@ -67,7 +67,7 @@ private fun CafeItemOpenPreview() {
                 cafeOpenState = com.bunbeauty.shared.presentation.cafe_list.CafeItem.CafeOpenState.Opened,
                 cafeStatusText = "Open"
             ),
-            onClick = {},
+            onClick = {}
         )
     }
 }
@@ -87,7 +87,7 @@ private fun CafeItemCloseSoonPreview() {
                 ),
                 cafeStatusText = "Closed soon 30 min"
             ),
-            onClick = {},
+            onClick = {}
         )
     }
 }
@@ -105,7 +105,7 @@ private fun CafeItemClosedPreview() {
                 cafeOpenState = com.bunbeauty.shared.presentation.cafe_list.CafeItem.CafeOpenState.Closed,
                 cafeStatusText = "Closed"
             ),
-            onClick = {},
+            onClick = {}
         )
     }
 }

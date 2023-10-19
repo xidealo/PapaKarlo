@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import FirebaseAuth
 import FirebaseCore
 import FirebaseMessaging
 import SwiftUI
@@ -46,26 +45,18 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         return self.restrictRotation
     }
     
-    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        // Pass device token to auth.
-        let firebaseAuth = Auth.auth()
-        
-        //At development time we use .sandbox
-        firebaseAuth.setAPNSToken(deviceToken, type: AuthAPNSTokenType.sandbox)
-        
-        //At time of production it will be set to .prod
-    }
+//    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+//        // Pass device token to auth.
+//        let firebaseAuth = Auth.auth()
+//
+//        //At development time we use .sandbox
+//        firebaseAuth.setAPNSToken(deviceToken, type: AuthAPNSTokenType.sandbox)
+//
+//        //At time of production it will be set to .prod
+//    }
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        let firebaseAuth = Auth.auth()
-        
-        
-        if (firebaseAuth.canHandleNotification(userInfo)){
-            print(userInfo)
-            return
-        }
-        
-        
+  
         // Print message ID.
         if let messageID = userInfo[gcmMessageIDKey] {
             print("Message ID: \(messageID)")

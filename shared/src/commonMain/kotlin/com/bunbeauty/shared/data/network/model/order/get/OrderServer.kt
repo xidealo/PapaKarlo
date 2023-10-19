@@ -41,6 +41,18 @@ class OrderServer(
 
     @SerialName("oderProductList")
     val oderProductList: List<OrderProductServer>,
+
+    @SerialName("paymentMethod")
+    val paymentMethod: String?,
+
+    @SerialName("oldTotalCost")
+    val oldTotalCost: Int?,
+
+    @SerialName("newTotalCost")
+    val newTotalCost: Int,
+
+    @SerialName("percentDiscount")
+    val percentDiscount: Int?,
 )
 
 @Serializable

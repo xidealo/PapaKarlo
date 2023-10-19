@@ -17,8 +17,7 @@ struct SettingsView: View {
         getCityListUseCase: iosComponent.provideGetCityListUseCase(),
         saveSelectedCityUseCase: iosComponent.provideSaveSelectedCityUseCase(),
         disableUserUseCase: iosComponent.provideDisableUserUseCase(),
-        userInteractor: iosComponent.provideIUserInteractor(),
-        firebaseAuthRepository: iosComponent.provideFirebaseAuthRepository()
+        userInteractor: iosComponent.provideIUserInteractor()
     )
     
     @State var state = SettingsState(
@@ -29,19 +28,17 @@ struct SettingsView: View {
         eventList: []
     )
     
-    @State private var showingAlert = false
+    @State private var showingDeleteAlert = false
+    @State private var showingLogoutAlert = false
     
     @State var listener: Closeable? = nil
-    
+
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     
     var body: some View {
         VStack(spacing:0){
             ToolbarView(
                 title: "titleSettings",
-                logout : {
-                    viewModel.logout()
-                },
                 back: {
                     self.mode.wrappedValue.dismiss()
                 }
@@ -65,15 +62,15 @@ struct SettingsView: View {
                     .padding(.top, Diems.SMALL_PADDING)
                                         
                     Button(action: {
-                        showingAlert = true
+                        showingDeleteAlert = true
                     }) {
                         Text(Strings.ACTION_SETTINGS_REMOVE_ACCOUNT)
                             .frame(maxWidth: .infinity)
                             .padding()
-                            .foregroundColor(Color("error"))
+                            .foregroundColor(AppColor.error)
                             .cornerRadius(Diems.MEDIUM_RADIUS)
                             .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default).smallCaps())
-                    }.alert("Вы уверены, что хотите удалить аккаунт?", isPresented: $showingAlert) {
+                    }.alert("Вы уверены, что хотите удалить аккаунт?", isPresented: $showingDeleteAlert) {
                         Button("Да") {
                             viewModel.disableUser()
                         }
@@ -85,6 +82,20 @@ struct SettingsView: View {
                 .padding(Diems.MEDIUM_PADDING)
 
                 Spacer()
+                
+                Button(
+                    action: {
+                        showingLogoutAlert = true
+                    }, label: {
+                        ButtonText(text: "Выйти")
+                    }
+                ).padding(16)
+                    .alert("Выйти из профиля?", isPresented: $showingLogoutAlert) {
+                        Button("Выйти") {
+                            viewModel.logout()
+                        }
+                        Button("Отмена", role: .cancel) { }
+                    }
             }
         }
         .frame(maxWidth:.infinity, maxHeight: .infinity)

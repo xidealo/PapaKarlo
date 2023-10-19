@@ -31,8 +31,13 @@ object Logger {
         log(LogLevel.ERROR, tag = tag, message.toString())
     }
 
+    fun logW(tag: String, message: Any) {
+        log(LogLevel.WARNING, tag = COMMON_TAG, message.toString())
+        log(LogLevel.WARNING, tag = tag, message.toString())
+    }
+
     enum class LogLevel {
-        DEBUG, ERROR
+        DEBUG, ERROR, WARNING
     }
 }
 

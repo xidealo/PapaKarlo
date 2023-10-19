@@ -8,21 +8,6 @@
 import SwiftUI
 import Kingfisher
 
-extension String {
-    
-    func load() -> UIImage {
-        do {
-            guard let url = URL(string: self) else {
-                return UIImage()
-            }
-            let data:Data = try Data(contentsOf: url)
-            return UIImage(data: data) ?? UIImage()
-        }catch {
-            return UIImage()
-        }
-    }
-}
-
 struct ProductDetailsView: View {
     
     @StateObject private var viewModel:ProductDetailsViewModel
@@ -42,68 +27,72 @@ struct ProductDetailsView: View {
     }
     
     var body: some View {
-        VStack(spacing:0){
-            ToolbarWithCartView(
-                title: LocalizedStringKey(viewModel.productDetailsViewState.name),
-                cost: viewModel.toolbarViewState.cost,
-                count: viewModel.toolbarViewState.count,
-                isShowLogo: .constant(false),
-                back: {
-                    self.mode.wrappedValue.dismiss()
-                },
-                isRootActive: $isRootActive,
-                selection: $selection,
-                showOrderCreated: $showOrderCreated
-            )
-            
-            VStack(spacing:0){
-                KFImage(
-                    URL(string: viewModel.productDetailsViewState.imageLink)
+        ZStack (alignment: .bottom){
+            VStack(spacing: 0){
+                ToolbarWithCartView(
+                    title: LocalizedStringKey(viewModel.productDetailsViewState.name),
+                    cost: viewModel.toolbarViewState.cost,
+                    count: viewModel.toolbarViewState.count,
+                    isShowLogo: .constant(false),
+                    back: {
+                        self.mode.wrappedValue.dismiss()
+                    },
+                    isRootActive: $isRootActive,
+                    selection: $selection,
+                    showOrderCreated: $showOrderCreated
                 )
-                .resizable()
-                .aspectRatio(contentMode: .fit)
                 
-                Group{
-                    HStack(spacing:0){
-                        Text(viewModel.productDetailsViewState.name)
-                            .titleMedium(weight: .bold)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .foregroundColor(AppColor.onSurface)
-                            
-                        Text(viewModel.productDetailsViewState.size)
-                            .bodySmall()
-                            .foregroundColor(AppColor.onSurfaceVariant)
-                    }
-                    .padding(.top, 12)
-                    
-                    HStack(spacing:0){
-                        if viewModel.productDetailsViewState.oldPrice != nil{
-                            StrikeText(
-                                text: String(viewModel.productDetailsViewState.oldPrice!) + Strings.CURRENCY
+                ScrollView{
+                        VStack(spacing:0){
+                            KFImage(
+                                URL(string: viewModel.productDetailsViewState.imageLink)
                             )
-                            .padding(.trailing, Diems.SMALL_RADIUS)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            
+                            Group{
+                                HStack(spacing:0){
+                                    Text(viewModel.productDetailsViewState.name)
+                                        .titleMedium(weight: .bold)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .foregroundColor(AppColor.onSurface)
+                                    
+                                    Text(viewModel.productDetailsViewState.size)
+                                        .bodySmall()
+                                        .foregroundColor(AppColor.onSurfaceVariant)
+                                }
+                                .padding(.top, 12)
+                                
+                                HStack(spacing:0){
+                                    if viewModel.productDetailsViewState.oldPrice != nil{
+                                        StrikeText(
+                                            text: String(viewModel.productDetailsViewState.oldPrice!) + Strings.CURRENCY
+                                        )
+                                        .padding(.trailing, Diems.SMALL_RADIUS)
+                                    }
+                                    Text(viewModel.productDetailsViewState.newPrice)
+                                        .foregroundColor(AppColor.onSurface)
+                                        .bodyLarge(weight: .bold)
+                                }
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .padding(.top, 4)
+                                
+                                Text(viewModel.productDetailsViewState.description)
+                                    .bodyLarge()
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .padding(.top, 16)
+                                    .foregroundColor(AppColor.onSurface)
+                                    .padding(.bottom, 16)
+                            }
+                            .padding(.horizontal, Diems.MEDIUM_PADDING)
                         }
-                        Text(viewModel.productDetailsViewState.newPrice)
-                            .foregroundColor(AppColor.onSurface)
-                            .bodyLarge(weight: .bold)
-                    }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.top, 4)
-                    
-                    Text(viewModel.productDetailsViewState.description)
-                        .bodyLarge()
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.top, 16)
-                        .foregroundColor(AppColor.onSurface)
-                        .padding(.bottom, 16)
-                }
-                .padding(.horizontal, Diems.MEDIUM_PADDING)
+                        .background(AppColor.surface)
+                        .cornerRadius(Diems.MEDIUM_RADIUS)
+                        .padding(Diems.MEDIUM_PADDING)
+                        .padding(.bottom, 48)
             }
-            .background(AppColor.surface)
-            .cornerRadius(Diems.MEDIUM_RADIUS)
-            .padding(Diems.MEDIUM_PADDING)
             
-            Spacer()
+            }
             
             Button(action: {
                 viewModel.addCartProductToCart(menuProductUuid: menuProductUuid)

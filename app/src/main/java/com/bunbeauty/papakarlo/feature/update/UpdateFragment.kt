@@ -26,7 +26,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
@@ -50,7 +49,6 @@ class UpdateFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) 
     private val viewModel: UpdateViewModel by viewModel()
     override val viewBinding by viewBinding(LayoutComposeBinding::bind)
 
-    @OptIn(ExperimentalLifecycleComposeApi::class)
     @SuppressLint("UnsafeRepeatOnLifecycleDetector")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         overrideBackPressedCallback()
@@ -72,7 +70,7 @@ class UpdateFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) 
     @Composable
     private fun UpdateScreen(
         uiState: UpdateUiState,
-        onRepeatClick: () -> Unit,
+        onRepeatClick: () -> Unit
     ) {
         FoodDeliveryScaffold(
             title = stringResource(R.string.title_update_new_app_version),
@@ -158,7 +156,7 @@ class UpdateFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) 
                     Link(
                         uuid = "1",
                         type = LinkType.GOOGLE_PLAY,
-                        linkValue = "https://play.google.com/store/apps/details?id=1",
+                        linkValue = "https://play.google.com/store/apps/details?id=1"
                     )
                 ),
                 onRepeatClick = {}

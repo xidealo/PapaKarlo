@@ -16,6 +16,10 @@ CREATE TABLE IF NOT EXISTS orderEntity (
     addressEntrance TEXT,
     addressFloor TEXT,
     addressComment TEXT,
+    paymentMethod TEXT,
+    oldTotalCost INTEGER AS Int,
+    newTotalCost INTEGER AS Int  NOT NULL,
+    percentDiscount INTEGER AS Int,
     FOREIGN KEY (userUuid) REFERENCES userEntity(uuid) ON DELETE CASCADE
 );
 

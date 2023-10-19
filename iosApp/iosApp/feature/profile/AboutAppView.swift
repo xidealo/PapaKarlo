@@ -39,7 +39,7 @@ struct AboutAppView: View {
             }.padding(Diems.MEDIUM_PADDING)
           
             Spacer()
-        }.frame(maxWidth:.infinity, maxHeight: .infinity).background(Color("background"))
+        }.frame(maxWidth:.infinity, maxHeight: .infinity).background(AppColor.background)
         .hiddenNavigationBarStyle()
     }
 }

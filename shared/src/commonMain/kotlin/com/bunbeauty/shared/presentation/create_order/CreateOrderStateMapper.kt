@@ -6,7 +6,6 @@ class CreateOrderStateMapper(
     private val userAddressMapper: UserAddressMapper,
     private val timeMapper: TimeMapper,
 ) {
-
     fun map(dataState: CreateOrderDataState): CreateOrderUIState {
         return CreateOrderUIState(
             isDelivery = dataState.isDelivery,
@@ -18,11 +17,14 @@ class CreateOrderStateMapper(
 
             totalCost = dataState.totalCost,
             deliveryCost = dataState.deliveryCost,
-            finalCost = dataState.finalCost,
+            oldFinalCost  = dataState.oldFinalCost,
+            newFinalCost = dataState.newFinalCost,
 
             isLoading = dataState.isLoading,
 
             eventList = dataState.eventList,
+            paymentMethod = dataState.selectedPaymentMethod,
+            discount = dataState.discount
         )
     }
 }

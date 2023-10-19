@@ -9,7 +9,7 @@ plugins {
 version = "1.0"
 
 kotlin {
-    android()
+    androidTarget()
     iosX64()
     iosArm64()
     iosSimulatorArm64()
@@ -19,8 +19,6 @@ kotlin {
         homepage = "Link to the Shared Module homepage"
         ios.deploymentTarget = "14.1"
         podfile = project.file("../iosApp/Podfile")
-
-        pod("FirebaseAuth")
 
         pod("FirebaseMessaging")
 
@@ -72,8 +70,6 @@ kotlin {
                 implementation(Lifecycle.viewmodel)
 
                 implementation(project.dependencies.platform(Firebase.bom))
-
-                implementation(Firebase.authKtx)
                 implementation(Firebase.messaging)
 
                 implementation(SqlDelight.androidDriver)
@@ -106,6 +102,7 @@ kotlin {
 }
 
 android {
+    namespace = Namespace.shared
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
         minSdk = AndroidSdk.min
@@ -116,10 +113,22 @@ android {
         debug {}
         release {}
     }
+
+    buildFeatures {
+        buildConfig = true
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+
     setFlavorDimensions(listOf("default"))
     productFlavors {
         create("papaKarlo") {}
         create("yuliar") {}
+        create("djan") {}
+        create("gustopub") {}
     }
 }
 

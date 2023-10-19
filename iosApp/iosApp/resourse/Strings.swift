@@ -47,7 +47,7 @@ class Strings{
     
     //CONFIRM
     static let MSG_CONFIRM_ENTER_CODE = "Введите код подтверждения ✉ \nКод был отправлен на номер\n"
-    static let ACTION_CONFIRM_GET_CODE = "Получить код"
+    static let ACTION_CONFIRM_GET_CODE = "Запросить код повторно"
     static let HINT_CONFIRM_CODE = "Код"
     static let ACTION_SEND_CODE = "Отправить"
     

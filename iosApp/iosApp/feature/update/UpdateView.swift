@@ -29,7 +29,7 @@ struct UpdateView: View {
 //                    .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default).smallCaps())
 //            }.padding(Diems.MEDIUM_PADDING)
             
-        }.background(Color("background"))
+        }.background(AppColor.background)
         .navigationTitle(
             Text("titleNewVersion")
         )

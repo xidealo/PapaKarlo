@@ -78,12 +78,10 @@ struct MenuItemView: View {
                 }
                 .padding(.top, 8)
                 .padding(.bottom, 8)
-                
             }
             .frame(maxWidth: .infinity)
             .background(AppColor.surface)
             .cornerRadius(Diems.MEDIUM_RADIUS)
-            
         }.isDetailLink(false)
     }
 }

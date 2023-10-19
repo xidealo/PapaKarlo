@@ -24,8 +24,8 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.delegates.nullableArgument
 import com.bunbeauty.papakarlo.common.ui.ComposeBottomSheet
 import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
-import com.bunbeauty.papakarlo.common.ui.element.text_field.FoodDeliveryTextField
-import com.bunbeauty.papakarlo.common.ui.screen.bottom_sheet.FoodDeliveryBottomSheet
+import com.bunbeauty.papakarlo.common.ui.element.textfield.FoodDeliveryTextField
+import com.bunbeauty.papakarlo.common.ui.screen.bottomsheet.FoodDeliveryBottomSheet
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import kotlin.coroutines.resume
@@ -50,7 +50,7 @@ class EmailBottomSheet : ComposeBottomSheet<String>() {
 
         suspend fun show(
             fragmentManager: FragmentManager,
-            email: String?,
+            email: String?
         ) = suspendCoroutine { continuation ->
             EmailBottomSheet().apply {
                 this.email = email
@@ -69,7 +69,7 @@ class EmailBottomSheet : ComposeBottomSheet<String>() {
 @Composable
 private fun EmailScreen(
     email: String?,
-    onSaveClicked: (String) -> Unit,
+    onSaveClicked: (String) -> Unit
 ) {
     FoodDeliveryBottomSheet(titleStringId = R.string.common_email) {
         val text = email ?: ""

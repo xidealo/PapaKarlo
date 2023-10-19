@@ -2,6 +2,7 @@ package com.bunbeauty.shared.domain.model.order
 
 import com.bunbeauty.shared.domain.model.date_time.DateTime
 import com.bunbeauty.shared.domain.model.date_time.Time
+import com.bunbeauty.shared.domain.model.payment_method.PaymentMethodName
 import com.bunbeauty.shared.domain.model.product.OrderProduct
 
 data class Order(
@@ -14,7 +15,11 @@ data class Order(
     val address: OrderAddress,
     val comment: String?,
     val deliveryCost: Int?,
-    val orderProductList: List<OrderProduct>
+    val orderProductList: List<OrderProduct>,
+    val paymentMethod: PaymentMethodName?,
+    val oldTotalCost: Int?,
+    val newTotalCost: Int,
+    val percentDiscount: Int?,
 )
 
 data class OrderAddress(

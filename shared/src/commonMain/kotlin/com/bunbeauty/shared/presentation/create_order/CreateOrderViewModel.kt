@@ -1,10 +1,11 @@
 package com.bunbeauty.shared.presentation.create_order
 
+import com.bunbeauty.shared.Constants.PERCENT
 import com.bunbeauty.shared.data.mapper.user_address.UserAddressMapper
-import com.bunbeauty.shared.domain.asCommonFlow
-import com.bunbeauty.shared.domain.asCommonStateFlow
 import com.bunbeauty.shared.domain.feature.city.GetSelectedCityTimeZoneUseCase
 import com.bunbeauty.shared.domain.feature.order.CreateOrderUseCase
+import com.bunbeauty.shared.domain.feature.payment.GetSelectablePaymentMethodListUseCase
+import com.bunbeauty.shared.domain.feature.payment.SavePaymentMethodUseCase
 import com.bunbeauty.shared.domain.interactor.cafe.ICafeInteractor
 import com.bunbeauty.shared.domain.interactor.cart.GetCartTotalUseCase
 import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
@@ -15,7 +16,7 @@ import com.bunbeauty.shared.domain.use_case.cafe.GetSelectableCafeListUseCase
 import com.bunbeauty.shared.domain.use_case.deferred_time.GetMinTimeUseCase
 import com.bunbeauty.shared.extension.launchSafe
 import com.bunbeauty.shared.extension.mapToStateFlow
-import com.bunbeauty.shared.presentation.SharedViewModel
+import com.bunbeauty.shared.presentation.base.SharedViewModel
 import com.bunbeauty.shared.presentation.cafe_address_list.SelectableCafeAddressItemMapper
 import com.bunbeauty.shared.presentation.create_order.model.TimeUI
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -35,9 +36,16 @@ class CreateOrderViewModel(
     private val createOrder: CreateOrderUseCase,
     private val getSelectedCityTimeZone: GetSelectedCityTimeZoneUseCase,
     private val saveSelectedUserAddress: SaveSelectedUserAddressUseCase,
+    private val getSelectablePaymentMethodListUseCase: GetSelectablePaymentMethodListUseCase,
+    private val savePaymentMethodUseCase: SavePaymentMethodUseCase,
 ) : SharedViewModel() {
 
-    private val mutableDataState = MutableStateFlow(CreateOrderDataState())
+    private val mutableDataState = MutableStateFlow(
+        CreateOrderDataState(
+            discount = null
+        )
+    )
+
     val uiState = mutableDataState.mapToStateFlow(
         scope = sharedScope,
         block = createOrderStateMapper::map
@@ -46,6 +54,7 @@ class CreateOrderViewModel(
     fun update() {
         withLoading {
             updateAddresses()
+            updatePaymentMethods()
             updateCartTotal()
         }
     }
@@ -97,6 +106,13 @@ class CreateOrderViewModel(
         }
     }
 
+    fun onPaymentMethodChanged(paymentMethodUuid: String) {
+        withLoading {
+            savePaymentMethodUseCase(paymentMethodUuid)
+            updatePaymentMethods()
+        }
+    }
+
     fun onDeferredTimeClicked() {
         sharedScope.launchSafe(
             block = {
@@ -112,6 +128,15 @@ class CreateOrderViewModel(
             },
             onError = {}
         )
+    }
+
+    fun onPaymentMethodClick() {
+        mutableDataState.update { state ->
+            val event = CreateOrderEvent.ShowPaymentMethodList(
+                selectablePaymentMethodList = state.paymentMethodList
+            )
+            state + event
+        }
     }
 
     fun onDeferredTimeSelected(deferredTimeUi: TimeUI) {
@@ -152,6 +177,13 @@ class CreateOrderViewModel(
             return
         }
 
+        if (data.selectedPaymentMethod == null) {
+            mutableDataState.update { state ->
+                state + CreateOrderEvent.ShowPaymentMethodError
+            }
+            return
+        }
+
         withLoading {
             if (userInteractor.isUserAuthorize()) {
                 val orderCode = createOrder(
@@ -160,7 +192,8 @@ class CreateOrderViewModel(
                     selectedCafe = data.selectedCafe,
                     comment = stateValue.comment,
                     deferredTime = data.deferredTime,
-                    timeZone = getSelectedCityTimeZone()
+                    timeZone = getSelectedCityTimeZone(),
+                    paymentMethod = data.selectedPaymentMethod.name.name
                 )
                 if (orderCode == null) {
                     val event = CreateOrderEvent.ShowSomethingWentWrongErrorEvent
@@ -203,6 +236,16 @@ class CreateOrderViewModel(
         updateSelectedCafe()
     }
 
+    private suspend fun updatePaymentMethods() {
+        val paymentMethodList = getSelectablePaymentMethodListUseCase()
+        mutableDataState.update { data ->
+            data.copy(
+                paymentMethodList = paymentMethodList,
+                selectedPaymentMethod = paymentMethodList.find { it.isSelected }?.paymentMethod
+            )
+        }
+    }
+
     private suspend fun updateSelectedUserAddress() {
         val userAddressList = getSelectableUserAddressList()
         mutableDataState.update { data ->
@@ -242,7 +285,11 @@ class CreateOrderViewModel(
                 state.copy(
                     totalCost = cartTotal.totalCost,
                     deliveryCost = cartTotal.deliveryCost,
-                    finalCost = cartTotal.finalCost,
+                    newFinalCost = cartTotal.newFinalCost,
+                    oldFinalCost = cartTotal.oldFinalCost,
+                    discount = cartTotal.discount?.let { discount ->
+                        discount.toString() + PERCENT
+                    }
                 )
             }
         } catch (exception: Exception) {

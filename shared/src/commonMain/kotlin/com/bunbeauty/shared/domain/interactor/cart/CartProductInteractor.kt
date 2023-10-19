@@ -1,11 +1,9 @@
 package com.bunbeauty.shared.domain.interactor.cart
 
-import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.domain.CommonFlow
 import com.bunbeauty.shared.domain.asCommonFlow
 import com.bunbeauty.shared.domain.interactor.product.IProductInteractor
 import com.bunbeauty.shared.domain.model.cart.CartProduct
-import com.bunbeauty.shared.domain.model.cart.CartTotal
 import com.bunbeauty.shared.domain.model.cart.ConsumerCart
 import com.bunbeauty.shared.domain.model.cart.LightCartProduct
 import com.bunbeauty.shared.domain.repo.CartProductRepo
@@ -15,13 +13,9 @@ import kotlinx.coroutines.flow.map
 class CartProductInteractor(
     private val cartProductRepo: CartProductRepo,
     private val deliveryRepo: DeliveryRepo,
-    private val dataStoreRepo: DataStoreRepo,
     private val productInteractor: IProductInteractor,
+    private val getCartTotal: GetCartTotalUseCase,
 ) : ICartProductInteractor {
-
-    override suspend fun getConsumerCart(): ConsumerCart? {
-        return getConsumerCart(cartProductRepo.getCartProductList())
-    }
 
     override fun observeConsumerCart(): CommonFlow<ConsumerCart?> {
         return cartProductRepo.observeCartProductList().map { cartProductList ->
@@ -34,36 +28,11 @@ class CartProductInteractor(
             getTotalCount(cartProductList)
         }.asCommonFlow()
     }
+
     override fun observeNewTotalCartCost(): CommonFlow<Int> {
         return cartProductRepo.observeCartProductList().map { cartProductList ->
             productInteractor.getNewTotalCost(cartProductList)
         }.asCommonFlow()
-    }
-
-    override fun observeDeliveryCost(): CommonFlow<Int> {
-        return cartProductRepo.observeCartProductList().map { cartProductList ->
-            productInteractor.getDeliveryCost(cartProductList)
-        }.asCommonFlow()
-    }
-
-    override suspend fun getCartTotal(): CartTotal {
-        return cartProductRepo.getCartProductList().let { cartProductList ->
-            val newTotalCost = productInteractor.getNewTotalCost(cartProductList)
-            dataStoreRepo.getDelivery().let { deliveryCost ->
-                if (newTotalCost > (deliveryCost?.forFree ?: 500))
-                    CartTotal(
-                        totalCost = newTotalCost,
-                        deliveryCost = 0,
-                        finalCost = newTotalCost
-                    )
-                else
-                    CartTotal(
-                        totalCost = newTotalCost,
-                        deliveryCost = deliveryCost?.cost ?: 0,
-                        finalCost = newTotalCost + (deliveryCost?.cost ?: 0)
-                    )
-            }
-        }
     }
 
     override suspend fun addProductToCart(menuProductUuid: String): CartProduct? {
@@ -83,16 +52,18 @@ class CartProductInteractor(
         cartProductRepo.deleteAllCartProducts()
     }
 
-    suspend fun getConsumerCart(cartProductList: List<CartProduct>): ConsumerCart? {
+    private suspend fun getConsumerCart(cartProductList: List<CartProduct>): ConsumerCart? {
         return if (cartProductList.isEmpty()) {
             ConsumerCart.Empty
         } else {
             deliveryRepo.getDelivery()?.let { delivery ->
+                val cartTotal = getCartTotal(isDelivery = false)
                 ConsumerCart.WithProducts(
                     forFreeDelivery = delivery.forFree,
                     cartProductList = cartProductList.map(::toLightCartProduct),
-                    oldTotalCost = productInteractor.getOldTotalCost(cartProductList),
-                    newTotalCost = productInteractor.getNewTotalCost(cartProductList)
+                    oldTotalCost = cartTotal.oldFinalCost,
+                    newTotalCost = cartTotal.newFinalCost,
+                    discount = cartTotal.discount
                 )
             }
         }

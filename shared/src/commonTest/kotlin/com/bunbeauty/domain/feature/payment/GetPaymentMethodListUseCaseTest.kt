@@ -6,13 +6,11 @@ import com.bunbeauty.shared.domain.model.payment_method.PaymentMethodName
 import com.bunbeauty.shared.domain.repo.PaymentRepo
 import io.mockk.coEvery
 import io.mockk.mockk
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertContentEquals
 
-@OptIn(ExperimentalCoroutinesApi::class)
 internal class GetPaymentMethodListUseCaseTest {
 
     private val paymentRepo: PaymentRepo = mockk()

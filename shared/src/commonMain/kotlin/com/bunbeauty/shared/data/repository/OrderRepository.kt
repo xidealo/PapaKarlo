@@ -5,8 +5,6 @@ import com.bunbeauty.shared.data.mapper.order.IOrderMapper
 import com.bunbeauty.shared.data.network.api.NetworkConnector
 import com.bunbeauty.shared.data.network.model.order.get.OrderServer
 import com.bunbeauty.shared.data.network.model.order.get.OrderUpdateServer
-import com.bunbeauty.shared.domain.mapFlow
-import com.bunbeauty.shared.domain.mapListFlow
 import com.bunbeauty.shared.domain.model.order.CreatedOrder
 import com.bunbeauty.shared.domain.model.order.LightOrder
 import com.bunbeauty.shared.domain.model.order.Order
@@ -24,17 +22,12 @@ class OrderRepository(
     private val orderMapper: IOrderMapper,
 ) : OrderRepo {
 
-    override fun observeOrderListByUserUuid(userUuid: String): Flow<List<LightOrder>> {
-        return orderDao.observeOrderListByUserUuid(userUuid).mapListFlow(orderMapper::toLightOrder)
-    }
+    data class CacheLastLightOrder(
+        val lastOrder: LightOrder? = null,
+        val isValid: Boolean = false,
+    )
 
-    override fun observeLastOrderByUserUuid(userUuid: String): Flow<LightOrder?> {
-        return orderDao.observeLastOrderByUserUuid(userUuid).mapFlow(orderMapper::toLightOrder)
-    }
-
-    override fun observeOrderByUuid(orderUuid: String): Flow<Order?> {
-        return orderDao.observeOrderWithProductListByUuid(orderUuid).mapFlow(orderMapper::toOrder)
-    }
+    private var cacheLastLightOrder = CacheLastLightOrder()
 
     override suspend fun observeOrderUpdates(token: String): Pair<String?, Flow<Order>> {
         val (uuid, orderUpdatesFlow) = observeOrderUpdatesServer(token)
@@ -84,10 +77,18 @@ class OrderRepository(
                 orderDao.getLastOrderByUserUuid(userUuid)?.let(orderMapper::toLightOrder)
             },
             onSuccess = { orderServerList ->
-                orderServerList.results.firstOrNull()?.let { orderServer ->
+                val lastOrderServer = orderServerList.results.firstOrNull()
+                val lightOrder = lastOrderServer?.let { orderServer ->
                     saveOrderLocally(orderServer)
                     orderMapper.toLightOrder(orderServer)
                 }
+
+                cacheLastLightOrder = CacheLastLightOrder(
+                    lastOrder = lightOrder,
+                    isValid = true
+                )
+
+                lightOrder
             }
         )
     }
@@ -96,18 +97,11 @@ class OrderRepository(
         token: String,
         userUuid: String,
     ): LightOrder? {
-        return orderDao.getLastOrderByUserUuid(userUuid)?.let(orderMapper::toLightOrder)
-            ?: networkConnector.getOrderList(token = token, count = 1).getNullableResult(
-                onError = {
-                    null
-                },
-                onSuccess = { orderServerList ->
-                    orderServerList.results.firstOrNull()?.let { orderServer ->
-                        saveOrderLocally(orderServer)
-                        orderMapper.toLightOrder(orderServer)
-                    }
-                }
-            )
+        return if (cacheLastLightOrder.isValid) {
+            cacheLastLightOrder.lastOrder
+        } else {
+            getLastOrderByUserUuidNetworkFirst(token, userUuid)
+        }
     }
 
     override suspend fun getOrderByUuid(token: String, orderUuid: String): Order? {
@@ -128,6 +122,11 @@ class OrderRepository(
         val orderPostServer = orderMapper.toOrderPostServer(createdOrder)
         return networkConnector.postOrder(token, orderPostServer).getNullableResult { orderServer ->
             saveOrderLocally(orderServer)
+            cacheLastLightOrder =
+                CacheLastLightOrder(
+                    lastOrder = orderMapper.toLightOrder(orderServer),
+                    isValid = true
+                )
             orderMapper.toOrderCode(orderServer)
         }
     }
@@ -154,5 +153,9 @@ class OrderRepository(
 
     private fun saveOrderLocally(orderServer: OrderServer) {
         saveOrderListLocally(listOf(orderServer))
+    }
+
+    override suspend fun clearCache() {
+        cacheLastLightOrder = CacheLastLightOrder()
     }
 }

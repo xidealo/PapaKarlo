@@ -8,19 +8,18 @@ object Constants {
     const val PAPA_KARLO_TARGET_NAME = "papakarlo"
     const val PAPA_KARLO_FLAVOR_NAME = "papaKarlo"
     const val PAPA_KARLO_COMPANY_UUID = "7416dba5-2825-4fe3-abfb-1494a5e2bf99"
-    const val PAPA_KARLO_VK_LINK = "https://vk.com/papakarlokimry"
-    const val PAPA_KARLO_INSTAGRAM_LINK = "https://www.instagram.com/papakarlokimry"
-    const val PAPA_KARLO_PLAY_MARKET_LINK = "https://play.google.com/store/apps/details?id=com.bunbeuaty.papakarlo"
-    const val PAPA_KARLO_APP_STORE_LINK = "https://apps.apple.com/ru/app/%D0%BF%D0%B0%D0%BF%D0%B0-%D0%BA%D0%B0%D1%80%D0%BB%D0%BE/id6443966083"
-    const val PAPA_KARLO_PAYMENT_INFO = "Оплатить заказ можно наличными, а также переводом по номеру карты или телефона"
 
     const val YULIAR_TARGET_NAME = "yuliar"
     const val YULIAR_FLAVOR_NAME = "yuliar"
     const val YULIAR_COMPANY_UUID = "8b91126f-be08-423a-b1dc-dea78ae79cd0"
-    const val YULIAR_VK_LINK = "https://vk.com/kafe.yuliar"
-    const val YULIAR_PLAY_MARKET_LINK = "https://play.google.com/store/apps/details?id=com.bunbeuaty.yuliar"
-    const val YULIAR_APP_STORE_LINK = "https://apps.apple.com/ru/app/%D1%8E%D0%BB%D0%B8%D0%B0%D1%80/id6447322629"
-    const val YULIAR_PAYMENT_INFO = "Оплатить заказ можно наличными или через терминал при получении"
+
+    const val DJAN_TARGET_NAME = "djan"
+    const val DJAN_FLAVOR_NAME = "djan"
+    const val DJAN_COMPANY_UUID = "136ce426-15ab-49eb-ab78-19da43fca191"
+
+    const val GUSTO_PUB_TARGET_NAME = "gustopub"
+    const val GUSTO_PUB_FLAVOR_NAME = "gustopub"
+    const val GUSTO_PUB_COMPANY_UUID = "e1d1474b-6fba-4dff-826f-48e89abc48e3"
 
     // NOTIFICATION
 
@@ -31,6 +30,7 @@ object Constants {
 
     const val COMPANY_UUID_PARAMETER = "companyUuid"
     const val CITY_UUID_PARAMETER = "cityUuid"
+    const val UUID_PARAMETER = "uuid"
 
     // HEADER
 
@@ -40,16 +40,6 @@ object Constants {
     // CART
 
     const val CART_PRODUCT_LIMIT = 99
-
-    // PAYMENT
-
-    const val CARD_NUMBER_LABEL = "cart number"
-    const val PHONE_NUMBER_LABEL = "phone number"
-
-    // PATTERN
-
-    const val DD_MMMM_HH_MM_PATTERN = "dd MMMM HH:mm"
-    const val HH_MM_PATTERN = "HH:mm"
 
     // TIME
 
@@ -73,6 +63,11 @@ object Constants {
     const val WORKING_HOURS_DIVIDER = " - "
     const val COORDINATES_DIVIDER = ","
     const val ADDRESS_DIVIDER = ", "
+
+    // SIGN
+
+    const val RUBLE_CURRENCY = "₽"
+    const val PERCENT = "%"
 
     // PHONE
     const val PHONE_CODE = "+7"

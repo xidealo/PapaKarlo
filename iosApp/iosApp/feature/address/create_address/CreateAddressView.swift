@@ -181,7 +181,7 @@ struct CreateAddressView: View {
                     toast: Toast(title: "Что-то пошло не так"),
                     show: $showError,
                     backgroundColor: AppColor.error,
-                    foregaroundColor: AppColor.onError
+                    foregroundColor: AppColor.onError
                 ),
                 show: $showError
             )

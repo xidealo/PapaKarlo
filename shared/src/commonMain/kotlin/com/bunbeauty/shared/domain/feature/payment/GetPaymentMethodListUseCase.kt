@@ -6,7 +6,6 @@ import com.bunbeauty.shared.domain.repo.PaymentRepo
 class GetPaymentMethodListUseCase(
     private val paymentRepo: PaymentRepo,
 ) {
-
     suspend operator fun invoke(): List<PaymentMethod> {
         return paymentRepo.getPaymentMethodList().sortedBy { paymentMethod ->
             if (paymentMethod.valueToShow == null || paymentMethod.valueToCopy == null) {

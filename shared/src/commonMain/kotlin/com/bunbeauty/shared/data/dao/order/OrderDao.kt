@@ -38,6 +38,10 @@ class OrderDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IOrderDao {
                             addressEntrance = firstOrderWithProduct.addressEntrance,
                             addressFloor = firstOrderWithProduct.addressFloor,
                             addressComment = firstOrderWithProduct.addressComment,
+                            paymentMethod = firstOrderWithProduct.paymentMethod,
+                            oldTotalCost = firstOrderWithProduct.oldTotalCost,
+                            newTotalCost = firstOrderWithProduct.newTotalCost,
+                            percentDiscount = firstOrderWithProduct.percentDiscount,
                         )
                     )
                 }

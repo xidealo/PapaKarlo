@@ -13,7 +13,6 @@ class NetworkUtil(
 ) : INetworkUtil {
 
     override fun observeIsOnline(): Flow<Boolean> = callbackFlow {
-
         trySend(getInitialIsOnline())
 
         val networkRequest = NetworkRequest.Builder()

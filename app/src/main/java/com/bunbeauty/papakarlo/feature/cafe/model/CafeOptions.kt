@@ -6,5 +6,5 @@ data class CafeOptions(
     val callToCafe: String,
     val phone: String,
     val latitude: Double,
-    val longitude: Double,
+    val longitude: Double
 )

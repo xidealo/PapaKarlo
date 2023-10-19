@@ -1,10 +1,8 @@
 package com.bunbeauty.shared.di
 
-import cocoapods.FirebaseAuth.FIRAuth
 import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.data.DataStoreRepository
 import com.bunbeauty.shared.data.DatabaseDriverFactory
-import com.bunbeauty.shared.data.FirebaseAuthRepository
 import com.bunbeauty.shared.data.UuidGenerator
 import com.bunbeauty.shared.db.FoodDeliveryDatabase
 import org.koin.dsl.module
@@ -18,8 +16,5 @@ actual fun platformModule() = module {
     }
     single {
         UuidGenerator()
-    }
-    single {
-        FirebaseAuthRepository(firebaseAuth = FIRAuth())
     }
 }

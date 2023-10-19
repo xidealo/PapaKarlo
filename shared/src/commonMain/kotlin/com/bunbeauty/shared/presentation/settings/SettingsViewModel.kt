@@ -1,6 +1,5 @@
 package com.bunbeauty.shared.presentation.settings
 
-import com.bunbeauty.shared.data.FirebaseAuthRepository
 import com.bunbeauty.shared.domain.asCommonStateFlow
 import com.bunbeauty.shared.domain.feature.city.GetCityListUseCase
 import com.bunbeauty.shared.domain.feature.city.ObserveSelectedCityUseCase
@@ -9,7 +8,7 @@ import com.bunbeauty.shared.domain.feature.settings.ObserveSettingsUseCase
 import com.bunbeauty.shared.domain.feature.settings.UpdateEmailUseCase
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
 import com.bunbeauty.shared.domain.use_case.DisableUserUseCase
-import com.bunbeauty.shared.presentation.SharedViewModel
+import com.bunbeauty.shared.presentation.base.SharedViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flatMapLatest
@@ -26,7 +25,6 @@ class SettingsViewModel(
     private val saveSelectedCityUseCase: SaveSelectedCityUseCase,
     private val disableUserUseCase: DisableUserUseCase,
     private val userInteractor: IUserInteractor,
-    private val firebaseAuthRepository: FirebaseAuthRepository,
 ) : SharedViewModel() {
 
     private val mutableSettingsState = MutableStateFlow(SettingsState())
@@ -88,7 +86,6 @@ class SettingsViewModel(
     fun logout() {
         sharedScope.launch {
             observeSettingsJob?.cancel()
-            firebaseAuthRepository.signOut()
             userInteractor.clearUserCache()
             mutableSettingsState.update { settingsState ->
                 settingsState + SettingsState.Event.Back

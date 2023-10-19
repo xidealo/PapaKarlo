@@ -28,28 +28,10 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>fb</string>
+			<string>Encoded Id</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.1098337969858-eg8h539t3bar1j5dgkor03vm3dimj2qa</string>
-			</array>
-		</dict>
-		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>None</string>
-			<key>CFBundleURLName</key>
-			<string></string>
-			<key>CFBundleURLSchemes</key>
-			<array/>
-		</dict>
-		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>CFBundleURLName</key>
-			<string>thirdFb</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>com.googleusercontent.apps.1098337969858-vu7punq6avt0jmj3mvvm5kro4o6126a7</string>
+				<string>app-1-1098337969858-ios-e03a99227b6a0d4b97bd5b</string>
 			</array>
 		</dict>
 	</array>

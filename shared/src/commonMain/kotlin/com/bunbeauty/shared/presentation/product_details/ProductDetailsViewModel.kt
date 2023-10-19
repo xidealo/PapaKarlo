@@ -5,7 +5,7 @@ import com.bunbeauty.shared.domain.feature.cart.AddCartProductUseCase
 import com.bunbeauty.shared.domain.feature.cart.ObserveCartUseCase
 import com.bunbeauty.shared.domain.feature.menu_product.GetMenuProductByUuidUseCase
 import com.bunbeauty.shared.domain.model.product.MenuProduct
-import com.bunbeauty.shared.presentation.SharedViewModel
+import com.bunbeauty.shared.presentation.base.SharedViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -70,7 +70,11 @@ class ProductDetailsViewModel(
             uuid = menuProduct.uuid,
             photoLink = menuProduct.photoLink,
             name = menuProduct.name,
-            size = "${menuProduct.nutrition} ${menuProduct.utils}",
+            size = if ((menuProduct.nutrition == null) || (menuProduct.utils == null)) {
+                ""
+            } else {
+                "${menuProduct.nutrition} ${menuProduct.utils}"
+            },
             oldPrice = menuProduct.oldPrice?.toString(),
             newPrice = menuProduct.newPrice.toString(),
             description = menuProduct.description,

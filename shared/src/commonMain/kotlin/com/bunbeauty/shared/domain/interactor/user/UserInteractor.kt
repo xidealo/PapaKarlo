@@ -6,6 +6,7 @@ import com.bunbeauty.shared.domain.asCommonFlow
 import com.bunbeauty.shared.domain.exeptions.NotAuthorizeException
 import com.bunbeauty.shared.domain.model.profile.Profile
 import com.bunbeauty.shared.domain.model.profile.User
+import com.bunbeauty.shared.domain.repo.OrderRepo
 import com.bunbeauty.shared.domain.repo.UserRepo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
@@ -13,8 +14,10 @@ import kotlinx.coroutines.flow.map
 
 class UserInteractor(
     private val userRepo: UserRepo,
+    private val orderRepo: OrderRepo,
     private val dataStoreRepo: DataStoreRepo,
 ) : IUserInteractor {
+
     @Throws(Throwable::class)
     override suspend fun login(firebaseUserUuid: String?, firebaseUserPhone: String?) {
         if (firebaseUserUuid != null && firebaseUserPhone != null) {
@@ -30,6 +33,7 @@ class UserInteractor(
 
     override suspend fun clearUserCache() {
         userRepo.clearUserCache()
+        orderRepo.clearCache()
     }
 
     override suspend fun isUserAuthorize(): Boolean {

@@ -3,10 +3,12 @@ package com.bunbeauty.shared.data.di
 import com.bunbeauty.shared.data.network.api.NetworkConnector
 import com.bunbeauty.shared.data.network.api.NetworkConnectorImpl
 import com.bunbeauty.shared.data.network.socket.SocketService
+import com.bunbeauty.shared.data.repository.AuthRepository
 import com.bunbeauty.shared.data.repository.CafeRepository
 import com.bunbeauty.shared.data.repository.CartProductRepository
 import com.bunbeauty.shared.data.repository.CityRepository
 import com.bunbeauty.shared.data.repository.DeliveryRepository
+import com.bunbeauty.shared.data.repository.DiscountRepository
 import com.bunbeauty.shared.data.repository.LinkRepository
 import com.bunbeauty.shared.data.repository.MenuProductRepository
 import com.bunbeauty.shared.data.repository.OrderRepository
@@ -16,6 +18,7 @@ import com.bunbeauty.shared.data.repository.StreetRepository
 import com.bunbeauty.shared.data.repository.UserAddressRepository
 import com.bunbeauty.shared.data.repository.UserRepository
 import com.bunbeauty.shared.data.repository.VersionRepository
+import com.bunbeauty.shared.domain.repo.AuthRepo
 import com.bunbeauty.shared.domain.repo.CafeRepo
 import com.bunbeauty.shared.domain.repo.CartProductRepo
 import com.bunbeauty.shared.domain.repo.CityRepo
@@ -138,6 +141,17 @@ fun repositoryModule() = module {
             networkConnector = get(),
             linkMapper = get(),
             linkDao = get(),
+        )
+    }
+    single {
+        DiscountRepository(
+            networkConnector = get(),
+            dataStoreRepo = get(),
+        )
+    }
+    single<AuthRepo> {
+        AuthRepository(
+            networkConnector = get(),
         )
     }
 }

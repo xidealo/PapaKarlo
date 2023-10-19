@@ -40,17 +40,17 @@ struct ToolbarWithCartView: View {
                 ){
                     HStack(spacing:0){
                         Text(cost + Strings.CURRENCY)
-                            .foregroundColor(Color("onSurface"))
+                            .foregroundColor(AppColor.onSurface)
                         
                         Image(systemName: "cart")
-                            .foregroundColor(Color("onSurface"))
+                            .foregroundColor(AppColor.onSurface)
                         
                         Text(count)
                             .labelSmall(weight: .medium)
-                            .foregroundColor(Color("onPrimary"))
+                            .foregroundColor(AppColor.onPrimary)
                             .padding(.horizontal, 4)
                             .padding(.vertical, 2)
-                            .background(Color("primary"))
+                            .background(AppColor.primary)
                             .cornerRadius(Diems.LARGE_RADIUS)
                             .padding(.bottom, 12)
                             .padding(.leading, -8)
@@ -60,7 +60,7 @@ struct ToolbarWithCartView: View {
                 .padding(.vertical, Diems.SMALL_PADDING)
                 .padding(.trailing, Diems.SMALL_PADDING)
                 
-            }.background(Color("surface"))
+            }.background(AppColor.surface)
             
             if(isShowLogo){
                 Image("LoginLogo")

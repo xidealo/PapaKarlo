@@ -16,7 +16,7 @@ import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.LightOra
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.LightRed
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Orange
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Purple
-import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Red
+import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Red1
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.White
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Yellow
 
@@ -27,14 +27,14 @@ val PapaKarloLightColors = AppColors(
         secondary = White,
         background = Cream,
         surface = White,
-        error = Red,
+        error = Red1,
         onPrimary = White,
         onDisabled = Grey3,
         onSecondary = Grey3,
         onBackground = Black1,
         onSurface = Black1,
         onSurfaceVariant = Grey2,
-        onError = White,
+        onError = White
     ),
     orderColors = OrderColors(
         notAccepted = Purple,
@@ -44,14 +44,14 @@ val PapaKarloLightColors = AppColors(
         done = LightGreen,
         delivered = Green,
         canceled = DarkGrey,
-        onOrder = White,
+        onOrder = White
     ),
     statusColors = StatusColors(
         positive = Green,
         warning = Yellow,
         negative = LightRed,
         info = LightOrange,
-        onStatus = White,
+        onStatus = White
     ),
     bunBeautyBrandColor = LightBlue,
     isLight = true
@@ -64,14 +64,14 @@ val PapaKarloDarkColors = AppColors(
         secondary = Black2,
         background = Black1,
         surface = Black2,
-        error = Red,
+        error = Red1,
         onPrimary = White,
         onDisabled = Grey3,
         onSecondary = Grey3,
         onBackground = White,
         onSurface = White,
         onSurfaceVariant = Grey2,
-        onError = White,
+        onError = White
     ),
     orderColors = OrderColors(
         notAccepted = Purple,
@@ -81,14 +81,14 @@ val PapaKarloDarkColors = AppColors(
         done = LightGreen,
         delivered = Green,
         canceled = DarkGrey,
-        onOrder = White,
+        onOrder = White
     ),
     statusColors = StatusColors(
         positive = Green,
         warning = Yellow,
         negative = LightRed,
         info = LightOrange,
-        onStatus = White,
+        onStatus = White
     ),
     bunBeautyBrandColor = LightBlue,
     isLight = false

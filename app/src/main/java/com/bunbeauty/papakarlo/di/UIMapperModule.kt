@@ -1,12 +1,12 @@
 package com.bunbeauty.papakarlo.di
 
-import com.bunbeauty.papakarlo.feature.cafe.screen.cafe_list.CafeListUiStateMapper
-import com.bunbeauty.papakarlo.feature.create_order.mapper.UserAddressItemMapper
-import com.bunbeauty.papakarlo.feature.create_order.screen.create_order.CreateOrderStateMapper
+import com.bunbeauty.papakarlo.feature.cafe.screen.cafelist.CafeListUiStateMapper
+import com.bunbeauty.papakarlo.feature.createorder.mapper.UserAddressItemMapper
+import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.CreateOrderStateMapper
 import com.bunbeauty.papakarlo.feature.menu.model.MenuUiStateMapper
-import com.bunbeauty.papakarlo.feature.order.screen.order_details.OrderDetailsUiStateMapper
-import com.bunbeauty.papakarlo.feature.order.screen.order_details.OrderProductItemMapper
-import com.bunbeauty.papakarlo.feature.product_details.ProductDetailsUiStateMapper
+import com.bunbeauty.papakarlo.feature.order.screen.orderdetails.OrderDetailsUiStateMapper
+import com.bunbeauty.papakarlo.feature.order.screen.orderdetails.OrderProductItemMapper
+import com.bunbeauty.papakarlo.feature.productdetails.ProductDetailsUiStateMapper
 import com.bunbeauty.papakarlo.feature.profile.screen.profile.LinkUiStateMapper
 import com.bunbeauty.papakarlo.feature.profile.screen.profile.PaymentMethodUiStateMapper
 import com.bunbeauty.papakarlo.feature.profile.screen.profile.ProfileUiStateMapper
@@ -53,17 +53,19 @@ fun uiMapperModule() = module {
     factory {
         OrderDetailsUiStateMapper(
             stringUtil = get(),
-            orderProductItemMapper = get()
+            orderProductItemMapper = get(),
+            paymentMethodUiStateMapper = get()
         )
     }
     factory {
         CreateOrderStateMapper(
             stringUtil = get(),
+            paymentMethodUiStateMapper = get()
         )
     }
     factory {
         PaymentMethodUiStateMapper(
-            resources = get(),
+            resources = get()
         )
     }
     factory {

@@ -13,23 +13,22 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragmentWithSharedViewModel
 import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
+import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
 import com.bunbeauty.papakarlo.common.ui.element.card.NavigationCard
 import com.bunbeauty.papakarlo.common.ui.element.card.NavigationTextCard
 import com.bunbeauty.papakarlo.common.ui.element.card.TextCard
-import com.bunbeauty.papakarlo.common.ui.element.top_bar.FoodDeliveryAction
 import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.LayoutComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
-import com.bunbeauty.papakarlo.feature.city.screen.change_city.CityListBottomSheet
+import com.bunbeauty.papakarlo.feature.city.screen.changecity.CityListBottomSheet
 import com.bunbeauty.papakarlo.feature.main.IMessageHost
 import com.bunbeauty.papakarlo.feature.profile.screen.logout.LogoutBottomSheet
 import com.bunbeauty.shared.domain.model.Settings
@@ -43,7 +42,6 @@ class SettingsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose
     override val viewBinding by viewBinding(LayoutComposeBinding::bind)
     private val viewModel: SettingsViewModel by viewModel()
 
-    @OptIn(ExperimentalLifecycleComposeApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.loadData()
@@ -63,24 +61,26 @@ class SettingsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose
             backActionClick = {
                 findNavController().popBackStack()
             },
-            topActions = listOf(
-                FoodDeliveryAction(
-                    iconId = R.drawable.ic_logout_24,
-                    onClick = {
-                        viewModel.onLogoutClicked()
-                    }
+            actionButton = {
+                MainButton(
+                    modifier = Modifier
+                        .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
+                    text = stringResource(id = R.string.action_logout),
+                    onClick = viewModel::onLogoutClicked
                 )
-            )
+            }
         ) {
             when (settingsState.state) {
                 SettingsState.State.SUCCESS -> {
                     SettingsScreenSuccess(settingsState)
                 }
+
                 SettingsState.State.ERROR -> {
                     ErrorScreen(mainTextId = R.string.error_common_data_loading) {
                         viewModel.loadData()
                     }
                 }
+
                 SettingsState.State.LOADING -> {
                     LoadingScreen()
                 }
@@ -115,7 +115,7 @@ class SettingsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose
                     modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace),
                     hintStringId = R.string.common_email,
                     label = email,
-                    onClick = viewModel::onEmailClicked,
+                    onClick = viewModel::onEmailClicked
                 )
             }
             NavigationTextCard(
@@ -135,6 +135,7 @@ class SettingsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose
                         viewModel.onEmailChanged(email)
                     }
                 }
+
                 is SettingsState.Event.ShowCityListEvent -> {
                     CityListBottomSheet.show(
                         fragmentManager = childFragmentManager,
@@ -144,19 +145,23 @@ class SettingsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose
                         viewModel.onCitySelected(city.uuid)
                     }
                 }
+
                 SettingsState.Event.ShowEmailChangedSuccessfullyEvent -> {
                     (activity as? IMessageHost)?.showInfoMessage(
                         resources.getString(R.string.msg_settings_email_updated)
                     )
                 }
+
                 SettingsState.Event.ShowEmailChangingFailedEvent -> {
                     (activity as? IMessageHost)?.showErrorMessage(
                         resources.getString(R.string.error_something_went_wrong)
                     )
                 }
+
                 SettingsState.Event.Back -> {
                     findNavController().navigateUp()
                 }
+
                 SettingsState.Event.ShowLogoutEvent -> {
                     LogoutBottomSheet.show(childFragmentManager)?.let { isLogout ->
                         if (isLogout) {
@@ -178,12 +183,12 @@ class SettingsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose
                     settings = Settings(
                         userUuid = "",
                         phoneNumber = "+7 999 000-00-00",
-                        email = "example@email.com",
+                        email = "example@email.com"
                     ),
                     selectedCity = City(
                         uuid = "",
                         name = "Москва",
-                        timeZone = "",
+                        timeZone = ""
                     ),
                     state = SettingsState.State.SUCCESS
                 )
@@ -200,12 +205,12 @@ class SettingsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose
                     settings = Settings(
                         userUuid = "",
                         phoneNumber = "+7 999 000-00-00",
-                        email = "",
+                        email = ""
                     ),
                     selectedCity = City(
                         uuid = "",
                         name = "Москва",
-                        timeZone = "",
+                        timeZone = ""
                     ),
                     state = SettingsState.State.SUCCESS
                 )

@@ -12,7 +12,7 @@ struct LargeHeaderText: View {
     
     var body: some View {
         Text(text)
-            .foregroundColor(Color("onSurface"))
+            .foregroundColor(AppColor.onSurface)
             .frame(maxWidth: .infinity, alignment: .leading)
             .font(.system(size: Diems.LARGE_TEXT_SIZE, weight: .heavy, design: .default))
             .multilineTextAlignment(.leading)

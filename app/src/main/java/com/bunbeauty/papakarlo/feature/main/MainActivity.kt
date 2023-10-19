@@ -31,14 +31,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidViewBinding
 import androidx.core.app.NotificationManagerCompat
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.FloatingWindow
 import androidx.navigation.fragment.NavHostFragment
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.common.ui.element.bottom_bar.FoodDeliveryNavigationBar
+import com.bunbeauty.papakarlo.common.ui.element.bottombar.FoodDeliveryNavigationBar
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.FragmentContainerBinding
 import com.bunbeauty.papakarlo.databinding.LayoutComposeBinding
@@ -56,7 +55,6 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { }
     }
 
-    @OptIn(ExperimentalLifecycleComposeApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
@@ -68,7 +66,7 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
             LaunchedEffect(mainState.eventList) {
                 handleEventList(
                     eventList = mainState.eventList,
-                    snackbarHostState = snackbarHostState,
+                    snackbarHostState = snackbarHostState
                 )
             }
             MainScreen(
@@ -128,7 +126,7 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
                     .fillMaxWidth()
                     .background(FoodDeliveryTheme.colors.mainColors.error)
                     .padding(8.dp),
-                contentAlignment = Alignment.Center,
+                contentAlignment = Alignment.Center
             ) {
                 Text(
                     text = resources.getString(R.string.error_no_internet),
@@ -154,7 +152,7 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
                 Snackbar(
                     snackbarData = snackbarData,
                     containerColor = containerColor,
-                    contentColor = contentColor,
+                    contentColor = contentColor
                 )
             }
         }

@@ -13,5 +13,5 @@ data class PaymentMethodUI(
 @Parcelize
 data class PaymentMethodValueUI(
     val value: String,
-    val valueToCopy: String,
+    val valueToCopy: String
 ) : Parcelable

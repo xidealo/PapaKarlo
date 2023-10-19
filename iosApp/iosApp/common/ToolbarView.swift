@@ -23,7 +23,7 @@ struct ToolbarView: View {
             }) {
                 if(back != nil){
                     Image(systemName: "arrow.backward")
-                        .foregroundColor(Color("onSurface"))
+                        .foregroundColor(AppColor.onSurface)
                         .padding(.horizontal, Diems.SMALL_PADDING)
                 }
             }.padding(Diems.SMALL_PADDING)
@@ -35,23 +35,6 @@ struct ToolbarView: View {
                 .padding(.vertical, Diems.MEDIUM_PADDING)
             
             Spacer()
-            
-            if logout != nil{
-                Button(action:{
-                    showingAlert = true
-                }){
-                    Image("LogoutIcon")
-                        .resizable()
-                        .frame(width: 24, height: 24)
-                        .padding(Diems.MEDIUM_PADDING).foregroundColor(Color("onSurface"))
-                }.alert("Выйти из профиля?", isPresented: $showingAlert) {
-                    Button("Выйти") {
-                        logout!()
-                    }
-                    Button("Отмена", role: .cancel) { }
-                }
-            }
-            
-        }.background(Color("surface"))
+        }.background(AppColor.surface)
     }
 }

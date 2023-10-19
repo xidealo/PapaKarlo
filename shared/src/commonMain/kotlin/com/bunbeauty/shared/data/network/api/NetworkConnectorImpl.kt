@@ -3,6 +3,7 @@ package com.bunbeauty.shared.data.network.api
 import com.bunbeauty.shared.Constants.AUTHORIZATION_HEADER
 import com.bunbeauty.shared.Constants.CITY_UUID_PARAMETER
 import com.bunbeauty.shared.Constants.COMPANY_UUID_PARAMETER
+import com.bunbeauty.shared.Constants.UUID_PARAMETER
 import com.bunbeauty.shared.data.companyUuid
 import com.bunbeauty.shared.data.network.ApiError
 import com.bunbeauty.shared.data.network.ApiResult
@@ -11,6 +12,7 @@ import com.bunbeauty.shared.data.network.model.CafeServer
 import com.bunbeauty.shared.data.network.model.CategoryServer
 import com.bunbeauty.shared.data.network.model.CityServer
 import com.bunbeauty.shared.data.network.model.DeliveryServer
+import com.bunbeauty.shared.data.network.model.DiscountServer
 import com.bunbeauty.shared.data.network.model.ForceUpdateVersionServer
 import com.bunbeauty.shared.data.network.model.LinkServer
 import com.bunbeauty.shared.data.network.model.ListServer
@@ -21,6 +23,9 @@ import com.bunbeauty.shared.data.network.model.SettingsServer
 import com.bunbeauty.shared.data.network.model.StreetServer
 import com.bunbeauty.shared.data.network.model.UserAddressPostServer
 import com.bunbeauty.shared.data.network.model.login.AuthResponseServer
+import com.bunbeauty.shared.data.network.model.login.AuthSessionServer
+import com.bunbeauty.shared.data.network.model.login.CodeRequestServer
+import com.bunbeauty.shared.data.network.model.login.CodeServer
 import com.bunbeauty.shared.data.network.model.login.LoginPostServer
 import com.bunbeauty.shared.data.network.model.order.get.OrderServer
 import com.bunbeauty.shared.data.network.model.order.get.OrderUpdateServer
@@ -28,6 +33,7 @@ import com.bunbeauty.shared.data.network.model.order.post.OrderPostServer
 import com.bunbeauty.shared.data.network.model.profile.get.ProfileServer
 import com.bunbeauty.shared.data.network.model.profile.patch.PatchUserServer
 import com.bunbeauty.shared.data.network.socket.SocketService
+import com.bunbeauty.shared.domain.exeptions.FoodDeliveryNetworkException
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.ClientRequestException
@@ -37,6 +43,7 @@ import io.ktor.client.request.header
 import io.ktor.client.request.parameter
 import io.ktor.client.request.patch
 import io.ktor.client.request.post
+import io.ktor.client.request.put
 import io.ktor.client.request.setBody
 import io.ktor.client.statement.HttpResponse
 import io.ktor.http.path
@@ -45,7 +52,7 @@ import org.koin.core.component.KoinComponent
 
 class NetworkConnectorImpl(
     private val client: HttpClient,
-    private val socketService: SocketService
+    private val socketService: SocketService,
 ) : KoinComponent, NetworkConnector {
 
     // GET
@@ -99,9 +106,16 @@ class NetworkConnectorImpl(
         )
     }
 
+    override suspend fun getDiscount(): ApiResult<DiscountServer> {
+        return getData(
+            path = "discount",
+            parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuid)
+        )
+    }
+
     override suspend fun getUserAddressListByCityUuid(
         token: String,
-        cityUuid: String
+        cityUuid: String,
     ): ApiResult<ListServer<AddressServer>> {
         return getData(
             path = "address",
@@ -166,20 +180,21 @@ class NetworkConnectorImpl(
 
     // POST
 
+    @Deprecated("Outdated login method")
     override suspend fun postLogin(loginPostServer: LoginPostServer): ApiResult<AuthResponseServer> {
         return postData(
             path = "client/login",
-            postBody = loginPostServer,
+            body = loginPostServer,
         )
     }
 
     override suspend fun postUserAddress(
         token: String,
-        userAddress: UserAddressPostServer
+        userAddress: UserAddressPostServer,
     ): ApiResult<AddressServer> {
         return postData(
             path = "address",
-            postBody = userAddress,
+            body = userAddress,
             token = token
         )
     }
@@ -187,8 +202,16 @@ class NetworkConnectorImpl(
     override suspend fun postOrder(token: String, order: OrderPostServer): ApiResult<OrderServer> {
         return postData(
             path = "v2/order",
-            postBody = order,
+            body = order,
             token = token
+        )
+    }
+
+    override suspend fun postCodeRequest(codeRequest: CodeRequestServer): ApiResult<AuthSessionServer> {
+        return postData(
+            path = "client/code_request",
+            body = codeRequest,
+            parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuid)
         )
     }
 
@@ -196,12 +219,29 @@ class NetworkConnectorImpl(
 
     override suspend fun patchSettings(
         token: String,
-        patchUserServer: PatchUserServer
+        patchUserServer: PatchUserServer,
     ): ApiResult<SettingsServer> {
         return patchData(
             path = "client/settings",
-            patchBody = patchUserServer,
+            body = patchUserServer,
             token = token
+        )
+    }
+
+    // PUT
+
+    override suspend fun putCodeResend(uuid: String): ApiResult<Unit> {
+        return putData(
+            path = "client/code_resend",
+            parameters = mapOf(UUID_PARAMETER to uuid)
+        )
+    }
+
+    override suspend fun putCodeCheck(code: CodeServer, uuid: String): ApiResult<AuthResponseServer> {
+        return putData(
+            path = "client/code_check",
+            body = code,
+            parameters = mapOf(UUID_PARAMETER to uuid)
         )
     }
 
@@ -224,7 +264,7 @@ class NetworkConnectorImpl(
     private suspend inline fun <reified R> getData(
         path: String,
         parameters: Map<String, Any> = mapOf(),
-        token: String? = null
+        token: String? = null,
     ): ApiResult<R> {
         return safeCall {
             client.get {
@@ -240,15 +280,15 @@ class NetworkConnectorImpl(
     private suspend inline fun <reified R> postData(
         path: String,
         parameters: Map<String, String> = mapOf(),
-        postBody: Any,
-        token: String? = null
+        body: Any,
+        token: String? = null,
     ): ApiResult<R> {
         return safeCall {
             client.post {
                 buildRequest(
                     path = path,
                     parameters = parameters,
-                    body = postBody,
+                    body = body,
                     token = token
                 )
             }
@@ -257,16 +297,34 @@ class NetworkConnectorImpl(
 
     private suspend inline fun <reified R> patchData(
         path: String,
-        patchBody: Any,
+        body: Any,
         parameters: Map<String, String> = mapOf(),
-        token: String? = null
+        token: String? = null,
     ): ApiResult<R> {
         return safeCall {
             client.patch {
                 buildRequest(
                     path = path,
                     parameters = parameters,
-                    body = patchBody,
+                    body = body,
+                    token = token
+                )
+            }
+        }
+    }
+
+    private suspend inline fun <reified R> putData(
+        path: String,
+        body: Any? = null,
+        parameters: Map<String, String> = mapOf(),
+        token: String? = null,
+    ): ApiResult<R> {
+        return safeCall {
+            client.put {
+                buildRequest(
+                    path = path,
+                    parameters = parameters,
+                    body = body,
                     token = token
                 )
             }
@@ -274,14 +332,17 @@ class NetworkConnectorImpl(
     }
 
     private suspend inline fun <reified R> safeCall(
-        networkCall: () -> HttpResponse
+        networkCall: () -> HttpResponse,
     ): ApiResult<R> {
         return try {
-            ApiResult.Success(networkCall().body())
+            val call = networkCall()
+            ApiResult.Success(call.body())
+        } catch (exception: FoodDeliveryNetworkException) {
+            throw exception
         } catch (exception: ClientRequestException) {
             ApiResult.Error(ApiError(exception.response.status.value, exception.message))
         } catch (exception: Throwable) {
-            ApiResult.Error(ApiError(0, exception.message ?: "Bad Internet"))
+            ApiResult.Error(ApiError(0, exception.message.toString()))
         }
     }
 
@@ -289,7 +350,7 @@ class NetworkConnectorImpl(
         path: String,
         parameters: Map<String, Any> = mapOf(),
         body: Any? = null,
-        token: String? = null
+        token: String? = null,
     ) {
         if (body != null) {
             setBody(body)

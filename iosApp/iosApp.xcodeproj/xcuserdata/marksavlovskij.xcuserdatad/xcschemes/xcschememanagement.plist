@@ -4,6 +4,16 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>djan.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
+		<key>gustoPub.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>24</integer>
+		</dict>
 		<key>papakarlo.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
@@ -12,11 +22,21 @@
 		<key>yuliar.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>20</integer>
+			<integer>1</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>026C1F502A2690B900838266</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>027CB0132A346F7B00350EB2</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>02ADC33529D9D0880062A141</key>
 		<dict>
 			<key>primary</key>

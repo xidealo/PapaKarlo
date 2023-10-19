@@ -20,9 +20,12 @@ class CreateOrderHolder: ObservableObject {
         deferredTime: TimeUIASAP(),
         totalCost: nil,
         deliveryCost: nil,
-        finalCost: nil,
+        oldFinalCost: nil,
+        newFinalCost: nil,
         isLoading: false,
-        eventList: []
+        eventList: [],
+        paymentMethod: nil,
+        discount: nil
     )
     
     let kmmViewModel = CreateOrderViewModel(
@@ -38,7 +41,9 @@ class CreateOrderHolder: ObservableObject {
         getMinTime: iosComponent.provideGetMinTimeUseCase(),
         createOrder: iosComponent.provideCreateOrderUseCase(),
         getSelectedCityTimeZone: iosComponent.provideGetSelectedCityTimeZoneUseCase(),
-        saveSelectedUserAddress : iosComponent.provideSaveSelectedUserAddressUseCase()
+        saveSelectedUserAddress : iosComponent.provideSaveSelectedUserAddressUseCase(),
+        getSelectablePaymentMethodListUseCase : iosComponent.provideGetSelectablePaymentMethodListUseCase(),
+        savePaymentMethodUseCase : iosComponent.provideSavePaymentMethodUseCase()
     )
         
     var listener: Closeable? = nil
@@ -91,12 +96,16 @@ class CreateOrderHolder: ObservableObject {
     func createOrder(){
         kmmViewModel.onCreateOrderClicked()
     }
-    
+
     func goToAddress(){
         if(creationOrderViewState.isDelivery){
             kmmViewModel.onUserAddressClicked()
         }else{
             kmmViewModel.onCafeAddressClicked()
         }
+    }
+    
+    func onPaymentMethodClick()  {
+        kmmViewModel.onPaymentMethodClick()
     }
 }

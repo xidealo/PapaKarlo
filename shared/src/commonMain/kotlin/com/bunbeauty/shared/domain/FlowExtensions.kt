@@ -3,6 +3,7 @@ package com.bunbeauty.shared.domain
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -38,7 +39,7 @@ interface Closeable{
 
 class CommonFlow<T>(private val origin: Flow<T>) : Flow<T> by origin {
     fun watch(block: (T) -> Unit): Closeable {
-        val job = Job()
+        val job = SupervisorJob()
 
         onEach {
             block(it)
@@ -55,7 +56,7 @@ class CommonFlow<T>(private val origin: Flow<T>) : Flow<T> by origin {
 
 class CommonStateFlow<T>(private val origin: StateFlow<T>) : StateFlow<T> by origin {
     fun watch(block: (T) -> Unit): Closeable {
-        val job = Job()
+        val job = SupervisorJob()
 
         onEach {
             block(it)
