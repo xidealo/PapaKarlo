@@ -68,7 +68,7 @@ class ConsumerCartFragment :
     @Composable
     override fun Screen(
         state: ConsumerCartState.State,
-        onAction: (ConsumerCartState.Action) -> Unit,
+        onAction: (ConsumerCartState.Action) -> Unit
     ) {
         FoodDeliveryScaffold(
             title = stringResource(id = R.string.title_cart),
@@ -78,12 +78,12 @@ class ConsumerCartFragment :
 
             backgroundColor = FoodDeliveryTheme.colors.mainColors.surface
         ) {
-            //check if change state to sealed class
+            // check if change state to sealed class
             Crossfade(targetState = state.screenState, label = "ConsumerCart") { screenState ->
                 when (screenState) {
                     ConsumerCartState.ScreenState.LOADING -> LoadingScreen()
                     ConsumerCartState.ScreenState.SUCCESS -> {
-                        //Warning(Check!)
+                        // Warning(Check!)
                         state.consumerCartData?.let { consumerCartData ->
                             ConsumerCartSuccessScreen(
                                 consumerCartData = consumerCartData,
@@ -115,7 +115,6 @@ class ConsumerCartFragment :
                     }
                 }
             }
-
         }
     }
 
@@ -148,13 +147,12 @@ class ConsumerCartFragment :
 
             ConsumerCartState.Event.NavigateBack -> findNavController().popBackStack()
         }
-
     }
 
     @Composable
     private fun ConsumerCartSuccessScreen(
         consumerCartData: ConsumerCartData,
-        onAction: (ConsumerCartState.Action) -> Unit,
+        onAction: (ConsumerCartState.Action) -> Unit
     ) {
         Column(
             modifier = Modifier
@@ -165,7 +163,7 @@ class ConsumerCartFragment :
                     modifier = Modifier.fillMaxSize(),
                     contentPadding = PaddingValues(vertical = FoodDeliveryTheme.dimensions.mediumSpace),
                     columns = GridCells.Fixed(2),
-                    horizontalArrangement = Arrangement.Absolute.spacedBy(8.dp),
+                    horizontalArrangement = Arrangement.Absolute.spacedBy(8.dp)
                 ) {
                     item(
                         span = { GridItemSpan(maxLineSpan) },
@@ -181,14 +179,14 @@ class ConsumerCartFragment :
                                 consumerCartData.forFreeDelivery
                             ),
                             style = FoodDeliveryTheme.typography.bodyMedium,
-                            color = FoodDeliveryTheme.colors.mainColors.onBackground,
+                            color = FoodDeliveryTheme.colors.mainColors.onBackground
                         )
                     }
 
                     itemsIndexed(
                         items = consumerCartData.cartProductList,
                         key = { index, cartProductItem -> cartProductItem.uuid },
-                        span = { index, cartProductItem -> GridItemSpan(maxLineSpan) },
+                        span = { index, cartProductItem -> GridItemSpan(maxLineSpan) }
                     ) { index, cartProductItem ->
                         Column {
                             CartProductItem(
@@ -215,15 +213,15 @@ class ConsumerCartFragment :
                                     )
                                 }
                             )
-                            if (index != consumerCartData.cartProductList.lastIndex)
+                            if (index != consumerCartData.cartProductList.lastIndex) {
                                 Divider(
                                     modifier = Modifier
                                         .padding(horizontal = 16.dp),
                                     thickness = 1.dp,
                                     color = FoodDeliveryTheme.colors.mainColors.background
                                 )
+                            }
                         }
-
                     }
                     item(
                         span = { GridItemSpan(maxLineSpan) },
@@ -237,7 +235,7 @@ class ConsumerCartFragment :
                                 R.string.msg_consumer_cart_recommendations
                             ),
                             style = FoodDeliveryTheme.typography.titleMedium.medium,
-                            color = FoodDeliveryTheme.colors.mainColors.onSurface,
+                            color = FoodDeliveryTheme.colors.mainColors.onSurface
                         )
                     }
                     itemsIndexed(
@@ -320,15 +318,12 @@ class ConsumerCartFragment :
                     )
                 }
             }
-
         }
     }
-
 
     @Preview(showSystemUi = true)
     @Composable
     private fun ConsumerCartSuccessScreenPreview() {
-
         fun getCartProductItemModel(uuid: String) = CartProductItem(
             uuid = uuid,
             name = "Бэргер",
@@ -364,7 +359,7 @@ class ConsumerCartFragment :
                         firstOrderDiscount = "10",
                         recommendations = listOf(
                             getMenuProductItem("6"),
-                            getMenuProductItem("7"),
+                            getMenuProductItem("7")
                         )
                     ),
                     screenState = ConsumerCartState.ScreenState.SUCCESS
