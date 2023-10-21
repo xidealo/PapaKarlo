@@ -1,0 +1,38 @@
+CREATE TABLE recommendationProductEntity (
+    uuid TEXT NOT NULL PRIMARY KEY,
+    menuProductUuid TEXT NOT NULL,
+    FOREIGN KEY (menuProductUuid) REFERENCES menuProductEntity(uuid) ON DELETE CASCADE
+);
+
+CREATE VIEW recommendationProductWithMenuProductEntity AS
+SELECT recommendationProductEntity.uuid AS recommendationProductUuid,
+    recommendationProductEntity.menuProductUuid,
+    menuProductEntity.*
+FROM recommendationProductEntity
+JOIN menuProductEntity ON menuProductEntity.uuid = recommendationProductEntity.menuProductUuid;
+
+insertRecommendationProduct:
+INSERT OR REPLACE
+INTO recommendationProductEntity
+VALUES (?, ?);
+
+getRecommendationProductList:
+SELECT *
+FROM recommendationProductWithMenuProductEntity;
+
+getRecommendationProductByUuid:
+SELECT *
+FROM recommendationProductWithMenuProductEntity
+WHERE recommendationProductWithMenuProductEntity.recommendationProductUuid = :uuid;
+
+getRecommendationProductByMenuProductUuid:
+SELECT *
+FROM recommendationProductWithMenuProductEntity
+WHERE recommendationProductWithMenuProductEntity.menuProductUuid = :menuProductUuid;
+
+deleteRecommendationProductByUuid:
+DELETE FROM recommendationProductEntity
+WHERE uuid = :uuid;
+
+deleteAllRecommendationProducts:
+DELETE FROM recommendationProductEntity;

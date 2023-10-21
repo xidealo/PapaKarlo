@@ -1,35 +1,33 @@
 package com.bunbeauty.shared.data.repository
 
-import com.bunbeauty.shared.data.mapper.menuProduct.IMenuProductMapper
+import com.bunbeauty.shared.data.dao.recommendation.IRecommendationProductDao
+import com.bunbeauty.shared.data.mapper.RecommendationMapper
 import com.bunbeauty.shared.data.network.api.NetworkConnector
-import com.bunbeauty.shared.data.network.model.RecommendationServer
-import com.bunbeauty.shared.domain.model.Recommendation
+import com.bunbeauty.shared.domain.model.RecommendationProduct
 
 class RecommendationRepository(
     private val networkConnector: NetworkConnector,
-    private val menuProductMapper: IMenuProductMapper,
-) : CacheListRepository<Recommendation>() {
+    private val recommendationMapper: RecommendationMapper,
+    private val recommendationProductDao: IRecommendationProductDao,
+) : CacheListRepository<RecommendationProduct>() {
 
     override val tag: String = "RECOMMENDATION_TAG"
 
-    suspend fun getRecommendations(): List<Recommendation> {
+    suspend fun getRecommendations(): List<RecommendationProduct> {
         return getCacheOrListData(
             onApiRequest = networkConnector::getRecommendationList,
             onLocalRequest = {
-                emptyList()
-                /*menuProductMapper.toMenuProductList(
-                    menuProductDao.getMenuProductWithCategoryList()
-                )*/
+                recommendationProductDao.getRecommendationProductWithMenuProductList()
+                    .map(recommendationMapper::toRecommendationProduct)
             },
-            onSaveLocally = { },
-            serverToDomainModel = ::toRecommendation
-        )
-    }
-
-    private fun toRecommendation(recommendationServer: RecommendationServer): Recommendation {
-        return Recommendation(
-            uuid = recommendationServer.uuid,
-            menuProduct = menuProductMapper.toMenuProduct(recommendationServer.menuProduct)
+            onSaveLocally = { recommendationProductList ->
+                recommendationProductDao.insertList(
+                    recommendationProductList.map(
+                        recommendationMapper::toRecommendationProductEntity
+                    )
+                )
+            },
+            serverToDomainModel = recommendationMapper::toRecommendation
         )
     }
 }

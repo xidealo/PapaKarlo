@@ -19,7 +19,7 @@ import com.bunbeauty.shared.data.network.model.ListServer
 import com.bunbeauty.shared.data.network.model.MenuProductServer
 import com.bunbeauty.shared.data.network.model.PaymentMethodServer
 import com.bunbeauty.shared.data.network.model.PaymentServer
-import com.bunbeauty.shared.data.network.model.RecommendationServer
+import com.bunbeauty.shared.data.network.model.RecommendationProductServer
 import com.bunbeauty.shared.data.network.model.SettingsServer
 import com.bunbeauty.shared.data.network.model.StreetServer
 import com.bunbeauty.shared.data.network.model.UserAddressPostServer
@@ -179,7 +179,7 @@ class NetworkConnectorImpl(
         )
     }
 
-    override suspend fun getRecommendationList(): ApiResult<ListServer<RecommendationServer>> {
+    override suspend fun getRecommendationList(): ApiResult<ListServer<RecommendationProductServer>> {
         return getData(
             path = "recommendation",
             parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuid)

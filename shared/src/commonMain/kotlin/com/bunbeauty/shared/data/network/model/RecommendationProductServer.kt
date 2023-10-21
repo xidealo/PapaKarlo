@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class RecommendationServer(
+data class RecommendationProductServer(
     @SerialName("uuid")
     val uuid: String,
     @SerialName("menuProduct")

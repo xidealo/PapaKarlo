@@ -1,0 +1,11 @@
+CREATE TABLE recommendationProductEntity (
+    uuid TEXT NOT NULL PRIMARY KEY,
+    menuProductUuid TEXT NOT NULL DEFAULT ""
+);
+
+CREATE VIEW recommendationProductWithMenuProductEntity AS
+SELECT recommendationProductEntity.uuid AS recommendationProductUuid,
+    recommendationProductEntity.menuProductUuid,
+    menuProductEntity.*
+FROM recommendationProductEntity
+JOIN menuProductEntity ON menuProductEntity.uuid = recommendationProductEntity.menuProductUuid;

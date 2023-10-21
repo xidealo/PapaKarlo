@@ -158,7 +158,8 @@ fun repositoryModule() = module {
     single {
         RecommendationRepository(
             networkConnector = get(),
-            menuProductMapper = get(),
+            recommendationMapper = get(),
+            recommendationProductDao = get()
         )
     }
 }
