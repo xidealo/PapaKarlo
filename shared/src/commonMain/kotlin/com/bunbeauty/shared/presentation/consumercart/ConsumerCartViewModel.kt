@@ -72,7 +72,6 @@ class ConsumerCartViewModel(
         }
     }
 
-
     private fun navigateBack() {
         event {
             ConsumerCartState.Event.NavigateBack
@@ -170,14 +169,16 @@ class ConsumerCartViewModel(
                 firstOrderDiscount = consumerCart.discount?.let { discount ->
                     discount.toString() + PERCENT
                 },
-                recommendations = getRecommendationsUseCase().map { menuProduct ->
-                    MenuProductItem(
-                        uuid = menuProduct.uuid,
-                        photoLink = menuProduct.photoLink,
-                        name = menuProduct.name,
-                        oldPrice = menuProduct.oldPrice,
-                        newPrice = menuProduct.newPrice
-                    )
+                recommendations = getRecommendationsUseCase().map { recommendationProduct ->
+                    with(recommendationProduct.menuProduct) {
+                        MenuProductItem(
+                            uuid = uuid,
+                            photoLink = photoLink,
+                            name = name,
+                            oldPrice = oldPrice,
+                            newPrice = newPrice
+                        )
+                    }
                 }
             )
         }

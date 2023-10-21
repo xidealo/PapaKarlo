@@ -2,6 +2,7 @@ package com.bunbeauty.papakarlo.feature.consumercart
 
 import android.os.Bundle
 import android.view.View
+import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -77,40 +78,44 @@ class ConsumerCartFragment :
 
             backgroundColor = FoodDeliveryTheme.colors.mainColors.surface
         ) {
-            when (state.screenState) {
-                ConsumerCartState.ScreenState.LOADING -> LoadingScreen()
-                ConsumerCartState.ScreenState.SUCCESS -> {
-                    //Warning(Check!)
-                    state.consumerCartData?.let { consumerCartData ->
-                        ConsumerCartSuccessScreen(
-                            consumerCartData = consumerCartData,
-                            onAction = onAction
+            //check if change state to sealed class
+            Crossfade(targetState = state.screenState, label = "ConsumerCart") { screenState ->
+                when (screenState) {
+                    ConsumerCartState.ScreenState.LOADING -> LoadingScreen()
+                    ConsumerCartState.ScreenState.SUCCESS -> {
+                        //Warning(Check!)
+                        state.consumerCartData?.let { consumerCartData ->
+                            ConsumerCartSuccessScreen(
+                                consumerCartData = consumerCartData,
+                                onAction = onAction
+                            )
+                        }
+                    }
+
+                    ConsumerCartState.ScreenState.EMPTY -> {
+                        EmptyScreen(
+                            imageId = R.drawable.ic_cart_24,
+                            imageDescriptionId = R.string.description_consumer_cart_empty,
+                            mainTextId = R.string.title_consumer_cart_empty,
+                            extraTextId = R.string.msg_consumer_cart_empty,
+                            buttonTextId = R.string.action_consumer_cart_menu,
+                            onClick = {
+                                onAction(ConsumerCartState.Action.OnMenuClick)
+                            }
+                        )
+                    }
+
+                    ConsumerCartState.ScreenState.ERROR -> {
+                        ErrorScreen(
+                            mainTextId = R.string.error_consumer_cart_loading,
+                            onClick = {
+                                onAction(ConsumerCartState.Action.OnErrorButtonClick)
+                            }
                         )
                     }
                 }
-
-                ConsumerCartState.ScreenState.EMPTY -> {
-                    EmptyScreen(
-                        imageId = R.drawable.ic_cart_24,
-                        imageDescriptionId = R.string.description_consumer_cart_empty,
-                        mainTextId = R.string.title_consumer_cart_empty,
-                        extraTextId = R.string.msg_consumer_cart_empty,
-                        buttonTextId = R.string.action_consumer_cart_menu,
-                        onClick = {
-                            onAction(ConsumerCartState.Action.OnMenuClick)
-                        }
-                    )
-                }
-
-                ConsumerCartState.ScreenState.ERROR -> {
-                    ErrorScreen(
-                        mainTextId = R.string.error_consumer_cart_loading,
-                        onClick = {
-                            onAction(ConsumerCartState.Action.OnErrorButtonClick)
-                        }
-                    )
-                }
             }
+
         }
     }
 
@@ -132,12 +137,13 @@ class ConsumerCartFragment :
             }
 
             is ConsumerCartState.Event.NavigateToProduct -> {
-                findNavController().navigateSafe(
-                    toProductFragment(
-                        event.uuid,
-                        event.name
+                findNavController()
+                    .navigateSafe(
+                        toProductFragment(
+                            event.uuid,
+                            event.name
+                        )
                     )
-                )
             }
 
             ConsumerCartState.Event.NavigateBack -> findNavController().popBackStack()
@@ -183,38 +189,41 @@ class ConsumerCartFragment :
                         items = consumerCartData.cartProductList,
                         key = { index, cartProductItem -> cartProductItem.uuid },
                         span = { index, cartProductItem -> GridItemSpan(maxLineSpan) },
+                    ) { index, cartProductItem ->
+                        Column {
+                            CartProductItem(
+                                cartProductItem = cartProductItem,
+                                onCountIncreased = {
+                                    onAction(
+                                        ConsumerCartState.Action.AddProductToCartClick(
+                                            menuProductUuid = cartProductItem.menuProductUuid
+                                        )
+                                    )
+                                },
+                                onCountDecreased = {
+                                    onAction(
+                                        ConsumerCartState.Action.RemoveProductFromCartClick(
+                                            menuProductUuid = cartProductItem.menuProductUuid
+                                        )
+                                    )
+                                },
+                                onClick = {
+                                    onAction(
+                                        ConsumerCartState.Action.OnProductClick(
+                                            cartProductItem = cartProductItem
+                                        )
+                                    )
+                                }
+                            )
+                            if (index != consumerCartData.cartProductList.lastIndex)
+                                Divider(
+                                    modifier = Modifier
+                                        .padding(horizontal = 16.dp),
+                                    thickness = 1.dp,
+                                    color = FoodDeliveryTheme.colors.mainColors.background
+                                )
+                        }
 
-                        ) { index, cartProductItem ->
-                        CartProductItem(
-                            cartProductItem = cartProductItem,
-                            onCountIncreased = {
-                                onAction(
-                                    ConsumerCartState.Action.AddProductToCartClick(
-                                        menuProductUuid = cartProductItem.menuProductUuid
-                                    )
-                                )
-                            },
-                            onCountDecreased = {
-                                onAction(
-                                    ConsumerCartState.Action.RemoveProductFromCartClick(
-                                        menuProductUuid = cartProductItem.menuProductUuid
-                                    )
-                                )
-                            },
-                            onClick = {
-                                onAction(
-                                    ConsumerCartState.Action.OnProductClick(
-                                        cartProductItem = cartProductItem
-                                    )
-                                )
-                            }
-                        )
-                        Divider(
-                            modifier = Modifier
-                                .padding(horizontal = 16.dp),
-                            thickness = 1.dp,
-                            color = FoodDeliveryTheme.colors.mainColors.background
-                        )
                     }
                     item(
                         span = { GridItemSpan(maxLineSpan) },
