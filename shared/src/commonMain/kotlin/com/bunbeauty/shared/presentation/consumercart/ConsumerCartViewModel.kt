@@ -8,7 +8,7 @@ import com.bunbeauty.shared.domain.feature.cart.GetRecommendationsUseCase
 import com.bunbeauty.shared.domain.feature.cart.RemoveCartProductUseCase
 import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
-import com.bunbeauty.shared.domain.model.cart.ConsumerCart
+import com.bunbeauty.shared.domain.model.cart.ConsumerCartDomain
 import com.bunbeauty.shared.domain.model.cart.LightCartProduct
 import com.bunbeauty.shared.extension.launchSafe
 import com.bunbeauty.shared.presentation.base.SharedStateViewModel
@@ -23,8 +23,8 @@ class ConsumerCartViewModel(
     private val addCartProductUseCase: AddCartProductUseCase,
     private val removeCartProductUseCase: RemoveCartProductUseCase,
     private val getRecommendationsUseCase: GetRecommendationsUseCase,
-) : SharedStateViewModel<ConsumerCartState.State, ConsumerCartState.Action, ConsumerCartState.Event>(
-    ConsumerCartState.State(
+) : SharedStateViewModel<ConsumerCart.State, ConsumerCart.Action, ConsumerCart.Event>(
+    ConsumerCart.State(
         consumerCartData = ConsumerCartData(
             forFreeDelivery = "",
             cartProductList = listOf(),
@@ -33,39 +33,38 @@ class ConsumerCartViewModel(
             firstOrderDiscount = null,
             recommendations = emptyList()
         ),
-        screenState = ConsumerCartState.ScreenState.LOADING,
+        screenState = ConsumerCart.ScreenState.LOADING,
     )
 ) {
 
     private var observeConsumerCartJob: Job? = null
 
-    override fun handleAction(action: ConsumerCartState.Action) {
+    override fun handleAction(action: ConsumerCart.Action) {
 
         when (action) {
-            is ConsumerCartState.Action.AddProductToCartClick -> onAddCardProductClicked(
+            is ConsumerCart.Action.AddProductToCartClick -> onAddCardProductClicked(
                 menuProductUuid = action.menuProductUuid
             )
 
-            ConsumerCartState.Action.BackClick -> navigateBack()
-            is ConsumerCartState.Action.ConsumeEvents -> consumeEvents(action.eventList)
-            ConsumerCartState.Action.Init -> init()
-            ConsumerCartState.Action.OnCreateOrderClick -> onCreateOrderClicked()
-            ConsumerCartState.Action.OnErrorButtonClick -> init()
-            ConsumerCartState.Action.OnMenuClick -> onMenuClicked()
-            is ConsumerCartState.Action.OnProductClick -> onProductClicked(
+            ConsumerCart.Action.BackClick -> navigateBack()
+            ConsumerCart.Action.Init -> init()
+            ConsumerCart.Action.OnCreateOrderClick -> onCreateOrderClicked()
+            ConsumerCart.Action.OnErrorButtonClick -> init()
+            ConsumerCart.Action.OnMenuClick -> onMenuClicked()
+            is ConsumerCart.Action.OnProductClick -> onProductClicked(
                 uuid = action.cartProductItem.menuProductUuid,
                 name = action.cartProductItem.name
             )
 
-            is ConsumerCartState.Action.RemoveProductFromCartClick -> onRemoveCardProductClicked(
+            is ConsumerCart.Action.RemoveProductFromCartClick -> onRemoveCardProductClicked(
                 menuProductUuid = action.menuProductUuid
             )
 
-            is ConsumerCartState.Action.AddProductToRecommendationClick -> onAddCardProductClicked(
+            is ConsumerCart.Action.AddProductToRecommendationClick -> onAddCardProductClicked(
                 menuProductUuid = action.menuProductUuid
             )
 
-            is ConsumerCartState.Action.RecommendationClick -> onProductClicked(
+            is ConsumerCart.Action.RecommendationClick -> onProductClicked(
                 uuid = action.menuProductUuid,
                 name = action.name
             )
@@ -74,14 +73,14 @@ class ConsumerCartViewModel(
 
     private fun navigateBack() {
         event {
-            ConsumerCartState.Event.NavigateBack
+            ConsumerCart.Event.NavigateBack
         }
     }
 
     private fun init() {
         state { oldState ->
             oldState.copy(
-                screenState = ConsumerCartState.ScreenState.LOADING
+                screenState = ConsumerCart.ScreenState.LOADING
             )
         }
         observeConsumerCartJob?.cancel()
@@ -90,12 +89,12 @@ class ConsumerCartViewModel(
                 Logger.logD("getConsumerCart", "getConsumerCart $consumerCart")
                 state { dataState ->
                     if (consumerCart == null) {
-                        dataState.copy(screenState = ConsumerCartState.ScreenState.ERROR)
+                        dataState.copy(screenState = ConsumerCart.ScreenState.ERROR)
                     } else {
                         dataState.copy(
                             screenState = getConsumerCartDataState(consumerCart),
                             consumerCartData = getConsumerCartData(
-                                consumerCart = consumerCart
+                                consumerCartDomain = consumerCart
                             ),
                         )
                     }
@@ -105,7 +104,7 @@ class ConsumerCartViewModel(
 
     private fun onMenuClicked() {
         event {
-            ConsumerCartState.Event.NavigateToMenu
+            ConsumerCart.Event.NavigateToMenu
         }
     }
 
@@ -114,9 +113,9 @@ class ConsumerCartViewModel(
             block = {
                 event {
                     if (userInteractor.isUserAuthorize()) {
-                        ConsumerCartState.Event.NavigateToCreateOrder
+                        ConsumerCart.Event.NavigateToCreateOrder
                     } else {
-                        ConsumerCartState.Event.NavigateToLogin
+                        ConsumerCart.Event.NavigateToLogin
                     }
                 }
             },
@@ -128,7 +127,7 @@ class ConsumerCartViewModel(
 
     private fun onProductClicked(uuid: String, name: String) {
         event {
-            ConsumerCartState.Event.NavigateToProduct(uuid = uuid, name = name)
+            ConsumerCart.Event.NavigateToProduct(uuid = uuid, name = name)
         }
     }
 
@@ -155,18 +154,18 @@ class ConsumerCartViewModel(
     }
 
     private suspend fun getConsumerCartData(
-        consumerCart: ConsumerCart,
+        consumerCartDomain: ConsumerCartDomain,
     ): ConsumerCartData? {
-        return when (consumerCart) {
-            is ConsumerCart.Empty -> null
-            is ConsumerCart.WithProducts -> ConsumerCartData(
-                forFreeDelivery = "${consumerCart.forFreeDelivery} $RUBLE_CURRENCY",
-                cartProductList = consumerCart.cartProductList.map(::toItem),
-                oldTotalCost = consumerCart.oldTotalCost?.let { oldTotalCost ->
+        return when (consumerCartDomain) {
+            is ConsumerCartDomain.Empty -> null
+            is ConsumerCartDomain.WithProducts -> ConsumerCartData(
+                forFreeDelivery = "${consumerCartDomain.forFreeDelivery} $RUBLE_CURRENCY",
+                cartProductList = consumerCartDomain.cartProductList.map(::toItem),
+                oldTotalCost = consumerCartDomain.oldTotalCost?.let { oldTotalCost ->
                     oldTotalCost.toString() + RUBLE_CURRENCY
                 },
-                newTotalCost = consumerCart.newTotalCost.toString() + RUBLE_CURRENCY,
-                firstOrderDiscount = consumerCart.discount?.let { discount ->
+                newTotalCost = consumerCartDomain.newTotalCost.toString() + RUBLE_CURRENCY,
+                firstOrderDiscount = consumerCartDomain.discount?.let { discount ->
                     discount.toString() + PERCENT
                 },
                 recommendations = getRecommendationsUseCase().map { recommendationProduct ->
@@ -184,10 +183,10 @@ class ConsumerCartViewModel(
         }
     }
 
-    private fun getConsumerCartDataState(consumerCart: ConsumerCart): ConsumerCartState.ScreenState {
-        return when (consumerCart) {
-            is ConsumerCart.Empty -> ConsumerCartState.ScreenState.EMPTY
-            is ConsumerCart.WithProducts -> ConsumerCartState.ScreenState.SUCCESS
+    private fun getConsumerCartDataState(consumerCartDomain: ConsumerCartDomain): ConsumerCart.ScreenState {
+        return when (consumerCartDomain) {
+            is ConsumerCartDomain.Empty -> ConsumerCart.ScreenState.EMPTY
+            is ConsumerCartDomain.WithProducts -> ConsumerCart.ScreenState.SUCCESS
         }
     }
 

@@ -4,7 +4,7 @@ import com.bunbeauty.shared.domain.CommonFlow
 import com.bunbeauty.shared.domain.asCommonFlow
 import com.bunbeauty.shared.domain.interactor.product.IProductInteractor
 import com.bunbeauty.shared.domain.model.cart.CartProduct
-import com.bunbeauty.shared.domain.model.cart.ConsumerCart
+import com.bunbeauty.shared.domain.model.cart.ConsumerCartDomain
 import com.bunbeauty.shared.domain.model.cart.LightCartProduct
 import com.bunbeauty.shared.domain.repo.CartProductRepo
 import com.bunbeauty.shared.domain.repo.DeliveryRepo
@@ -17,7 +17,7 @@ class CartProductInteractor(
     private val getCartTotal: GetCartTotalUseCase,
 ) : ICartProductInteractor {
 
-    override fun observeConsumerCart(): CommonFlow<ConsumerCart?> {
+    override fun observeConsumerCart(): CommonFlow<ConsumerCartDomain?> {
         return cartProductRepo.observeCartProductList().map { cartProductList ->
             getConsumerCart(cartProductList)
         }.asCommonFlow()
@@ -52,13 +52,13 @@ class CartProductInteractor(
         cartProductRepo.deleteAllCartProducts()
     }
 
-    private suspend fun getConsumerCart(cartProductList: List<CartProduct>): ConsumerCart? {
+    private suspend fun getConsumerCart(cartProductList: List<CartProduct>): ConsumerCartDomain? {
         return if (cartProductList.isEmpty()) {
-            ConsumerCart.Empty
+            ConsumerCartDomain.Empty
         } else {
             deliveryRepo.getDelivery()?.let { delivery ->
                 val cartTotal = getCartTotal(isDelivery = false)
-                ConsumerCart.WithProducts(
+                ConsumerCartDomain.WithProducts(
                     forFreeDelivery = delivery.forFree,
                     cartProductList = cartProductList.map(::toLightCartProduct),
                     oldTotalCost = cartTotal.oldFinalCost,

@@ -2,13 +2,11 @@ package com.bunbeauty.shared.domain.interactor.cart
 
 import com.bunbeauty.shared.domain.CommonFlow
 import com.bunbeauty.shared.domain.model.cart.CartProduct
-import com.bunbeauty.shared.domain.model.cart.CartTotal
-import com.bunbeauty.shared.domain.model.cart.ConsumerCart
-import kotlinx.coroutines.flow.Flow
+import com.bunbeauty.shared.domain.model.cart.ConsumerCartDomain
 
 interface ICartProductInteractor {
 
-    fun observeConsumerCart(): CommonFlow<ConsumerCart?>
+    fun observeConsumerCart(): CommonFlow<ConsumerCartDomain?>
 
     fun observeNewTotalCartCost(): CommonFlow<Int>
 

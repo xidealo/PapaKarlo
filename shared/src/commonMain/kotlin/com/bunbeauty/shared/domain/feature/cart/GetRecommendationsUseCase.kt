@@ -8,6 +8,7 @@ class GetRecommendationsUseCase(
     private val recommendationRepository: RecommendationRepository,
 ) {
     suspend operator fun invoke(): List<RecommendationProduct> {
-        return recommendationRepository.getRecommendations()
+        return recommendationRepository.getRecommendations()?.recommendationProductList
+            ?: emptyList()
     }
 }
