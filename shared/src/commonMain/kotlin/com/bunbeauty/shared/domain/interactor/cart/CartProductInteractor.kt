@@ -23,6 +23,10 @@ class CartProductInteractor(
         }.asCommonFlow()
     }
 
+    override suspend fun getCartProductList(): List<CartProduct> {
+        return cartProductRepo.getCartProductList()
+    }
+
     override fun observeTotalCartCount(): CommonFlow<Int> {
         return cartProductRepo.observeCartProductList().map { cartProductList ->
             getTotalCount(cartProductList)

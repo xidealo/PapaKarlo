@@ -8,6 +8,8 @@ interface ICartProductInteractor {
 
     fun observeConsumerCart(): CommonFlow<ConsumerCartDomain?>
 
+    suspend fun getCartProductList(): List<CartProduct>
+
     fun observeNewTotalCartCost(): CommonFlow<Int>
 
     fun observeTotalCartCount(): CommonFlow<Int>
