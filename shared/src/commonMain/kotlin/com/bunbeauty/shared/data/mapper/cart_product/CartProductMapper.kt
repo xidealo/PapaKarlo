@@ -8,8 +8,8 @@ import com.bunbeauty.shared.domain.model.product.MenuProduct
 
 class CartProductMapper : ICartProductMapper {
 
-    override fun toCartProductList(cartProductWithMenuProductEntity: List<CartProductWithMenuProductEntity>): List<CartProduct> {
-        return cartProductWithMenuProductEntity.groupBy { cartProductWithMenuProductEntity ->
+    override fun toCartProductList(cartProductWithMenuProductEntityList: List<CartProductWithMenuProductEntity>): List<CartProduct> {
+        return cartProductWithMenuProductEntityList.groupBy { cartProductWithMenuProductEntity ->
             cartProductWithMenuProductEntity.cartProductUuid
         }.map { (_, groupedCartProductWithCategoryEntityList) ->
             val firstCartProductWithCategoryEntity =
