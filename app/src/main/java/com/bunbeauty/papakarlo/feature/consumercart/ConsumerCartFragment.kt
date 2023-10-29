@@ -49,8 +49,8 @@ import com.bunbeauty.papakarlo.feature.consumercart.ui.CartProductItem
 import com.bunbeauty.papakarlo.feature.menu.ui.MenuProductItem
 import com.bunbeauty.shared.domain.model.SuccessLoginDirection
 import com.bunbeauty.shared.presentation.consumercart.CartProductItem
-import com.bunbeauty.shared.presentation.consumercart.ConsumerCartData
 import com.bunbeauty.shared.presentation.consumercart.ConsumerCart
+import com.bunbeauty.shared.presentation.consumercart.ConsumerCartData
 import com.bunbeauty.shared.presentation.consumercart.ConsumerCartViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.bunbeauty.shared.presentation.menu.MenuProductItem as MenuProductItemModel
@@ -70,7 +70,7 @@ class ConsumerCartFragment :
     @Composable
     override fun Screen(
         state: ConsumerCart.State,
-        onAction: (ConsumerCart.Action) -> Unit,
+        onAction: (ConsumerCart.Action) -> Unit
     ) {
         FoodDeliveryScaffold(
             title = stringResource(id = R.string.title_cart),
@@ -80,12 +80,10 @@ class ConsumerCartFragment :
 
             backgroundColor = FoodDeliveryTheme.colors.mainColors.surface
         ) {
-
             Crossfade(targetState = state.screenState, label = "ConsumerCart") { screenState ->
                 when (screenState) {
                     ConsumerCart.ScreenState.LOADING -> LoadingScreen()
                     ConsumerCart.ScreenState.SUCCESS -> {
-
                         state.consumerCartData?.let { consumerCartData ->
                             ConsumerCartSuccessScreen(
                                 consumerCartData = consumerCartData,
@@ -154,7 +152,7 @@ class ConsumerCartFragment :
     @Composable
     private fun ConsumerCartSuccessScreen(
         consumerCartData: ConsumerCartData,
-        onAction: (ConsumerCart.Action) -> Unit,
+        onAction: (ConsumerCart.Action) -> Unit
     ) {
         Column(
             modifier = Modifier
@@ -225,21 +223,25 @@ class ConsumerCartFragment :
                             }
                         }
                     }
-                    item(
-                        span = { GridItemSpan(maxLineSpan) },
-                        key = R.string.msg_consumer_cart_recommendations
-                    ) {
-                        Text(
-                            modifier = Modifier
-                                .padding(top = 8.dp)
-                                .padding(horizontal = 16.dp),
-                            text = stringResource(
-                                R.string.msg_consumer_cart_recommendations
-                            ),
-                            style = FoodDeliveryTheme.typography.titleMedium.medium,
-                            color = FoodDeliveryTheme.colors.mainColors.onSurface
-                        )
+
+                    if (consumerCartData.recommendations.isNotEmpty()) {
+                        item(
+                            span = { GridItemSpan(maxLineSpan) },
+                            key = R.string.msg_consumer_cart_recommendations
+                        ) {
+                            Text(
+                                modifier = Modifier
+                                    .padding(top = 8.dp)
+                                    .padding(horizontal = 16.dp),
+                                text = stringResource(
+                                    R.string.msg_consumer_cart_recommendations
+                                ),
+                                style = FoodDeliveryTheme.typography.titleMedium.medium,
+                                color = FoodDeliveryTheme.colors.mainColors.onSurface
+                            )
+                        }
                     }
+
                     items(
                         items = consumerCartData.recommendations,
                         key = { recommendation -> recommendation.uuid },
