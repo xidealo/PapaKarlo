@@ -3,7 +3,7 @@ package com.bunbeauty.shared.domain.feature.cart
 import com.bunbeauty.shared.data.repository.RecommendationRepository
 import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
 import com.bunbeauty.shared.domain.model.RecommendationProduct
-import com.bunbeauty.shared.domain.model.RecommendationProductList
+import com.bunbeauty.shared.domain.model.cart.CartProduct
 import com.bunbeauty.shared.domain.model.category.Category
 
 class GetRecommendationsUseCase(
@@ -13,39 +13,61 @@ class GetRecommendationsUseCase(
     suspend operator fun invoke(): List<RecommendationProduct> {
 
         val cartProductList = cartProductInteractor.getCartProductList()
-        val recommendation = recommendationRepository.getRecommendations()
+        val recommendationsWithMaxCount = recommendationRepository.getRecommendations()
 
         val recommendationProductList =
-            recommendation?.recommendationProductList ?: return emptyList()
+            recommendationsWithMaxCount?.recommendationProductList ?: return emptyList()
 
-        val recommendationProductListNoneCategory = buildList {
-            recommendationProductList.forEach { recommendationProduct ->
-                val hasSameCategory =
-                    recommendationProduct.menuProduct.categoryList.any { recommendationProductCategory ->
-                        cartProductList
-                            .any { cartProduct ->
-                                cartProduct.product.categoryList
-                                    .any { cartProductCategory -> cartProductCategory.uuid == recommendationProductCategory.uuid }
-                            }
-                    }
-
-                if (!hasSameCategory) {
-                    add(recommendationProduct)
-                }
-            }
-        }
+        val recommendationProductListNoneCategory = getFilteredRecommendationsByCategories(
+            recommendationProductList = recommendationProductList,
+            cartProductList = cartProductList
+        )
 
         return if (recommendationProductListNoneCategory.size < 2) {
-            buildList {
-                addAll(recommendationProductListNoneCategory)
-                recommendationProductList.forEach { recommendationProduct ->
-                    if (cartProductList.none { it.product.uuid == recommendationProduct.menuProduct.uuid }) {
-                        add(recommendationProduct)
-                    }
-                }
-            }.take(recommendation.maxVisibleCount)
+            recommendationProductListNoneCategory + getRecommendationsByCartAndFilteredRecommendations(
+                recommendationProductList = recommendationProductList,
+                cartProductList = cartProductList,
+                recommendationProductListNoneCategory = recommendationProductListNoneCategory
+            )
         } else {
-            recommendationProductListNoneCategory.take(recommendation.maxVisibleCount)
-        }
+            recommendationProductListNoneCategory
+        }.take(recommendationsWithMaxCount.maxVisibleCount)
     }
+
+    private fun getFilteredRecommendationsByCategories(
+        recommendationProductList: List<RecommendationProduct>,
+        cartProductList: List<CartProduct>,
+    ) = recommendationProductList.filterNot { recommendationProduct ->
+        hasRecommendationCategoriesInCart(recommendationProduct, cartProductList)
+    }
+
+    private fun getRecommendationsByCartAndFilteredRecommendations(
+        recommendationProductList: List<RecommendationProduct>,
+        cartProductList: List<CartProduct>,
+        recommendationProductListNoneCategory: List<RecommendationProduct>,
+    ) = recommendationProductList.filter { recommendationProduct ->
+        cartProductList.none { it.product.uuid == recommendationProduct.menuProduct.uuid }
+                && recommendationProductListNoneCategory.none { it.menuProduct.uuid == recommendationProduct.menuProduct.uuid }
+    }
+
+    private fun hasRecommendationCategoriesInCart(
+        recommendationProduct: RecommendationProduct,
+        cartProductList: List<CartProduct>,
+    ) = recommendationProduct.menuProduct.categoryList.any { recommendationProductCategory ->
+        hasRecommendationCategoriesInCartProduct(cartProductList, recommendationProductCategory)
+    }
+
+    private fun hasRecommendationCategoriesInCartProduct(
+        cartProductList: List<CartProduct>,
+        recommendationProductCategory: Category,
+    ) = cartProductList
+        .any { cartProduct ->
+            hasCategoryInCartProduct(cartProduct, recommendationProductCategory)
+        }
+
+    private fun hasCategoryInCartProduct(
+        cartProduct: CartProduct,
+        recommendationProductCategory: Category,
+    ) = cartProduct.product.categoryList
+        .any { cartProductCategory -> cartProductCategory.uuid == recommendationProductCategory.uuid }
 }

@@ -4,28 +4,16 @@ import com.bunbeauty.getCartProduct
 import com.bunbeauty.getCategoryProduct
 import com.bunbeauty.getMenuProduct
 import com.bunbeauty.getRecommendationProductList
-import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.data.repository.RecommendationRepository
-import com.bunbeauty.shared.domain.exeptions.NoTokenException
-import com.bunbeauty.shared.domain.feature.auth.CheckCodeUseCase
 import com.bunbeauty.shared.domain.feature.cart.GetRecommendationsUseCase
 import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
 import com.bunbeauty.shared.domain.model.RecommendationProduct
-import com.bunbeauty.shared.domain.model.RecommendationProductList
-import com.bunbeauty.shared.domain.model.cart.CartProduct
-import com.bunbeauty.shared.domain.model.category.Category
-import com.bunbeauty.shared.domain.model.product.MenuProduct
-import com.bunbeauty.shared.domain.repo.AuthRepo
-import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.mockk
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
-import kotlinx.coroutines.test.setMain
 import kotlin.test.BeforeTest
 import kotlin.test.Test
-import kotlin.test.assertFailsWith
+import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 internal class GetRecommendationsUseCaseTest {
@@ -371,6 +359,30 @@ internal class GetRecommendationsUseCaseTest {
                     ),
                 )
             )
-            assertTrue(getRecommendationsUseCase().size == 2)
+            assertEquals(
+                expected = listOf(
+                    RecommendationProduct(
+                        uuid = "3",
+                        menuProduct = getMenuProduct(
+                            categoryList = listOf(
+                                getCategoryProduct(
+                                    uuid = "3",
+                                )
+                            )
+                        )
+                    ),
+                    RecommendationProduct(
+                        uuid = "4",
+                        menuProduct = getMenuProduct(
+                            categoryList = listOf(
+                                getCategoryProduct(
+                                    uuid = "4",
+                                )
+                            )
+                        )
+                    )
+                ),
+                actual = getRecommendationsUseCase()
+            )
         }
 }
