@@ -14,7 +14,7 @@ data class ConsumerCartData(
     val recommendations: List<MenuProductItem>,
 )
 
-interface ConsumerCartState {
+interface ConsumerCart {
 
     enum class ScreenState {
         LOADING,
@@ -30,7 +30,6 @@ interface ConsumerCartState {
 
     sealed interface Action : BaseAction {
         data object Init : Action
-        data class ConsumeEvents(val eventList: List<Event>) : Action
         data object BackClick : Action
         data class AddProductToCartClick(val menuProductUuid: String) : Action
         data class RemoveProductFromCartClick(val menuProductUuid: String) : Action

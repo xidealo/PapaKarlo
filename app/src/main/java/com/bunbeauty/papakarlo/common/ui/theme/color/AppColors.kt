@@ -65,7 +65,8 @@ class MainColors(
     onBackground: Color,
     onSurface: Color,
     onSurfaceVariant: Color,
-    onError: Color
+    onError: Color,
+    stroke: Color
 ) {
 
     var primary by mutableStateOf(primary)
@@ -94,6 +95,8 @@ class MainColors(
         private set
     var onError by mutableStateOf(onError)
         private set
+    var stroke by mutableStateOf(stroke)
+        private set
 
     fun copy(
         primary: Color = this.primary,
@@ -108,7 +111,8 @@ class MainColors(
         onBackground: Color = this.onBackground,
         onSurface: Color = this.onSurface,
         onSurfaceVariant: Color = this.onSurfaceVariant,
-        onError: Color = this.onError
+        onError: Color = this.onError,
+        stroke: Color = this.stroke
     ) = MainColors(
         primary = primary,
         disabled = disabled,
@@ -122,7 +126,8 @@ class MainColors(
         onBackground = onBackground,
         onSurface = onSurface,
         onSurfaceVariant = onSurfaceVariant,
-        onError = onError
+        onError = onError,
+        stroke = stroke
     )
 
     fun update(other: MainColors) {
@@ -139,6 +144,7 @@ class MainColors(
         onSurface = other.onSurface
         onSurfaceVariant = other.onSurfaceVariant
         onError = other.onError
+        stroke = other.stroke
     }
 }
 

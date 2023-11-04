@@ -23,7 +23,6 @@ interface Login {
         ) : Action
 
         data object NextClick : Action
-        data class ConsumeEvents(val eventList: List<Event>) : Action
         data object BackClick : Action
     }
 

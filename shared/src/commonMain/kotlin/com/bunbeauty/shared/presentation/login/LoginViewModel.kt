@@ -26,7 +26,6 @@ class LoginViewModel(
 
             Login.Action.NextClick -> requestCode()
             is Login.Action.BackClick -> navigateBack()
-            is Login.Action.ConsumeEvents -> consumeEvents(action.eventList)
         }
     }
 

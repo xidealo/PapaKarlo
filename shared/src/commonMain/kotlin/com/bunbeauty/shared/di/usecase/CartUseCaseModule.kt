@@ -21,7 +21,8 @@ internal fun cartUseCaseModule() = module {
     }
     factory {
         GetRecommendationsUseCase(
-            recommendationRepository = get()
+            recommendationRepository = get(),
+            cartProductInteractor = get()
         )
     }
     factory {

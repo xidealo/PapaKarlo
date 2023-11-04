@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
@@ -48,13 +49,14 @@ import com.bunbeauty.papakarlo.feature.consumercart.ui.CartProductItem
 import com.bunbeauty.papakarlo.feature.menu.ui.MenuProductItem
 import com.bunbeauty.shared.domain.model.SuccessLoginDirection
 import com.bunbeauty.shared.presentation.consumercart.CartProductItem
+import com.bunbeauty.shared.presentation.consumercart.ConsumerCart
 import com.bunbeauty.shared.presentation.consumercart.ConsumerCartData
-import com.bunbeauty.shared.presentation.consumercart.ConsumerCartState
 import com.bunbeauty.shared.presentation.consumercart.ConsumerCartViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import com.bunbeauty.shared.presentation.menu.MenuProductItem as MenuProductItemModel
 
 class ConsumerCartFragment :
-    BaseComposeFragment<ConsumerCartState.State, ConsumerCartState.Action, ConsumerCartState.Event>() {
+    BaseComposeFragment<ConsumerCart.State, ConsumerCart.Action, ConsumerCart.Event>() {
 
     override val viewModel: ConsumerCartViewModel by viewModel()
     override val viewBinding by viewBinding(LayoutComposeBinding::bind)
@@ -62,28 +64,26 @@ class ConsumerCartFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.handleAction(ConsumerCartState.Action.Init)
+        viewModel.handleAction(ConsumerCart.Action.Init)
     }
 
     @Composable
     override fun Screen(
-        state: ConsumerCartState.State,
-        onAction: (ConsumerCartState.Action) -> Unit
+        state: ConsumerCart.State,
+        onAction: (ConsumerCart.Action) -> Unit
     ) {
         FoodDeliveryScaffold(
             title = stringResource(id = R.string.title_cart),
             backActionClick = {
-                onAction(ConsumerCartState.Action.BackClick)
+                onAction(ConsumerCart.Action.BackClick)
             },
 
             backgroundColor = FoodDeliveryTheme.colors.mainColors.surface
         ) {
-            // check if change state to sealed class
             Crossfade(targetState = state.screenState, label = "ConsumerCart") { screenState ->
                 when (screenState) {
-                    ConsumerCartState.ScreenState.LOADING -> LoadingScreen()
-                    ConsumerCartState.ScreenState.SUCCESS -> {
-                        // Warning(Check!)
+                    ConsumerCart.ScreenState.LOADING -> LoadingScreen()
+                    ConsumerCart.ScreenState.SUCCESS -> {
                         state.consumerCartData?.let { consumerCartData ->
                             ConsumerCartSuccessScreen(
                                 consumerCartData = consumerCartData,
@@ -92,7 +92,7 @@ class ConsumerCartFragment :
                         }
                     }
 
-                    ConsumerCartState.ScreenState.EMPTY -> {
+                    ConsumerCart.ScreenState.EMPTY -> {
                         EmptyScreen(
                             imageId = R.drawable.ic_cart_24,
                             imageDescriptionId = R.string.description_consumer_cart_empty,
@@ -100,16 +100,16 @@ class ConsumerCartFragment :
                             extraTextId = R.string.msg_consumer_cart_empty,
                             buttonTextId = R.string.action_consumer_cart_menu,
                             onClick = {
-                                onAction(ConsumerCartState.Action.OnMenuClick)
+                                onAction(ConsumerCart.Action.OnMenuClick)
                             }
                         )
                     }
 
-                    ConsumerCartState.ScreenState.ERROR -> {
+                    ConsumerCart.ScreenState.ERROR -> {
                         ErrorScreen(
                             mainTextId = R.string.error_consumer_cart_loading,
                             onClick = {
-                                onAction(ConsumerCartState.Action.OnErrorButtonClick)
+                                onAction(ConsumerCart.Action.OnErrorButtonClick)
                             }
                         )
                     }
@@ -118,24 +118,24 @@ class ConsumerCartFragment :
         }
     }
 
-    override fun handleEvent(event: ConsumerCartState.Event) {
+    override fun handleEvent(event: ConsumerCart.Event) {
         when (event) {
-            ConsumerCartState.Event.NavigateToMenu -> {
+            ConsumerCart.Event.NavigateToMenu -> {
                 findNavController()
                     .navigateSafe(toMenuFragment())
             }
 
-            ConsumerCartState.Event.NavigateToCreateOrder -> {
+            ConsumerCart.Event.NavigateToCreateOrder -> {
                 findNavController()
                     .navigateSafe(toCreateOrderFragment())
             }
 
-            is ConsumerCartState.Event.NavigateToLogin -> {
+            is ConsumerCart.Event.NavigateToLogin -> {
                 findNavController()
                     .navigateSafe(toLoginFragment(SuccessLoginDirection.TO_CREATE_ORDER))
             }
 
-            is ConsumerCartState.Event.NavigateToProduct -> {
+            is ConsumerCart.Event.NavigateToProduct -> {
                 findNavController()
                     .navigateSafe(
                         toProductFragment(
@@ -145,14 +145,14 @@ class ConsumerCartFragment :
                     )
             }
 
-            ConsumerCartState.Event.NavigateBack -> findNavController().popBackStack()
+            ConsumerCart.Event.NavigateBack -> findNavController().popBackStack()
         }
     }
 
     @Composable
     private fun ConsumerCartSuccessScreen(
         consumerCartData: ConsumerCartData,
-        onAction: (ConsumerCartState.Action) -> Unit
+        onAction: (ConsumerCart.Action) -> Unit
     ) {
         Column(
             modifier = Modifier
@@ -163,7 +163,7 @@ class ConsumerCartFragment :
                     modifier = Modifier.fillMaxSize(),
                     contentPadding = PaddingValues(vertical = FoodDeliveryTheme.dimensions.mediumSpace),
                     columns = GridCells.Fixed(2),
-                    horizontalArrangement = Arrangement.Absolute.spacedBy(8.dp)
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     item(
                         span = { GridItemSpan(maxLineSpan) },
@@ -185,29 +185,29 @@ class ConsumerCartFragment :
 
                     itemsIndexed(
                         items = consumerCartData.cartProductList,
-                        key = { index, cartProductItem -> cartProductItem.uuid },
-                        span = { index, cartProductItem -> GridItemSpan(maxLineSpan) }
+                        key = { _, cartProductItem -> cartProductItem.uuid },
+                        span = { _, _ -> GridItemSpan(maxLineSpan) }
                     ) { index, cartProductItem ->
                         Column {
                             CartProductItem(
                                 cartProductItem = cartProductItem,
                                 onCountIncreased = {
                                     onAction(
-                                        ConsumerCartState.Action.AddProductToCartClick(
+                                        ConsumerCart.Action.AddProductToCartClick(
                                             menuProductUuid = cartProductItem.menuProductUuid
                                         )
                                     )
                                 },
                                 onCountDecreased = {
                                     onAction(
-                                        ConsumerCartState.Action.RemoveProductFromCartClick(
+                                        ConsumerCart.Action.RemoveProductFromCartClick(
                                             menuProductUuid = cartProductItem.menuProductUuid
                                         )
                                     )
                                 },
                                 onClick = {
                                     onAction(
-                                        ConsumerCartState.Action.OnProductClick(
+                                        ConsumerCart.Action.OnProductClick(
                                             cartProductItem = cartProductItem
                                         )
                                     )
@@ -218,31 +218,35 @@ class ConsumerCartFragment :
                                     modifier = Modifier
                                         .padding(horizontal = 16.dp),
                                     thickness = 1.dp,
-                                    color = FoodDeliveryTheme.colors.mainColors.background
+                                    color = FoodDeliveryTheme.colors.mainColors.stroke
                                 )
                             }
                         }
                     }
-                    item(
-                        span = { GridItemSpan(maxLineSpan) },
-                        key = R.string.msg_consumer_cart_recommendations
-                    ) {
-                        Text(
-                            modifier = Modifier
-                                .padding(top = 8.dp)
-                                .padding(horizontal = 16.dp),
-                            text = stringResource(
-                                R.string.msg_consumer_cart_recommendations
-                            ),
-                            style = FoodDeliveryTheme.typography.titleMedium.medium,
-                            color = FoodDeliveryTheme.colors.mainColors.onSurface
-                        )
+
+                    if (consumerCartData.recommendations.isNotEmpty()) {
+                        item(
+                            span = { GridItemSpan(maxLineSpan) },
+                            key = R.string.msg_consumer_cart_recommendations
+                        ) {
+                            Text(
+                                modifier = Modifier
+                                    .padding(top = 8.dp)
+                                    .padding(horizontal = 16.dp),
+                                text = stringResource(
+                                    R.string.msg_consumer_cart_recommendations
+                                ),
+                                style = FoodDeliveryTheme.typography.titleMedium.medium,
+                                color = FoodDeliveryTheme.colors.mainColors.onSurface
+                            )
+                        }
                     }
-                    itemsIndexed(
+
+                    items(
                         items = consumerCartData.recommendations,
-                        key = { index, recommendation -> recommendation.uuid },
-                        span = { index, cartProductItem -> GridItemSpan(1) }
-                    ) { index, recommendation ->
+                        key = { recommendation -> recommendation.uuid },
+                        span = { _ -> GridItemSpan(1) }
+                    ) { recommendation ->
                         MenuProductItem(
                             modifier = Modifier
                                 .padding(top = 8.dp)
@@ -250,14 +254,14 @@ class ConsumerCartFragment :
                             menuProductItem = recommendation,
                             onAddProductClick = {
                                 onAction(
-                                    ConsumerCartState.Action.AddProductToRecommendationClick(
+                                    ConsumerCart.Action.AddProductToRecommendationClick(
                                         menuProductUuid = recommendation.uuid
                                     )
                                 )
                             },
                             onProductClick = {
                                 onAction(
-                                    ConsumerCartState.Action.RecommendationClick(
+                                    ConsumerCart.Action.RecommendationClick(
                                         menuProductUuid = recommendation.uuid,
                                         name = recommendation.name
                                     )
@@ -313,7 +317,7 @@ class ConsumerCartFragment :
                         modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
                         textStringId = R.string.action_consumer_cart_creeate_order,
                         onClick = {
-                            onAction(ConsumerCartState.Action.OnCreateOrderClick)
+                            onAction(ConsumerCart.Action.OnCreateOrderClick)
                         }
                     )
                 }
@@ -334,17 +338,17 @@ class ConsumerCartFragment :
             menuProductUuid = ""
         )
 
-        fun getMenuProductItem(uuid: String) =
-            com.bunbeauty.shared.presentation.menu.MenuProductItem(
-                uuid = uuid,
-                photoLink = "",
-                name = "Бэргер",
-                newPrice = 99,
-                oldPrice = 100
-            )
+        fun getMenuProductItem(uuid: String) = MenuProductItemModel(
+            uuid = uuid,
+            photoLink = "",
+            name = "Бэргер",
+            newPrice = 99,
+            oldPrice = 100
+        )
+
         FoodDeliveryTheme {
             Screen(
-                state = ConsumerCartState.State(
+                state = ConsumerCart.State(
                     consumerCartData = ConsumerCartData(
                         forFreeDelivery = "500 ₽",
                         cartProductList = listOf(
@@ -362,7 +366,7 @@ class ConsumerCartFragment :
                             getMenuProductItem("7")
                         )
                     ),
-                    screenState = ConsumerCartState.ScreenState.SUCCESS
+                    screenState = ConsumerCart.ScreenState.SUCCESS
                 ),
                 onAction = {}
             )
@@ -374,7 +378,7 @@ class ConsumerCartFragment :
     private fun ConsumerCartEmptyScreenPreview() {
         FoodDeliveryTheme {
             Screen(
-                state = ConsumerCartState.State(
+                state = ConsumerCart.State(
                     consumerCartData = ConsumerCartData(
                         forFreeDelivery = "500 ₽",
                         cartProductList = listOf(),
@@ -383,7 +387,7 @@ class ConsumerCartFragment :
                         firstOrderDiscount = "10",
                         recommendations = emptyList()
                     ),
-                    screenState = ConsumerCartState.ScreenState.EMPTY
+                    screenState = ConsumerCart.ScreenState.EMPTY
                 ),
                 onAction = {}
             )
@@ -395,7 +399,7 @@ class ConsumerCartFragment :
     private fun ConsumerCartLoadingScreenPreview() {
         FoodDeliveryTheme {
             Screen(
-                state = ConsumerCartState.State(
+                state = ConsumerCart.State(
                     consumerCartData = ConsumerCartData(
                         forFreeDelivery = "500 ₽",
                         cartProductList = listOf(),
@@ -404,7 +408,7 @@ class ConsumerCartFragment :
                         firstOrderDiscount = "10",
                         recommendations = emptyList()
                     ),
-                    screenState = ConsumerCartState.ScreenState.LOADING
+                    screenState = ConsumerCart.ScreenState.LOADING
                 ),
                 onAction = {}
             )
@@ -416,7 +420,7 @@ class ConsumerCartFragment :
     private fun ConsumerCartErrorScreenPreview() {
         FoodDeliveryTheme {
             Screen(
-                state = ConsumerCartState.State(
+                state = ConsumerCart.State(
                     consumerCartData = ConsumerCartData(
                         forFreeDelivery = "500 ₽",
                         cartProductList = listOf(),
@@ -425,7 +429,7 @@ class ConsumerCartFragment :
                         firstOrderDiscount = "10",
                         recommendations = emptyList()
                     ),
-                    screenState = ConsumerCartState.ScreenState.ERROR
+                    screenState = ConsumerCart.ScreenState.ERROR
                 ),
                 onAction = {}
             )
