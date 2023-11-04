@@ -46,8 +46,11 @@ class GetRecommendationsUseCase(
         cartProductList: List<CartProduct>,
         recommendationProductListNoneCategory: List<RecommendationProduct>,
     ) = recommendationProductList.filter { recommendationProduct ->
-        cartProductList.none { it.product.uuid == recommendationProduct.menuProduct.uuid }
-                && recommendationProductListNoneCategory.none { it.menuProduct.uuid == recommendationProduct.menuProduct.uuid }
+        cartProductList.none {
+            it.product.uuid == recommendationProduct.menuProduct.uuid
+        } && recommendationProductListNoneCategory.none {
+            it.menuProduct.uuid == recommendationProduct.menuProduct.uuid
+        }
     }
 
     private fun hasRecommendationCategoriesInCart(
@@ -60,14 +63,14 @@ class GetRecommendationsUseCase(
     private fun hasRecommendationCategoriesInCartProduct(
         cartProductList: List<CartProduct>,
         recommendationProductCategory: Category,
-    ) = cartProductList
-        .any { cartProduct ->
-            hasCategoryInCartProduct(cartProduct, recommendationProductCategory)
-        }
+    ) = cartProductList.any { cartProduct ->
+        hasCategoryInCartProduct(cartProduct, recommendationProductCategory)
+    }
 
     private fun hasCategoryInCartProduct(
         cartProduct: CartProduct,
         recommendationProductCategory: Category,
-    ) = cartProduct.product.categoryList
-        .any { cartProductCategory -> cartProductCategory.uuid == recommendationProductCategory.uuid }
+    ) = cartProduct.product.categoryList.any { cartProductCategory ->
+        cartProductCategory.uuid == recommendationProductCategory.uuid
+    }
 }

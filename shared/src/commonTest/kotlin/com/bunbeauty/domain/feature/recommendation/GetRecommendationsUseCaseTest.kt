@@ -35,11 +35,7 @@ internal class GetRecommendationsUseCaseTest {
         coEvery { recommendationRepository.getRecommendations() } returns getRecommendationProductList()
 
         coEvery { cartProductInteractor.getCartProductList() } returns listOf(
-            getCartProduct(
-                uuid = "1",
-                count = 1,
-                menuProduct = getMenuProduct("1"),
-            )
+            getCartProductWithCategory("1")
         )
         assertTrue(getRecommendationsUseCase().isEmpty())
     }
@@ -52,61 +48,40 @@ internal class GetRecommendationsUseCaseTest {
                 recommendationProductList = listOf(
                     RecommendationProduct(
                         uuid = "1",
-                        menuProduct = getMenuProduct(
-                            categoryList = listOf(
-                                getCategoryProduct(
-                                    uuid = "2",
-                                )
-                            )
-                        )
+                        menuProduct = getMenuProductWithCategory("2")
                     )
                 )
             )
 
             coEvery { cartProductInteractor.getCartProductList() } returns listOf(
-                getCartProduct(
-                    uuid = "1",
-                    count = 1,
-                    menuProduct = getMenuProduct(
-                        uuid = "1",
-                        categoryList = listOf(
-                            getCategoryProduct(
-                                uuid = "1",
-                            )
-                        )
-                    ),
-                )
+                getCartProductWithCategory("1")
             )
-            assertTrue(getRecommendationsUseCase().isNotEmpty())
+            assertEquals(
+                expected = listOf(
+                    RecommendationProduct(
+                        uuid = "1",
+                        menuProduct = getMenuProductWithCategory("2")
+                    )
+                ),
+                actual = getRecommendationsUseCase()
+            )
         }
 
     @Test
     fun `return empty recommendation list when cartProductList has same category and no other recommendations`() =
         runTest {
-            val categoryList = listOf(
-                getCategoryProduct(
-                    uuid = "1",
-                )
-            )
+
             coEvery { recommendationRepository.getRecommendations() } returns getRecommendationProductList(
                 maxVisibleCount = 3,
                 recommendationProductList = listOf(
                     RecommendationProduct(
                         uuid = "1",
-                        menuProduct = getMenuProduct(
-                            categoryList = categoryList
-                        )
+                        menuProduct = getMenuProductWithCategory("1")
                     )
                 )
             )
             coEvery { cartProductInteractor.getCartProductList() } returns listOf(
-                getCartProduct(
-                    uuid = "1",
-                    count = 1,
-                    menuProduct = getMenuProduct(
-                        categoryList = categoryList
-                    ),
-                )
+                getCartProductWithCategory("1")
             )
             assertTrue(getRecommendationsUseCase().isEmpty())
         }
@@ -114,275 +89,184 @@ internal class GetRecommendationsUseCaseTest {
     @Test
     fun `return recommendation list when cartProductList has same category but not same by uuid`() =
         runTest {
-            val categoryList = listOf(
-                getCategoryProduct(
-                    uuid = "1",
-                )
-            )
             coEvery { recommendationRepository.getRecommendations() } returns getRecommendationProductList(
                 maxVisibleCount = 3,
                 recommendationProductList = listOf(
                     RecommendationProduct(
                         uuid = "1",
-                        menuProduct = getMenuProduct(
-                            categoryList = categoryList
-                        )
+                        menuProduct = getMenuProductWithCategory("1")
                     ),
                     RecommendationProduct(
                         uuid = "2",
-                        menuProduct = getMenuProduct(
-                            categoryList = listOf(
-                                getCategoryProduct(
-                                    uuid = "2",
-                                )
-                            )
-                        )
+                        menuProduct = getMenuProductWithCategory("2")
                     )
                 )
             )
             coEvery { cartProductInteractor.getCartProductList() } returns listOf(
-                getCartProduct(
-                    uuid = "1",
-                    count = 1,
-                    menuProduct = getMenuProduct(
-                        categoryList = categoryList
-                    ),
-                )
-            )
-            assertTrue(getRecommendationsUseCase().isNotEmpty())
-        }
-
-    @Test
-    fun `return recommendation list size equal maxVisibleCount`() =
-        runTest {
-            val categoryList = listOf(
-                getCategoryProduct(
-                    uuid = "1",
-                )
-            )
-            coEvery { recommendationRepository.getRecommendations() } returns getRecommendationProductList(
-                maxVisibleCount = 3,
-                recommendationProductList = listOf(
-                    RecommendationProduct(
-                        uuid = "1",
-                        menuProduct = getMenuProduct(
-                            categoryList = categoryList
-                        )
-                    ),
-                    RecommendationProduct(
-                        uuid = "2",
-                        menuProduct = getMenuProduct(
-                            categoryList = listOf(
-                                getCategoryProduct(
-                                    uuid = "2",
-                                )
-                            )
-                        )
-                    ),
-                    RecommendationProduct(
-                        uuid = "3",
-                        menuProduct = getMenuProduct(
-                            categoryList = listOf(
-                                getCategoryProduct(
-                                    uuid = "3",
-                                )
-                            )
-                        )
-                    ),
-                    RecommendationProduct(
-                        uuid = "4",
-                        menuProduct = getMenuProduct(
-                            categoryList = listOf(
-                                getCategoryProduct(
-                                    uuid = "4",
-                                )
-                            )
-                        )
-                    )
-                )
-            )
-            coEvery { cartProductInteractor.getCartProductList() } returns listOf(
-                getCartProduct(
-                    uuid = "1",
-                    count = 1,
-                    menuProduct = getMenuProduct(
-                        categoryList = categoryList
-                    ),
-                )
-            )
-            assertTrue(getRecommendationsUseCase().size == 3)
-        }
-
-    @Test
-    fun `return recommendations when cartProductList has same category but not all`() =
-        runTest {
-            val categoryList = listOf(
-                getCategoryProduct(
-                    uuid = "1",
-                )
-            )
-            coEvery { recommendationRepository.getRecommendations() } returns getRecommendationProductList(
-                maxVisibleCount = 4,
-                recommendationProductList = listOf(
-                    RecommendationProduct(
-                        uuid = "1",
-                        menuProduct = getMenuProduct(
-                            categoryList = listOf(
-                                getCategoryProduct(
-                                    uuid = "1",
-                                )
-                            )
-                        )
-                    ),
-                    RecommendationProduct(
-                        uuid = "2",
-                        menuProduct = getMenuProduct(
-                            categoryList = listOf(
-                                getCategoryProduct(
-                                    uuid = "2",
-                                )
-                            )
-                        )
-                    ),
-                    RecommendationProduct(
-                        uuid = "3",
-                        menuProduct = getMenuProduct(
-                            categoryList = listOf(
-                                getCategoryProduct(
-                                    uuid = "3",
-                                )
-                            )
-                        )
-                    ),
-                    RecommendationProduct(
-                        uuid = "4",
-                        menuProduct = getMenuProduct(
-                            categoryList = listOf(
-                                getCategoryProduct(
-                                    uuid = "4",
-                                )
-                            )
-                        )
-                    )
-                )
-            )
-            coEvery { cartProductInteractor.getCartProductList() } returns listOf(
-                getCartProduct(
-                    uuid = "1",
-                    count = 1,
-                    menuProduct = getMenuProduct(
-                        categoryList = listOf(
-                            getCategoryProduct(
-                                uuid = "1",
-                            )
-                        )
-                    ),
-                )
-            )
-            assertTrue(getRecommendationsUseCase().size == 3)
-        }
-
-    @Test
-    fun `return recommendations when cartProducts has same category but not all and many cartProducts`() =
-        runTest {
-            val categoryList = listOf(
-                getCategoryProduct(
-                    uuid = "1",
-                )
-            )
-            coEvery { recommendationRepository.getRecommendations() } returns getRecommendationProductList(
-                maxVisibleCount = 4,
-                recommendationProductList = listOf(
-                    RecommendationProduct(
-                        uuid = "1",
-                        menuProduct = getMenuProduct(
-                            categoryList = listOf(
-                                getCategoryProduct(
-                                    uuid = "1",
-                                )
-                            )
-                        )
-                    ),
-                    RecommendationProduct(
-                        uuid = "2",
-                        menuProduct = getMenuProduct(
-                            categoryList = listOf(
-                                getCategoryProduct(
-                                    uuid = "2",
-                                )
-                            )
-                        )
-                    ),
-                    RecommendationProduct(
-                        uuid = "3",
-                        menuProduct = getMenuProduct(
-                            categoryList = listOf(
-                                getCategoryProduct(
-                                    uuid = "3",
-                                )
-                            )
-                        )
-                    ),
-                    RecommendationProduct(
-                        uuid = "4",
-                        menuProduct = getMenuProduct(
-                            categoryList = listOf(
-                                getCategoryProduct(
-                                    uuid = "4",
-                                )
-                            )
-                        )
-                    )
-                )
-            )
-            coEvery { cartProductInteractor.getCartProductList() } returns listOf(
-                getCartProduct(
-                    uuid = "1",
-                    count = 1,
-                    menuProduct = getMenuProduct(
-                        categoryList = listOf(
-                            getCategoryProduct(
-                                uuid = "1",
-                            )
-                        )
-                    ),
-                ),
-                getCartProduct(
-                    uuid = "1",
-                    count = 1,
-                    menuProduct = getMenuProduct(
-                        categoryList = listOf(
-                            getCategoryProduct(
-                                uuid = "2",
-                            )
-                        )
-                    ),
-                )
+                getCartProductWithCategory("1")
             )
             assertEquals(
                 expected = listOf(
                     RecommendationProduct(
-                        uuid = "3",
-                        menuProduct = getMenuProduct(
-                            categoryList = listOf(
-                                getCategoryProduct(
-                                    uuid = "3",
-                                )
-                            )
-                        )
-                    ),
-                    RecommendationProduct(
-                        uuid = "4",
-                        menuProduct = getMenuProduct(
-                            categoryList = listOf(
-                                getCategoryProduct(
-                                    uuid = "4",
-                                )
-                            )
-                        )
+                        uuid = "2",
+                        menuProduct = getMenuProductWithCategory("2")
                     )
                 ),
                 actual = getRecommendationsUseCase()
             )
         }
+
+    @Test
+    fun `return recommendations size equal maxVisibleCount`() =
+        runTest {
+            coEvery { recommendationRepository.getRecommendations() } returns getRecommendationProductList(
+                maxVisibleCount = 3,
+                recommendationProductList = listOf(
+                    RecommendationProduct(
+                        uuid = "1",
+                        menuProduct = getMenuProductWithCategory("1")
+                    ),
+                    RecommendationProduct(
+                        uuid = "2",
+                        menuProduct = getMenuProductWithCategory("2")
+                    ),
+                    RecommendationProduct(
+                        uuid = "3",
+                        menuProduct = getMenuProductWithCategory("3")
+                    ),
+                    RecommendationProduct(
+                        uuid = "4",
+                        menuProduct = getMenuProductWithCategory("4")
+                    ),
+                    RecommendationProduct(
+                        uuid = "5",
+                        menuProduct = getMenuProductWithCategory("5")
+                    )
+                )
+            )
+            coEvery { cartProductInteractor.getCartProductList() } returns listOf(
+                getCartProductWithCategory("1")
+            )
+
+            assertEquals(
+                expected = listOf(
+                    RecommendationProduct(
+                        uuid = "2",
+                        menuProduct = getMenuProductWithCategory("2")
+                    ),
+                    RecommendationProduct(
+                        uuid = "3",
+                        menuProduct = getMenuProductWithCategory("3")
+                    ),
+                    RecommendationProduct(
+                        uuid = "4",
+                        menuProduct = getMenuProductWithCategory("4")
+                    )
+                ),
+                actual = getRecommendationsUseCase()
+            )
+        }
+
+    @Test
+    fun `return recommendations when cartProductList has same category but not all`() =
+        runTest {
+            coEvery { recommendationRepository.getRecommendations() } returns getRecommendationProductList(
+                maxVisibleCount = 4,
+                recommendationProductList = listOf(
+                    RecommendationProduct(
+                        uuid = "1",
+                        menuProduct = getMenuProductWithCategory("1")
+                    ),
+                    RecommendationProduct(
+                        uuid = "2",
+                        menuProduct = getMenuProductWithCategory("2")
+                    ),
+                    RecommendationProduct(
+                        uuid = "3",
+                        menuProduct = getMenuProductWithCategory("3")
+                    ),
+                    RecommendationProduct(
+                        uuid = "4",
+                        menuProduct = getMenuProductWithCategory("4")
+                    )
+                )
+            )
+            coEvery { cartProductInteractor.getCartProductList() } returns listOf(
+                getCartProductWithCategory("1"),
+            )
+
+            assertEquals(
+                expected = listOf(
+                    RecommendationProduct(
+                        uuid = "2",
+                        menuProduct = getMenuProductWithCategory("2")
+                    ),
+                    RecommendationProduct(
+                        uuid = "3",
+                        menuProduct = getMenuProductWithCategory("3")
+                    ),
+                    RecommendationProduct(
+                        uuid = "4",
+                        menuProduct = getMenuProductWithCategory("4")
+                    )
+                ),
+                actual = getRecommendationsUseCase()
+            )
+        }
+
+    @Test
+    fun `return recommendations when cartProducts has same category but not all and many cartProducts`() =
+        runTest {
+            coEvery { recommendationRepository.getRecommendations() } returns getRecommendationProductList(
+                maxVisibleCount = 4,
+                recommendationProductList = listOf(
+                    RecommendationProduct(
+                        uuid = "1",
+                        menuProduct = getMenuProductWithCategory("1")
+                    ),
+                    RecommendationProduct(
+                        uuid = "2",
+                        menuProduct = getMenuProductWithCategory("2")
+                    ),
+                    RecommendationProduct(
+                        uuid = "3",
+                        menuProduct = getMenuProductWithCategory("3")
+                    ),
+                    RecommendationProduct(
+                        uuid = "4",
+                        menuProduct = getMenuProductWithCategory("4")
+                    )
+                )
+            )
+            coEvery { cartProductInteractor.getCartProductList() } returns listOf(
+                getCartProductWithCategory("1"),
+                getCartProductWithCategory("2")
+            )
+            assertEquals(
+                expected = listOf(
+                    RecommendationProduct(
+                        uuid = "3",
+                        menuProduct = getMenuProductWithCategory("3")
+                    ),
+                    RecommendationProduct(
+                        uuid = "4",
+                        menuProduct = getMenuProductWithCategory("4")
+                    )
+                ),
+                actual = getRecommendationsUseCase()
+            )
+        }
+
+    private fun getCartProductWithCategory(categoryUuid: String) = getCartProduct(
+        menuProduct = getMenuProductWithCategory(categoryUuid)
+    )
+
+    private fun getMenuProductWithCategory(categoryUuid: String) = getMenuProduct(
+        categoryList = listOf(
+            getCategoryProduct(
+                uuid = categoryUuid,
+            )
+        )
+    )
+
 }
