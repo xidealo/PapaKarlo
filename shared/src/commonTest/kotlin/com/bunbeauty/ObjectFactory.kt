@@ -12,7 +12,7 @@ fun getMenuProduct(
     oldPrice: Int? = null,
     categoryList: List<Category> = emptyList(),
 ) = MenuProduct(
-    uuid = "1",
+    uuid = uuid,
     name = "Kapusta",
     newPrice = newPrice,
     oldPrice = oldPrice,
