@@ -82,6 +82,8 @@ struct MenuItemView: View {
             .frame(maxWidth: .infinity)
             .background(AppColor.surface)
             .cornerRadius(Diems.MEDIUM_RADIUS)
+            .shadow(color: Color.black.opacity(0.25), radius: 4, x: 0, y: 0)
+
         }.isDetailLink(false)
     }
 }

@@ -20,7 +20,7 @@ struct ConsumerCartView: View {
     )
     
     @State var consumerCartData: ConsumerCartData? = nil
-    @State var screenState: ConsumerCartStateScreenState = ConsumerCartStateScreenState.loading
+    @State var screenState: ConsumerCartScreenState = ConsumerCartScreenState.loading
     
     @State var listener: Closeable? = nil
     @State var eventsListener: Closeable? = nil
@@ -43,7 +43,7 @@ struct ConsumerCartView: View {
             ToolbarView(
                 title: "titleCartProducts",
                 back: {
-                    viewModel.handleAction(action: ConsumerCartStateActionBackClick())
+                    viewModel.handleAction(action: ConsumerCartActionBackClick())
                 }
             )
             NavigationLink(
@@ -65,7 +65,7 @@ struct ConsumerCartView: View {
                 EmptyView()
             }
             switch screenState{
-            case ConsumerCartStateScreenState.success:
+            case ConsumerCartScreenState.success:
                 if let consumerCartUi = consumerCartData {
                     ConsumerCartSuccessScreen(
                         consumerCartUI: consumerCartUi,
@@ -73,11 +73,11 @@ struct ConsumerCartView: View {
                     )
                 }
                 
-            case ConsumerCartStateScreenState.loading: LoadingView()
-            case ConsumerCartStateScreenState.empty: ConsumerCartEmptyScreen(
+            case ConsumerCartScreenState.loading: LoadingView()
+            case ConsumerCartScreenState.empty: ConsumerCartEmptyScreen(
                 isRootActive: $isRootActive, selection: $selection
             )
-            case ConsumerCartStateScreenState.error: EmptyView()
+            case ConsumerCartScreenState.error: EmptyView()
             default:
                 EmptyView()
             }
@@ -94,7 +94,7 @@ struct ConsumerCartView: View {
     }
     
     func subscribe(){
-        viewModel.handleAction(action: ConsumerCartStateActionInit())
+        viewModel.handleAction(action: ConsumerCartActionInit())
         listener = viewModel.state.watch { consumerCartStateVM in
             if let consumerCartStateVM =  consumerCartStateVM {
                 consumerCartData = consumerCartStateVM.consumerCartData
@@ -106,14 +106,14 @@ struct ConsumerCartView: View {
     func eventsSubscribe(){
         eventsListener = viewModel.events.watch(block: { _events in
             if let events = _events{
-                let consumerCartEvents = events as? [ConsumerCartStateEvent] ?? []
+                let consumerCartEvents = events as? [ConsumerCartEvent] ?? []
                 
                 consumerCartEvents.forEach { event in
                     print(event)
                     switch(event){
-                    case is ConsumerCartStateEventNavigateBack : self.mode.wrappedValue.dismiss()
-                    case is ConsumerCartStateEventNavigateToCreateOrder : openCreateOrder = true
-                    case is ConsumerCartStateEventNavigateToLogin: openLogin = true
+                    case is ConsumerCartEventNavigateBack : self.mode.wrappedValue.dismiss()
+                    case is ConsumerCartEventNavigateToCreateOrder : openCreateOrder = true
+                    case is ConsumerCartEventNavigateToLogin: openLogin = true
                     default:
                         print("def")
                     }
@@ -138,10 +138,21 @@ struct ConsumerCartSuccessScreen: View {
     
     let consumerCartUI : ConsumerCartData
     let cartProductListIos : [CartProductItemIos]
+    let recommendationProductList : [MenuProductItem]
     
-    let action: (ConsumerCartStateAction) -> Void
+    @State var selection:Int = 1 //Not used for navigate to productDetails
+
+    let action: (ConsumerCartAction) -> Void
     
-    init(consumerCartUI: ConsumerCartData, action: @escaping (ConsumerCartStateAction) -> Void) {
+    let columns = [
+        GridItem(.flexible(), spacing: 8, alignment: .top),
+        GridItem(.flexible(), spacing: 8, alignment: .top)
+    ]
+    
+    init(
+        consumerCartUI: ConsumerCartData,
+        action: @escaping (ConsumerCartAction) -> Void
+    ) {
         self.consumerCartUI = consumerCartUI
         self.cartProductListIos = consumerCartUI.cartProductList.map({ cartProductItem in
             CartProductItemIos(
@@ -150,6 +161,16 @@ struct ConsumerCartSuccessScreen: View {
             )
         })
         self.action = action
+        self.recommendationProductList = consumerCartUI.recommendations.map({ menuProduct in
+            MenuProductItem(
+                id: menuProduct.uuid,
+                productUuid: menuProduct.uuid,
+                name: menuProduct.name,
+                newPrice: String(menuProduct.newPrice) + Strings.CURRENCY,
+                oldPrice: menuProduct.oldPrice as? Int,
+                photoLink: menuProduct.photoLink
+            )
+        })
     }
     
     var body: some View {
@@ -168,10 +189,10 @@ struct ConsumerCartSuccessScreen: View {
                             VStack(spacing:0){
                                 CartProductView(cartProductItem: cartProductItemIos.cartProductItem, plusAction: {
                                     action(
-                                        ConsumerCartStateActionAddProductToCartClick(menuProductUuid: cartProductItemIos.cartProductItem.menuProductUuid)
+                                        ConsumerCartActionAddProductToCartClick(menuProductUuid: cartProductItemIos.cartProductItem.menuProductUuid)
                                     )
                                 }, minusAction: {
-                                    action(ConsumerCartStateActionRemoveProductFromCartClick(menuProductUuid: cartProductItemIos.cartProductItem.menuProductUuid))
+                                    action(ConsumerCartActionRemoveProductFromCartClick(menuProductUuid: cartProductItemIos.cartProductItem.menuProductUuid))
                                 })
                                 .padding(.horizontal, Diems.MEDIUM_PADDING)
                                 .padding(.bottom, 8)
@@ -183,8 +204,30 @@ struct ConsumerCartSuccessScreen: View {
                                     .padding(.bottom, 8)
                             }
                         }
-                       // .padding(.bottom, Diems.MEDIUM_PADDING)
                     }
+                    
+                    Text("Что-нибудь еще?")
+                        .titleMedium(weight: .medium)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.horizontal, Diems.MEDIUM_PADDING)
+                        .padding(.bottom, 8)
+                        .padding(.top, 16)
+                    
+                    LazyVGrid(columns: columns, spacing: 8) {
+                        ForEach(recommendationProductList){ menuProductItem in
+                            MenuItemView(
+                                menuProductItem: menuProductItem,
+                                isRootActive : .constant(false),
+                                selection : $selection,
+                                showOrderCreated : .constant(false),
+                                action: {
+                                    action(ConsumerCartActionAddProductToRecommendationClick(menuProductUuid: menuProductItem.productUuid))
+                                }
+                            )
+                            .padding(.horizontal, Diems.MEDIUM_PADDING)
+                        }
+                    }
+                    .padding(.bottom, 8)
                 }
             }
             
@@ -224,7 +267,7 @@ struct ConsumerCartSuccessScreen: View {
                     .padding(.horizontal, 16)
                 
                 Button {
-                    action(ConsumerCartStateActionOnCreateOrderClick())
+                    action(ConsumerCartActionOnCreateOrderClick())
                 } label: {
                     ButtonText(text: Strings.ACTION_CART_PRODUCT_CREATE_ORDER)
                 }
