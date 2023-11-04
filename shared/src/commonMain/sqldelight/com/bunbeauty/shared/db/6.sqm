@@ -8,6 +8,7 @@ CREATE TABLE recommendationProductEntity (
 CREATE VIEW recommendationProductWithMenuProductEntity AS
 SELECT recommendationProductEntity.uuid AS recommendationProductUuid,
     recommendationProductEntity.menuProductUuid,
+    recommendationProductEntity.isVisible AS recommendationIsVisible,
     categoryEntity.uuid AS categoryUuid,
     categoryEntity.name AS categoryName,
     categoryEntity.priority,
