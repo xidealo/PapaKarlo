@@ -8,7 +8,6 @@ import com.bunbeauty.getRecommendationProductList
 import com.bunbeauty.shared.data.repository.RecommendationRepository
 import com.bunbeauty.shared.domain.feature.cart.GetRecommendationsUseCase
 import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
-import com.bunbeauty.shared.domain.model.RecommendationProduct
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
