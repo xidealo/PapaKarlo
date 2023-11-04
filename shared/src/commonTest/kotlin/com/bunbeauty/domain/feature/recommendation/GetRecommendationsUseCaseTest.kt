@@ -69,6 +69,44 @@ internal class GetRecommendationsUseCaseTest {
     }
 
     @Test
+    fun `return recommendation filtered by visible`() = runTest {
+        coEvery { recommendationRepository.getRecommendations() } returns getRecommendationProductList(
+            maxVisibleCount = 3,
+            recommendationProductList = listOf(
+                getRecommendationProduct(
+                    uuid = "1",
+                    menuProduct = getMenuProductWithCategory("1", "1"),
+                    isVisible = false
+                ),
+                getRecommendationProduct(
+                    uuid = "2",
+                    menuProduct = getMenuProductWithCategory("2", "2"),
+                    isVisible = false
+                ),
+                getRecommendationProduct(
+                    uuid = "3",
+                    menuProduct = getMenuProductWithCategory("3", "3"),
+                    isVisible = true
+                )
+            )
+        )
+
+        coEvery { cartProductInteractor.getCartProductList() } returns listOf()
+
+        assertEquals(
+            expected = listOf(
+                getRecommendationProduct(
+                    uuid = "3",
+                    menuProduct = getMenuProductWithCategory("3", "3"),
+                    isVisible = true
+                )
+            ),
+            actual = getRecommendationsUseCase()
+        )
+
+    }
+
+    @Test
     fun `return recommendation list when cartProductList has no same category products`() =
         runTest {
             coEvery { recommendationRepository.getRecommendations() } returns getRecommendationProductList(
