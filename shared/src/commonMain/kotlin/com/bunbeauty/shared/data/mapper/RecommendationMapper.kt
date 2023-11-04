@@ -16,14 +16,16 @@ class RecommendationMapper(
     fun toRecommendationProductEntity(recommendationProduct: RecommendationProduct): RecommendationProductEntity {
         return RecommendationProductEntity(
             uuid = recommendationProduct.uuid,
-            menuProductUuid = recommendationProduct.menuProduct.uuid
+            menuProductUuid = recommendationProduct.menuProduct.uuid,
+            isVisible = recommendationProduct.isVisible
         )
     }
 
     fun toRecommendationProductEntity(recommendationProductServer: RecommendationProductServer): RecommendationProductEntity {
         return RecommendationProductEntity(
             uuid = recommendationProductServer.uuid,
-            menuProductUuid = recommendationProductServer.menuProduct.uuid
+            menuProductUuid = recommendationProductServer.menuProduct.uuid,
+            isVisible = recommendationProductServer.isVisible
         )
     }
 
@@ -52,8 +54,9 @@ class RecommendationMapper(
                             priority = menuProductWithCategoryEntity.priority
                         )
                     },
-                    visible = firstRecommendationProductWithCategoryEntity.visible
-                )
+                    visible = firstRecommendationProductWithCategoryEntity.visible,
+                ),
+                isVisible = false
             )
         }
     }
@@ -64,7 +67,8 @@ class RecommendationMapper(
             recommendationProductList = recommendationProductListServer.recommendationList.map { recommendationProductServer ->
                 RecommendationProduct(
                     uuid = recommendationProductServer.uuid,
-                    menuProduct = menuProductMapper.toMenuProduct(recommendationProductServer.menuProduct)
+                    menuProduct = menuProductMapper.toMenuProduct(recommendationProductServer.menuProduct),
+                    isVisible = recommendationProductServer.isVisible
                 )
             }
         )

@@ -17,4 +17,6 @@ data class RecommendationProductServer(
     val uuid: String,
     @SerialName("menuProduct")
     val menuProduct: MenuProductServer,
+    @SerialName("isVisible")
+    val isVisible: Boolean,
 )

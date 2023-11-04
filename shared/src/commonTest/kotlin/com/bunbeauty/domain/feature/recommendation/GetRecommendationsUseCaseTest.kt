@@ -3,6 +3,7 @@ package com.bunbeauty.domain.feature.recommendation
 import com.bunbeauty.getCartProduct
 import com.bunbeauty.getCategoryProduct
 import com.bunbeauty.getMenuProduct
+import com.bunbeauty.getRecommendationProduct
 import com.bunbeauty.getRecommendationProductList
 import com.bunbeauty.shared.data.repository.RecommendationRepository
 import com.bunbeauty.shared.domain.feature.cart.GetRecommendationsUseCase
@@ -41,12 +42,39 @@ internal class GetRecommendationsUseCaseTest {
     }
 
     @Test
+    fun `return empty list when has no visible recommendations`() = runTest {
+        coEvery { recommendationRepository.getRecommendations() } returns getRecommendationProductList(
+            maxVisibleCount = 3,
+            recommendationProductList = listOf(
+                getRecommendationProduct(
+                    uuid = "1",
+                    menuProduct = getMenuProductWithCategory("1", "1"),
+                    isVisible = false
+                ),
+                getRecommendationProduct(
+                    uuid = "2",
+                    menuProduct = getMenuProductWithCategory("2", "2"),
+                    isVisible = false
+                ),
+                getRecommendationProduct(
+                    uuid = "3",
+                    menuProduct = getMenuProductWithCategory("3", "3"),
+                    isVisible = false
+                )
+            )
+        )
+
+        coEvery { cartProductInteractor.getCartProductList() } returns listOf()
+        assertTrue(getRecommendationsUseCase().isEmpty())
+    }
+
+    @Test
     fun `return recommendation list when cartProductList has no same category products`() =
         runTest {
             coEvery { recommendationRepository.getRecommendations() } returns getRecommendationProductList(
                 maxVisibleCount = 3,
                 recommendationProductList = listOf(
-                    RecommendationProduct(
+                    getRecommendationProduct(
                         uuid = "1",
                         menuProduct = getMenuProductWithCategory("2", "1")
                     )
@@ -58,7 +86,7 @@ internal class GetRecommendationsUseCaseTest {
             )
             assertEquals(
                 expected = listOf(
-                    RecommendationProduct(
+                    getRecommendationProduct(
                         uuid = "1",
                         menuProduct = getMenuProductWithCategory("2", "1")
                     )
@@ -73,7 +101,7 @@ internal class GetRecommendationsUseCaseTest {
             coEvery { recommendationRepository.getRecommendations() } returns getRecommendationProductList(
                 maxVisibleCount = 3,
                 recommendationProductList = listOf(
-                    RecommendationProduct(
+                    getRecommendationProduct(
                         uuid = "1",
                         menuProduct = getMenuProductWithCategory("1", "1")
                     )
@@ -91,11 +119,11 @@ internal class GetRecommendationsUseCaseTest {
             coEvery { recommendationRepository.getRecommendations() } returns getRecommendationProductList(
                 maxVisibleCount = 3,
                 recommendationProductList = listOf(
-                    RecommendationProduct(
+                    getRecommendationProduct(
                         uuid = "1",
                         menuProduct = getMenuProductWithCategory("1", "1")
                     ),
-                    RecommendationProduct(
+                    getRecommendationProduct(
                         uuid = "1",
                         menuProduct = getMenuProductWithCategory("1", "2")
                     )
@@ -106,7 +134,7 @@ internal class GetRecommendationsUseCaseTest {
             )
             assertEquals(
                 expected = listOf(
-                    RecommendationProduct(
+                    getRecommendationProduct(
                         uuid = "1",
                         menuProduct = getMenuProductWithCategory("1", "2")
                     )
@@ -121,11 +149,11 @@ internal class GetRecommendationsUseCaseTest {
             coEvery { recommendationRepository.getRecommendations() } returns getRecommendationProductList(
                 maxVisibleCount = 3,
                 recommendationProductList = listOf(
-                    RecommendationProduct(
+                    getRecommendationProduct(
                         uuid = "1",
                         menuProduct = getMenuProductWithCategory("1", "1")
                     ),
-                    RecommendationProduct(
+                    getRecommendationProduct(
                         uuid = "2",
                         menuProduct = getMenuProductWithCategory("2", "2")
                     )
@@ -136,7 +164,7 @@ internal class GetRecommendationsUseCaseTest {
             )
             assertEquals(
                 expected = listOf(
-                    RecommendationProduct(
+                    getRecommendationProduct(
                         uuid = "2",
                         menuProduct = getMenuProductWithCategory("2", "2")
                     )
@@ -151,23 +179,23 @@ internal class GetRecommendationsUseCaseTest {
             coEvery { recommendationRepository.getRecommendations() } returns getRecommendationProductList(
                 maxVisibleCount = 3,
                 recommendationProductList = listOf(
-                    RecommendationProduct(
+                    getRecommendationProduct(
                         uuid = "1",
                         menuProduct = getMenuProductWithCategory("1", "1")
                     ),
-                    RecommendationProduct(
+                    getRecommendationProduct(
                         uuid = "2",
                         menuProduct = getMenuProductWithCategory("2", "2")
                     ),
-                    RecommendationProduct(
+                    getRecommendationProduct(
                         uuid = "3",
                         menuProduct = getMenuProductWithCategory("3", "3")
                     ),
-                    RecommendationProduct(
+                    getRecommendationProduct(
                         uuid = "4",
                         menuProduct = getMenuProductWithCategory("4", "4")
                     ),
-                    RecommendationProduct(
+                    getRecommendationProduct(
                         uuid = "5",
                         menuProduct = getMenuProductWithCategory("5", "5")
                     )
@@ -179,15 +207,15 @@ internal class GetRecommendationsUseCaseTest {
 
             assertEquals(
                 expected = listOf(
-                    RecommendationProduct(
+                    getRecommendationProduct(
                         uuid = "2",
                         menuProduct = getMenuProductWithCategory("2", "2")
                     ),
-                    RecommendationProduct(
+                    getRecommendationProduct(
                         uuid = "3",
                         menuProduct = getMenuProductWithCategory("3", "3")
                     ),
-                    RecommendationProduct(
+                    getRecommendationProduct(
                         uuid = "4",
                         menuProduct = getMenuProductWithCategory("4", "4")
                     )
@@ -202,19 +230,19 @@ internal class GetRecommendationsUseCaseTest {
             coEvery { recommendationRepository.getRecommendations() } returns getRecommendationProductList(
                 maxVisibleCount = 4,
                 recommendationProductList = listOf(
-                    RecommendationProduct(
+                    getRecommendationProduct(
                         uuid = "1",
                         menuProduct = getMenuProductWithCategory("1", "1")
                     ),
-                    RecommendationProduct(
+                    getRecommendationProduct(
                         uuid = "2",
                         menuProduct = getMenuProductWithCategory("2", "2")
                     ),
-                    RecommendationProduct(
+                    getRecommendationProduct(
                         uuid = "3",
                         menuProduct = getMenuProductWithCategory("3", "3")
                     ),
-                    RecommendationProduct(
+                    getRecommendationProduct(
                         uuid = "4",
                         menuProduct = getMenuProductWithCategory("4", "4")
                     )
@@ -226,15 +254,15 @@ internal class GetRecommendationsUseCaseTest {
 
             assertEquals(
                 expected = listOf(
-                    RecommendationProduct(
+                    getRecommendationProduct(
                         uuid = "2",
                         menuProduct = getMenuProductWithCategory("2", "2")
                     ),
-                    RecommendationProduct(
+                    getRecommendationProduct(
                         uuid = "3",
                         menuProduct = getMenuProductWithCategory("3", "3")
                     ),
-                    RecommendationProduct(
+                    getRecommendationProduct(
                         uuid = "4",
                         menuProduct = getMenuProductWithCategory("4", "4")
                     )
@@ -249,19 +277,19 @@ internal class GetRecommendationsUseCaseTest {
             coEvery { recommendationRepository.getRecommendations() } returns getRecommendationProductList(
                 maxVisibleCount = 4,
                 recommendationProductList = listOf(
-                    RecommendationProduct(
+                    getRecommendationProduct(
                         uuid = "1",
                         menuProduct = getMenuProductWithCategory("1", "1")
                     ),
-                    RecommendationProduct(
+                    getRecommendationProduct(
                         uuid = "2",
                         menuProduct = getMenuProductWithCategory("2", "2")
                     ),
-                    RecommendationProduct(
+                    getRecommendationProduct(
                         uuid = "3",
                         menuProduct = getMenuProductWithCategory("3", "3")
                     ),
-                    RecommendationProduct(
+                    getRecommendationProduct(
                         uuid = "4",
                         menuProduct = getMenuProductWithCategory("4", "4")
                     )
@@ -273,11 +301,11 @@ internal class GetRecommendationsUseCaseTest {
             )
             assertEquals(
                 expected = listOf(
-                    RecommendationProduct(
+                    getRecommendationProduct(
                         uuid = "3",
                         menuProduct = getMenuProductWithCategory("3", "3")
                     ),
-                    RecommendationProduct(
+                    getRecommendationProduct(
                         uuid = "4",
                         menuProduct = getMenuProductWithCategory("4", "4")
                     )
@@ -300,5 +328,6 @@ internal class GetRecommendationsUseCaseTest {
                 )
             )
         )
+
 
 }

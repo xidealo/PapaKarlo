@@ -48,7 +48,9 @@ fun getRecommendationProductList(
 fun getRecommendationProduct(
     uuid: String,
     menuProduct: MenuProduct,
+    isVisible: Boolean = true,
 ) = RecommendationProduct(
     uuid = uuid,
     menuProduct = menuProduct,
+    isVisible = isVisible
 )

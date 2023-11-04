@@ -10,5 +10,6 @@ data class RecommendationProductList(
 data class RecommendationProduct(
     val uuid: String,
     val menuProduct: MenuProduct,
+    val isVisible: Boolean,
 )
 
