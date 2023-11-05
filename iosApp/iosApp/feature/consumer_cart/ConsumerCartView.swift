@@ -196,23 +196,27 @@ struct ConsumerCartSuccessScreen: View {
                                 })
                                 .padding(.horizontal, Diems.MEDIUM_PADDING)
                                 .padding(.bottom, 8)
-
-                                Divider()
-                                    .frame(height: 2)
-                                    .overlay(AppColor.stroke)
-                                    .padding(.horizontal, Diems.MEDIUM_PADDING)
-                                    .padding(.bottom, 8)
+                                if(cartProductListIos.last?.id != cartProductItemIos.id){
+                                    Divider()
+                                        .frame(height: 2)
+                                        .overlay(AppColor.stroke)
+                                        .padding(.horizontal, Diems.MEDIUM_PADDING)
+                                        .padding(.bottom, 8)
+                                }
                             }
                         }
                     }
                     
-                    Text("Что-нибудь еще?")
-                        .titleMedium(weight: .medium)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.horizontal, Diems.MEDIUM_PADDING)
-                        .padding(.bottom, 8)
-                        .padding(.top, 16)
-                    
+                    if(!recommendationProductList.isEmpty){
+                        Text("consumer_cart_recommendations")
+                            .titleMedium(weight: .medium)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.horizontal, Diems.MEDIUM_PADDING)
+                            .padding(.bottom, 8)
+                            .padding(.top, 16)
+                        
+                    }
+                
                     LazyVGrid(columns: columns, spacing: 8) {
                         ForEach(recommendationProductList){ menuProductItem in
                             MenuItemView(
@@ -224,9 +228,9 @@ struct ConsumerCartSuccessScreen: View {
                                     action(ConsumerCartActionAddProductToRecommendationClick(menuProductUuid: menuProductItem.productUuid))
                                 }
                             )
-                            .padding(.horizontal, Diems.MEDIUM_PADDING)
                         }
                     }
+                    .padding(.horizontal, Diems.MEDIUM_PADDING)
                     .padding(.bottom, 8)
                 }
             }

@@ -22,11 +22,13 @@
 //logim
 "loginTitleProfile" = "Login profile";
 "loginSecondProfile" = "Your profile will display shipping addresses and your order history.";
+
 //consumer cart
 "emptyCartTitleProfile" = "Cart is empty";
 "emptyCartSecondProfile" = "Add a product from the “Menu”";
 "consumer_cart_total" = "total";
 "consumer_cart_discount" = "discount";
+"consumer_cart_recommendations" = "Something else?";
 
 //user address
 "emptyAddressListTitleProfile" = "Address list is empty";
