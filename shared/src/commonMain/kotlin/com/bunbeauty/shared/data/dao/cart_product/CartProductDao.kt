@@ -27,13 +27,13 @@ class CartProductDao(foodDeliveryDatabase: FoodDeliveryDatabase) : ICartProductD
         return cartProductEntityQueries.getCartProductList().executeAsList()
     }
 
-    override suspend fun getCartProductByUuid(uuid: String): CartProductWithMenuProductEntity? {
-        return cartProductEntityQueries.getCartProductByUuid(uuid).executeAsOneOrNull()
+    override suspend fun getCartProductByUuid(uuid: String): List<CartProductWithMenuProductEntity> {
+        return cartProductEntityQueries.getCartProductByUuid(uuid).executeAsList()
     }
 
-    override suspend fun getCartProductByMenuProductUuid(menuProductUuid: String): CartProductWithMenuProductEntity? {
+    override suspend fun getCartProductByMenuProductUuid(menuProductUuid: String): List<CartProductWithMenuProductEntity> {
         return cartProductEntityQueries.getCartProductByMenuProductUuid(menuProductUuid)
-            .executeAsOneOrNull()
+            .executeAsList()
     }
 
     override suspend fun updateCartProductCountByUuid(uuid: String, count: Int) {

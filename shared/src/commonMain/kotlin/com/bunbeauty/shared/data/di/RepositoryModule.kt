@@ -13,6 +13,7 @@ import com.bunbeauty.shared.data.repository.LinkRepository
 import com.bunbeauty.shared.data.repository.MenuProductRepository
 import com.bunbeauty.shared.data.repository.OrderRepository
 import com.bunbeauty.shared.data.repository.PaymentRepository
+import com.bunbeauty.shared.data.repository.RecommendationRepository
 import com.bunbeauty.shared.data.repository.SettingsRepository
 import com.bunbeauty.shared.data.repository.StreetRepository
 import com.bunbeauty.shared.data.repository.UserAddressRepository
@@ -152,6 +153,13 @@ fun repositoryModule() = module {
     single<AuthRepo> {
         AuthRepository(
             networkConnector = get(),
+        )
+    }
+    single {
+        RecommendationRepository(
+            networkConnector = get(),
+            recommendationMapper = get(),
+            recommendationProductDao = get()
         )
     }
 }

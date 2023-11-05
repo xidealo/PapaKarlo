@@ -16,12 +16,13 @@ class AddCartProductUseCase(
         }
 
         val initialCartProduct = cartProductRepo.getCartProductByMenuProductUuid(menuProductUuid)
+
         val cartProduct = if (initialCartProduct == null) {
             cartProductRepo.saveAsCartProduct(menuProductUuid)
         } else {
             cartProductRepo.updateCartProductCount(
-                initialCartProduct.uuid,
-                initialCartProduct.count + 1
+                cartProductUuid = initialCartProduct.uuid,
+                count = initialCartProduct.count + 1
             )
         }
         return cartProduct != null

@@ -11,8 +11,8 @@ interface ICartProductDao {
     fun observeCartProductList(): Flow<List<CartProductWithMenuProductEntity>>
 
     suspend fun getCartProductList(): List<CartProductWithMenuProductEntity>
-    suspend fun getCartProductByUuid(uuid: String): CartProductWithMenuProductEntity?
-    suspend fun getCartProductByMenuProductUuid(menuProductUuid: String): CartProductWithMenuProductEntity?
+    suspend fun getCartProductByUuid(uuid: String): List<CartProductWithMenuProductEntity>
+    suspend fun getCartProductByMenuProductUuid(menuProductUuid: String): List<CartProductWithMenuProductEntity>
 
     suspend fun updateCartProductCountByUuid(uuid: String, count: Int)
 

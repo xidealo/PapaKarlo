@@ -1,0 +1,32 @@
+CREATE TABLE recommendationProductEntity (
+    uuid TEXT NOT NULL PRIMARY KEY,
+    menuProductUuid TEXT NOT NULL DEFAULT "",
+    isVisible INTEGER AS Boolean NOT NULL DEFAULT 0
+    FOREIGN KEY (menuProductUuid) REFERENCES menuProductEntity(uuid) ON DELETE CASCADE
+);
+
+CREATE VIEW recommendationProductWithMenuProductEntity AS
+SELECT recommendationProductEntity.uuid AS recommendationProductUuid,
+    recommendationProductEntity.menuProductUuid,
+    recommendationProductEntity.isVisible AS recommendationIsVisible,
+    categoryEntity.uuid AS categoryUuid,
+    categoryEntity.name AS categoryName,
+    categoryEntity.priority,
+    menuProductEntity.*
+FROM recommendationProductEntity
+JOIN menuProductEntity ON menuProductEntity.uuid = recommendationProductEntity.menuProductUuid
+JOIN menuProductCategoryReference ON menuProductCategoryReference.menuProductUuidReference = menuProductEntity.uuid
+JOIN categoryEntity ON menuProductCategoryReference.categoryUuidReference = categoryEntity.uuid;
+
+CREATE VIEW cartProductWithMenuProductEntity AS
+SELECT cartProductEntity.uuid AS cartProductUuid,
+    cartProductEntity.count,
+    cartProductEntity.menuProductUuid,
+    categoryEntity.uuid AS categoryUuid,
+    categoryEntity.name AS categoryName,
+    categoryEntity.priority,
+    menuProductEntity.*
+FROM cartProductEntity
+JOIN menuProductEntity ON menuProductEntity.uuid = cartProductEntity.menuProductUuid
+JOIN menuProductCategoryReference ON menuProductCategoryReference.menuProductUuidReference = menuProductEntity.uuid
+JOIN categoryEntity ON menuProductCategoryReference.categoryUuidReference = categoryEntity.uuid;

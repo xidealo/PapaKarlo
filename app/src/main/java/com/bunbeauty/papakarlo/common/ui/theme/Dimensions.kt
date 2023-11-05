@@ -24,8 +24,8 @@ data class AppDimensions(
     val mediumSpace: Dp = 16.dp,
     val largeSpace: Dp = 24.dp,
 
-    val cardElevation: Dp = 2.dp,
-    val surfaceElevation: Dp = 4.dp,
+    val cardElevation: Dp = 4.dp,
+    val surfaceElevation: Dp = 6.dp,
 
     val codeWidth: Dp = 56.dp,
     val cardHeight: Dp = 40.dp,

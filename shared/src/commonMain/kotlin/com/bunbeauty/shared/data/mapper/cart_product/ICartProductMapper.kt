@@ -6,6 +6,6 @@ import com.bunbeauty.shared.domain.model.cart.CartProduct
 
 interface ICartProductMapper {
 
-    fun toModel(cartProductWithMenuProductEntity: CartProductWithMenuProductEntity): CartProduct
+    fun toCartProductList(cartProductWithMenuProductEntity: List<CartProductWithMenuProductEntity>): List<CartProduct>
     fun toEntityModel(cartProduct: CartProduct): CartProductEntity
 }

@@ -40,7 +40,8 @@ fun viewModelModule() = module {
             userInteractor = get(),
             cartProductInteractor = get(),
             addCartProductUseCase = get(),
-            removeCartProductUseCase = get()
+            removeCartProductUseCase = get(),
+            getRecommendationsUseCase = get()
         )
     }
     viewModel {

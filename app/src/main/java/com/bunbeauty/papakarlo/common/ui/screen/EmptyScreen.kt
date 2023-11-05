@@ -38,7 +38,6 @@ internal fun EmptyScreen(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .background(FoodDeliveryTheme.colors.mainColors.background)
             .padding(FoodDeliveryTheme.dimensions.mediumSpace)
     ) {
         Spacer(modifier = Modifier.weight(1f))
