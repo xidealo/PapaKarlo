@@ -12,7 +12,7 @@ fun getMenuProduct(
     oldPrice: Int? = null,
     categoryList: List<Category> = emptyList(),
 ) = MenuProduct(
-    uuid = "1",
+    uuid = uuid,
     name = "Kapusta",
     newPrice = newPrice,
     oldPrice = oldPrice,
@@ -48,7 +48,9 @@ fun getRecommendationProductList(
 fun getRecommendationProduct(
     uuid: String,
     menuProduct: MenuProduct,
+    isVisible: Boolean = true,
 ) = RecommendationProduct(
     uuid = uuid,
     menuProduct = menuProduct,
+    isVisible = isVisible
 )

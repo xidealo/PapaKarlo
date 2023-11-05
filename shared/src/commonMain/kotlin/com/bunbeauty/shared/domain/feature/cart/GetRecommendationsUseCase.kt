@@ -16,7 +16,8 @@ class GetRecommendationsUseCase(
         val recommendationsWithMaxCount = recommendationRepository.getRecommendations()
 
         val recommendationProductList =
-            recommendationsWithMaxCount?.recommendationProductList ?: return emptyList()
+            recommendationsWithMaxCount?.recommendationProductList?.filter { it.isVisible }
+                ?: return emptyList()
 
         val recommendationProductListNoneCategory = getFilteredRecommendationsByCategories(
             recommendationProductList = recommendationProductList,

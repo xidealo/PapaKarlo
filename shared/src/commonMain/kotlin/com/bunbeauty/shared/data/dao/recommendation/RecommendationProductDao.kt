@@ -13,7 +13,8 @@ class RecommendationProductDao(foodDeliveryDatabase: FoodDeliveryDatabase) :
         recommendationProductEntityList.forEach { recommendationProductEntity ->
             recommendationEntityQueries.insertRecommendationProduct(
                 uuid = recommendationProductEntity.uuid,
-                menuProductUuid = recommendationProductEntity.menuProductUuid
+                menuProductUuid = recommendationProductEntity.menuProductUuid,
+                isVisible = recommendationProductEntity.isVisible
             )
         }
     }
