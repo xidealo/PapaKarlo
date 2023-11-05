@@ -1,5 +1,7 @@
 package com.bunbeauty.shared.presentation.consumercart
 
+import com.bunbeauty.analytic.AnalyticService
+import com.bunbeauty.analytic.event.RecommendationAddEvent
 import com.bunbeauty.shared.Constants.PERCENT
 import com.bunbeauty.shared.Constants.RUBLE_CURRENCY
 import com.bunbeauty.shared.Logger
@@ -23,6 +25,7 @@ class ConsumerCartViewModel(
     private val addCartProductUseCase: AddCartProductUseCase,
     private val removeCartProductUseCase: RemoveCartProductUseCase,
     private val getRecommendationsUseCase: GetRecommendationsUseCase,
+    private val analyticService: AnalyticService,
 ) : SharedStateViewModel<ConsumerCart.State, ConsumerCart.Action, ConsumerCart.Event>(
     ConsumerCart.State(
         consumerCartData = ConsumerCartData(
@@ -60,7 +63,7 @@ class ConsumerCartViewModel(
                 menuProductUuid = action.menuProductUuid
             )
 
-            is ConsumerCart.Action.AddProductToRecommendationClick -> onAddCardProductClicked(
+            is ConsumerCart.Action.AddRecommendationProductToCartClick -> addRecommendation(
                 menuProductUuid = action.menuProductUuid
             )
 
@@ -129,6 +132,13 @@ class ConsumerCartViewModel(
         event {
             ConsumerCart.Event.NavigateToProduct(uuid = uuid, name = name)
         }
+    }
+
+    private fun addRecommendation(menuProductUuid: String) {
+        onAddCardProductClicked(
+            menuProductUuid = menuProductUuid
+        )
+        analyticService.sendEvent(RecommendationAddEvent)
     }
 
     private fun onAddCardProductClicked(menuProductUuid: String) {

@@ -31,6 +31,8 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
+                implementation(project(":analytic"))
+
                 Ktor.run {
                     implementation(clientSerialization)
                     implementation(clientLogging)

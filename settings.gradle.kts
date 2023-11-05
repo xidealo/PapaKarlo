@@ -3,3 +3,4 @@ include(
     ":shared",
 )
 rootProject.name = "PapaKarlo"
+include(":analytic")

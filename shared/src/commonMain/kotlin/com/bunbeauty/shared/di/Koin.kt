@@ -1,5 +1,6 @@
 package com.bunbeauty.shared.di
 
+import com.bunbeauty.analytic.di.analyticModule
 import com.bunbeauty.shared.data.di.dataMapperModule
 import com.bunbeauty.shared.data.di.databaseModule
 import com.bunbeauty.shared.data.di.networkModule
@@ -75,7 +76,8 @@ fun initKoin(appDeclaration: KoinAppDeclaration = {}) = startKoin {
         cafeUseCaseModule(),
         paymentUseCaseModule(),
         authUseCaseModule(),
-        useCaseModules()
+        useCaseModules(),
+        analyticModule()
     )
 }
 
@@ -96,7 +98,8 @@ fun initKoin() = startKoin {
         cafeUseCaseModule(),
         paymentUseCaseModule(),
         authUseCaseModule(),
-        useCaseModules()
+        useCaseModules(),
+        analyticModule()
     )
 }
 
