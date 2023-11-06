@@ -21,15 +21,16 @@ struct CartProductView: View {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(maxWidth: Diems.IMAGE_ELEMENT_WIDTH, maxHeight: Diems.IMAGE_ELEMENT_HEIGHT)
-            
+                .cornerRadius(Diems.MEDIUM_RADIUS)
+
             VStack(spacing:0){
                 Text(cartProductItem.name)
                     .titleSmall(weight: .bold)
+                    .lineLimit(nil)
                     .frame(maxWidth:.infinity, alignment: .topLeading)
                     .foregroundColor(AppColor.onSurface)
-                    .padding(.top, 8)
 
-                HStack(spacing:0){
+                HStack(alignment: .top, spacing:0){
                     if let oldCost = cartProductItem.oldCost {
                         Text(oldCost)
                             .strikethrough()
@@ -42,20 +43,17 @@ struct CartProductView: View {
                         .frame(maxWidth:.infinity, alignment: .topLeading)
                         .foregroundColor(AppColor.onSurface)
                         .padding(.leading, (cartProductItem.oldCost != nil) ? 4 : 0)
+                    
+                    CountPicker(
+                        count: String(cartProductItem.count),
+                        plusAction: plusAction,
+                        minusAction: minusAction
+                    )
                 }
                 .padding(.top, 4)
             }
             .frame(maxHeight: Diems.IMAGE_ELEMENT_HEIGHT, alignment: .topLeading)
             .padding(.leading, Diems.SMALL_PADDING)
-            
-            CountPicker(
-                count: String(cartProductItem.count),
-                plusAction: plusAction,
-                minusAction: minusAction
-            )
-                .padding(.trailing, Diems.SMALL_PADDING)
         }.frame(maxWidth:.infinity, alignment: .topLeading)
-            .background(AppColor.surface)
-        .cornerRadius(Diems.MEDIUM_RADIUS)
     }
 }

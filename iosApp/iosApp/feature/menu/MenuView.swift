@@ -101,7 +101,7 @@ struct MenuView: View {
                 }
             }
         }
-        .background(AppColor.background)
+        .background(AppColor.background2)
         .navigationBarTitle("")
         .hiddenNavigationBarStyle()
         .preferredColorScheme(.light)
