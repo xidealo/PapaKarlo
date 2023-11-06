@@ -1,3 +1,8 @@
+import Constants.DJAN_FLAVOR_NAME
+import Constants.GUSTO_PUB_FLAVOR_NAME
+import Constants.PAPA_KARLO_FLAVOR_NAME
+import Constants.YULIAR_FLAVOR_NAME
+
 plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
@@ -54,5 +59,15 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
+    }
+    buildFeatures {
+        buildConfig = true
+    }
+    setFlavorDimensions(listOf("default"))
+    productFlavors {
+        create(PAPA_KARLO_FLAVOR_NAME) {}
+        create(YULIAR_FLAVOR_NAME) {}
+        create(DJAN_FLAVOR_NAME) {}
+        create(GUSTO_PUB_FLAVOR_NAME) {}
     }
 }

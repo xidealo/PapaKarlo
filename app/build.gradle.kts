@@ -1,3 +1,7 @@
+import Constants.DJAN_FLAVOR_NAME
+import Constants.GUSTO_PUB_FLAVOR_NAME
+import Constants.PAPA_KARLO_FLAVOR_NAME
+import Constants.YULIAR_FLAVOR_NAME
 import com.android.build.gradle.internal.api.BaseVariantOutputImpl
 import java.io.FileInputStream
 import java.util.Properties
@@ -62,22 +66,22 @@ android {
 
     flavorDimensions.add("default")
     productFlavors {
-        create("papaKarlo") {
+        create(PAPA_KARLO_FLAVOR_NAME) {
             applicationId = PapaKarloApplication.applicationId
             versionCode = CommonApplication.versionCode
             versionName = PapaKarloApplication.versionName
         }
-        create("yuliar") {
+        create(YULIAR_FLAVOR_NAME) {
             applicationId = YuliarApplication.applicationId
             versionCode = CommonApplication.versionCode
             versionName = YuliarApplication.versionName
         }
-        create("djan") {
+        create(DJAN_FLAVOR_NAME) {
             applicationId = DjanApplication.applicationId
             versionCode = CommonApplication.versionCode
             versionName = DjanApplication.versionName
         }
-        create("gustopub") {
+        create(GUSTO_PUB_FLAVOR_NAME) {
             applicationId = GustoPubApplication.applicationId
             versionCode = CommonApplication.versionCode
             versionName = GustoPubApplication.versionName

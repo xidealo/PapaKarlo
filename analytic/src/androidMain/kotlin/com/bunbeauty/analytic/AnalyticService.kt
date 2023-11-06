@@ -12,7 +12,7 @@ actual class AnalyticService : KoinComponent {
     private val firebaseAnalytics: FirebaseAnalytics by inject()
 
     actual fun sendEvent(event: FoodDeliveryEvent, params: List<EventParameter>) {
-        val name = "${event.category}_${event.action}"
+        val name = "${BuildConfig.FLAVOR}_${event.category}_${event.action}"
         firebaseAnalytics.logEvent(name, params.toBundle())
     }
 
