@@ -23,9 +23,9 @@ class ConsumerCartViewModel(
     private val addCartProductUseCase: AddCartProductUseCase,
     private val removeCartProductUseCase: RemoveCartProductUseCase,
     private val getRecommendationsUseCase: GetRecommendationsUseCase,
-) : SharedStateViewModel<ConsumerCart.State, ConsumerCart.Action, ConsumerCart.Event>(
-    ConsumerCart.State(
-        consumerCartData = ConsumerCartData(
+) : SharedStateViewModel<ConsumerCart.ViewDataState, ConsumerCart.Action, ConsumerCart.Event>(
+    ConsumerCart.ViewDataState(
+        consumerCartData = ConsumerCart.ViewDataState.ConsumerCartData(
             forFreeDelivery = "",
             cartProductList = listOf(),
             oldTotalCost = null,
@@ -33,23 +33,22 @@ class ConsumerCartViewModel(
             firstOrderDiscount = null,
             recommendations = emptyList()
         ),
-        screenState = ConsumerCart.ScreenState.LOADING,
+        screenState = ConsumerCart.ViewDataState.ScreenState.LOADING,
     )
 ) {
 
     private var observeConsumerCartJob: Job? = null
 
-    override fun handleAction(action: ConsumerCart.Action) {
-
+    override fun reduce(action: ConsumerCart.Action, dataState: ConsumerCart.ViewDataState) {
         when (action) {
             is ConsumerCart.Action.AddProductToCartClick -> onAddCardProductClicked(
                 menuProductUuid = action.menuProductUuid
             )
 
             ConsumerCart.Action.BackClick -> navigateBack()
-            ConsumerCart.Action.Init -> init()
+            ConsumerCart.Action.Init -> observeConsumerCart()
             ConsumerCart.Action.OnCreateOrderClick -> onCreateOrderClicked()
-            ConsumerCart.Action.OnErrorButtonClick -> init()
+            ConsumerCart.Action.OnErrorButtonClick -> observeConsumerCart()
             ConsumerCart.Action.OnMenuClick -> onMenuClicked()
             is ConsumerCart.Action.OnProductClick -> onProductClicked(
                 uuid = action.cartProductItem.menuProductUuid,
@@ -72,38 +71,35 @@ class ConsumerCartViewModel(
     }
 
     private fun navigateBack() {
-        event {
+        addEvent {
             ConsumerCart.Event.NavigateBack
         }
     }
 
-    private fun init() {
-        state { oldState ->
-            oldState.copy(
-                screenState = ConsumerCart.ScreenState.LOADING
-            )
+    private fun observeConsumerCart() {
+        setState {
+            copy(screenState = ConsumerCart.ViewDataState.ScreenState.LOADING)
         }
         observeConsumerCartJob?.cancel()
-        observeConsumerCartJob =
-            cartProductInteractor.observeConsumerCart().onEach { consumerCart ->
-                Logger.logD("getConsumerCart", "getConsumerCart $consumerCart")
-                state { dataState ->
-                    if (consumerCart == null) {
-                        dataState.copy(screenState = ConsumerCart.ScreenState.ERROR)
-                    } else {
-                        dataState.copy(
-                            screenState = getConsumerCartDataState(consumerCart),
-                            consumerCartData = getConsumerCartData(
-                                consumerCartDomain = consumerCart
-                            ),
-                        )
-                    }
+        observeConsumerCartJob = cartProductInteractor.observeConsumerCart().onEach { consumerCartDomain ->
+            Logger.logD("getConsumerCart", "getConsumerCart $consumerCartDomain")
+            setState {
+                if (consumerCartDomain == null) {
+                    copy(screenState = ConsumerCart.ViewDataState.ScreenState.ERROR)
+                } else {
+                    copy(
+                        screenState = getConsumerCartDataState(consumerCartDomain),
+                        consumerCartData = getConsumerCartData(
+                            consumerCartDomain = consumerCartDomain
+                        ),
+                    )
                 }
-            }.launchIn(sharedScope)
+            }
+        }.launchIn(sharedScope)
     }
 
     private fun onMenuClicked() {
-        event {
+        addEvent {
             ConsumerCart.Event.NavigateToMenu
         }
     }
@@ -111,7 +107,7 @@ class ConsumerCartViewModel(
     private fun onCreateOrderClicked() {
         sharedScope.launchSafe(
             block = {
-                event {
+                addEvent {
                     if (userInteractor.isUserAuthorize()) {
                         ConsumerCart.Event.NavigateToCreateOrder
                     } else {
@@ -126,7 +122,7 @@ class ConsumerCartViewModel(
     }
 
     private fun onProductClicked(uuid: String, name: String) {
-        event {
+        addEvent {
             ConsumerCart.Event.NavigateToProduct(uuid = uuid, name = name)
         }
     }
@@ -155,10 +151,10 @@ class ConsumerCartViewModel(
 
     private suspend fun getConsumerCartData(
         consumerCartDomain: ConsumerCartDomain,
-    ): ConsumerCartData? {
+    ): ConsumerCart.ViewDataState.ConsumerCartData? {
         return when (consumerCartDomain) {
             is ConsumerCartDomain.Empty -> null
-            is ConsumerCartDomain.WithProducts -> ConsumerCartData(
+            is ConsumerCartDomain.WithProducts -> ConsumerCart.ViewDataState.ConsumerCartData(
                 forFreeDelivery = "${consumerCartDomain.forFreeDelivery} $RUBLE_CURRENCY",
                 cartProductList = consumerCartDomain.cartProductList.map(::toItem),
                 oldTotalCost = consumerCartDomain.oldTotalCost?.let { oldTotalCost ->
@@ -183,10 +179,10 @@ class ConsumerCartViewModel(
         }
     }
 
-    private fun getConsumerCartDataState(consumerCartDomain: ConsumerCartDomain): ConsumerCart.ScreenState {
+    private fun getConsumerCartDataState(consumerCartDomain: ConsumerCartDomain): ConsumerCart.ViewDataState.ScreenState {
         return when (consumerCartDomain) {
-            is ConsumerCartDomain.Empty -> ConsumerCart.ScreenState.EMPTY
-            is ConsumerCartDomain.WithProducts -> ConsumerCart.ScreenState.SUCCESS
+            is ConsumerCartDomain.Empty -> ConsumerCart.ViewDataState.ScreenState.EMPTY
+            is ConsumerCartDomain.WithProducts -> ConsumerCart.ViewDataState.ScreenState.SUCCESS
         }
     }
 

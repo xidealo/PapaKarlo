@@ -3,15 +3,15 @@ package com.bunbeauty.shared.presentation.confirm
 import com.bunbeauty.shared.domain.model.SuccessLoginDirection
 import com.bunbeauty.shared.presentation.base.BaseAction
 import com.bunbeauty.shared.presentation.base.BaseEvent
-import com.bunbeauty.shared.presentation.base.BaseState
+import com.bunbeauty.shared.presentation.base.BaseViewDataState
 
 interface Confirm {
 
-    data class State(
+    data class ViewDataState(
         val phoneNumber: String,
         val resendSeconds: Int,
         val isLoading: Boolean,
-    ): BaseState {
+    ): BaseViewDataState {
         val isResendEnable: Boolean = resendSeconds == 0
     }
 
