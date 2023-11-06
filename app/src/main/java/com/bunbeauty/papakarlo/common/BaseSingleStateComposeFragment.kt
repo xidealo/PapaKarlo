@@ -10,5 +10,4 @@ abstract class BaseSingleStateComposeFragment<VDS : BaseViewDataState, A : BaseA
     override fun mapState(dataState: VDS): VDS {
         return dataState
     }
-
 }
