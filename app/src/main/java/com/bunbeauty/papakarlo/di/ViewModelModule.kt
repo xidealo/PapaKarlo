@@ -41,7 +41,8 @@ fun viewModelModule() = module {
             cartProductInteractor = get(),
             addCartProductUseCase = get(),
             removeCartProductUseCase = get(),
-            getRecommendationsUseCase = get()
+            getRecommendationsUseCase = get(),
+            analyticService = get()
         )
     }
     viewModel {
@@ -146,7 +147,8 @@ fun viewModelModule() = module {
         ProductDetailsViewModel(
             getMenuProductByUuidUseCase = get(),
             observeCartUseCase = get(),
-            addCartProductUseCase = get()
+            addCartProductUseCase = get(),
+            analyticService = get()
         )
     }
     viewModel {

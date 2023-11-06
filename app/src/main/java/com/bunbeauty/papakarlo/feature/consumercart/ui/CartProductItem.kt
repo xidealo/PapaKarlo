@@ -40,7 +40,6 @@ fun CartProductItem(
         modifier = modifier.fillMaxWidth(),
         onClick = onClick,
         elevated = false,
-        shape = RoundedCornerShape(0.dp)
     ) {
         Row(
             modifier = Modifier

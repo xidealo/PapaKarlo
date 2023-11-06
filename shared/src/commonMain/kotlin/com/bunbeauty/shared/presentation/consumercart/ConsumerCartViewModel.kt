@@ -1,6 +1,7 @@
 package com.bunbeauty.shared.presentation.consumercart
 
 import com.bunbeauty.analytic.AnalyticService
+import com.bunbeauty.analytic.event.CartAddEvent
 import com.bunbeauty.analytic.event.RecommendationAddEvent
 import com.bunbeauty.shared.Constants.PERCENT
 import com.bunbeauty.shared.Constants.RUBLE_CURRENCY
@@ -15,6 +16,7 @@ import com.bunbeauty.shared.domain.model.cart.LightCartProduct
 import com.bunbeauty.shared.extension.launchSafe
 import com.bunbeauty.shared.presentation.base.SharedStateViewModel
 import com.bunbeauty.shared.presentation.menu.MenuProductItem
+import com.bunbeauty.shared.presentation.product_details.ProductDetailsOpenedFrom
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -45,7 +47,7 @@ class ConsumerCartViewModel(
     override fun handleAction(action: ConsumerCart.Action) {
 
         when (action) {
-            is ConsumerCart.Action.AddProductToCartClick -> onAddCardProductClicked(
+            is ConsumerCart.Action.AddProductToCartClick -> addCartProductToCartClick(
                 menuProductUuid = action.menuProductUuid
             )
 
@@ -56,20 +58,22 @@ class ConsumerCartViewModel(
             ConsumerCart.Action.OnMenuClick -> onMenuClicked()
             is ConsumerCart.Action.OnProductClick -> onProductClicked(
                 uuid = action.cartProductItem.menuProductUuid,
-                name = action.cartProductItem.name
+                name = action.cartProductItem.name,
+                productDetailsOpenedFrom = ProductDetailsOpenedFrom.CART_PRODUCT
             )
 
             is ConsumerCart.Action.RemoveProductFromCartClick -> onRemoveCardProductClicked(
                 menuProductUuid = action.menuProductUuid
             )
 
-            is ConsumerCart.Action.AddRecommendationProductToCartClick -> addRecommendation(
+            is ConsumerCart.Action.AddRecommendationProductToCartClick -> addRecommendationProductClicked(
                 menuProductUuid = action.menuProductUuid
             )
 
             is ConsumerCart.Action.RecommendationClick -> onProductClicked(
                 uuid = action.menuProductUuid,
-                name = action.name
+                name = action.name,
+                productDetailsOpenedFrom = ProductDetailsOpenedFrom.RECOMMENDATION_PRODUCT
             )
         }
     }
@@ -128,20 +132,35 @@ class ConsumerCartViewModel(
         )
     }
 
-    private fun onProductClicked(uuid: String, name: String) {
+    private fun onProductClicked(
+        uuid: String,
+        name: String,
+        productDetailsOpenedFrom: ProductDetailsOpenedFrom,
+    ) {
         event {
-            ConsumerCart.Event.NavigateToProduct(uuid = uuid, name = name)
+            ConsumerCart.Event.NavigateToProduct(
+                uuid = uuid,
+                name = name,
+                productDetailsOpenedFrom = productDetailsOpenedFrom
+            )
         }
     }
 
-    private fun addRecommendation(menuProductUuid: String) {
-        onAddCardProductClicked(
+    private fun addRecommendationProductClicked(menuProductUuid: String) {
+        addProduct(
             menuProductUuid = menuProductUuid
         )
         analyticService.sendEvent(RecommendationAddEvent)
     }
 
-    private fun onAddCardProductClicked(menuProductUuid: String) {
+    private fun addCartProductToCartClick(menuProductUuid: String) {
+        addProduct(
+            menuProductUuid = menuProductUuid
+        )
+        analyticService.sendEvent(CartAddEvent)
+    }
+
+    private fun addProduct(menuProductUuid: String) {
         sharedScope.launchSafe(
             block = {
                 addCartProductUseCase(menuProductUuid)

@@ -60,7 +60,9 @@ class ProductDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_c
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.getMenuProduct(args.menuProductUuid)
+        viewModel.getMenuProduct(
+            menuProductUuid = args.menuProductUuid,
+        )
 
         viewBinding.root.setContentWithTheme {
             val menuProductUiState by viewModel.menuProductDetailsState.collectAsStateWithLifecycle()
@@ -79,7 +81,7 @@ class ProductDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_c
         menuProductName: String,
         menuProductUuid: String,
         productDetailsUi: ProductDetailsUi,
-        state: ProductDetailsState.State
+        state: ProductDetailsState.State,
     ) {
         FoodDeliveryScaffold(
             title = menuProductName,
@@ -104,7 +106,7 @@ class ProductDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_c
                         modifier = Modifier.padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
                         textStringId = R.string.action_product_details_want
                     ) {
-                        viewModel.onWantClicked()
+                        viewModel.onWantClicked(productDetailsOpenedFrom = args.productDetailsOpenedFrom)
                     }
                 }
             }
@@ -229,7 +231,7 @@ class ProductDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_c
                         oldPrice = "320 ₽",
                         newPrice = "280 ₽",
                         description = "Сочная котлетка, сыр Чедр, маринованный огурчик, помидор, " +
-                            "красный лук, салат, фирменный соус, булочка с кунжутом"
+                                "красный лук, салат, фирменный соус, булочка с кунжутом"
                     )
                 ),
                 state = ProductDetailsState.State.SUCCESS

@@ -52,6 +52,7 @@ import com.bunbeauty.shared.presentation.consumercart.CartProductItem
 import com.bunbeauty.shared.presentation.consumercart.ConsumerCart
 import com.bunbeauty.shared.presentation.consumercart.ConsumerCartData
 import com.bunbeauty.shared.presentation.consumercart.ConsumerCartViewModel
+import com.bunbeauty.shared.presentation.product_details.ProductDetailsOpenedFrom
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.bunbeauty.shared.presentation.menu.MenuProductItem as MenuProductItemModel
 
@@ -70,7 +71,7 @@ class ConsumerCartFragment :
     @Composable
     override fun Screen(
         state: ConsumerCart.State,
-        onAction: (ConsumerCart.Action) -> Unit
+        onAction: (ConsumerCart.Action) -> Unit,
     ) {
         FoodDeliveryScaffold(
             title = stringResource(id = R.string.title_cart),
@@ -140,7 +141,8 @@ class ConsumerCartFragment :
                     .navigateSafe(
                         toProductFragment(
                             event.uuid,
-                            event.name
+                            event.name,
+                            event.productDetailsOpenedFrom
                         )
                     )
             }
@@ -152,7 +154,7 @@ class ConsumerCartFragment :
     @Composable
     private fun ConsumerCartSuccessScreen(
         consumerCartData: ConsumerCartData,
-        onAction: (ConsumerCart.Action) -> Unit
+        onAction: (ConsumerCart.Action) -> Unit,
     ) {
         Column(
             modifier = Modifier
@@ -161,7 +163,7 @@ class ConsumerCartFragment :
             Box(modifier = Modifier.weight(1f)) {
                 LazyVerticalGrid(
                     modifier = Modifier.fillMaxSize(),
-                    contentPadding = PaddingValues(vertical = FoodDeliveryTheme.dimensions.mediumSpace),
+                    contentPadding = PaddingValues(FoodDeliveryTheme.dimensions.mediumSpace),
                     columns = GridCells.Fixed(2),
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
@@ -249,8 +251,7 @@ class ConsumerCartFragment :
                     ) { recommendation ->
                         MenuProductItem(
                             modifier = Modifier
-                                .padding(top = 8.dp)
-                                .padding(horizontal = 16.dp),
+                                .padding(top = 8.dp),
                             menuProductItem = recommendation,
                             onAddProductClick = {
                                 onAction(

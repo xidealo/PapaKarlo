@@ -131,6 +131,7 @@ fun getProperty(key: String): String {
 
 dependencies {
     implementation(project(":shared"))
+    implementation(project(":analytic"))
 
     implementation(AndroidX.appCompat)
     implementation(AndroidX.coreKtx)

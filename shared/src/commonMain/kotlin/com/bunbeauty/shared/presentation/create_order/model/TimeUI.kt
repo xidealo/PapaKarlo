@@ -9,5 +9,5 @@ sealed interface TimeUI : SerializableMultiplatform {
         val minutes: Int
     ) : TimeUI
 
-    object ASAP : TimeUI
+    data object ASAP : TimeUI
 }

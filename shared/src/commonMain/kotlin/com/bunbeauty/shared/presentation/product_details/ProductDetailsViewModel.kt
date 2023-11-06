@@ -1,5 +1,9 @@
 package com.bunbeauty.shared.presentation.product_details
 
+import com.bunbeauty.analytic.AnalyticService
+import com.bunbeauty.analytic.event.CartAddEvent
+import com.bunbeauty.analytic.event.MenuAddEvent
+import com.bunbeauty.analytic.event.RecommendationAddEvent
 import com.bunbeauty.shared.domain.asCommonStateFlow
 import com.bunbeauty.shared.domain.feature.cart.AddCartProductUseCase
 import com.bunbeauty.shared.domain.feature.cart.ObserveCartUseCase
@@ -16,6 +20,7 @@ class ProductDetailsViewModel(
     private val getMenuProductByUuidUseCase: GetMenuProductByUuidUseCase,
     private val observeCartUseCase: ObserveCartUseCase,
     private val addCartProductUseCase: AddCartProductUseCase,
+    private val analyticService: AnalyticService,
 ) : SharedViewModel() {
 
     private val mutableProductDetailsState = MutableStateFlow(ProductDetailsState())
@@ -31,7 +36,9 @@ class ProductDetailsViewModel(
         observeCart()
     }
 
-    fun getMenuProduct(menuProductUuid: String) {
+    fun getMenuProduct(
+        menuProductUuid: String,
+    ) {
         sharedScope.launch(exceptionHandler) {
             val menuProduct = getMenuProductByUuidUseCase(menuProductUuid)
             mutableProductDetailsState.update { state ->
@@ -47,11 +54,32 @@ class ProductDetailsViewModel(
         }
     }
 
-    fun onWantClicked() {
+    fun onWantClicked(
+        productDetailsOpenedFrom: ProductDetailsOpenedFrom,
+    ) {
+        sendOnWantedClickedAnalytic(productDetailsOpenedFrom = productDetailsOpenedFrom)
         menuProductDetailsState.value.menuProduct?.let { menuProduct ->
             sharedScope.launch {
                 addCartProductUseCase(menuProduct.uuid)
             }
+        }
+    }
+
+    private fun sendOnWantedClickedAnalytic(
+        productDetailsOpenedFrom: ProductDetailsOpenedFrom,
+    ) {
+        when (productDetailsOpenedFrom) {
+            ProductDetailsOpenedFrom.RECOMMENDATION_PRODUCT -> analyticService.sendEvent(
+                RecommendationAddEvent
+            )
+
+            ProductDetailsOpenedFrom.CART_PRODUCT -> analyticService.sendEvent(
+                CartAddEvent
+            )
+
+            ProductDetailsOpenedFrom.MENU_PRODUCT -> analyticService.sendEvent(
+                MenuAddEvent
+            )
         }
     }
 

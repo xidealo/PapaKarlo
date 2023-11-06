@@ -58,6 +58,7 @@ import com.bunbeauty.shared.presentation.menu.MenuItem
 import com.bunbeauty.shared.presentation.menu.MenuProductItem
 import com.bunbeauty.shared.presentation.menu.MenuState
 import com.bunbeauty.shared.presentation.menu.MenuViewModel
+import com.bunbeauty.shared.presentation.product_details.ProductDetailsOpenedFrom
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -93,7 +94,8 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
                     findNavController().navigateSafe(
                         MenuFragmentDirections.toProductFragment(
                             event.uuid,
-                            event.name
+                            event.name,
+                            ProductDetailsOpenedFrom.MENU_PRODUCT
                         )
                     )
                 }
@@ -106,7 +108,7 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
     private fun MenuScreen(
         menuUi: MenuUi,
         onMenuPositionChanged: (Int) -> Unit,
-        errorAction: () -> Unit
+        errorAction: () -> Unit,
     ) {
         FoodDeliveryScaffold(
             title = stringResource(R.string.title_menu),
@@ -166,7 +168,7 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
     @Composable
     private fun CategoryRow(
         categoryItemList: List<CategoryItem>,
-        menuLazyListState: LazyGridState
+        menuLazyListState: LazyGridState,
     ) {
         val coroutineScope = rememberCoroutineScope()
         val categoryLazyListState = rememberLazyListState()
@@ -219,13 +221,13 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
     @Composable
     private fun MenuColumn(
         menu: MenuUi,
-        menuLazyListState: LazyGridState
+        menuLazyListState: LazyGridState,
     ) {
         LazyVerticalGrid(
             modifier = Modifier.fillMaxSize(),
             contentPadding = PaddingValues(FoodDeliveryTheme.dimensions.mediumSpace),
             columns = GridCells.Fixed(2),
-            horizontalArrangement = Arrangement.Absolute.spacedBy(8.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
             state = menuLazyListState,
             userScrollEnabled = menu.userScrollEnabled
         ) {
@@ -236,6 +238,7 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
                     when (menuItemModel) {
                         is MenuItem.DiscountItem, is MenuItem.MenuCategoryHeaderItem ->
                             GridItemSpan(maxLineSpan)
+
                         else -> GridItemSpan(1)
                     }
                 }
