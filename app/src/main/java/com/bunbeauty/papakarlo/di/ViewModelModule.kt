@@ -129,7 +129,8 @@ fun viewModelModule() = module {
         ConfirmViewModel(
             formatPhoneNumber = get(),
             checkCode = get(),
-            resendCode = get()
+            resendCode = get(),
+            analyticService = get()
         )
     }
     viewModel {
@@ -140,7 +141,8 @@ fun viewModelModule() = module {
             getCityListUseCase = get(),
             saveSelectedCityUseCase = get(),
             disableUserUseCase = get(),
-            userInteractor = get()
+            userInteractor = get(),
+            analyticService = get()
         )
     }
     viewModel {

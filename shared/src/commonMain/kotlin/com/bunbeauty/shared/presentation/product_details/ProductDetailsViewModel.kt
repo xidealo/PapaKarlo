@@ -2,6 +2,7 @@ package com.bunbeauty.shared.presentation.product_details
 
 import com.bunbeauty.analytic.AnalyticService
 import com.bunbeauty.analytic.event.CartAddEvent
+import com.bunbeauty.analytic.event.EventParameter
 import com.bunbeauty.analytic.event.MenuAddEvent
 import com.bunbeauty.analytic.event.RecommendationAddEvent
 import com.bunbeauty.shared.domain.asCommonStateFlow
@@ -57,8 +58,11 @@ class ProductDetailsViewModel(
     fun onWantClicked(
         productDetailsOpenedFrom: ProductDetailsOpenedFrom,
     ) {
-        sendOnWantedClickedAnalytic(productDetailsOpenedFrom = productDetailsOpenedFrom)
         menuProductDetailsState.value.menuProduct?.let { menuProduct ->
+            sendOnWantedClickedAnalytic(
+                menuProductUuid = menuProduct.uuid,
+                productDetailsOpenedFrom = productDetailsOpenedFrom
+            )
             sharedScope.launch {
                 addCartProductUseCase(menuProduct.uuid)
             }
@@ -66,19 +70,23 @@ class ProductDetailsViewModel(
     }
 
     private fun sendOnWantedClickedAnalytic(
+        menuProductUuid: String,
         productDetailsOpenedFrom: ProductDetailsOpenedFrom,
     ) {
         when (productDetailsOpenedFrom) {
             ProductDetailsOpenedFrom.RECOMMENDATION_PRODUCT -> analyticService.sendEvent(
-                RecommendationAddEvent
+                RecommendationAddEvent,
+                params = listOf(EventParameter("menuProductUuid", menuProductUuid))
             )
 
             ProductDetailsOpenedFrom.CART_PRODUCT -> analyticService.sendEvent(
-                CartAddEvent
+                CartAddEvent,
+                params = listOf(EventParameter("menuProductUuid", menuProductUuid))
             )
 
             ProductDetailsOpenedFrom.MENU_PRODUCT -> analyticService.sendEvent(
-                MenuAddEvent
+                MenuAddEvent,
+                params = listOf(EventParameter("menuProductUuid", menuProductUuid))
             )
         }
     }

@@ -2,6 +2,7 @@ package com.bunbeauty.shared.presentation.consumercart
 
 import com.bunbeauty.analytic.AnalyticService
 import com.bunbeauty.analytic.event.CartAddEvent
+import com.bunbeauty.analytic.event.EventParameter
 import com.bunbeauty.analytic.event.RecommendationAddEvent
 import com.bunbeauty.shared.Constants.PERCENT
 import com.bunbeauty.shared.Constants.RUBLE_CURRENCY
@@ -147,10 +148,14 @@ class ConsumerCartViewModel(
     }
 
     private fun addRecommendationProductClicked(menuProductUuid: String) {
+        analyticService.sendEvent(
+            RecommendationAddEvent,
+            params = listOf(EventParameter("menuProductUuid", menuProductUuid)),
+        )
+
         addProduct(
             menuProductUuid = menuProductUuid
         )
-        analyticService.sendEvent(RecommendationAddEvent)
     }
 
     private fun addCartProductToCartClick(menuProductUuid: String) {

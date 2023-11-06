@@ -1,5 +1,8 @@
 package com.bunbeauty.shared.presentation.confirm
 
+import com.bunbeauty.analytic.AnalyticService
+import com.bunbeauty.analytic.event.ConfirmExceptionEvent
+import com.bunbeauty.analytic.event.EventParameter
 import com.bunbeauty.shared.domain.exeptions.AuthSessionTimeoutException
 import com.bunbeauty.shared.domain.exeptions.InvalidCodeException
 import com.bunbeauty.shared.domain.exeptions.NoAttemptsException
@@ -21,6 +24,7 @@ class ConfirmViewModel(
     private val formatPhoneNumber: FormatPhoneNumberUseCase,
     private val checkCode: CheckCodeUseCase,
     private val resendCode: ResendCodeUseCase,
+    private val analyticService: AnalyticService,
 ) : SharedStateViewModel<Confirm.State, Confirm.Action, Confirm.Event>(
     initState = Confirm.State(
         phoneNumber = "",
@@ -104,6 +108,14 @@ class ConfirmViewModel(
     }
 
     private fun handleException(throwable: Throwable) {
+        analyticService.sendEvent(
+            ConfirmExceptionEvent, params = listOf(
+                EventParameter(
+                    key = "exception",
+                    value = throwable.toString()
+                )
+            )
+        )
         event {
             when (throwable) {
                 is TooManyRequestsException -> Confirm.Event.ShowTooManyRequestsError

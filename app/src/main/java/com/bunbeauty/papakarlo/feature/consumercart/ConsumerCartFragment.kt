@@ -52,7 +52,6 @@ import com.bunbeauty.shared.presentation.consumercart.CartProductItem
 import com.bunbeauty.shared.presentation.consumercart.ConsumerCart
 import com.bunbeauty.shared.presentation.consumercart.ConsumerCartData
 import com.bunbeauty.shared.presentation.consumercart.ConsumerCartViewModel
-import com.bunbeauty.shared.presentation.product_details.ProductDetailsOpenedFrom
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.bunbeauty.shared.presentation.menu.MenuProductItem as MenuProductItemModel
 
@@ -71,7 +70,7 @@ class ConsumerCartFragment :
     @Composable
     override fun Screen(
         state: ConsumerCart.State,
-        onAction: (ConsumerCart.Action) -> Unit,
+        onAction: (ConsumerCart.Action) -> Unit
     ) {
         FoodDeliveryScaffold(
             title = stringResource(id = R.string.title_cart),
@@ -154,7 +153,7 @@ class ConsumerCartFragment :
     @Composable
     private fun ConsumerCartSuccessScreen(
         consumerCartData: ConsumerCartData,
-        onAction: (ConsumerCart.Action) -> Unit,
+        onAction: (ConsumerCart.Action) -> Unit
     ) {
         Column(
             modifier = Modifier
