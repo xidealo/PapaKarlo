@@ -65,9 +65,9 @@ android {
     }
     setFlavorDimensions(listOf("default"))
     productFlavors {
-        create("papakarlo") {}
-        create("yuliar") {}
-        create("djan") {}
-        create("gustopub") {}
+        create(PAPA_KARLO_FLAVOR_NAME) {}
+        create(YULIAR_FLAVOR_NAME) {}
+        create(DJAN_FLAVOR_NAME) {}
+        create(GUSTO_PUB_FLAVOR_NAME) {}
     }
 }
