@@ -1,8 +1,7 @@
 package com.bunbeauty.shared.presentation.confirm
 
 import com.bunbeauty.analytic.AnalyticService
-import com.bunbeauty.analytic.event.ConfirmExceptionEvent
-import com.bunbeauty.analytic.event.EventParameter
+import com.bunbeauty.analytic.event.ConfirmErrorShowEvent
 import com.bunbeauty.shared.domain.exeptions.AuthSessionTimeoutException
 import com.bunbeauty.shared.domain.exeptions.InvalidCodeException
 import com.bunbeauty.shared.domain.exeptions.NoAttemptsException
@@ -109,13 +108,17 @@ class ConfirmViewModel(
 
     private fun handleException(throwable: Throwable) {
         analyticService.sendEvent(
-            ConfirmExceptionEvent, params = listOf(
-                EventParameter(
-                    key = "exception",
-                    value = throwable.toString()
-                )
-            )
+            event = ConfirmErrorShowEvent(
+                error = when (throwable) {
+                    is TooManyRequestsException -> "TooManyRequests"
+                    is NoAttemptsException -> "NoAttempts"
+                    is InvalidCodeException -> "InvalidCode"
+                    is AuthSessionTimeoutException -> "AuthSessionTimeout"
+                    else -> "ShowSomethingWentWrong"
+                }
+            ),
         )
+
         event {
             when (throwable) {
                 is TooManyRequestsException -> Confirm.Event.ShowTooManyRequestsError

@@ -1,9 +1,11 @@
 package com.bunbeauty.shared.presentation.consumercart
 
 import com.bunbeauty.analytic.AnalyticService
-import com.bunbeauty.analytic.event.CartAddEvent
-import com.bunbeauty.analytic.event.EventParameter
-import com.bunbeauty.analytic.event.RecommendationAddEvent
+import com.bunbeauty.analytic.event.cart.DecreaseCartProductClickEvent
+import com.bunbeauty.analytic.event.cart.IncreaseCartProductClickEvent
+import com.bunbeauty.analytic.event.cart.RemoveCartProductClickEvent
+import com.bunbeauty.analytic.event.recommendation.AddRecommendationProductClickEvent
+import com.bunbeauty.analytic.parameter.MenuProductUuidEventParameter
 import com.bunbeauty.shared.Constants.PERCENT
 import com.bunbeauty.shared.Constants.RUBLE_CURRENCY
 import com.bunbeauty.shared.Logger
@@ -149,20 +151,24 @@ class ConsumerCartViewModel(
 
     private fun addRecommendationProductClicked(menuProductUuid: String) {
         analyticService.sendEvent(
-            RecommendationAddEvent,
-            params = listOf(EventParameter("menuProductUuid", menuProductUuid)),
+            event = AddRecommendationProductClickEvent(
+                menuProductUuidEventParameter = MenuProductUuidEventParameter(value = menuProductUuid)
+            ),
         )
-
         addProduct(
             menuProductUuid = menuProductUuid
         )
     }
 
     private fun addCartProductToCartClick(menuProductUuid: String) {
+        analyticService.sendEvent(
+            event = IncreaseCartProductClickEvent(
+                menuProductUuidEventParameter = MenuProductUuidEventParameter(value = menuProductUuid)
+            ),
+        )
         addProduct(
             menuProductUuid = menuProductUuid
         )
-        analyticService.sendEvent(CartAddEvent)
     }
 
     private fun addProduct(menuProductUuid: String) {
@@ -177,14 +183,30 @@ class ConsumerCartViewModel(
     }
 
     private fun onRemoveCardProductClicked(menuProductUuid: String) {
+        handleRemoveAnalytic(menuProductUuid = menuProductUuid)
         sharedScope.launchSafe(
             block = {
-                removeCartProductUseCase(menuProductUuid)
+                removeCartProductUseCase(menuProductUuid = menuProductUuid)
             },
             onError = {
                 // TODO handle error
             }
         )
+    }
+
+    private fun handleRemoveAnalytic(menuProductUuid: String) {
+        analyticService.sendEvent(
+            event = DecreaseCartProductClickEvent(
+                menuProductUuidEventParameter = MenuProductUuidEventParameter(value = menuProductUuid)
+            ),
+        )
+        if (state.value.consumerCartData?.cartProductList?.size == 1) {
+            analyticService.sendEvent(
+                event = RemoveCartProductClickEvent(
+                    menuProductUuidEventParameter = MenuProductUuidEventParameter(value = menuProductUuid)
+                ),
+            )
+        }
     }
 
     private suspend fun getConsumerCartData(

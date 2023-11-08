@@ -2,8 +2,7 @@ package com.bunbeauty.shared.presentation.settings
 
 import com.bunbeauty.analytic.AnalyticService
 import com.bunbeauty.analytic.event.EventParameter
-import com.bunbeauty.analytic.event.FoodDeliveryEvent
-import com.bunbeauty.analytic.event.SettingsLogoutEvent
+import com.bunbeauty.analytic.event.LogoutSettingsClickEvent
 import com.bunbeauty.shared.domain.asCommonStateFlow
 import com.bunbeauty.shared.domain.feature.city.GetCityListUseCase
 import com.bunbeauty.shared.domain.feature.city.ObserveSelectedCityUseCase
@@ -50,13 +49,9 @@ class SettingsViewModel(
 
     fun onLogoutClicked() {
         analyticService.sendEvent(
-            event = SettingsLogoutEvent,
-            params = listOf(
-                EventParameter(
-                    "phoneNumber",
-                    settingsState.value.settings?.phoneNumber.toString()
-                )
-            )
+            event = LogoutSettingsClickEvent(
+                phone = settingsState.value.settings?.phoneNumber.toString()
+            ),
         )
         mutableSettingsState.update { settingsState ->
             settingsState + SettingsState.Event.ShowLogoutEvent

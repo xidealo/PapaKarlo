@@ -1,5 +1,10 @@
 package com.bunbeauty.shared.presentation.menu
 
+import com.bunbeauty.analytic.AnalyticService
+import com.bunbeauty.analytic.event.EventParameter
+import com.bunbeauty.analytic.event.FoodDeliveryEvent
+import com.bunbeauty.analytic.event.menu.AddMenuProductClickEvent
+import com.bunbeauty.analytic.parameter.MenuProductUuidEventParameter
 import com.bunbeauty.shared.domain.feature.cart.AddCartProductUseCase
 import com.bunbeauty.shared.domain.feature.cart.ObserveCartUseCase
 import com.bunbeauty.shared.domain.feature.discount.GetDiscountUseCase
@@ -19,6 +24,7 @@ class MenuViewModel(
     private val observeCartUseCase: ObserveCartUseCase,
     private val addCartProductUseCase: AddCartProductUseCase,
     private val getDiscountUseCase: GetDiscountUseCase,
+    private val analyticService: AnalyticService,
 ) : SharedViewModel() {
 
     private val mutableMenuState = MutableStateFlow(
@@ -91,10 +97,11 @@ class MenuViewModel(
                     )
                 }
 
-            val menuItemList = listOfNotNull(discountItem) + menuSectionList.flatMap { menuSection ->
-                listOf(toMenuCategoryItemModel(menuSection)) +
-                    toMenuProductItemModelList(menuSection)
-            }
+            val menuItemList =
+                listOfNotNull(discountItem) + menuSectionList.flatMap { menuSection ->
+                    listOf(toMenuCategoryItemModel(menuSection)) +
+                            toMenuProductItemModelList(menuSection)
+                }
 
             mutableMenuState.update { oldState ->
                 oldState.copy(
@@ -140,6 +147,11 @@ class MenuViewModel(
     }
 
     fun onAddProductClicked(menuProductUuid: String) {
+        analyticService.sendEvent(
+            event = AddMenuProductClickEvent(
+                menuProductUuidEventParameter = MenuProductUuidEventParameter(value = menuProductUuid)
+            ),
+        )
         sharedScope.launch {
             addCartProductUseCase(menuProductUuid)
         }

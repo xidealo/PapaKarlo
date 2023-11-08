@@ -1,6 +1,6 @@
 package com.bunbeauty.analytic.event
 
-data class EventParameter(
+open class EventParameter(
     val key: String,
     val value: String,
 ) {

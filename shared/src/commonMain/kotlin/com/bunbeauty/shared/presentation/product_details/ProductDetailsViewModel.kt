@@ -1,10 +1,11 @@
 package com.bunbeauty.shared.presentation.product_details
 
 import com.bunbeauty.analytic.AnalyticService
-import com.bunbeauty.analytic.event.CartAddEvent
+import com.bunbeauty.analytic.event.cart.AddCartProductDetailsClickEvent
 import com.bunbeauty.analytic.event.EventParameter
-import com.bunbeauty.analytic.event.MenuAddEvent
-import com.bunbeauty.analytic.event.RecommendationAddEvent
+import com.bunbeauty.analytic.event.menu.AddMenuProductDetailsClickEvent
+import com.bunbeauty.analytic.event.recommendation.AddRecommendationProductDetailsClickEvent
+import com.bunbeauty.analytic.parameter.MenuProductUuidEventParameter
 import com.bunbeauty.shared.domain.asCommonStateFlow
 import com.bunbeauty.shared.domain.feature.cart.AddCartProductUseCase
 import com.bunbeauty.shared.domain.feature.cart.ObserveCartUseCase
@@ -73,22 +74,22 @@ class ProductDetailsViewModel(
         menuProductUuid: String,
         productDetailsOpenedFrom: ProductDetailsOpenedFrom,
     ) {
-        when (productDetailsOpenedFrom) {
-            ProductDetailsOpenedFrom.RECOMMENDATION_PRODUCT -> analyticService.sendEvent(
-                RecommendationAddEvent,
-                params = listOf(EventParameter("menuProductUuid", menuProductUuid))
-            )
+        analyticService.sendEvent(
+            event = when (productDetailsOpenedFrom) {
+                ProductDetailsOpenedFrom.RECOMMENDATION_PRODUCT -> AddRecommendationProductDetailsClickEvent(
+                    menuProductUuidEventParameter = MenuProductUuidEventParameter(value = menuProductUuid)
+                )
 
-            ProductDetailsOpenedFrom.CART_PRODUCT -> analyticService.sendEvent(
-                CartAddEvent,
-                params = listOf(EventParameter("menuProductUuid", menuProductUuid))
-            )
+                ProductDetailsOpenedFrom.CART_PRODUCT -> AddCartProductDetailsClickEvent(
+                    menuProductUuidEventParameter = MenuProductUuidEventParameter(value = menuProductUuid)
+                )
 
-            ProductDetailsOpenedFrom.MENU_PRODUCT -> analyticService.sendEvent(
-                MenuAddEvent,
-                params = listOf(EventParameter("menuProductUuid", menuProductUuid))
-            )
-        }
+                ProductDetailsOpenedFrom.MENU_PRODUCT -> AddMenuProductDetailsClickEvent(
+                    menuProductUuidEventParameter = MenuProductUuidEventParameter(value = menuProductUuid)
+                )
+            }
+        )
+
     }
 
     private fun observeCart() {
