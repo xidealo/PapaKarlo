@@ -11,14 +11,15 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.LayoutComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.shared.presentation.base.BaseAction
+import com.bunbeauty.shared.presentation.base.BaseDataState
 import com.bunbeauty.shared.presentation.base.BaseEvent
-import com.bunbeauty.shared.presentation.base.BaseState
+import com.bunbeauty.shared.presentation.base.BaseViewState
 import com.bunbeauty.shared.presentation.base.SharedStateViewModel
 
-abstract class BaseComposeFragment<State : BaseState, Action : BaseAction, Event : BaseEvent> :
+abstract class BaseComposeFragment<DS : BaseDataState, VS : BaseViewState, A : BaseAction, E : BaseEvent> :
     BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
 
-    abstract val viewModel: SharedStateViewModel<State, Action, Event>
+    abstract val viewModel: SharedStateViewModel<DS, A, E>
 
     override val viewBinding by viewBinding(LayoutComposeBinding::bind)
 
@@ -26,10 +27,10 @@ abstract class BaseComposeFragment<State : BaseState, Action : BaseAction, Event
         super.onViewCreated(view, savedInstanceState)
 
         viewBinding.root.setContentWithTheme {
-            val state by viewModel.state.collectAsStateWithLifecycle()
+            val dataState by viewModel.dataState.collectAsStateWithLifecycle()
             Screen(
-                state = state,
-                onAction = viewModel::handleAction
+                viewState = mapState(dataState),
+                onAction = viewModel::onAction
             )
 
             val events by viewModel.events.collectAsStateWithLifecycle()
@@ -42,8 +43,10 @@ abstract class BaseComposeFragment<State : BaseState, Action : BaseAction, Event
         }
     }
 
-    abstract fun handleEvent(event: Event)
+    abstract fun handleEvent(event: E)
+
+    abstract fun mapState(dataState: DS): VS
 
     @Composable
-    abstract fun Screen(state: State, onAction: (Action) -> Unit)
+    abstract fun Screen(viewState: VS, onAction: (A) -> Unit)
 }

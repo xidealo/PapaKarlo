@@ -21,7 +21,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.common.BaseComposeFragment
+import com.bunbeauty.papakarlo.common.BaseSingleStateComposeFragment
 import com.bunbeauty.papakarlo.common.extension.navigateSafe
 import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
@@ -34,7 +34,7 @@ import com.bunbeauty.shared.presentation.confirm.Confirm
 import com.bunbeauty.shared.presentation.confirm.ConfirmViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class ConfirmFragment : BaseComposeFragment<Confirm.State, Confirm.Action, Confirm.Event>() {
+class ConfirmFragment : BaseSingleStateComposeFragment<Confirm.ViewDataState, Confirm.Action, Confirm.Event>() {
 
     private val args: ConfirmFragmentArgs by navArgs()
 
@@ -45,39 +45,39 @@ class ConfirmFragment : BaseComposeFragment<Confirm.State, Confirm.Action, Confi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.handleAction(Confirm.Action.Init(args.phoneNumber, args.successLoginDirection))
+        viewModel.onAction(Confirm.Action.Init(args.phoneNumber, args.successLoginDirection))
     }
 
     @Composable
-    override fun Screen(state: Confirm.State, onAction: (Confirm.Action) -> Unit) {
+    override fun Screen(viewState: Confirm.ViewDataState, onAction: (Confirm.Action) -> Unit) {
         FoodDeliveryScaffold(
             backActionClick = {
                 onAction(Confirm.Action.BackClick)
             },
             backgroundColor = FoodDeliveryTheme.colors.mainColors.surface,
             actionButton = {
-                if (!state.isLoading) {
-                    val buttonText = if (state.isResendEnable) {
+                if (!viewState.isLoading) {
+                    val buttonText = if (viewState.isResendEnable) {
                         stringResource(R.string.msg_request_code)
                     } else {
-                        stringResource(R.string.msg_request_code_sec, state.resendSeconds)
+                        stringResource(R.string.msg_request_code_sec, viewState.resendSeconds)
                     }
                     MainButton(
                         modifier = Modifier
                             .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
                         text = buttonText,
-                        isEnabled = state.isResendEnable
+                        isEnabled = viewState.isResendEnable
                     ) {
                         onAction(Confirm.Action.ResendCode)
                     }
                 }
             }
         ) {
-            if (state.isLoading) {
+            if (viewState.isLoading) {
                 LoadingScreen()
             } else {
                 ConfirmScreenSuccess(
-                    state = state,
+                    state = viewState,
                     onAction = onAction
                 )
             }
@@ -131,7 +131,7 @@ class ConfirmFragment : BaseComposeFragment<Confirm.State, Confirm.Action, Confi
     }
 
     @Composable
-    private fun ConfirmScreenSuccess(state: Confirm.State, onAction: (Confirm.Action) -> Unit) {
+    private fun ConfirmScreenSuccess(state: Confirm.ViewDataState, onAction: (Confirm.Action) -> Unit) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -163,7 +163,7 @@ class ConfirmFragment : BaseComposeFragment<Confirm.State, Confirm.Action, Confi
     private fun ConfirmScreenResendCodeDisableSuccessPreview() {
         FoodDeliveryTheme {
             Screen(
-                state = Confirm.State(
+                viewState = Confirm.ViewDataState(
                     phoneNumber = "+7 (900) 900-90-90",
                     resendSeconds = 59,
                     isLoading = false
@@ -178,7 +178,7 @@ class ConfirmFragment : BaseComposeFragment<Confirm.State, Confirm.Action, Confi
     private fun ConfirmScreenResendCodeEnableSuccessPreview() {
         FoodDeliveryTheme {
             Screen(
-                state = Confirm.State(
+                viewState = Confirm.ViewDataState(
                     phoneNumber = "+7 (900) 900-90-90",
                     resendSeconds = 0,
                     isLoading = false
@@ -193,7 +193,7 @@ class ConfirmFragment : BaseComposeFragment<Confirm.State, Confirm.Action, Confi
     private fun ConfirmScreenResendLoadingPreview() {
         FoodDeliveryTheme {
             Screen(
-                state = Confirm.State(
+                viewState = Confirm.ViewDataState(
                     phoneNumber = "+7 (900) 900-90-90",
                     resendSeconds = 0,
                     isLoading = true

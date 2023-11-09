@@ -21,8 +21,8 @@ class ConfirmViewModel(
     private val formatPhoneNumber: FormatPhoneNumberUseCase,
     private val checkCode: CheckCodeUseCase,
     private val resendCode: ResendCodeUseCase,
-) : SharedStateViewModel<Confirm.State, Confirm.Action, Confirm.Event>(
-    initState = Confirm.State(
+) : SharedStateViewModel<Confirm.ViewDataState, Confirm.Action, Confirm.Event>(
+    initDataState = Confirm.ViewDataState(
         phoneNumber = "",
         resendSeconds = TIMER_SECONDS,
         isLoading = false,
@@ -37,10 +37,13 @@ class ConfirmViewModel(
         startResendTimer()
     }
 
-    override fun handleAction(action: Confirm.Action) {
+    override fun reduce(action: Confirm.Action, dataState: Confirm.ViewDataState) {
         when (action) {
             is Confirm.Action.Init -> {
-                init(direction = action.direction, phoneNumber = action.phoneNumber)
+                init(
+                    direction = action.direction,
+                    phoneNumber = action.phoneNumber
+                )
             }
 
             is Confirm.Action.CheckCode -> {
@@ -52,21 +55,21 @@ class ConfirmViewModel(
             }
 
             Confirm.Action.BackClick -> {
-                event { Confirm.Event.NavigateBack }
+                addEvent { Confirm.Event.NavigateBack }
             }
         }
     }
 
     private fun init(direction: SuccessLoginDirection, phoneNumber: String) {
         this.direction = direction
-        state { state ->
-            state.copy(phoneNumber = formatPhoneNumber(phoneNumber))
+        setState {
+            copy(phoneNumber = formatPhoneNumber(phoneNumber))
         }
     }
 
     private fun startCodeChecking(code: String) {
-        state { state ->
-            state.copy(isLoading = true)
+        setState {
+            copy(isLoading = true)
         }
         sharedScope.launchSafe(
             block = {
@@ -74,8 +77,8 @@ class ConfirmViewModel(
                 finishConfirmation()
             },
             onError = { throwable ->
-                state { state ->
-                    state.copy(isLoading = false)
+                setState {
+                    copy(isLoading = false)
                 }
                 handleException(throwable)
             }
@@ -84,7 +87,7 @@ class ConfirmViewModel(
 
     private fun finishConfirmation() {
         direction?.let { direction ->
-            event {
+            addEvent {
                 when (direction) {
                     SuccessLoginDirection.BACK_TO_PROFILE -> Confirm.Event.NavigateBackToProfile
                     SuccessLoginDirection.TO_CREATE_ORDER -> Confirm.Event.NavigateToCreateOrder
@@ -104,7 +107,7 @@ class ConfirmViewModel(
     }
 
     private fun handleException(throwable: Throwable) {
-        event {
+        addEvent {
             when (throwable) {
                 is TooManyRequestsException -> Confirm.Event.ShowTooManyRequestsError
                 is NoAttemptsException -> Confirm.Event.ShowNoAttemptsError
@@ -116,14 +119,14 @@ class ConfirmViewModel(
     }
 
     private fun startResendTimer() {
-        state { state ->
-            state.copy(resendSeconds = TIMER_SECONDS)
+        setState {
+            copy(resendSeconds = TIMER_SECONDS)
         }
         timerJob = sharedScope.launch {
-            while (state.value.resendSeconds > 0) {
+            while (dataState.value.resendSeconds > 0) {
                 delay(TIMER_INTERVAL_MILLIS)
-                state { state ->
-                    state.copy(resendSeconds = state.resendSeconds - 1)
+                setState {
+                    copy(resendSeconds = resendSeconds - 1)
                 }
             }
         }
