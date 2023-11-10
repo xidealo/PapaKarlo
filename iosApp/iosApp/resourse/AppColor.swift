@@ -14,6 +14,7 @@ class AppColor{
     static let disabled = Color("disabled")
     static let secondary = Color("secondary")
     static let background = Color("background")
+    static let background2 = Color("surface")
     static let surface = Color("surface")
     static let error = Color("error")
     static let onPrimary = Color("onPrimary")
@@ -36,4 +37,5 @@ class AppColor{
     static let negative = Color("negative")
     static let info = Color("info")
     static let onStatus = Color("onStatus")
+    static let stroke = Color("stroke")
 }

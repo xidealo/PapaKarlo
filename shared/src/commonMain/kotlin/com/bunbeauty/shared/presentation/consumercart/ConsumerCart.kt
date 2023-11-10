@@ -2,32 +2,33 @@ package com.bunbeauty.shared.presentation.consumercart
 
 import com.bunbeauty.shared.presentation.base.BaseAction
 import com.bunbeauty.shared.presentation.base.BaseEvent
-import com.bunbeauty.shared.presentation.base.BaseState
+import com.bunbeauty.shared.presentation.base.BaseViewDataState
 import com.bunbeauty.shared.presentation.menu.MenuProductItem
 import com.bunbeauty.shared.presentation.product_details.ProductDetailsOpenedFrom
 
-data class ConsumerCartData(
-    val forFreeDelivery: String,
-    val cartProductList: List<CartProductItem>,
-    val oldTotalCost: String?,
-    val newTotalCost: String,
-    val firstOrderDiscount: String?,
-    val recommendations: List<MenuProductItem>,
-)
-
 interface ConsumerCart {
 
-    enum class ScreenState {
-        LOADING,
-        SUCCESS,
-        EMPTY,
-        ERROR
-    }
-
-    data class State(
+    data class ViewDataState(
         val consumerCartData: ConsumerCartData?,
         val screenState: ScreenState,
-    ) : BaseState
+    ) : BaseViewDataState {
+
+        data class ConsumerCartData(
+            val forFreeDelivery: String,
+            val cartProductList: List<CartProductItem>,
+            val oldTotalCost: String?,
+            val newTotalCost: String,
+            val firstOrderDiscount: String?,
+            val recommendations: List<MenuProductItem>,
+        )
+
+        enum class ScreenState {
+            LOADING,
+            SUCCESS,
+            EMPTY,
+            ERROR
+        }
+    }
 
     sealed interface Action : BaseAction {
         data object Init : Action
