@@ -196,7 +196,7 @@ class ConsumerCartViewModel(
                 menuProductUuidEventParameter = MenuProductUuidEventParameter(value = menuProductUuid)
             ),
         )
-        if (state.value.consumerCartData?.cartProductList?.size == 1) {
+        if (dataState.value.consumerCartData?.cartProductList?.size == 1) {
             analyticService.sendEvent(
                 event = RemoveCartProductClickEvent(
                     menuProductUuidEventParameter = MenuProductUuidEventParameter(value = menuProductUuid)
