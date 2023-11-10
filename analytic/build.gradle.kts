@@ -27,7 +27,7 @@ kotlin {
 
         podfile = project.file("../iosApp/Podfile")
 
-        pod("Firebase/Analytics")
+        pod("FirebaseAnalytics")
 
         framework {
             baseName = "analytic"
