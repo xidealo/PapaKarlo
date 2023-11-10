@@ -1,7 +1,6 @@
 package com.bunbeauty.analytic
 
 import cocoapods.FirebaseAnalytics.FIRAnalytics
-import com.bunbeauty.analytic.event.EventParameter
 import com.bunbeauty.analytic.event.FoodDeliveryEvent
 import com.bunbeauty.analytic.event.toMap
 import platform.Foundation.NSBundle

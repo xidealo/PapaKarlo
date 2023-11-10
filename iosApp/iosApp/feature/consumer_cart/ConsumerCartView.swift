@@ -15,7 +15,9 @@ struct ConsumerCartView: View {
         userInteractor: iosComponent.provideIUserInteractor(),
         cartProductInteractor: iosComponent.provideCartProductInteractor(),
         addCartProductUseCase: iosComponent.provideAddCartProductUseCase(),
-        removeCartProductUseCase: iosComponent.provideRemoveCartProductUseCase()
+        removeCartProductUseCase: iosComponent.provideRemoveCartProductUseCase(),
+        getRecommendationsUseCase: iosComponent.provideApiRepo()
+        analyticService: iosComponent.provideAnalyticService()
     )
     
     @State var consumerCartUIState = ConsumerCartUIState(

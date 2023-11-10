@@ -18,7 +18,8 @@ struct ConfirmView: View {
     @State var viewModel = ConfirmViewModel(
         formatPhoneNumber: iosComponent.provideFormatPhoneNumberUseCase(),
         checkCode: iosComponent.provideCheckCodeUseCase(),
-        resendCode: iosComponent.provideResendCodeUseCase()
+        resendCode: iosComponent.provideResendCodeUseCase(),
+        analyticService: iosComponent.provideAnalyticService()
     )
 
     //State

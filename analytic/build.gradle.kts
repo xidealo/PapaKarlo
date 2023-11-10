@@ -28,10 +28,9 @@ kotlin {
         podfile = project.file("../iosApp/Podfile")
 
         pod("FirebaseAnalytics")
-
         framework {
             baseName = "analytic"
-            isStatic = false
+            isStatic = true
         }
     }
 

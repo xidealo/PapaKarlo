@@ -1,5 +1,6 @@
 package com.bunbeauty.shared.di
 
+import com.bunbeauty.analytic.AnalyticService
 import com.bunbeauty.analytic.di.analyticModule
 import com.bunbeauty.shared.data.di.dataMapperModule
 import com.bunbeauty.shared.data.di.databaseModule
@@ -160,5 +161,6 @@ class IosComponent : KoinComponent {
 
     //Other
     fun provideApiRepo(): NetworkConnector = get()
+    fun provideAnalyticService(): AnalyticService = get()
 
 }

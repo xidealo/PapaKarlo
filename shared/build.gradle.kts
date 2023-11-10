@@ -29,7 +29,7 @@ kotlin {
 
         framework {
             baseName = "shared"
-            isStatic = false
+            isStatic = true
         }
     }
 
