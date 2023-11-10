@@ -16,12 +16,12 @@ struct ConsumerCartView: View {
         cartProductInteractor: iosComponent.provideCartProductInteractor(),
         addCartProductUseCase: iosComponent.provideAddCartProductUseCase(),
         removeCartProductUseCase: iosComponent.provideRemoveCartProductUseCase(),
-        getRecommendationsUseCase: iosComponent.provideGetRecommendationsUseCase()
+        getRecommendationsUseCase: iosComponent.provideGetRecommendationsUseCase(),
         analyticService: iosComponent.provideAnalyticService()
     )
     
-    @State var consumerCartData: ConsumerCartData? = nil
-    @State var screenState: ConsumerCartScreenState = ConsumerCartScreenState.loading
+    @State var consumerCartData: ConsumerCartViewDataState.ConsumerCartData? = nil
+    @State var screenState: ConsumerCartViewDataState.ScreenState = ConsumerCartViewDataState.ScreenState.loading
     
     @State var listener: Closeable? = nil
     @State var eventsListener: Closeable? = nil
@@ -44,7 +44,7 @@ struct ConsumerCartView: View {
             ToolbarView(
                 title: "titleCartProducts",
                 back: {
-                    viewModel.handleAction(action: ConsumerCartActionBackClick())
+                    viewModel.onAction(action: ConsumerCartActionBackClick())
                 }
             )
             NavigationLink(
@@ -66,19 +66,19 @@ struct ConsumerCartView: View {
                 EmptyView()
             }
             switch screenState{
-            case ConsumerCartScreenState.success:
+            case ConsumerCartViewDataState.ScreenState.success:
                 if let consumerCartUi = consumerCartData {
                     ConsumerCartSuccessScreen(
                         consumerCartUI: consumerCartUi,
-                        action: viewModel.handleAction
+                        action: viewModel.onAction
                     )
                 }
 
-            case ConsumerCartScreenState.loading: LoadingView()
-            case ConsumerCartScreenState.empty: ConsumerCartEmptyScreen(
+            case ConsumerCartViewDataState.ScreenState.loading: LoadingView()
+            case ConsumerCartViewDataState.ScreenState.empty: ConsumerCartEmptyScreen(
                 isRootActive: $isRootActive, selection: $selection
             )
-            case ConsumerCartScreenState.error: EmptyView()
+            case ConsumerCartViewDataState.ScreenState.error: EmptyView()
             default:
                 EmptyView()
             }
@@ -95,8 +95,8 @@ struct ConsumerCartView: View {
     }
 
     func subscribe(){
-        viewModel.handleAction(action: ConsumerCartActionInit())
-        listener = viewModel.state.watch { consumerCartStateVM in
+        viewModel.onAction(action: ConsumerCartActionInit())
+        listener = viewModel.dataState.watch { consumerCartStateVM in
             if let consumerCartStateVM =  consumerCartStateVM {
                 consumerCartData = consumerCartStateVM.consumerCartData
                 screenState = consumerCartStateVM.screenState
@@ -137,7 +137,7 @@ struct ConsumerCartView: View {
 
 struct ConsumerCartSuccessScreen: View {
     
-    let consumerCartUI : ConsumerCartData
+    let consumerCartUI : ConsumerCartViewDataState.ConsumerCartData
     let cartProductListIos : [CartProductItemIos]
     let recommendationProductList : [MenuProductItem]
     
@@ -151,7 +151,7 @@ struct ConsumerCartSuccessScreen: View {
     ]
 
     init(
-        consumerCartUI: ConsumerCartData,
+        consumerCartUI: ConsumerCartViewDataState.ConsumerCartData,
         action: @escaping (ConsumerCartAction) -> Void
     ) {
         self.consumerCartUI = consumerCartUI
@@ -226,7 +226,7 @@ struct ConsumerCartSuccessScreen: View {
                                 selection : $selection,
                                 showOrderCreated : .constant(false),
                                 action: {
-                                    action(ConsumerCartActionAddProductToRecommendationClick(menuProductUuid: menuProductItem.productUuid))
+                                    action(ConsumerCartActionAddRecommendationProductToCartClick(menuProductUuid: menuProductItem.productUuid))
                                 }
                             )
                         }
