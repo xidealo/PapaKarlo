@@ -144,7 +144,7 @@ class SettingsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose
                             city.run {
                                 CityUI(
                                     uuid = uuid,
-                                    name = name,
+                                    name = name
                                 )
                             }
                         },

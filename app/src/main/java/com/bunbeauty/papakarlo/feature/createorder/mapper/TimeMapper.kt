@@ -16,18 +16,17 @@ class TimeMapper {
     fun toTimeUI(time: Time): TimeUI.Time {
         return TimeUI.Time(
             hours = time.hours,
-            minutes = time.minutes,
+            minutes = time.minutes
         )
     }
 
     fun toTime(time: TimeUI): Time? {
-        return  when (time) {
+        return when (time) {
             is TimeUI.Time -> Time(
                 hours = time.hours,
-                minutes = time.minutes,
+                minutes = time.minutes
             )
             TimeUI.ASAP -> null
         }
     }
-
 }

@@ -6,5 +6,5 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class CityUI(
     val uuid: String,
-    val name: String,
-): Parcelable
+    val name: String
+) : Parcelable

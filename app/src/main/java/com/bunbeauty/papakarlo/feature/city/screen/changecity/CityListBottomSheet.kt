@@ -66,7 +66,7 @@ private fun CityListScreen(
         titleStringId = R.string.common_city,
         scrolledToTop = scrolledToTop
     ) {
-        items(cityList) {city ->
+        items(cityList) { city ->
             CityItem(
                 cityName = city.name,
                 elevated = false,
@@ -87,11 +87,11 @@ private fun CityListScreenPreview() {
             cityList = listOf(
                 CityUI(
                     uuid = "1",
-                    name = "City 1",
+                    name = "City 1"
                 ),
                 CityUI(
                     uuid = "2",
-                    name = "City 2",
+                    name = "City 2"
                 )
             ),
             scrolledToTop = {},

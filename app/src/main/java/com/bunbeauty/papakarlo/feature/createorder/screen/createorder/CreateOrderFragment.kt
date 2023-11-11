@@ -102,7 +102,7 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_comp
         onCommentClicked: () -> Unit,
         onDeferredTimeClicked: () -> Unit,
         onPaymentMethodClick: () -> Unit,
-        onCreateOrderClicked: () -> Unit,
+        onCreateOrderClicked: () -> Unit
     ) {
         FoodDeliveryScaffold(
             title = stringResource(id = R.string.title_create_order),
@@ -157,7 +157,7 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_comp
     private fun AddressCard(
         createOrderUi: CreateOrderUi,
         onUserAddressClicked: () -> Unit,
-        onCafeAddressClicked: () -> Unit,
+        onCafeAddressClicked: () -> Unit
     ) {
         val labelStringId = if (createOrderUi.isDelivery) {
             R.string.delivery_address
@@ -212,7 +212,7 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_comp
     @Composable
     private fun CommentCard(
         createOrderUi: CreateOrderUi,
-        onCommentClicked: () -> Unit,
+        onCommentClicked: () -> Unit
     ) {
         if (createOrderUi.comment == null) {
             NavigationCard(
@@ -235,7 +235,7 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_comp
     @Composable
     private fun DeferredTimeCard(
         createOrderUi: CreateOrderUi,
-        onDeferredTimeClicked: () -> Unit,
+        onDeferredTimeClicked: () -> Unit
     ) {
         val hintStringId = if (createOrderUi.isDelivery) {
             R.string.delivery_time
@@ -254,7 +254,7 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_comp
     @Composable
     private fun PaymentMethodCard(
         createOrderUi: CreateOrderUi,
-        onPaymentMethodClick: () -> Unit,
+        onPaymentMethodClick: () -> Unit
     ) {
         if (createOrderUi.selectedPaymentMethod == null) {
             NavigationCard(
@@ -279,7 +279,7 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_comp
     @Composable
     private fun BottomAmountBar(
         createOrderUi: CreateOrderUi,
-        onCreateOrderClicked: () -> Unit,
+        onCreateOrderClicked: () -> Unit
     ) {
         FoodDeliverySurface(modifier = Modifier.fillMaxWidth()) {
             Column(modifier = Modifier.padding(FoodDeliveryTheme.dimensions.mediumSpace)) {
@@ -392,7 +392,7 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_comp
                                     SelectableCafeAddressUI(
                                         uuid = uuid,
                                         address = address,
-                                        isSelected = isSelected,
+                                        isSelected = isSelected
                                     )
                                 }
                             }

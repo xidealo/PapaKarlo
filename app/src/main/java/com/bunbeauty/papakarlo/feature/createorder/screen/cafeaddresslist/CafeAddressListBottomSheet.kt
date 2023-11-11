@@ -60,7 +60,7 @@ private fun CafeAddressListScreen(
         titleStringId = R.string.pickup_address,
         scrolledToTop = scrolledToTop
     ) {
-        items(addressList) {addressItem ->
+        items(addressList) { addressItem ->
             SelectableItemView(
                 title = addressItem.address,
                 isClickable = true,

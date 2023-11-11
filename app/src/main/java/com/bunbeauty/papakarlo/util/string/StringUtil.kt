@@ -13,7 +13,7 @@ import com.bunbeauty.shared.domain.model.order.OrderStatus
 import com.bunbeauty.shared.presentation.cafe_list.CafeItem
 
 class StringUtil(
-    private val resourcesProvider: IResourcesProvider,
+    private val resourcesProvider: IResourcesProvider
 ) : IStringUtil {
 
     override fun getCostString(cost: Int?): String? {

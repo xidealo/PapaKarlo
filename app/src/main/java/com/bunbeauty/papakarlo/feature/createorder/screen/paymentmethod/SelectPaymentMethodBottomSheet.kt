@@ -36,7 +36,7 @@ class SelectPaymentMethodBottomSheet : ComposeBottomSheet<SelectablePaymentMetho
 
         suspend fun show(
             fragmentManager: FragmentManager,
-            paymentMethodList: List<SelectablePaymentMethodUI>,
+            paymentMethodList: List<SelectablePaymentMethodUI>
         ): SelectablePaymentMethodUI? {
             return suspendCoroutine { continuation ->
                 SelectPaymentMethodBottomSheet().apply {
@@ -57,7 +57,7 @@ class SelectPaymentMethodBottomSheet : ComposeBottomSheet<SelectablePaymentMetho
 private fun PaymentMethodListScreen(
     paymentMethodList: List<SelectablePaymentMethodUI>,
     scrolledToTop: (Boolean) -> Unit,
-    onPaymentMethodClicked: (SelectablePaymentMethodUI) -> Unit,
+    onPaymentMethodClicked: (SelectablePaymentMethodUI) -> Unit
 ) {
     FoodDeliveryLazyBottomSheet(
         titleStringId = R.string.pickup_payment_method,

@@ -7,5 +7,5 @@ import kotlinx.parcelize.Parcelize
 class SelectableCafeAddressUI(
     val uuid: String,
     val address: String,
-    val isSelected: Boolean,
-): Parcelable
+    val isSelected: Boolean
+) : Parcelable

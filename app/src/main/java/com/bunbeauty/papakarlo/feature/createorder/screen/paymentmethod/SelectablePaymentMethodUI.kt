@@ -8,4 +8,4 @@ import kotlinx.parcelize.Parcelize
 class SelectablePaymentMethodUI(
     val paymentMethodUI: PaymentMethodUI,
     val isSelected: Boolean
-): Parcelable
+) : Parcelable

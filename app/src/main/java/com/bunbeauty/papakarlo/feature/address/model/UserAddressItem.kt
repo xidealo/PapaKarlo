@@ -8,4 +8,4 @@ class UserAddressItem(
     val uuid: String,
     val address: String,
     val isSelected: Boolean
-): Parcelable
+) : Parcelable

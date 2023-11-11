@@ -13,5 +13,4 @@ class UserAddressItemMapper(private val stringUtil: IStringUtil) {
             isSelected = userAddress.isSelected
         )
     }
-
 }

@@ -43,7 +43,7 @@ class UserAddressListBottomSheet : ComposeBottomSheet<UserAddressListResult>() {
 
         suspend fun show(
             fragmentManager: FragmentManager,
-            addressList: List<UserAddressItem>,
+            addressList: List<UserAddressItem>
         ): UserAddressListResult? {
             return suspendCoroutine { continuation ->
                 UserAddressListBottomSheet().apply {
@@ -65,7 +65,7 @@ private fun UserAddressListScreen(
     addressList: List<UserAddressItem>,
     scrolledToTop: (Boolean) -> Unit,
     onAddressClicked: (UserAddressItem) -> Unit,
-    onAddAddressClicked: () -> Unit,
+    onAddAddressClicked: () -> Unit
 ) {
     FoodDeliveryLazyBottomSheet(
         titleStringId = R.string.delivery_address,
