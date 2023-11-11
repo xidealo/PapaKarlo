@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.feature.createorder.screen.createorder
+package com.bunbeauty.papakarlo.feature.createorder.screen.createorder.model
 
 import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentMethodUI
 

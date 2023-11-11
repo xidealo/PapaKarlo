@@ -2,8 +2,6 @@ package com.bunbeauty.papakarlo.feature.profile.screen.feedback
 
 import android.content.Intent
 import android.net.Uri
-import android.os.Bundle
-import android.view.View
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
@@ -16,27 +14,25 @@ import com.bunbeauty.papakarlo.common.ui.ComposeBottomSheet
 import com.bunbeauty.papakarlo.common.ui.element.card.NavigationIconCard
 import com.bunbeauty.papakarlo.common.ui.screen.bottomsheet.FoodDeliveryBottomSheet
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.extensions.setContentWithTheme
+import com.bunbeauty.papakarlo.feature.profile.screen.feedback.model.FeedbackArgument
+import com.bunbeauty.papakarlo.feature.profile.screen.feedback.model.LinkUI
 
 class FeedbackBottomSheet : ComposeBottomSheet<Any>() {
 
     private var feedbackArgument by argument<FeedbackArgument>()
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        binding.root.setContentWithTheme {
-            FeedbackScreen(
-                linkList = feedbackArgument.linkList,
-                onItemClick = ::goByLink
-            )
-        }
-    }
-
     private fun goByLink(link: String) {
         val uri = Uri.parse(link)
         val intent = Intent(Intent.ACTION_VIEW, uri)
         startActivity(intent)
+    }
+
+    @Composable
+    override fun Content() {
+        FeedbackScreen(
+            linkList = feedbackArgument.linkList,
+            onItemClick = ::goByLink
+        )
     }
 
     companion object {

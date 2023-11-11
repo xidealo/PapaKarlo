@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.feature.profile.screen.feedback
+package com.bunbeauty.papakarlo.feature.profile.screen.feedback.model
 
 import android.os.Parcelable
 import androidx.annotation.DrawableRes

@@ -6,7 +6,6 @@ import com.bunbeauty.shared.domain.feature.order.ObserveOrderUseCase
 import com.bunbeauty.shared.domain.feature.order.StopObserveOrdersUseCase
 import com.bunbeauty.shared.domain.model.order.Order
 import com.bunbeauty.shared.presentation.base.SharedViewModel
-import com.bunbeauty.shared.presentation.create_order.TimeMapper
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -15,7 +14,6 @@ import kotlinx.coroutines.launch
 
 class OrderDetailsViewModel(
     private val observeOrderUseCase: ObserveOrderUseCase,
-    private val timeMapper: TimeMapper,
     private val stopObserveOrdersUseCase: StopObserveOrdersUseCase,
 ) : SharedViewModel() {
 
@@ -69,7 +67,7 @@ class OrderDetailsViewModel(
             code = order.code,
             status = order.status,
             dateTime = order.dateTime,
-            deferredTime = timeMapper.toUiModel(order.deferredTime),
+            deferredTime = order.deferredTime,
             address = order.address,
             comment = order.comment,
             isDelivery = order.isDelivery,

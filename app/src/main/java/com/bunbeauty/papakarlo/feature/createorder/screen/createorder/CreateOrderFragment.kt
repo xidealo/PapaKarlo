@@ -37,16 +37,20 @@ import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold
 import com.bunbeauty.papakarlo.databinding.LayoutComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
-import com.bunbeauty.papakarlo.feature.createorder.mapper.UserAddressItemMapper
+import com.bunbeauty.papakarlo.feature.address.mapper.UserAddressItemMapper
+import com.bunbeauty.papakarlo.feature.createorder.mapper.CreateOrderStateMapper
+import com.bunbeauty.papakarlo.feature.createorder.mapper.TimeMapper
 import com.bunbeauty.papakarlo.feature.createorder.screen.cafeaddresslist.CafeAddressListBottomSheet
 import com.bunbeauty.papakarlo.feature.createorder.screen.comment.CommentBottomSheet
 import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.CreateOrderFragmentDirections.toCreateAddressFragment
 import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.CreateOrderFragmentDirections.toProfileFragment
+import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.model.CreateOrderUi
+import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.model.SelectableCafeAddressUI
 import com.bunbeauty.papakarlo.feature.createorder.screen.deferredtime.DeferredTimeBottomSheet
 import com.bunbeauty.papakarlo.feature.createorder.screen.paymentmethod.SelectPaymentMethodBottomSheet
 import com.bunbeauty.papakarlo.feature.createorder.screen.paymentmethod.SelectablePaymentMethodUI
 import com.bunbeauty.papakarlo.feature.createorder.screen.useraddresslist.UserAddressListBottomSheet
-import com.bunbeauty.papakarlo.feature.createorder.screen.useraddresslist.UserAddressListResult
+import com.bunbeauty.papakarlo.feature.createorder.screen.useraddresslist.model.UserAddressListResult
 import com.bunbeauty.papakarlo.feature.main.IMessageHost
 import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentMethodUI
 import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentMethodValueUI
@@ -65,6 +69,7 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_comp
     private val userAddressItemMapper: UserAddressItemMapper by inject()
     private val createOrderStateMapper: CreateOrderStateMapper by inject()
     private val paymentMethodUiStateMapper: PaymentMethodUiStateMapper by inject()
+    private val timeMapper: TimeMapper by inject()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -97,7 +102,7 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_comp
         onCommentClicked: () -> Unit,
         onDeferredTimeClicked: () -> Unit,
         onPaymentMethodClick: () -> Unit,
-        onCreateOrderClicked: () -> Unit
+        onCreateOrderClicked: () -> Unit,
     ) {
         FoodDeliveryScaffold(
             title = stringResource(id = R.string.title_create_order),
@@ -152,7 +157,7 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_comp
     private fun AddressCard(
         createOrderUi: CreateOrderUi,
         onUserAddressClicked: () -> Unit,
-        onCafeAddressClicked: () -> Unit
+        onCafeAddressClicked: () -> Unit,
     ) {
         val labelStringId = if (createOrderUi.isDelivery) {
             R.string.delivery_address
@@ -207,7 +212,7 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_comp
     @Composable
     private fun CommentCard(
         createOrderUi: CreateOrderUi,
-        onCommentClicked: () -> Unit
+        onCommentClicked: () -> Unit,
     ) {
         if (createOrderUi.comment == null) {
             NavigationCard(
@@ -230,7 +235,7 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_comp
     @Composable
     private fun DeferredTimeCard(
         createOrderUi: CreateOrderUi,
-        onDeferredTimeClicked: () -> Unit
+        onDeferredTimeClicked: () -> Unit,
     ) {
         val hintStringId = if (createOrderUi.isDelivery) {
             R.string.delivery_time
@@ -249,7 +254,7 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_comp
     @Composable
     private fun PaymentMethodCard(
         createOrderUi: CreateOrderUi,
-        onPaymentMethodClick: () -> Unit
+        onPaymentMethodClick: () -> Unit,
     ) {
         if (createOrderUi.selectedPaymentMethod == null) {
             NavigationCard(
@@ -274,7 +279,7 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_comp
     @Composable
     private fun BottomAmountBar(
         createOrderUi: CreateOrderUi,
-        onCreateOrderClicked: () -> Unit
+        onCreateOrderClicked: () -> Unit,
     ) {
         FoodDeliverySurface(modifier = Modifier.fillMaxWidth()) {
             Column(modifier = Modifier.padding(FoodDeliveryTheme.dimensions.mediumSpace)) {
@@ -382,7 +387,15 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_comp
                     lifecycleScope.launch {
                         CafeAddressListBottomSheet.show(
                             fragmentManager = childFragmentManager,
-                            addressList = event.addressList
+                            addressList = event.addressList.map { selectableCafeAddressItem ->
+                                selectableCafeAddressItem.run {
+                                    SelectableCafeAddressUI(
+                                        uuid = uuid,
+                                        address = address,
+                                        isSelected = isSelected,
+                                    )
+                                }
+                            }
                         )?.let { addressItem ->
                             viewModel.onCafeAddressChanged(addressItem.uuid)
                         }
@@ -409,11 +422,11 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_comp
                         }
                         DeferredTimeBottomSheet.show(
                             fragmentManager = childFragmentManager,
-                            deferredTime = event.deferredTime,
-                            minTime = event.minTime,
+                            deferredTime = timeMapper.toTimeUI(event.deferredTime),
+                            minTime = timeMapper.toTimeUI(event.minTime),
                             title = resources.getString(titleId)
                         )?.let { deferredTime ->
-                            viewModel.onDeferredTimeSelected(deferredTime)
+                            viewModel.onDeferredTimeSelected(timeMapper.toTime(deferredTime))
                         }
                     }
                 }
@@ -450,7 +463,7 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_comp
                     lifecycleScope.launch {
                         SelectPaymentMethodBottomSheet.show(
                             fragmentManager = childFragmentManager,
-                            selectablePaymentMethodList = event.selectablePaymentMethodList
+                            paymentMethodList = event.selectablePaymentMethodList
                                 .map { selectablePaymentMethod ->
                                     SelectablePaymentMethodUI(
                                         paymentMethodUI = paymentMethodUiStateMapper.map(
@@ -459,8 +472,8 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_comp
                                         isSelected = selectablePaymentMethod.isSelected
                                     )
                                 }
-                        )?.let { paymentMethod ->
-                            viewModel.onPaymentMethodChanged(paymentMethod.paymentMethodUI.uuid)
+                        )?.let { paymentMethodUI ->
+                            viewModel.onPaymentMethodChanged(paymentMethodUI.paymentMethodUI.uuid)
                         }
                     }
                 }
@@ -478,7 +491,7 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_comp
     private fun handleUserAddressListResult(result: UserAddressListResult) {
         when (result) {
             is UserAddressListResult.AddressSelected -> {
-                viewModel.onUserAddressChanged(result.addressItem.uuid)
+                viewModel.onUserAddressChanged(result.userAddressItem.uuid)
             }
 
             is UserAddressListResult.AddNewAddress -> {

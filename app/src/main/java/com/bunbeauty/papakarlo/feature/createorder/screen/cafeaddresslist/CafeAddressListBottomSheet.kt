@@ -1,11 +1,7 @@
 package com.bunbeauty.papakarlo.feature.createorder.screen.cafeaddresslist
 
-import android.os.Bundle
-import android.view.View
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.fragment.app.FragmentManager
 import com.bunbeauty.papakarlo.R
@@ -13,29 +9,25 @@ import com.bunbeauty.papakarlo.common.delegates.argument
 import com.bunbeauty.papakarlo.common.ui.ComposeBottomSheet
 import com.bunbeauty.papakarlo.common.ui.screen.bottomsheet.FoodDeliveryLazyBottomSheet
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.address.ui.SelectableItemView
-import com.bunbeauty.shared.presentation.cafe_address_list.SelectableCafeAddressItem
+import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.model.SelectableCafeAddressUI
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
-class CafeAddressListBottomSheet : ComposeBottomSheet<SelectableCafeAddressItem>() {
+class CafeAddressListBottomSheet : ComposeBottomSheet<SelectableCafeAddressUI>() {
 
-    private var addressList by argument<List<SelectableCafeAddressItem>>()
+    private var addressList by argument<List<SelectableCafeAddressUI>>()
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        binding.root.setContentWithTheme {
-            CafeAddressListScreen(
-                addressList = addressList,
-                scrolledToTop = ::toggleDraggable,
-                onAddressClicked = { addressItem ->
-                    callback?.onResult(addressItem)
-                    dismiss()
-                }
-            )
-        }
+    @Composable
+    override fun Content() {
+        CafeAddressListScreen(
+            addressList = addressList,
+            scrolledToTop = ::toggleDraggable,
+            onAddressClicked = { addressItem ->
+                callback?.onResult(addressItem)
+                dismiss()
+            }
+        )
     }
 
     companion object {
@@ -43,12 +35,12 @@ class CafeAddressListBottomSheet : ComposeBottomSheet<SelectableCafeAddressItem>
 
         suspend fun show(
             fragmentManager: FragmentManager,
-            addressList: List<SelectableCafeAddressItem>
+            addressList: List<SelectableCafeAddressUI>
         ) = suspendCoroutine { continuation ->
             CafeAddressListBottomSheet().apply {
                 this.addressList = addressList
-                callback = object : Callback<SelectableCafeAddressItem> {
-                    override fun onResult(result: SelectableCafeAddressItem?) {
+                callback = object : Callback<SelectableCafeAddressUI> {
+                    override fun onResult(result: SelectableCafeAddressUI?) {
                         continuation.resume(result)
                     }
                 }
@@ -60,26 +52,24 @@ class CafeAddressListBottomSheet : ComposeBottomSheet<SelectableCafeAddressItem>
 
 @Composable
 private fun CafeAddressListScreen(
-    addressList: List<SelectableCafeAddressItem>,
+    addressList: List<SelectableCafeAddressUI>,
     scrolledToTop: (Boolean) -> Unit,
-    onAddressClicked: (SelectableCafeAddressItem) -> Unit
+    onAddressClicked: (SelectableCafeAddressUI) -> Unit
 ) {
     FoodDeliveryLazyBottomSheet(
         titleStringId = R.string.pickup_address,
         scrolledToTop = scrolledToTop
     ) {
-        itemsIndexed(addressList) { i, addressItem ->
+        items(addressList) {addressItem ->
             SelectableItemView(
-                modifier = Modifier.padding(
-                    top = FoodDeliveryTheme.dimensions.getItemSpaceByIndex(i)
-                ),
                 title = addressItem.address,
                 isClickable = true,
                 elevated = false,
-                isSelected = addressItem.isSelected
-            ) {
-                onAddressClicked(addressItem)
-            }
+                isSelected = addressItem.isSelected,
+                onClick = {
+                    onAddressClicked(addressItem)
+                }
+            )
         }
     }
 }
@@ -90,12 +80,12 @@ private fun CafeAddressListScreenPreview() {
     FoodDeliveryTheme {
         CafeAddressListScreen(
             addressList = listOf(
-                SelectableCafeAddressItem(
+                SelectableCafeAddressUI(
                     uuid = "1",
                     address = "Адрес 1",
                     isSelected = true
                 ),
-                SelectableCafeAddressItem(
+                SelectableCafeAddressUI(
                     uuid = "2",
                     address = "Оооооооооооооооооооооооочень длинный адрес 2",
                     isSelected = false

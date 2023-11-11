@@ -1,7 +1,7 @@
 package com.bunbeauty.papakarlo.feature.profile.screen.profile
 
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.feature.profile.screen.feedback.LinkUI
+import com.bunbeauty.papakarlo.feature.profile.screen.feedback.model.LinkUI
 import com.bunbeauty.shared.domain.model.link.Link
 import com.bunbeauty.shared.domain.model.link.LinkType
 

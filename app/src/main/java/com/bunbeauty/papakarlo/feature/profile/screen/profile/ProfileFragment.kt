@@ -47,7 +47,7 @@ import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.order.model.OrderItem
 import com.bunbeauty.papakarlo.feature.order.ui.OrderItem
 import com.bunbeauty.papakarlo.feature.productdetails.ProductDetailsFragmentDirections
-import com.bunbeauty.papakarlo.feature.profile.screen.feedback.FeedbackArgument
+import com.bunbeauty.papakarlo.feature.profile.screen.feedback.model.FeedbackArgument
 import com.bunbeauty.papakarlo.feature.profile.screen.feedback.FeedbackBottomSheet
 import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentBottomSheet
 import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentMethodsArgument
