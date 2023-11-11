@@ -27,7 +27,8 @@ fun viewModelModule() = module {
             menuProductInteractor = get(),
             observeCartUseCase = get(),
             addCartProductUseCase = get(),
-            getDiscountUseCase = get()
+            getDiscountUseCase = get(),
+            analyticService = get()
         )
     }
     viewModel {

@@ -53,12 +53,12 @@ struct LoginView: View {
                 LoginViewSuccessView(
                     phone: $phone,
                     hasError: $hasPhoneError,
-                    action: viewModel.handleAction
+                    action: viewModel.onAction
                 )
             }
         }
         .onAppear(){
-            viewModel.handleAction(action: LoginActionInit())
+            viewModel.onAction(action: LoginActionInit())
             subscribe()
             eventsSubscribe()
         }
@@ -86,7 +86,7 @@ struct LoginView: View {
     }
 
     func subscribe(){
-        stateListener = viewModel.state.watch {  loginStateVM in
+        stateListener = viewModel.dataState.watch {  loginStateVM in
             if let loginState = loginStateVM {
                 print(loginState)
                 phone = loginState.phoneNumber

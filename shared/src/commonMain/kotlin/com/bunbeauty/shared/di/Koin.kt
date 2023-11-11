@@ -1,5 +1,6 @@
 package com.bunbeauty.shared.di
 
+import com.bunbeauty.analytic.AnalyticService
 import com.bunbeauty.analytic.di.analyticModule
 import com.bunbeauty.shared.data.di.dataMapperModule
 import com.bunbeauty.shared.data.di.databaseModule
@@ -44,6 +45,7 @@ import com.bunbeauty.shared.domain.feature.auth.GetPhoneNumberCursorPositionUseC
 import com.bunbeauty.shared.domain.feature.auth.RequestCodeUseCase
 import com.bunbeauty.shared.domain.feature.auth.ResendCodeUseCase
 import com.bunbeauty.shared.domain.feature.cart.AddCartProductUseCase
+import com.bunbeauty.shared.domain.feature.cart.GetRecommendationsUseCase
 import com.bunbeauty.shared.domain.feature.discount.GetDiscountUseCase
 import com.bunbeauty.shared.domain.feature.payment.GetSelectablePaymentMethodListUseCase
 import com.bunbeauty.shared.domain.feature.payment.SavePaymentMethodUseCase
@@ -152,6 +154,7 @@ class IosComponent : KoinComponent {
     fun provideCheckCodeUseCase(): CheckCodeUseCase = get()
     fun provideResendCodeUseCase(): ResendCodeUseCase = get()
     fun provideCheckPhoneNumberUseCase(): CheckPhoneNumberUseCase = get()
+    fun provideGetRecommendationsUseCase(): GetRecommendationsUseCase = get()
 
     //Mapper
     fun provideTimeMapper(): TimeMapper = get()
@@ -160,5 +163,6 @@ class IosComponent : KoinComponent {
 
     //Other
     fun provideApiRepo(): NetworkConnector = get()
+    fun provideAnalyticService(): AnalyticService = get()
 
 }

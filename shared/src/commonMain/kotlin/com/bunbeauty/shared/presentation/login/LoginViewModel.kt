@@ -14,9 +14,9 @@ class LoginViewModel(
     private val formatPhoneNumber: FormatPhoneNumberUseCase,
     private val getPhoneNumberCursorPosition: GetPhoneNumberCursorPositionUseCase,
     private val checkPhoneNumber: CheckPhoneNumberUseCase,
-) : SharedStateViewModel<Login.State, Login.Action, Login.Event>(Login.State()) {
+) : SharedStateViewModel<Login.ViewDataState, Login.Action, Login.Event>(Login.ViewDataState()) {
 
-    override fun handleAction(action: Login.Action) {
+    override fun reduce(action: Login.Action, dataState: Login.ViewDataState) {
         when (action) {
             Login.Action.Init -> init()
             is Login.Action.ChangePhoneNumber -> updatePhoneNumber(
@@ -30,14 +30,14 @@ class LoginViewModel(
     }
 
     private fun init() {
-        state { state ->
-            state.copy(isLoading = false)
+        setState {
+            copy(isLoading = false)
         }
     }
 
     private fun updatePhoneNumber(phoneNumber: String, cursorPosition: Int) {
-        state { state ->
-            state.copy(
+        setState {
+            copy(
                 phoneNumber = formatPhoneNumber(phoneNumber),
                 phoneNumberCursorPosition = getPhoneNumberCursorPosition(
                     phoneNumber = phoneNumber,
@@ -48,20 +48,20 @@ class LoginViewModel(
     }
 
     private fun requestCode() {
-        val phoneNumber = mutableState.value.phoneNumber.replace(
+        val phoneNumber = mutableDataState.value.phoneNumber.replace(
             regex = Regex("[ ()-]"),
             replacement = ""
         )
         if (checkPhoneNumber(phoneNumber)) {
-            state { state ->
-                state.copy(
+            setState {
+                copy(
                     hasPhoneError = false,
                     isLoading = true
                 )
             }
         } else {
-            state { state ->
-                state.copy(hasPhoneError = true)
+            setState {
+                copy(hasPhoneError = true)
             }
             return
         }
@@ -69,7 +69,7 @@ class LoginViewModel(
         sharedScope.launchSafe(
             block = {
                 requestCode(phoneNumber)
-                event {
+                addEvent {
                     Login.Event.NavigateToConfirm(phoneNumber)
                 }
             },
@@ -78,31 +78,31 @@ class LoginViewModel(
     }
 
     private fun navigateBack() {
-        event {
+        addEvent {
             Login.Event.NavigateBack
         }
     }
 
     private fun handleException(throwable: Throwable) {
-        state { state ->
-            state.copy(isLoading = false)
+        setState {
+            copy(isLoading = false)
         }
 
         when (throwable) {
             is InvalidPhoneNumberException -> {
-                state { state ->
-                    state.copy(hasPhoneError = true)
+                setState {
+                    copy(hasPhoneError = true)
                 }
             }
 
             is TooManyRequestsException -> {
-                event {
+                addEvent {
                     Login.Event.ShowTooManyRequestsError
                 }
             }
 
             else -> {
-                event {
+                addEvent {
                     Login.Event.ShowSomethingWentWrongError
                 }
             }

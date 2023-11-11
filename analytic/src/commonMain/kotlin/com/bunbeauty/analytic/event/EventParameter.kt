@@ -7,4 +7,4 @@ open class EventParameter(
     fun toPair() = Pair(key, value)
 }
 
-fun List<EventParameter>.toMap(): Map<String, Any> = associate { it.toPair() }
+fun List<EventParameter>.toMap(): Map<Any?, String> = associate { it.toPair() }

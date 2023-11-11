@@ -11,26 +11,28 @@ import shared
 
 struct ConsumerCartView: View {
     
-    let viewModel: ConsumerCartViewModel = ConsumerCartViewModel(
+    @State var viewModel: ConsumerCartViewModel = ConsumerCartViewModel(
         userInteractor: iosComponent.provideIUserInteractor(),
         cartProductInteractor: iosComponent.provideCartProductInteractor(),
         addCartProductUseCase: iosComponent.provideAddCartProductUseCase(),
-        removeCartProductUseCase: iosComponent.provideRemoveCartProductUseCase()
+        removeCartProductUseCase: iosComponent.provideRemoveCartProductUseCase(),
+        getRecommendationsUseCase: iosComponent.provideGetRecommendationsUseCase(),
+        analyticService: iosComponent.provideAnalyticService()
     )
     
-    @State var consumerCartUIState = ConsumerCartUIState(
-        consumerCartState: ConsumerCartUIStateConsumerCartStateLoading(),
-        eventList: []
-    )
+    @State var consumerCartData: ConsumerCartViewDataState.ConsumerCartData? = nil
+    @State var screenState: ConsumerCartViewDataState.ScreenState = ConsumerCartViewDataState.ScreenState.loading
     
     @State var listener: Closeable? = nil
-    
+    @State var eventsListener: Closeable? = nil
     
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     
+    //State
     @State var openCreateOrder:Bool = false
     @State var openLogin:Bool = false
-    
+    // ---
+
     //for back after createOrder
     @Binding var isRootActive:Bool
     @Binding var selection:Int
@@ -42,7 +44,7 @@ struct ConsumerCartView: View {
             ToolbarView(
                 title: "titleCartProducts",
                 back: {
-                    self.mode.wrappedValue.dismiss()
+                    viewModel.onAction(action: ConsumerCartActionBackClick())
                 }
             )
             NavigationLink(
@@ -63,83 +65,95 @@ struct ConsumerCartView: View {
             ){
                 EmptyView()
             }
-            switch consumerCartUIState.consumerCartState{
-            case is ConsumerCartUIStateConsumerCartStateSuccess:
-                let data = (consumerCartUIState.consumerCartState as! ConsumerCartUIStateConsumerCartStateSuccess).data
-                ConsumerCartSuccessScreen(
-                    consumerCartUI: data,
-                    plusAction: { uuid in
-                        viewModel.onAddCardProductClicked(menuProductUuid: uuid)
-                    },
-                    minusAction: { uuid in
-                        viewModel.onRemoveCardProductClicked(menuProductUuid: uuid)
-                    },
-                    mainButtonAction: {
-                        viewModel.onCreateOrderClicked()
-                    }
-                )
-            case is ConsumerCartUIStateConsumerCartStateLoading: LoadingView()
-            case is ConsumerCartUIStateConsumerCartStateEmpty: ConsumerCartEmptyScreen(
+            switch screenState{
+            case ConsumerCartViewDataState.ScreenState.success:
+                if let consumerCartUi = consumerCartData {
+                    ConsumerCartSuccessScreen(
+                        consumerCartUI: consumerCartUi,
+                        action: viewModel.onAction
+                    )
+                }
+
+            case ConsumerCartViewDataState.ScreenState.loading: LoadingView()
+            case ConsumerCartViewDataState.ScreenState.empty: ConsumerCartEmptyScreen(
                 isRootActive: $isRootActive, selection: $selection
             )
-            case is ConsumerCartUIStateConsumerCartStateError: EmptyView()
+            case ConsumerCartViewDataState.ScreenState.error: EmptyView()
             default:
                 EmptyView()
             }
         }
-        .background(AppColor.background)
+        .background(AppColor.background2)
         .hiddenNavigationBarStyle()
         .onAppear(){
             subscribe()
+            eventsSubscribe()
         }
         .onDisappear(){
             unsubscribe()
         }
-        .onChange(of : consumerCartUIState, perform: { creationOrderViewState in
-            
-            print(creationOrderViewState.eventList)
-            
-            consumerCartUIState.eventList.forEach { event in
-                switch(event){
-                case is ConsumerCartEventNavigateToMenuEvent : self.mode.wrappedValue.dismiss()
-                case is ConsumerCartEventNavigateToCreateOrderEvent : openCreateOrder = true
-                case is ConsumerCartEventNavigateToLoginEvent : openLogin = true
-                case is ConsumerCartEventNavigateToProductEvent : openLogin = true
-                default:
-                    print("def")
-                }
-            }
-            
-            if !consumerCartUIState.eventList.isEmpty{
-                viewModel.consumeEventList(eventList: consumerCartUIState.eventList)
-            }
-        })
     }
-    
+
     func subscribe(){
-        viewModel.getConsumerCart()
-        listener = viewModel.consumerCartState.watch { consumerCartStateVM in
-            if(consumerCartStateVM != nil ){
-                consumerCartUIState = consumerCartStateVM!
+        viewModel.onAction(action: ConsumerCartActionInit())
+        listener = viewModel.dataState.watch { consumerCartStateVM in
+            if let consumerCartStateVM =  consumerCartStateVM {
+                consumerCartData = consumerCartStateVM.consumerCartData
+                screenState = consumerCartStateVM.screenState
             }
         }
+    }
+
+    func eventsSubscribe(){
+        eventsListener = viewModel.events.watch(block: { _events in
+            if let events = _events{
+                let consumerCartEvents = events as? [ConsumerCartEvent] ?? []
+
+                consumerCartEvents.forEach { event in
+                    print(event)
+                    switch(event){
+                    case is ConsumerCartEventNavigateBack : self.mode.wrappedValue.dismiss()
+                    case is ConsumerCartEventNavigateToCreateOrder : openCreateOrder = true
+                    case is ConsumerCartEventNavigateToLogin: openLogin = true
+                    default:
+                        print("def")
+                    }
+                }
+
+                if !consumerCartEvents.isEmpty {
+                    viewModel.consumeEvents(events: consumerCartEvents)
+                }
+            }
+        })
     }
     
     func unsubscribe(){
         listener?.close()
         listener = nil
+        eventsListener?.close()
+        eventsListener = nil
     }
 }
 
 struct ConsumerCartSuccessScreen: View {
     
-    let consumerCartUI : ConsumerCartData
+    let consumerCartUI : ConsumerCartViewDataState.ConsumerCartData
     let cartProductListIos : [CartProductItemIos]
-    let plusAction: (String) -> Void
-    let minusAction: (String) -> Void
-    let mainButtonAction: () -> Void
+    let recommendationProductList : [MenuProductItem]
     
-    init(consumerCartUI: ConsumerCartData, plusAction: @escaping (String) -> Void, minusAction: @escaping (String) -> Void, mainButtonAction : @escaping () -> Void) {
+    @State var selection:Int = 1 //Not used for navigate to productDetails
+
+    let action: (ConsumerCartAction) -> Void
+
+    let columns = [
+        GridItem(.flexible(), spacing: 8, alignment: .top),
+        GridItem(.flexible(), spacing: 8, alignment: .top)
+    ]
+
+    init(
+        consumerCartUI: ConsumerCartViewDataState.ConsumerCartData,
+        action: @escaping (ConsumerCartAction) -> Void
+    ) {
         self.consumerCartUI = consumerCartUI
         self.cartProductListIos = consumerCartUI.cartProductList.map({ cartProductItem in
             CartProductItemIos(
@@ -147,9 +161,17 @@ struct ConsumerCartSuccessScreen: View {
                 cartProductItem: cartProductItem
             )
         })
-        self.plusAction = plusAction
-        self.minusAction = minusAction
-        self.mainButtonAction = mainButtonAction
+        self.action = action
+        self.recommendationProductList = consumerCartUI.recommendations.map({ menuProduct in
+            MenuProductItem(
+                id: menuProduct.uuid,
+                productUuid: menuProduct.uuid,
+                name: menuProduct.name,
+                newPrice: String(menuProduct.newPrice) + Strings.CURRENCY,
+                oldPrice: menuProduct.oldPrice as? Int,
+                photoLink: menuProduct.photoLink
+            )
+        })
     }
     
     var body: some View {
@@ -157,25 +179,60 @@ struct ConsumerCartSuccessScreen: View {
             ZStack(alignment: .bottom){
                 ScrollView {
                     LazyVStack(spacing:0){
-                        Text("Бесплатная доставка от \(consumerCartUI.forFreeDelivery)\(Strings.CURRENCY)")
-                            .bodyLarge()
-                            .frame(maxWidth: .infinity, alignment: .center)
+                        Text("Бесплатная доставка от \(consumerCartUI.forFreeDelivery)")
+                            .bodyMedium()
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.horizontal, Diems.MEDIUM_PADDING)
                             .padding(.bottom, Diems.MEDIUM_PADDING)
                             .padding(.top, Diems.SMALL_PADDING)
                         
-                        VStack(spacing: 0){
-                            ForEach(cartProductListIos){ cartProductItemIos in
+                        ForEach(cartProductListIos){ cartProductItemIos in
+                            VStack(spacing:0){
                                 CartProductView(cartProductItem: cartProductItemIos.cartProductItem, plusAction: {
-                                    plusAction(cartProductItemIos.cartProductItem.menuProductUuid)
+                                    action(
+                                        ConsumerCartActionAddProductToCartClick(menuProductUuid: cartProductItemIos.cartProductItem.menuProductUuid)
+                                    )
                                 }, minusAction: {
-                                    minusAction(cartProductItemIos.cartProductItem.menuProductUuid)
+                                    action(ConsumerCartActionRemoveProductFromCartClick(menuProductUuid: cartProductItemIos.cartProductItem.menuProductUuid))
                                 })
                                 .padding(.horizontal, Diems.MEDIUM_PADDING)
-                                .padding(.bottom, Diems.SMALL_PADDING)
+                                .padding(.bottom, 8)
+                                if(cartProductListIos.last?.id != cartProductItemIos.id){
+                                    Divider()
+                                        .frame(height: 2)
+                                        .overlay(AppColor.stroke)
+                                        .padding(.horizontal, Diems.MEDIUM_PADDING)
+                                        .padding(.bottom, 8)
+                                }
                             }
                         }
-                        .padding(.bottom, Diems.MEDIUM_PADDING)
                     }
+
+                    if(!recommendationProductList.isEmpty){
+                        Text("consumer_cart_recommendations")
+                            .titleMedium(weight: .medium)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.horizontal, Diems.MEDIUM_PADDING)
+                            .padding(.bottom, 8)
+                            .padding(.top, 16)
+
+                    }
+
+                    LazyVGrid(columns: columns, spacing: 8) {
+                        ForEach(recommendationProductList){ menuProductItem in
+                            MenuItemView(
+                                menuProductItem: menuProductItem,
+                                isRootActive : .constant(false),
+                                selection : $selection,
+                                showOrderCreated : .constant(false),
+                                action: {
+                                    action(ConsumerCartActionAddRecommendationProductToCartClick(menuProductUuid: menuProductItem.productUuid))
+                                }
+                            )
+                        }
+                    }
+                    .padding(.horizontal, Diems.MEDIUM_PADDING)
+                    .padding(.bottom, 8)
                 }
             }
             
@@ -215,7 +272,7 @@ struct ConsumerCartSuccessScreen: View {
                     .padding(.horizontal, 16)
 
                 Button {
-                    mainButtonAction()
+                    action(ConsumerCartActionOnCreateOrderClick())
                 } label: {
                     ButtonText(text: Strings.ACTION_CART_PRODUCT_CREATE_ORDER)
                 }
