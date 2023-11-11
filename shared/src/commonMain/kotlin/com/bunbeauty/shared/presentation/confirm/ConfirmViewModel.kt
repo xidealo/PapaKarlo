@@ -117,7 +117,7 @@ class ConfirmViewModel(
                     is NoAttemptsException -> "NoAttempts"
                     is InvalidCodeException -> "InvalidCode"
                     is AuthSessionTimeoutException -> "AuthSessionTimeout"
-                    else -> "ShowSomethingWentWrong"
+                    else -> "SomethingWentWrong"
                 }
             ),
         )

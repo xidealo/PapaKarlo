@@ -69,7 +69,7 @@ class ConsumerCartFragment :
     @Composable
     override fun Screen(
         viewState: ConsumerCart.ViewDataState,
-        onAction: (ConsumerCart.Action) -> Unit
+        onAction: (ConsumerCart.Action) -> Unit,
     ) {
         FoodDeliveryScaffold(
             title = stringResource(id = R.string.title_cart),
@@ -152,7 +152,7 @@ class ConsumerCartFragment :
     @Composable
     private fun ConsumerCartSuccessScreen(
         consumerCartData: ConsumerCart.ViewDataState.ConsumerCartData,
-        onAction: (ConsumerCart.Action) -> Unit
+        onAction: (ConsumerCart.Action) -> Unit,
     ) {
         Column(
             modifier = Modifier

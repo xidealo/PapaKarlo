@@ -28,7 +28,9 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.bunbeauty.papakarlo.R
+import com.bunbeauty.papakarlo.common.BaseComposeFragment
 import com.bunbeauty.papakarlo.common.BaseFragmentWithSharedViewModel
+import com.bunbeauty.papakarlo.common.BaseSingleStateComposeFragment
 import com.bunbeauty.papakarlo.common.extension.navigateSafe
 import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
@@ -42,14 +44,17 @@ import com.bunbeauty.papakarlo.databinding.LayoutComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.productdetails.ProductDetailsFragmentDirections.globalConsumerCartFragment
 import com.bunbeauty.papakarlo.feature.topcart.TopCartUi
+import com.bunbeauty.shared.presentation.consumercart.ConsumerCart
 import com.bunbeauty.shared.presentation.product_details.ProductDetailsState
 import com.bunbeauty.shared.presentation.product_details.ProductDetailsViewModel
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.security.PrivilegedAction
 
-class ProductDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
+class ProductDetailsFragment :
+    BaseComposeFragment<ProductDetailsState.ViewDataState, ProductDetailsUi, ProductDetailsState.Action, ProductDetailsState.Event>() {
 
-    private val viewModel: ProductDetailsViewModel by viewModel()
+    override val viewModel: ProductDetailsViewModel by viewModel()
 
     private val args: ProductDetailsFragmentArgs by navArgs()
 
@@ -60,18 +65,31 @@ class ProductDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_c
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.getMenuProduct(
-            menuProductUuid = args.menuProductUuid
-        )
+        viewModel.onAction(ProductDetailsState.Action.Init(args.menuProductUuid))
+    }
 
-        viewBinding.root.setContentWithTheme {
-            val menuProductUiState by viewModel.menuProductDetailsState.collectAsStateWithLifecycle()
-            ProductDetailsScreen(
-                menuProductName = args.menuProductName,
-                menuProductUuid = args.menuProductUuid,
-                productDetailsUi = productDetailsUiStateMapper.map(menuProductUiState),
-                state = menuProductUiState.state
-            )
+    @Composable
+    override fun Screen(
+        viewState: ProductDetailsUi,
+        onAction: (ProductDetailsState.Action) -> Unit,
+    ) {
+        ProductDetailsScreen(
+            menuProductName = args.menuProductName,
+            menuProductUuid = args.menuProductUuid,
+            productDetailsUi = viewState,
+            onAction = viewModel::onAction
+        )
+    }
+
+    override fun mapState(dataState: ProductDetailsState.ViewDataState): ProductDetailsUi {
+        return productDetailsUiStateMapper.map(dataState)
+    }
+
+    override fun handleEvent(event: ProductDetailsState.Event) {
+        when (event) {
+            ProductDetailsState.Event.NavigateBack -> findNavController().popBackStack()
+            ProductDetailsState.Event.NavigateToConsumerCart -> findNavController()
+                .navigateSafe(globalConsumerCartFragment())
         }
     }
 
@@ -81,48 +99,55 @@ class ProductDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_c
         menuProductName: String,
         menuProductUuid: String,
         productDetailsUi: ProductDetailsUi,
-        state: ProductDetailsState.State
+        onAction: (ProductDetailsState.Action) -> Unit,
     ) {
         FoodDeliveryScaffold(
             title = menuProductName,
             backActionClick = {
-                findNavController().popBackStack()
+                onAction(ProductDetailsState.Action.BackClick)
             },
-            topActions = listOf(
-                FoodDeliveryCartAction(topCartUi = productDetailsUi.topCartUi) {
-                    val backQueue = findNavController().currentBackStack.value
-                    if ((backQueue.size > 1) &&
-                        (backQueue[backQueue.lastIndex - 1].destination.id == R.id.consumerCartFragment)
-                    ) {
-                        findNavController().popBackStack()
-                    } else {
-                        findNavController().navigateSafe(globalConsumerCartFragment())
+            topActions = if (productDetailsUi is ProductDetailsUi.Success) {
+                listOf(
+                    FoodDeliveryCartAction(topCartUi = productDetailsUi.topCartUi) {
+                        val backQueue = findNavController().currentBackStack.value
+                        if ((backQueue.size > 1) &&
+                            (backQueue[backQueue.lastIndex - 1].destination.id == R.id.consumerCartFragment)
+                        ) {
+                            onAction(ProductDetailsState.Action.BackClick)
+                        } else {
+                            onAction(ProductDetailsState.Action.CartClick)
+                        }
                     }
-                }
-            ),
+                )
+            } else emptyList(),
             actionButton = {
-                if (state == ProductDetailsState.State.SUCCESS) {
+                if (productDetailsUi is ProductDetailsUi.Success) {
                     MainButton(
-                        modifier = Modifier.padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
+                        modifier = Modifier
+                            .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
                         textStringId = R.string.action_product_details_want
                     ) {
-                        viewModel.onWantClicked(productDetailsOpenedFrom = args.productDetailsOpenedFrom)
+                        onAction(
+                            ProductDetailsState.Action.AddProductToCartClick(
+                                productDetailsOpenedFrom = args.productDetailsOpenedFrom
+                            )
+                        )
                     }
                 }
             }
         ) {
-            when (state) {
-                ProductDetailsState.State.SUCCESS -> {
+            when (productDetailsUi) {
+                is ProductDetailsUi.Success -> {
                     ProductDetailsSuccessScreen(productDetailsUi.menuProductUi)
                 }
 
-                ProductDetailsState.State.LOADING -> {
+                is ProductDetailsUi.Loading -> {
                     LoadingScreen()
                 }
 
-                ProductDetailsState.State.ERROR -> {
+                is ProductDetailsUi.Error -> {
                     ErrorScreen(mainTextId = R.string.common_error) {
-                        viewModel.getMenuProduct(menuProductUuid)
+                        onAction(ProductDetailsState.Action.Init(menuProductUuid))
                     }
                 }
             }
@@ -130,7 +155,7 @@ class ProductDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_c
     }
 
     @Composable
-    private fun ProductDetailsSuccessScreen(menuProductUi: ProductDetailsUi.MenuProductUi?) {
+    private fun ProductDetailsSuccessScreen(menuProductUi: ProductDetailsUi.Success.MenuProductUi?) {
         menuProductUi?.let {
             Column(
                 modifier = Modifier
@@ -144,7 +169,7 @@ class ProductDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_c
     }
 
     @Composable
-    private fun ProductCard(menuProductUi: ProductDetailsUi.MenuProductUi) {
+    private fun ProductCard(menuProductUi: ProductDetailsUi.Success.MenuProductUi) {
         FoodDeliveryCard(
             modifier = Modifier
                 .fillMaxWidth()
@@ -219,22 +244,22 @@ class ProductDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_c
             ProductDetailsScreen(
                 menuProductName = "Бэргер куриный Макс с экстра сырным соусом",
                 menuProductUuid = "",
-                productDetailsUi = ProductDetailsUi(
+                productDetailsUi = ProductDetailsUi.Success(
                     topCartUi = TopCartUi(
                         cost = "100",
                         count = "2"
                     ),
-                    menuProductUi = ProductDetailsUi.MenuProductUi(
+                    menuProductUi = ProductDetailsUi.Success.MenuProductUi(
                         photoLink = "",
                         name = "Бэргер куриный Макс с экстра сырным соусом",
                         size = "300 г",
                         oldPrice = "320 ₽",
                         newPrice = "280 ₽",
                         description = "Сочная котлетка, сыр Чедр, маринованный огурчик, помидор, " +
-                            "красный лук, салат, фирменный соус, булочка с кунжутом"
+                                "красный лук, салат, фирменный соус, булочка с кунжутом"
                     )
                 ),
-                state = ProductDetailsState.State.SUCCESS
+                onAction = {}
             )
         }
     }
@@ -246,14 +271,8 @@ class ProductDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_c
             ProductDetailsScreen(
                 menuProductName = "Бэргер куриный Макс с экстра сырным соусом",
                 menuProductUuid = "",
-                productDetailsUi = ProductDetailsUi(
-                    topCartUi = TopCartUi(
-                        cost = "100",
-                        count = "2"
-                    ),
-                    menuProductUi = null
-                ),
-                state = ProductDetailsState.State.LOADING
+                productDetailsUi = ProductDetailsUi.Loading,
+                onAction = {}
             )
         }
     }

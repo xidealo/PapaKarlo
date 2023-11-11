@@ -2,10 +2,21 @@ package com.bunbeauty.papakarlo.feature.consumercart.ui
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.with
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
@@ -13,10 +24,12 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.R
@@ -24,12 +37,13 @@ import com.bunbeauty.papakarlo.common.ui.element.button.FoodDeliveryButtonDefaul
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun CountPicker(
     modifier: Modifier = Modifier,
     count: Int,
     onCountIncreased: () -> Unit,
-    onCountDecreased: () -> Unit
+    onCountDecreased: () -> Unit,
 ) {
     Row(
         modifier = modifier
@@ -47,12 +61,34 @@ fun CountPicker(
             descriptionStringId = R.string.description_consumer_cart_decrease,
             onClick = onCountDecreased
         )
-        Text(
-            modifier = Modifier.padding(horizontal = 4.dp),
-            text = count.toString(),
-            style = FoodDeliveryTheme.typography.bodySmall.bold,
-            color = FoodDeliveryTheme.colors.mainColors.primary
-        )
+
+        AnimatedContent(
+            modifier = Modifier
+                .height(36.dp),
+            targetState = count,
+            transitionSpec = {
+                fadeIn(animationSpec = tween(220, delayMillis = 90)) + slideInVertically(
+                    animationSpec = tween(220, delayMillis = 90)
+                ) with fadeOut(animationSpec = tween(90))
+            },
+            label = "",
+            contentAlignment = Alignment.Center
+        ) { countExpanded ->
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier.fillMaxHeight()
+            ) {
+                Text(
+                    modifier = Modifier
+                        .padding(horizontal = 4.dp),
+                    text = countExpanded.toString(),
+                    style = FoodDeliveryTheme.typography.bodySmall.bold,
+                    color = FoodDeliveryTheme.colors.mainColors.primary,
+                    textAlign = TextAlign.Center
+                )
+            }
+        }
+
         CountPickerButton(
             iconId = R.drawable.ic_plus_16,
             descriptionStringId = R.string.description_consumer_cart_increase,
@@ -65,7 +101,7 @@ fun CountPicker(
 fun CountPickerButton(
     @DrawableRes iconId: Int,
     @StringRes descriptionStringId: Int,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     IconButton(
         modifier = Modifier.size(36.dp),
