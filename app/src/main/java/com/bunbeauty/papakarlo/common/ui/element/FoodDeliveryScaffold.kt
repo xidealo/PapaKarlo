@@ -29,6 +29,7 @@ fun FoodDeliveryScaffold(
     backgroundColor: Color = FoodDeliveryTheme.colors.mainColors.background,
     @DrawableRes drawableId: Int? = null,
     actionButton: @Composable () -> Unit = {},
+    appBarContent: @Composable () -> Unit = {},
     content: (@Composable () -> Unit)
 ) {
     val appBarState = rememberTopAppBarState()
@@ -43,7 +44,8 @@ fun FoodDeliveryScaffold(
                 backActionClick = backActionClick,
                 scrollBehavior = scrollBehavior,
                 actions = topActions,
-                drawableId = drawableId
+                drawableId = drawableId,
+                content = appBarContent
             )
         },
         containerColor = backgroundColor,

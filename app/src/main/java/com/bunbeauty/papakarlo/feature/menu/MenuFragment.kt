@@ -38,7 +38,6 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragmentWithSharedViewModel
 import com.bunbeauty.papakarlo.common.extension.navigateSafe
 import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
-import com.bunbeauty.papakarlo.common.ui.element.surface.FoodDeliverySurface
 import com.bunbeauty.papakarlo.common.ui.element.topbar.FoodDeliveryCartAction
 import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
@@ -106,8 +105,9 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
     private fun MenuScreen(
         menuUi: MenuUi,
         onMenuPositionChanged: (Int) -> Unit,
-        errorAction: () -> Unit
+        errorAction: () -> Unit,
     ) {
+        val menuLazyGridState = rememberLazyGridState()
         FoodDeliveryScaffold(
             title = stringResource(R.string.title_menu),
             drawableId = R.drawable.logo_small,
@@ -115,13 +115,26 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
                 FoodDeliveryCartAction(topCartUi = menuUi.topCartUi) {
                     findNavController().navigateSafe(globalConsumerCartFragment())
                 }
-            )
+            ),
+            appBarContent = {
+                if (menuUi.state is MenuState.State.Success) {
+                    CategoryRow(
+                        modifier = Modifier.fillMaxWidth(),
+                        categoryItemList = menuUi.categoryItemList,
+                        menuLazyGridState = menuLazyGridState,
+                    )
+                }
+            }
         ) {
-            Crossfade(targetState = menuUi.state, label = "MenuScreen") { state ->
+            Crossfade(
+                targetState = menuUi.state,
+                label = "MenuScreen"
+            ) { state ->
                 when (state) {
                     is MenuState.State.Success -> {
                         MenuSuccessScreen(
                             menu = menuUi,
+                            menuLazyGridState = menuLazyGridState,
                             onMenuPositionChanged = onMenuPositionChanged
                         )
                     }
@@ -142,9 +155,13 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
     }
 
     @Composable
-    private fun MenuSuccessScreen(menu: MenuUi, onMenuPositionChanged: (Int) -> Unit) {
+    private fun MenuSuccessScreen(
+        menu: MenuUi,
+        menuLazyGridState: LazyGridState,
+        onMenuPositionChanged: (Int) -> Unit,
+    ) {
         Column(modifier = Modifier.fillMaxSize()) {
-            val menuLazyGridState = rememberLazyGridState()
+
             val menuPosition by remember {
                 derivedStateOf {
                     menuLazyGridState.firstVisibleItemIndex
@@ -152,9 +169,6 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
             }
             LaunchedEffect(Unit) {
                 snapshotFlow { menuPosition }.collect(onMenuPositionChanged)
-            }
-            FoodDeliverySurface(modifier = Modifier.fillMaxWidth()) {
-                CategoryRow(menu.categoryItemList, menuLazyGridState)
             }
             MenuColumn(
                 menu = menu,
@@ -166,11 +180,13 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
     @Composable
     private fun CategoryRow(
         categoryItemList: List<CategoryItem>,
-        menuLazyListState: LazyGridState
+        menuLazyGridState: LazyGridState,
+        modifier: Modifier = Modifier,
     ) {
         val coroutineScope = rememberCoroutineScope()
         val categoryLazyListState = rememberLazyListState()
         LazyRow(
+            modifier = modifier,
             contentPadding = PaddingValues(
                 horizontal = FoodDeliveryTheme.dimensions.mediumSpace,
                 vertical = FoodDeliveryTheme.dimensions.smallSpace
@@ -194,7 +210,7 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
                         }
                         coroutineScope.launch {
                             viewModel.onStartAutoScroll()
-                            menuLazyListState.animateScrollToItem(
+                            menuLazyGridState.animateScrollToItem(
                                 viewModel.getMenuListPosition(categoryItemModel)
                             )
                             viewModel.onStopAutoScroll()
@@ -219,7 +235,7 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
     @Composable
     private fun MenuColumn(
         menu: MenuUi,
-        menuLazyListState: LazyGridState
+        menuLazyListState: LazyGridState,
     ) {
         LazyVerticalGrid(
             modifier = Modifier.fillMaxSize(),
@@ -236,6 +252,7 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
                     when (menuItemModel) {
                         is MenuItem.DiscountItem, is MenuItem.MenuCategoryHeaderItem ->
                             GridItemSpan(maxLineSpan)
+
                         else -> GridItemSpan(1)
                     }
                 }
