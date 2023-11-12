@@ -21,7 +21,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -29,8 +28,6 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseComposeFragment
-import com.bunbeauty.papakarlo.common.BaseFragmentWithSharedViewModel
-import com.bunbeauty.papakarlo.common.BaseSingleStateComposeFragment
 import com.bunbeauty.papakarlo.common.extension.navigateSafe
 import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
@@ -41,15 +38,12 @@ import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold
 import com.bunbeauty.papakarlo.databinding.LayoutComposeBinding
-import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.productdetails.ProductDetailsFragmentDirections.globalConsumerCartFragment
 import com.bunbeauty.papakarlo.feature.topcart.TopCartUi
-import com.bunbeauty.shared.presentation.consumercart.ConsumerCart
 import com.bunbeauty.shared.presentation.product_details.ProductDetailsState
 import com.bunbeauty.shared.presentation.product_details.ProductDetailsViewModel
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.security.PrivilegedAction
 
 class ProductDetailsFragment :
     BaseComposeFragment<ProductDetailsState.ViewDataState, ProductDetailsUi, ProductDetailsState.Action, ProductDetailsState.Event>() {
@@ -71,7 +65,7 @@ class ProductDetailsFragment :
     @Composable
     override fun Screen(
         viewState: ProductDetailsUi,
-        onAction: (ProductDetailsState.Action) -> Unit,
+        onAction: (ProductDetailsState.Action) -> Unit
     ) {
         ProductDetailsScreen(
             menuProductName = args.menuProductName,
@@ -99,7 +93,7 @@ class ProductDetailsFragment :
         menuProductName: String,
         menuProductUuid: String,
         productDetailsUi: ProductDetailsUi,
-        onAction: (ProductDetailsState.Action) -> Unit,
+        onAction: (ProductDetailsState.Action) -> Unit
     ) {
         FoodDeliveryScaffold(
             title = menuProductName,
@@ -119,7 +113,9 @@ class ProductDetailsFragment :
                         }
                     }
                 )
-            } else emptyList(),
+            } else {
+                emptyList()
+            },
             actionButton = {
                 if (productDetailsUi is ProductDetailsUi.Success) {
                     MainButton(
@@ -256,7 +252,7 @@ class ProductDetailsFragment :
                         oldPrice = "320 ₽",
                         newPrice = "280 ₽",
                         description = "Сочная котлетка, сыр Чедр, маринованный огурчик, помидор, " +
-                                "красный лук, салат, фирменный соус, булочка с кунжутом"
+                            "красный лук, салат, фирменный соус, булочка с кунжутом"
                     )
                 ),
                 onAction = {}

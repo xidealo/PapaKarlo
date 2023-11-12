@@ -1,0 +1,20 @@
+package com.bunbeauty.papakarlo.common.ui.animation
+
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
+import androidx.compose.animation.with
+
+@OptIn(ExperimentalAnimationApi::class)
+val slideInAndSlideOutVerticallyWithFadeAnimation =
+    fadeIn(animationSpec = tween(220, delayMillis = 90)) + slideInVertically(
+        animationSpec = tween(220, delayMillis = 90)
+    ) with fadeOut(animationSpec = tween(90)) + slideOutVertically(
+        animationSpec = tween(
+            220,
+            delayMillis = 90
+        )
+    )

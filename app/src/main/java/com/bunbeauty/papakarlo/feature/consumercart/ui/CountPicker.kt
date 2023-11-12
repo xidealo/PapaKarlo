@@ -4,12 +4,6 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.scaleIn
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.with
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -24,7 +18,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
@@ -33,6 +26,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.R
+import com.bunbeauty.papakarlo.common.ui.animation.slideInAndSlideOutVerticallyWithFadeAnimation
 import com.bunbeauty.papakarlo.common.ui.element.button.FoodDeliveryButtonDefaults
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold
@@ -43,7 +37,7 @@ fun CountPicker(
     modifier: Modifier = Modifier,
     count: Int,
     onCountIncreased: () -> Unit,
-    onCountDecreased: () -> Unit,
+    onCountDecreased: () -> Unit
 ) {
     Row(
         modifier = modifier
@@ -67,11 +61,9 @@ fun CountPicker(
                 .height(36.dp),
             targetState = count,
             transitionSpec = {
-                fadeIn(animationSpec = tween(220, delayMillis = 90)) + slideInVertically(
-                    animationSpec = tween(220, delayMillis = 90)
-                ) with fadeOut(animationSpec = tween(90))
+                slideInAndSlideOutVerticallyWithFadeAnimation
             },
-            label = "",
+            label = "CountPickerCount",
             contentAlignment = Alignment.Center
         ) { countExpanded ->
             Box(
@@ -101,7 +93,7 @@ fun CountPicker(
 fun CountPickerButton(
     @DrawableRes iconId: Int,
     @StringRes descriptionStringId: Int,
-    onClick: () -> Unit,
+    onClick: () -> Unit
 ) {
     IconButton(
         modifier = Modifier.size(36.dp),
