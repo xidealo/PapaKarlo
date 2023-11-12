@@ -15,7 +15,7 @@ class AppColors(
     orderColors: OrderColors,
     statusColors: StatusColors,
     bunBeautyBrandColor: Color,
-    isLight: Boolean
+    isLight: Boolean,
 ) {
     var mainColors by mutableStateOf(mainColors)
         private set
@@ -33,7 +33,7 @@ class AppColors(
         orderColors: OrderColors = this.orderColors,
         statusColors: StatusColors = this.statusColors,
         bunBeautyBrandColor: Color = this.bunBeautyBrandColor,
-        isLight: Boolean = this.isLight
+        isLight: Boolean = this.isLight,
     ) = AppColors(
         mainColors = mainColors,
         orderColors = orderColors,
@@ -58,6 +58,7 @@ class MainColors(
     secondary: Color,
     background: Color,
     surface: Color,
+    surfaceVariant: Color,
     error: Color,
     onPrimary: Color,
     onDisabled: Color,
@@ -66,7 +67,8 @@ class MainColors(
     onSurface: Color,
     onSurfaceVariant: Color,
     onError: Color,
-    stroke: Color
+    stroke: Color,
+    strokeVariant: Color,
 ) {
 
     var primary by mutableStateOf(primary)
@@ -78,6 +80,8 @@ class MainColors(
     var background by mutableStateOf(background)
         private set
     var surface by mutableStateOf(surface)
+        private set
+    var surfaceVariant by mutableStateOf(surfaceVariant)
         private set
     var error by mutableStateOf(error)
         private set
@@ -97,6 +101,8 @@ class MainColors(
         private set
     var stroke by mutableStateOf(stroke)
         private set
+    var strokeVariant by mutableStateOf(strokeVariant)
+        private set
 
     fun copy(
         primary: Color = this.primary,
@@ -104,6 +110,7 @@ class MainColors(
         secondary: Color = this.secondary,
         background: Color = this.background,
         surface: Color = this.surface,
+        surfaceVariant: Color = this.surfaceVariant,
         error: Color = this.error,
         onPrimary: Color = this.onPrimary,
         onDisabled: Color = this.onDisabled,
@@ -112,13 +119,15 @@ class MainColors(
         onSurface: Color = this.onSurface,
         onSurfaceVariant: Color = this.onSurfaceVariant,
         onError: Color = this.onError,
-        stroke: Color = this.stroke
+        stroke: Color = this.stroke,
+        strokeVariant: Color = this.strokeVariant,
     ) = MainColors(
         primary = primary,
         disabled = disabled,
         secondary = secondary,
         background = background,
         surface = surface,
+        surfaceVariant = surfaceVariant,
         error = error,
         onPrimary = onPrimary,
         onDisabled = onDisabled,
@@ -127,7 +136,8 @@ class MainColors(
         onSurface = onSurface,
         onSurfaceVariant = onSurfaceVariant,
         onError = onError,
-        stroke = stroke
+        stroke = stroke,
+        strokeVariant = strokeVariant,
     )
 
     fun update(other: MainColors) {
@@ -136,6 +146,7 @@ class MainColors(
         secondary = other.secondary
         background = other.background
         surface = other.surface
+        surfaceVariant = other.surfaceVariant
         error = other.error
         onPrimary = other.onPrimary
         onDisabled = other.onDisabled
@@ -145,6 +156,7 @@ class MainColors(
         onSurfaceVariant = other.onSurfaceVariant
         onError = other.onError
         stroke = other.stroke
+        strokeVariant = other.strokeVariant
     }
 }
 
@@ -157,7 +169,7 @@ class OrderColors(
     done: Color,
     delivered: Color,
     canceled: Color,
-    onOrder: Color
+    onOrder: Color,
 ) {
     var notAccepted by mutableStateOf(notAccepted)
         private set
@@ -184,7 +196,7 @@ class OrderColors(
         done: Color = this.done,
         delivered: Color = this.delivered,
         canceled: Color = this.canceled,
-        onOrder: Color = this.onOrder
+        onOrder: Color = this.onOrder,
     ) = OrderColors(
         notAccepted = notAccepted,
         accepted = accepted,
@@ -214,7 +226,7 @@ class StatusColors(
     warning: Color,
     negative: Color,
     info: Color,
-    onStatus: Color
+    onStatus: Color,
 ) {
     var positive by mutableStateOf(positive)
         private set
@@ -232,7 +244,7 @@ class StatusColors(
         warning: Color = this.warning,
         negative: Color = this.negative,
         info: Color = this.info,
-        onStatus: Color = this.onStatus
+        onStatus: Color = this.onStatus,
     ) = StatusColors(
         positive = positive,
         warning = warning,
