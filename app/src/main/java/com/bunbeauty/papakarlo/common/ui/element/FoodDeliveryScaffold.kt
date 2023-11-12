@@ -16,7 +16,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import com.bunbeauty.papakarlo.common.ui.element.topbar.FoodDeliveryToolbar
+import com.bunbeauty.papakarlo.common.ui.element.topbar.FoodDeliveryTopAppBar
 import com.bunbeauty.papakarlo.common.ui.element.topbar.FoodDeliveryToolbarActions
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 
@@ -38,7 +38,7 @@ fun FoodDeliveryScaffold(
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
-            FoodDeliveryToolbar(
+            FoodDeliveryTopAppBar(
                 title = title,
                 backActionClick = backActionClick,
                 scrollBehavior = scrollBehavior,

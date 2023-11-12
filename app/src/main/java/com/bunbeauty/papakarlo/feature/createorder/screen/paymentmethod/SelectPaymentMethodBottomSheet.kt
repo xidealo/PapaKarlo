@@ -87,7 +87,7 @@ private fun PaymentMethodListScreen(
 
 @Preview
 @Composable
-private fun CafeAddressListScreenPreview() {
+private fun PaymentMethodListScreenPreview() {
     FoodDeliveryTheme {
         PaymentMethodListScreen(
             paymentMethodList = listOf(
