@@ -1,11 +1,7 @@
 package com.bunbeauty.papakarlo.feature.createorder.screen.useraddresslist
 
-import android.os.Bundle
-import android.view.View
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.fragment.app.FragmentManager
 import com.bunbeauty.papakarlo.R
@@ -14,9 +10,9 @@ import com.bunbeauty.papakarlo.common.ui.ComposeBottomSheet
 import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
 import com.bunbeauty.papakarlo.common.ui.screen.bottomsheet.FoodDeliveryLazyBottomSheet
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.address.model.UserAddressItem
 import com.bunbeauty.papakarlo.feature.address.ui.SelectableItemView
+import com.bunbeauty.papakarlo.feature.createorder.screen.useraddresslist.model.UserAddressListResult
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
@@ -24,25 +20,22 @@ class UserAddressListBottomSheet : ComposeBottomSheet<UserAddressListResult>() {
 
     private var addressList by argument<List<UserAddressItem>>()
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        binding.root.setContentWithTheme {
-            UserAddressListScreen(
-                addressList = addressList,
-                scrolledToTop = { isScrolledToTop ->
-                    behavior.isDraggable = isScrolledToTop
-                },
-                onAddressClicked = { addressItem ->
-                    callback?.onResult(UserAddressListResult.AddressSelected(addressItem))
-                    dismiss()
-                },
-                onAddAddressClicked = {
-                    callback?.onResult(UserAddressListResult.AddNewAddress)
-                    dismiss()
-                }
-            )
-        }
+    @Composable
+    override fun Content() {
+        UserAddressListScreen(
+            addressList = addressList,
+            scrolledToTop = { isScrolledToTop ->
+                behavior.isDraggable = isScrolledToTop
+            },
+            onAddressClicked = { addressItem ->
+                callback?.onResult(UserAddressListResult.AddressSelected(addressItem))
+                dismiss()
+            },
+            onAddAddressClicked = {
+                callback?.onResult(UserAddressListResult.AddNewAddress)
+                dismiss()
+            }
+        )
     }
 
     companion object {
@@ -51,15 +44,17 @@ class UserAddressListBottomSheet : ComposeBottomSheet<UserAddressListResult>() {
         suspend fun show(
             fragmentManager: FragmentManager,
             addressList: List<UserAddressItem>
-        ) = suspendCoroutine { continuation ->
-            UserAddressListBottomSheet().apply {
-                this.addressList = addressList
-                callback = object : Callback<UserAddressListResult> {
-                    override fun onResult(result: UserAddressListResult?) {
-                        continuation.resume(result)
+        ): UserAddressListResult? {
+            return suspendCoroutine { continuation ->
+                UserAddressListBottomSheet().apply {
+                    this.addressList = addressList
+                    callback = object : Callback<UserAddressListResult> {
+                        override fun onResult(result: UserAddressListResult?) {
+                            continuation.resume(result)
+                        }
                     }
+                    show(fragmentManager, TAG)
                 }
-                show(fragmentManager, TAG)
             }
         }
     }
@@ -82,18 +77,16 @@ private fun UserAddressListScreen(
             )
         }
     ) {
-        itemsIndexed(addressList) { i, addressItem ->
+        items(addressList) { addressItem ->
             SelectableItemView(
-                modifier = Modifier.padding(
-                    top = FoodDeliveryTheme.dimensions.getItemSpaceByIndex(i)
-                ),
                 title = addressItem.address,
                 isClickable = true,
                 elevated = false,
-                isSelected = addressItem.isSelected
-            ) {
-                onAddressClicked(addressItem)
-            }
+                isSelected = addressItem.isSelected,
+                onClick = {
+                    onAddressClicked(addressItem)
+                }
+            )
         }
     }
 }

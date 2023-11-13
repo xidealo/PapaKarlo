@@ -1,11 +1,7 @@
 package com.bunbeauty.papakarlo.feature.city.screen.changecity
 
-import android.os.Bundle
-import android.view.View
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.fragment.app.FragmentManager
 import com.bunbeauty.papakarlo.R
@@ -14,31 +10,27 @@ import com.bunbeauty.papakarlo.common.delegates.nullableArgument
 import com.bunbeauty.papakarlo.common.ui.ComposeBottomSheet
 import com.bunbeauty.papakarlo.common.ui.screen.bottomsheet.FoodDeliveryLazyBottomSheet
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.extensions.setContentWithTheme
+import com.bunbeauty.papakarlo.feature.city.screen.CityUI
 import com.bunbeauty.papakarlo.feature.city.ui.CityItem
-import com.bunbeauty.shared.domain.model.city.City
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
-class CityListBottomSheet : ComposeBottomSheet<City>() {
+class CityListBottomSheet : ComposeBottomSheet<CityUI>() {
 
-    private var cityList by argument<List<City>>()
+    private var cityList by argument<List<CityUI>>()
     private var selectedCityUuid by nullableArgument<String>()
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        binding.root.setContentWithTheme {
-            CityListScreen(
-                cityList = cityList,
-                scrolledToTop = ::toggleDraggable,
-                onAddressClicked = { city ->
-                    callback?.onResult(city)
-                    dismiss()
-                },
-                selectedCityUuid = selectedCityUuid
-            )
-        }
+    @Composable
+    override fun Content() {
+        CityListScreen(
+            cityList = cityList,
+            scrolledToTop = ::toggleDraggable,
+            onAddressClicked = { city ->
+                callback?.onResult(city)
+                dismiss()
+            },
+            selectedCityUuid = selectedCityUuid
+        )
     }
 
     companion object {
@@ -46,14 +38,14 @@ class CityListBottomSheet : ComposeBottomSheet<City>() {
 
         suspend fun show(
             fragmentManager: FragmentManager,
-            cityList: List<City>,
+            cityList: List<CityUI>,
             selectedCityUuid: String?
         ) = suspendCoroutine { continuation ->
             CityListBottomSheet().apply {
                 this.cityList = cityList
                 this.selectedCityUuid = selectedCityUuid
-                callback = object : Callback<City> {
-                    override fun onResult(result: City?) {
+                callback = object : Callback<CityUI> {
+                    override fun onResult(result: CityUI?) {
                         continuation.resume(result)
                     }
                 }
@@ -65,26 +57,24 @@ class CityListBottomSheet : ComposeBottomSheet<City>() {
 
 @Composable
 private fun CityListScreen(
-    cityList: List<City>,
+    cityList: List<CityUI>,
     selectedCityUuid: String?,
     scrolledToTop: (Boolean) -> Unit,
-    onAddressClicked: (City) -> Unit
+    onAddressClicked: (CityUI) -> Unit
 ) {
     FoodDeliveryLazyBottomSheet(
         titleStringId = R.string.common_city,
         scrolledToTop = scrolledToTop
     ) {
-        itemsIndexed(cityList) { i, city ->
+        items(cityList) { city ->
             CityItem(
-                modifier = Modifier.padding(
-                    top = FoodDeliveryTheme.dimensions.getItemSpaceByIndex(i)
-                ),
                 cityName = city.name,
                 elevated = false,
-                isSelected = city.uuid == selectedCityUuid
-            ) {
-                onAddressClicked(city)
-            }
+                isSelected = city.uuid == selectedCityUuid,
+                onClick = {
+                    onAddressClicked(city)
+                }
+            )
         }
     }
 }
@@ -95,15 +85,13 @@ private fun CityListScreenPreview() {
     FoodDeliveryTheme {
         CityListScreen(
             cityList = listOf(
-                City(
+                CityUI(
                     uuid = "1",
-                    name = "City 1",
-                    timeZone = "1"
+                    name = "City 1"
                 ),
-                City(
+                CityUI(
                     uuid = "2",
-                    name = "City 2",
-                    timeZone = "2"
+                    name = "City 2"
                 )
             ),
             scrolledToTop = {},

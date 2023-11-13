@@ -1,7 +1,6 @@
 package com.bunbeauty.shared.presentation.create_order
 
 import com.bunbeauty.shared.Constants.PERCENT
-import com.bunbeauty.shared.data.mapper.user_address.UserAddressMapper
 import com.bunbeauty.shared.domain.feature.city.GetSelectedCityTimeZoneUseCase
 import com.bunbeauty.shared.domain.feature.order.CreateOrderUseCase
 import com.bunbeauty.shared.domain.feature.payment.GetSelectablePaymentMethodListUseCase
@@ -10,6 +9,7 @@ import com.bunbeauty.shared.domain.interactor.cafe.ICafeInteractor
 import com.bunbeauty.shared.domain.interactor.cart.GetCartTotalUseCase
 import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
+import com.bunbeauty.shared.domain.model.date_time.Time
 import com.bunbeauty.shared.domain.use_case.address.GetSelectableUserAddressListUseCase
 import com.bunbeauty.shared.domain.use_case.address.SaveSelectedUserAddressUseCase
 import com.bunbeauty.shared.domain.use_case.cafe.GetSelectableCafeListUseCase
@@ -18,7 +18,6 @@ import com.bunbeauty.shared.extension.launchSafe
 import com.bunbeauty.shared.extension.mapToStateFlow
 import com.bunbeauty.shared.presentation.base.SharedViewModel
 import com.bunbeauty.shared.presentation.cafe_address_list.SelectableCafeAddressItemMapper
-import com.bunbeauty.shared.presentation.create_order.model.TimeUI
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 
@@ -27,8 +26,6 @@ class CreateOrderViewModel(
     private val cafeInteractor: ICafeInteractor,
     private val userInteractor: IUserInteractor,
     private val createOrderStateMapper: CreateOrderStateMapper,
-    private val timeMapper: TimeMapper,
-    private val userAddressMapper: UserAddressMapper,
     private val getSelectableUserAddressList: GetSelectableUserAddressListUseCase,
     private val getSelectableCafeList: GetSelectableCafeListUseCase,
     private val getCartTotal: GetCartTotalUseCase,
@@ -72,11 +69,10 @@ class CreateOrderViewModel(
 
     fun onUserAddressClicked() {
         val addressList = mutableDataState.value.userAddressList
-        val addressUiList = addressList.mapNotNull(userAddressMapper::toUiModel)
-        val event = if (addressUiList.isEmpty()) {
+        val event = if (addressList.isEmpty()) {
             CreateOrderEvent.OpenCreateAddressEvent
         } else {
-            CreateOrderEvent.ShowUserAddressListEvent(addressList = addressUiList)
+            CreateOrderEvent.ShowUserAddressListEvent(addressList)
         }
         mutableDataState.update { state ->
             state + event
@@ -119,8 +115,8 @@ class CreateOrderViewModel(
                 val timeZone = getSelectedCityTimeZone()
                 mutableDataState.update { state ->
                     val event = CreateOrderEvent.ShowDeferredTimeEvent(
-                        deferredTime = timeMapper.toUiModel(state.deferredTime),
-                        minTime = timeMapper.toUiModel(getMinTime(timeZone)),
+                        deferredTime = state.deferredTime,
+                        minTime = getMinTime(timeZone),
                         isDelivery = state.isDelivery
                     )
                     state + event
@@ -139,9 +135,9 @@ class CreateOrderViewModel(
         }
     }
 
-    fun onDeferredTimeSelected(deferredTimeUi: TimeUI) {
+    fun onDeferredTimeSelected(deferredTime: Time?) {
         mutableDataState.update { data ->
-            data.copy(deferredTime = timeMapper.toDomainModel(deferredTimeUi))
+            data.copy(deferredTime = deferredTime)
         }
     }
 

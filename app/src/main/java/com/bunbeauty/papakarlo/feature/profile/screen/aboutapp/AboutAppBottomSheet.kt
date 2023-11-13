@@ -1,7 +1,5 @@
 package com.bunbeauty.papakarlo.feature.profile.screen.aboutapp
 
-import android.os.Bundle
-import android.view.View
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -14,16 +12,12 @@ import com.bunbeauty.papakarlo.common.ui.ComposeBottomSheet
 import com.bunbeauty.papakarlo.common.ui.element.card.StartIconCard
 import com.bunbeauty.papakarlo.common.ui.screen.bottomsheet.FoodDeliveryBottomSheet
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 
 class AboutAppBottomSheet : ComposeBottomSheet<Any>() {
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        binding.root.setContentWithTheme {
-            AboutAppScreen()
-        }
+    @Composable
+    override fun Content() {
+        AboutAppScreen()
     }
 }
 
