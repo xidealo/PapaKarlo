@@ -3,7 +3,7 @@ package com.bunbeauty.papakarlo.feature.menu
 import android.os.Bundle
 import android.view.View
 import androidx.compose.animation.Crossfade
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -196,16 +196,13 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
                 vertical = FoodDeliveryTheme.dimensions.smallSpace
             ),
             state = categoryLazyListState,
-            horizontalArrangement = Arrangement.SpaceAround
+            horizontalArrangement = spacedBy(8.dp),
         ) {
             itemsIndexed(
                 categoryItemList,
                 key = { _, categoryItemModel -> categoryItemModel.key }
             ) { i, categoryItemModel ->
                 CategoryItem(
-                    modifier = Modifier.padding(
-                        start = FoodDeliveryTheme.dimensions.getItemSpaceByIndex(i)
-                    ),
                     categoryItem = categoryItemModel,
                     onClick = {
                         viewModel.onCategoryClicked(categoryItemModel)
@@ -245,14 +242,14 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
             modifier = Modifier.fillMaxSize(),
             contentPadding = PaddingValues(FoodDeliveryTheme.dimensions.mediumSpace),
             columns = GridCells.Fixed(2),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalArrangement = spacedBy(8.dp),
             state = menuLazyListState,
             userScrollEnabled = menu.userScrollEnabled
         ) {
             itemsIndexed(
                 items = menu.menuItemList,
-                key = { index, menuItemModel -> menuItemModel.key },
-                span = { index, menuItemModel ->
+                key = { _, menuItemModel -> menuItemModel.key },
+                span = { _, menuItemModel ->
                     when (menuItemModel) {
                         is MenuItem.DiscountItem, is MenuItem.MenuCategoryHeaderItem ->
                             GridItemSpan(maxLineSpan)
