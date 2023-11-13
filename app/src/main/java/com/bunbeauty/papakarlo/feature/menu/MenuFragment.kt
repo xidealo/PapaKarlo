@@ -110,14 +110,16 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
         errorAction: () -> Unit,
     ) {
         val menuLazyGridState = rememberLazyGridState()
+
         FoodDeliveryScaffold(
             title = stringResource(R.string.title_menu),
-            drawableId = R.drawable.logo_small,
             topActions = listOf(
                 FoodDeliveryCartAction(topCartUi = menuUi.topCartUi) {
                     findNavController().navigateSafe(globalConsumerCartFragment())
                 }
             ),
+            scrollableState = menuLazyGridState,
+            drawableId = R.drawable.logo_small,
             appBarContent = {
                 if (menuUi.state is MenuState.State.Success) {
                     CategoryRow(
