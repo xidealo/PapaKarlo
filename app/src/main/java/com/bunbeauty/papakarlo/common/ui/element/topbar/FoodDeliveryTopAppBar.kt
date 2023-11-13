@@ -16,7 +16,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -34,21 +33,15 @@ import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold
 import com.bunbeauty.papakarlo.common.ui.theme.medium
 
-private val StartScrollContentOffset = -8f
-
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FoodDeliveryTopAppBar(
     title: String?,
     backActionClick: (() -> Unit)? = null,
     actions: List<FoodDeliveryToolbarActions> = emptyList(),
-    scrollBehavior: TopAppBarScrollBehavior? = null,
+    isScrolled: Boolean = false,
     @DrawableRes drawableId: Int? = null,
     content: @Composable () -> Unit = {},
 ) {
-    val isScrolled = scrollBehavior?.let {
-        scrollBehavior.state.contentOffset < StartScrollContentOffset
-    } ?: false
     val containerColor by animateColorAsState(
         targetValue = if (isScrolled) {
             FoodDeliveryTheme.colors.mainColors.surfaceVariant
