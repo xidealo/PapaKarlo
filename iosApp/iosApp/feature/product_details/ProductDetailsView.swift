@@ -7,77 +7,88 @@
 
 import SwiftUI
 import Kingfisher
+import shared
 
 struct ProductDetailsView: View {
     
-    @StateObject private var viewModel:ProductDetailsViewModel
     let menuProductUuid:String
+    let menuProductName:String
+    let productDetailsOpenedFrom:ProductDetailsOpenedFrom
     @Binding var isRootActive:Bool
     @Binding var selection:Int
     @Binding var showOrderCreated:Bool
 
+    @State var viewModel = ProductDetailsViewModel(
+        getMenuProductByUuidUseCase: iosComponent.provideGetMenuProductByUuidUseCase(),
+        observeCartUseCase: iosComponent.provideObserveCartUseCase(),
+        addCartProductUseCase: iosComponent.provideAddCartProductUseCase(),
+        analyticService: iosComponent.provideAnalyticService()
+    )
+    //State
+    @State var cartCostAndCount : CartCostAndCount? = nil
+    @State var menuProduct : ProductDetailsStateViewDataState.MenuProduct? = nil
+    @State var screenState : ProductDetailsStateViewDataState.ScreenState = ProductDetailsStateViewDataState.ScreenState.loading
+    //-----
+    
+    @State var listener: Closeable? = nil
+    @State var eventsListener: Closeable? = nil
+
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
 
-    init(menuProductUuid:String, isRootActive: Binding<Bool>, selection: Binding<Int>, showOrderCreated: Binding<Bool> ) {
-        self._viewModel = StateObject(wrappedValue: ProductDetailsViewModel(productUuid: menuProductUuid))
-        self.menuProductUuid = menuProductUuid
-        self._isRootActive = isRootActive
-        self._selection = selection
-        self._showOrderCreated =  showOrderCreated
-    }
-    
     var body: some View {
         ZStack (alignment: .bottom){
             VStack(spacing: 0){
                 ToolbarWithCartView(
-                    title: LocalizedStringKey(viewModel.productDetailsViewState.name),
-                    cost: viewModel.toolbarViewState.cost,
-                    count: viewModel.toolbarViewState.count,
+                    title: LocalizedStringKey(menuProductName),
+                    cost: cartCostAndCount?.cost,
+                    count: cartCostAndCount?.count,
                     isShowLogo: .constant(false),
                     back: {
-                        self.mode.wrappedValue.dismiss()
+                        viewModel.onAction(action: ProductDetailsStateActionBackClick())
                     },
                     isRootActive: $isRootActive,
                     selection: $selection,
                     showOrderCreated: $showOrderCreated
                 )
-                
+
                 ScrollView{
                         VStack(spacing:0){
-                            KFImage(
-                                URL(string: viewModel.productDetailsViewState.imageLink)
-                            )
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            
+                            if let photoLink = menuProduct?.photoLink{
+                                KFImage(
+                                    URL(string: photoLink)
+                                )
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                            }
+                       
                             Group{
                                 HStack(spacing:0){
-                                    Text(viewModel.productDetailsViewState.name)
+                                    Text(menuProduct?.name ?? "")
                                         .titleMedium(weight: .bold)
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                         .foregroundColor(AppColor.onSurface)
-                                    
-                                    Text(viewModel.productDetailsViewState.size)
+
+                                    Text(menuProduct?.size ?? "")
                                         .bodySmall()
                                         .foregroundColor(AppColor.onSurfaceVariant)
                                 }
                                 .padding(.top, 12)
-                                
+
                                 HStack(spacing:0){
-                                    if viewModel.productDetailsViewState.oldPrice != nil{
+                                    if let oldPrice = menuProduct?.oldPrice {
                                         StrikeText(
-                                            text: String(viewModel.productDetailsViewState.oldPrice!) + Strings.CURRENCY
+                                            text: oldPrice
                                         )
                                         .padding(.trailing, Diems.SMALL_RADIUS)
                                     }
-                                    Text(viewModel.productDetailsViewState.newPrice)
+                                    Text(menuProduct?.newPrice ?? "")
                                         .foregroundColor(AppColor.onSurface)
                                         .bodyLarge(weight: .bold)
                                 }
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .padding(.top, 4)
-                                
-                                Text(viewModel.productDetailsViewState.description)
+
+                                Text(menuProduct?.description_ ?? "")
                                     .bodyLarge()
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                     .padding(.top, 16)
@@ -91,23 +102,67 @@ struct ProductDetailsView: View {
                         .padding(Diems.MEDIUM_PADDING)
                         .padding(.bottom, 48)
             }
-            
+
             }
-            
-            Button(action: {
-                viewModel.addCartProductToCart(menuProductUuid: menuProductUuid)
-            }) {
-                ButtonText(text: Strings.ACTION_PRODUCT_DETAILS_ADD)
-            }.padding(Diems.MEDIUM_PADDING)
+
+           Button(action: {
+               viewModel.onAction(
+                action: ProductDetailsStateActionAddProductToCartClick(productDetailsOpenedFrom: productDetailsOpenedFrom)
+               )
+           }) {
+               ButtonText(text: Strings.ACTION_PRODUCT_DETAILS_ADD)
+           }.padding(Diems.MEDIUM_PADDING)
         }
         .frame(maxWidth:.infinity, maxHeight: .infinity)
         .background(AppColor.background)
         .hiddenNavigationBarStyle()
         .onAppear(){
-            viewModel.subscribeOnFlow()
+            subscribe()
+            eventsSubscribe()
         }
         .onDisappear(){
-            viewModel.unsubFromFlows()
+            unsubscribe()
         }
+    }
+    
+    func subscribe(){
+        viewModel.onAction(
+         action: ProductDetailsStateActionInit(menuProductUuid: menuProductUuid)
+        )
+        listener = viewModel.dataState.watch { productDetailsVM in
+            if let productDetailsStateVM =  productDetailsVM {
+                menuProduct = productDetailsStateVM.menuProduct
+                screenState = productDetailsStateVM.screenState
+                cartCostAndCount = productDetailsStateVM.cartCostAndCount
+            }
+        }
+    }
+
+    func eventsSubscribe(){
+        eventsListener = viewModel.events.watch(block: { _events in
+            if let events = _events{
+                    let productDetailsStateEvents = events as? [ProductDetailsStateEvent] ?? []
+
+                productDetailsStateEvents.forEach { event in
+                        switch(event){
+                        case is ProductDetailsStateEventNavigateBack : self.mode.wrappedValue.dismiss()
+                        case is ProductDetailsStateEventNavigateToConsumerCart :                        print("ProductDetailsStateEventNavigateToConsumerCart")
+                        default:
+                            print("def")
+                        }
+                    }
+
+                    if !productDetailsStateEvents.isEmpty {
+                        viewModel.consumeEvents(events: productDetailsStateEvents)
+                    }
+            }
+        })
+    }
+    
+    func unsubscribe(){
+        listener?.close()
+        listener = nil
+        eventsListener?.close()
+        eventsListener = nil
     }
 }

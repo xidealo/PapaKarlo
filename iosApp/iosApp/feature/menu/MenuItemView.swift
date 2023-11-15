@@ -7,11 +7,13 @@
 
 import SwiftUI
 import Kingfisher
+import shared
 
 struct MenuItemView: View {
     
     let menuProductItem:MenuProductItem
-    
+    let productDetailsOpenedFrom:ProductDetailsOpenedFrom
+
     //for back after createOrder
     @Binding var isRootActive:Bool
     @Binding var selection:Int
@@ -23,7 +25,9 @@ struct MenuItemView: View {
         NavigationLink(
             destination:
                 ProductDetailsView(
-                    menuProductUuid: menuProductItem.productUuid,
+                    menuProductUuid: menuProductItem.productUuid, 
+                    menuProductName: menuProductItem.name,
+                    productDetailsOpenedFrom: productDetailsOpenedFrom,
                     isRootActive: self.$isRootActive,
                     selection: self.$selection,
                     showOrderCreated: $showOrderCreated
