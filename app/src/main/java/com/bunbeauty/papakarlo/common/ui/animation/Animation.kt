@@ -10,11 +10,22 @@ import androidx.compose.animation.with
 
 @OptIn(ExperimentalAnimationApi::class)
 val slideInAndSlideOutVerticallyWithFadeAnimation =
-    fadeIn(animationSpec = tween(220, delayMillis = 90)) + slideInVertically(
-        animationSpec = tween(220, delayMillis = 90)
-    ) with fadeOut(animationSpec = tween(90)) + slideOutVertically(
+    fadeIn(
         animationSpec = tween(
-            220,
+            durationMillis = 220,
             delayMillis = 90
+        )
+    ) + slideInVertically(
+        animationSpec = tween(
+            durationMillis = 220,
+            delayMillis = 90
+        )
+    ) with fadeOut(
+        animationSpec = tween(
+            durationMillis = 220,
+        )
+    ) + slideOutVertically(
+        animationSpec = tween(
+            durationMillis = 220,
         )
     )

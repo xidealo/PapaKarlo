@@ -8,6 +8,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
@@ -37,7 +38,7 @@ fun CountPicker(
     modifier: Modifier = Modifier,
     count: Int,
     onCountIncreased: () -> Unit,
-    onCountDecreased: () -> Unit
+    onCountDecreased: () -> Unit,
 ) {
     Row(
         modifier = modifier
@@ -58,13 +59,12 @@ fun CountPicker(
 
         AnimatedContent(
             modifier = Modifier
-                .height(36.dp),
+                .height(IntrinsicSize.Min),
             targetState = count,
             transitionSpec = {
                 slideInAndSlideOutVerticallyWithFadeAnimation
             },
             label = "CountPickerCount",
-            contentAlignment = Alignment.Center
         ) { countExpanded ->
             Box(
                 contentAlignment = Alignment.Center,
@@ -93,7 +93,7 @@ fun CountPicker(
 fun CountPickerButton(
     @DrawableRes iconId: Int,
     @StringRes descriptionStringId: Int,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     IconButton(
         modifier = Modifier.size(36.dp),
