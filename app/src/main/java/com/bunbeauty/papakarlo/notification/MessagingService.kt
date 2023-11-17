@@ -9,11 +9,11 @@ import android.os.Build
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import com.bunbeauty.core.Logger
+import com.bunbeauty.core.Logger.NOTIFICATION_TAG
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.feature.main.MainActivity
 import com.bunbeauty.shared.Constants.CHANNEL_ID
-import com.bunbeauty.shared.Logger
-import com.bunbeauty.shared.Logger.NOTIFICATION_TAG
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 

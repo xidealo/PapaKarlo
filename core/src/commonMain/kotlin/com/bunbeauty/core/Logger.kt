@@ -1,4 +1,4 @@
-package com.bunbeauty.shared
+package com.bunbeauty.core
 
 object Logger {
 
