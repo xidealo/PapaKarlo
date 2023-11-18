@@ -1,8 +1,6 @@
 package com.bunbeauty.shared.presentation.menu
 
 import com.bunbeauty.analytic.AnalyticService
-import com.bunbeauty.analytic.event.EventParameter
-import com.bunbeauty.analytic.event.FoodDeliveryEvent
 import com.bunbeauty.analytic.event.menu.AddMenuProductClickEvent
 import com.bunbeauty.analytic.parameter.MenuProductUuidEventParameter
 import com.bunbeauty.shared.domain.feature.cart.AddCartProductUseCase
