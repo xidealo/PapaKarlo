@@ -1,5 +1,7 @@
 package com.bunbeauty.shared.extension
 
+import com.bunbeauty.core.Logger
+import com.bunbeauty.core.Logger.COMMON_EXCEPTION_TAG
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
@@ -13,7 +15,9 @@ inline fun CoroutineScope.launchSafe(
     dispatcher: CoroutineDispatcher = Dispatchers.Main,
     errorDispatcher: CoroutineDispatcher = Dispatchers.Main,
 ): Job {
+
     val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
+        Logger.logE(COMMON_EXCEPTION_TAG, "$throwable")
         launch(errorDispatcher) {
             onError(throwable)
         }

@@ -20,6 +20,7 @@ object Logger {
     const val WEB_SOCKET_TAG = "webSocketTag"
     const val NOTIFICATION_TAG = "notificationTag"
     const val NETWORK_TAG = "networkTag"
+    const val COMMON_EXCEPTION_TAG = "commonExceptionTag"
 
     fun logD(tag: String, message: Any) {
         log(LogLevel.DEBUG, tag = COMMON_TAG, message.toString())
