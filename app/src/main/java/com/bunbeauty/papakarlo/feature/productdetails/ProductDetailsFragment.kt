@@ -64,7 +64,7 @@ class ProductDetailsFragment :
     @Composable
     override fun Screen(
         viewState: ProductDetailsUi,
-        onAction: (ProductDetailsState.Action) -> Unit,
+        onAction: (ProductDetailsState.Action) -> Unit
     ) {
         ProductDetailsScreen(
             menuProductName = args.menuProductName,
@@ -83,7 +83,6 @@ class ProductDetailsFragment :
             ProductDetailsState.Event.NavigateBack -> findNavController().popBackStack()
             ProductDetailsState.Event.NavigateToConsumerCart -> findNavController()
                 .navigateSafe(globalConsumerCartFragment())
-
         }
     }
 
@@ -93,7 +92,7 @@ class ProductDetailsFragment :
         menuProductName: String,
         menuProductUuid: String,
         productDetailsUi: ProductDetailsUi,
-        onAction: (ProductDetailsState.Action) -> Unit,
+        onAction: (ProductDetailsState.Action) -> Unit
     ) {
         FoodDeliveryScaffold(
             title = menuProductName,
@@ -252,7 +251,7 @@ class ProductDetailsFragment :
                         oldPrice = "320 ₽",
                         newPrice = "280 ₽",
                         description = "Сочная котлетка, сыр Чедр, маринованный огурчик, помидор, " +
-                                "красный лук, салат, фирменный соус, булочка с кунжутом"
+                            "красный лук, салат, фирменный соус, булочка с кунжутом"
                     )
                 ),
                 onAction = {}

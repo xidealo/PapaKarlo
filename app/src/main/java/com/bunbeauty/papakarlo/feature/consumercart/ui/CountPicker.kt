@@ -38,7 +38,7 @@ fun CountPicker(
     modifier: Modifier = Modifier,
     count: Int,
     onCountIncreased: () -> Unit,
-    onCountDecreased: () -> Unit,
+    onCountDecreased: () -> Unit
 ) {
     Row(
         modifier = modifier
@@ -64,7 +64,7 @@ fun CountPicker(
             transitionSpec = {
                 slideInAndSlideOutVerticallyWithFadeAnimation
             },
-            label = "CountPickerCount",
+            label = "CountPickerCount"
         ) { countExpanded ->
             Box(
                 contentAlignment = Alignment.Center,
@@ -93,7 +93,7 @@ fun CountPicker(
 fun CountPickerButton(
     @DrawableRes iconId: Int,
     @StringRes descriptionStringId: Int,
-    onClick: () -> Unit,
+    onClick: () -> Unit
 ) {
     IconButton(
         modifier = Modifier.size(36.dp),

@@ -22,10 +22,10 @@ val slideInAndSlideOutVerticallyWithFadeAnimation =
         )
     ) with fadeOut(
         animationSpec = tween(
-            durationMillis = 220,
+            durationMillis = 220
         )
     ) + slideOutVertically(
         animationSpec = tween(
-            durationMillis = 220,
+            durationMillis = 220
         )
     )
