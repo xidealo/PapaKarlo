@@ -1,8 +1,14 @@
 package com.bunbeauty.shared.presentation.consumercart
 
+import com.bunbeauty.analytic.AnalyticService
+import com.bunbeauty.analytic.event.cart.DecreaseCartProductClickEvent
+import com.bunbeauty.analytic.event.cart.IncreaseCartProductClickEvent
+import com.bunbeauty.analytic.event.cart.RemoveCartProductClickEvent
+import com.bunbeauty.analytic.event.recommendation.AddRecommendationProductClickEvent
+import com.bunbeauty.analytic.parameter.MenuProductUuidEventParameter
+import com.bunbeauty.core.Logger
 import com.bunbeauty.shared.Constants.PERCENT
 import com.bunbeauty.shared.Constants.RUBLE_CURRENCY
-import com.bunbeauty.shared.Logger
 import com.bunbeauty.shared.domain.feature.cart.AddCartProductUseCase
 import com.bunbeauty.shared.domain.feature.cart.GetRecommendationsUseCase
 import com.bunbeauty.shared.domain.feature.cart.RemoveCartProductUseCase
@@ -13,6 +19,7 @@ import com.bunbeauty.shared.domain.model.cart.LightCartProduct
 import com.bunbeauty.shared.extension.launchSafe
 import com.bunbeauty.shared.presentation.base.SharedStateViewModel
 import com.bunbeauty.shared.presentation.menu.MenuProductItem
+import com.bunbeauty.shared.presentation.product_details.ProductDetailsOpenedFrom
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -23,7 +30,8 @@ class ConsumerCartViewModel(
     private val addCartProductUseCase: AddCartProductUseCase,
     private val removeCartProductUseCase: RemoveCartProductUseCase,
     private val getRecommendationsUseCase: GetRecommendationsUseCase,
-) : SharedStateViewModel<ConsumerCart.ViewDataState, ConsumerCart.Action, ConsumerCart.Event>(
+    private val analyticService: AnalyticService,
+    ) : SharedStateViewModel<ConsumerCart.ViewDataState, ConsumerCart.Action, ConsumerCart.Event>(
     ConsumerCart.ViewDataState(
         consumerCartData = ConsumerCart.ViewDataState.ConsumerCartData(
             forFreeDelivery = "",
@@ -41,7 +49,7 @@ class ConsumerCartViewModel(
 
     override fun reduce(action: ConsumerCart.Action, dataState: ConsumerCart.ViewDataState) {
         when (action) {
-            is ConsumerCart.Action.AddProductToCartClick -> onAddCardProductClicked(
+            is ConsumerCart.Action.AddProductToCartClick -> addCartProductToCartClick(
                 menuProductUuid = action.menuProductUuid
             )
 
@@ -52,20 +60,22 @@ class ConsumerCartViewModel(
             ConsumerCart.Action.OnMenuClick -> onMenuClicked()
             is ConsumerCart.Action.OnProductClick -> onProductClicked(
                 uuid = action.cartProductItem.menuProductUuid,
-                name = action.cartProductItem.name
+                name = action.cartProductItem.name,
+                productDetailsOpenedFrom = ProductDetailsOpenedFrom.CART_PRODUCT
             )
 
             is ConsumerCart.Action.RemoveProductFromCartClick -> onRemoveCardProductClicked(
                 menuProductUuid = action.menuProductUuid
             )
 
-            is ConsumerCart.Action.AddProductToRecommendationClick -> onAddCardProductClicked(
+            is ConsumerCart.Action.AddRecommendationProductToCartClick -> addRecommendationProductClicked(
                 menuProductUuid = action.menuProductUuid
             )
 
             is ConsumerCart.Action.RecommendationClick -> onProductClicked(
                 uuid = action.menuProductUuid,
-                name = action.name
+                name = action.name,
+                productDetailsOpenedFrom = ProductDetailsOpenedFrom.RECOMMENDATION_PRODUCT
             )
         }
     }
@@ -121,13 +131,43 @@ class ConsumerCartViewModel(
         )
     }
 
-    private fun onProductClicked(uuid: String, name: String) {
+    private fun onProductClicked(
+        uuid: String,
+        name: String,
+        productDetailsOpenedFrom: ProductDetailsOpenedFrom,
+    ) {
         addEvent {
-            ConsumerCart.Event.NavigateToProduct(uuid = uuid, name = name)
+            ConsumerCart.Event.NavigateToProduct(
+                uuid = uuid,
+                name = name,
+                productDetailsOpenedFrom = productDetailsOpenedFrom
+            )
         }
     }
 
-    private fun onAddCardProductClicked(menuProductUuid: String) {
+    private fun addRecommendationProductClicked(menuProductUuid: String) {
+        analyticService.sendEvent(
+            event = AddRecommendationProductClickEvent(
+                menuProductUuidEventParameter = MenuProductUuidEventParameter(value = menuProductUuid)
+            ),
+        )
+        addProduct(
+            menuProductUuid = menuProductUuid
+        )
+    }
+
+    private fun addCartProductToCartClick(menuProductUuid: String) {
+        analyticService.sendEvent(
+            event = IncreaseCartProductClickEvent(
+                menuProductUuidEventParameter = MenuProductUuidEventParameter(value = menuProductUuid)
+            ),
+        )
+        addProduct(
+            menuProductUuid = menuProductUuid
+        )
+    }
+
+    private fun addProduct(menuProductUuid: String) {
         sharedScope.launchSafe(
             block = {
                 addCartProductUseCase(menuProductUuid)
@@ -139,14 +179,30 @@ class ConsumerCartViewModel(
     }
 
     private fun onRemoveCardProductClicked(menuProductUuid: String) {
+        handleRemoveAnalytic(menuProductUuid = menuProductUuid)
         sharedScope.launchSafe(
             block = {
-                removeCartProductUseCase(menuProductUuid)
+                removeCartProductUseCase(menuProductUuid = menuProductUuid)
             },
             onError = {
                 // TODO handle error
             }
         )
+    }
+
+    private fun handleRemoveAnalytic(menuProductUuid: String) {
+        analyticService.sendEvent(
+            event = DecreaseCartProductClickEvent(
+                menuProductUuidEventParameter = MenuProductUuidEventParameter(value = menuProductUuid)
+            ),
+        )
+        if (dataState.value.consumerCartData?.cartProductList?.size == 1) {
+            analyticService.sendEvent(
+                event = RemoveCartProductClickEvent(
+                    menuProductUuidEventParameter = MenuProductUuidEventParameter(value = menuProductUuid)
+                ),
+            )
+        }
     }
 
     private suspend fun getConsumerCartData(

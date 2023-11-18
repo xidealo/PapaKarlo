@@ -1,5 +1,8 @@
 package com.bunbeauty.shared.presentation.settings
 
+import com.bunbeauty.analytic.AnalyticService
+import com.bunbeauty.analytic.event.EventParameter
+import com.bunbeauty.analytic.event.LogoutSettingsClickEvent
 import com.bunbeauty.shared.domain.asCommonStateFlow
 import com.bunbeauty.shared.domain.feature.city.GetCityListUseCase
 import com.bunbeauty.shared.domain.feature.city.ObserveSelectedCityUseCase
@@ -25,6 +28,7 @@ class SettingsViewModel(
     private val saveSelectedCityUseCase: SaveSelectedCityUseCase,
     private val disableUserUseCase: DisableUserUseCase,
     private val userInteractor: IUserInteractor,
+    private val analyticService: AnalyticService,
 ) : SharedViewModel() {
 
     private val mutableSettingsState = MutableStateFlow(SettingsState())
@@ -43,7 +47,12 @@ class SettingsViewModel(
         }
     }
 
-    fun onLogoutClicked(){
+    fun onLogoutClicked() {
+        analyticService.sendEvent(
+            event = LogoutSettingsClickEvent(
+                phone = settingsState.value.settings?.phoneNumber.toString()
+            ),
+        )
         mutableSettingsState.update { settingsState ->
             settingsState + SettingsState.Event.ShowLogoutEvent
         }

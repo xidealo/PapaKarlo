@@ -4,6 +4,7 @@ import com.bunbeauty.shared.presentation.base.BaseAction
 import com.bunbeauty.shared.presentation.base.BaseEvent
 import com.bunbeauty.shared.presentation.base.BaseViewDataState
 import com.bunbeauty.shared.presentation.menu.MenuProductItem
+import com.bunbeauty.shared.presentation.product_details.ProductDetailsOpenedFrom
 
 interface ConsumerCart {
 
@@ -38,7 +39,7 @@ interface ConsumerCart {
         data object OnCreateOrderClick : Action
         data object OnMenuClick : Action
         data object OnErrorButtonClick : Action
-        data class AddProductToRecommendationClick(val menuProductUuid: String) : Action
+        data class AddRecommendationProductToCartClick(val menuProductUuid: String) : Action
         data class RecommendationClick(val menuProductUuid: String, val name: String) : Action
     }
 
@@ -46,7 +47,12 @@ interface ConsumerCart {
         data object NavigateToMenu : Event
         data object NavigateToCreateOrder : Event
         data object NavigateToLogin : Event
-        data class NavigateToProduct(val uuid: String, val name: String) : Event
+        data class NavigateToProduct(
+            val uuid: String,
+            val name: String,
+            val productDetailsOpenedFrom: ProductDetailsOpenedFrom,
+        ) : Event
+
         data object NavigateBack : Event
     }
 }

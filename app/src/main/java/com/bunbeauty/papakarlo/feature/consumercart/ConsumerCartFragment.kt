@@ -139,7 +139,8 @@ class ConsumerCartFragment :
                     .navigateSafe(
                         toProductFragment(
                             event.uuid,
-                            event.name
+                            event.name,
+                            event.productDetailsOpenedFrom
                         )
                     )
             }
@@ -160,7 +161,7 @@ class ConsumerCartFragment :
             Box(modifier = Modifier.weight(1f)) {
                 LazyVerticalGrid(
                     modifier = Modifier.fillMaxSize(),
-                    contentPadding = PaddingValues(vertical = FoodDeliveryTheme.dimensions.mediumSpace),
+                    contentPadding = PaddingValues(FoodDeliveryTheme.dimensions.mediumSpace),
                     columns = GridCells.Fixed(2),
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
@@ -248,12 +249,11 @@ class ConsumerCartFragment :
                     ) { recommendation ->
                         MenuProductItem(
                             modifier = Modifier
-                                .padding(top = 8.dp)
-                                .padding(horizontal = 16.dp),
+                                .padding(top = 8.dp),
                             menuProductItem = recommendation,
                             onAddProductClick = {
                                 onAction(
-                                    ConsumerCart.Action.AddProductToRecommendationClick(
+                                    ConsumerCart.Action.AddRecommendationProductToCartClick(
                                         menuProductUuid = recommendation.uuid
                                     )
                                 )

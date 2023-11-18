@@ -16,7 +16,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarHost
@@ -94,7 +93,6 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
         }
     }
 
-    @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     private fun MainScreen(mainState: MainState, snackbarHostState: SnackbarHostState) {
         Scaffold(
@@ -158,7 +156,6 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
         }
     }
 
-    @OptIn(ExperimentalMaterial3Api::class)
     private fun handleEventList(
         eventList: List<MainState.Event>,
         snackbarHostState: SnackbarHostState

@@ -1,5 +1,7 @@
 package com.bunbeauty.shared.di
 
+import com.bunbeauty.analytic.AnalyticService
+import com.bunbeauty.analytic.di.analyticModule
 import com.bunbeauty.shared.data.di.dataMapperModule
 import com.bunbeauty.shared.data.di.databaseModule
 import com.bunbeauty.shared.data.di.networkModule
@@ -45,6 +47,7 @@ import com.bunbeauty.shared.domain.feature.auth.ResendCodeUseCase
 import com.bunbeauty.shared.domain.feature.cart.AddCartProductUseCase
 import com.bunbeauty.shared.domain.feature.cart.GetRecommendationsUseCase
 import com.bunbeauty.shared.domain.feature.discount.GetDiscountUseCase
+import com.bunbeauty.shared.domain.feature.menu_product.GetMenuProductByUuidUseCase
 import com.bunbeauty.shared.domain.feature.payment.GetSelectablePaymentMethodListUseCase
 import com.bunbeauty.shared.domain.feature.payment.SavePaymentMethodUseCase
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
@@ -75,7 +78,8 @@ fun initKoin(appDeclaration: KoinAppDeclaration = {}) = startKoin {
         cafeUseCaseModule(),
         paymentUseCaseModule(),
         authUseCaseModule(),
-        useCaseModules()
+        useCaseModules(),
+        analyticModule()
     )
 }
 
@@ -96,7 +100,8 @@ fun initKoin() = startKoin {
         cafeUseCaseModule(),
         paymentUseCaseModule(),
         authUseCaseModule(),
-        useCaseModules()
+        useCaseModules(),
+        analyticModule()
     )
 }
 
@@ -150,6 +155,7 @@ class IosComponent : KoinComponent {
     fun provideResendCodeUseCase(): ResendCodeUseCase = get()
     fun provideCheckPhoneNumberUseCase(): CheckPhoneNumberUseCase = get()
     fun provideGetRecommendationsUseCase(): GetRecommendationsUseCase = get()
+  fun provideGetMenuProductByUuidUseCase(): GetMenuProductByUuidUseCase = get()
 
     //Mapper
     fun provideUserAddressMapper(): UserAddressMapper = get()
@@ -157,5 +163,6 @@ class IosComponent : KoinComponent {
 
     //Other
     fun provideApiRepo(): NetworkConnector = get()
+    fun provideAnalyticService(): AnalyticService = get()
 
 }

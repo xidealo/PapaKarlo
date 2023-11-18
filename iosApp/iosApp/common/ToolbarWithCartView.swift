@@ -13,8 +13,8 @@ struct ToolbarWithCartView: View {
     let title:LocalizedStringKey
     let titleString:String? = nil
     
-    let cost:String
-    let count:String
+    let cost:String?
+    let count:String?
     @Binding var isShowLogo: Bool
     
     var logout: (() -> Void)? = nil
@@ -39,21 +39,26 @@ struct ToolbarWithCartView: View {
                     isActive: $isRootActive
                 ){
                     HStack(spacing:0){
-                        Text(cost + Strings.CURRENCY)
-                            .foregroundColor(AppColor.onSurface)
+                        
+                        if let checkedCost = cost {
+                            Text(checkedCost)
+                                .foregroundColor(AppColor.onSurface)
+                        }
                         
                         Image(systemName: "cart")
                             .foregroundColor(AppColor.onSurface)
-                        
-                        Text(count)
-                            .labelSmall(weight: .medium)
-                            .foregroundColor(AppColor.onPrimary)
-                            .padding(.horizontal, 4)
-                            .padding(.vertical, 2)
-                            .background(AppColor.primary)
-                            .cornerRadius(Diems.LARGE_RADIUS)
-                            .padding(.bottom, 12)
-                            .padding(.leading, -8)
+                        if let checkedCount = count {
+                            Text(checkedCount)
+                                .labelSmall(weight: .medium)
+                                .foregroundColor(AppColor.onPrimary)
+                                .padding(.horizontal, 4)
+                                .padding(.vertical, 2)
+                                .background(AppColor.primary)
+                                .cornerRadius(Diems.LARGE_RADIUS)
+                                .padding(.bottom, 12)
+                                .padding(.leading, -8)
+                        }
+                   
                     }
                 }
                 .isDetailLink(false)
@@ -69,7 +74,5 @@ struct ToolbarWithCartView: View {
                     .frame(height: 40)
             }
         }
-        
-       
     }
 }

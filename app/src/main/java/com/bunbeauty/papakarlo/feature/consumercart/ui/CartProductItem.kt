@@ -39,8 +39,7 @@ fun CartProductItem(
     FoodDeliveryCard(
         modifier = modifier.fillMaxWidth(),
         onClick = onClick,
-        elevated = false,
-        shape = RoundedCornerShape(0.dp)
+        elevated = false
     ) {
         Row(
             modifier = Modifier

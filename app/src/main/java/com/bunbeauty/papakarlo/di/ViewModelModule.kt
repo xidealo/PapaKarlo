@@ -27,7 +27,8 @@ fun viewModelModule() = module {
             menuProductInteractor = get(),
             observeCartUseCase = get(),
             addCartProductUseCase = get(),
-            getDiscountUseCase = get()
+            getDiscountUseCase = get(),
+            analyticService = get()
         )
     }
     viewModel {
@@ -41,7 +42,8 @@ fun viewModelModule() = module {
             cartProductInteractor = get(),
             addCartProductUseCase = get(),
             removeCartProductUseCase = get(),
-            getRecommendationsUseCase = get()
+            getRecommendationsUseCase = get(),
+            analyticService = get()
         )
     }
     viewModel {
@@ -125,7 +127,8 @@ fun viewModelModule() = module {
         ConfirmViewModel(
             formatPhoneNumber = get(),
             checkCode = get(),
-            resendCode = get()
+            resendCode = get(),
+            analyticService = get()
         )
     }
     viewModel {
@@ -136,14 +139,16 @@ fun viewModelModule() = module {
             getCityListUseCase = get(),
             saveSelectedCityUseCase = get(),
             disableUserUseCase = get(),
-            userInteractor = get()
+            userInteractor = get(),
+            analyticService = get()
         )
     }
     viewModel {
         ProductDetailsViewModel(
             getMenuProductByUuidUseCase = get(),
             observeCartUseCase = get(),
-            addCartProductUseCase = get()
+            addCartProductUseCase = get(),
+            analyticService = get()
         )
     }
     viewModel {
