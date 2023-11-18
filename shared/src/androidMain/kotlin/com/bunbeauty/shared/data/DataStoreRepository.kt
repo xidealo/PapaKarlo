@@ -176,7 +176,7 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
 
     override suspend fun saveDiscount(discount: Discount) {
         context.discountDataStore.edit {
-            it.clear()
+            it.remove(FIRST_ORDER_DISCOUNT_KEY)
             discount.firstOrderDiscount?.let { firstOrderDiscount ->
                 it[FIRST_ORDER_DISCOUNT_KEY] = firstOrderDiscount
             }
