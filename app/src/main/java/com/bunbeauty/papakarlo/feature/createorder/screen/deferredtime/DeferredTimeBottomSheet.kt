@@ -1,7 +1,5 @@
 package com.bunbeauty.papakarlo.feature.createorder.screen.deferredtime
 
-import android.os.Bundle
-import android.view.View
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
@@ -25,8 +23,7 @@ import com.bunbeauty.papakarlo.common.ui.element.card.SimpleCard
 import com.bunbeauty.papakarlo.common.ui.screen.bottomsheet.FoodDeliveryBottomSheet
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.medium
-import com.bunbeauty.papakarlo.extensions.setContentWithTheme
-import com.bunbeauty.shared.presentation.create_order.model.TimeUI
+import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.model.TimeUI
 import com.vanpra.composematerialdialogs.MaterialDialog
 import com.vanpra.composematerialdialogs.MaterialDialogState
 import com.vanpra.composematerialdialogs.datetime.time.TimePickerDefaults
@@ -61,23 +58,20 @@ class DeferredTimeBottomSheet : ComposeBottomSheet<TimeUI>() {
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        binding.root.setContentWithTheme {
-            val timeDialogState = rememberMaterialDialogState()
-            DeferredTimeScreen(
-                title = title,
-                onAsapClicked = {
-                    callback?.onResult(TimeUI.ASAP)
-                    dismiss()
-                },
-                onSelectTimeClicked = {
-                    timeDialogState.show()
-                }
-            )
-            TimePickerDialog(timeDialogState)
-        }
+    @Composable
+    override fun Content() {
+        val timeDialogState = rememberMaterialDialogState()
+        DeferredTimeScreen(
+            title = title,
+            onAsapClicked = {
+                callback?.onResult(TimeUI.ASAP)
+                dismiss()
+            },
+            onSelectTimeClicked = {
+                timeDialogState.show()
+            }
+        )
+        TimePickerDialog(timeDialogState)
     }
 
     @Composable

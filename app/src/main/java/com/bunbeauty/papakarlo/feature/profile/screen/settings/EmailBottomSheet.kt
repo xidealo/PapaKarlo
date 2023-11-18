@@ -1,7 +1,5 @@
 package com.bunbeauty.papakarlo.feature.profile.screen.settings
 
-import android.os.Bundle
-import android.view.View
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
@@ -27,7 +25,6 @@ import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
 import com.bunbeauty.papakarlo.common.ui.element.textfield.FoodDeliveryTextField
 import com.bunbeauty.papakarlo.common.ui.screen.bottomsheet.FoodDeliveryBottomSheet
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
@@ -35,13 +32,10 @@ class EmailBottomSheet : ComposeBottomSheet<String>() {
 
     private var email by nullableArgument<String>()
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        binding.root.setContentWithTheme {
-            EmailScreen(email = email) { updatedComment ->
-                callback?.onResult(updatedComment)
-            }
+    @Composable
+    override fun Content() {
+        EmailScreen(email = email) { updatedComment ->
+            callback?.onResult(updatedComment)
         }
     }
 

@@ -2,6 +2,7 @@ package com.bunbeauty.papakarlo.common.ui.screen.bottomsheet
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Spacer
@@ -26,6 +27,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
@@ -35,6 +37,7 @@ import com.bunbeauty.papakarlo.common.ui.theme.bold
 fun FoodDeliveryLazyBottomSheet(
     @StringRes titleStringId: Int,
     scrolledToTop: ((Boolean) -> Unit),
+    contentSpace: Dp = 8.dp,
     bottomContent: @Composable ColumnScope.() -> Unit = {},
     content: LazyListScope.() -> Unit
 ) {
@@ -55,6 +58,7 @@ fun FoodDeliveryLazyBottomSheet(
         LazyColumn(
             modifier = Modifier.weight(1f, false),
             state = lazyListState,
+            verticalArrangement = spacedBy(contentSpace),
             content = content
         )
         bottomContent()

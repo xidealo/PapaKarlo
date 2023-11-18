@@ -52,8 +52,6 @@ fun viewModelModule() = module {
             cafeInteractor = get(),
             userInteractor = get(),
             createOrderStateMapper = get(),
-            timeMapper = get(),
-            userAddressMapper = get(),
             getSelectableUserAddressList = get(),
             getSelectableCafeList = get(),
             getCartTotal = get(),
@@ -103,7 +101,6 @@ fun viewModelModule() = module {
     viewModel {
         OrderDetailsViewModel(
             observeOrderUseCase = get(),
-            timeMapper = get(),
             stopObserveOrdersUseCase = get()
         )
     }

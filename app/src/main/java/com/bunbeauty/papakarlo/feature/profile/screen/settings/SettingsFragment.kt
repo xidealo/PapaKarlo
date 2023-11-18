@@ -28,6 +28,7 @@ import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.LayoutComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
+import com.bunbeauty.papakarlo.feature.city.screen.CityUI
 import com.bunbeauty.papakarlo.feature.city.screen.changecity.CityListBottomSheet
 import com.bunbeauty.papakarlo.feature.main.IMessageHost
 import com.bunbeauty.papakarlo.feature.profile.screen.logout.LogoutBottomSheet
@@ -139,10 +140,17 @@ class SettingsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose
                 is SettingsState.Event.ShowCityListEvent -> {
                     CityListBottomSheet.show(
                         fragmentManager = childFragmentManager,
-                        cityList = event.cityList,
+                        cityList = event.cityList.map { city ->
+                            city.run {
+                                CityUI(
+                                    uuid = uuid,
+                                    name = name
+                                )
+                            }
+                        },
                         selectedCityUuid = event.selectedCityUuid
-                    )?.let { city ->
-                        viewModel.onCitySelected(city.uuid)
+                    )?.let { cityUI ->
+                        viewModel.onCitySelected(cityUI.uuid)
                     }
                 }
 

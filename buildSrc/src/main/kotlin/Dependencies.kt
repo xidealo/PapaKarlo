@@ -21,6 +21,8 @@ object Versions {
     const val datetime = "0.9.0"
     const val desugar = "2.0.3"
 
+    const val material = "1.9.0"
+
     const val composeCompiler = "1.5.0"
     const val composeBom = "2023.06.01"
     const val activityCompose = "1.7.2"
@@ -124,6 +126,10 @@ object AndroidX {
 
 object Google {
     const val androidMaps = "com.google.maps.android:android-maps-utils:${Versions.googleMapUtils}"
+}
+
+object Material {
+    const val material = "com.google.android.material:material:${Versions.material}"
 }
 
 object Compose {

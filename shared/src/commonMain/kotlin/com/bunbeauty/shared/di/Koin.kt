@@ -55,7 +55,6 @@ import com.bunbeauty.shared.domain.use_case.DisableUserUseCase
 import com.bunbeauty.shared.domain.use_case.address.*
 import com.bunbeauty.shared.domain.use_case.cafe.GetSelectableCafeListUseCase
 import com.bunbeauty.shared.presentation.create_order.CreateOrderStateMapper
-import com.bunbeauty.shared.presentation.create_order.TimeMapper
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 import org.koin.core.context.startKoin
@@ -159,7 +158,6 @@ class IosComponent : KoinComponent {
   fun provideGetMenuProductByUuidUseCase(): GetMenuProductByUuidUseCase = get()
 
     //Mapper
-    fun provideTimeMapper(): TimeMapper = get()
     fun provideUserAddressMapper(): UserAddressMapper = get()
     fun provideCreateOrderStateMapper(): CreateOrderStateMapper = get()
 

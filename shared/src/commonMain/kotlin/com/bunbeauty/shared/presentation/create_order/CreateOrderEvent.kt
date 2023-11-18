@@ -1,14 +1,14 @@
 package com.bunbeauty.shared.presentation.create_order
 
+import com.bunbeauty.shared.domain.model.address.SelectableUserAddress
+import com.bunbeauty.shared.domain.model.date_time.Time
 import com.bunbeauty.shared.domain.model.payment_method.SelectablePaymentMethod
 import com.bunbeauty.shared.presentation.cafe_address_list.SelectableCafeAddressItem
-import com.bunbeauty.shared.presentation.create_order.model.SelectableUserAddressUi
-import com.bunbeauty.shared.presentation.create_order.model.TimeUI
 
 sealed interface CreateOrderEvent {
-    object OpenCreateAddressEvent : CreateOrderEvent
+    data object OpenCreateAddressEvent : CreateOrderEvent
     data class ShowUserAddressListEvent(
-        val addressList: List<SelectableUserAddressUi>,
+        val addressList: List<SelectableUserAddress>,
     ) : CreateOrderEvent
 
     data class ShowCafeAddressListEvent(
@@ -16,17 +16,17 @@ sealed interface CreateOrderEvent {
     ) : CreateOrderEvent
 
     data class ShowDeferredTimeEvent(
-        val deferredTime: TimeUI,
-        val minTime: TimeUI.Time,
+        val deferredTime: Time?,
+        val minTime: Time,
         val isDelivery: Boolean,
     ) : CreateOrderEvent
 
     data class ShowCommentInputEvent(val comment: String?) : CreateOrderEvent
-    object ShowUserUnauthorizedErrorEvent : CreateOrderEvent
-    object ShowSomethingWentWrongErrorEvent : CreateOrderEvent
+    data object ShowUserUnauthorizedErrorEvent : CreateOrderEvent
+    data object ShowSomethingWentWrongErrorEvent : CreateOrderEvent
     data class OrderCreatedEvent(val code: String) : CreateOrderEvent
-    object ShowUserAddressError : CreateOrderEvent
-    object ShowPaymentMethodError : CreateOrderEvent
+    data object ShowUserAddressError : CreateOrderEvent
+    data object ShowPaymentMethodError : CreateOrderEvent
     data class ShowPaymentMethodList(val selectablePaymentMethodList: List<SelectablePaymentMethod>) :
         CreateOrderEvent
 }

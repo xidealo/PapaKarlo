@@ -1,5 +1,6 @@
-package com.bunbeauty.papakarlo.feature.createorder.screen.createorder
+package com.bunbeauty.papakarlo.feature.createorder.mapper
 
+import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.model.CreateOrderUi
 import com.bunbeauty.papakarlo.feature.profile.screen.profile.PaymentMethodUiStateMapper
 import com.bunbeauty.papakarlo.util.string.IStringUtil
 import com.bunbeauty.shared.presentation.create_order.CreateOrderUIState

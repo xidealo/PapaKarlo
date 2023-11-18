@@ -141,6 +141,8 @@ dependencies {
     implementation(AndroidX.appCompat)
     implementation(AndroidX.coreKtx)
 
+    implementation(Material.material)
+
     implementation(platform(Compose.bom))
     implementation(Compose.foundation)
     implementation(Compose.foundationLayout)

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,6 +17,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -29,10 +31,10 @@ import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.LayoutComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
+import com.bunbeauty.papakarlo.feature.address.mapper.UserAddressItemMapper
 import com.bunbeauty.papakarlo.feature.address.model.UserAddressItem
 import com.bunbeauty.papakarlo.feature.address.screen.useraddresslist.UserAddressListFragmentDirections.toCreateAddressFragment
 import com.bunbeauty.papakarlo.feature.address.ui.SelectableItemView
-import com.bunbeauty.papakarlo.feature.createorder.mapper.UserAddressItemMapper
 import com.bunbeauty.shared.presentation.user_address_list.UserAddressListState
 import com.bunbeauty.shared.presentation.user_address_list.UserAddressListViewModel
 import org.koin.android.ext.android.inject
@@ -126,13 +128,11 @@ class UserAddressListFragment : BaseFragmentWithSharedViewModel(R.layout.layout_
                 contentPadding = PaddingValues(
                     top = FoodDeliveryTheme.dimensions.mediumSpace,
                     bottom = FoodDeliveryTheme.dimensions.scrollScreenBottomSpace
-                )
+                ),
+                verticalArrangement = spacedBy(8.dp)
             ) {
                 itemsIndexed(userAddressItems) { i, userAddressItem ->
                     SelectableItemView(
-                        modifier = Modifier.padding(
-                            top = FoodDeliveryTheme.dimensions.getItemSpaceByIndex(i)
-                        ),
                         title = userAddressItem.address,
                         isClickable = false,
                         elevated = true

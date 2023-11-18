@@ -2,8 +2,6 @@ package com.bunbeauty.papakarlo.feature.profile.screen.payment
 
 import android.content.ClipData
 import android.content.ClipboardManager
-import android.os.Bundle
-import android.view.View
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -24,34 +22,30 @@ import com.bunbeauty.papakarlo.common.ui.element.card.StartIconTextCard
 import com.bunbeauty.papakarlo.common.ui.element.rememberFoodDeliverySnackbarState
 import com.bunbeauty.papakarlo.common.ui.screen.bottomsheet.FoodDeliveryBottomSheet
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 
 class PaymentBottomSheet : ComposeBottomSheet<Any>() {
 
     private var paymentMethodsArgument by argument<PaymentMethodsArgument>()
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    @Composable
+    override fun Content() {
+        val snackbarState = rememberFoodDeliverySnackbarState(
+            stringResource(R.string.common_copied)
+        )
 
-        binding.root.setContentWithTheme {
-            val snackbarState = rememberFoodDeliverySnackbarState(
-                stringResource(R.string.common_copied)
-            )
-
-            FoodDeliverySnackbarBox(snackbarState) {
-                PaymentScreen(
-                    paymentMethodList = paymentMethodsArgument.paymentMethodList,
-                    onCopyClick = { nameWithCopyableValue ->
-                        nameWithCopyableValue.value?.let { value ->
-                            copyToBuffer(
-                                label = nameWithCopyableValue.name,
-                                text = value.valueToCopy
-                            )
-                            snackbarState.show()
-                        }
+        FoodDeliverySnackbarBox(snackbarState) {
+            PaymentScreen(
+                paymentMethodList = paymentMethodsArgument.paymentMethodList,
+                onCopyClick = { nameWithCopyableValue ->
+                    nameWithCopyableValue.value?.let { value ->
+                        copyToBuffer(
+                            label = nameWithCopyableValue.name,
+                            text = value.valueToCopy
+                        )
+                        snackbarState.show()
                     }
-                )
-            }
+                }
+            )
         }
     }
 
