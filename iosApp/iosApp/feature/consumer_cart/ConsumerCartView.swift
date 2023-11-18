@@ -70,7 +70,10 @@ struct ConsumerCartView: View {
                 if let consumerCartUi = consumerCartData {
                     ConsumerCartSuccessScreen(
                         consumerCartUI: consumerCartUi,
-                        action: viewModel.onAction
+                        action: viewModel.onAction,
+                        isRootActive: isRootActive,
+                        selection: selection,
+                        showOrderCreated: showOrderCreated
                     )
                 }
 
@@ -140,9 +143,12 @@ struct ConsumerCartSuccessScreen: View {
     let consumerCartUI : ConsumerCartViewDataState.ConsumerCartData
     let cartProductListIos : [CartProductItemIos]
     let recommendationProductList : [MenuProductItem]
+        
+    //for back after createOrder
+    @State var isRootActive:Bool
+    @State var selection:Int
+    @State var showOrderCreated:Bool
     
-    @State var selection:Int = 1 //Not used for navigate to productDetails
-
     let action: (ConsumerCartAction) -> Void
 
     let columns = [
@@ -152,7 +158,10 @@ struct ConsumerCartSuccessScreen: View {
 
     init(
         consumerCartUI: ConsumerCartViewDataState.ConsumerCartData,
-        action: @escaping (ConsumerCartAction) -> Void
+        action: @escaping (ConsumerCartAction) -> Void,
+        isRootActive:Bool,
+        selection:Int,
+        showOrderCreated: Bool
     ) {
         self.consumerCartUI = consumerCartUI
         self.cartProductListIos = consumerCartUI.cartProductList.map({ cartProductItem in
@@ -172,6 +181,10 @@ struct ConsumerCartSuccessScreen: View {
                 photoLink: menuProduct.photoLink
             )
         })
+        
+        self.isRootActive = isRootActive
+        self.selection = selection
+        self.showOrderCreated = showOrderCreated
     }
     
     var body: some View {
@@ -215,16 +228,16 @@ struct ConsumerCartSuccessScreen: View {
                             .padding(.horizontal, Diems.MEDIUM_PADDING)
                             .padding(.bottom, 8)
                             .padding(.top, 16)
-
                     }
 
                     LazyVGrid(columns: columns, spacing: 8) {
                         ForEach(recommendationProductList){ menuProductItem in
                             MenuItemView(
                                 menuProductItem: menuProductItem,
-                                isRootActive : .constant(false),
+                                productDetailsOpenedFrom: ProductDetailsOpenedFrom.recommendationProduct,
+                                isRootActive : $isRootActive,
                                 selection : $selection,
-                                showOrderCreated : .constant(false),
+                                showOrderCreated : $showOrderCreated,
                                 action: {
                                     action(ConsumerCartActionAddRecommendationProductToCartClick(menuProductUuid: menuProductItem.productUuid))
                                 }

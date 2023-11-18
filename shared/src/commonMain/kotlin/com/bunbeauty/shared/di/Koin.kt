@@ -47,6 +47,7 @@ import com.bunbeauty.shared.domain.feature.auth.ResendCodeUseCase
 import com.bunbeauty.shared.domain.feature.cart.AddCartProductUseCase
 import com.bunbeauty.shared.domain.feature.cart.GetRecommendationsUseCase
 import com.bunbeauty.shared.domain.feature.discount.GetDiscountUseCase
+import com.bunbeauty.shared.domain.feature.menu_product.GetMenuProductByUuidUseCase
 import com.bunbeauty.shared.domain.feature.payment.GetSelectablePaymentMethodListUseCase
 import com.bunbeauty.shared.domain.feature.payment.SavePaymentMethodUseCase
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
@@ -155,6 +156,7 @@ class IosComponent : KoinComponent {
     fun provideResendCodeUseCase(): ResendCodeUseCase = get()
     fun provideCheckPhoneNumberUseCase(): CheckPhoneNumberUseCase = get()
     fun provideGetRecommendationsUseCase(): GetRecommendationsUseCase = get()
+  fun provideGetMenuProductByUuidUseCase(): GetMenuProductByUuidUseCase = get()
 
     //Mapper
     fun provideTimeMapper(): TimeMapper = get()

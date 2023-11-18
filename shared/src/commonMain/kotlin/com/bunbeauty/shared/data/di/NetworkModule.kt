@@ -1,7 +1,7 @@
 package com.bunbeauty.shared.data.di
 
-import com.bunbeauty.shared.Logger
-import com.bunbeauty.shared.Logger.NETWORK_TAG
+import com.bunbeauty.core.Logger
+import com.bunbeauty.core.Logger.NETWORK_TAG
 import com.bunbeauty.shared.domain.exeptions.AuthSessionTimeoutException
 import com.bunbeauty.shared.domain.exeptions.InvalidCodeException
 import com.bunbeauty.shared.domain.exeptions.NoAttemptsException

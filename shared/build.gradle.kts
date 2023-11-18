@@ -20,7 +20,7 @@ kotlin {
     iosSimulatorArm64()
 
     cocoapods {
-        summary = "Some description for the Shared Module"
+        summary = "Main shared module with presentation layer"
         homepage = "Link to the Shared Module homepage"
         ios.deploymentTarget = "14.1"
         podfile = project.file("../iosApp/Podfile")
@@ -37,6 +37,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(project(":analytic"))
+                implementation(project(":core"))
 
                 Ktor.run {
                     implementation(clientSerialization)

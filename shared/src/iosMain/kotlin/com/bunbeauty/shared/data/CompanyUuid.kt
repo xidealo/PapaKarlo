@@ -1,5 +1,6 @@
 package com.bunbeauty.shared.data
 
+import com.bunbeauty.core.targetName
 import com.bunbeauty.shared.Constants.GUSTO_PUB_TARGET_NAME
 import com.bunbeauty.shared.Constants.GUSTO_PUB_COMPANY_UUID
 import com.bunbeauty.shared.Constants.DJAN_COMPANY_UUID
