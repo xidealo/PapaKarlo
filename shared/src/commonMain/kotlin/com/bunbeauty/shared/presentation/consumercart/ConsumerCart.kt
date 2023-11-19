@@ -14,7 +14,7 @@ interface ConsumerCart {
     ) : BaseViewDataState {
 
         fun getIsLastProduct(menuProductUuid: String): Boolean {
-            return consumerCartData?.cartProductList?.filter { it.menuProductUuid == menuProductUuid }?.size == 1
+            return consumerCartData?.cartProductList?.find { it.menuProductUuid == menuProductUuid }?.count == 1
         }
 
         data class ConsumerCartData(
