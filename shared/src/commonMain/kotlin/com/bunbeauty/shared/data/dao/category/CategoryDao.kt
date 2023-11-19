@@ -1,9 +1,9 @@
 package com.bunbeauty.shared.data.dao.category
 
+import app.cash.sqldelight.coroutines.asFlow
 import com.bunbeauty.shared.db.CategoryEntity
 import com.bunbeauty.shared.db.FoodDeliveryDatabase
-import com.squareup.sqldelight.runtime.coroutines.asFlow
-import com.squareup.sqldelight.runtime.coroutines.mapToList
+import com.bunbeauty.shared.extension.mapToList
 import kotlinx.coroutines.flow.Flow
 
 class CategoryDao(foodDeliveryDatabase: FoodDeliveryDatabase) : ICategoryDao {
@@ -23,7 +23,9 @@ class CategoryDao(foodDeliveryDatabase: FoodDeliveryDatabase) : ICategoryDao {
     }
 
     override fun observeCategoryList(): Flow<List<CategoryEntity>> {
-        return categoryEntityQueries.getCategoryList().asFlow().mapToList()
+        return categoryEntityQueries.getCategoryList()
+            .asFlow()
+            .mapToList()
     }
 
 }

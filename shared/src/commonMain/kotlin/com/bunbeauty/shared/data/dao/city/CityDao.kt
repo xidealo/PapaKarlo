@@ -1,10 +1,10 @@
 package com.bunbeauty.shared.data.dao.city
 
+import app.cash.sqldelight.coroutines.asFlow
 import com.bunbeauty.shared.db.CityEntity
 import com.bunbeauty.shared.db.FoodDeliveryDatabase
-import com.squareup.sqldelight.runtime.coroutines.asFlow
-import com.squareup.sqldelight.runtime.coroutines.mapToList
-import com.squareup.sqldelight.runtime.coroutines.mapToOneOrNull
+import com.bunbeauty.shared.extension.mapToList
+import com.bunbeauty.shared.extension.mapToOneOrNull
 import kotlinx.coroutines.flow.Flow
 
 class CityDao(foodDeliveryDatabase: FoodDeliveryDatabase) : ICityDao {
@@ -33,10 +33,14 @@ class CityDao(foodDeliveryDatabase: FoodDeliveryDatabase) : ICityDao {
     }
 
     override fun observeCityByUuid(uuid: String): Flow<CityEntity?> {
-        return cityEntityQueries.getCityByUuid(uuid).asFlow().mapToOneOrNull()
+        return cityEntityQueries.getCityByUuid(uuid)
+            .asFlow()
+            .mapToOneOrNull()
     }
 
     override fun observeCityList(): Flow<List<CityEntity>> {
-        return cityEntityQueries.getCityList().asFlow().mapToList()
+        return cityEntityQueries.getCityList()
+            .asFlow()
+            .mapToList()
     }
 }

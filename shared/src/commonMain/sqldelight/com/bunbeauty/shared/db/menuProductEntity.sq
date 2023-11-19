@@ -1,3 +1,6 @@
+import kotlin.Boolean;
+import kotlin.Int;
+
 CREATE TABLE menuProductEntity (
     uuid TEXT NOT NULL PRIMARY KEY,
     name TEXT NOT NULL,

@@ -11,7 +11,7 @@ object Versions {
     const val koin = "3.4.3"
     const val mockK = "1.12.5"
 
-    const val sqlDelight = "1.5.5"
+    const val sqlDelight = "2.0.0"
 
     const val junit = "4.13.2"
     const val testRunner = "1.3.0"
@@ -101,7 +101,7 @@ object ClassPath {
         "com.google.firebase:firebase-crashlytics-gradle:${Versions.crashlytics}"
     const val navigationSafeArgs =
         "androidx.navigation:navigation-safe-args-gradle-plugin:${Versions.navigation}"
-    const val sqlDelight = "com.squareup.sqldelight:gradle-plugin:${Versions.sqlDelight}"
+    const val sqlDelight = "app.cash.sqldelight:gradle-plugin:${Versions.sqlDelight}"
 }
 
 object Plugin {
@@ -116,7 +116,7 @@ object Plugin {
     const val multiplatform = "multiplatform"
     const val googleService = "com.google.gms.google-services"
     const val crashlytics = "com.google.firebase.crashlytics"
-    const val sqldelight = "com.squareup.sqldelight"
+    const val sqldelight = "app.cash.sqldelight"
 }
 
 object AndroidX {
@@ -237,12 +237,13 @@ object Firebase {
 }
 
 object SqlDelight {
-    const val runtime = "com.squareup.sqldelight:runtime:${Versions.sqlDelight}"
+    const val runtime = "app.cash.sqldelight:runtime:${Versions.sqlDelight}"
     const val coroutineExtensions =
-        "com.squareup.sqldelight:coroutines-extensions:${Versions.sqlDelight}"
-    const val androidDriver = "com.squareup.sqldelight:android-driver:${Versions.sqlDelight}"
+        "app.cash.sqldelight:coroutines-extensions:${Versions.sqlDelight}"
+    const val androidDriver = "app.cash.sqldelight:android-driver:${Versions.sqlDelight}"
+    const val primitiveAdapters = "app.cash.sqldelight:primitive-adapters:${Versions.sqlDelight}"
 
-    const val nativeDriver = "com.squareup.sqldelight:native-driver:${Versions.sqlDelight}"
+    const val nativeDriver = "app.cash.sqldelight:native-driver:${Versions.sqlDelight}"
 }
 
 object Coroutine {

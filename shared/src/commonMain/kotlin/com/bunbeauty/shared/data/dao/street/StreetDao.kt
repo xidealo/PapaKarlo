@@ -1,9 +1,9 @@
 package com.bunbeauty.shared.data.dao.street
 
+import app.cash.sqldelight.coroutines.asFlow
 import com.bunbeauty.shared.db.FoodDeliveryDatabase
 import com.bunbeauty.shared.db.StreetEntity
-import com.squareup.sqldelight.runtime.coroutines.asFlow
-import com.squareup.sqldelight.runtime.coroutines.mapToList
+import com.bunbeauty.shared.extension.mapToList
 import kotlinx.coroutines.flow.Flow
 
 class StreetDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IStreetDao {
@@ -27,7 +27,9 @@ class StreetDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IStreetDao {
     }
 
     override fun observeStreetListByCityUuid(cityUuid: String): Flow<List<StreetEntity>> {
-        return streetEntityQueries.getStreetListByCityUuid(cityUuid).asFlow().mapToList()
+        return streetEntityQueries.getStreetListByCityUuid(cityUuid)
+            .asFlow()
+            .mapToList()
     }
 
     override suspend fun getStreetByNameAndCityUuid(name: String, cityUuid: String): StreetEntity? {

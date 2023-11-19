@@ -1,12 +1,12 @@
 package com.bunbeauty.shared.data.dao.order
 
+import app.cash.sqldelight.coroutines.asFlow
 import com.bunbeauty.shared.db.FoodDeliveryDatabase
 import com.bunbeauty.shared.db.OrderEntity
 import com.bunbeauty.shared.db.OrderProductEntity
 import com.bunbeauty.shared.db.OrderWithProductEntity
-import com.squareup.sqldelight.runtime.coroutines.asFlow
-import com.squareup.sqldelight.runtime.coroutines.mapToList
-import com.squareup.sqldelight.runtime.coroutines.mapToOneOrNull
+import com.bunbeauty.shared.extension.mapToList
+import com.bunbeauty.shared.extension.mapToOneOrNull
 import kotlinx.coroutines.flow.Flow
 
 class OrderDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IOrderDao {
@@ -82,19 +82,26 @@ class OrderDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IOrderDao {
     }
 
     override fun observeOrderWithProductListByUserUuid(userUuid: String): Flow<List<OrderWithProductEntity>> {
-        return orderEntityQueries.getOrderWithProductListByUserUuid(userUuid).asFlow().mapToList()
+        return orderEntityQueries.getOrderWithProductListByUserUuid(userUuid)
+            .asFlow()
+            .mapToList()
     }
 
     override fun observeOrderListByUserUuid(userUuid: String): Flow<List<OrderEntity>> {
-        return orderEntityQueries.getOrderListByUserUuid(userUuid).asFlow().mapToList()
+        return orderEntityQueries.getOrderListByUserUuid(userUuid)
+            .asFlow()
+            .mapToList()
     }
 
     override fun observeOrderWithProductListByUuid(uuid: String): Flow<List<OrderWithProductEntity>> {
-        return orderEntityQueries.getOrderWithProductByUuid(uuid).asFlow().mapToList()
+        return orderEntityQueries.getOrderWithProductByUuid(uuid)
+            .asFlow()
+            .mapToList()
     }
 
     override fun observeLastOrderByUserUuid(userUuid: String): Flow<OrderEntity?> {
-        return orderEntityQueries.getLastOrderWithProductListByUserUuid(userUuid).asFlow()
+        return orderEntityQueries.getLastOrderWithProductListByUserUuid(userUuid)
+            .asFlow()
             .mapToOneOrNull()
     }
 

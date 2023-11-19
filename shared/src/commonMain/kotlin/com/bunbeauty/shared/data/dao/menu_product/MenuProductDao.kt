@@ -1,11 +1,11 @@
 package com.bunbeauty.shared.data.dao.menu_product
 
+import app.cash.sqldelight.coroutines.asFlow
 import com.bunbeauty.shared.db.FoodDeliveryDatabase
 import com.bunbeauty.shared.db.MenuProductEntity
 import com.bunbeauty.shared.db.MenuProductWithCategoryEntity
-import com.squareup.sqldelight.runtime.coroutines.asFlow
-import com.squareup.sqldelight.runtime.coroutines.mapToList
-import com.squareup.sqldelight.runtime.coroutines.mapToOneOrNull
+import com.bunbeauty.shared.extension.mapToList
+import com.bunbeauty.shared.extension.mapToOneOrNull
 import kotlinx.coroutines.flow.Flow
 
 class MenuProductDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IMenuProductDao {
@@ -37,11 +37,15 @@ class MenuProductDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IMenuProductD
     }
 
     override fun observeMenuProductList(): Flow<List<MenuProductWithCategoryEntity>> {
-        return menuProductEntityQueries.getMenuProductList().asFlow().mapToList()
+        return menuProductEntityQueries.getMenuProductList()
+            .asFlow()
+            .mapToList()
     }
 
     override fun observeMenuProductByUuid(uuid: String): Flow<MenuProductEntity?> {
-        return menuProductEntityQueries.getMenuProductByUuid(uuid).asFlow().mapToOneOrNull()
+        return menuProductEntityQueries.getMenuProductByUuid(uuid)
+            .asFlow()
+            .mapToOneOrNull()
     }
 
     override suspend fun getMenuProductByUuid(uuid: String): MenuProductEntity? {

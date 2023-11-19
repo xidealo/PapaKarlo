@@ -1,7 +1,9 @@
+import kotlin.Boolean;
+
 CREATE TABLE recommendationProductEntity (
     uuid TEXT NOT NULL PRIMARY KEY,
     menuProductUuid TEXT NOT NULL DEFAULT "",
-    isVisible INTEGER AS Boolean NOT NULL DEFAULT 0
+    isVisible INTEGER AS Boolean NOT NULL DEFAULT 0,
     FOREIGN KEY (menuProductUuid) REFERENCES menuProductEntity(uuid) ON DELETE CASCADE
 );
 

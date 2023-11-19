@@ -59,6 +59,7 @@ kotlin {
 
                 implementation(SqlDelight.runtime)
                 implementation(SqlDelight.coroutineExtensions)
+                implementation(SqlDelight.primitiveAdapters)
             }
         }
         val commonTest by getting {
@@ -141,7 +142,9 @@ android {
 }
 
 sqldelight {
-    database("FoodDeliveryDatabase") {
-        packageName = "com.bunbeauty.shared.db"
+    databases {
+        create("FoodDeliveryDatabase") {
+            packageName.set("com.bunbeauty.shared.db")
+        }
     }
 }

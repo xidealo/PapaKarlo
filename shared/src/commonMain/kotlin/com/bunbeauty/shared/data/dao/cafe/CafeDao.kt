@@ -1,11 +1,11 @@
 package com.bunbeauty.shared.data.dao.cafe
 
+import app.cash.sqldelight.coroutines.asFlow
 import com.bunbeauty.shared.db.CafeEntity
 import com.bunbeauty.shared.db.FoodDeliveryDatabase
 import com.bunbeauty.shared.db.SelectedCafeUuidEntity
-import com.squareup.sqldelight.runtime.coroutines.asFlow
-import com.squareup.sqldelight.runtime.coroutines.mapToList
-import com.squareup.sqldelight.runtime.coroutines.mapToOneOrNull
+import com.bunbeauty.shared.extension.mapToList
+import com.bunbeauty.shared.extension.mapToOneOrNull
 import kotlinx.coroutines.flow.Flow
 
 class CafeDao(foodDeliveryDatabase: FoodDeliveryDatabase) : ICafeDao {
@@ -50,23 +50,30 @@ class CafeDao(foodDeliveryDatabase: FoodDeliveryDatabase) : ICafeDao {
     }
 
     override fun observeCafeListByCityUuid(cityUuid: String): Flow<List<CafeEntity>> {
-        return cityEntityQueries.getCafeListByCityUuid(cityUuid).asFlow().mapToList()
+        return cityEntityQueries.getCafeListByCityUuid(cityUuid)
+            .asFlow()
+            .mapToList()
     }
 
     override fun observeCafeByUuid(uuid: String): Flow<CafeEntity?> {
-        return cityEntityQueries.getCafeByUuid(uuid).asFlow().mapToOneOrNull()
+        return cityEntityQueries.getCafeByUuid(uuid)
+            .asFlow()
+            .mapToOneOrNull()
     }
 
     override fun observeSelectedCafeByUserAndCityUuid(
         userUuid: String,
-        cityUuid: String
+        cityUuid: String,
     ): Flow<CafeEntity?> {
-        return cityEntityQueries.getSelectedCafeByUserAndCityUuid(userUuid, cityUuid).asFlow()
+        return cityEntityQueries.getSelectedCafeByUserAndCityUuid(userUuid, cityUuid)
+            .asFlow()
             .mapToOneOrNull()
     }
 
     override fun observeFirstCafeByCityUuid(cityUuid: String): Flow<CafeEntity?> {
-        return cityEntityQueries.getFirstCafeByCityUuid(cityUuid).asFlow().mapToOneOrNull()
+        return cityEntityQueries.getFirstCafeByCityUuid(cityUuid)
+            .asFlow()
+            .mapToOneOrNull()
     }
 
     override suspend fun getCafeListByCityUuid(cityUuid: String): List<CafeEntity> {

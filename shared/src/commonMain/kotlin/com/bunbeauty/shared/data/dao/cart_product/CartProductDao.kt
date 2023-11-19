@@ -1,10 +1,10 @@
 package com.bunbeauty.shared.data.dao.cart_product
 
+import app.cash.sqldelight.coroutines.asFlow
 import com.bunbeauty.shared.db.CartProductEntity
 import com.bunbeauty.shared.db.CartProductWithMenuProductEntity
 import com.bunbeauty.shared.db.FoodDeliveryDatabase
-import com.squareup.sqldelight.runtime.coroutines.asFlow
-import com.squareup.sqldelight.runtime.coroutines.mapToList
+import com.bunbeauty.shared.extension.mapToList
 import kotlinx.coroutines.flow.Flow
 
 class CartProductDao(foodDeliveryDatabase: FoodDeliveryDatabase) : ICartProductDao {
@@ -20,15 +20,19 @@ class CartProductDao(foodDeliveryDatabase: FoodDeliveryDatabase) : ICartProductD
     }
 
     override fun observeCartProductList(): Flow<List<CartProductWithMenuProductEntity>> {
-        return cartProductEntityQueries.getCartProductList().asFlow().mapToList()
+        return cartProductEntityQueries.getCartProductList()
+            .asFlow()
+            .mapToList()
     }
 
     override suspend fun getCartProductList(): List<CartProductWithMenuProductEntity> {
-        return cartProductEntityQueries.getCartProductList().executeAsList()
+        return cartProductEntityQueries.getCartProductList()
+            .executeAsList()
     }
 
     override suspend fun getCartProductByUuid(uuid: String): List<CartProductWithMenuProductEntity> {
-        return cartProductEntityQueries.getCartProductByUuid(uuid).executeAsList()
+        return cartProductEntityQueries.getCartProductByUuid(uuid)
+            .executeAsList()
     }
 
     override suspend fun getCartProductByMenuProductUuid(menuProductUuid: String): List<CartProductWithMenuProductEntity> {
