@@ -243,20 +243,18 @@ class ConsumerCartFragment :
 
                     itemsIndexed(
                         items = consumerCartData.recommendations,
-                        key = { index, recommendation -> recommendation.uuid },
-                        span = { index, _ -> GridItemSpan(1) }
+                        key = { _, recommendation -> recommendation.uuid },
+                        span = { _, _ -> GridItemSpan(1) }
                     ) { index, recommendation ->
                         MenuProductItem(
                             modifier = Modifier
-                                .padding(top = 8.dp)
                                 .padding(
+                                    top = 8.dp,
                                     start = if (index % 2 == 0) {
                                         16.dp
                                     } else {
                                         0.dp
-                                    }
-                                )
-                                .padding(
+                                    },
                                     end = if (index % 2 == 1) {
                                         16.dp
                                     } else {
