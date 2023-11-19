@@ -13,6 +13,10 @@ interface ConsumerCart {
         val screenState: ScreenState,
     ) : BaseViewDataState {
 
+        fun getIsLastProduct(menuProductUuid: String): Boolean {
+            return consumerCartData?.cartProductList?.find { it.menuProductUuid == menuProductUuid }?.count == 1
+        }
+
         data class ConsumerCartData(
             val forFreeDelivery: String,
             val cartProductList: List<CartProductItem>,

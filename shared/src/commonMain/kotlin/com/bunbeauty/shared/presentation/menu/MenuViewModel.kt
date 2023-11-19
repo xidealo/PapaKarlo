@@ -9,6 +9,7 @@ import com.bunbeauty.shared.domain.feature.discount.GetDiscountUseCase
 import com.bunbeauty.shared.domain.interactor.menu_product.IMenuProductInteractor
 import com.bunbeauty.shared.domain.model.menu.MenuSection
 import com.bunbeauty.shared.domain.model.product.MenuProduct
+import com.bunbeauty.shared.extension.launchSafe
 import com.bunbeauty.shared.presentation.base.SharedViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -40,14 +41,6 @@ class MenuViewModel(
     private var selectedCategoryUuid: String? = null
     private var currentMenuPosition = 0
 
-    private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
-        mutableMenuState.update { oldState ->
-            oldState.copy(
-                state = MenuState.State.Error(throwable)
-            )
-        }
-    }
-
     init {
         observeCart()
     }
@@ -65,13 +58,18 @@ class MenuViewModel(
     }
 
     private fun observeCart() {
-        sharedScope.launch(exceptionHandler) {
-            observeCartUseCase().collectLatest { cartTotalAndCount ->
-                mutableMenuState.update { state ->
-                    state.copy(cartCostAndCount = cartTotalAndCount)
+        sharedScope.launchSafe(
+            block = {
+                observeCartUseCase().collectLatest { cartTotalAndCount ->
+                    mutableMenuState.update { state ->
+                        state.copy(cartCostAndCount = cartTotalAndCount)
+                    }
                 }
+            },
+            onError = { throwable ->
+                handleError(throwable)
             }
-        }
+        )
     }
 
     fun getMenu() {
@@ -81,36 +79,41 @@ class MenuViewModel(
             )
         }
 
-        sharedScope.launch(exceptionHandler) {
-            val menuSectionList = menuProductInteractor.getMenuSectionList()
-            if (selectedCategoryUuid == null) {
-                selectedCategoryUuid = menuSectionList.firstOrNull()?.category?.uuid
-            }
+        sharedScope.launchSafe(
+            block = {
+                val menuSectionList = menuProductInteractor.getMenuSectionList()
+                if (selectedCategoryUuid == null) {
+                    selectedCategoryUuid = menuSectionList.firstOrNull()?.category?.uuid
+                }
 
-            val discountItem =
-                getDiscountUseCase()?.firstOrderDiscount?.toString()?.let { discount ->
-                    MenuItem.DiscountItem(
-                        key = "MenuProductDiscountModel $discount",
-                        discount = discount
+                val discountItem =
+                    getDiscountUseCase()?.firstOrderDiscount?.toString()?.let { discount ->
+                        MenuItem.DiscountItem(
+                            key = "MenuProductDiscountModel $discount",
+                            discount = discount
+                        )
+                    }
+
+                val menuItemList =
+                    listOfNotNull(discountItem) + menuSectionList.flatMap { menuSection ->
+                        listOf(toMenuCategoryItemModel(menuSection)) +
+                                toMenuProductItemModelList(menuSection)
+                    }
+
+                mutableMenuState.update { oldState ->
+                    oldState.copy(
+                        categoryItemList = menuSectionList.map { menuSection ->
+                            toCategoryItemModel(menuSection)
+                        },
+                        menuItemList = menuItemList,
+                        state = MenuState.State.Success,
                     )
                 }
-
-            val menuItemList =
-                listOfNotNull(discountItem) + menuSectionList.flatMap { menuSection ->
-                    listOf(toMenuCategoryItemModel(menuSection)) +
-                            toMenuProductItemModelList(menuSection)
-                }
-
-            mutableMenuState.update { oldState ->
-                oldState.copy(
-                    categoryItemList = menuSectionList.map { menuSection ->
-                        toCategoryItemModel(menuSection)
-                    },
-                    menuItemList = menuItemList,
-                    state = MenuState.State.Success,
-                )
+            },
+            onError = { throwable ->
+                handleError(throwable)
             }
-        }
+        )
     }
 
     fun onCategoryClicked(categoryItem: CategoryItem) {
@@ -124,14 +127,28 @@ class MenuViewModel(
 
         currentMenuPosition = menuPosition
 
-        sharedScope.launch(exceptionHandler) {
-            val menuItemModelList = mutableMenuState.value.menuItemList
-            menuItemModelList.filterIsInstance<MenuItem.MenuCategoryHeaderItem>()
-                .findLast { menuItemModel ->
-                    menuItemModelList.indexOf(menuItemModel) <= menuPosition
-                }?.let { menuItemModel ->
-                    setCategory(menuItemModel.uuid)
-                }
+        sharedScope.launchSafe(
+            block = {
+                val menuItemModelList = mutableMenuState.value.menuItemList
+                menuItemModelList.filterIsInstance<MenuItem.MenuCategoryHeaderItem>()
+                    .findLast { menuItemModel ->
+                        menuItemModelList.indexOf(menuItemModel) <= menuPosition
+                    }?.let { menuItemModel ->
+                        setCategory(menuItemModel.uuid)
+                    }
+            },
+            onError = { throwable ->
+                handleError(throwable)
+            }
+
+        )
+    }
+
+    private fun handleError(throwable: Throwable) {
+        mutableMenuState.update { oldState ->
+            oldState.copy(
+                state = MenuState.State.Error(throwable)
+            )
         }
     }
 

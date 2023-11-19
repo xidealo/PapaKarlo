@@ -6,6 +6,12 @@ import com.bunbeauty.shared.domain.model.RecommendationProduct
 import com.bunbeauty.shared.domain.model.cart.CartProduct
 import com.bunbeauty.shared.domain.model.category.Category
 
+/*
+* 1 - Берем список рекомендаций
+* 2 - Берем только те, категорий которых нет в корзине
+* 3 - Если рекомендаций меньше 2-х, берем те, которых нет в корзине
+* 4 - Рекомендуем первые 4 (maxVisibleCount)
+* */
 class GetRecommendationsUseCase(
     private val recommendationRepository: RecommendationRepository,
     private val cartProductInteractor: ICartProductInteractor,
