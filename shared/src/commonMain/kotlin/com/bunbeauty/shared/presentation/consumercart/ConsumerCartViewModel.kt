@@ -31,7 +31,7 @@ class ConsumerCartViewModel(
     private val removeCartProductUseCase: RemoveCartProductUseCase,
     private val getRecommendationsUseCase: GetRecommendationsUseCase,
     private val analyticService: AnalyticService,
-    ) : SharedStateViewModel<ConsumerCart.ViewDataState, ConsumerCart.Action, ConsumerCart.Event>(
+) : SharedStateViewModel<ConsumerCart.ViewDataState, ConsumerCart.Action, ConsumerCart.Event>(
     ConsumerCart.ViewDataState(
         consumerCartData = ConsumerCart.ViewDataState.ConsumerCartData(
             forFreeDelivery = "",
@@ -91,21 +91,22 @@ class ConsumerCartViewModel(
             copy(screenState = ConsumerCart.ViewDataState.ScreenState.LOADING)
         }
         observeConsumerCartJob?.cancel()
-        observeConsumerCartJob = cartProductInteractor.observeConsumerCart().onEach { consumerCartDomain ->
-            Logger.logD("getConsumerCart", "getConsumerCart $consumerCartDomain")
-            setState {
-                if (consumerCartDomain == null) {
-                    copy(screenState = ConsumerCart.ViewDataState.ScreenState.ERROR)
-                } else {
-                    copy(
-                        screenState = getConsumerCartDataState(consumerCartDomain),
-                        consumerCartData = getConsumerCartData(
-                            consumerCartDomain = consumerCartDomain
-                        ),
-                    )
+        observeConsumerCartJob =
+            cartProductInteractor.observeConsumerCart().onEach { consumerCartDomain ->
+                Logger.logD("getConsumerCart", "getConsumerCart $consumerCartDomain")
+                setState {
+                    if (consumerCartDomain == null) {
+                        copy(screenState = ConsumerCart.ViewDataState.ScreenState.ERROR)
+                    } else {
+                        copy(
+                            screenState = getConsumerCartDataState(consumerCartDomain),
+                            consumerCartData = getConsumerCartData(
+                                consumerCartDomain = consumerCartDomain
+                            ),
+                        )
+                    }
                 }
-            }
-        }.launchIn(sharedScope)
+            }.launchIn(sharedScope)
     }
 
     private fun onMenuClicked() {
@@ -196,7 +197,8 @@ class ConsumerCartViewModel(
                 menuProductUuidEventParameter = MenuProductUuidEventParameter(value = menuProductUuid)
             ),
         )
-        if (dataState.value.consumerCartData?.cartProductList?.size == 1) {
+
+        if (dataState.value.getIsLastProduct(menuProductUuid = menuProductUuid)) {
             analyticService.sendEvent(
                 event = RemoveCartProductClickEvent(
                     menuProductUuidEventParameter = MenuProductUuidEventParameter(value = menuProductUuid)
