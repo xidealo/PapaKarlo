@@ -56,10 +56,10 @@ object Namespace {
 
 object CommonApplication {
     const val versionMajor = 1
-    const val versionMinor = 6
+    const val versionMinor = 7
     const val versionPatch = 0
 
-    const val versionCode = 160
+    const val versionCode = 170
 }
 
 object PapaKarloApplication {
