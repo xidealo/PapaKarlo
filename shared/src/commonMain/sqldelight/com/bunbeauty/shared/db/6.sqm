@@ -18,7 +18,8 @@ JOIN menuProductEntity ON menuProductEntity.uuid = recommendationProductEntity.m
 JOIN menuProductCategoryReference ON menuProductCategoryReference.menuProductUuidReference = menuProductEntity.uuid
 JOIN categoryEntity ON menuProductCategoryReference.categoryUuidReference = categoryEntity.uuid;
 
-CREATE OR REPLACE VIEW cartProductWithMenuProductEntity AS
+DROP VIEW IF EXISTS cartProductWithMenuProductEntity;
+CREATE VIEW cartProductWithMenuProductEntity AS
 SELECT cartProductEntity.uuid AS cartProductUuid,
  cartProductEntity.count,
  cartProductEntity.menuProductUuid,
