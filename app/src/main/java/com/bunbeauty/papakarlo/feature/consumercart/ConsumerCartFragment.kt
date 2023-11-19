@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
@@ -69,7 +68,7 @@ class ConsumerCartFragment :
     @Composable
     override fun Screen(
         viewState: ConsumerCart.ViewDataState,
-        onAction: (ConsumerCart.Action) -> Unit
+        onAction: (ConsumerCart.Action) -> Unit,
     ) {
         FoodDeliveryScaffold(
             title = stringResource(id = R.string.title_cart),
@@ -152,7 +151,7 @@ class ConsumerCartFragment :
     @Composable
     private fun ConsumerCartSuccessScreen(
         consumerCartData: ConsumerCart.ViewDataState.ConsumerCartData,
-        onAction: (ConsumerCart.Action) -> Unit
+        onAction: (ConsumerCart.Action) -> Unit,
     ) {
         Column(
             modifier = Modifier
@@ -161,7 +160,7 @@ class ConsumerCartFragment :
             Box(modifier = Modifier.weight(1f)) {
                 LazyVerticalGrid(
                     modifier = Modifier.fillMaxSize(),
-                    contentPadding = PaddingValues(FoodDeliveryTheme.dimensions.mediumSpace),
+                    contentPadding = PaddingValues(vertical = FoodDeliveryTheme.dimensions.mediumSpace),
                     columns = GridCells.Fixed(2),
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
@@ -242,14 +241,28 @@ class ConsumerCartFragment :
                         }
                     }
 
-                    items(
+                    itemsIndexed(
                         items = consumerCartData.recommendations,
-                        key = { recommendation -> recommendation.uuid },
-                        span = { _ -> GridItemSpan(1) }
-                    ) { recommendation ->
+                        key = { index, recommendation -> recommendation.uuid },
+                        span = { index, _ -> GridItemSpan(1) }
+                    ) { index, recommendation ->
                         MenuProductItem(
                             modifier = Modifier
-                                .padding(top = 8.dp),
+                                .padding(top = 8.dp)
+                                .padding(
+                                    start = if (index % 2 == 0) {
+                                        16.dp
+                                    } else {
+                                        0.dp
+                                    }
+                                )
+                                .padding(
+                                    end = if (index % 2 == 1) {
+                                        16.dp
+                                    } else {
+                                        0.dp
+                                    }
+                                ),
                             menuProductItem = recommendation,
                             onAddProductClick = {
                                 onAction(
