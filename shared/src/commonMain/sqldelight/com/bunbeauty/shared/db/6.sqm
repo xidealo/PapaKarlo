@@ -1,7 +1,7 @@
 CREATE TABLE recommendationProductEntity (
     uuid TEXT NOT NULL PRIMARY KEY,
-    menuProductUuid TEXT NOT NULL DEFAULT "",
-    isVisible INTEGER AS Boolean NOT NULL DEFAULT 0,
+    menuProductUuid TEXT NOT NULL,
+    isVisible INTEGER AS Boolean NOT NULL,
     FOREIGN KEY (menuProductUuid) REFERENCES menuProductEntity(uuid) ON DELETE CASCADE
 );
 
