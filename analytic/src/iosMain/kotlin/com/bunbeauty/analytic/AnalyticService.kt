@@ -11,7 +11,7 @@ import platform.Foundation.NSBundle
 actual class AnalyticService {
     actual fun sendEvent(event: FoodDeliveryEvent) {
         val name = "${targetName}_${event.category}_${event.action}"
-        Logger.logD(Logger.ANALYTIC_TAG, "send event: $name with params ${event.params}")
+        Logger.logD(Logger.ANALYTIC_TAG, "send event: $name with params ${event.params.toMap()}")
         FIRAnalytics.logEventWithName(name, event.params.toMap())
     }
 }

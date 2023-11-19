@@ -14,7 +14,7 @@ actual class AnalyticService : KoinComponent {
 
     actual fun sendEvent(event: FoodDeliveryEvent) {
         val name = "${BuildConfig.FLAVOR}_${event.category}_${event.action}"
-        Logger.logD(Logger.ANALYTIC_TAG, "send event: $name with params ${event.params}")
+        Logger.logD(Logger.ANALYTIC_TAG, "send event: $name with params ${event.params.toBundle()}")
         firebaseAnalytics.logEvent(name, event.params.toBundle())
     }
 
