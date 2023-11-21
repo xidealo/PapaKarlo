@@ -2,8 +2,7 @@ source "https://cdn.cocoapods.org"
 use_frameworks!
 use_modular_headers!
 
-platform :ios, '14.1'
-
+platform :ios, :deployment_target => '14.2'
 install! 'cocoapods', :deterministic_uuids => false
 
 def default_pods
