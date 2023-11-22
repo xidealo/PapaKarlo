@@ -23,7 +23,7 @@ object FoodDeliveryColors {
 
     val Cream = Color(0xFFF2F1F6)
 
-    val Red50 = Color(0xFFFFDFDF)
+    val Red50 = Color(0xFFFFEFEF)
     val Red100 = Color(0xFFFDBEBE)
     val Red200 = Color(0xFFDD6962)
     val Red250 = Color(0xFFED6264)
