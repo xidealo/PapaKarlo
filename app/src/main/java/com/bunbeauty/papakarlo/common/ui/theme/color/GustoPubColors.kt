@@ -29,7 +29,7 @@ val GustoPubLightColors = AppColors(
         secondary = White,
         background = Cream,
         surface = White,
-        surfaceVariant = Red100,
+        surfaceVariant = Red50,
         error = Red500,
         onPrimary = White,
         onDisabled = Grey3,
@@ -39,7 +39,7 @@ val GustoPubLightColors = AppColors(
         onSurfaceVariant = Grey2,
         onError = White,
         stroke = Cream,
-        strokeVariant = Red50,
+        strokeVariant = Red100,
     ),
     orderColors = OrderColors(
         notAccepted = Purple,

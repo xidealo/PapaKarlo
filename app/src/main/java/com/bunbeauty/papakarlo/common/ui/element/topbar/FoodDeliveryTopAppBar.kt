@@ -1,7 +1,6 @@
 package com.bunbeauty.papakarlo.common.ui.element.topbar
 
 import androidx.annotation.DrawableRes
-import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -17,7 +16,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -32,7 +31,9 @@ import com.bunbeauty.papakarlo.common.ui.icon24
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold
 import com.bunbeauty.papakarlo.common.ui.theme.medium
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
+@Suppress("DEPRECATION")
 @Composable
 fun FoodDeliveryTopAppBar(
     title: String?,
@@ -42,15 +43,18 @@ fun FoodDeliveryTopAppBar(
     @DrawableRes drawableId: Int? = null,
     content: @Composable () -> Unit = {},
 ) {
-    val containerColor by animateColorAsState(
-        targetValue = if (isScrolled) {
-            FoodDeliveryTheme.colors.mainColors.surfaceVariant
-        } else {
-            FoodDeliveryTheme.colors.mainColors.surface
-        },
-        label = "containerColor"
-    )
-    Column(modifier = Modifier.background(containerColor)) {
+    val barColorBar = if (isScrolled) {
+        FoodDeliveryTheme.colors.mainColors.surfaceVariant
+    } else {
+        FoodDeliveryTheme.colors.mainColors.surface
+    }
+
+    val systemUiController = rememberSystemUiController()
+    LaunchedEffect(isScrolled) {
+        systemUiController.setStatusBarColor(barColorBar)
+    }
+
+    Column(modifier = Modifier.background(barColorBar)) {
         Box {
             FoodDeliveryTopAppBar(
                 title = title,

@@ -29,6 +29,7 @@ fun CategoryItem(
     }
     FoodDeliveryCard(
         modifier = modifier.defaultMinSize(minHeight = FoodDeliveryTheme.dimensions.smallButtonSize),
+        elevated = false,
         onClick = onClick,
         colors = FoodDeliveryCardDefaults.transparentCardColors,
         shape = RoundedCornerShape(16.dp),
