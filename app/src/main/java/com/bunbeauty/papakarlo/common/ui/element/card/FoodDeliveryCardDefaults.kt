@@ -29,7 +29,10 @@ object FoodDeliveryCardDefaults {
         )
 
     val cardShape: RoundedCornerShape
-        @Composable get() = RoundedCornerShape(FoodDeliveryTheme.dimensions.cardRadius)
+        @Composable get() = RoundedCornerShape(8.dp)
+
+    val smallCardShape: RoundedCornerShape
+        @Composable get() = RoundedCornerShape(4.dp)
 
     @Composable
     fun getCardElevation(elevated: Boolean): CardElevation = if (elevated) {

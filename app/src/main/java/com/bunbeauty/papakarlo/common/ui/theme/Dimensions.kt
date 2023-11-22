@@ -15,7 +15,6 @@ data class AppDimensions(
     val switcherRadius: Dp = 24.dp,
     val switcherButtonRadius: Dp = 20.dp,
 
-    val cardRadius: Dp = 8.dp,
     val cardMediumInnerSpace: Dp = 12.dp,
     val cardLargeInnerSpace: Dp = 16.dp,
 

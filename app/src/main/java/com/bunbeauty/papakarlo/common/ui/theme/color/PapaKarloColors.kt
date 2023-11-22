@@ -30,7 +30,7 @@ val PapaKarloLightColors = AppColors(
         secondary = White,
         background = Cream,
         surface = White,
-        surfaceVariant = Orange100,
+        surfaceVariant = Orange50,
         error = Red500,
         onPrimary = White,
         onDisabled = Grey3,
@@ -40,7 +40,7 @@ val PapaKarloLightColors = AppColors(
         onSurfaceVariant = Grey2,
         onError = White,
         stroke = Cream,
-        strokeVariant = Orange50,
+        strokeVariant = Orange100,
     ),
     orderColors = OrderColors(
         notAccepted = Purple,

@@ -7,14 +7,14 @@ import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Black50
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Blue
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Cream
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.DarkGrey
-import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Gold
+import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Gold100
+import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Gold200
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Green
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Grey1
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Grey2
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Grey3
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.LightBlue
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.LightGreen
-import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Orange100
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Orange50
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Purple
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Red200
@@ -24,12 +24,12 @@ import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Yellow
 
 val YuliarLightColors = AppColors(
     mainColors = MainColors(
-        primary = Gold,
+        primary = Gold200,
         disabled = Grey1,
         secondary = White,
         background = Cream,
         surface = White,
-        surfaceVariant = Orange100,
+        surfaceVariant = Orange50,
         error = Red500,
         onPrimary = White,
         onDisabled = Grey3,
@@ -39,7 +39,7 @@ val YuliarLightColors = AppColors(
         onSurfaceVariant = Grey2,
         onError = White,
         stroke = Cream,
-        strokeVariant = Orange50,
+        strokeVariant = Gold100,
     ),
     orderColors = OrderColors(
         notAccepted = Purple,
@@ -55,7 +55,7 @@ val YuliarLightColors = AppColors(
         positive = Green,
         warning = Yellow,
         negative = Red200,
-        info = Gold,
+        info = Gold200,
         onStatus = White
     ),
     bunBeautyBrandColor = LightBlue,
@@ -64,7 +64,7 @@ val YuliarLightColors = AppColors(
 
 val YuliarDarkColors = AppColors(
     mainColors = MainColors(
-        primary = Gold,
+        primary = Gold200,
         disabled = Black100,
         secondary = Black200,
         background = Black300,
@@ -95,7 +95,7 @@ val YuliarDarkColors = AppColors(
         positive = Green,
         warning = Yellow,
         negative = Red200,
-        info = Gold,
+        info = Gold200,
         onStatus = White
     ),
     bunBeautyBrandColor = LightBlue,
