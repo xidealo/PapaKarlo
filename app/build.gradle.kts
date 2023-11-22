@@ -147,6 +147,7 @@ dependencies {
     implementation(Compose.uiViewbinding)
     implementation(Compose.activity)
     implementation(Compose.lifecycle)
+    implementation(Compose.systemUiController)
 
     implementation(Navigation.navigationFragment)
     implementation(Navigation.navigationFragmentKtx)

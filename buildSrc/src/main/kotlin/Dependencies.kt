@@ -27,10 +27,11 @@ object Versions {
     const val composeBom = "2023.06.01"
     const val activityCompose = "1.7.2"
     const val lifecycleRuntimeCompose = "2.6.1"
+    const val accompanistSystemUiController = "0.33.2-alpha"
 
     const val dataStorePreferences = "1.0.0"
 
-    const val activity = "1.7.2"
+    const val activity = "1.8.1"
     const val fragment = "1.5.7"
     const val lifecycle = "2.6.1"
 
@@ -145,6 +146,8 @@ object Compose {
     const val activity = "androidx.activity:activity-compose:${Versions.activityCompose}"
     const val lifecycle =
         "androidx.lifecycle:lifecycle-runtime-compose:${Versions.lifecycleRuntimeCompose}"
+    const val systemUiController =
+        "com.google.accompanist:accompanist-systemuicontroller:${Versions.accompanistSystemUiController}"
 }
 
 object Lifecycle {

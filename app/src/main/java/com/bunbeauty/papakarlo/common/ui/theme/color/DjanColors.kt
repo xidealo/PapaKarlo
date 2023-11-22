@@ -15,9 +15,9 @@ import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.LightBlu
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.LightGreen
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Red200
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Purple
+import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Red100
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Red500
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Red400
-import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Red100
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Red50
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.White
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Yellow
@@ -29,7 +29,7 @@ val DjanLightColors = AppColors(
         secondary = White,
         background = Cream,
         surface = White,
-        surfaceVariant = Red100,
+        surfaceVariant = Red50,
         error = Red500,
         onPrimary = White,
         onDisabled = Grey3,
@@ -39,7 +39,7 @@ val DjanLightColors = AppColors(
         onSurfaceVariant = Grey2,
         onError = White,
         stroke = Cream,
-        strokeVariant = Red50,
+        strokeVariant = Red100,
     ),
     orderColors = OrderColors(
         notAccepted = Purple,
