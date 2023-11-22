@@ -251,12 +251,12 @@ struct CreateOrderSuccessView: View {
                     
                     Toggle(isOn: $faster.onChange({ faster in
                         if(faster) {
-                            viewModel.kmmViewModel.onDeferredTimeSelected(deferredTimeUi: TimeUIASAP())
+                            viewModel.kmmViewModel.onDeferredTimeSelected(deferredTime: nil)
                         }else{
                             let date =  Date.now + 60 * 60
                             
                             viewModel.kmmViewModel.onDeferredTimeSelected(
-                                deferredTimeUi: TimeUITime(
+                                deferredTime: Time(
                                     hours: Int32(calendar.component(.hour, from: date)),
                                     minutes: Int32(calendar.component(.minute, from: date)
                                                   )
@@ -277,7 +277,7 @@ struct CreateOrderSuccessView: View {
                                 selection: $deferredTime.onChange(
                                     { date in
                                         viewModel.kmmViewModel.onDeferredTimeSelected(
-                                            deferredTimeUi: TimeUITime(
+                                            deferredTime: Time(
                                                 hours: Int32(calendar.component(.hour, from: date)),
                                                 minutes: Int32(calendar.component(.minute, from: date)
                                                               )
@@ -298,7 +298,7 @@ struct CreateOrderSuccessView: View {
                                 selection: $deferredTime.onChange(
                                     { date in
                                         viewModel.kmmViewModel.onDeferredTimeSelected(
-                                            deferredTimeUi: TimeUITime(
+                                            deferredTime: Time(
                                                 hours: Int32(calendar.component(.hour, from: date)),
                                                 minutes: Int32(calendar.component(.minute, from: date)
                                                               )

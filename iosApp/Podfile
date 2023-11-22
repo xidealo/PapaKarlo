@@ -2,8 +2,8 @@ source "https://cdn.cocoapods.org"
 use_frameworks!
 use_modular_headers!
 
-platform :ios, :deployment_target => '14.2'
-install! 'cocoapods', :deterministic_uuids => false
+platform :ios, '12.0'
+install! 'cocoapods'
 
 def default_pods
   pod 'Firebase'

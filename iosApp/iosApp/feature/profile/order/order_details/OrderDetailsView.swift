@@ -25,7 +25,6 @@ struct OrderDetailsView: View {
     
     var viewModel = OrderDetailsViewModel(
         observeOrderUseCase: iosComponent.provideObserveOrderUseCase(),
-        timeMapper: iosComponent.provideTimeMapper(),
         stopObserveOrdersUseCase: iosComponent.provideStopObserveOrdersUseCase()
     )
     
@@ -125,7 +124,7 @@ struct OrderDetailsView: View {
                                 .foregroundColor(AppColor.onSurfaceVariant)
                                 .padding(.trailing, 4)
                         }
-                
+                        
                         Text((orderDetailsState.newTotalCost ?? "") + Strings.CURRENCY)
                             .bodyMedium(weight: .bold)
                     }
@@ -186,7 +185,7 @@ struct OrderProductItemView :View {
                     .frame(maxWidth:.infinity, alignment: .topLeading)
                     .foregroundColor(AppColor.onSurface)
                     .padding(.top, 8)
-
+                
                 Spacer()
                 
                 HStack(spacing:0){
@@ -254,15 +253,19 @@ struct OrderDetailsTextView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
                 
-                if(orderDetails.deferredTime != nil && orderDetails.deferredTime is TimeUITime){
+                if(orderDetails.deferredTime != nil){
                     VStack(spacing:0){
                         Text("Время доставки")
                             .labelSmall(weight: .medium)
                             .foregroundColor(AppColor.onSurfaceVariant)
                             .frame(maxWidth: .infinity, alignment: .leading)
-                        Text(dateUtil.getTimeString(time: orderDetails.deferredTime as! TimeUITime))
-                            .bodyMedium()
-                            .frame(maxWidth: .infinity, alignment: .leading)
+                        
+                        if let time = orderDetails.deferredTime{
+                            Text(dateUtil.getTimeString(time: time))
+                                .bodyMedium()
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                        }
+                        
                     }
                 }
             }
@@ -286,7 +289,7 @@ struct OrderDetailsTextView: View {
                             .frame(maxWidth: .infinity, alignment: .leading)
                     }
                 }
-
+                
                 VStack(spacing:0){
                     if let paymentMethd = orderDetails.paymentMethod{
                         Text("selectable_payment_method")
