@@ -33,7 +33,7 @@ fun FoodDeliveryScaffold(
     @DrawableRes drawableId: Int? = null,
     actionButton: @Composable () -> Unit = {},
     appBarContent: @Composable () -> Unit = {},
-    content: (@Composable () -> Unit),
+    content: (@Composable () -> Unit)
 ) {
     val appBarState = rememberTopAppBarState()
     val behavior = TopAppBarDefaults.pinnedScrollBehavior(appBarState)

@@ -39,7 +39,7 @@ val YuliarLightColors = AppColors(
         onSurfaceVariant = Grey2,
         onError = White,
         stroke = Cream,
-        strokeVariant = Gold100,
+        strokeVariant = Gold100
     ),
     orderColors = OrderColors(
         notAccepted = Purple,
@@ -79,7 +79,7 @@ val YuliarDarkColors = AppColors(
         onSurfaceVariant = Grey2,
         onError = White,
         stroke = Black50,
-        strokeVariant = Black50,
+        strokeVariant = Black50
     ),
     orderColors = OrderColors(
         notAccepted = Purple,

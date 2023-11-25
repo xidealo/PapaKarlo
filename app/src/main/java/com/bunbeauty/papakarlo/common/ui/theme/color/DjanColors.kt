@@ -1,8 +1,8 @@
 package com.bunbeauty.papakarlo.common.ui.theme.color
 
-import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Black300
-import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Black200
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Black100
+import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Black200
+import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Black300
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Black50
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Blue
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Cream
@@ -13,12 +13,12 @@ import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Grey2
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Grey3
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.LightBlue
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.LightGreen
-import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Red200
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Purple
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Red100
-import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Red500
+import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Red200
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Red400
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Red50
+import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Red500
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.White
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Yellow
 
@@ -39,7 +39,7 @@ val DjanLightColors = AppColors(
         onSurfaceVariant = Grey2,
         onError = White,
         stroke = Cream,
-        strokeVariant = Red100,
+        strokeVariant = Red100
     ),
     orderColors = OrderColors(
         notAccepted = Purple,
@@ -79,7 +79,7 @@ val DjanDarkColors = AppColors(
         onSurfaceVariant = Grey2,
         onError = White,
         stroke = Black50,
-        strokeVariant = Black50,
+        strokeVariant = Black50
     ),
     orderColors = OrderColors(
         notAccepted = Purple,

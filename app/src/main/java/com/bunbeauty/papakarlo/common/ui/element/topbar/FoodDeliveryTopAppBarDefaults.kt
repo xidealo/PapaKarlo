@@ -15,7 +15,7 @@ object FoodDeliveryTopAppBarDefaults {
         scrolledContainerColor: Color = Color.Transparent,
         navigationIconContentColor: Color = FoodDeliveryTheme.colors.mainColors.onSurface,
         titleContentColor: Color = FoodDeliveryTheme.colors.mainColors.onSurface,
-        actionIconContentColor: Color = FoodDeliveryTheme.colors.mainColors.onSurface,
+        actionIconContentColor: Color = FoodDeliveryTheme.colors.mainColors.onSurface
     ) = TopAppBarDefaults.topAppBarColors(
         containerColor = containerColor,
         scrolledContainerColor = scrolledContainerColor,

@@ -111,7 +111,7 @@ class OrderListFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compos
                 contentPadding = PaddingValues(FoodDeliveryTheme.dimensions.mediumSpace),
                 verticalArrangement = spacedBy(8.dp)
             ) {
-                items(orderItemList) {orderItem ->
+                items(orderItemList) { orderItem ->
                     OrderItem(
                         orderItem = orderItem,
                         onClick = {

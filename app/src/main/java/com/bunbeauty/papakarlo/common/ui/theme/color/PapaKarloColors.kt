@@ -1,8 +1,8 @@
 package com.bunbeauty.papakarlo.common.ui.theme.color
 
-import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Black300
-import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Black200
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Black100
+import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Black200
+import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Black300
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Black50
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Blue
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Cream
@@ -13,12 +13,12 @@ import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Grey2
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Grey3
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.LightBlue
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.LightGreen
-import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Orange200
-import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Red200
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Orange100
+import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Orange200
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Orange300
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Orange50
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Purple
+import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Red200
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Red500
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.White
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Yellow
@@ -40,7 +40,7 @@ val PapaKarloLightColors = AppColors(
         onSurfaceVariant = Grey2,
         onError = White,
         stroke = Cream,
-        strokeVariant = Orange100,
+        strokeVariant = Orange100
     ),
     orderColors = OrderColors(
         notAccepted = Purple,
@@ -80,7 +80,7 @@ val PapaKarloDarkColors = AppColors(
         onSurfaceVariant = Grey2,
         onError = White,
         stroke = Black50,
-        strokeVariant = Black50,
+        strokeVariant = Black50
     ),
     orderColors = OrderColors(
         notAccepted = Purple,

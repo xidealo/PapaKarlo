@@ -20,7 +20,7 @@ object FoodDeliveryCardDefaults {
     val transparentCardColors: CardColors
         @Composable get() = CardDefaults.cardColors(
             containerColor = Color.Transparent,
-            disabledContainerColor = Color.Transparent,
+            disabledContainerColor = Color.Transparent
         )
 
     val cardStatusColors: CardColors
