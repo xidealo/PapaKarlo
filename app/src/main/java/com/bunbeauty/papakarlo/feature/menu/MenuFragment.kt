@@ -119,6 +119,7 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
                 }
             ),
             scrollableState = menuLazyGridState,
+            backgroundColor = FoodDeliveryTheme.colors.mainColors.surface,
             drawableId = R.drawable.logo_small,
             appBarContent = {
                 if (menuUi.state is MenuState.State.Success) {

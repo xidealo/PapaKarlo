@@ -1,6 +1,8 @@
 package com.bunbeauty.papakarlo.common.ui.element.topbar
 
 import androidx.annotation.DrawableRes
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -17,6 +19,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -32,6 +35,7 @@ import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold
 import com.bunbeauty.papakarlo.common.ui.theme.medium
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import kotlinx.coroutines.delay
 
 @Suppress("DEPRECATION")
 @Composable
@@ -41,20 +45,30 @@ fun FoodDeliveryTopAppBar(
     actions: List<FoodDeliveryToolbarActions> = emptyList(),
     isScrolled: Boolean = false,
     @DrawableRes drawableId: Int? = null,
-    content: @Composable () -> Unit = {}
+    content: @Composable () -> Unit = {},
 ) {
-    val barColorBar = if (isScrolled) {
+    val barColor = if (isScrolled) {
         FoodDeliveryTheme.colors.mainColors.surfaceVariant
     } else {
         FoodDeliveryTheme.colors.mainColors.surface
     }
+    val animatedBarColor by animateColorAsState(
+        targetValue = if (isScrolled) {
+            FoodDeliveryTheme.colors.mainColors.surfaceVariant
+        } else {
+            FoodDeliveryTheme.colors.mainColors.surface
+        },
+        animationSpec = tween(400),
+        label = "barColor"
+    )
 
     val systemUiController = rememberSystemUiController()
     LaunchedEffect(isScrolled) {
-        systemUiController.setStatusBarColor(barColorBar)
+        delay(200)
+        systemUiController.setStatusBarColor(barColor)
     }
 
-    Column(modifier = Modifier.background(barColorBar)) {
+    Column(modifier = Modifier.background(animatedBarColor)) {
         Box {
             FoodDeliveryTopAppBar(
                 title = title,
@@ -80,7 +94,7 @@ fun FoodDeliveryTopAppBar(
 private fun FoodDeliveryTopAppBar(
     title: String?,
     backActionClick: (() -> Unit)? = null,
-    actions: List<FoodDeliveryToolbarActions> = emptyList()
+    actions: List<FoodDeliveryToolbarActions> = emptyList(),
 ) {
     TopAppBar(
         colors = FoodDeliveryTopAppBarDefaults.topAppBarColors(),
@@ -180,7 +194,7 @@ private fun CardAction(action: FoodDeliveryCartAction) {
 @Composable
 private fun LogoImage(
     @DrawableRes drawableId: Int?,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     drawableId?.let {
         Image(
