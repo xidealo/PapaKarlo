@@ -8,8 +8,8 @@ Pod::Spec.new do |spec|
     spec.summary                  = 'Analytic module'
     spec.vendored_frameworks      = 'build/cocoapods/framework/analytic.framework'
     spec.libraries                = 'c++'
-    spec.ios.deployment_target = '14.1'
-    spec.dependency 'FirebaseAnalytics'
+    spec.ios.deployment_target = '12.0'
+                
                 
     spec.pod_target_xcconfig = {
         'KOTLIN_PROJECT_PATH' => ':analytic',
