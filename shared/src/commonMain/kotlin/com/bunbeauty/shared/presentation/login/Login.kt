@@ -3,16 +3,16 @@ package com.bunbeauty.shared.presentation.login
 import com.bunbeauty.shared.Constants.PHONE_CODE
 import com.bunbeauty.shared.presentation.base.BaseAction
 import com.bunbeauty.shared.presentation.base.BaseEvent
-import com.bunbeauty.shared.presentation.base.BaseState
+import com.bunbeauty.shared.presentation.base.BaseViewDataState
 
 interface Login {
 
-    data class State(
+    data class ViewDataState(
         val phoneNumber: String = PHONE_CODE,
         val phoneNumberCursorPosition: Int = PHONE_CODE.length,
         val hasPhoneError: Boolean = false,
-        val isLoading: Boolean = false,
-    ): BaseState
+        val isLoading: Boolean = true,
+    ): BaseViewDataState
 
     sealed interface Action: BaseAction {
         data object Init : Action
@@ -23,7 +23,6 @@ interface Login {
         ) : Action
 
         data object NextClick : Action
-        data class ConsumeEvents(val eventList: List<Event>) : Action
         data object BackClick : Action
     }
 

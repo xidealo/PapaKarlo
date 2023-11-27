@@ -4,9 +4,4 @@ import io.ktor.client.engine.HttpClientEngine
 import io.ktor.client.engine.darwin.Darwin
 import platform.UIKit.UIDevice
 
-actual class Platform actual constructor() {
-    actual val platform: String =
-        UIDevice.currentDevice.systemName() + " " + UIDevice.currentDevice.systemVersion
-}
-
 actual val httpClientEngine: HttpClientEngine = Darwin.create()

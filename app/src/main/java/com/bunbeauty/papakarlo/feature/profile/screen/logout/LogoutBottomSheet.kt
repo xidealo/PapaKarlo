@@ -1,7 +1,5 @@
 package com.bunbeauty.papakarlo.feature.profile.screen.logout
 
-import android.os.Bundle
-import android.view.View
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -14,24 +12,21 @@ import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
 import com.bunbeauty.papakarlo.common.ui.element.button.SecondaryButton
 import com.bunbeauty.papakarlo.common.ui.screen.bottomsheet.FoodDeliveryBottomSheet
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
 class LogoutBottomSheet : ComposeBottomSheet<Boolean>() {
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        binding.root.setContentWithTheme {
-            LogoutScreen(
-                onLogoutClick = {
-                    callback?.onResult(true)
-                },
-                onCancelClick = {
-                    callback?.onResult(false)
-                }
-            )
-        }
+    @Composable
+    override fun Content() {
+        LogoutScreen(
+            onLogoutClick = {
+                callback?.onResult(true)
+            },
+            onCancelClick = {
+                callback?.onResult(false)
+            }
+        )
     }
 
     companion object {

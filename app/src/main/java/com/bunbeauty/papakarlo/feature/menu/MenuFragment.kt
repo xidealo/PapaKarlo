@@ -14,6 +14,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -57,6 +58,7 @@ import com.bunbeauty.shared.presentation.menu.MenuItem
 import com.bunbeauty.shared.presentation.menu.MenuProductItem
 import com.bunbeauty.shared.presentation.menu.MenuState
 import com.bunbeauty.shared.presentation.menu.MenuViewModel
+import com.bunbeauty.shared.presentation.product_details.ProductDetailsOpenedFrom
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -92,7 +94,8 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
                     findNavController().navigateSafe(
                         MenuFragmentDirections.toProductFragment(
                             event.uuid,
-                            event.name
+                            event.name,
+                            ProductDetailsOpenedFrom.MENU_PRODUCT
                         )
                     )
                 }
@@ -224,54 +227,51 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
             modifier = Modifier.fillMaxSize(),
             contentPadding = PaddingValues(FoodDeliveryTheme.dimensions.mediumSpace),
             columns = GridCells.Fixed(2),
-            horizontalArrangement = Arrangement.Absolute.spacedBy(8.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
             state = menuLazyListState,
             userScrollEnabled = menu.userScrollEnabled
         ) {
-            menu.menuItemList.forEachIndexed { index, menuItemModel ->
+            itemsIndexed(
+                items = menu.menuItemList,
+                key = { index, menuItemModel -> menuItemModel.key },
+                span = { index, menuItemModel ->
+                    when (menuItemModel) {
+                        is MenuItem.DiscountItem, is MenuItem.MenuCategoryHeaderItem ->
+                            GridItemSpan(maxLineSpan)
+
+                        else -> GridItemSpan(1)
+                    }
+                }
+            ) { index, menuItemModel ->
                 when (menuItemModel) {
                     is MenuItem.DiscountItem -> {
-                        item(
-                            span = { GridItemSpan(maxLineSpan) },
-                            key = menuItemModel.key
-                        ) {
-                            FirstOrderDiscountItem(
-                                discount = menuItemModel.discount
-                            )
-                        }
+                        FirstOrderDiscountItem(
+                            discount = menuItemModel.discount
+                        )
                     }
 
                     is MenuItem.MenuCategoryHeaderItem -> {
-                        item(
-                            span = { GridItemSpan(maxLineSpan) },
-                            key = menuItemModel.key
-                        ) {
-                            Text(
-                                modifier = Modifier.padding(
-                                    top = if (index == 0) {
-                                        0.dp
-                                    } else {
-                                        16.dp
-                                    }
-                                ),
-                                text = menuItemModel.name,
-                                style = FoodDeliveryTheme.typography.titleMedium.bold,
-                                color = FoodDeliveryTheme.colors.mainColors.onSurface
-                            )
-                        }
+                        Text(
+                            modifier = Modifier.padding(
+                                top = if (index == 0) {
+                                    0.dp
+                                } else {
+                                    16.dp
+                                }
+                            ),
+                            text = menuItemModel.name,
+                            style = FoodDeliveryTheme.typography.titleMedium.bold,
+                            color = FoodDeliveryTheme.colors.mainColors.onSurface
+                        )
                     }
 
                     is MenuItem.MenuProductListItem -> {
-                        item(
-                            key = menuItemModel.key
-                        ) {
-                            MenuProductItem(
-                                modifier = Modifier.padding(top = 8.dp),
-                                menuProductItem = menuItemModel.product,
-                                onAddProductClick = viewModel::onAddProductClicked,
-                                onProductClick = viewModel::onMenuItemClicked
-                            )
-                        }
+                        MenuProductItem(
+                            modifier = Modifier.padding(top = 8.dp),
+                            menuProductItem = menuItemModel.product,
+                            onAddProductClick = viewModel::onAddProductClicked,
+                            onProductClick = viewModel::onMenuItemClicked
+                        )
                     }
                 }
             }

@@ -1,10 +1,10 @@
 package com.bunbeauty.shared.presentation.order_details
 
 import com.bunbeauty.shared.domain.model.date_time.DateTime
+import com.bunbeauty.shared.domain.model.date_time.Time
 import com.bunbeauty.shared.domain.model.order.OrderAddress
 import com.bunbeauty.shared.domain.model.order.OrderStatus
 import com.bunbeauty.shared.domain.model.payment_method.PaymentMethodName
-import com.bunbeauty.shared.presentation.create_order.model.TimeUI
 
 data class OrderDetailsState(
     val orderProductItemList: List<OrderProductItem> = emptyList(),
@@ -20,7 +20,7 @@ data class OrderDetailsState(
         val code: String,
         val status: OrderStatus,
         val dateTime: DateTime,
-        val deferredTime: TimeUI?,
+        val deferredTime: Time?,
         val address: OrderAddress,
         val comment: String?,
         val isDelivery: Boolean,

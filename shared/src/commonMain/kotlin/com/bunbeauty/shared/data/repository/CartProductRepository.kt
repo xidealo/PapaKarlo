@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.map
 class CartProductRepository(
     private val uuidGenerator: UuidGenerator,
     private val cartProductDao: ICartProductDao,
-    private val cartProductMapper: ICartProductMapper
+    private val cartProductMapper: ICartProductMapper,
 ) : CartProductRepo {
 
     override fun observeCartProductList(): Flow<List<CartProduct>> {
@@ -27,7 +27,9 @@ class CartProductRepository(
     }
 
     override suspend fun getCartProductByMenuProductUuid(menuProductUuid: String): CartProduct? {
-        return cartProductDao.getCartProductByMenuProductUuid(menuProductUuid).toCartProduct()
+        return cartProductDao.getCartProductByMenuProductUuid(menuProductUuid)
+            .toCartProductList()
+            .firstOrNull()
     }
 
     override suspend fun saveAsCartProduct(menuProductUuid: String): CartProduct? {
@@ -39,15 +41,16 @@ class CartProductRepository(
         )
         cartProductDao.insertCartProduct(cartProductEntity)
 
-        return cartProductDao.getCartProductByUuid(uuid).toCartProduct()
+        return cartProductMapper
+            .toCartProductList(cartProductDao.getCartProductByUuid(uuid))
+            .firstOrNull()
     }
 
     override suspend fun updateCartProductCount(cartProductUuid: String, count: Int): CartProduct? {
         cartProductDao.updateCartProductCountByUuid(cartProductUuid, count)
-
-        return cartProductDao.getCartProductByUuid(cartProductUuid)?.let { updatedCartProduct ->
-            cartProductMapper.toModel(updatedCartProduct)
-        }
+        return cartProductMapper
+            .toCartProductList(cartProductDao.getCartProductByUuid(cartProductUuid))
+            .firstOrNull()
     }
 
     override suspend fun deleteCartProduct(cartProductUuid: String) {
@@ -59,18 +62,10 @@ class CartProductRepository(
     }
 
     private fun List<CartProductWithMenuProductEntity>.toCartProductList(): List<CartProduct> {
-        return this.filter { cartProductWithMenuProduct ->
-            cartProductWithMenuProduct.visible
-        }.map(cartProductMapper::toModel)
-    }
-
-    private fun CartProductWithMenuProductEntity?.toCartProduct(): CartProduct? {
-        return this?.let { cartProductWithMenuProductEntity ->
-            if (cartProductWithMenuProductEntity.visible) {
-                cartProductMapper.toModel(cartProductWithMenuProductEntity)
-            } else {
-                null
+        return cartProductMapper.toCartProductList(
+            this.filter { cartProductWithMenuProduct ->
+                cartProductWithMenuProduct.visible
             }
-        }
+        )
     }
 }

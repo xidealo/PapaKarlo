@@ -17,7 +17,7 @@ class CreateOrderHolder: ObservableObject {
         isDeliveryAddressErrorShown: false,
         pickupAddress: nil,
         comment: nil,
-        deferredTime: TimeUIASAP(),
+        deferredTime: nil,
         totalCost: nil,
         deliveryCost: nil,
         oldFinalCost: nil,
@@ -33,8 +33,6 @@ class CreateOrderHolder: ObservableObject {
         cafeInteractor: iosComponent.provideCafeInteractor(),
         userInteractor: iosComponent.provideIUserInteractor(),
         createOrderStateMapper: iosComponent.provideCreateOrderStateMapper(),
-        timeMapper: iosComponent.provideTimeMapper(),
-        userAddressMapper: iosComponent.provideUserAddressMapper(),
         getSelectableUserAddressList: iosComponent.provideGetSelectableUserAddressListUseCase(),
         getSelectableCafeList: iosComponent.provideGetSelectableCafeListUseCase(),
         getCartTotal: iosComponent.provideGetCartTotalUseCase(),
@@ -68,7 +66,7 @@ class CreateOrderHolder: ObservableObject {
             return ""
         }
         
-        var address : String = creationOrderViewState.deliveryAddress?.street ?? ""
+        var address : String = creationOrderViewState.deliveryAddress?.street.name ?? ""
         
         if(creationOrderViewState.deliveryAddress?.house != nil){
             address += ", д. " + (creationOrderViewState.deliveryAddress?.house ?? "")

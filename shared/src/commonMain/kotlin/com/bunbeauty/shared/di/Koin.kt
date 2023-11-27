@@ -1,5 +1,7 @@
 package com.bunbeauty.shared.di
 
+import com.bunbeauty.analytic.AnalyticService
+import com.bunbeauty.analytic.di.analyticModule
 import com.bunbeauty.shared.data.di.dataMapperModule
 import com.bunbeauty.shared.data.di.databaseModule
 import com.bunbeauty.shared.data.di.networkModule
@@ -43,7 +45,9 @@ import com.bunbeauty.shared.domain.feature.auth.GetPhoneNumberCursorPositionUseC
 import com.bunbeauty.shared.domain.feature.auth.RequestCodeUseCase
 import com.bunbeauty.shared.domain.feature.auth.ResendCodeUseCase
 import com.bunbeauty.shared.domain.feature.cart.AddCartProductUseCase
+import com.bunbeauty.shared.domain.feature.cart.GetRecommendationsUseCase
 import com.bunbeauty.shared.domain.feature.discount.GetDiscountUseCase
+import com.bunbeauty.shared.domain.feature.menu_product.GetMenuProductByUuidUseCase
 import com.bunbeauty.shared.domain.feature.payment.GetSelectablePaymentMethodListUseCase
 import com.bunbeauty.shared.domain.feature.payment.SavePaymentMethodUseCase
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
@@ -51,7 +55,6 @@ import com.bunbeauty.shared.domain.use_case.DisableUserUseCase
 import com.bunbeauty.shared.domain.use_case.address.*
 import com.bunbeauty.shared.domain.use_case.cafe.GetSelectableCafeListUseCase
 import com.bunbeauty.shared.presentation.create_order.CreateOrderStateMapper
-import com.bunbeauty.shared.presentation.create_order.TimeMapper
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 import org.koin.core.context.startKoin
@@ -75,7 +78,8 @@ fun initKoin(appDeclaration: KoinAppDeclaration = {}) = startKoin {
         cafeUseCaseModule(),
         paymentUseCaseModule(),
         authUseCaseModule(),
-        useCaseModules()
+        useCaseModules(),
+        analyticModule()
     )
 }
 
@@ -96,7 +100,8 @@ fun initKoin() = startKoin {
         cafeUseCaseModule(),
         paymentUseCaseModule(),
         authUseCaseModule(),
-        useCaseModules()
+        useCaseModules(),
+        analyticModule()
     )
 }
 
@@ -149,13 +154,15 @@ class IosComponent : KoinComponent {
     fun provideCheckCodeUseCase(): CheckCodeUseCase = get()
     fun provideResendCodeUseCase(): ResendCodeUseCase = get()
     fun provideCheckPhoneNumberUseCase(): CheckPhoneNumberUseCase = get()
+    fun provideGetRecommendationsUseCase(): GetRecommendationsUseCase = get()
+  fun provideGetMenuProductByUuidUseCase(): GetMenuProductByUuidUseCase = get()
 
     //Mapper
-    fun provideTimeMapper(): TimeMapper = get()
     fun provideUserAddressMapper(): UserAddressMapper = get()
     fun provideCreateOrderStateMapper(): CreateOrderStateMapper = get()
 
     //Other
     fun provideApiRepo(): NetworkConnector = get()
+    fun provideAnalyticService(): AnalyticService = get()
 
 }

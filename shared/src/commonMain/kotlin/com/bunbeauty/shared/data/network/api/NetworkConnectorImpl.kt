@@ -19,6 +19,8 @@ import com.bunbeauty.shared.data.network.model.ListServer
 import com.bunbeauty.shared.data.network.model.MenuProductServer
 import com.bunbeauty.shared.data.network.model.PaymentMethodServer
 import com.bunbeauty.shared.data.network.model.PaymentServer
+import com.bunbeauty.shared.data.network.model.RecommendationProductListServer
+import com.bunbeauty.shared.data.network.model.RecommendationProductServer
 import com.bunbeauty.shared.data.network.model.SettingsServer
 import com.bunbeauty.shared.data.network.model.StreetServer
 import com.bunbeauty.shared.data.network.model.UserAddressPostServer
@@ -178,6 +180,12 @@ class NetworkConnectorImpl(
         )
     }
 
+    override suspend fun getRecommendationList(): ApiResult<RecommendationProductListServer> {
+        return getData(
+            path = "recommendation",
+            parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuid)
+        )
+    }
     // POST
 
     @Deprecated("Outdated login method")

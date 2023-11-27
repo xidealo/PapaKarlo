@@ -11,7 +11,6 @@ class ObserveCartUseCase(
     private val cartProductRepo: CartProductRepo,
     private val getNewTotalCostUseCase: GetNewTotalCostUseCase,
 ) {
-
     operator fun invoke(): CommonFlow<CartCostAndCount> {
         return cartProductRepo.observeCartProductList().map { cartProductList ->
             CartCostAndCount(

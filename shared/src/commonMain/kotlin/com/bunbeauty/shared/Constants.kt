@@ -6,19 +6,19 @@ object Constants {
     const val TEST_COMPANY_UUID = "fd483dcb-3f44-457f-b4d4-f82d2aa83b46"
 
     const val PAPA_KARLO_TARGET_NAME = "papakarlo"
-    const val PAPA_KARLO_FLAVOR_NAME = "papaKarlo"
+    const val PAPA_KARLO_FLAVOR_NAME = PAPA_KARLO_TARGET_NAME
     const val PAPA_KARLO_COMPANY_UUID = "7416dba5-2825-4fe3-abfb-1494a5e2bf99"
 
     const val YULIAR_TARGET_NAME = "yuliar"
-    const val YULIAR_FLAVOR_NAME = "yuliar"
+    const val YULIAR_FLAVOR_NAME = YULIAR_TARGET_NAME
     const val YULIAR_COMPANY_UUID = "8b91126f-be08-423a-b1dc-dea78ae79cd0"
 
     const val DJAN_TARGET_NAME = "djan"
-    const val DJAN_FLAVOR_NAME = "djan"
+    const val DJAN_FLAVOR_NAME = DJAN_TARGET_NAME
     const val DJAN_COMPANY_UUID = "136ce426-15ab-49eb-ab78-19da43fca191"
 
     const val GUSTO_PUB_TARGET_NAME = "gustopub"
-    const val GUSTO_PUB_FLAVOR_NAME = "gustopub"
+    const val GUSTO_PUB_FLAVOR_NAME = GUSTO_PUB_TARGET_NAME
     const val GUSTO_PUB_COMPANY_UUID = "e1d1474b-6fba-4dff-826f-48e89abc48e3"
 
     // NOTIFICATION

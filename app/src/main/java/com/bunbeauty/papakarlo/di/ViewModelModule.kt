@@ -27,7 +27,8 @@ fun viewModelModule() = module {
             menuProductInteractor = get(),
             observeCartUseCase = get(),
             addCartProductUseCase = get(),
-            getDiscountUseCase = get()
+            getDiscountUseCase = get(),
+            analyticService = get()
         )
     }
     viewModel {
@@ -40,7 +41,9 @@ fun viewModelModule() = module {
             userInteractor = get(),
             cartProductInteractor = get(),
             addCartProductUseCase = get(),
-            removeCartProductUseCase = get()
+            removeCartProductUseCase = get(),
+            getRecommendationsUseCase = get(),
+            analyticService = get()
         )
     }
     viewModel {
@@ -49,8 +52,6 @@ fun viewModelModule() = module {
             cafeInteractor = get(),
             userInteractor = get(),
             createOrderStateMapper = get(),
-            timeMapper = get(),
-            userAddressMapper = get(),
             getSelectableUserAddressList = get(),
             getSelectableCafeList = get(),
             getCartTotal = get(),
@@ -100,7 +101,6 @@ fun viewModelModule() = module {
     viewModel {
         OrderDetailsViewModel(
             observeOrderUseCase = get(),
-            timeMapper = get(),
             stopObserveOrdersUseCase = get()
         )
     }
@@ -127,7 +127,8 @@ fun viewModelModule() = module {
         ConfirmViewModel(
             formatPhoneNumber = get(),
             checkCode = get(),
-            resendCode = get()
+            resendCode = get(),
+            analyticService = get()
         )
     }
     viewModel {
@@ -138,14 +139,16 @@ fun viewModelModule() = module {
             getCityListUseCase = get(),
             saveSelectedCityUseCase = get(),
             disableUserUseCase = get(),
-            userInteractor = get()
+            userInteractor = get(),
+            analyticService = get()
         )
     }
     viewModel {
         ProductDetailsViewModel(
             getMenuProductByUuidUseCase = get(),
             observeCartUseCase = get(),
-            addCartProductUseCase = get()
+            addCartProductUseCase = get(),
+            analyticService = get()
         )
     }
     viewModel {

@@ -18,7 +18,8 @@ struct ConfirmView: View {
     @State var viewModel = ConfirmViewModel(
         formatPhoneNumber: iosComponent.provideFormatPhoneNumberUseCase(),
         checkCode: iosComponent.provideCheckCodeUseCase(),
-        resendCode: iosComponent.provideResendCodeUseCase()
+        resendCode: iosComponent.provideResendCodeUseCase(),
+        analyticService: iosComponent.provideAnalyticService()
     )
 
     //State
@@ -46,7 +47,7 @@ struct ConfirmView: View {
     init(phone:String, rootIsActive: Binding<Bool>, isGoToCreateOrder: Binding<Bool>){
         self._rootIsActive = rootIsActive
         self._isGoToCreateOrder = isGoToCreateOrder
-        self.viewModel.handleAction(action: ConfirmActionInit(phoneNumber: phone, direction: SuccessLoginDirection.backToProfile))
+        self.viewModel.onAction(action: ConfirmActionInit(phoneNumber: phone, direction: SuccessLoginDirection.backToProfile))
         }
     
     var body: some View {
@@ -58,7 +59,7 @@ struct ConfirmView: View {
                     code: $code,
                     phone: $phoneNumber,
                     resendSeconds: $resendSeconds,
-                    action: viewModel.handleAction
+                    action: viewModel.onAction
                 )
             }
         }
@@ -113,7 +114,7 @@ struct ConfirmView: View {
     }
 
     func subscribe(){
-        stateListener = viewModel.state.watch { confirmStateVM in
+        stateListener = viewModel.dataState.watch { confirmStateVM in
             if let confirmState = confirmStateVM{
                 phoneNumber = confirmState.phoneNumber
                 resendSeconds = Int(confirmState.resendSeconds)

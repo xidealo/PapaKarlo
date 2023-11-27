@@ -32,7 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.common.BaseComposeFragment
+import com.bunbeauty.papakarlo.common.BaseSingleStateComposeFragment
 import com.bunbeauty.papakarlo.common.extension.navigateSafe
 import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.papakarlo.common.ui.element.button.LoadingButton
@@ -43,22 +43,22 @@ import com.bunbeauty.shared.presentation.login.Login
 import com.bunbeauty.shared.presentation.login.LoginViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class LoginFragment : BaseComposeFragment<Login.State, Login.Action, Login.Event>() {
+class LoginFragment : BaseSingleStateComposeFragment<Login.ViewDataState, Login.Action, Login.Event>() {
 
     override val viewModel: LoginViewModel by viewModel()
 
     private val args: LoginFragmentArgs by navArgs()
 
-    private val LogoBoxHeightLimit: Dp = 200.dp
+    private val logoBoxHeightLimit: Dp = 200.dp
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.handleAction(Login.Action.Init)
+        viewModel.onAction(Login.Action.Init)
     }
 
     @Composable
-    override fun Screen(state: Login.State, onAction: (Login.Action) -> Unit) {
+    override fun Screen(viewState: Login.ViewDataState, onAction: (Login.Action) -> Unit) {
         FoodDeliveryScaffold(
             backActionClick = {
                 onAction(Login.Action.BackClick)
@@ -69,7 +69,7 @@ class LoginFragment : BaseComposeFragment<Login.State, Login.Action, Login.Event
                     modifier = Modifier
                         .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
                     textStringId = R.string.action_login_continue,
-                    isLoading = state.isLoading,
+                    isLoading = viewState.isLoading,
                     onClick = {
                         onAction(Login.Action.NextClick)
                     }
@@ -85,7 +85,7 @@ class LoginFragment : BaseComposeFragment<Login.State, Login.Action, Login.Event
                 verticalArrangement = Arrangement.Center
             ) {
                 BoxWithConstraints {
-                    if (maxHeight > LogoBoxHeightLimit) {
+                    if (maxHeight > logoBoxHeightLimit) {
                         Image(
                             modifier = Modifier.height(156.dp),
                             painter = painterResource(R.drawable.logo_medium),
@@ -107,8 +107,8 @@ class LoginFragment : BaseComposeFragment<Login.State, Login.Action, Login.Event
                         .padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
                     focusRequester = focusRequester,
                     value = TextFieldValue(
-                        text = state.phoneNumber,
-                        selection = TextRange(state.phoneNumberCursorPosition)
+                        text = viewState.phoneNumber,
+                        selection = TextRange(viewState.phoneNumberCursorPosition)
                     ),
                     labelStringId = R.string.hint_login_phone,
                     keyboardType = KeyboardType.Phone,
@@ -116,7 +116,7 @@ class LoginFragment : BaseComposeFragment<Login.State, Login.Action, Login.Event
                     onValueChange = { value ->
                         onAction(Login.Action.ChangePhoneNumber(value.text, value.selection.start))
                     },
-                    errorMessageId = if (state.hasPhoneError) {
+                    errorMessageId = if (viewState.hasPhoneError) {
                         R.string.error_login_phone
                     } else {
                         null
@@ -167,7 +167,7 @@ class LoginFragment : BaseComposeFragment<Login.State, Login.Action, Login.Event
     private fun LoginScreenPreview() {
         FoodDeliveryTheme {
             Screen(
-                state = Login.State(
+                viewState = Login.ViewDataState(
                     phoneNumber = "+7 (900) 900-90-90",
                     phoneNumberCursorPosition = 18,
                     hasPhoneError = false,

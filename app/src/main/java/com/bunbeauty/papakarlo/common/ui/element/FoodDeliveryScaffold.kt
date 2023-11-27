@@ -46,7 +46,7 @@ fun FoodDeliveryScaffold(
                 drawableId = drawableId
             )
         },
-        containerColor = FoodDeliveryTheme.colors.mainColors.background,
+        containerColor = backgroundColor,
         floatingActionButton = actionButton,
         floatingActionButtonPosition = FabPosition.Center,
         contentWindowInsets = WindowInsets(0, 0, 0, 0)

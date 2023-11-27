@@ -23,6 +23,9 @@ struct CountPicker: View {
                 }
                 Text(count)
                     .bodySmall(weight: .bold)
+                    .id("count" + count)
+                    .transition(.opacity)
+
                 Button(action:plusAction) {
                     Text("+")
                         .bodyLarge(weight: .bold)

@@ -1,3 +1,9 @@
+import Constants.DEPLOYMENT_TARGET
+import Constants.DJAN_FLAVOR_NAME
+import Constants.GUSTO_PUB_FLAVOR_NAME
+import Constants.PAPA_KARLO_FLAVOR_NAME
+import Constants.YULIAR_FLAVOR_NAME
+
 plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
@@ -6,8 +12,6 @@ plugins {
     id(Plugin.kotlinSerialization)
 }
 
-version = "1.0"
-
 kotlin {
     androidTarget()
     iosX64()
@@ -15,22 +19,26 @@ kotlin {
     iosSimulatorArm64()
 
     cocoapods {
-        summary = "Some description for the Shared Module"
+        summary = "Main shared module with presentation layer"
         homepage = "Link to the Shared Module homepage"
-        ios.deploymentTarget = "14.1"
+        version = "1.0"
+        ios.deploymentTarget = DEPLOYMENT_TARGET
         podfile = project.file("../iosApp/Podfile")
 
         pod("FirebaseMessaging")
 
         framework {
             baseName = "shared"
-            isStatic = false
+            isStatic = true
         }
     }
 
     sourceSets {
         val commonMain by getting {
             dependencies {
+                implementation(project(":analytic"))
+                implementation(project(":core"))
+
                 Ktor.run {
                     implementation(clientSerialization)
                     implementation(clientLogging)
@@ -125,10 +133,10 @@ android {
 
     setFlavorDimensions(listOf("default"))
     productFlavors {
-        create("papaKarlo") {}
-        create("yuliar") {}
-        create("djan") {}
-        create("gustopub") {}
+        create(PAPA_KARLO_FLAVOR_NAME) {}
+        create(YULIAR_FLAVOR_NAME) {}
+        create(DJAN_FLAVOR_NAME) {}
+        create(GUSTO_PUB_FLAVOR_NAME) {}
     }
 }
 

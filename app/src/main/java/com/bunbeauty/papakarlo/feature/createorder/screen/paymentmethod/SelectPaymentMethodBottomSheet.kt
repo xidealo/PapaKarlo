@@ -1,11 +1,7 @@
 package com.bunbeauty.papakarlo.feature.createorder.screen.paymentmethod
 
-import android.os.Bundle
-import android.view.View
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.fragment.app.FragmentManager
 import com.bunbeauty.papakarlo.R
@@ -13,7 +9,6 @@ import com.bunbeauty.papakarlo.common.delegates.argument
 import com.bunbeauty.papakarlo.common.ui.ComposeBottomSheet
 import com.bunbeauty.papakarlo.common.ui.screen.bottomsheet.FoodDeliveryLazyBottomSheet
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.address.ui.SelectableItemView
 import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentMethodUI
 import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentMethodValueUI
@@ -24,19 +19,16 @@ class SelectPaymentMethodBottomSheet : ComposeBottomSheet<SelectablePaymentMetho
 
     private var paymentMethodList by argument<List<SelectablePaymentMethodUI>>()
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        binding.root.setContentWithTheme {
-            PaymentMethodListScreen(
-                paymentMethodList = paymentMethodList,
-                scrolledToTop = ::toggleDraggable,
-                onPaymentMethodClicked = { addressItem ->
-                    callback?.onResult(addressItem)
-                    dismiss()
-                }
-            )
-        }
+    @Composable
+    override fun Content() {
+        PaymentMethodListScreen(
+            paymentMethodList = paymentMethodList,
+            scrolledToTop = ::toggleDraggable,
+            onPaymentMethodClicked = { paymentMethodUI ->
+                callback?.onResult(paymentMethodUI)
+                dismiss()
+            }
+        )
     }
 
     companion object {
@@ -44,16 +36,18 @@ class SelectPaymentMethodBottomSheet : ComposeBottomSheet<SelectablePaymentMetho
 
         suspend fun show(
             fragmentManager: FragmentManager,
-            selectablePaymentMethodList: List<SelectablePaymentMethodUI>
-        ) = suspendCoroutine { continuation ->
-            SelectPaymentMethodBottomSheet().apply {
-                this.paymentMethodList = selectablePaymentMethodList
-                callback = object : Callback<SelectablePaymentMethodUI> {
-                    override fun onResult(result: SelectablePaymentMethodUI?) {
-                        continuation.resume(result)
+            paymentMethodList: List<SelectablePaymentMethodUI>
+        ): SelectablePaymentMethodUI? {
+            return suspendCoroutine { continuation ->
+                SelectPaymentMethodBottomSheet().apply {
+                    this.paymentMethodList = paymentMethodList
+                    callback = object : Callback<SelectablePaymentMethodUI> {
+                        override fun onResult(result: SelectablePaymentMethodUI?) {
+                            continuation.resume(result)
+                        }
                     }
+                    show(fragmentManager, TAG)
                 }
-                show(fragmentManager, TAG)
             }
         }
     }
@@ -69,25 +63,23 @@ private fun PaymentMethodListScreen(
         titleStringId = R.string.pickup_payment_method,
         scrolledToTop = scrolledToTop
     ) {
-        itemsIndexed(paymentMethodList) { i, paymentItem ->
+        items(paymentMethodList) { paymentItem ->
             SelectableItemView(
-                modifier = Modifier.padding(
-                    top = FoodDeliveryTheme.dimensions.getItemSpaceByIndex(i)
-                ),
                 title = paymentItem.paymentMethodUI.name,
                 isClickable = true,
                 elevated = false,
-                isSelected = paymentItem.isSelected
-            ) {
-                onPaymentMethodClicked(paymentItem)
-            }
+                isSelected = paymentItem.isSelected,
+                onClick = {
+                    onPaymentMethodClicked(paymentItem)
+                }
+            )
         }
     }
 }
 
 @Preview
 @Composable
-private fun CafeAddressListScreenPreview() {
+private fun PaymentMethodListScreenPreview() {
     FoodDeliveryTheme {
         PaymentMethodListScreen(
             paymentMethodList = listOf(
@@ -100,7 +92,7 @@ private fun CafeAddressListScreenPreview() {
                             valueToCopy = "asdsd"
                         )
                     ),
-                    isSelected = true
+                    isSelected = false
                 ),
                 SelectablePaymentMethodUI(
                     PaymentMethodUI(

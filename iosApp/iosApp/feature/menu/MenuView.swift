@@ -72,6 +72,7 @@ struct MenuView: View {
                                     ForEach(viewModel.menuViewState.menuItems[i].categorySectionItem.menuProdctItems){ menuProductItem in
                                         MenuItemView(
                                             menuProductItem: menuProductItem,
+                                            productDetailsOpenedFrom : ProductDetailsOpenedFrom.menuProduct,
                                             isRootActive : $isRootActive,
                                             selection : $selection,
                                             showOrderCreated : $showOrderCreated,
@@ -101,7 +102,7 @@ struct MenuView: View {
                 }
             }
         }
-        .background(AppColor.background)
+        .background(AppColor.background2)
         .navigationBarTitle("")
         .hiddenNavigationBarStyle()
         .preferredColorScheme(.light)
