@@ -2,9 +2,10 @@ package com.bunbeauty.shared.domain.feature.cart
 
 import com.bunbeauty.shared.data.repository.RecommendationRepository
 import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
-import com.bunbeauty.shared.domain.model.RecommendationProduct
 import com.bunbeauty.shared.domain.model.cart.CartProduct
 import com.bunbeauty.shared.domain.model.category.Category
+import com.bunbeauty.shared.domain.model.product.MenuProduct
+import com.bunbeauty.shared.domain.repo.MenuProductRepo
 
 /*
 * 1 - Берем список рекомендаций
@@ -15,15 +16,15 @@ import com.bunbeauty.shared.domain.model.category.Category
 class GetRecommendationsUseCase(
     private val recommendationRepository: RecommendationRepository,
     private val cartProductInteractor: ICartProductInteractor,
+    private val menuProductRepository: MenuProductRepo,
 ) {
-    suspend operator fun invoke(): List<RecommendationProduct> {
+    suspend operator fun invoke(): List<MenuProduct> {
 
         val cartProductList = cartProductInteractor.getCartProductList()
-        val recommendationsWithMaxCount = recommendationRepository.getRecommendations()
+        val maxVisibleCount = recommendationRepository.getMaxVisibleCount()
 
-        val recommendationProductList =
-            recommendationsWithMaxCount?.recommendationProductList?.filter { it.isVisible }
-                ?: return emptyList()
+        val recommendationProductList = menuProductRepository.getMenuProductList()
+            .filter { it.isRecommended && it.visible }
 
         val recommendationProductListNoneCategory = getFilteredRecommendationsByCategories(
             recommendationProductList = recommendationProductList,
@@ -38,32 +39,32 @@ class GetRecommendationsUseCase(
             )
         } else {
             recommendationProductListNoneCategory
-        }.take(recommendationsWithMaxCount.maxVisibleCount)
+        }.take(maxVisibleCount)
     }
 
     private fun getFilteredRecommendationsByCategories(
-        recommendationProductList: List<RecommendationProduct>,
+        recommendationProductList: List<MenuProduct>,
         cartProductList: List<CartProduct>,
     ) = recommendationProductList.filterNot { recommendationProduct ->
         hasRecommendationCategoriesInCart(recommendationProduct, cartProductList)
     }
 
     private fun getRecommendationsByCartAndFilteredRecommendations(
-        recommendationProductList: List<RecommendationProduct>,
+        recommendationProductList: List<MenuProduct>,
         cartProductList: List<CartProduct>,
-        recommendationProductListNoneCategory: List<RecommendationProduct>,
+        recommendationProductListNoneCategory: List<MenuProduct>,
     ) = recommendationProductList.filter { recommendationProduct ->
         cartProductList.none {
-            it.product.uuid == recommendationProduct.menuProduct.uuid
+            it.product.uuid == recommendationProduct.uuid
         } && recommendationProductListNoneCategory.none {
-            it.menuProduct.uuid == recommendationProduct.menuProduct.uuid
+            it.uuid == recommendationProduct.uuid
         }
     }
 
     private fun hasRecommendationCategoriesInCart(
-        recommendationProduct: RecommendationProduct,
+        recommendationProduct: MenuProduct,
         cartProductList: List<CartProduct>,
-    ) = recommendationProduct.menuProduct.categoryList.any { recommendationProductCategory ->
+    ) = recommendationProduct.categoryList.any { recommendationProductCategory ->
         hasRecommendationCategoriesInCartProduct(cartProductList, recommendationProductCategory)
     }
 

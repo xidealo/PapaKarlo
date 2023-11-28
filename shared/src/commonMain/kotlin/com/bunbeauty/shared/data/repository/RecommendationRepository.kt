@@ -1,36 +1,28 @@
 package com.bunbeauty.shared.data.repository
 
-import com.bunbeauty.shared.data.dao.recommendation.IRecommendationProductDao
-import com.bunbeauty.shared.data.mapper.RecommendationMapper
 import com.bunbeauty.shared.data.network.api.NetworkConnector
-import com.bunbeauty.shared.data.network.model.RecommendationProductListServer
-import com.bunbeauty.shared.domain.model.RecommendationProduct
-import com.bunbeauty.shared.domain.model.RecommendationProductList
 
 class RecommendationRepository(
     private val networkConnector: NetworkConnector,
-    private val recommendationMapper: RecommendationMapper,
-    private val recommendationProductDao: IRecommendationProductDao,
-) : CacheRepository<RecommendationProductList>() {
+) : CacheRepository<Int>() {
+    companion object {
+        private const val DEFAULT_RECOMMENDATIONS_COUNT = 6
+    }
 
     override val tag: String = "RECOMMENDATION_TAG"
 
-    suspend fun getRecommendations(): RecommendationProductList? {
+    suspend fun getMaxVisibleCount(): Int {
         return getCacheOrData(
-            onApiRequest = networkConnector::getRecommendationList,
+            onApiRequest = networkConnector::getRecommendationData,
             onLocalRequest = {
-                val list = recommendationMapper
-                    .toRecommendationProductList(recommendationProductDao.getRecommendationProductWithMenuProductList())
-                RecommendationProductList(maxVisibleCount = 6, recommendationProductList = list)
+                DEFAULT_RECOMMENDATIONS_COUNT
             },
-            onSaveLocally = { recommendationProductList ->
-                recommendationProductDao.insertList(
-                    recommendationProductList.recommendationList.map(
-                        recommendationMapper::toRecommendationProductEntity
-                    )
-                )
+            onSaveLocally = {
+                //todo save to datastore
             },
-            serverToDomainModel = recommendationMapper::toRecommendation
-        )
+            serverToDomainModel = { recommendationProductListServer ->
+                recommendationProductListServer.maxVisibleCount
+            }
+        ) ?: DEFAULT_RECOMMENDATIONS_COUNT
     }
 }

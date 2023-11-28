@@ -9,7 +9,8 @@ CREATE TABLE menuProductEntity (
     comboDescription TEXT,
     photoLink TEXT NOT NULL,
     barcode INTEGER AS Int,
-    visible INTEGER AS Boolean NOT NULL
+    visible INTEGER AS Boolean NOT NULL,
+    isRecommended INTEGER AS Boolean NOT NULL
 );
 
 CREATE VIEW menuProductWithCategoryEntity AS
@@ -24,7 +25,7 @@ JOIN categoryEntity ON menuProductCategoryReference.categoryUuidReference = cate
 insertMenuProduct:
 INSERT OR REPLACE
 INTO menuProductEntity
-VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
 
 getMenuProductList:
 SELECT *

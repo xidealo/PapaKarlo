@@ -34,7 +34,8 @@ class CartProductMapper : ICartProductMapper {
                             priority = menuProductWithCategoryEntity.priority
                         )
                     },
-                    visible = firstCartProductWithCategoryEntity.visible
+                    visible = firstCartProductWithCategoryEntity.visible,
+                    isRecommended = firstCartProductWithCategoryEntity.isRecommended
                 )
             )
         }

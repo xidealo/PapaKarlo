@@ -14,4 +14,5 @@ data class MenuProduct(
     val photoLink: String,
     val categoryList: List<Category>,
     val visible: Boolean,
+    val isRecommended: Boolean,
 ) : Product()
