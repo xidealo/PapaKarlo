@@ -45,7 +45,7 @@ fun FoodDeliveryTopAppBar(
     actions: List<FoodDeliveryToolbarActions> = emptyList(),
     isScrolled: Boolean = false,
     @DrawableRes drawableId: Int? = null,
-    content: @Composable () -> Unit = {},
+    content: @Composable () -> Unit = {}
 ) {
     val barColor = if (isScrolled) {
         FoodDeliveryTheme.colors.mainColors.surfaceVariant
@@ -94,7 +94,7 @@ fun FoodDeliveryTopAppBar(
 private fun FoodDeliveryTopAppBar(
     title: String?,
     backActionClick: (() -> Unit)? = null,
-    actions: List<FoodDeliveryToolbarActions> = emptyList(),
+    actions: List<FoodDeliveryToolbarActions> = emptyList()
 ) {
     TopAppBar(
         colors = FoodDeliveryTopAppBarDefaults.topAppBarColors(),
@@ -194,7 +194,7 @@ private fun CardAction(action: FoodDeliveryCartAction) {
 @Composable
 private fun LogoImage(
     @DrawableRes drawableId: Int?,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     drawableId?.let {
         Image(
