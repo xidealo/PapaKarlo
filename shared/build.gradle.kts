@@ -1,3 +1,4 @@
+import Constants.DEPLOYMENT_TARGET
 import Constants.DJAN_FLAVOR_NAME
 import Constants.GUSTO_PUB_FLAVOR_NAME
 import Constants.PAPA_KARLO_FLAVOR_NAME
@@ -11,8 +12,6 @@ plugins {
     id(Plugin.kotlinSerialization)
 }
 
-version = "1.0"
-
 kotlin {
     androidTarget()
     iosX64()
@@ -22,7 +21,8 @@ kotlin {
     cocoapods {
         summary = "Main shared module with presentation layer"
         homepage = "Link to the Shared Module homepage"
-        ios.deploymentTarget = "14.1"
+        version = "1.0"
+        ios.deploymentTarget = DEPLOYMENT_TARGET
         podfile = project.file("../iosApp/Podfile")
 
         pod("FirebaseMessaging")

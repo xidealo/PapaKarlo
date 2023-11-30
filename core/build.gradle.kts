@@ -1,3 +1,4 @@
+import Constants.DEPLOYMENT_TARGET
 import Constants.DJAN_FLAVOR_NAME
 import Constants.GUSTO_PUB_FLAVOR_NAME
 import Constants.PAPA_KARLO_FLAVOR_NAME
@@ -22,9 +23,12 @@ kotlin {
         summary = "Core module with common features"
         homepage = "Link to the Shared Module homepage"
         version = "1.0"
-        ios.deploymentTarget = "14.1"
+        ios.deploymentTarget = DEPLOYMENT_TARGET
+        podfile = project.file("../iosApp/Podfile")
+
         framework {
             baseName = "core"
+            isStatic = true
         }
     }
     
