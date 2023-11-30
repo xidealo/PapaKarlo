@@ -3,18 +3,19 @@ package com.bunbeauty.papakarlo.feature.order.screen.orderlist
 import android.os.Bundle
 import android.view.View
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -107,17 +108,16 @@ class OrderListFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compos
         ) {
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),
-                contentPadding = PaddingValues(FoodDeliveryTheme.dimensions.mediumSpace)
+                contentPadding = PaddingValues(FoodDeliveryTheme.dimensions.mediumSpace),
+                verticalArrangement = spacedBy(8.dp)
             ) {
-                itemsIndexed(orderItemList) { i, orderItem ->
+                items(orderItemList) { orderItem ->
                     OrderItem(
-                        modifier = Modifier.padding(
-                            top = FoodDeliveryTheme.dimensions.getItemSpaceByIndex(i)
-                        ),
-                        orderItem = orderItem
-                    ) {
-                        viewModel.onOrderClicked(orderItem.uuid, orderItem.code)
-                    }
+                        orderItem = orderItem,
+                        onClick = {
+                            viewModel.onOrderClicked(orderItem.uuid, orderItem.code)
+                        }
+                    )
                 }
             }
         }
