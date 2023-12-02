@@ -27,7 +27,6 @@ import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 @Composable
 fun FoodDeliveryScaffold(
     title: String? = null,
-    window: Window? = null,
     backActionClick: (() -> Unit)? = null,
     topActions: List<FoodDeliveryToolbarActions> = emptyList(),
     scrollableState: ScrollableState? = null,
@@ -51,7 +50,6 @@ fun FoodDeliveryScaffold(
                 actions = topActions,
                 drawableId = drawableId,
                 content = appBarContent,
-                window = window
             )
         },
         containerColor = backgroundColor,

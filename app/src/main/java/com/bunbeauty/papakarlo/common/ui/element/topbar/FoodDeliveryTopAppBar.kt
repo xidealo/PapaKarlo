@@ -45,7 +45,6 @@ import com.bunbeauty.papakarlo.common.ui.theme.medium
 @Composable
 fun FoodDeliveryTopAppBar(
     title: String?,
-    window: Window?,
     backActionClick: (() -> Unit)? = null,
     actions: List<FoodDeliveryToolbarActions> = emptyList(),
     isScrolled: Boolean = false,
@@ -64,10 +63,10 @@ fun FoodDeliveryTopAppBar(
         )
     }
 
-    val windowW = (LocalView.current.context as? Activity)?.window
+    val window = (LocalView.current.context as? Activity)?.window
 
     LaunchedEffect(isScrolled) {
-        if (windowW != null) {
+        if (window != null) {
             ValueAnimator.ofObject(
                 ArgbEvaluator(),
                 barColorStartEndPair.first.toArgb(),
@@ -75,7 +74,7 @@ fun FoodDeliveryTopAppBar(
             ).apply {
                 duration = 400L // Set the duration of the animation in milliseconds
                 addUpdateListener { animator ->
-                    setBarColor(windowW, animator)
+                    setBarColor(window, animator)
                 }
                 start()
             }
