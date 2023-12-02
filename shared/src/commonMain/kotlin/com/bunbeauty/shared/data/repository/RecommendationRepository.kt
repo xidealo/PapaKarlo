@@ -1,9 +1,11 @@
 package com.bunbeauty.shared.data.repository
 
+import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.data.network.api.NetworkConnector
 
 class RecommendationRepository(
     private val networkConnector: NetworkConnector,
+    private val dataStoreRepo: DataStoreRepo,
 ) : CacheRepository<Int>() {
     companion object {
         private const val DEFAULT_RECOMMENDATIONS_COUNT = 6
@@ -15,10 +17,10 @@ class RecommendationRepository(
         return getCacheOrData(
             onApiRequest = networkConnector::getRecommendationData,
             onLocalRequest = {
-                DEFAULT_RECOMMENDATIONS_COUNT
+                dataStoreRepo.getRecommendationMaxVisible()
             },
-            onSaveLocally = {
-                //todo save to datastore
+            onSaveLocally = { recommendationMaxVisible ->
+                dataStoreRepo.saveRecommendationMaxVisible(recommendationMaxVisible.maxVisibleCount)
             },
             serverToDomainModel = { recommendationProductListServer ->
                 recommendationProductListServer.maxVisibleCount

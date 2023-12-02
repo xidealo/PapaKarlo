@@ -33,6 +33,7 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
         name = SELECTED_PAYMENT_METHOD_DATA_STORE
     )
     private val Context.discountDataStore: DataStore<Preferences> by preferencesDataStore(name = DISCOUNT_DATA_STORE)
+    private val Context.recommendationDataStore: DataStore<Preferences> by preferencesDataStore(name = RECOMMENDATION_DATA_STORE)
 
     actual override val token: Flow<String?> = context.tokenDataStore.data.map {
         it[TOKEN_KEY]
@@ -183,6 +184,20 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
         }
     }
 
+    override val recommendationMaxVisible: Flow<Int?> = context.recommendationDataStore.data.map {
+        it[RECOMMENDATION_MAX_VISIBLE_KEY]
+    }
+
+    override suspend fun getRecommendationMaxVisible(): Int? {
+        return recommendationMaxVisible.firstOrNull()
+    }
+
+    override suspend fun saveRecommendationMaxVisible(recommendationMaxVisible: Int) {
+        context.discountDataStore.edit {
+            it[RECOMMENDATION_MAX_VISIBLE_KEY] = recommendationMaxVisible
+        }
+    }
+
     actual override suspend fun clearUserData() {
         context.tokenDataStore.edit {
             it.clear()
@@ -231,6 +246,10 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
         private const val DISCOUNT_DATA_STORE = "discount data store"
         private const val FIRST_ORDER_DISCOUNT = "first order discount"
         private val FIRST_ORDER_DISCOUNT_KEY = intPreferencesKey(FIRST_ORDER_DISCOUNT)
+
+        private const val RECOMMENDATION_DATA_STORE = "recommendation"
+        private const val RECOMMENDATION_MAX_VISIBLE = "recommendation max visible"
+        private val RECOMMENDATION_MAX_VISIBLE_KEY = intPreferencesKey(RECOMMENDATION_MAX_VISIBLE)
 
     }
 }

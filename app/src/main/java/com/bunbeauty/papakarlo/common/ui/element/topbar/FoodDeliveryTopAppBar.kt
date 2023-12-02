@@ -1,5 +1,10 @@
 package com.bunbeauty.papakarlo.common.ui.element.topbar
 
+import android.animation.ArgbEvaluator
+import android.animation.ValueAnimator
+import android.app.Activity
+import android.view.Window
+import android.view.WindowManager
 import androidx.annotation.DrawableRes
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
@@ -22,11 +27,12 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCardDefaults
 import com.bunbeauty.papakarlo.common.ui.icon16
@@ -34,39 +40,57 @@ import com.bunbeauty.papakarlo.common.ui.icon24
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold
 import com.bunbeauty.papakarlo.common.ui.theme.medium
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import kotlinx.coroutines.delay
 
 @Suppress("DEPRECATION")
 @Composable
 fun FoodDeliveryTopAppBar(
     title: String?,
+    window: Window?,
     backActionClick: (() -> Unit)? = null,
     actions: List<FoodDeliveryToolbarActions> = emptyList(),
     isScrolled: Boolean = false,
     @DrawableRes drawableId: Int? = null,
-    content: @Composable () -> Unit = {}
+    content: @Composable () -> Unit = {},
 ) {
-    val barColor = if (isScrolled) {
-        FoodDeliveryTheme.colors.mainColors.surfaceVariant
+    val barColorStartEndPair = if (isScrolled) {
+        Pair(
+            FoodDeliveryTheme.colors.mainColors.surface,
+            FoodDeliveryTheme.colors.mainColors.surfaceVariant,
+        )
     } else {
-        FoodDeliveryTheme.colors.mainColors.surface
+        Pair(
+            FoodDeliveryTheme.colors.mainColors.surfaceVariant,
+            FoodDeliveryTheme.colors.mainColors.surface,
+        )
     }
+
+    val windowW = (LocalView.current.context as? Activity)?.window
+
+    LaunchedEffect(isScrolled) {
+        if (windowW != null) {
+            ValueAnimator.ofObject(
+                ArgbEvaluator(),
+                barColorStartEndPair.first.toArgb(),
+                barColorStartEndPair.second.toArgb()
+            ).apply {
+                duration = 400L // Set the duration of the animation in milliseconds
+                addUpdateListener { animator ->
+                    setBarColor(windowW, animator)
+                }
+                start()
+            }
+        }
+    }
+
     val animatedBarColor by animateColorAsState(
         targetValue = if (isScrolled) {
             FoodDeliveryTheme.colors.mainColors.surfaceVariant
         } else {
             FoodDeliveryTheme.colors.mainColors.surface
         },
-        animationSpec = tween(400),
+        animationSpec = tween(500),
         label = "barColor"
     )
-
-    val systemUiController = rememberSystemUiController()
-    LaunchedEffect(isScrolled) {
-        delay(200)
-        systemUiController.setStatusBarColor(barColor)
-    }
 
     Column(modifier = Modifier.background(animatedBarColor)) {
         Box {
@@ -89,12 +113,19 @@ fun FoodDeliveryTopAppBar(
     }
 }
 
+private fun setBarColor(window: Window, animator: ValueAnimator) {
+    with(window) {
+        addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        statusBarColor = animator.animatedValue as Int
+    }
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun FoodDeliveryTopAppBar(
     title: String?,
     backActionClick: (() -> Unit)? = null,
-    actions: List<FoodDeliveryToolbarActions> = emptyList()
+    actions: List<FoodDeliveryToolbarActions> = emptyList(),
 ) {
     TopAppBar(
         colors = FoodDeliveryTopAppBarDefaults.topAppBarColors(),
@@ -113,7 +144,7 @@ private fun FoodDeliveryTopAppBar(
                 ) {
                     Icon(
                         modifier = Modifier.icon16(),
-                        painter = painterResource(id = R.drawable.ic_arrow_back),
+                        painter = painterResource(id = com.bunbeauty.papakarlo.R.drawable.ic_arrow_back),
                         tint = FoodDeliveryTheme.colors.mainColors.onSurface,
                         contentDescription = null
                     )
@@ -172,7 +203,7 @@ private fun CardAction(action: FoodDeliveryCartAction) {
                     modifier = Modifier
                         .padding(4.dp)
                         .icon24(),
-                    painter = painterResource(id = R.drawable.ic_cart_24),
+                    painter = painterResource(id = com.bunbeauty.papakarlo.R.drawable.ic_cart_24),
                     tint = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
                     contentDescription = null
                 )
@@ -194,14 +225,14 @@ private fun CardAction(action: FoodDeliveryCartAction) {
 @Composable
 private fun LogoImage(
     @DrawableRes drawableId: Int?,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     drawableId?.let {
         Image(
             modifier = modifier
                 .height(40.dp),
             painter = painterResource(drawableId),
-            contentDescription = stringResource(R.string.description_company_logo)
+            contentDescription = stringResource(com.bunbeauty.papakarlo.R.string.description_company_logo)
         )
     }
 }

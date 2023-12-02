@@ -1,5 +1,6 @@
 package com.bunbeauty.papakarlo.common.ui.element
 
+import android.view.Window
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.ScrollableState
@@ -26,6 +27,7 @@ import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 @Composable
 fun FoodDeliveryScaffold(
     title: String? = null,
+    window: Window? = null,
     backActionClick: (() -> Unit)? = null,
     topActions: List<FoodDeliveryToolbarActions> = emptyList(),
     scrollableState: ScrollableState? = null,
@@ -48,7 +50,8 @@ fun FoodDeliveryScaffold(
                 isScrolled = scrollableState?.canScrollBackward ?: scrollBehavior.isScrolled,
                 actions = topActions,
                 drawableId = drawableId,
-                content = appBarContent
+                content = appBarContent,
+                window = window
             )
         },
         containerColor = backgroundColor,

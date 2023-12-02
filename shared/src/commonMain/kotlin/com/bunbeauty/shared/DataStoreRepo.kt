@@ -41,6 +41,10 @@ interface DataStoreRepo {
     suspend fun getDiscount(): Discount?
     suspend fun saveDiscount(discount: Discount)
 
+    val recommendationMaxVisible: Flow<Int?>
+    suspend fun getRecommendationMaxVisible(): Int?
+    suspend fun saveRecommendationMaxVisible(recommendationMaxVisible: Int)
+
     fun observeUserAndCityUuid(): Flow<UserCityUuid>
     suspend fun getUserAndCityUuid(): UserCityUuid
 
