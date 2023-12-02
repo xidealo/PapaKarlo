@@ -1,7 +1,5 @@
 package com.bunbeauty.papakarlo.common.ui.element.topbar
 
-import android.animation.ArgbEvaluator
-import android.animation.ValueAnimator
 import android.app.Activity
 import android.view.Window
 import android.view.WindowManager
@@ -41,7 +39,6 @@ import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold
 import com.bunbeauty.papakarlo.common.ui.theme.medium
 
-@Suppress("DEPRECATION")
 @Composable
 fun FoodDeliveryTopAppBar(
     title: String?,
@@ -51,37 +48,7 @@ fun FoodDeliveryTopAppBar(
     @DrawableRes drawableId: Int? = null,
     content: @Composable () -> Unit = {},
 ) {
-    val barColorStartEndPair = if (isScrolled) {
-        Pair(
-            FoodDeliveryTheme.colors.mainColors.surface,
-            FoodDeliveryTheme.colors.mainColors.surfaceVariant,
-        )
-    } else {
-        Pair(
-            FoodDeliveryTheme.colors.mainColors.surfaceVariant,
-            FoodDeliveryTheme.colors.mainColors.surface,
-        )
-    }
-
-    val window = (LocalView.current.context as? Activity)?.window
-
-    LaunchedEffect(isScrolled) {
-        if (window != null) {
-            ValueAnimator.ofObject(
-                ArgbEvaluator(),
-                barColorStartEndPair.first.toArgb(),
-                barColorStartEndPair.second.toArgb()
-            ).apply {
-                duration = 400L // Set the duration of the animation in milliseconds
-                addUpdateListener { animator ->
-                    setBarColor(window, animator)
-                }
-                start()
-            }
-        }
-    }
-
-    val animatedBarColor by animateColorAsState(
+    val barColor by animateColorAsState(
         targetValue = if (isScrolled) {
             FoodDeliveryTheme.colors.mainColors.surfaceVariant
         } else {
@@ -91,7 +58,12 @@ fun FoodDeliveryTopAppBar(
         label = "barColor"
     )
 
-    Column(modifier = Modifier.background(animatedBarColor)) {
+    val window = (LocalView.current.context as? Activity)?.window
+    LaunchedEffect(barColor) {
+        window?.setBarColor(barColor.toArgb())
+    }
+
+    Column(modifier = Modifier.background(barColor)) {
         Box {
             FoodDeliveryTopAppBar(
                 title = title,
@@ -112,11 +84,9 @@ fun FoodDeliveryTopAppBar(
     }
 }
 
-private fun setBarColor(window: Window, animator: ValueAnimator) {
-    with(window) {
-        addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        statusBarColor = animator.animatedValue as Int
-    }
+private fun Window.setBarColor(color: Int) {
+    addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+    statusBarColor = color
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
