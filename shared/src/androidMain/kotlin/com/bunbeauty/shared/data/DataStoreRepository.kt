@@ -184,15 +184,15 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
         }
     }
 
-    override val recommendationMaxVisible: Flow<Int?> = context.recommendationDataStore.data.map {
+    actual override val recommendationMaxVisible: Flow<Int?> = context.recommendationDataStore.data.map {
         it[RECOMMENDATION_MAX_VISIBLE_KEY]
     }
 
-    override suspend fun getRecommendationMaxVisible(): Int? {
+    actual override suspend fun getRecommendationMaxVisible(): Int? {
         return recommendationMaxVisible.firstOrNull()
     }
 
-    override suspend fun saveRecommendationMaxVisible(recommendationMaxVisible: Int) {
+    actual override suspend fun saveRecommendationMaxVisible(recommendationMaxVisible: Int) {
         context.discountDataStore.edit {
             it[RECOMMENDATION_MAX_VISIBLE_KEY] = recommendationMaxVisible
         }
