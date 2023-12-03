@@ -193,7 +193,7 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
     }
 
     actual override suspend fun saveRecommendationMaxVisible(recommendationMaxVisible: Int) {
-        context.discountDataStore.edit {
+        context.recommendationDataStore.edit {
             it[RECOMMENDATION_MAX_VISIBLE_KEY] = recommendationMaxVisible
         }
     }
@@ -236,7 +236,6 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
         private const val SELECTED_CITY_DATA_STORE = "selected city data store"
         private const val SELECTED_CITY_UUID = "selected city uuid"
         private val SELECTED_CITY_UUID_KEY = stringPreferencesKey(SELECTED_CITY_UUID)
-
 
         private const val SELECTED_PAYMENT_METHOD_DATA_STORE = "payment method data store"
         private const val SELECTED_PAYMENT_METHOD_UUID = "payment method uuid"

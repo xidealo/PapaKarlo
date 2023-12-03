@@ -31,6 +31,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCardDefaults
 import com.bunbeauty.papakarlo.common.ui.icon16
@@ -113,7 +114,7 @@ private fun FoodDeliveryTopAppBar(
                 ) {
                     Icon(
                         modifier = Modifier.icon16(),
-                        painter = painterResource(id = com.bunbeauty.papakarlo.R.drawable.ic_arrow_back),
+                        painter = painterResource(id = R.drawable.ic_arrow_back),
                         tint = FoodDeliveryTheme.colors.mainColors.onSurface,
                         contentDescription = null
                     )
@@ -172,7 +173,7 @@ private fun CardAction(action: FoodDeliveryCartAction) {
                     modifier = Modifier
                         .padding(4.dp)
                         .icon24(),
-                    painter = painterResource(id = com.bunbeauty.papakarlo.R.drawable.ic_cart_24),
+                    painter = painterResource(id = R.drawable.ic_cart_24),
                     tint = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
                     contentDescription = null
                 )
@@ -201,7 +202,7 @@ private fun LogoImage(
             modifier = modifier
                 .height(40.dp),
             painter = painterResource(drawableId),
-            contentDescription = stringResource(com.bunbeauty.papakarlo.R.string.description_company_logo)
+            contentDescription = stringResource(R.string.description_company_logo)
         )
     }
 }
