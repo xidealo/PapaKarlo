@@ -107,7 +107,7 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
     private fun MenuScreen(
         menuUi: MenuUi,
         onMenuPositionChanged: (Int) -> Unit,
-        errorAction: () -> Unit,
+        errorAction: () -> Unit
     ) {
         val menuLazyGridState = rememberLazyGridState()
 
@@ -163,7 +163,7 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
     private fun MenuSuccessScreen(
         menu: MenuUi,
         menuLazyGridState: LazyGridState,
-        onMenuPositionChanged: (Int) -> Unit,
+        onMenuPositionChanged: (Int) -> Unit
     ) {
         Column(modifier = Modifier.fillMaxSize()) {
             val menuPosition by remember {
@@ -185,7 +185,7 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
     private fun CategoryRow(
         categoryItemList: List<CategoryItem>,
         menuLazyGridState: LazyGridState,
-        modifier: Modifier = Modifier,
+        modifier: Modifier = Modifier
     ) {
         val coroutineScope = rememberCoroutineScope()
         val categoryLazyListState = rememberLazyListState()
@@ -236,7 +236,7 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
     @Composable
     private fun MenuColumn(
         menu: MenuUi,
-        menuLazyListState: LazyGridState,
+        menuLazyListState: LazyGridState
     ) {
         LazyVerticalGrid(
             modifier = Modifier.fillMaxSize(),
