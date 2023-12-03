@@ -32,6 +32,7 @@ class MenuProductMapper : IMenuProductMapper {
             photoLink = menuProduct.photoLink,
             barcode = menuProduct.barcode,
             visible = menuProduct.isVisible,
+            isRecommended = menuProduct.isRecommended
         )
     }
 
@@ -60,7 +61,8 @@ class MenuProductMapper : IMenuProductMapper {
             comboDescription = menuProduct.comboDescription,
             photoLink = menuProduct.photoLink,
             categoryList = emptyList(),
-            visible = menuProduct.visible
+            visible = menuProduct.visible,
+            isRecommended = menuProduct.isRecommended
         )
     }
 
@@ -82,7 +84,8 @@ class MenuProductMapper : IMenuProductMapper {
                     priority = categoryServer.priority,
                 )
             },
-            visible = menuProductServer.isVisible
+            visible = menuProductServer.isVisible,
+            isRecommended = menuProductServer.isRecommended
         )
     }
 
@@ -109,7 +112,8 @@ class MenuProductMapper : IMenuProductMapper {
                         priority = menuProductWithCategoryEntity.priority
                     )
                 },
-                visible = firstMenuProductWithCategoryEntity.visible
+                visible = firstMenuProductWithCategoryEntity.visible,
+                isRecommended = firstMenuProductWithCategoryEntity.isRecommended
             )
         }
     }

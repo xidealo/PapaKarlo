@@ -222,8 +222,8 @@ class ConsumerCartViewModel(
                 firstOrderDiscount = consumerCartDomain.discount?.let { discount ->
                     discount.toString() + PERCENT
                 },
-                recommendations = getRecommendationsUseCase().map { recommendationProduct ->
-                    with(recommendationProduct.menuProduct) {
+                recommendations = getRecommendationsUseCase().map { menuProduct ->
+                    with(menuProduct) {
                         MenuProductItem(
                             uuid = uuid,
                             photoLink = photoLink,

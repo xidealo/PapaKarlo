@@ -27,6 +27,7 @@ class MenuProductDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IMenuProductD
                     photoLink = menuProduct.photoLink,
                     barcode = menuProduct.barcode,
                     visible = menuProduct.visible,
+                    isRecommended = menuProduct.isRecommended
                 )
             }
         }
