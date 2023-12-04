@@ -314,7 +314,8 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
             photoLink = "",
             name = "Бэргер",
             newPrice = 99,
-            oldPrice = 100
+            oldPrice = 100,
+            hasAdditions = true
         )
 
         fun getMenuProductPairItemModel(key: String) = MenuItem.MenuProductListItem(

@@ -140,6 +140,47 @@ class ProductDetailsViewModel(
     }
 
     private fun mapMenuProduct(menuProduct: MenuProduct): ProductDetailsState.ViewDataState.MenuProduct {
+        val additionList = buildList {
+            menuProduct.additionGroups.forEach { additionGroup ->
+                add(
+                    AdditionItem.AdditionHeaderItem(
+                        key = "AdditionHeaderItem + ${additionGroup.uuid}",
+                        uuid = additionGroup.uuid,
+                        name = additionGroup.name
+                    )
+                )
+                addAll(
+                    additionGroup.additionList.mapIndexed { index, addition ->
+                        if (additionGroup.singleChoice) {
+                            AdditionItem.AdditionSingleListItem(
+                                key = "AdditionSingleListItem + ${addition.uuid}",
+                                product = MenuProductAdditionItem(
+                                    uuid = addition.uuid,
+                                    isSelected = addition.isSelected,
+                                    name = addition.name,
+                                    price = addition.price?.toString(),
+                                    isLast = additionGroup.additionList.lastIndex == index,
+                                    photoLink = addition.photoLink
+                                ),
+                            )
+                        } else {
+                            AdditionItem.AdditionMultiplyListItem(
+                                key = "AdditionMultiplyListItem + ${addition.uuid}",
+                                product = MenuProductAdditionItem(
+                                    uuid = addition.uuid,
+                                    isSelected = addition.isSelected,
+                                    name = addition.name,
+                                    price = addition.price?.toString(),
+                                    isLast = additionGroup.additionList.lastIndex == index,
+                                    photoLink = addition.photoLink
+                                ),
+                            )
+                        }
+                    }
+                )
+            }
+        }
+
         return ProductDetailsState.ViewDataState.MenuProduct(
             uuid = menuProduct.uuid,
             photoLink = menuProduct.photoLink,
@@ -152,6 +193,7 @@ class ProductDetailsViewModel(
             oldPrice = menuProduct.oldPrice?.toString(),
             newPrice = menuProduct.newPrice.toString(),
             description = menuProduct.description,
+            additionList = additionList
         )
     }
 }

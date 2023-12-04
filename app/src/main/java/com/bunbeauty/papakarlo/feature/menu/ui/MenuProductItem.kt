@@ -28,7 +28,7 @@ fun MenuProductItem(
     modifier: Modifier = Modifier,
     menuProductItem: MenuProductItem,
     onAddProductClick: (String) -> Unit,
-    onProductClick: (MenuProductItem) -> Unit
+    onProductClick: (MenuProductItem) -> Unit,
 ) {
     FoodDeliveryCard(
         modifier = modifier,
@@ -96,7 +96,8 @@ private fun MenuProductItemPreview() {
                 photoLink = "",
                 name = "Бэргер",
                 newPrice = 99,
-                oldPrice = 100
+                oldPrice = 100,
+                hasAdditions = true
             ),
             onAddProductClick = {},
             onProductClick = {}

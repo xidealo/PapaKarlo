@@ -229,7 +229,8 @@ class ConsumerCartViewModel(
                             photoLink = photoLink,
                             name = name,
                             oldPrice = oldPrice,
-                            newPrice = newPrice
+                            newPrice = newPrice,
+                            hasAdditions = additionGroups.isNotEmpty()
                         )
                     }
                 }

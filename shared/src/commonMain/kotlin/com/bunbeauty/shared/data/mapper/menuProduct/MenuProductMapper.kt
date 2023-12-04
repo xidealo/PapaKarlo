@@ -1,10 +1,13 @@
 package com.bunbeauty.shared.data.mapper.menuProduct
 
+import com.bunbeauty.core.Logger
 import com.bunbeauty.shared.data.network.model.MenuProductServer
 import com.bunbeauty.shared.db.CategoryEntity
 import com.bunbeauty.shared.db.MenuProductCategoryReference
 import com.bunbeauty.shared.db.MenuProductEntity
 import com.bunbeauty.shared.db.MenuProductWithCategoryEntity
+import com.bunbeauty.shared.domain.model.addition.Addition
+import com.bunbeauty.shared.domain.model.addition.AdditionGroup
 import com.bunbeauty.shared.domain.model.category.Category
 import com.bunbeauty.shared.domain.model.product.MenuProduct
 
@@ -62,7 +65,8 @@ class MenuProductMapper : IMenuProductMapper {
             photoLink = menuProduct.photoLink,
             categoryList = emptyList(),
             visible = menuProduct.visible,
-            isRecommended = menuProduct.isRecommended
+            isRecommended = menuProduct.isRecommended,
+            additionGroups = emptyList()
         )
     }
 
@@ -85,7 +89,25 @@ class MenuProductMapper : IMenuProductMapper {
                 )
             },
             visible = menuProductServer.isVisible,
-            isRecommended = menuProductServer.isRecommended
+            isRecommended = menuProductServer.isRecommended,
+            additionGroups = menuProductServer.additionGroupServers.map { additionGroupServer ->
+                AdditionGroup(
+                    additionList = additionGroupServer.additionServerList.map { additionServer ->
+                        Addition(
+                            isSelected = additionServer.isSelected,
+                            isVisible = additionServer.isVisible,
+                            name = additionServer.name,
+                            photoLink = additionServer.photoLink,
+                            price = additionServer.price,
+                            uuid = additionServer.uuid
+                        )
+                    },
+                    isVisible = additionGroupServer.isVisible,
+                    name = additionGroupServer.name,
+                    singleChoice = additionGroupServer.singleChoice,
+                    uuid = additionGroupServer.uuid
+                )
+            }
         )
     }
 
@@ -113,7 +135,8 @@ class MenuProductMapper : IMenuProductMapper {
                     )
                 },
                 visible = firstMenuProductWithCategoryEntity.visible,
-                isRecommended = firstMenuProductWithCategoryEntity.isRecommended
+                isRecommended = firstMenuProductWithCategoryEntity.isRecommended,
+                additionGroups = emptyList()
             )
         }
     }

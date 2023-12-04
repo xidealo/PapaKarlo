@@ -16,7 +16,6 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
-import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -32,6 +31,7 @@ import com.bunbeauty.papakarlo.common.extension.navigateSafe
 import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
 import com.bunbeauty.papakarlo.common.ui.element.card.DiscountCard
+import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryItem
 import com.bunbeauty.papakarlo.common.ui.element.surface.FoodDeliverySurface
 import com.bunbeauty.papakarlo.common.ui.screen.EmptyScreen
 import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
@@ -68,7 +68,7 @@ class ConsumerCartFragment :
     @Composable
     override fun Screen(
         viewState: ConsumerCart.ViewDataState,
-        onAction: (ConsumerCart.Action) -> Unit
+        onAction: (ConsumerCart.Action) -> Unit,
     ) {
         FoodDeliveryScaffold(
             title = stringResource(id = R.string.title_cart),
@@ -151,7 +151,7 @@ class ConsumerCartFragment :
     @Composable
     private fun ConsumerCartSuccessScreen(
         consumerCartData: ConsumerCart.ViewDataState.ConsumerCartData,
-        onAction: (ConsumerCart.Action) -> Unit
+        onAction: (ConsumerCart.Action) -> Unit,
     ) {
         Column(
             modifier = Modifier
@@ -187,7 +187,7 @@ class ConsumerCartFragment :
                         key = { _, cartProductItem -> cartProductItem.uuid },
                         span = { _, _ -> GridItemSpan(maxLineSpan) }
                     ) { index, cartProductItem ->
-                        Column {
+                        FoodDeliveryItem(needDivider = index != consumerCartData.cartProductList.lastIndex) {
                             CartProductItem(
                                 cartProductItem = cartProductItem,
                                 onCountIncreased = {
@@ -212,14 +212,6 @@ class ConsumerCartFragment :
                                     )
                                 }
                             )
-                            if (index != consumerCartData.cartProductList.lastIndex) {
-                                Divider(
-                                    modifier = Modifier
-                                        .padding(horizontal = 16.dp),
-                                    thickness = 1.dp,
-                                    color = FoodDeliveryTheme.colors.mainColors.stroke
-                                )
-                            }
                         }
                     }
 
@@ -353,7 +345,8 @@ class ConsumerCartFragment :
             photoLink = "",
             name = "Бэргер",
             newPrice = 99,
-            oldPrice = 100
+            oldPrice = 100,
+            hasAdditions = true
         )
 
         FoodDeliveryTheme {

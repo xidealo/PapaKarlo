@@ -35,7 +35,8 @@ class CartProductMapper : ICartProductMapper {
                         )
                     },
                     visible = firstCartProductWithCategoryEntity.visible,
-                    isRecommended = firstCartProductWithCategoryEntity.isRecommended
+                    isRecommended = firstCartProductWithCategoryEntity.isRecommended,
+                    additionGroups = emptyList()
                 )
             )
         }

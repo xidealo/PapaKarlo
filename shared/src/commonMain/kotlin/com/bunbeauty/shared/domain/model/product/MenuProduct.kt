@@ -1,5 +1,6 @@
 package com.bunbeauty.shared.domain.model.product
 
+import com.bunbeauty.shared.domain.model.addition.AdditionGroup
 import com.bunbeauty.shared.domain.model.category.Category
 
 data class MenuProduct(
@@ -15,4 +16,5 @@ data class MenuProduct(
     val categoryList: List<Category>,
     val visible: Boolean,
     val isRecommended: Boolean,
+    val additionGroups: List<AdditionGroup>,
 ) : Product()

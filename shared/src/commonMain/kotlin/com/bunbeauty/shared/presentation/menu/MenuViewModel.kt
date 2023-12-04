@@ -245,7 +245,8 @@ class MenuViewModel(
                 photoLink = menuProduct.photoLink,
                 name = menuProduct.name,
                 oldPrice = menuProduct.oldPrice,
-                newPrice = menuProduct.newPrice
+                newPrice = menuProduct.newPrice,
+                hasAdditions = menuProduct.additionGroups.isNotEmpty()
             )
         }
 

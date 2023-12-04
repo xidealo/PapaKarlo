@@ -20,8 +20,8 @@ interface ProductDetailsState {
             val oldPrice: String?,
             val newPrice: String,
             val description: String,
+            val additionList: List<AdditionItem>,
         )
-
         enum class ScreenState {
             SUCCESS,
             ERROR,

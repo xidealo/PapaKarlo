@@ -47,13 +47,19 @@ class MenuProductRepository(
     }
 
     override suspend fun getMenuProductByUuid(menuProductUuid: String): MenuProduct? {
-        return menuProductDao.getMenuProductByUuid(uuid = menuProductUuid).let {
-            if (it == null) return null
-            menuProductMapper.toMenuProduct(it)
-        }
+        return getCacheOrListData(
+            onApiRequest = networkConnector::getMenuProductList,
+            onLocalRequest = {
+                menuProductMapper.toMenuProductList(
+                    menuProductDao.getMenuProductWithCategoryList()
+                )
+            },
+            onSaveLocally = ::saveMenuLocally,
+            serverToDomainModel = menuProductMapper::toMenuProduct
+        ).find { menuProduct -> menuProduct.uuid == menuProductUuid }
     }
 
-    suspend fun saveMenuLocally(menuProductServerList: List<MenuProductServer>) {
+    private suspend fun saveMenuLocally(menuProductServerList: List<MenuProductServer>) {
         menuProductMapper.toCategoryEntityList(menuProductServerList)
             .let { categoryEntityList ->
                 categoryDao.insertCategoryList(categoryEntityList)

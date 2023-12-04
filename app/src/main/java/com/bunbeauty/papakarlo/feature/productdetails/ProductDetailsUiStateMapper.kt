@@ -5,7 +5,7 @@ import com.bunbeauty.papakarlo.util.string.IStringUtil
 import com.bunbeauty.shared.presentation.product_details.ProductDetailsState
 
 class ProductDetailsUiStateMapper(
-    private val stringUtil: IStringUtil
+    private val stringUtil: IStringUtil,
 ) {
     fun map(productDetailsState: ProductDetailsState.ViewDataState): ProductDetailsUi {
         return when (productDetailsState.screenState) {
@@ -25,10 +25,12 @@ class ProductDetailsUiStateMapper(
                             stringUtil.getCostString(oldPrice)
                         },
                         newPrice = stringUtil.getCostString(menuProduct.newPrice),
-                        description = menuProduct.description
+                        description = menuProduct.description,
+                        additionList = menuProduct.additionList
                     )
                 }
             )
+
             ProductDetailsState.ViewDataState.ScreenState.ERROR -> ProductDetailsUi.Error
             ProductDetailsState.ViewDataState.ScreenState.LOADING -> ProductDetailsUi.Loading
         }

@@ -14,6 +14,7 @@
     <string name="description_ic_next">Переход</string>
     <string name="description_ic_checked">Выбрано</string>
     <string name="description_product">Фото блюда</string>
+    <string name="description_product_addition">Фото добавки</string>
     <string name="description_ic_discount">Скидка</string>
     <string name="common_email">Почта</string>
     <string name="common_city">Город</string>
@@ -56,7 +57,7 @@
     <string name="msg_menu_discount">Успей сделать первый заказ со скидкой %s%%</string>
 
     <!-- PRODUCT DETAILS -->
-    <string name="action_product_details_want">Хочу!</string>
+    <string name="action_product_details_want">Добавить за %s!</string>
 
     <!-- CONSUMER CART -->
     <string name="title_cart">Корзина</string>
