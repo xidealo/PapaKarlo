@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -20,6 +21,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -38,6 +40,7 @@ import com.bunbeauty.papakarlo.common.extension.navigateSafe
 import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
+import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCardDefaults
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryItem
 import com.bunbeauty.papakarlo.common.ui.element.topbar.FoodDeliveryCartAction
 import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
@@ -132,8 +135,9 @@ class ProductDetailsFragment :
                             .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
                         text = stringResource(
                             id = R.string.action_product_details_want,
-                            productDetailsUi.menuProductUi?.newPrice ?: ""
-                        )
+                            productDetailsUi.menuProductUi?.priceWithAdditions ?: "",
+
+                            )
                     ) {
                         onAction(
                             ProductDetailsState.Action.AddProductToCartClick(
@@ -147,7 +151,7 @@ class ProductDetailsFragment :
         ) {
             when (productDetailsUi) {
                 is ProductDetailsUi.Success -> {
-                    ProductDetailsSuccessScreen(productDetailsUi.menuProductUi)
+                    ProductDetailsSuccessScreen(productDetailsUi.menuProductUi, onAction = onAction)
                 }
 
                 is ProductDetailsUi.Loading -> {
@@ -164,7 +168,10 @@ class ProductDetailsFragment :
     }
 
     @Composable
-    private fun ProductDetailsSuccessScreen(menuProductUi: ProductDetailsUi.Success.MenuProductUi?) {
+    private fun ProductDetailsSuccessScreen(
+        menuProductUi: ProductDetailsUi.Success.MenuProductUi?,
+        onAction: (ProductDetailsState.Action) -> Unit,
+    ) {
         menuProductUi?.let {
             LazyColumn(
                 modifier = Modifier
@@ -199,85 +206,21 @@ class ProductDetailsFragment :
 
                         is AdditionItem.AdditionSingleListItem -> {
                             FoodDeliveryItem(needDivider = !menuProductAdditionItem.product.isLast) {
-                                Row(
-                                    modifier = Modifier
-                                        .padding(horizontal = 16.dp)
-                                        .padding(vertical = 8.dp),
-                                    verticalAlignment = Alignment.CenterVertically
-                                ) {
-                                    AsyncImage(
-                                        modifier = Modifier
-                                            .size(40.dp),
-                                        model = ImageRequest.Builder(LocalContext.current)
-                                            .data(menuProductAdditionItem.product.photoLink)
-                                            .crossfade(true)
-                                            .build(),
-                                        placeholder = painterResource(R.drawable.placeholder_small),
-                                        contentDescription = stringResource(R.string.description_product_addition),
-                                        contentScale = ContentScale.FillWidth,
-                                    )
-
-                                    Text(
-                                        modifier = Modifier
-                                            .weight(1f)
-                                            .padding(start = 8.dp),
-                                        text = menuProductAdditionItem.product.name,
-                                        style = FoodDeliveryTheme.typography.bodyLarge,
-                                    )
-
-                                    RadioButton(
-                                        selected = menuProductAdditionItem.product.isSelected,
-                                        onClick = {
-                                            //if (enabled) onChange.invoke()
-                                        },
-                                        colors = RadioButtonDefaults.colors(
-                                            selectedColor = FoodDeliveryTheme.colors.mainColors.primary,
-                                            unselectedColor = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
-                                        ),
-                                    )
-                                }
+                                AdditionItem(
+                                    menuProductAdditionItem = menuProductAdditionItem.product,
+                                    isMultiply = false,
+                                    onAction = onAction
+                                )
                             }
                         }
 
                         is AdditionItem.AdditionMultiplyListItem -> {
                             FoodDeliveryItem(needDivider = !menuProductAdditionItem.product.isLast) {
-                                Row(
-                                    modifier = Modifier
-                                        .padding(horizontal = 16.dp)
-                                        .padding(vertical = 8.dp),
-                                    verticalAlignment = Alignment.CenterVertically
-                                ) {
-                                    AsyncImage(
-                                        modifier = Modifier
-                                            .size(40.dp),
-                                        model = ImageRequest.Builder(LocalContext.current)
-                                            .data(menuProductAdditionItem.product.photoLink)
-                                            .crossfade(true)
-                                            .build(),
-                                        placeholder = painterResource(R.drawable.placeholder_small),
-                                        contentDescription = stringResource(R.string.description_product_addition),
-                                        contentScale = ContentScale.FillWidth,
-                                    )
-
-                                    Text(
-                                        modifier = Modifier
-                                            .weight(1f)
-                                            .padding(start = 8.dp),
-                                        text = menuProductAdditionItem.product.name,
-                                        style = FoodDeliveryTheme.typography.bodyLarge,
-                                    )
-
-                                    Checkbox(
-                                        checked = menuProductAdditionItem.product.isSelected,
-                                        onCheckedChange = {
-
-                                        },
-                                        colors = CheckboxDefaults.colors(
-                                            checkedColor = FoodDeliveryTheme.colors.mainColors.primary,
-                                            uncheckedColor = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
-                                        ),
-                                    )
-                                }
+                                AdditionItem(
+                                    menuProductAdditionItem = menuProductAdditionItem.product,
+                                    isMultiply = true,
+                                    onAction = onAction
+                                )
                             }
                         }
                     }
@@ -285,6 +228,82 @@ class ProductDetailsFragment :
                 item {
                     Spacer(modifier = Modifier.height(FoodDeliveryTheme.dimensions.scrollScreenBottomSpace))
                 }
+            }
+        }
+    }
+
+    @Composable
+    private fun AdditionItem(
+        menuProductAdditionItem: MenuProductAdditionItem,
+        isMultiply: Boolean,
+        onAction: (ProductDetailsState.Action) -> Unit,
+    ) {
+        Row(
+            modifier = Modifier
+                .padding(horizontal = 16.dp)
+                .padding(vertical = 8.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            AsyncImage(
+                modifier = Modifier
+                    .size(40.dp),
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(menuProductAdditionItem.photoLink)
+                    .crossfade(true)
+                    .build(),
+                placeholder = painterResource(R.drawable.placeholder_small),
+                contentDescription = stringResource(R.string.description_product_addition),
+                contentScale = ContentScale.FillWidth,
+            )
+
+            Text(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(start = 8.dp),
+                text = menuProductAdditionItem.name,
+                style = FoodDeliveryTheme.typography.bodyLarge,
+            )
+
+            menuProductAdditionItem.price?.let { price ->
+                Text(
+                    modifier = Modifier,
+                    text = price,
+                    style = FoodDeliveryTheme.typography.bodyLarge,
+                )
+            }
+
+            if (isMultiply) {
+                Checkbox(
+                    checked = menuProductAdditionItem.isSelected,
+                    onCheckedChange = {
+                        onAction(
+                            ProductDetailsState.Action.AdditionClick(
+                                uuid = menuProductAdditionItem.uuid,
+                                groupId = menuProductAdditionItem.groupId
+                            )
+                        )
+                    },
+                    colors = CheckboxDefaults.colors(
+                        checkedColor = FoodDeliveryTheme.colors.mainColors.primary,
+                        uncheckedColor = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
+                    ),
+                )
+            } else {
+                RadioButton(
+                    selected = menuProductAdditionItem.isSelected,
+                    onClick = {
+                        onAction(
+                            ProductDetailsState.Action.AdditionClick(
+                                uuid = menuProductAdditionItem.uuid,
+                                groupId = menuProductAdditionItem.groupId
+                            )
+                        )
+                    },
+                    colors = RadioButtonDefaults.colors(
+                        selectedColor = FoodDeliveryTheme.colors.mainColors.primary,
+                        unselectedColor = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
+                    ),
+                )
             }
         }
     }
@@ -301,7 +320,9 @@ class ProductDetailsFragment :
         ) {
             Column {
                 AsyncImage(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clip(FoodDeliveryCardDefaults.cardShape),
                     model = ImageRequest.Builder(LocalContext.current)
                         .data(menuProductUi.photoLink)
                         .crossfade(true)
@@ -395,9 +416,10 @@ class ProductDetailsFragment :
                                     uuid = "uuid2",
                                     isSelected = true,
                                     name = "БулОЧКА Валентина",
-                                    price = "200",
+                                    price = "+200",
                                     photoLink = "",
-                                    isLast = false
+                                    isLast = false,
+                                    groupId = ""
                                 )
                             ),
                             AdditionItem.AdditionSingleListItem(
@@ -408,7 +430,8 @@ class ProductDetailsFragment :
                                     name = "БулОЧКА Марка",
                                     price = "300",
                                     photoLink = "",
-                                    isLast = true
+                                    isLast = true,
+                                    groupId = ""
                                 )
                             ),
                             AdditionItem.AdditionHeaderItem(
@@ -424,7 +447,8 @@ class ProductDetailsFragment :
                                     name = "Монкейэс",
                                     price = "13",
                                     photoLink = "",
-                                    isLast = false
+                                    isLast = false,
+                                    groupId = ""
                                 )
                             ),
                             AdditionItem.AdditionMultiplyListItem(
@@ -435,10 +459,12 @@ class ProductDetailsFragment :
                                     name = "Лида в лаваше",
                                     price = "2",
                                     photoLink = "",
-                                    isLast = true
+                                    isLast = true,
+                                    groupId = ""
                                 )
                             ),
-                        )
+                        ),
+                        priceWithAdditions = "300 ₽"
                     )
                 ),
                 onAction = {}

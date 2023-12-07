@@ -21,14 +21,13 @@ class ProductDetailsUiStateMapper(
                         photoLink = menuProduct.photoLink,
                         name = menuProduct.name,
                         size = menuProduct.size,
-                        oldPrice = menuProduct.oldPrice?.let { oldPrice ->
-                            stringUtil.getCostString(oldPrice)
-                        },
-                        newPrice = stringUtil.getCostString(menuProduct.newPrice),
+                        oldPrice = menuProduct.oldPrice,
+                        newPrice = menuProduct.newPrice,
                         description = menuProduct.description,
-                        additionList = menuProduct.additionList
+                        additionList = menuProduct.additionList,
+                        priceWithAdditions = menuProduct.priceWithAdditions,
                     )
-                }
+                },
             )
 
             ProductDetailsState.ViewDataState.ScreenState.ERROR -> ProductDetailsUi.Error

@@ -15,6 +15,7 @@ sealed interface ProductDetailsUi : BaseViewState {
             val size: String,
             val oldPrice: String?,
             val newPrice: String,
+            val priceWithAdditions: String,
             val description: String,
             val additionList: List<AdditionItem>,
         )

@@ -5,6 +5,7 @@ import com.bunbeauty.analytic.event.cart.AddCartProductDetailsClickEvent
 import com.bunbeauty.analytic.event.menu.AddMenuProductDetailsClickEvent
 import com.bunbeauty.analytic.event.recommendation.AddRecommendationProductDetailsClickEvent
 import com.bunbeauty.analytic.parameter.MenuProductUuidEventParameter
+import com.bunbeauty.shared.Constants.RUBLE_CURRENCY
 import com.bunbeauty.shared.domain.feature.cart.AddCartProductUseCase
 import com.bunbeauty.shared.domain.feature.cart.ObserveCartUseCase
 import com.bunbeauty.shared.domain.feature.menu_product.GetMenuProductByUuidUseCase
@@ -12,6 +13,7 @@ import com.bunbeauty.shared.domain.model.product.MenuProduct
 import com.bunbeauty.shared.extension.launchSafe
 import com.bunbeauty.shared.presentation.base.SharedStateViewModel
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.DEFAULT_CONCURRENCY
 import kotlinx.coroutines.flow.collectLatest
 
 class ProductDetailsViewModel(
@@ -45,11 +47,20 @@ class ProductDetailsViewModel(
                 ProductDetailsState.Event.NavigateToConsumerCart
             }
 
+            is ProductDetailsState.Action.AdditionClick -> selectAddition(
+                uuid = action.uuid,
+                groupId = action.groupId
+            )
+
             is ProductDetailsState.Action.Init -> {
                 observeCart()
                 getMenuProduct(menuProductUuid = action.menuProductUuid)
             }
         }
+    }
+
+    fun selectAddition(uuid: String, groupId: String) {
+
     }
 
     fun getMenuProduct(
@@ -158,9 +169,10 @@ class ProductDetailsViewModel(
                                     uuid = addition.uuid,
                                     isSelected = addition.isSelected,
                                     name = addition.name,
-                                    price = addition.price?.toString(),
+                                    price = addition.price?.let { price -> "+$price$RUBLE_CURRENCY" },
                                     isLast = additionGroup.additionList.lastIndex == index,
-                                    photoLink = addition.photoLink
+                                    photoLink = addition.photoLink,
+                                    groupId = additionGroup.uuid
                                 ),
                             )
                         } else {
@@ -170,9 +182,10 @@ class ProductDetailsViewModel(
                                     uuid = addition.uuid,
                                     isSelected = addition.isSelected,
                                     name = addition.name,
-                                    price = addition.price?.toString(),
+                                    price = addition.price?.let { price -> "+$price$RUBLE_CURRENCY" },
                                     isLast = additionGroup.additionList.lastIndex == index,
-                                    photoLink = addition.photoLink
+                                    photoLink = addition.photoLink,
+                                    groupId = additionGroup.uuid
                                 ),
                             )
                         }
@@ -190,10 +203,15 @@ class ProductDetailsViewModel(
             } else {
                 "${menuProduct.nutrition} ${menuProduct.utils}"
             },
-            oldPrice = menuProduct.oldPrice?.toString(),
-            newPrice = menuProduct.newPrice.toString(),
+            oldPrice = menuProduct.oldPrice?.let { oldPrice -> "$oldPrice$RUBLE_CURRENCY" },
+            newPrice = menuProduct.newPrice.toString() + RUBLE_CURRENCY,
             description = menuProduct.description,
-            additionList = additionList
+            additionList = additionList,
+            priceWithAdditions = (
+                    menuProduct.newPrice + menuProduct.additionsList
+                        .filter { addition -> addition.isSelected }
+                        .sumOf { addition -> addition.price ?: 0 }
+                    ).toString() + RUBLE_CURRENCY
         )
     }
 }
