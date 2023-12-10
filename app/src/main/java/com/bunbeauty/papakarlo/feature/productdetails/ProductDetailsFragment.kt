@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -246,7 +245,8 @@ class ProductDetailsFragment :
         ) {
             AsyncImage(
                 modifier = Modifier
-                    .size(40.dp),
+                    .size(40.dp)
+                    .clip(FoodDeliveryCardDefaults.cardShape),
                 model = ImageRequest.Builder(LocalContext.current)
                     .data(menuProductAdditionItem.photoLink)
                     .crossfade(true)
@@ -279,7 +279,7 @@ class ProductDetailsFragment :
                         onAction(
                             ProductDetailsState.Action.AdditionClick(
                                 uuid = menuProductAdditionItem.uuid,
-                                groupId = menuProductAdditionItem.groupId
+                                groupUuid = menuProductAdditionItem.groupId
                             )
                         )
                     },
@@ -295,7 +295,7 @@ class ProductDetailsFragment :
                         onAction(
                             ProductDetailsState.Action.AdditionClick(
                                 uuid = menuProductAdditionItem.uuid,
-                                groupId = menuProductAdditionItem.groupId
+                                groupUuid = menuProductAdditionItem.groupId
                             )
                         )
                     },

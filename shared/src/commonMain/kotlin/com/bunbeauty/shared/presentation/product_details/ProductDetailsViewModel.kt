@@ -9,11 +9,11 @@ import com.bunbeauty.shared.Constants.RUBLE_CURRENCY
 import com.bunbeauty.shared.domain.feature.cart.AddCartProductUseCase
 import com.bunbeauty.shared.domain.feature.cart.ObserveCartUseCase
 import com.bunbeauty.shared.domain.feature.menu_product.GetMenuProductByUuidUseCase
+import com.bunbeauty.shared.domain.model.addition.AdditionGroup
 import com.bunbeauty.shared.domain.model.product.MenuProduct
 import com.bunbeauty.shared.extension.launchSafe
 import com.bunbeauty.shared.presentation.base.SharedStateViewModel
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.DEFAULT_CONCURRENCY
 import kotlinx.coroutines.flow.collectLatest
 
 class ProductDetailsViewModel(
@@ -24,7 +24,18 @@ class ProductDetailsViewModel(
 ) : SharedStateViewModel<ProductDetailsState.ViewDataState, ProductDetailsState.Action, ProductDetailsState.Event>(
     ProductDetailsState.ViewDataState(
         cartCostAndCount = null,
-        menuProduct = null,
+        menuProduct = ProductDetailsState.ViewDataState.MenuProduct(
+            uuid = "",
+            photoLink = "",
+            name = "",
+            size = "",
+            oldPrice = null,
+            newPrice = 0,
+            priceWithAdditions = 0,
+            description = "",
+            additionGroups = listOf(),
+            currency = RUBLE_CURRENCY
+        ),
         screenState = ProductDetailsState.ViewDataState.ScreenState.LOADING,
     )
 ) {
@@ -49,7 +60,7 @@ class ProductDetailsViewModel(
 
             is ProductDetailsState.Action.AdditionClick -> selectAddition(
                 uuid = action.uuid,
-                groupId = action.groupId
+                groupUuid = action.groupUuid
             )
 
             is ProductDetailsState.Action.Init -> {
@@ -59,8 +70,54 @@ class ProductDetailsViewModel(
         }
     }
 
-    fun selectAddition(uuid: String, groupId: String) {
+    fun selectAddition(uuid: String, groupUuid: String) {
+        setState {
+            val changedGroup = getChangedGroup(menuProduct, groupUuid = groupUuid, uuid = uuid)
 
+            val newAdditionGroups = menuProduct.additionGroups.mapNotNull { additionGroup ->
+                if (additionGroup.uuid == groupUuid) {
+                    changedGroup
+                } else {
+                    additionGroup
+                }
+            }
+            copy(
+                menuProduct = menuProduct.copy(
+                    additionGroups = newAdditionGroups,
+                    priceWithAdditions = (
+                            menuProduct.newPrice + newAdditionGroups
+                                .flatMap { it.additionList }
+                                .filter { addition -> addition.isSelected }
+                                .sumOf { addition -> addition.price ?: 0 }
+                            )
+                )
+            )
+        }
+    }
+
+    private fun getChangedGroup(
+        menuProduct: ProductDetailsState.ViewDataState.MenuProduct,
+        groupUuid: String,
+        uuid: String,
+    ): AdditionGroup? {
+        return menuProduct.additionGroups.find { it.uuid == groupUuid }
+            ?.let { additionGroup ->
+                additionGroup.copy(
+                    additionList = if (additionGroup.singleChoice) {
+                        additionGroup.additionList.map { addition ->
+                            addition.copy(
+                                isSelected = addition.uuid == uuid
+                            )
+                        }
+                    } else {
+                        additionGroup.additionList.map { addition ->
+                            addition.copy(
+                                isSelected = if (addition.uuid == uuid) !addition.isSelected else addition.isSelected
+                            )
+                        }
+                    }
+                )
+            }
     }
 
     fun getMenuProduct(
@@ -91,7 +148,7 @@ class ProductDetailsViewModel(
     fun onWantClicked(
         productDetailsOpenedFrom: ProductDetailsOpenedFrom,
     ) {
-        dataState.value.menuProduct?.let { menuProduct ->
+        dataState.value.menuProduct.let { menuProduct ->
             sendOnWantedClickedAnalytic(
                 menuProductUuid = menuProduct.uuid,
                 productDetailsOpenedFrom = productDetailsOpenedFrom
@@ -151,49 +208,6 @@ class ProductDetailsViewModel(
     }
 
     private fun mapMenuProduct(menuProduct: MenuProduct): ProductDetailsState.ViewDataState.MenuProduct {
-        val additionList = buildList {
-            menuProduct.additionGroups.forEach { additionGroup ->
-                add(
-                    AdditionItem.AdditionHeaderItem(
-                        key = "AdditionHeaderItem + ${additionGroup.uuid}",
-                        uuid = additionGroup.uuid,
-                        name = additionGroup.name
-                    )
-                )
-                addAll(
-                    additionGroup.additionList.mapIndexed { index, addition ->
-                        if (additionGroup.singleChoice) {
-                            AdditionItem.AdditionSingleListItem(
-                                key = "AdditionSingleListItem + ${addition.uuid}",
-                                product = MenuProductAdditionItem(
-                                    uuid = addition.uuid,
-                                    isSelected = addition.isSelected,
-                                    name = addition.name,
-                                    price = addition.price?.let { price -> "+$price$RUBLE_CURRENCY" },
-                                    isLast = additionGroup.additionList.lastIndex == index,
-                                    photoLink = addition.photoLink,
-                                    groupId = additionGroup.uuid
-                                ),
-                            )
-                        } else {
-                            AdditionItem.AdditionMultiplyListItem(
-                                key = "AdditionMultiplyListItem + ${addition.uuid}",
-                                product = MenuProductAdditionItem(
-                                    uuid = addition.uuid,
-                                    isSelected = addition.isSelected,
-                                    name = addition.name,
-                                    price = addition.price?.let { price -> "+$price$RUBLE_CURRENCY" },
-                                    isLast = additionGroup.additionList.lastIndex == index,
-                                    photoLink = addition.photoLink,
-                                    groupId = additionGroup.uuid
-                                ),
-                            )
-                        }
-                    }
-                )
-            }
-        }
-
         return ProductDetailsState.ViewDataState.MenuProduct(
             uuid = menuProduct.uuid,
             photoLink = menuProduct.photoLink,
@@ -203,15 +217,16 @@ class ProductDetailsViewModel(
             } else {
                 "${menuProduct.nutrition} ${menuProduct.utils}"
             },
-            oldPrice = menuProduct.oldPrice?.let { oldPrice -> "$oldPrice$RUBLE_CURRENCY" },
-            newPrice = menuProduct.newPrice.toString() + RUBLE_CURRENCY,
+            oldPrice = menuProduct.oldPrice,
+            newPrice = menuProduct.newPrice,
             description = menuProduct.description,
-            additionList = additionList,
-            priceWithAdditions = (
-                    menuProduct.newPrice + menuProduct.additionsList
-                        .filter { addition -> addition.isSelected }
-                        .sumOf { addition -> addition.price ?: 0 }
-                    ).toString() + RUBLE_CURRENCY
+            priceWithAdditions =
+            menuProduct.newPrice + menuProduct.additionsList
+                .filter { addition -> addition.isSelected }
+                .sumOf { addition -> addition.price ?: 0 },
+            additionGroups = menuProduct.additionGroups,
+            currency = RUBLE_CURRENCY
         )
     }
+
 }
