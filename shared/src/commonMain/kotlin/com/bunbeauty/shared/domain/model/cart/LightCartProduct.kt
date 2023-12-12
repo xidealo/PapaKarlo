@@ -8,4 +8,5 @@ data class LightCartProduct(
     val photoLink: String,
     val count: Int,
     val menuProductUuid: String,
+    val cartProductAdditionList: List<CartProductAddition>,
 )

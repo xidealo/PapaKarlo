@@ -337,7 +337,8 @@ class ConsumerCartFragment :
             oldCost = "330 ₽",
             photoLink = "",
             count = 3,
-            menuProductUuid = ""
+            menuProductUuid = "",
+            additions = null
         )
 
         fun getMenuProductItem(uuid: String) = MenuProductItemModel(

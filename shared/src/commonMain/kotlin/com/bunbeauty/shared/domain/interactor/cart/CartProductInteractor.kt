@@ -2,7 +2,6 @@ package com.bunbeauty.shared.domain.interactor.cart
 
 import com.bunbeauty.shared.domain.CommonFlow
 import com.bunbeauty.shared.domain.asCommonFlow
-import com.bunbeauty.shared.domain.interactor.product.IProductInteractor
 import com.bunbeauty.shared.domain.model.cart.CartProduct
 import com.bunbeauty.shared.domain.model.cart.ConsumerCartDomain
 import com.bunbeauty.shared.domain.model.cart.LightCartProduct
@@ -13,7 +12,6 @@ import kotlinx.coroutines.flow.map
 class CartProductInteractor(
     private val cartProductRepo: CartProductRepo,
     private val deliveryRepo: DeliveryRepo,
-    private val productInteractor: IProductInteractor,
     private val getCartTotal: GetCartTotalUseCase,
 ) : ICartProductInteractor {
 
@@ -30,12 +28,6 @@ class CartProductInteractor(
     override fun observeTotalCartCount(): CommonFlow<Int> {
         return cartProductRepo.observeCartProductList().map { cartProductList ->
             getTotalCount(cartProductList)
-        }.asCommonFlow()
-    }
-
-    override fun observeNewTotalCartCost(): CommonFlow<Int> {
-        return cartProductRepo.observeCartProductList().map { cartProductList ->
-            productInteractor.getNewTotalCost(cartProductList)
         }.asCommonFlow()
     }
 
@@ -64,26 +56,32 @@ class CartProductInteractor(
         return LightCartProduct(
             uuid = cartProduct.uuid,
             name = cartProduct.product.name,
-            newCost = productInteractor.getProductPositionNewCost(cartProduct),
-            oldCost = productInteractor.getProductPositionOldCost(cartProduct),
+            newCost = getNewTotalCost(cartProduct),
+            oldCost = getOldTotalCost(cartProduct),
             photoLink = cartProduct.product.photoLink,
             count = cartProduct.count,
             menuProductUuid = cartProduct.product.uuid,
+            cartProductAdditionList = cartProduct.cartProductAdditionList
         )
     }
 
-    suspend fun getTotalCartCount(): Int {
-        val cartProductList = cartProductRepo.getCartProductList()
-        return getTotalCount(cartProductList)
+    fun getNewTotalCost(cartProduct: CartProduct): Int {
+        return (cartProduct.product.newPrice + cartProduct.cartProductAdditionList.sumOf { addition ->
+            addition.price ?: 0
+        }) * cartProduct.count
+    }
+
+    fun getOldTotalCost(cartProduct: CartProduct): Int? {
+        val oldPrice = cartProduct.product.oldPrice ?: return null
+
+        return (oldPrice + cartProduct.cartProductAdditionList.sumOf { addition ->
+            addition.price ?: 0
+        }) * cartProduct.count
     }
 
     fun getTotalCount(productList: List<CartProduct>): Int {
         return productList.sumOf { product ->
             product.count
         }
-    }
-
-    companion object {
-        private const val CART_PRODUCT_LIMIT = 99
     }
 }

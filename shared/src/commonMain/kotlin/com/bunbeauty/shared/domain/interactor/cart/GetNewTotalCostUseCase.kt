@@ -5,21 +5,17 @@ import com.bunbeauty.shared.domain.model.cart.CartProduct
 
 //TODO(add more tests)
 class GetNewTotalCostUseCase(private val getDiscountUseCase: GetDiscountUseCase) {
-    suspend operator fun invoke(productList: List<CartProduct>): Int {
-        val newTotalCost = productList.sumOf { orderProductEntity ->
-            getMenuProductPrice(orderProductEntity = orderProductEntity) +
-                    getAdditionsPrice(orderProductEntity = orderProductEntity)
+    suspend operator fun invoke(cartProductList: List<CartProduct>): Int {
+        val newTotalCost = cartProductList.sumOf { cartProduct ->
+            (cartProduct.product.newPrice + getAdditionsPrice(cartProduct = cartProduct)) * cartProduct.count
         }
         val discount =
             (newTotalCost * (getDiscountUseCase()?.firstOrderDiscount ?: 0) / 100.0).toInt()
         return newTotalCost - discount
     }
 
-    private fun getMenuProductPrice(orderProductEntity: CartProduct) =
-        orderProductEntity.count * orderProductEntity.product.newPrice
-
-    private fun getAdditionsPrice(orderProductEntity: CartProduct) =
-        orderProductEntity.cartProductAdditionList.sumOf { cartProductAddition ->
+    private fun getAdditionsPrice(cartProduct: CartProduct) =
+        cartProduct.cartProductAdditionList.sumOf { cartProductAddition ->
             cartProductAddition.price ?: 0
         }
 }

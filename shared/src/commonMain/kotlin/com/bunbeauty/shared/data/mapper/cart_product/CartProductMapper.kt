@@ -39,14 +39,18 @@ class CartProductMapper : ICartProductMapper {
                     isRecommended = firstCartProductWithCategoryEntity.isRecommended,
                     additionGroups = emptyList(),
                 ),
-                cartProductAdditionList = groupedCartProductWithCategoryEntityList.map { cartProductWithMenuProductEntityList ->
-                    CartProductAddition(
-                        uuid = cartProductWithMenuProductEntityList.cartProductAdditionUuid,
-                        name = cartProductWithMenuProductEntityList.cartProductAdditionName,
-                        price = cartProductWithMenuProductEntityList.cartProductAdditionPrice,
-                        cartProductUuid = cartProductWithMenuProductEntityList.cartProductUuid,
-                        additionUuid = cartProductWithMenuProductEntityList.cartProductAdditionAdditionUuid
-                    )
+                cartProductAdditionList = groupedCartProductWithCategoryEntityList.mapNotNull { cartProductWithMenuProductEntityList ->
+                    cartProductWithMenuProductEntityList.cartProductAdditionUuid?.let {
+                        CartProductAddition(
+                            uuid = cartProductWithMenuProductEntityList.cartProductAdditionUuid,
+                            name = cartProductWithMenuProductEntityList.cartProductAdditionName
+                                ?: "",
+                            price = cartProductWithMenuProductEntityList.cartProductAdditionPrice,
+                            cartProductUuid = cartProductWithMenuProductEntityList.cartProductUuid,
+                            additionUuid = cartProductWithMenuProductEntityList.cartProductAdditionAdditionUuid
+                                ?: ""
+                        )
+                    }
                 }
             )
         }

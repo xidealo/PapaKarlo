@@ -253,7 +253,10 @@ class ConsumerCartViewModel(
             oldCost = lightCartProduct.oldCost?.let { oldCost -> oldCost.toString() + RUBLE_CURRENCY },
             photoLink = lightCartProduct.photoLink,
             count = lightCartProduct.count,
-            menuProductUuid = lightCartProduct.menuProductUuid
+            menuProductUuid = lightCartProduct.menuProductUuid,
+            additions = lightCartProduct.cartProductAdditionList
+                .joinToString(" • ") { it.name }
+                .ifEmpty { null }
         )
     }
 

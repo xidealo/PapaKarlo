@@ -7,5 +7,6 @@ data class CartProductItem(
     val oldCost: String?,
     val photoLink: String,
     val count: Int,
-    val menuProductUuid: String
+    val menuProductUuid: String,
+    val additions: String?,
 )

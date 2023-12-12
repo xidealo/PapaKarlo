@@ -8,8 +8,6 @@ import com.bunbeauty.shared.domain.interactor.city.CityInteractor
 import com.bunbeauty.shared.domain.interactor.city.ICityInteractor
 import com.bunbeauty.shared.domain.interactor.menu_product.IMenuProductInteractor
 import com.bunbeauty.shared.domain.interactor.menu_product.MenuProductInteractor
-import com.bunbeauty.shared.domain.interactor.product.IProductInteractor
-import com.bunbeauty.shared.domain.interactor.product.ProductInteractor
 import com.bunbeauty.shared.domain.interactor.update.IUpdateInteractor
 import com.bunbeauty.shared.domain.interactor.update.UpdateInteractor
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
@@ -40,7 +38,6 @@ internal fun interactorModule() = module {
         CartProductInteractor(
             cartProductRepo = get(),
             deliveryRepo = get(),
-            productInteractor = get(),
             getCartTotal = get()
         )
     }
@@ -59,8 +56,5 @@ internal fun interactorModule() = module {
         MenuProductInteractor(
             menuProductRepo = get(),
         )
-    }
-    single<IProductInteractor> {
-        ProductInteractor()
     }
 }

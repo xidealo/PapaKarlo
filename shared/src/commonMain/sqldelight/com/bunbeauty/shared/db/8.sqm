@@ -24,4 +24,4 @@ FROM cartProductEntity
 JOIN menuProductEntity ON menuProductEntity.uuid = cartProductEntity.menuProductUuid
 JOIN menuProductCategoryReference ON menuProductCategoryReference.menuProductUuidReference = menuProductEntity.uuid
 JOIN categoryEntity ON menuProductCategoryReference.categoryUuidReference = categoryEntity.uuid
-JOIN cartProductAdditionEntity ON cartProductAdditionEntity.cartProductUuid = cartProductEntity.uuid;
+LEFT JOIN cartProductAdditionEntity ON cartProductAdditionEntity.cartProductUuid = cartProductEntity.uuid;
