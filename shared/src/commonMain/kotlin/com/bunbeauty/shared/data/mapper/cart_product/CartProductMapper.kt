@@ -3,6 +3,7 @@ package com.bunbeauty.shared.data.mapper.cart_product
 import com.bunbeauty.shared.db.CartProductEntity
 import com.bunbeauty.shared.db.CartProductWithMenuProductEntity
 import com.bunbeauty.shared.domain.model.cart.CartProduct
+import com.bunbeauty.shared.domain.model.cart.CartProductAddition
 import com.bunbeauty.shared.domain.model.category.Category
 import com.bunbeauty.shared.domain.model.product.MenuProduct
 
@@ -36,8 +37,17 @@ class CartProductMapper : ICartProductMapper {
                     },
                     visible = firstCartProductWithCategoryEntity.visible,
                     isRecommended = firstCartProductWithCategoryEntity.isRecommended,
-                    additionGroups = emptyList()
-                )
+                    additionGroups = emptyList(),
+                ),
+                cartProductAdditionList = groupedCartProductWithCategoryEntityList.map { cartProductWithMenuProductEntityList ->
+                    CartProductAddition(
+                        uuid = cartProductWithMenuProductEntityList.cartProductAdditionUuid,
+                        name = cartProductWithMenuProductEntityList.cartProductAdditionName,
+                        price = cartProductWithMenuProductEntityList.cartProductAdditionPrice,
+                        cartProductUuid = cartProductWithMenuProductEntityList.cartProductUuid,
+                        additionUuid = cartProductWithMenuProductEntityList.cartProductAdditionAdditionUuid
+                    )
+                }
             )
         }
     }

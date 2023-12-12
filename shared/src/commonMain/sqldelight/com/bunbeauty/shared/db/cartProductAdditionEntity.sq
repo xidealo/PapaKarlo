@@ -1,0 +1,24 @@
+CREATE TABLE cartProductAdditionEntity (
+   uuid TEXT NOT NULL PRIMARY KEY,
+   name TEXT NOT NULL,
+   price INTEGER AS Int,
+   additionUuid TEXT NOT NULL,
+   cartProductUuid TEXT NOT NULL,
+   FOREIGN KEY (cartProductUuid) REFERENCES cartProductEntity(uuid) ON DELETE CASCADE
+);
+
+insertCartProductAdditionEntity:
+INSERT OR REPLACE
+INTO cartProductAdditionEntity
+VALUES (?, ?, ?, ?, ?);
+
+--
+-- getCartProductAdditionEntityByUuid:
+-- SELECT *
+-- FROM userEntity
+-- WHERE uuid = :uuid;
+--
+-- updateUserEmailByUuid:
+-- UPDATE userEntity
+-- SET email = :email
+-- WHERE uuid = :uuid;

@@ -159,4 +159,27 @@ class GetNewTotalCostUseCaseTest {
             )
         }
 
+    //TODO (add more tests)
+    @Test
+    fun `should return newFinalCost with additions price when has additions`() =
+        runTest {
+            // Given
+            val cartProductListMockData = listOf(
+                getCartProduct(
+                    count = 1,
+                    menuProduct = getMenuProduct(newPrice = 666, oldPrice = 1000)
+                )
+            )
+            coEvery { getDiscountUseCase() } returns Discount(firstOrderDiscount = 0)
+
+            // When
+            val newFinalCost = getNewTotalCostUseCase(cartProductListMockData)
+
+            // Then
+            assertEquals(
+                expected = 1,
+                actual = newFinalCost
+            )
+        }
+
 }

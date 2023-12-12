@@ -168,7 +168,7 @@ class MenuViewModel(
             ),
         )
         sharedScope.launch {
-            addCartProductUseCase(menuProductUuid)
+            addCartProductUseCase(menuProductUuid = menuProductUuid, additionList = listOf())
         }
     }
 

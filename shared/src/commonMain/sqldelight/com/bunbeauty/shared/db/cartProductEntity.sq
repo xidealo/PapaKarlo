@@ -12,11 +12,16 @@ SELECT cartProductEntity.uuid AS cartProductUuid,
     categoryEntity.uuid AS categoryUuid,
     categoryEntity.name AS categoryName,
     categoryEntity.priority,
-    menuProductEntity.*
+    menuProductEntity.*,
+    cartProductAdditionEntity.uuid AS cartProductAdditionUuid,
+    cartProductAdditionEntity.name AS cartProductAdditionName,
+    cartProductAdditionEntity.price AS cartProductAdditionPrice,
+    cartProductAdditionEntity.additionUuid AS cartProductAdditionAdditionUuid
 FROM cartProductEntity
 JOIN menuProductEntity ON menuProductEntity.uuid = cartProductEntity.menuProductUuid
 JOIN menuProductCategoryReference ON menuProductCategoryReference.menuProductUuidReference = menuProductEntity.uuid
-JOIN categoryEntity ON menuProductCategoryReference.categoryUuidReference = categoryEntity.uuid;
+JOIN categoryEntity ON menuProductCategoryReference.categoryUuidReference = categoryEntity.uuid
+JOIN cartProductAdditionEntity ON cartProductAdditionEntity.cartProductUuid = cartProductEntity.uuid;
 
 insertCartProduct:
 INSERT OR REPLACE

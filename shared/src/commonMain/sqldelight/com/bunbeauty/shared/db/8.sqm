@@ -1,0 +1,27 @@
+CREATE TABLE cartProductAdditionEntity (
+   uuid TEXT NOT NULL PRIMARY KEY,
+   name TEXT NOT NULL,
+   price INTEGER AS Int,
+   additionUuid TEXT NOT NULL,
+   cartProductUuid TEXT NOT NULL,
+   FOREIGN KEY (cartProductUuid) REFERENCES cartProductEntity(uuid) ON DELETE CASCADE
+);
+
+DROP VIEW IF EXISTS cartProductWithMenuProductEntity;
+CREATE VIEW cartProductWithMenuProductEntity AS
+SELECT cartProductEntity.uuid AS cartProductUuid,
+    cartProductEntity.count,
+    cartProductEntity.menuProductUuid,
+    categoryEntity.uuid AS categoryUuid,
+    categoryEntity.name AS categoryName,
+    categoryEntity.priority,
+    menuProductEntity.*,
+    cartProductAdditionEntity.uuid AS cartProductAdditionUuid,
+    cartProductAdditionEntity.name AS cartProductAdditionName,
+    cartProductAdditionEntity.price AS cartProductAdditionPrice,
+    cartProductAdditionEntity.additionUuid AS cartProductAdditionAdditionUuid
+FROM cartProductEntity
+JOIN menuProductEntity ON menuProductEntity.uuid = cartProductEntity.menuProductUuid
+JOIN menuProductCategoryReference ON menuProductCategoryReference.menuProductUuidReference = menuProductEntity.uuid
+JOIN categoryEntity ON menuProductCategoryReference.categoryUuidReference = categoryEntity.uuid
+JOIN cartProductAdditionEntity ON cartProductAdditionEntity.cartProductUuid = cartProductEntity.uuid;

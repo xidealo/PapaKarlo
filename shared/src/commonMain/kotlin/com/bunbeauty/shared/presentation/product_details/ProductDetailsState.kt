@@ -24,7 +24,9 @@ interface ProductDetailsState {
             val priceWithAdditions: Int,
             val description: String,
             val additionGroups: List<AdditionGroup>,
-        )
+        ) {
+            val additionList = additionGroups.flatMap { additionGroups -> additionGroups.additionList }
+        }
 
         enum class ScreenState {
             SUCCESS,

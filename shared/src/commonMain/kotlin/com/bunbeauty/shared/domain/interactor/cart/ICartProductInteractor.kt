@@ -14,7 +14,5 @@ interface ICartProductInteractor {
 
     fun observeTotalCartCount(): CommonFlow<Int>
 
-    suspend fun addProductToCart(menuProductUuid: String): CartProduct?
-
     suspend fun removeAllProductsFromCart()
 }

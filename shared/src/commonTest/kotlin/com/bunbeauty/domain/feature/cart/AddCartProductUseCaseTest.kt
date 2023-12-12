@@ -32,7 +32,7 @@ internal class AddCartProductUseCaseTest {
         )
 
         // When
-        val result = addCartProduct(menuProductUuid)
+        val result = addCartProduct(menuProductUuid, emptyList())
 
         // Then
         assertFalse(result)
@@ -46,7 +46,7 @@ internal class AddCartProductUseCaseTest {
         coEvery { cartProductRepo.saveAsCartProduct(menuProductUuid) } returns generateCartProduct()
 
         // When
-        val result = addCartProduct(menuProductUuid)
+        val result = addCartProduct(menuProductUuid, emptyList())
 
         // Then
         assertTrue(result)
@@ -67,7 +67,7 @@ internal class AddCartProductUseCaseTest {
         } returns initialCartProduct.copy(count = initialCount + 1)
 
         // When
-        val result = addCartProduct(menuProductUuid)
+        val result = addCartProduct(menuProductUuid, emptyList())
 
         // Then
         assertTrue(result)

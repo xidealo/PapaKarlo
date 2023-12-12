@@ -171,7 +171,7 @@ class ConsumerCartViewModel(
     private fun addProduct(menuProductUuid: String) {
         sharedScope.launchSafe(
             block = {
-                addCartProductUseCase(menuProductUuid)
+                addCartProductUseCase(menuProductUuid = menuProductUuid, additionList = listOf())
             },
             onError = {
                 // TODO handle error

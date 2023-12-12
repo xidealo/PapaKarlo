@@ -5,6 +5,7 @@ import com.bunbeauty.shared.data.network.api.NetworkConnectorImpl
 import com.bunbeauty.shared.data.network.socket.SocketService
 import com.bunbeauty.shared.data.repository.AuthRepository
 import com.bunbeauty.shared.data.repository.CafeRepository
+import com.bunbeauty.shared.data.repository.CartProductAdditionRepository
 import com.bunbeauty.shared.data.repository.CartProductRepository
 import com.bunbeauty.shared.data.repository.CityRepository
 import com.bunbeauty.shared.data.repository.DeliveryRepository
@@ -159,6 +160,12 @@ fun repositoryModule() = module {
         RecommendationRepository(
             networkConnector = get(),
             dataStoreRepo = get()
+        )
+    }
+    single {
+        CartProductAdditionRepository(
+            uuidGenerator = get(),
+            cartProductAdditionDao = get()
         )
     }
 }

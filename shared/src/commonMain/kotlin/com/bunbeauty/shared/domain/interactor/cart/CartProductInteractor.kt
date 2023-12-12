@@ -39,19 +39,6 @@ class CartProductInteractor(
         }.asCommonFlow()
     }
 
-    override suspend fun addProductToCart(menuProductUuid: String): CartProduct? {
-        if (getTotalCartCount() >= CART_PRODUCT_LIMIT) {
-            return null
-        }
-
-        val cartProduct = cartProductRepo.getCartProductByMenuProductUuid(menuProductUuid)
-        return if (cartProduct == null) {
-            cartProductRepo.saveAsCartProduct(menuProductUuid)
-        } else {
-            cartProductRepo.updateCartProductCount(cartProduct.uuid, cartProduct.count + 1)
-        }
-    }
-
     override suspend fun removeAllProductsFromCart() {
         cartProductRepo.deleteAllCartProducts()
     }

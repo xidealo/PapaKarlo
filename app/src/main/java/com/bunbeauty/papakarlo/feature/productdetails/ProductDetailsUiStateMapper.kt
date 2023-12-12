@@ -3,7 +3,6 @@ package com.bunbeauty.papakarlo.feature.productdetails
 import com.bunbeauty.papakarlo.feature.topcart.TopCartUi
 import com.bunbeauty.papakarlo.util.string.IStringUtil
 import com.bunbeauty.shared.Constants
-import com.bunbeauty.shared.Constants.RUBLE_CURRENCY
 import com.bunbeauty.shared.presentation.product_details.AdditionItem
 import com.bunbeauty.shared.presentation.product_details.MenuProductAdditionItem
 import com.bunbeauty.shared.presentation.product_details.ProductDetailsState

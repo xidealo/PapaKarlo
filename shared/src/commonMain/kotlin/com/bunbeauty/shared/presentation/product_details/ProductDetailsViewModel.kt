@@ -81,6 +81,7 @@ class ProductDetailsViewModel(
                     additionGroup
                 }
             }
+
             copy(
                 menuProduct = menuProduct.copy(
                     additionGroups = newAdditionGroups,
@@ -155,7 +156,10 @@ class ProductDetailsViewModel(
             )
             sharedScope.launchSafe(
                 block = {
-                    addCartProductUseCase(menuProduct.uuid)
+                    addCartProductUseCase(
+                        menuProductUuid = menuProduct.uuid,
+                        additionList = menuProduct.additionList.filter { addition -> addition.isSelected }
+                    )
                 },
                 onError = {
                     setState {
