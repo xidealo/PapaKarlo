@@ -158,8 +158,13 @@ class ProductDetailsViewModel(
                 block = {
                     addCartProductUseCase(
                         menuProductUuid = menuProduct.uuid,
-                        additionList = menuProduct.additionList.filter { addition -> addition.isSelected }
+                        additionUuidList = menuProduct.additionList
+                            .filter { addition -> addition.isSelected }
+                            .map { addition -> addition.uuid }
                     )
+                    addEvent {
+                        ProductDetailsState.Event.AddedProduct(menuProduct.uuid)
+                    }
                 },
                 onError = {
                     setState {

@@ -37,7 +37,11 @@ interface ConsumerCart {
     sealed interface Action : BaseAction {
         data object Init : Action
         data object BackClick : Action
-        data class AddProductToCartClick(val menuProductUuid: String) : Action
+        data class AddProductToCartClick(
+            val menuProductUuid: String,
+            val additionUuidList: List<String>,
+        ) : Action
+
         data class RemoveProductFromCartClick(
             val menuProductUuid: String,
             val cartProductUuid: String,
@@ -47,7 +51,10 @@ interface ConsumerCart {
         data object OnCreateOrderClick : Action
         data object OnMenuClick : Action
         data object OnErrorButtonClick : Action
-        data class AddRecommendationProductToCartClick(val menuProductUuid: String) : Action
+        data class AddRecommendationProductToCartClick(
+            val menuProductUuid: String,
+        ) : Action
+
         data class RecommendationClick(val menuProductUuid: String, val name: String) : Action
     }
 

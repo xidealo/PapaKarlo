@@ -3,6 +3,7 @@ package com.bunbeauty.shared.data.di
 import com.bunbeauty.shared.data.network.api.NetworkConnector
 import com.bunbeauty.shared.data.network.api.NetworkConnectorImpl
 import com.bunbeauty.shared.data.network.socket.SocketService
+import com.bunbeauty.shared.data.repository.AdditionRepository
 import com.bunbeauty.shared.data.repository.AuthRepository
 import com.bunbeauty.shared.data.repository.CafeRepository
 import com.bunbeauty.shared.data.repository.CartProductAdditionRepository
@@ -70,6 +71,7 @@ fun repositoryModule() = module {
             categoryDao = get(),
             menuProductCategoryReferenceDao = get(),
             menuProductMapper = get(),
+            additionDao = get()
         )
     }
     single<UserAddressRepo> {
@@ -166,6 +168,11 @@ fun repositoryModule() = module {
         CartProductAdditionRepository(
             uuidGenerator = get(),
             cartProductAdditionDao = get()
+        )
+    }
+    single {
+        AdditionRepository(
+            additionDao = get(),
         )
     }
 }

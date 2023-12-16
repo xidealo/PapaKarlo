@@ -1,0 +1,20 @@
+CREATE TABLE additionEntity (
+    uuid TEXT NOT NULL PRIMARY KEY,
+    name TEXT NOT NULL,
+    photoLink TEXT NOT NULL,
+    price INTEGER AS Int,
+    isVisible INTEGER AS Boolean NOT NULL,
+    isSelected INTEGER AS Boolean NOT NULL,
+    menuProductUuid TEXT NOT NULL,
+    FOREIGN KEY(menuProductUuid) REFERENCES menuProductEntity(uuid) ON DELETE CASCADE
+);
+
+insert:
+INSERT OR REPLACE
+INTO additionEntity
+VALUES (?, ?, ?, ?, ?, ?, ?);
+
+getAdditionByUuid:
+SELECT *
+FROM additionEntity
+WHERE uuid = :uuid;

@@ -25,3 +25,14 @@ JOIN menuProductEntity ON menuProductEntity.uuid = cartProductEntity.menuProduct
 JOIN menuProductCategoryReference ON menuProductCategoryReference.menuProductUuidReference = menuProductEntity.uuid
 JOIN categoryEntity ON menuProductCategoryReference.categoryUuidReference = categoryEntity.uuid
 LEFT JOIN cartProductAdditionEntity ON cartProductAdditionEntity.cartProductUuid = cartProductEntity.uuid;
+
+CREATE TABLE additionEntity (
+    uuid TEXT NOT NULL PRIMARY KEY,
+    name TEXT NOT NULL,
+    photoLink TEXT NOT NULL,
+    price INTEGER AS Int,
+    isVisible INTEGER AS Boolean NOT NULL,
+    isSelected INTEGER AS Boolean NOT NULL,
+    menuProductUuid TEXT NOT NULL,
+    FOREIGN KEY(menuProductUuid) REFERENCES menuProductEntity(uuid) ON DELETE CASCADE
+);

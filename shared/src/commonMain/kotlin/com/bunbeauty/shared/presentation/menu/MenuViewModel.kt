@@ -183,7 +183,10 @@ class MenuViewModel(
                     )
                 }
             } else {
-                addCartProductUseCase(menuProductUuid = menuProductUuid, additionList = listOf())
+                addCartProductUseCase(
+                    menuProductUuid = menuProductUuid,
+                    additionUuidList = listOf()
+                )
             }
         }
     }

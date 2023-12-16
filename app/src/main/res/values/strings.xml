@@ -65,7 +65,7 @@
     <string name="action_consumer_cart_menu">Меню</string>
     <string name="title_consumer_cart_empty">Корзина пуста</string>
     <string name="msg_consumer_cart_empty">Добавьте товар из «Меню»</string>
-    <string name="msg_consumer_cart_free_delivery_from">Бесплатная доставка от %s</string>
+    <string name="msg_consumer_cart_free_delivery_from">Бесплатная доставка от%s</string>
     <string name="msg_consumer_cart_recommendations">Что-нибудь еще?</string>
     <string name="title_consumer_cart_total">Итого</string>
     <string name="title_consumer_cart_discount">Скидка</string>

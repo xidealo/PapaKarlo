@@ -1,7 +1,7 @@
 package com.bunbeauty.shared.data.mapper.menuProduct
 
-import com.bunbeauty.core.Logger
 import com.bunbeauty.shared.data.network.model.MenuProductServer
+import com.bunbeauty.shared.db.AdditionEntity
 import com.bunbeauty.shared.db.CategoryEntity
 import com.bunbeauty.shared.db.MenuProductCategoryReference
 import com.bunbeauty.shared.db.MenuProductEntity
@@ -52,6 +52,24 @@ class MenuProductMapper : IMenuProductMapper {
             }
     }
 
+    override fun toAdditionEntityList(menuProductServerList: List<MenuProductServer>): List<AdditionEntity> {
+        return menuProductServerList.flatMap { menuProductServer ->
+            menuProductServer.additionGroupServers.flatMap { additionGroupServers -> additionGroupServers.additionServerList }
+                .map { additionServer ->
+                    AdditionEntity(
+                        uuid = additionServer.uuid,
+                        name = additionServer.name,
+                        price = additionServer.price,
+                        isVisible = additionServer.isVisible,
+                        isSelected = additionServer.isSelected,
+                        menuProductUuid = menuProductServer.uuid,
+                        photoLink = menuProductServer.photoLink
+                    )
+                }
+        }
+
+    }
+
     override fun toMenuProduct(menuProduct: MenuProductEntity): MenuProduct {
         return MenuProduct(
             uuid = menuProduct.uuid,
@@ -99,7 +117,8 @@ class MenuProductMapper : IMenuProductMapper {
                             name = additionServer.name,
                             photoLink = additionServer.photoLink,
                             price = additionServer.price,
-                            uuid = additionServer.uuid
+                            uuid = additionServer.uuid,
+                            menuProductUuid = menuProductServer.uuid
                         )
                     },
                     isVisible = additionGroupServer.isVisible,

@@ -6,5 +6,6 @@ data class Addition(
     val name: String,
     val photoLink: String,
     val price: Int?,
-    val uuid: String
+    val uuid: String,
+    val menuProductUuid: String,
 )

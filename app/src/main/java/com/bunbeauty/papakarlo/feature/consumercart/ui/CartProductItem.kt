@@ -140,6 +140,7 @@ private fun CartProductItemPreview() {
                 count = 5,
                 menuProductUuid = "",
                 additions = "Обычная булка • Добавка 1 • Добавка 2",
+                additionUuidList = emptyList()
             ),
             onCountIncreased = {},
             onCountDecreased = {},
@@ -162,6 +163,7 @@ private fun CartProductItemWithoutOldCostPreview() {
                 count = 5,
                 menuProductUuid = "",
                 additions = "",
+                additionUuidList = emptyList()
             ),
             onCountIncreased = {},
             onCountDecreased = {},

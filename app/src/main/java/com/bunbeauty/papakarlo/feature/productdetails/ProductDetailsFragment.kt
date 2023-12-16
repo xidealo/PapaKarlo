@@ -67,9 +67,8 @@ class ProductDetailsFragment :
 
     private val productDetailsUiStateMapper: ProductDetailsUiStateMapper by inject()
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         viewModel.onAction(ProductDetailsState.Action.Init(args.menuProductUuid))
     }
 
@@ -95,6 +94,9 @@ class ProductDetailsFragment :
             ProductDetailsState.Event.NavigateBack -> findNavController().popBackStack()
             ProductDetailsState.Event.NavigateToConsumerCart -> findNavController()
                 .navigateSafe(globalConsumerCartFragment())
+
+            //set result?
+            is ProductDetailsState.Event.AddedProduct -> findNavController().popBackStack()
         }
     }
 

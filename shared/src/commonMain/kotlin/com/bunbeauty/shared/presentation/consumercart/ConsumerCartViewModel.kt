@@ -50,7 +50,8 @@ class ConsumerCartViewModel(
     override fun reduce(action: ConsumerCart.Action, dataState: ConsumerCart.ViewDataState) {
         when (action) {
             is ConsumerCart.Action.AddProductToCartClick -> addCartProductToCartClick(
-                menuProductUuid = action.menuProductUuid
+                menuProductUuid = action.menuProductUuid,
+                additionUuidList = action.additionUuidList
             )
 
             ConsumerCart.Action.BackClick -> navigateBack()
@@ -154,25 +155,36 @@ class ConsumerCartViewModel(
             ),
         )
         addProduct(
-            menuProductUuid = menuProductUuid
+            menuProductUuid = menuProductUuid,
+            additionUuidList = emptyList()
         )
     }
 
-    private fun addCartProductToCartClick(menuProductUuid: String) {
+    private fun addCartProductToCartClick(
+        menuProductUuid: String,
+        additionUuidList: List<String>,
+    ) {
         analyticService.sendEvent(
             event = IncreaseCartProductClickEvent(
                 menuProductUuidEventParameter = MenuProductUuidEventParameter(value = menuProductUuid)
             ),
         )
         addProduct(
-            menuProductUuid = menuProductUuid
+            menuProductUuid = menuProductUuid,
+            additionUuidList = additionUuidList
         )
     }
 
-    private fun addProduct(menuProductUuid: String) {
+    private fun addProduct(
+        menuProductUuid: String,
+        additionUuidList: List<String>,
+    ) {
         sharedScope.launchSafe(
             block = {
-                addCartProductUseCase(menuProductUuid = menuProductUuid, additionList = listOf())
+                addCartProductUseCase(
+                    menuProductUuid = menuProductUuid,
+                    additionUuidList = additionUuidList
+                )
             },
             onError = {
                 // TODO handle error
@@ -262,7 +274,9 @@ class ConsumerCartViewModel(
             menuProductUuid = lightCartProduct.menuProductUuid,
             additions = lightCartProduct.cartProductAdditionList
                 .joinToString(" • ") { cartProductAddition -> cartProductAddition.name }
-                .ifEmpty { null }
+                .ifEmpty { null },
+            additionUuidList = lightCartProduct.cartProductAdditionList
+                .map { it.additionUuid }
         )
     }
 

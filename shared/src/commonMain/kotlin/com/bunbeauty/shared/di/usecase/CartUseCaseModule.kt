@@ -16,7 +16,8 @@ internal fun cartUseCaseModule() = module {
     factory {
         AddCartProductUseCase(
             cartProductRepo = get(),
-            cartProductAdditionRepository = get()
+            cartProductAdditionRepository = get(),
+            additionRepository = get()
         )
     }
     factory {

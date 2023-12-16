@@ -193,7 +193,8 @@ class ConsumerCartFragment :
                                 onCountIncreased = {
                                     onAction(
                                         ConsumerCart.Action.AddProductToCartClick(
-                                            menuProductUuid = cartProductItem.menuProductUuid
+                                            menuProductUuid = cartProductItem.menuProductUuid,
+                                            additionUuidList = cartProductItem.additionUuidList
                                         )
                                     )
                                 },
@@ -340,6 +341,7 @@ class ConsumerCartFragment :
             count = 3,
             menuProductUuid = "",
             additions = null,
+            additionUuidList = emptyList()
         )
 
         fun getMenuProductItem(uuid: String) = MenuProductItemModel(

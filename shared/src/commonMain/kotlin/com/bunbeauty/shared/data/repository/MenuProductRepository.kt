@@ -1,5 +1,6 @@
 package com.bunbeauty.shared.data.repository
 
+import com.bunbeauty.shared.data.dao.addition.IAdditionDao
 import com.bunbeauty.shared.data.dao.category.ICategoryDao
 import com.bunbeauty.shared.data.dao.menu_product.IMenuProductDao
 import com.bunbeauty.shared.data.dao.menu_product_category_reference.IMenuProductCategoryReferenceDao
@@ -18,6 +19,7 @@ class MenuProductRepository(
     private val categoryDao: ICategoryDao,
     private val menuProductCategoryReferenceDao: IMenuProductCategoryReferenceDao,
     private val menuProductMapper: IMenuProductMapper,
+    private val additionDao: IAdditionDao,
 ) : CacheListRepository<MenuProduct>(), MenuProductRepo {
 
     override val tag: String = "MENU_PRODUCT_TAG"
@@ -68,6 +70,12 @@ class MenuProductRepository(
             .let { menuProductEntityList ->
                 menuProductDao.insertMenuProductList(menuProductEntityList)
             }
+
+        menuProductMapper.toAdditionEntityList(menuProductServerList)
+            .let { additionEntityList ->
+                additionDao.insertList(additionEntityList)
+            }
+
         menuProductServerList.flatMap(menuProductMapper::toMenuProductCategoryReference)
             .let { menuProductCategoryReferenceList ->
                 menuProductCategoryReferenceDao.updateMenuProductReferenceList(

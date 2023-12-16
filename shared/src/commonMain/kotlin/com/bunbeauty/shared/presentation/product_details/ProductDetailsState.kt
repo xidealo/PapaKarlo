@@ -25,7 +25,8 @@ interface ProductDetailsState {
             val description: String,
             val additionGroups: List<AdditionGroup>,
         ) {
-            val additionList = additionGroups.flatMap { additionGroups -> additionGroups.additionList }
+            val additionList =
+                additionGroups.flatMap { additionGroups -> additionGroups.additionList }
         }
 
         enum class ScreenState {
@@ -48,6 +49,9 @@ interface ProductDetailsState {
     sealed interface Event : BaseEvent {
         data object NavigateBack : Event
         data object NavigateToConsumerCart : Event
+        data class AddedProduct(
+            val menuProductUuid: String,
+        ) : Event
     }
 }
 
