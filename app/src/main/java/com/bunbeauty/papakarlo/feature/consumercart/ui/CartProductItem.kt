@@ -139,7 +139,7 @@ private fun CartProductItemPreview() {
                 photoLink = "",
                 count = 5,
                 menuProductUuid = "",
-                additions = "Обычная булка • Добавка 1 • Добавка 2"
+                additions = "Обычная булка • Добавка 1 • Добавка 2",
             ),
             onCountIncreased = {},
             onCountDecreased = {},
@@ -161,7 +161,7 @@ private fun CartProductItemWithoutOldCostPreview() {
                 photoLink = "",
                 count = 5,
                 menuProductUuid = "",
-                additions = ""
+                additions = "",
             ),
             onCountIncreased = {},
             onCountDecreased = {},

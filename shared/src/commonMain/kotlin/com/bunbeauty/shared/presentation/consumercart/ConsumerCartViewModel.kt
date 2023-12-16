@@ -65,7 +65,8 @@ class ConsumerCartViewModel(
             )
 
             is ConsumerCart.Action.RemoveProductFromCartClick -> onRemoveCardProductClicked(
-                menuProductUuid = action.menuProductUuid
+                menuProductUuid = action.menuProductUuid,
+                cartProductUuid = action.cartProductUuid
             )
 
             is ConsumerCart.Action.AddRecommendationProductToCartClick -> addRecommendationProductClicked(
@@ -179,11 +180,16 @@ class ConsumerCartViewModel(
         )
     }
 
-    private fun onRemoveCardProductClicked(menuProductUuid: String) {
+    private fun onRemoveCardProductClicked(
+        menuProductUuid: String,
+        cartProductUuid: String,
+    ) {
         handleRemoveAnalytic(menuProductUuid = menuProductUuid)
         sharedScope.launchSafe(
             block = {
-                removeCartProductUseCase(menuProductUuid = menuProductUuid)
+                removeCartProductUseCase(
+                    cartProductUuid = cartProductUuid,
+                )
             },
             onError = {
                 // TODO handle error
@@ -255,7 +261,7 @@ class ConsumerCartViewModel(
             count = lightCartProduct.count,
             menuProductUuid = lightCartProduct.menuProductUuid,
             additions = lightCartProduct.cartProductAdditionList
-                .joinToString(" • ") { it.name }
+                .joinToString(" • ") { cartProductAddition -> cartProductAddition.name }
                 .ifEmpty { null }
         )
     }

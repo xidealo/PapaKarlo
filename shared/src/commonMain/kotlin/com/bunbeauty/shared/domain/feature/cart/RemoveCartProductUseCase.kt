@@ -6,9 +6,11 @@ class RemoveCartProductUseCase(
     private val cartProductRepo: CartProductRepo,
 ) {
 
-    suspend operator fun invoke(menuProductUuid: String): Boolean {
-        val cartProduct =
-            cartProductRepo.getCartProductByMenuProductUuid(menuProductUuid) ?: return false
+    suspend operator fun invoke(cartProductUuid: String): Boolean {
+        val cartProduct = cartProductRepo.getCartProduct(
+            cartProductUuid = cartProductUuid
+        ) ?: return false
+
         if (cartProduct.count > 1) {
             cartProductRepo.updateCartProductCount(
                 cartProduct.uuid,

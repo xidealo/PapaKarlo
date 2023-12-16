@@ -168,7 +168,23 @@ class MenuViewModel(
             ),
         )
         sharedScope.launch {
-            addCartProductUseCase(menuProductUuid = menuProductUuid, additionList = listOf())
+
+            //для оптимизации заранее мапу отдельно хранить?
+            val menuProduct =
+                mutableMenuState.value.menuItemList.filterIsInstance<MenuItem.MenuProductListItem>()
+                    .find { it.product.uuid == menuProductUuid }
+
+
+            if (menuProduct?.product?.hasAdditions == true) {
+                mutableMenuState.update { oldState ->
+                    oldState + MenuState.Event.GoToSelectedItem(
+                        uuid = menuProduct.product.uuid,
+                        name = menuProduct.product.name
+                    )
+                }
+            } else {
+                addCartProductUseCase(menuProductUuid = menuProductUuid, additionList = listOf())
+            }
         }
     }
 

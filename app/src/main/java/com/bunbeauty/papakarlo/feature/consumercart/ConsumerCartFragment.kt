@@ -200,7 +200,8 @@ class ConsumerCartFragment :
                                 onCountDecreased = {
                                     onAction(
                                         ConsumerCart.Action.RemoveProductFromCartClick(
-                                            menuProductUuid = cartProductItem.menuProductUuid
+                                            menuProductUuid = cartProductItem.menuProductUuid,
+                                            cartProductUuid = cartProductItem.uuid
                                         )
                                     )
                                 },
@@ -338,7 +339,7 @@ class ConsumerCartFragment :
             photoLink = "",
             count = 3,
             menuProductUuid = "",
-            additions = null
+            additions = null,
         )
 
         fun getMenuProductItem(uuid: String) = MenuProductItemModel(

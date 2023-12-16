@@ -6,7 +6,6 @@ import com.bunbeauty.shared.domain.model.cart.CartProduct
 import com.bunbeauty.shared.domain.repo.CartProductRepo
 import io.mockk.coEvery
 import io.mockk.mockk
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -42,7 +41,7 @@ internal class AddCartProductUseCaseTest {
     fun `save new cart product when product is not in cart`() = runTest {
         // Given
         coEvery { cartProductRepo.getCartProductList() } returns emptyList()
-        coEvery { cartProductRepo.getCartProductByMenuProductUuid(menuProductUuid) } returns null
+        coEvery { cartProductRepo.getCartProductListByMenuProductUuid(menuProductUuid) } returns null
         coEvery { cartProductRepo.saveAsCartProduct(menuProductUuid) } returns generateCartProduct()
 
         // When
@@ -58,7 +57,7 @@ internal class AddCartProductUseCaseTest {
         val initialCount = 2
         val initialCartProduct = generateCartProduct(count = initialCount)
         coEvery { cartProductRepo.getCartProductList() } returns listOf(initialCartProduct)
-        coEvery { cartProductRepo.getCartProductByMenuProductUuid(menuProductUuid) } returns initialCartProduct
+        coEvery { cartProductRepo.getCartProductListByMenuProductUuid(menuProductUuid) } returns initialCartProduct
         coEvery {
             cartProductRepo.updateCartProductCount(
                 initialCartProduct.uuid,

@@ -4,7 +4,7 @@ CREATE TABLE cartProductAdditionEntity (
    price INTEGER AS Int,
    additionUuid TEXT NOT NULL,
    cartProductUuid TEXT NOT NULL,
-   FOREIGN KEY (cartProductUuid) REFERENCES cartProductEntity(uuid) ON DELETE CASCADE
+   FOREIGN KEY(cartProductUuid) REFERENCES cartProductEntity(uuid) ON DELETE CASCADE
 );
 
 insertCartProductAdditionEntity:

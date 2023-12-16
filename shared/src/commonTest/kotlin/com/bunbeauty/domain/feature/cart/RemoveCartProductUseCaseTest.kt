@@ -6,7 +6,6 @@ import com.bunbeauty.shared.domain.repo.CartProductRepo
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -27,14 +26,14 @@ internal class RemoveCartProductUseCaseTest {
     @Test
     fun `return false when there is no product in cart`() = runTest {
         // Given
-        coEvery { cartProductRepo.getCartProductByMenuProductUuid(menuProductUuid) } returns null
+        coEvery { cartProductRepo.getCartProductListByMenuProductUuid(menuProductUuid) } returns null
 
         // When
         val result = removeCartProduct(menuProductUuid)
 
         // Then
         coVerify(exactly = 1) {
-            cartProductRepo.getCartProductByMenuProductUuid(menuProductUuid)
+            cartProductRepo.getCartProductListByMenuProductUuid(menuProductUuid)
         }
         assertFalse(result)
     }
@@ -44,7 +43,7 @@ internal class RemoveCartProductUseCaseTest {
         // Given
         val initialCartProduct = generateCartProduct(uuid = menuProductUuid, count = 2)
         val resultCartProduct = initialCartProduct.copy(count = 1)
-        coEvery { cartProductRepo.getCartProductByMenuProductUuid(menuProductUuid) } returns initialCartProduct
+        coEvery { cartProductRepo.getCartProductListByMenuProductUuid(menuProductUuid) } returns initialCartProduct
         coEvery { cartProductRepo.updateCartProductCount(menuProductUuid, 1) } returns resultCartProduct
 
         // When
@@ -52,7 +51,7 @@ internal class RemoveCartProductUseCaseTest {
 
         // Then
         coVerify(exactly = 1) {
-            cartProductRepo.getCartProductByMenuProductUuid(menuProductUuid)
+            cartProductRepo.getCartProductListByMenuProductUuid(menuProductUuid)
         }
         coVerify(exactly = 1) {
             cartProductRepo.updateCartProductCount(menuProductUuid, 1)
@@ -64,7 +63,7 @@ internal class RemoveCartProductUseCaseTest {
     fun `return true when product count equals 1`() = runTest {
         // Given
         val cartProduct = generateCartProduct(uuid = menuProductUuid, count = 1)
-        coEvery { cartProductRepo.getCartProductByMenuProductUuid(menuProductUuid) } returns cartProduct
+        coEvery { cartProductRepo.getCartProductListByMenuProductUuid(menuProductUuid) } returns cartProduct
         coEvery { cartProductRepo.deleteCartProduct(menuProductUuid) } returns Unit
 
         // When
@@ -72,7 +71,7 @@ internal class RemoveCartProductUseCaseTest {
 
         // Then
         coVerify(exactly = 1) {
-            cartProductRepo.getCartProductByMenuProductUuid(menuProductUuid)
+            cartProductRepo.getCartProductListByMenuProductUuid(menuProductUuid)
         }
         coVerify(exactly = 1) {
             cartProductRepo.deleteCartProduct(menuProductUuid)

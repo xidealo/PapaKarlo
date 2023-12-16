@@ -38,7 +38,11 @@ interface ConsumerCart {
         data object Init : Action
         data object BackClick : Action
         data class AddProductToCartClick(val menuProductUuid: String) : Action
-        data class RemoveProductFromCartClick(val menuProductUuid: String) : Action
+        data class RemoveProductFromCartClick(
+            val menuProductUuid: String,
+            val cartProductUuid: String,
+        ) : Action
+
         data class OnProductClick(val cartProductItem: CartProductItem) : Action
         data object OnCreateOrderClick : Action
         data object OnMenuClick : Action
