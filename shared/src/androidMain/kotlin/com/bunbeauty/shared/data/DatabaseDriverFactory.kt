@@ -11,5 +11,6 @@ actual class DatabaseDriverFactory(private val context: Context) {
             schema = FoodDeliveryDatabase.Schema,
             context = context,
             name = "foodDelivery.db",
+        )
     }
 }

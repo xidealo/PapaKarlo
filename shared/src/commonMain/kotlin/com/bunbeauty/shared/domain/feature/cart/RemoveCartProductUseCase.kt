@@ -1,9 +1,11 @@
 package com.bunbeauty.shared.domain.feature.cart
 
+import com.bunbeauty.shared.data.repository.CartProductAdditionRepository
 import com.bunbeauty.shared.domain.repo.CartProductRepo
 
 class RemoveCartProductUseCase(
     private val cartProductRepo: CartProductRepo,
+    private val cartProductAdditionRepository: CartProductAdditionRepository,
 ) {
 
     suspend operator fun invoke(cartProductUuid: String): Boolean {
@@ -18,8 +20,10 @@ class RemoveCartProductUseCase(
             )
         } else {
             cartProductRepo.deleteCartProduct(cartProduct.uuid)
+            cartProduct.cartProductAdditionList.forEach { cartProductAddition ->
+                cartProductAdditionRepository.delete(cartProductAdditionUuid = cartProductAddition.uuid)
+            }
         }
-
         return true
     }
 }

@@ -202,7 +202,7 @@ class ConsumerCartFragment :
                                     onAction(
                                         ConsumerCart.Action.RemoveProductFromCartClick(
                                             menuProductUuid = cartProductItem.menuProductUuid,
-                                            cartProductUuid = cartProductItem.uuid
+                                            cartProductUuid = cartProductItem.uuid,
                                         )
                                     )
                                 },

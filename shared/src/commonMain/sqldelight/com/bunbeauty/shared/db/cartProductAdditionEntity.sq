@@ -12,13 +12,6 @@ INSERT OR REPLACE
 INTO cartProductAdditionEntity
 VALUES (?, ?, ?, ?, ?);
 
---
--- getCartProductAdditionEntityByUuid:
--- SELECT *
--- FROM userEntity
--- WHERE uuid = :uuid;
---
--- updateUserEmailByUuid:
--- UPDATE userEntity
--- SET email = :email
--- WHERE uuid = :uuid;
+deleteCartProductAdditionByUuid:
+DELETE FROM cartProductAdditionEntity
+WHERE uuid = :uuid;

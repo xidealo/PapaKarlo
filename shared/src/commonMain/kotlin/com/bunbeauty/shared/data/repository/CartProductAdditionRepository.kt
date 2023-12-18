@@ -20,4 +20,8 @@ class CartProductAdditionRepository(
         )
         cartProductAdditionDao.insertCartProductAddition(cartProductAdditionEntity)
     }
+
+    suspend fun delete(cartProductAdditionUuid: String) {
+        cartProductAdditionDao.delete(cartProductAdditionUuid = cartProductAdditionUuid)
+    }
 }

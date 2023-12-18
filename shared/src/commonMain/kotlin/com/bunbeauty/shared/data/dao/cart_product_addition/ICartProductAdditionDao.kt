@@ -8,4 +8,5 @@ import kotlinx.coroutines.flow.Flow
 interface ICartProductAdditionDao {
 
     suspend fun insertCartProductAddition(cartProductAdditionEntity: CartProductAdditionEntity)
+    suspend fun delete(cartProductAdditionUuid: String)
 }

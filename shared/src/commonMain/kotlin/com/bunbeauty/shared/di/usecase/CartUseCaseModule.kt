@@ -29,7 +29,8 @@ internal fun cartUseCaseModule() = module {
     }
     factory {
         RemoveCartProductUseCase(
-            cartProductRepo = get()
+            cartProductRepo = get(),
+            cartProductAdditionRepository = get()
         )
     }
 }

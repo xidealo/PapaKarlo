@@ -67,7 +67,7 @@ class ConsumerCartViewModel(
 
             is ConsumerCart.Action.RemoveProductFromCartClick -> onRemoveCardProductClicked(
                 menuProductUuid = action.menuProductUuid,
-                cartProductUuid = action.cartProductUuid
+                cartProductUuid = action.cartProductUuid,
             )
 
             is ConsumerCart.Action.AddRecommendationProductToCartClick -> addRecommendationProductClicked(
@@ -276,7 +276,7 @@ class ConsumerCartViewModel(
                 .joinToString(" • ") { cartProductAddition -> cartProductAddition.name }
                 .ifEmpty { null },
             additionUuidList = lightCartProduct.cartProductAdditionList
-                .map { it.additionUuid }
+                .map { cartProductAddition -> cartProductAddition.additionUuid }
         )
     }
 
