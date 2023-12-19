@@ -2,7 +2,6 @@ package com.bunbeauty.papakarlo.feature.productdetails
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.View
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -69,7 +68,12 @@ class ProductDetailsFragment :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.onAction(ProductDetailsState.Action.Init(args.menuProductUuid))
+        viewModel.onAction(
+            ProductDetailsState.Action.Init(
+                menuProductUuid = args.menuProductUuid,
+                selectedAdditionUuidList = args.additionUuidList.toList()
+            )
+        )
     }
 
     @Composable
@@ -80,6 +84,7 @@ class ProductDetailsFragment :
         ProductDetailsScreen(
             menuProductName = args.menuProductName,
             menuProductUuid = args.menuProductUuid,
+            additionUuidList = args.additionUuidList.toList(),
             productDetailsUi = viewState,
             onAction = viewModel::onAction
         )
@@ -105,6 +110,7 @@ class ProductDetailsFragment :
     private fun ProductDetailsScreen(
         menuProductName: String,
         menuProductUuid: String,
+        additionUuidList: List<String>,
         productDetailsUi: ProductDetailsUi,
         onAction: (ProductDetailsState.Action) -> Unit,
     ) {
@@ -161,7 +167,12 @@ class ProductDetailsFragment :
 
                 is ProductDetailsUi.Error -> {
                     ErrorScreen(mainTextId = R.string.common_error) {
-                        onAction(ProductDetailsState.Action.Init(menuProductUuid))
+                        onAction(
+                            ProductDetailsState.Action.Init(
+                                menuProductUuid = menuProductUuid,
+                                selectedAdditionUuidList = additionUuidList
+                            )
+                        )
                     }
                 }
             }
@@ -469,6 +480,7 @@ class ProductDetailsFragment :
                         priceWithAdditions = "300 ₽"
                     )
                 ),
+                additionUuidList = emptyList(),
                 onAction = {}
             )
         }
@@ -482,6 +494,7 @@ class ProductDetailsFragment :
                 menuProductName = "Бэргер куриный Макс с экстра сырным соусом",
                 menuProductUuid = "",
                 productDetailsUi = ProductDetailsUi.Loading,
+                additionUuidList = emptyList(),
                 onAction = {}
             )
         }

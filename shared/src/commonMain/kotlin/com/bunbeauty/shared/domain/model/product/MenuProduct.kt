@@ -17,6 +17,4 @@ data class MenuProduct(
     val visible: Boolean,
     val isRecommended: Boolean,
     val additionGroups: List<AdditionGroup>,
-) : Product() {
-    val additionsList = additionGroups.flatMap { it.additionList }
-}
+) : Product()

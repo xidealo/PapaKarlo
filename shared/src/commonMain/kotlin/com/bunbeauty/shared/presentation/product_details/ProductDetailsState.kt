@@ -33,11 +33,12 @@ interface ProductDetailsState {
             SUCCESS,
             ERROR,
             LOADING,
+            INIT,
         }
     }
 
     sealed interface Action : BaseAction {
-        data class Init(val menuProductUuid: String) : Action
+        data class Init(val menuProductUuid: String, val selectedAdditionUuidList: List<String>) : Action
         data object BackClick : Action
         data object CartClick : Action
         data class AdditionClick(val uuid: String, val groupUuid: String) : Action

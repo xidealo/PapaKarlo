@@ -66,6 +66,7 @@ interface ConsumerCart {
             val uuid: String,
             val name: String,
             val productDetailsOpenedFrom: ProductDetailsOpenedFrom,
+            val additionUuidList: List<String>,
         ) : Event
 
         data object NavigateBack : Event

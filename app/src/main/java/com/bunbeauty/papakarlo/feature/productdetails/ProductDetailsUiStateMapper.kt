@@ -78,7 +78,7 @@ class ProductDetailsUiStateMapper(
             )
 
             ProductDetailsState.ViewDataState.ScreenState.ERROR -> ProductDetailsUi.Error
-            ProductDetailsState.ViewDataState.ScreenState.LOADING -> ProductDetailsUi.Loading
+            ProductDetailsState.ViewDataState.ScreenState.LOADING, ProductDetailsState.ViewDataState.ScreenState.INIT -> ProductDetailsUi.Loading
         }
     }
 }

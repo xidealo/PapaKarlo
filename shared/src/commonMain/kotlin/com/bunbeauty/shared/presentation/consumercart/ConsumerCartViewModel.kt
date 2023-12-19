@@ -62,7 +62,8 @@ class ConsumerCartViewModel(
             is ConsumerCart.Action.OnProductClick -> onProductClicked(
                 uuid = action.cartProductItem.menuProductUuid,
                 name = action.cartProductItem.name,
-                productDetailsOpenedFrom = ProductDetailsOpenedFrom.CART_PRODUCT
+                productDetailsOpenedFrom = ProductDetailsOpenedFrom.CART_PRODUCT,
+                additionUuidList = action.cartProductItem.additionUuidList
             )
 
             is ConsumerCart.Action.RemoveProductFromCartClick -> onRemoveCardProductClicked(
@@ -77,7 +78,8 @@ class ConsumerCartViewModel(
             is ConsumerCart.Action.RecommendationClick -> onProductClicked(
                 uuid = action.menuProductUuid,
                 name = action.name,
-                productDetailsOpenedFrom = ProductDetailsOpenedFrom.RECOMMENDATION_PRODUCT
+                productDetailsOpenedFrom = ProductDetailsOpenedFrom.RECOMMENDATION_PRODUCT,
+                additionUuidList = emptyList()
             )
         }
     }
@@ -138,12 +140,14 @@ class ConsumerCartViewModel(
         uuid: String,
         name: String,
         productDetailsOpenedFrom: ProductDetailsOpenedFrom,
+        additionUuidList: List<String>,
     ) {
         addEvent {
             ConsumerCart.Event.NavigateToProduct(
                 uuid = uuid,
                 name = name,
-                productDetailsOpenedFrom = productDetailsOpenedFrom
+                productDetailsOpenedFrom = productDetailsOpenedFrom,
+                additionUuidList = additionUuidList
             )
         }
     }
@@ -231,7 +235,7 @@ class ConsumerCartViewModel(
         return when (consumerCartDomain) {
             is ConsumerCartDomain.Empty -> null
             is ConsumerCartDomain.WithProducts -> ConsumerCart.ViewDataState.ConsumerCartData(
-                forFreeDelivery = "${consumerCartDomain.forFreeDelivery} $RUBLE_CURRENCY",
+                forFreeDelivery = "${consumerCartDomain.forFreeDelivery}$RUBLE_CURRENCY",
                 cartProductList = consumerCartDomain.cartProductList.map(::toItem),
                 oldTotalCost = consumerCartDomain.oldTotalCost?.let { oldTotalCost ->
                     oldTotalCost.toString() + RUBLE_CURRENCY

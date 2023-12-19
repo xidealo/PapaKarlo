@@ -36,7 +36,7 @@ class ProductDetailsViewModel(
             additionGroups = listOf(),
             currency = RUBLE_CURRENCY
         ),
-        screenState = ProductDetailsState.ViewDataState.ScreenState.LOADING,
+        screenState = ProductDetailsState.ViewDataState.ScreenState.INIT,
     )
 ) {
     private var observeConsumerCartJob: Job? = null
@@ -65,12 +65,15 @@ class ProductDetailsViewModel(
 
             is ProductDetailsState.Action.Init -> {
                 observeCart()
-                getMenuProduct(menuProductUuid = action.menuProductUuid)
+                getMenuProduct(
+                    menuProductUuid = action.menuProductUuid,
+                    selectedAdditionUuidList = action.selectedAdditionUuidList
+                )
             }
         }
     }
 
-    fun selectAddition(uuid: String, groupUuid: String) {
+    private fun selectAddition(uuid: String, groupUuid: String) {
         setState {
             val changedGroup = getChangedGroup(menuProduct, groupUuid = groupUuid, uuid = uuid)
 
@@ -113,7 +116,11 @@ class ProductDetailsViewModel(
                     } else {
                         additionGroup.additionList.map { addition ->
                             addition.copy(
-                                isSelected = if (addition.uuid == uuid) !addition.isSelected else addition.isSelected
+                                isSelected = if (addition.uuid == uuid) {
+                                    !addition.isSelected
+                                } else {
+                                    addition.isSelected
+                                }
                             )
                         }
                     }
@@ -121,8 +128,9 @@ class ProductDetailsViewModel(
             }
     }
 
-    fun getMenuProduct(
+    private fun getMenuProduct(
         menuProductUuid: String,
+        selectedAdditionUuidList: List<String>,
     ) {
         sharedScope.launchSafe(
             block = {
@@ -132,7 +140,12 @@ class ProductDetailsViewModel(
                         copy(screenState = ProductDetailsState.ViewDataState.ScreenState.ERROR)
                     } else {
                         copy(
-                            menuProduct = mapMenuProduct(menuProduct),
+                            menuProduct = mapMenuProduct(
+                                menuProduct = menuProduct,
+                                selectedAdditionUuidList = selectedAdditionUuidList,
+                                isInit = screenState == ProductDetailsState.ViewDataState.ScreenState.INIT,
+                                stateAdditionGroupList = this.menuProduct.additionGroups
+                            ),
                             screenState = ProductDetailsState.ViewDataState.ScreenState.SUCCESS
                         )
                     }
@@ -216,7 +229,22 @@ class ProductDetailsViewModel(
         )
     }
 
-    private fun mapMenuProduct(menuProduct: MenuProduct): ProductDetailsState.ViewDataState.MenuProduct {
+    private fun mapMenuProduct(
+        menuProduct: MenuProduct,
+        selectedAdditionUuidList: List<String>,
+        isInit: Boolean,
+        stateAdditionGroupList: List<AdditionGroup>,
+    ): ProductDetailsState.ViewDataState.MenuProduct {
+
+        val groupWithSelectedAdditionFromConsumerCart = when {
+            !isInit -> stateAdditionGroupList
+            selectedAdditionUuidList.isEmpty() -> menuProduct.additionGroups
+            else -> getAdditionGroupsWithSelectedAddition(
+                menuProduct = menuProduct,
+                selectedAdditionUuidList = selectedAdditionUuidList
+            )
+        }
+
         return ProductDetailsState.ViewDataState.MenuProduct(
             uuid = menuProduct.uuid,
             photoLink = menuProduct.photoLink,
@@ -230,11 +258,29 @@ class ProductDetailsViewModel(
             newPrice = menuProduct.newPrice,
             description = menuProduct.description,
             priceWithAdditions =
-            menuProduct.newPrice + menuProduct.additionsList
+            menuProduct.newPrice + groupWithSelectedAdditionFromConsumerCart
+                .flatMap { additionGroup ->
+                    additionGroup.additionList
+                }
                 .filter { addition -> addition.isSelected }
                 .sumOf { addition -> addition.price ?: 0 },
-            additionGroups = menuProduct.additionGroups,
+            additionGroups = groupWithSelectedAdditionFromConsumerCart,
             currency = RUBLE_CURRENCY
+        )
+    }
+
+    private fun getAdditionGroupsWithSelectedAddition(
+        menuProduct: MenuProduct,
+        selectedAdditionUuidList: List<String>,
+    ) = menuProduct.additionGroups.map { additionGroup ->
+        additionGroup.copy(
+            additionList = additionGroup.additionList.map { addition ->
+                addition.copy(
+                    isSelected = selectedAdditionUuidList.any { additionUuid ->
+                        additionUuid == addition.uuid
+                    }
+                )
+            }
         )
     }
 

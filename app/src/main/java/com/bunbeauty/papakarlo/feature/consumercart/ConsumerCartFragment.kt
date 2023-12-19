@@ -139,7 +139,8 @@ class ConsumerCartFragment :
                         toProductFragment(
                             event.uuid,
                             event.name,
-                            event.productDetailsOpenedFrom
+                            event.productDetailsOpenedFrom,
+                            event.additionUuidList.toTypedArray()
                         )
                     )
             }
