@@ -1,5 +1,6 @@
 package com.bunbeauty.shared.di.usecase
 
+import com.bunbeauty.shared.domain.feature.addition.GetIsAdditionsAreEqual
 import com.bunbeauty.shared.domain.feature.address.CreateAddressUseCase
 import com.bunbeauty.shared.domain.feature.address.GetFilteredStreetListUseCase
 import com.bunbeauty.shared.domain.feature.address.GetStreetsUseCase
@@ -93,5 +94,8 @@ internal fun useCaseModules() = module {
             orderRepository = get(),
             dataStoreRepo = get(),
         )
+    }
+    factory {
+        GetIsAdditionsAreEqual()
     }
 }

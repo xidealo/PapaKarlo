@@ -1,6 +1,7 @@
 package com.bunbeauty.shared.di.usecase
 
 import com.bunbeauty.shared.domain.feature.cart.AddCartProductUseCase
+import com.bunbeauty.shared.domain.feature.cart.EditCartProductUseCase
 import com.bunbeauty.shared.domain.feature.cart.GetRecommendationsUseCase
 import com.bunbeauty.shared.domain.feature.cart.ObserveCartUseCase
 import com.bunbeauty.shared.domain.feature.cart.RemoveCartProductUseCase
@@ -17,7 +18,8 @@ internal fun cartUseCaseModule() = module {
         AddCartProductUseCase(
             cartProductRepo = get(),
             cartProductAdditionRepository = get(),
-            additionRepository = get()
+            additionRepository = get(),
+            getIsAdditionsAreEqual = get()
         )
     }
     factory {
@@ -31,6 +33,14 @@ internal fun cartUseCaseModule() = module {
         RemoveCartProductUseCase(
             cartProductRepo = get(),
             cartProductAdditionRepository = get()
+        )
+    }
+    factory {
+        EditCartProductUseCase(
+            cartProductRepo = get(),
+            cartProductAdditionRepository = get(),
+            additionRepository = get(),
+            getIsAdditionsAreEqual = get()
         )
     }
 }

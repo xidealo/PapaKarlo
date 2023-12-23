@@ -102,6 +102,7 @@ class ProductDetailsFragment :
 
             //set result?
             is ProductDetailsState.Event.AddedProduct -> findNavController().popBackStack()
+            is ProductDetailsState.Event.EditedProduct -> findNavController().popBackStack()
         }
     }
 
@@ -148,7 +149,8 @@ class ProductDetailsFragment :
                     ) {
                         onAction(
                             ProductDetailsState.Action.AddProductToCartClick(
-                                productDetailsOpenedFrom = args.productDetailsOpenedFrom
+                                productDetailsOpenedFrom = args.productDetailsOpenedFrom,
+                                cartProductUuid = args.cartProductUuid
                             )
                         )
                     }

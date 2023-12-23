@@ -63,7 +63,8 @@ class MenuProductMapper : IMenuProductMapper {
                         isVisible = additionServer.isVisible,
                         isSelected = additionServer.isSelected,
                         menuProductUuid = menuProductServer.uuid,
-                        photoLink = menuProductServer.photoLink
+                        photoLink = menuProductServer.photoLink,
+                        fullName = additionServer.fullName
                     )
                 }
         }
@@ -118,7 +119,8 @@ class MenuProductMapper : IMenuProductMapper {
                             photoLink = additionServer.photoLink,
                             price = additionServer.price,
                             uuid = additionServer.uuid,
-                            menuProductUuid = menuProductServer.uuid
+                            menuProductUuid = menuProductServer.uuid,
+                            fullName = additionServer.fullName
                         )
                     },
                     isVisible = additionGroupServer.isVisible,

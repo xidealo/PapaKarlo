@@ -12,6 +12,8 @@ data class AdditionServer(
     val isVisible: Boolean,
     @SerialName("name")
     val name: String,
+    @SerialName("fullName")
+    val fullName: String?,
     @SerialName("photoLink")
     val photoLink: String,
     @SerialName("price")

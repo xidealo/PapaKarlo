@@ -19,7 +19,8 @@ class CartProductAdditionDao(foodDeliveryDatabase: FoodDeliveryDatabase) : ICart
             name = cartProductAdditionEntity.name,
             price = cartProductAdditionEntity.price,
             additionUuid = cartProductAdditionEntity.additionUuid,
-            cartProductUuid = cartProductAdditionEntity.cartProductUuid
+            cartProductUuid = cartProductAdditionEntity.cartProductUuid,
+            fullName = cartProductAdditionEntity.fullName
         )
     }
 

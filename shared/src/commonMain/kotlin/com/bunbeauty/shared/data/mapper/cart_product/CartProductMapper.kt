@@ -48,7 +48,8 @@ class CartProductMapper : ICartProductMapper {
                             price = cartProductWithMenuProductEntityList.cartProductAdditionPrice,
                             cartProductUuid = cartProductWithMenuProductEntityList.cartProductUuid,
                             additionUuid = cartProductWithMenuProductEntityList.cartProductAdditionAdditionUuid
-                                ?: ""
+                                ?: "",
+                            fullName = cartProductWithMenuProductEntityList.cartProductAdditionFullName
                         )
                     }
                 }

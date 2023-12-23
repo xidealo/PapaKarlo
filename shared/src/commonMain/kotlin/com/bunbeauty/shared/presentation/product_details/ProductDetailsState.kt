@@ -38,12 +38,15 @@ interface ProductDetailsState {
     }
 
     sealed interface Action : BaseAction {
-        data class Init(val menuProductUuid: String, val selectedAdditionUuidList: List<String>) : Action
+        data class Init(val menuProductUuid: String, val selectedAdditionUuidList: List<String>) :
+            Action
+
         data object BackClick : Action
         data object CartClick : Action
         data class AdditionClick(val uuid: String, val groupUuid: String) : Action
         data class AddProductToCartClick(
             val productDetailsOpenedFrom: ProductDetailsOpenedFrom,
+            val cartProductUuid: String?,
         ) : Action
     }
 
@@ -51,6 +54,10 @@ interface ProductDetailsState {
         data object NavigateBack : Event
         data object NavigateToConsumerCart : Event
         data class AddedProduct(
+            val menuProductUuid: String,
+        ) : Event
+
+        data class EditedProduct(
             val menuProductUuid: String,
         ) : Event
     }

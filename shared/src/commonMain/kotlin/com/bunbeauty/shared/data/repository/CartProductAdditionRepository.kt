@@ -17,6 +17,7 @@ class CartProductAdditionRepository(
             price = addition.price,
             additionUuid = addition.uuid,
             cartProductUuid = cartProductUuid,
+            fullName = addition.fullName
         )
         cartProductAdditionDao.insertCartProductAddition(cartProductAdditionEntity)
     }

@@ -1,6 +1,7 @@
 CREATE TABLE cartProductAdditionEntity (
    uuid TEXT NOT NULL PRIMARY KEY,
    name TEXT NOT NULL,
+   fullName TEXT,
    price INTEGER AS Int,
    additionUuid TEXT NOT NULL,
    cartProductUuid TEXT NOT NULL,
@@ -18,6 +19,7 @@ SELECT cartProductEntity.uuid AS cartProductUuid,
     menuProductEntity.*,
     cartProductAdditionEntity.uuid AS cartProductAdditionUuid,
     cartProductAdditionEntity.name AS cartProductAdditionName,
+    cartProductAdditionEntity.fullName AS cartProductAdditionFullName,
     cartProductAdditionEntity.price AS cartProductAdditionPrice,
     cartProductAdditionEntity.additionUuid AS cartProductAdditionAdditionUuid
 FROM cartProductEntity
@@ -29,6 +31,7 @@ LEFT JOIN cartProductAdditionEntity ON cartProductAdditionEntity.cartProductUuid
 CREATE TABLE additionEntity (
     uuid TEXT NOT NULL PRIMARY KEY,
     name TEXT NOT NULL,
+    fullName TEXT,
     photoLink TEXT NOT NULL,
     price INTEGER AS Int,
     isVisible INTEGER AS Boolean NOT NULL,

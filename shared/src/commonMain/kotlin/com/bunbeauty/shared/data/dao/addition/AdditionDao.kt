@@ -21,7 +21,8 @@ class AdditionDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IAdditionDao {
             isVisible = additionEntity.isVisible,
             isSelected = additionEntity.isSelected,
             menuProductUuid = additionEntity.menuProductUuid,
-            photoLink = additionEntity.photoLink
+            photoLink = additionEntity.photoLink,
+            fullName = additionEntity.fullName
         )
     }
 

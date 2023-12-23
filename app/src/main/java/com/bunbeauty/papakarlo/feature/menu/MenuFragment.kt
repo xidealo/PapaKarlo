@@ -95,7 +95,8 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
                             event.uuid,
                             event.name,
                             ProductDetailsOpenedFrom.MENU_PRODUCT,
-                            emptyArray()
+                            emptyArray(),
+                            null
                         )
                     )
                 }

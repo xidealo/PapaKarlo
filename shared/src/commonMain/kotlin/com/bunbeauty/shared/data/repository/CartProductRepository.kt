@@ -38,9 +38,7 @@ class CartProductRepository(
     ): List<CartProduct> {
         return cartProductDao.getCartProductByMenuProductUuid(menuProductUuid)
             .toCartProductList()
-
     }
-
 
     override suspend fun saveAsCartProduct(menuProductUuid: String): String? {
         val uuid = uuidGenerator.generateUuid()

@@ -1,6 +1,7 @@
 CREATE TABLE additionEntity (
     uuid TEXT NOT NULL PRIMARY KEY,
     name TEXT NOT NULL,
+    fullName TEXT,
     photoLink TEXT NOT NULL,
     price INTEGER AS Int,
     isVisible INTEGER AS Boolean NOT NULL,
@@ -12,7 +13,7 @@ CREATE TABLE additionEntity (
 insert:
 INSERT OR REPLACE
 INTO additionEntity
-VALUES (?, ?, ?, ?, ?, ?, ?);
+VALUES (?, ?, ?, ?, ?, ?, ?, ?);
 
 getAdditionByUuid:
 SELECT *

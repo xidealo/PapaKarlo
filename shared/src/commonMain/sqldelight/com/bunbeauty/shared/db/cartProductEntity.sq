@@ -15,6 +15,7 @@ SELECT cartProductEntity.uuid AS cartProductUuid,
     menuProductEntity.*,
     cartProductAdditionEntity.uuid AS cartProductAdditionUuid,
     cartProductAdditionEntity.name AS cartProductAdditionName,
+    cartProductAdditionEntity.fullName AS cartProductAdditionFullName,
     cartProductAdditionEntity.price AS cartProductAdditionPrice,
     cartProductAdditionEntity.additionUuid AS cartProductAdditionAdditionUuid
 FROM cartProductEntity

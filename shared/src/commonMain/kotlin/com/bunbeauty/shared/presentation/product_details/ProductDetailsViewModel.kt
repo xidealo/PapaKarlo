@@ -7,6 +7,7 @@ import com.bunbeauty.analytic.event.recommendation.AddRecommendationProductDetai
 import com.bunbeauty.analytic.parameter.MenuProductUuidEventParameter
 import com.bunbeauty.shared.Constants.RUBLE_CURRENCY
 import com.bunbeauty.shared.domain.feature.cart.AddCartProductUseCase
+import com.bunbeauty.shared.domain.feature.cart.EditCartProductUseCase
 import com.bunbeauty.shared.domain.feature.cart.ObserveCartUseCase
 import com.bunbeauty.shared.domain.feature.menu_product.GetMenuProductByUuidUseCase
 import com.bunbeauty.shared.domain.model.addition.AdditionGroup
@@ -21,6 +22,7 @@ class ProductDetailsViewModel(
     private val observeCartUseCase: ObserveCartUseCase,
     private val addCartProductUseCase: AddCartProductUseCase,
     private val analyticService: AnalyticService,
+    private val editCartProductUseCase: EditCartProductUseCase,
 ) : SharedStateViewModel<ProductDetailsState.ViewDataState, ProductDetailsState.Action, ProductDetailsState.Event>(
     ProductDetailsState.ViewDataState(
         cartCostAndCount = null,
@@ -47,7 +49,8 @@ class ProductDetailsViewModel(
     ) {
         when (action) {
             is ProductDetailsState.Action.AddProductToCartClick -> onWantClicked(
-                productDetailsOpenedFrom = action.productDetailsOpenedFrom
+                productDetailsOpenedFrom = action.productDetailsOpenedFrom,
+                cartProductUuid = action.cartProductUuid,
             )
 
             ProductDetailsState.Action.BackClick -> addEvent {
@@ -159,33 +162,50 @@ class ProductDetailsViewModel(
         )
     }
 
-    fun onWantClicked(
+    private fun onWantClicked(
         productDetailsOpenedFrom: ProductDetailsOpenedFrom,
+        cartProductUuid: String?,
     ) {
-        dataState.value.menuProduct.let { menuProduct ->
-            sendOnWantedClickedAnalytic(
-                menuProductUuid = menuProduct.uuid,
-                productDetailsOpenedFrom = productDetailsOpenedFrom
-            )
-            sharedScope.launchSafe(
-                block = {
+
+        val menuProduct = dataState.value.menuProduct
+
+        sendOnWantedClickedAnalytic(
+            menuProductUuid = menuProduct.uuid,
+            productDetailsOpenedFrom = productDetailsOpenedFrom
+        )
+
+        sharedScope.launchSafe(
+            block = {
+                val selectedAdditionUuidList = menuProduct.additionList
+                    .filter { addition -> addition.isSelected }
+                    .map { addition -> addition.uuid }
+
+                if (productDetailsOpenedFrom == ProductDetailsOpenedFrom.CART_PRODUCT) {
+                    cartProductUuid?.let { cartProductUuid ->
+                        editCartProductUseCase(
+                            cartProductUuid = cartProductUuid,
+                            additionUuidList = selectedAdditionUuidList,
+                        )
+                        addEvent {
+                            ProductDetailsState.Event.EditedProduct(menuProduct.uuid)
+                        }
+                    }
+                } else {
                     addCartProductUseCase(
                         menuProductUuid = menuProduct.uuid,
-                        additionUuidList = menuProduct.additionList
-                            .filter { addition -> addition.isSelected }
-                            .map { addition -> addition.uuid }
+                        additionUuidList = selectedAdditionUuidList
                     )
                     addEvent {
                         ProductDetailsState.Event.AddedProduct(menuProduct.uuid)
                     }
-                },
-                onError = {
-                    setState {
-                        copy(screenState = ProductDetailsState.ViewDataState.ScreenState.ERROR)
-                    }
                 }
-            )
-        }
+            },
+            onError = {
+                setState {
+                    copy(screenState = ProductDetailsState.ViewDataState.ScreenState.ERROR)
+                }
+            }
+        )
     }
 
     private fun sendOnWantedClickedAnalytic(

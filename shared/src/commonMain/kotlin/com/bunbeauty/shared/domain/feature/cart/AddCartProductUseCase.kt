@@ -3,6 +3,7 @@ package com.bunbeauty.shared.domain.feature.cart
 import com.bunbeauty.shared.Constants.CART_PRODUCT_LIMIT
 import com.bunbeauty.shared.data.repository.AdditionRepository
 import com.bunbeauty.shared.data.repository.CartProductAdditionRepository
+import com.bunbeauty.shared.domain.feature.addition.GetIsAdditionsAreEqual
 import com.bunbeauty.shared.domain.model.cart.CartProduct
 import com.bunbeauty.shared.domain.repo.CartProductRepo
 
@@ -10,6 +11,7 @@ class AddCartProductUseCase(
     private val cartProductRepo: CartProductRepo,
     private val cartProductAdditionRepository: CartProductAdditionRepository,
     private val additionRepository: AdditionRepository,
+    private val getIsAdditionsAreEqual: GetIsAdditionsAreEqual,
 ) {
 
     suspend operator fun invoke(
@@ -58,25 +60,8 @@ class AddCartProductUseCase(
         return cartProductList.firstOrNull { cartProduct ->
             getIsAdditionsAreEqual(
                 initialCartProduct = cartProduct,
-                additionList = additionUuidList
+                additionUuidList = additionUuidList
             )
         }
-    }
-
-    private fun getIsAdditionsAreEqual(
-        initialCartProduct: CartProduct?,
-        additionList: List<String>,
-    ): Boolean {
-        // Check if the lists have the same size
-        val listsHaveSameSize =
-            initialCartProduct?.cartProductAdditionList?.size == additionList.size
-
-        // Check if each element in 'additionList' has a corresponding element in 'cartProductAdditionList' with the same 'uuid'
-        val listsAreEqual = listsHaveSameSize && additionList.all { additionUuid ->
-            initialCartProduct?.cartProductAdditionList?.any { cartProductAddition ->
-                cartProductAddition.additionUuid == additionUuid
-            } ?: false
-        }
-        return listsAreEqual
     }
 }

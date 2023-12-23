@@ -1,6 +1,7 @@
 CREATE TABLE cartProductAdditionEntity (
    uuid TEXT NOT NULL PRIMARY KEY,
    name TEXT NOT NULL,
+   fullName TEXT,
    price INTEGER AS Int,
    additionUuid TEXT NOT NULL,
    cartProductUuid TEXT NOT NULL,
@@ -10,7 +11,7 @@ CREATE TABLE cartProductAdditionEntity (
 insertCartProductAdditionEntity:
 INSERT OR REPLACE
 INTO cartProductAdditionEntity
-VALUES (?, ?, ?, ?, ?);
+VALUES (?, ?, ?, ?, ?, ?);
 
 deleteCartProductAdditionByUuid:
 DELETE FROM cartProductAdditionEntity

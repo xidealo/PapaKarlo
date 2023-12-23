@@ -15,7 +15,8 @@ class AdditionRepository(
                 photoLink = additionEntity.photoLink,
                 price = additionEntity.price,
                 uuid = additionEntity.uuid,
-                menuProductUuid = additionEntity.menuProductUuid
+                menuProductUuid = additionEntity.menuProductUuid,
+                fullName = additionEntity.fullName
             )
         }
     }

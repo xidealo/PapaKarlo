@@ -140,7 +140,8 @@ class ConsumerCartFragment :
                             event.uuid,
                             event.name,
                             event.productDetailsOpenedFrom,
-                            event.additionUuidList.toTypedArray()
+                            event.additionUuidList.toTypedArray(),
+                            event.cartProductUuid
                         )
                     )
             }

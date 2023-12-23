@@ -148,7 +148,8 @@ fun viewModelModule() = module {
             getMenuProductByUuidUseCase = get(),
             observeCartUseCase = get(),
             addCartProductUseCase = get(),
-            analyticService = get()
+            analyticService = get(),
+            editCartProductUseCase = get()
         )
     }
     viewModel {

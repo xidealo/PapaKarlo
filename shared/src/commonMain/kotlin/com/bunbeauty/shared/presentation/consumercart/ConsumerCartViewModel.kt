@@ -63,7 +63,8 @@ class ConsumerCartViewModel(
                 uuid = action.cartProductItem.menuProductUuid,
                 name = action.cartProductItem.name,
                 productDetailsOpenedFrom = ProductDetailsOpenedFrom.CART_PRODUCT,
-                additionUuidList = action.cartProductItem.additionUuidList
+                additionUuidList = action.cartProductItem.additionUuidList,
+                cartProductUuid = action.cartProductItem.uuid
             )
 
             is ConsumerCart.Action.RemoveProductFromCartClick -> onRemoveCardProductClicked(
@@ -79,7 +80,8 @@ class ConsumerCartViewModel(
                 uuid = action.menuProductUuid,
                 name = action.name,
                 productDetailsOpenedFrom = ProductDetailsOpenedFrom.RECOMMENDATION_PRODUCT,
-                additionUuidList = emptyList()
+                additionUuidList = emptyList(),
+                cartProductUuid = null
             )
         }
     }
@@ -141,13 +143,15 @@ class ConsumerCartViewModel(
         name: String,
         productDetailsOpenedFrom: ProductDetailsOpenedFrom,
         additionUuidList: List<String>,
+        cartProductUuid: String?,
     ) {
         addEvent {
             ConsumerCart.Event.NavigateToProduct(
                 uuid = uuid,
                 name = name,
                 productDetailsOpenedFrom = productDetailsOpenedFrom,
-                additionUuidList = additionUuidList
+                additionUuidList = additionUuidList,
+                cartProductUuid = cartProductUuid,
             )
         }
     }
@@ -277,7 +281,9 @@ class ConsumerCartViewModel(
             count = lightCartProduct.count,
             menuProductUuid = lightCartProduct.menuProductUuid,
             additions = lightCartProduct.cartProductAdditionList
-                .joinToString(" • ") { cartProductAddition -> cartProductAddition.name }
+                .joinToString(" • ") { cartProductAddition ->
+                    cartProductAddition.fullName ?: cartProductAddition.name
+                }
                 .ifEmpty { null },
             additionUuidList = lightCartProduct.cartProductAdditionList
                 .map { cartProductAddition -> cartProductAddition.additionUuid }
