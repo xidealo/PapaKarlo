@@ -237,7 +237,6 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
         private const val SELECTED_CITY_UUID = "selected city uuid"
         private val SELECTED_CITY_UUID_KEY = stringPreferencesKey(SELECTED_CITY_UUID)
 
-
         private const val SELECTED_PAYMENT_METHOD_DATA_STORE = "payment method data store"
         private const val SELECTED_PAYMENT_METHOD_UUID = "payment method uuid"
         private val SELECTED_PAYMENT_METHOD_UUID_KEY =
