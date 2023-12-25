@@ -7,7 +7,7 @@ import com.bunbeauty.shared.presentation.product_details.AdditionItem
 sealed interface ProductDetailsUi : BaseViewState {
     data class Success(
         val topCartUi: TopCartUi,
-        val menuProductUi: MenuProductUi?,
+        val menuProductUi: MenuProductUi?
     ) : ProductDetailsUi {
         data class MenuProductUi(
             val photoLink: String,
@@ -17,7 +17,7 @@ sealed interface ProductDetailsUi : BaseViewState {
             val newPrice: String,
             val priceWithAdditions: String,
             val description: String,
-            val additionList: List<AdditionItem>,
+            val additionList: List<AdditionItem>
         )
     }
 

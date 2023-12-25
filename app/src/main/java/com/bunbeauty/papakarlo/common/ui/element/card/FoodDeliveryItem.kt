@@ -12,7 +12,7 @@ import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 @Composable
 fun FoodDeliveryItem(
     needDivider: Boolean,
-    content: @Composable ColumnScope.() -> Unit,
+    content: @Composable ColumnScope.() -> Unit
 ) {
     Column {
         content()

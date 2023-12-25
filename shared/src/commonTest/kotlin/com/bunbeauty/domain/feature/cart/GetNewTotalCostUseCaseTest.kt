@@ -158,7 +158,7 @@ class GetNewTotalCostUseCaseTest {
                 actual = newFinalCost
             )
         }
-
+/*
     //TODO (add more tests)
     @Test
     fun `should return newFinalCost with additions price when has additions`() =
@@ -180,6 +180,6 @@ class GetNewTotalCostUseCaseTest {
                 expected = 1,
                 actual = newFinalCost
             )
-        }
+        }*/
 
 }

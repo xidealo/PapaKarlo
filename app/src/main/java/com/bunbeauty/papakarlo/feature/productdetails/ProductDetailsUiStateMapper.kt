@@ -8,10 +8,10 @@ import com.bunbeauty.shared.presentation.product_details.MenuProductAdditionItem
 import com.bunbeauty.shared.presentation.product_details.ProductDetailsState
 
 class ProductDetailsUiStateMapper(
-    private val stringUtil: IStringUtil,
+    private val stringUtil: IStringUtil
 ) {
     fun map(productDetailsState: ProductDetailsState.ViewDataState): ProductDetailsUi {
-        //для PR вынес потому что в вью модели нужны изменяемые данные, в свифте буду использовать свои модели со своими ключами
+        // для PR вынес потому что в вью модели нужны изменяемые данные, в свифте буду использовать свои модели со своими ключами
         val additionList = buildList {
             productDetailsState.menuProduct.additionGroups.forEach { additionGroup ->
                 add(
@@ -34,7 +34,7 @@ class ProductDetailsUiStateMapper(
                                     isLast = additionGroup.additionList.lastIndex == index,
                                     photoLink = addition.photoLink,
                                     groupId = additionGroup.uuid
-                                ),
+                                )
                             )
                         } else {
                             AdditionItem.AdditionMultiplyListItem(
@@ -47,7 +47,7 @@ class ProductDetailsUiStateMapper(
                                     isLast = additionGroup.additionList.lastIndex == index,
                                     photoLink = addition.photoLink,
                                     groupId = additionGroup.uuid
-                                ),
+                                )
                             )
                         }
                     }
@@ -72,9 +72,9 @@ class ProductDetailsUiStateMapper(
                         newPrice = "${menuProduct.newPrice}${menuProduct.currency}",
                         description = menuProduct.description,
                         additionList = additionList,
-                        priceWithAdditions = "${menuProduct.priceWithAdditions}${menuProduct.currency}",
+                        priceWithAdditions = "${menuProduct.priceWithAdditions}${menuProduct.currency}"
                     )
-                },
+                }
             )
 
             ProductDetailsState.ViewDataState.ScreenState.ERROR -> ProductDetailsUi.Error

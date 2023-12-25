@@ -34,7 +34,7 @@ fun CartProductItem(
     cartProductItem: CartProductItem,
     onCountIncreased: () -> Unit,
     onCountDecreased: () -> Unit,
-    onClick: () -> Unit,
+    onClick: () -> Unit
 ) {
     FoodDeliveryCard(
         modifier = modifier.fillMaxWidth(),
@@ -78,7 +78,7 @@ fun CartProductItem(
                 ) {
                     Column(
                         modifier = Modifier
-                            .weight(1f),
+                            .weight(1f)
                     ) {
                         cartProductItem.additions?.let { additions ->
                             Text(
@@ -91,7 +91,7 @@ fun CartProductItem(
                         }
                         Row(
                             modifier = Modifier
-                                .padding(top = 4.dp),
+                                .padding(top = 4.dp)
                         ) {
                             cartProductItem.oldCost?.let { oldCost ->
                                 Text(

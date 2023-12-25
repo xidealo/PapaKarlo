@@ -28,7 +28,7 @@ fun MenuProductItem(
     modifier: Modifier = Modifier,
     menuProductItem: MenuProductItem,
     onAddProductClick: (String) -> Unit,
-    onProductClick: (MenuProductItem) -> Unit,
+    onProductClick: (MenuProductItem) -> Unit
 ) {
     FoodDeliveryCard(
         modifier = modifier,

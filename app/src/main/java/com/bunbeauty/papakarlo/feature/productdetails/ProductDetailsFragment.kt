@@ -79,7 +79,7 @@ class ProductDetailsFragment :
     @Composable
     override fun Screen(
         viewState: ProductDetailsUi,
-        onAction: (ProductDetailsState.Action) -> Unit,
+        onAction: (ProductDetailsState.Action) -> Unit
     ) {
         ProductDetailsScreen(
             menuProductName = args.menuProductName,
@@ -100,7 +100,7 @@ class ProductDetailsFragment :
             ProductDetailsState.Event.NavigateToConsumerCart -> findNavController()
                 .navigateSafe(globalConsumerCartFragment())
 
-            //set result?
+            // set result?
             is ProductDetailsState.Event.AddedProduct -> findNavController().popBackStack()
             is ProductDetailsState.Event.EditedProduct -> findNavController().popBackStack()
         }
@@ -113,7 +113,7 @@ class ProductDetailsFragment :
         menuProductUuid: String,
         additionUuidList: List<String>,
         productDetailsUi: ProductDetailsUi,
-        onAction: (ProductDetailsState.Action) -> Unit,
+        onAction: (ProductDetailsState.Action) -> Unit
     ) {
         FoodDeliveryScaffold(
             title = menuProductName,
@@ -143,9 +143,9 @@ class ProductDetailsFragment :
                             .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
                         text = stringResource(
                             id = R.string.action_product_details_want,
-                            productDetailsUi.menuProductUi?.priceWithAdditions ?: "",
+                            productDetailsUi.menuProductUi?.priceWithAdditions ?: ""
 
-                            )
+                        )
                     ) {
                         onAction(
                             ProductDetailsState.Action.AddProductToCartClick(
@@ -184,7 +184,7 @@ class ProductDetailsFragment :
     @Composable
     private fun ProductDetailsSuccessScreen(
         menuProductUi: ProductDetailsUi.Success.MenuProductUi?,
-        onAction: (ProductDetailsState.Action) -> Unit,
+        onAction: (ProductDetailsState.Action) -> Unit
     ) {
         menuProductUi?.let {
             LazyColumn(
@@ -250,7 +250,7 @@ class ProductDetailsFragment :
     private fun AdditionItem(
         menuProductAdditionItem: MenuProductAdditionItem,
         isMultiply: Boolean,
-        onAction: (ProductDetailsState.Action) -> Unit,
+        onAction: (ProductDetailsState.Action) -> Unit
     ) {
         Row(
             modifier = Modifier
@@ -268,7 +268,7 @@ class ProductDetailsFragment :
                     .build(),
                 placeholder = painterResource(R.drawable.placeholder_small),
                 contentDescription = stringResource(R.string.description_product_addition),
-                contentScale = ContentScale.FillWidth,
+                contentScale = ContentScale.FillWidth
             )
 
             Text(
@@ -276,14 +276,14 @@ class ProductDetailsFragment :
                     .weight(1f)
                     .padding(start = 8.dp),
                 text = menuProductAdditionItem.name,
-                style = FoodDeliveryTheme.typography.bodyLarge,
+                style = FoodDeliveryTheme.typography.bodyLarge
             )
 
             menuProductAdditionItem.price?.let { price ->
                 Text(
                     modifier = Modifier,
                     text = price,
-                    style = FoodDeliveryTheme.typography.bodyLarge,
+                    style = FoodDeliveryTheme.typography.bodyLarge
                 )
             }
 
@@ -300,8 +300,8 @@ class ProductDetailsFragment :
                     },
                     colors = CheckboxDefaults.colors(
                         checkedColor = FoodDeliveryTheme.colors.mainColors.primary,
-                        uncheckedColor = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
-                    ),
+                        uncheckedColor = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
+                    )
                 )
             } else {
                 RadioButton(
@@ -316,8 +316,8 @@ class ProductDetailsFragment :
                     },
                     colors = RadioButtonDefaults.colors(
                         selectedColor = FoodDeliveryTheme.colors.mainColors.primary,
-                        unselectedColor = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
-                    ),
+                        unselectedColor = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
+                    )
                 )
             }
         }
@@ -326,7 +326,7 @@ class ProductDetailsFragment :
     @Composable
     private fun ProductCard(
         modifier: Modifier = Modifier,
-        menuProductUi: ProductDetailsUi.Success.MenuProductUi,
+        menuProductUi: ProductDetailsUi.Success.MenuProductUi
     ) {
         FoodDeliveryCard(
             modifier = modifier,
@@ -418,12 +418,12 @@ class ProductDetailsFragment :
                         oldPrice = "320 ₽",
                         newPrice = "280 ₽",
                         description = "Сочная котлетка, сыр Чедр, маринованный огурчик, помидор, " +
-                                "красный лук, салат, фирменный соус, булочка с кунжутом",
+                            "красный лук, салат, фирменный соус, булочка с кунжутом",
                         additionList = listOf(
                             AdditionItem.AdditionHeaderItem(
                                 key = "key1",
                                 uuid = "uuid1",
-                                name = "Булочка",
+                                name = "Булочка"
                             ),
                             AdditionItem.AdditionSingleListItem(
                                 key = "key2",
@@ -452,7 +452,7 @@ class ProductDetailsFragment :
                             AdditionItem.AdditionHeaderItem(
                                 key = "key4",
                                 uuid = "uuid4",
-                                name = "Добавить по вкусу",
+                                name = "Добавить по вкусу"
                             ),
                             AdditionItem.AdditionMultiplyListItem(
                                 key = "key5",
@@ -477,7 +477,7 @@ class ProductDetailsFragment :
                                     isLast = true,
                                     groupId = ""
                                 )
-                            ),
+                            )
                         ),
                         priceWithAdditions = "300 ₽"
                     )
