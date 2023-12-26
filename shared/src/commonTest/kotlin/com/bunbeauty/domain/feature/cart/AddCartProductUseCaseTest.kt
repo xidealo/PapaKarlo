@@ -1,14 +1,18 @@
 package com.bunbeauty.domain.feature.cart
 
+import com.bunbeauty.getAddition
+import com.bunbeauty.getCartProduct
+import com.bunbeauty.getMenuProduct
 import com.bunbeauty.shared.Constants.CART_PRODUCT_LIMIT
 import com.bunbeauty.shared.data.repository.AdditionRepository
 import com.bunbeauty.shared.data.repository.CartProductAdditionRepository
-import com.bunbeauty.shared.domain.feature.addition.GetIsAdditionsAreEqual
+import com.bunbeauty.shared.domain.feature.addition.GetIsAdditionsAreEqualUseCase
 import com.bunbeauty.shared.domain.feature.cart.AddCartProductUseCase
 import com.bunbeauty.shared.domain.model.cart.CartProduct
 import com.bunbeauty.shared.domain.model.cart.CartProductAddition
 import com.bunbeauty.shared.domain.repo.CartProductRepo
 import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest
@@ -19,9 +23,9 @@ import kotlin.test.assertTrue
 internal class AddCartProductUseCaseTest {
 
     private val cartProductRepo: CartProductRepo = mockk()
-    private val cartProductAdditionRepository: CartProductAdditionRepository = mockk()
+    private val cartProductAdditionRepository: CartProductAdditionRepository = mockk(relaxed = true)
     private val additionRepository: AdditionRepository = mockk()
-    private val getIsAdditionsAreEqual: GetIsAdditionsAreEqual = mockk()
+    private val getIsAdditionsAreEqualUseCase: GetIsAdditionsAreEqualUseCase = mockk()
     private val menuProductUuid = "menu_product_uuid"
     private lateinit var addCartProduct: AddCartProductUseCase
 
@@ -31,7 +35,7 @@ internal class AddCartProductUseCaseTest {
             cartProductRepo = cartProductRepo,
             cartProductAdditionRepository = cartProductAdditionRepository,
             additionRepository = additionRepository,
-            getIsAdditionsAreEqual = getIsAdditionsAreEqual
+            getIsAdditionsAreEqualUseCase = getIsAdditionsAreEqualUseCase
         )
     }
 
@@ -64,6 +68,99 @@ internal class AddCartProductUseCaseTest {
     }
 
     @Test
+    fun `save new cart product when product has not same additions`() = runTest {
+        // Given
+        val initialCartProduct = getCartProduct(
+            menuProduct = getMenuProduct(),
+            cartProductAdditionList = emptyList()
+        )
+        val initialAdditionList = listOf(
+            getAddition("1"),
+            getAddition("2")
+        )
+        coEvery { cartProductRepo.getCartProductList() } returns listOf(
+            initialCartProduct
+        )
+        coEvery { cartProductRepo.getCartProductListByMenuProductUuid(menuProductUuid) } returns listOf(
+            initialCartProduct
+        )
+        coEvery {
+            getIsAdditionsAreEqualUseCase(
+                initialCartProduct,
+                initialAdditionList.map { addition -> addition.uuid })
+        } returns false
+
+        coEvery { cartProductRepo.saveAsCartProduct(menuProductUuid) } returns initialCartProduct.uuid
+        coEvery { additionRepository.getAddition("1") } returns getAddition("1")
+        coEvery { additionRepository.getAddition("2") } returns getAddition("2")
+
+        // When
+        val result =
+            addCartProduct(menuProductUuid, initialAdditionList.map { addition -> addition.uuid })
+
+        // Then
+        coVerify { cartProductRepo.saveAsCartProduct(menuProductUuid) }
+
+        coVerify {
+            cartProductAdditionRepository.saveAsCartProductAddition(
+                initialCartProduct.uuid,
+                getAddition("1")
+            )
+        }
+        coVerify {
+            cartProductAdditionRepository.saveAsCartProductAddition(
+                initialCartProduct.uuid,
+                getAddition("2")
+            )
+        }
+        assertTrue(result)
+    }
+
+    @Test
+    fun `update cart product when product has same additions`() = runTest {
+        // Given
+        val initialCount = 2
+        val initialCartProduct = getCartProduct(
+            count = initialCount,
+            menuProduct = getMenuProduct(),
+            cartProductAdditionList = emptyList()
+        )
+        val initialAdditionList = listOf(
+            getAddition("1"),
+            getAddition("2")
+        )
+        coEvery { cartProductRepo.getCartProductList() } returns listOf(
+            initialCartProduct
+        )
+        coEvery { cartProductRepo.getCartProductListByMenuProductUuid(menuProductUuid) } returns listOf(
+            initialCartProduct
+        )
+        coEvery {
+            getIsAdditionsAreEqualUseCase(
+                initialCartProduct,
+                initialAdditionList.map { addition -> addition.uuid })
+        } returns true
+
+        coEvery {
+            cartProductRepo.updateCartProductCount(
+                initialCartProduct.uuid,
+                initialCount + 1
+            )
+        } returns true
+        coEvery { additionRepository.getAddition("1") } returns getAddition("1")
+        coEvery { additionRepository.getAddition("2") } returns getAddition("2")
+
+        // When
+        val result =
+            addCartProduct(menuProductUuid, initialAdditionList.map { addition -> addition.uuid })
+
+        // Then
+        coVerify { cartProductRepo.updateCartProductCount(initialCartProduct.uuid, initialCount + 1) }
+
+        assertTrue(result)
+    }
+
+    @Test
     fun `update cart product count when product is in cart`() = runTest {
         // Given
         val initialCount = 2
@@ -72,7 +169,7 @@ internal class AddCartProductUseCaseTest {
         coEvery { cartProductRepo.getCartProductListByMenuProductUuid(menuProductUuid) } returns listOf(
             initialCartProduct
         )
-        coEvery { getIsAdditionsAreEqual(initialCartProduct, emptyList()) } returns true
+        coEvery { getIsAdditionsAreEqualUseCase(initialCartProduct, emptyList()) } returns true
         coEvery {
             cartProductRepo.updateCartProductCount(
                 initialCartProduct.uuid,

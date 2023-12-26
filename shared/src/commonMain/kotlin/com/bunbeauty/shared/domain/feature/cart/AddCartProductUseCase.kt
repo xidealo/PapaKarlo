@@ -3,7 +3,7 @@ package com.bunbeauty.shared.domain.feature.cart
 import com.bunbeauty.shared.Constants.CART_PRODUCT_LIMIT
 import com.bunbeauty.shared.data.repository.AdditionRepository
 import com.bunbeauty.shared.data.repository.CartProductAdditionRepository
-import com.bunbeauty.shared.domain.feature.addition.GetIsAdditionsAreEqual
+import com.bunbeauty.shared.domain.feature.addition.GetIsAdditionsAreEqualUseCase
 import com.bunbeauty.shared.domain.model.cart.CartProduct
 import com.bunbeauty.shared.domain.repo.CartProductRepo
 
@@ -11,7 +11,7 @@ class AddCartProductUseCase(
     private val cartProductRepo: CartProductRepo,
     private val cartProductAdditionRepository: CartProductAdditionRepository,
     private val additionRepository: AdditionRepository,
-    private val getIsAdditionsAreEqual: GetIsAdditionsAreEqual,
+    private val getIsAdditionsAreEqualUseCase: GetIsAdditionsAreEqualUseCase,
 ) {
 
     suspend operator fun invoke(
@@ -58,7 +58,7 @@ class AddCartProductUseCase(
         additionUuidList: List<String>,
     ): CartProduct? {
         return cartProductList.firstOrNull { cartProduct ->
-            getIsAdditionsAreEqual(
+            getIsAdditionsAreEqualUseCase(
                 initialCartProduct = cartProduct,
                 additionUuidList = additionUuidList
             )

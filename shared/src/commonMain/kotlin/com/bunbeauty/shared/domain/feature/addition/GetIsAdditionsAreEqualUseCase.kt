@@ -2,8 +2,7 @@ package com.bunbeauty.shared.domain.feature.addition
 
 import com.bunbeauty.shared.domain.model.cart.CartProduct
 
-//TODO tests
-class GetIsAdditionsAreEqual {
+class GetIsAdditionsAreEqualUseCase {
     operator fun invoke(
         initialCartProduct: CartProduct?,
         additionUuidList: List<String>,

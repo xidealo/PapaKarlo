@@ -1,5 +1,6 @@
 package com.bunbeauty
 
+import com.bunbeauty.shared.domain.model.addition.Addition
 import com.bunbeauty.shared.domain.model.addition.AdditionGroup
 import com.bunbeauty.shared.domain.model.cart.CartProduct
 import com.bunbeauty.shared.domain.model.cart.CartProductAddition
@@ -47,3 +48,25 @@ fun getCategoryProduct(uuid: String, name: String = "", priority: Int = 0) = Cat
     name = name,
     priority = priority
 )
+
+fun getCartProductAddition(uuid: String = "1", additionUuid: String = "1", price: Int = 100) =
+    CartProductAddition(
+        uuid = uuid,
+        name = "",
+        fullName = null,
+        price = price,
+        cartProductUuid = "",
+        additionUuid = additionUuid
+    )
+
+fun getAddition(uuid: String = "1") = Addition(
+    uuid = uuid,
+    name = "",
+    fullName = null,
+    price = null,
+    isSelected = false,
+    isVisible = false,
+    photoLink = "",
+    menuProductUuid = "",
+
+    )

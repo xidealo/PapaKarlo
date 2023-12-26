@@ -1,6 +1,7 @@
 package com.bunbeauty.domain.feature.cart
 
 import com.bunbeauty.getCartProduct
+import com.bunbeauty.getCartProductAddition
 import com.bunbeauty.getMenuProduct
 import com.bunbeauty.shared.domain.feature.discount.GetDiscountUseCase
 import com.bunbeauty.shared.domain.interactor.cart.GetNewTotalCostUseCase
@@ -158,8 +159,7 @@ class GetNewTotalCostUseCaseTest {
                 actual = newFinalCost
             )
         }
-/*
-    //TODO (add more tests)
+
     @Test
     fun `should return newFinalCost with additions price when has additions`() =
         runTest {
@@ -167,7 +167,11 @@ class GetNewTotalCostUseCaseTest {
             val cartProductListMockData = listOf(
                 getCartProduct(
                     count = 1,
-                    menuProduct = getMenuProduct(newPrice = 666, oldPrice = 1000)
+                    menuProduct = getMenuProduct(newPrice = 666, oldPrice = 1000),
+                    cartProductAdditionList = listOf(
+                        getCartProductAddition(price = 50),
+                        getCartProductAddition(price = 50),
+                    )
                 )
             )
             coEvery { getDiscountUseCase() } returns Discount(firstOrderDiscount = 0)
@@ -177,9 +181,8 @@ class GetNewTotalCostUseCaseTest {
 
             // Then
             assertEquals(
-                expected = 1,
+                expected = 766,
                 actual = newFinalCost
             )
-        }*/
-
+        }
 }

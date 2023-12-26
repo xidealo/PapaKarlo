@@ -2,7 +2,7 @@ package com.bunbeauty.shared.domain.feature.cart
 
 import com.bunbeauty.shared.data.repository.AdditionRepository
 import com.bunbeauty.shared.data.repository.CartProductAdditionRepository
-import com.bunbeauty.shared.domain.feature.addition.GetIsAdditionsAreEqual
+import com.bunbeauty.shared.domain.feature.addition.GetIsAdditionsAreEqualUseCase
 import com.bunbeauty.shared.domain.repo.CartProductRepo
 
 //TODO (tests)
@@ -10,7 +10,7 @@ class EditCartProductUseCase(
     private val cartProductRepo: CartProductRepo,
     private val cartProductAdditionRepository: CartProductAdditionRepository,
     private val additionRepository: AdditionRepository,
-    private val getIsAdditionsAreEqual: GetIsAdditionsAreEqual,
+    private val getIsAdditionsAreEqualUseCase: GetIsAdditionsAreEqualUseCase,
 ) {
     suspend operator fun invoke(
         cartProductUuid: String,
@@ -19,7 +19,8 @@ class EditCartProductUseCase(
         val cartProduct =
             cartProductRepo.getCartProduct(cartProductUuid = cartProductUuid) ?: return
 
-        if (getIsAdditionsAreEqual(
+        if (
+            getIsAdditionsAreEqualUseCase(
                 initialCartProduct = cartProduct,
                 additionUuidList = additionUuidList
             )

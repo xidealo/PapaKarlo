@@ -1,9 +1,10 @@
 package com.bunbeauty.domain.feature.cart
 
+import com.bunbeauty.getCartProduct
+import com.bunbeauty.getCartProductAddition
+import com.bunbeauty.getMenuProduct
 import com.bunbeauty.shared.data.repository.CartProductAdditionRepository
 import com.bunbeauty.shared.domain.feature.cart.RemoveCartProductUseCase
-import com.bunbeauty.shared.domain.model.cart.CartProduct
-import com.bunbeauty.shared.domain.model.cart.CartProductAddition
 import com.bunbeauty.shared.domain.repo.CartProductRepo
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -48,7 +49,8 @@ internal class RemoveCartProductUseCaseTest {
     @Test
     fun `return true when product count more than 1`() = runTest {
         // Given
-        val initialCartProduct = generateCartProduct(uuid = cartProductUuid, count = 2)
+        val initialCartProduct =
+            getCartProduct(uuid = cartProductUuid, count = 2, menuProduct = getMenuProduct())
         val resultCartProduct = initialCartProduct.copy(count = 1)
         coEvery { cartProductRepo.getCartProduct(cartProductUuid) } returns initialCartProduct
 
@@ -76,11 +78,18 @@ internal class RemoveCartProductUseCaseTest {
     @Test
     fun `return true when product count equals 1`() = runTest {
         // Given
-        val cartProduct = generateCartProduct(uuid = cartProductUuid, count = 1)
+        val initialCartProductAddition = getCartProductAddition(uuid = "1")
+        val cartProduct =
+            getCartProduct(
+                uuid = cartProductUuid,
+                count = 1,
+                menuProduct = getMenuProduct(),
+                cartProductAdditionList = listOf(initialCartProductAddition)
+            )
         coEvery { cartProductRepo.getCartProduct(cartProductUuid) } returns cartProduct
 
         coEvery { cartProductRepo.deleteCartProduct(cartProductUuid) } returns Unit
-        coEvery { cartProductAdditionRepository.delete(cartProductUuid) } returns Unit
+        coEvery { cartProductAdditionRepository.delete(initialCartProductAddition.uuid) } returns Unit
 
         // When
         val result = removeCartProduct(cartProductUuid)
@@ -92,16 +101,9 @@ internal class RemoveCartProductUseCaseTest {
         coVerify(exactly = 1) {
             cartProductRepo.deleteCartProduct(cartProductUuid)
         }
-        assertTrue(result)
-    }
-
-    companion object {
-        private fun generateCartProduct(
-            uuid: String = "cart_uuid",
-            count: Int = 1,
-            cartProductAdditionList: List<CartProductAddition> = emptyList(),
-        ): CartProduct {
-            return CartProduct(uuid, count, mockk(), cartProductAdditionList)
+        coVerify(exactly = 1) {
+            cartProductAdditionRepository.delete(initialCartProductAddition.uuid)
         }
+        assertTrue(result)
     }
 }

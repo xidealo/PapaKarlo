@@ -3,7 +3,6 @@ package com.bunbeauty.shared.domain.interactor.cart
 import com.bunbeauty.shared.domain.feature.discount.GetDiscountUseCase
 import com.bunbeauty.shared.domain.model.cart.CartProduct
 
-//TODO(add more tests)
 class GetNewTotalCostUseCase(private val getDiscountUseCase: GetDiscountUseCase) {
     suspend operator fun invoke(cartProductList: List<CartProduct>): Int {
         val newTotalCost = cartProductList.sumOf { cartProduct ->
