@@ -5,7 +5,6 @@ import com.bunbeauty.shared.data.repository.CartProductAdditionRepository
 import com.bunbeauty.shared.domain.feature.addition.GetIsAdditionsAreEqualUseCase
 import com.bunbeauty.shared.domain.repo.CartProductRepo
 
-//TODO (tests)
 class EditCartProductUseCase(
     private val cartProductRepo: CartProductRepo,
     private val cartProductAdditionRepository: CartProductAdditionRepository,
