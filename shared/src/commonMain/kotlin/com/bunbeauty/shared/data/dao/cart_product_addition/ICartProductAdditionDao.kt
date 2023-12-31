@@ -9,4 +9,5 @@ interface ICartProductAdditionDao {
 
     suspend fun insertCartProductAddition(cartProductAdditionEntity: CartProductAdditionEntity)
     suspend fun delete(cartProductAdditionUuid: String)
+    suspend fun deleteAll()
 }

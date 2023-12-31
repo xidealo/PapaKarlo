@@ -1,5 +1,7 @@
 package com.bunbeauty.shared.domain.model.cart
 
+import com.bunbeauty.shared.domain.model.addition.CartProductAddition
+
 data class LightCartProduct(
     val uuid: String,
     val name: String,

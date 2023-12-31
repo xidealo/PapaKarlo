@@ -3,7 +3,7 @@ package com.bunbeauty.domain.feature.additions
 import com.bunbeauty.getCartProduct
 import com.bunbeauty.getMenuProduct
 import com.bunbeauty.shared.domain.feature.addition.GetIsAdditionsAreEqualUseCase
-import com.bunbeauty.shared.domain.model.cart.CartProductAddition
+import com.bunbeauty.shared.domain.model.addition.CartProductAddition
 import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test

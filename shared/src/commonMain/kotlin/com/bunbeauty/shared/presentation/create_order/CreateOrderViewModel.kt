@@ -39,7 +39,7 @@ class CreateOrderViewModel(
 
     private val mutableDataState = MutableStateFlow(
         CreateOrderDataState(
-            discount = null
+            discount = null,
         )
     )
 

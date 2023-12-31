@@ -63,7 +63,6 @@ fun CartProductItem(
             Column(
                 modifier = Modifier
                     .weight(1f)
-                    .padding(top = FoodDeliveryTheme.dimensions.smallSpace)
                     .padding(start = FoodDeliveryTheme.dimensions.smallSpace)
             ) {
                 OverflowingText(

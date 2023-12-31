@@ -16,3 +16,6 @@ VALUES (?, ?, ?, ?, ?, ?);
 deleteCartProductAdditionByUuid:
 DELETE FROM cartProductAdditionEntity
 WHERE uuid = :uuid;
+
+deleteAllCartProductAdditions:
+DELETE FROM cartProductAdditionEntity;

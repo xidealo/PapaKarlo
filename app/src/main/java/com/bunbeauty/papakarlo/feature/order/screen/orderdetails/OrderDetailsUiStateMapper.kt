@@ -3,56 +3,63 @@ package com.bunbeauty.papakarlo.feature.order.screen.orderdetails
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.feature.profile.screen.profile.PaymentMethodUiStateMapper
 import com.bunbeauty.papakarlo.util.string.IStringUtil
-import com.bunbeauty.shared.presentation.order_details.OrderDetailsState
+import com.bunbeauty.shared.domain.model.order.OrderStatus
+import com.bunbeauty.shared.presentation.order_details.OrderDetails
 
 class OrderDetailsUiStateMapper(
     private val stringUtil: IStringUtil,
     private val orderProductItemMapper: OrderProductItemMapper,
-    private val paymentMethodUiStateMapper: PaymentMethodUiStateMapper
+    private val paymentMethodUiStateMapper: PaymentMethodUiStateMapper,
 ) {
-    fun map(orderState: OrderDetailsState): OrderDetailsUi {
+    fun map(orderState: OrderDetails.ViewDataState): OrderDetailsUi {
         return OrderDetailsUi(
-            orderProductItemList = orderState.orderProductItemList.map(
+            orderProductItemList = orderState.orderDetailsData.orderProductItemList.map(
                 orderProductItemMapper::toItem
             ),
-            oldTotalCost = orderState.oldTotalCost?.let { oldTotalCost ->
+            oldTotalCost = orderState.orderDetailsData.oldTotalCost?.let { oldTotalCost ->
                 stringUtil.getCostString(oldTotalCost)
             },
-            deliveryCost = orderState.deliveryCost?.let { deliveryCost ->
+            deliveryCost = orderState.orderDetailsData.deliveryCost?.let { deliveryCost ->
                 stringUtil.getCostString(
                     deliveryCost
                 )
             },
-            newTotalCost = orderState.newTotalCost?.let { newTotalCost ->
+            newTotalCost = orderState.orderDetailsData.newTotalCost?.let { newTotalCost ->
                 stringUtil.getCostString(
                     newTotalCost
                 )
             },
-            isLoading = orderState.isLoading,
-            orderInfo = orderState.orderInfo?.let { orderInfo ->
+            orderInfo = orderState.orderDetailsData.orderInfo.let { orderInfo ->
                 OrderDetailsUi.OrderInfo(
-                    status = orderInfo.status,
+                    status = orderInfo?.status ?: OrderStatus.NOT_ACCEPTED,
                     statusName = stringUtil.getOrderStatusName(
-                        orderInfo.status
+                        orderInfo?.status ?: OrderStatus.NOT_ACCEPTED
                     ),
-                    dateTime = stringUtil.getDateTimeString(orderInfo.dateTime),
-                    deferredTime = orderInfo.deferredTime
+                    dateTime = orderInfo?.dateTime?.let { dateTime ->
+                        stringUtil.getDateTimeString(dateTime)
+                    } ?: "",
+                    deferredTime = orderInfo?.deferredTime
                         ?.let { stringUtil.getTimeString(it) },
-                    address = stringUtil.getOrderAddressString(orderInfo.address),
-                    comment = orderInfo.comment,
-                    pickupMethod = stringUtil.getPickupMethodString(orderInfo.isDelivery),
-                    deferredTimeHintId = if (orderInfo.isDelivery) {
+                    address = orderInfo?.address?.let { orderAddress ->
+                        stringUtil.getOrderAddressString(orderAddress)
+                    } ?: "",
+                    comment = orderInfo?.comment,
+                    pickupMethod = orderInfo?.isDelivery?.let { isDelivery ->
+                        stringUtil.getPickupMethodString(isDelivery)
+                    } ?: "",
+                    deferredTimeHintId = if (orderInfo?.isDelivery == true) {
                         R.string.delivery_time
                     } else {
                         R.string.pickup_time
                     },
-                    paymentMethod = orderInfo.paymentMethod?.let { paymentMethod ->
+                    paymentMethod = orderInfo?.paymentMethod?.let { paymentMethod ->
                         paymentMethodUiStateMapper.map(paymentMethod)
                     }
                 )
             },
-            code = orderState.orderInfo?.code ?: "",
-            discount = orderState.discount
+            code = orderState.orderDetailsData.orderInfo?.code ?: "",
+            discount = orderState.orderDetailsData.discount,
+            state = orderState.screenState,
         )
     }
 }

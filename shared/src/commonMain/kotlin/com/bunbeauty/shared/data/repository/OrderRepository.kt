@@ -120,7 +120,10 @@ class OrderRepository(
 
     override suspend fun createOrder(token: String, createdOrder: CreatedOrder): OrderCode? {
         val orderPostServer = orderMapper.toOrderPostServer(createdOrder)
-        return networkConnector.postOrder(token, orderPostServer).getNullableResult { orderServer ->
+        return networkConnector.postOrder(
+            token = token,
+            order = orderPostServer
+        ).getNullableResult { orderServer ->
             saveOrderLocally(orderServer)
             cacheLastLightOrder =
                 CacheLastLightOrder(

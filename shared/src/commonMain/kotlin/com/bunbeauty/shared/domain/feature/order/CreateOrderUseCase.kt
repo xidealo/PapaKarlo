@@ -62,7 +62,10 @@ class CreateOrderUseCase(
             orderProducts = cartProductList.map { cartProduct ->
                 CreatedOrderProduct(
                     menuProductUuid = cartProduct.product.uuid,
-                    count = cartProduct.count
+                    count = cartProduct.count,
+                    additionUuids = cartProduct.cartProductAdditionList.map { cartProductAddition ->
+                        cartProductAddition.additionUuid
+                    }
                 )
             },
             paymentMethod = paymentMethod

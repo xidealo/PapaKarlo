@@ -1,5 +1,6 @@
 package com.bunbeauty.shared.domain.model.cart
 
+import com.bunbeauty.shared.domain.model.addition.CartProductAddition
 import com.bunbeauty.shared.domain.model.product.MenuProduct
 import com.bunbeauty.shared.domain.model.product.ProductPosition
 

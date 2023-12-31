@@ -3,6 +3,7 @@ package com.bunbeauty.shared.data.mapper.order_product
 import com.bunbeauty.shared.data.network.model.order.get.OrderProductServer
 import com.bunbeauty.shared.data.network.model.order.post.OrderProductPostServer
 import com.bunbeauty.shared.db.OrderWithProductEntity
+import com.bunbeauty.shared.domain.model.addition.OrderAddition
 import com.bunbeauty.shared.domain.model.cart.CartProduct
 import com.bunbeauty.shared.domain.model.product.CreatedOrderProduct
 import com.bunbeauty.shared.domain.model.product.OrderMenuProduct
@@ -24,6 +25,7 @@ class OrderProductMapper : IOrderProductMapper {
                 comboDescription = orderWithProductEntity.orderProductComboDescription,
                 photoLink = orderWithProductEntity.orderProductPhotoLink,
             ),
+            orderAdditionList = emptyList()
         )
     }
 
@@ -41,27 +43,21 @@ class OrderProductMapper : IOrderProductMapper {
                 comboDescription = orderProduct.comboDescription,
                 photoLink = orderProduct.photoLink,
             ),
+            orderAdditionList = orderProduct.additions.map { orderAdditionsServer ->
+                OrderAddition(
+                    uuid = orderAdditionsServer.uuid,
+                    name = orderAdditionsServer.name
+                )
+            }
         )
     }
 
-    override fun toPostServerModel(orderProduct: OrderProduct): OrderProductPostServer {
-        return OrderProductPostServer(
-            count = orderProduct.count,
-            menuProductUuid = ""
-        )
-    }
-
-    override fun toPostServerModel(cartProduct: CartProduct): OrderProductPostServer {
-        return OrderProductPostServer(
-            count = cartProduct.count,
-            menuProductUuid = cartProduct.product.uuid
-        )
-    }
 
     override fun toPostServerModel(createdOrderProduct: CreatedOrderProduct): OrderProductPostServer {
         return OrderProductPostServer(
             menuProductUuid = createdOrderProduct.menuProductUuid,
             count = createdOrderProduct.count,
+            additionUuids = createdOrderProduct.additionUuids
         )
     }
 }

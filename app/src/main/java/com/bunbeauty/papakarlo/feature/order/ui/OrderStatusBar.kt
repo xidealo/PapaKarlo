@@ -30,13 +30,14 @@ private val stepShape = RoundedCornerShape(12.dp)
 fun OrderStatusBar(
     modifier: Modifier = Modifier,
     orderStatus: OrderStatus,
-    orderStatusName: String
+    orderStatusName: String,
 ) {
     FoodDeliveryCard(
         modifier = modifier
             .height(IntrinsicSize.Min)
             .fillMaxWidth(),
-        clickable = false
+        clickable = false,
+        elevated = false
     ) {
         val currentStep = when (orderStatus) {
             OrderStatus.NOT_ACCEPTED -> 0
@@ -47,7 +48,11 @@ fun OrderStatusBar(
             OrderStatus.DELIVERED -> 4
             OrderStatus.CANCELED -> 0
         }
-        Row(modifier = Modifier.padding(FoodDeliveryTheme.dimensions.mediumSpace)) {
+        Row(
+            modifier = Modifier
+                .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace)
+                .padding(vertical = FoodDeliveryTheme.dimensions.smallSpace)
+        ) {
             repeat(5) { i ->
                 val startSpace = if (i == 0) {
                     0.dp
@@ -63,6 +68,7 @@ fun OrderStatusBar(
                             orderStatus = orderStatus
                         )
                     }
+
                     (i == currentStep) -> {
                         OrderStatusChip(
                             modifier = Modifier
@@ -71,6 +77,7 @@ fun OrderStatusBar(
                             statusName = orderStatusName
                         )
                     }
+
                     else -> {
                         EmptyOrderStatusChip(
                             modifier = Modifier
@@ -87,7 +94,7 @@ fun OrderStatusBar(
 @Composable
 private fun DoneStep(
     modifier: Modifier = Modifier,
-    orderStatus: OrderStatus
+    orderStatus: OrderStatus,
 ) {
     Box(
         modifier = modifier

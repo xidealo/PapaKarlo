@@ -1,5 +1,6 @@
 package com.bunbeauty.shared.domain.interactor.cart
 
+import com.bunbeauty.shared.data.repository.CartProductAdditionRepository
 import com.bunbeauty.shared.domain.CommonFlow
 import com.bunbeauty.shared.domain.asCommonFlow
 import com.bunbeauty.shared.domain.model.cart.CartProduct
@@ -13,6 +14,7 @@ class CartProductInteractor(
     private val cartProductRepo: CartProductRepo,
     private val deliveryRepo: DeliveryRepo,
     private val getCartTotal: GetCartTotalUseCase,
+    private val cartProductAdditionRepository: CartProductAdditionRepository,
 ) : ICartProductInteractor {
 
     override fun observeConsumerCart(): CommonFlow<ConsumerCartDomain?> {
@@ -33,6 +35,7 @@ class CartProductInteractor(
 
     override suspend fun removeAllProductsFromCart() {
         cartProductRepo.deleteAllCartProducts()
+        cartProductAdditionRepository.deleteAll()
     }
 
     private suspend fun getConsumerCart(cartProductList: List<CartProduct>): ConsumerCartDomain? {

@@ -1,8 +1,8 @@
 package com.bunbeauty.papakarlo.feature.order.screen.orderdetails
 
-import android.os.Bundle
-import android.view.View
+import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -12,82 +12,99 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.common.BaseFragmentWithSharedViewModel
+import com.bunbeauty.papakarlo.common.BaseComposeFragment
 import com.bunbeauty.papakarlo.common.delegates.argument
 import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.papakarlo.common.ui.element.card.DiscountCard
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
+import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryItem
 import com.bunbeauty.papakarlo.common.ui.element.surface.FoodDeliverySurface
+import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold
 import com.bunbeauty.papakarlo.common.ui.theme.medium
 import com.bunbeauty.papakarlo.databinding.LayoutComposeBinding
-import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.order.ui.OrderProductItem
 import com.bunbeauty.papakarlo.feature.order.ui.OrderStatusBar
 import com.bunbeauty.shared.domain.model.order.OrderStatus
+import com.bunbeauty.shared.presentation.order_details.OrderDetails
 import com.bunbeauty.shared.presentation.order_details.OrderDetailsViewModel
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
+class OrderDetailsFragment :
+    BaseComposeFragment<OrderDetails.ViewDataState, OrderDetailsUi, OrderDetails.Action, OrderDetails.Event>() {
 
-    private val viewModel: OrderDetailsViewModel by viewModel()
+    override val viewModel: OrderDetailsViewModel by viewModel()
     override val viewBinding by viewBinding(LayoutComposeBinding::bind)
 
     private val orderDetailsUiStateMapper: OrderDetailsUiStateMapper by inject()
 
     private val orderUuid: String by argument()
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        viewBinding.root.setContentWithTheme {
-            val orderState by viewModel.orderState.collectAsStateWithLifecycle()
-            OrderDetailsScreen(
-                orderDetailsUi = orderDetailsUiStateMapper.map(orderState)
-            )
-        }
-    }
-
     override fun onStart() {
         super.onStart()
-        viewModel.loadOrder(orderUuid)
+        viewModel.onAction(OrderDetails.Action.Init(orderUuid = orderUuid))
     }
 
     override fun onStop() {
-        viewModel.stopObserveOrders()
+        viewModel.onAction(OrderDetails.Action.StopObserve)
         super.onStop()
     }
 
     @Composable
-    private fun OrderDetailsScreen(orderDetailsUi: OrderDetailsUi) {
+    override fun Screen(viewState: OrderDetailsUi, onAction: (OrderDetails.Action) -> Unit) {
+        OrderDetailsScreen(viewState, onAction)
+    }
+
+    override fun mapState(dataState: OrderDetails.ViewDataState): OrderDetailsUi {
+        return orderDetailsUiStateMapper.map(dataState)
+    }
+
+    override fun handleEvent(event: OrderDetails.Event) {
+        when (event) {
+            OrderDetails.Event.Back -> findNavController().popBackStack()
+        }
+    }
+
+    @Composable
+    private fun OrderDetailsScreen(
+        orderDetailsUi: OrderDetailsUi,
+        onAction: (OrderDetails.Action) -> Unit,
+    ) {
         FoodDeliveryScaffold(
             title = orderDetailsUi.code,
             backActionClick = {
-                findNavController().popBackStack()
-            }
+                onAction(OrderDetails.Action.Back)
+            },
+            backgroundColor = FoodDeliveryTheme.colors.mainColors.surface
         ) {
-            if (orderDetailsUi.isLoading) {
-                LoadingScreen()
-            } else {
-                OrderDetailsSuccessScreen(orderDetailsUi)
+            Crossfade(targetState = orderDetailsUi.state, label = "ConsumerCart") { screenState ->
+                when (screenState) {
+                    OrderDetails.ViewDataState.ScreenState.LOADING -> LoadingScreen()
+                    OrderDetails.ViewDataState.ScreenState.SUCCESS -> OrderDetailsSuccessScreen(
+                        orderDetailsUi
+                    )
+
+                    OrderDetails.ViewDataState.ScreenState.ERROR -> ErrorScreen(R.string.error_order_details_discount) {
+                        //onAction(OrderDetails.Action.Init)
+                    }
+                }
             }
+
         }
     }
 
@@ -101,30 +118,38 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_com
             ) {
                 LazyColumn(
                     modifier = Modifier.fillMaxSize(),
-                    contentPadding = PaddingValues(FoodDeliveryTheme.dimensions.screenContentSpace)
+                    contentPadding = PaddingValues(bottom = FoodDeliveryTheme.dimensions.screenContentSpace),
+                    verticalArrangement = spacedBy(8.dp)
                 ) {
-                    state.orderInfo?.let { orderInfo ->
-                        item {
-                            Column {
-                                OrderStatusBar(
-                                    orderStatus = orderInfo.status,
-                                    orderStatusName = orderInfo.statusName
-                                )
-                                OrderInfoCard(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(top = 8.dp),
-                                    orderInfo = orderInfo
-                                )
-                            }
-                        }
+
+                    item(key = "OrderStatusBar") {
+                        OrderStatusBar(
+                            orderStatus = state.orderInfo.status,
+                            orderStatusName = state.orderInfo.statusName
+                        )
                     }
 
-                    items(state.orderProductItemList) { orderProductItem ->
-                        OrderProductItem(
-                            modifier = Modifier.padding(top = 8.dp),
-                            orderProductItem = orderProductItem
+                    item(key = "OrderInfoCard") {
+                        OrderInfoCard(
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            orderInfo = state.orderInfo
                         )
+                    }
+
+                    itemsIndexed(
+                        items = state.orderProductItemList,
+                        key = { index, orderProductItem ->
+                            orderProductItem.key
+                        }
+                    ) { index, orderProductItem ->
+                        FoodDeliveryItem(needDivider = index != state.orderProductItemList.lastIndex) {
+                            OrderProductItem(
+                                modifier = Modifier
+                                    .padding(horizontal = 16.dp),
+                                orderProductItem = orderProductItem
+                            )
+                        }
                     }
                 }
             }
@@ -136,7 +161,7 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_com
     private fun OrderInfoTextColumn(
         modifier: Modifier = Modifier,
         hint: String,
-        info: String
+        info: String,
     ) {
         Column(modifier = modifier) {
             Text(
@@ -155,16 +180,18 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_com
     @Composable
     private fun OrderInfoCard(
         modifier: Modifier = Modifier,
-        orderInfo: OrderDetailsUi.OrderInfo
+        orderInfo: OrderDetailsUi.OrderInfo,
     ) {
         FoodDeliveryCard(
             modifier = modifier,
-            clickable = false
+            clickable = false,
+            elevated = false
         ) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp)
+                    .padding(horizontal = 16.dp)
+                    .padding(bottom = 8.dp)
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth()
@@ -338,7 +365,11 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_com
     @Composable
     private fun OrderDetailsSuccessScreenPreview() {
         FoodDeliveryTheme {
-            OrderDetailsScreen(orderDetailsUi = getOrderDetails())
+            OrderDetailsScreen(
+                orderDetailsUi = getOrderDetails(),
+                onAction = {
+
+                })
         }
     }
 
@@ -348,8 +379,11 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_com
         FoodDeliveryTheme {
             OrderDetailsScreen(
                 orderDetailsUi = getOrderDetails().copy(
-                    isLoading = true
-                )
+                    state = OrderDetails.ViewDataState.ScreenState.LOADING,
+                ),
+                onAction = {
+
+                }
             )
         }
     }
@@ -365,7 +399,9 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_com
                     newCost = "200",
                     oldCost = "300",
                     photoLink = "",
-                    count = "2"
+                    count = "2",
+                    key = "k1",
+                    additions = null
                 ),
                 OrderProductUiItem(
                     uuid = "",
@@ -375,14 +411,16 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_com
                     newCost = "150",
                     oldCost = null,
                     photoLink = "",
-                    count = "1"
+                    count = "1",
+                    key = "k2",
+                    additions = null
                 )
             ),
             orderInfo = getOrderInfo(),
             oldTotalCost = "450",
             deliveryCost = "100",
             newTotalCost = "550",
-            isLoading = false,
+            state = OrderDetails.ViewDataState.ScreenState.SUCCESS,
             code = "A-40",
             discount = "10%"
         )
@@ -395,12 +433,12 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_com
             deferredTime = "10:30",
             address =
             "" +
-                "ул. Лука" +
-                "2" +
-                "10" +
-                "1" +
-                "3" +
-                "тест",
+                    "ул. Лука" +
+                    "2" +
+                    "10" +
+                    "1" +
+                    "3" +
+                    "тест",
             comment = "давай кушать",
             pickupMethod = "доставка",
             statusName = "Готовится",

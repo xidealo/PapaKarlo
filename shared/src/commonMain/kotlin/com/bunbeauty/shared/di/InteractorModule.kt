@@ -38,7 +38,8 @@ internal fun interactorModule() = module {
         CartProductInteractor(
             cartProductRepo = get(),
             deliveryRepo = get(),
-            getCartTotal = get()
+            getCartTotal = get(),
+            cartProductAdditionRepository = get()
         )
     }
     single<ICafeInteractor> {

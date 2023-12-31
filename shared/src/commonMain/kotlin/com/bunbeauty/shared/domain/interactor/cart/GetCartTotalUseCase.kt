@@ -11,13 +11,17 @@ class GetCartTotalUseCase(
     private val deliveryRepo: DeliveryRepo,
     private val getDiscountUseCase: GetDiscountUseCase,
     private val getNewTotalCostUseCase: GetNewTotalCostUseCase,
+    private val getOldTotalCostUseCase: GetOldTotalCostUseCase,
 ) {
 
     suspend operator fun invoke(isDelivery: Boolean): CartTotal {
         val cartProductList = cartProductRepo.getCartProductList()
 
         val newTotalCost = getNewTotalCostUseCase(cartProductList)
-        val oldTotalCost = getOldTotalCost(cartProductList)
+        val oldTotalCost = checkOldTotalCost(
+            oldTotalCost = getOldTotalCostUseCase(cartProductList),
+            newTotalCost = newTotalCost
+        )
 
         val deliveryCost = getDeliveryCost(isDelivery, newTotalCost)
 
@@ -47,14 +51,8 @@ class GetCartTotalUseCase(
         }
     }
 
-
-    private suspend fun getOldTotalCost(productList: List<CartProduct>): Int? {
-        val oldTotalCost = productList.sumOf { orderProductEntity ->
-            orderProductEntity.count * (orderProductEntity.product.oldPrice
-                ?: orderProductEntity.product.newPrice)
-        }
-
-        return if (oldTotalCost == getNewTotalCostUseCase(productList)) {
+    private fun checkOldTotalCost(oldTotalCost: Int, newTotalCost: Int): Int? {
+        return if (oldTotalCost == newTotalCost) {
             null
         } else {
             oldTotalCost

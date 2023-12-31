@@ -25,4 +25,8 @@ class CartProductAdditionRepository(
     suspend fun delete(cartProductAdditionUuid: String) {
         cartProductAdditionDao.delete(cartProductAdditionUuid = cartProductAdditionUuid)
     }
+
+    suspend fun deleteAll() {
+        cartProductAdditionDao.deleteAll()
+    }
 }

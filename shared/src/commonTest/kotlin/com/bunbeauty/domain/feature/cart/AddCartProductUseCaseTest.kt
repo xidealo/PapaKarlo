@@ -9,7 +9,7 @@ import com.bunbeauty.shared.data.repository.CartProductAdditionRepository
 import com.bunbeauty.shared.domain.feature.addition.GetIsAdditionsAreEqualUseCase
 import com.bunbeauty.shared.domain.feature.cart.AddCartProductUseCase
 import com.bunbeauty.shared.domain.model.cart.CartProduct
-import com.bunbeauty.shared.domain.model.cart.CartProductAddition
+import com.bunbeauty.shared.domain.model.addition.CartProductAddition
 import com.bunbeauty.shared.domain.repo.CartProductRepo
 import io.mockk.coEvery
 import io.mockk.coVerify

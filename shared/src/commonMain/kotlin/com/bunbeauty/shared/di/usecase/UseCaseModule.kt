@@ -13,6 +13,7 @@ import com.bunbeauty.shared.domain.feature.settings.ObserveSettingsUseCase
 import com.bunbeauty.shared.domain.feature.settings.UpdateEmailUseCase
 import com.bunbeauty.shared.domain.interactor.cart.GetCartTotalUseCase
 import com.bunbeauty.shared.domain.interactor.cart.GetNewTotalCostUseCase
+import com.bunbeauty.shared.domain.interactor.cart.GetOldTotalCostUseCase
 import com.bunbeauty.shared.domain.use_case.DisableUserUseCase
 import com.bunbeauty.shared.domain.use_case.deferred_time.GetMinTimeUseCase
 import org.koin.dsl.module
@@ -23,14 +24,20 @@ internal fun useCaseModules() = module {
             cartProductRepo = get(),
             deliveryRepo = get(),
             getDiscountUseCase = get(),
-            getNewTotalCostUseCase = get()
+            getNewTotalCostUseCase = get(),
+            getOldTotalCostUseCase = get()
         )
     }
+
     factory {
         GetNewTotalCostUseCase(
             getDiscountUseCase = get()
         )
     }
+    factory {
+        GetOldTotalCostUseCase()
+    }
+
     factory {
         GetMinTimeUseCase(dateTimeUtil = get())
     }

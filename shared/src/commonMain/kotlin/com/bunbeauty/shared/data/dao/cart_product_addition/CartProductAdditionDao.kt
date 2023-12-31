@@ -28,4 +28,8 @@ class CartProductAdditionDao(foodDeliveryDatabase: FoodDeliveryDatabase) : ICart
         cartProductAdditionEntityQueries.deleteCartProductAdditionByUuid(cartProductAdditionUuid)
     }
 
+    override suspend fun deleteAll() {
+        cartProductAdditionEntityQueries.deleteAllCartProductAdditions()
+    }
+
 }
