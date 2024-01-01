@@ -4,7 +4,6 @@ import com.bunbeauty.shared.data.network.model.order.get.OrderProductServer
 import com.bunbeauty.shared.data.network.model.order.post.OrderProductPostServer
 import com.bunbeauty.shared.db.OrderWithProductEntity
 import com.bunbeauty.shared.domain.model.addition.OrderAddition
-import com.bunbeauty.shared.domain.model.cart.CartProduct
 import com.bunbeauty.shared.domain.model.product.CreatedOrderProduct
 import com.bunbeauty.shared.domain.model.product.OrderMenuProduct
 import com.bunbeauty.shared.domain.model.product.OrderProduct

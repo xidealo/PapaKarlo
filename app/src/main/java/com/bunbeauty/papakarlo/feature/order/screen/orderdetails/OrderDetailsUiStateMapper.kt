@@ -16,19 +16,9 @@ class OrderDetailsUiStateMapper(
             orderProductItemList = orderState.orderDetailsData.orderProductItemList.map(
                 orderProductItemMapper::toItem
             ),
-            oldTotalCost = orderState.orderDetailsData.oldTotalCost?.let { oldTotalCost ->
-                stringUtil.getCostString(oldTotalCost)
-            },
-            deliveryCost = orderState.orderDetailsData.deliveryCost?.let { deliveryCost ->
-                stringUtil.getCostString(
-                    deliveryCost
-                )
-            },
-            newTotalCost = orderState.orderDetailsData.newTotalCost?.let { newTotalCost ->
-                stringUtil.getCostString(
-                    newTotalCost
-                )
-            },
+            oldTotalCost = orderState.orderDetailsData.oldTotalCost,
+            deliveryCost = orderState.orderDetailsData.deliveryCost,
+            newTotalCost = orderState.orderDetailsData.newTotalCost,
             orderInfo = orderState.orderDetailsData.orderInfo.let { orderInfo ->
                 OrderDetailsUi.OrderInfo(
                     status = orderInfo?.status ?: OrderStatus.NOT_ACCEPTED,

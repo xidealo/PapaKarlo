@@ -1,6 +1,7 @@
 package com.bunbeauty.shared.presentation.order_details
 
 import com.bunbeauty.shared.Constants.PERCENT
+import com.bunbeauty.shared.Constants.RUBLE_CURRENCY
 import com.bunbeauty.shared.domain.feature.order.ObserveOrderUseCase
 import com.bunbeauty.shared.domain.feature.order.StopObserveOrdersUseCase
 import com.bunbeauty.shared.domain.model.order.Order
@@ -58,9 +59,15 @@ class OrderDetailsViewModel(
                                 orderDetailsData = OrderDetails.ViewDataState.OrderDetailsData(
                                     orderProductItemList = getProductList(order),
                                     orderInfo = getOrderInfo(order),
-                                    deliveryCost = order.deliveryCost?.toString(),
-                                    oldTotalCost = order.oldTotalCost?.toString(),
-                                    newTotalCost = order.newTotalCost.toString(),
+                                    deliveryCost = order.deliveryCost?.let { deliveryCost ->
+                                        "$deliveryCost$RUBLE_CURRENCY"
+                                    },
+                                    oldTotalCost = order.oldTotalCost?.let { oldTotalCost ->
+                                        "$oldTotalCost$RUBLE_CURRENCY"
+                                    },
+                                    newTotalCost = order.newTotalCost.let { newTotalCost ->
+                                        "$newTotalCost$RUBLE_CURRENCY"
+                                    },
                                     discount = order.percentDiscount?.let { discount ->
                                         discount.toString() + PERCENT
                                     }

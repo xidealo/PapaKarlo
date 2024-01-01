@@ -1,8 +1,13 @@
 package com.bunbeauty.shared.data.repository
 
 import com.bunbeauty.shared.data.dao.order.IOrderDao
+import com.bunbeauty.shared.data.dao.order_addition.IOrderAdditionDao
+import com.bunbeauty.shared.data.dao.order_product.IOrderProductDao
 import com.bunbeauty.shared.data.mapper.order.IOrderMapper
+import com.bunbeauty.shared.data.mapper.order_addition.mapOrderAdditionServerToOrderAdditionEntity
+import com.bunbeauty.shared.data.mapper.order_product.mapOrderProductServerToOrderProductEntity
 import com.bunbeauty.shared.data.network.api.NetworkConnector
+import com.bunbeauty.shared.data.network.model.order.get.OrderProductServer
 import com.bunbeauty.shared.data.network.model.order.get.OrderServer
 import com.bunbeauty.shared.data.network.model.order.get.OrderUpdateServer
 import com.bunbeauty.shared.domain.model.order.CreatedOrder
@@ -20,6 +25,8 @@ class OrderRepository(
     private val orderDao: IOrderDao,
     private val networkConnector: NetworkConnector,
     private val orderMapper: IOrderMapper,
+    private val orderAdditionDao: IOrderAdditionDao,
+    private val orderProductDao: IOrderProductDao,
 ) : OrderRepo {
 
     data class CacheLastLightOrder(
@@ -145,12 +152,26 @@ class OrderRepository(
     }
 
     private fun saveOrderListLocally(orderServerList: List<OrderServer>) {
-        orderServerList.flatMap { orderServer ->
-            orderServer.oderProductList.map { oderProductServer ->
-                orderMapper.toOrderWithProductEntity(orderServer, oderProductServer)
+        orderServerList.forEach { orderServer ->
+            orderDao.insertOrder(
+                orderMapper.toOrderEntity(orderServer)
+            )
+            orderServer.oderProductList.forEach { orderProductServer ->
+                orderProductDao.insert(orderProductServer.mapOrderProductServerToOrderProductEntity())
+                insertOrderAdditions(orderProductServer)
             }
-        }.let { orderWithProductEntityList ->
-            orderDao.insertOrderWithProductList(orderWithProductEntityList)
+        }
+    }
+
+    private fun insertOrderAdditions(
+        orderProductServer: OrderProductServer,
+    ) {
+        orderProductServer.additions.map { orderAdditionServer ->
+            orderAdditionDao.insert(
+                orderAdditionServer.mapOrderAdditionServerToOrderAdditionEntity(
+                    orderProductServer.uuid
+                )
+            )
         }
     }
 

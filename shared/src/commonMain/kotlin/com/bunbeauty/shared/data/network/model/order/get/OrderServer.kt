@@ -120,11 +120,11 @@ class OrderProductServer(
     val orderUuid: String,
 
     @SerialName("additions")
-    val additions: List<OrderAdditionsServer>,
+    val additions: List<OrderAdditionServer>,
 )
 
 @Serializable
-class OrderAdditionsServer(
+class OrderAdditionServer(
     @SerialName("uuid")
     val uuid: String,
     @SerialName("name")

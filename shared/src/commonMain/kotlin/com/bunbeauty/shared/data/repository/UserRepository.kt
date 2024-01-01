@@ -3,17 +3,23 @@ package com.bunbeauty.shared.data.repository
 import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.data.companyUuid
 import com.bunbeauty.shared.data.dao.order.IOrderDao
+import com.bunbeauty.shared.data.dao.order_addition.IOrderAdditionDao
+import com.bunbeauty.shared.data.dao.order_product.IOrderProductDao
 import com.bunbeauty.shared.data.dao.user.IUserDao
 import com.bunbeauty.shared.data.dao.user_address.IUserAddressDao
 import com.bunbeauty.shared.data.mapper.order.IOrderMapper
+import com.bunbeauty.shared.data.mapper.order_addition.mapOrderAdditionServerToOrderAdditionEntity
+import com.bunbeauty.shared.data.mapper.order_product.mapOrderProductServerToOrderProductEntity
 import com.bunbeauty.shared.data.mapper.profile.IProfileMapper
 import com.bunbeauty.shared.data.mapper.user.IUserMapper
 import com.bunbeauty.shared.data.network.api.NetworkConnector
 import com.bunbeauty.shared.data.network.model.login.LoginPostServer
+import com.bunbeauty.shared.data.network.model.order.get.OrderProductServer
 import com.bunbeauty.shared.data.network.model.profile.get.ProfileServer
 import com.bunbeauty.shared.data.network.model.profile.patch.PatchUserServer
 import com.bunbeauty.shared.domain.mapFlow
 import com.bunbeauty.shared.domain.model.AuthResponse
+import com.bunbeauty.shared.domain.model.addition.OrderAddition
 import com.bunbeauty.shared.domain.model.profile.Profile
 import com.bunbeauty.shared.domain.model.profile.User
 import com.bunbeauty.shared.domain.repo.UserRepo
@@ -27,8 +33,10 @@ class UserRepository(
     private val userDao: IUserDao,
     private val userAddressDao: IUserAddressDao,
     private val orderDao: IOrderDao,
-    private val dataStoreRepo: DataStoreRepo
-) : DatabaseCacheRepository(), UserRepo {
+    private val dataStoreRepo: DataStoreRepo,
+    private val orderProductDao: IOrderProductDao,
+    private val orderAdditionDao: IOrderAdditionDao
+    ) : DatabaseCacheRepository(), UserRepo {
 
     override val tag: String = "USER_TAG"
     var cachedUserUuid: String? = null
@@ -54,7 +62,7 @@ class UserRepository(
     override suspend fun getProfileByUserUuidAndCityUuid(
         userUuid: String,
         cityUuid: String,
-        token: String
+        token: String,
     ): Profile.Authorized? {
         val profile = getCacheOrData(
             isCacheValid = {
@@ -82,18 +90,32 @@ class UserRepository(
         networkConnector.patchSettings(token, PatchUserServer(isActive = false))
     }
 
-    suspend fun saveProfileLocally(profile: ProfileServer?) {
+    private suspend fun saveProfileLocally(profile: ProfileServer?) {
         if (profile != null) {
             dataStoreRepo.saveUserUuid(profile.uuid)
             userDao.insertUser(profileMapper.toUserEntity(profile))
             userAddressDao.insertUserAddressList(profileMapper.toUserAddressEntityList(profile))
-            profile.orders.flatMap { orderServer ->
-                orderServer.oderProductList.map { orderProductServer ->
-                    orderMapper.toOrderWithProductEntity(orderServer, orderProductServer)
+            profile.orders.forEach { orderServer ->
+                orderDao.insertOrder(
+                    orderMapper.toOrderEntity(orderServer)
+                )
+                orderServer.oderProductList.forEach { orderProductServer ->
+                    orderProductDao.insert(orderProductServer.mapOrderProductServerToOrderProductEntity())
+                    insertOrderAdditions(orderProductServer)
                 }
-            }.let { orderWithProductEntityList ->
-                orderDao.insertOrderWithProductList(orderWithProductEntityList)
             }
+        }
+    }
+
+    private fun insertOrderAdditions(
+        orderProductServer: OrderProductServer,
+    ) {
+        orderProductServer.additions.map { orderAdditionServer ->
+            orderAdditionDao.insert(
+                orderAdditionServer.mapOrderAdditionServerToOrderAdditionEntity(
+                    orderProductServer.uuid
+                )
+            )
         }
     }
 

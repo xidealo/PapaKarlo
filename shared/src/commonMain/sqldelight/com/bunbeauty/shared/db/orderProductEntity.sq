@@ -13,3 +13,8 @@ CREATE TABLE orderProductEntity (
     orderUuid TEXT NOT NULL,
     FOREIGN KEY (orderUuid) REFERENCES orderEntity(uuid) ON DELETE CASCADE
 );
+
+insert:
+INSERT OR REPLACE
+INTO orderProductEntity
+VALUES ?;

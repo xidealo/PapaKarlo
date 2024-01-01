@@ -39,3 +39,10 @@ CREATE TABLE additionEntity (
     menuProductUuid TEXT NOT NULL,
     FOREIGN KEY(menuProductUuid) REFERENCES menuProductEntity(uuid) ON DELETE CASCADE
 );
+
+CREATE TABLE orderAdditionEntity (
+   uuid TEXT NOT NULL PRIMARY KEY,
+   name TEXT NOT NULL,
+   orderProductUuid TEXT NOT NULL,
+   FOREIGN KEY(orderProductUuid) REFERENCES orderProductEntity(uuid) ON DELETE CASCADE
+);

@@ -45,11 +45,6 @@ INSERT OR REPLACE
 INTO orderEntity
 VALUES ?;
 
-insertOrderProduct:
-INSERT OR REPLACE
-INTO orderProductEntity
-VALUES ?;
-
 getOrderWithProductListByUserUuid:
 SELECT *
 FROM orderWithProductEntity
