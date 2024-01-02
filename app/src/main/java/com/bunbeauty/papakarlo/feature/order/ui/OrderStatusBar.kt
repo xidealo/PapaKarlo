@@ -30,7 +30,7 @@ private val stepShape = RoundedCornerShape(12.dp)
 fun OrderStatusBar(
     modifier: Modifier = Modifier,
     orderStatus: OrderStatus,
-    orderStatusName: String,
+    orderStatusName: String
 ) {
     FoodDeliveryCard(
         modifier = modifier
@@ -94,7 +94,7 @@ fun OrderStatusBar(
 @Composable
 private fun DoneStep(
     modifier: Modifier = Modifier,
-    orderStatus: OrderStatus,
+    orderStatus: OrderStatus
 ) {
     Box(
         modifier = modifier

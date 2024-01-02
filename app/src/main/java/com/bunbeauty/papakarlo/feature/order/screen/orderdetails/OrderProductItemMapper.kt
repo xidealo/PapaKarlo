@@ -4,7 +4,7 @@ import com.bunbeauty.papakarlo.util.string.IStringUtil
 import com.bunbeauty.shared.presentation.order_details.OrderDetails
 
 class OrderProductItemMapper(
-    private val stringUtil: IStringUtil,
+    private val stringUtil: IStringUtil
 ) {
 
     fun toItem(orderProductItem: OrderDetails.ViewDataState.OrderDetailsData.OrderProductItem): OrderProductUiItem {
@@ -22,9 +22,9 @@ class OrderProductItemMapper(
             photoLink = stringUtil.getCostString(orderProductItem.photoLink),
             count = stringUtil.getCountString(orderProductItem.count),
             key = "${orderProductItem.uuid} ${
-                orderProductItem.additions.joinToString(" ") { orderAddition ->
-                    orderAddition.uuid
-                }
+            orderProductItem.additions.joinToString(" ") { orderAddition ->
+                orderAddition.uuid
+            }
             }",
             additions = orderProductItem.additions.joinToString(" • ") { orderAddition ->
                 orderAddition.name

@@ -13,7 +13,7 @@ data class OrderDetailsUi(
     val state: OrderDetails.ViewDataState.ScreenState,
     val code: String,
     val orderInfo: OrderInfo,
-    val discount: String?,
+    val discount: String?
 ) : BaseViewState {
     data class OrderInfo(
         val status: OrderStatus,
@@ -24,6 +24,6 @@ data class OrderDetailsUi(
         val comment: String?,
         val pickupMethod: String,
         @StringRes val deferredTimeHintId: Int,
-        val paymentMethod: String?,
+        val paymentMethod: String?
     )
 }

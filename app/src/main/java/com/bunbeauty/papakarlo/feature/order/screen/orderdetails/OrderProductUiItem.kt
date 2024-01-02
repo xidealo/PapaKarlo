@@ -10,5 +10,5 @@ class OrderProductUiItem(
     val oldCost: String?,
     val photoLink: String,
     val count: String,
-    val additions: String?,
+    val additions: String?
 )

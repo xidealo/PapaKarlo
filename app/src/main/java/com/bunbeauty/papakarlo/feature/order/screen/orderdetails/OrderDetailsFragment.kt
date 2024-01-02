@@ -83,7 +83,7 @@ class OrderDetailsFragment :
     @Composable
     private fun OrderDetailsScreen(
         orderDetailsUi: OrderDetailsUi,
-        onAction: (OrderDetails.Action) -> Unit,
+        onAction: (OrderDetails.Action) -> Unit
     ) {
         FoodDeliveryScaffold(
             title = orderDetailsUi.code,
@@ -100,11 +100,10 @@ class OrderDetailsFragment :
                     )
 
                     OrderDetails.ViewDataState.ScreenState.ERROR -> ErrorScreen(R.string.error_order_details_discount) {
-                        //onAction(OrderDetails.Action.Init)
+                        // onAction(OrderDetails.Action.Init)
                     }
                 }
             }
-
         }
     }
 
@@ -121,7 +120,6 @@ class OrderDetailsFragment :
                     contentPadding = PaddingValues(bottom = FoodDeliveryTheme.dimensions.screenContentSpace),
                     verticalArrangement = spacedBy(8.dp)
                 ) {
-
                     item(key = "OrderStatusBar") {
                         OrderStatusBar(
                             orderStatus = state.orderInfo.status,
@@ -138,7 +136,7 @@ class OrderDetailsFragment :
                     }
 
                     itemsIndexed(
-                        items = state.orderProductItemList,
+                        items = state.orderProductItemList
                         /*key = { index, orderProductItem ->
                             orderProductItem.key
                         }*/
@@ -161,7 +159,7 @@ class OrderDetailsFragment :
     private fun OrderInfoTextColumn(
         modifier: Modifier = Modifier,
         hint: String,
-        info: String,
+        info: String
     ) {
         Column(modifier = modifier) {
             Text(
@@ -180,7 +178,7 @@ class OrderDetailsFragment :
     @Composable
     private fun OrderInfoCard(
         modifier: Modifier = Modifier,
-        orderInfo: OrderDetailsUi.OrderInfo,
+        orderInfo: OrderDetailsUi.OrderInfo
     ) {
         FoodDeliveryCard(
             modifier = modifier,
@@ -368,8 +366,8 @@ class OrderDetailsFragment :
             OrderDetailsScreen(
                 orderDetailsUi = getOrderDetails(),
                 onAction = {
-
-                })
+                }
+            )
         }
     }
 
@@ -379,10 +377,9 @@ class OrderDetailsFragment :
         FoodDeliveryTheme {
             OrderDetailsScreen(
                 orderDetailsUi = getOrderDetails().copy(
-                    state = OrderDetails.ViewDataState.ScreenState.LOADING,
+                    state = OrderDetails.ViewDataState.ScreenState.LOADING
                 ),
                 onAction = {
-
                 }
             )
         }
@@ -433,12 +430,12 @@ class OrderDetailsFragment :
             deferredTime = "10:30",
             address =
             "" +
-                    "ул. Лука" +
-                    "2" +
-                    "10" +
-                    "1" +
-                    "3" +
-                    "тест",
+                "ул. Лука" +
+                "2" +
+                "10" +
+                "1" +
+                "3" +
+                "тест",
             comment = "давай кушать",
             pickupMethod = "доставка",
             statusName = "Готовится",

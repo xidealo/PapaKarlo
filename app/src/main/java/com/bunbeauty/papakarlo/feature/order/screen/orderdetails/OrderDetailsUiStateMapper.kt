@@ -9,7 +9,7 @@ import com.bunbeauty.shared.presentation.order_details.OrderDetails
 class OrderDetailsUiStateMapper(
     private val stringUtil: IStringUtil,
     private val orderProductItemMapper: OrderProductItemMapper,
-    private val paymentMethodUiStateMapper: PaymentMethodUiStateMapper,
+    private val paymentMethodUiStateMapper: PaymentMethodUiStateMapper
 ) {
     fun map(orderState: OrderDetails.ViewDataState): OrderDetailsUi {
         return OrderDetailsUi(
@@ -49,7 +49,7 @@ class OrderDetailsUiStateMapper(
             },
             code = orderState.orderDetailsData.orderInfo?.code ?: "",
             discount = orderState.orderDetailsData.discount,
-            state = orderState.screenState,
+            state = orderState.screenState
         )
     }
 }
