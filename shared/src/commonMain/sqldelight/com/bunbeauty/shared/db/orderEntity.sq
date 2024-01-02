@@ -22,7 +22,6 @@ CREATE TABLE IF NOT EXISTS orderEntity (
     percentDiscount INTEGER AS Int,
     FOREIGN KEY (userUuid) REFERENCES userEntity(uuid) ON DELETE CASCADE
 );
-
 CREATE VIEW orderWithProductEntity AS
 SELECT orderEntity.*,
     orderProductEntity.uuid AS orderProductUuid,
@@ -36,9 +35,13 @@ SELECT orderEntity.*,
     orderProductEntity.comboDescription AS orderProductComboDescription,
     orderProductEntity.photoLink AS orderProductPhotoLink,
     orderProductEntity.barcode AS orderProductBarcode,
-    orderProductEntity.orderUuid AS orderUuid
+    orderProductEntity.orderUuid AS orderUuid,
+    orderAdditionEntity.uuid AS orderAdditionEntityUuid,
+    orderAdditionEntity.name AS orderAdditionEntityName,
+    orderAdditionEntity.orderProductUuid AS orderAdditionEntityOrderProductUuid
 FROM orderEntity
-JOIN orderProductEntity ON orderEntity.uuid = orderProductEntity.orderUuid;
+JOIN orderProductEntity ON orderEntity.uuid = orderProductEntity.orderUuid
+LEFT JOIN orderAdditionEntity ON orderProductEntity.uuid = orderAdditionEntity.orderProductUuid;
 
 isnsertOrder:
 INSERT OR REPLACE

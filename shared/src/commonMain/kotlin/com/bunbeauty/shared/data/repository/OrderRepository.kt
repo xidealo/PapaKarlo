@@ -157,7 +157,11 @@ class OrderRepository(
                 orderMapper.toOrderEntity(orderServer)
             )
             orderServer.oderProductList.forEach { orderProductServer ->
-                orderProductDao.insert(orderProductServer.mapOrderProductServerToOrderProductEntity())
+                orderProductDao.insert(
+                    orderProductServer.mapOrderProductServerToOrderProductEntity(
+                        orderServer.uuid
+                    )
+                )
                 insertOrderAdditions(orderProductServer)
             }
         }

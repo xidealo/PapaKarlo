@@ -19,7 +19,6 @@ import com.bunbeauty.shared.data.network.model.profile.get.ProfileServer
 import com.bunbeauty.shared.data.network.model.profile.patch.PatchUserServer
 import com.bunbeauty.shared.domain.mapFlow
 import com.bunbeauty.shared.domain.model.AuthResponse
-import com.bunbeauty.shared.domain.model.addition.OrderAddition
 import com.bunbeauty.shared.domain.model.profile.Profile
 import com.bunbeauty.shared.domain.model.profile.User
 import com.bunbeauty.shared.domain.repo.UserRepo
@@ -35,8 +34,8 @@ class UserRepository(
     private val orderDao: IOrderDao,
     private val dataStoreRepo: DataStoreRepo,
     private val orderProductDao: IOrderProductDao,
-    private val orderAdditionDao: IOrderAdditionDao
-    ) : DatabaseCacheRepository(), UserRepo {
+    private val orderAdditionDao: IOrderAdditionDao,
+) : DatabaseCacheRepository(), UserRepo {
 
     override val tag: String = "USER_TAG"
     var cachedUserUuid: String? = null
@@ -100,7 +99,11 @@ class UserRepository(
                     orderMapper.toOrderEntity(orderServer)
                 )
                 orderServer.oderProductList.forEach { orderProductServer ->
-                    orderProductDao.insert(orderProductServer.mapOrderProductServerToOrderProductEntity())
+                    orderProductDao.insert(
+                        orderProductServer.mapOrderProductServerToOrderProductEntity(
+                            orderServer.uuid
+                        )
+                    )
                     insertOrderAdditions(orderProductServer)
                 }
             }

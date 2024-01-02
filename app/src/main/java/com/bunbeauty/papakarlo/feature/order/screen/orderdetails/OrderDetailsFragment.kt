@@ -139,9 +139,9 @@ class OrderDetailsFragment :
 
                     itemsIndexed(
                         items = state.orderProductItemList,
-                        key = { index, orderProductItem ->
+                        /*key = { index, orderProductItem ->
                             orderProductItem.key
-                        }
+                        }*/
                     ) { index, orderProductItem ->
                         FoodDeliveryItem(needDivider = index != state.orderProductItemList.lastIndex) {
                             OrderProductItem(

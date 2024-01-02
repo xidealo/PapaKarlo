@@ -10,22 +10,35 @@ import com.bunbeauty.shared.domain.model.product.OrderProduct
 
 class OrderProductMapper : IOrderProductMapper {
 
-    override fun toOrderProduct(orderWithProductEntity: OrderWithProductEntity): OrderProduct {
-        return OrderProduct(
-            uuid = orderWithProductEntity.orderProductUuid,
-            count = orderWithProductEntity.orderProductCount,
-            product = OrderMenuProduct(
-                name = orderWithProductEntity.orderProductName,
-                newPrice = orderWithProductEntity.orderProductNewPrice,
-                oldPrice = orderWithProductEntity.orderProductOldPrice,
-                utils = orderWithProductEntity.orderProductUtils,
-                nutrition = orderWithProductEntity.orderProductNutrition,
-                description = orderWithProductEntity.orderProductDescription,
-                comboDescription = orderWithProductEntity.orderProductComboDescription,
-                photoLink = orderWithProductEntity.orderProductPhotoLink,
-            ),
-            orderAdditionList = emptyList()
-        )
+    override fun toOrderProduct(orderWithProductEntity: List<OrderWithProductEntity>): List<OrderProduct> {
+        return orderWithProductEntity.groupBy { orderWithProductEntity ->
+            orderWithProductEntity.orderProductUuid
+        }.map { (_, groupedOrderWithProductEntityList) ->
+            val firstOrderWithProductEntity =
+                groupedOrderWithProductEntityList.first()
+            OrderProduct(
+                uuid = firstOrderWithProductEntity.orderProductUuid,
+                count = firstOrderWithProductEntity.orderProductCount,
+                product = OrderMenuProduct(
+                    name = firstOrderWithProductEntity.orderProductName,
+                    newPrice = firstOrderWithProductEntity.orderProductNewPrice,
+                    oldPrice = firstOrderWithProductEntity.orderProductOldPrice,
+                    utils = firstOrderWithProductEntity.orderProductUtils,
+                    nutrition = firstOrderWithProductEntity.orderProductNutrition,
+                    description = firstOrderWithProductEntity.orderProductDescription,
+                    comboDescription = firstOrderWithProductEntity.orderProductComboDescription,
+                    photoLink = firstOrderWithProductEntity.orderProductPhotoLink,
+                ),
+                orderAdditionList = groupedOrderWithProductEntityList.mapNotNull { orderWithProductEntity ->
+                    orderWithProductEntity.orderAdditionEntityUuid?.let { orderAdditionEntityUuid ->
+                        OrderAddition(
+                            uuid = orderAdditionEntityUuid,
+                            name = orderWithProductEntity.orderAdditionEntityName ?: ""
+                        )
+                    }
+                }
+            )
+        }
     }
 
     override fun toOrderProduct(orderProduct: OrderProductServer): OrderProduct {

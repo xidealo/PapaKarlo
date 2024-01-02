@@ -28,6 +28,27 @@ JOIN menuProductCategoryReference ON menuProductCategoryReference.menuProductUui
 JOIN categoryEntity ON menuProductCategoryReference.categoryUuidReference = categoryEntity.uuid
 LEFT JOIN cartProductAdditionEntity ON cartProductAdditionEntity.cartProductUuid = cartProductEntity.uuid;
 
+CREATE VIEW orderWithProductEntity AS
+SELECT orderEntity.*,
+    orderProductEntity.uuid AS orderProductUuid,
+    orderProductEntity.count AS orderProductCount,
+    orderProductEntity.name AS orderProductName,
+    orderProductEntity.newPrice AS orderProductNewPrice,
+    orderProductEntity.oldPrice AS orderProductOldPrice,
+    orderProductEntity.utils AS orderProductUtils,
+    orderProductEntity.nutrition AS orderProductNutrition,
+    orderProductEntity.description AS orderProductDescription,
+    orderProductEntity.comboDescription AS orderProductComboDescription,
+    orderProductEntity.photoLink AS orderProductPhotoLink,
+    orderProductEntity.barcode AS orderProductBarcode,
+    orderProductEntity.orderUuid AS orderUuid,
+    orderAdditionEntity.uuid AS orderAdditionEntityUuid,
+    orderAdditionEntity.name AS orderAdditionEntityName,
+    orderAdditionEntity.orderProductUuid AS orderAdditionEntityOrderProductUuid
+FROM orderEntity
+JOIN orderProductEntity ON orderEntity.uuid = orderProductEntity.orderUuid
+LEFT JOIN orderAdditionEntity ON orderProductEntity.uuid = orderAdditionEntity.orderProductUuid;
+
 CREATE TABLE additionEntity (
     uuid TEXT NOT NULL PRIMARY KEY,
     name TEXT NOT NULL,

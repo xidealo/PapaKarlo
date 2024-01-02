@@ -20,5 +20,4 @@ interface UserRepo {
     suspend fun clearUserCache()
 
     suspend fun disableUser(token: String)
-
 }

@@ -45,7 +45,12 @@ class OrderMapper(
     }
 
     override fun toOrder(orderWithProductEntityList: List<OrderWithProductEntity>): Order? {
-        return orderWithProductEntityList.firstOrNull()?.let { firstOrderWithProductEntity ->
+        return orderWithProductEntityList.groupBy { orderWithProductEntity ->
+            orderWithProductEntity.uuid
+        }.map { (_, groupedOrderWithProductEntityList) ->
+            val firstOrderWithProductEntity =
+                groupedOrderWithProductEntityList.first()
+
             Order(
                 uuid = firstOrderWithProductEntity.uuid,
                 code = firstOrderWithProductEntity.code,
@@ -69,14 +74,14 @@ class OrderMapper(
                 ),
                 comment = firstOrderWithProductEntity.comment,
                 deliveryCost = firstOrderWithProductEntity.deliveryCost,
-                orderProductList = orderWithProductEntityList.map(orderProductMapper::toOrderProduct),
+                orderProductList = orderProductMapper.toOrderProduct(groupedOrderWithProductEntityList),
                 paymentMethod = PaymentMethodName.values()
                     .firstOrNull { it.name == firstOrderWithProductEntity.paymentMethod },
                 oldTotalCost = firstOrderWithProductEntity.oldTotalCost,
                 newTotalCost = firstOrderWithProductEntity.newTotalCost,
                 percentDiscount = firstOrderWithProductEntity.percentDiscount,
             )
-        }
+        }.firstOrNull()
     }
 
     override fun toOrder(orderServer: OrderServer): Order {
@@ -134,6 +139,7 @@ class OrderMapper(
             percentDiscount = orderServer.percentDiscount,
         )
     }
+
     override fun toOrderPostServer(createdOrder: CreatedOrder): OrderPostServer {
         return OrderPostServer(
             isDelivery = createdOrder.isDelivery,
