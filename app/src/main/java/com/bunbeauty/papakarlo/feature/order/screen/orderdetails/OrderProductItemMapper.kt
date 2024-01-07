@@ -7,7 +7,7 @@ class OrderProductItemMapper(
     private val stringUtil: IStringUtil
 ) {
 
-    fun toItem(orderProductItem: OrderDetails.ViewDataState.OrderDetailsData.OrderProductItem): OrderProductUiItem {
+    fun toItem(orderProductItem: OrderDetails.DataState.OrderDetailsData.OrderProductItem): OrderProductUiItem {
         return OrderProductUiItem(
             uuid = orderProductItem.uuid,
             name = orderProductItem.name,
@@ -21,11 +21,7 @@ class OrderProductItemMapper(
             },
             photoLink = stringUtil.getCostString(orderProductItem.photoLink),
             count = stringUtil.getCountString(orderProductItem.count),
-            key = "${orderProductItem.uuid} ${
-            orderProductItem.additions.joinToString(" ") { orderAddition ->
-                orderAddition.uuid
-            }
-            }",
+            key = "OrderProduct ${orderProductItem.uuid}",
             additions = orderProductItem.additions.joinToString(" • ") { orderAddition ->
                 orderAddition.name
             }.ifEmpty {

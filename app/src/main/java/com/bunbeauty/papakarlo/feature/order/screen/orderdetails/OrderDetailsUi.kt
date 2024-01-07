@@ -1,18 +1,18 @@
 package com.bunbeauty.papakarlo.feature.order.screen.orderdetails
 
-import androidx.annotation.StringRes
 import com.bunbeauty.shared.domain.model.order.OrderStatus
 import com.bunbeauty.shared.presentation.base.BaseViewState
 import com.bunbeauty.shared.presentation.order_details.OrderDetails
 
 data class OrderDetailsUi(
+    val orderUuid: String,
     val orderProductItemList: List<OrderProductUiItem>,
     val oldTotalCost: String?,
     val deliveryCost: String?,
-    val newTotalCost: String?,
-    val state: OrderDetails.ViewDataState.ScreenState,
+    val newTotalCost: String,
+    val state: OrderDetails.DataState.ScreenState,
     val code: String,
-    val orderInfo: OrderInfo,
+    val orderInfo: OrderInfo?,
     val discount: String?
 ) : BaseViewState {
     data class OrderInfo(
@@ -23,7 +23,7 @@ data class OrderDetailsUi(
         val address: String,
         val comment: String?,
         val pickupMethod: String,
-        @StringRes val deferredTimeHintId: Int,
+        val deferredTimeHint: String,
         val paymentMethod: String?
     )
 }

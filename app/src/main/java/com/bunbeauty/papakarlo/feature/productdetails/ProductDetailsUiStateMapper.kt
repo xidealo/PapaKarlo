@@ -10,8 +10,7 @@ import com.bunbeauty.shared.presentation.product_details.ProductDetailsState
 class ProductDetailsUiStateMapper(
     private val stringUtil: IStringUtil
 ) {
-    fun map(productDetailsState: ProductDetailsState.ViewDataState): ProductDetailsUi {
-        // для PR вынес потому что в вью модели нужны изменяемые данные, в свифте буду использовать свои модели со своими ключами
+    fun map(productDetailsState: ProductDetailsState.DataState): ProductDetailsUi {
         val additionList = buildList {
             productDetailsState.menuProduct.additionGroups.forEach { additionGroup ->
                 add(
@@ -56,7 +55,7 @@ class ProductDetailsUiStateMapper(
         }
 
         return when (productDetailsState.screenState) {
-            ProductDetailsState.ViewDataState.ScreenState.SUCCESS -> ProductDetailsUi.Success(
+            ProductDetailsState.DataState.ScreenState.SUCCESS -> ProductDetailsUi.Success(
                 topCartUi = TopCartUi(
                     cost = productDetailsState.cartCostAndCount?.cost?.let { cost ->
                         stringUtil.getCostString(cost)
@@ -77,8 +76,8 @@ class ProductDetailsUiStateMapper(
                 }
             )
 
-            ProductDetailsState.ViewDataState.ScreenState.ERROR -> ProductDetailsUi.Error
-            ProductDetailsState.ViewDataState.ScreenState.LOADING, ProductDetailsState.ViewDataState.ScreenState.INIT -> ProductDetailsUi.Loading
+            ProductDetailsState.DataState.ScreenState.ERROR -> ProductDetailsUi.Error
+            ProductDetailsState.DataState.ScreenState.LOADING, ProductDetailsState.DataState.ScreenState.INIT -> ProductDetailsUi.Loading
         }
     }
 }

@@ -31,6 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -45,11 +46,14 @@ import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold
 import com.bunbeauty.papakarlo.databinding.LayoutComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
+import com.bunbeauty.papakarlo.feature.main.IMessageHost
 import com.bunbeauty.papakarlo.feature.menu.model.MenuUi
 import com.bunbeauty.papakarlo.feature.menu.model.MenuUiStateMapper
 import com.bunbeauty.papakarlo.feature.menu.ui.CategoryItem
 import com.bunbeauty.papakarlo.feature.menu.ui.FirstOrderDiscountItem
 import com.bunbeauty.papakarlo.feature.menu.ui.MenuProductItem
+import com.bunbeauty.papakarlo.feature.productdetails.ProductDetailsFragment
+import com.bunbeauty.papakarlo.feature.productdetails.ProductDetailsFragment.Companion.ADD_REQUEST_KEY
 import com.bunbeauty.papakarlo.feature.productdetails.ProductDetailsFragmentDirections.globalConsumerCartFragment
 import com.bunbeauty.papakarlo.feature.topcart.TopCartUi
 import com.bunbeauty.shared.presentation.menu.CategoryItem
@@ -71,6 +75,17 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         overrideBackPressedCallback()
         super.onViewCreated(view, savedInstanceState)
+
+        setFragmentResultListener(ADD_REQUEST_KEY) { key, bundle ->
+            (activity as? IMessageHost)?.showInfoMessage(
+                resources.getString(
+                    R.string.msg_menu_product_added,
+                    bundle.getString(
+                        ProductDetailsFragment.MENU_PRODUCT_NAME
+                    )
+                )
+            )
+        }
 
         viewModel.getMenu()
         viewBinding.root.setContentWithTheme {

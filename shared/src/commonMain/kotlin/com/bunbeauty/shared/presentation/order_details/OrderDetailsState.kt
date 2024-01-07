@@ -9,22 +9,22 @@ import com.bunbeauty.shared.domain.model.payment_method.PaymentMethodName
 import com.bunbeauty.shared.presentation.base.BaseAction
 import com.bunbeauty.shared.presentation.base.BaseDataState
 import com.bunbeauty.shared.presentation.base.BaseEvent
-import com.bunbeauty.shared.presentation.base.BaseViewDataState
 
 interface OrderDetails {
-    data class ViewDataState(
+    data class DataState(
+        val orderUuid: String,
         val orderDetailsData: OrderDetailsData,
         val screenState: ScreenState,
-    ) : BaseViewDataState {
+    ) : BaseDataState {
 
         data class OrderDetailsData(
             val orderProductItemList: List<OrderProductItem>,
             val orderInfo: OrderInfo?,
             val oldTotalCost: String?,
             val deliveryCost: String?,
-            val newTotalCost: String?,
+            val newTotalCost: String,
             val discount: String?,
-        ) : BaseDataState {
+        ) {
             data class OrderInfo(
                 val code: String,
                 val status: OrderStatus,
@@ -58,8 +58,9 @@ interface OrderDetails {
 
     sealed interface Action : BaseAction {
         data object Back : Action
-        data class Init(val orderUuid: String) : Action
-        object StopObserve : Action
+        data class StartObserve(val orderUuid: String) : Action
+        data class Reload(val orderUuid: String) : Action
+        data object StopObserve : Action
     }
 
     sealed interface Event : BaseEvent {

@@ -193,7 +193,7 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
     }
 
     actual override suspend fun saveRecommendationMaxVisible(recommendationMaxVisible: Int) {
-        context.discountDataStore.edit {
+        context.recommendationDataStore.edit {
             it[RECOMMENDATION_MAX_VISIBLE_KEY] = recommendationMaxVisible
         }
     }

@@ -284,7 +284,7 @@ class CreateOrderViewModel(
                     newFinalCost = cartTotal.newFinalCost,
                     oldFinalCost = cartTotal.oldFinalCost,
                     discount = cartTotal.discount?.let { discount ->
-                        discount.toString() + PERCENT
+                        "$discount$PERCENT"
                     }
                 )
             }

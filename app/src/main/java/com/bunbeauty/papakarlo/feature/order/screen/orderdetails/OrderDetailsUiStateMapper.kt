@@ -1,9 +1,7 @@
 package com.bunbeauty.papakarlo.feature.order.screen.orderdetails
 
-import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.feature.profile.screen.profile.PaymentMethodUiStateMapper
 import com.bunbeauty.papakarlo.util.string.IStringUtil
-import com.bunbeauty.shared.domain.model.order.OrderStatus
 import com.bunbeauty.shared.presentation.order_details.OrderDetails
 
 class OrderDetailsUiStateMapper(
@@ -11,7 +9,8 @@ class OrderDetailsUiStateMapper(
     private val orderProductItemMapper: OrderProductItemMapper,
     private val paymentMethodUiStateMapper: PaymentMethodUiStateMapper
 ) {
-    fun map(orderState: OrderDetails.ViewDataState): OrderDetailsUi {
+
+    fun map(orderState: OrderDetails.DataState): OrderDetailsUi {
         return OrderDetailsUi(
             orderProductItemList = orderState.orderDetailsData.orderProductItemList.map(
                 orderProductItemMapper::toItem
@@ -19,37 +18,27 @@ class OrderDetailsUiStateMapper(
             oldTotalCost = orderState.orderDetailsData.oldTotalCost,
             deliveryCost = orderState.orderDetailsData.deliveryCost,
             newTotalCost = orderState.orderDetailsData.newTotalCost,
-            orderInfo = orderState.orderDetailsData.orderInfo.let { orderInfo ->
+            orderInfo = orderState.orderDetailsData.orderInfo?.let { orderInfo ->
                 OrderDetailsUi.OrderInfo(
-                    status = orderInfo?.status ?: OrderStatus.NOT_ACCEPTED,
+                    status = orderInfo.status,
                     statusName = stringUtil.getOrderStatusName(
-                        orderInfo?.status ?: OrderStatus.NOT_ACCEPTED
+                        orderInfo.status
                     ),
-                    dateTime = orderInfo?.dateTime?.let { dateTime ->
-                        stringUtil.getDateTimeString(dateTime)
-                    } ?: "",
-                    deferredTime = orderInfo?.deferredTime
-                        ?.let { stringUtil.getTimeString(it) },
-                    address = orderInfo?.address?.let { orderAddress ->
-                        stringUtil.getOrderAddressString(orderAddress)
-                    } ?: "",
-                    comment = orderInfo?.comment,
-                    pickupMethod = orderInfo?.isDelivery?.let { isDelivery ->
-                        stringUtil.getPickupMethodString(isDelivery)
-                    } ?: "",
-                    deferredTimeHintId = if (orderInfo?.isDelivery == true) {
-                        R.string.delivery_time
-                    } else {
-                        R.string.pickup_time
-                    },
-                    paymentMethod = orderInfo?.paymentMethod?.let { paymentMethod ->
+                    dateTime = stringUtil.getDateTimeString(orderInfo.dateTime),
+                    deferredTime = stringUtil.getTimeString(orderInfo.deferredTime),
+                    address = stringUtil.getOrderAddressString(orderInfo.address),
+                    comment = orderInfo.comment,
+                    pickupMethod = stringUtil.getPickupMethodString(orderInfo.isDelivery),
+                    deferredTimeHint = stringUtil.getDeferredString(orderInfo.isDelivery),
+                    paymentMethod = orderInfo.paymentMethod?.let { paymentMethod ->
                         paymentMethodUiStateMapper.map(paymentMethod)
                     }
                 )
             },
             code = orderState.orderDetailsData.orderInfo?.code ?: "",
             discount = orderState.orderDetailsData.discount,
-            state = orderState.screenState
+            state = orderState.screenState,
+            orderUuid = orderState.orderUuid
         )
     }
 }

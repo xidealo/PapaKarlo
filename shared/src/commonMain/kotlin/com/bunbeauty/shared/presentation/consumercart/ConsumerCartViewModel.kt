@@ -246,7 +246,7 @@ class ConsumerCartViewModel(
                 },
                 newTotalCost = consumerCartDomain.newTotalCost.toString() + RUBLE_CURRENCY,
                 firstOrderDiscount = consumerCartDomain.discount?.let { discount ->
-                    discount.toString() + PERCENT
+                    "$discount$PERCENT"
                 },
                 recommendations = getRecommendationsUseCase().map { menuProduct ->
                     with(menuProduct) {

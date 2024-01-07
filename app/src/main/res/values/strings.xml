@@ -55,6 +55,8 @@
     <string name="error_menu_loading">Не удалось загрузить меню</string>
     <string name="title_menu_discount">Скидка %s%%</string>
     <string name="msg_menu_discount">Успей сделать первый заказ со скидкой %s%%</string>
+    <string name="msg_menu_product_added">%s добавлено</string>
+    <string name="msg_menu_product_edited">%s изменено</string>
 
     <!-- PRODUCT DETAILS -->
     <string name="action_product_details_want">Добавить за %s!</string>

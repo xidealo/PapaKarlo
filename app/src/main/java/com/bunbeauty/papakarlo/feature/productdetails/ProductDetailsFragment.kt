@@ -11,10 +11,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Checkbox
-import androidx.compose.material3.CheckboxDefaults
-import androidx.compose.material3.RadioButton
-import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -27,6 +23,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.os.bundleOf
+import androidx.fragment.app.setFragmentResult
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -37,9 +35,10 @@ import com.bunbeauty.papakarlo.common.BaseComposeFragment
 import com.bunbeauty.papakarlo.common.extension.navigateSafe
 import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
-import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCardDefaults
+import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCheckbox
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryItem
+import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryRadioButton
 import com.bunbeauty.papakarlo.common.ui.element.topbar.FoodDeliveryCartAction
 import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
@@ -56,7 +55,14 @@ import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ProductDetailsFragment :
-    BaseComposeFragment<ProductDetailsState.ViewDataState, ProductDetailsUi, ProductDetailsState.Action, ProductDetailsState.Event>() {
+    BaseComposeFragment<ProductDetailsState.DataState, ProductDetailsUi, ProductDetailsState.Action, ProductDetailsState.Event>() {
+
+    companion object {
+        const val ADD_REQUEST_KEY = "ProductDetailsFragment_ADD_REQUEST_KEY"
+        const val EDIT_REQUEST_KEY = "ProductDetailsFragment_EDIT_REQUEST_KEY"
+
+        const val MENU_PRODUCT_NAME = "ProductDetailsFragment_MENU_PRODUCT_NAME"
+    }
 
     override val viewModel: ProductDetailsViewModel by viewModel()
 
@@ -79,7 +85,7 @@ class ProductDetailsFragment :
     @Composable
     override fun Screen(
         viewState: ProductDetailsUi,
-        onAction: (ProductDetailsState.Action) -> Unit
+        onAction: (ProductDetailsState.Action) -> Unit,
     ) {
         ProductDetailsScreen(
             menuProductName = args.menuProductName,
@@ -90,7 +96,7 @@ class ProductDetailsFragment :
         )
     }
 
-    override fun mapState(dataState: ProductDetailsState.ViewDataState): ProductDetailsUi {
+    override fun mapState(dataState: ProductDetailsState.DataState): ProductDetailsUi {
         return productDetailsUiStateMapper.map(dataState)
     }
 
@@ -100,9 +106,22 @@ class ProductDetailsFragment :
             ProductDetailsState.Event.NavigateToConsumerCart -> findNavController()
                 .navigateSafe(globalConsumerCartFragment())
 
-            // set result?
-            is ProductDetailsState.Event.AddedProduct -> findNavController().popBackStack()
-            is ProductDetailsState.Event.EditedProduct -> findNavController().popBackStack()
+            // set result? show toast
+            is ProductDetailsState.Event.AddedProduct -> {
+                setFragmentResult(
+                    ADD_REQUEST_KEY,
+                    bundleOf(MENU_PRODUCT_NAME to event.menuProductName)
+                )
+                findNavController().popBackStack()
+            }
+
+            is ProductDetailsState.Event.EditedProduct -> {
+                setFragmentResult(
+                    EDIT_REQUEST_KEY,
+                    bundleOf(MENU_PRODUCT_NAME to event.menuProductName)
+                )
+                findNavController().popBackStack()
+            }
         }
     }
 
@@ -113,7 +132,7 @@ class ProductDetailsFragment :
         menuProductUuid: String,
         additionUuidList: List<String>,
         productDetailsUi: ProductDetailsUi,
-        onAction: (ProductDetailsState.Action) -> Unit
+        onAction: (ProductDetailsState.Action) -> Unit,
     ) {
         FoodDeliveryScaffold(
             title = menuProductName,
@@ -184,7 +203,7 @@ class ProductDetailsFragment :
     @Composable
     private fun ProductDetailsSuccessScreen(
         menuProductUi: ProductDetailsUi.Success.MenuProductUi?,
-        onAction: (ProductDetailsState.Action) -> Unit
+        onAction: (ProductDetailsState.Action) -> Unit,
     ) {
         menuProductUi?.let {
             LazyColumn(
@@ -195,8 +214,8 @@ class ProductDetailsFragment :
                     ProductCard(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace)
-                            .padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
+                            .padding(horizontal = 16.dp)
+                            .padding(top = 16.dp),
                         menuProductUi = menuProductUi
                     )
                 }
@@ -250,7 +269,7 @@ class ProductDetailsFragment :
     private fun AdditionItem(
         menuProductAdditionItem: MenuProductAdditionItem,
         isMultiply: Boolean,
-        onAction: (ProductDetailsState.Action) -> Unit
+        onAction: (ProductDetailsState.Action) -> Unit,
     ) {
         Row(
             modifier = Modifier
@@ -288,7 +307,7 @@ class ProductDetailsFragment :
             }
 
             if (isMultiply) {
-                Checkbox(
+                FoodDeliveryCheckbox(
                     checked = menuProductAdditionItem.isSelected,
                     onCheckedChange = {
                         onAction(
@@ -298,13 +317,9 @@ class ProductDetailsFragment :
                             )
                         )
                     },
-                    colors = CheckboxDefaults.colors(
-                        checkedColor = FoodDeliveryTheme.colors.mainColors.primary,
-                        uncheckedColor = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
-                    )
                 )
             } else {
-                RadioButton(
+                FoodDeliveryRadioButton(
                     selected = menuProductAdditionItem.isSelected,
                     onClick = {
                         onAction(
@@ -314,10 +329,6 @@ class ProductDetailsFragment :
                             )
                         )
                     },
-                    colors = RadioButtonDefaults.colors(
-                        selectedColor = FoodDeliveryTheme.colors.mainColors.primary,
-                        unselectedColor = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
-                    )
                 )
             }
         }
@@ -326,75 +337,71 @@ class ProductDetailsFragment :
     @Composable
     private fun ProductCard(
         modifier: Modifier = Modifier,
-        menuProductUi: ProductDetailsUi.Success.MenuProductUi
+        menuProductUi: ProductDetailsUi.Success.MenuProductUi,
     ) {
-        FoodDeliveryCard(
+        Column(
             modifier = modifier,
-            clickable = false,
-            elevated = false
         ) {
-            Column {
-                AsyncImage(
+            AsyncImage(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(FoodDeliveryCardDefaults.cardShape),
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(menuProductUi.photoLink)
+                    .crossfade(true)
+                    .build(),
+                placeholder = painterResource(R.drawable.placeholder_large),
+                contentDescription = stringResource(R.string.description_product),
+                contentScale = ContentScale.FillWidth
+            )
+            Column(
+                modifier = Modifier
+                    .padding(top = FoodDeliveryTheme.dimensions.mediumSpace)
+            ) {
+                Row {
+                    Text(
+                        modifier = Modifier
+                            .weight(1f)
+                            .alignByBaseline()
+                            .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
+                        text = menuProductUi.name,
+                        style = FoodDeliveryTheme.typography.titleMedium.bold,
+                        color = FoodDeliveryTheme.colors.mainColors.onSurface
+                    )
+                    Text(
+                        modifier = Modifier.alignByBaseline(),
+                        text = menuProductUi.size,
+                        style = FoodDeliveryTheme.typography.bodySmall,
+                        color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
+                    )
+                }
+                Row(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .clip(FoodDeliveryCardDefaults.cardShape),
-                    model = ImageRequest.Builder(LocalContext.current)
-                        .data(menuProductUi.photoLink)
-                        .crossfade(true)
-                        .build(),
-                    placeholder = painterResource(R.drawable.placeholder_large),
-                    contentDescription = stringResource(R.string.description_product),
-                    contentScale = ContentScale.FillWidth
-                )
-                Column(
-                    modifier = Modifier
-                        .padding(top = FoodDeliveryTheme.dimensions.mediumSpace)
+                        .padding(top = FoodDeliveryTheme.dimensions.smallSpace)
                 ) {
-                    Row {
+                    menuProductUi.oldPrice?.let {
                         Text(
                             modifier = Modifier
-                                .weight(1f)
-                                .alignByBaseline()
                                 .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
-                            text = menuProductUi.name,
-                            style = FoodDeliveryTheme.typography.titleMedium.bold,
-                            color = FoodDeliveryTheme.colors.mainColors.onSurface
-                        )
-                        Text(
-                            modifier = Modifier.alignByBaseline(),
-                            text = menuProductUi.size,
-                            style = FoodDeliveryTheme.typography.bodySmall,
-                            color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
-                        )
-                    }
-                    Row(
-                        modifier = Modifier
-                            .padding(top = FoodDeliveryTheme.dimensions.smallSpace)
-                    ) {
-                        menuProductUi.oldPrice?.let {
-                            Text(
-                                modifier = Modifier
-                                    .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
-                                text = menuProductUi.oldPrice,
-                                style = FoodDeliveryTheme.typography.bodyLarge,
-                                color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
-                                textDecoration = TextDecoration.LineThrough
-                            )
-                        }
-                        Text(
-                            text = menuProductUi.newPrice,
-                            style = FoodDeliveryTheme.typography.bodyLarge.bold,
-                            color = FoodDeliveryTheme.colors.mainColors.onSurface
+                            text = menuProductUi.oldPrice,
+                            style = FoodDeliveryTheme.typography.bodyLarge,
+                            color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
+                            textDecoration = TextDecoration.LineThrough
                         )
                     }
                     Text(
-                        modifier = Modifier
-                            .padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
-                        text = menuProductUi.description,
-                        style = FoodDeliveryTheme.typography.bodyLarge,
+                        text = menuProductUi.newPrice,
+                        style = FoodDeliveryTheme.typography.bodyLarge.bold,
                         color = FoodDeliveryTheme.colors.mainColors.onSurface
                     )
                 }
+                Text(
+                    modifier = Modifier
+                        .padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
+                    text = menuProductUi.description,
+                    style = FoodDeliveryTheme.typography.bodyLarge,
+                    color = FoodDeliveryTheme.colors.mainColors.onSurface
+                )
             }
         }
     }
@@ -418,7 +425,7 @@ class ProductDetailsFragment :
                         oldPrice = "320 ₽",
                         newPrice = "280 ₽",
                         description = "Сочная котлетка, сыр Чедр, маринованный огурчик, помидор, " +
-                            "красный лук, салат, фирменный соус, булочка с кунжутом",
+                                "красный лук, салат, фирменный соус, булочка с кунжутом",
                         additionList = listOf(
                             AdditionItem.AdditionHeaderItem(
                                 key = "key1",

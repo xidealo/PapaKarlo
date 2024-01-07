@@ -3,16 +3,16 @@ package com.bunbeauty.shared.presentation.product_details
 import com.bunbeauty.shared.domain.model.addition.AdditionGroup
 import com.bunbeauty.shared.domain.model.cart.CartCostAndCount
 import com.bunbeauty.shared.presentation.base.BaseAction
+import com.bunbeauty.shared.presentation.base.BaseDataState
 import com.bunbeauty.shared.presentation.base.BaseEvent
-import com.bunbeauty.shared.presentation.base.BaseViewDataState
 
 interface ProductDetailsState {
 
-    data class ViewDataState(
+    data class DataState(
         val cartCostAndCount: CartCostAndCount?,
         val menuProduct: MenuProduct,
         val screenState: ScreenState,
-    ) : BaseViewDataState {
+    ) : BaseDataState {
         data class MenuProduct(
             val uuid: String,
             val photoLink: String,
@@ -54,11 +54,11 @@ interface ProductDetailsState {
         data object NavigateBack : Event
         data object NavigateToConsumerCart : Event
         data class AddedProduct(
-            val menuProductUuid: String,
+            val menuProductName: String,
         ) : Event
 
         data class EditedProduct(
-            val menuProductUuid: String,
+            val menuProductName: String,
         ) : Event
     }
 }

@@ -23,10 +23,10 @@ class ProductDetailsViewModel(
     private val addCartProductUseCase: AddCartProductUseCase,
     private val analyticService: AnalyticService,
     private val editCartProductUseCase: EditCartProductUseCase,
-) : SharedStateViewModel<ProductDetailsState.ViewDataState, ProductDetailsState.Action, ProductDetailsState.Event>(
-    ProductDetailsState.ViewDataState(
+) : SharedStateViewModel<ProductDetailsState.DataState, ProductDetailsState.Action, ProductDetailsState.Event>(
+    ProductDetailsState.DataState(
         cartCostAndCount = null,
-        menuProduct = ProductDetailsState.ViewDataState.MenuProduct(
+        menuProduct = ProductDetailsState.DataState.MenuProduct(
             uuid = "",
             photoLink = "",
             name = "",
@@ -38,14 +38,14 @@ class ProductDetailsViewModel(
             additionGroups = listOf(),
             currency = RUBLE_CURRENCY
         ),
-        screenState = ProductDetailsState.ViewDataState.ScreenState.INIT,
+        screenState = ProductDetailsState.DataState.ScreenState.INIT,
     )
 ) {
     private var observeConsumerCartJob: Job? = null
 
     override fun reduce(
         action: ProductDetailsState.Action,
-        dataState: ProductDetailsState.ViewDataState,
+        dataState: ProductDetailsState.DataState,
     ) {
         when (action) {
             is ProductDetailsState.Action.AddProductToCartClick -> onWantClicked(
@@ -103,7 +103,7 @@ class ProductDetailsViewModel(
     }
 
     private fun getChangedGroup(
-        menuProduct: ProductDetailsState.ViewDataState.MenuProduct,
+        menuProduct: ProductDetailsState.DataState.MenuProduct,
         groupUuid: String,
         uuid: String,
     ): AdditionGroup? {
@@ -140,23 +140,23 @@ class ProductDetailsViewModel(
                 val menuProduct = getMenuProductByUuidUseCase(menuProductUuid = menuProductUuid)
                 setState {
                     if (menuProduct == null) {
-                        copy(screenState = ProductDetailsState.ViewDataState.ScreenState.ERROR)
+                        copy(screenState = ProductDetailsState.DataState.ScreenState.ERROR)
                     } else {
                         copy(
                             menuProduct = mapMenuProduct(
                                 menuProduct = menuProduct,
                                 selectedAdditionUuidList = selectedAdditionUuidList,
-                                isInit = screenState == ProductDetailsState.ViewDataState.ScreenState.INIT,
+                                isInit = screenState == ProductDetailsState.DataState.ScreenState.INIT,
                                 stateAdditionGroupList = this.menuProduct.additionGroups
                             ),
-                            screenState = ProductDetailsState.ViewDataState.ScreenState.SUCCESS
+                            screenState = ProductDetailsState.DataState.ScreenState.SUCCESS
                         )
                     }
                 }
             },
             onError = {
                 setState {
-                    copy(screenState = ProductDetailsState.ViewDataState.ScreenState.ERROR)
+                    copy(screenState = ProductDetailsState.DataState.ScreenState.ERROR)
                 }
             }
         )
@@ -187,7 +187,7 @@ class ProductDetailsViewModel(
                             additionUuidList = selectedAdditionUuidList,
                         )
                         addEvent {
-                            ProductDetailsState.Event.EditedProduct(menuProduct.uuid)
+                            ProductDetailsState.Event.EditedProduct(menuProductName = menuProduct.name)
                         }
                     }
                 } else {
@@ -196,13 +196,13 @@ class ProductDetailsViewModel(
                         additionUuidList = selectedAdditionUuidList
                     )
                     addEvent {
-                        ProductDetailsState.Event.AddedProduct(menuProduct.uuid)
+                        ProductDetailsState.Event.AddedProduct(menuProductName = menuProduct.name)
                     }
                 }
             },
             onError = {
                 setState {
-                    copy(screenState = ProductDetailsState.ViewDataState.ScreenState.ERROR)
+                    copy(screenState = ProductDetailsState.DataState.ScreenState.ERROR)
                 }
             }
         )
@@ -243,7 +243,7 @@ class ProductDetailsViewModel(
             },
             onError = {
                 setState {
-                    copy(screenState = ProductDetailsState.ViewDataState.ScreenState.ERROR)
+                    copy(screenState = ProductDetailsState.DataState.ScreenState.ERROR)
                 }
             }
         )
@@ -254,7 +254,7 @@ class ProductDetailsViewModel(
         selectedAdditionUuidList: List<String>,
         isInit: Boolean,
         stateAdditionGroupList: List<AdditionGroup>,
-    ): ProductDetailsState.ViewDataState.MenuProduct {
+    ): ProductDetailsState.DataState.MenuProduct {
 
         val groupWithSelectedAdditionFromConsumerCart = when {
             !isInit -> stateAdditionGroupList
@@ -265,7 +265,7 @@ class ProductDetailsViewModel(
             )
         }
 
-        return ProductDetailsState.ViewDataState.MenuProduct(
+        return ProductDetailsState.DataState.MenuProduct(
             uuid = menuProduct.uuid,
             photoLink = menuProduct.photoLink,
             name = menuProduct.name,

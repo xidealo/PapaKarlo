@@ -28,6 +28,7 @@ JOIN menuProductCategoryReference ON menuProductCategoryReference.menuProductUui
 JOIN categoryEntity ON menuProductCategoryReference.categoryUuidReference = categoryEntity.uuid
 LEFT JOIN cartProductAdditionEntity ON cartProductAdditionEntity.cartProductUuid = cartProductEntity.uuid;
 
+DROP VIEW IF EXISTS orderWithProductEntity;
 CREATE VIEW orderWithProductEntity AS
 SELECT orderEntity.*,
     orderProductEntity.uuid AS orderProductUuid,

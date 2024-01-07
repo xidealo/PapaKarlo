@@ -23,6 +23,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
@@ -45,7 +46,9 @@ import com.bunbeauty.papakarlo.feature.consumercart.ConsumerCartFragmentDirectio
 import com.bunbeauty.papakarlo.feature.consumercart.ConsumerCartFragmentDirections.toMenuFragment
 import com.bunbeauty.papakarlo.feature.consumercart.ConsumerCartFragmentDirections.toProductFragment
 import com.bunbeauty.papakarlo.feature.consumercart.ui.CartProductItem
+import com.bunbeauty.papakarlo.feature.main.IMessageHost
 import com.bunbeauty.papakarlo.feature.menu.ui.MenuProductItem
+import com.bunbeauty.papakarlo.feature.productdetails.ProductDetailsFragment
 import com.bunbeauty.shared.domain.model.SuccessLoginDirection
 import com.bunbeauty.shared.presentation.consumercart.CartProductItem
 import com.bunbeauty.shared.presentation.consumercart.ConsumerCart
@@ -61,6 +64,17 @@ class ConsumerCartFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        setFragmentResultListener(ProductDetailsFragment.EDIT_REQUEST_KEY) { key, bundle ->
+            (activity as? IMessageHost)?.showInfoMessage(
+                resources.getString(
+                    R.string.msg_menu_product_edited,
+                    bundle.getString(
+                        ProductDetailsFragment.MENU_PRODUCT_NAME
+                    )
+                )
+            )
+        }
 
         viewModel.onAction(ConsumerCart.Action.Init)
     }

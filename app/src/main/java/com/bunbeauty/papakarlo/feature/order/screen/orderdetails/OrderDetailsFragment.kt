@@ -46,7 +46,7 @@ import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class OrderDetailsFragment :
-    BaseComposeFragment<OrderDetails.ViewDataState, OrderDetailsUi, OrderDetails.Action, OrderDetails.Event>() {
+    BaseComposeFragment<OrderDetails.DataState, OrderDetailsUi, OrderDetails.Action, OrderDetails.Event>() {
 
     override val viewModel: OrderDetailsViewModel by viewModel()
     override val viewBinding by viewBinding(LayoutComposeBinding::bind)
@@ -57,7 +57,7 @@ class OrderDetailsFragment :
 
     override fun onStart() {
         super.onStart()
-        viewModel.onAction(OrderDetails.Action.Init(orderUuid = orderUuid))
+        viewModel.onAction(OrderDetails.Action.StartObserve(orderUuid = orderUuid))
     }
 
     override fun onStop() {
@@ -70,7 +70,7 @@ class OrderDetailsFragment :
         OrderDetailsScreen(viewState, onAction)
     }
 
-    override fun mapState(dataState: OrderDetails.ViewDataState): OrderDetailsUi {
+    override fun mapState(dataState: OrderDetails.DataState): OrderDetailsUi {
         return orderDetailsUiStateMapper.map(dataState)
     }
 
@@ -94,13 +94,12 @@ class OrderDetailsFragment :
         ) {
             Crossfade(targetState = orderDetailsUi.state, label = "ConsumerCart") { screenState ->
                 when (screenState) {
-                    OrderDetails.ViewDataState.ScreenState.LOADING -> LoadingScreen()
-                    OrderDetails.ViewDataState.ScreenState.SUCCESS -> OrderDetailsSuccessScreen(
+                    OrderDetails.DataState.ScreenState.LOADING -> LoadingScreen()
+                    OrderDetails.DataState.ScreenState.SUCCESS -> OrderDetailsSuccessScreen(
                         orderDetailsUi
                     )
-
-                    OrderDetails.ViewDataState.ScreenState.ERROR -> ErrorScreen(R.string.error_order_details_discount) {
-                        // onAction(OrderDetails.Action.Init)
+                    OrderDetails.DataState.ScreenState.ERROR -> ErrorScreen(R.string.error_order_details_discount) {
+                        onAction(OrderDetails.Action.Reload(orderDetailsUi.orderUuid))
                     }
                 }
             }
@@ -121,25 +120,29 @@ class OrderDetailsFragment :
                     verticalArrangement = spacedBy(8.dp)
                 ) {
                     item(key = "OrderStatusBar") {
-                        OrderStatusBar(
-                            orderStatus = state.orderInfo.status,
-                            orderStatusName = state.orderInfo.statusName
-                        )
+                        state.orderInfo?.let { orderInfo ->
+                            OrderStatusBar(
+                                orderStatus = orderInfo.status,
+                                orderStatusName = orderInfo.statusName
+                            )
+                        }
                     }
 
                     item(key = "OrderInfoCard") {
-                        OrderInfoCard(
-                            modifier = Modifier
-                                .fillMaxWidth(),
-                            orderInfo = state.orderInfo
-                        )
+                        state.orderInfo?.let { orderInfo ->
+                            OrderInfoCard(
+                                modifier = Modifier
+                                    .fillMaxWidth(),
+                                orderInfo = orderInfo
+                            )
+                        }
                     }
 
                     itemsIndexed(
-                        items = state.orderProductItemList
-                        /*key = { index, orderProductItem ->
+                        items = state.orderProductItemList,
+                        key = { index, orderProductItem ->
                             orderProductItem.key
-                        }*/
+                        }
                     ) { index, orderProductItem ->
                         FoodDeliveryItem(needDivider = index != state.orderProductItemList.lastIndex) {
                             OrderProductItem(
@@ -205,7 +208,7 @@ class OrderDetailsFragment :
                             modifier = Modifier
                                 .padding(start = 16.dp)
                                 .weight(1f),
-                            hint = stringResource(id = orderInfo.deferredTimeHintId),
+                            hint = orderInfo.deferredTimeHint,
                             info = deferredTime
                         )
                     }
@@ -377,7 +380,7 @@ class OrderDetailsFragment :
         FoodDeliveryTheme {
             OrderDetailsScreen(
                 orderDetailsUi = getOrderDetails().copy(
-                    state = OrderDetails.ViewDataState.ScreenState.LOADING
+                    state = OrderDetails.DataState.ScreenState.LOADING
                 ),
                 onAction = {
                 }
@@ -417,9 +420,10 @@ class OrderDetailsFragment :
             oldTotalCost = "450",
             deliveryCost = "100",
             newTotalCost = "550",
-            state = OrderDetails.ViewDataState.ScreenState.SUCCESS,
+            state = OrderDetails.DataState.ScreenState.SUCCESS,
             code = "A-40",
-            discount = "10%"
+            discount = "10%",
+            orderUuid = "sdas"
         )
     }
 
@@ -439,7 +443,7 @@ class OrderDetailsFragment :
             comment = "давай кушать",
             pickupMethod = "доставка",
             statusName = "Готовится",
-            deferredTimeHintId = R.string.pickup_time,
+            deferredTimeHint = "Время самовывоза",
             paymentMethod = "Наличными"
         )
     }
