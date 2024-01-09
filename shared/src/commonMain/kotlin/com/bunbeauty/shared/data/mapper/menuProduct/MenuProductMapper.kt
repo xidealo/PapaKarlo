@@ -64,7 +64,8 @@ class MenuProductMapper : IMenuProductMapper {
                         isSelected = additionServer.isSelected,
                         menuProductUuid = menuProductServer.uuid,
                         photoLink = menuProductServer.photoLink,
-                        fullName = additionServer.fullName
+                        fullName = additionServer.fullName,
+                        priority = additionServer.priority
                     )
                 }
         }
@@ -120,13 +121,15 @@ class MenuProductMapper : IMenuProductMapper {
                             price = additionServer.price,
                             uuid = additionServer.uuid,
                             menuProductUuid = menuProductServer.uuid,
-                            fullName = additionServer.fullName
+                            fullName = additionServer.fullName,
+                            priority = additionServer.priority
                         )
                     },
                     isVisible = additionGroupServer.isVisible,
                     name = additionGroupServer.name,
                     singleChoice = additionGroupServer.singleChoice,
-                    uuid = additionGroupServer.uuid
+                    uuid = additionGroupServer.uuid,
+                    priority = additionGroupServer.priority
                 )
             }
         )

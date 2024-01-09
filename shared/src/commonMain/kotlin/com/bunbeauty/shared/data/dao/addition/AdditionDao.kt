@@ -14,16 +14,7 @@ class AdditionDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IAdditionDao {
     }
 
     override fun insert(additionEntity: AdditionEntity) {
-        additionEntityQueries.insert(
-            uuid = additionEntity.uuid,
-            name = additionEntity.name,
-            price = additionEntity.price,
-            isVisible = additionEntity.isVisible,
-            isSelected = additionEntity.isSelected,
-            menuProductUuid = additionEntity.menuProductUuid,
-            photoLink = additionEntity.photoLink,
-            fullName = additionEntity.fullName
-        )
+        additionEntityQueries.insert(additionEntity)
     }
 
     override fun getAdditionEntity(uuid: String): AdditionEntity? {

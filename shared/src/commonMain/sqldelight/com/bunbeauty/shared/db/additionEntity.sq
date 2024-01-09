@@ -7,13 +7,14 @@ CREATE TABLE additionEntity (
     isVisible INTEGER AS Boolean NOT NULL,
     isSelected INTEGER AS Boolean NOT NULL,
     menuProductUuid TEXT NOT NULL,
+    priority INTEGER AS Int NOT NULL,
     FOREIGN KEY(menuProductUuid) REFERENCES menuProductEntity(uuid) ON DELETE CASCADE
 );
 
 insert:
 INSERT OR REPLACE
 INTO additionEntity
-VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+VALUES ?;
 
 getAdditionByUuid:
 SELECT *

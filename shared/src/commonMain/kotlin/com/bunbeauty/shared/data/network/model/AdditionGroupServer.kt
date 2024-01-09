@@ -15,5 +15,7 @@ data class AdditionGroupServer(
     @SerialName("singleChoice")
     val singleChoice: Boolean,
     @SerialName("uuid")
-    val uuid: String
+    val uuid: String,
+    @SerialName("priority")
+    val priority: Int,
 )

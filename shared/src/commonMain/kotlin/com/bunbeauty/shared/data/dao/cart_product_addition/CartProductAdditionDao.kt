@@ -14,14 +14,7 @@ class CartProductAdditionDao(foodDeliveryDatabase: FoodDeliveryDatabase) : ICart
         foodDeliveryDatabase.cartProductAdditionEntityQueries
 
     override suspend fun insertCartProductAddition(cartProductAdditionEntity: CartProductAdditionEntity) {
-        cartProductAdditionEntityQueries.insertCartProductAdditionEntity(
-            uuid = cartProductAdditionEntity.uuid,
-            name = cartProductAdditionEntity.name,
-            price = cartProductAdditionEntity.price,
-            additionUuid = cartProductAdditionEntity.additionUuid,
-            cartProductUuid = cartProductAdditionEntity.cartProductUuid,
-            fullName = cartProductAdditionEntity.fullName
-        )
+        cartProductAdditionEntityQueries.insertCartProductAdditionEntity(cartProductAdditionEntity)
     }
 
     override suspend fun delete(cartProductAdditionUuid: String) {

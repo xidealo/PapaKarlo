@@ -9,7 +9,7 @@ import com.bunbeauty.shared.Constants.RUBLE_CURRENCY
 import com.bunbeauty.shared.domain.feature.cart.AddCartProductUseCase
 import com.bunbeauty.shared.domain.feature.cart.EditCartProductUseCase
 import com.bunbeauty.shared.domain.feature.cart.ObserveCartUseCase
-import com.bunbeauty.shared.domain.feature.menu_product.GetMenuProductByUuidUseCase
+import com.bunbeauty.shared.domain.feature.menu_product.GetMenuProductUseCase
 import com.bunbeauty.shared.domain.model.addition.AdditionGroup
 import com.bunbeauty.shared.domain.model.product.MenuProduct
 import com.bunbeauty.shared.extension.launchSafe
@@ -18,7 +18,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 
 class ProductDetailsViewModel(
-    private val getMenuProductByUuidUseCase: GetMenuProductByUuidUseCase,
+    private val getMenuProductUseCase: GetMenuProductUseCase,
     private val observeCartUseCase: ObserveCartUseCase,
     private val addCartProductUseCase: AddCartProductUseCase,
     private val analyticService: AnalyticService,
@@ -137,7 +137,7 @@ class ProductDetailsViewModel(
     ) {
         sharedScope.launchSafe(
             block = {
-                val menuProduct = getMenuProductByUuidUseCase(menuProductUuid = menuProductUuid)
+                val menuProduct = getMenuProductUseCase(menuProductUuid = menuProductUuid)
                 setState {
                     if (menuProduct == null) {
                         copy(screenState = ProductDetailsState.DataState.ScreenState.ERROR)

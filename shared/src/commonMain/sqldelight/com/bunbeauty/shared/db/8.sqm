@@ -5,6 +5,7 @@ CREATE TABLE cartProductAdditionEntity (
    price INTEGER AS Int,
    additionUuid TEXT NOT NULL,
    cartProductUuid TEXT NOT NULL,
+   priority INTEGER AS Int NOT NULL,
    FOREIGN KEY (cartProductUuid) REFERENCES cartProductEntity(uuid) ON DELETE CASCADE
 );
 
@@ -22,6 +23,7 @@ SELECT cartProductEntity.uuid AS cartProductUuid,
     cartProductAdditionEntity.fullName AS cartProductAdditionFullName,
     cartProductAdditionEntity.price AS cartProductAdditionPrice,
     cartProductAdditionEntity.additionUuid AS cartProductAdditionAdditionUuid
+    cartProductAdditionEntity.priority AS cartProductAdditionPriority
 FROM cartProductEntity
 JOIN menuProductEntity ON menuProductEntity.uuid = cartProductEntity.menuProductUuid
 JOIN menuProductCategoryReference ON menuProductCategoryReference.menuProductUuidReference = menuProductEntity.uuid

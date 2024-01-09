@@ -129,4 +129,6 @@ class OrderAdditionServer(
     val uuid: String,
     @SerialName("name")
     val name: String,
+    @SerialName("priority")
+    val priority: Int,
 )

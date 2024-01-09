@@ -16,7 +16,8 @@ class AdditionRepository(
                 price = additionEntity.price,
                 uuid = additionEntity.uuid,
                 menuProductUuid = additionEntity.menuProductUuid,
-                fullName = additionEntity.fullName
+                fullName = additionEntity.fullName,
+                priority = additionEntity.priority
             )
         }
     }

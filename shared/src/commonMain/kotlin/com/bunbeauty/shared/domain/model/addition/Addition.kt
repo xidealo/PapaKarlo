@@ -9,4 +9,5 @@ data class Addition(
     val price: Int?,
     val uuid: String,
     val menuProductUuid: String,
+    val priority: Int,
 )
