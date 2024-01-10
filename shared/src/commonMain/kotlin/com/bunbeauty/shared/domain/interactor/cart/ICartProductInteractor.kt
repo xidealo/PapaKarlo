@@ -10,7 +10,5 @@ interface ICartProductInteractor {
 
     suspend fun getCartProductList(): List<CartProduct>
 
-    fun observeTotalCartCount(): CommonFlow<Int>
-
     suspend fun removeAllProductsFromCart()
 }

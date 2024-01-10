@@ -32,7 +32,7 @@ class CartProductMapper : ICartProductMapper {
                         Category(
                             uuid = menuProductWithCategoryEntity.categoryUuid,
                             name = menuProductWithCategoryEntity.categoryName,
-                            priority = menuProductWithCategoryEntity.priority
+                            priority = menuProductWithCategoryEntity.categoryPriority
                         )
                     },
                     visible = firstCartProductWithCategoryEntity.visible,
@@ -49,7 +49,8 @@ class CartProductMapper : ICartProductMapper {
                             cartProductUuid = cartProductWithMenuProductEntityList.cartProductUuid,
                             additionUuid = cartProductWithMenuProductEntityList.cartProductAdditionAdditionUuid
                                 ?: "",
-                            fullName = cartProductWithMenuProductEntityList.cartProductAdditionFullName
+                            fullName = cartProductWithMenuProductEntityList.cartProductAdditionFullName,
+                            priority = cartProductWithMenuProductEntityList.cartProductAdditionPriority
                         )
                     }
                 }

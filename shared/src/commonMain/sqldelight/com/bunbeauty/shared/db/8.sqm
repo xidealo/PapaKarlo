@@ -16,7 +16,7 @@ SELECT cartProductEntity.uuid AS cartProductUuid,
     cartProductEntity.menuProductUuid,
     categoryEntity.uuid AS categoryUuid,
     categoryEntity.name AS categoryName,
-    categoryEntity.priority,
+    categoryEntity.priority AS categoryPriority,
     menuProductEntity.*,
     cartProductAdditionEntity.uuid AS cartProductAdditionUuid,
     cartProductAdditionEntity.name AS cartProductAdditionName,
@@ -64,6 +64,7 @@ CREATE TABLE additionEntity (
     price INTEGER AS Int,
     isVisible INTEGER AS Boolean NOT NULL,
     isSelected INTEGER AS Boolean NOT NULL,
+    priority INTEGER AS Int NOT NULL,
     menuProductUuid TEXT NOT NULL,
     FOREIGN KEY(menuProductUuid) REFERENCES menuProductEntity(uuid) ON DELETE CASCADE
 );

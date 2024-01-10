@@ -27,12 +27,6 @@ class CartProductInteractor(
         return cartProductRepo.getCartProductList()
     }
 
-    override fun observeTotalCartCount(): CommonFlow<Int> {
-        return cartProductRepo.observeCartProductList().map { cartProductList ->
-            getTotalCount(cartProductList)
-        }.asCommonFlow()
-    }
-
     override suspend fun removeAllProductsFromCart() {
         cartProductRepo.deleteAllCartProducts()
         cartProductAdditionRepository.deleteAll()
@@ -64,17 +58,19 @@ class CartProductInteractor(
             photoLink = cartProduct.product.photoLink,
             count = cartProduct.count,
             menuProductUuid = cartProduct.product.uuid,
-            cartProductAdditionList = cartProduct.cartProductAdditionList
+            cartProductAdditionList = cartProduct.cartProductAdditionList.sortedBy { cartProductAddition ->
+                cartProductAddition.priority
+            }
         )
     }
 
-    fun getNewTotalCost(cartProduct: CartProduct): Int {
+    private fun getNewTotalCost(cartProduct: CartProduct): Int {
         return (cartProduct.product.newPrice + cartProduct.cartProductAdditionList.sumOf { addition ->
             addition.price ?: 0
         }) * cartProduct.count
     }
 
-    fun getOldTotalCost(cartProduct: CartProduct): Int? {
+    private fun getOldTotalCost(cartProduct: CartProduct): Int? {
         val oldPrice = cartProduct.product.oldPrice ?: return null
 
         return (oldPrice + cartProduct.cartProductAdditionList.sumOf { addition ->
@@ -82,7 +78,7 @@ class CartProductInteractor(
         }) * cartProduct.count
     }
 
-    fun getTotalCount(productList: List<CartProduct>): Int {
+    private fun getTotalCount(productList: List<CartProduct>): Int {
         return productList.sumOf { product ->
             product.count
         }
