@@ -129,11 +129,13 @@ class OrderDetailsViewModel(
             OrderDetails.DataState.OrderDetailsData.OrderProductItem(
                 uuid = orderProduct.uuid,
                 name = orderProduct.product.name,
-                newPrice = orderProduct.product.newPrice.toString(),
-                oldPrice = orderProduct.product.oldPrice?.toString(),
-                newCost = (orderProduct.product.newPrice * orderProduct.count).toString(),
-                oldCost = orderProduct.product.oldPrice?.let { oldPrice ->
-                    (oldPrice * orderProduct.count).toString()
+                newPrice = "${orderProduct.product.newCommonPrice}$RUBLE_CURRENCY",
+                oldPrice = orderProduct.product.oldCommonPrice?.let { oldTotalCost ->
+                    "$oldTotalCost$RUBLE_CURRENCY"
+                },
+                newCost = "${orderProduct.product.newTotalCost}$RUBLE_CURRENCY",
+                oldCost = orderProduct.product.oldTotalCost?.let { oldTotalCost ->
+                    "$oldTotalCost$RUBLE_CURRENCY"
                 },
                 photoLink = orderProduct.product.photoLink,
                 count = orderProduct.count.toString(),

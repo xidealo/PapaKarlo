@@ -11,15 +11,11 @@ class OrderProductItemMapper(
         return OrderProductUiItem(
             uuid = orderProductItem.uuid,
             name = orderProductItem.name,
-            newPrice = stringUtil.getCostString(orderProductItem.newPrice),
-            oldPrice = orderProductItem.oldPrice?.let { oldPrice ->
-                stringUtil.getCostString(oldPrice)
-            },
-            newCost = stringUtil.getCostString(orderProductItem.newCost),
-            oldCost = orderProductItem.oldCost?.let { oldCost ->
-                stringUtil.getCostString(oldCost)
-            },
-            photoLink = stringUtil.getCostString(orderProductItem.photoLink),
+            newPrice = orderProductItem.newPrice,
+            oldPrice = orderProductItem.oldPrice,
+            newCost = orderProductItem.newCost,
+            oldCost = orderProductItem.oldCost,
+            photoLink = orderProductItem.photoLink,
             count = stringUtil.getCountString(orderProductItem.count),
             key = "OrderProduct ${orderProductItem.uuid}",
             additions = orderProductItem.additions.joinToString(" • ") { orderAddition ->

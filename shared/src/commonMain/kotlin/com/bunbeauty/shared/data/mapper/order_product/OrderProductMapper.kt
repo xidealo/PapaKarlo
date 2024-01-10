@@ -28,6 +28,10 @@ class OrderProductMapper : IOrderProductMapper {
                     description = firstOrderWithProductEntity.orderProductDescription,
                     comboDescription = firstOrderWithProductEntity.orderProductComboDescription,
                     photoLink = firstOrderWithProductEntity.orderProductPhotoLink,
+                    newCommonPrice = firstOrderWithProductEntity.orderProductNewCommonPrice,
+                    oldCommonPrice = firstOrderWithProductEntity.orderProductOldCommonPrice,
+                    newTotalCost = firstOrderWithProductEntity.orderProductNewTotalCost,
+                    oldTotalCost = firstOrderWithProductEntity.orderProductOldTotalCost,
                 ),
                 orderAdditionList = groupedOrderWithProductEntityList.mapNotNull { orderWithProductEntity ->
                     orderWithProductEntity.orderAdditionEntityUuid?.let { orderAdditionEntityUuid ->
@@ -54,6 +58,10 @@ class OrderProductMapper : IOrderProductMapper {
                 description = orderProduct.description,
                 comboDescription = orderProduct.comboDescription,
                 photoLink = orderProduct.photoLink,
+                newCommonPrice = orderProduct.newCommonPrice,
+                oldCommonPrice = orderProduct.oldCommonPrice,
+                newTotalCost = orderProduct.newTotalCost,
+                oldTotalCost = orderProduct.oldTotalCost,
             ),
             orderAdditionList = orderProduct.additions.map { orderAdditionsServer ->
                 OrderAddition(

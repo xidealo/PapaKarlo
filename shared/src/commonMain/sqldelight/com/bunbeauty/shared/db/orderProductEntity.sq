@@ -10,6 +10,10 @@ CREATE TABLE orderProductEntity (
     comboDescription TEXT,
     photoLink TEXT NOT NULL,
     barcode INTEGER AS Int,
+    newCommonPrice INTEGER AS Int NOT NULL,
+    oldCommonPrice INTEGER AS Int,
+    newTotalCost INTEGER AS Int NOT NULL,
+    oldTotalCost INTEGER AS Int,
     orderUuid TEXT NOT NULL,
     FOREIGN KEY (orderUuid) REFERENCES orderEntity(uuid) ON DELETE CASCADE
 );

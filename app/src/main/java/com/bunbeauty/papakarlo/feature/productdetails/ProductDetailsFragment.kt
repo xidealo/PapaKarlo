@@ -85,7 +85,7 @@ class ProductDetailsFragment :
     @Composable
     override fun Screen(
         viewState: ProductDetailsUi,
-        onAction: (ProductDetailsState.Action) -> Unit,
+        onAction: (ProductDetailsState.Action) -> Unit
     ) {
         ProductDetailsScreen(
             menuProductName = args.menuProductName,
@@ -132,7 +132,7 @@ class ProductDetailsFragment :
         menuProductUuid: String,
         additionUuidList: List<String>,
         productDetailsUi: ProductDetailsUi,
-        onAction: (ProductDetailsState.Action) -> Unit,
+        onAction: (ProductDetailsState.Action) -> Unit
     ) {
         FoodDeliveryScaffold(
             title = menuProductName,
@@ -203,7 +203,7 @@ class ProductDetailsFragment :
     @Composable
     private fun ProductDetailsSuccessScreen(
         menuProductUi: ProductDetailsUi.Success.MenuProductUi?,
-        onAction: (ProductDetailsState.Action) -> Unit,
+        onAction: (ProductDetailsState.Action) -> Unit
     ) {
         menuProductUi?.let {
             LazyColumn(
@@ -269,7 +269,7 @@ class ProductDetailsFragment :
     private fun AdditionItem(
         menuProductAdditionItem: MenuProductAdditionItem,
         isMultiply: Boolean,
-        onAction: (ProductDetailsState.Action) -> Unit,
+        onAction: (ProductDetailsState.Action) -> Unit
     ) {
         Row(
             modifier = Modifier
@@ -316,7 +316,7 @@ class ProductDetailsFragment :
                                 groupUuid = menuProductAdditionItem.groupId
                             )
                         )
-                    },
+                    }
                 )
             } else {
                 FoodDeliveryRadioButton(
@@ -328,7 +328,7 @@ class ProductDetailsFragment :
                                 groupUuid = menuProductAdditionItem.groupId
                             )
                         )
-                    },
+                    }
                 )
             }
         }
@@ -337,10 +337,10 @@ class ProductDetailsFragment :
     @Composable
     private fun ProductCard(
         modifier: Modifier = Modifier,
-        menuProductUi: ProductDetailsUi.Success.MenuProductUi,
+        menuProductUi: ProductDetailsUi.Success.MenuProductUi
     ) {
         Column(
-            modifier = modifier,
+            modifier = modifier
         ) {
             AsyncImage(
                 modifier = Modifier
@@ -425,7 +425,7 @@ class ProductDetailsFragment :
                         oldPrice = "320 ₽",
                         newPrice = "280 ₽",
                         description = "Сочная котлетка, сыр Чедр, маринованный огурчик, помидор, " +
-                                "красный лук, салат, фирменный соус, булочка с кунжутом",
+                            "красный лук, салат, фирменный соус, булочка с кунжутом",
                         additionList = listOf(
                             AdditionItem.AdditionHeaderItem(
                                 key = "key1",

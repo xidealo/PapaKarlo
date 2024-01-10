@@ -17,6 +17,10 @@ val mapOrderProductServerToOrderProductEntity: OrderProductServer.(String) -> Or
             comboDescription = comboDescription,
             photoLink = photoLink,
             barcode = barcode,
+            newCommonPrice = newCommonPrice,
+            oldCommonPrice = oldCommonPrice,
+            newTotalCost = newTotalCost,
+            oldTotalCost = oldTotalCost,
             orderUuid = orderUuidServer,
         )
     }
