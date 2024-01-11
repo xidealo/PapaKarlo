@@ -60,30 +60,27 @@ object CommonApplication {
     const val versionPatch = 0
 
     const val versionCode = 170
+    const val versionName = "$versionMajor.$versionMinor.$versionPatch"
 }
 
 object PapaKarloApplication {
-    const val versionName =
-        "${CommonApplication.versionMajor}.${CommonApplication.versionMinor}.${CommonApplication.versionPatch}"
     const val applicationId = "com.bunbeuaty.papakarlo"
 }
 
 object YuliarApplication {
-    const val versionName =
-        "${CommonApplication.versionMajor}.${CommonApplication.versionMinor}.${CommonApplication.versionPatch}"
     const val applicationId = "com.bunbeuaty.yuliar"
 }
 
 object DjanApplication {
-    const val versionName =
-        "${CommonApplication.versionMajor}.${CommonApplication.versionMinor}.${CommonApplication.versionPatch}"
     const val applicationId = "com.bunbeauty.djan"
 }
 
 object GustoPubApplication {
-    const val versionName =
-        "${CommonApplication.versionMajor}.${CommonApplication.versionMinor}.${CommonApplication.versionPatch}"
     const val applicationId = "com.bunbeauty.gustopub"
+}
+
+object TandirHouseApplication {
+    const val applicationId = "com.bunbeauty.tandirhouse"
 }
 
 object AndroidSdk {
