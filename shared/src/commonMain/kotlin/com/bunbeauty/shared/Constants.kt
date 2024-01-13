@@ -21,6 +21,10 @@ object Constants {
     const val GUSTO_PUB_FLAVOR_NAME = GUSTO_PUB_TARGET_NAME
     const val GUSTO_PUB_COMPANY_UUID = "e1d1474b-6fba-4dff-826f-48e89abc48e3"
 
+    const val TANDIR_HOUSE_TARGET_NAME = "tandirhouse"
+    const val TANDIR_HOUSE_FLAVOR_NAME = TANDIR_HOUSE_TARGET_NAME
+    const val TANDIR_HOUSE_COMPANY_UUID = "355b609e-12af-4622-8f40-a42ea0eef85a"
+
     // NOTIFICATION
 
     const val NEWS_NOTIFICATION_PREFIX = "NEWS_"

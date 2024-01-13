@@ -1,6 +1,7 @@
 import Constants.DJAN_FLAVOR_NAME
 import Constants.GUSTO_PUB_FLAVOR_NAME
 import Constants.PAPA_KARLO_FLAVOR_NAME
+import Constants.TANDIR_HOUSE_FLAVOR_NAME
 import Constants.YULIAR_FLAVOR_NAME
 import com.android.build.gradle.internal.api.BaseVariantOutputImpl
 import java.io.FileInputStream
@@ -69,22 +70,27 @@ android {
         create(PAPA_KARLO_FLAVOR_NAME) {
             applicationId = PapaKarloApplication.applicationId
             versionCode = CommonApplication.versionCode
-            versionName = PapaKarloApplication.versionName
+            versionName = CommonApplication.versionName
         }
         create(YULIAR_FLAVOR_NAME) {
             applicationId = YuliarApplication.applicationId
             versionCode = CommonApplication.versionCode
-            versionName = YuliarApplication.versionName
+            versionName = CommonApplication.versionName
         }
         create(DJAN_FLAVOR_NAME) {
             applicationId = DjanApplication.applicationId
             versionCode = CommonApplication.versionCode
-            versionName = DjanApplication.versionName
+            versionName = CommonApplication.versionName
         }
         create(GUSTO_PUB_FLAVOR_NAME) {
             applicationId = GustoPubApplication.applicationId
             versionCode = CommonApplication.versionCode
-            versionName = GustoPubApplication.versionName
+            versionName = CommonApplication.versionName
+        }
+        create(TANDIR_HOUSE_FLAVOR_NAME) {
+            applicationId = TandirHouseApplication.applicationId
+            versionCode = CommonApplication.versionCode
+            versionName = CommonApplication.versionName
         }
     }
 
