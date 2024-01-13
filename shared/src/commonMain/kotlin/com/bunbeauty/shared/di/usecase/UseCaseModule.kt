@@ -65,7 +65,6 @@ internal fun useCaseModules() = module {
     }
     factory {
         CreateAddressUseCase(
-            streetRepo = get(),
             dataStoreRepo = get(),
             userAddressRepo = get(),
         )

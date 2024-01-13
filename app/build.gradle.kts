@@ -200,4 +200,6 @@ dependencies {
     androidTestImplementation(Kaspresso.kaspresso)
     androidTestImplementation(Kaspresso.kaspressoAllureSupport)
     androidTestImplementation(Kaspresso.kaspressoComposeSupport)
+
+    implementation(CollectionsImmutable.collectionsImmutable)
 }

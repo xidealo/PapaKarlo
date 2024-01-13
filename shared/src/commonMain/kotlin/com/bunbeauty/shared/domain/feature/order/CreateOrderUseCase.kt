@@ -2,8 +2,6 @@ package com.bunbeauty.shared.domain.feature.order
 
 import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.domain.model.address.SelectableUserAddress
-import com.bunbeauty.shared.domain.model.address.UserAddress
-import com.bunbeauty.shared.domain.model.cafe.Cafe
 import com.bunbeauty.shared.domain.model.cafe.SelectableCafe
 import com.bunbeauty.shared.domain.model.date_time.Time
 import com.bunbeauty.shared.domain.model.order.CreatedOrder
@@ -37,7 +35,7 @@ class CreateOrderUseCase(
             selectedUserAddress ?: return null
             CreatedOrderAddress(
                 uuid = selectedUserAddress.uuid,
-                street = selectedUserAddress.street.name,
+                street = selectedUserAddress.street,
                 house = selectedUserAddress.house,
                 flat = selectedUserAddress.flat,
                 entrance = selectedUserAddress.entrance,

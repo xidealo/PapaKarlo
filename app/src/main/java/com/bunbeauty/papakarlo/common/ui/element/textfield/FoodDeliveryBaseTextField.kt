@@ -3,9 +3,10 @@ package com.bunbeauty.papakarlo.common.ui.element.textfield
 import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.selection.LocalTextSelectionColors
-import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -20,11 +21,12 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.R
+import com.bunbeauty.papakarlo.common.ui.element.CircularProgressBar
 import com.bunbeauty.papakarlo.common.ui.icon16
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FoodDeliveryBaseTextField(
     modifier: Modifier = Modifier,
@@ -35,7 +37,8 @@ fun FoodDeliveryBaseTextField(
     onValueChange: (value: String) -> Unit,
     maxSymbols: Int = Int.MAX_VALUE,
     maxLines: Int = 1,
-    isError: Boolean = false
+    isError: Boolean = false,
+    isLoading: Boolean = false,
 ) {
     OutlinedTextField(
         modifier = modifier,
@@ -52,7 +55,9 @@ fun FoodDeliveryBaseTextField(
             )
         },
         trailingIcon = {
-            if (value.isNotEmpty()) {
+            if (isLoading) {
+                CircularProgressBar(modifier = Modifier.size(16.dp))
+            } else if (value.isNotEmpty()) {
                 Icon(
                     modifier = Modifier
                         .icon16()
@@ -77,7 +82,6 @@ fun FoodDeliveryBaseTextField(
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FoodDeliveryBaseTextField(
     modifier: Modifier = Modifier,
@@ -88,7 +92,8 @@ fun FoodDeliveryBaseTextField(
     onValueChange: (value: TextFieldValue) -> Unit,
     maxSymbols: Int = Int.MAX_VALUE,
     maxLines: Int = 1,
-    isError: Boolean = false
+    isError: Boolean = false,
+    isLoading: Boolean = false,
 ) {
     CompositionLocalProvider(
         LocalTextSelectionColors provides FoodDeliveryTextFieldDefaults.textSelectionColors
@@ -112,7 +117,9 @@ fun FoodDeliveryBaseTextField(
                 )
             },
             trailingIcon = {
-                if (value.text.isNotEmpty()) {
+                if (isLoading) {
+                    CircularProgressIndicator(modifier = Modifier.size(16.dp))
+                } else if (value.text.isNotEmpty()) {
                     Icon(
                         modifier = Modifier
                             .icon16()
@@ -146,5 +153,29 @@ private fun FoodDeliveryTextBaseFieldPreview() {
         value = "Нужно больше еды \n ...",
         labelStringId = R.string.hint_create_order_comment,
         onValueChange = {}
+    )
+}
+
+@ExperimentalComposeUiApi
+@Preview
+@Composable
+private fun FoodDeliveryTextBaseFieldWithLoadingPreview() {
+    FoodDeliveryBaseTextField(
+        value = "Нужно больше еды \n ...",
+        labelStringId = R.string.hint_create_order_comment,
+        onValueChange = {},
+        isLoading = true,
+    )
+}
+
+@ExperimentalComposeUiApi
+@Preview
+@Composable
+private fun FoodDeliveryTextBaseFieldWithErrorPreview() {
+    FoodDeliveryBaseTextField(
+        value = "Нужно больше еды \n ...",
+        labelStringId = R.string.hint_create_order_comment,
+        onValueChange = {},
+        isError = true,
     )
 }

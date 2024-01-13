@@ -60,6 +60,8 @@ kotlin {
 
                 implementation(SqlDelight.runtime)
                 implementation(SqlDelight.coroutineExtensions)
+
+                implementation(CollectionsImmutable.collectionsImmutable)
             }
         }
         val commonTest by getting {

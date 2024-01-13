@@ -1,185 +1,254 @@
 package com.bunbeauty.shared.presentation.create_address
 
-import com.bunbeauty.shared.domain.asCommonStateFlow
-import com.bunbeauty.shared.domain.exeptions.EmptyStreetListException
-import com.bunbeauty.shared.domain.feature.address.GetFilteredStreetListUseCase
 import com.bunbeauty.shared.domain.feature.address.CreateAddressUseCase
+import com.bunbeauty.shared.domain.feature.address.GetSuggestionsUseCase
+import com.bunbeauty.shared.domain.model.Suggestion
 import com.bunbeauty.shared.domain.use_case.address.SaveSelectedUserAddressUseCase
-import com.bunbeauty.shared.domain.feature.address.GetStreetsUseCase
-import com.bunbeauty.shared.presentation.base.SharedViewModel
-import com.bunbeauty.shared.presentation.Suggestion
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
+import com.bunbeauty.shared.extension.launchSafe
+import com.bunbeauty.shared.presentation.SuggestionUi
+import com.bunbeauty.shared.presentation.base.SharedStateViewModel
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
+
+private const val LETTER_COUNT_FOR_SUGGESTIONS = 3
 
 class CreateAddressViewModel(
-    private val getStreetsUseCase: GetStreetsUseCase,
+    private val getSuggestionsUseCase: GetSuggestionsUseCase,
     private val createAddressUseCase: CreateAddressUseCase,
     private val saveSelectedUserAddressUseCase: SaveSelectedUserAddressUseCase,
-    private val getFilteredStreetListUseCase: GetFilteredStreetListUseCase,
-) : SharedViewModel() {
+) : SharedStateViewModel<CreateAddress.ViewDataState, CreateAddress.Action, CreateAddress.Event>(
+    initDataState = CreateAddress.ViewDataState()
+) {
 
-    private val mutableStreetListState = MutableStateFlow(CreateAddressState())
-    val streetListState = mutableStreetListState.asCommonStateFlow()
+    private var suggestionsJob: Job? = null
 
-    private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
-        mutableStreetListState.update {
-            it.copy(
-                state = CreateAddressState.State.Error(throwable),
-                isCreateLoading = false
-            )
+    init {
+        observeStreetChanges()
+    }
+
+    override fun reduce(action: CreateAddress.Action, dataState: CreateAddress.ViewDataState) {
+        when (action) {
+            is CreateAddress.Action.StreetTextChange -> {
+                handleStreetTextChange(street = action.street)
+            }
+
+            is CreateAddress.Action.StreetFocusChange -> {
+                handleStreetFocusChange(isFocused = action.isFocused)
+            }
+
+            is CreateAddress.Action.SuggestionSelect -> {
+                handleSuggestionSelect(suggestion = action.suggestion)
+            }
+
+            is CreateAddress.Action.HouseTextChange -> {
+                handleHouseTextChange(house = action.house)
+            }
+
+            is CreateAddress.Action.FlatTextChange -> {
+                handleFlatTextChange(flat = action.flat)
+            }
+
+            is CreateAddress.Action.EntranceTextChange -> {
+                handleEntranceTextChange(entrance = action.entrance)
+            }
+
+            is CreateAddress.Action.FloorTextChange -> {
+                handleFloorTextChange(floor = action.floor)
+            }
+
+            is CreateAddress.Action.CommentTextChange -> {
+                handleCommentTextChange(comment = action.comment)
+            }
+
+            CreateAddress.Action.SaveClick -> {
+                handleSaveClick()
+            }
         }
     }
 
-    fun getStreetList() {
-        sharedScope.launch(exceptionHandler) {
-            mutableStreetListState.update { oldState ->
-                oldState.copy(
-                    state = CreateAddressState.State.Loading
+    private fun handleStreetTextChange(street: String) {
+        if (street.length < LETTER_COUNT_FOR_SUGGESTIONS) {
+            suggestionsJob?.cancel()
+            setState {
+                copy(
+                    street = street,
+                    streetSuggestionList = persistentListOf(),
+                    isSuggestionLoading = false,
                 )
             }
-
-            val streets = getStreetsUseCase().ifEmpty {
-                mutableStreetListState.update { oldState ->
-                    oldState.copy(
-                        state = CreateAddressState.State.Error(EmptyStreetListException())
-                    )
-                }
-                return@launch
-            }
-
-            mutableStreetListState.update { oldState ->
-                oldState.copy(
-                    streetList = streets,
-                    state = CreateAddressState.State.Success
-                )
+        } else {
+            setState {
+                copy(street = street)
             }
         }
     }
 
-    fun onStreetTextChanged(streetText: String) {
-        mutableStreetListState.update { state ->
-            state.copy(
-                street = streetText,
-                suggestedStreetList = getFilteredStreetListUseCase(
-                    query = streetText,
-                    streetList = state.streetList
-                ).map { street ->
-                    Suggestion(
-                        id = street.uuid,
-                        value = street.name,
-                    )
-                }
-            )
-        }
-        if (isStreetCorrect(streetText)) {
-            mutableStreetListState.update { oldState ->
-                oldState.copy(hasStreetError = false)
-            }
+    private fun handleStreetFocusChange(isFocused: Boolean) {
+        suggestionsJob?.cancel()
+        setState {
+            copy(streetFocused = isFocused)
         }
     }
 
-    fun onSuggestedStreetSelected(suggestion: Suggestion) {
-        mutableStreetListState.update { state ->
-            state.copy(
+    private fun handleSuggestionSelect(suggestion: SuggestionUi) {
+        suggestionsJob?.cancel()
+        setState {
+            copy(
                 street = suggestion.value,
-                suggestedStreetList = emptyList()
+                streetSuggestionList = persistentListOf(),
+                selectedStreetSuggestion = suggestion,
+                isSuggestionLoading = false,
+                hasStreetError = false,
             )
         }
-        if (isStreetCorrect(suggestion.value)) {
-            mutableStreetListState.update { oldState ->
-                oldState.copy(hasStreetError = false)
+    }
+
+    private fun handleHouseTextChange(house: String) {
+        if (house.isBlank()) {
+            setState {
+                copy(house = house)
+            }
+        } else {
+            setState {
+                copy(
+                    house = house,
+                    hasHouseError = false,
+                )
             }
         }
     }
 
-    fun onHouseTextChanged(houseText: String) {
-        mutableStreetListState.update { state ->
-            state.copy(house = houseText)
-        }
-        if (houseText.isNotBlank()) {
-            mutableStreetListState.update { state ->
-                state.copy(hasHouseError = false)
-            }
+    private fun handleFlatTextChange(flat: String) {
+        setState {
+            copy(flat = flat)
         }
     }
 
-    fun onFlatTextChanged(flatText: String) {
-        mutableStreetListState.update { state ->
-            state.copy(flat = flatText)
+    private fun handleEntranceTextChange(entrance: String) {
+        setState {
+            copy(entrance = entrance)
         }
     }
 
-    fun onEntranceTextChanged(entranceText: String) {
-        mutableStreetListState.update { state ->
-            state.copy(entrance = entranceText)
+    private fun handleFloorTextChange(floor: String) {
+        setState {
+            copy(floor = floor)
         }
     }
 
-    fun onFloorTextChanged(floorText: String) {
-        mutableStreetListState.update { state ->
-            state.copy(floor = floorText)
+    private fun handleCommentTextChange(comment: String) {
+        setState {
+            copy(comment = comment)
         }
     }
 
-    fun onCommentTextChanged(commentText: String) {
-        mutableStreetListState.update { state ->
-            state.copy(comment = commentText)
-        }
-    }
-
-    fun onCreateAddressClicked() {
-        mutableStreetListState.update { state ->
-            var newState = state.copy(
-                hasStreetError = !isStreetCorrect(state.street),
-                hasHouseError = state.house.isBlank()
+    private fun handleSaveClick() {
+        val streetSuggestion = dataState.value.selectedStreetSuggestion
+        val hasHouseError = dataState.value.house.isBlank()
+        setState {
+            copy(
+                hasStreetError = streetSuggestion == null,
+                hasHouseError = hasHouseError,
             )
-            newState = newState.copy(isCreateLoading = !newState.hasError)
-            newState
         }
-        if (streetListState.value.hasError) {
+
+        if (streetSuggestion == null || hasHouseError) {
             return
         }
 
-        sharedScope.launch(exceptionHandler) {
-            val userAddress = createAddressUseCase(
-                mutableStreetListState.value.street,
-                mutableStreetListState.value.house,
-                mutableStreetListState.value.flat,
-                mutableStreetListState.value.entrance,
-                mutableStreetListState.value.comment,
-                mutableStreetListState.value.floor,
-            )
+        setState {
+            copy(isCreateLoading = true)
+        }
+        sharedScope.launchSafe(
+            block = {
+                val userAddress = createAddressUseCase(
+                    street = Suggestion(
+                        fiasId = streetSuggestion.id,
+                        street = streetSuggestion.value,
+                    ),
+                    house = dataState.value.house,
+                    flat = dataState.value.flat,
+                    entrance = dataState.value.entrance,
+                    floor = dataState.value.floor,
+                    comment = dataState.value.comment,
+                )
 
-            if (userAddress == null) {
-                mutableStreetListState.update { state ->
-                    state.copy(
-                        eventList = state.eventList + CreateAddressState.Event.AddressCreatedFailed,
-                        isCreateLoading = false
+                if (userAddress == null) {
+                    showCreationFailed()
+                } else {
+                    saveSelectedUserAddressUseCase(userAddress.uuid)
+                    addEvent {
+                        CreateAddress.Event.AddressCreatedSuccess
+                    }
+                }
+            },
+            onError = {
+                showCreationFailed()
+            }
+        )
+    }
+
+    private fun showCreationFailed() {
+        addEvent {
+            CreateAddress.Event.AddressCreatedFailed
+        }
+        setState {
+            copy(isCreateLoading = false)
+        }
+    }
+
+    @OptIn(FlowPreview::class)
+    private fun observeStreetChanges() {
+        mutableDataState.map { state ->
+            CreateAddress.StreetField(
+                street = state.street,
+                isFocused = state.streetFocused,
+                selectedSuggestion = state.selectedStreetSuggestion,
+            )
+        }.distinctUntilChanged()
+            .debounce(1_000)
+            .filter { streetField ->
+                streetField.isFocused &&
+                    (streetField.street != streetField.selectedSuggestion?.value) &&
+                    (streetField.street.length >= LETTER_COUNT_FOR_SUGGESTIONS)
+            }
+            .onEach { (street, _) ->
+                requestSuggestions(query = street)
+            }.launchIn(sharedScope)
+    }
+
+    private fun requestSuggestions(query: String) {
+        suggestionsJob?.cancel()
+        suggestionsJob = sharedScope.launchSafe(
+            block = {
+                setState {
+                    copy(isSuggestionLoading = true)
+                }
+                val suggestionList = getSuggestionsUseCase(query = query)
+                setState {
+                    copy(
+                        streetSuggestionList = suggestionList.map { suggestion ->
+                            SuggestionUi(
+                                id = suggestion.fiasId,
+                                value = suggestion.street,
+                            )
+                        }.toImmutableList(),
+                        isSuggestionLoading = false,
                     )
                 }
-            } else {
-                saveSelectedUserAddressUseCase(userAddress.uuid)
-                mutableStreetListState.update { state ->
-                    state + CreateAddressState.Event.AddressCreatedSuccess
-                }
+            },
+            onError = {
+                // TODO handle error
             }
-        }
-    }
-
-    fun consumeEventList(eventList: List<CreateAddressState.Event>) {
-        mutableStreetListState.update { state ->
-            state.copy(eventList = state.eventList - eventList.toSet())
-        }
-    }
-
-    private fun isStreetCorrect(streetText: String): Boolean {
-        return streetListState.value
-            .streetList
-            .any { street ->
-                street.name == streetText
-            }
+        )
     }
 
 

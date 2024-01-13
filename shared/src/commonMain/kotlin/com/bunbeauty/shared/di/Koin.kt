@@ -38,6 +38,7 @@ import com.bunbeauty.shared.domain.interactor.city.ICityInteractor
 import com.bunbeauty.shared.domain.use_case.deferred_time.GetMinTimeUseCase
 import com.bunbeauty.shared.domain.interactor.menu_product.IMenuProductInteractor
 import com.bunbeauty.shared.domain.feature.address.GetStreetsUseCase
+import com.bunbeauty.shared.domain.feature.address.di.addressModule
 import com.bunbeauty.shared.domain.feature.auth.CheckCodeUseCase
 import com.bunbeauty.shared.domain.feature.auth.CheckPhoneNumberUseCase
 import com.bunbeauty.shared.domain.feature.auth.FormatPhoneNumberUseCase
@@ -79,7 +80,8 @@ fun initKoin(appDeclaration: KoinAppDeclaration = {}) = startKoin {
         paymentUseCaseModule(),
         authUseCaseModule(),
         useCaseModules(),
-        analyticModule()
+        analyticModule(),
+        addressModule(),
     )
 }
 
