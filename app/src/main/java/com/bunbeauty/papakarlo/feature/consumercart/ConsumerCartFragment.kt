@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -82,7 +83,7 @@ class ConsumerCartFragment :
     @Composable
     override fun Screen(
         viewState: ConsumerCart.ViewDataState,
-        onAction: (ConsumerCart.Action) -> Unit
+        onAction: (ConsumerCart.Action) -> Unit,
     ) {
         FoodDeliveryScaffold(
             title = stringResource(id = R.string.title_cart),
@@ -167,7 +168,7 @@ class ConsumerCartFragment :
     @Composable
     private fun ConsumerCartSuccessScreen(
         consumerCartData: ConsumerCart.ViewDataState.ConsumerCartData,
-        onAction: (ConsumerCart.Action) -> Unit
+        onAction: (ConsumerCart.Action) -> Unit,
     ) {
         Column(
             modifier = Modifier
@@ -198,12 +199,12 @@ class ConsumerCartFragment :
                         )
                     }
 
-                    itemsIndexed(
+                    items(
                         items = consumerCartData.cartProductList,
-                        key = { _, cartProductItem -> cartProductItem.uuid },
-                        span = { _, _ -> GridItemSpan(maxLineSpan) }
-                    ) { index, cartProductItem ->
-                        FoodDeliveryItem(needDivider = index != consumerCartData.cartProductList.lastIndex) {
+                        key = { cartProductItem -> cartProductItem.uuid },
+                        span = { _ -> GridItemSpan(maxLineSpan) }
+                    ) { cartProductItem ->
+                        FoodDeliveryItem(needDivider = !cartProductItem.isLast) {
                             CartProductItem(
                                 cartProductItem = cartProductItem,
                                 onCountIncreased = {
@@ -357,7 +358,8 @@ class ConsumerCartFragment :
             count = 3,
             menuProductUuid = "",
             additions = null,
-            additionUuidList = emptyList()
+            additionUuidList = emptyList(),
+            isLast = false
         )
 
         fun getMenuProductItem(uuid: String) = MenuProductItemModel(

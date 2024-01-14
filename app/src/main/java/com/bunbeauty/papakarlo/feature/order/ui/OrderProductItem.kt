@@ -150,7 +150,8 @@ private fun OrderProductItemPreview() {
                 photoLink = "",
                 count = "× 2",
                 key = "uuid",
-                additions = "Необычный лаваш • Добавка 1 • Добавка 2 Необычный лаваш • Добавка 1 • Добавка 2 Необычный лаваш • Добавка 1 • Добавка 2"
+                additions = "Необычный лаваш • Добавка 1 • Добавка 2 Необычный лаваш • Добавка 1 • Добавка 2 Необычный лаваш • Добавка 1 • Добавка 2",
+                isLast = true
             )
         )
     }
@@ -171,7 +172,8 @@ private fun OrderProductItemWithoutOldPricePreview() {
                 photoLink = "",
                 count = "× 2",
                 key = "uuid",
-                additions = "Необычный лаваш • Добавка 1 • Добавка 2"
+                additions = "Необычный лаваш • Добавка 1 • Добавка 2",
+                isLast = true
             )
         )
     }

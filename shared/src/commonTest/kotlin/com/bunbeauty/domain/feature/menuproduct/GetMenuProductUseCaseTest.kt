@@ -4,8 +4,6 @@ import com.bunbeauty.getAddition
 import com.bunbeauty.getAdditionGroup
 import com.bunbeauty.getMenuProduct
 import com.bunbeauty.shared.domain.feature.menu_product.GetMenuProductUseCase
-import com.bunbeauty.shared.domain.model.Discount
-import com.bunbeauty.shared.domain.model.order.LightOrder
 import com.bunbeauty.shared.domain.repo.MenuProductRepo
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -31,9 +29,12 @@ class GetMenuProductUseCaseTest {
     fun `should return menu product with addition group list sorted by priority`() =
         runTest {
             // Given
+            val additionGroup10 = getAdditionGroup(priority = 10)
+            val additionGroup2 = getAdditionGroup(priority = 2)
+
             val initialAdditionGroups = listOf(
-                getAdditionGroup(priority = 10),
-                getAdditionGroup(priority = 2),
+                additionGroup10,
+                additionGroup2
             )
 
             val initialMenuProduct = getMenuProduct(
@@ -41,9 +42,10 @@ class GetMenuProductUseCaseTest {
             )
 
             val menuProductWithSortedAdditionGroups = getMenuProduct(
-                additionGroups = initialAdditionGroups.sortedBy { additionGroup ->
-                    additionGroup.priority
-                }
+                additionGroups = listOf(
+                    additionGroup2,
+                    additionGroup10
+                )
             )
 
             coEvery { menuProductRepo.getMenuProductByUuid(menuProductUuid) } returns initialMenuProduct
@@ -63,22 +65,25 @@ class GetMenuProductUseCaseTest {
     fun `should return menu product with addition list sorted by priority`() =
         runTest {
             // Given
-            val initialAdditions = listOf(
-                getAddition(priority = 10),
-                getAddition(priority = 2)
-            )
+
+            val addition10 = getAddition(priority = 10)
+            val addition2 = getAddition(priority = 2)
 
             val initialAdditionGroups = listOf(
                 getAdditionGroup(
-                    additions = initialAdditions
+                    additions = listOf(
+                        addition10,
+                        addition2
+                    )
                 ),
             )
 
             val additionGroupsWithSortedAdditions = listOf(
                 getAdditionGroup(
-                    additions = initialAdditions.sortedBy { addition ->
-                        addition.priority
-                    }
+                    additions = listOf(
+                        addition2,
+                        addition10
+                    )
                 ),
             )
 

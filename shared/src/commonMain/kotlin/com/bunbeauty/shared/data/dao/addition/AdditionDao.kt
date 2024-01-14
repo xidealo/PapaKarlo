@@ -7,18 +7,21 @@ class AdditionDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IAdditionDao {
 
     private val additionEntityQueries = foodDeliveryDatabase.additionEntityQueries
 
-    override fun insertList(additionEntityList: List<AdditionEntity>) {
+    override suspend fun insertList(additionEntityList: List<AdditionEntity>) {
         additionEntityList.forEach { additionEntity ->
             insert(additionEntity)
         }
     }
 
-    override fun insert(additionEntity: AdditionEntity) {
+    override suspend fun insert(additionEntity: AdditionEntity) {
         additionEntityQueries.insert(additionEntity)
     }
 
-    override fun getAdditionEntity(uuid: String): AdditionEntity? {
+    override suspend fun getAdditionEntity(uuid: String): AdditionEntity? {
         return additionEntityQueries.getAdditionByUuid(uuid).executeAsOneOrNull()
+    }
 
+    override suspend fun getAdditionEntityListByAdditionGroup(uuid: String): List<AdditionEntity> {
+        TODO("Not yet implemented")
     }
 }

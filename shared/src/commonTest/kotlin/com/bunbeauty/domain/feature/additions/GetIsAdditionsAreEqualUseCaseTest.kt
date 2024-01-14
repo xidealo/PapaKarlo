@@ -1,6 +1,7 @@
 package com.bunbeauty.domain.feature.additions
 
 import com.bunbeauty.getCartProduct
+import com.bunbeauty.getCartProductAddition
 import com.bunbeauty.getMenuProduct
 import com.bunbeauty.shared.domain.feature.addition.GetIsAdditionsAreEqualUseCase
 import com.bunbeauty.shared.domain.model.addition.CartProductAddition
@@ -25,29 +26,20 @@ class GetIsAdditionsAreEqualUseCaseTest {
             initialCartProduct = getCartProduct(
                 menuProduct = getMenuProduct(),
                 cartProductAdditionList = listOf(
-                    CartProductAddition(
+                    getCartProductAddition(
                         uuid = "1",
-                        name = "1",
-                        fullName = null,
                         price = null,
-                        cartProductUuid = "1",
-                        additionUuid = "1"
+                        additionUuid = "1",
                     ),
-                    CartProductAddition(
+                    getCartProductAddition(
                         uuid = "2",
-                        name = "2",
-                        fullName = null,
                         price = null,
-                        cartProductUuid = "2",
-                        additionUuid = "2"
+                        additionUuid = "2",
                     ),
-                    CartProductAddition(
+                    getCartProductAddition(
                         uuid = "3",
-                        name = "3",
-                        fullName = null,
                         price = null,
-                        cartProductUuid = "3",
-                        additionUuid = "3"
+                        additionUuid = "3",
                     ),
                 )
             ),
@@ -62,29 +54,20 @@ class GetIsAdditionsAreEqualUseCaseTest {
             initialCartProduct = getCartProduct(
                 menuProduct = getMenuProduct(),
                 cartProductAdditionList = listOf(
-                    CartProductAddition(
+                    getCartProductAddition(
                         uuid = "1",
-                        name = "1",
-                        fullName = null,
                         price = null,
-                        cartProductUuid = "1",
-                        additionUuid = "1"
+                        additionUuid = "1",
                     ),
-                    CartProductAddition(
+                    getCartProductAddition(
                         uuid = "2",
-                        name = "2",
-                        fullName = null,
                         price = null,
-                        cartProductUuid = "2",
-                        additionUuid = "2"
+                        additionUuid = "2",
                     ),
-                    CartProductAddition(
+                    getCartProductAddition(
                         uuid = "3",
-                        name = "3",
-                        fullName = null,
                         price = null,
-                        cartProductUuid = "3",
-                        additionUuid = "3"
+                        additionUuid = "3",
                     ),
                 )
             ),
@@ -99,29 +82,20 @@ class GetIsAdditionsAreEqualUseCaseTest {
             initialCartProduct = getCartProduct(
                 menuProduct = getMenuProduct(),
                 cartProductAdditionList = listOf(
-                    CartProductAddition(
+                    getCartProductAddition(
                         uuid = "1",
-                        name = "1",
-                        fullName = null,
-                        price = null,
-                        cartProductUuid = "1",
-                        additionUuid = "1"
+                        price = 1,
+                        additionUuid = "1",
                     ),
-                    CartProductAddition(
+                    getCartProductAddition(
                         uuid = "2",
-                        name = "2",
-                        fullName = null,
-                        price = null,
-                        cartProductUuid = "2",
-                        additionUuid = "2"
+                        price = 2,
+                        additionUuid = "2",
                     ),
-                    CartProductAddition(
+                    getCartProductAddition(
                         uuid = "3",
-                        name = "3",
-                        fullName = null,
                         price = null,
-                        cartProductUuid = "3",
-                        additionUuid = "3"
+                        additionUuid = "3",
                     ),
                 )
             ),

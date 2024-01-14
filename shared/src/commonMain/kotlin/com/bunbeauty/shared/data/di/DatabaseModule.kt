@@ -2,6 +2,8 @@ package com.bunbeauty.shared.data.di
 
 import com.bunbeauty.shared.data.dao.addition.AdditionDao
 import com.bunbeauty.shared.data.dao.addition.IAdditionDao
+import com.bunbeauty.shared.data.dao.addition_group.AdditionGroupDao
+import com.bunbeauty.shared.data.dao.addition_group.IAdditionGroupDao
 import com.bunbeauty.shared.data.dao.cafe.CafeDao
 import com.bunbeauty.shared.data.dao.cafe.ICafeDao
 import com.bunbeauty.shared.data.dao.cart_product.CartProductDao
@@ -82,5 +84,8 @@ fun databaseModule() = module {
     }
     single<IOrderAdditionDao> {
         OrderAdditionDao(foodDeliveryDatabase = get())
+    }
+    single<IAdditionGroupDao> {
+        AdditionGroupDao(foodDeliveryDatabase = get())
     }
 }

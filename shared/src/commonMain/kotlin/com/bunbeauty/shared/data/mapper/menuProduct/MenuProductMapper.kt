@@ -2,6 +2,7 @@ package com.bunbeauty.shared.data.mapper.menuProduct
 
 import com.bunbeauty.shared.data.network.model.MenuProductServer
 import com.bunbeauty.shared.db.AdditionEntity
+import com.bunbeauty.shared.db.AdditionGroupEntity
 import com.bunbeauty.shared.db.CategoryEntity
 import com.bunbeauty.shared.db.MenuProductCategoryReference
 import com.bunbeauty.shared.db.MenuProductEntity
@@ -54,22 +55,37 @@ class MenuProductMapper : IMenuProductMapper {
 
     override fun toAdditionEntityList(menuProductServerList: List<MenuProductServer>): List<AdditionEntity> {
         return menuProductServerList.flatMap { menuProductServer ->
-            menuProductServer.additionGroupServers.flatMap { additionGroupServers -> additionGroupServers.additionServerList }
-                .map { additionServer ->
-                    AdditionEntity(
-                        uuid = additionServer.uuid,
-                        name = additionServer.name,
-                        price = additionServer.price,
-                        isVisible = additionServer.isVisible,
-                        isSelected = additionServer.isSelected,
-                        menuProductUuid = menuProductServer.uuid,
-                        photoLink = menuProductServer.photoLink,
-                        fullName = additionServer.fullName,
-                        priority = additionServer.priority
-                    )
+            menuProductServer.additionGroupServers.flatMap { additionGroupServer ->
+                   additionGroupServer.additionServerList.map { additionServer ->
+                        AdditionEntity(
+                            uuid = additionServer.uuid,
+                            name = additionServer.name,
+                            price = additionServer.price,
+                            isVisible = additionServer.isVisible,
+                            isSelected = additionServer.isSelected,
+                            additionGroupUuid = additionGroupServer.uuid,
+                            photoLink = menuProductServer.photoLink,
+                            fullName = additionServer.fullName,
+                            priority = additionServer.priority,
+                        )
+                    }
                 }
         }
+    }
 
+    override fun toAdditionGroupEntityList(menuProductServerList: List<MenuProductServer>): List<AdditionGroupEntity> {
+        return menuProductServerList.flatMap { menuProductServer ->
+            menuProductServer.additionGroupServers.map { additionServer ->
+                AdditionGroupEntity(
+                    uuid = additionServer.uuid,
+                    name = additionServer.name,
+                    isVisible = additionServer.isVisible,
+                    menuProductUuid = menuProductServer.uuid,
+                    priority = additionServer.priority,
+                    singleChoice = additionServer.singleChoice,
+                )
+            }
+        }
     }
 
     override fun toMenuProduct(menuProduct: MenuProductEntity): MenuProduct {
@@ -120,7 +136,7 @@ class MenuProductMapper : IMenuProductMapper {
                             photoLink = additionServer.photoLink,
                             price = additionServer.price,
                             uuid = additionServer.uuid,
-                            menuProductUuid = menuProductServer.uuid,
+                            additionGroupServer = additionGroupServer.uuid,
                             fullName = additionServer.fullName,
                             priority = additionServer.priority
                         )
@@ -155,12 +171,23 @@ class MenuProductMapper : IMenuProductMapper {
                     Category(
                         uuid = menuProductWithCategoryEntity.categoryUuid,
                         name = menuProductWithCategoryEntity.categoryName,
-                        priority = menuProductWithCategoryEntity.priority
+                        priority = menuProductWithCategoryEntity.categoryPriority
                     )
                 },
                 visible = firstMenuProductWithCategoryEntity.visible,
                 isRecommended = firstMenuProductWithCategoryEntity.isRecommended,
-                additionGroups = emptyList()
+                additionGroups = groupedMenuProductWithCategoryEntityList.mapNotNull { menuProductEntity ->
+                    menuProductEntity.additionGroupUuid?.let { uuid ->
+                        AdditionGroup(
+                            additionList = listOf(),
+                            isVisible = menuProductEntity.additionGroupIsVisible ?: false,
+                            name = menuProductEntity.additionGroupName ?: "",
+                            singleChoice = menuProductEntity.additionGroupSingleChoice ?: false,
+                            uuid = uuid,
+                            priority = menuProductEntity.additionGroupPriority ?: 1
+                        )
+                    }
+                }
             )
         }
     }

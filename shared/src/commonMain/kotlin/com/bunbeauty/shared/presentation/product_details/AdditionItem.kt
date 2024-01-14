@@ -9,13 +9,9 @@ sealed class AdditionItem : ItemModel() {
         val name: String,
     ) : AdditionItem()
 
-    data class AdditionMultiplyListItem(
+    data class AdditionListItem(
         override val key: String,
         val product: MenuProductAdditionItem,
-    ) : AdditionItem()
-
-    data class AdditionSingleListItem(
-        override val key: String,
-        val product: MenuProductAdditionItem,
+        val isMultiply: Boolean,
     ) : AdditionItem()
 }

@@ -46,6 +46,7 @@ interface OrderDetails {
                 val photoLink: String,
                 val count: String,
                 val additions: List<OrderAddition>,
+                val isLast: Boolean,
             )
         }
 

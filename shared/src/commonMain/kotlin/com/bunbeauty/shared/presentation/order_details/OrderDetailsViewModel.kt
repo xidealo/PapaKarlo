@@ -125,7 +125,7 @@ class OrderDetailsViewModel(
         )
 
     private fun getProductList(order: Order) =
-        order.orderProductList.map { orderProduct ->
+        order.orderProductList.mapIndexed { index, orderProduct ->
             OrderDetails.DataState.OrderDetailsData.OrderProductItem(
                 uuid = orderProduct.uuid,
                 name = orderProduct.product.name,
@@ -139,7 +139,8 @@ class OrderDetailsViewModel(
                 },
                 photoLink = orderProduct.product.photoLink,
                 count = orderProduct.count.toString(),
-                additions = orderProduct.orderAdditionList
+                additions = orderProduct.orderAdditionList,
+                isLast = index == order.orderProductList.lastIndex
             )
         }
 

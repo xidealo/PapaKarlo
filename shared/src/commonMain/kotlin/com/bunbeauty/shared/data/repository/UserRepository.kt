@@ -110,7 +110,7 @@ class UserRepository(
         }
     }
 
-    private fun insertOrderAdditions(
+    private suspend fun insertOrderAdditions(
         orderProductServer: OrderProductServer,
     ) {
         orderProductServer.additions.map { orderAdditionServer ->

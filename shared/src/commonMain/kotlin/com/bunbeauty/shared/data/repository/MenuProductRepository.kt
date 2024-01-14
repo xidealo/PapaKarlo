@@ -1,6 +1,7 @@
 package com.bunbeauty.shared.data.repository
 
 import com.bunbeauty.shared.data.dao.addition.IAdditionDao
+import com.bunbeauty.shared.data.dao.addition_group.IAdditionGroupDao
 import com.bunbeauty.shared.data.dao.category.ICategoryDao
 import com.bunbeauty.shared.data.dao.menu_product.IMenuProductDao
 import com.bunbeauty.shared.data.dao.menu_product_category_reference.IMenuProductCategoryReferenceDao
@@ -20,6 +21,7 @@ class MenuProductRepository(
     private val menuProductCategoryReferenceDao: IMenuProductCategoryReferenceDao,
     private val menuProductMapper: IMenuProductMapper,
     private val additionDao: IAdditionDao,
+    private val additionGroupDao: IAdditionGroupDao,
 ) : CacheListRepository<MenuProduct>(), MenuProductRepo {
 
     override val tag: String = "MENU_PRODUCT_TAG"
@@ -49,12 +51,27 @@ class MenuProductRepository(
     }
 
     override suspend fun getMenuProductByUuid(menuProductUuid: String): MenuProduct? {
+        val menuProduct = menuProductMapper.toMenuProductList(
+            menuProductDao.getMenuProductWithCategoryList()
+        ).find { menuProduct ->
+            menuProduct.uuid == menuProductUuid
+        }
+
+        menuProduct?.copy(
+            additionGroups = menuProduct.additionGroups.map { additionGroup ->
+                additionGroup.copy(
+                    additionList = additionDao.getAdditionEntityListByAdditionGroup(additionGroup.uuid)
+                )
+            }
+        )
+
         return getCacheOrListData(
             onApiRequest = networkConnector::getMenuProductList,
             onLocalRequest = {
                 menuProductMapper.toMenuProductList(
                     menuProductDao.getMenuProductWithCategoryList()
                 )
+
             },
             onSaveLocally = ::saveMenuLocally,
             serverToDomainModel = menuProductMapper::toMenuProduct
@@ -69,6 +86,11 @@ class MenuProductRepository(
         menuProductServerList.map(menuProductMapper::toMenuProductEntity)
             .let { menuProductEntityList ->
                 menuProductDao.insertMenuProductList(menuProductEntityList)
+            }
+
+        menuProductMapper.toAdditionGroupEntityList(menuProductServerList)
+            .let { additionGroupEntityList ->
+                additionGroupDao.insertList(additionGroupEntityList)
             }
 
         menuProductMapper.toAdditionEntityList(menuProductServerList)

@@ -34,7 +34,7 @@ fun CartProductItem(
     cartProductItem: CartProductItem,
     onCountIncreased: () -> Unit,
     onCountDecreased: () -> Unit,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     FoodDeliveryCard(
         modifier = modifier.fillMaxWidth(),
@@ -139,7 +139,8 @@ private fun CartProductItemPreview() {
                 count = 5,
                 menuProductUuid = "",
                 additions = "Обычная булка • Добавка 1 • Добавка 2",
-                additionUuidList = emptyList()
+                additionUuidList = emptyList(),
+                isLast = false
             ),
             onCountIncreased = {},
             onCountDecreased = {},
@@ -162,7 +163,8 @@ private fun CartProductItemWithoutOldCostPreview() {
                 count = 5,
                 menuProductUuid = "",
                 additions = "",
-                additionUuidList = emptyList()
+                additionUuidList = emptyList(),
+                isLast = false
             ),
             onCountIncreased = {},
             onCountDecreased = {},

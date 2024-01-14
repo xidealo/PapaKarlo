@@ -73,7 +73,8 @@ fun repositoryModule() = module {
             categoryDao = get(),
             menuProductCategoryReferenceDao = get(),
             menuProductMapper = get(),
-            additionDao = get()
+            additionDao = get(),
+            additionGroupDao = get()
         )
     }
     single<UserAddressRepo> {

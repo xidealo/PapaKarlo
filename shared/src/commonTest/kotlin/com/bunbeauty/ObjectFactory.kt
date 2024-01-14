@@ -49,14 +49,15 @@ fun getCategoryProduct(uuid: String, name: String = "", priority: Int = 0) = Cat
     priority = priority
 )
 
-fun getCartProductAddition(uuid: String = "1", additionUuid: String = "1", price: Int = 100) =
+fun getCartProductAddition(uuid: String = "1", additionUuid: String = "1", price: Int? = 100) =
     CartProductAddition(
         uuid = uuid,
         name = "",
         fullName = null,
         price = price,
         cartProductUuid = "",
-        additionUuid = additionUuid
+        additionUuid = additionUuid,
+        priority = null
     )
 
 fun getAddition(uuid: String = "1", priority: Int = 0) = Addition(
@@ -67,7 +68,7 @@ fun getAddition(uuid: String = "1", priority: Int = 0) = Addition(
     isSelected = false,
     isVisible = false,
     photoLink = "",
-    menuProductUuid = "",
+    additionGroupServer = "",
     priority = priority
 )
 

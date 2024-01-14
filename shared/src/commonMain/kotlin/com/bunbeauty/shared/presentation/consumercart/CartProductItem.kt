@@ -10,4 +10,5 @@ data class CartProductItem(
     val menuProductUuid: String,
     val additions: String?,
     val additionUuidList: List<String>,
+    val isLast: Boolean,
 )

@@ -76,6 +76,16 @@ CREATE TABLE orderAdditionEntity (
    FOREIGN KEY(orderProductUuid) REFERENCES orderProductEntity(uuid) ON DELETE CASCADE
 );
 
+CREATE TABLE additionGroupEntity (
+    uuid TEXT NOT NULL PRIMARY KEY,
+    name TEXT NOT NULL,
+    isVisible INTEGER AS Boolean NOT NULL,
+    singleChoice INTEGER AS Boolean NOT NULL,
+    priority INTEGER AS Int NOT NULL,
+    menuProductUuid TEXT NOT NULL,
+    FOREIGN KEY(menuProductUuid) REFERENCES menuProductEntity(uuid) ON DELETE CASCADE
+);
+
 ALTER TABLE orderProductEntity ADD COLUMN newCommonPrice INT NOT NULL;
 ALTER TABLE orderProductEntity ADD COLUMN oldCommonPrice INT;
 ALTER TABLE orderProductEntity ADD COLUMN newTotalCost INT NOT NULL;

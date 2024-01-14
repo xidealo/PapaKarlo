@@ -12,7 +12,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -83,7 +83,7 @@ class OrderDetailsFragment :
     @Composable
     private fun OrderDetailsScreen(
         orderDetailsUi: OrderDetailsUi,
-        onAction: (OrderDetails.Action) -> Unit
+        onAction: (OrderDetails.Action) -> Unit,
     ) {
         FoodDeliveryScaffold(
             title = orderDetailsUi.code,
@@ -98,6 +98,7 @@ class OrderDetailsFragment :
                     OrderDetails.DataState.ScreenState.SUCCESS -> OrderDetailsSuccessScreen(
                         orderDetailsUi
                     )
+
                     OrderDetails.DataState.ScreenState.ERROR -> ErrorScreen(R.string.error_order_details_discount) {
                         onAction(OrderDetails.Action.Reload(orderDetailsUi.orderUuid))
                     }
@@ -138,13 +139,13 @@ class OrderDetailsFragment :
                         }
                     }
 
-                    itemsIndexed(
+                    items(
                         items = state.orderProductItemList,
-                        key = { index, orderProductItem ->
+                        key = { orderProductItem ->
                             orderProductItem.key
                         }
-                    ) { index, orderProductItem ->
-                        FoodDeliveryItem(needDivider = index != state.orderProductItemList.lastIndex) {
+                    ) { orderProductItem ->
+                        FoodDeliveryItem(needDivider = !orderProductItem.isLast) {
                             OrderProductItem(
                                 modifier = Modifier
                                     .padding(horizontal = 16.dp),
@@ -162,7 +163,7 @@ class OrderDetailsFragment :
     private fun OrderInfoTextColumn(
         modifier: Modifier = Modifier,
         hint: String,
-        info: String
+        info: String,
     ) {
         Column(modifier = modifier) {
             Text(
@@ -181,7 +182,7 @@ class OrderDetailsFragment :
     @Composable
     private fun OrderInfoCard(
         modifier: Modifier = Modifier,
-        orderInfo: OrderDetailsUi.OrderInfo
+        orderInfo: OrderDetailsUi.OrderInfo,
     ) {
         FoodDeliveryCard(
             modifier = modifier,
@@ -308,13 +309,11 @@ class OrderDetailsFragment :
                             textDecoration = TextDecoration.LineThrough
                         )
                     }
-                    orderDetailsUi.newTotalCost?.let { finalCost ->
-                        Text(
-                            text = finalCost,
-                            style = FoodDeliveryTheme.typography.bodyMedium.bold,
-                            color = FoodDeliveryTheme.colors.mainColors.onSurface
-                        )
-                    }
+                    Text(
+                        text = orderDetailsUi.newTotalCost,
+                        style = FoodDeliveryTheme.typography.bodyMedium.bold,
+                        color = FoodDeliveryTheme.colors.mainColors.onSurface
+                    )
                 }
             }
         }
@@ -401,7 +400,8 @@ class OrderDetailsFragment :
                     photoLink = "",
                     count = "2",
                     key = "k1",
-                    additions = null
+                    additions = null,
+                    isLast = false
                 ),
                 OrderProductUiItem(
                     uuid = "",
@@ -413,7 +413,8 @@ class OrderDetailsFragment :
                     photoLink = "",
                     count = "1",
                     key = "k2",
-                    additions = null
+                    additions = null,
+                    isLast = true
                 )
             ),
             orderInfo = getOrderInfo(),
@@ -434,12 +435,12 @@ class OrderDetailsFragment :
             deferredTime = "10:30",
             address =
             "" +
-                "ул. Лука" +
-                "2" +
-                "10" +
-                "1" +
-                "3" +
-                "тест",
+                    "ул. Лука" +
+                    "2" +
+                    "10" +
+                    "1" +
+                    "3" +
+                    "тест",
             comment = "давай кушать",
             pickupMethod = "доставка",
             statusName = "Готовится",

@@ -1,6 +1,5 @@
 package com.bunbeauty.shared.data.repository
 
-import com.bunbeauty.core.log
 import com.bunbeauty.shared.data.dao.order.IOrderDao
 import com.bunbeauty.shared.data.dao.order_addition.IOrderAdditionDao
 import com.bunbeauty.shared.data.dao.order_product.IOrderProductDao
@@ -152,7 +151,7 @@ class OrderRepository(
         }
     }
 
-    private fun saveOrderListLocally(orderServerList: List<OrderServer>) {
+    private suspend fun saveOrderListLocally(orderServerList: List<OrderServer>) {
         orderServerList.forEach { orderServer ->
             orderDao.insertOrder(
                 orderMapper.toOrderEntity(orderServer)
@@ -168,7 +167,7 @@ class OrderRepository(
         }
     }
 
-    private fun insertOrderAdditions(
+    private suspend fun insertOrderAdditions(
         orderProductServer: OrderProductServer,
     ) {
         orderProductServer.additions.map { orderAdditionServer ->
@@ -180,7 +179,7 @@ class OrderRepository(
         }
     }
 
-    private fun saveOrderLocally(orderServer: OrderServer) {
+    private suspend fun saveOrderLocally(orderServer: OrderServer) {
         saveOrderListLocally(listOf(orderServer))
     }
 

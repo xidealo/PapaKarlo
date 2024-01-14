@@ -12,7 +12,7 @@ class OrderDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IOrderDao {
 
     private val orderEntityQueries = foodDeliveryDatabase.orderEntityQueries
 
-    override fun insertOrder(orderEntity: OrderEntity) {
+    override suspend fun insertOrder(orderEntity: OrderEntity) {
         orderEntityQueries.isnsertOrder(orderEntity)
     }
 

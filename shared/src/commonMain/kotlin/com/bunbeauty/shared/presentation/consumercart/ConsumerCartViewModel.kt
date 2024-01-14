@@ -240,7 +240,12 @@ class ConsumerCartViewModel(
             is ConsumerCartDomain.Empty -> null
             is ConsumerCartDomain.WithProducts -> ConsumerCart.ViewDataState.ConsumerCartData(
                 forFreeDelivery = "${consumerCartDomain.forFreeDelivery}$RUBLE_CURRENCY",
-                cartProductList = consumerCartDomain.cartProductList.map(::toItem),
+                cartProductList = consumerCartDomain.cartProductList.mapIndexed { index, lightCartProduct ->
+                    toItem(
+                        lightCartProduct = lightCartProduct,
+                        isLast = index == consumerCartDomain.cartProductList.lastIndex
+                    )
+                },
                 oldTotalCost = consumerCartDomain.oldTotalCost?.let { oldTotalCost ->
                     oldTotalCost.toString() + RUBLE_CURRENCY
                 },
@@ -271,12 +276,12 @@ class ConsumerCartViewModel(
         }
     }
 
-    private fun toItem(lightCartProduct: LightCartProduct): CartProductItem {
+    private fun toItem(lightCartProduct: LightCartProduct, isLast: Boolean): CartProductItem {
         return CartProductItem(
             uuid = lightCartProduct.uuid,
             name = lightCartProduct.name,
-            newCost = lightCartProduct.newCost.toString() + RUBLE_CURRENCY,
-            oldCost = lightCartProduct.oldCost?.let { oldCost -> oldCost.toString() + RUBLE_CURRENCY },
+            newCost = "${lightCartProduct.newCost}$RUBLE_CURRENCY",
+            oldCost = lightCartProduct.oldCost?.let { oldCost -> "$oldCost$RUBLE_CURRENCY" },
             photoLink = lightCartProduct.photoLink,
             count = lightCartProduct.count,
             menuProductUuid = lightCartProduct.menuProductUuid,
@@ -286,7 +291,8 @@ class ConsumerCartViewModel(
                 }
                 .ifEmpty { null },
             additionUuidList = lightCartProduct.cartProductAdditionList
-                .map { cartProductAddition -> cartProductAddition.additionUuid }
+                .map { cartProductAddition -> cartProductAddition.additionUuid },
+            isLast = isLast
         )
     }
 

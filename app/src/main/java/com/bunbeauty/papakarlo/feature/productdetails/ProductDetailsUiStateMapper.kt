@@ -8,9 +8,9 @@ import com.bunbeauty.shared.presentation.product_details.MenuProductAdditionItem
 import com.bunbeauty.shared.presentation.product_details.ProductDetailsState
 
 class ProductDetailsUiStateMapper(
-    private val stringUtil: IStringUtil
+    private val stringUtil: IStringUtil,
 ) {
-    fun map(productDetailsState: ProductDetailsState.DataState): ProductDetailsUi {
+    fun map(productDetailsState: ProductDetailsState.DataState): ProductDetailsViewState {
         val additionList = buildList {
             productDetailsState.menuProduct.additionGroups.forEach { additionGroup ->
                 add(
@@ -22,40 +22,26 @@ class ProductDetailsUiStateMapper(
                 )
                 addAll(
                     additionGroup.additionList.mapIndexed { index, addition ->
-                        if (additionGroup.singleChoice) {
-                            AdditionItem.AdditionSingleListItem(
-                                key = "AdditionSingleListItem + ${addition.uuid}",
-                                product = MenuProductAdditionItem(
-                                    uuid = addition.uuid,
-                                    isSelected = addition.isSelected,
-                                    name = addition.name,
-                                    price = addition.price?.let { price -> "+$price${Constants.RUBLE_CURRENCY}" },
-                                    isLast = additionGroup.additionList.lastIndex == index,
-                                    photoLink = addition.photoLink,
-                                    groupId = additionGroup.uuid
-                                )
-                            )
-                        } else {
-                            AdditionItem.AdditionMultiplyListItem(
-                                key = "AdditionMultiplyListItem + ${addition.uuid}",
-                                product = MenuProductAdditionItem(
-                                    uuid = addition.uuid,
-                                    isSelected = addition.isSelected,
-                                    name = addition.name,
-                                    price = addition.price?.let { price -> "+$price${Constants.RUBLE_CURRENCY}" },
-                                    isLast = additionGroup.additionList.lastIndex == index,
-                                    photoLink = addition.photoLink,
-                                    groupId = additionGroup.uuid
-                                )
-                            )
-                        }
+                        AdditionItem.AdditionListItem(
+                            key = "AdditionMultiplyListItem + ${addition.uuid}",
+                            product = MenuProductAdditionItem(
+                                uuid = addition.uuid,
+                                isSelected = addition.isSelected,
+                                name = addition.name,
+                                price = addition.price?.let { price -> "+$price${Constants.RUBLE_CURRENCY}" },
+                                isLast = additionGroup.additionList.lastIndex == index,
+                                photoLink = addition.photoLink,
+                                groupId = additionGroup.uuid
+                            ),
+                            isMultiply = !additionGroup.singleChoice
+                        )
                     }
                 )
             }
         }
 
         return when (productDetailsState.screenState) {
-            ProductDetailsState.DataState.ScreenState.SUCCESS -> ProductDetailsUi.Success(
+            ProductDetailsState.DataState.ScreenState.SUCCESS -> ProductDetailsViewState.Success(
                 topCartUi = TopCartUi(
                     cost = productDetailsState.cartCostAndCount?.cost?.let { cost ->
                         stringUtil.getCostString(cost)
@@ -63,7 +49,7 @@ class ProductDetailsUiStateMapper(
                     count = productDetailsState.cartCostAndCount?.count ?: ""
                 ),
                 menuProductUi = productDetailsState.menuProduct.let { menuProduct ->
-                    ProductDetailsUi.Success.MenuProductUi(
+                    ProductDetailsViewState.Success.MenuProductUi(
                         photoLink = menuProduct.photoLink,
                         name = menuProduct.name,
                         size = menuProduct.size,
@@ -76,8 +62,8 @@ class ProductDetailsUiStateMapper(
                 }
             )
 
-            ProductDetailsState.DataState.ScreenState.ERROR -> ProductDetailsUi.Error
-            ProductDetailsState.DataState.ScreenState.LOADING, ProductDetailsState.DataState.ScreenState.INIT -> ProductDetailsUi.Loading
+            ProductDetailsState.DataState.ScreenState.ERROR -> ProductDetailsViewState.Error
+            ProductDetailsState.DataState.ScreenState.LOADING, ProductDetailsState.DataState.ScreenState.INIT -> ProductDetailsViewState.Loading
         }
     }
 }

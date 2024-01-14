@@ -55,7 +55,7 @@ import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ProductDetailsFragment :
-    BaseComposeFragment<ProductDetailsState.DataState, ProductDetailsUi, ProductDetailsState.Action, ProductDetailsState.Event>() {
+    BaseComposeFragment<ProductDetailsState.DataState, ProductDetailsViewState, ProductDetailsState.Action, ProductDetailsState.Event>() {
 
     companion object {
         const val ADD_REQUEST_KEY = "ProductDetailsFragment_ADD_REQUEST_KEY"
@@ -84,19 +84,19 @@ class ProductDetailsFragment :
 
     @Composable
     override fun Screen(
-        viewState: ProductDetailsUi,
-        onAction: (ProductDetailsState.Action) -> Unit
+        viewState: ProductDetailsViewState,
+        onAction: (ProductDetailsState.Action) -> Unit,
     ) {
         ProductDetailsScreen(
             menuProductName = args.menuProductName,
             menuProductUuid = args.menuProductUuid,
             additionUuidList = args.additionUuidList.toList(),
-            productDetailsUi = viewState,
+            productDetailsViewState = viewState,
             onAction = viewModel::onAction
         )
     }
 
-    override fun mapState(dataState: ProductDetailsState.DataState): ProductDetailsUi {
+    override fun mapState(dataState: ProductDetailsState.DataState): ProductDetailsViewState {
         return productDetailsUiStateMapper.map(dataState)
     }
 
@@ -131,17 +131,17 @@ class ProductDetailsFragment :
         menuProductName: String,
         menuProductUuid: String,
         additionUuidList: List<String>,
-        productDetailsUi: ProductDetailsUi,
-        onAction: (ProductDetailsState.Action) -> Unit
+        productDetailsViewState: ProductDetailsViewState,
+        onAction: (ProductDetailsState.Action) -> Unit,
     ) {
         FoodDeliveryScaffold(
             title = menuProductName,
             backActionClick = {
                 onAction(ProductDetailsState.Action.BackClick)
             },
-            topActions = if (productDetailsUi is ProductDetailsUi.Success) {
+            topActions = if (productDetailsViewState is ProductDetailsViewState.Success) {
                 listOf(
-                    FoodDeliveryCartAction(topCartUi = productDetailsUi.topCartUi) {
+                    FoodDeliveryCartAction(topCartUi = productDetailsViewState.topCartUi) {
                         val backQueue = findNavController().currentBackStack.value
                         if ((backQueue.size > 1) &&
                             (backQueue[backQueue.lastIndex - 1].destination.id == R.id.consumerCartFragment)
@@ -156,13 +156,13 @@ class ProductDetailsFragment :
                 emptyList()
             },
             actionButton = {
-                if (productDetailsUi is ProductDetailsUi.Success) {
+                if (productDetailsViewState is ProductDetailsViewState.Success) {
                     MainButton(
                         modifier = Modifier
                             .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
                         text = stringResource(
                             id = R.string.action_product_details_want,
-                            productDetailsUi.menuProductUi?.priceWithAdditions ?: ""
+                            productDetailsViewState.menuProductUi.priceWithAdditions
 
                         )
                     ) {
@@ -177,16 +177,16 @@ class ProductDetailsFragment :
             },
             backgroundColor = FoodDeliveryTheme.colors.mainColors.surface
         ) {
-            when (productDetailsUi) {
-                is ProductDetailsUi.Success -> {
-                    ProductDetailsSuccessScreen(productDetailsUi.menuProductUi, onAction = onAction)
+            when (productDetailsViewState) {
+                is ProductDetailsViewState.Success -> {
+                    ProductDetailsSuccessScreen(productDetailsViewState.menuProductUi, onAction = onAction)
                 }
 
-                is ProductDetailsUi.Loading -> {
+                is ProductDetailsViewState.Loading -> {
                     LoadingScreen()
                 }
 
-                is ProductDetailsUi.Error -> {
+                is ProductDetailsViewState.Error -> {
                     ErrorScreen(mainTextId = R.string.common_error) {
                         onAction(
                             ProductDetailsState.Action.Init(
@@ -202,8 +202,8 @@ class ProductDetailsFragment :
 
     @Composable
     private fun ProductDetailsSuccessScreen(
-        menuProductUi: ProductDetailsUi.Success.MenuProductUi?,
-        onAction: (ProductDetailsState.Action) -> Unit
+        menuProductUi: ProductDetailsViewState.Success.MenuProductUi?,
+        onAction: (ProductDetailsState.Action) -> Unit,
     ) {
         menuProductUi?.let {
             LazyColumn(
@@ -237,21 +237,11 @@ class ProductDetailsFragment :
                             )
                         }
 
-                        is AdditionItem.AdditionSingleListItem -> {
+                        is AdditionItem.AdditionListItem -> {
                             FoodDeliveryItem(needDivider = !menuProductAdditionItem.product.isLast) {
                                 AdditionItem(
                                     menuProductAdditionItem = menuProductAdditionItem.product,
-                                    isMultiply = false,
-                                    onAction = onAction
-                                )
-                            }
-                        }
-
-                        is AdditionItem.AdditionMultiplyListItem -> {
-                            FoodDeliveryItem(needDivider = !menuProductAdditionItem.product.isLast) {
-                                AdditionItem(
-                                    menuProductAdditionItem = menuProductAdditionItem.product,
-                                    isMultiply = true,
+                                    isMultiply = menuProductAdditionItem.isMultiply,
                                     onAction = onAction
                                 )
                             }
@@ -269,7 +259,7 @@ class ProductDetailsFragment :
     private fun AdditionItem(
         menuProductAdditionItem: MenuProductAdditionItem,
         isMultiply: Boolean,
-        onAction: (ProductDetailsState.Action) -> Unit
+        onAction: (ProductDetailsState.Action) -> Unit,
     ) {
         Row(
             modifier = Modifier
@@ -337,7 +327,7 @@ class ProductDetailsFragment :
     @Composable
     private fun ProductCard(
         modifier: Modifier = Modifier,
-        menuProductUi: ProductDetailsUi.Success.MenuProductUi
+        menuProductUi: ProductDetailsViewState.Success.MenuProductUi,
     ) {
         Column(
             modifier = modifier
@@ -413,26 +403,26 @@ class ProductDetailsFragment :
             ProductDetailsScreen(
                 menuProductName = "Бэргер куриный Макс с экстра сырным соусом",
                 menuProductUuid = "",
-                productDetailsUi = ProductDetailsUi.Success(
+                productDetailsViewState = ProductDetailsViewState.Success(
                     topCartUi = TopCartUi(
                         cost = "100",
                         count = "2"
                     ),
-                    menuProductUi = ProductDetailsUi.Success.MenuProductUi(
+                    menuProductUi = ProductDetailsViewState.Success.MenuProductUi(
                         photoLink = "",
                         name = "Бэргер куриный Макс с экстра сырным соусом",
                         size = "300 г",
                         oldPrice = "320 ₽",
                         newPrice = "280 ₽",
                         description = "Сочная котлетка, сыр Чедр, маринованный огурчик, помидор, " +
-                            "красный лук, салат, фирменный соус, булочка с кунжутом",
+                                "красный лук, салат, фирменный соус, булочка с кунжутом",
                         additionList = listOf(
                             AdditionItem.AdditionHeaderItem(
                                 key = "key1",
                                 uuid = "uuid1",
                                 name = "Булочка"
                             ),
-                            AdditionItem.AdditionSingleListItem(
+                            AdditionItem.AdditionListItem(
                                 key = "key2",
                                 product = MenuProductAdditionItem(
                                     uuid = "uuid2",
@@ -442,9 +432,10 @@ class ProductDetailsFragment :
                                     photoLink = "",
                                     isLast = false,
                                     groupId = ""
-                                )
+                                ),
+                                isMultiply = false
                             ),
-                            AdditionItem.AdditionSingleListItem(
+                            AdditionItem.AdditionListItem(
                                 key = "key3",
                                 product = MenuProductAdditionItem(
                                     uuid = "uuid3",
@@ -454,14 +445,15 @@ class ProductDetailsFragment :
                                     photoLink = "",
                                     isLast = true,
                                     groupId = ""
-                                )
+                                ),
+                                isMultiply = false
                             ),
                             AdditionItem.AdditionHeaderItem(
                                 key = "key4",
                                 uuid = "uuid4",
                                 name = "Добавить по вкусу"
                             ),
-                            AdditionItem.AdditionMultiplyListItem(
+                            AdditionItem.AdditionListItem(
                                 key = "key5",
                                 product = MenuProductAdditionItem(
                                     uuid = "uuid5",
@@ -471,9 +463,10 @@ class ProductDetailsFragment :
                                     photoLink = "",
                                     isLast = false,
                                     groupId = ""
-                                )
+                                ),
+                                isMultiply = true
                             ),
-                            AdditionItem.AdditionMultiplyListItem(
+                            AdditionItem.AdditionListItem(
                                 key = "key6",
                                 product = MenuProductAdditionItem(
                                     uuid = "uuid6",
@@ -483,7 +476,8 @@ class ProductDetailsFragment :
                                     photoLink = "",
                                     isLast = true,
                                     groupId = ""
-                                )
+                                ),
+                                isMultiply = true
                             )
                         ),
                         priceWithAdditions = "300 ₽"
@@ -502,7 +496,7 @@ class ProductDetailsFragment :
             ProductDetailsScreen(
                 menuProductName = "Бэргер куриный Макс с экстра сырным соусом",
                 menuProductUuid = "",
-                productDetailsUi = ProductDetailsUi.Loading,
+                productDetailsViewState = ProductDetailsViewState.Loading,
                 additionUuidList = emptyList(),
                 onAction = {}
             )

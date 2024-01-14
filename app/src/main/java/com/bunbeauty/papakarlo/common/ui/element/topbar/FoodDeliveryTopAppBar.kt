@@ -173,7 +173,7 @@ private fun CardAction(action: FoodDeliveryCartAction) {
                     modifier = Modifier
                         .padding(4.dp)
                         .icon24(),
-                    painter = painterResource(id = com.bunbeauty.papakarlo.R.drawable.ic_cart_24),
+                    painter = painterResource(id = R.drawable.ic_cart_24),
                     tint = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
                     contentDescription = null
                 )
@@ -202,7 +202,7 @@ private fun LogoImage(
             modifier = modifier
                 .height(40.dp),
             painter = painterResource(drawableId),
-            contentDescription = stringResource(com.bunbeauty.papakarlo.R.string.description_company_logo)
+            contentDescription = stringResource(R.string.description_company_logo)
         )
     }
 }

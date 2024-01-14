@@ -4,11 +4,11 @@ import com.bunbeauty.papakarlo.feature.topcart.TopCartUi
 import com.bunbeauty.shared.presentation.base.BaseViewState
 import com.bunbeauty.shared.presentation.product_details.AdditionItem
 
-sealed interface ProductDetailsUi : BaseViewState {
+sealed interface ProductDetailsViewState : BaseViewState {
     data class Success(
         val topCartUi: TopCartUi,
-        val menuProductUi: MenuProductUi?
-    ) : ProductDetailsUi {
+        val menuProductUi: MenuProductUi
+    ) : ProductDetailsViewState {
         data class MenuProductUi(
             val photoLink: String,
             val name: String,
@@ -21,6 +21,6 @@ sealed interface ProductDetailsUi : BaseViewState {
         )
     }
 
-    data object Loading : ProductDetailsUi
-    data object Error : ProductDetailsUi
+    data object Loading : ProductDetailsViewState
+    data object Error : ProductDetailsViewState
 }
