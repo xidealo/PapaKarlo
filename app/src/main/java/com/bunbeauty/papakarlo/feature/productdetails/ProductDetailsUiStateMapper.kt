@@ -8,7 +8,7 @@ import com.bunbeauty.shared.presentation.product_details.MenuProductAdditionItem
 import com.bunbeauty.shared.presentation.product_details.ProductDetailsState
 
 class ProductDetailsUiStateMapper(
-    private val stringUtil: IStringUtil,
+    private val stringUtil: IStringUtil
 ) {
     fun map(productDetailsState: ProductDetailsState.DataState): ProductDetailsViewState {
         val additionList = buildList {

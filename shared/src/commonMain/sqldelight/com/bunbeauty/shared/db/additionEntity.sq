@@ -20,3 +20,8 @@ getAdditionByUuid:
 SELECT *
 FROM additionEntity
 WHERE uuid = :uuid;
+
+getAdditionByAdditionGroupUuid:
+SELECT *
+FROM additionEntity
+WHERE additionGroupUuid = :additionGroupUuid;

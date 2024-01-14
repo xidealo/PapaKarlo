@@ -1,5 +1,6 @@
 package com.bunbeauty.shared.data.repository
 
+import com.bunbeauty.shared.data.mapper.addition.mapAdditionEntityToAddition
 import com.bunbeauty.shared.data.dao.addition.IAdditionDao
 import com.bunbeauty.shared.data.dao.addition_group.IAdditionGroupDao
 import com.bunbeauty.shared.data.dao.category.ICategoryDao
@@ -51,27 +52,23 @@ class MenuProductRepository(
     }
 
     override suspend fun getMenuProductByUuid(menuProductUuid: String): MenuProduct? {
-        val menuProduct = menuProductMapper.toMenuProductList(
-            menuProductDao.getMenuProductWithCategoryList()
-        ).find { menuProduct ->
-            menuProduct.uuid == menuProductUuid
-        }
-
-        menuProduct?.copy(
-            additionGroups = menuProduct.additionGroups.map { additionGroup ->
-                additionGroup.copy(
-                    additionList = additionDao.getAdditionEntityListByAdditionGroup(additionGroup.uuid)
-                )
-            }
-        )
 
         return getCacheOrListData(
             onApiRequest = networkConnector::getMenuProductList,
             onLocalRequest = {
                 menuProductMapper.toMenuProductList(
                     menuProductDao.getMenuProductWithCategoryList()
-                )
-
+                ).map { menuProduct ->
+                    menuProduct.copy(
+                        additionGroups = menuProduct.additionGroups.map { additionGroup ->
+                            additionGroup.copy(
+                                additionList = additionDao.getAdditionEntityListByAdditionGroup(
+                                    additionGroup.uuid
+                                ).mapNotNull(mapAdditionEntityToAddition)
+                            )
+                        }
+                    )
+                }
             },
             onSaveLocally = ::saveMenuLocally,
             serverToDomainModel = menuProductMapper::toMenuProduct

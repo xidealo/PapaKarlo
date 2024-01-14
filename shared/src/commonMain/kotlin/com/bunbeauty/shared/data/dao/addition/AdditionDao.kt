@@ -22,6 +22,6 @@ class AdditionDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IAdditionDao {
     }
 
     override suspend fun getAdditionEntityListByAdditionGroup(uuid: String): List<AdditionEntity> {
-        TODO("Not yet implemented")
+        return additionEntityQueries.getAdditionByAdditionGroupUuid(uuid).executeAsList()
     }
 }

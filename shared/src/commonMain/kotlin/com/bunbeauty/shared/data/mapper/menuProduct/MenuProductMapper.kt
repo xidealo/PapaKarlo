@@ -64,7 +64,7 @@ class MenuProductMapper : IMenuProductMapper {
                             isVisible = additionServer.isVisible,
                             isSelected = additionServer.isSelected,
                             additionGroupUuid = additionGroupServer.uuid,
-                            photoLink = menuProductServer.photoLink,
+                            photoLink = additionServer.photoLink,
                             fullName = additionServer.fullName,
                             priority = additionServer.priority,
                         )

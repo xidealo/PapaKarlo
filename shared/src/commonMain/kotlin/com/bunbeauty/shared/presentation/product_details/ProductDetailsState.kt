@@ -54,7 +54,7 @@ interface ProductDetailsState {
         data object NavigateBack : Event
         data object NavigateToConsumerCart : Event
         data class AddedProduct(
-            val menuProductName: String,
+            val menuProductPhotoLink: String,
         ) : Event
 
         data class EditedProduct(

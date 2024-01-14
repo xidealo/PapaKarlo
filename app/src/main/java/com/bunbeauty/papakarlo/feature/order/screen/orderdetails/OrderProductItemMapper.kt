@@ -4,7 +4,7 @@ import com.bunbeauty.papakarlo.util.string.IStringUtil
 import com.bunbeauty.shared.presentation.order_details.OrderDetails
 
 class OrderProductItemMapper(
-    private val stringUtil: IStringUtil,
+    private val stringUtil: IStringUtil
 ) {
     fun toItem(orderProductItem: OrderDetails.DataState.OrderDetailsData.OrderProductItem): OrderProductUiItem {
         return OrderProductUiItem(

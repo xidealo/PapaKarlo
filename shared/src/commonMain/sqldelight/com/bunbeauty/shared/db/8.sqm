@@ -64,9 +64,9 @@ CREATE TABLE additionEntity (
     price INTEGER AS Int,
     isVisible INTEGER AS Boolean NOT NULL,
     isSelected INTEGER AS Boolean NOT NULL,
+    additionGroupUuid TEXT NOT NULL,
     priority INTEGER AS Int NOT NULL,
-    menuProductUuid TEXT NOT NULL,
-    FOREIGN KEY(menuProductUuid) REFERENCES menuProductEntity(uuid) ON DELETE CASCADE
+    FOREIGN KEY(additionGroupUuid) REFERENCES additionGroupEntity(uuid) ON DELETE CASCADE
 );
 
 CREATE TABLE orderAdditionEntity (

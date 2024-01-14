@@ -30,14 +30,17 @@ class MainViewModel(
                 selectedItem = NavigationBarItem.CAFE_LIST,
                 navController = navController
             )
+
             R.id.menuFragment -> NavigationBarOptions.Visible(
                 selectedItem = NavigationBarItem.MENU,
                 navController = navController
             )
+
             R.id.profileFragment -> NavigationBarOptions.Visible(
                 selectedItem = NavigationBarItem.PROFILE,
                 navController = navController
             )
+
             else -> NavigationBarOptions.Hidden
         }
         mutableMainState.update { state ->
@@ -45,12 +48,20 @@ class MainViewModel(
         }
     }
 
-    fun showInfoMessage(text: String) {
-        showMessage(text, FoodDeliveryMessageType.INFO)
+    fun showInfoMessage(text: String, photoLink: String?) {
+        showMessage(
+            text = text,
+            type = FoodDeliveryMessageType.INFO,
+            photoLink = photoLink
+        )
     }
 
     fun showErrorMessage(text: String) {
-        showMessage(text, FoodDeliveryMessageType.ERROR)
+        showMessage(
+            text = text,
+            type = FoodDeliveryMessageType.ERROR,
+            photoLink = null
+        )
     }
 
     fun consumeEventList(eventList: List<MainState.Event>) {
@@ -59,12 +70,13 @@ class MainViewModel(
         }
     }
 
-    private fun showMessage(text: String, type: FoodDeliveryMessageType) {
+    private fun showMessage(text: String, type: FoodDeliveryMessageType, photoLink: String?) {
         mutableMainState.update { state ->
             state + MainState.Event.ShowMessageEvent(
                 message = FoodDeliveryMessage(
                     type = type,
-                    text = text
+                    text = text,
+                    photoLink = photoLink
                 )
             )
         }

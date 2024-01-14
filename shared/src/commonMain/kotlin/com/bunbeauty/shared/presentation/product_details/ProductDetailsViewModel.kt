@@ -196,7 +196,7 @@ class ProductDetailsViewModel(
                         additionUuidList = selectedAdditionUuidList
                     )
                     addEvent {
-                        ProductDetailsState.Event.AddedProduct(menuProductName = menuProduct.name)
+                        ProductDetailsState.Event.AddedProduct(menuProductPhotoLink = menuProduct.photoLink)
                     }
                 }
             },

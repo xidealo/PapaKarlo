@@ -23,8 +23,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.core.os.bundleOf
-import androidx.fragment.app.setFragmentResult
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -45,6 +43,7 @@ import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold
 import com.bunbeauty.papakarlo.databinding.LayoutComposeBinding
+import com.bunbeauty.papakarlo.feature.main.IMessageHost
 import com.bunbeauty.papakarlo.feature.productdetails.ProductDetailsFragmentDirections.globalConsumerCartFragment
 import com.bunbeauty.papakarlo.feature.topcart.TopCartUi
 import com.bunbeauty.shared.presentation.product_details.AdditionItem
@@ -56,13 +55,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ProductDetailsFragment :
     BaseComposeFragment<ProductDetailsState.DataState, ProductDetailsViewState, ProductDetailsState.Action, ProductDetailsState.Event>() {
-
-    companion object {
-        const val ADD_REQUEST_KEY = "ProductDetailsFragment_ADD_REQUEST_KEY"
-        const val EDIT_REQUEST_KEY = "ProductDetailsFragment_EDIT_REQUEST_KEY"
-
-        const val MENU_PRODUCT_NAME = "ProductDetailsFragment_MENU_PRODUCT_NAME"
-    }
 
     override val viewModel: ProductDetailsViewModel by viewModel()
 
@@ -85,7 +77,7 @@ class ProductDetailsFragment :
     @Composable
     override fun Screen(
         viewState: ProductDetailsViewState,
-        onAction: (ProductDetailsState.Action) -> Unit,
+        onAction: (ProductDetailsState.Action) -> Unit
     ) {
         ProductDetailsScreen(
             menuProductName = args.menuProductName,
@@ -106,19 +98,21 @@ class ProductDetailsFragment :
             ProductDetailsState.Event.NavigateToConsumerCart -> findNavController()
                 .navigateSafe(globalConsumerCartFragment())
 
-            // set result? show toast
             is ProductDetailsState.Event.AddedProduct -> {
-                setFragmentResult(
-                    ADD_REQUEST_KEY,
-                    bundleOf(MENU_PRODUCT_NAME to event.menuProductName)
+                (activity as? IMessageHost)?.showInfoMessage(
+                    text = resources.getString(
+                        R.string.msg_menu_product_added
+                    ),
+                    photoLink = event.menuProductPhotoLink
                 )
                 findNavController().popBackStack()
             }
 
             is ProductDetailsState.Event.EditedProduct -> {
-                setFragmentResult(
-                    EDIT_REQUEST_KEY,
-                    bundleOf(MENU_PRODUCT_NAME to event.menuProductName)
+                (activity as? IMessageHost)?.showInfoMessage(
+                    resources.getString(
+                        R.string.msg_menu_product_edited
+                    )
                 )
                 findNavController().popBackStack()
             }
@@ -132,7 +126,7 @@ class ProductDetailsFragment :
         menuProductUuid: String,
         additionUuidList: List<String>,
         productDetailsViewState: ProductDetailsViewState,
-        onAction: (ProductDetailsState.Action) -> Unit,
+        onAction: (ProductDetailsState.Action) -> Unit
     ) {
         FoodDeliveryScaffold(
             title = menuProductName,
@@ -179,7 +173,10 @@ class ProductDetailsFragment :
         ) {
             when (productDetailsViewState) {
                 is ProductDetailsViewState.Success -> {
-                    ProductDetailsSuccessScreen(productDetailsViewState.menuProductUi, onAction = onAction)
+                    ProductDetailsSuccessScreen(
+                        productDetailsViewState.menuProductUi,
+                        onAction = onAction
+                    )
                 }
 
                 is ProductDetailsViewState.Loading -> {
@@ -203,7 +200,7 @@ class ProductDetailsFragment :
     @Composable
     private fun ProductDetailsSuccessScreen(
         menuProductUi: ProductDetailsViewState.Success.MenuProductUi?,
-        onAction: (ProductDetailsState.Action) -> Unit,
+        onAction: (ProductDetailsState.Action) -> Unit
     ) {
         menuProductUi?.let {
             LazyColumn(
@@ -259,7 +256,7 @@ class ProductDetailsFragment :
     private fun AdditionItem(
         menuProductAdditionItem: MenuProductAdditionItem,
         isMultiply: Boolean,
-        onAction: (ProductDetailsState.Action) -> Unit,
+        onAction: (ProductDetailsState.Action) -> Unit
     ) {
         Row(
             modifier = Modifier
@@ -327,7 +324,7 @@ class ProductDetailsFragment :
     @Composable
     private fun ProductCard(
         modifier: Modifier = Modifier,
-        menuProductUi: ProductDetailsViewState.Success.MenuProductUi,
+        menuProductUi: ProductDetailsViewState.Success.MenuProductUi
     ) {
         Column(
             modifier = modifier
@@ -415,7 +412,7 @@ class ProductDetailsFragment :
                         oldPrice = "320 ₽",
                         newPrice = "280 ₽",
                         description = "Сочная котлетка, сыр Чедр, маринованный огурчик, помидор, " +
-                                "красный лук, салат, фирменный соус, булочка с кунжутом",
+                            "красный лук, салат, фирменный соус, булочка с кунжутом",
                         additionList = listOf(
                             AdditionItem.AdditionHeaderItem(
                                 key = "key1",
