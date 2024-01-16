@@ -67,6 +67,11 @@ class CreateAddressFragment :
 
     override fun handleEvent(event: CreateAddress.Event) {
         when (event) {
+            CreateAddress.Event.SuggestionLoadingFailed -> {
+                (activity as? IMessageHost)?.showErrorMessage(
+                    resources.getString(R.string.error_create_address_loading)
+                )
+            }
             CreateAddress.Event.AddressCreatedSuccess -> {
                 (activity as? IMessageHost)?.showInfoMessage(
                     resources.getString(R.string.msg_create_address_created)

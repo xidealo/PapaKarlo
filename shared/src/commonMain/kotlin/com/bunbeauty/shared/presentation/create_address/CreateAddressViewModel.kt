@@ -246,7 +246,12 @@ class CreateAddressViewModel(
                 }
             },
             onError = {
-                // TODO handle error
+                addEvent {
+                    CreateAddress.Event.SuggestionLoadingFailed
+                }
+                setState {
+                    copy(isSuggestionLoading = false)
+                }
             }
         )
     }

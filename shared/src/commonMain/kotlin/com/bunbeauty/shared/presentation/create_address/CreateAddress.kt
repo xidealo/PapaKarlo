@@ -38,6 +38,7 @@ interface CreateAddress {
     )
 
     sealed interface Event : BaseEvent {
+        data object SuggestionLoadingFailed : Event
         data object AddressCreatedSuccess : Event
         data object AddressCreatedFailed : Event
     }
