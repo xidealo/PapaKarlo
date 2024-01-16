@@ -2,12 +2,11 @@ package com.bunbeauty.domain.feature.address
 
 import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.domain.exeptions.NoSelectedCityUuidException
-import com.bunbeauty.shared.domain.exeptions.NoStreetByNameAndCityUuidException
 import com.bunbeauty.shared.domain.exeptions.NoTokenException
 import com.bunbeauty.shared.domain.feature.address.CreateAddressUseCase
+import com.bunbeauty.shared.domain.model.Suggestion
 import com.bunbeauty.shared.domain.model.address.CreatedUserAddress
 import com.bunbeauty.shared.domain.model.address.UserAddress
-import com.bunbeauty.shared.domain.model.street.Street
 import com.bunbeauty.shared.domain.repo.StreetRepo
 import com.bunbeauty.shared.domain.repo.UserAddressRepo
 import io.mockk.MockKAnnotations
@@ -30,9 +29,6 @@ internal class CreateAddressUseCaseTest {
     private lateinit var dataStoreRepo: DataStoreRepo
 
     @MockK(relaxed = true)
-    private lateinit var streetRepo: StreetRepo
-
-    @MockK(relaxed = true)
     private lateinit var userAddressRepo: UserAddressRepo
 
     @InjectMockKs
@@ -52,7 +48,10 @@ internal class CreateAddressUseCaseTest {
             exceptionClass = NoTokenException::class,
             block = {
                 createAddressUseCase(
-                    streetName = "streetName",
+                    street = Suggestion(
+                        fiasId = "fiasId",
+                        street = "street"
+                    ),
                     house = "house",
                     flat = "flat",
                     entrance = "entrance",
@@ -71,26 +70,10 @@ internal class CreateAddressUseCaseTest {
             exceptionClass = NoSelectedCityUuidException::class,
             block = {
                 createAddressUseCase(
-                    streetName = "streetName",
-                    house = "house",
-                    flat = "flat",
-                    entrance = "entrance",
-                    comment = "comment",
-                    floor = "floor",
-                )
-            }
-        )
-    }
-
-    @Test
-    fun `return NoStreetByNameAndCityUuidException when no street by name and city`() = runTest {
-        coEvery { streetRepo.getStreetByNameAndCityUuid(any(), any()) } returns null
-
-        assertFailsWith(
-            exceptionClass = NoStreetByNameAndCityUuidException::class,
-            block = {
-                createAddressUseCase(
-                    streetName = "streetName",
+                    street = Suggestion(
+                        fiasId = "fiasId",
+                        street = "street"
+                    ),
                     house = "house",
                     flat = "flat",
                     entrance = "entrance",
@@ -104,22 +87,10 @@ internal class CreateAddressUseCaseTest {
     @Test
     fun `return userAddress when all data is ok`() = runTest {
         coEvery { dataStoreRepo.getToken() } returns "token"
-
         coEvery { dataStoreRepo.getSelectedCityUuid() } returns "cityUuid"
-
-        coEvery { streetRepo.getStreetByNameAndCityUuid(any(), any()) } returns Street(
-            uuid = "uuid",
-            name = "streetName",
-            cityUuid = "cityUuid ",
-        )
-
         val userAddress = UserAddress(
             uuid = "uuid",
-            street = Street(
-                uuid = "uuid",
-                name = "streetName",
-                cityUuid = "cityUuid ",
-            ),
+            street = "street",
             house = "house",
             flat = "flat",
             entrance = "entrance",
@@ -132,27 +103,33 @@ internal class CreateAddressUseCaseTest {
             userAddressRepo.saveUserAddress(
                 token = "token",
                 createdUserAddress = CreatedUserAddress(
-                    streetUuid = "uuid",
+                    street = Suggestion(
+                        fiasId = "fiasId",
+                        street = "street"
+                    ),
                     house = "house",
                     flat = "flat",
                     entrance = "entrance",
                     comment = "comment",
                     floor = "floor",
+                    cityUuid = "cityUuid",
                     isVisible = true
                 )
             )
         } returns userAddress
 
-        assertEquals(
-            userAddress,
-            createAddressUseCase(
-                streetName = "streetName",
-                house = "house",
-                flat = "flat",
-                entrance = "entrance",
-                comment = "comment",
-                floor = "floor",
-            )
+        val createdUserAddress = createAddressUseCase(
+            street = Suggestion(
+                fiasId = "fiasId",
+                street = "street"
+            ),
+            house = "house",
+            flat = "flat",
+            entrance = "entrance",
+            comment = "comment",
+            floor = "floor",
         )
+
+        assertEquals(userAddress, createdUserAddress)
     }
 }

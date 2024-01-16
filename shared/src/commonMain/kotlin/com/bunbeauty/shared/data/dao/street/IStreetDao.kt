@@ -3,7 +3,7 @@ package com.bunbeauty.shared.data.dao.street
 import com.bunbeauty.shared.db.StreetEntity
 import kotlinx.coroutines.flow.Flow
 
-
+@Deprecated("Unused")
 interface IStreetDao {
 
     suspend fun insertStreetList(streetList: List<StreetEntity>)

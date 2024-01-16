@@ -6,6 +6,7 @@ import com.bunbeauty.shared.domain.exeptions.NoUserUuidException
 import com.bunbeauty.shared.domain.model.street.Street
 import com.bunbeauty.shared.domain.repo.StreetRepo
 
+@Deprecated("Unused")
 class GetStreetsUseCase(
     private val streetRepo: StreetRepo,
     private val dataStoreRepo: DataStoreRepo,

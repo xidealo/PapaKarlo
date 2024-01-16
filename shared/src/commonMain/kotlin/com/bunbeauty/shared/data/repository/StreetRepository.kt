@@ -7,6 +7,7 @@ import com.bunbeauty.shared.domain.model.street.Street
 import com.bunbeauty.shared.domain.model.street.StreetCache
 import com.bunbeauty.shared.domain.repo.StreetRepo
 
+@Deprecated("Unused")
 class StreetRepository(
     private val networkConnector: NetworkConnector,
     private val streetDao: IStreetDao,
@@ -45,9 +46,4 @@ class StreetRepository(
         }
     }
 
-    override suspend fun getStreetByNameAndCityUuid(name: String, cityUuid: String): Street? {
-        return streetDao.getStreetByNameAndCityUuid(name, cityUuid)?.let { streetEntity ->
-            streetMapper.toStreet(streetEntity)
-        }
-    }
 }

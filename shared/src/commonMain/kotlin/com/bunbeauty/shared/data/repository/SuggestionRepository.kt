@@ -9,8 +9,14 @@ class SuggestionRepository(
     private val networkConnector: NetworkConnector,
 ) : SuggestionRepo {
 
+    private val cache: MutableMap<String, List<Suggestion>> = mutableMapOf()
+
     override suspend fun getSuggestionList(token: String, query: String, cityUuid: String): List<Suggestion>? {
-        return networkConnector.getSuggestions(
+        if (cache[query] != null) {
+            return cache[query]
+        }
+
+        val suggestions = networkConnector.getSuggestions(
             token = token,
             query = query,
             cityUuid = cityUuid
@@ -20,6 +26,11 @@ class SuggestionRepository(
                 street = suggestionServer.street,
             )
         }
+        if (suggestions != null) {
+            cache[query] = suggestions
+        }
+
+        return suggestions
     }
 
 }

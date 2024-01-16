@@ -2,9 +2,9 @@ package com.bunbeauty.shared.data.mapper.street
 
 import com.bunbeauty.shared.data.network.model.StreetServer
 import com.bunbeauty.shared.db.StreetEntity
-import com.bunbeauty.shared.db.UserAddressEntity
 import com.bunbeauty.shared.domain.model.street.Street
 
+@Deprecated("Unused")
 class StreetMapper : IStreetMapper {
 
     override fun toStreetEntity(street: StreetServer): StreetEntity {
@@ -12,14 +12,6 @@ class StreetMapper : IStreetMapper {
             uuid = street.uuid,
             name = street.name,
             cityUuid = street.cityUuid,
-        )
-    }
-
-    override fun toStreetEntity(street: Street): StreetEntity {
-        return StreetEntity(
-            uuid = street.uuid,
-            name = street.name,
-            cityUuid = street.cityUuid
         )
     }
 
@@ -36,44 +28,6 @@ class StreetMapper : IStreetMapper {
             uuid = street.uuid,
             name = street.name,
             cityUuid = street.cityUuid
-        )
-    }
-
-    override fun toStreet(userAddressEntity: UserAddressEntity): Street {
-        return Street(
-            uuid = userAddressEntity.streetUuid,
-            name = userAddressEntity.streetName,
-            cityUuid = userAddressEntity.cityUuid
-        )
-    }
-
-    override fun toStreetServer(street: Street): StreetServer {
-        return StreetServer(
-            uuid = street.uuid,
-            name = street.name,
-            cityUuid = street.cityUuid,
-            cafeUuid = "",
-            isVisible = true
-        )
-    }
-
-    override fun toStreetServer(street: StreetEntity): StreetServer {
-        return StreetServer(
-            uuid = street.uuid,
-            name = street.name,
-            cityUuid = street.cityUuid,
-            cafeUuid = "",
-            isVisible = true
-        )
-    }
-
-    override fun toStreetServer(userAddressEntity: UserAddressEntity): StreetServer {
-        return StreetServer(
-            uuid = userAddressEntity.streetUuid,
-            name = userAddressEntity.streetName,
-            cityUuid = userAddressEntity.cityUuid,
-            cafeUuid = "",
-            isVisible = true
         )
     }
 }

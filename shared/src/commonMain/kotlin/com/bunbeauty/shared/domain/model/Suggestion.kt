@@ -1,6 +1,6 @@
 package com.bunbeauty.shared.domain.model
 
-class Suggestion(
+data class Suggestion(
     val fiasId: String,
     val street: String,
 )
