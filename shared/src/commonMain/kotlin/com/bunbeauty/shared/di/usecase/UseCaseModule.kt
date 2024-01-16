@@ -2,7 +2,6 @@ package com.bunbeauty.shared.di.usecase
 
 import com.bunbeauty.shared.domain.feature.address.CreateAddressUseCase
 import com.bunbeauty.shared.domain.feature.address.GetFilteredStreetListUseCase
-import com.bunbeauty.shared.domain.feature.address.GetStreetsUseCase
 import com.bunbeauty.shared.domain.feature.city.GetSelectedCityTimeZoneUseCase
 import com.bunbeauty.shared.domain.feature.discount.GetDiscountUseCase
 import com.bunbeauty.shared.domain.feature.link.GetLinkListUseCase
@@ -55,12 +54,6 @@ internal fun useCaseModules() = module {
         GetSelectedCityTimeZoneUseCase(
             cityRepo = get(),
             dataStoreRepo = get()
-        )
-    }
-    factory {
-        GetStreetsUseCase(
-            streetRepo = get(),
-            dataStoreRepo = get(),
         )
     }
     factory {

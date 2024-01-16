@@ -15,7 +15,6 @@ import com.bunbeauty.shared.data.repository.OrderRepository
 import com.bunbeauty.shared.data.repository.PaymentRepository
 import com.bunbeauty.shared.data.repository.RecommendationRepository
 import com.bunbeauty.shared.data.repository.SettingsRepository
-import com.bunbeauty.shared.data.repository.StreetRepository
 import com.bunbeauty.shared.data.repository.SuggestionRepository
 import com.bunbeauty.shared.data.repository.UserAddressRepository
 import com.bunbeauty.shared.data.repository.UserRepository
@@ -29,7 +28,6 @@ import com.bunbeauty.shared.domain.repo.LinkRepo
 import com.bunbeauty.shared.domain.repo.MenuProductRepo
 import com.bunbeauty.shared.domain.repo.OrderRepo
 import com.bunbeauty.shared.domain.repo.PaymentRepo
-import com.bunbeauty.shared.domain.repo.StreetRepo
 import com.bunbeauty.shared.domain.repo.SuggestionRepo
 import com.bunbeauty.shared.domain.repo.UserAddressRepo
 import com.bunbeauty.shared.domain.repo.UserRepo
@@ -86,13 +84,6 @@ fun repositoryModule() = module {
             dataStoreRepo = get(),
             cafeDao = get(),
             cafeMapper = get(),
-        )
-    }
-    single<StreetRepo> {
-        StreetRepository(
-            networkConnector = get(),
-            streetDao = get(),
-            streetMapper = get(),
         )
     }
     single<DeliveryRepo> {

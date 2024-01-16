@@ -7,7 +7,6 @@ import com.bunbeauty.shared.domain.feature.address.CreateAddressUseCase
 import com.bunbeauty.shared.domain.model.Suggestion
 import com.bunbeauty.shared.domain.model.address.CreatedUserAddress
 import com.bunbeauty.shared.domain.model.address.UserAddress
-import com.bunbeauty.shared.domain.repo.StreetRepo
 import com.bunbeauty.shared.domain.repo.UserAddressRepo
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
