@@ -14,7 +14,7 @@ val mapAdditionEntityToAddition: AdditionEntity?.() -> Addition? = {
             photoLink = photoLink,
             price = price,
             uuid = uuid,
-            additionGroupServer = additionGroupUuid,
+            additionGroupUuid = additionGroupUuid,
             fullName = fullName,
             priority = priority
         )

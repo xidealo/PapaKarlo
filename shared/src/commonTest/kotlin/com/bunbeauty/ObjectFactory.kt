@@ -68,7 +68,7 @@ fun getAddition(uuid: String = "1", priority: Int = 0) = Addition(
     isSelected = false,
     isVisible = false,
     photoLink = "",
-    additionGroupServer = "",
+    additionGroupUuid = "",
     priority = priority
 )
 

@@ -1,5 +1,6 @@
 package com.bunbeauty.shared.data.mapper.order_product
 
+import com.bunbeauty.shared.data.mapper.orderaddition.mapOrderAdditionServerToOrderAddition
 import com.bunbeauty.shared.data.network.model.order.get.OrderProductServer
 import com.bunbeauty.shared.data.network.model.order.post.OrderProductPostServer
 import com.bunbeauty.shared.db.OrderWithProductEntity
@@ -37,7 +38,8 @@ class OrderProductMapper : IOrderProductMapper {
                     orderWithProductEntity.orderAdditionEntityUuid?.let { orderAdditionEntityUuid ->
                         OrderAddition(
                             uuid = orderAdditionEntityUuid,
-                            name = orderWithProductEntity.orderAdditionEntityName ?: ""
+                            name = orderWithProductEntity.orderAdditionEntityName ?: "",
+                            priority = orderWithProductEntity.orderAdditionEntityPriority ?: 0
                         )
                     }
                 }
@@ -63,12 +65,7 @@ class OrderProductMapper : IOrderProductMapper {
                 newTotalCost = orderProduct.newTotalCost,
                 oldTotalCost = orderProduct.oldTotalCost,
             ),
-            orderAdditionList = orderProduct.additions.map { orderAdditionsServer ->
-                OrderAddition(
-                    uuid = orderAdditionsServer.uuid,
-                    name = orderAdditionsServer.name
-                )
-            }
+            orderAdditionList = orderProduct.additions.map(mapOrderAdditionServerToOrderAddition)
         )
     }
 

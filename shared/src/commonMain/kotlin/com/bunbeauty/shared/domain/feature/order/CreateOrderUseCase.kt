@@ -5,6 +5,7 @@ import com.bunbeauty.shared.domain.model.address.SelectableUserAddress
 import com.bunbeauty.shared.domain.model.address.UserAddress
 import com.bunbeauty.shared.domain.model.cafe.Cafe
 import com.bunbeauty.shared.domain.model.cafe.SelectableCafe
+import com.bunbeauty.shared.domain.model.cart.CartProduct
 import com.bunbeauty.shared.domain.model.date_time.Time
 import com.bunbeauty.shared.domain.model.order.CreatedOrder
 import com.bunbeauty.shared.domain.model.order.CreatedOrderAddress
@@ -14,6 +15,7 @@ import com.bunbeauty.shared.domain.repo.CartProductRepo
 import com.bunbeauty.shared.domain.repo.OrderRepo
 import com.bunbeauty.shared.domain.util.IDateTimeUtil
 
+//todo (add tests for sort additions)
 class CreateOrderUseCase(
     private val dataStoreRepo: DataStoreRepo,
     private val cartProductRepo: CartProductRepo,
@@ -63,9 +65,7 @@ class CreateOrderUseCase(
                 CreatedOrderProduct(
                     menuProductUuid = cartProduct.product.uuid,
                     count = cartProduct.count,
-                    additionUuids = cartProduct.cartProductAdditionList.map { cartProductAddition ->
-                        cartProductAddition.additionUuid
-                    }
+                    additionUuids = getSortedAdditionUuidList(cartProduct)
                 )
             },
             paymentMethod = paymentMethod
@@ -73,4 +73,11 @@ class CreateOrderUseCase(
 
         return orderRepo.createOrder(token, createdOrder)
     }
+
+    private fun getSortedAdditionUuidList(cartProduct: CartProduct) =
+        cartProduct.cartProductAdditionList.sortedBy { cartProductAddition ->
+            cartProductAddition.priority
+        }.map { cartProductAddition ->
+            cartProductAddition.additionUuid
+        }
 }

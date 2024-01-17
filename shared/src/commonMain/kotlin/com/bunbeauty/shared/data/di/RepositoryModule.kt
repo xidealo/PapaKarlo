@@ -3,6 +3,7 @@ package com.bunbeauty.shared.data.di
 import com.bunbeauty.shared.data.network.api.NetworkConnector
 import com.bunbeauty.shared.data.network.api.NetworkConnectorImpl
 import com.bunbeauty.shared.data.network.socket.SocketService
+import com.bunbeauty.shared.data.repository.AdditionGroupRepository
 import com.bunbeauty.shared.data.repository.AdditionRepository
 import com.bunbeauty.shared.data.repository.AuthRepository
 import com.bunbeauty.shared.data.repository.CafeRepository
@@ -178,6 +179,11 @@ fun repositoryModule() = module {
     single {
         AdditionRepository(
             additionDao = get(),
+        )
+    }
+    single {
+        AdditionGroupRepository(
+            additionGroupDao = get(),
         )
     }
 }

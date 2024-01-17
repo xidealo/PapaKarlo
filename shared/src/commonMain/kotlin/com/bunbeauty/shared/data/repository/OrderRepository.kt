@@ -4,7 +4,7 @@ import com.bunbeauty.shared.data.dao.order.IOrderDao
 import com.bunbeauty.shared.data.dao.order_addition.IOrderAdditionDao
 import com.bunbeauty.shared.data.dao.order_product.IOrderProductDao
 import com.bunbeauty.shared.data.mapper.order.IOrderMapper
-import com.bunbeauty.shared.data.mapper.order_addition.mapOrderAdditionServerToOrderAdditionEntity
+import com.bunbeauty.shared.data.mapper.orderaddition.mapOrderAdditionServerToOrderAdditionEntity
 import com.bunbeauty.shared.data.mapper.order_product.mapOrderProductServerToOrderProductEntity
 import com.bunbeauty.shared.data.network.api.NetworkConnector
 import com.bunbeauty.shared.data.network.model.order.get.OrderProductServer

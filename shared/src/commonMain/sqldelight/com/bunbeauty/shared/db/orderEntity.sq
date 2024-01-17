@@ -42,6 +42,7 @@ SELECT orderEntity.*,
     orderProductEntity.orderUuid AS orderUuid,
     orderAdditionEntity.uuid AS orderAdditionEntityUuid,
     orderAdditionEntity.name AS orderAdditionEntityName,
+    orderAdditionEntity.priority AS orderAdditionEntityPriority,
     orderAdditionEntity.orderProductUuid AS orderAdditionEntityOrderProductUuid
 FROM orderEntity
 JOIN orderProductEntity ON orderEntity.uuid = orderProductEntity.orderUuid

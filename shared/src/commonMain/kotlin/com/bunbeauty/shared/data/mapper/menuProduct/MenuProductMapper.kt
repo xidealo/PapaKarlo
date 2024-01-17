@@ -136,7 +136,7 @@ class MenuProductMapper : IMenuProductMapper {
                             photoLink = additionServer.photoLink,
                             price = additionServer.price,
                             uuid = additionServer.uuid,
-                            additionGroupServer = additionGroupServer.uuid,
+                            additionGroupUuid = additionGroupServer.uuid,
                             fullName = additionServer.fullName,
                             priority = additionServer.priority
                         )

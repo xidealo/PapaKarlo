@@ -8,6 +8,6 @@ data class Addition(
     val photoLink: String,
     val price: Int?,
     val uuid: String,
-    val additionGroupServer: String,
+    val additionGroupUuid: String,
     val priority: Int,
 )
