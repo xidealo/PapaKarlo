@@ -81,7 +81,7 @@ fun viewModelModule() = module {
         CreateAddressViewModel(
             getSuggestionsUseCase = get(),
             createAddressUseCase = get(),
-            saveSelectedUserAddressUseCase = get(),
+            saveSelectedUserAddressUseCase = get()
         )
     }
     viewModel {

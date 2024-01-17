@@ -54,7 +54,7 @@ class CreateAddressFragment :
                     isLoading = viewState.isCreateLoading,
                     onClick = {
                         onAction(CreateAddress.Action.SaveClick)
-                    },
+                    }
                 )
             }
         ) {
@@ -90,7 +90,7 @@ class CreateAddressFragment :
     @Composable
     private fun CreateAddressSuccessScreen(
         viewState: CreateAddress.ViewDataState,
-        onAction: (CreateAddress.Action) -> Unit,
+        onAction: (CreateAddress.Action) -> Unit
     ) {
         Column(
             modifier = Modifier
@@ -138,7 +138,7 @@ class CreateAddressFragment :
                             null
                         },
                         suggestionsList = viewState.streetSuggestionList,
-                        isLoading = viewState.isSuggestionLoading,
+                        isLoading = viewState.isSuggestionLoading
                     )
 
                     FoodDeliveryTextField(

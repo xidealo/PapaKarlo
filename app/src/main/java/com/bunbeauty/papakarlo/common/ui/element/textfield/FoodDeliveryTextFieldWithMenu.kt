@@ -32,7 +32,7 @@ fun FoodDeliveryTextFieldWithMenu(
     onValueChange: (value: String) -> Unit,
     @StringRes errorMessageId: Int? = null,
     suggestionsList: ImmutableList<SuggestionUi> = persistentListOf(),
-    isLoading: Boolean = false,
+    isLoading: Boolean = false
 ) {
     Column {
         ExposedDropdownMenuBox(
@@ -48,7 +48,7 @@ fun FoodDeliveryTextFieldWithMenu(
                 labelStringId = labelStringId,
                 onValueChange = onValueChange,
                 isError = errorMessageId != null,
-                isLoading = isLoading,
+                isLoading = isLoading
             )
 
             if (suggestionsList.isNotEmpty()) {

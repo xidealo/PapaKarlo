@@ -38,7 +38,7 @@ fun FoodDeliveryBaseTextField(
     maxSymbols: Int = Int.MAX_VALUE,
     maxLines: Int = 1,
     isError: Boolean = false,
-    isLoading: Boolean = false,
+    isLoading: Boolean = false
 ) {
     OutlinedTextField(
         modifier = modifier,
@@ -93,7 +93,7 @@ fun FoodDeliveryBaseTextField(
     maxSymbols: Int = Int.MAX_VALUE,
     maxLines: Int = 1,
     isError: Boolean = false,
-    isLoading: Boolean = false,
+    isLoading: Boolean = false
 ) {
     CompositionLocalProvider(
         LocalTextSelectionColors provides FoodDeliveryTextFieldDefaults.textSelectionColors
@@ -164,7 +164,7 @@ private fun FoodDeliveryTextBaseFieldWithLoadingPreview() {
         value = "Нужно больше еды \n ...",
         labelStringId = R.string.hint_create_order_comment,
         onValueChange = {},
-        isLoading = true,
+        isLoading = true
     )
 }
 
@@ -176,6 +176,6 @@ private fun FoodDeliveryTextBaseFieldWithErrorPreview() {
         value = "Нужно больше еды \n ...",
         labelStringId = R.string.hint_create_order_comment,
         onValueChange = {},
-        isError = true,
+        isError = true
     )
 }
