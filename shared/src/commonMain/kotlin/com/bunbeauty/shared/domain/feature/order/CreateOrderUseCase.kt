@@ -15,7 +15,6 @@ import com.bunbeauty.shared.domain.repo.CartProductRepo
 import com.bunbeauty.shared.domain.repo.OrderRepo
 import com.bunbeauty.shared.domain.util.IDateTimeUtil
 
-//todo (add tests for sort additions)
 class CreateOrderUseCase(
     private val dataStoreRepo: DataStoreRepo,
     private val cartProductRepo: CartProductRepo,

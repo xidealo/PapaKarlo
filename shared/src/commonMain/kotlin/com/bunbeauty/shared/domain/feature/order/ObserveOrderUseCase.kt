@@ -10,7 +10,6 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
 
-//TODO(tests for sort additions)
 class ObserveOrderUseCase(
     private val dataStoreRepo: DataStoreRepo,
     private val orderRepo: OrderRepo,

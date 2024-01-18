@@ -1,11 +1,14 @@
 package com.bunbeauty.domain.feature.cart
 
 import com.bunbeauty.getAddition
+import com.bunbeauty.getAdditionGroup
 import com.bunbeauty.getCartProduct
 import com.bunbeauty.getMenuProduct
 import com.bunbeauty.shared.Constants.CART_PRODUCT_LIMIT
+import com.bunbeauty.shared.data.repository.AdditionGroupRepository
 import com.bunbeauty.shared.data.repository.AdditionRepository
 import com.bunbeauty.shared.data.repository.CartProductAdditionRepository
+import com.bunbeauty.shared.domain.feature.addition.GetAdditionPriorityUseCase
 import com.bunbeauty.shared.domain.feature.addition.GetIsAdditionsAreEqualUseCase
 import com.bunbeauty.shared.domain.feature.cart.AddCartProductUseCase
 import com.bunbeauty.shared.domain.model.cart.CartProduct
@@ -26,6 +29,8 @@ internal class AddCartProductUseCaseTest {
     private val cartProductAdditionRepository: CartProductAdditionRepository = mockk(relaxed = true)
     private val additionRepository: AdditionRepository = mockk()
     private val getIsAdditionsAreEqualUseCase: GetIsAdditionsAreEqualUseCase = mockk()
+    private val additionGroupRepository: AdditionGroupRepository = mockk()
+    private val getAdditionPriorityUseCase: GetAdditionPriorityUseCase = mockk()
     private val menuProductUuid = "menu_product_uuid"
     private lateinit var addCartProduct: AddCartProductUseCase
 
@@ -35,7 +40,9 @@ internal class AddCartProductUseCaseTest {
             cartProductRepo = cartProductRepo,
             cartProductAdditionRepository = cartProductAdditionRepository,
             additionRepository = additionRepository,
-            getIsAdditionsAreEqualUseCase = getIsAdditionsAreEqualUseCase
+            getIsAdditionsAreEqualUseCase = getIsAdditionsAreEqualUseCase,
+            additionGroupRepository = additionGroupRepository,
+            getAdditionPriorityUseCase = getAdditionPriorityUseCase
         )
     }
 
@@ -89,6 +96,13 @@ internal class AddCartProductUseCaseTest {
                 initialCartProduct,
                 initialAdditionList.map { addition -> addition.uuid })
         } returns false
+        coEvery {
+            additionGroupRepository.getAdditionGroup("")
+        } returns getAdditionGroup()
+
+        coEvery {
+            getAdditionPriorityUseCase(any(), any())
+        } returns 0
 
         coEvery { cartProductRepo.saveAsCartProduct(menuProductUuid) } returns initialCartProduct.uuid
         coEvery { additionRepository.getAddition("1") } returns getAddition("1")
@@ -155,7 +169,12 @@ internal class AddCartProductUseCaseTest {
             addCartProduct(menuProductUuid, initialAdditionList.map { addition -> addition.uuid })
 
         // Then
-        coVerify { cartProductRepo.updateCartProductCount(initialCartProduct.uuid, initialCount + 1) }
+        coVerify {
+            cartProductRepo.updateCartProductCount(
+                initialCartProduct.uuid,
+                initialCount + 1
+            )
+        }
 
         assertTrue(result)
     }

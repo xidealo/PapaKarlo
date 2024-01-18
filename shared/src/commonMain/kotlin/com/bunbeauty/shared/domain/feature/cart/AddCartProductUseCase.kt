@@ -4,13 +4,12 @@ import com.bunbeauty.shared.Constants.CART_PRODUCT_LIMIT
 import com.bunbeauty.shared.data.repository.AdditionGroupRepository
 import com.bunbeauty.shared.data.repository.AdditionRepository
 import com.bunbeauty.shared.data.repository.CartProductAdditionRepository
+import com.bunbeauty.shared.domain.feature.addition.GetAdditionPriorityUseCase
 import com.bunbeauty.shared.domain.feature.addition.GetIsAdditionsAreEqualUseCase
 import com.bunbeauty.shared.domain.model.addition.Addition
 import com.bunbeauty.shared.domain.model.addition.AdditionGroup
 import com.bunbeauty.shared.domain.model.cart.CartProduct
 import com.bunbeauty.shared.domain.repo.CartProductRepo
-
-//todo (add tests for calculating priority)
 
 class AddCartProductUseCase(
     private val cartProductRepo: CartProductRepo,
@@ -18,12 +17,8 @@ class AddCartProductUseCase(
     private val additionRepository: AdditionRepository,
     private val getIsAdditionsAreEqualUseCase: GetIsAdditionsAreEqualUseCase,
     private val additionGroupRepository: AdditionGroupRepository,
+    private val getAdditionPriorityUseCase: GetAdditionPriorityUseCase,
 ) {
-
-    companion object {
-        private const val ADDITION_GROUP_COEFFICIENT = 10
-    }
-
     suspend operator fun invoke(
         menuProductUuid: String,
         additionUuidList: List<String>,
@@ -52,7 +47,9 @@ class AddCartProductUseCase(
                             cartProductAdditionRepository.saveAsCartProductAddition(
                                 cartProductUuid = cartProductUuid,
                                 addition = foundAddition.copy(
-                                    priority = getAdditionPriority(additionGroup, foundAddition)
+                                    priority = additionGroup?.let {
+                                        getAdditionPriorityUseCase(additionGroup, foundAddition)
+                                    } ?: foundAddition.priority
                                 )
                             )
                         }
@@ -66,11 +63,6 @@ class AddCartProductUseCase(
         }
         return cartProduct != null
     }
-
-    private fun getAdditionPriority(
-        additionGroup: AdditionGroup?,
-        foundAddition: Addition,
-    ) = (additionGroup?.priority ?: 0) * ADDITION_GROUP_COEFFICIENT + foundAddition.priority
 
 
     private fun getCartProductWithSameAdditions(

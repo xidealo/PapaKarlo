@@ -60,7 +60,7 @@ fun getCartProductAddition(uuid: String = "1", additionUuid: String = "1", price
         priority = null
     )
 
-fun getAddition(uuid: String = "1", priority: Int = 0) = Addition(
+fun getAddition(uuid: String = "1", priority: Int = 0, additionGroupUuid: String = "") = Addition(
     uuid = uuid,
     name = "",
     fullName = null,
@@ -68,7 +68,7 @@ fun getAddition(uuid: String = "1", priority: Int = 0) = Addition(
     isSelected = false,
     isVisible = false,
     photoLink = "",
-    additionGroupUuid = "",
+    additionGroupUuid = additionGroupUuid,
     priority = priority
 )
 
