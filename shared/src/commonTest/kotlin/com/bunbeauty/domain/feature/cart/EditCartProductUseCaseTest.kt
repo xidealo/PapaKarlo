@@ -20,7 +20,6 @@ internal class EditCartProductUseCaseTest {
 
     private val cartProductRepo: CartProductRepo = mockk()
     private val cartProductAdditionRepository: CartProductAdditionRepository = mockk(relaxed = true)
-    private val additionRepository: AdditionRepository = mockk()
     private val areAdditionsEqualUseCase: AreAdditionsEqualUseCase = mockk()
     private lateinit var editCartProductUseCase: EditCartProductUseCase
 
@@ -29,7 +28,6 @@ internal class EditCartProductUseCaseTest {
         editCartProductUseCase = EditCartProductUseCase(
             cartProductRepo = cartProductRepo,
             cartProductAdditionRepository = cartProductAdditionRepository,
-            additionRepository = additionRepository,
             areAdditionsEqualUseCase = areAdditionsEqualUseCase
         )
     }
@@ -51,7 +49,6 @@ internal class EditCartProductUseCaseTest {
             )
         } returns false
         coEvery { cartProductAdditionRepository.delete(cartProductAdditionUuid = initialCartProductAddition.uuid) } returns Unit
-        coEvery { additionRepository.getAddition(uuid = initialAddition.uuid) } returns initialAddition
         coEvery {
             cartProductAdditionRepository.saveAsCartProductAddition(
                 cartProductUuid = initialCartProduct.uuid,
@@ -60,7 +57,7 @@ internal class EditCartProductUseCaseTest {
         } returns Unit
 
         // When
-        editCartProductUseCase(initialCartProduct.uuid, listOf(initialAddition.uuid))
+        editCartProductUseCase(initialCartProduct.uuid, listOf(initialAddition))
 
         // Then
         coVerify {
@@ -85,7 +82,6 @@ internal class EditCartProductUseCaseTest {
             )
         } returns false
         coEvery { cartProductAdditionRepository.delete(cartProductAdditionUuid = initialCartProductAddition.uuid) } returns Unit
-        coEvery { additionRepository.getAddition(uuid = initialAddition.uuid) } returns initialAddition
         coEvery {
             cartProductAdditionRepository.saveAsCartProductAddition(
                 cartProductUuid = initialCartProduct.uuid,
@@ -94,12 +90,9 @@ internal class EditCartProductUseCaseTest {
         } returns Unit
 
         // When
-        editCartProductUseCase(initialCartProduct.uuid, listOf(initialAddition.uuid))
+        editCartProductUseCase(initialCartProduct.uuid, listOf(initialAddition))
 
         // Then
-        coVerify {
-            additionRepository.getAddition(uuid = initialAddition.uuid)
-        }
         coVerify {
             cartProductAdditionRepository.saveAsCartProductAddition(
                 cartProductUuid = initialCartProduct.uuid,
@@ -126,7 +119,6 @@ internal class EditCartProductUseCaseTest {
             )
         } returns false
         coEvery { cartProductAdditionRepository.delete(cartProductAdditionUuid = initialCartProductAddition.uuid) } returns Unit
-        coEvery { additionRepository.getAddition(uuid = initialAddition.uuid) } returns initialAddition
         coEvery {
             cartProductAdditionRepository.saveAsCartProductAddition(
                 cartProductUuid = initialCartProduct.uuid,
@@ -135,7 +127,7 @@ internal class EditCartProductUseCaseTest {
         } returns Unit
 
         // When
-        editCartProductUseCase(initialCartProduct.uuid, listOf(initialAddition.uuid))
+        editCartProductUseCase(initialCartProduct.uuid, listOf(initialAddition))
 
         // Then
         coVerify(exactly = 0) {
@@ -146,9 +138,6 @@ internal class EditCartProductUseCaseTest {
                 initialCartProduct,
                 listOf(initialAddition.uuid)
             )
-        }
-        coVerify(exactly = 0) {
-            additionRepository.getAddition(uuid = initialAddition.uuid)
         }
         coVerify(exactly = 0) {
             cartProductAdditionRepository.saveAsCartProductAddition(
@@ -176,7 +165,6 @@ internal class EditCartProductUseCaseTest {
             )
         } returns true
         coEvery { cartProductAdditionRepository.delete(cartProductAdditionUuid = initialCartProductAddition.uuid) } returns Unit
-        coEvery { additionRepository.getAddition(uuid = initialAddition.uuid) } returns initialAddition
         coEvery {
             cartProductAdditionRepository.saveAsCartProductAddition(
                 cartProductUuid = initialCartProduct.uuid,
@@ -185,14 +173,11 @@ internal class EditCartProductUseCaseTest {
         } returns Unit
 
         // When
-        editCartProductUseCase(initialCartProduct.uuid, listOf(initialAddition.uuid))
+        editCartProductUseCase(initialCartProduct.uuid, listOf(initialAddition))
 
         // Then
         coVerify(exactly = 0) {
             cartProductAdditionRepository.delete(cartProductAdditionUuid = initialCartProductAddition.uuid)
-        }
-        coVerify(exactly = 0) {
-            additionRepository.getAddition(uuid = initialAddition.uuid)
         }
         coVerify(exactly = 0) {
             cartProductAdditionRepository.saveAsCartProductAddition(

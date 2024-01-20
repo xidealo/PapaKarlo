@@ -41,7 +41,6 @@ internal fun cartUseCaseModule() = module {
         EditCartProductUseCase(
             cartProductRepo = get(),
             cartProductAdditionRepository = get(),
-            additionRepository = get(),
             areAdditionsEqualUseCase = get()
         )
     }

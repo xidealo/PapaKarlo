@@ -176,15 +176,16 @@ class ProductDetailsViewModel(
 
         sharedScope.launchSafe(
             block = {
-                val selectedAdditionUuidList = menuProduct.additionList
-                    .filter { addition -> addition.isSelected }
-                    .map { addition -> addition.uuid }
+                val selectedAdditionList = menuProduct.additionList
+                    .filter { addition ->
+                        addition.isSelected
+                    }
 
                 if (productDetailsOpenedFrom == ProductDetailsOpenedFrom.CART_PRODUCT) {
                     cartProductUuid?.let { cartProductUuid ->
                         editCartProductUseCase(
                             cartProductUuid = cartProductUuid,
-                            additionUuidList = selectedAdditionUuidList,
+                            additionList = selectedAdditionList,
                         )
                         addEvent {
                             ProductDetailsState.Event.EditedProduct(menuProductName = menuProduct.name)
@@ -193,7 +194,10 @@ class ProductDetailsViewModel(
                 } else {
                     addCartProductUseCase(
                         menuProductUuid = menuProduct.uuid,
-                        additionUuidList = selectedAdditionUuidList
+                        additionUuidList = selectedAdditionList
+                            .map { addition ->
+                                addition.uuid
+                            }
                     )
                     addEvent {
                         ProductDetailsState.Event.AddedProduct(menuProductPhotoLink = menuProduct.photoLink)

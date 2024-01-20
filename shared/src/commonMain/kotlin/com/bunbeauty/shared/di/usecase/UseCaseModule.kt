@@ -30,11 +30,14 @@ internal fun useCaseModules() = module {
 
     factory {
         GetNewTotalCostUseCase(
-            getDiscountUseCase = get()
+            getDiscountUseCase = get(),
+            getCartProductAdditionsPriceUseCase = get()
         )
     }
     factory {
-        GetOldTotalCostUseCase()
+        GetOldTotalCostUseCase(
+            getCartProductAdditionsPriceUseCase = get()
+        )
     }
 
     factory {

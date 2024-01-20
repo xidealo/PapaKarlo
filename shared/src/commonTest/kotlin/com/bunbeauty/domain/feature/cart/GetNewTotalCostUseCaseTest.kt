@@ -3,6 +3,8 @@ package com.bunbeauty.domain.feature.cart
 import com.bunbeauty.getCartProduct
 import com.bunbeauty.getCartProductAddition
 import com.bunbeauty.getMenuProduct
+import com.bunbeauty.shared.domain.feature.addition.GetAdditionPriorityUseCase
+import com.bunbeauty.shared.domain.feature.addition.GetCartProductAdditionsPriceUseCase
 import com.bunbeauty.shared.domain.feature.discount.GetDiscountUseCase
 import com.bunbeauty.shared.domain.interactor.cart.GetNewTotalCostUseCase
 import com.bunbeauty.shared.domain.model.Discount
@@ -16,6 +18,7 @@ import kotlin.test.assertEquals
 class GetNewTotalCostUseCaseTest {
 
     private val getDiscountUseCase: GetDiscountUseCase = mockk()
+    private val getCartProductAdditionsPriceUseCase: GetCartProductAdditionsPriceUseCase = mockk()
 
     private lateinit var getNewTotalCostUseCase: GetNewTotalCostUseCase
 
@@ -23,6 +26,7 @@ class GetNewTotalCostUseCaseTest {
     fun setup() {
         getNewTotalCostUseCase = GetNewTotalCostUseCase(
             getDiscountUseCase = getDiscountUseCase,
+            getCartProductAdditionsPriceUseCase = getCartProductAdditionsPriceUseCase
         )
     }
 
@@ -57,6 +61,7 @@ class GetNewTotalCostUseCaseTest {
                 )
             )
             coEvery { getDiscountUseCase() } returns null
+            coEvery { getCartProductAdditionsPriceUseCase(any()) } returns 0
 
             // When
             val newFinalCost = getNewTotalCostUseCase(cartProductListMockData)
@@ -83,6 +88,7 @@ class GetNewTotalCostUseCaseTest {
                 )
             )
             coEvery { getDiscountUseCase() } returns Discount(firstOrderDiscount = 10)
+            coEvery { getCartProductAdditionsPriceUseCase(any()) } returns 0
 
             // When
             val newFinalCost = getNewTotalCostUseCase(cartProductListMockData)
@@ -105,6 +111,7 @@ class GetNewTotalCostUseCaseTest {
                 ),
             )
             coEvery { getDiscountUseCase() } returns Discount(firstOrderDiscount = 10)
+            coEvery { getCartProductAdditionsPriceUseCase(any()) } returns 0
 
             // When
             val newFinalCost = getNewTotalCostUseCase(cartProductListMockData)
@@ -127,6 +134,7 @@ class GetNewTotalCostUseCaseTest {
                 ),
             )
             coEvery { getDiscountUseCase() } returns Discount(firstOrderDiscount = 100)
+            coEvery { getCartProductAdditionsPriceUseCase(any()) } returns 0
 
             // When
             val newFinalCost = getNewTotalCostUseCase(cartProductListMockData)
@@ -149,6 +157,7 @@ class GetNewTotalCostUseCaseTest {
                 )
             )
             coEvery { getDiscountUseCase() } returns Discount(firstOrderDiscount = 0)
+            coEvery { getCartProductAdditionsPriceUseCase(any()) } returns 0
 
             // When
             val newFinalCost = getNewTotalCostUseCase(cartProductListMockData)
@@ -175,6 +184,7 @@ class GetNewTotalCostUseCaseTest {
                 )
             )
             coEvery { getDiscountUseCase() } returns Discount(firstOrderDiscount = 0)
+            coEvery { getCartProductAdditionsPriceUseCase(any()) } returns 100
 
             // When
             val newFinalCost = getNewTotalCostUseCase(cartProductListMockData)

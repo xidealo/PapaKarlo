@@ -65,11 +65,12 @@ fun getAddition(
     priority: Int = 0,
     additionGroupUuid: String = "",
     isVisible: Boolean = true,
+    price: Int? = 0,
 ) = Addition(
     uuid = uuid,
     name = "",
     fullName = null,
-    price = null,
+    price = price,
     isSelected = false,
     isVisible = isVisible,
     photoLink = "",

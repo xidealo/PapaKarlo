@@ -3,17 +3,17 @@ package com.bunbeauty.shared.domain.feature.cart
 import com.bunbeauty.shared.data.repository.AdditionRepository
 import com.bunbeauty.shared.data.repository.CartProductAdditionRepository
 import com.bunbeauty.shared.domain.feature.addition.AreAdditionsEqualUseCase
+import com.bunbeauty.shared.domain.model.addition.Addition
 import com.bunbeauty.shared.domain.repo.CartProductRepo
 
 class EditCartProductUseCase(
     private val cartProductRepo: CartProductRepo,
     private val cartProductAdditionRepository: CartProductAdditionRepository,
-    private val additionRepository: AdditionRepository,
     private val areAdditionsEqualUseCase: AreAdditionsEqualUseCase,
 ) {
     suspend operator fun invoke(
         cartProductUuid: String,
-        additionUuidList: List<String>,
+        additionList: List<Addition>,
     ) {
         val cartProduct =
             cartProductRepo.getCartProduct(cartProductUuid = cartProductUuid) ?: return
@@ -21,7 +21,9 @@ class EditCartProductUseCase(
         if (
             areAdditionsEqualUseCase(
                 cartProduct = cartProduct,
-                additionUuidList = additionUuidList
+                additionUuidList = additionList.map { addition ->
+                    addition.uuid
+                }
             )
         ) {
             return
@@ -31,13 +33,11 @@ class EditCartProductUseCase(
             cartProductAdditionRepository.delete(cartProductAdditionUuid = cartProductAddition.uuid)
         }
 
-        additionUuidList.forEach { additionUuid ->
-            additionRepository.getAddition(uuid = additionUuid)?.let { addition ->
-                cartProductAdditionRepository.saveAsCartProductAddition(
-                    cartProductUuid = cartProductUuid,
-                    addition = addition
-                )
-            }
+        additionList.forEach { addition ->
+            cartProductAdditionRepository.saveAsCartProductAddition(
+                cartProductUuid = cartProductUuid,
+                addition = addition
+            )
         }
     }
 }

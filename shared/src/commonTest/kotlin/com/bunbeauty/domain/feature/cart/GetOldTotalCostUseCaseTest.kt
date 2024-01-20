@@ -3,7 +3,10 @@ package com.bunbeauty.domain.feature.cart
 import com.bunbeauty.getCartProduct
 import com.bunbeauty.getCartProductAddition
 import com.bunbeauty.getMenuProduct
+import com.bunbeauty.shared.domain.feature.addition.GetCartProductAdditionsPriceUseCase
 import com.bunbeauty.shared.domain.interactor.cart.GetOldTotalCostUseCase
+import io.mockk.coEvery
+import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -13,10 +16,13 @@ class GetOldTotalCostUseCaseTest {
 
 
     private lateinit var getOldTotalCostUseCase: GetOldTotalCostUseCase
+    private val getCartProductAdditionsPriceUseCase: GetCartProductAdditionsPriceUseCase = mockk()
 
     @BeforeTest
     fun setup() {
-        getOldTotalCostUseCase = GetOldTotalCostUseCase()
+        getOldTotalCostUseCase = GetOldTotalCostUseCase(
+            getCartProductAdditionsPriceUseCase = getCartProductAdditionsPriceUseCase
+        )
     }
 
     @Test
@@ -24,6 +30,7 @@ class GetOldTotalCostUseCaseTest {
 
         // When
         val oldFinalCost = getOldTotalCostUseCase(emptyList())
+        coEvery { getCartProductAdditionsPriceUseCase(any()) } returns 0
 
         // Then
         assertEquals(
@@ -51,6 +58,13 @@ class GetOldTotalCostUseCaseTest {
                     )
                 ),
             )
+            coEvery { getCartProductAdditionsPriceUseCase(listOf(getCartProductAddition(price = 100))) } returns 100
+
+            coEvery { getCartProductAdditionsPriceUseCase(listOf(
+                getCartProductAddition(price = 75),
+                getCartProductAddition(price = 75)
+            )) } returns 150
+
             // When
             val oldFinalCost = getOldTotalCostUseCase(cartProductListMockData)
 
