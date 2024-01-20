@@ -3,20 +3,20 @@ package com.bunbeauty.shared.domain.feature.addition
 import com.bunbeauty.shared.domain.model.cart.CartProduct
 
 class AreAdditionsEqualUseCase {
+
     operator fun invoke(
-        initialCartProduct: CartProduct,
+        cartProduct: CartProduct,
         additionUuidList: List<String>,
     ): Boolean {
-        // Check if the lists have the same size
-        val listsHaveSameSize =
-            initialCartProduct.cartProductAdditionList.size == additionUuidList.size
-
-        // Check if each element in 'additionList' has a corresponding element in 'cartProductAdditionList' with the same 'uuid'
-        val listsAreEqual = listsHaveSameSize && additionUuidList.all { additionUuid ->
-            initialCartProduct.cartProductAdditionList.any { cartProductAddition ->
-                cartProductAddition.additionUuid == additionUuid
-            }
+        if (cartProduct.additionList.size != additionUuidList.size) {
+            return false
         }
-        return listsAreEqual
+
+        val sortedCartProductAdditionUuidList = cartProduct.additionList.map { addition ->
+            addition.additionUuid
+        }.sorted()
+        val sortedAdditionUuidList = additionUuidList.sorted()
+
+        return sortedCartProductAdditionUuidList == sortedAdditionUuidList
     }
 }

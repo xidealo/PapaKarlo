@@ -58,14 +58,14 @@ class CartProductInteractor(
             photoLink = cartProduct.product.photoLink,
             count = cartProduct.count,
             menuProductUuid = cartProduct.product.uuid,
-            cartProductAdditionList = cartProduct.cartProductAdditionList.sortedBy { cartProductAddition ->
+            cartProductAdditionList = cartProduct.additionList.sortedBy { cartProductAddition ->
                 cartProductAddition.priority
             }
         )
     }
 
     private fun getNewTotalCost(cartProduct: CartProduct): Int {
-        return (cartProduct.product.newPrice + cartProduct.cartProductAdditionList.sumOf { addition ->
+        return (cartProduct.product.newPrice + cartProduct.additionList.sumOf { addition ->
             addition.price ?: 0
         }) * cartProduct.count
     }
@@ -73,14 +73,8 @@ class CartProductInteractor(
     private fun getOldTotalCost(cartProduct: CartProduct): Int? {
         val oldPrice = cartProduct.product.oldPrice ?: return null
 
-        return (oldPrice + cartProduct.cartProductAdditionList.sumOf { addition ->
+        return (oldPrice + cartProduct.additionList.sumOf { addition ->
             addition.price ?: 0
         }) * cartProduct.count
-    }
-
-    private fun getTotalCount(productList: List<CartProduct>): Int {
-        return productList.sumOf { product ->
-            product.count
-        }
     }
 }

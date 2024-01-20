@@ -39,7 +39,7 @@ class CartProductMapper : ICartProductMapper {
                     isRecommended = firstCartProductWithCategoryEntity.isRecommended,
                     additionGroups = emptyList(),
                 ),
-                cartProductAdditionList = groupedCartProductWithCategoryEntityList.mapNotNull { cartProductWithMenuProductEntityList ->
+                additionList = groupedCartProductWithCategoryEntityList.mapNotNull { cartProductWithMenuProductEntityList ->
                     cartProductWithMenuProductEntityList.cartProductAdditionUuid?.let {
                         CartProductAddition(
                             uuid = cartProductWithMenuProductEntityList.cartProductAdditionUuid,

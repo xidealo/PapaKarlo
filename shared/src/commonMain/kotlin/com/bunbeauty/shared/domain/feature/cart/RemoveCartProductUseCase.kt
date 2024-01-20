@@ -20,7 +20,7 @@ class RemoveCartProductUseCase(
             )
         } else {
             cartProductRepo.deleteCartProduct(cartProduct.uuid)
-            cartProduct.cartProductAdditionList.forEach { cartProductAddition ->
+            cartProduct.additionList.forEach { cartProductAddition ->
                 cartProductAdditionRepository.delete(cartProductAdditionUuid = cartProductAddition.uuid)
             }
         }

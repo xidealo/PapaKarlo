@@ -40,7 +40,7 @@ fun getCartProduct(
     uuid = uuid,
     count = count,
     product = menuProduct,
-    cartProductAdditionList = cartProductAdditionList
+    additionList = cartProductAdditionList
 )
 
 fun getCategoryProduct(uuid: String, name: String = "", priority: Int = 0) = Category(
