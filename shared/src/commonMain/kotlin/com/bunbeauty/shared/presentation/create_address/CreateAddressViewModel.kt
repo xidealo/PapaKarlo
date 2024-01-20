@@ -19,6 +19,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 
 private const val LETTER_COUNT_FOR_SUGGESTIONS = 3
+private const val SUGGESTION_REQUEST_DEBOUNCE_MILLIS = 1_000L
 
 class CreateAddressViewModel(
     private val getSuggestionsUseCase: GetSuggestionsUseCase,
@@ -229,7 +230,7 @@ class CreateAddressViewModel(
                 selectedSuggestion = state.selectedStreetSuggestion,
             )
         }.distinctUntilChanged()
-            .debounce(1_000)
+            .debounce(SUGGESTION_REQUEST_DEBOUNCE_MILLIS)
             .filter { streetField ->
                 streetField.isFocused &&
                     (streetField.street != streetField.selectedSuggestion?.value) &&
@@ -250,12 +251,7 @@ class CreateAddressViewModel(
                 val suggestionList = getSuggestionsUseCase(query = query)
                 setState {
                     copy(
-                        streetSuggestionList = suggestionList.map { suggestion ->
-                            SuggestionUi(
-                                id = suggestion.fiasId,
-                                value = suggestion.street,
-                            )
-                        }.toImmutableList(),
+                        streetSuggestionList = suggestionList.map(::mapSuggestion).toImmutableList(),
                         isSuggestionLoading = false,
                     )
                 }
@@ -268,6 +264,13 @@ class CreateAddressViewModel(
                     copy(isSuggestionLoading = false)
                 }
             }
+        )
+    }
+
+    private fun mapSuggestion(suggestion: Suggestion): SuggestionUi {
+        return SuggestionUi(
+            id = suggestion.fiasId,
+            value = suggestion.street,
         )
     }
 
