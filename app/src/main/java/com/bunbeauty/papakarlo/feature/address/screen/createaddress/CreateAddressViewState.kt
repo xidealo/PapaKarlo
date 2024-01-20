@@ -18,8 +18,8 @@ data class CreateAddressViewState(
     val entrance: String,
     val floor: String,
     val comment: String,
-    val isCreateLoading: Boolean,
-): BaseViewState {
+    val isCreateLoading: Boolean
+) : BaseViewState {
 
     val suggestionListNotEmpty = streetSuggestionList.isNotEmpty()
 }

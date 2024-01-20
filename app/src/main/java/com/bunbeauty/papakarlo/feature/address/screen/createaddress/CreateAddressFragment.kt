@@ -96,7 +96,7 @@ class CreateAddressFragment :
     @Composable
     private fun CreateAddressSuccessScreen(
         viewState: CreateAddressViewState,
-        onAction: (CreateAddress.Action) -> Unit,
+        onAction: (CreateAddress.Action) -> Unit
     ) {
         Column(
             modifier = Modifier
@@ -218,7 +218,7 @@ class CreateAddressFragment :
                     entrance = "",
                     floor = "",
                     comment = "",
-                    isCreateLoading = false,
+                    isCreateLoading = false
                 ),
                 onAction = {}
             )

@@ -35,7 +35,7 @@ fun FoodDeliveryBaseTextField(
     maxSymbols: Int = Int.MAX_VALUE,
     maxLines: Int = 1,
     isError: Boolean = false,
-    isLoading: Boolean = false,
+    isLoading: Boolean = false
 ) {
     OutlinedTextField(
         modifier = modifier,
@@ -57,7 +57,7 @@ fun FoodDeliveryBaseTextField(
                 textValue = value,
                 onClick = {
                     onValueChange("")
-                },
+                }
             )
         },
         isError = isError,
@@ -83,7 +83,7 @@ fun FoodDeliveryBaseTextField(
     maxSymbols: Int = Int.MAX_VALUE,
     maxLines: Int = 1,
     isError: Boolean = false,
-    isLoading: Boolean = false,
+    isLoading: Boolean = false
 ) {
     CompositionLocalProvider(
         LocalTextSelectionColors provides FoodDeliveryTextFieldDefaults.textSelectionColors
@@ -112,7 +112,7 @@ fun FoodDeliveryBaseTextField(
                     textValue = value.text,
                     onClick = {
                         onValueChange(TextFieldValue(""))
-                    },
+                    }
                 )
             },
             isError = isError,
@@ -133,7 +133,7 @@ private fun TrailingIcon(
     isLoading: Boolean,
     textValue: String,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     when {
         isLoading -> {

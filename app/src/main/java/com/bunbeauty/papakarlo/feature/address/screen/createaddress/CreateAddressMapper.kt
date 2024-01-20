@@ -24,6 +24,6 @@ val mapCreateAddressState: CreateAddress.DataState.() -> CreateAddressViewState 
         entrance = entrance,
         floor = floor,
         comment = comment,
-        isCreateLoading = isCreateLoading,
+        isCreateLoading = isCreateLoading
     )
 }
