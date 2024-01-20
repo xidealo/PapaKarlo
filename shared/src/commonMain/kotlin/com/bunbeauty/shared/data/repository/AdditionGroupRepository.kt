@@ -8,9 +8,6 @@ class AdditionGroupRepository(
     private val additionGroupDao: IAdditionGroupDao,
 ) {
     suspend fun getAdditionGroup(uuid: String): AdditionGroup? {
-        return additionGroupDao.getAdditionGroupEntity(uuid)?.mapAdditionGroupEntityToGroup(
-            // don't need additions for current using
-            emptyList()
-        )
+        return additionGroupDao.getAdditionGroupEntity(uuid)?.mapAdditionGroupEntityToGroup()
     }
 }

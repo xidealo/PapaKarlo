@@ -12,6 +12,6 @@ sealed class AdditionItem : ItemModel() {
     data class AdditionListItem(
         override val key: String,
         val product: MenuProductAdditionItem,
-        val isMultiply: Boolean,
+        val isMultiple: Boolean,
     ) : AdditionItem()
 }

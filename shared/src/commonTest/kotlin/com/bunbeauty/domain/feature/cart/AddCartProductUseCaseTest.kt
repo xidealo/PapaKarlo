@@ -9,7 +9,7 @@ import com.bunbeauty.shared.data.repository.AdditionGroupRepository
 import com.bunbeauty.shared.data.repository.AdditionRepository
 import com.bunbeauty.shared.data.repository.CartProductAdditionRepository
 import com.bunbeauty.shared.domain.feature.addition.GetAdditionPriorityUseCase
-import com.bunbeauty.shared.domain.feature.addition.GetIsAdditionsAreEqualUseCase
+import com.bunbeauty.shared.domain.feature.addition.AreAdditionsEqualUseCase
 import com.bunbeauty.shared.domain.feature.cart.AddCartProductUseCase
 import com.bunbeauty.shared.domain.model.cart.CartProduct
 import com.bunbeauty.shared.domain.model.addition.CartProductAddition
@@ -28,7 +28,7 @@ internal class AddCartProductUseCaseTest {
     private val cartProductRepo: CartProductRepo = mockk()
     private val cartProductAdditionRepository: CartProductAdditionRepository = mockk(relaxed = true)
     private val additionRepository: AdditionRepository = mockk()
-    private val getIsAdditionsAreEqualUseCase: GetIsAdditionsAreEqualUseCase = mockk()
+    private val areAdditionsEqualUseCase: AreAdditionsEqualUseCase = mockk()
     private val additionGroupRepository: AdditionGroupRepository = mockk()
     private val getAdditionPriorityUseCase: GetAdditionPriorityUseCase = mockk()
     private val menuProductUuid = "menu_product_uuid"
@@ -40,7 +40,7 @@ internal class AddCartProductUseCaseTest {
             cartProductRepo = cartProductRepo,
             cartProductAdditionRepository = cartProductAdditionRepository,
             additionRepository = additionRepository,
-            getIsAdditionsAreEqualUseCase = getIsAdditionsAreEqualUseCase,
+            areAdditionsEqualUseCase = areAdditionsEqualUseCase,
             additionGroupRepository = additionGroupRepository,
             getAdditionPriorityUseCase = getAdditionPriorityUseCase
         )
@@ -92,7 +92,7 @@ internal class AddCartProductUseCaseTest {
             initialCartProduct
         )
         coEvery {
-            getIsAdditionsAreEqualUseCase(
+            areAdditionsEqualUseCase(
                 initialCartProduct,
                 initialAdditionList.map { addition -> addition.uuid })
         } returns false
@@ -150,7 +150,7 @@ internal class AddCartProductUseCaseTest {
             initialCartProduct
         )
         coEvery {
-            getIsAdditionsAreEqualUseCase(
+            areAdditionsEqualUseCase(
                 initialCartProduct,
                 initialAdditionList.map { addition -> addition.uuid })
         } returns true
@@ -188,7 +188,7 @@ internal class AddCartProductUseCaseTest {
         coEvery { cartProductRepo.getCartProductListByMenuProductUuid(menuProductUuid) } returns listOf(
             initialCartProduct
         )
-        coEvery { getIsAdditionsAreEqualUseCase(initialCartProduct, emptyList()) } returns true
+        coEvery { areAdditionsEqualUseCase(initialCartProduct, emptyList()) } returns true
         coEvery {
             cartProductRepo.updateCartProductCount(
                 initialCartProduct.uuid,

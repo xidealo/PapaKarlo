@@ -33,7 +33,7 @@ class ProductDetailsUiStateMapper(
                                 photoLink = addition.photoLink,
                                 groupId = additionGroup.uuid
                             ),
-                            isMultiply = !additionGroup.singleChoice
+                            isMultiple = !additionGroup.singleChoice
                         )
                     }
                 )

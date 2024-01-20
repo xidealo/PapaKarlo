@@ -10,8 +10,8 @@ class OrderDetailsUiStateMapper(
     private val paymentMethodUiStateMapper: PaymentMethodUiStateMapper
 ) {
 
-    fun map(orderState: OrderDetails.DataState): OrderDetailsUi {
-        return OrderDetailsUi(
+    fun map(orderState: OrderDetails.DataState): OrderDetailsViewState {
+        return OrderDetailsViewState(
             orderProductItemList = orderState.orderDetailsData.orderProductItemList.map(
                 orderProductItemMapper::toItem
             ),
@@ -19,7 +19,7 @@ class OrderDetailsUiStateMapper(
             deliveryCost = orderState.orderDetailsData.deliveryCost,
             newTotalCost = orderState.orderDetailsData.newTotalCost,
             orderInfo = orderState.orderDetailsData.orderInfo?.let { orderInfo ->
-                OrderDetailsUi.OrderInfo(
+                OrderDetailsViewState.OrderInfo(
                     status = orderInfo.status,
                     statusName = stringUtil.getOrderStatusName(
                         orderInfo.status

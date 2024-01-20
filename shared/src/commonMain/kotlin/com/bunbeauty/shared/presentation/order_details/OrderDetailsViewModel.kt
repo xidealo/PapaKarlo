@@ -89,7 +89,7 @@ class OrderDetailsViewModel(
                 setState {
                     copy(
                         orderUuid = orderUuid,
-                        screenState = OrderDetails.DataState.ScreenState.SUCCESS,
+                        screenState = OrderDetails.DataState.ScreenState.ERROR,
                     )
                 }
             },

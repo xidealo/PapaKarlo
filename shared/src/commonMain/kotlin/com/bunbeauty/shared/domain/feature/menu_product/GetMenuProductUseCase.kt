@@ -1,5 +1,6 @@
 package com.bunbeauty.shared.domain.feature.menu_product
 
+import com.bunbeauty.shared.domain.model.addition.AdditionGroup
 import com.bunbeauty.shared.domain.model.product.MenuProduct
 import com.bunbeauty.shared.domain.repo.MenuProductRepo
 
@@ -11,15 +12,25 @@ class GetMenuProductUseCase(
         val menuProduct = menuProductRepo.getMenuProductByUuid(menuProductUuid)
 
         return menuProduct?.copy(
-            additionGroups = menuProduct.additionGroups.map { additionGroup ->
-                additionGroup.copy(
-                    additionList = additionGroup.additionList.sortedBy { addition ->
-                        addition.priority
-                    }
-                )
-            }.sortedBy { additionGroup ->
-                additionGroup.priority
-            }
+            additionGroups = getAdditionGroupList(menuProduct)
         )
     }
+
+    private fun getAdditionGroupList(menuProduct: MenuProduct) =
+        menuProduct.additionGroups.map { additionGroup ->
+            additionGroup.copy(
+                additionList = getAdditionList(additionGroup)
+            )
+        }.filter { additionGroup ->
+            additionGroup.isVisible
+        }.sortedBy { additionGroup ->
+            additionGroup.priority
+        }
+
+    private fun getAdditionList(additionGroup: AdditionGroup) =
+        additionGroup.additionList.filter { addition ->
+            addition.isVisible
+        }.sortedBy { addition ->
+            addition.priority
+        }
 }

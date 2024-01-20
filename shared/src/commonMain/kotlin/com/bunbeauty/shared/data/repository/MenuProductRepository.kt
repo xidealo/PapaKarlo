@@ -10,6 +10,7 @@ import com.bunbeauty.shared.data.mapper.menuProduct.IMenuProductMapper
 import com.bunbeauty.shared.data.network.api.NetworkConnector
 import com.bunbeauty.shared.data.network.model.MenuProductServer
 import com.bunbeauty.shared.domain.mapFlow
+import com.bunbeauty.shared.domain.model.addition.AdditionGroup
 import com.bunbeauty.shared.domain.model.product.MenuProduct
 import com.bunbeauty.shared.domain.repo.MenuProductRepo
 import kotlinx.coroutines.flow.Flow
@@ -60,13 +61,7 @@ class MenuProductRepository(
                     menuProductDao.getMenuProductWithCategoryList()
                 ).map { menuProduct ->
                     menuProduct.copy(
-                        additionGroups = menuProduct.additionGroups.map { additionGroup ->
-                            additionGroup.copy(
-                                additionList = additionDao.getAdditionEntityListByAdditionGroup(
-                                    additionGroup.uuid
-                                ).mapNotNull(mapAdditionEntityToAddition)
-                            )
-                        }
+                        additionGroups = getAdditionGroups(menuProduct)
                     )
                 }
             },
@@ -74,6 +69,18 @@ class MenuProductRepository(
             serverToDomainModel = menuProductMapper::toMenuProduct
         ).find { menuProduct -> menuProduct.uuid == menuProductUuid }
     }
+
+    private suspend fun getAdditionGroups(menuProduct: MenuProduct) =
+        menuProduct.additionGroups.map { additionGroup ->
+            additionGroup.copy(
+                additionList = getAdditions(additionGroup)
+            )
+        }
+
+    private suspend fun getAdditions(additionGroup: AdditionGroup) =
+        additionDao.getAdditionEntityListByAdditionGroup(
+            additionGroup.uuid
+        ).map(mapAdditionEntityToAddition)
 
     private suspend fun saveMenuLocally(menuProductServerList: List<MenuProductServer>) {
         menuProductMapper.toCategoryEntityList(menuProductServerList)

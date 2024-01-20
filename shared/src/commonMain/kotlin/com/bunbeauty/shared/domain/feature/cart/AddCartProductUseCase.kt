@@ -5,9 +5,7 @@ import com.bunbeauty.shared.data.repository.AdditionGroupRepository
 import com.bunbeauty.shared.data.repository.AdditionRepository
 import com.bunbeauty.shared.data.repository.CartProductAdditionRepository
 import com.bunbeauty.shared.domain.feature.addition.GetAdditionPriorityUseCase
-import com.bunbeauty.shared.domain.feature.addition.GetIsAdditionsAreEqualUseCase
-import com.bunbeauty.shared.domain.model.addition.Addition
-import com.bunbeauty.shared.domain.model.addition.AdditionGroup
+import com.bunbeauty.shared.domain.feature.addition.AreAdditionsEqualUseCase
 import com.bunbeauty.shared.domain.model.cart.CartProduct
 import com.bunbeauty.shared.domain.repo.CartProductRepo
 
@@ -15,7 +13,7 @@ class AddCartProductUseCase(
     private val cartProductRepo: CartProductRepo,
     private val cartProductAdditionRepository: CartProductAdditionRepository,
     private val additionRepository: AdditionRepository,
-    private val getIsAdditionsAreEqualUseCase: GetIsAdditionsAreEqualUseCase,
+    private val areAdditionsEqualUseCase: AreAdditionsEqualUseCase,
     private val additionGroupRepository: AdditionGroupRepository,
     private val getAdditionPriorityUseCase: GetAdditionPriorityUseCase,
 ) {
@@ -70,7 +68,7 @@ class AddCartProductUseCase(
         additionUuidList: List<String>,
     ): CartProduct? {
         return cartProductList.firstOrNull { cartProduct ->
-            getIsAdditionsAreEqualUseCase(
+            areAdditionsEqualUseCase(
                 initialCartProduct = cartProduct,
                 additionUuidList = additionUuidList
             )

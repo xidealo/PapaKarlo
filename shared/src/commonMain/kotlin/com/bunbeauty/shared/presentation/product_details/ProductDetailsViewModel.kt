@@ -296,9 +296,7 @@ class ProductDetailsViewModel(
         additionGroup.copy(
             additionList = additionGroup.additionList.map { addition ->
                 addition.copy(
-                    isSelected = selectedAdditionUuidList.any { additionUuid ->
-                        additionUuid == addition.uuid
-                    }
+                    isSelected = selectedAdditionUuidList.contains(addition.uuid)
                 )
             }
         )

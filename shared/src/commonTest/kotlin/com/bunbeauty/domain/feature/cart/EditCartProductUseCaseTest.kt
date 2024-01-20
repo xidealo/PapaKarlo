@@ -6,7 +6,7 @@ import com.bunbeauty.getCartProductAddition
 import com.bunbeauty.getMenuProduct
 import com.bunbeauty.shared.data.repository.AdditionRepository
 import com.bunbeauty.shared.data.repository.CartProductAdditionRepository
-import com.bunbeauty.shared.domain.feature.addition.GetIsAdditionsAreEqualUseCase
+import com.bunbeauty.shared.domain.feature.addition.AreAdditionsEqualUseCase
 import com.bunbeauty.shared.domain.feature.cart.EditCartProductUseCase
 import com.bunbeauty.shared.domain.repo.CartProductRepo
 import io.mockk.coEvery
@@ -21,7 +21,7 @@ internal class EditCartProductUseCaseTest {
     private val cartProductRepo: CartProductRepo = mockk()
     private val cartProductAdditionRepository: CartProductAdditionRepository = mockk(relaxed = true)
     private val additionRepository: AdditionRepository = mockk()
-    private val getIsAdditionsAreEqualUseCase: GetIsAdditionsAreEqualUseCase = mockk()
+    private val areAdditionsEqualUseCase: AreAdditionsEqualUseCase = mockk()
     private lateinit var editCartProductUseCase: EditCartProductUseCase
 
     @BeforeTest
@@ -30,7 +30,7 @@ internal class EditCartProductUseCaseTest {
             cartProductRepo = cartProductRepo,
             cartProductAdditionRepository = cartProductAdditionRepository,
             additionRepository = additionRepository,
-            getIsAdditionsAreEqualUseCase = getIsAdditionsAreEqualUseCase
+            areAdditionsEqualUseCase = areAdditionsEqualUseCase
         )
     }
 
@@ -45,7 +45,7 @@ internal class EditCartProductUseCaseTest {
         // Given
         coEvery { cartProductRepo.getCartProduct(initialCartProduct.uuid) } returns initialCartProduct
         coEvery {
-            getIsAdditionsAreEqualUseCase(
+            areAdditionsEqualUseCase(
                 initialCartProduct,
                 listOf(initialAddition.uuid)
             )
@@ -79,7 +79,7 @@ internal class EditCartProductUseCaseTest {
         // Given
         coEvery { cartProductRepo.getCartProduct(initialCartProduct.uuid) } returns initialCartProduct
         coEvery {
-            getIsAdditionsAreEqualUseCase(
+            areAdditionsEqualUseCase(
                 initialCartProduct,
                 listOf(initialAddition.uuid)
             )
@@ -120,7 +120,7 @@ internal class EditCartProductUseCaseTest {
         // Given
         coEvery { cartProductRepo.getCartProduct(initialCartProduct.uuid) } returns null
         coEvery {
-            getIsAdditionsAreEqualUseCase(
+            areAdditionsEqualUseCase(
                 initialCartProduct,
                 listOf(initialAddition.uuid)
             )
@@ -142,7 +142,7 @@ internal class EditCartProductUseCaseTest {
             cartProductAdditionRepository.delete(cartProductAdditionUuid = initialCartProductAddition.uuid)
         }
         coVerify(exactly = 0) {
-            getIsAdditionsAreEqualUseCase(
+            areAdditionsEqualUseCase(
                 initialCartProduct,
                 listOf(initialAddition.uuid)
             )
@@ -170,7 +170,7 @@ internal class EditCartProductUseCaseTest {
         // Given
         coEvery { cartProductRepo.getCartProduct(initialCartProduct.uuid) } returns initialCartProduct
         coEvery {
-            getIsAdditionsAreEqualUseCase(
+            areAdditionsEqualUseCase(
                 initialCartProduct,
                 listOf(initialAddition.uuid)
             )

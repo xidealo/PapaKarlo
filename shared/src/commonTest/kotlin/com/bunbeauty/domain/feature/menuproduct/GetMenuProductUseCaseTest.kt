@@ -60,6 +60,40 @@ class GetMenuProductUseCaseTest {
             )
         }
 
+    @Test
+    fun `should return menu product with addition group list filtered by isVisible`() =
+        runTest {
+            // Given
+            val additionGroup10 = getAdditionGroup(priority = 10)
+            val additionGroup2 = getAdditionGroup(priority = 2, isVisible = false)
+
+            val initialAdditionGroups = listOf(
+                additionGroup10,
+                additionGroup2
+            )
+
+            val initialMenuProduct = getMenuProduct(
+                additionGroups = initialAdditionGroups
+            )
+
+            val menuProductWithFilteredAdditionGroups = getMenuProduct(
+                additionGroups = listOf(
+                    additionGroup10
+                )
+            )
+
+            coEvery { menuProductRepo.getMenuProductByUuid(menuProductUuid) } returns initialMenuProduct
+
+            // When
+            val result = getMenuProductUseCase(menuProductUuid)
+
+            // Then
+            assertEquals(
+                expected = menuProductWithFilteredAdditionGroups,
+                actual = result
+            )
+        }
+
 
     @Test
     fun `should return menu product with addition list sorted by priority`() =
@@ -103,6 +137,51 @@ class GetMenuProductUseCaseTest {
             // Then
             assertEquals(
                 expected = menuProductWithSortedAdditionGroups,
+                actual = result
+            )
+        }
+
+    @Test
+    fun `should return menu product with addition list filttred by isVisible`() =
+        runTest {
+            // Given
+
+            val addition10 = getAddition(priority = 10)
+            val addition2 = getAddition(priority = 2, isVisible = false)
+
+            val initialAdditionGroups = listOf(
+                getAdditionGroup(
+                    additions = listOf(
+                        addition10,
+                        addition2
+                    )
+                ),
+            )
+
+            val additionGroupsWithFilttredAdditions = listOf(
+                getAdditionGroup(
+                    additions = listOf(
+                        addition10
+                    )
+                ),
+            )
+
+            val initialMenuProduct = getMenuProduct(
+                additionGroups = initialAdditionGroups
+            )
+
+            val menuProductWithFilteredAdditionGroups = getMenuProduct(
+                additionGroups = additionGroupsWithFilttredAdditions
+            )
+
+            coEvery { menuProductRepo.getMenuProductByUuid(menuProductUuid) } returns initialMenuProduct
+
+            // When
+            val result = getMenuProductUseCase(menuProductUuid)
+
+            // Then
+            assertEquals(
+                expected = menuProductWithFilteredAdditionGroups,
                 actual = result
             )
         }

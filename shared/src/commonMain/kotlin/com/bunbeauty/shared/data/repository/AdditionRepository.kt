@@ -8,6 +8,6 @@ class AdditionRepository(
     private val additionDao: IAdditionDao,
 ) {
     suspend fun getAddition(uuid: String): Addition? {
-        return additionDao.getAdditionEntity(uuid).mapAdditionEntityToAddition()
+        return additionDao.getAdditionEntity(uuid)?.mapAdditionEntityToAddition()
     }
 }

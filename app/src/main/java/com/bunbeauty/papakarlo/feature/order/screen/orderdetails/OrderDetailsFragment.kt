@@ -46,7 +46,7 @@ import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class OrderDetailsFragment :
-    BaseComposeFragment<OrderDetails.DataState, OrderDetailsUi, OrderDetails.Action, OrderDetails.Event>() {
+    BaseComposeFragment<OrderDetails.DataState, OrderDetailsViewState, OrderDetails.Action, OrderDetails.Event>() {
 
     override val viewModel: OrderDetailsViewModel by viewModel()
     override val viewBinding by viewBinding(LayoutComposeBinding::bind)
@@ -66,11 +66,11 @@ class OrderDetailsFragment :
     }
 
     @Composable
-    override fun Screen(viewState: OrderDetailsUi, onAction: (OrderDetails.Action) -> Unit) {
+    override fun Screen(viewState: OrderDetailsViewState, onAction: (OrderDetails.Action) -> Unit) {
         OrderDetailsScreen(viewState, onAction)
     }
 
-    override fun mapState(dataState: OrderDetails.DataState): OrderDetailsUi {
+    override fun mapState(dataState: OrderDetails.DataState): OrderDetailsViewState {
         return orderDetailsUiStateMapper.map(dataState)
     }
 
@@ -82,25 +82,25 @@ class OrderDetailsFragment :
 
     @Composable
     private fun OrderDetailsScreen(
-        orderDetailsUi: OrderDetailsUi,
+        orderDetailsViewState: OrderDetailsViewState,
         onAction: (OrderDetails.Action) -> Unit
     ) {
         FoodDeliveryScaffold(
-            title = orderDetailsUi.code,
+            title = orderDetailsViewState.code,
             backActionClick = {
                 onAction(OrderDetails.Action.Back)
             },
             backgroundColor = FoodDeliveryTheme.colors.mainColors.surface
         ) {
-            Crossfade(targetState = orderDetailsUi.state, label = "ConsumerCart") { screenState ->
+            Crossfade(targetState = orderDetailsViewState.state, label = "ConsumerCart") { screenState ->
                 when (screenState) {
                     OrderDetails.DataState.ScreenState.LOADING -> LoadingScreen()
                     OrderDetails.DataState.ScreenState.SUCCESS -> OrderDetailsSuccessScreen(
-                        orderDetailsUi
+                        orderDetailsViewState
                     )
 
                     OrderDetails.DataState.ScreenState.ERROR -> ErrorScreen(R.string.error_order_details_discount) {
-                        onAction(OrderDetails.Action.Reload(orderDetailsUi.orderUuid))
+                        onAction(OrderDetails.Action.Reload(orderDetailsViewState.orderUuid))
                     }
                 }
             }
@@ -108,7 +108,7 @@ class OrderDetailsFragment :
     }
 
     @Composable
-    private fun OrderDetailsSuccessScreen(state: OrderDetailsUi) {
+    private fun OrderDetailsSuccessScreen(state: OrderDetailsViewState) {
         Column(modifier = Modifier.fillMaxSize()) {
             Box(
                 modifier = Modifier
@@ -182,7 +182,7 @@ class OrderDetailsFragment :
     @Composable
     private fun OrderInfoCard(
         modifier: Modifier = Modifier,
-        orderInfo: OrderDetailsUi.OrderInfo
+        orderInfo: OrderDetailsViewState.OrderInfo
     ) {
         FoodDeliveryCard(
             modifier = modifier,
@@ -254,7 +254,7 @@ class OrderDetailsFragment :
     }
 
     @Composable
-    private fun BottomAmountBar(orderDetailsUi: OrderDetailsUi) {
+    private fun BottomAmountBar(orderDetailsViewState: OrderDetailsViewState) {
         FoodDeliverySurface(modifier = Modifier.fillMaxWidth()) {
             Column(
                 modifier = Modifier
@@ -262,7 +262,7 @@ class OrderDetailsFragment :
                     .background(FoodDeliveryTheme.colors.mainColors.surface)
                     .padding(FoodDeliveryTheme.dimensions.mediumSpace)
             ) {
-                orderDetailsUi.discount?.let { discount ->
+                orderDetailsViewState.discount?.let { discount ->
                     Row(modifier = Modifier.padding(bottom = 8.dp)) {
                         Text(
                             text = stringResource(R.string.msg_order_details_discount),
@@ -275,7 +275,7 @@ class OrderDetailsFragment :
                     }
                 }
 
-                orderDetailsUi.deliveryCost?.let { deliveryCost ->
+                orderDetailsViewState.deliveryCost?.let { deliveryCost ->
                     Row(modifier = Modifier.padding(bottom = 8.dp)) {
                         Text(
                             text = stringResource(R.string.msg_order_details_delivery_cost),
@@ -299,7 +299,7 @@ class OrderDetailsFragment :
                         color = FoodDeliveryTheme.colors.mainColors.onSurface
                     )
                     Spacer(modifier = Modifier.weight(1f))
-                    orderDetailsUi.oldTotalCost?.let { totalCost ->
+                    orderDetailsViewState.oldTotalCost?.let { totalCost ->
                         Text(
                             modifier = Modifier
                                 .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
@@ -310,7 +310,7 @@ class OrderDetailsFragment :
                         )
                     }
                     Text(
-                        text = orderDetailsUi.newTotalCost,
+                        text = orderDetailsViewState.newTotalCost,
                         style = FoodDeliveryTheme.typography.bodyMedium.bold,
                         color = FoodDeliveryTheme.colors.mainColors.onSurface
                     )
@@ -344,7 +344,7 @@ class OrderDetailsFragment :
     @Composable
     private fun BottomAmountBarPreview() {
         FoodDeliveryTheme {
-            BottomAmountBar(orderDetailsUi = getOrderDetails())
+            BottomAmountBar(orderDetailsViewState = getOrderDetails())
         }
     }
 
@@ -353,7 +353,7 @@ class OrderDetailsFragment :
     private fun BottomAmountBarWithoutDeliveryPreview() {
         FoodDeliveryTheme {
             BottomAmountBar(
-                orderDetailsUi = getOrderDetails().copy(
+                orderDetailsViewState = getOrderDetails().copy(
                     deliveryCost = null,
                     oldTotalCost = null
                 )
@@ -366,7 +366,7 @@ class OrderDetailsFragment :
     private fun OrderDetailsSuccessScreenPreview() {
         FoodDeliveryTheme {
             OrderDetailsScreen(
-                orderDetailsUi = getOrderDetails(),
+                orderDetailsViewState = getOrderDetails(),
                 onAction = {
                 }
             )
@@ -378,7 +378,7 @@ class OrderDetailsFragment :
     private fun OrderDetailsLoadingScreenPreview() {
         FoodDeliveryTheme {
             OrderDetailsScreen(
-                orderDetailsUi = getOrderDetails().copy(
+                orderDetailsViewState = getOrderDetails().copy(
                     state = OrderDetails.DataState.ScreenState.LOADING
                 ),
                 onAction = {
@@ -387,8 +387,8 @@ class OrderDetailsFragment :
         }
     }
 
-    private fun getOrderDetails(): OrderDetailsUi {
-        return OrderDetailsUi(
+    private fun getOrderDetails(): OrderDetailsViewState {
+        return OrderDetailsViewState(
             orderProductItemList = listOf(
                 OrderProductUiItem(
                     uuid = "",
@@ -428,8 +428,8 @@ class OrderDetailsFragment :
         )
     }
 
-    private fun getOrderInfo(): OrderDetailsUi.OrderInfo {
-        return OrderDetailsUi.OrderInfo(
+    private fun getOrderInfo(): OrderDetailsViewState.OrderInfo {
+        return OrderDetailsViewState.OrderInfo(
             status = OrderStatus.PREPARING,
             dateTime = "19.03.2023",
             deferredTime = "10:30",

@@ -3,8 +3,7 @@ package com.bunbeauty.domain.feature.additions
 import com.bunbeauty.getCartProduct
 import com.bunbeauty.getCartProductAddition
 import com.bunbeauty.getMenuProduct
-import com.bunbeauty.shared.domain.feature.addition.GetIsAdditionsAreEqualUseCase
-import com.bunbeauty.shared.domain.model.addition.CartProductAddition
+import com.bunbeauty.shared.domain.feature.addition.AreAdditionsEqualUseCase
 import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -13,16 +12,16 @@ import kotlin.test.assertTrue
 
 class GetIsAdditionsAreEqualUseCaseTest {
 
-    private lateinit var getIsAdditionsAreEqualUseCase: GetIsAdditionsAreEqualUseCase
+    private lateinit var areAdditionsEqualUseCase: AreAdditionsEqualUseCase
 
     @BeforeTest
     fun setup() {
-        getIsAdditionsAreEqualUseCase = GetIsAdditionsAreEqualUseCase()
+        areAdditionsEqualUseCase = AreAdditionsEqualUseCase()
     }
 
     @Test
     fun `return true when addition uuid list are equal to cart additions`() = runTest {
-        val result = getIsAdditionsAreEqualUseCase(
+        val result = areAdditionsEqualUseCase(
             initialCartProduct = getCartProduct(
                 menuProduct = getMenuProduct(),
                 cartProductAdditionList = listOf(
@@ -50,7 +49,7 @@ class GetIsAdditionsAreEqualUseCaseTest {
 
     @Test
     fun `return false when addition uuid list are not equal to cart additions`() = runTest {
-        val result = getIsAdditionsAreEqualUseCase(
+        val result = areAdditionsEqualUseCase(
             initialCartProduct = getCartProduct(
                 menuProduct = getMenuProduct(),
                 cartProductAdditionList = listOf(
@@ -78,7 +77,7 @@ class GetIsAdditionsAreEqualUseCaseTest {
 
     @Test
     fun `return false when addition uuid list has less elements than`() = runTest {
-        val result = getIsAdditionsAreEqualUseCase(
+        val result = areAdditionsEqualUseCase(
             initialCartProduct = getCartProduct(
                 menuProduct = getMenuProduct(),
                 cartProductAdditionList = listOf(

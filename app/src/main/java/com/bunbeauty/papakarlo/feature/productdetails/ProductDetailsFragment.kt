@@ -60,8 +60,6 @@ class ProductDetailsFragment :
 
     private val args: ProductDetailsFragmentArgs by navArgs()
 
-    override val viewBinding by viewBinding(LayoutComposeBinding::bind)
-
     private val productDetailsUiStateMapper: ProductDetailsUiStateMapper by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -199,55 +197,53 @@ class ProductDetailsFragment :
 
     @Composable
     private fun ProductDetailsSuccessScreen(
-        menuProductUi: ProductDetailsViewState.Success.MenuProductUi?,
+        menuProductUi: ProductDetailsViewState.Success.MenuProductUi,
         onAction: (ProductDetailsState.Action) -> Unit
     ) {
-        menuProductUi?.let {
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxWidth()
-            ) {
-                item {
-                    ProductCard(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp)
-                            .padding(top = 16.dp),
-                        menuProductUi = menuProductUi
-                    )
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxWidth()
+        ) {
+            item {
+                ProductCard(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp)
+                        .padding(top = 16.dp),
+                    menuProductUi = menuProductUi
+                )
+            }
+            items(
+                menuProductUi.additionList,
+                key = { menuProductAdditionItem ->
+                    menuProductAdditionItem.key
                 }
-                items(
-                    menuProductUi.additionList,
-                    key = { menuProductAdditionItem ->
-                        menuProductAdditionItem.key
+            ) { menuProductAdditionItem ->
+                when (menuProductAdditionItem) {
+                    is AdditionItem.AdditionHeaderItem -> {
+                        Text(
+                            modifier = Modifier
+                                .padding(horizontal = 16.dp)
+                                .padding(top = 24.dp),
+                            text = menuProductAdditionItem.name,
+                            style = FoodDeliveryTheme.typography.titleMedium.bold,
+                            color = FoodDeliveryTheme.colors.mainColors.onSurface
+                        )
                     }
-                ) { menuProductAdditionItem ->
-                    when (menuProductAdditionItem) {
-                        is AdditionItem.AdditionHeaderItem -> {
-                            Text(
-                                modifier = Modifier
-                                    .padding(horizontal = 16.dp)
-                                    .padding(top = 24.dp),
-                                text = menuProductAdditionItem.name,
-                                style = FoodDeliveryTheme.typography.titleMedium.bold,
-                                color = FoodDeliveryTheme.colors.mainColors.onSurface
+
+                    is AdditionItem.AdditionListItem -> {
+                        FoodDeliveryItem(needDivider = !menuProductAdditionItem.product.isLast) {
+                            AdditionItem(
+                                menuProductAdditionItem = menuProductAdditionItem.product,
+                                isMultiple = menuProductAdditionItem.isMultiple,
+                                onAction = onAction
                             )
                         }
-
-                        is AdditionItem.AdditionListItem -> {
-                            FoodDeliveryItem(needDivider = !menuProductAdditionItem.product.isLast) {
-                                AdditionItem(
-                                    menuProductAdditionItem = menuProductAdditionItem.product,
-                                    isMultiply = menuProductAdditionItem.isMultiply,
-                                    onAction = onAction
-                                )
-                            }
-                        }
                     }
                 }
-                item {
-                    Spacer(modifier = Modifier.height(FoodDeliveryTheme.dimensions.scrollScreenBottomSpace))
-                }
+            }
+            item {
+                Spacer(modifier = Modifier.height(FoodDeliveryTheme.dimensions.scrollScreenBottomSpace))
             }
         }
     }
@@ -255,7 +251,7 @@ class ProductDetailsFragment :
     @Composable
     private fun AdditionItem(
         menuProductAdditionItem: MenuProductAdditionItem,
-        isMultiply: Boolean,
+        isMultiple: Boolean,
         onAction: (ProductDetailsState.Action) -> Unit
     ) {
         Row(
@@ -293,7 +289,7 @@ class ProductDetailsFragment :
                 )
             }
 
-            if (isMultiply) {
+            if (isMultiple) {
                 FoodDeliveryCheckbox(
                     checked = menuProductAdditionItem.isSelected,
                     onCheckedChange = {
@@ -430,7 +426,7 @@ class ProductDetailsFragment :
                                     isLast = false,
                                     groupId = ""
                                 ),
-                                isMultiply = false
+                                isMultiple = false
                             ),
                             AdditionItem.AdditionListItem(
                                 key = "key3",
@@ -443,7 +439,7 @@ class ProductDetailsFragment :
                                     isLast = true,
                                     groupId = ""
                                 ),
-                                isMultiply = false
+                                isMultiple = false
                             ),
                             AdditionItem.AdditionHeaderItem(
                                 key = "key4",
@@ -461,7 +457,7 @@ class ProductDetailsFragment :
                                     isLast = false,
                                     groupId = ""
                                 ),
-                                isMultiply = true
+                                isMultiple = true
                             ),
                             AdditionItem.AdditionListItem(
                                 key = "key6",
@@ -474,7 +470,7 @@ class ProductDetailsFragment :
                                     isLast = true,
                                     groupId = ""
                                 ),
-                                isMultiply = true
+                                isMultiple = true
                             )
                         ),
                         priceWithAdditions = "300 ₽"

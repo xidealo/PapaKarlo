@@ -3,8 +3,8 @@ package com.bunbeauty.shared.data.mapper.order_product
 import com.bunbeauty.shared.data.network.model.order.get.OrderProductServer
 import com.bunbeauty.shared.db.OrderProductEntity
 
-val mapOrderProductServerToOrderProductEntity: OrderProductServer.(String) -> OrderProductEntity =
-    { orderUuidServer ->
+val mapOrderProductServerToOrderProductEntity: OrderProductServer.() -> OrderProductEntity =
+    {
         OrderProductEntity(
             uuid = uuid,
             count = count,
@@ -21,6 +21,6 @@ val mapOrderProductServerToOrderProductEntity: OrderProductServer.(String) -> Or
             oldCommonPrice = oldCommonPrice,
             newTotalCost = newTotalCost,
             oldTotalCost = oldTotalCost,
-            orderUuid = orderUuidServer,
+            orderUuid = orderUuid,
         )
     }

@@ -94,19 +94,6 @@ class UserRepository(
             dataStoreRepo.saveUserUuid(profile.uuid)
             userDao.insertUser(profileMapper.toUserEntity(profile))
             userAddressDao.insertUserAddressList(profileMapper.toUserAddressEntityList(profile))
-            profile.orders.forEach { orderServer ->
-                orderDao.insertOrder(
-                    orderMapper.toOrderEntity(orderServer)
-                )
-                orderServer.oderProductList.forEach { orderProductServer ->
-                    orderProductDao.insert(
-                        orderProductServer.mapOrderProductServerToOrderProductEntity(
-                            orderServer.uuid
-                        )
-                    )
-                    insertOrderAdditions(orderProductServer)
-                }
-            }
         }
     }
 

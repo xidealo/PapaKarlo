@@ -4,7 +4,7 @@ import com.bunbeauty.shared.domain.model.order.OrderStatus
 import com.bunbeauty.shared.presentation.base.BaseViewState
 import com.bunbeauty.shared.presentation.order_details.OrderDetails
 
-data class OrderDetailsUi(
+data class OrderDetailsViewState(
     val orderUuid: String,
     val orderProductItemList: List<OrderProductUiItem>,
     val oldTotalCost: String?,

@@ -1,7 +1,5 @@
 package com.bunbeauty.shared.di.usecase
 
-import com.bunbeauty.shared.domain.feature.addition.GetAdditionPriorityUseCase
-import com.bunbeauty.shared.domain.feature.addition.GetIsAdditionsAreEqualUseCase
 import com.bunbeauty.shared.domain.feature.address.CreateAddressUseCase
 import com.bunbeauty.shared.domain.feature.address.GetFilteredStreetListUseCase
 import com.bunbeauty.shared.domain.feature.address.GetStreetsUseCase

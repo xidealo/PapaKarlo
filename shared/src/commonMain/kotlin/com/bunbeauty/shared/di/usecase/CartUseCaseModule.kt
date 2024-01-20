@@ -19,7 +19,7 @@ internal fun cartUseCaseModule() = module {
             cartProductRepo = get(),
             cartProductAdditionRepository = get(),
             additionRepository = get(),
-            getIsAdditionsAreEqualUseCase = get(),
+            areAdditionsEqualUseCase = get(),
             additionGroupRepository = get(),
             getAdditionPriorityUseCase = get()
         )
@@ -42,7 +42,7 @@ internal fun cartUseCaseModule() = module {
             cartProductRepo = get(),
             cartProductAdditionRepository = get(),
             additionRepository = get(),
-            getIsAdditionsAreEqualUseCase = get()
+            areAdditionsEqualUseCase = get()
         )
     }
 }
