@@ -69,7 +69,7 @@ class AddCartProductUseCase(
     ): CartProduct? {
         return cartProductList.firstOrNull { cartProduct ->
             areAdditionsEqualUseCase(
-                initialCartProduct = cartProduct,
+                cartProduct = cartProduct,
                 additionUuidList = additionUuidList
             )
         }

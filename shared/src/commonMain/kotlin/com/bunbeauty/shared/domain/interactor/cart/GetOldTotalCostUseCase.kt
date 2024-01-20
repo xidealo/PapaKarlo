@@ -16,7 +16,7 @@ class GetOldTotalCostUseCase {
     }
 
     private fun getAdditionsPrice(cartProduct: CartProduct) =
-        cartProduct.cartProductAdditionList.sumOf { cartProductAddition ->
+        cartProduct.additionList.sumOf { cartProductAddition ->
             cartProductAddition.price ?: 0
         }
 }

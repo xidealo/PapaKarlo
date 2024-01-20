@@ -20,14 +20,14 @@ class EditCartProductUseCase(
 
         if (
             areAdditionsEqualUseCase(
-                initialCartProduct = cartProduct,
+                cartProduct = cartProduct,
                 additionUuidList = additionUuidList
             )
         ) {
             return
         }
 
-        cartProduct.cartProductAdditionList.forEach { cartProductAddition ->
+        cartProduct.additionList.forEach { cartProductAddition ->
             cartProductAdditionRepository.delete(cartProductAdditionUuid = cartProductAddition.uuid)
         }
 

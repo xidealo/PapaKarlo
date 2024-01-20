@@ -14,7 +14,7 @@ class GetNewTotalCostUseCase(private val getDiscountUseCase: GetDiscountUseCase)
     }
 
     private fun getAdditionsPrice(cartProduct: CartProduct) =
-        cartProduct.cartProductAdditionList.sumOf { cartProductAddition ->
+        cartProduct.additionList.sumOf { cartProductAddition ->
             cartProductAddition.price ?: 0
         }
 }

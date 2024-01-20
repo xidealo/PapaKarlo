@@ -2,8 +2,6 @@ package com.bunbeauty.shared.domain.feature.order
 
 import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.domain.model.address.SelectableUserAddress
-import com.bunbeauty.shared.domain.model.address.UserAddress
-import com.bunbeauty.shared.domain.model.cafe.Cafe
 import com.bunbeauty.shared.domain.model.cafe.SelectableCafe
 import com.bunbeauty.shared.domain.model.cart.CartProduct
 import com.bunbeauty.shared.domain.model.date_time.Time
@@ -74,7 +72,7 @@ class CreateOrderUseCase(
     }
 
     private fun getSortedAdditionUuidList(cartProduct: CartProduct) =
-        cartProduct.cartProductAdditionList.sortedBy { cartProductAddition ->
+        cartProduct.additionList.sortedBy { cartProductAddition ->
             cartProductAddition.priority
         }.map { cartProductAddition ->
             cartProductAddition.additionUuid
