@@ -111,7 +111,7 @@
     <string name="msg_create_address_created">Адрес добавлен</string>
     <string name="error_create_address_street">Выберите название улицы из списка</string>
     <string name="error_create_address_house">Укажите номер дома</string>
-    <string name="error_create_address_fail">Не удалось создать адрес</string>
+    <string name="error_create_address_fail">Не удалось добавить адрес</string>
     <string name="error_create_address_loading">Не удалось загрузить список улиц</string>
     <string name="action_create_address_save">Сохранить</string>
 

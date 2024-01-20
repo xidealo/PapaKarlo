@@ -1,6 +1,7 @@
 package com.bunbeauty.papakarlo.common.ui.element.button
 
 import androidx.annotation.StringRes
+import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.ui.element.button.FoodDeliveryButtonDefaults.getButtonElevation
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
@@ -23,7 +25,7 @@ fun LoadingButton(
     @StringRes textStringId: Int,
     hasShadow: Boolean = true,
     isLoading: Boolean,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     Button(
         modifier = modifier.fillMaxWidth(),
@@ -33,18 +35,19 @@ fun LoadingButton(
         elevation = getButtonElevation(hasShadow),
         enabled = !isLoading
     ) {
-        if (isLoading) {
-            CircularProgressIndicator(
-                modifier = Modifier
-                    .size(FoodDeliveryTheme.dimensions.smallProgressBarSize),
-                color = FoodDeliveryTheme.colors.mainColors.onDisabled
-            )
-        } else {
-            Text(
-                text = stringResource(textStringId),
-                style = FoodDeliveryTheme.typography.labelLarge.medium,
-                color = FoodDeliveryTheme.colors.mainColors.onPrimary
-            )
+        Crossfade(targetState = isLoading) { state ->
+            if (state) {
+                CircularProgressIndicator(
+                    modifier = Modifier.size(24.dp),
+                    color = FoodDeliveryTheme.colors.mainColors.onDisabled
+                )
+            } else {
+                Text(
+                    text = stringResource(textStringId),
+                    style = FoodDeliveryTheme.typography.labelLarge.medium,
+                    color = FoodDeliveryTheme.colors.mainColors.onPrimary
+                )
+            }
         }
     }
 }

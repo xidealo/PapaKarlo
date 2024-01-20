@@ -2,34 +2,26 @@ package com.bunbeauty.shared.presentation.create_address
 
 import com.bunbeauty.shared.presentation.SuggestionUi
 import com.bunbeauty.shared.presentation.base.BaseAction
+import com.bunbeauty.shared.presentation.base.BaseDataState
 import com.bunbeauty.shared.presentation.base.BaseEvent
-import com.bunbeauty.shared.presentation.base.BaseViewDataState
-import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.persistentListOf
 
 interface CreateAddress {
 
-    data class ViewDataState(
-        val street: String = "",
-        val streetFocused: Boolean = false,
-        val streetSuggestionList: ImmutableList<SuggestionUi> = persistentListOf(),
-        val isSuggestionLoading: Boolean = false,
-        val selectedStreetSuggestion: SuggestionUi? = null,
-        val hasStreetError: Boolean = false,
-
-        val house: String = "",
-        val hasHouseError: Boolean = false,
-
-        val flat: String = "",
-        val entrance: String = "",
-        val floor: String = "",
-        val comment: String = "",
-
-        val isCreateLoading: Boolean = false,
-    ) : BaseViewDataState {
-
-         val suggestionListNotEmpty = streetSuggestionList.isNotEmpty()
-    }
+    data class DataState(
+        val street: String,
+        val streetFocused: Boolean,
+        val streetSuggestionList: List<SuggestionUi>,
+        val isSuggestionLoading: Boolean,
+        val selectedStreetSuggestion: SuggestionUi?,
+        val hasStreetError: Boolean,
+        val house: String,
+        val hasHouseError: Boolean,
+        val flat: String,
+        val entrance: String,
+        val floor: String,
+        val comment: String,
+        val isCreateLoading: Boolean,
+    ) : BaseDataState
 
     data class StreetField(
         val street: String,

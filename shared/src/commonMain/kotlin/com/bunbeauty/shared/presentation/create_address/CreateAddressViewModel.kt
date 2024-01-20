@@ -24,8 +24,22 @@ class CreateAddressViewModel(
     private val getSuggestionsUseCase: GetSuggestionsUseCase,
     private val createAddressUseCase: CreateAddressUseCase,
     private val saveSelectedUserAddressUseCase: SaveSelectedUserAddressUseCase,
-) : SharedStateViewModel<CreateAddress.ViewDataState, CreateAddress.Action, CreateAddress.Event>(
-    initDataState = CreateAddress.ViewDataState()
+) : SharedStateViewModel<CreateAddress.DataState, CreateAddress.Action, CreateAddress.Event>(
+    initDataState = CreateAddress.DataState(
+        street = "",
+        streetFocused = false,
+        streetSuggestionList = listOf(),
+        isSuggestionLoading = false,
+        selectedStreetSuggestion = null,
+        hasStreetError = false,
+        house = "",
+        hasHouseError = false,
+        flat = "",
+        entrance = "",
+        floor = "",
+        comment = "",
+        isCreateLoading = false,
+    )
 ) {
 
     private var suggestionsJob: Job? = null
@@ -34,7 +48,7 @@ class CreateAddressViewModel(
         observeStreetChanges()
     }
 
-    override fun reduce(action: CreateAddress.Action, dataState: CreateAddress.ViewDataState) {
+    override fun reduce(action: CreateAddress.Action, dataState: CreateAddress.DataState) {
         when (action) {
             is CreateAddress.Action.StreetTextChange -> {
                 handleStreetTextChange(street = action.street)
@@ -152,15 +166,16 @@ class CreateAddressViewModel(
 
     private fun handleSaveClick() {
         val streetSuggestion = dataState.value.selectedStreetSuggestion
+        val hasStreetError = streetSuggestion == null || streetSuggestion.value != dataState.value.street
         val hasHouseError = dataState.value.house.isBlank()
         setState {
             copy(
-                hasStreetError = streetSuggestion == null,
+                hasStreetError = hasStreetError,
                 hasHouseError = hasHouseError,
             )
         }
 
-        if (streetSuggestion == null || hasHouseError) {
+        if (streetSuggestion == null || hasStreetError || hasHouseError) {
             return
         }
 

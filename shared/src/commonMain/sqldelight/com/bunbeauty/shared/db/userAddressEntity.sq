@@ -1,6 +1,5 @@
 CREATE TABLE userAddressEntity (
     uuid TEXT NOT NULL PRIMARY KEY,
-    streetUuid TEXT NOT NULL,
     streetName TEXT NOT NULL,
     cityUuid TEXT NOT NULL,
     house TEXT NOT NULL,
@@ -14,7 +13,7 @@ CREATE TABLE userAddressEntity (
 insertUserAddress:
 INSERT OR REPLACE
 INTO userAddressEntity
-VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
 
 getUserAddressListByUserUuidAndCityUuid:
 SELECT *

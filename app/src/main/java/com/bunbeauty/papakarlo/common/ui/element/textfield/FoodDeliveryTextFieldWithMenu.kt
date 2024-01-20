@@ -30,7 +30,7 @@ fun FoodDeliveryTextFieldWithMenu(
     value: String = "",
     @StringRes labelStringId: Int,
     onValueChange: (value: String) -> Unit,
-    @StringRes errorMessageId: Int? = null,
+    @StringRes errorMessageStringId: Int? = null,
     suggestionsList: ImmutableList<SuggestionUi> = persistentListOf(),
     isLoading: Boolean = false
 ) {
@@ -47,7 +47,7 @@ fun FoodDeliveryTextFieldWithMenu(
                 value = value,
                 labelStringId = labelStringId,
                 onValueChange = onValueChange,
-                isError = errorMessageId != null,
+                isError = errorMessageStringId != null,
                 isLoading = isLoading
             )
 
@@ -81,12 +81,12 @@ fun FoodDeliveryTextFieldWithMenu(
                 }
             }
         }
-        errorMessageId?.let {
+        errorMessageStringId?.let { stringId ->
             Text(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 16.dp, top = 4.dp),
-                text = stringResource(errorMessageId),
+                text = stringResource(stringId),
                 style = FoodDeliveryTheme.typography.bodySmall,
                 color = FoodDeliveryTheme.colors.mainColors.error
             )

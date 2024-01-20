@@ -23,7 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.fragment.findNavController
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.common.BaseSingleStateComposeFragment
+import com.bunbeauty.papakarlo.common.BaseComposeFragment
 import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.papakarlo.common.ui.element.button.LoadingButton
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
@@ -33,15 +33,20 @@ import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.feature.main.IMessageHost
 import com.bunbeauty.shared.presentation.create_address.CreateAddress
 import com.bunbeauty.shared.presentation.create_address.CreateAddressViewModel
+import kotlinx.collections.immutable.persistentListOf
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CreateAddressFragment :
-    BaseSingleStateComposeFragment<CreateAddress.ViewDataState, CreateAddress.Action, CreateAddress.Event>() {
+    BaseComposeFragment<CreateAddress.DataState, CreateAddressViewState, CreateAddress.Action, CreateAddress.Event>() {
 
     override val viewModel: CreateAddressViewModel by viewModel()
 
+    override fun mapState(dataState: CreateAddress.DataState): CreateAddressViewState {
+        return dataState.mapCreateAddressState()
+    }
+
     @Composable
-    override fun Screen(viewState: CreateAddress.ViewDataState, onAction: (CreateAddress.Action) -> Unit) {
+    override fun Screen(viewState: CreateAddressViewState, onAction: (CreateAddress.Action) -> Unit) {
         FoodDeliveryScaffold(
             title = stringResource(R.string.title_create_address),
             backActionClick = {
@@ -49,7 +54,7 @@ class CreateAddressFragment :
             },
             actionButton = {
                 LoadingButton(
-                    modifier = Modifier.padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
+                    modifier = Modifier.padding(horizontal = 16.dp),
                     textStringId = R.string.action_create_address_save,
                     isLoading = viewState.isCreateLoading,
                     onClick = {
@@ -72,6 +77,7 @@ class CreateAddressFragment :
                     resources.getString(R.string.error_create_address_loading)
                 )
             }
+
             CreateAddress.Event.AddressCreatedSuccess -> {
                 (activity as? IMessageHost)?.showInfoMessage(
                     resources.getString(R.string.msg_create_address_created)
@@ -89,8 +95,8 @@ class CreateAddressFragment :
 
     @Composable
     private fun CreateAddressSuccessScreen(
-        viewState: CreateAddress.ViewDataState,
-        onAction: (CreateAddress.Action) -> Unit
+        viewState: CreateAddressViewState,
+        onAction: (CreateAddress.Action) -> Unit,
     ) {
         Column(
             modifier = Modifier
@@ -132,11 +138,7 @@ class CreateAddressFragment :
                         onValueChange = { street ->
                             onAction(CreateAddress.Action.StreetTextChange(street = street))
                         },
-                        errorMessageId = if (viewState.hasStreetError) {
-                            R.string.error_create_address_street
-                        } else {
-                            null
-                        },
+                        errorMessageStringId = viewState.streetErrorStringId,
                         suggestionsList = viewState.streetSuggestionList,
                         isLoading = viewState.isSuggestionLoading
                     )
@@ -149,11 +151,7 @@ class CreateAddressFragment :
                             onAction(CreateAddress.Action.HouseTextChange(house = value))
                         },
                         maxSymbols = 5,
-                        errorMessageId = if (viewState.hasHouseError) {
-                            R.string.error_create_address_house
-                        } else {
-                            null
-                        }
+                        errorMessageStringId = viewState.houseErrorStringId
                     )
 
                     FoodDeliveryTextField(
@@ -209,7 +207,19 @@ class CreateAddressFragment :
     private fun CreateAddressScreenPreview() {
         FoodDeliveryTheme {
             Screen(
-                viewState = CreateAddress.ViewDataState(),
+                viewState = CreateAddressViewState(
+                    street = "Street",
+                    streetErrorStringId = null,
+                    streetSuggestionList = persistentListOf(),
+                    isSuggestionLoading = true,
+                    house = "1",
+                    houseErrorStringId = null,
+                    flat = "",
+                    entrance = "",
+                    floor = "",
+                    comment = "",
+                    isCreateLoading = false,
+                ),
                 onAction = {}
             )
         }

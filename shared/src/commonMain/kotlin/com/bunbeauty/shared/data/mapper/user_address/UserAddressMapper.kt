@@ -38,7 +38,6 @@ class UserAddressMapper {
     fun toUserAddressEntity(addressServer: AddressServer): UserAddressEntity {
         return UserAddressEntity(
             uuid = addressServer.uuid,
-            streetUuid = "",
             streetName = addressServer.street,
             cityUuid = addressServer.cityUuid,
             house = addressServer.house,
