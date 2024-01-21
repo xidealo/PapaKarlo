@@ -73,7 +73,7 @@ class ProductDetailsFragment :
     @Composable
     override fun Screen(
         viewState: ProductDetailsViewState,
-        onAction: (ProductDetailsState.Action) -> Unit,
+        onAction: (ProductDetailsState.Action) -> Unit
     ) {
         ProductDetailsScreen(
             menuProductName = args.menuProductName,
@@ -122,7 +122,7 @@ class ProductDetailsFragment :
         menuProductUuid: String,
         additionUuidList: List<String>,
         productDetailsViewState: ProductDetailsViewState,
-        onAction: (ProductDetailsState.Action) -> Unit,
+        onAction: (ProductDetailsState.Action) -> Unit
     ) {
         FoodDeliveryScaffold(
             title = menuProductName,
@@ -196,7 +196,7 @@ class ProductDetailsFragment :
     @Composable
     private fun ProductDetailsSuccessScreen(
         menuProductUi: ProductDetailsViewState.Success.MenuProductUi,
-        onAction: (ProductDetailsState.Action) -> Unit,
+        onAction: (ProductDetailsState.Action) -> Unit
     ) {
         LazyColumn(
             modifier = Modifier
@@ -250,9 +250,9 @@ class ProductDetailsFragment :
     private fun AdditionItem(
         menuProductAdditionItem: MenuProductAdditionItem,
         isMultiple: Boolean,
-        onAction: (ProductDetailsState.Action) -> Unit,
+        onAction: (ProductDetailsState.Action) -> Unit
     ) {
-        //add card for select
+        // add card for select
         Row(
             modifier = Modifier
                 .padding(horizontal = 16.dp)
@@ -319,7 +319,7 @@ class ProductDetailsFragment :
     @Composable
     private fun ProductCard(
         modifier: Modifier = Modifier,
-        menuProductUi: ProductDetailsViewState.Success.MenuProductUi,
+        menuProductUi: ProductDetailsViewState.Success.MenuProductUi
     ) {
         Column(
             modifier = modifier
@@ -407,7 +407,7 @@ class ProductDetailsFragment :
                         oldPrice = "320 ₽",
                         newPrice = "280 ₽",
                         description = "Сочная котлетка, сыр Чедр, маринованный огурчик, помидор, " +
-                                "красный лук, салат, фирменный соус, булочка с кунжутом",
+                            "красный лук, салат, фирменный соус, булочка с кунжутом",
                         additionList = listOf(
                             AdditionItem.AdditionHeaderItem(
                                 key = "key1",
