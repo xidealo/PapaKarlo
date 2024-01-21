@@ -1,13 +1,14 @@
-package com.bunbeauty.shared.di.usecase
+package com.bunbeauty.shared.domain.feature.cart.di
 
 import com.bunbeauty.shared.domain.feature.cart.AddCartProductUseCase
 import com.bunbeauty.shared.domain.feature.cart.EditCartProductUseCase
 import com.bunbeauty.shared.domain.feature.cart.GetRecommendationsUseCase
+import com.bunbeauty.shared.domain.feature.cart.IncreaseCartProductCountUseCase
 import com.bunbeauty.shared.domain.feature.cart.ObserveCartUseCase
 import com.bunbeauty.shared.domain.feature.cart.RemoveCartProductUseCase
 import org.koin.dsl.module
 
-internal fun cartUseCaseModule() = module {
+internal fun cartModule() = module {
     factory {
         ObserveCartUseCase(
             cartProductRepo = get(),
@@ -42,6 +43,11 @@ internal fun cartUseCaseModule() = module {
             cartProductRepo = get(),
             cartProductAdditionRepository = get(),
             areAdditionsEqualUseCase = get()
+        )
+    }
+    factory {
+        IncreaseCartProductCountUseCase(
+            cartProductRepo = get()
         )
     }
 }

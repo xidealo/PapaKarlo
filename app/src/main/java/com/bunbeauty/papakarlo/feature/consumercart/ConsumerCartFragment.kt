@@ -203,8 +203,8 @@ class ConsumerCartFragment :
                                 onCountIncreased = {
                                     onAction(
                                         ConsumerCart.Action.AddProductToCartClick(
+                                            cartProductUuid = cartProductItem.uuid,
                                             menuProductUuid = cartProductItem.menuProductUuid,
-                                            additionUuidList = cartProductItem.additionUuidList
                                         )
                                     )
                                 },

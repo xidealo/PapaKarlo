@@ -38,8 +38,8 @@ interface ConsumerCart {
         data object Init : Action
         data object BackClick : Action
         data class AddProductToCartClick(
+            val cartProductUuid: String,
             val menuProductUuid: String,
-            val additionUuidList: List<String>,
         ) : Action
 
         data class RemoveProductFromCartClick(

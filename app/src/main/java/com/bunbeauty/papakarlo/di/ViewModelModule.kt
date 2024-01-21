@@ -26,7 +26,7 @@ fun viewModelModule() = module {
         MenuViewModel(
             menuProductInteractor = get(),
             observeCartUseCase = get(),
-            addCartProductUseCase = get(),
+            addMenuProductUseCase = get(),
             getDiscountUseCase = get(),
             analyticService = get()
         )
@@ -40,7 +40,8 @@ fun viewModelModule() = module {
         ConsumerCartViewModel(
             userInteractor = get(),
             cartProductInteractor = get(),
-            addCartProductUseCase = get(),
+            increaseCartProductCountUseCase = get(),
+            addMenuProductUseCase = get(),
             removeCartProductUseCase = get(),
             getRecommendationsUseCase = get(),
             analyticService = get()

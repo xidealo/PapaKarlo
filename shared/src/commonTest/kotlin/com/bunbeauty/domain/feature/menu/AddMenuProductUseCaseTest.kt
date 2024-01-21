@@ -56,7 +56,7 @@ class AddMenuProductUseCaseTest {
                 cartProductUuid = cartProductUuid,
                 count = 3
             )
-        } returns true
+        } returns Unit
 
         addMenuProductUseCase(menuProductUuid)
 

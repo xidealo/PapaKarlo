@@ -190,7 +190,7 @@ internal class AddCartProductUseCaseTest {
                 cartProductUuid = cartProductUuid,
                 count = 3
             )
-        } returns true
+        } returns Unit
 
         // When
         addCartProduct(menuProductUuid = menuProductUuid, additionUuidList = additionUuidList)

@@ -52,9 +52,8 @@ class CartProductRepository(
         return uuid
     }
 
-    override suspend fun updateCartProductCount(cartProductUuid: String, count: Int): Boolean {
+    override suspend fun updateCartProductCount(cartProductUuid: String, count: Int) {
         cartProductDao.updateCartProductCountByUuid(cartProductUuid, count)
-        return true
     }
 
     override suspend fun deleteCartProduct(cartProductUuid: String) {

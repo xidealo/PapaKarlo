@@ -49,9 +49,11 @@ internal class RemoveCartProductUseCaseTest {
     @Test
     fun `return true when product count more than 1`() = runTest {
         // Given
-        val initialCartProduct =
-            getCartProduct(uuid = cartProductUuid, count = 2, menuProduct = getMenuProduct())
-        val resultCartProduct = initialCartProduct.copy(count = 1)
+        val initialCartProduct = getCartProduct(
+            uuid = cartProductUuid,
+            count = 2,
+            menuProduct = getMenuProduct()
+        )
         coEvery { cartProductRepo.getCartProduct(cartProductUuid) } returns initialCartProduct
 
         coEvery {
@@ -59,7 +61,7 @@ internal class RemoveCartProductUseCaseTest {
                 cartProductUuid,
                 1
             )
-        } returns true
+        } returns Unit
         coEvery { cartProductAdditionRepository.delete(cartProductUuid) } returns Unit
 
         // When
