@@ -52,7 +52,7 @@ interface ConsumerCart {
         data object OnMenuClick : Action
         data object OnErrorButtonClick : Action
         data class AddRecommendationProductToCartClick(
-            val menuProductUuid: String,
+            val menuProductItem: MenuProductItem,
         ) : Action
 
         data class RecommendationClick(val menuProductUuid: String, val name: String) : Action
@@ -71,6 +71,8 @@ interface ConsumerCart {
         ) : Event
 
         data object NavigateBack : Event
+        data object ShowAddProductError : Event
+        data object ShowRemoveProductError : Event
     }
 }
 

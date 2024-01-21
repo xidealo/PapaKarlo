@@ -161,30 +161,23 @@ class MenuViewModel(
         }
     }
 
-    fun onAddProductClicked(menuProductUuid: String) {
+    fun onAddProductClicked(menuProductItem: MenuProductItem) {
         analyticService.sendEvent(
             event = AddMenuProductClickEvent(
-                menuProductUuidEventParameter = MenuProductUuidEventParameter(value = menuProductUuid)
+                menuProductUuidEventParameter = MenuProductUuidEventParameter(value = menuProductItem.uuid)
             ),
         )
         sharedScope.launch {
-
-            //для оптимизации заранее мапу отдельно хранить?
-            val menuProduct =
-                mutableMenuState.value.menuItemList.filterIsInstance<MenuItem.MenuProductListItem>()
-                    .find { it.product.uuid == menuProductUuid }
-
-
-            if (menuProduct?.product?.hasAdditions == true) {
+            if (menuProductItem.hasAdditions) {
                 mutableMenuState.update { oldState ->
                     oldState + MenuState.Event.GoToSelectedItem(
-                        uuid = menuProduct.product.uuid,
-                        name = menuProduct.product.name
+                        uuid = menuProductItem.uuid,
+                        name = menuProductItem.name
                     )
                 }
             } else {
                 addCartProductUseCase(
-                    menuProductUuid = menuProductUuid,
+                    menuProductUuid = menuProductItem.uuid,
                     additionUuidList = listOf()
                 )
             }

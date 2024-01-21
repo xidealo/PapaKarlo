@@ -46,6 +46,7 @@ import com.bunbeauty.papakarlo.feature.consumercart.ConsumerCartFragmentDirectio
 import com.bunbeauty.papakarlo.feature.consumercart.ConsumerCartFragmentDirections.toMenuFragment
 import com.bunbeauty.papakarlo.feature.consumercart.ConsumerCartFragmentDirections.toProductFragment
 import com.bunbeauty.papakarlo.feature.consumercart.ui.CartProductItem
+import com.bunbeauty.papakarlo.feature.main.IMessageHost
 import com.bunbeauty.papakarlo.feature.menu.ui.MenuProductItem
 import com.bunbeauty.shared.domain.model.SuccessLoginDirection
 import com.bunbeauty.shared.presentation.consumercart.CartProductItem
@@ -68,7 +69,7 @@ class ConsumerCartFragment :
     @Composable
     override fun Screen(
         viewState: ConsumerCart.ViewDataState,
-        onAction: (ConsumerCart.Action) -> Unit
+        onAction: (ConsumerCart.Action) -> Unit,
     ) {
         FoodDeliveryScaffold(
             title = stringResource(id = R.string.title_cart),
@@ -147,13 +148,20 @@ class ConsumerCartFragment :
             }
 
             ConsumerCart.Event.NavigateBack -> findNavController().popBackStack()
+            ConsumerCart.Event.ShowAddProductError -> (activity as? IMessageHost)?.showErrorMessage(
+                resources.getString(R.string.error_consumer_cart_add_product)
+            )
+
+            ConsumerCart.Event.ShowRemoveProductError -> (activity as? IMessageHost)?.showErrorMessage(
+                resources.getString(R.string.error_consumer_cart_remove_product)
+            )
         }
     }
 
     @Composable
     private fun ConsumerCartSuccessScreen(
         consumerCartData: ConsumerCart.ViewDataState.ConsumerCartData,
-        onAction: (ConsumerCart.Action) -> Unit
+        onAction: (ConsumerCart.Action) -> Unit,
     ) {
         Column(
             modifier = Modifier
@@ -258,10 +266,10 @@ class ConsumerCartFragment :
                                     }
                                 ),
                             menuProductItem = recommendation,
-                            onAddProductClick = {
+                            onAddProductClick = { menuProductItem ->
                                 onAction(
                                     ConsumerCart.Action.AddRecommendationProductToCartClick(
-                                        menuProductUuid = recommendation.uuid
+                                        menuProductItem = menuProductItem
                                     )
                                 )
                             },

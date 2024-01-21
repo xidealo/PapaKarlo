@@ -75,6 +75,8 @@
     <string name="description_consumer_cart_decrease">Уменьшить</string>
     <string name="description_consumer_cart_empty">Пустая корзина</string>
     <string name="error_consumer_cart_loading">Не удалось загрузить корзину</string>
+    <string name="error_consumer_cart_add_product">Не удалось добавить</string>
+    <string name="error_consumer_cart_remove_product">Не удалось удалить</string>
 
     <!-- CREATE ORDER -->
     <string name="title_create_order">Оформление заказа</string>

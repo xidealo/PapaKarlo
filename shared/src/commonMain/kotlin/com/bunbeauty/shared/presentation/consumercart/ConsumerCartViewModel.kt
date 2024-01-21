@@ -73,7 +73,7 @@ class ConsumerCartViewModel(
             )
 
             is ConsumerCart.Action.AddRecommendationProductToCartClick -> addRecommendationProductClicked(
-                menuProductUuid = action.menuProductUuid
+                menuProductUuid = action.menuProductItem.uuid
             )
 
             is ConsumerCart.Action.RecommendationClick -> onProductClicked(
@@ -195,7 +195,9 @@ class ConsumerCartViewModel(
                 )
             },
             onError = {
-                // TODO handle error
+                addEvent {
+                    ConsumerCart.Event.ShowAddProductError
+                }
             }
         )
     }
@@ -212,7 +214,9 @@ class ConsumerCartViewModel(
                 )
             },
             onError = {
-                // TODO handle error
+                addEvent {
+                    ConsumerCart.Event.ShowRemoveProductError
+                }
             }
         )
     }
