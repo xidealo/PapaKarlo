@@ -1,6 +1,5 @@
 package com.bunbeauty.shared.domain.feature.cart
 
-import com.bunbeauty.shared.data.repository.AdditionRepository
 import com.bunbeauty.shared.data.repository.CartProductAdditionRepository
 import com.bunbeauty.shared.domain.feature.addition.AreAdditionsEqualUseCase
 import com.bunbeauty.shared.domain.model.addition.Addition

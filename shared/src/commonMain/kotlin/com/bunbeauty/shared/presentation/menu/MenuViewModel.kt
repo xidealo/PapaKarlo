@@ -3,15 +3,14 @@ package com.bunbeauty.shared.presentation.menu
 import com.bunbeauty.analytic.AnalyticService
 import com.bunbeauty.analytic.event.menu.AddMenuProductClickEvent
 import com.bunbeauty.analytic.parameter.MenuProductUuidEventParameter
-import com.bunbeauty.shared.domain.feature.cart.AddCartProductUseCase
 import com.bunbeauty.shared.domain.feature.cart.ObserveCartUseCase
 import com.bunbeauty.shared.domain.feature.discount.GetDiscountUseCase
+import com.bunbeauty.shared.domain.feature.menu.AddMenuProductUseCase
 import com.bunbeauty.shared.domain.interactor.menu_product.IMenuProductInteractor
 import com.bunbeauty.shared.domain.model.menu.MenuSection
 import com.bunbeauty.shared.domain.model.product.MenuProduct
 import com.bunbeauty.shared.extension.launchSafe
 import com.bunbeauty.shared.presentation.base.SharedViewModel
-import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -21,7 +20,7 @@ import kotlinx.coroutines.launch
 class MenuViewModel(
     private val menuProductInteractor: IMenuProductInteractor,
     private val observeCartUseCase: ObserveCartUseCase,
-    private val addCartProductUseCase: AddCartProductUseCase,
+    private val addMenuProductUseCase: AddMenuProductUseCase,
     private val getDiscountUseCase: GetDiscountUseCase,
     private val analyticService: AnalyticService,
 ) : SharedViewModel() {
@@ -176,10 +175,7 @@ class MenuViewModel(
                     )
                 }
             } else {
-                addCartProductUseCase(
-                    menuProductUuid = menuProductItem.uuid,
-                    additionUuidList = listOf()
-                )
+                addMenuProductUseCase(menuProductUuid = menuProductItem.uuid)
             }
         }
     }

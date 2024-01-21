@@ -40,7 +40,7 @@ class CartProductRepository(
             .toCartProductList()
     }
 
-    override suspend fun saveAsCartProduct(menuProductUuid: String): String? {
+    override suspend fun saveAsCartProduct(menuProductUuid: String): String {
         val uuid = uuidGenerator.generateUuid()
         val cartProductEntity = CartProductEntity(
             uuid = uuid,

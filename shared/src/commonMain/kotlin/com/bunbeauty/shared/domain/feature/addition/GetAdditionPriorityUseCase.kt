@@ -10,6 +10,6 @@ class GetAdditionPriorityUseCase {
 
     operator fun invoke(
         additionGroup: AdditionGroup,
-        foundAddition: Addition,
-    ) = additionGroup.priority * ADDITION_GROUP_COEFFICIENT + foundAddition.priority
+        addition: Addition,
+    ) = additionGroup.priority * ADDITION_GROUP_COEFFICIENT + addition.priority
 }

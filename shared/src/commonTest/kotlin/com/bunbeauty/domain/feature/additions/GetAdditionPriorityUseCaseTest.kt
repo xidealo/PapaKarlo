@@ -26,7 +26,7 @@ class GetAdditionPriorityUseCaseTest {
         // When
         val result = useCase(
             additionGroup = additionGroup,
-            foundAddition = addition
+            addition = addition
         )
 
         // Then
