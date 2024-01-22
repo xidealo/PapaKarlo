@@ -34,7 +34,7 @@ fun getMenuProduct(
 fun getCartProduct(
     uuid: String = "1",
     count: Int = 0,
-    menuProduct: MenuProduct,
+    menuProduct: MenuProduct = getMenuProduct(),
     cartProductAdditionList: List<CartProductAddition> = emptyList(),
 ) = CartProduct(
     uuid = uuid,

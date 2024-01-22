@@ -166,7 +166,6 @@ class ProductDetailsViewModel(
         productDetailsOpenedFrom: ProductDetailsOpenedFrom,
         cartProductUuid: String?,
     ) {
-
         val menuProduct = dataState.value.menuProduct
 
         sendOnWantedClickedAnalytic(

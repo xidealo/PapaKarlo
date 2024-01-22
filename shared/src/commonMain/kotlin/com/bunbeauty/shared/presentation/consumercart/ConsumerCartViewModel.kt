@@ -9,9 +9,10 @@ import com.bunbeauty.analytic.parameter.MenuProductUuidEventParameter
 import com.bunbeauty.core.Logger
 import com.bunbeauty.shared.Constants.PERCENT
 import com.bunbeauty.shared.Constants.RUBLE_CURRENCY
-import com.bunbeauty.shared.domain.feature.cart.AddCartProductUseCase
 import com.bunbeauty.shared.domain.feature.cart.GetRecommendationsUseCase
+import com.bunbeauty.shared.domain.feature.cart.IncreaseCartProductCountUseCase
 import com.bunbeauty.shared.domain.feature.cart.RemoveCartProductUseCase
+import com.bunbeauty.shared.domain.feature.menu.AddMenuProductUseCase
 import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
 import com.bunbeauty.shared.domain.model.cart.ConsumerCartDomain
@@ -23,11 +24,13 @@ import com.bunbeauty.shared.presentation.product_details.ProductDetailsOpenedFro
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 
 class ConsumerCartViewModel(
     private val userInteractor: IUserInteractor,
     private val cartProductInteractor: ICartProductInteractor,
-    private val addCartProductUseCase: AddCartProductUseCase,
+    private val increaseCartProductCountUseCase: IncreaseCartProductCountUseCase,
+    private val addMenuProductUseCase: AddMenuProductUseCase,
     private val removeCartProductUseCase: RemoveCartProductUseCase,
     private val getRecommendationsUseCase: GetRecommendationsUseCase,
     private val analyticService: AnalyticService,
@@ -49,9 +52,9 @@ class ConsumerCartViewModel(
 
     override fun reduce(action: ConsumerCart.Action, dataState: ConsumerCart.ViewDataState) {
         when (action) {
-            is ConsumerCart.Action.AddProductToCartClick -> addCartProductToCartClick(
-                menuProductUuid = action.menuProductUuid,
-                additionUuidList = action.additionUuidList
+            is ConsumerCart.Action.AddProductToCartClick -> increaseCartProductToCartClick(
+                cartProductUuid = action.cartProductUuid,
+                menuProductUuid = action.menuProductUuid
             )
 
             ConsumerCart.Action.BackClick -> navigateBack()
@@ -73,7 +76,7 @@ class ConsumerCartViewModel(
             )
 
             is ConsumerCart.Action.AddRecommendationProductToCartClick -> addRecommendationProductClicked(
-                menuProductUuid = action.menuProductItem.uuid
+                menuProductItem = action.menuProductItem
             )
 
             is ConsumerCart.Action.RecommendationClick -> onProductClicked(
@@ -156,43 +159,39 @@ class ConsumerCartViewModel(
         }
     }
 
-    private fun addRecommendationProductClicked(menuProductUuid: String) {
+    private fun addRecommendationProductClicked(menuProductItem: MenuProductItem) {
         analyticService.sendEvent(
             event = AddRecommendationProductClickEvent(
-                menuProductUuidEventParameter = MenuProductUuidEventParameter(value = menuProductUuid)
+                menuProductUuidEventParameter = MenuProductUuidEventParameter(value = menuProductItem.uuid)
             ),
         )
-        addProduct(
-            menuProductUuid = menuProductUuid,
-            additionUuidList = emptyList()
-        )
+
+        sharedScope.launch {
+            if (menuProductItem.hasAdditions) {
+                addEvent {
+                    ConsumerCart.Event.NavigateToProduct(
+                        uuid = menuProductItem.uuid,
+                        name = menuProductItem.name,
+                        productDetailsOpenedFrom = ProductDetailsOpenedFrom.RECOMMENDATION_PRODUCT,
+                        additionUuidList = emptyList(),
+                        cartProductUuid = null,
+                    )
+                }
+            } else {
+                addMenuProductUseCase(menuProductUuid = menuProductItem.uuid)
+            }
+        }
     }
 
-    private fun addCartProductToCartClick(
-        menuProductUuid: String,
-        additionUuidList: List<String>,
-    ) {
+    private fun increaseCartProductToCartClick(cartProductUuid: String, menuProductUuid: String) {
         analyticService.sendEvent(
             event = IncreaseCartProductClickEvent(
                 menuProductUuidEventParameter = MenuProductUuidEventParameter(value = menuProductUuid)
             ),
         )
-        addProduct(
-            menuProductUuid = menuProductUuid,
-            additionUuidList = additionUuidList
-        )
-    }
-
-    private fun addProduct(
-        menuProductUuid: String,
-        additionUuidList: List<String>,
-    ) {
         sharedScope.launchSafe(
             block = {
-                addCartProductUseCase(
-                    menuProductUuid = menuProductUuid,
-                    additionUuidList = additionUuidList
-                )
+                increaseCartProductCountUseCase(cartProductUuid = cartProductUuid)
             },
             onError = {
                 addEvent {

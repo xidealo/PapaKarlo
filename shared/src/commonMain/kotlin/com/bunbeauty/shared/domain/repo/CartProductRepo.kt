@@ -15,9 +15,9 @@ interface CartProductRepo {
         menuProductUuid: String,
     ): List<CartProduct>
 
-    suspend fun saveAsCartProduct(menuProductUuid: String): String?
+    suspend fun saveAsCartProduct(menuProductUuid: String): String
 
-    suspend fun updateCartProductCount(cartProductUuid: String, count: Int): Boolean
+    suspend fun updateCartProductCount(cartProductUuid: String, count: Int)
 
     suspend fun deleteCartProduct(cartProductUuid: String)
 

@@ -11,7 +11,7 @@ import com.bunbeauty.shared.data.network.api.NetworkConnector
 import com.bunbeauty.shared.di.usecase.additionUseCaseModule
 import com.bunbeauty.shared.di.usecase.authUseCaseModule
 import com.bunbeauty.shared.di.usecase.cafeUseCaseModule
-import com.bunbeauty.shared.di.usecase.cartUseCaseModule
+import com.bunbeauty.shared.domain.feature.cart.di.cartModule
 import com.bunbeauty.shared.di.usecase.cityUseCaseModule
 import com.bunbeauty.shared.di.usecase.orderUseCaseModule
 import com.bunbeauty.shared.di.usecase.paymentUseCaseModule
@@ -48,6 +48,7 @@ import com.bunbeauty.shared.domain.feature.auth.ResendCodeUseCase
 import com.bunbeauty.shared.domain.feature.cart.AddCartProductUseCase
 import com.bunbeauty.shared.domain.feature.cart.GetRecommendationsUseCase
 import com.bunbeauty.shared.domain.feature.discount.GetDiscountUseCase
+import com.bunbeauty.shared.domain.feature.menu.di.menuModule
 import com.bunbeauty.shared.domain.feature.menu_product.GetMenuProductUseCase
 import com.bunbeauty.shared.domain.feature.payment.GetSelectablePaymentMethodListUseCase
 import com.bunbeauty.shared.domain.feature.payment.SavePaymentMethodUseCase
@@ -75,13 +76,14 @@ fun initKoin(appDeclaration: KoinAppDeclaration = {}) = startKoin {
         cityUseCaseModule(),
         userAddressUseCaseModule(),
         orderUseCaseModule(),
-        cartUseCaseModule(),
+        cartModule(),
         cafeUseCaseModule(),
         paymentUseCaseModule(),
         authUseCaseModule(),
         useCaseModules(),
         analyticModule(),
-        additionUseCaseModule()
+        additionUseCaseModule(),
+        menuModule(),
     )
 }
 
@@ -98,13 +100,14 @@ fun initKoin() = startKoin {
         cityUseCaseModule(),
         userAddressUseCaseModule(),
         orderUseCaseModule(),
-        cartUseCaseModule(),
+        cartModule(),
         cafeUseCaseModule(),
         paymentUseCaseModule(),
         authUseCaseModule(),
         useCaseModules(),
         analyticModule(),
-        additionUseCaseModule()
+        additionUseCaseModule(),
+        menuModule(),
     )
 }
 
@@ -158,7 +161,7 @@ class IosComponent : KoinComponent {
     fun provideResendCodeUseCase(): ResendCodeUseCase = get()
     fun provideCheckPhoneNumberUseCase(): CheckPhoneNumberUseCase = get()
     fun provideGetRecommendationsUseCase(): GetRecommendationsUseCase = get()
-  fun provideGetMenuProductByUuidUseCase(): GetMenuProductUseCase = get()
+    fun provideGetMenuProductByUuidUseCase(): GetMenuProductUseCase = get()
 
     //Mapper
     fun provideUserAddressMapper(): UserAddressMapper = get()

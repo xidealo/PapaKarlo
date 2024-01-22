@@ -40,7 +40,7 @@ class CartProductRepository(
             .toCartProductList()
     }
 
-    override suspend fun saveAsCartProduct(menuProductUuid: String): String? {
+    override suspend fun saveAsCartProduct(menuProductUuid: String): String {
         val uuid = uuidGenerator.generateUuid()
         val cartProductEntity = CartProductEntity(
             uuid = uuid,
@@ -52,9 +52,8 @@ class CartProductRepository(
         return uuid
     }
 
-    override suspend fun updateCartProductCount(cartProductUuid: String, count: Int): Boolean {
+    override suspend fun updateCartProductCount(cartProductUuid: String, count: Int) {
         cartProductDao.updateCartProductCountByUuid(cartProductUuid, count)
-        return true
     }
 
     override suspend fun deleteCartProduct(cartProductUuid: String) {
