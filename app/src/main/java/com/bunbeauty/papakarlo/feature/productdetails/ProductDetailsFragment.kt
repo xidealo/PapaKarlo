@@ -32,6 +32,7 @@ import com.bunbeauty.papakarlo.common.BaseComposeFragment
 import com.bunbeauty.papakarlo.common.extension.navigateSafe
 import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
+import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCardDefaults
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCheckbox
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryItem
@@ -253,65 +254,78 @@ class ProductDetailsFragment :
         onAction: (ProductDetailsState.Action) -> Unit
     ) {
         // add card for select
-        Row(
-            modifier = Modifier
-                .padding(horizontal = 16.dp)
-                .padding(vertical = 8.dp),
-            verticalAlignment = Alignment.CenterVertically
+        FoodDeliveryCard(
+            onClick = {
+                onAction(
+                    ProductDetailsState.Action.AdditionClick(
+                        uuid = menuProductAdditionItem.uuid,
+                        groupUuid = menuProductAdditionItem.groupId
+                    )
+                )
+            },
+            elevated = false
         ) {
-            AsyncImage(
+            Row(
                 modifier = Modifier
-                    .size(40.dp)
-                    .clip(FoodDeliveryCardDefaults.cardShape),
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(menuProductAdditionItem.photoLink)
-                    .crossfade(true)
-                    .build(),
-                placeholder = painterResource(R.drawable.placeholder_small),
-                contentDescription = stringResource(R.string.description_product_addition),
-                contentScale = ContentScale.FillWidth
-            )
+                    .padding(horizontal = 16.dp)
+                    .padding(vertical = 8.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                AsyncImage(
+                    modifier = Modifier
+                        .size(40.dp)
+                        .clip(FoodDeliveryCardDefaults.cardShape),
+                    model = ImageRequest.Builder(LocalContext.current)
+                        .data(menuProductAdditionItem.photoLink)
+                        .crossfade(true)
+                        .build(),
+                    placeholder = painterResource(R.drawable.placeholder_small),
+                    contentDescription = stringResource(R.string.description_product_addition),
+                    contentScale = ContentScale.FillWidth
+                )
 
-            Text(
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(start = 8.dp),
-                text = menuProductAdditionItem.name,
-                style = FoodDeliveryTheme.typography.bodyLarge
-            )
-
-            menuProductAdditionItem.price?.let { price ->
                 Text(
-                    modifier = Modifier,
-                    text = price,
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(start = 8.dp),
+                    text = menuProductAdditionItem.name,
                     style = FoodDeliveryTheme.typography.bodyLarge
                 )
-            }
 
-            if (isMultiple) {
-                FoodDeliveryCheckbox(
-                    checked = menuProductAdditionItem.isSelected,
-                    onCheckedChange = {
-                        onAction(
-                            ProductDetailsState.Action.AdditionClick(
-                                uuid = menuProductAdditionItem.uuid,
-                                groupUuid = menuProductAdditionItem.groupId
+                menuProductAdditionItem.price?.let { price ->
+                    Text(
+                        modifier = Modifier
+                            .padding(end = 8.dp),
+                        text = price,
+                        style = FoodDeliveryTheme.typography.bodyLarge
+                    )
+                }
+
+                if (isMultiple) {
+                    FoodDeliveryCheckbox(
+                        checked = menuProductAdditionItem.isSelected,
+                        onCheckedChange = {
+                            onAction(
+                                ProductDetailsState.Action.AdditionClick(
+                                    uuid = menuProductAdditionItem.uuid,
+                                    groupUuid = menuProductAdditionItem.groupId
+                                )
                             )
-                        )
-                    }
-                )
-            } else {
-                FoodDeliveryRadioButton(
-                    selected = menuProductAdditionItem.isSelected,
-                    onClick = {
-                        onAction(
-                            ProductDetailsState.Action.AdditionClick(
-                                uuid = menuProductAdditionItem.uuid,
-                                groupUuid = menuProductAdditionItem.groupId
+                        }
+                    )
+                } else {
+                    FoodDeliveryRadioButton(
+                        selected = menuProductAdditionItem.isSelected,
+                        onClick = {
+                            onAction(
+                                ProductDetailsState.Action.AdditionClick(
+                                    uuid = menuProductAdditionItem.uuid,
+                                    groupUuid = menuProductAdditionItem.groupId
+                                )
                             )
-                        )
-                    }
-                )
+                        }
+                    )
+                }
             }
         }
     }
