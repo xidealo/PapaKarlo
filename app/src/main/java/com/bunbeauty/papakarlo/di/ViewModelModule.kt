@@ -150,7 +150,9 @@ fun viewModelModule() = module {
             observeCartUseCase = get(),
             addCartProductUseCase = get(),
             analyticService = get(),
-            editCartProductUseCase = get()
+            editCartProductUseCase = get(),
+            getAdditionGroupsWithSelectedAdditionUseCase = get(),
+            getSelectedAdditionsPriceUseCase = get()
         )
     }
     viewModel {

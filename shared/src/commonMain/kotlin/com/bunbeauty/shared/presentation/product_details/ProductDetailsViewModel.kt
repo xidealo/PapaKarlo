@@ -6,10 +6,12 @@ import com.bunbeauty.analytic.event.menu.AddMenuProductDetailsClickEvent
 import com.bunbeauty.analytic.event.recommendation.AddRecommendationProductDetailsClickEvent
 import com.bunbeauty.analytic.parameter.MenuProductUuidEventParameter
 import com.bunbeauty.shared.Constants.RUBLE_CURRENCY
+import com.bunbeauty.shared.domain.feature.addition.GetPriceOfSelectedAdditionsUseCase
 import com.bunbeauty.shared.domain.feature.cart.AddCartProductUseCase
 import com.bunbeauty.shared.domain.feature.cart.EditCartProductUseCase
 import com.bunbeauty.shared.domain.feature.cart.ObserveCartUseCase
 import com.bunbeauty.shared.domain.feature.menu_product.GetMenuProductUseCase
+import com.bunbeauty.shared.domain.feature.addition.GetAdditionGroupsWithSelectedAdditionUseCase
 import com.bunbeauty.shared.domain.model.addition.AdditionGroup
 import com.bunbeauty.shared.domain.model.product.MenuProduct
 import com.bunbeauty.shared.extension.launchSafe
@@ -23,6 +25,8 @@ class ProductDetailsViewModel(
     private val addCartProductUseCase: AddCartProductUseCase,
     private val analyticService: AnalyticService,
     private val editCartProductUseCase: EditCartProductUseCase,
+    private val getAdditionGroupsWithSelectedAdditionUseCase: GetAdditionGroupsWithSelectedAdditionUseCase,
+    private val getSelectedAdditionsPriceUseCase: GetPriceOfSelectedAdditionsUseCase,
 ) : SharedStateViewModel<ProductDetailsState.DataState, ProductDetailsState.Action, ProductDetailsState.Event>(
     ProductDetailsState.DataState(
         cartCostAndCount = null,
@@ -78,57 +82,24 @@ class ProductDetailsViewModel(
 
     private fun selectAddition(uuid: String, groupUuid: String) {
         setState {
-            val changedGroup = getChangedGroup(menuProduct, groupUuid = groupUuid, uuid = uuid)
-
-            val newAdditionGroups = menuProduct.additionGroups.mapNotNull { additionGroup ->
-                if (additionGroup.uuid == groupUuid) {
-                    changedGroup
-                } else {
-                    additionGroup
-                }
-            }
+            val newAdditionGroups = getAdditionGroupsWithSelectedAdditionUseCase(
+                additionGroups = menuProduct.additionGroups,
+                groupUuid = groupUuid,
+                additionUuid = uuid
+            )
 
             copy(
                 menuProduct = menuProduct.copy(
                     additionGroups = newAdditionGroups,
                     priceWithAdditions = (
-                            menuProduct.newPrice + newAdditionGroups
-                                .flatMap { it.additionList }
-                                .filter { addition -> addition.isSelected }
-                                .sumOf { addition -> addition.price ?: 0 }
+                            menuProduct.newPrice + getSelectedAdditionsPriceUseCase(
+                                additions = newAdditionGroups
+                                    .flatMap { it.additionList }
+                            )
                             )
                 )
             )
         }
-    }
-
-    private fun getChangedGroup(
-        menuProduct: ProductDetailsState.DataState.MenuProduct,
-        groupUuid: String,
-        uuid: String,
-    ): AdditionGroup? {
-        return menuProduct.additionGroups.find { it.uuid == groupUuid }
-            ?.let { additionGroup ->
-                additionGroup.copy(
-                    additionList = if (additionGroup.singleChoice) {
-                        additionGroup.additionList.map { addition ->
-                            addition.copy(
-                                isSelected = addition.uuid == uuid
-                            )
-                        }
-                    } else {
-                        additionGroup.additionList.map { addition ->
-                            addition.copy(
-                                isSelected = if (addition.uuid == uuid) {
-                                    !addition.isSelected
-                                } else {
-                                    addition.isSelected
-                                }
-                            )
-                        }
-                    }
-                )
-            }
     }
 
     private fun getMenuProduct(
@@ -281,12 +252,12 @@ class ProductDetailsViewModel(
             newPrice = menuProduct.newPrice,
             description = menuProduct.description,
             priceWithAdditions =
-            menuProduct.newPrice + groupWithSelectedAdditionFromConsumerCart
-                .flatMap { additionGroup ->
-                    additionGroup.additionList
-                }
-                .filter { addition -> addition.isSelected }
-                .sumOf { addition -> addition.price ?: 0 },
+            menuProduct.newPrice + getSelectedAdditionsPriceUseCase(
+                groupWithSelectedAdditionFromConsumerCart
+                    .flatMap { additionGroup ->
+                        additionGroup.additionList
+                    }
+            ),
             additionGroups = groupWithSelectedAdditionFromConsumerCart,
             currency = RUBLE_CURRENCY
         )

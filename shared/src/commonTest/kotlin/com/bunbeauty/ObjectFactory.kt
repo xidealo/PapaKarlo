@@ -66,12 +66,13 @@ fun getAddition(
     additionGroupUuid: String = "",
     isVisible: Boolean = true,
     price: Int? = 0,
+    isSelected: Boolean = false,
 ) = Addition(
     uuid = uuid,
     name = "",
     fullName = null,
     price = price,
-    isSelected = false,
+    isSelected = isSelected,
     isVisible = isVisible,
     photoLink = "",
     additionGroupUuid = additionGroupUuid,
@@ -83,11 +84,12 @@ fun getAdditionGroup(
     priority: Int = 0,
     additions: List<Addition> = emptyList(),
     isVisible: Boolean = true,
+    singleChoice: Boolean = false,
 ) = AdditionGroup(
     uuid = uuid,
     name = "",
     isVisible = isVisible,
     priority = priority,
     additionList = additions,
-    singleChoice = false
+    singleChoice = singleChoice
 )
