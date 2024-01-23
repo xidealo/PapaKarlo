@@ -1,0 +1,2 @@
+DROP TABLE IF EXISTS streetEntity;
+ALTER TABLE userAddressEntity DROP COLUMN streetUuid;

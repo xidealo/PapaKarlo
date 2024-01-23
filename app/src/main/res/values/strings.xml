@@ -109,15 +109,11 @@
     <string name="hint_create_address_floor">Этаж</string>
     <string name="hint_create_address_comment">Комментарий для курьера</string>
     <string name="msg_create_address_created">Адрес добавлен</string>
-    <string name="error_create_address_fail">Не удалось создать адрес</string>
     <string name="error_create_address_street">Выберите название улицы из списка</string>
     <string name="error_create_address_house">Укажите номер дома</string>
-    <string name="action_create_address_save">Сохранить</string>
+    <string name="error_create_address_fail">Не удалось добавить адрес</string>
     <string name="error_create_address_loading">Не удалось загрузить список улиц</string>
-    <string name="error_create_address_no_selected_city">Ууупс, кажется, у вас не выбран город</string>
-    <string name="error_create_address_no_selected_city_help">Выберите город в настройках профиля</string>
-    <string name="error_create_address_no_street_by_city_uuid_and_name">Ууупс, кажется, мы не смогли добавить адрес</string>
-    <string name="error_create_address_no_street_by_city_uuid_and_name_help">Попробуйте добавить адрес еще раз</string>
+    <string name="action_create_address_save">Сохранить</string>
 
     <!-- BOTTOM PANEL -->
     <string name="title_bottom_navigation_menu_cafe_list">Рестораны</string>

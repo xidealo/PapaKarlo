@@ -37,7 +37,7 @@ import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
 import com.bunbeauty.shared.domain.interactor.city.ICityInteractor
 import com.bunbeauty.shared.domain.use_case.deferred_time.GetMinTimeUseCase
 import com.bunbeauty.shared.domain.interactor.menu_product.IMenuProductInteractor
-import com.bunbeauty.shared.domain.feature.address.GetStreetsUseCase
+import com.bunbeauty.shared.domain.feature.address.di.addressModule
 import com.bunbeauty.shared.domain.feature.auth.CheckCodeUseCase
 import com.bunbeauty.shared.domain.feature.auth.CheckPhoneNumberUseCase
 import com.bunbeauty.shared.domain.feature.auth.FormatPhoneNumberUseCase
@@ -79,7 +79,8 @@ fun initKoin(appDeclaration: KoinAppDeclaration = {}) = startKoin {
         paymentUseCaseModule(),
         authUseCaseModule(),
         useCaseModules(),
-        analyticModule()
+        analyticModule(),
+        addressModule(),
     )
 }
 
@@ -132,7 +133,6 @@ class IosComponent : KoinComponent {
     fun provideStopObserveOrdersUseCase(): StopObserveOrdersUseCase = get()
     fun provideObserveOrderListUseCase(): ObserveOrderListUseCase = get()
     fun provideObserveOrderUseCase(): ObserveOrderUseCase = get()
-    fun provideGetStreetsUseCase(): GetStreetsUseCase = get()
     fun provideCreateAddressUseCase(): CreateAddressUseCase = get()
     fun provideSaveSelectedUserAddressUseCase(): SaveSelectedUserAddressUseCase = get()
     fun provideGetLastOrderUseCase(): GetLastOrderUseCase = get()

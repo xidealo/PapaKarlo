@@ -47,6 +47,8 @@ object Versions {
     const val pinEntryEditText = "2.0.6"
 
     const val kaspresso = "1.5.3"
+
+    const val collectionsImmutable = "0.3.7"
 }
 
 object Namespace {
@@ -263,4 +265,9 @@ object Kaspresso {
         "com.kaspersky.android-components:kaspresso-allure-support:${Versions.kaspresso}"
     const val kaspressoComposeSupport =
         "com.kaspersky.android-components:kaspresso-compose-support:${Versions.kaspresso}"
+}
+
+object CollectionsImmutable {
+    const val collectionsImmutable =
+        "org.jetbrains.kotlinx:kotlinx-collections-immutable:${Versions.collectionsImmutable}"
 }
