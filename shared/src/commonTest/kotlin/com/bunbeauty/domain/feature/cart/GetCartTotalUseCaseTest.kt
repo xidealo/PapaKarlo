@@ -1,6 +1,9 @@
 package com.bunbeauty.domain.feature.cart
 
+import com.bunbeauty.getAddition
+import com.bunbeauty.getAdditionGroup
 import com.bunbeauty.getCartProduct
+import com.bunbeauty.getCartProductAddition
 import com.bunbeauty.getMenuProduct
 import com.bunbeauty.shared.domain.feature.discount.GetDiscountUseCase
 import com.bunbeauty.shared.domain.interactor.cart.GetCartTotalUseCase
@@ -129,7 +132,7 @@ class GetCartTotalUseCaseTest {
     }
 
     @Test
-    fun `should return totalCost equals sum of newPrice from productList`() =
+    fun `should return totalCost equals sum of newPrice and additions from productList`() =
         runTest {
             // Given
             val cartProductListMockData = listOf(
@@ -139,7 +142,15 @@ class GetCartTotalUseCaseTest {
                 ),
                 getCartProduct(
                     count = 1,
-                    menuProduct = getMenuProduct(newPrice = 50, oldPrice = 100)
+                    menuProduct = getMenuProduct(
+                        newPrice = 50,
+                        oldPrice = 100,
+                    ),
+                    cartProductAdditionList = listOf(
+                        getCartProductAddition(
+                            price = 10
+                        )
+                    )
                 ),
             )
 
@@ -158,7 +169,7 @@ class GetCartTotalUseCaseTest {
 
             // Then
             assertEquals(
-                expected = 100,
+                expected = 110,
                 actual = cartTotal.totalCost
             )
         }

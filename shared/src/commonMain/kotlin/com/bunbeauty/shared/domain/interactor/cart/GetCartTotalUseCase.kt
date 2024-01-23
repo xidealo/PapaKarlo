@@ -47,7 +47,11 @@ class GetCartTotalUseCase(
 
     private fun getTotalCost(productList: List<CartProduct>): Int {
         return productList.sumOf { orderProductEntity ->
-            orderProductEntity.count * orderProductEntity.product.newPrice
+            val sumOfNewPriceAndAdditions =
+                orderProductEntity.product.newPrice + orderProductEntity.additionList.sumOf { addition ->
+                    addition.price ?: 0
+                }
+            sumOfNewPriceAndAdditions * orderProductEntity.count
         }
     }
 
