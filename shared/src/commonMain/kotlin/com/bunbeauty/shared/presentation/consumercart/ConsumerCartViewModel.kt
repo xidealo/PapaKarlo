@@ -136,7 +136,7 @@ class ConsumerCartViewModel(
                 }
             },
             onError = {
-                // TODO handle error
+                // Do nothing
             }
         )
     }
@@ -250,9 +250,9 @@ class ConsumerCartViewModel(
                     )
                 },
                 oldTotalCost = consumerCartDomain.oldTotalCost?.let { oldTotalCost ->
-                    oldTotalCost.toString() + RUBLE_CURRENCY
+                    "$oldTotalCost $RUBLE_CURRENCY"
                 },
-                newTotalCost = consumerCartDomain.newTotalCost.toString() + RUBLE_CURRENCY,
+                newTotalCost = "${consumerCartDomain.newTotalCost} $RUBLE_CURRENCY",
                 firstOrderDiscount = consumerCartDomain.discount?.let { discount ->
                     "$discount$PERCENT"
                 },

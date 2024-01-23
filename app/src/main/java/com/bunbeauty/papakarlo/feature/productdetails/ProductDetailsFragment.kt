@@ -253,7 +253,6 @@ class ProductDetailsFragment :
         isMultiple: Boolean,
         onAction: (ProductDetailsState.Action) -> Unit
     ) {
-        // add card for select
         FoodDeliveryCard(
             onClick = {
                 onAction(

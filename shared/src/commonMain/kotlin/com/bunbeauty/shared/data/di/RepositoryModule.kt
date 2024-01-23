@@ -110,14 +110,11 @@ fun repositoryModule() = module {
         UserRepository(
             networkConnector = get(),
             profileMapper = get(),
-            orderMapper = get(),
             userMapper = get(),
             userDao = get(),
             userAddressDao = get(),
             orderDao = get(),
             dataStoreRepo = get(),
-            orderProductDao = get(),
-            orderAdditionDao = get()
         )
     }
     single<CityRepo> {
