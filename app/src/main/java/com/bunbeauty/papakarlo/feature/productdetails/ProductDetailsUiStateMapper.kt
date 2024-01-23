@@ -23,7 +23,7 @@ class ProductDetailsUiStateMapper(
                 addAll(
                     additionGroup.additionList.mapIndexed { index, addition ->
                         AdditionItem.AdditionListItem(
-                            key = "AdditionMultiplyListItem + ${addition.uuid}",
+                            key = "AdditionListItem + ${addition.uuid}",
                             product = MenuProductAdditionItem(
                                 uuid = addition.uuid,
                                 isSelected = addition.isSelected,

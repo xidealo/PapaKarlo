@@ -87,16 +87,14 @@ class ProductDetailsViewModel(
                 groupUuid = groupUuid,
                 additionUuid = uuid
             )
+            val selectedAdditionsPrice = getSelectedAdditionsPriceUseCase(
+                additions = newAdditionGroups.flatMap { it.additionList }
+            )
 
             copy(
                 menuProduct = menuProduct.copy(
                     additionGroups = newAdditionGroups,
-                    priceWithAdditions = (
-                            menuProduct.newPrice + getSelectedAdditionsPriceUseCase(
-                                additions = newAdditionGroups
-                                    .flatMap { it.additionList }
-                            )
-                            )
+                    priceWithAdditions = (menuProduct.newPrice + selectedAdditionsPrice)
                 )
             )
         }
@@ -201,7 +199,6 @@ class ProductDetailsViewModel(
                 )
             }
         )
-
     }
 
     private fun observeCart() {
@@ -229,7 +226,6 @@ class ProductDetailsViewModel(
         isInit: Boolean,
         stateAdditionGroupList: List<AdditionGroup>,
     ): ProductDetailsState.DataState.MenuProduct {
-
         val groupWithSelectedAdditionFromConsumerCart = when {
             !isInit -> stateAdditionGroupList
             selectedAdditionUuidList.isEmpty() -> menuProduct.additionGroups
@@ -238,6 +234,11 @@ class ProductDetailsViewModel(
                 selectedAdditionUuidList = selectedAdditionUuidList
             )
         }
+        val selectedAdditionsPrice = getSelectedAdditionsPriceUseCase(
+            additions = groupWithSelectedAdditionFromConsumerCart.flatMap { additionGroup ->
+                additionGroup.additionList
+            }
+        )
 
         return ProductDetailsState.DataState.MenuProduct(
             uuid = menuProduct.uuid,
@@ -251,13 +252,7 @@ class ProductDetailsViewModel(
             oldPrice = menuProduct.oldPrice,
             newPrice = menuProduct.newPrice,
             description = menuProduct.description,
-            priceWithAdditions =
-            menuProduct.newPrice + getSelectedAdditionsPriceUseCase(
-                groupWithSelectedAdditionFromConsumerCart
-                    .flatMap { additionGroup ->
-                        additionGroup.additionList
-                    }
-            ),
+            priceWithAdditions = menuProduct.newPrice + selectedAdditionsPrice,
             additionGroups = groupWithSelectedAdditionFromConsumerCart,
             currency = RUBLE_CURRENCY
         )
