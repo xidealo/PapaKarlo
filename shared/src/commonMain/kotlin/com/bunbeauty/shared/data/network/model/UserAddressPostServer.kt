@@ -4,7 +4,10 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class UserAddressPostServer(
+class UserAddressPostServer(
+
+    @SerialName("street")
+    val street: UserAddressStreetPostServer,
 
     @SerialName("house")
     val house: String,
@@ -21,9 +24,20 @@ data class UserAddressPostServer(
     @SerialName("comment")
     val comment: String?,
 
-    @SerialName("streetUuid")
-    val streetUuid: String,
-
     @SerialName("isVisible")
     val isVisible: Boolean,
+
+    @SerialName("cityUuid")
+    val cityUuid: String,
 )
+
+@Serializable
+class UserAddressStreetPostServer(
+
+    @SerialName("fiasId")
+    val fiasId: String,
+
+    @SerialName("name")
+    val name: String,
+)
+

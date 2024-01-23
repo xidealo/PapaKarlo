@@ -80,10 +80,9 @@ fun viewModelModule() = module {
     }
     viewModel {
         CreateAddressViewModel(
-            getStreetsUseCase = get(),
+            getSuggestionsUseCase = get(),
             createAddressUseCase = get(),
-            saveSelectedUserAddressUseCase = get(),
-            getFilteredStreetListUseCase = get()
+            saveSelectedUserAddressUseCase = get()
         )
     }
     viewModel {

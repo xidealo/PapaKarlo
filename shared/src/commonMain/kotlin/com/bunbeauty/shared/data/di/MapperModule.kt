@@ -17,8 +17,6 @@ import com.bunbeauty.shared.data.mapper.order_product.OrderProductMapper
 import com.bunbeauty.shared.data.mapper.payment.PaymentMethodMapper
 import com.bunbeauty.shared.data.mapper.profile.IProfileMapper
 import com.bunbeauty.shared.data.mapper.profile.ProfileMapper
-import com.bunbeauty.shared.data.mapper.street.IStreetMapper
-import com.bunbeauty.shared.data.mapper.street.StreetMapper
 import com.bunbeauty.shared.data.mapper.user.IUserMapper
 import com.bunbeauty.shared.data.mapper.user.UserMapper
 import org.koin.dsl.module
@@ -34,7 +32,6 @@ fun dataMapperModule() = module {
         )
     }
     factory<IUserMapper> { UserMapper() }
-    factory<IStreetMapper> { StreetMapper() }
     factory<ICityMapper> { CityMapper() }
     factory<IOrderMapper> { OrderMapper(orderProductMapper = get(), dateTimeUtil = get()) }
     factory<IOrderProductMapper> { OrderProductMapper() }

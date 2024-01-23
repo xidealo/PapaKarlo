@@ -92,3 +92,6 @@ ALTER TABLE orderProductEntity ADD COLUMN newCommonPrice INT NOT NULL;
 ALTER TABLE orderProductEntity ADD COLUMN oldCommonPrice INT;
 ALTER TABLE orderProductEntity ADD COLUMN newTotalCost INT NOT NULL;
 ALTER TABLE orderProductEntity ADD COLUMN oldTotalCost INT;
+
+DROP TABLE IF EXISTS streetEntity;
+ALTER TABLE userAddressEntity DROP COLUMN streetUuid;

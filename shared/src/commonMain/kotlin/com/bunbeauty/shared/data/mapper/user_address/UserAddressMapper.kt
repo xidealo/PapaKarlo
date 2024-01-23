@@ -1,20 +1,18 @@
 package com.bunbeauty.shared.data.mapper.user_address
 
-import com.bunbeauty.shared.data.mapper.street.IStreetMapper
 import com.bunbeauty.shared.data.network.model.AddressServer
 import com.bunbeauty.shared.data.network.model.UserAddressPostServer
+import com.bunbeauty.shared.data.network.model.UserAddressStreetPostServer
 import com.bunbeauty.shared.db.UserAddressEntity
 import com.bunbeauty.shared.domain.model.address.CreatedUserAddress
 import com.bunbeauty.shared.domain.model.address.UserAddress
 
-class UserAddressMapper(
-    private val streetMapper: IStreetMapper,
-) {
+class UserAddressMapper {
 
     fun toUserAddress(userAddressEntity: UserAddressEntity): UserAddress {
         return UserAddress(
             uuid = userAddressEntity.uuid,
-            street = streetMapper.toStreet(userAddressEntity),
+            street = userAddressEntity.streetName,
             house = userAddressEntity.house,
             flat = userAddressEntity.flat,
             entrance = userAddressEntity.entrance,
@@ -27,7 +25,7 @@ class UserAddressMapper(
     fun toUserAddress(addressServer: AddressServer): UserAddress {
         return UserAddress(
             uuid = addressServer.uuid,
-            street = streetMapper.toStreet(addressServer.street),
+            street = addressServer.street,
             house = addressServer.house,
             flat = addressServer.flat,
             entrance = addressServer.entrance,
@@ -40,9 +38,8 @@ class UserAddressMapper(
     fun toUserAddressEntity(addressServer: AddressServer): UserAddressEntity {
         return UserAddressEntity(
             uuid = addressServer.uuid,
-            streetUuid = addressServer.street.uuid,
-            streetName = addressServer.street.name,
-            cityUuid = addressServer.street.cityUuid,
+            streetName = addressServer.street,
+            cityUuid = addressServer.cityUuid,
             house = addressServer.house,
             flat = addressServer.flat,
             entrance = addressServer.entrance,
@@ -54,13 +51,17 @@ class UserAddressMapper(
 
     fun toUserAddressPostServer(createdUserAddress: CreatedUserAddress): UserAddressPostServer {
         return UserAddressPostServer(
+            street = UserAddressStreetPostServer(
+                fiasId = createdUserAddress.street.fiasId,
+                name = createdUserAddress.street.street,
+            ),
             house = createdUserAddress.house,
             flat = createdUserAddress.flat,
             entrance = createdUserAddress.entrance,
             floor = createdUserAddress.floor,
             comment = createdUserAddress.comment,
-            streetUuid = createdUserAddress.streetUuid,
             isVisible = createdUserAddress.isVisible,
+            cityUuid = createdUserAddress.cityUuid,
         )
     }
 }

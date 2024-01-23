@@ -36,7 +36,7 @@ class CreateOrderUseCase(
             selectedUserAddress ?: return null
             CreatedOrderAddress(
                 uuid = selectedUserAddress.uuid,
-                street = selectedUserAddress.street.name,
+                street = selectedUserAddress.street,
                 house = selectedUserAddress.house,
                 flat = selectedUserAddress.flat,
                 entrance = selectedUserAddress.entrance,
