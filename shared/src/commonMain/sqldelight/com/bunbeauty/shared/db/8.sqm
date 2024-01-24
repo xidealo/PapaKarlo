@@ -22,7 +22,7 @@ SELECT cartProductEntity.uuid AS cartProductUuid,
     cartProductAdditionEntity.name AS cartProductAdditionName,
     cartProductAdditionEntity.fullName AS cartProductAdditionFullName,
     cartProductAdditionEntity.price AS cartProductAdditionPrice,
-    cartProductAdditionEntity.additionUuid AS cartProductAdditionAdditionUuid
+    cartProductAdditionEntity.additionUuid AS cartProductAdditionAdditionUuid,
     cartProductAdditionEntity.priority AS cartProductAdditionPriority
 FROM cartProductEntity
 JOIN menuProductEntity ON menuProductEntity.uuid = cartProductEntity.menuProductUuid
@@ -88,10 +88,22 @@ CREATE TABLE additionGroupEntity (
     FOREIGN KEY(menuProductUuid) REFERENCES menuProductEntity(uuid) ON DELETE CASCADE
 );
 
-ALTER TABLE orderProductEntity ADD COLUMN newCommonPrice INT NOT NULL;
-ALTER TABLE orderProductEntity ADD COLUMN oldCommonPrice INT;
-ALTER TABLE orderProductEntity ADD COLUMN newTotalCost INT NOT NULL;
-ALTER TABLE orderProductEntity ADD COLUMN oldTotalCost INT;
+ALTER TABLE orderProductEntity ADD COLUMN newCommonPrice INTEGER NOT NULL DEFAULT 0;
+ALTER TABLE orderProductEntity ADD COLUMN oldCommonPrice INTEGER;
+ALTER TABLE orderProductEntity ADD COLUMN newTotalCost INTEGER NOT NULL DEFAULT 0;
+ALTER TABLE orderProductEntity ADD COLUMN oldTotalCost INTEGER;
 
 DROP TABLE IF EXISTS streetEntity;
-ALTER TABLE userAddressEntity DROP COLUMN streetUuid;
+
+DROP TABLE userAddressEntity;
+CREATE TABLE userAddressEntity (
+    uuid TEXT NOT NULL PRIMARY KEY,
+    streetName TEXT NOT NULL,
+    cityUuid TEXT NOT NULL,
+    house TEXT NOT NULL,
+    flat TEXT,
+    entrance TEXT,
+    floor TEXT,
+    comment TEXT,
+    userUuid TEXT NOT NULL
+);
