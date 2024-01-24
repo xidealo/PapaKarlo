@@ -10,6 +10,7 @@ import com.bunbeauty.shared.data.repository.CartProductAdditionRepository
 import com.bunbeauty.shared.domain.feature.addition.AreAdditionsEqualUseCase
 import com.bunbeauty.shared.domain.feature.addition.GetAdditionPriorityUseCase
 import com.bunbeauty.shared.domain.feature.cart.AddCartProductUseCase
+import com.bunbeauty.shared.domain.feature.cart.GetCartProductCountUseCase
 import com.bunbeauty.shared.domain.repo.CartProductRepo
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -20,6 +21,7 @@ import kotlin.test.Test
 
 internal class AddCartProductUseCaseTest {
 
+    private val getCartProductCountUseCase: GetCartProductCountUseCase = mockk()
     private val cartProductRepo: CartProductRepo = mockk()
     private val cartProductAdditionRepository: CartProductAdditionRepository = mockk(relaxed = true)
     private val additionRepository: AdditionRepository = mockk()
@@ -32,6 +34,7 @@ internal class AddCartProductUseCaseTest {
     @BeforeTest
     fun setup() {
         addCartProduct = AddCartProductUseCase(
+            getCartProductCountUseCase = getCartProductCountUseCase,
             cartProductRepo = cartProductRepo,
             cartProductAdditionRepository = cartProductAdditionRepository,
             additionRepository = additionRepository,
@@ -45,8 +48,8 @@ internal class AddCartProductUseCaseTest {
     fun `do nothing when cart is full`() = runTest {
         // Given
         coEvery {
-            cartProductRepo.getCartProductList()
-        } returns listOf(getCartProduct(count = 99))
+            getCartProductCountUseCase()
+        } returns 99
 
         // When
         addCartProduct(
@@ -71,7 +74,7 @@ internal class AddCartProductUseCaseTest {
         // Given
         val menuProductUuid = "menuProductUuid"
         val cartProductUuid = "cartProductUuid"
-        coEvery { cartProductRepo.getCartProductList() } returns emptyList()
+        coEvery { getCartProductCountUseCase() } returns 0
         coEvery {
             cartProductRepo.getCartProductListByMenuProductUuid(menuProductUuid = menuProductUuid)
         } returns emptyList()
@@ -103,7 +106,7 @@ internal class AddCartProductUseCaseTest {
         val additionUuidList = listOf(additionUuid1, additionUuid2)
         val additionGroup = getAdditionGroup(uuid = additionGroupUuid)
         val cartProductUuid = "cartProductUuid"
-        coEvery { cartProductRepo.getCartProductList() } returns listOf(cartProduct)
+        coEvery { getCartProductCountUseCase() } returns 1
         coEvery {
             cartProductRepo.getCartProductListByMenuProductUuid(menuProductUuid = menuProductUuid)
         } returns listOf(cartProduct)
@@ -175,7 +178,7 @@ internal class AddCartProductUseCaseTest {
             cartProductAdditionList = emptyList()
         )
         val additionUuidList = listOf("additionUuid1", "additionUuid2")
-        coEvery { cartProductRepo.getCartProductList() } returns listOf(cartProduct)
+        coEvery { getCartProductCountUseCase() } returns 1
         coEvery {
             cartProductRepo.getCartProductListByMenuProductUuid(menuProductUuid = menuProductUuid)
         } returns listOf(cartProduct)

@@ -1,12 +1,19 @@
 package com.bunbeauty.shared.domain.feature.menu
 
+import com.bunbeauty.shared.Constants.CART_PRODUCT_LIMIT
+import com.bunbeauty.shared.domain.feature.cart.GetCartProductCountUseCase
 import com.bunbeauty.shared.domain.repo.CartProductRepo
 
 class AddMenuProductUseCase(
+    private val getCartProductCountUseCase: GetCartProductCountUseCase,
     private val cartProductRepo: CartProductRepo,
 ) {
 
     suspend operator fun invoke(menuProductUuid: String) {
+        if (getCartProductCountUseCase() >= CART_PRODUCT_LIMIT) {
+            return
+        }
+
         val cartProductList = cartProductRepo.getCartProductListByMenuProductUuid(menuProductUuid = menuProductUuid)
         if (cartProductList.isEmpty()) {
             cartProductRepo.saveAsCartProduct(menuProductUuid)

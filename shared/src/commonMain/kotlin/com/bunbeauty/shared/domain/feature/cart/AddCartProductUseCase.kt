@@ -10,6 +10,7 @@ import com.bunbeauty.shared.domain.model.cart.CartProduct
 import com.bunbeauty.shared.domain.repo.CartProductRepo
 
 class AddCartProductUseCase(
+    private val getCartProductCountUseCase: GetCartProductCountUseCase,
     private val cartProductRepo: CartProductRepo,
     private val cartProductAdditionRepository: CartProductAdditionRepository,
     private val additionRepository: AdditionRepository,
@@ -21,10 +22,7 @@ class AddCartProductUseCase(
         menuProductUuid: String,
         additionUuidList: List<String>,
     ) {
-        val cartCount = cartProductRepo.getCartProductList().sumOf { cartProduct ->
-            cartProduct.count
-        }
-        if (cartCount >= CART_PRODUCT_LIMIT) {
+        if (getCartProductCountUseCase() >= CART_PRODUCT_LIMIT) {
             return
         }
 
