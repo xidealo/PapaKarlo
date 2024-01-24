@@ -1,10 +1,14 @@
 package com.bunbeauty.shared.data.mapper.menuProduct
 
 import com.bunbeauty.shared.data.network.model.MenuProductServer
+import com.bunbeauty.shared.db.AdditionEntity
+import com.bunbeauty.shared.db.AdditionGroupEntity
 import com.bunbeauty.shared.db.CategoryEntity
 import com.bunbeauty.shared.db.MenuProductCategoryReference
 import com.bunbeauty.shared.db.MenuProductEntity
 import com.bunbeauty.shared.db.MenuProductWithCategoryEntity
+import com.bunbeauty.shared.domain.model.addition.Addition
+import com.bunbeauty.shared.domain.model.addition.AdditionGroup
 import com.bunbeauty.shared.domain.model.category.Category
 import com.bunbeauty.shared.domain.model.product.MenuProduct
 
@@ -49,6 +53,41 @@ class MenuProductMapper : IMenuProductMapper {
             }
     }
 
+    override fun toAdditionEntityList(menuProductServerList: List<MenuProductServer>): List<AdditionEntity> {
+        return menuProductServerList.flatMap { menuProductServer ->
+            menuProductServer.additionGroupServers.flatMap { additionGroupServer ->
+                   additionGroupServer.additionServerList.map { additionServer ->
+                        AdditionEntity(
+                            uuid = additionServer.uuid,
+                            name = additionServer.name,
+                            price = additionServer.price,
+                            isVisible = additionServer.isVisible,
+                            isSelected = additionServer.isSelected,
+                            additionGroupUuid = additionGroupServer.uuid,
+                            photoLink = additionServer.photoLink,
+                            fullName = additionServer.fullName,
+                            priority = additionServer.priority,
+                        )
+                    }
+                }
+        }
+    }
+
+    override fun toAdditionGroupEntityList(menuProductServerList: List<MenuProductServer>): List<AdditionGroupEntity> {
+        return menuProductServerList.flatMap { menuProductServer ->
+            menuProductServer.additionGroupServers.map { additionServer ->
+                AdditionGroupEntity(
+                    uuid = additionServer.uuid,
+                    name = additionServer.name,
+                    isVisible = additionServer.isVisible,
+                    menuProductUuid = menuProductServer.uuid,
+                    priority = additionServer.priority,
+                    singleChoice = additionServer.singleChoice,
+                )
+            }
+        }
+    }
+
     override fun toMenuProduct(menuProduct: MenuProductEntity): MenuProduct {
         return MenuProduct(
             uuid = menuProduct.uuid,
@@ -62,7 +101,8 @@ class MenuProductMapper : IMenuProductMapper {
             photoLink = menuProduct.photoLink,
             categoryList = emptyList(),
             visible = menuProduct.visible,
-            isRecommended = menuProduct.isRecommended
+            isRecommended = menuProduct.isRecommended,
+            additionGroups = emptyList()
         )
     }
 
@@ -85,7 +125,29 @@ class MenuProductMapper : IMenuProductMapper {
                 )
             },
             visible = menuProductServer.isVisible,
-            isRecommended = menuProductServer.isRecommended
+            isRecommended = menuProductServer.isRecommended,
+            additionGroups = menuProductServer.additionGroupServers.map { additionGroupServer ->
+                AdditionGroup(
+                    additionList = additionGroupServer.additionServerList.map { additionServer ->
+                        Addition(
+                            isSelected = additionServer.isSelected,
+                            isVisible = additionServer.isVisible,
+                            name = additionServer.name,
+                            photoLink = additionServer.photoLink,
+                            price = additionServer.price,
+                            uuid = additionServer.uuid,
+                            additionGroupUuid = additionGroupServer.uuid,
+                            fullName = additionServer.fullName,
+                            priority = additionServer.priority
+                        )
+                    },
+                    isVisible = additionGroupServer.isVisible,
+                    name = additionGroupServer.name,
+                    singleChoice = additionGroupServer.singleChoice,
+                    uuid = additionGroupServer.uuid,
+                    priority = additionGroupServer.priority
+                )
+            }
         )
     }
 
@@ -109,11 +171,23 @@ class MenuProductMapper : IMenuProductMapper {
                     Category(
                         uuid = menuProductWithCategoryEntity.categoryUuid,
                         name = menuProductWithCategoryEntity.categoryName,
-                        priority = menuProductWithCategoryEntity.priority
+                        priority = menuProductWithCategoryEntity.categoryPriority
                     )
                 },
                 visible = firstMenuProductWithCategoryEntity.visible,
-                isRecommended = firstMenuProductWithCategoryEntity.isRecommended
+                isRecommended = firstMenuProductWithCategoryEntity.isRecommended,
+                additionGroups = groupedMenuProductWithCategoryEntityList.mapNotNull { menuProductEntity ->
+                    menuProductEntity.additionGroupUuid?.let { uuid ->
+                        AdditionGroup(
+                            additionList = listOf(),
+                            isVisible = menuProductEntity.additionGroupIsVisible ?: false,
+                            name = menuProductEntity.additionGroupName ?: "",
+                            singleChoice = menuProductEntity.additionGroupSingleChoice ?: false,
+                            uuid = uuid,
+                            priority = menuProductEntity.additionGroupPriority ?: 1
+                        )
+                    }
+                }
             )
         }
     }

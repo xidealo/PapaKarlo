@@ -1,69 +1,119 @@
 package com.bunbeauty.shared.presentation.order_details
 
 import com.bunbeauty.shared.Constants.PERCENT
-import com.bunbeauty.shared.domain.asCommonStateFlow
+import com.bunbeauty.shared.Constants.RUBLE_CURRENCY
 import com.bunbeauty.shared.domain.feature.order.ObserveOrderUseCase
 import com.bunbeauty.shared.domain.feature.order.StopObserveOrdersUseCase
 import com.bunbeauty.shared.domain.model.order.Order
-import com.bunbeauty.shared.presentation.base.SharedViewModel
+import com.bunbeauty.shared.extension.launchSafe
+import com.bunbeauty.shared.presentation.base.SharedStateViewModel
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 
 class OrderDetailsViewModel(
     private val observeOrderUseCase: ObserveOrderUseCase,
     private val stopObserveOrdersUseCase: StopObserveOrdersUseCase,
-) : SharedViewModel() {
-
-    private val mutableOrderState = MutableStateFlow(
-        OrderDetailsState(discount = null)
+) : SharedStateViewModel<OrderDetails.DataState, OrderDetails.Action, OrderDetails.Event>(
+    OrderDetails.DataState(
+        orderDetailsData = OrderDetails.DataState.OrderDetailsData(
+            orderProductItemList = listOf(),
+            orderInfo = null,
+            oldTotalCost = null,
+            deliveryCost = null,
+            newTotalCost = "",
+            discount = null
+        ),
+        screenState = OrderDetails.DataState.ScreenState.LOADING,
+        orderUuid = ""
     )
-    val orderState = mutableOrderState.asCommonStateFlow()
+) {
 
     private var observeOrderJob: Job? = null
     private var orderObservationUuid: String? = null
 
-    fun loadOrder(orderUuid: String) {
-        mutableOrderState.update { state ->
-            state.copy(isLoading = true)
-        }
-        observeOrderJob = sharedScope.launch {
-            val (uuid, orderFlow) = observeOrderUseCase(orderUuid)
-            orderObservationUuid = uuid
-            orderFlow.collectLatest { order ->
-                if (order != null) {
-                    mutableOrderState.update { state ->
-                        state.copy(
-                            orderProductItemList = getProductList(order),
-                            orderInfo = getOrderInfo(order),
-                            deliveryCost = order.deliveryCost?.toString(),
-                            oldTotalCost = order.oldTotalCost?.toString(),
-                            newTotalCost = order.newTotalCost.toString(),
-                            isLoading = false,
-                            discount = order.percentDiscount?.let { discount ->
-                                discount.toString() + PERCENT
-                            }
-                        )
-                    }
-                }
+    override fun reduce(action: OrderDetails.Action, dataState: OrderDetails.DataState) {
+        when (action) {
+            OrderDetails.Action.Back -> addEvent {
+                OrderDetails.Event.Back
             }
+
+            is OrderDetails.Action.StartObserve -> startObserveOrder(action.orderUuid)
+            is OrderDetails.Action.Reload -> reloadOrder(action.orderUuid)
+            OrderDetails.Action.StopObserve -> stopObserveOrders()
         }
     }
 
-    fun stopObserveOrders() {
+    private fun reloadOrder(orderUuid: String) {
+        setState {
+            copy(
+                screenState = OrderDetails.DataState.ScreenState.LOADING,
+            )
+        }
+        stopObserveOrders()
+        startObserveOrder(orderUuid = orderUuid)
+    }
+
+    private fun startObserveOrder(orderUuid: String) {
+        observeOrderJob = sharedScope.launchSafe(
+            block = {
+                val (uuid, orderFlow) = observeOrderUseCase(orderUuid)
+                orderObservationUuid = uuid
+                orderFlow.collectLatest { order ->
+                    if (order != null) {
+                        setState {
+                            copy(
+                                orderUuid = orderUuid,
+                                orderDetailsData = OrderDetails.DataState.OrderDetailsData(
+                                    orderProductItemList = getProductList(order),
+                                    orderInfo = getOrderInfo(order),
+                                    deliveryCost = order.deliveryCost?.let { deliveryCost ->
+                                        "$deliveryCost$RUBLE_CURRENCY"
+                                    },
+                                    oldTotalCost = order.oldTotalCost?.let { oldTotalCost ->
+                                        "$oldTotalCost$RUBLE_CURRENCY"
+                                    },
+                                    newTotalCost = order.newTotalCost.let { newTotalCost ->
+                                        "$newTotalCost$RUBLE_CURRENCY"
+                                    },
+                                    discount = order.percentDiscount?.let { discount ->
+                                        "$discount$PERCENT"
+                                    }
+                                ),
+                                screenState = OrderDetails.DataState.ScreenState.SUCCESS,
+                            )
+                        }
+                    }
+                }
+            },
+            onError = {
+                setState {
+                    copy(
+                        orderUuid = orderUuid,
+                        screenState = OrderDetails.DataState.ScreenState.ERROR,
+                    )
+                }
+            },
+        )
+
+    }
+
+    private fun stopObserveOrders() {
         observeOrderJob?.cancel()
         orderObservationUuid?.let { uuid ->
-            sharedScope.launch {
-                stopObserveOrdersUseCase(uuid)
-            }
+            sharedScope.launchSafe(
+                block = {
+                    stopObserveOrdersUseCase(uuid)
+                },
+                onError = {
+
+                },
+            )
         }
         orderObservationUuid = null
     }
 
     private fun getOrderInfo(order: Order) =
-        OrderDetailsState.OrderInfo(
+        OrderDetails.DataState.OrderDetailsData.OrderInfo(
             code = order.code,
             status = order.status,
             dateTime = order.dateTime,
@@ -75,18 +125,23 @@ class OrderDetailsViewModel(
         )
 
     private fun getProductList(order: Order) =
-        order.orderProductList.map { orderProduct ->
-            OrderDetailsState.OrderProductItem(
+        order.orderProductList.mapIndexed { index, orderProduct ->
+            OrderDetails.DataState.OrderDetailsData.OrderProductItem(
                 uuid = orderProduct.uuid,
                 name = orderProduct.product.name,
-                newPrice = orderProduct.product.newPrice.toString(),
-                oldPrice = orderProduct.product.oldPrice?.toString(),
-                newCost = (orderProduct.product.newPrice * orderProduct.count).toString(),
-                oldCost = orderProduct.product.oldPrice?.let { oldPrice ->
-                    (oldPrice * orderProduct.count).toString()
+                newPrice = "${orderProduct.product.newCommonPrice}$RUBLE_CURRENCY",
+                oldPrice = orderProduct.product.oldCommonPrice?.let { oldTotalCost ->
+                    "$oldTotalCost$RUBLE_CURRENCY"
+                },
+                newCost = "${orderProduct.product.newTotalCost}$RUBLE_CURRENCY",
+                oldCost = orderProduct.product.oldTotalCost?.let { oldTotalCost ->
+                    "$oldTotalCost$RUBLE_CURRENCY"
                 },
                 photoLink = orderProduct.product.photoLink,
                 count = orderProduct.count.toString(),
+                additions = orderProduct.orderAdditionList,
+                isLast = index == order.orderProductList.lastIndex
             )
         }
+
 }

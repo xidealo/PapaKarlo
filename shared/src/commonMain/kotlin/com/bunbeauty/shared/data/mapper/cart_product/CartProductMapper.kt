@@ -3,6 +3,7 @@ package com.bunbeauty.shared.data.mapper.cart_product
 import com.bunbeauty.shared.db.CartProductEntity
 import com.bunbeauty.shared.db.CartProductWithMenuProductEntity
 import com.bunbeauty.shared.domain.model.cart.CartProduct
+import com.bunbeauty.shared.domain.model.addition.CartProductAddition
 import com.bunbeauty.shared.domain.model.category.Category
 import com.bunbeauty.shared.domain.model.product.MenuProduct
 
@@ -31,12 +32,28 @@ class CartProductMapper : ICartProductMapper {
                         Category(
                             uuid = menuProductWithCategoryEntity.categoryUuid,
                             name = menuProductWithCategoryEntity.categoryName,
-                            priority = menuProductWithCategoryEntity.priority
+                            priority = menuProductWithCategoryEntity.categoryPriority
                         )
                     },
                     visible = firstCartProductWithCategoryEntity.visible,
-                    isRecommended = firstCartProductWithCategoryEntity.isRecommended
-                )
+                    isRecommended = firstCartProductWithCategoryEntity.isRecommended,
+                    additionGroups = emptyList(),
+                ),
+                additionList = groupedCartProductWithCategoryEntityList.mapNotNull { cartProductWithMenuProductEntityList ->
+                    cartProductWithMenuProductEntityList.cartProductAdditionUuid?.let {
+                        CartProductAddition(
+                            uuid = cartProductWithMenuProductEntityList.cartProductAdditionUuid,
+                            name = cartProductWithMenuProductEntityList.cartProductAdditionName
+                                ?: "",
+                            price = cartProductWithMenuProductEntityList.cartProductAdditionPrice,
+                            cartProductUuid = cartProductWithMenuProductEntityList.cartProductUuid,
+                            additionUuid = cartProductWithMenuProductEntityList.cartProductAdditionAdditionUuid
+                                ?: "",
+                            fullName = cartProductWithMenuProductEntityList.cartProductAdditionFullName,
+                            priority = cartProductWithMenuProductEntityList.cartProductAdditionPriority
+                        )
+                    }
+                }
             )
         }
     }

@@ -6,4 +6,5 @@ data class MenuProductItem(
     val name: String,
     val oldPrice: Int?,
     val newPrice: Int,
+    val hasAdditions: Boolean,
 )

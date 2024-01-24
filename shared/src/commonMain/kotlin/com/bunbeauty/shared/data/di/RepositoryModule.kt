@@ -3,8 +3,11 @@ package com.bunbeauty.shared.data.di
 import com.bunbeauty.shared.data.network.api.NetworkConnector
 import com.bunbeauty.shared.data.network.api.NetworkConnectorImpl
 import com.bunbeauty.shared.data.network.socket.SocketService
+import com.bunbeauty.shared.data.repository.AdditionGroupRepository
+import com.bunbeauty.shared.data.repository.AdditionRepository
 import com.bunbeauty.shared.data.repository.AuthRepository
 import com.bunbeauty.shared.data.repository.CafeRepository
+import com.bunbeauty.shared.data.repository.CartProductAdditionRepository
 import com.bunbeauty.shared.data.repository.CartProductRepository
 import com.bunbeauty.shared.data.repository.CityRepository
 import com.bunbeauty.shared.data.repository.DeliveryRepository
@@ -60,6 +63,8 @@ fun repositoryModule() = module {
             orderDao = get(),
             networkConnector = get(),
             orderMapper = get(),
+            orderAdditionDao = get(),
+            orderProductDao = get()
         )
     }
     single<MenuProductRepo> {
@@ -69,6 +74,8 @@ fun repositoryModule() = module {
             categoryDao = get(),
             menuProductCategoryReferenceDao = get(),
             menuProductMapper = get(),
+            additionDao = get(),
+            additionGroupDao = get()
         )
     }
     single<UserAddressRepo> {
@@ -96,12 +103,11 @@ fun repositoryModule() = module {
         UserRepository(
             networkConnector = get(),
             profileMapper = get(),
-            orderMapper = get(),
             userMapper = get(),
             userDao = get(),
             userAddressDao = get(),
             orderDao = get(),
-            dataStoreRepo = get()
+            dataStoreRepo = get(),
         )
     }
     single<CityRepo> {
@@ -152,6 +158,22 @@ fun repositoryModule() = module {
         RecommendationRepository(
             networkConnector = get(),
             dataStoreRepo = get()
+        )
+    }
+    single {
+        CartProductAdditionRepository(
+            uuidGenerator = get(),
+            cartProductAdditionDao = get()
+        )
+    }
+    single {
+        AdditionRepository(
+            additionDao = get(),
+        )
+    }
+    single {
+        AdditionGroupRepository(
+            additionGroupDao = get(),
         )
     }
     single<SuggestionRepo> {

@@ -24,11 +24,11 @@ class CityDao(foodDeliveryDatabase: FoodDeliveryDatabase) : ICityDao {
         }
     }
 
-    override fun getCityList(): List<CityEntity> {
+    override suspend fun getCityList(): List<CityEntity> {
         return cityEntityQueries.getCityList().executeAsList()
     }
 
-    override fun getCityByUuid(uuid: String): CityEntity? {
+    override suspend fun getCityByUuid(uuid: String): CityEntity? {
         return cityEntityQueries.getCityByUuid(uuid).executeAsOneOrNull()
     }
 

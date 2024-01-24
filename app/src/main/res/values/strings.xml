@@ -14,6 +14,7 @@
     <string name="description_ic_next">Переход</string>
     <string name="description_ic_checked">Выбрано</string>
     <string name="description_product">Фото блюда</string>
+    <string name="description_product_addition">Фото добавки</string>
     <string name="description_ic_discount">Скидка</string>
     <string name="common_email">Почта</string>
     <string name="common_city">Город</string>
@@ -54,9 +55,11 @@
     <string name="error_menu_loading">Не удалось загрузить меню</string>
     <string name="title_menu_discount">Скидка %s%%</string>
     <string name="msg_menu_discount">Успей сделать первый заказ со скидкой %s%%</string>
+    <string name="msg_menu_product_added">Добавлено</string>
+    <string name="msg_menu_product_edited">Изменено</string>
 
     <!-- PRODUCT DETAILS -->
-    <string name="action_product_details_want">Хочу!</string>
+    <string name="action_product_details_want">Добавить за %s!</string>
 
     <!-- CONSUMER CART -->
     <string name="title_cart">Корзина</string>
@@ -72,6 +75,8 @@
     <string name="description_consumer_cart_decrease">Уменьшить</string>
     <string name="description_consumer_cart_empty">Пустая корзина</string>
     <string name="error_consumer_cart_loading">Не удалось загрузить корзину</string>
+    <string name="error_consumer_cart_add_product">Не удалось добавить</string>
+    <string name="error_consumer_cart_remove_product">Не удалось удалить</string>
 
     <!-- CREATE ORDER -->
     <string name="title_create_order">Оформление заказа</string>
@@ -162,14 +167,13 @@
     <string name="msg_order_details_date_time">Дата и время заказа</string>
     <string name="msg_order_details_pickup_method">Способ получения</string>
     <string name="msg_order_details_payment_method">Способ оплаты</string>
-    <string name="msg_order_details_deferred_time_delivery">Ко времени</string>
-    <string name="msg_order_details_deferred_time_pickup">Ко времени</string>
     <string name="msg_order_details_address">Адрес</string>
     <string name="msg_order_details_comment">Комментарий</string>
     <string name="msg_order_details_order_cost">Сумма заказа</string>
     <string name="msg_order_details_delivery_cost">Доставка</string>
     <string name="description_order_details_done">Шаг выполнен</string>
     <string name="msg_order_details_discount">Скидка</string>
+    <string name="error_order_details_discount">Не удалось загрузить детали заказа</string>
 
     <!-- PROFILE -->
     <string name="title_profile">Профиль</string>

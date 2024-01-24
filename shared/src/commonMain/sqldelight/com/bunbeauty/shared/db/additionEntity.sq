@@ -1,0 +1,27 @@
+CREATE TABLE additionEntity (
+    uuid TEXT NOT NULL PRIMARY KEY,
+    name TEXT NOT NULL,
+    fullName TEXT,
+    photoLink TEXT NOT NULL,
+    price INTEGER AS Int,
+    isVisible INTEGER AS Boolean NOT NULL,
+    isSelected INTEGER AS Boolean NOT NULL,
+    additionGroupUuid TEXT NOT NULL,
+    priority INTEGER AS Int NOT NULL,
+    FOREIGN KEY(additionGroupUuid) REFERENCES additionGroupEntity(uuid) ON DELETE CASCADE
+);
+
+insert:
+INSERT OR REPLACE
+INTO additionEntity
+VALUES ?;
+
+getAdditionByUuid:
+SELECT *
+FROM additionEntity
+WHERE uuid = :uuid;
+
+getAdditionByAdditionGroupUuid:
+SELECT *
+FROM additionEntity
+WHERE additionGroupUuid = :additionGroupUuid;

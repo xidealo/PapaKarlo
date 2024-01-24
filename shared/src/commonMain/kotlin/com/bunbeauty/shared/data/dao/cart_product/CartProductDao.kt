@@ -32,7 +32,8 @@ class CartProductDao(foodDeliveryDatabase: FoodDeliveryDatabase) : ICartProductD
     }
 
     override suspend fun getCartProductByMenuProductUuid(menuProductUuid: String): List<CartProductWithMenuProductEntity> {
-        return cartProductEntityQueries.getCartProductByMenuProductUuid(menuProductUuid)
+        return cartProductEntityQueries
+            .getCartProductByMenuProductUuid(menuProductUuid)
             .executeAsList()
     }
 

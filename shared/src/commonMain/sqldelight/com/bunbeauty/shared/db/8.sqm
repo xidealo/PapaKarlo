@@ -1,2 +1,97 @@
+CREATE TABLE cartProductAdditionEntity (
+   uuid TEXT NOT NULL PRIMARY KEY,
+   name TEXT NOT NULL,
+   fullName TEXT,
+   price INTEGER AS Int,
+   additionUuid TEXT NOT NULL,
+   cartProductUuid TEXT NOT NULL,
+   priority INTEGER AS Int NOT NULL,
+   FOREIGN KEY (cartProductUuid) REFERENCES cartProductEntity(uuid) ON DELETE CASCADE
+);
+
+DROP VIEW IF EXISTS cartProductWithMenuProductEntity;
+CREATE VIEW cartProductWithMenuProductEntity AS
+SELECT cartProductEntity.uuid AS cartProductUuid,
+    cartProductEntity.count,
+    cartProductEntity.menuProductUuid,
+    categoryEntity.uuid AS categoryUuid,
+    categoryEntity.name AS categoryName,
+    categoryEntity.priority AS categoryPriority,
+    menuProductEntity.*,
+    cartProductAdditionEntity.uuid AS cartProductAdditionUuid,
+    cartProductAdditionEntity.name AS cartProductAdditionName,
+    cartProductAdditionEntity.fullName AS cartProductAdditionFullName,
+    cartProductAdditionEntity.price AS cartProductAdditionPrice,
+    cartProductAdditionEntity.additionUuid AS cartProductAdditionAdditionUuid
+    cartProductAdditionEntity.priority AS cartProductAdditionPriority
+FROM cartProductEntity
+JOIN menuProductEntity ON menuProductEntity.uuid = cartProductEntity.menuProductUuid
+JOIN menuProductCategoryReference ON menuProductCategoryReference.menuProductUuidReference = menuProductEntity.uuid
+JOIN categoryEntity ON menuProductCategoryReference.categoryUuidReference = categoryEntity.uuid
+LEFT JOIN cartProductAdditionEntity ON cartProductAdditionEntity.cartProductUuid = cartProductEntity.uuid;
+
+DROP VIEW IF EXISTS orderWithProductEntity;
+CREATE VIEW orderWithProductEntity AS
+SELECT orderEntity.*,
+    orderProductEntity.uuid AS orderProductUuid,
+    orderProductEntity.count AS orderProductCount,
+    orderProductEntity.name AS orderProductName,
+    orderProductEntity.newPrice AS orderProductNewPrice,
+    orderProductEntity.oldPrice AS orderProductOldPrice,
+    orderProductEntity.utils AS orderProductUtils,
+    orderProductEntity.nutrition AS orderProductNutrition,
+    orderProductEntity.description AS orderProductDescription,
+    orderProductEntity.comboDescription AS orderProductComboDescription,
+    orderProductEntity.photoLink AS orderProductPhotoLink,
+    orderProductEntity.barcode AS orderProductBarcode,
+    orderProductEntity.newCommonPrice AS orderProductNewCommonPrice,
+    orderProductEntity.oldCommonPrice AS orderProductOldCommonPrice,
+    orderProductEntity.newTotalCost AS orderProductNewTotalCost,
+    orderProductEntity.oldTotalCost AS orderProductOldTotalCost,
+    orderProductEntity.orderUuid AS orderUuid,
+    orderAdditionEntity.uuid AS orderAdditionEntityUuid,
+    orderAdditionEntity.name AS orderAdditionEntityName,
+    orderAdditionEntity.priority AS orderAdditionEntityPriority,
+    orderAdditionEntity.orderProductUuid AS orderAdditionEntityOrderProductUuid
+FROM orderEntity
+JOIN orderProductEntity ON orderEntity.uuid = orderProductEntity.orderUuid
+LEFT JOIN orderAdditionEntity ON orderProductEntity.uuid = orderAdditionEntity.orderProductUuid;
+
+CREATE TABLE additionEntity (
+    uuid TEXT NOT NULL PRIMARY KEY,
+    name TEXT NOT NULL,
+    fullName TEXT,
+    photoLink TEXT NOT NULL,
+    price INTEGER AS Int,
+    isVisible INTEGER AS Boolean NOT NULL,
+    isSelected INTEGER AS Boolean NOT NULL,
+    additionGroupUuid TEXT NOT NULL,
+    priority INTEGER AS Int NOT NULL,
+    FOREIGN KEY(additionGroupUuid) REFERENCES additionGroupEntity(uuid) ON DELETE CASCADE
+);
+
+CREATE TABLE orderAdditionEntity (
+   uuid TEXT NOT NULL PRIMARY KEY,
+   name TEXT NOT NULL,
+   priority INTEGER AS Int NOT NULL,
+   orderProductUuid TEXT NOT NULL,
+   FOREIGN KEY(orderProductUuid) REFERENCES orderProductEntity(uuid) ON DELETE CASCADE
+);
+
+CREATE TABLE additionGroupEntity (
+    uuid TEXT NOT NULL PRIMARY KEY,
+    name TEXT NOT NULL,
+    isVisible INTEGER AS Boolean NOT NULL,
+    singleChoice INTEGER AS Boolean NOT NULL,
+    priority INTEGER AS Int NOT NULL,
+    menuProductUuid TEXT NOT NULL,
+    FOREIGN KEY(menuProductUuid) REFERENCES menuProductEntity(uuid) ON DELETE CASCADE
+);
+
+ALTER TABLE orderProductEntity ADD COLUMN newCommonPrice INT NOT NULL;
+ALTER TABLE orderProductEntity ADD COLUMN oldCommonPrice INT;
+ALTER TABLE orderProductEntity ADD COLUMN newTotalCost INT NOT NULL;
+ALTER TABLE orderProductEntity ADD COLUMN oldTotalCost INT;
+
 DROP TABLE IF EXISTS streetEntity;
 ALTER TABLE userAddressEntity DROP COLUMN streetUuid;

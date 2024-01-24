@@ -71,7 +71,6 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         overrideBackPressedCallback()
         super.onViewCreated(view, savedInstanceState)
-
         viewModel.getMenu()
         viewBinding.root.setContentWithTheme {
             val menuState by viewModel.menuState.collectAsStateWithLifecycle()
@@ -94,7 +93,9 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
                         MenuFragmentDirections.toProductFragment(
                             event.uuid,
                             event.name,
-                            ProductDetailsOpenedFrom.MENU_PRODUCT
+                            ProductDetailsOpenedFrom.MENU_PRODUCT,
+                            emptyArray(),
+                            null
                         )
                     )
                 }
@@ -314,7 +315,8 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
             photoLink = "",
             name = "Бэргер",
             newPrice = 99,
-            oldPrice = 100
+            oldPrice = 100,
+            hasAdditions = true
         )
 
         fun getMenuProductPairItemModel(key: String) = MenuItem.MenuProductListItem(

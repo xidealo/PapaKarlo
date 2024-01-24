@@ -1,8 +1,8 @@
 package com.bunbeauty.shared.domain.interactor.cart
 
+import com.bunbeauty.shared.data.repository.CartProductAdditionRepository
 import com.bunbeauty.shared.domain.CommonFlow
 import com.bunbeauty.shared.domain.asCommonFlow
-import com.bunbeauty.shared.domain.interactor.product.IProductInteractor
 import com.bunbeauty.shared.domain.model.cart.CartProduct
 import com.bunbeauty.shared.domain.model.cart.ConsumerCartDomain
 import com.bunbeauty.shared.domain.model.cart.LightCartProduct
@@ -13,8 +13,8 @@ import kotlinx.coroutines.flow.map
 class CartProductInteractor(
     private val cartProductRepo: CartProductRepo,
     private val deliveryRepo: DeliveryRepo,
-    private val productInteractor: IProductInteractor,
     private val getCartTotal: GetCartTotalUseCase,
+    private val cartProductAdditionRepository: CartProductAdditionRepository,
 ) : ICartProductInteractor {
 
     override fun observeConsumerCart(): CommonFlow<ConsumerCartDomain?> {
@@ -27,33 +27,9 @@ class CartProductInteractor(
         return cartProductRepo.getCartProductList()
     }
 
-    override fun observeTotalCartCount(): CommonFlow<Int> {
-        return cartProductRepo.observeCartProductList().map { cartProductList ->
-            getTotalCount(cartProductList)
-        }.asCommonFlow()
-    }
-
-    override fun observeNewTotalCartCost(): CommonFlow<Int> {
-        return cartProductRepo.observeCartProductList().map { cartProductList ->
-            productInteractor.getNewTotalCost(cartProductList)
-        }.asCommonFlow()
-    }
-
-    override suspend fun addProductToCart(menuProductUuid: String): CartProduct? {
-        if (getTotalCartCount() >= CART_PRODUCT_LIMIT) {
-            return null
-        }
-
-        val cartProduct = cartProductRepo.getCartProductByMenuProductUuid(menuProductUuid)
-        return if (cartProduct == null) {
-            cartProductRepo.saveAsCartProduct(menuProductUuid)
-        } else {
-            cartProductRepo.updateCartProductCount(cartProduct.uuid, cartProduct.count + 1)
-        }
-    }
-
     override suspend fun removeAllProductsFromCart() {
         cartProductRepo.deleteAllCartProducts()
+        cartProductAdditionRepository.deleteAll()
     }
 
     private suspend fun getConsumerCart(cartProductList: List<CartProduct>): ConsumerCartDomain? {
@@ -77,26 +53,28 @@ class CartProductInteractor(
         return LightCartProduct(
             uuid = cartProduct.uuid,
             name = cartProduct.product.name,
-            newCost = productInteractor.getProductPositionNewCost(cartProduct),
-            oldCost = productInteractor.getProductPositionOldCost(cartProduct),
+            newCost = getNewTotalCost(cartProduct),
+            oldCost = getOldTotalCost(cartProduct),
             photoLink = cartProduct.product.photoLink,
             count = cartProduct.count,
             menuProductUuid = cartProduct.product.uuid,
+            cartProductAdditionList = cartProduct.additionList.sortedBy { cartProductAddition ->
+                cartProductAddition.priority
+            }
         )
     }
 
-    suspend fun getTotalCartCount(): Int {
-        val cartProductList = cartProductRepo.getCartProductList()
-        return getTotalCount(cartProductList)
+    private fun getNewTotalCost(cartProduct: CartProduct): Int {
+        return (cartProduct.product.newPrice + cartProduct.additionList.sumOf { addition ->
+            addition.price ?: 0
+        }) * cartProduct.count
     }
 
-    fun getTotalCount(productList: List<CartProduct>): Int {
-        return productList.sumOf { product ->
-            product.count
-        }
-    }
+    private fun getOldTotalCost(cartProduct: CartProduct): Int? {
+        val oldPrice = cartProduct.product.oldPrice ?: return null
 
-    companion object {
-        private const val CART_PRODUCT_LIMIT = 99
+        return (oldPrice + cartProduct.additionList.sumOf { addition ->
+            addition.price ?: 0
+        }) * cartProduct.count
     }
 }

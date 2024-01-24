@@ -15,8 +15,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.itemsIndexed
-import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -32,6 +32,7 @@ import com.bunbeauty.papakarlo.common.extension.navigateSafe
 import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
 import com.bunbeauty.papakarlo.common.ui.element.card.DiscountCard
+import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryItem
 import com.bunbeauty.papakarlo.common.ui.element.surface.FoodDeliverySurface
 import com.bunbeauty.papakarlo.common.ui.screen.EmptyScreen
 import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
@@ -45,6 +46,7 @@ import com.bunbeauty.papakarlo.feature.consumercart.ConsumerCartFragmentDirectio
 import com.bunbeauty.papakarlo.feature.consumercart.ConsumerCartFragmentDirections.toMenuFragment
 import com.bunbeauty.papakarlo.feature.consumercart.ConsumerCartFragmentDirections.toProductFragment
 import com.bunbeauty.papakarlo.feature.consumercart.ui.CartProductItem
+import com.bunbeauty.papakarlo.feature.main.IMessageHost
 import com.bunbeauty.papakarlo.feature.menu.ui.MenuProductItem
 import com.bunbeauty.shared.domain.model.SuccessLoginDirection
 import com.bunbeauty.shared.presentation.consumercart.CartProductItem
@@ -61,7 +63,6 @@ class ConsumerCartFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         viewModel.onAction(ConsumerCart.Action.Init)
     }
 
@@ -139,12 +140,21 @@ class ConsumerCartFragment :
                         toProductFragment(
                             event.uuid,
                             event.name,
-                            event.productDetailsOpenedFrom
+                            event.productDetailsOpenedFrom,
+                            event.additionUuidList.toTypedArray(),
+                            event.cartProductUuid
                         )
                     )
             }
 
             ConsumerCart.Event.NavigateBack -> findNavController().popBackStack()
+            ConsumerCart.Event.ShowAddProductError -> (activity as? IMessageHost)?.showErrorMessage(
+                resources.getString(R.string.error_consumer_cart_add_product)
+            )
+
+            ConsumerCart.Event.ShowRemoveProductError -> (activity as? IMessageHost)?.showErrorMessage(
+                resources.getString(R.string.error_consumer_cart_remove_product)
+            )
         }
     }
 
@@ -182,17 +192,18 @@ class ConsumerCartFragment :
                         )
                     }
 
-                    itemsIndexed(
+                    items(
                         items = consumerCartData.cartProductList,
-                        key = { _, cartProductItem -> cartProductItem.uuid },
-                        span = { _, _ -> GridItemSpan(maxLineSpan) }
-                    ) { index, cartProductItem ->
-                        Column {
+                        key = { cartProductItem -> cartProductItem.uuid },
+                        span = { _ -> GridItemSpan(maxLineSpan) }
+                    ) { cartProductItem ->
+                        FoodDeliveryItem(needDivider = !cartProductItem.isLast) {
                             CartProductItem(
                                 cartProductItem = cartProductItem,
                                 onCountIncreased = {
                                     onAction(
                                         ConsumerCart.Action.AddProductToCartClick(
+                                            cartProductUuid = cartProductItem.uuid,
                                             menuProductUuid = cartProductItem.menuProductUuid
                                         )
                                     )
@@ -200,7 +211,8 @@ class ConsumerCartFragment :
                                 onCountDecreased = {
                                     onAction(
                                         ConsumerCart.Action.RemoveProductFromCartClick(
-                                            menuProductUuid = cartProductItem.menuProductUuid
+                                            menuProductUuid = cartProductItem.menuProductUuid,
+                                            cartProductUuid = cartProductItem.uuid
                                         )
                                     )
                                 },
@@ -212,14 +224,6 @@ class ConsumerCartFragment :
                                     )
                                 }
                             )
-                            if (index != consumerCartData.cartProductList.lastIndex) {
-                                Divider(
-                                    modifier = Modifier
-                                        .padding(horizontal = 16.dp),
-                                    thickness = 1.dp,
-                                    color = FoodDeliveryTheme.colors.mainColors.stroke
-                                )
-                            }
                         }
                     }
 
@@ -262,10 +266,10 @@ class ConsumerCartFragment :
                                     }
                                 ),
                             menuProductItem = recommendation,
-                            onAddProductClick = {
+                            onAddProductClick = { menuProductItem ->
                                 onAction(
                                     ConsumerCart.Action.AddRecommendationProductToCartClick(
-                                        menuProductUuid = recommendation.uuid
+                                        menuProductItem = menuProductItem
                                     )
                                 )
                             },
@@ -345,7 +349,10 @@ class ConsumerCartFragment :
             oldCost = "330 ₽",
             photoLink = "",
             count = 3,
-            menuProductUuid = ""
+            menuProductUuid = "",
+            additions = null,
+            additionUuidList = emptyList(),
+            isLast = false
         )
 
         fun getMenuProductItem(uuid: String) = MenuProductItemModel(
@@ -353,7 +360,8 @@ class ConsumerCartFragment :
             photoLink = "",
             name = "Бэргер",
             newPrice = 99,
-            oldPrice = 100
+            oldPrice = 100,
+            hasAdditions = true
         )
 
         FoodDeliveryTheme {

@@ -98,6 +98,18 @@ class OrderProductServer(
     @SerialName("oldPrice")
     val oldPrice: Int?,
 
+    @SerialName("newCommonPrice")
+    val newCommonPrice: Int,
+
+    @SerialName("oldCommonPrice")
+    val oldCommonPrice: Int?,
+
+    @SerialName("newTotalCost")
+    val newTotalCost: Int,
+
+    @SerialName("oldTotalCost")
+    val oldTotalCost: Int?,
+
     @SerialName("utils")
     val utils: String?,
 
@@ -118,4 +130,17 @@ class OrderProductServer(
 
     @SerialName("orderUuid")
     val orderUuid: String,
+
+    @SerialName("additions")
+    val additions: List<OrderAdditionServer>,
+)
+
+@Serializable
+class OrderAdditionServer(
+    @SerialName("uuid")
+    val uuid: String,
+    @SerialName("name")
+    val name: String,
+    @SerialName("priority")
+    val priority: Int,
 )

@@ -37,13 +37,24 @@ interface ConsumerCart {
     sealed interface Action : BaseAction {
         data object Init : Action
         data object BackClick : Action
-        data class AddProductToCartClick(val menuProductUuid: String) : Action
-        data class RemoveProductFromCartClick(val menuProductUuid: String) : Action
+        data class AddProductToCartClick(
+            val cartProductUuid: String,
+            val menuProductUuid: String,
+        ) : Action
+
+        data class RemoveProductFromCartClick(
+            val menuProductUuid: String,
+            val cartProductUuid: String,
+        ) : Action
+
         data class OnProductClick(val cartProductItem: CartProductItem) : Action
         data object OnCreateOrderClick : Action
         data object OnMenuClick : Action
         data object OnErrorButtonClick : Action
-        data class AddRecommendationProductToCartClick(val menuProductUuid: String) : Action
+        data class AddRecommendationProductToCartClick(
+            val menuProductItem: MenuProductItem,
+        ) : Action
+
         data class RecommendationClick(val menuProductUuid: String, val name: String) : Action
     }
 
@@ -55,9 +66,13 @@ interface ConsumerCart {
             val uuid: String,
             val name: String,
             val productDetailsOpenedFrom: ProductDetailsOpenedFrom,
+            val additionUuidList: List<String>,
+            val cartProductUuid: String?,
         ) : Event
 
         data object NavigateBack : Event
+        data object ShowAddProductError : Event
+        data object ShowRemoveProductError : Event
     }
 }
 

@@ -77,8 +77,8 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
         checkNotificationPermission()
     }
 
-    override fun showInfoMessage(text: String) {
-        viewModel.showInfoMessage(text)
+    override fun showInfoMessage(text: String, photoLink: String?) {
+        viewModel.showInfoMessage(text, photoLink)
     }
 
     override fun showErrorMessage(text: String) {

@@ -9,9 +9,10 @@ import com.bunbeauty.analytic.parameter.MenuProductUuidEventParameter
 import com.bunbeauty.core.Logger
 import com.bunbeauty.shared.Constants.PERCENT
 import com.bunbeauty.shared.Constants.RUBLE_CURRENCY
-import com.bunbeauty.shared.domain.feature.cart.AddCartProductUseCase
 import com.bunbeauty.shared.domain.feature.cart.GetRecommendationsUseCase
+import com.bunbeauty.shared.domain.feature.cart.IncreaseCartProductCountUseCase
 import com.bunbeauty.shared.domain.feature.cart.RemoveCartProductUseCase
+import com.bunbeauty.shared.domain.feature.menu.AddMenuProductUseCase
 import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
 import com.bunbeauty.shared.domain.model.cart.ConsumerCartDomain
@@ -23,11 +24,13 @@ import com.bunbeauty.shared.presentation.product_details.ProductDetailsOpenedFro
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 
 class ConsumerCartViewModel(
     private val userInteractor: IUserInteractor,
     private val cartProductInteractor: ICartProductInteractor,
-    private val addCartProductUseCase: AddCartProductUseCase,
+    private val increaseCartProductCountUseCase: IncreaseCartProductCountUseCase,
+    private val addMenuProductUseCase: AddMenuProductUseCase,
     private val removeCartProductUseCase: RemoveCartProductUseCase,
     private val getRecommendationsUseCase: GetRecommendationsUseCase,
     private val analyticService: AnalyticService,
@@ -49,7 +52,8 @@ class ConsumerCartViewModel(
 
     override fun reduce(action: ConsumerCart.Action, dataState: ConsumerCart.ViewDataState) {
         when (action) {
-            is ConsumerCart.Action.AddProductToCartClick -> addCartProductToCartClick(
+            is ConsumerCart.Action.AddProductToCartClick -> increaseCartProductToCartClick(
+                cartProductUuid = action.cartProductUuid,
                 menuProductUuid = action.menuProductUuid
             )
 
@@ -61,21 +65,26 @@ class ConsumerCartViewModel(
             is ConsumerCart.Action.OnProductClick -> onProductClicked(
                 uuid = action.cartProductItem.menuProductUuid,
                 name = action.cartProductItem.name,
-                productDetailsOpenedFrom = ProductDetailsOpenedFrom.CART_PRODUCT
+                productDetailsOpenedFrom = ProductDetailsOpenedFrom.CART_PRODUCT,
+                additionUuidList = action.cartProductItem.additionUuidList,
+                cartProductUuid = action.cartProductItem.uuid
             )
 
             is ConsumerCart.Action.RemoveProductFromCartClick -> onRemoveCardProductClicked(
-                menuProductUuid = action.menuProductUuid
+                menuProductUuid = action.menuProductUuid,
+                cartProductUuid = action.cartProductUuid,
             )
 
             is ConsumerCart.Action.AddRecommendationProductToCartClick -> addRecommendationProductClicked(
-                menuProductUuid = action.menuProductUuid
+                menuProductItem = action.menuProductItem
             )
 
             is ConsumerCart.Action.RecommendationClick -> onProductClicked(
                 uuid = action.menuProductUuid,
                 name = action.name,
-                productDetailsOpenedFrom = ProductDetailsOpenedFrom.RECOMMENDATION_PRODUCT
+                productDetailsOpenedFrom = ProductDetailsOpenedFrom.RECOMMENDATION_PRODUCT,
+                additionUuidList = emptyList(),
+                cartProductUuid = null
             )
         }
     }
@@ -127,7 +136,7 @@ class ConsumerCartViewModel(
                 }
             },
             onError = {
-                // TODO handle error
+                // Do nothing
             }
         )
     }
@@ -136,57 +145,77 @@ class ConsumerCartViewModel(
         uuid: String,
         name: String,
         productDetailsOpenedFrom: ProductDetailsOpenedFrom,
+        additionUuidList: List<String>,
+        cartProductUuid: String?,
     ) {
         addEvent {
             ConsumerCart.Event.NavigateToProduct(
                 uuid = uuid,
                 name = name,
-                productDetailsOpenedFrom = productDetailsOpenedFrom
+                productDetailsOpenedFrom = productDetailsOpenedFrom,
+                additionUuidList = additionUuidList,
+                cartProductUuid = cartProductUuid,
             )
         }
     }
 
-    private fun addRecommendationProductClicked(menuProductUuid: String) {
+    private fun addRecommendationProductClicked(menuProductItem: MenuProductItem) {
         analyticService.sendEvent(
             event = AddRecommendationProductClickEvent(
-                menuProductUuidEventParameter = MenuProductUuidEventParameter(value = menuProductUuid)
+                menuProductUuidEventParameter = MenuProductUuidEventParameter(value = menuProductItem.uuid)
             ),
         )
-        addProduct(
-            menuProductUuid = menuProductUuid
-        )
+
+        sharedScope.launch {
+            if (menuProductItem.hasAdditions) {
+                addEvent {
+                    ConsumerCart.Event.NavigateToProduct(
+                        uuid = menuProductItem.uuid,
+                        name = menuProductItem.name,
+                        productDetailsOpenedFrom = ProductDetailsOpenedFrom.RECOMMENDATION_PRODUCT,
+                        additionUuidList = emptyList(),
+                        cartProductUuid = null,
+                    )
+                }
+            } else {
+                addMenuProductUseCase(menuProductUuid = menuProductItem.uuid)
+            }
+        }
     }
 
-    private fun addCartProductToCartClick(menuProductUuid: String) {
+    private fun increaseCartProductToCartClick(cartProductUuid: String, menuProductUuid: String) {
         analyticService.sendEvent(
             event = IncreaseCartProductClickEvent(
                 menuProductUuidEventParameter = MenuProductUuidEventParameter(value = menuProductUuid)
             ),
         )
-        addProduct(
-            menuProductUuid = menuProductUuid
-        )
-    }
-
-    private fun addProduct(menuProductUuid: String) {
         sharedScope.launchSafe(
             block = {
-                addCartProductUseCase(menuProductUuid)
+                increaseCartProductCountUseCase(cartProductUuid = cartProductUuid)
             },
             onError = {
-                // TODO handle error
+                addEvent {
+                    ConsumerCart.Event.ShowAddProductError
+                }
             }
         )
     }
 
-    private fun onRemoveCardProductClicked(menuProductUuid: String) {
+    private fun onRemoveCardProductClicked(
+        menuProductUuid: String,
+        cartProductUuid: String,
+    ) {
         handleRemoveAnalytic(menuProductUuid = menuProductUuid)
         sharedScope.launchSafe(
             block = {
-                removeCartProductUseCase(menuProductUuid = menuProductUuid)
+                removeCartProductUseCase(
+                    cartProductUuid = cartProductUuid,
+                )
             },
             onError = {
-                // TODO handle error
+                addEvent {
+                    ConsumerCart.Event.ShowRemoveProductError
+                }
             }
         )
     }
@@ -213,14 +242,19 @@ class ConsumerCartViewModel(
         return when (consumerCartDomain) {
             is ConsumerCartDomain.Empty -> null
             is ConsumerCartDomain.WithProducts -> ConsumerCart.ViewDataState.ConsumerCartData(
-                forFreeDelivery = "${consumerCartDomain.forFreeDelivery} $RUBLE_CURRENCY",
-                cartProductList = consumerCartDomain.cartProductList.map(::toItem),
-                oldTotalCost = consumerCartDomain.oldTotalCost?.let { oldTotalCost ->
-                    oldTotalCost.toString() + RUBLE_CURRENCY
+                forFreeDelivery = "${consumerCartDomain.forFreeDelivery}$RUBLE_CURRENCY",
+                cartProductList = consumerCartDomain.cartProductList.mapIndexed { index, lightCartProduct ->
+                    toItem(
+                        lightCartProduct = lightCartProduct,
+                        isLast = index == consumerCartDomain.cartProductList.lastIndex
+                    )
                 },
-                newTotalCost = consumerCartDomain.newTotalCost.toString() + RUBLE_CURRENCY,
+                oldTotalCost = consumerCartDomain.oldTotalCost?.let { oldTotalCost ->
+                    "$oldTotalCost $RUBLE_CURRENCY"
+                },
+                newTotalCost = "${consumerCartDomain.newTotalCost} $RUBLE_CURRENCY",
                 firstOrderDiscount = consumerCartDomain.discount?.let { discount ->
-                    discount.toString() + PERCENT
+                    "$discount$PERCENT"
                 },
                 recommendations = getRecommendationsUseCase().map { menuProduct ->
                     with(menuProduct) {
@@ -229,7 +263,8 @@ class ConsumerCartViewModel(
                             photoLink = photoLink,
                             name = name,
                             oldPrice = oldPrice,
-                            newPrice = newPrice
+                            newPrice = newPrice,
+                            hasAdditions = additionGroups.isNotEmpty()
                         )
                     }
                 }
@@ -244,15 +279,23 @@ class ConsumerCartViewModel(
         }
     }
 
-    private fun toItem(lightCartProduct: LightCartProduct): CartProductItem {
+    private fun toItem(lightCartProduct: LightCartProduct, isLast: Boolean): CartProductItem {
         return CartProductItem(
             uuid = lightCartProduct.uuid,
             name = lightCartProduct.name,
-            newCost = lightCartProduct.newCost.toString() + RUBLE_CURRENCY,
-            oldCost = lightCartProduct.oldCost?.let { oldCost -> oldCost.toString() + RUBLE_CURRENCY },
+            newCost = "${lightCartProduct.newCost}$RUBLE_CURRENCY",
+            oldCost = lightCartProduct.oldCost?.let { oldCost -> "$oldCost$RUBLE_CURRENCY" },
             photoLink = lightCartProduct.photoLink,
             count = lightCartProduct.count,
-            menuProductUuid = lightCartProduct.menuProductUuid
+            menuProductUuid = lightCartProduct.menuProductUuid,
+            additions = lightCartProduct.cartProductAdditionList
+                .joinToString(" • ") { cartProductAddition ->
+                    cartProductAddition.fullName ?: cartProductAddition.name
+                }
+                .ifEmpty { null },
+            additionUuidList = lightCartProduct.cartProductAdditionList
+                .map { cartProductAddition -> cartProductAddition.additionUuid },
+            isLast = isLast
         )
     }
 

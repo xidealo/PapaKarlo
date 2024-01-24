@@ -225,7 +225,7 @@ class NetworkConnectorImpl(
 
     override suspend fun postOrder(token: String, order: OrderPostServer): ApiResult<OrderServer> {
         return postData(
-            path = "v2/order",
+            path = "v3/order",
             body = order,
             token = token
         )

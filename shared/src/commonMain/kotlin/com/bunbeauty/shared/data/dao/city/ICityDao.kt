@@ -7,9 +7,9 @@ interface ICityDao {
 
     suspend fun insertCityList(cityList: List<CityEntity>)
 
-    fun getCityList(): List<CityEntity>
+    suspend fun getCityList(): List<CityEntity>
 
-    fun getCityByUuid(uuid: String): CityEntity?
+    suspend fun getCityByUuid(uuid: String): CityEntity?
 
     fun observeCityList(): Flow<List<CityEntity>>
 
