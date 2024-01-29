@@ -5,6 +5,9 @@ import org.koin.dsl.module
 
 internal fun menuModule() = module {
     factory {
-        AddMenuProductUseCase(cartProductRepo = get())
+        AddMenuProductUseCase(
+            getCartProductCountUseCase = get(),
+            cartProductRepo = get(),
+        )
     }
 }

@@ -1,6 +1,7 @@
 package com.bunbeauty.domain.feature.menu
 
 import com.bunbeauty.getCartProduct
+import com.bunbeauty.shared.domain.feature.cart.GetCartProductCountUseCase
 import com.bunbeauty.shared.domain.feature.menu.AddMenuProductUseCase
 import com.bunbeauty.shared.domain.repo.CartProductRepo
 import io.mockk.MockKAnnotations
@@ -15,6 +16,9 @@ import kotlin.test.Test
 class AddMenuProductUseCaseTest {
 
     @MockK(relaxed = true)
+    private lateinit var getCartProductCountUseCase: GetCartProductCountUseCase
+
+    @MockK(relaxed = true)
     private lateinit var cartProductRepo: CartProductRepo
 
     @InjectMockKs
@@ -23,6 +27,32 @@ class AddMenuProductUseCaseTest {
     @BeforeTest
     fun setup() {
         MockKAnnotations.init(this)
+    }
+
+    @Test
+    fun `do nothing when cart is full`() = runTest {
+        // Given
+        val menuProductUuid = "menuProductUuid"
+        coEvery {
+            getCartProductCountUseCase()
+        } returns 99
+
+        // When
+        addMenuProductUseCase(menuProductUuid)
+
+        // Then
+        coVerify(exactly = 0) {
+            cartProductRepo.getCartProductListByMenuProductUuid(menuProductUuid = menuProductUuid)
+        }
+        coVerify(exactly = 0) {
+            cartProductRepo.saveAsCartProduct(menuProductUuid = menuProductUuid)
+        }
+        coVerify(exactly = 0) {
+            cartProductRepo.updateCartProductCount(
+                cartProductUuid = menuProductUuid,
+                count = any()
+            )
+        }
     }
 
     @Test

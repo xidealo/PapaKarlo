@@ -2,6 +2,7 @@ package com.bunbeauty.domain.feature.cart
 
 import com.bunbeauty.getCartProduct
 import com.bunbeauty.shared.domain.exeptions.CartProductNotFoundException
+import com.bunbeauty.shared.domain.feature.cart.GetCartProductCountUseCase
 import com.bunbeauty.shared.domain.feature.cart.IncreaseCartProductCountUseCase
 import com.bunbeauty.shared.domain.repo.CartProductRepo
 import io.mockk.MockKAnnotations
@@ -17,6 +18,9 @@ import kotlin.test.assertFailsWith
 class IncreaseCartProductCountUseCaseTest {
 
     @MockK(relaxed = true)
+    private lateinit var getCartProductCountUseCase: GetCartProductCountUseCase
+
+    @MockK(relaxed = true)
     private lateinit var cartProductRepo: CartProductRepo
 
     @InjectMockKs
@@ -25,6 +29,29 @@ class IncreaseCartProductCountUseCaseTest {
     @BeforeTest
     fun setup() {
         MockKAnnotations.init(this)
+    }
+
+    @Test
+    fun `do nothing when cart is full`() = runTest {
+        // Given
+        val cartProductUuid = "cartProductUuid"
+        coEvery {
+            getCartProductCountUseCase()
+        } returns 99
+
+        // When
+        increaseCartProductCountUseCase(cartProductUuid = cartProductUuid)
+
+        // Then
+        coVerify(exactly = 0) {
+            cartProductRepo.getCartProduct(cartProductUuid)
+        }
+        coVerify(exactly = 0) {
+            cartProductRepo.updateCartProductCount(
+                cartProductUuid = cartProductUuid,
+                count = any()
+            )
+        }
     }
 
     @Test
