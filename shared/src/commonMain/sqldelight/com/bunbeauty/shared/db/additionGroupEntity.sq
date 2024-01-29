@@ -17,3 +17,8 @@ getAdditionGroupByUuid:
 SELECT *
 FROM additionGroupEntity
 WHERE uuid = :uuid;
+
+getAdditionGroupListByMenuProductUuid:
+SELECT *
+FROM additionGroupEntity
+WHERE menuProductUuid = :menuProductUuid;

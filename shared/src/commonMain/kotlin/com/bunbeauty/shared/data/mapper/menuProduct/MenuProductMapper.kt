@@ -56,20 +56,20 @@ class MenuProductMapper : IMenuProductMapper {
     override fun toAdditionEntityList(menuProductServerList: List<MenuProductServer>): List<AdditionEntity> {
         return menuProductServerList.flatMap { menuProductServer ->
             menuProductServer.additionGroupServers.flatMap { additionGroupServer ->
-                   additionGroupServer.additionServerList.map { additionServer ->
-                        AdditionEntity(
-                            uuid = additionServer.uuid,
-                            name = additionServer.name,
-                            price = additionServer.price,
-                            isVisible = additionServer.isVisible,
-                            isSelected = additionServer.isSelected,
-                            additionGroupUuid = additionGroupServer.uuid,
-                            photoLink = additionServer.photoLink,
-                            fullName = additionServer.fullName,
-                            priority = additionServer.priority,
-                        )
-                    }
+                additionGroupServer.additionServerList.map { additionServer ->
+                    AdditionEntity(
+                        uuid = additionServer.uuid,
+                        name = additionServer.name,
+                        price = additionServer.price,
+                        isVisible = additionServer.isVisible,
+                        isSelected = additionServer.isSelected,
+                        additionGroupUuid = additionGroupServer.uuid,
+                        photoLink = additionServer.photoLink,
+                        fullName = additionServer.fullName,
+                        priority = additionServer.priority,
+                    )
                 }
+            }
         }
     }
 
@@ -151,7 +151,9 @@ class MenuProductMapper : IMenuProductMapper {
         )
     }
 
-    override fun toMenuProductList(menuProductWithCategoryEntityList: List<MenuProductWithCategoryEntity>): List<MenuProduct> {
+    override fun toMenuProductList(
+        menuProductWithCategoryEntityList: List<MenuProductWithCategoryEntity>,
+    ): List<MenuProduct> {
         return menuProductWithCategoryEntityList.groupBy { menuProductWithCategoryEntity ->
             menuProductWithCategoryEntity.uuid
         }.map { (_, groupedMenuProductWithCategoryEntityList) ->
@@ -176,18 +178,7 @@ class MenuProductMapper : IMenuProductMapper {
                 },
                 visible = firstMenuProductWithCategoryEntity.visible,
                 isRecommended = firstMenuProductWithCategoryEntity.isRecommended,
-                additionGroups = groupedMenuProductWithCategoryEntityList.mapNotNull { menuProductEntity ->
-                    menuProductEntity.additionGroupUuid?.let { uuid ->
-                        AdditionGroup(
-                            additionList = listOf(),
-                            isVisible = menuProductEntity.additionGroupIsVisible ?: false,
-                            name = menuProductEntity.additionGroupName ?: "",
-                            singleChoice = menuProductEntity.additionGroupSingleChoice ?: false,
-                            uuid = uuid,
-                            priority = menuProductEntity.additionGroupPriority ?: 1
-                        )
-                    }
-                }
+                additionGroups = emptyList()
             )
         }
     }

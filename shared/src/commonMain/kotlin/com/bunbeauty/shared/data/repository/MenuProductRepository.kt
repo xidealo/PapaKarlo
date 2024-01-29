@@ -6,6 +6,7 @@ import com.bunbeauty.shared.data.dao.addition_group.IAdditionGroupDao
 import com.bunbeauty.shared.data.dao.category.ICategoryDao
 import com.bunbeauty.shared.data.dao.menu_product.IMenuProductDao
 import com.bunbeauty.shared.data.dao.menu_product_category_reference.IMenuProductCategoryReferenceDao
+import com.bunbeauty.shared.data.mapper.additiongroup.mapAdditionGroupEntityToGroup
 import com.bunbeauty.shared.data.mapper.menuProduct.IMenuProductMapper
 import com.bunbeauty.shared.data.network.api.NetworkConnector
 import com.bunbeauty.shared.data.network.model.MenuProductServer
@@ -34,12 +35,27 @@ class MenuProductRepository(
             onLocalRequest = {
                 menuProductMapper.toMenuProductList(
                     menuProductDao.getMenuProductWithCategoryList()
-                )
+                ).map { menuProduct ->
+                    menuProduct.copy(
+                        additionGroups = getAdditionGroups(menuProduct)
+                    )
+                }
             },
             onSaveLocally = ::saveMenuLocally,
             serverToDomainModel = menuProductMapper::toMenuProduct
         )
     }
+
+    private suspend fun getAdditionGroups(
+        menuProduct: MenuProduct,
+    ) = additionGroupDao.getAdditionGroupEntityList(
+        menuProduct = menuProduct.uuid
+    ).map(mapAdditionGroupEntityToGroup)
+        .map { additionGroup ->
+            additionGroup.copy(
+                additionList = getAdditions(additionGroup)
+            )
+        }
 
     override fun observeMenuProductList(): Flow<List<MenuProduct>> {
         return menuProductDao.observeMenuProductList().map { menuProductWithCategoryEntityList ->
@@ -53,7 +69,6 @@ class MenuProductRepository(
     }
 
     override suspend fun getMenuProductByUuid(menuProductUuid: String): MenuProduct? {
-
         return getCacheOrListData(
             onApiRequest = networkConnector::getMenuProductList,
             onLocalRequest = {
@@ -69,13 +84,6 @@ class MenuProductRepository(
             serverToDomainModel = menuProductMapper::toMenuProduct
         ).find { menuProduct -> menuProduct.uuid == menuProductUuid }
     }
-
-    private suspend fun getAdditionGroups(menuProduct: MenuProduct) =
-        menuProduct.additionGroups.map { additionGroup ->
-            additionGroup.copy(
-                additionList = getAdditions(additionGroup)
-            )
-        }
 
     private suspend fun getAdditions(additionGroup: AdditionGroup) =
         additionDao.getAdditionEntityListByAdditionGroup(

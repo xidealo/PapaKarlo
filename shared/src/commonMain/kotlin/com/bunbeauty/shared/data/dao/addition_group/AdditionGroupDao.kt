@@ -16,4 +16,8 @@ class AdditionGroupDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IAdditionGr
     override suspend fun getAdditionGroupEntity(uuid: String): AdditionGroupEntity? {
         return additionGroupEntityQueries.getAdditionGroupByUuid(uuid).executeAsOneOrNull()
     }
+
+    override suspend fun getAdditionGroupEntityList(menuProductUuid: String): List<AdditionGroupEntity> {
+        return additionGroupEntityQueries.getAdditionGroupListByMenuProductUuid(menuProductUuid).executeAsList()
+    }
 }
