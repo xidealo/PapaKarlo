@@ -7,6 +7,7 @@ import com.bunbeauty.getMenuProduct
 import com.bunbeauty.shared.data.repository.AdditionGroupRepository
 import com.bunbeauty.shared.data.repository.AdditionRepository
 import com.bunbeauty.shared.data.repository.CartProductAdditionRepository
+import com.bunbeauty.shared.domain.exeptions.CartProductLimitReachedException
 import com.bunbeauty.shared.domain.feature.addition.AreAdditionsEqualUseCase
 import com.bunbeauty.shared.domain.feature.addition.GetAdditionPriorityUseCase
 import com.bunbeauty.shared.domain.feature.cart.AddCartProductUseCase
@@ -18,6 +19,7 @@ import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
+import kotlin.test.assertFailsWith
 
 internal class AddCartProductUseCaseTest {
 
@@ -45,19 +47,19 @@ internal class AddCartProductUseCaseTest {
     }
 
     @Test
-    fun `do nothing when cart is full`() = runTest {
+    fun `throws CartProductLimitReachedException when cart is full`() = runTest {
         // Given
         coEvery {
             getCartProductCountUseCase()
         } returns 99
 
-        // When
-        addCartProduct(
-            menuProductUuid = menuProductUuid,
-            additionUuidList = emptyList()
-        )
-
-        // Then
+        // When-Then
+        assertFailsWith(CartProductLimitReachedException::class) {
+            addCartProduct(
+                menuProductUuid = menuProductUuid,
+                additionUuidList = emptyList()
+            )
+        }
         coVerify(exactly = 0) {
             cartProductRepo.getCartProductListByMenuProductUuid(any())
         }

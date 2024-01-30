@@ -1,6 +1,7 @@
 package com.bunbeauty.domain.feature.menu
 
 import com.bunbeauty.getCartProduct
+import com.bunbeauty.shared.domain.exeptions.CartProductLimitReachedException
 import com.bunbeauty.shared.domain.feature.cart.GetCartProductCountUseCase
 import com.bunbeauty.shared.domain.feature.menu.AddMenuProductUseCase
 import com.bunbeauty.shared.domain.repo.CartProductRepo
@@ -12,6 +13,7 @@ import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
+import kotlin.test.assertFailsWith
 
 class AddMenuProductUseCaseTest {
 
@@ -30,17 +32,17 @@ class AddMenuProductUseCaseTest {
     }
 
     @Test
-    fun `do nothing when cart is full`() = runTest {
+    fun `throws CartProductLimitReachedException when cart is full`() = runTest {
         // Given
         val menuProductUuid = "menuProductUuid"
         coEvery {
             getCartProductCountUseCase()
         } returns 99
 
-        // When
-        addMenuProductUseCase(menuProductUuid)
-
-        // Then
+        // When-Then
+        assertFailsWith(CartProductLimitReachedException::class) {
+            addMenuProductUseCase(menuProductUuid = menuProductUuid)
+        }
         coVerify(exactly = 0) {
             cartProductRepo.getCartProductListByMenuProductUuid(menuProductUuid = menuProductUuid)
         }
