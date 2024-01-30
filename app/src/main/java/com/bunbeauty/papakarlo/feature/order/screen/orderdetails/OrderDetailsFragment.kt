@@ -18,7 +18,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.fragment.findNavController
@@ -147,8 +146,7 @@ class OrderDetailsFragment :
                     ) { orderProductItem ->
                         FoodDeliveryItem(needDivider = !orderProductItem.isLast) {
                             OrderProductItem(
-                                modifier = Modifier
-                                    .padding(horizontal = 16.dp),
+                                modifier = Modifier.padding(horizontal = 16.dp),
                                 orderProductItem = orderProductItem
                             )
                         }
@@ -298,21 +296,12 @@ class OrderDetailsFragment :
                         style = FoodDeliveryTheme.typography.bodyMedium.bold,
                         color = FoodDeliveryTheme.colors.mainColors.onSurface
                     )
-                    Spacer(modifier = Modifier.weight(1f))
-                    orderDetailsViewState.oldTotalCost?.let { totalCost ->
-                        Text(
-                            modifier = Modifier
-                                .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
-                            text = totalCost,
-                            style = FoodDeliveryTheme.typography.bodyMedium.bold,
-                            color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
-                            textDecoration = TextDecoration.LineThrough
-                        )
-                    }
                     Text(
+                        modifier = Modifier.weight(1f),
                         text = orderDetailsViewState.newTotalCost,
                         style = FoodDeliveryTheme.typography.bodyMedium.bold,
-                        color = FoodDeliveryTheme.colors.mainColors.onSurface
+                        color = FoodDeliveryTheme.colors.mainColors.onSurface,
+                        textAlign = TextAlign.End,
                     )
                 }
             }
@@ -353,10 +342,7 @@ class OrderDetailsFragment :
     private fun BottomAmountBarWithoutDeliveryPreview() {
         FoodDeliveryTheme {
             BottomAmountBar(
-                orderDetailsViewState = getOrderDetails().copy(
-                    deliveryCost = null,
-                    oldTotalCost = null
-                )
+                orderDetailsViewState = getOrderDetails().copy(deliveryCost = null)
             )
         }
     }
@@ -367,8 +353,7 @@ class OrderDetailsFragment :
         FoodDeliveryTheme {
             OrderDetailsScreen(
                 orderDetailsViewState = getOrderDetails(),
-                onAction = {
-                }
+                onAction = {}
             )
         }
     }
@@ -393,12 +378,10 @@ class OrderDetailsFragment :
                 OrderProductUiItem(
                     uuid = "",
                     name = "Product 1",
-                    newPrice = "100",
-                    oldPrice = "150",
-                    newCost = "200",
-                    oldCost = "300",
+                    newPrice = "100 ₽",
+                    newCost = "200 ₽",
                     photoLink = "",
-                    count = "2",
+                    count = "× 2",
                     key = "k1",
                     additions = null,
                     isLast = false
@@ -406,21 +389,18 @@ class OrderDetailsFragment :
                 OrderProductUiItem(
                     uuid = "",
                     name = "Product 2",
-                    newPrice = "150",
-                    oldPrice = null,
-                    newCost = "150",
-                    oldCost = null,
+                    newPrice = "150 ₽",
+                    newCost = "150 ₽",
                     photoLink = "",
-                    count = "1",
+                    count = "× 1",
                     key = "k2",
-                    additions = null,
+                    additions = "Необычный лаваш • Добавка 1 • Добавка 2",
                     isLast = true
                 )
             ),
             orderInfo = getOrderInfo(),
-            oldTotalCost = "450",
-            deliveryCost = "100",
-            newTotalCost = "550",
+            deliveryCost = "100 ₽",
+            newTotalCost = "550 ₽",
             state = OrderDetails.DataState.ScreenState.SUCCESS,
             code = "A-40",
             discount = "10%",

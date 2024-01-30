@@ -7,7 +7,6 @@ import com.bunbeauty.shared.presentation.order_details.OrderDetails
 data class OrderDetailsViewState(
     val orderUuid: String,
     val orderProductItemList: List<OrderProductUiItem>,
-    val oldTotalCost: String?,
     val deliveryCost: String?,
     val newTotalCost: String,
     val state: OrderDetails.DataState.ScreenState,
