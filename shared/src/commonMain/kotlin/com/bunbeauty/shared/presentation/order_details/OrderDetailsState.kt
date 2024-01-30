@@ -20,7 +20,6 @@ interface OrderDetails {
         data class OrderDetailsData(
             val orderProductItemList: List<OrderProductItem>,
             val orderInfo: OrderInfo?,
-            val oldTotalCost: String?,
             val deliveryCost: String?,
             val newTotalCost: String,
             val discount: String?,
@@ -40,9 +39,7 @@ interface OrderDetails {
                 val uuid: String,
                 val name: String,
                 val newPrice: String,
-                val oldPrice: String?,
                 val newCost: String,
-                val oldCost: String?,
                 val photoLink: String,
                 val count: String,
                 val additions: List<OrderAddition>,

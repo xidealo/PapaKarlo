@@ -15,7 +15,6 @@ class OrderDetailsUiStateMapper(
             orderProductItemList = orderState.orderDetailsData.orderProductItemList.map(
                 orderProductItemMapper::toItem
             ),
-            oldTotalCost = orderState.orderDetailsData.oldTotalCost,
             deliveryCost = orderState.orderDetailsData.deliveryCost,
             newTotalCost = orderState.orderDetailsData.newTotalCost,
             orderInfo = orderState.orderDetailsData.orderInfo?.let { orderInfo ->
