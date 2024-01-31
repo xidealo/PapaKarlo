@@ -34,7 +34,7 @@ class OrderProductMapper : IOrderProductMapper {
                     newTotalCost = firstOrderWithProductEntity.orderProductNewTotalCost,
                     oldTotalCost = firstOrderWithProductEntity.orderProductOldTotalCost,
                 ),
-                orderAdditionList = emptyList()/* groupedOrderWithProductEntityList.mapNotNull { orderWithProductEntity ->
+                orderAdditionList = groupedOrderWithProductEntityList.mapNotNull { orderWithProductEntity ->
                     orderWithProductEntity.orderAdditionEntityUuid?.let { orderAdditionEntityUuid ->
                         OrderAddition(
                             uuid = orderAdditionEntityUuid,
@@ -42,7 +42,7 @@ class OrderProductMapper : IOrderProductMapper {
                             priority = orderWithProductEntity.orderAdditionEntityPriority ?: 0
                         )
                     }
-                }*/
+                }
             )
         }
     }
