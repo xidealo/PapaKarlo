@@ -60,6 +60,8 @@ interface ProductDetailsState {
         data class EditedProduct(
             val menuProductName: String,
         ) : Event
+
+        data object ShowAddProductError: Event
     }
 }
 

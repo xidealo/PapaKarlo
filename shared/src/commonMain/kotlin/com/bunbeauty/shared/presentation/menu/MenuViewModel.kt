@@ -96,7 +96,7 @@ class MenuViewModel(
                 val menuItemList =
                     listOfNotNull(discountItem) + menuSectionList.flatMap { menuSection ->
                         listOf(toMenuCategoryItemModel(menuSection)) +
-                                toMenuProductItemModelList(menuSection)
+                            toMenuProductItemModelList(menuSection)
                     }
 
                 mutableMenuState.update { oldState ->
@@ -166,18 +166,25 @@ class MenuViewModel(
                 menuProductUuidEventParameter = MenuProductUuidEventParameter(value = menuProductItem.uuid)
             ),
         )
-        sharedScope.launch {
-            if (menuProductItem.hasAdditions) {
-                mutableMenuState.update { oldState ->
-                    oldState + MenuState.Event.GoToSelectedItem(
-                        uuid = menuProductItem.uuid,
-                        name = menuProductItem.name
-                    )
+        sharedScope.launchSafe(
+            block = {
+                if (menuProductItem.hasAdditions) {
+                    mutableMenuState.update { oldState ->
+                        oldState + MenuState.Event.GoToSelectedItem(
+                            uuid = menuProductItem.uuid,
+                            name = menuProductItem.name
+                        )
+                    }
+                } else {
+                    addMenuProductUseCase(menuProductUuid = menuProductItem.uuid)
                 }
-            } else {
-                addMenuProductUseCase(menuProductUuid = menuProductItem.uuid)
+            },
+            onError = {
+                mutableMenuState.update { oldState ->
+                    oldState + MenuState.Event.ShowAddProductError
+                }
             }
-        }
+        )
     }
 
     fun getMenuListPosition(categoryItem: CategoryItem): Int {

@@ -4,6 +4,7 @@ import com.bunbeauty.shared.Constants.CART_PRODUCT_LIMIT
 import com.bunbeauty.shared.data.repository.AdditionGroupRepository
 import com.bunbeauty.shared.data.repository.AdditionRepository
 import com.bunbeauty.shared.data.repository.CartProductAdditionRepository
+import com.bunbeauty.shared.domain.exeptions.CartProductLimitReachedException
 import com.bunbeauty.shared.domain.feature.addition.GetAdditionPriorityUseCase
 import com.bunbeauty.shared.domain.feature.addition.AreAdditionsEqualUseCase
 import com.bunbeauty.shared.domain.model.cart.CartProduct
@@ -23,7 +24,7 @@ class AddCartProductUseCase(
         additionUuidList: List<String>,
     ) {
         if (getCartProductCountUseCase() >= CART_PRODUCT_LIMIT) {
-            return
+            throw CartProductLimitReachedException()
         }
 
         val cartProductWithSameAdditions = getCartProductWithSameAdditions(

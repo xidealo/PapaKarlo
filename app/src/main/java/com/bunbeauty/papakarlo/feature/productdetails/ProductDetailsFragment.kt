@@ -113,6 +113,11 @@ class ProductDetailsFragment :
                 )
                 findNavController().popBackStack()
             }
+            ProductDetailsState.Event.ShowAddProductError -> {
+                (activity as? IMessageHost)?.showErrorMessage(
+                    resources.getString(R.string.error_consumer_cart_add_product)
+                )
+            }
         }
     }
 

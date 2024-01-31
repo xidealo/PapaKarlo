@@ -1,6 +1,7 @@
 package com.bunbeauty.shared.domain.feature.cart
 
 import com.bunbeauty.shared.Constants.CART_PRODUCT_LIMIT
+import com.bunbeauty.shared.domain.exeptions.CartProductLimitReachedException
 import com.bunbeauty.shared.domain.exeptions.CartProductNotFoundException
 import com.bunbeauty.shared.domain.repo.CartProductRepo
 
@@ -11,7 +12,7 @@ class IncreaseCartProductCountUseCase(
 
     suspend operator fun invoke(cartProductUuid: String) {
         if (getCartProductCountUseCase() >= CART_PRODUCT_LIMIT) {
-            return
+            throw CartProductLimitReachedException()
         }
 
         val cartProduct = cartProductRepo.getCartProduct(cartProductUuid) ?: throw CartProductNotFoundException()

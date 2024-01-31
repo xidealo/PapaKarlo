@@ -24,7 +24,6 @@ import com.bunbeauty.shared.presentation.product_details.ProductDetailsOpenedFro
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 
 class ConsumerCartViewModel(
     private val userInteractor: IUserInteractor,
@@ -166,21 +165,28 @@ class ConsumerCartViewModel(
             ),
         )
 
-        sharedScope.launch {
-            if (menuProductItem.hasAdditions) {
-                addEvent {
-                    ConsumerCart.Event.NavigateToProduct(
-                        uuid = menuProductItem.uuid,
-                        name = menuProductItem.name,
-                        productDetailsOpenedFrom = ProductDetailsOpenedFrom.RECOMMENDATION_PRODUCT,
-                        additionUuidList = emptyList(),
-                        cartProductUuid = null,
-                    )
+        sharedScope.launchSafe(
+            block = {
+                if (menuProductItem.hasAdditions) {
+                    addEvent {
+                        ConsumerCart.Event.NavigateToProduct(
+                            uuid = menuProductItem.uuid,
+                            name = menuProductItem.name,
+                            productDetailsOpenedFrom = ProductDetailsOpenedFrom.RECOMMENDATION_PRODUCT,
+                            additionUuidList = emptyList(),
+                            cartProductUuid = null,
+                        )
+                    }
+                } else {
+                    addMenuProductUseCase(menuProductUuid = menuProductItem.uuid)
                 }
-            } else {
-                addMenuProductUseCase(menuProductUuid = menuProductItem.uuid)
+            },
+            onError = {
+                addEvent {
+                    ConsumerCart.Event.ShowAddProductError
+                }
             }
-        }
+        )
     }
 
     private fun increaseCartProductToCartClick(cartProductUuid: String, menuProductUuid: String) {

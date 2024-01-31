@@ -45,6 +45,7 @@ import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold
 import com.bunbeauty.papakarlo.databinding.LayoutComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
+import com.bunbeauty.papakarlo.feature.main.IMessageHost
 import com.bunbeauty.papakarlo.feature.menu.model.MenuUi
 import com.bunbeauty.papakarlo.feature.menu.model.MenuUiStateMapper
 import com.bunbeauty.papakarlo.feature.menu.ui.CategoryItem
@@ -97,6 +98,11 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
                             emptyArray(),
                             null
                         )
+                    )
+                }
+                MenuState.Event.ShowAddProductError -> {
+                    (activity as? IMessageHost)?.showErrorMessage(
+                        resources.getString(R.string.error_consumer_cart_add_product)
                     )
                 }
             }

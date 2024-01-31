@@ -6,12 +6,12 @@ import com.bunbeauty.analytic.event.menu.AddMenuProductDetailsClickEvent
 import com.bunbeauty.analytic.event.recommendation.AddRecommendationProductDetailsClickEvent
 import com.bunbeauty.analytic.parameter.MenuProductUuidEventParameter
 import com.bunbeauty.shared.Constants.RUBLE_CURRENCY
+import com.bunbeauty.shared.domain.feature.addition.GetAdditionGroupsWithSelectedAdditionUseCase
 import com.bunbeauty.shared.domain.feature.addition.GetPriceOfSelectedAdditionsUseCase
 import com.bunbeauty.shared.domain.feature.cart.AddCartProductUseCase
 import com.bunbeauty.shared.domain.feature.cart.EditCartProductUseCase
 import com.bunbeauty.shared.domain.feature.cart.ObserveCartUseCase
 import com.bunbeauty.shared.domain.feature.menu_product.GetMenuProductUseCase
-import com.bunbeauty.shared.domain.feature.addition.GetAdditionGroupsWithSelectedAdditionUseCase
 import com.bunbeauty.shared.domain.model.addition.AdditionGroup
 import com.bunbeauty.shared.domain.model.product.MenuProduct
 import com.bunbeauty.shared.extension.launchSafe
@@ -173,9 +173,7 @@ class ProductDetailsViewModel(
                 }
             },
             onError = {
-                setState {
-                    copy(screenState = ProductDetailsState.DataState.ScreenState.ERROR)
-                }
+                addEvent { ProductDetailsState.Event.ShowAddProductError }
             }
         )
     }

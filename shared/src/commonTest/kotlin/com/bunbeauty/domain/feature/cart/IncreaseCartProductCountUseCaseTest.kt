@@ -1,6 +1,7 @@
 package com.bunbeauty.domain.feature.cart
 
 import com.bunbeauty.getCartProduct
+import com.bunbeauty.shared.domain.exeptions.CartProductLimitReachedException
 import com.bunbeauty.shared.domain.exeptions.CartProductNotFoundException
 import com.bunbeauty.shared.domain.feature.cart.GetCartProductCountUseCase
 import com.bunbeauty.shared.domain.feature.cart.IncreaseCartProductCountUseCase
@@ -32,17 +33,17 @@ class IncreaseCartProductCountUseCaseTest {
     }
 
     @Test
-    fun `do nothing when cart is full`() = runTest {
+    fun `throws CartProductLimitReachedException when cart is full`() = runTest {
         // Given
         val cartProductUuid = "cartProductUuid"
         coEvery {
             getCartProductCountUseCase()
         } returns 99
 
-        // When
-        increaseCartProductCountUseCase(cartProductUuid = cartProductUuid)
-
-        // Then
+        // When-Then
+        assertFailsWith(CartProductLimitReachedException::class) {
+            increaseCartProductCountUseCase(cartProductUuid = cartProductUuid)
+        }
         coVerify(exactly = 0) {
             cartProductRepo.getCartProduct(cartProductUuid)
         }
