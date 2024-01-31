@@ -1,9 +1,6 @@
 package com.bunbeauty.domain.feature.cart
 
-import com.bunbeauty.getAddition
-import com.bunbeauty.getAdditionGroup
 import com.bunbeauty.getCartProduct
-import com.bunbeauty.getCartProductAddition
 import com.bunbeauty.getMenuProduct
 import com.bunbeauty.shared.domain.feature.discount.GetDiscountUseCase
 import com.bunbeauty.shared.domain.interactor.cart.GetCartTotalUseCase
@@ -111,7 +108,6 @@ class GetCartTotalUseCaseTest {
     @Test
     fun `should return null discount when no discount`() = runTest {
         // Given
-
         coEvery { cartProductRepo.getCartProductList() } returns listOf()
         coEvery { getDiscountUseCase() } returns null
         coEvery { deliveryRepo.getDelivery() } returns Delivery(
@@ -131,51 +127,6 @@ class GetCartTotalUseCaseTest {
         )
     }
 
-    @Test
-    fun `should return totalCost equals sum of newPrice and additions from productList`() =
-        runTest {
-            // Given
-            val cartProductListMockData = listOf(
-                getCartProduct(
-                    count = 1,
-                    menuProduct = getMenuProduct(newPrice = 50, oldPrice = 100)
-                ),
-                getCartProduct(
-                    count = 1,
-                    menuProduct = getMenuProduct(
-                        newPrice = 50,
-                        oldPrice = 100,
-                    ),
-                    cartProductAdditionList = listOf(
-                        getCartProductAddition(
-                            price = 10
-                        )
-                    )
-                ),
-            )
-
-            coEvery { cartProductRepo.getCartProductList() } returns cartProductListMockData
-
-            coEvery { getDiscountUseCase() } returns null
-            coEvery { deliveryRepo.getDelivery() } returns Delivery(
-                cost = 10,
-                forFree = 100
-            )
-            coEvery { getNewTotalCostUseCase(cartProductListMockData) } returns 100
-            coEvery { getOldTotalCostUseCase(cartProductListMockData) } returns 0
-
-            // When
-            val cartTotal = getCartTotalUseCase(isDelivery = false)
-
-            // Then
-            assertEquals(
-                expected = 110,
-                actual = cartTotal.totalCost
-            )
-        }
-
-
-    //delivery
     @Test
     fun `should return oldFinalCost with cost of delivery when delivery is true`() =
         runTest {

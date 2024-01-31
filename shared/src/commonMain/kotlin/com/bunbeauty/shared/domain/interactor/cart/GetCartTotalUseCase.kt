@@ -1,7 +1,6 @@
 package com.bunbeauty.shared.domain.interactor.cart
 
 import com.bunbeauty.shared.domain.feature.discount.GetDiscountUseCase
-import com.bunbeauty.shared.domain.model.cart.CartProduct
 import com.bunbeauty.shared.domain.model.cart.CartTotal
 import com.bunbeauty.shared.domain.repo.CartProductRepo
 import com.bunbeauty.shared.domain.repo.DeliveryRepo
@@ -26,7 +25,7 @@ class GetCartTotalUseCase(
         val deliveryCost = getDeliveryCost(isDelivery, newTotalCost)
 
         return CartTotal(
-            totalCost = getTotalCost(cartProductList),
+            totalCost = newTotalCost,
             deliveryCost = deliveryCost,
             oldFinalCost = oldTotalCost?.let {
                 oldTotalCost + deliveryCost
@@ -42,16 +41,6 @@ class GetCartTotalUseCase(
             delivery.cost
         } else {
             0
-        }
-    }
-
-    private fun getTotalCost(productList: List<CartProduct>): Int {
-        return productList.sumOf { orderProductEntity ->
-            val sumOfNewPriceAndAdditions =
-                orderProductEntity.product.newPrice + orderProductEntity.additionList.sumOf { addition ->
-                    addition.price ?: 0
-                }
-            sumOfNewPriceAndAdditions * orderProductEntity.count
         }
     }
 
