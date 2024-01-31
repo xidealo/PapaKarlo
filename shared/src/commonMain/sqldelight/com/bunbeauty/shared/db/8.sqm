@@ -1,3 +1,6 @@
+import kotlin.Boolean;
+import kotlin.Int;
+
 CREATE TABLE cartProductAdditionEntity (
    uuid TEXT NOT NULL PRIMARY KEY,
    name TEXT NOT NULL,
@@ -40,10 +43,26 @@ CREATE TABLE additionGroupEntity (
     FOREIGN KEY(menuProductUuid) REFERENCES menuProductEntity(uuid) ON DELETE CASCADE
 );
 
-ALTER TABLE orderProductEntity ADD COLUMN newCommonPrice INTEGER NOT NULL DEFAULT 0;
-ALTER TABLE orderProductEntity ADD COLUMN oldCommonPrice INTEGER;
-ALTER TABLE orderProductEntity ADD COLUMN newTotalCost INTEGER NOT NULL DEFAULT 0;
-ALTER TABLE orderProductEntity ADD COLUMN oldTotalCost INTEGER;
+DROP TABLE orderProductEntity;
+CREATE TABLE orderProductEntity (
+    uuid TEXT NOT NULL PRIMARY KEY,
+    count INTEGER AS Int NOT NULL,
+    name TEXT NOT NULL,
+    newPrice INTEGER AS Int NOT NULL,
+    oldPrice INTEGER AS Int,
+    utils TEXT,
+    nutrition INTEGER AS Int,
+    description TEXT NOT NULL,
+    comboDescription TEXT,
+    photoLink TEXT NOT NULL,
+    barcode INTEGER AS Int,
+    newCommonPrice INTEGER AS Int NOT NULL,
+    oldCommonPrice INTEGER AS Int,
+    newTotalCost INTEGER AS Int NOT NULL,
+    oldTotalCost INTEGER AS Int,
+    orderUuid TEXT NOT NULL,
+    FOREIGN KEY (orderUuid) REFERENCES orderEntity(uuid) ON DELETE CASCADE
+);
 
 DROP TABLE IF EXISTS streetEntity;
 
@@ -86,9 +105,14 @@ SELECT orderEntity.*,
     orderProductEntity.oldCommonPrice AS orderProductOldCommonPrice,
     orderProductEntity.newTotalCost AS orderProductNewTotalCost,
     orderProductEntity.oldTotalCost AS orderProductOldTotalCost,
-    orderProductEntity.orderUuid AS orderUuid
+    orderProductEntity.orderUuid AS orderUuid,
+    orderAdditionEntity.uuid AS orderAdditionEntityUuid,
+    orderAdditionEntity.name AS orderAdditionEntityName,
+    orderAdditionEntity.priority AS orderAdditionEntityPriority,
+    orderAdditionEntity.orderProductUuid AS orderAdditionEntityOrderProductUuid
 FROM orderEntity
-JOIN orderProductEntity ON orderEntity.uuid = orderProductEntity.orderUuid;
+JOIN orderProductEntity ON orderEntity.uuid = orderProductEntity.orderUuid
+LEFT JOIN orderAdditionEntity ON orderProductEntity.uuid = orderAdditionEntity.orderProductUuid;
 
 DROP VIEW IF EXISTS menuProductWithCategoryEntity;
 CREATE VIEW menuProductWithCategoryEntity AS
