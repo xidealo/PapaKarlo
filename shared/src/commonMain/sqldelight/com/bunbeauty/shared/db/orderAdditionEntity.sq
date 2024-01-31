@@ -1,7 +1,7 @@
 CREATE TABLE orderAdditionEntity (
    uuid TEXT NOT NULL PRIMARY KEY,
    name TEXT NOT NULL,
-    priority INTEGER AS Int NOT NULL,
+   priority INTEGER AS Int NOT NULL,
    orderProductUuid TEXT NOT NULL,
    FOREIGN KEY(orderProductUuid) REFERENCES orderProductEntity(uuid) ON DELETE CASCADE
 );

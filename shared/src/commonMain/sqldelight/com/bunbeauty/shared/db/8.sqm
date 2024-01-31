@@ -9,6 +9,44 @@ CREATE TABLE cartProductAdditionEntity (
    FOREIGN KEY (cartProductUuid) REFERENCES cartProductEntity(uuid) ON DELETE CASCADE
 );
 
+CREATE TABLE additionEntity (
+    uuid TEXT NOT NULL PRIMARY KEY,
+    name TEXT NOT NULL,
+    fullName TEXT,
+    photoLink TEXT NOT NULL,
+    price INTEGER AS Int,
+    isVisible INTEGER AS Boolean NOT NULL,
+    isSelected INTEGER AS Boolean NOT NULL,
+    additionGroupUuid TEXT NOT NULL,
+    priority INTEGER AS Int NOT NULL,
+    FOREIGN KEY(additionGroupUuid) REFERENCES additionGroupEntity(uuid) ON DELETE CASCADE
+);
+
+CREATE TABLE orderAdditionEntity (
+   uuid TEXT NOT NULL PRIMARY KEY,
+   name TEXT NOT NULL,
+   priority INTEGER AS Int NOT NULL,
+   orderProductUuid TEXT NOT NULL,
+   FOREIGN KEY(orderProductUuid) REFERENCES orderProductEntity(uuid) ON DELETE CASCADE
+);
+
+CREATE TABLE additionGroupEntity (
+    uuid TEXT NOT NULL PRIMARY KEY,
+    name TEXT NOT NULL,
+    isVisible INTEGER AS Boolean NOT NULL,
+    singleChoice INTEGER AS Boolean NOT NULL,
+    priority INTEGER AS Int NOT NULL,
+    menuProductUuid TEXT NOT NULL,
+    FOREIGN KEY(menuProductUuid) REFERENCES menuProductEntity(uuid) ON DELETE CASCADE
+);
+
+ALTER TABLE orderProductEntity ADD COLUMN newCommonPrice INTEGER NOT NULL DEFAULT 0;
+ALTER TABLE orderProductEntity ADD COLUMN oldCommonPrice INTEGER;
+ALTER TABLE orderProductEntity ADD COLUMN newTotalCost INTEGER NOT NULL DEFAULT 0;
+ALTER TABLE orderProductEntity ADD COLUMN oldTotalCost INTEGER;
+
+DROP TABLE IF EXISTS streetEntity;
+
 DROP VIEW IF EXISTS cartProductWithMenuProductEntity;
 CREATE VIEW cartProductWithMenuProductEntity AS
 SELECT cartProductEntity.uuid AS cartProductUuid,
@@ -66,44 +104,6 @@ SELECT categoryEntity.uuid AS categoryUuid,
 FROM menuProductEntity
 JOIN menuProductCategoryReference ON menuProductCategoryReference.menuProductUuidReference = menuProductEntity.uuid
 JOIN categoryEntity ON menuProductCategoryReference.categoryUuidReference = categoryEntity.uuid;
-
-CREATE TABLE additionEntity (
-    uuid TEXT NOT NULL PRIMARY KEY,
-    name TEXT NOT NULL,
-    fullName TEXT,
-    photoLink TEXT NOT NULL,
-    price INTEGER AS Int,
-    isVisible INTEGER AS Boolean NOT NULL,
-    isSelected INTEGER AS Boolean NOT NULL,
-    additionGroupUuid TEXT NOT NULL,
-    priority INTEGER AS Int NOT NULL,
-    FOREIGN KEY(additionGroupUuid) REFERENCES additionGroupEntity(uuid) ON DELETE CASCADE
-);
-
-CREATE TABLE orderAdditionEntity (
-   uuid TEXT NOT NULL PRIMARY KEY,
-   name TEXT NOT NULL,
-   priority INTEGER AS Int NOT NULL,
-   orderProductUuid TEXT NOT NULL,
-   FOREIGN KEY(orderProductUuid) REFERENCES orderProductEntity(uuid) ON DELETE CASCADE
-);
-
-CREATE TABLE additionGroupEntity (
-    uuid TEXT NOT NULL PRIMARY KEY,
-    name TEXT NOT NULL,
-    isVisible INTEGER AS Boolean NOT NULL,
-    singleChoice INTEGER AS Boolean NOT NULL,
-    priority INTEGER AS Int NOT NULL,
-    menuProductUuid TEXT NOT NULL,
-    FOREIGN KEY(menuProductUuid) REFERENCES menuProductEntity(uuid) ON DELETE CASCADE
-);
-
-ALTER TABLE orderProductEntity ADD COLUMN newCommonPrice INTEGER NOT NULL DEFAULT 0;
-ALTER TABLE orderProductEntity ADD COLUMN oldCommonPrice INTEGER;
-ALTER TABLE orderProductEntity ADD COLUMN newTotalCost INTEGER NOT NULL DEFAULT 0;
-ALTER TABLE orderProductEntity ADD COLUMN oldTotalCost INTEGER;
-
-DROP TABLE IF EXISTS streetEntity;
 
 DROP TABLE userAddressEntity;
 CREATE TABLE userAddressEntity (
