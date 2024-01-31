@@ -86,14 +86,9 @@ SELECT orderEntity.*,
     orderProductEntity.oldCommonPrice AS orderProductOldCommonPrice,
     orderProductEntity.newTotalCost AS orderProductNewTotalCost,
     orderProductEntity.oldTotalCost AS orderProductOldTotalCost,
-    orderProductEntity.orderUuid AS orderUuid,
-    orderAdditionEntity.uuid AS orderAdditionEntityUuid,
-    orderAdditionEntity.name AS orderAdditionEntityName,
-    orderAdditionEntity.priority AS orderAdditionEntityPriority,
-    orderAdditionEntity.orderProductUuid AS orderAdditionEntityOrderProductUuid
+    orderProductEntity.orderUuid AS orderUuid
 FROM orderEntity
-JOIN orderProductEntity ON orderEntity.uuid = orderProductEntity.orderUuid
-LEFT JOIN orderAdditionEntity ON orderProductEntity.uuid = orderAdditionEntity.orderProductUuid;
+JOIN orderProductEntity ON orderEntity.uuid = orderProductEntity.orderUuid;
 
 DROP VIEW IF EXISTS menuProductWithCategoryEntity;
 CREATE VIEW menuProductWithCategoryEntity AS
