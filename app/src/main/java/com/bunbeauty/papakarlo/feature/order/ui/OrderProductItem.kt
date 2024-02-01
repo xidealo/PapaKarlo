@@ -57,7 +57,7 @@ fun OrderProductItem(
                 modifier = Modifier.padding(
                     start = FoodDeliveryTheme.dimensions.smallSpace
                 ),
-                verticalArrangement = spacedBy(4.dp),
+                verticalArrangement = spacedBy(4.dp)
             ) {
                 OverflowingText(
                     text = orderProductItem.name,
@@ -94,7 +94,7 @@ fun OrderProductItem(
                         text = orderProductItem.newCost,
                         style = FoodDeliveryTheme.typography.bodySmall.bold,
                         color = FoodDeliveryTheme.colors.mainColors.onSurface,
-                        textAlign = TextAlign.End,
+                        textAlign = TextAlign.End
                     )
                 }
             }

@@ -301,7 +301,7 @@ class OrderDetailsFragment :
                         text = orderDetailsViewState.newTotalCost,
                         style = FoodDeliveryTheme.typography.bodyMedium.bold,
                         color = FoodDeliveryTheme.colors.mainColors.onSurface,
-                        textAlign = TextAlign.End,
+                        textAlign = TextAlign.End
                     )
                 }
             }

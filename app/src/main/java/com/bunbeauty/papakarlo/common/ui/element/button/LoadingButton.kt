@@ -23,7 +23,7 @@ fun LoadingButton(
     isLoading: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    hasShadow: Boolean = true,
+    hasShadow: Boolean = true
 ) {
     Button(
         modifier = modifier.fillMaxWidth(),
@@ -56,7 +56,7 @@ private fun LoadingButtonPreview() {
         LoadingButton(
             textStringId = R.string.action_create_order_create_order,
             isLoading = false,
-            onClick = {},
+            onClick = {}
         )
     }
 }
@@ -68,7 +68,7 @@ private fun LoadingButtonLoadingPreview() {
         LoadingButton(
             textStringId = R.string.action_create_order_create_order,
             isLoading = true,
-            onClick = {},
+            onClick = {}
         )
     }
 }
