@@ -53,7 +53,7 @@ extension String {
 extension UserAddress {
     func getAddress() -> String {
         
-        var address = self.street.name
+        var address = "self.street.name"
         address += ", д. " + (self.house)
         
         if(self.flat != nil && self.flat != ""){
@@ -79,7 +79,7 @@ extension UserAddress {
 extension SelectableUserAddress {
     func getAddress() -> String {
         
-        var address = self.street.name
+        var address = "self.street.name"
         address += ", д. " + (self.house)
         
         if(self.flat != nil && self.flat != ""){

@@ -78,14 +78,14 @@ class MenuViewModel : ObservableObject {
     }
     
     func addCartProductToCart(menuProductUuid:String){
-        iosComponent.provideCartProductInteractor().addProductToCart(menuProductUuid: menuProductUuid) { cartProduct, error in
-            if(cartProduct == nil){
-                print("Not added")
-            }
-            else{
-                print("Added")
-            }
-        }
+//        iosComponent.provideCartProductInteractor().addProductToCart(menuProductUuid: menuProductUuid) { cartProduct, error in
+//            if(cartProduct == nil){
+//                print("Not added")
+//            }
+//            else{
+//                print("Added")
+//            }
+//        }
     }
     
     func selectTagWithHorizontalScroll(selectIndex:Int){

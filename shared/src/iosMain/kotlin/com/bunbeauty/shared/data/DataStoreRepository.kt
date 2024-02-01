@@ -166,7 +166,7 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
         emit(
             NSUserDefaults.standardUserDefaults.integerForKey(
                 RECOMMENDATION_MAX_VISIBLE_KEY
-            )
+            ).toInt()
         )
     }
 

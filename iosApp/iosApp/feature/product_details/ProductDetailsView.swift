@@ -19,15 +19,18 @@ struct ProductDetailsView: View {
     @Binding var showOrderCreated:Bool
 
     @State var viewModel = ProductDetailsViewModel(
-        getMenuProductByUuidUseCase: iosComponent.provideGetMenuProductByUuidUseCase(),
+        getMenuProductUseCase: iosComponent.provideGetMenuProductByUuidUseCase(),
         observeCartUseCase: iosComponent.provideObserveCartUseCase(),
         addCartProductUseCase: iosComponent.provideAddCartProductUseCase(),
-        analyticService: iosComponent.provideAnalyticService()
+        analyticService: iosComponent.provideAnalyticService(),
+        editCartProductUseCase: iosComponent.provideEditCartProductUseCase(),
+        getAdditionGroupsWithSelectedAdditionUseCase: iosComponent.provideGetAdditionGroupsWithSelectedAdditionUseCase(),
+        getSelectedAdditionsPriceUseCase: iosComponent.provideGetPriceOfSelectedAdditionsUseCase()
     )
     //State
     @State var cartCostAndCount : CartCostAndCount? = nil
-    @State var menuProduct : ProductDetailsStateViewDataState.MenuProduct? = nil
-    @State var screenState : ProductDetailsStateViewDataState.ScreenState = ProductDetailsStateViewDataState.ScreenState.loading
+    @State var menuProduct : ProductDetailsStateDataState.MenuProduct? = nil
+    @State var screenState : ProductDetailsStateDataState.ScreenState = ProductDetailsStateDataState.ScreenState.loading
     //-----
     
     @State var listener: Closeable? = nil
@@ -51,63 +54,63 @@ struct ProductDetailsView: View {
                     showOrderCreated: $showOrderCreated
                 )
 
-                ScrollView{
-                        VStack(spacing:0){
-                            if let photoLink = menuProduct?.photoLink{
-                                KFImage(
-                                    URL(string: photoLink)
-                                )
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                            }
-                       
-                            Group{
-                                HStack(spacing:0){
-                                    Text(menuProduct?.name ?? "")
-                                        .titleMedium(weight: .bold)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                        .foregroundColor(AppColor.onSurface)
-
-                                    Text(menuProduct?.size ?? "")
-                                        .bodySmall()
-                                        .foregroundColor(AppColor.onSurfaceVariant)
-                                }
-                                .padding(.top, 12)
-
-                                HStack(spacing:0){
-                                    if let oldPrice = menuProduct?.oldPrice {
-                                        StrikeText(
-                                            text: oldPrice
-                                        )
-                                        .padding(.trailing, Diems.SMALL_RADIUS)
-                                    }
-                                    Text(menuProduct?.newPrice ?? "")
-                                        .foregroundColor(AppColor.onSurface)
-                                        .bodyLarge(weight: .bold)
-                                }
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .padding(.top, 4)
-
-                                Text(menuProduct?.description_ ?? "")
-                                    .bodyLarge()
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    .padding(.top, 16)
-                                    .foregroundColor(AppColor.onSurface)
-                                    .padding(.bottom, 16)
-                            }
-                            .padding(.horizontal, Diems.MEDIUM_PADDING)
-                        }
-                        .background(AppColor.surface)
-                        .cornerRadius(Diems.MEDIUM_RADIUS)
-                        .padding(Diems.MEDIUM_PADDING)
-                        .padding(.bottom, 48)
-            }
+//                ScrollView{
+//                        VStack(spacing:0){
+//                            if let photoLink = menuProduct?.photoLink{
+//                                KFImage(
+//                                    URL(string: photoLink)
+//                                )
+//                                .resizable()
+//                                .aspectRatio(contentMode: .fit)
+//                            }
+//                       
+//                            Group{
+//                                HStack(spacing:0){
+//                                    Text(menuProduct?.name ?? "")
+//                                        .titleMedium(weight: .bold)
+//                                        .frame(maxWidth: .infinity, alignment: .leading)
+//                                        .foregroundColor(AppColor.onSurface)
+//
+//                                    Text(menuProduct?.size ?? "")
+//                                        .bodySmall()
+//                                        .foregroundColor(AppColor.onSurfaceVariant)
+//                                }
+//                                .padding(.top, 12)
+//
+//                                HStack(spacing:0){
+//                                    if let oldPrice = menuProduct?.oldPrice {
+//                                        StrikeText(
+//                                            text: oldPrice
+//                                        )
+//                                        .padding(.trailing, Diems.SMALL_RADIUS)
+//                                    }
+//                                    Text(menuProduct?.newPrice ?? "")
+//                                        .foregroundColor(AppColor.onSurface)
+//                                        .bodyLarge(weight: .bold)
+//                                }
+//                                .frame(maxWidth: .infinity, alignment: .leading)
+//                                .padding(.top, 4)
+//
+//                                Text(menuProduct?.description_ ?? "")
+//                                    .bodyLarge()
+//                                    .frame(maxWidth: .infinity, alignment: .leading)
+//                                    .padding(.top, 16)
+//                                    .foregroundColor(AppColor.onSurface)
+//                                    .padding(.bottom, 16)
+//                            }
+//                            .padding(.horizontal, Diems.MEDIUM_PADDING)
+//                        }
+//                        .background(AppColor.surface)
+//                        .cornerRadius(Diems.MEDIUM_RADIUS)
+//                        .padding(Diems.MEDIUM_PADDING)
+//                        .padding(.bottom, 48)
+//            }
 
             }
 
            Button(action: {
                viewModel.onAction(
-                action: ProductDetailsStateActionAddProductToCartClick(productDetailsOpenedFrom: productDetailsOpenedFrom)
+                action: ProductDetailsStateActionAddProductToCartClick(productDetailsOpenedFrom: productDetailsOpenedFrom, cartProductUuid: nil)
                )
            }) {
                ButtonText(text: Strings.ACTION_PRODUCT_DETAILS_ADD)
@@ -127,7 +130,7 @@ struct ProductDetailsView: View {
     
     func subscribe(){
         viewModel.onAction(
-         action: ProductDetailsStateActionInit(menuProductUuid: menuProductUuid)
+            action: ProductDetailsStateActionInit(menuProductUuid: menuProductUuid, selectedAdditionUuidList: [])
         )
         listener = viewModel.dataState.watch { productDetailsVM in
             if let productDetailsStateVM =  productDetailsVM {

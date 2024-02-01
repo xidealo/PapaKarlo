@@ -13,8 +13,9 @@ struct ConsumerCartView: View {
     
     @State var viewModel: ConsumerCartViewModel = ConsumerCartViewModel(
         userInteractor: iosComponent.provideIUserInteractor(),
-        cartProductInteractor: iosComponent.provideCartProductInteractor(),
-        addCartProductUseCase: iosComponent.provideAddCartProductUseCase(),
+        cartProductInteractor: iosComponent.provideCartProductInteractor(), 
+        increaseCartProductCountUseCase: iosComponent.provideIncreaseCartProductCountUseCase(),
+        addMenuProductUseCase: iosComponent.provideAddMenuProductUseCase(),
         removeCartProductUseCase: iosComponent.provideRemoveCartProductUseCase(),
         getRecommendationsUseCase: iosComponent.provideGetRecommendationsUseCase(),
         analyticService: iosComponent.provideAnalyticService()
@@ -201,12 +202,13 @@ struct ConsumerCartSuccessScreen: View {
                         
                         ForEach(cartProductListIos){ cartProductItemIos in
                             VStack(spacing:0){
-                                CartProductView(cartProductItem: cartProductItemIos.cartProductItem, plusAction: {
-                                    action(
-                                        ConsumerCartActionAddProductToCartClick(menuProductUuid: cartProductItemIos.cartProductItem.menuProductUuid)
-                                    )
+                                CartProductView(cartProductItem: cartProductItemIos.cartProductItem, 
+                                                plusAction: {
+//                                    action(
+//                                        ConsumerCartActionAddProductToCartClick(menuProductUuid: cartProductItemIos.cartProductItem.menuProductUuid)
+//                                    )
                                 }, minusAction: {
-                                    action(ConsumerCartActionRemoveProductFromCartClick(menuProductUuid: cartProductItemIos.cartProductItem.menuProductUuid))
+//                                    action(ConsumerCartActionRemoveProductFromCartClick(menuProductUuid: cartProductItemIos.cartProductItem.menuProductUuid))
                                 })
                                 .padding(.horizontal, Diems.MEDIUM_PADDING)
                                 .padding(.bottom, 8)
@@ -239,7 +241,7 @@ struct ConsumerCartSuccessScreen: View {
                                 selection : $selection,
                                 showOrderCreated : $showOrderCreated,
                                 action: {
-                                    action(ConsumerCartActionAddRecommendationProductToCartClick(menuProductUuid: menuProductItem.productUuid))
+//                                    action(ConsumerCartActionAddRecommendationProductToCartClick(menuProductUuid: menuProductItem.productUuid))
                                 }
                             )
                         }
