@@ -13,6 +13,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.PopupProperties
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
@@ -67,8 +70,14 @@ fun FoodDeliveryTextFieldWithMenu(
                     suggestionsList.forEach { suggestion ->
                         DropdownMenuItem(
                             text = {
+                                val text = buildAnnotatedString {
+                                    append(suggestion.value)
+                                    withStyle(SpanStyle(FoodDeliveryTheme.colors.mainColors.onSurfaceVariant)) {
+                                        append(suggestion.postfix)
+                                    }
+                                }
                                 Text(
-                                    text = suggestion.value,
+                                    text = text,
                                     color = FoodDeliveryTheme.colors.mainColors.onSurface,
                                     style = FoodDeliveryTheme.typography.bodyMedium
                                 )
