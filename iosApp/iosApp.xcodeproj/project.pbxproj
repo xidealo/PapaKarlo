@@ -96,6 +96,10 @@
 		024E8781287A160500728CB3 /* SpalshViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024E8780287A160500728CB3 /* SpalshViewState.swift */; };
 		0253930A29AB92A800C8B04B /* ButtonText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0253930929AB92A800C8B04B /* ButtonText.swift */; };
 		02542938287F39060089B45E /* CreateOrderHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02542937287F39060089B45E /* CreateOrderHolder.swift */; };
+		0254EF942B6CFA5700982CA5 /* OrderDetailsViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0254EF932B6CFA5700982CA5 /* OrderDetailsViewState.swift */; };
+		0254EF952B6CFA5700982CA5 /* OrderDetailsViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0254EF932B6CFA5700982CA5 /* OrderDetailsViewState.swift */; };
+		0254EF962B6CFA5700982CA5 /* OrderDetailsViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0254EF932B6CFA5700982CA5 /* OrderDetailsViewState.swift */; };
+		0254EF972B6CFA5700982CA5 /* OrderDetailsViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0254EF932B6CFA5700982CA5 /* OrderDetailsViewState.swift */; };
 		025775152ACCA01600DDBC94 /* DiscountCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025775142ACCA01600DDBC94 /* DiscountCard.swift */; };
 		025775162ACCA01600DDBC94 /* DiscountCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025775142ACCA01600DDBC94 /* DiscountCard.swift */; };
 		025775172ACCA01600DDBC94 /* DiscountCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025775142ACCA01600DDBC94 /* DiscountCard.swift */; };
@@ -531,6 +535,7 @@
 		0251DCA229DE11990008DBA5 /* yuliar.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = yuliar.plist; sourceTree = "<group>"; };
 		0253930929AB92A800C8B04B /* ButtonText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonText.swift; sourceTree = "<group>"; };
 		02542937287F39060089B45E /* CreateOrderHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateOrderHolder.swift; sourceTree = "<group>"; };
+		0254EF932B6CFA5700982CA5 /* OrderDetailsViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDetailsViewState.swift; sourceTree = "<group>"; };
 		025775142ACCA01600DDBC94 /* DiscountCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscountCard.swift; sourceTree = "<group>"; };
 		0265D29C2AC9B14A00B862FF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		026643F02A22AF3C000310BF /* papakarlo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = papakarlo.entitlements; sourceTree = "<group>"; };
@@ -723,6 +728,7 @@
 			children = (
 				0232343E287879EF0048CF39 /* OrderDetailsView.swift */,
 				022BC67328CC9D0700F3ED27 /* OrderProductItem.swift */,
+				0254EF932B6CFA5700982CA5 /* OrderDetailsViewState.swift */,
 			);
 			path = order_details;
 			sourceTree = "<group>";
@@ -1559,6 +1565,7 @@
 				026C1F8B2A2690B900838266 /* CreateOrderViewState.swift in Sources */,
 				026C1F8C2A2690B900838266 /* SmsTextField.swift in Sources */,
 				026C1F8D2A2690B900838266 /* LoginView.swift in Sources */,
+				0254EF962B6CFA5700982CA5 /* OrderDetailsViewState.swift in Sources */,
 				02CBBE372A6BE979000260FC /* SelectablePaymentListView.swift in Sources */,
 				026C1F8E2A2690B900838266 /* ProductDetailsViewState.swift in Sources */,
 				026C1F8F2A2690B900838266 /* AppDelegate.swift in Sources */,
@@ -1666,6 +1673,7 @@
 				027CB04E2A346F7B00350EB2 /* CreateOrderViewState.swift in Sources */,
 				027CB04F2A346F7B00350EB2 /* SmsTextField.swift in Sources */,
 				027CB0502A346F7B00350EB2 /* LoginView.swift in Sources */,
+				0254EF972B6CFA5700982CA5 /* OrderDetailsViewState.swift in Sources */,
 				02CBBE382A6BE979000260FC /* SelectablePaymentListView.swift in Sources */,
 				027CB0512A346F7B00350EB2 /* ProductDetailsViewState.swift in Sources */,
 				027CB0522A346F7B00350EB2 /* AppDelegate.swift in Sources */,
@@ -1773,6 +1781,7 @@
 				02ADC36E29D9D0880062A141 /* CreateOrderViewState.swift in Sources */,
 				02ADC36F29D9D0880062A141 /* SmsTextField.swift in Sources */,
 				02ADC37029D9D0880062A141 /* LoginView.swift in Sources */,
+				0254EF952B6CFA5700982CA5 /* OrderDetailsViewState.swift in Sources */,
 				02CBBE362A6BE979000260FC /* SelectablePaymentListView.swift in Sources */,
 				02ADC37129D9D0880062A141 /* ProductDetailsViewState.swift in Sources */,
 				02ADC37229D9D0880062A141 /* AppDelegate.swift in Sources */,
@@ -1880,6 +1889,7 @@
 				023234AE287879EF0048CF39 /* CreateOrderViewState.swift in Sources */,
 				023234CB28787A180048CF39 /* SmsTextField.swift in Sources */,
 				02323483287879EF0048CF39 /* LoginView.swift in Sources */,
+				0254EF942B6CFA5700982CA5 /* OrderDetailsViewState.swift in Sources */,
 				02CBBE352A6BE979000260FC /* SelectablePaymentListView.swift in Sources */,
 				023234A8287879EF0048CF39 /* ProductDetailsViewState.swift in Sources */,
 				02323420287878440048CF39 /* AppDelegate.swift in Sources */,

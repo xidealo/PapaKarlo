@@ -33,8 +33,10 @@ struct ProductDetailsView: View {
     @State var screenState : ProductDetailsStateDataState.ScreenState = ProductDetailsStateDataState.ScreenState.loading
     //-----
     
+    //Listeners
     @State var listener: Closeable? = nil
     @State var eventsListener: Closeable? = nil
+    //-----
 
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
 
