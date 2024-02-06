@@ -179,7 +179,8 @@ struct ConsumerCartSuccessScreen: View {
                 name: menuProduct.name,
                 newPrice: String(menuProduct.newPrice) + Strings.CURRENCY,
                 oldPrice: menuProduct.oldPrice as? Int,
-                photoLink: menuProduct.photoLink
+                photoLink: menuProduct.photoLink,
+                hasAdditions: menuProduct.hasAdditions
             )
         })
         
@@ -239,7 +240,7 @@ struct ConsumerCartSuccessScreen: View {
                                 productDetailsOpenedFrom: ProductDetailsOpenedFrom.recommendationProduct,
                                 isRootActive : $isRootActive,
                                 selection : $selection,
-                                showOrderCreated : $showOrderCreated,
+                                showOrderCreated : $showOrderCreated, 
                                 action: {
 //                                    action(ConsumerCartActionAddRecommendationProductToCartClick(menuProductUuid: menuProductItem.productUuid))
                                 }

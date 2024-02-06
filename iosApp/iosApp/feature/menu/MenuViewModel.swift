@@ -19,10 +19,11 @@ class MenuViewModel : ObservableObject {
     )
     
     @Published var scrollToPostion = "no pos"
-
+    
     var lastDisappearIndex = 1
     var lastAppearIndex = 2
     var canCalculate = true
+    let addMenuProductUseCase = iosComponent.provideAddMenuProductUseCase()
     
     init(){
         iosComponent.provideMenuInteractor().getMenuSectionList { menuSectionList, error in
@@ -58,7 +59,8 @@ class MenuViewModel : ObservableObject {
                     name: menuProduct.name,
                     newPrice: String(menuProduct.newPrice) + Strings.CURRENCY,
                     oldPrice: menuProduct.oldPrice as? Int,
-                    photoLink: menuProduct.photoLink
+                    photoLink: menuProduct.photoLink,
+                    hasAdditions: !menuProduct.additionGroups.isEmpty
                 )
             }))
             )
@@ -66,7 +68,6 @@ class MenuViewModel : ObservableObject {
     }
     
     private func getCategoryItems(menuSectionList:[MenuSection]) -> [CategoryItemModel] {
-        
         return menuSectionList.map { menuSection in
             CategoryItemModel(
                 key: "MenuCategoryHeaderItemModel "  + menuSection.category.uuid,
@@ -77,15 +78,10 @@ class MenuViewModel : ObservableObject {
         }
     }
     
-    func addCartProductToCart(menuProductUuid:String){
-//        iosComponent.provideCartProductInteractor().addProductToCart(menuProductUuid: menuProductUuid) { cartProduct, error in
-//            if(cartProduct == nil){
-//                print("Not added")
-//            }
-//            else{
-//                print("Added")
-//            }
-//        }
+    func addCartProductToCart(menuProductItem:MenuProductItem){
+        addMenuProductUseCase.invoke(menuProductUuid: menuProductItem.productUuid) { err in
+            print("Not added")
+        }
     }
     
     func selectTagWithHorizontalScroll(selectIndex:Int){

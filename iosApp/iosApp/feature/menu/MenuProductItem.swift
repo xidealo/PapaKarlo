@@ -13,4 +13,5 @@ struct MenuProductItem:Identifiable  {
     let newPrice: String
     let oldPrice: Int?
     let photoLink: String
+    let hasAdditions:Bool
 }

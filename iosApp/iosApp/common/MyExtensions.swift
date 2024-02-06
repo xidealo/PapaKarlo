@@ -53,23 +53,31 @@ extension String {
 extension UserAddress {
     func getAddress() -> String {
         
-        var address = "self.street.name"
+        var address = self.street
         address += ", д. " + (self.house)
         
-        if(self.flat != nil && self.flat != ""){
-            address += ", кв. " + (self.flat ?? "")
+        if let flat = self.flat{
+            if(flat != ""){
+                address += ", кв. " + flat
+            }
         }
         
-        if(self.entrance != nil && self.entrance != ""){
-            address += ", подъезд " + (self.entrance ?? "")
+        if let entrance = self.entrance{
+            if(self.entrance != ""){
+                address += ", подъезд " + entrance
+            }
         }
         
-        if(self.floor != nil && self.floor != ""){
-            address += ", этаж. " + (self.floor ?? "")
+        if let floor = self.floor{
+            if(self.floor != ""){
+                address += ", этаж " + floor
+            }
         }
         
-        if(self.comment != nil && self.comment != ""){
-            address += ", \(self.comment ?? "")"
+        if let comment = self.comment{
+            if(self.comment != ""){
+                address += ", \(comment)"
+            }
         }
         
         return address
@@ -79,7 +87,7 @@ extension UserAddress {
 extension SelectableUserAddress {
     func getAddress() -> String {
         
-        var address = "self.street.name"
+        var address = self.street
         address += ", д. " + (self.house)
         
         if(self.flat != nil && self.flat != ""){

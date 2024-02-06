@@ -77,14 +77,12 @@ struct MenuView: View {
                                             selection : $selection,
                                             showOrderCreated : $showOrderCreated,
                                             action: {
-                                                viewModel.addCartProductToCart(menuProductUuid: menuProductItem.productUuid)
+                                                viewModel.addCartProductToCart(menuProductItem: menuProductItem)
                                             })
                                         .onAppear(){
-                                            //print("onAppear \(i)")
                                             viewModel.checkAppear(index: i)
                                         }
                                         .onDisappear(){
-                                            //print("onDisappear \(i)")
                                             viewModel.checkDisappear(index: i)
                                         }
                                     }
