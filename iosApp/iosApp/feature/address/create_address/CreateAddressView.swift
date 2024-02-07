@@ -37,22 +37,20 @@ struct CreateAddressView: View {
     @StateObject var viewModel:CreateAddressHolder = CreateAddressHolder()
     
     @State var listener: Closeable? = nil
-//    
-//    @State var createAddressState = CreateAddressState(
-//        streetList: [],
-//        suggestedStreetList: [],
-//        state: CreateAddressState.StateLoading(),
-//        street: "",
-//        hasStreetError: false,
-//        house: "",
-//        hasHouseError: false,
-//        flat: "",
-//        entrance: "",
-//        floor: "",
-//        comment: "",
-//        isCreateLoading: false,
-//        eventList: []
-//    )
+    
+    @State var createAddressViewState = CreateAddressViewState(
+        street: "",
+        streetErrorStringId: nil,
+        streetSuggestionList: [],
+        isSuggestionLoading: false,
+        house: "",
+        houseErrorStringId: nil,
+        flat: "",
+        entrance: "",
+        floor: "",
+        comment: "",
+        isCreateLoading: false
+    )
     
     @State var filteredList : [StreetItem] = []
     

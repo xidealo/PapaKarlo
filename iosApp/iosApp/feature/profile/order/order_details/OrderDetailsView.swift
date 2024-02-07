@@ -95,7 +95,6 @@ struct OrderDetailsView: View {
                             .padding(.horizontal, 16)
                     }
                     
-                    
                     if let deliveryCost = orderDetailsViewState.deliveryCost{
                         HStack(spacing:0){
                             Text(Strings.MSG_CREATION_ORDER_DELIVERY)

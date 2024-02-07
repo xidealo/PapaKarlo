@@ -110,13 +110,44 @@ struct ProductDetailsView: View {
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .padding(.top, 16)
                                 .foregroundColor(AppColor.onSurface)
-                                .padding(.bottom, 16)
-                            
                             
                             ForEach(productDetailsViewState.additionList){ additionItem in
                                 switch(additionItem){
                                 case let addition as AdditionItem.AdditionHeaderItem : Text(addition.name)
-                                case let addition as AdditionItem.AdditionListItem : Text(addition.product.name)
+                                        .titleMedium(weight: .medium)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .padding(.bottom, 8)
+                                        .padding(.top, 16)
+                                case let addition as AdditionItem.AdditionListItem : VStack(spacing:0){
+                                    HStack(spacing:0){
+                                        KFImage(
+                                            URL(string: addition.product.photoLink)
+                                        )
+                                        .resizable()
+                                        .frame(width: 40, height: 40)
+                                        .aspectRatio(contentMode: .fit)
+                                        .cornerRadius(Diems.MEDIUM_RADIUS)
+                                        
+                                        Text(addition.product.name)
+                                            .bodyLarge()
+                                            .padding(.leading, 8)
+                                        
+                                        Spacer()
+                                        
+                                        if let price = addition.product.price{
+                                            Text(price)
+                                                .bodyLarge()
+                                        }
+                                    
+                                        Toggle(isOn: .constant(addition.product.isSelected)){
+                                            
+                                        }
+                                        
+                                    }.frame(maxWidth: .infinity, alignment: .leading)
+                                    
+                                    Divider()
+                                        .padding(.vertical, 8)
+                                }
                                 default : EmptyView()
                                 }
                             }
