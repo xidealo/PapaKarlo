@@ -9,9 +9,6 @@ CREATE VIEW cartProductWithMenuProductEntity AS
 SELECT cartProductEntity.uuid AS cartProductUuid,
     cartProductEntity.count,
     cartProductEntity.menuProductUuid,
-    categoryEntity.uuid AS categoryUuid,
-    categoryEntity.name AS categoryName,
-    categoryEntity.priority AS categoryPriority,
     menuProductEntity.*,
     cartProductAdditionEntity.uuid AS cartProductAdditionUuid,
     cartProductAdditionEntity.name AS cartProductAdditionName,
@@ -21,8 +18,6 @@ SELECT cartProductEntity.uuid AS cartProductUuid,
     cartProductAdditionEntity.priority AS cartProductAdditionPriority
 FROM cartProductEntity
 JOIN menuProductEntity ON menuProductEntity.uuid = cartProductEntity.menuProductUuid
-JOIN menuProductCategoryReference ON menuProductCategoryReference.menuProductUuidReference = menuProductEntity.uuid
-JOIN categoryEntity ON menuProductCategoryReference.categoryUuidReference = categoryEntity.uuid
 LEFT JOIN cartProductAdditionEntity ON cartProductAdditionEntity.cartProductUuid = cartProductEntity.uuid;
 
 insertCartProduct:

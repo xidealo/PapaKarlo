@@ -2,9 +2,8 @@ package com.bunbeauty.shared.data.mapper.cart_product
 
 import com.bunbeauty.shared.db.CartProductEntity
 import com.bunbeauty.shared.db.CartProductWithMenuProductEntity
-import com.bunbeauty.shared.domain.model.cart.CartProduct
 import com.bunbeauty.shared.domain.model.addition.CartProductAddition
-import com.bunbeauty.shared.domain.model.category.Category
+import com.bunbeauty.shared.domain.model.cart.CartProduct
 import com.bunbeauty.shared.domain.model.product.MenuProduct
 
 class CartProductMapper : ICartProductMapper {
@@ -28,13 +27,7 @@ class CartProductMapper : ICartProductMapper {
                     description = firstCartProductWithCategoryEntity.description,
                     comboDescription = firstCartProductWithCategoryEntity.comboDescription,
                     photoLink = firstCartProductWithCategoryEntity.photoLink,
-                    categoryList = groupedCartProductWithCategoryEntityList.map { menuProductWithCategoryEntity ->
-                        Category(
-                            uuid = menuProductWithCategoryEntity.categoryUuid,
-                            name = menuProductWithCategoryEntity.categoryName,
-                            priority = menuProductWithCategoryEntity.categoryPriority
-                        )
-                    },
+                    categoryList = emptyList(),
                     visible = firstCartProductWithCategoryEntity.visible,
                     isRecommended = firstCartProductWithCategoryEntity.isRecommended,
                     additionGroups = emptyList(),

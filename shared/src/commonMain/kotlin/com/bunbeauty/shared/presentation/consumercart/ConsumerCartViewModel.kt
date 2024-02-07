@@ -6,7 +6,6 @@ import com.bunbeauty.analytic.event.cart.IncreaseCartProductClickEvent
 import com.bunbeauty.analytic.event.cart.RemoveCartProductClickEvent
 import com.bunbeauty.analytic.event.recommendation.AddRecommendationProductClickEvent
 import com.bunbeauty.analytic.parameter.MenuProductUuidEventParameter
-import com.bunbeauty.core.Logger
 import com.bunbeauty.shared.Constants.PERCENT
 import com.bunbeauty.shared.Constants.RUBLE_CURRENCY
 import com.bunbeauty.shared.domain.feature.cart.GetRecommendationsUseCase
@@ -99,9 +98,8 @@ class ConsumerCartViewModel(
             copy(screenState = ConsumerCart.ViewDataState.ScreenState.LOADING)
         }
         observeConsumerCartJob?.cancel()
-        observeConsumerCartJob =
-            cartProductInteractor.observeConsumerCart().onEach { consumerCartDomain ->
-                Logger.logD("getConsumerCart", "getConsumerCart $consumerCartDomain")
+        observeConsumerCartJob = cartProductInteractor.observeConsumerCart()
+            .onEach { consumerCartDomain ->
                 setState {
                     if (consumerCartDomain == null) {
                         copy(screenState = ConsumerCart.ViewDataState.ScreenState.ERROR)

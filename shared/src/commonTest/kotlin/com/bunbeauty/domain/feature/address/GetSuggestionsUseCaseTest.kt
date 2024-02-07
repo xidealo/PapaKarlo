@@ -67,10 +67,12 @@ class GetSuggestionsUseCaseTest {
             Suggestion(
                 fiasId = "fiasId1",
                 street = "street1",
+                details = null,
             ),
             Suggestion(
                 fiasId = "fiasId2",
                 street = "street2",
+                details = null,
             ),
         )
         coEvery {
