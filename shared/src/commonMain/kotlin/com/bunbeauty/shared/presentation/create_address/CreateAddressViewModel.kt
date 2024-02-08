@@ -189,6 +189,7 @@ class CreateAddressViewModel(
                     street = Suggestion(
                         fiasId = streetSuggestion.id,
                         street = streetSuggestion.value,
+                        details = null
                     ),
                     house = dataState.value.house,
                     flat = dataState.value.flat,
@@ -271,6 +272,9 @@ class CreateAddressViewModel(
         return SuggestionUi(
             id = suggestion.fiasId,
             value = suggestion.street,
+            postfix = suggestion.details?.let { details ->
+                ", $details"
+            },
         )
     }
 

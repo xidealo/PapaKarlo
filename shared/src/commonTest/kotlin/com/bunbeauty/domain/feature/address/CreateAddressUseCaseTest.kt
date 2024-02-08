@@ -49,7 +49,8 @@ internal class CreateAddressUseCaseTest {
                 createAddressUseCase(
                     street = Suggestion(
                         fiasId = "fiasId",
-                        street = "street"
+                        street = "street",
+                        details = null,
                     ),
                     house = "house",
                     flat = "flat",
@@ -71,7 +72,8 @@ internal class CreateAddressUseCaseTest {
                 createAddressUseCase(
                     street = Suggestion(
                         fiasId = "fiasId",
-                        street = "street"
+                        street = "street",
+                        details = null,
                     ),
                     house = "house",
                     flat = "flat",
@@ -104,7 +106,8 @@ internal class CreateAddressUseCaseTest {
                 createdUserAddress = CreatedUserAddress(
                     street = Suggestion(
                         fiasId = "fiasId",
-                        street = "street"
+                        street = "street",
+                        details = null,
                     ),
                     house = "house",
                     flat = "flat",
@@ -120,7 +123,8 @@ internal class CreateAddressUseCaseTest {
         val createdUserAddress = createAddressUseCase(
             street = Suggestion(
                 fiasId = "fiasId",
-                street = "street"
+                street = "street",
+                details = null,
             ),
             house = "house",
             flat = "flat",

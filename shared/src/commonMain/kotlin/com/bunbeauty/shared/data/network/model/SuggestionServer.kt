@@ -12,4 +12,7 @@ class SuggestionServer(
     @SerialName("street")
     val street: String,
 
+    @SerialName("details")
+    val details: String,
+
 )

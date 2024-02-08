@@ -24,6 +24,7 @@ class SuggestionRepository(
             Suggestion(
                 fiasId = suggestionServer.fiasId,
                 street = suggestionServer.street,
+                details = suggestionServer.details,
             )
         }
         if (suggestions != null) {
