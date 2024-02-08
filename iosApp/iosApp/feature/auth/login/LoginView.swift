@@ -161,7 +161,7 @@ struct LoginViewSuccessView: View {
                 
                 EditTextView(
                     hint: Strings.HINT_LOGIN_PHONE,
-                    text: $phone,
+                    text: phone,
                     limit: 18,
                     keyBoadrType: UIKeyboardType.phonePad,
                     hasError: $hasError,

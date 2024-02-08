@@ -50,7 +50,7 @@ class CreateAddressFragment :
         FoodDeliveryScaffold(
             title = stringResource(R.string.title_create_address),
             backActionClick = {
-                findNavController().popBackStack()
+                onAction(CreateAddress.Action.BackClick)
             },
             actionButton = {
                 LoadingButton(
@@ -89,6 +89,10 @@ class CreateAddressFragment :
                 (activity as? IMessageHost)?.showErrorMessage(
                     resources.getString(R.string.error_create_address_fail)
                 )
+            }
+
+            CreateAddress.Event.Back -> {
+                findNavController().popBackStack()
             }
         }
     }

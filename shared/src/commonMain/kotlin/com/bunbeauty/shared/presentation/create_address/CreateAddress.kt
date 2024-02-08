@@ -33,9 +33,11 @@ interface CreateAddress {
         data object SuggestionLoadingFailed : Event
         data object AddressCreatedSuccess : Event
         data object AddressCreatedFailed : Event
+        data object Back : Event
     }
 
     sealed interface Action : BaseAction {
+        data object Init: Action
         data class StreetTextChange(val street: String): Action
         data class StreetFocusChange(val isFocused: Boolean): Action
         data class SuggestionSelect(val suggestion: SuggestionUi): Action
@@ -45,6 +47,7 @@ interface CreateAddress {
         data class FloorTextChange(val floor: String): Action
         data class CommentTextChange(val comment: String): Action
         data object SaveClick: Action
+        data object BackClick: Action
     }
 
 }

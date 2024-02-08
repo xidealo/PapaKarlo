@@ -93,7 +93,9 @@ fun initKoin(appDeclaration: KoinAppDeclaration = {}) = startKoin {
         addressModule(),
     )
 }
-
+/**
+* Function for init in IOS
+* */
 fun initKoin() = startKoin {
     modules(
         databaseModule(),
@@ -115,6 +117,7 @@ fun initKoin() = startKoin {
         analyticModule(),
         additionUseCaseModule(),
         menuModule(),
+        addressModule()
     )
 }
 

@@ -237,13 +237,11 @@ struct CreateOrderSuccessView: View {
                     
                     EditTextView(
                         hint: Strings.HINT_CREATE_COMMENT_COMMENT,
-                        text: $comment.onChange({ comment in
-                            viewModel.kmmViewModel.onCommentChanged(comment: comment)
-                        }),
+                        text: comment,
                         limit: 255,
                         hasError: .constant(false),
                         textChanged: { str in
-                            
+                            viewModel.kmmViewModel.onCommentChanged(comment: comment)
                         }
                     )
                     .padding(.top, Diems.SMALL_PADDING)

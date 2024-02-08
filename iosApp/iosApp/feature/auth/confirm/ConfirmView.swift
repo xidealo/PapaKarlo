@@ -191,20 +191,17 @@ struct ConfirmViewSuccessView: View {
                 
                 EditTextView(
                     hint: Strings.HINT_CONFIRM_CODE,
-                    text:$code,
+                    text: code,
                     limit: 6,
                     keyBoadrType: UIKeyboardType.numberPad,
                     hasError: .constant(false),
                     textChanged: { str in
-                        
+                        if(code.count == 6){
+                            action(ConfirmActionCheckCode(code: code))
+                            code = ""
+                        }
                     }
                 )
-                .onReceive(Just(code)) { _ in
-                    if(code.count == 6){
-                        action(ConfirmActionCheckCode(code: code))
-                        code = ""
-                    }
-                }
                 
                 Spacer()
                 

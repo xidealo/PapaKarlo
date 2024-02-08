@@ -11,7 +11,7 @@ import Combine
 struct EditTextView: View {
     
     let hint: String
-    @Binding var text: String
+    @State var text: String
     let limit:Int
     var keyBoadrType = UIKeyboardType.default //default
     

@@ -7,14 +7,15 @@
 //
 
 import Foundation
+import SwiftUI
 
 struct CreateAddressViewState {
     let street: String
-    let streetErrorStringId: Int?
+    let streetError: LocalizedStringKey?
     let streetSuggestionList: [StreetItem]
     let isSuggestionLoading: Bool
     let house: String
-    let houseErrorStringId: Int?
+    let houseError: LocalizedStringKey?
     let flat: String
     let entrance: String
     let floor: String

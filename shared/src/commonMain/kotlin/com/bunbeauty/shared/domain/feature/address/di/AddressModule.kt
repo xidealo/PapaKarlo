@@ -10,5 +10,4 @@ internal fun addressModule() = module {
             dataStoreRepo = get(),
         )
     }
-
 }
