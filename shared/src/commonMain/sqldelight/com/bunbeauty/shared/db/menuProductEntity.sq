@@ -35,3 +35,8 @@ getMenuProductByUuid:
 SELECT *
 FROM menuProductEntity
 WHERE uuid = :uuid;
+
+getMenuProductWithCategoryListByUuid:
+SELECT *
+FROM menuProductWithCategoryEntity
+WHERE uuid = :uuid;

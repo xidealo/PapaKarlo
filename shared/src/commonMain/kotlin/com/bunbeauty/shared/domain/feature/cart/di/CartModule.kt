@@ -30,7 +30,7 @@ internal fun cartModule() = module {
     factory {
         GetRecommendationsUseCase(
             recommendationRepository = get(),
-            cartProductInteractor = get(),
+            cartProductRepo = get(),
             menuProductRepository = get()
         )
     }

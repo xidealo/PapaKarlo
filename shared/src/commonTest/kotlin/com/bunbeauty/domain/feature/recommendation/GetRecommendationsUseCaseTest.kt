@@ -5,7 +5,7 @@ import com.bunbeauty.getCategoryProduct
 import com.bunbeauty.getMenuProduct
 import com.bunbeauty.shared.data.repository.RecommendationRepository
 import com.bunbeauty.shared.domain.feature.cart.GetRecommendationsUseCase
-import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
+import com.bunbeauty.shared.domain.repo.CartProductRepo
 import com.bunbeauty.shared.domain.repo.MenuProductRepo
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -18,7 +18,7 @@ import kotlin.test.assertTrue
 internal class GetRecommendationsUseCaseTest {
 
     private val recommendationRepository: RecommendationRepository = mockk()
-    private val cartProductInteractor: ICartProductInteractor = mockk()
+    private val cartProductRepo: CartProductRepo = mockk()
     private val menuProductRepo: MenuProductRepo = mockk()
     lateinit var getRecommendationsUseCase: GetRecommendationsUseCase
 
@@ -26,7 +26,7 @@ internal class GetRecommendationsUseCaseTest {
     fun setup() {
         getRecommendationsUseCase = GetRecommendationsUseCase(
             recommendationRepository = recommendationRepository,
-            cartProductInteractor = cartProductInteractor,
+            cartProductRepo = cartProductRepo,
             menuProductRepository = menuProductRepo
         )
     }
@@ -35,7 +35,7 @@ internal class GetRecommendationsUseCaseTest {
     fun `return empty list when has no recommendations`() = runTest {
         coEvery { recommendationRepository.getMaxVisibleCount() } returns 3
         coEvery { menuProductRepo.getMenuProductList() } returns listOf()
-        coEvery { cartProductInteractor.getCartProductList() } returns listOf(
+        coEvery { cartProductRepo.getCartProductList() } returns listOf(
             getCartProductWithCategory("1", "1")
         )
         assertTrue(getRecommendationsUseCase().isEmpty())
@@ -50,7 +50,7 @@ internal class GetRecommendationsUseCaseTest {
             getMenuProductWithCategory("3", "3", visible = false),
         )
 
-        coEvery { cartProductInteractor.getCartProductList() } returns listOf()
+        coEvery { cartProductRepo.getCartProductList() } returns listOf()
         assertTrue(getRecommendationsUseCase().isEmpty())
     }
 
@@ -63,7 +63,7 @@ internal class GetRecommendationsUseCaseTest {
             getMenuProductWithCategory("3", "3", visible = true),
         )
 
-        coEvery { cartProductInteractor.getCartProductList() } returns listOf()
+        coEvery { cartProductRepo.getCartProductList() } returns listOf()
 
         assertEquals(
             expected = listOf(
@@ -83,7 +83,7 @@ internal class GetRecommendationsUseCaseTest {
                         getMenuProductWithCategory("2", "1")
                     )
 
-            coEvery { cartProductInteractor.getCartProductList() } returns listOf(
+            coEvery { cartProductRepo.getCartProductList() } returns listOf(
                 getCartProductWithCategory("1", "1")
             )
 
@@ -103,7 +103,7 @@ internal class GetRecommendationsUseCaseTest {
                 getMenuProductWithCategory("1", "1")
             )
 
-            coEvery { cartProductInteractor.getCartProductList() } returns listOf(
+            coEvery { cartProductRepo.getCartProductList() } returns listOf(
                 getCartProductWithCategory("1", "1")
             )
             assertTrue(getRecommendationsUseCase().isEmpty())
@@ -118,7 +118,7 @@ internal class GetRecommendationsUseCaseTest {
                 getMenuProductWithCategory("1", "2")
             )
 
-            coEvery { cartProductInteractor.getCartProductList() } returns listOf(
+            coEvery { cartProductRepo.getCartProductList() } returns listOf(
                 getCartProductWithCategory("1", "1")
             )
             assertEquals(
@@ -138,7 +138,7 @@ internal class GetRecommendationsUseCaseTest {
                 getMenuProductWithCategory("2", "2")
             )
 
-            coEvery { cartProductInteractor.getCartProductList() } returns listOf(
+            coEvery { cartProductRepo.getCartProductList() } returns listOf(
                 getCartProductWithCategory("1", "1")
             )
             assertEquals(
@@ -160,7 +160,7 @@ internal class GetRecommendationsUseCaseTest {
                 getMenuProductWithCategory("4", "4"),
                 getMenuProductWithCategory("5", "5")
             )
-            coEvery { cartProductInteractor.getCartProductList() } returns listOf(
+            coEvery { cartProductRepo.getCartProductList() } returns listOf(
                 getCartProductWithCategory("1", "1")
             )
 
@@ -186,7 +186,7 @@ internal class GetRecommendationsUseCaseTest {
 
             )
 
-            coEvery { cartProductInteractor.getCartProductList() } returns listOf(
+            coEvery { cartProductRepo.getCartProductList() } returns listOf(
                 getCartProductWithCategory("1", "1"),
             )
 
@@ -212,7 +212,7 @@ internal class GetRecommendationsUseCaseTest {
 
             )
 
-            coEvery { cartProductInteractor.getCartProductList() } returns listOf(
+            coEvery { cartProductRepo.getCartProductList() } returns listOf(
                 getCartProductWithCategory("1", "1"),
                 getCartProductWithCategory("2", "2")
             )

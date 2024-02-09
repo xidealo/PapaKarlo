@@ -37,6 +37,10 @@ class MenuProductDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IMenuProductD
         return menuProductEntityQueries.getMenuProductList().executeAsList()
     }
 
+    override suspend fun getMenuProductWithCategoryListByUuid(uuid: String): List<MenuProductWithCategoryEntity> {
+        return menuProductEntityQueries.getMenuProductWithCategoryListByUuid(uuid).executeAsList()
+    }
+
     override fun observeMenuProductList(): Flow<List<MenuProductWithCategoryEntity>> {
         return menuProductEntityQueries.getMenuProductList().asFlow().mapToList()
     }
