@@ -237,9 +237,9 @@ struct CreateOrderSuccessView: View {
                     
                     EditTextView(
                         hint: Strings.HINT_CREATE_COMMENT_COMMENT,
-                        text: comment,
+                        text: $comment,
                         limit: 255,
-                        hasError: .constant(false),
+                        errorMessage: .constant(nil),
                         textChanged: { str in
                             viewModel.kmmViewModel.onCommentChanged(comment: comment)
                         }

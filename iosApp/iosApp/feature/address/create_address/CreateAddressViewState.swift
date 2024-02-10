@@ -10,15 +10,15 @@ import Foundation
 import SwiftUI
 
 struct CreateAddressViewState {
-    let street: String
-    let streetError: LocalizedStringKey?
-    let streetSuggestionList: [StreetItem]
-    let isSuggestionLoading: Bool
-    let house: String
-    let houseError: LocalizedStringKey?
-    let flat: String
-    let entrance: String
-    let floor: String
-    let comment: String
-    let isCreateLoading: Bool
+    var street: String
+    var streetError: LocalizedStringKey?
+    var streetSuggestionList: [StreetItem]
+    var isSuggestionLoading: Bool
+    var house: String
+    var houseError: LocalizedStringKey?
+    var flat: String
+    var entrance: String
+    var floor: String
+    var comment: String
+    var isCreateLoading: Bool
 }

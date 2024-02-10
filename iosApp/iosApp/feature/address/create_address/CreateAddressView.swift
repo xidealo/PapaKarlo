@@ -11,7 +11,7 @@ import shared
 struct CreateAddressView: View {
     
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
-        
+    
     @State var hasStreetError:Bool = false
     @State var hasHouseError:Bool = false
     
@@ -45,7 +45,7 @@ struct CreateAddressView: View {
         comment: "",
         isCreateLoading: false
     )
-        
+    
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     var body: some View {
@@ -61,23 +61,35 @@ struct CreateAddressView: View {
                     VStack(spacing:0){
                         SearchEditTextView(
                             hint: Strings.HINT_CREATION_ADDRESS_STREET,
-                            text: createAddressViewState.street,
+                            text: $createAddressViewState.street,
                             limit: 100,
                             list: createAddressViewState.streetSuggestionList,
-                            hasError: $hasStreetError,
-                            errorMessage: "Выберите улицу из списка",
+                            errorMessage: $createAddressViewState.streetError,
+                            isLoading: $createAddressViewState.isSuggestionLoading,
                             textChanged: { changedValue in
                                 viewModel.onAction(action: CreateAddressActionStreetTextChange(street: changedValue))
+                            },
+                            selectSuggetion: { streetItem in
+                                viewModel.onAction(action: CreateAddressActionSuggestionSelect(
+                                    suggestion: SuggestionUi(
+                                        id: streetItem.id,
+                                        value: streetItem.name,
+                                        postfix: streetItem.postfix
+                                    )
+                                )
+                                )
+                            },
+                            focusChangeListener: { isSelected in
+                                viewModel.onAction(action: CreateAddressActionStreetFocusChange(isFocused: isSelected))
                             }
                         )
                         .focused($isTextFieldFocused)
                         
                         EditTextView(
                             hint: Strings.HINT_CREATION_ADDRESS_HOUSE,
-                            text: createAddressViewState.house,
+                            text: $createAddressViewState.house,
                             limit: 5,
-                            hasError: $hasHouseError,
-                            errorMessage: "Введите номер дома",
+                            errorMessage: $createAddressViewState.houseError,
                             textChanged: { changedValue in
                                 viewModel.onAction(action: CreateAddressActionHouseTextChange(house: changedValue))
                             }
@@ -87,10 +99,9 @@ struct CreateAddressView: View {
                         
                         EditTextView(
                             hint: Strings.HINT_CREATION_ADDRESS_FLAT,
-                            text: createAddressViewState.flat,
+                            text: $createAddressViewState.flat,
                             limit: 5,
-                            hasError: .constant(false),
-                            errorMessage: "Максимальная длина поля 5",
+                            errorMessage: .constant(nil),
                             textChanged: { changedValue in
                                 viewModel.onAction(action: CreateAddressActionFlatTextChange(flat: changedValue))
                             }
@@ -101,10 +112,9 @@ struct CreateAddressView: View {
                         
                         EditTextView(
                             hint: Strings.HINT_CREATION_ADDRESS_ENTRANCE,
-                            text: createAddressViewState.entrance,
+                            text: $createAddressViewState.entrance,
                             limit: 5,
-                            hasError: .constant(false),
-                            errorMessage: "Максимальная длина поля 5",
+                            errorMessage: .constant(nil),
                             textChanged: { changedValue in
                                 viewModel.onAction(action: CreateAddressActionEntranceTextChange(entrance: changedValue))
                             }
@@ -115,10 +125,9 @@ struct CreateAddressView: View {
                         
                         EditTextView(
                             hint: Strings.HINT_CREATION_ADDRESS_FLOOR,
-                            text: createAddressViewState.floor,
+                            text: $createAddressViewState.floor,
                             limit: 5,
-                            hasError: .constant(false),
-                            errorMessage: "Максимальная длина поля 5",
+                            errorMessage: .constant(nil),
                             textChanged: { changedValue in
                                 viewModel.onAction(action: CreateAddressActionFloorTextChange(floor: changedValue))
                             }
@@ -129,10 +138,9 @@ struct CreateAddressView: View {
                         
                         EditTextView(
                             hint: Strings.HINT_CREATION_ADDRESS_COMMENT,
-                            text: createAddressViewState.comment,
+                            text: $createAddressViewState.comment,
                             limit: 100,
-                            hasError: .constant(false),
-                            errorMessage: "Максимальная длина поля 100",
+                            errorMessage: .constant(nil),
                             textChanged: { changedValue in
                                 viewModel.onAction(action: CreateAddressActionCommentTextChange(comment: changedValue))
                             }
@@ -149,14 +157,13 @@ struct CreateAddressView: View {
                 
                 Button(
                     action: {
-                      //  viewModel.onAction(action: CreateAddressActionSaveClick())
-                        print(createAddressViewState)
+                        viewModel.onAction(action: CreateAddressActionSaveClick())
                     }
                 ) {
                     if(createAddressViewState.isCreateLoading){
                         ProgressView()
                             .progressViewStyle(CircularProgressViewStyle(tint: AppColor.primary))
-                            .scaleEffect(1.5)
+                            .scaleEffect(1.2)
                     }else{
                         ButtonText(text: Strings.ACTION_CREATION_ADDRESS_ADD)
                     }
@@ -187,7 +194,6 @@ struct CreateAddressView: View {
     
     func subscribe(){
         viewModel.onAction(action: CreateAddressActionInit())
-        viewModel.onAction(action: CreateAddressActionStreetFocusChange(isFocused: true))
         viewModel.dataState.watch { createAddressVM in
             if let createAddressDataState =  createAddressVM {
                 print(createAddressDataState)
@@ -222,7 +228,7 @@ struct CreateAddressView: View {
     }
     
     func getHouseError(createAddressDataState: CreateAddressDataState) -> LocalizedStringKey? {
-        if(createAddressDataState.hasStreetError){
+        if(createAddressDataState.hasHouseError){
             return LocalizedStringKey("error_create_address_house")
         }
         return nil
@@ -236,6 +242,9 @@ struct CreateAddressView: View {
                 createAddressStateEvents.forEach { event in
                     switch(event){
                     case is CreateAddressEventBack : self.mode.wrappedValue.dismiss()
+                    case is CreateAddressEventAddressCreatedSuccess : self.mode.wrappedValue.dismiss()
+                    case is CreateAddressEventSuggestionLoadingFailed : print("err")
+                    case is CreateAddressEventAddressCreatedFailed : print("err")
                     default:
                         print("def")
                     }

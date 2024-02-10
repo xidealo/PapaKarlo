@@ -134,6 +134,7 @@ struct LoginViewSuccessView: View {
     @Binding var phone:String
     @Binding var hasError:Bool
     @State var isSelected:Bool = false
+    @State var textFieldError : LocalizedStringKey? = LocalizedStringKey("Введите корректный номер телефона")
 
     let action: (LoginAction) -> Void
 
@@ -161,11 +162,10 @@ struct LoginViewSuccessView: View {
                 
                 EditTextView(
                     hint: Strings.HINT_LOGIN_PHONE,
-                    text: phone,
+                    text: $phone,
                     limit: 18,
                     keyBoadrType: UIKeyboardType.phonePad,
-                    hasError: $hasError,
-                    errorMessage: "Введите корректный номер телефона",
+                    errorMessage: $textFieldError,
                     textChanged: { str in
                         action(LoginActionChangePhoneNumber(phoneNumber: str, cursorPosition: 0))
                     }

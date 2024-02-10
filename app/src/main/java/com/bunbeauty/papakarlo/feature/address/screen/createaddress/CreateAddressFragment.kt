@@ -121,7 +121,6 @@ class CreateAddressFragment :
                     var expanded by remember(viewState.suggestionListNotEmpty) {
                         mutableStateOf(viewState.suggestionListNotEmpty)
                     }
-
                     FoodDeliveryTextFieldWithMenu(
                         modifier = Modifier
                             .fillMaxWidth()

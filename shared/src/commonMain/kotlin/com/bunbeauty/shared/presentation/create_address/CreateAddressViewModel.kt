@@ -105,11 +105,15 @@ class CreateAddressViewModel(
                     street = street,
                     streetSuggestionList = persistentListOf(),
                     isSuggestionLoading = false,
+                    selectedStreetSuggestion = null
                 )
             }
         } else {
             setState {
-                copy(street = street)
+                copy(
+                    street = street,
+                    selectedStreetSuggestion = null
+                )
             }
         }
     }
