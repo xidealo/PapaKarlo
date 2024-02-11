@@ -26,7 +26,6 @@ class MenuProductInteractor(
                         toMenuSectionList(menuProductList)
                     }
                 } ?: emptyList()
-
         }
     }
 
@@ -74,50 +73,7 @@ class MenuProductInteractor(
                         },
                         MenuProduct::name
                     )
-                ).map { menuProduct ->
-                    //TODO(only for test!)
-                    if (menuProduct.name == "Шаурма Армянская") {
-                        menuProduct.copy(
-                            additionGroups = listOf(
-                                AdditionGroup(
-                                    additionList = listOf(
-                                        Addition(
-                                            isSelected = true,
-                                            isVisible = true,
-                                            name = "Potato",
-                                            fullName = "kartoxa 2x",
-                                            photoLink = "",
-                                            price = null,
-                                            uuid = "uuid1",
-                                            additionGroupUuid = "sss",
-                                            priority = 1,
-                                        ),
-                                        Addition(
-                                            isSelected = true,
-                                            isVisible = true,
-                                            name = "Bacon",
-                                            fullName = "Bacon jopa",
-                                            photoLink = "",
-                                            price = 2,
-                                            uuid = "uuid2",
-                                            additionGroupUuid = "sss",
-                                            priority = 1,
-                                        )
-                                    ),
-                                    isVisible = true,
-                                    name = "jopa",
-                                    singleChoice = true,
-                                    uuid = "sss",
-                                    priority = 1,
-                                )
-                            )
-                        )
-                    } else {
-                        menuProduct
-                    }
-
-                }
-            )
+                )
         }.sortedBy { menuSection ->
             menuSection.category.priority
         }

@@ -12,14 +12,12 @@ struct CreateAddressView: View {
     
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     
-    @State var hasStreetError:Bool = false
-    @State var hasHouseError:Bool = false
-    
+    @State var showSuggetionLoadingError:Bool = false
+    @State var showCreateError:Bool = false
+
     @Binding var show:Bool
     
     @FocusState private var isTextFieldFocused: Bool
-    
-    @State var showError:Bool = false
     
     @State var viewModel = CreateAddressViewModel(
         getSuggestionsUseCase: iosComponent.provideGetSuggestionsUseCase(),
@@ -173,12 +171,21 @@ struct CreateAddressView: View {
             .padding(.bottom, Diems.MEDIUM_PADDING)
             .overlay(
                 overlayView: ToastView(
-                    toast: Toast(title: "Что-то пошло не так"),
-                    show: $showError,
+                    toast: Toast(title: "Не удалось добавить адрес"),
+                    show: $showCreateError,
                     backgroundColor: AppColor.error,
                     foregroundColor: AppColor.onError
                 ),
-                show: $showError
+                show: $showCreateError
+            )
+            .overlay(
+                overlayView: ToastView(
+                    toast: Toast(title: "Не удалось загрузить список улиц"),
+                    show: $showSuggetionLoadingError,
+                    backgroundColor: AppColor.error,
+                    foregroundColor: AppColor.onError
+                ),
+                show: $showSuggetionLoadingError
             )
         }
         .hiddenNavigationBarStyle()
@@ -243,8 +250,8 @@ struct CreateAddressView: View {
                     switch(event){
                     case is CreateAddressEventBack : self.mode.wrappedValue.dismiss()
                     case is CreateAddressEventAddressCreatedSuccess : self.mode.wrappedValue.dismiss()
-                    case is CreateAddressEventSuggestionLoadingFailed : print("err")
-                    case is CreateAddressEventAddressCreatedFailed : print("err")
+                    case is CreateAddressEventSuggestionLoadingFailed : showSuggetionLoadingError = true
+                    case is CreateAddressEventAddressCreatedFailed : showCreateError = true
                     default:
                         print("def")
                     }
