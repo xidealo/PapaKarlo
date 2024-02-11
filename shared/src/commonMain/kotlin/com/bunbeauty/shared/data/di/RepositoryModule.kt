@@ -55,6 +55,7 @@ fun repositoryModule() = module {
         CartProductRepository(
             uuidGenerator = get(),
             cartProductDao = get(),
+            menuProductDao = get(),
             cartProductMapper = get(),
         )
     }

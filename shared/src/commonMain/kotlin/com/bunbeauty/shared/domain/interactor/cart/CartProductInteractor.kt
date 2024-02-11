@@ -23,10 +23,6 @@ class CartProductInteractor(
         }.asCommonFlow()
     }
 
-    override suspend fun getCartProductList(): List<CartProduct> {
-        return cartProductRepo.getCartProductList()
-    }
-
     override suspend fun removeAllProductsFromCart() {
         cartProductRepo.deleteAllCartProducts()
         cartProductAdditionRepository.deleteAll()
@@ -49,7 +45,7 @@ class CartProductInteractor(
         }
     }
 
-    fun toLightCartProduct(cartProduct: CartProduct): LightCartProduct {
+    private fun toLightCartProduct(cartProduct: CartProduct): LightCartProduct {
         return LightCartProduct(
             uuid = cartProduct.uuid,
             name = cartProduct.product.name,

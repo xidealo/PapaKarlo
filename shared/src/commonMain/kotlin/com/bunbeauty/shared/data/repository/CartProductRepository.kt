@@ -2,6 +2,7 @@ package com.bunbeauty.shared.data.repository
 
 import com.bunbeauty.shared.data.UuidGenerator
 import com.bunbeauty.shared.data.dao.cart_product.ICartProductDao
+import com.bunbeauty.shared.data.dao.menu_product.IMenuProductDao
 import com.bunbeauty.shared.data.mapper.cart_product.ICartProductMapper
 import com.bunbeauty.shared.db.CartProductEntity
 import com.bunbeauty.shared.db.CartProductWithMenuProductEntity
@@ -13,6 +14,7 @@ import kotlinx.coroutines.flow.map
 class CartProductRepository(
     private val uuidGenerator: UuidGenerator,
     private val cartProductDao: ICartProductDao,
+    private val menuProductDao: IMenuProductDao,
     private val cartProductMapper: ICartProductMapper,
 ) : CartProductRepo {
 
@@ -64,11 +66,20 @@ class CartProductRepository(
         cartProductDao.deleteAllCartProducts()
     }
 
-    private fun List<CartProductWithMenuProductEntity>.toCartProductList(): List<CartProduct> {
-        return cartProductMapper.toCartProductList(
-            this.filter { cartProductWithMenuProduct ->
-                cartProductWithMenuProduct.visible
-            }
-        )
+    private suspend fun List<CartProductWithMenuProductEntity>.toCartProductList(): List<CartProduct> {
+        return filter { cartProductWithMenuProductEntity ->
+            cartProductWithMenuProductEntity.visible
+        }.groupBy { cartProductWithMenuProductEntity ->
+            cartProductWithMenuProductEntity.cartProductUuid
+        }.map { (_, cartProductWithMenuProductEntityList) ->
+            val menuProductUuid = cartProductWithMenuProductEntityList.first().uuid
+            val menuProductWithCategoryList =
+                menuProductDao.getMenuProductWithCategoryListByUuid(uuid = menuProductUuid)
+
+            cartProductMapper.toCartProduct(
+                cartProductWithMenuProductEntityList = cartProductWithMenuProductEntityList,
+                menuProductWithCategoryEntityList = menuProductWithCategoryList
+            )
+        }
     }
 }

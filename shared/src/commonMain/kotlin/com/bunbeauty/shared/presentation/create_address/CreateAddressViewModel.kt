@@ -8,7 +8,6 @@ import com.bunbeauty.shared.extension.launchSafe
 import com.bunbeauty.shared.presentation.SuggestionUi
 import com.bunbeauty.shared.presentation.base.SharedStateViewModel
 import kotlinx.collections.immutable.persistentListOf
-import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.debounce
