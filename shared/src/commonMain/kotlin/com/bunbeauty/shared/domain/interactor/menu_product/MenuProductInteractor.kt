@@ -74,6 +74,7 @@ class MenuProductInteractor(
                         MenuProduct::name
                     )
                 )
+            )
         }.sortedBy { menuSection ->
             menuSection.category.priority
         }
