@@ -118,35 +118,49 @@ struct ProductDetailsView: View {
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                         .padding(.bottom, 8)
                                         .padding(.top, 16)
-                                case let addition as AdditionItem.AdditionListItem : VStack(spacing:0){
-                                    HStack(spacing:0){
-                                        KFImage(
-                                            URL(string: addition.product.photoLink)
+                                case let addition as AdditionItem.AdditionListItem : 
+                                    Button(action: {
+                                        viewModel.onAction(
+                                            action: ProductDetailsStateActionAdditionClick(
+                                                uuid: addition.product.uuid,
+                                                groupUuid: addition.product.groupId
+                                            )
                                         )
-                                        .resizable()
-                                        .frame(width: 40, height: 40)
-                                        .aspectRatio(contentMode: .fit)
-                                        .cornerRadius(Diems.MEDIUM_RADIUS)
-                                        
-                                        Text(addition.product.name)
-                                            .bodyLarge()
-                                            .padding(.leading, 8)
-                                        
-                                        Spacer()
-                                        
-                                        if let price = addition.product.price{
-                                            Text(price)
-                                                .bodyLarge()
-                                        }
-                                    
-                                        Toggle(isOn: .constant(addition.product.isSelected)){
+                                    }) {
+                                        VStack(spacing:0){
+                                            HStack(spacing:0){
+                                                KFImage(
+                                                    URL(string: addition.product.photoLink)
+                                                )
+                                                .resizable()
+                                                .frame(width: 40, height: 40)
+                                                .aspectRatio(contentMode: .fit)
+                                                .cornerRadius(Diems.MEDIUM_RADIUS)
+                                                
+                                                Text(addition.product.name)
+                                                    .bodyLarge()
+                                                    .padding(.leading, 8)
+                                                    .foregroundColor(AppColor.onSurface)
+
+                                                Spacer()
+                                                
+                                                if let price = addition.product.price{
+                                                    Text(price)
+                                                        .bodyLarge()
+                                                        .padding(.trailing, 8)
+                                                        .foregroundColor(AppColor.onSurface)
+                                                }
+                                           
+                                                if(addition.isMultiple){
+                                                    Image(systemName: addition.product.isSelected ? "checkmark.square" : "square")
+                                                }else{
+                                                    Image(systemName: addition.product.isSelected ? "checkmark.circle" : "circle")
+                                                }
+                                            }.frame(maxWidth: .infinity, alignment: .leading)
                                             
+                                            Divider()
+                                                .padding(.vertical, 8)
                                         }
-                                        
-                                    }.frame(maxWidth: .infinity, alignment: .leading)
-                                    
-                                    Divider()
-                                        .padding(.vertical, 8)
                                 }
                                 default : EmptyView()
                                 }
@@ -167,7 +181,7 @@ struct ProductDetailsView: View {
                     )
                 )
             }) {
-                ButtonText(text: Strings.ACTION_PRODUCT_DETAILS_ADD)
+                ButtonText(text: Strings.ACTION_PRODUCT_DETAILS_ADD + productDetailsViewState.priceWithAdditions)
             }.padding(Diems.MEDIUM_PADDING)
         }
         .frame(maxWidth:.infinity, maxHeight: .infinity)

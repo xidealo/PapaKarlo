@@ -159,7 +159,6 @@ class ProductDetailsFragment :
                         text = stringResource(
                             id = R.string.action_product_details_want,
                             productDetailsViewState.menuProductUi.priceWithAdditions
-
                         )
                     ) {
                         onAction(

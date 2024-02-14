@@ -9,15 +9,15 @@ import Foundation
 import shared
 
 struct ProductDetailsViewState {
-    let photoLink: String
-    let name: String
-    let size: String
-    let oldPrice: String?
-    let newPrice: String
-    let priceWithAdditions: String
-    let description: String
-    let additionList: [AdditionItem]
-    let screenState : ProductDetailsStateDataState.ScreenState
+    var photoLink: String
+    var name: String
+    var size: String
+    var oldPrice: String?
+    var newPrice: String
+    var priceWithAdditions: String
+    var description: String
+    var additionList: [AdditionItem]
+    var screenState : ProductDetailsStateDataState.ScreenState
 }
 
 class AdditionItem: Identifiable {
@@ -49,12 +49,12 @@ class AdditionItem: Identifiable {
 }
 
 struct MenuProductAdditionItem {
-    let uuid: String
-    let isSelected: Bool
-    let name: String
-    let price: String?
-    let isLast: Bool
-    let photoLink: String
-    let groupId: String
+    var uuid: String
+    var isSelected: Bool
+    var name: String
+    var price: String?
+    var isLast: Bool
+    var photoLink: String
+    var groupId: String
 }
 

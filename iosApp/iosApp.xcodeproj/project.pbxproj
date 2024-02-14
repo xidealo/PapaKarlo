@@ -110,6 +110,10 @@
 		025775182ACCA01600DDBC94 /* DiscountCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025775142ACCA01600DDBC94 /* DiscountCard.swift */; };
 		0265D2A02AC9B1BF00B862FF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0265D29C2AC9B14A00B862FF /* GoogleService-Info.plist */; };
 		0265D2A12AC9B1C200B862FF /* pepe.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0251DCA029DE11680008DBA5 /* pepe.plist */; };
+		02670C2B2B7AB8E200FAB328 /* iOSCheckboxToggleStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02670C2A2B7AB8E200FAB328 /* iOSCheckboxToggleStyle.swift */; };
+		02670C2C2B7AB8E200FAB328 /* iOSCheckboxToggleStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02670C2A2B7AB8E200FAB328 /* iOSCheckboxToggleStyle.swift */; };
+		02670C2D2B7AB8E200FAB328 /* iOSCheckboxToggleStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02670C2A2B7AB8E200FAB328 /* iOSCheckboxToggleStyle.swift */; };
+		02670C2E2B7AB8E200FAB328 /* iOSCheckboxToggleStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02670C2A2B7AB8E200FAB328 /* iOSCheckboxToggleStyle.swift */; };
 		026C1F532A2690B900838266 /* ButtonText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0253930929AB92A800C8B04B /* ButtonText.swift */; };
 		026C1F542A2690B900838266 /* CategoryItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323465287879EF0048CF39 /* CategoryItemModel.swift */; };
 		026C1F552A2690B900838266 /* NavigationTextCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023234B328787A180048CF39 /* NavigationTextCard.swift */; };
@@ -544,6 +548,7 @@
 		025775142ACCA01600DDBC94 /* DiscountCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscountCard.swift; sourceTree = "<group>"; };
 		0265D29C2AC9B14A00B862FF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		026643F02A22AF3C000310BF /* papakarlo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = papakarlo.entitlements; sourceTree = "<group>"; };
+		02670C2A2B7AB8E200FAB328 /* iOSCheckboxToggleStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSCheckboxToggleStyle.swift; sourceTree = "<group>"; };
 		026C1FCB2A2690B900838266 /* djan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = djan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		026C1FCD2A2691B000838266 /* djan.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = djan.plist; sourceTree = "<group>"; };
 		026C1FD12A2691E500838266 /* djanAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = djanAssets.xcassets; sourceTree = "<group>"; };
@@ -894,6 +899,7 @@
 				022BC67128CC8A6700F3ED27 /* OrderChip.swift */,
 				023041D228D61C3700ACF30B /* ToastView.swift */,
 				0294FD7929DF71B900568A10 /* EmptyWithIconView.swift */,
+				02670C2A2B7AB8E200FAB328 /* iOSCheckboxToggleStyle.swift */,
 			);
 			path = custom_view;
 			sourceTree = "<group>";
@@ -1523,6 +1529,7 @@
 				026C1F582A2690B900838266 /* ConsumerCartView.swift in Sources */,
 				026C1F592A2690B900838266 /* BottomBarView.swift in Sources */,
 				026C1F5A2A2690B900838266 /* AppColor.swift in Sources */,
+				02670C2D2B7AB8E200FAB328 /* iOSCheckboxToggleStyle.swift in Sources */,
 				026C1F5B2A2690B900838266 /* CafeAddressListView.swift in Sources */,
 				026C1F5C2A2690B900838266 /* CafeListView.swift in Sources */,
 				026C1F5D2A2690B900838266 /* ToolbarWithCartView.swift in Sources */,
@@ -1632,6 +1639,7 @@
 				027CB01B2A346F7B00350EB2 /* ConsumerCartView.swift in Sources */,
 				027CB01C2A346F7B00350EB2 /* BottomBarView.swift in Sources */,
 				027CB01D2A346F7B00350EB2 /* AppColor.swift in Sources */,
+				02670C2E2B7AB8E200FAB328 /* iOSCheckboxToggleStyle.swift in Sources */,
 				027CB01E2A346F7B00350EB2 /* CafeAddressListView.swift in Sources */,
 				027CB01F2A346F7B00350EB2 /* CafeListView.swift in Sources */,
 				027CB0202A346F7B00350EB2 /* ToolbarWithCartView.swift in Sources */,
@@ -1741,6 +1749,7 @@
 				02ADC33D29D9D0880062A141 /* ConsumerCartView.swift in Sources */,
 				02ADC33E29D9D0880062A141 /* BottomBarView.swift in Sources */,
 				0294FD8129E751CC00568A10 /* AppColor.swift in Sources */,
+				02670C2C2B7AB8E200FAB328 /* iOSCheckboxToggleStyle.swift in Sources */,
 				02ADC33F29D9D0880062A141 /* CafeAddressListView.swift in Sources */,
 				02ADC34029D9D0880062A141 /* CafeListView.swift in Sources */,
 				02ADC34129D9D0880062A141 /* ToolbarWithCartView.swift in Sources */,
@@ -1850,6 +1859,7 @@
 				0232347B287879EF0048CF39 /* ConsumerCartView.swift in Sources */,
 				022AA66D28BE9DD2005B9F20 /* BottomBarView.swift in Sources */,
 				0294FD8029E751CC00568A10 /* AppColor.swift in Sources */,
+				02670C2B2B7AB8E200FAB328 /* iOSCheckboxToggleStyle.swift in Sources */,
 				020FEEBF28D3AEF7002B3D69 /* CafeAddressListView.swift in Sources */,
 				02323497287879EF0048CF39 /* CafeListView.swift in Sources */,
 				0220B1022953A6E000CD93B4 /* ToolbarWithCartView.swift in Sources */,
