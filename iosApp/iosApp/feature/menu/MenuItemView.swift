@@ -27,7 +27,8 @@ struct MenuItemView: View {
             destination:
                 ProductDetailsView(
                     menuProductUuid: menuProductItem.productUuid,
-                    menuProductName: menuProductItem.name,
+                    menuProductName: menuProductItem.name, 
+                    cartProductUuid: nil,
                     productDetailsOpenedFrom: productDetailsOpenedFrom,
                     isRootActive: self.$isRootActive,
                     selection: self.$selection,

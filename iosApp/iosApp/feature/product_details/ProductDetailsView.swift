@@ -13,6 +13,8 @@ struct ProductDetailsView: View {
     
     let menuProductUuid:String
     let menuProductName:String
+    let cartProductUuid:String?
+    
     let productDetailsOpenedFrom:ProductDetailsOpenedFrom
     @Binding var isRootActive:Bool
     @Binding var selection:Int
@@ -152,14 +154,41 @@ struct ProductDetailsView: View {
                                                 }
                                            
                                                 if(addition.isMultiple){
-                                                    Image(systemName: addition.product.isSelected ? "checkmark.square" : "square")
+                                                    ZStack{
+                                                        IconImage(
+                                                            width: 20,
+                                                            height: 20,
+                                                            imageName: addition.product.isSelected ? "ic_enabled_checkbox" : "ic_disabled_checkbox"
+                                                        )
+                                                        .foregroundColor(
+                                                            addition.product.isSelected ? AppColor.primary : AppColor.onSurfaceVariant
+                                                        )
+                                                        
+                                                        if(addition.product.isSelected){
+                                                            IconImage(width: 12, height: 10, imageName: "CheckIcon")
+                                                                .foregroundColor(
+                                                                    AppColor.onPrimary
+                                                                )
+                                                        }
+                                                    }
                                                 }else{
-                                                    Image(systemName: addition.product.isSelected ? "checkmark.circle" : "circle")
+                                                    IconImage(
+                                                        width: 24,
+                                                        height: 24,
+                                                        imageName: addition.product.isSelected ? "ic_enabled_radiobutton" : "ic_disabled_radiobutton"
+                                                    ).foregroundColor(
+                                                        addition.product.isSelected ? AppColor.primary : AppColor.onSurfaceVariant
+                                                    )
                                                 }
                                             }.frame(maxWidth: .infinity, alignment: .leading)
+                                                .onAppear(){
+                                                    print(addition.product.isLast)
+                                                }
                                             
-                                            Divider()
-                                                .padding(.vertical, 8)
+                                            if(!addition.product.isLast){
+                                                Divider()
+                                                    .padding(.vertical, 8)
+                                            }
                                         }
                                 }
                                 default : EmptyView()
@@ -233,7 +262,7 @@ struct ProductDetailsView: View {
             additionItemList.append(
                 AdditionItem.AdditionHeaderItem(id: additionGroup.uuid, name: additionGroup.name)
             )
-            additionGroup.additionList.forEach { addition in
+            for (index, addition) in additionGroup.additionList.enumerated() {
                 additionItemList.append(AdditionItem.AdditionListItem(
                     id: addition.uuid,
                     product: MenuProductAdditionItem(
@@ -241,15 +270,17 @@ struct ProductDetailsView: View {
                         isSelected: addition.isSelected,
                         name: addition.name,
                         price: getAdditionPrice(addition: addition),
-                        isLast: false,
+                        isLast: index == additionGroup.additionList.endIndex - 1,
                         photoLink: addition.photoLink,
                         groupId: additionGroup.uuid
                     ),
                     isMultiple: !additionGroup.singleChoice
                 )
                 )
+                print("ADDITION index = \(index) lastIndex \(additionGroup.additionList.endIndex) \(index == additionGroup.additionList.endIndex)")
             }
         }
+
         return additionItemList
     }
     
@@ -269,7 +300,11 @@ struct ProductDetailsView: View {
                 productDetailsStateEvents.forEach { event in
                     switch(event){
                     case is ProductDetailsStateEventNavigateBack : self.mode.wrappedValue.dismiss()
-                    case is ProductDetailsStateEventNavigateToConsumerCart :                        print("ProductDetailsStateEventNavigateToConsumerCart")
+                    case is ProductDetailsStateEventNavigateToConsumerCart :                        print("ProductDetailsStateEventNavigateToConsumerCart")  
+                    case is ProductDetailsStateEventAddedProduct : 
+                        self.mode.wrappedValue.dismiss()
+                    case is ProductDetailsStateEventEditedProduct :
+                        self.mode.wrappedValue.dismiss()
                     default:
                         print("def")
                     }
