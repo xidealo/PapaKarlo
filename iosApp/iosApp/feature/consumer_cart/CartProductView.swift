@@ -29,7 +29,16 @@ struct CartProductView: View {
                     .lineLimit(nil)
                     .frame(maxWidth:.infinity, alignment: .topLeading)
                     .foregroundColor(AppColor.onSurface)
-
+                
+                if let additions = cartProductItem.additions{
+                    Text(additions)
+                        .bodySmall()
+                        .lineLimit(nil)
+                        .frame(maxWidth:.infinity, alignment: .topLeading)
+                        .foregroundColor(AppColor.onSurfaceVariant)
+                        .padding(.top, 4)
+                }
+                
                 HStack(alignment: .top, spacing:0){
                     if let oldCost = cartProductItem.oldCost {
                         Text(oldCost)
@@ -51,6 +60,7 @@ struct CartProductView: View {
                     )
                 }
                 .padding(.top, 4)
+                
             }
             .frame(maxHeight: Diems.IMAGE_ELEMENT_HEIGHT, alignment: .topLeading)
             .padding(.leading, Diems.SMALL_PADDING)

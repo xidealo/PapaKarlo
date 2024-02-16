@@ -66,7 +66,7 @@ class CreateOrderHolder: ObservableObject {
             return ""
         }
         
-        var address : String = "" //creationOrderViewState.deliveryAddress?.street.name ?? ""
+        var address : String = creationOrderViewState.deliveryAddress?.street ?? ""
         
         if(creationOrderViewState.deliveryAddress?.house != nil){
             address += ", д. " + (creationOrderViewState.deliveryAddress?.house ?? "")

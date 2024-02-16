@@ -74,7 +74,9 @@ class ConsumerCartViewModel(
             )
 
             is ConsumerCart.Action.AddRecommendationProductToCartClick -> addRecommendationProductClicked(
-                menuProductItem = action.menuProductItem
+                menuProductUuid = action.menuProductUuid,
+                menuProductName = action.menuProductName,
+                hasAdditions = action.hasAdditions
             )
 
             is ConsumerCart.Action.RecommendationClick -> onProductClicked(
@@ -156,27 +158,30 @@ class ConsumerCartViewModel(
         }
     }
 
-    private fun addRecommendationProductClicked(menuProductItem: MenuProductItem) {
+    private fun addRecommendationProductClicked(
+        menuProductUuid: String,
+        menuProductName: String,
+        hasAdditions: Boolean,
+    ) {
         analyticService.sendEvent(
             event = AddRecommendationProductClickEvent(
-                menuProductUuidEventParameter = MenuProductUuidEventParameter(value = menuProductItem.uuid)
+                menuProductUuidEventParameter = MenuProductUuidEventParameter(value = menuProductUuid)
             ),
         )
-
         sharedScope.launchSafe(
             block = {
-                if (menuProductItem.hasAdditions) {
+                if (hasAdditions) {
                     addEvent {
                         ConsumerCart.Event.NavigateToProduct(
-                            uuid = menuProductItem.uuid,
-                            name = menuProductItem.name,
+                            uuid = menuProductUuid,
+                            name = menuProductName,
                             productDetailsOpenedFrom = ProductDetailsOpenedFrom.RECOMMENDATION_PRODUCT,
                             additionUuidList = emptyList(),
                             cartProductUuid = null,
                         )
                     }
                 } else {
-                    addMenuProductUseCase(menuProductUuid = menuProductItem.uuid)
+                    addMenuProductUseCase(menuProductUuid = menuProductUuid)
                 }
             },
             onError = {
@@ -254,9 +259,9 @@ class ConsumerCartViewModel(
                     )
                 },
                 oldTotalCost = consumerCartDomain.oldTotalCost?.let { oldTotalCost ->
-                    "$oldTotalCost $RUBLE_CURRENCY"
+                    "$oldTotalCost$RUBLE_CURRENCY"
                 },
-                newTotalCost = "${consumerCartDomain.newTotalCost} $RUBLE_CURRENCY",
+                newTotalCost = "${consumerCartDomain.newTotalCost}$RUBLE_CURRENCY",
                 firstOrderDiscount = consumerCartDomain.discount?.let { discount ->
                     "$discount$PERCENT"
                 },
