@@ -19,6 +19,8 @@ struct MenuView: View {
     @Binding var isRootActive:Bool
     @Binding var selection:Int
     @Binding var showOrderCreated:Bool
+    @State var created:Bool = false
+    @State var edited:Bool = false
     
     let columns = [
         GridItem(.flexible(), spacing: 8, alignment: .top),
@@ -76,6 +78,8 @@ struct MenuView: View {
                                             isRootActive : $isRootActive,
                                             selection : $selection,
                                             showOrderCreated : $showOrderCreated,
+                                            created: $created,
+                                            edited: $edited,
                                             action: {
                                                 viewModel.addCartProductToCart(menuProductItem: menuProductItem)
                                             })
@@ -104,6 +108,15 @@ struct MenuView: View {
         .navigationBarTitle("")
         .hiddenNavigationBarStyle()
         .preferredColorScheme(.light)
+        .overlay(
+            overlayView: ToastView(
+                toast: Toast(title: "Добавлено"),
+                show: $created,
+                backgroundColor: AppColor.primary,
+                foregroundColor: AppColor.onPrimary
+            ),
+            show: $created
+        )
     }
     
     func DiscountView(discount:String) -> some View {

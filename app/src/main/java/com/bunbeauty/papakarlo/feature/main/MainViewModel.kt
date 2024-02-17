@@ -48,11 +48,10 @@ class MainViewModel(
         }
     }
 
-    fun showInfoMessage(text: String, photoLink: String?) {
+    fun showInfoMessage(text: String) {
         showMessage(
             text = text,
             type = FoodDeliveryMessageType.INFO,
-            photoLink = photoLink
         )
     }
 
@@ -60,7 +59,6 @@ class MainViewModel(
         showMessage(
             text = text,
             type = FoodDeliveryMessageType.ERROR,
-            photoLink = null
         )
     }
 
@@ -70,13 +68,12 @@ class MainViewModel(
         }
     }
 
-    private fun showMessage(text: String, type: FoodDeliveryMessageType, photoLink: String?) {
+    private fun showMessage(text: String, type: FoodDeliveryMessageType) {
         mutableMainState.update { state ->
             state + MainState.Event.ShowMessageEvent(
                 message = FoodDeliveryMessage(
                     type = type,
-                    text = text,
-                    photoLink = photoLink
+                    text = text
                 )
             )
         }

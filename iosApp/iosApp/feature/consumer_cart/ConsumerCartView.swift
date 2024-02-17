@@ -40,6 +40,11 @@ struct ConsumerCartView: View {
     @Binding var showOrderCreated:Bool
     //--
     
+    //for add or edit product
+    @State var created:Bool = false
+    @State var edited:Bool = false
+    //--
+    
     var body: some View {
         VStack(spacing:0){
             ToolbarView(
@@ -57,7 +62,7 @@ struct ConsumerCartView: View {
             .isDetailLink(false)
             
             NavigationLink(
-                destination:CreateOrderView(
+                destination: CreateOrderView(
                     isRootActive: self.$isRootActive,
                     selection: self.$selection,
                     showOrderCreated: $showOrderCreated
@@ -74,7 +79,9 @@ struct ConsumerCartView: View {
                         action: viewModel.onAction,
                         isRootActive: isRootActive,
                         selection: selection,
-                        showOrderCreated: showOrderCreated
+                        showOrderCreated: showOrderCreated,
+                        created: $created,
+                        edited: $edited
                     )
                 }
 
@@ -96,6 +103,23 @@ struct ConsumerCartView: View {
         .onDisappear(){
             unsubscribe()
         }
+        .overlay(
+            overlayView: ToastView(
+                toast: Toast(title: "Добавлено"),
+                show: $created,
+                backgroundColor: AppColor.primary,
+                foregroundColor: AppColor.onPrimary
+            ),
+            show: $created
+        ).overlay(
+            overlayView: ToastView(
+                toast: Toast(title: "Изменено"),
+                show: $edited,
+                backgroundColor: AppColor.primary,
+                foregroundColor: AppColor.onPrimary
+            ),
+            show: $edited
+        )
     }
 
     func subscribe(){
@@ -150,6 +174,11 @@ struct ConsumerCartSuccessScreen: View {
     @State var selection:Int
     @State var showOrderCreated:Bool
     
+    
+    //for add or edit product
+    @Binding var created:Bool
+    @Binding var edited:Bool
+    
     let action: (ConsumerCartAction) -> Void
 
     let columns = [
@@ -162,7 +191,9 @@ struct ConsumerCartSuccessScreen: View {
         action: @escaping (ConsumerCartAction) -> Void,
         isRootActive:Bool,
         selection:Int,
-        showOrderCreated: Bool
+        showOrderCreated: Bool,
+        created : Binding<Bool>,
+        edited : Binding<Bool>
     ) {
         self.consumerCartUI = consumerCartUI
         self.cartProductListIos = consumerCartUI.cartProductList.map({ cartProductItem in
@@ -187,6 +218,8 @@ struct ConsumerCartSuccessScreen: View {
         self.isRootActive = isRootActive
         self.selection = selection
         self.showOrderCreated = showOrderCreated
+        self._created = created
+        self._edited = edited
     }
     
     var body: some View {
@@ -205,6 +238,11 @@ struct ConsumerCartSuccessScreen: View {
                             VStack(spacing:0){
                                 CartProductView(
                                     cartProductItem: cartProductItemIos.cartProductItem,
+                                    isRootActive : $isRootActive,
+                                    selection : $selection,
+                                    showOrderCreated : $showOrderCreated,
+                                    created: $created,
+                                    edited: $edited,
                                 plusAction: {
                                     action(
                                         ConsumerCartActionAddProductToCartClick(
@@ -212,7 +250,8 @@ struct ConsumerCartSuccessScreen: View {
                                             menuProductUuid: cartProductItemIos.cartProductItem.menuProductUuid
                                         )
                                     )
-                                }, minusAction: {
+                                }, 
+                                minusAction: {
                                     action(
                                         ConsumerCartActionRemoveProductFromCartClick(
                                             menuProductUuid: cartProductItemIos.cartProductItem.menuProductUuid,
@@ -250,6 +289,8 @@ struct ConsumerCartSuccessScreen: View {
                                 isRootActive : $isRootActive,
                                 selection : $selection,
                                 showOrderCreated : $showOrderCreated, 
+                                created: $created,
+                                edited: $edited,
                                 action: {
                                     action(
                                         ConsumerCartActionAddRecommendationProductToCartClick(
@@ -267,49 +308,49 @@ struct ConsumerCartSuccessScreen: View {
                 }
             }
             
-            VStack(spacing:0){
-                if let discount = consumerCartUI.firstOrderDiscount{
-                    HStack(spacing:0){
-                        Text("consumer_cart_discount")
-                            .bodyMedium()
-                            .foregroundColor(AppColor.onSurface)
-                        
-                        Spacer()
-                        
-                        DiscountCard(text:discount)
-                    }.padding(.top, 16)
-                        .padding(.horizontal, 16)
-                }
-                
-                HStack(spacing:0){
-                    Text("consumer_cart_total")
-                        .bodyMedium(weight: .bold)
-                        .foregroundColor(AppColor.onSurface)
-                    
-                    Spacer()
-                    
-                    if let oldTotalCost = consumerCartUI.oldTotalCost{
-                        Text(oldTotalCost)
-                            .strikethrough()
-                            .bodyMedium(weight: .bold)
-                            .foregroundColor(AppColor.onSurfaceVariant)
-                            .padding(.trailing, 4)
-                    }
-                    
-                    Text(consumerCartUI.newTotalCost)
-                        .bodyMedium(weight: .bold)
-                        .foregroundColor(AppColor.onSurface)
-                }.padding(.top, 8)
-                    .padding(.horizontal, 16)
-
-                Button {
-                    action(ConsumerCartActionOnCreateOrderClick())
-                } label: {
-                    ButtonText(text: Strings.ACTION_CART_PRODUCT_CREATE_ORDER)
-                }
-                .padding(.horizontal, Diems.MEDIUM_PADDING)
-                .padding(.vertical, Diems.MEDIUM_PADDING)
-            }.background(AppColor.surface)
+//            VStack(spacing:0){
+//                if let discount = consumerCartUI.firstOrderDiscount{
+//                    HStack(spacing:0){
+//                        Text("consumer_cart_discount")
+//                            .bodyMedium()
+//                            .foregroundColor(AppColor.onSurface)
+//                        
+//                        Spacer()
+//                        
+//                        DiscountCard(text:discount)
+//                    }.padding(.top, 16)
+//                        .padding(.horizontal, 16)
+//                }
+//                
+//                HStack(spacing:0){
+//                    Text("consumer_cart_total")
+//                        .bodyMedium(weight: .bold)
+//                        .foregroundColor(AppColor.onSurface)
+//                    
+//                    Spacer()
+//                    
+//                    if let oldTotalCost = consumerCartUI.oldTotalCost{
+//                        Text(oldTotalCost)
+//                            .strikethrough()
+//                            .bodyMedium(weight: .bold)
+//                            .foregroundColor(AppColor.onSurfaceVariant)
+//                            .padding(.trailing, 4)
+//                    }
+//                    
+//                    Text(consumerCartUI.newTotalCost)
+//                        .bodyMedium(weight: .bold)
+//                        .foregroundColor(AppColor.onSurface)
+//                }.padding(.top, 8)
+//                    .padding(.horizontal, 16)
+//
+//                Button {
+//                    action(ConsumerCartActionOnCreateOrderClick())
+//                } label: {
+//                    ButtonText(text: Strings.ACTION_CART_PRODUCT_CREATE_ORDER)
+//                }
+//                .padding(.horizontal, Diems.MEDIUM_PADDING)
+//                .padding(.vertical, Diems.MEDIUM_PADDING)
+//            }.background(AppColor.surface)
         }
     }
     

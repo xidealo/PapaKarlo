@@ -19,6 +19,8 @@ struct MenuItemView: View {
     @Binding var selection:Int
     @Binding var showOrderCreated:Bool
     @State var openProductDetails:Bool = false
+    @Binding var created:Bool
+    @Binding var edited:Bool
     
     let action: () -> Void
     
@@ -29,10 +31,13 @@ struct MenuItemView: View {
                     menuProductUuid: menuProductItem.productUuid,
                     menuProductName: menuProductItem.name, 
                     cartProductUuid: nil,
+                    additionUuidList: [],
                     productDetailsOpenedFrom: productDetailsOpenedFrom,
                     isRootActive: self.$isRootActive,
                     selection: self.$selection,
-                    showOrderCreated: $showOrderCreated
+                    showOrderCreated: $showOrderCreated,
+                    created: $created,
+                    edited: $edited
                 ),
             isActive: $openProductDetails
         ){

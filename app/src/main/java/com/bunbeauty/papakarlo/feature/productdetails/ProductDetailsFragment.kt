@@ -100,12 +100,11 @@ class ProductDetailsFragment :
                     text = resources.getString(
                         R.string.msg_menu_product_added
                     ),
-                    photoLink = event.menuProductPhotoLink
                 )
                 findNavController().popBackStack()
             }
 
-            is ProductDetailsState.Event.EditedProduct -> {
+            ProductDetailsState.Event.EditedProduct -> {
                 (activity as? IMessageHost)?.showInfoMessage(
                     resources.getString(
                         R.string.msg_menu_product_edited

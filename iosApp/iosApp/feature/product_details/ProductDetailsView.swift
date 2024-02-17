@@ -14,11 +14,14 @@ struct ProductDetailsView: View {
     let menuProductUuid:String
     let menuProductName:String
     let cartProductUuid:String?
+    let additionUuidList:[String]
     
     let productDetailsOpenedFrom:ProductDetailsOpenedFrom
     @Binding var isRootActive:Bool
     @Binding var selection:Int
     @Binding var showOrderCreated:Bool
+    @Binding var created:Bool
+    @Binding var edited:Bool
     
     @State var viewModel = ProductDetailsViewModel(
         getMenuProductUseCase: iosComponent.provideGetMenuProductByUuidUseCase(),
@@ -206,7 +209,7 @@ struct ProductDetailsView: View {
                 viewModel.onAction(
                     action: ProductDetailsStateActionAddProductToCartClick(
                         productDetailsOpenedFrom: productDetailsOpenedFrom,
-                        cartProductUuid: nil
+                        cartProductUuid: cartProductUuid
                     )
                 )
             }) {
@@ -227,7 +230,10 @@ struct ProductDetailsView: View {
     
     func subscribe(){
         viewModel.onAction(
-            action: ProductDetailsStateActionInit(menuProductUuid: menuProductUuid, selectedAdditionUuidList: [])
+            action: ProductDetailsStateActionInit(
+                menuProductUuid: menuProductUuid,
+                selectedAdditionUuidList: additionUuidList
+            )
         )
         listener = viewModel.dataState.watch { productDetailsVM in
             if let productDetailsStateVM = productDetailsVM {
@@ -277,7 +283,6 @@ struct ProductDetailsView: View {
                     isMultiple: !additionGroup.singleChoice
                 )
                 )
-                print("ADDITION index = \(index) lastIndex \(additionGroup.additionList.endIndex) \(index == additionGroup.additionList.endIndex)")
             }
         }
 
@@ -302,8 +307,10 @@ struct ProductDetailsView: View {
                     case is ProductDetailsStateEventNavigateBack : self.mode.wrappedValue.dismiss()
                     case is ProductDetailsStateEventNavigateToConsumerCart :                        print("ProductDetailsStateEventNavigateToConsumerCart")  
                     case is ProductDetailsStateEventAddedProduct : 
+                        created = true
                         self.mode.wrappedValue.dismiss()
                     case is ProductDetailsStateEventEditedProduct :
+                        edited = true
                         self.mode.wrappedValue.dismiss()
                     default:
                         print("def")

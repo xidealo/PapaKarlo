@@ -30,6 +30,7 @@ struct LoginView: View {
     @State var hasPhoneError: Bool = false
     @State var phone = ""
     @State var phoneNumberCursorPosition = Int32(shared.Constants().PHONE_CODE.count)
+    @State var textFieldError : LocalizedStringKey? = nil
     // ---
 
     @State var stateListener: Closeable? = nil
@@ -52,7 +53,7 @@ struct LoginView: View {
             }else{
                 LoginViewSuccessView(
                     phone: $phone,
-                    hasError: $hasPhoneError,
+                    textFieldError: $textFieldError,
                     action: viewModel.onAction
                 )
             }
@@ -91,6 +92,13 @@ struct LoginView: View {
                 print(loginState)
                 phone = loginState.phoneNumber
                 hasPhoneError = loginState.hasPhoneError
+                
+                if(loginState.hasPhoneError){
+                  textFieldError =  LocalizedStringKey("Введите корректный номер телефона")
+                }else{
+                    textFieldError = nil
+                }
+                
                 isLoading = loginState.isLoading
                 phoneNumberCursorPosition = loginState.phoneNumberCursorPosition
             }
@@ -132,9 +140,8 @@ struct LoginView: View {
 
 struct LoginViewSuccessView: View {
     @Binding var phone:String
-    @Binding var hasError:Bool
     @State var isSelected:Bool = false
-    @State var textFieldError : LocalizedStringKey? = LocalizedStringKey("Введите корректный номер телефона")
+    @Binding var textFieldError : LocalizedStringKey?
 
     let action: (LoginAction) -> Void
 
