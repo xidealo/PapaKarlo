@@ -99,7 +99,7 @@ class ProductDetailsFragment :
                 (activity as? IMessageHost)?.showInfoMessage(
                     text = resources.getString(
                         R.string.msg_menu_product_added
-                    ),
+                    )
                 )
                 findNavController().popBackStack()
             }

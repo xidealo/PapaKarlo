@@ -271,7 +271,7 @@ class ConsumerCartFragment :
                                     ConsumerCart.Action.AddRecommendationProductToCartClick(
                                         menuProductUuid = menuProductItem.uuid,
                                         menuProductName = menuProductItem.name,
-                                        hasAdditions = menuProductItem.hasAdditions,
+                                        hasAdditions = menuProductItem.hasAdditions
                                     )
                                 )
                             },

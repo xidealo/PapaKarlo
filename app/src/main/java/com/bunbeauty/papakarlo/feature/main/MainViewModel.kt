@@ -51,14 +51,14 @@ class MainViewModel(
     fun showInfoMessage(text: String) {
         showMessage(
             text = text,
-            type = FoodDeliveryMessageType.INFO,
+            type = FoodDeliveryMessageType.INFO
         )
     }
 
     fun showErrorMessage(text: String) {
         showMessage(
             text = text,
-            type = FoodDeliveryMessageType.ERROR,
+            type = FoodDeliveryMessageType.ERROR
         )
     }
 

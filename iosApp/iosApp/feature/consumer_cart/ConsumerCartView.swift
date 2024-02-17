@@ -308,49 +308,49 @@ struct ConsumerCartSuccessScreen: View {
                 }
             }
             
-//            VStack(spacing:0){
-//                if let discount = consumerCartUI.firstOrderDiscount{
-//                    HStack(spacing:0){
-//                        Text("consumer_cart_discount")
-//                            .bodyMedium()
-//                            .foregroundColor(AppColor.onSurface)
-//                        
-//                        Spacer()
-//                        
-//                        DiscountCard(text:discount)
-//                    }.padding(.top, 16)
-//                        .padding(.horizontal, 16)
-//                }
-//                
-//                HStack(spacing:0){
-//                    Text("consumer_cart_total")
-//                        .bodyMedium(weight: .bold)
-//                        .foregroundColor(AppColor.onSurface)
-//                    
-//                    Spacer()
-//                    
-//                    if let oldTotalCost = consumerCartUI.oldTotalCost{
-//                        Text(oldTotalCost)
-//                            .strikethrough()
-//                            .bodyMedium(weight: .bold)
-//                            .foregroundColor(AppColor.onSurfaceVariant)
-//                            .padding(.trailing, 4)
-//                    }
-//                    
-//                    Text(consumerCartUI.newTotalCost)
-//                        .bodyMedium(weight: .bold)
-//                        .foregroundColor(AppColor.onSurface)
-//                }.padding(.top, 8)
-//                    .padding(.horizontal, 16)
-//
-//                Button {
-//                    action(ConsumerCartActionOnCreateOrderClick())
-//                } label: {
-//                    ButtonText(text: Strings.ACTION_CART_PRODUCT_CREATE_ORDER)
-//                }
-//                .padding(.horizontal, Diems.MEDIUM_PADDING)
-//                .padding(.vertical, Diems.MEDIUM_PADDING)
-//            }.background(AppColor.surface)
+            VStack(spacing:0){
+                if let discount = consumerCartUI.firstOrderDiscount{
+                    HStack(spacing:0){
+                        Text("consumer_cart_discount")
+                            .bodyMedium()
+                            .foregroundColor(AppColor.onSurface)
+                        
+                        Spacer()
+                        
+                        DiscountCard(text:discount)
+                    }.padding(.top, 16)
+                        .padding(.horizontal, 16)
+                }
+                
+                HStack(spacing:0){
+                    Text("consumer_cart_total")
+                        .bodyMedium(weight: .bold)
+                        .foregroundColor(AppColor.onSurface)
+                    
+                    Spacer()
+                    
+                    if let oldTotalCost = consumerCartUI.oldTotalCost{
+                        Text(oldTotalCost)
+                            .strikethrough()
+                            .bodyMedium(weight: .bold)
+                            .foregroundColor(AppColor.onSurfaceVariant)
+                            .padding(.trailing, 4)
+                    }
+                    
+                    Text(consumerCartUI.newTotalCost)
+                        .bodyMedium(weight: .bold)
+                        .foregroundColor(AppColor.onSurface)
+                }.padding(.top, 8)
+                    .padding(.horizontal, 16)
+
+                Button {
+                    action(ConsumerCartActionOnCreateOrderClick())
+                } label: {
+                    ButtonText(text: Strings.ACTION_CART_PRODUCT_CREATE_ORDER)
+                }
+                .padding(.horizontal, Diems.MEDIUM_PADDING)
+                .padding(.vertical, Diems.MEDIUM_PADDING)
+            }.background(AppColor.surface)
         }
     }
     
