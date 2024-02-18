@@ -112,6 +112,7 @@ class ProductDetailsFragment :
                 )
                 findNavController().popBackStack()
             }
+
             ProductDetailsState.Event.ShowAddProductError -> {
                 (activity as? IMessageHost)?.showErrorMessage(
                     resources.getString(R.string.error_consumer_cart_add_product)
@@ -291,7 +292,8 @@ class ProductDetailsFragment :
                         .weight(1f)
                         .padding(start = 8.dp),
                     text = menuProductAdditionItem.name,
-                    style = FoodDeliveryTheme.typography.bodyLarge
+                    style = FoodDeliveryTheme.typography.bodyLarge,
+                    color = FoodDeliveryTheme.colors.mainColors.onSurface
                 )
 
                 menuProductAdditionItem.price?.let { price ->
@@ -299,7 +301,8 @@ class ProductDetailsFragment :
                         modifier = Modifier
                             .padding(end = 8.dp),
                         text = price,
-                        style = FoodDeliveryTheme.typography.bodyLarge
+                        style = FoodDeliveryTheme.typography.bodyLarge,
+                        color = FoodDeliveryTheme.colors.mainColors.onSurface
                     )
                 }
 
