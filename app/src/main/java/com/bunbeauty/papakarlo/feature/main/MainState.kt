@@ -24,8 +24,7 @@ enum class FoodDeliveryMessageType {
 
 data class FoodDeliveryMessage(
     val type: FoodDeliveryMessageType,
-    val text: String,
-    val photoLink: String?
+    val text: String
 )
 
 sealed interface NavigationBarOptions {

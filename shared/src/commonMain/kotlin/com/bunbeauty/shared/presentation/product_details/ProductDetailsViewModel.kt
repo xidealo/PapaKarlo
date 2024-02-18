@@ -156,7 +156,7 @@ class ProductDetailsViewModel(
                             additionList = selectedAdditionList,
                         )
                         addEvent {
-                            ProductDetailsState.Event.EditedProduct(menuProductName = menuProduct.name)
+                            ProductDetailsState.Event.EditedProduct
                         }
                     }
                 } else {
@@ -168,7 +168,7 @@ class ProductDetailsViewModel(
                             }
                     )
                     addEvent {
-                        ProductDetailsState.Event.AddedProduct(menuProductPhotoLink = menuProduct.photoLink)
+                        ProductDetailsState.Event.AddedProduct
                     }
                 }
             },

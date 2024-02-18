@@ -74,7 +74,9 @@ class ConsumerCartViewModel(
             )
 
             is ConsumerCart.Action.AddRecommendationProductToCartClick -> addRecommendationProductClicked(
-                menuProductItem = action.menuProductItem
+                menuProductUuid = action.menuProductUuid,
+                menuProductName = action.menuProductName,
+                hasAdditions = action.hasAdditions
             )
 
             is ConsumerCart.Action.RecommendationClick -> onProductClicked(
@@ -156,27 +158,30 @@ class ConsumerCartViewModel(
         }
     }
 
-    private fun addRecommendationProductClicked(menuProductItem: MenuProductItem) {
+    private fun addRecommendationProductClicked(
+        menuProductUuid: String,
+        menuProductName: String,
+        hasAdditions: Boolean,
+    ) {
         analyticService.sendEvent(
             event = AddRecommendationProductClickEvent(
-                menuProductUuidEventParameter = MenuProductUuidEventParameter(value = menuProductItem.uuid)
+                menuProductUuidEventParameter = MenuProductUuidEventParameter(value = menuProductUuid)
             ),
         )
-
         sharedScope.launchSafe(
             block = {
-                if (menuProductItem.hasAdditions) {
+                if (hasAdditions) {
                     addEvent {
                         ConsumerCart.Event.NavigateToProduct(
-                            uuid = menuProductItem.uuid,
-                            name = menuProductItem.name,
+                            uuid = menuProductUuid,
+                            name = menuProductName,
                             productDetailsOpenedFrom = ProductDetailsOpenedFrom.RECOMMENDATION_PRODUCT,
                             additionUuidList = emptyList(),
                             cartProductUuid = null,
                         )
                     }
                 } else {
-                    addMenuProductUseCase(menuProductUuid = menuProductItem.uuid)
+                    addMenuProductUseCase(menuProductUuid = menuProductUuid)
                 }
             },
             onError = {
@@ -246,7 +251,7 @@ class ConsumerCartViewModel(
         return when (consumerCartDomain) {
             is ConsumerCartDomain.Empty -> null
             is ConsumerCartDomain.WithProducts -> ConsumerCart.ViewDataState.ConsumerCartData(
-                forFreeDelivery = "${consumerCartDomain.forFreeDelivery}$RUBLE_CURRENCY",
+                forFreeDelivery = "${consumerCartDomain.forFreeDelivery} $RUBLE_CURRENCY",
                 cartProductList = consumerCartDomain.cartProductList.mapIndexed { index, lightCartProduct ->
                     toItem(
                         lightCartProduct = lightCartProduct,
@@ -287,8 +292,8 @@ class ConsumerCartViewModel(
         return CartProductItem(
             uuid = lightCartProduct.uuid,
             name = lightCartProduct.name,
-            newCost = "${lightCartProduct.newCost}$RUBLE_CURRENCY",
-            oldCost = lightCartProduct.oldCost?.let { oldCost -> "$oldCost$RUBLE_CURRENCY" },
+            newCost = "${lightCartProduct.newCost} $RUBLE_CURRENCY",
+            oldCost = lightCartProduct.oldCost?.let { oldCost -> "$oldCost $RUBLE_CURRENCY" },
             photoLink = lightCartProduct.photoLink,
             count = lightCartProduct.count,
             menuProductUuid = lightCartProduct.menuProductUuid,

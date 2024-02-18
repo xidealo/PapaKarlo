@@ -53,14 +53,8 @@ interface ProductDetailsState {
     sealed interface Event : BaseEvent {
         data object NavigateBack : Event
         data object NavigateToConsumerCart : Event
-        data class AddedProduct(
-            val menuProductPhotoLink: String,
-        ) : Event
-
-        data class EditedProduct(
-            val menuProductName: String,
-        ) : Event
-
+        data object AddedProduct : Event
+        data object EditedProduct : Event
         data object ShowAddProductError: Event
     }
 }

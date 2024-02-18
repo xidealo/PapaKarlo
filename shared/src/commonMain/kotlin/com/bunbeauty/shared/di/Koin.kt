@@ -17,8 +17,11 @@ import com.bunbeauty.shared.di.usecase.orderUseCaseModule
 import com.bunbeauty.shared.di.usecase.paymentUseCaseModule
 import com.bunbeauty.shared.di.usecase.useCaseModules
 import com.bunbeauty.shared.di.usecase.userAddressUseCaseModule
+import com.bunbeauty.shared.domain.feature.addition.GetAdditionGroupsWithSelectedAdditionUseCase
+import com.bunbeauty.shared.domain.feature.addition.GetPriceOfSelectedAdditionsUseCase
 import com.bunbeauty.shared.domain.feature.address.CreateAddressUseCase
 import com.bunbeauty.shared.domain.feature.address.GetFilteredStreetListUseCase
+import com.bunbeauty.shared.domain.feature.address.GetSuggestionsUseCase
 import com.bunbeauty.shared.domain.feature.cart.ObserveCartUseCase
 import com.bunbeauty.shared.domain.feature.cart.RemoveCartProductUseCase
 import com.bunbeauty.shared.domain.feature.city.GetCityListUseCase
@@ -46,8 +49,11 @@ import com.bunbeauty.shared.domain.feature.auth.GetPhoneNumberCursorPositionUseC
 import com.bunbeauty.shared.domain.feature.auth.RequestCodeUseCase
 import com.bunbeauty.shared.domain.feature.auth.ResendCodeUseCase
 import com.bunbeauty.shared.domain.feature.cart.AddCartProductUseCase
+import com.bunbeauty.shared.domain.feature.cart.EditCartProductUseCase
 import com.bunbeauty.shared.domain.feature.cart.GetRecommendationsUseCase
+import com.bunbeauty.shared.domain.feature.cart.IncreaseCartProductCountUseCase
 import com.bunbeauty.shared.domain.feature.discount.GetDiscountUseCase
+import com.bunbeauty.shared.domain.feature.menu.AddMenuProductUseCase
 import com.bunbeauty.shared.domain.feature.menu.di.menuModule
 import com.bunbeauty.shared.domain.feature.menu_product.GetMenuProductUseCase
 import com.bunbeauty.shared.domain.feature.payment.GetSelectablePaymentMethodListUseCase
@@ -87,7 +93,9 @@ fun initKoin(appDeclaration: KoinAppDeclaration = {}) = startKoin {
         addressModule(),
     )
 }
-
+/**
+* Function for init in IOS
+* */
 fun initKoin() = startKoin {
     modules(
         databaseModule(),
@@ -109,6 +117,7 @@ fun initKoin() = startKoin {
         analyticModule(),
         additionUseCaseModule(),
         menuModule(),
+        addressModule()
     )
 }
 
@@ -162,6 +171,13 @@ class IosComponent : KoinComponent {
     fun provideCheckPhoneNumberUseCase(): CheckPhoneNumberUseCase = get()
     fun provideGetRecommendationsUseCase(): GetRecommendationsUseCase = get()
     fun provideGetMenuProductByUuidUseCase(): GetMenuProductUseCase = get()
+    fun provideGetSuggestionsUseCase(): GetSuggestionsUseCase = get()
+    fun provideIncreaseCartProductCountUseCase(): IncreaseCartProductCountUseCase = get()
+    fun provideAddMenuProductUseCase(): AddMenuProductUseCase = get()
+    fun provideEditCartProductUseCase(): EditCartProductUseCase = get()
+    fun provideGetAdditionGroupsWithSelectedAdditionUseCase(): GetAdditionGroupsWithSelectedAdditionUseCase =
+        get()
+    fun provideGetPriceOfSelectedAdditionsUseCase(): GetPriceOfSelectedAdditionsUseCase = get()
 
     //Mapper
     fun provideUserAddressMapper(): UserAddressMapper = get()

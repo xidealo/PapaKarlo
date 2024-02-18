@@ -84,3 +84,15 @@
 
 //Settings
 "action_settings_log_out" = "Выйти";
+
+//Create address
+"error_create_address_street" = "Выберите название улицы из списка";
+"error_create_address_house" = "Укажите номер дома";
+"title_create_address" = "Добавление адресa";
+"hint_create_address_street" = "Улица*";
+"hint_create_address_house" = "Дом*";
+"hint_create_address_flat" = "Квартира/Офис";
+"hint_create_address_entrance" = "Подъезд";
+"hint_create_address_floor" = "Этаж";
+"hint_create_address_comment" = "Комментарий для курьера";
+"msg_create_address_created" = "Адрес добавлен";

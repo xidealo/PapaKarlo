@@ -13,8 +13,9 @@ struct ConsumerCartView: View {
     
     @State var viewModel: ConsumerCartViewModel = ConsumerCartViewModel(
         userInteractor: iosComponent.provideIUserInteractor(),
-        cartProductInteractor: iosComponent.provideCartProductInteractor(),
-        addCartProductUseCase: iosComponent.provideAddCartProductUseCase(),
+        cartProductInteractor: iosComponent.provideCartProductInteractor(), 
+        increaseCartProductCountUseCase: iosComponent.provideIncreaseCartProductCountUseCase(),
+        addMenuProductUseCase: iosComponent.provideAddMenuProductUseCase(),
         removeCartProductUseCase: iosComponent.provideRemoveCartProductUseCase(),
         getRecommendationsUseCase: iosComponent.provideGetRecommendationsUseCase(),
         analyticService: iosComponent.provideAnalyticService()
@@ -39,6 +40,11 @@ struct ConsumerCartView: View {
     @Binding var showOrderCreated:Bool
     //--
     
+    //for add or edit product
+    @State var created:Bool = false
+    @State var edited:Bool = false
+    //--
+    
     var body: some View {
         VStack(spacing:0){
             ToolbarView(
@@ -56,7 +62,7 @@ struct ConsumerCartView: View {
             .isDetailLink(false)
             
             NavigationLink(
-                destination:CreateOrderView(
+                destination: CreateOrderView(
                     isRootActive: self.$isRootActive,
                     selection: self.$selection,
                     showOrderCreated: $showOrderCreated
@@ -73,7 +79,9 @@ struct ConsumerCartView: View {
                         action: viewModel.onAction,
                         isRootActive: isRootActive,
                         selection: selection,
-                        showOrderCreated: showOrderCreated
+                        showOrderCreated: showOrderCreated,
+                        created: $created,
+                        edited: $edited
                     )
                 }
 
@@ -95,6 +103,23 @@ struct ConsumerCartView: View {
         .onDisappear(){
             unsubscribe()
         }
+        .overlay(
+            overlayView: ToastView(
+                toast: Toast(title: "Добавлено"),
+                show: $created,
+                backgroundColor: AppColor.primary,
+                foregroundColor: AppColor.onPrimary
+            ),
+            show: $created
+        ).overlay(
+            overlayView: ToastView(
+                toast: Toast(title: "Изменено"),
+                show: $edited,
+                backgroundColor: AppColor.primary,
+                foregroundColor: AppColor.onPrimary
+            ),
+            show: $edited
+        )
     }
 
     func subscribe(){
@@ -149,6 +174,11 @@ struct ConsumerCartSuccessScreen: View {
     @State var selection:Int
     @State var showOrderCreated:Bool
     
+    
+    //for add or edit product
+    @Binding var created:Bool
+    @Binding var edited:Bool
+    
     let action: (ConsumerCartAction) -> Void
 
     let columns = [
@@ -161,7 +191,9 @@ struct ConsumerCartSuccessScreen: View {
         action: @escaping (ConsumerCartAction) -> Void,
         isRootActive:Bool,
         selection:Int,
-        showOrderCreated: Bool
+        showOrderCreated: Bool,
+        created : Binding<Bool>,
+        edited : Binding<Bool>
     ) {
         self.consumerCartUI = consumerCartUI
         self.cartProductListIos = consumerCartUI.cartProductList.map({ cartProductItem in
@@ -178,13 +210,16 @@ struct ConsumerCartSuccessScreen: View {
                 name: menuProduct.name,
                 newPrice: String(menuProduct.newPrice) + Strings.CURRENCY,
                 oldPrice: menuProduct.oldPrice as? Int,
-                photoLink: menuProduct.photoLink
+                photoLink: menuProduct.photoLink,
+                hasAdditions: menuProduct.hasAdditions
             )
         })
         
         self.isRootActive = isRootActive
         self.selection = selection
         self.showOrderCreated = showOrderCreated
+        self._created = created
+        self._edited = edited
     }
     
     var body: some View {
@@ -201,12 +236,28 @@ struct ConsumerCartSuccessScreen: View {
                         
                         ForEach(cartProductListIos){ cartProductItemIos in
                             VStack(spacing:0){
-                                CartProductView(cartProductItem: cartProductItemIos.cartProductItem, plusAction: {
+                                CartProductView(
+                                    cartProductItem: cartProductItemIos.cartProductItem,
+                                    isRootActive : $isRootActive,
+                                    selection : $selection,
+                                    showOrderCreated : $showOrderCreated,
+                                    created: $created,
+                                    edited: $edited,
+                                plusAction: {
                                     action(
-                                        ConsumerCartActionAddProductToCartClick(menuProductUuid: cartProductItemIos.cartProductItem.menuProductUuid)
+                                        ConsumerCartActionAddProductToCartClick(
+                                            cartProductUuid: cartProductItemIos.cartProductItem.uuid,
+                                            menuProductUuid: cartProductItemIos.cartProductItem.menuProductUuid
+                                        )
                                     )
-                                }, minusAction: {
-                                    action(ConsumerCartActionRemoveProductFromCartClick(menuProductUuid: cartProductItemIos.cartProductItem.menuProductUuid))
+                                }, 
+                                minusAction: {
+                                    action(
+                                        ConsumerCartActionRemoveProductFromCartClick(
+                                            menuProductUuid: cartProductItemIos.cartProductItem.menuProductUuid,
+                                            cartProductUuid: cartProductItemIos.cartProductItem.uuid
+                                        )
+                                    )
                                 })
                                 .padding(.horizontal, Diems.MEDIUM_PADDING)
                                 .padding(.bottom, 8)
@@ -237,9 +288,17 @@ struct ConsumerCartSuccessScreen: View {
                                 productDetailsOpenedFrom: ProductDetailsOpenedFrom.recommendationProduct,
                                 isRootActive : $isRootActive,
                                 selection : $selection,
-                                showOrderCreated : $showOrderCreated,
+                                showOrderCreated : $showOrderCreated, 
+                                created: $created,
+                                edited: $edited,
                                 action: {
-                                    action(ConsumerCartActionAddRecommendationProductToCartClick(menuProductUuid: menuProductItem.productUuid))
+                                    action(
+                                        ConsumerCartActionAddRecommendationProductToCartClick(
+                                            menuProductUuid: menuProductItem.id,
+                                            menuProductName: menuProductItem.name,
+                                            hasAdditions: menuProductItem.hasAdditions
+                                        )
+                                    )
                                 }
                             )
                         }

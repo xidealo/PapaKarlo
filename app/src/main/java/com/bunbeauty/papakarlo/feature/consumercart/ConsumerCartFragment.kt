@@ -269,7 +269,9 @@ class ConsumerCartFragment :
                             onAddProductClick = { menuProductItem ->
                                 onAction(
                                     ConsumerCart.Action.AddRecommendationProductToCartClick(
-                                        menuProductItem = menuProductItem
+                                        menuProductUuid = menuProductItem.uuid,
+                                        menuProductName = menuProductItem.name,
+                                        hasAdditions = menuProductItem.hasAdditions
                                     )
                                 )
                             },

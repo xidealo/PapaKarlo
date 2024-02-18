@@ -17,51 +17,64 @@ struct SearchEditTextView: View {
     @Binding var text: String
     let limit:Int
     
-    @Binding var list:[StreetItem]
+    var list:[StreetItem]
     
     @State var prevSimbol = ""
     
-    @Binding var hasError:Bool
-    @State var errorMessage:String = ""
+    @Binding var errorMessage:LocalizedStringKey?
+    
+    @Binding var isLoading:Bool
     
     var textChanged: (String) -> Void
+    
+    var selectSuggetion: (StreetItem) -> Void
+    
+    var focusChangeListener: (Bool) -> Void
 
     var body: some View {
         VStack (spacing:0) {
-            EditTextView(
-                hint: hint,
-                text: $text,
-                limit: limit,
-                hasError: $hasError,
-                errorMessage: errorMessage,
-                textChanged: textChanged
-            ).onReceive(Just(text)) { str in
-                    limitText(limit)
-                }
-            
-            LazyVStack(spacing:0){
-                ForEach(list){ street in
-                    Button {
-                        prevSimbol = street.name
-                        text = street.name
-                    } label: {
-                        Text(street.name)
-                            .padding(Diems.SMALL_PADDING)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .background(AppColor.surface)
-                            .cornerRadius(Diems.MEDIUM_RADIUS)
-                            .foregroundColor(AppColor.onSurface)
-                            .padding(.top, Diems.SMALL_PADDING)
-                    }
+            ZStack(alignment:.trailing){
+                EditTextView(
+                    hint: hint,
+                    text: $text,
+                    limit: limit,
+                    errorMessage: $errorMessage,
+                    textChanged: textChanged,
+                    focusChangeListener: focusChangeListener
+                )
+                
+                if isLoading{
+                    ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle(tint: AppColor.primary))
+                        .scaleEffect(0.6)
+                        .padding(.trailing, 2)
                 }
             }
-            .padding(.horizontal, Diems.MEDIUM_PADDING)
+            
+            ForEach(list){ street in
+                Button {
+                    text = street.name
+                    dropFocusFromTextField()
+                    selectSuggetion(street)
+                } label: {
+                    HStack(spacing:0){
+                        Text(
+                        "\(Text(street.name).foregroundColor(AppColor.onSurface))\(Text(street.postfix ?? "").foregroundColor(AppColor.onSurfaceVariant))"
+                        ).multilineTextAlignment(.leading)
+                    }
+                    .padding(Diems.SMALL_PADDING)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(AppColor.surface)
+                    .cornerRadius(Diems.MEDIUM_RADIUS)
+                    .padding(.top, Diems.SMALL_PADDING)
+                }
+            }
         }
     }
     
-    func limitText(_ upper: Int) {
-        if text.count > upper {
-            text = String(text.prefix(upper))
-        }
+    
+    func dropFocusFromTextField(){
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to:nil, from:nil, for:nil)
     }
+    
 }

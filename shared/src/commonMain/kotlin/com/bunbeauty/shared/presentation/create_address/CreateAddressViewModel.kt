@@ -50,6 +50,9 @@ class CreateAddressViewModel(
 
     override fun reduce(action: CreateAddress.Action, dataState: CreateAddress.DataState) {
         when (action) {
+            is CreateAddress.Action.Init -> {
+                observeStreetChanges()
+            }
             is CreateAddress.Action.StreetTextChange -> {
                 handleStreetTextChange(street = action.street)
             }
@@ -85,6 +88,11 @@ class CreateAddressViewModel(
             CreateAddress.Action.SaveClick -> {
                 handleSaveClick()
             }
+
+            CreateAddress.Action.BackClick -> addEvent {
+                CreateAddress.Event.Back
+            }
+
         }
     }
 
@@ -100,7 +108,9 @@ class CreateAddressViewModel(
             }
         } else {
             setState {
-                copy(street = street)
+                copy(
+                    street = street,
+                )
             }
         }
     }
