@@ -41,6 +41,7 @@ import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.FragmentContainerBinding
 import com.bunbeauty.papakarlo.databinding.LayoutComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -164,9 +165,13 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
             when (event) {
                 is MainState.Event.ShowMessageEvent -> {
                     lifecycleScope.launch {
-                        snackbarHostState.showSnackbar(
-                            FoodDeliverySnackbarVisuals(event.message)
-                        )
+                        val snackbarJob = launch {
+                            snackbarHostState.showSnackbar(
+                                visuals = FoodDeliverySnackbarVisuals(event.message)
+                            )
+                        }
+                        delay(2_000)
+                        snackbarJob.cancel()
                     }
                 }
             }
