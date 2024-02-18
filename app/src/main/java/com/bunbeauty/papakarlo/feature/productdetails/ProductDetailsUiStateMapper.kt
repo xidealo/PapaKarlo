@@ -28,7 +28,7 @@ class ProductDetailsUiStateMapper(
                                 uuid = addition.uuid,
                                 isSelected = addition.isSelected,
                                 name = addition.name,
-                                price = addition.price?.let { price -> "+$price${Constants.RUBLE_CURRENCY}" },
+                                price = addition.price?.let { price -> "+$price ${Constants.RUBLE_CURRENCY}" },
                                 isLast = additionGroup.additionList.lastIndex == index,
                                 photoLink = addition.photoLink,
                                 groupId = additionGroup.uuid
@@ -53,11 +53,11 @@ class ProductDetailsUiStateMapper(
                         photoLink = menuProduct.photoLink,
                         name = menuProduct.name,
                         size = menuProduct.size,
-                        oldPrice = menuProduct.oldPrice?.let { oldPrice -> "$oldPrice${menuProduct.currency}" },
-                        newPrice = "${menuProduct.newPrice}${menuProduct.currency}",
+                        oldPrice = menuProduct.oldPrice?.let { oldPrice -> "$oldPrice ${menuProduct.currency}" },
+                        newPrice = "${menuProduct.newPrice} ${menuProduct.currency}",
                         description = menuProduct.description,
                         additionList = additionList,
-                        priceWithAdditions = "${menuProduct.priceWithAdditions}${menuProduct.currency}"
+                        priceWithAdditions = "${menuProduct.priceWithAdditions} ${menuProduct.currency}"
                     )
                 }
             )

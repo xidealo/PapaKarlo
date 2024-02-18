@@ -66,10 +66,10 @@ class OrderDetailsViewModel(
                                     orderProductItemList = getProductList(order),
                                     orderInfo = getOrderInfo(order),
                                     deliveryCost = order.deliveryCost?.let { deliveryCost ->
-                                        "$deliveryCost$RUBLE_CURRENCY"
+                                        "$deliveryCost $RUBLE_CURRENCY"
                                     },
                                     newTotalCost = order.newTotalCost.let { newTotalCost ->
-                                        "$newTotalCost$RUBLE_CURRENCY"
+                                        "$newTotalCost $RUBLE_CURRENCY"
                                     },
                                     discount = order.percentDiscount?.let { discount ->
                                         "$discount$PERCENT"
@@ -125,8 +125,8 @@ class OrderDetailsViewModel(
             OrderDetails.DataState.OrderDetailsData.OrderProductItem(
                 uuid = orderProduct.uuid,
                 name = orderProduct.product.name,
-                newPrice = "${orderProduct.product.newCommonPrice}$RUBLE_CURRENCY",
-                newCost = "${orderProduct.product.newTotalCost}$RUBLE_CURRENCY",
+                newPrice = "${orderProduct.product.newCommonPrice} $RUBLE_CURRENCY",
+                newCost = "${orderProduct.product.newTotalCost} $RUBLE_CURRENCY",
                 photoLink = orderProduct.product.photoLink,
                 count = orderProduct.count.toString(),
                 additions = orderProduct.orderAdditionList,

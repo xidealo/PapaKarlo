@@ -59,7 +59,7 @@
     <string name="msg_menu_product_edited">Изменено</string>
 
     <!-- PRODUCT DETAILS -->
-    <string name="action_product_details_want">Добавить за %s!</string>
+    <string name="action_product_details_want">Добавить за %s</string>
 
     <!-- CONSUMER CART -->
     <string name="title_cart">Корзина</string>

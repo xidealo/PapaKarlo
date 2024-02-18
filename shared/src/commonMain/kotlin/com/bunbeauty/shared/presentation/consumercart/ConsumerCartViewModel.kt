@@ -251,7 +251,7 @@ class ConsumerCartViewModel(
         return when (consumerCartDomain) {
             is ConsumerCartDomain.Empty -> null
             is ConsumerCartDomain.WithProducts -> ConsumerCart.ViewDataState.ConsumerCartData(
-                forFreeDelivery = "${consumerCartDomain.forFreeDelivery}$RUBLE_CURRENCY",
+                forFreeDelivery = "${consumerCartDomain.forFreeDelivery} $RUBLE_CURRENCY",
                 cartProductList = consumerCartDomain.cartProductList.mapIndexed { index, lightCartProduct ->
                     toItem(
                         lightCartProduct = lightCartProduct,
@@ -259,9 +259,9 @@ class ConsumerCartViewModel(
                     )
                 },
                 oldTotalCost = consumerCartDomain.oldTotalCost?.let { oldTotalCost ->
-                    "$oldTotalCost$RUBLE_CURRENCY"
+                    "$oldTotalCost $RUBLE_CURRENCY"
                 },
-                newTotalCost = "${consumerCartDomain.newTotalCost}$RUBLE_CURRENCY",
+                newTotalCost = "${consumerCartDomain.newTotalCost} $RUBLE_CURRENCY",
                 firstOrderDiscount = consumerCartDomain.discount?.let { discount ->
                     "$discount$PERCENT"
                 },
@@ -292,8 +292,8 @@ class ConsumerCartViewModel(
         return CartProductItem(
             uuid = lightCartProduct.uuid,
             name = lightCartProduct.name,
-            newCost = "${lightCartProduct.newCost}$RUBLE_CURRENCY",
-            oldCost = lightCartProduct.oldCost?.let { oldCost -> "$oldCost$RUBLE_CURRENCY" },
+            newCost = "${lightCartProduct.newCost} $RUBLE_CURRENCY",
+            oldCost = lightCartProduct.oldCost?.let { oldCost -> "$oldCost $RUBLE_CURRENCY" },
             photoLink = lightCartProduct.photoLink,
             count = lightCartProduct.count,
             menuProductUuid = lightCartProduct.menuProductUuid,
