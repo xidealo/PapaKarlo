@@ -29,7 +29,6 @@ class GetSelectableCafeListUseCaseTest {
         )
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun `return cafe list with selected cafe`() = runTest {
         // Arrange

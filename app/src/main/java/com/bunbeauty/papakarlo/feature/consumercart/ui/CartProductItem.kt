@@ -63,7 +63,6 @@ fun CartProductItem(
             Column(
                 modifier = Modifier
                     .weight(1f)
-                    .padding(top = FoodDeliveryTheme.dimensions.smallSpace)
                     .padding(start = FoodDeliveryTheme.dimensions.smallSpace)
             ) {
                 OverflowingText(
@@ -74,29 +73,47 @@ fun CartProductItem(
                 )
                 Row(
                     modifier = Modifier
-                        .padding(top = FoodDeliveryTheme.dimensions.smallSpace)
+                        .padding(top = 4.dp)
                 ) {
-                    cartProductItem.oldCost?.let { oldCost ->
-                        Text(
-                            modifier = Modifier
-                                .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
-                            text = oldCost,
-                            style = FoodDeliveryTheme.typography.bodySmall,
-                            textDecoration = TextDecoration.LineThrough,
-                            color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
-                        )
-                    }
-                    Text(
+                    Column(
                         modifier = Modifier
-                            .weight(1f),
-                        text = cartProductItem.newCost,
-                        style = FoodDeliveryTheme.typography.bodySmall.bold,
-                        color = FoodDeliveryTheme.colors.mainColors.onSurface
-                    )
+                            .weight(1f)
+                    ) {
+                        cartProductItem.additions?.let { additions ->
+                            Text(
+                                modifier = Modifier
+                                    .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
+                                text = additions,
+                                style = FoodDeliveryTheme.typography.bodySmall,
+                                color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
+                            )
+                        }
+                        Row(
+                            modifier = Modifier
+                                .padding(top = 4.dp)
+                        ) {
+                            cartProductItem.oldCost?.let { oldCost ->
+                                Text(
+                                    modifier = Modifier
+                                        .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
+                                    text = oldCost,
+                                    style = FoodDeliveryTheme.typography.bodySmall,
+                                    textDecoration = TextDecoration.LineThrough,
+                                    color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
+                                )
+                            }
+                            Text(
+                                modifier = Modifier
+                                    .weight(1f),
+                                text = cartProductItem.newCost,
+                                style = FoodDeliveryTheme.typography.bodySmall.bold,
+                                color = FoodDeliveryTheme.colors.mainColors.onSurface
+                            )
+                        }
+                    }
 
                     CountPicker(
                         modifier = Modifier
-                            .padding()
                             .align(CenterVertically),
                         count = cartProductItem.count,
                         onCountIncreased = onCountIncreased,
@@ -120,7 +137,10 @@ private fun CartProductItemPreview() {
                 oldCost = "100 ₽",
                 photoLink = "",
                 count = 5,
-                menuProductUuid = ""
+                menuProductUuid = "",
+                additions = "Обычная булка • Добавка 1 • Добавка 2",
+                additionUuidList = emptyList(),
+                isLast = false
             ),
             onCountIncreased = {},
             onCountDecreased = {},
@@ -141,7 +161,10 @@ private fun CartProductItemWithoutOldCostPreview() {
                 oldCost = null,
                 photoLink = "",
                 count = 5,
-                menuProductUuid = ""
+                menuProductUuid = "",
+                additions = "",
+                additionUuidList = emptyList(),
+                isLast = false
             ),
             onCountIncreased = {},
             onCountDecreased = {},

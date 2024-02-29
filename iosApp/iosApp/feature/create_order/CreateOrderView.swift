@@ -237,13 +237,11 @@ struct CreateOrderSuccessView: View {
                     
                     EditTextView(
                         hint: Strings.HINT_CREATE_COMMENT_COMMENT,
-                        text: $comment.onChange({ comment in
-                            viewModel.kmmViewModel.onCommentChanged(comment: comment)
-                        }),
+                        text: $comment,
                         limit: 255,
-                        hasError: .constant(false),
+                        errorMessage: .constant(nil),
                         textChanged: { str in
-                            
+                            viewModel.kmmViewModel.onCommentChanged(comment: comment)
                         }
                     )
                     .padding(.top, Diems.SMALL_PADDING)
@@ -321,6 +319,19 @@ struct CreateOrderSuccessView: View {
             .background(AppColor.background)
             
             VStack(spacing:0){
+                if let discount = viewModel.creationOrderViewState.discount{
+                    HStack(spacing:0){
+                        Text("create_order_discount")
+                            .bodyMedium()
+                            .foregroundColor(AppColor.onSurface)
+                        
+                        Spacer()
+                        
+                        DiscountCard(text:discount)
+                    }.padding(.top, 8)
+                        .padding(.horizontal, 16)
+                }
+                
                 HStack(spacing:0){
                     Text(Strings.MSG_CREATION_ORDER_RESULT)
                         .bodyMedium()
@@ -335,20 +346,7 @@ struct CreateOrderSuccessView: View {
                 }
                 .padding(.top, Diems.SMALL_PADDING)
                 .padding(.horizontal, Diems.MEDIUM_PADDING)
-                
-                if let discount = viewModel.creationOrderViewState.discount{
-                    HStack(spacing:0){
-                        Text("create_order_discount")
-                            .bodyMedium()
-                            .foregroundColor(AppColor.onSurface)
-                        
-                        Spacer()
-                        
-                        DiscountCard(text:discount)
-                    }.padding(.top, 8)
-                        .padding(.horizontal, 16)
-                }
-                
+         
                 if(viewModel.creationOrderViewState.isDelivery){
                     if let deliveryCost = viewModel.creationOrderViewState.deliveryCost {
                         HStack(spacing:0){

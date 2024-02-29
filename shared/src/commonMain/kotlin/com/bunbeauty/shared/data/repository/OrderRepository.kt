@@ -1,8 +1,13 @@
 package com.bunbeauty.shared.data.repository
 
 import com.bunbeauty.shared.data.dao.order.IOrderDao
+import com.bunbeauty.shared.data.dao.order_addition.IOrderAdditionDao
+import com.bunbeauty.shared.data.dao.order_product.IOrderProductDao
 import com.bunbeauty.shared.data.mapper.order.IOrderMapper
+import com.bunbeauty.shared.data.mapper.orderaddition.mapOrderAdditionServerToOrderAdditionEntity
+import com.bunbeauty.shared.data.mapper.order_product.mapOrderProductServerToOrderProductEntity
 import com.bunbeauty.shared.data.network.api.NetworkConnector
+import com.bunbeauty.shared.data.network.model.order.get.OrderProductServer
 import com.bunbeauty.shared.data.network.model.order.get.OrderServer
 import com.bunbeauty.shared.data.network.model.order.get.OrderUpdateServer
 import com.bunbeauty.shared.domain.model.order.CreatedOrder
@@ -11,6 +16,7 @@ import com.bunbeauty.shared.domain.model.order.Order
 import com.bunbeauty.shared.domain.model.order.OrderCode
 import com.bunbeauty.shared.domain.repo.OrderRepo
 import com.bunbeauty.shared.extension.getNullableResult
+import io.ktor.http.HttpHeaders
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
@@ -20,6 +26,8 @@ class OrderRepository(
     private val orderDao: IOrderDao,
     private val networkConnector: NetworkConnector,
     private val orderMapper: IOrderMapper,
+    private val orderAdditionDao: IOrderAdditionDao,
+    private val orderProductDao: IOrderProductDao,
 ) : OrderRepo {
 
     data class CacheLastLightOrder(
@@ -120,7 +128,10 @@ class OrderRepository(
 
     override suspend fun createOrder(token: String, createdOrder: CreatedOrder): OrderCode? {
         val orderPostServer = orderMapper.toOrderPostServer(createdOrder)
-        return networkConnector.postOrder(token, orderPostServer).getNullableResult { orderServer ->
+        return networkConnector.postOrder(
+            token = token,
+            order = orderPostServer
+        ).getNullableResult { orderServer ->
             saveOrderLocally(orderServer)
             cacheLastLightOrder =
                 CacheLastLightOrder(
@@ -141,17 +152,33 @@ class OrderRepository(
         }
     }
 
-    private fun saveOrderListLocally(orderServerList: List<OrderServer>) {
-        orderServerList.flatMap { orderServer ->
-            orderServer.oderProductList.map { oderProductServer ->
-                orderMapper.toOrderWithProductEntity(orderServer, oderProductServer)
+    private suspend fun saveOrderListLocally(orderServerList: List<OrderServer>) {
+        orderServerList.forEach { orderServer ->
+            orderDao.insertOrder(
+                orderMapper.toOrderEntity(orderServer)
+            )
+            orderServer.oderProductList.forEach { orderProductServer ->
+                orderProductDao.insert(
+                    orderProductServer.mapOrderProductServerToOrderProductEntity()
+                )
+                insertOrderAdditions(orderProductServer)
             }
-        }.let { orderWithProductEntityList ->
-            orderDao.insertOrderWithProductList(orderWithProductEntityList)
         }
     }
 
-    private fun saveOrderLocally(orderServer: OrderServer) {
+    private suspend fun insertOrderAdditions(
+        orderProductServer: OrderProductServer,
+    ) {
+        orderProductServer.additions.map { orderAdditionServer ->
+            orderAdditionDao.insert(
+                orderAdditionServer.mapOrderAdditionServerToOrderAdditionEntity(
+                    orderProductServer.uuid
+                )
+            )
+        }
+    }
+
+    private suspend fun saveOrderLocally(orderServer: OrderServer) {
         saveOrderListLocally(listOf(orderServer))
     }
 

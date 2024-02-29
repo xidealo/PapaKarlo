@@ -11,6 +11,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
+import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCardDefaults
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.medium
 import com.bunbeauty.shared.presentation.menu.CategoryItem
@@ -27,9 +28,10 @@ fun CategoryItem(
         FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
     }
     FoodDeliveryCard(
-        modifier = modifier
-            .defaultMinSize(minHeight = FoodDeliveryTheme.dimensions.smallButtonSize),
+        modifier = modifier.defaultMinSize(minHeight = FoodDeliveryTheme.dimensions.smallButtonSize),
+        elevated = false,
         onClick = onClick,
+        colors = FoodDeliveryCardDefaults.transparentCardColors,
         shape = RoundedCornerShape(16.dp),
         border = BorderStroke(
             width = 2.dp,

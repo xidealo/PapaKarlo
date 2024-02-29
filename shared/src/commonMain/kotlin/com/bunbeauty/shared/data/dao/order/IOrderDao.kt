@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface IOrderDao {
 
-    fun insertOrderWithProductList(orderWithProductList: List<OrderWithProductEntity>)
+    suspend fun insertOrder(orderEntity: OrderEntity)
 
     suspend fun getLastOrderByUserUuid(userUuid: String): OrderEntity?
     suspend fun getOrderListByUserUuid(userUuid: String): List<OrderEntity>

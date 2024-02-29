@@ -80,3 +80,15 @@
 
 //Settings
 "action_settings_log_out" = "Log out";
+
+//Create address
+"error_create_address_street" = "Select name steert from list";
+"error_create_address_house" = "Enter the house number";
+"title_create_address" = "Adding address";
+"hint_create_address_street" = "Street*";
+"hint_create_address_house" = "House*";
+"hint_create_address_flat" = "Flat/Office";
+"hint_create_address_entrance" = "Entrance";
+"hint_create_address_floor" = "Floor";
+"hint_create_address_comment" = "Comment for couriers";
+"msg_create_address_created" = "Address added";

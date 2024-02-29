@@ -18,6 +18,7 @@ data class MenuState(
 
     sealed interface Event {
         data class GoToSelectedItem(val uuid: String, val name: String) : Event
+        data object ShowAddProductError : Event
     }
 
     operator fun plus(event: Event) = copy(eventList = eventList + event)

@@ -27,7 +27,7 @@ import com.bunbeauty.shared.presentation.menu.MenuProductItem
 fun MenuProductItem(
     modifier: Modifier = Modifier,
     menuProductItem: MenuProductItem,
-    onAddProductClick: (String) -> Unit,
+    onAddProductClick: (MenuProductItem) -> Unit,
     onProductClick: (MenuProductItem) -> Unit
 ) {
     FoodDeliveryCard(
@@ -78,7 +78,7 @@ fun MenuProductItem(
                     textStringId = R.string.action_product_want,
                     elevated = false,
                     onClick = {
-                        onAddProductClick(menuProductItem.uuid)
+                        onAddProductClick(menuProductItem)
                     }
                 )
             }
@@ -96,9 +96,10 @@ private fun MenuProductItemPreview() {
                 photoLink = "",
                 name = "Бэргер",
                 newPrice = 99,
-                oldPrice = 100
+                oldPrice = 100,
+                hasAdditions = true
             ),
-            onAddProductClick = {},
+            onAddProductClick = { },
             onProductClick = {}
         )
     }

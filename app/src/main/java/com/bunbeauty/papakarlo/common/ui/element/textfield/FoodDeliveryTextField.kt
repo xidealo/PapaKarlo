@@ -30,7 +30,7 @@ fun FoodDeliveryTextField(
     onValueChange: (value: String) -> Unit,
     maxSymbols: Int = Int.MAX_VALUE,
     maxLines: Int = 1,
-    @StringRes errorMessageId: Int? = null
+    @StringRes errorMessageStringId: Int? = null
 ) {
     Column(modifier = modifier) {
         FoodDeliveryBaseTextField(
@@ -42,14 +42,14 @@ fun FoodDeliveryTextField(
             onValueChange = onValueChange,
             maxSymbols = maxSymbols,
             maxLines = maxLines,
-            isError = errorMessageId != null
+            isError = errorMessageStringId != null
         )
-        errorMessageId?.let {
+        errorMessageStringId?.let {
             Text(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 16.dp, top = 4.dp),
-                text = stringResource(errorMessageId),
+                text = stringResource(errorMessageStringId),
                 style = FoodDeliveryTheme.typography.bodySmall,
                 color = FoodDeliveryTheme.colors.mainColors.error
             )

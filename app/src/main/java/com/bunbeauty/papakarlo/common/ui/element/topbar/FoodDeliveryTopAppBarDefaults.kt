@@ -11,8 +11,8 @@ object FoodDeliveryTopAppBarDefaults {
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun topAppBarColors(
-        containerColor: Color = FoodDeliveryTheme.colors.mainColors.surface,
-        scrolledContainerColor: Color = FoodDeliveryTheme.colors.mainColors.surface,
+        containerColor: Color = Color.Transparent,
+        scrolledContainerColor: Color = Color.Transparent,
         navigationIconContentColor: Color = FoodDeliveryTheme.colors.mainColors.onSurface,
         titleContentColor: Color = FoodDeliveryTheme.colors.mainColors.onSurface,
         actionIconContentColor: Color = FoodDeliveryTheme.colors.mainColors.onSurface

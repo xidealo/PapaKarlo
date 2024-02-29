@@ -14,19 +14,24 @@ struct EditTextView: View {
     @Binding var text: String
     let limit:Int
     var keyBoadrType = UIKeyboardType.default //default
-    
-    @Binding var hasError:Bool
-    
-    @State var errorMessage:String = "Ошибка"
+        
+    @Binding var errorMessage:LocalizedStringKey?
     
     var textChanged: (String) -> Void
     
     @State var isSelectedSSS:Bool = false
+    
+    var focusChangeListener: (Bool) -> Void = { _ in }
+
     var body: some View {
         VStack(spacing:0){
-            TextField(hint, text: $text, onEditingChanged: { edit in
-                self.isSelectedSSS = edit
-            })
+            TextField(
+                hint,
+                text: $text,
+                onEditingChanged: { edit in
+                    self.isSelectedSSS = edit
+                    focusChangeListener(edit)
+                })
             .font(Font.system(size: 16, weight: .regular, design: .default))
             .padding(16)
             .lineLimit(5)
@@ -41,8 +46,9 @@ struct EditTextView: View {
                 textChanged(str)
             }
             .keyboardType(keyBoadrType)
-            if(hasError){
-                Text(errorMessage)
+            
+            if(errorMessage != nil){
+                Text(errorMessage ?? "")
                     .bodySmall()
                     .foregroundColor(AppColor.error)
                     .frame(maxWidth:.infinity, alignment: .leading)
@@ -53,7 +59,7 @@ struct EditTextView: View {
     }
     
     func getRoundedColor() -> Color {
-        if (hasError) {
+        if (errorMessage != nil) {
             return AppColor.error
         }
         

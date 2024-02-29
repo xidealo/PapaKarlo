@@ -162,6 +162,22 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
         NSUserDefaults.standardUserDefaults.setObject(settings.email, SETTINGS_EMAIL_KEY)
     }
 
+    actual override val recommendationMaxVisible: Flow<Int?> = flow {
+        emit(
+            NSUserDefaults.standardUserDefaults.integerForKey(
+                RECOMMENDATION_MAX_VISIBLE_KEY
+            ).toInt()
+        )
+    }
+
+    actual override suspend fun getRecommendationMaxVisible(): Int? {
+        return recommendationMaxVisible.firstOrNull()
+    }
+
+    actual override suspend fun saveRecommendationMaxVisible(recommendationMaxVisible: Int) {
+        NSUserDefaults.standardUserDefaults.setObject(recommendationMaxVisible, RECOMMENDATION_MAX_VISIBLE_KEY)
+    }
+
     actual override suspend fun clearUserData() {
         NSUserDefaults.standardUserDefaults.removeObjectForKey(TOKEN_KEY)
         NSUserDefaults.standardUserDefaults.removeObjectForKey(USER_UUID_KEY)
@@ -186,6 +202,7 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
         private const val SETTINGS_EMAIL_KEY = "SETTINGS_EMAIL_KEY"
         private const val SELECTED_PAYMENT_METHOD_UUID_KEY = "SELECTED_PAYMENT_METHOD_UUID_KEY"
         private const val FIRST_DISCOUNT_KEY = "FIRST_DISCOUNT_KEY"
+        private const val RECOMMENDATION_MAX_VISIBLE_KEY = "RECOMMENDATION_MAX_VISIBLE_KEY"
     }
 
 }

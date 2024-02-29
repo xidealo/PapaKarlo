@@ -8,54 +8,41 @@
 import SwiftUI
 import shared
 
-class CreateAddressHolder: ObservableObject {
-    var viewModel = CreateAddressViewModel(
-        getStreetsUseCase: iosComponent.provideGetStreetsUseCase(),
-        createAddressUseCase: iosComponent.provideCreateAddressUseCase(),
-        saveSelectedUserAddressUseCase: iosComponent.provideSaveSelectedUserAddressUseCase(),
-        getFilteredStreetListUseCase: iosComponent.provideGetFilteredStreetListUseCase()
-    )
-}
-
 struct CreateAddressView: View {
     
-    @State var street:String = ""
-    @State var house:String = ""
-    @State var flat:String = ""
-    @State var entarance:String = ""
-    @State var floor:String = ""
-    @State var comment:String = ""
+    @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     
-    @State var hasStreetError:Bool = false
-    @State var hasHouseError:Bool = false
+    @State var showSuggetionLoadingError:Bool = false
+    @State var showCreateError:Bool = false
 
     @Binding var show:Bool
     
     @FocusState private var isTextFieldFocused: Bool
-
-    @State var showError:Bool = false
     
-    @StateObject var viewModel:CreateAddressHolder = CreateAddressHolder()
+    @State var viewModel = CreateAddressViewModel(
+        getSuggestionsUseCase: iosComponent.provideGetSuggestionsUseCase(),
+        createAddressUseCase: iosComponent.provideCreateAddressUseCase(),
+        saveSelectedUserAddressUseCase: iosComponent.provideSaveSelectedUserAddressUseCase()
+    )
     
+    //Listeners
     @State var listener: Closeable? = nil
+    @State var eventsListener: Closeable? = nil
+    //-----
     
-    @State var createAddressState = CreateAddressState(
-        streetList: [],
-        suggestedStreetList: [],
-        state: CreateAddressState.StateLoading(),
+    @State var createAddressViewState = CreateAddressViewState(
         street: "",
-        hasStreetError: false,
+        streetError: nil,
+        streetSuggestionList: [],
+        isSuggestionLoading: false,
         house: "",
-        hasHouseError: false,
+        houseError: nil,
         flat: "",
         entrance: "",
         floor: "",
         comment: "",
-        isCreateLoading: false,
-        eventList: []
+        isCreateLoading: false
     )
-    
-    @State var filteredList : [StreetItem] = []
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
@@ -64,35 +51,45 @@ struct CreateAddressView: View {
             ToolbarView(
                 title: "titleCreationAddress",
                 back: {
-                    self.presentationMode.wrappedValue.dismiss()
+                    viewModel.onAction(action: CreateAddressActionBackClick())
                 }
             )
-            switch(createAddressState.state){
-            case is CreateAddressState.StateLoading: LoadingView()
-            case is CreateAddressState.StateSuccess: ZStack (alignment: .bottom){
+            ZStack (alignment: .bottom){
                 ScrollView{
                     VStack(spacing:0){
                         SearchEditTextView(
                             hint: Strings.HINT_CREATION_ADDRESS_STREET,
-                            text: $street,
+                            text: $createAddressViewState.street,
                             limit: 100,
-                            list: $filteredList,
-                            hasError: $hasStreetError,
-                            errorMessage: "Выберите улицу из списка",
+                            list: createAddressViewState.streetSuggestionList,
+                            errorMessage: $createAddressViewState.streetError,
+                            isLoading: $createAddressViewState.isSuggestionLoading,
                             textChanged: { changedValue in
-                                viewModel.viewModel.onStreetTextChanged(streetText: changedValue)
+                                viewModel.onAction(action: CreateAddressActionStreetTextChange(street: changedValue))
+                            },
+                            selectSuggetion: { streetItem in
+                                viewModel.onAction(action: CreateAddressActionSuggestionSelect(
+                                    suggestion: SuggestionUi(
+                                        id: streetItem.id,
+                                        value: streetItem.name,
+                                        postfix: streetItem.postfix
+                                    )
+                                )
+                                )
+                            },
+                            focusChangeListener: { isSelected in
+                                viewModel.onAction(action: CreateAddressActionStreetFocusChange(isFocused: isSelected))
                             }
                         )
                         .focused($isTextFieldFocused)
                         
                         EditTextView(
                             hint: Strings.HINT_CREATION_ADDRESS_HOUSE,
-                            text: $house,
+                            text: $createAddressViewState.house,
                             limit: 5,
-                            hasError: $hasHouseError,
-                            errorMessage: "Введите номер дома",
-                            textChanged: { str in
-                                viewModel.viewModel.onHouseTextChanged(houseText: str)
+                            errorMessage: $createAddressViewState.houseError,
+                            textChanged: { changedValue in
+                                viewModel.onAction(action: CreateAddressActionHouseTextChange(house: changedValue))
                             }
                         )
                         .focused($isTextFieldFocused)
@@ -100,12 +97,11 @@ struct CreateAddressView: View {
                         
                         EditTextView(
                             hint: Strings.HINT_CREATION_ADDRESS_FLAT,
-                            text: $flat,
+                            text: $createAddressViewState.flat,
                             limit: 5,
-                            hasError: .constant(false),
-                            errorMessage: "Максимальная длина поля 5",
-                            textChanged: { str in
-                                viewModel.viewModel.onFlatTextChanged(flatText: str)
+                            errorMessage: .constant(nil),
+                            textChanged: { changedValue in
+                                viewModel.onAction(action: CreateAddressActionFlatTextChange(flat: changedValue))
                             }
                         )
                         .focused($isTextFieldFocused)
@@ -114,12 +110,11 @@ struct CreateAddressView: View {
                         
                         EditTextView(
                             hint: Strings.HINT_CREATION_ADDRESS_ENTRANCE,
-                            text: $entarance,
+                            text: $createAddressViewState.entrance,
                             limit: 5,
-                            hasError: .constant(false),
-                            errorMessage: "Максимальная длина поля 5",
-                            textChanged: { str in
-                                viewModel.viewModel.onEntranceTextChanged(entranceText: str)
+                            errorMessage: .constant(nil),
+                            textChanged: { changedValue in
+                                viewModel.onAction(action: CreateAddressActionEntranceTextChange(entrance: changedValue))
                             }
                         )
                         .focused($isTextFieldFocused)
@@ -128,12 +123,11 @@ struct CreateAddressView: View {
                         
                         EditTextView(
                             hint: Strings.HINT_CREATION_ADDRESS_FLOOR,
-                            text: $floor,
+                            text: $createAddressViewState.floor,
                             limit: 5,
-                            hasError: .constant(false),
-                            errorMessage: "Максимальная длина поля 5",
-                            textChanged: { str in
-                                viewModel.viewModel.onFloorTextChanged(floorText: str)
+                            errorMessage: .constant(nil),
+                            textChanged: { changedValue in
+                                viewModel.onAction(action: CreateAddressActionFloorTextChange(floor: changedValue))
                             }
                         )
                         .focused($isTextFieldFocused)
@@ -142,12 +136,11 @@ struct CreateAddressView: View {
                         
                         EditTextView(
                             hint: Strings.HINT_CREATION_ADDRESS_COMMENT,
-                            text: $comment,
+                            text: $createAddressViewState.comment,
                             limit: 100,
-                            hasError: .constant(false),
-                            errorMessage: "Максимальная длина поля 100",
-                            textChanged: { str in
-                                viewModel.viewModel.onCommentTextChanged(commentText: str)
+                            errorMessage: .constant(nil),
+                            textChanged: { changedValue in
+                                viewModel.onAction(action: CreateAddressActionCommentTextChange(comment: changedValue))
                             }
                         )
                         .focused($isTextFieldFocused)
@@ -159,16 +152,16 @@ struct CreateAddressView: View {
                     .padding(Diems.MEDIUM_PADDING)
                     .padding(.bottom, isTextFieldFocused ? 60 :  0)
                 }
-                                
+                
                 Button(
                     action: {
-                        viewModel.viewModel.onCreateAddressClicked()
+                        viewModel.onAction(action: CreateAddressActionSaveClick())
                     }
                 ) {
-                    if(createAddressState.isCreateLoading){
+                    if(createAddressViewState.isCreateLoading){
                         ProgressView()
                             .progressViewStyle(CircularProgressViewStyle(tint: AppColor.primary))
-                            .scaleEffect(1.5)
+                            .scaleEffect(1.2)
                     }else{
                         ButtonText(text: Strings.ACTION_CREATION_ADDRESS_ADD)
                     }
@@ -178,82 +171,103 @@ struct CreateAddressView: View {
             .padding(.bottom, Diems.MEDIUM_PADDING)
             .overlay(
                 overlayView: ToastView(
-                    toast: Toast(title: "Что-то пошло не так"),
-                    show: $showError,
+                    toast: Toast(title: "Не удалось добавить адрес"),
+                    show: $showCreateError,
                     backgroundColor: AppColor.error,
                     foregroundColor: AppColor.onError
                 ),
-                show: $showError
+                show: $showCreateError
             )
-            case is CreateAddressState.StateError : VStack(spacing:0){
-                let errorState = createAddressState.state as? CreateAddressState.StateError
-                switch(errorState?.throwable){
-                case is NoSelectedCityUuidException :  ErrorView(
-                    mainText: "Уупс, кажется, у вас не выбран город",
-                    extratext: "Зайдите в настройки, расположенные в профиле, там можно выбрать город",
-                    action: {
-                        viewModel.viewModel.getStreetList()
-                    })
-                case is NoUserUuidException :  ErrorView(
-                    mainText: "Уупс, кажется, у вас проблемы с авторизацией",
-                    extratext: "Зайдите в настройки, расположенные в профиле, там можной выйти и авторизоваться снова",
-                    action: {
-                        viewModel.viewModel.getStreetList()
-                    })
-                case is NoStreetByNameAndCityUuidException : ErrorView(
-                    mainText: "Ууупс, кажется мы не смогли добавить адрес",
-                    extratext: "Попробуйте добавить адрес еще раз",
-                    action: {
-                        viewModel.viewModel.getStreetList()
-                    }
-                )
-                default:
-                    ErrorView(
-                        mainText: "Не удается загрузить данные",
-                        extratext: "Проверьте соединение и повторите попытку",
-                        action: {
-                            viewModel.viewModel.getStreetList()
-                        })
-                }
-                
-            }
-            default : EmptyView()
-            }
+            .overlay(
+                overlayView: ToastView(
+                    toast: Toast(title: "Не удалось загрузить список улиц"),
+                    show: $showSuggetionLoadingError,
+                    backgroundColor: AppColor.error,
+                    foregroundColor: AppColor.onError
+                ),
+                show: $showSuggetionLoadingError
+            )
         }
         .hiddenNavigationBarStyle()
         .background(AppColor.background)
         .onAppear(){
-            viewModel.viewModel.getStreetList()
-            listener = viewModel.viewModel.streetListState.watch { createAddressStateVM in
-                if(createAddressStateVM != nil ){
-                    createAddressState = createAddressStateVM!
-                    hasStreetError = createAddressState.hasStreetError
-                    hasHouseError = createAddressState.hasHouseError
-                    filteredList = createAddressState.suggestedStreetList.map({ street in
+            subscribe()
+            eventsSubscribe()
+        }
+        .onDisappear(){
+            unsubscribe()
+        }
+    }
+    
+    func subscribe(){
+        viewModel.onAction(action: CreateAddressActionInit())
+        viewModel.dataState.watch { createAddressVM in
+            if let createAddressDataState =  createAddressVM {
+                print(createAddressDataState)
+                createAddressViewState = CreateAddressViewState(
+                    street: createAddressDataState.street,
+                    streetError: getStreetError(createAddressDataState: createAddressDataState),
+                    streetSuggestionList: createAddressDataState.streetSuggestionList.map({ streetItem in
                         StreetItem(
-                            id: street.id,
-                            name: street.value
+                            id: streetItem.id,
+                            name: streetItem.value,
+                            postfix: streetItem.postfix
                         )
-                    })
-                }
+                    }),
+                    isSuggestionLoading: createAddressDataState.isSuggestionLoading,
+                    house: createAddressDataState.house,
+                    houseError: getHouseError(createAddressDataState: createAddressDataState),
+                    flat: createAddressDataState.flat,
+                    entrance: createAddressDataState.entrance,
+                    floor: createAddressDataState.floor,
+                    comment: createAddressDataState.comment,
+                    isCreateLoading: createAddressDataState.isCreateLoading
+                )
+            }
+        }
+    }
+    
+    func getStreetError(createAddressDataState: CreateAddressDataState) -> LocalizedStringKey? {
+        if(createAddressDataState.hasStreetError){
+            return LocalizedStringKey("error_create_address_street")
+        }
+        return nil
+    }
+    
+    func getHouseError(createAddressDataState: CreateAddressDataState) -> LocalizedStringKey? {
+        if(createAddressDataState.hasHouseError){
+            return LocalizedStringKey("error_create_address_house")
+        }
+        return nil
+    }
+    
+    func eventsSubscribe(){
+        eventsListener = viewModel.events.watch(block: { _events in
+            if let events = _events{
+                let createAddressStateEvents = events as? [CreateAddressEvent] ?? []
                 
-                createAddressState.eventList.forEach { event in
+                createAddressStateEvents.forEach { event in
                     switch(event){
-                    case is CreateAddressStateEventAddressCreatedSuccess : self.presentationMode.wrappedValue.dismiss()
-                        show = true
-                    case is CreateAddressStateEventAddressCreatedFailed: showError = true
+                    case is CreateAddressEventBack : self.mode.wrappedValue.dismiss()
+                    case is CreateAddressEventAddressCreatedSuccess : self.mode.wrappedValue.dismiss()
+                    case is CreateAddressEventSuggestionLoadingFailed : showSuggetionLoadingError = true
+                    case is CreateAddressEventAddressCreatedFailed : showCreateError = true
                     default:
                         print("def")
                     }
                 }
                 
-                if !createAddressState.eventList.isEmpty{
-                    viewModel.viewModel.consumeEventList(eventList: createAddressState.eventList)
+                if !createAddressStateEvents.isEmpty {
+                    viewModel.consumeEvents(events: createAddressStateEvents)
                 }
             }
-        }.onDisappear(){
-            listener?.close()
-            listener = nil
-        }
+        })
+    }
+    
+    func unsubscribe(){
+        listener?.close()
+        listener = nil
+        eventsListener?.close()
+        eventsListener = nil
     }
 }

@@ -30,7 +30,7 @@ object Versions {
 
     const val dataStorePreferences = "1.0.0"
 
-    const val activity = "1.7.2"
+    const val activity = "1.8.1"
     const val fragment = "1.5.7"
     const val lifecycle = "2.6.1"
 
@@ -47,6 +47,8 @@ object Versions {
     const val pinEntryEditText = "2.0.6"
 
     const val kaspresso = "1.5.3"
+
+    const val collectionsImmutable = "0.3.7"
 }
 
 object Namespace {
@@ -55,35 +57,32 @@ object Namespace {
 }
 
 object CommonApplication {
-    const val versionMajor = 1
-    const val versionMinor = 7
-    const val versionPatch = 0
+    const val versionMajor = 2
+    const val versionMinor = 0
+    const val versionPatch = 2
 
-    const val versionCode = 170
+    const val versionCode = 202
+    const val versionName = "$versionMajor.$versionMinor.$versionPatch"
 }
 
 object PapaKarloApplication {
-    const val versionName =
-        "${CommonApplication.versionMajor}.${CommonApplication.versionMinor}.${CommonApplication.versionPatch}"
     const val applicationId = "com.bunbeuaty.papakarlo"
 }
 
 object YuliarApplication {
-    const val versionName =
-        "${CommonApplication.versionMajor}.${CommonApplication.versionMinor}.${CommonApplication.versionPatch}"
     const val applicationId = "com.bunbeuaty.yuliar"
 }
 
 object DjanApplication {
-    const val versionName =
-        "${CommonApplication.versionMajor}.${CommonApplication.versionMinor}.${CommonApplication.versionPatch}"
     const val applicationId = "com.bunbeauty.djan"
 }
 
 object GustoPubApplication {
-    const val versionName =
-        "${CommonApplication.versionMajor}.${CommonApplication.versionMinor}.${CommonApplication.versionPatch}"
     const val applicationId = "com.bunbeauty.gustopub"
+}
+
+object TandirHouseApplication {
+    const val applicationId = "com.bunbeauty.tandirhouse"
 }
 
 object AndroidSdk {
@@ -266,4 +265,9 @@ object Kaspresso {
         "com.kaspersky.android-components:kaspresso-allure-support:${Versions.kaspresso}"
     const val kaspressoComposeSupport =
         "com.kaspersky.android-components:kaspresso-compose-support:${Versions.kaspresso}"
+}
+
+object CollectionsImmutable {
+    const val collectionsImmutable =
+        "org.jetbrains.kotlinx:kotlinx-collections-immutable:${Versions.collectionsImmutable}"
 }

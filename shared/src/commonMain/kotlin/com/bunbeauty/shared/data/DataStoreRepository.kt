@@ -8,7 +8,7 @@ import com.bunbeauty.shared.domain.model.UserCityUuid
 import kotlinx.coroutines.flow.Flow
 import org.koin.core.component.KoinComponent
 
-expect class DataStoreRepository: DataStoreRepo, KoinComponent {
+expect class DataStoreRepository : DataStoreRepo, KoinComponent {
 
     override val token: Flow<String?>
     override suspend fun getToken(): String?
@@ -36,4 +36,8 @@ expect class DataStoreRepository: DataStoreRepo, KoinComponent {
 
     override fun observeUserAndCityUuid(): Flow<UserCityUuid>
     override suspend fun getUserAndCityUuid(): UserCityUuid
+
+    override val recommendationMaxVisible: Flow<Int?>
+    override suspend fun getRecommendationMaxVisible(): Int?
+    override suspend fun saveRecommendationMaxVisible(recommendationMaxVisible: Int)
 }

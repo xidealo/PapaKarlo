@@ -8,7 +8,7 @@
 import SwiftUI
 import shared
 
-struct OrderItem :Identifiable {
+struct OrderItem : Identifiable {
     let id:String
     let status:OrderStatus
     let code:String

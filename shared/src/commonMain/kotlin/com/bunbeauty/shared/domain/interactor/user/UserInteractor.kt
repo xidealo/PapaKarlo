@@ -3,11 +3,11 @@ package com.bunbeauty.shared.domain.interactor.user
 import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.domain.CommonFlow
 import com.bunbeauty.shared.domain.asCommonFlow
-import com.bunbeauty.shared.domain.exeptions.NotAuthorizeException
 import com.bunbeauty.shared.domain.model.profile.Profile
 import com.bunbeauty.shared.domain.model.profile.User
 import com.bunbeauty.shared.domain.repo.OrderRepo
 import com.bunbeauty.shared.domain.repo.UserRepo
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
@@ -17,19 +17,6 @@ class UserInteractor(
     private val orderRepo: OrderRepo,
     private val dataStoreRepo: DataStoreRepo,
 ) : IUserInteractor {
-
-    @Throws(Throwable::class)
-    override suspend fun login(firebaseUserUuid: String?, firebaseUserPhone: String?) {
-        if (firebaseUserUuid != null && firebaseUserPhone != null) {
-            val loginResponse = userRepo.login(firebaseUserUuid, firebaseUserPhone)
-            if (loginResponse != null) {
-                dataStoreRepo.saveToken(loginResponse.token)
-                dataStoreRepo.saveUserUuid(loginResponse.userUuid)
-            } else {
-                throw NotAuthorizeException()
-            }
-        }
-    }
 
     override suspend fun clearUserCache() {
         userRepo.clearUserCache()
@@ -46,6 +33,7 @@ class UserInteractor(
         }.asCommonFlow()
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     override fun observeUser(): Flow<User?> {
         return dataStoreRepo.userUuid.flatMapLatest { userUuid ->
             userRepo.observeUserByUuid(userUuid ?: "")

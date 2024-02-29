@@ -10,7 +10,7 @@ internal fun domainMapperModule() = module {
         LightOrderMapper()
     }
     factory {
-        UserAddressMapper(streetMapper = get())
+        UserAddressMapper()
     }
     factory {
         CreateOrderStateMapper()

@@ -9,13 +9,14 @@ CREATE TABLE menuProductEntity (
     comboDescription TEXT,
     photoLink TEXT NOT NULL,
     barcode INTEGER AS Int,
-    visible INTEGER AS Boolean NOT NULL
+    visible INTEGER AS Boolean NOT NULL,
+    isRecommended INTEGER AS Boolean NOT NULL
 );
 
 CREATE VIEW menuProductWithCategoryEntity AS
 SELECT categoryEntity.uuid AS categoryUuid,
     categoryEntity.name AS categoryName,
-    categoryEntity.priority,
+    categoryEntity.priority AS categoryPriority,
     menuProductEntity.*
 FROM menuProductEntity
 JOIN menuProductCategoryReference ON menuProductCategoryReference.menuProductUuidReference = menuProductEntity.uuid
@@ -24,7 +25,7 @@ JOIN categoryEntity ON menuProductCategoryReference.categoryUuidReference = cate
 insertMenuProduct:
 INSERT OR REPLACE
 INTO menuProductEntity
-VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
 
 getMenuProductList:
 SELECT *
@@ -33,4 +34,9 @@ FROM menuProductWithCategoryEntity;
 getMenuProductByUuid:
 SELECT *
 FROM menuProductEntity
+WHERE uuid = :uuid;
+
+getMenuProductWithCategoryListByUuid:
+SELECT *
+FROM menuProductWithCategoryEntity
 WHERE uuid = :uuid;

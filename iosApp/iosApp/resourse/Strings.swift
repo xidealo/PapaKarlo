@@ -9,7 +9,7 @@ import Foundation
 
 class Strings{
 
-    static let ACTION_PRODUCT_DETAILS_ADD = "Добавить"
+    static let ACTION_PRODUCT_DETAILS_ADD = "Добавить за "
     static let ACTION_MENU_PRODUCT_WANT = "Хочу"
     static let ACTION_RETRU = "Повторить попытку"
 

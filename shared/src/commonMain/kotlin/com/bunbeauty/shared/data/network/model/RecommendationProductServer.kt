@@ -4,19 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class RecommendationProductListServer(
+data class RecommendationDataServer(
     @SerialName("maxVisibleCount")
-    val maxVisibleCount: Int,
-    @SerialName("recommendationList")
-    val recommendationList: List<RecommendationProductServer>,
-)
-
-@Serializable
-data class RecommendationProductServer(
-    @SerialName("uuid")
-    val uuid: String,
-    @SerialName("menuProduct")
-    val menuProduct: MenuProductServer,
-    @SerialName("isVisible")
-    val isVisible: Boolean,
+    val maxVisibleCount: Int
 )

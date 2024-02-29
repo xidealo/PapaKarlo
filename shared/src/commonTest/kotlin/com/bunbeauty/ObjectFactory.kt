@@ -1,8 +1,9 @@
 package com.bunbeauty
 
-import com.bunbeauty.shared.domain.model.RecommendationProduct
-import com.bunbeauty.shared.domain.model.RecommendationProductList
+import com.bunbeauty.shared.domain.model.addition.Addition
+import com.bunbeauty.shared.domain.model.addition.AdditionGroup
 import com.bunbeauty.shared.domain.model.cart.CartProduct
+import com.bunbeauty.shared.domain.model.addition.CartProductAddition
 import com.bunbeauty.shared.domain.model.category.Category
 import com.bunbeauty.shared.domain.model.product.MenuProduct
 
@@ -11,6 +12,9 @@ fun getMenuProduct(
     newPrice: Int = 0,
     oldPrice: Int? = null,
     categoryList: List<Category> = emptyList(),
+    isRecommended: Boolean = false,
+    visible: Boolean = true,
+    additionGroups: List<AdditionGroup> = emptyList(),
 ) = MenuProduct(
     uuid = uuid,
     name = "Kapusta",
@@ -22,13 +26,21 @@ fun getMenuProduct(
     comboDescription = "",
     photoLink = "",
     categoryList = categoryList,
-    visible = true,
+    visible = visible,
+    isRecommended = isRecommended,
+    additionGroups = additionGroups,
 )
 
-fun getCartProduct(uuid: String = "1", count: Int = 0, menuProduct: MenuProduct) = CartProduct(
+fun getCartProduct(
+    uuid: String = "1",
+    count: Int = 0,
+    menuProduct: MenuProduct = getMenuProduct(),
+    cartProductAdditionList: List<CartProductAddition> = emptyList(),
+) = CartProduct(
     uuid = uuid,
     count = count,
     product = menuProduct,
+    additionList = cartProductAdditionList
 )
 
 fun getCategoryProduct(uuid: String, name: String = "", priority: Int = 0) = Category(
@@ -37,20 +49,47 @@ fun getCategoryProduct(uuid: String, name: String = "", priority: Int = 0) = Cat
     priority = priority
 )
 
-fun getRecommendationProductList(
-    maxVisibleCount: Int = 0,
-    recommendationProductList: List<RecommendationProduct> = emptyList(),
-) = RecommendationProductList(
-    maxVisibleCount = maxVisibleCount,
-    recommendationProductList = recommendationProductList
+fun getCartProductAddition(uuid: String = "1", additionUuid: String = "1", price: Int? = 100) =
+    CartProductAddition(
+        uuid = uuid,
+        name = "",
+        fullName = null,
+        price = price,
+        cartProductUuid = "",
+        additionUuid = additionUuid,
+        priority = null
+    )
+
+fun getAddition(
+    uuid: String = "1",
+    priority: Int = 0,
+    additionGroupUuid: String = "",
+    isVisible: Boolean = true,
+    price: Int? = 0,
+    isSelected: Boolean = false,
+) = Addition(
+    uuid = uuid,
+    name = "",
+    fullName = null,
+    price = price,
+    isSelected = isSelected,
+    isVisible = isVisible,
+    photoLink = "",
+    additionGroupUuid = additionGroupUuid,
+    priority = priority
 )
 
-fun getRecommendationProduct(
-    uuid: String,
-    menuProduct: MenuProduct,
+fun getAdditionGroup(
+    uuid: String = "1",
+    priority: Int = 0,
+    additions: List<Addition> = emptyList(),
     isVisible: Boolean = true,
-) = RecommendationProduct(
+    singleChoice: Boolean = false,
+) = AdditionGroup(
     uuid = uuid,
-    menuProduct = menuProduct,
-    isVisible = isVisible
+    name = "",
+    isVisible = isVisible,
+    priority = priority,
+    additionList = additions,
+    singleChoice = singleChoice
 )

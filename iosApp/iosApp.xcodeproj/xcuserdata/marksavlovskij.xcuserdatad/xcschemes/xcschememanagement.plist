@@ -12,12 +12,17 @@
 		<key>gustoPub.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>24</integer>
+			<integer>3</integer>
 		</dict>
 		<key>papakarlo.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
+		</dict>
+		<key>tandirhouse.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>28</integer>
 		</dict>
 		<key>yuliar.xcscheme_^#shared#^_</key>
 		<dict>
@@ -27,6 +32,11 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>0219B78D2B8FB97C00305E2D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>026C1F502A2690B900838266</key>
 		<dict>
 			<key>primary</key>

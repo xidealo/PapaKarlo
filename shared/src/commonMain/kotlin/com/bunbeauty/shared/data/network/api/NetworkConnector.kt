@@ -13,10 +13,10 @@ import com.bunbeauty.shared.data.network.model.ListServer
 import com.bunbeauty.shared.data.network.model.MenuProductServer
 import com.bunbeauty.shared.data.network.model.PaymentMethodServer
 import com.bunbeauty.shared.data.network.model.PaymentServer
-import com.bunbeauty.shared.data.network.model.RecommendationProductListServer
-import com.bunbeauty.shared.data.network.model.RecommendationProductServer
+import com.bunbeauty.shared.data.network.model.RecommendationDataServer
 import com.bunbeauty.shared.data.network.model.SettingsServer
 import com.bunbeauty.shared.data.network.model.StreetServer
+import com.bunbeauty.shared.data.network.model.SuggestionServer
 import com.bunbeauty.shared.data.network.model.UserAddressPostServer
 import com.bunbeauty.shared.data.network.model.login.AuthResponseServer
 import com.bunbeauty.shared.data.network.model.login.AuthSessionServer
@@ -41,6 +41,11 @@ interface NetworkConnector {
     suspend fun getStreetListByCityUuid(cityUuid: String): ApiResult<ListServer<StreetServer>>
     suspend fun getDelivery(): ApiResult<DeliveryServer>
     suspend fun getDiscount(): ApiResult<DiscountServer>
+    suspend fun getSuggestions(
+        token: String,
+        query: String,
+        cityUuid: String,
+    ): ApiResult<ListServer<SuggestionServer>>
 
     suspend fun getUserAddressListByCityUuid(
         token: String,
@@ -58,7 +63,7 @@ interface NetworkConnector {
     suspend fun getSettings(token: String): ApiResult<SettingsServer>
     suspend fun getPaymentMethodList(): ApiResult<ListServer<PaymentMethodServer>>
     suspend fun getLinkList(): ApiResult<ListServer<LinkServer>>
-    suspend fun getRecommendationList(): ApiResult<RecommendationProductListServer>
+    suspend fun getRecommendationData(): ApiResult<RecommendationDataServer>
 
     @Deprecated("Outdated login method")
     suspend fun postLogin(loginPostServer: LoginPostServer): ApiResult<AuthResponseServer>

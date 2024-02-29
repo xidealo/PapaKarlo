@@ -7,6 +7,10 @@ import com.squareup.sqldelight.db.SqlDriver
 
 actual class DatabaseDriverFactory(private val context: Context) {
     actual fun createDriver(): SqlDriver {
-        return AndroidSqliteDriver(FoodDeliveryDatabase.Schema, context, "foodDelivery.db")
+        return AndroidSqliteDriver(
+            schema = FoodDeliveryDatabase.Schema,
+            context = context,
+            name = "foodDelivery.db",
+        )
     }
 }

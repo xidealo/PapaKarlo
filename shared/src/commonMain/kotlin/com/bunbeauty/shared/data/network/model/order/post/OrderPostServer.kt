@@ -61,4 +61,7 @@ class OrderProductPostServer(
 
     @SerialName("menuProductUuid")
     val menuProductUuid: String,
+
+    @SerialName("additionUuids")
+    val additionUuids: List<String>,
 )

@@ -1,6 +1,5 @@
 package com.bunbeauty.shared.data.di
 
-import com.bunbeauty.shared.data.mapper.RecommendationMapper
 import com.bunbeauty.shared.data.mapper.SettingsMapper
 import com.bunbeauty.shared.data.mapper.cafe.CafeMapper
 import com.bunbeauty.shared.data.mapper.cafe.ICafeMapper
@@ -18,28 +17,24 @@ import com.bunbeauty.shared.data.mapper.order_product.OrderProductMapper
 import com.bunbeauty.shared.data.mapper.payment.PaymentMethodMapper
 import com.bunbeauty.shared.data.mapper.profile.IProfileMapper
 import com.bunbeauty.shared.data.mapper.profile.ProfileMapper
-import com.bunbeauty.shared.data.mapper.street.IStreetMapper
-import com.bunbeauty.shared.data.mapper.street.StreetMapper
 import com.bunbeauty.shared.data.mapper.user.IUserMapper
 import com.bunbeauty.shared.data.mapper.user.UserMapper
 import org.koin.dsl.module
 
 fun dataMapperModule() = module {
-    single<ICafeMapper> { CafeMapper() }
-    single<IMenuProductMapper> { MenuProductMapper() }
-    single<ICartProductMapper> { CartProductMapper() }
-    single<IProfileMapper> {
+    factory<ICafeMapper> { CafeMapper() }
+    factory<IMenuProductMapper> { MenuProductMapper() }
+    factory<ICartProductMapper> { CartProductMapper() }
+    factory<IProfileMapper> {
         ProfileMapper(
             userAddressMapper = get(),
             orderMapper = get()
         )
     }
-    single<IUserMapper> { UserMapper() }
-    single<IStreetMapper> { StreetMapper() }
-    single<ICityMapper> { CityMapper() }
-    single<IOrderMapper> { OrderMapper(orderProductMapper = get(), dateTimeUtil = get()) }
-    single<IOrderProductMapper> { OrderProductMapper() }
-    factory { RecommendationMapper(menuProductMapper = get()) }
+    factory<IUserMapper> { UserMapper() }
+    factory<ICityMapper> { CityMapper() }
+    factory<IOrderMapper> { OrderMapper(orderProductMapper = get(), dateTimeUtil = get()) }
+    factory<IOrderProductMapper> { OrderProductMapper() }
     factory {
         SettingsMapper()
     }

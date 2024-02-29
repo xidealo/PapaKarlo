@@ -12,6 +12,7 @@ import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 fun DiscountCard(discount: String) {
     FoodDeliveryCard(
         colors = FoodDeliveryCardDefaults.cardStatusColors,
+        shape = FoodDeliveryCardDefaults.smallCardShape,
         elevated = false,
         clickable = false
     ) {

@@ -103,6 +103,13 @@
         <argument
             android:name="productDetailsOpenedFrom"
             app:argType="com.bunbeauty.shared.presentation.product_details.ProductDetailsOpenedFrom" />
+        <argument
+            android:name="additionUuidList"
+            app:argType="string[]" />
+        <argument
+            android:name="cartProductUuid"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
 
     <!-- PROFILE -->

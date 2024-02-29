@@ -13,29 +13,29 @@ class OrderProductItem: NSObject, Identifiable {
     var id: String
     var name: String
     var newPrice: String
-    var oldPrice: String?
     var newCost: String
-    var oldCost: String?
     var photoLink: String
     var count: String
+    var additions:String
+    var isLast:Bool
     
     init(
         id:String,
         name:String,
         newPrice:String,
-        oldPrice:String?,
         newCost:String,
-        oldCost:String?,
         photoLink:String,
-        count:String
+        count:String,
+        additions:String,
+        isLast:Bool
     ){
         self.id = id
         self.name = name
         self.newPrice = newPrice
-        self.oldPrice = oldPrice
         self.newCost = newCost
-        self.oldCost = oldCost
         self.photoLink = photoLink
         self.count = count
+        self.additions = additions
+        self.isLast = isLast
     }
 }

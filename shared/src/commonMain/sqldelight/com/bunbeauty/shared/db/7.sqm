@@ -1,0 +1,3 @@
+ALTER TABLE menuProductEntity ADD COLUMN isRecommended INTEGER DEFAULT 0;
+DROP TABLE IF EXISTS recommendationProductEntity;
+DROP VIEW IF EXISTS recommendationProductWithMenuProductEntity;

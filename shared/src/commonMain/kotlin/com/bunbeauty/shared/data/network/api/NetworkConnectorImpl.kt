@@ -3,6 +3,7 @@ package com.bunbeauty.shared.data.network.api
 import com.bunbeauty.shared.Constants.AUTHORIZATION_HEADER
 import com.bunbeauty.shared.Constants.CITY_UUID_PARAMETER
 import com.bunbeauty.shared.Constants.COMPANY_UUID_PARAMETER
+import com.bunbeauty.shared.Constants.QUERY_PARAMETER
 import com.bunbeauty.shared.Constants.UUID_PARAMETER
 import com.bunbeauty.shared.data.companyUuid
 import com.bunbeauty.shared.data.network.ApiError
@@ -19,10 +20,10 @@ import com.bunbeauty.shared.data.network.model.ListServer
 import com.bunbeauty.shared.data.network.model.MenuProductServer
 import com.bunbeauty.shared.data.network.model.PaymentMethodServer
 import com.bunbeauty.shared.data.network.model.PaymentServer
-import com.bunbeauty.shared.data.network.model.RecommendationProductListServer
-import com.bunbeauty.shared.data.network.model.RecommendationProductServer
+import com.bunbeauty.shared.data.network.model.RecommendationDataServer
 import com.bunbeauty.shared.data.network.model.SettingsServer
 import com.bunbeauty.shared.data.network.model.StreetServer
+import com.bunbeauty.shared.data.network.model.SuggestionServer
 import com.bunbeauty.shared.data.network.model.UserAddressPostServer
 import com.bunbeauty.shared.data.network.model.login.AuthResponseServer
 import com.bunbeauty.shared.data.network.model.login.AuthSessionServer
@@ -115,12 +116,27 @@ class NetworkConnectorImpl(
         )
     }
 
+    override suspend fun getSuggestions(
+        token: String,
+        query: String,
+        cityUuid: String
+    ): ApiResult<ListServer<SuggestionServer>> {
+        return getData(
+            path = "street/suggestions",
+            parameters = mapOf(
+                QUERY_PARAMETER to query,
+                CITY_UUID_PARAMETER to cityUuid,
+            ),
+            token = token
+        )
+    }
+
     override suspend fun getUserAddressListByCityUuid(
         token: String,
         cityUuid: String,
     ): ApiResult<ListServer<AddressServer>> {
         return getData(
-            path = "address",
+            path = "v2/address",
             parameters = mapOf(CITY_UUID_PARAMETER to cityUuid),
             token = token
         )
@@ -180,7 +196,7 @@ class NetworkConnectorImpl(
         )
     }
 
-    override suspend fun getRecommendationList(): ApiResult<RecommendationProductListServer> {
+    override suspend fun getRecommendationData(): ApiResult<RecommendationDataServer> {
         return getData(
             path = "recommendation",
             parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuid)
@@ -201,7 +217,7 @@ class NetworkConnectorImpl(
         userAddress: UserAddressPostServer,
     ): ApiResult<AddressServer> {
         return postData(
-            path = "address",
+            path = "v2/address",
             body = userAddress,
             token = token
         )
@@ -209,7 +225,7 @@ class NetworkConnectorImpl(
 
     override suspend fun postOrder(token: String, order: OrderPostServer): ApiResult<OrderServer> {
         return postData(
-            path = "v2/order",
+            path = "v3/order",
             body = order,
             token = token
         )

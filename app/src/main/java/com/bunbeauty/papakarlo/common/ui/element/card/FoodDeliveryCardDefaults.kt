@@ -5,6 +5,7 @@ import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CardElevation
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 
@@ -16,13 +17,22 @@ object FoodDeliveryCardDefaults {
             disabledContainerColor = FoodDeliveryTheme.colors.mainColors.surface
         )
 
+    val transparentCardColors: CardColors
+        @Composable get() = CardDefaults.cardColors(
+            containerColor = Color.Transparent,
+            disabledContainerColor = Color.Transparent
+        )
+
     val cardStatusColors: CardColors
         @Composable get() = CardDefaults.cardColors(
             containerColor = FoodDeliveryTheme.colors.statusColors.positive
         )
 
     val cardShape: RoundedCornerShape
-        @Composable get() = RoundedCornerShape(FoodDeliveryTheme.dimensions.cardRadius)
+        @Composable get() = RoundedCornerShape(8.dp)
+
+    val smallCardShape: RoundedCornerShape
+        @Composable get() = RoundedCornerShape(4.dp)
 
     @Composable
     fun getCardElevation(elevated: Boolean): CardElevation = if (elevated) {

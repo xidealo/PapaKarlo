@@ -15,7 +15,6 @@ data class AppDimensions(
     val switcherRadius: Dp = 24.dp,
     val switcherButtonRadius: Dp = 20.dp,
 
-    val cardRadius: Dp = 8.dp,
     val cardMediumInnerSpace: Dp = 12.dp,
     val cardLargeInnerSpace: Dp = 16.dp,
 
@@ -39,13 +38,4 @@ data class AppDimensions(
     val smallProgressBarSize: Dp = 24.dp,
     val smsEditTextWidth: Dp = 320.dp,
     val scrollScreenBottomSpace: Dp = buttonHeight + 32.dp
-) {
-    @Deprecated("use arrangement")
-    fun getItemSpaceByIndex(i: Int): Dp {
-        return if (i == 0) {
-            0.dp
-        } else {
-            smallSpace
-        }
-    }
-}
+)

@@ -69,6 +69,8 @@ internal class MenuProductInteractorTest {
                         )
                     ),
                     visible = true,
+                    isRecommended = false,
+                    additionGroups = emptyList()
                 ),
                 MenuProduct(
                     uuid = "uuid2",
@@ -88,6 +90,8 @@ internal class MenuProductInteractorTest {
                         )
                     ),
                     visible = false,
+                    isRecommended = false,
+                    additionGroups = emptyList()
                 ),
                 MenuProduct(
                     uuid = "uuid3",
@@ -107,6 +111,8 @@ internal class MenuProductInteractorTest {
                         )
                     ),
                     visible = false,
+                    isRecommended = false,
+                    additionGroups = emptyList()
                 ),
             )
     }
