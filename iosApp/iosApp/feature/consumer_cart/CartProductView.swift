@@ -45,7 +45,7 @@ struct CartProductView: View {
                 ),
             isActive: $openProductDetails
         ){
-            HStack(spacing:0){
+            HStack(alignment: .top, spacing:0){
                 KFImage(URL(string: cartProductItem.photoLink))
                     .resizable()
                     .aspectRatio(contentMode: .fit)
@@ -63,7 +63,8 @@ struct CartProductView: View {
                         Text(additions)
                             .bodySmall()
                             .lineLimit(nil)
-                            .frame(maxWidth:.infinity, alignment: .topLeading)
+                            .multilineTextAlignment(.leading)
+                            .frame(maxWidth:.infinity, alignment: .leading)
                             .foregroundColor(AppColor.onSurfaceVariant)
                             .padding(.top, 4)
                     }
@@ -91,7 +92,7 @@ struct CartProductView: View {
                     .padding(.top, 4)
                     
                 }
-                .frame(maxHeight: Diems.IMAGE_ELEMENT_HEIGHT, alignment: .topLeading)
+                .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.leading, Diems.SMALL_PADDING)
             }.frame(maxWidth:.infinity, alignment: .topLeading)
         }.isDetailLink(false)

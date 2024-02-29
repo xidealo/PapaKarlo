@@ -245,31 +245,30 @@ struct OrderProductItemView :View {
     var orderProductItem:OrderProductItem
     
     var body: some View {
-        HStack(spacing: 0){
+        HStack(alignment: .top, spacing: 0){
             KFImage(URL(string: orderProductItem.photoLink))
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(maxWidth: Diems.IMAGE_ELEMENT_WIDTH, maxHeight: Diems.IMAGE_ELEMENT_HEIGHT)
-            
+                .cornerRadius(Diems.MEDIUM_RADIUS)
+
             VStack(spacing:0){
                 Text(orderProductItem.name)
                     .titleSmall(weight: .bold)
                     .frame(maxWidth:.infinity, alignment: .topLeading)
                     .foregroundColor(AppColor.onSurface)
-                    .padding(.top, 8)
-                
-                Text(orderProductItem.additions)
-                    .bodySmall(weight: .regular)
-                    .frame(maxWidth:.infinity, alignment: .topLeading)
-                    .foregroundColor(AppColor.onSurfaceVariant)
-                    .padding(.top, 4)
-                
-                Spacer()
-                
+
+                if(!orderProductItem.additions.isEmpty){
+                    Text(orderProductItem.additions)
+                        .bodySmall(weight: .regular)
+                        .frame(maxWidth:.infinity, alignment: .topLeading)
+                        .foregroundColor(AppColor.onSurfaceVariant)
+                        .padding(.top, 4)
+                }
+           
                 HStack(spacing:0){
-                    
                     Text(orderProductItem.newPrice)
-                        .bodySmall(weight: .bold)
+                        .bodySmall()
                         .foregroundColor(AppColor.onSurface)
                     
                     Text(" × ")
@@ -288,9 +287,10 @@ struct OrderProductItemView :View {
                     .frame(maxWidth:.infinity, alignment: .topTrailing)
                     .padding(.trailing, Diems.SMALL_PADDING)
                 }
+                .padding(.top, 4)
                 .padding(.bottom, 8)
             }
-            .frame(maxHeight: Diems.IMAGE_ELEMENT_HEIGHT)
+            .frame(maxWidth: .infinity, alignment:.top)
             .padding(.leading, Diems.SMALL_PADDING)
         }.frame(maxWidth:.infinity, alignment: .topLeading)
             .background(AppColor.surface)

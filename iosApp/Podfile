@@ -32,3 +32,7 @@ end
 target 'gustopub' do
   default_pods
 end
+
+target 'tandirhouse' do
+  default_pods
+end
