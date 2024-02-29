@@ -62,21 +62,13 @@ getOrderListByUserUuid:
 SELECT *
 FROM orderEntity
 WHERE userUuid = :userUuid
-ORDER BY time DESC;
+ORDER BY time DESC
+LIMIT :count;
 
 getOrderWithProductByUuid:
 SELECT *
 FROM orderWithProductEntity
 WHERE uuid = :uuid;
-
-getLastOrderWithProductListByUserUuid:
-SELECT *
-FROM orderEntity
-WHERE userUuid = :userUuid AND time = (
-    SELECT MAX(time)
-    FROM orderEntity
-    WHERE userUuid = :userUuid
-);
 
 updateOrderStatusByUuid:
 UPDATE orderEntity
