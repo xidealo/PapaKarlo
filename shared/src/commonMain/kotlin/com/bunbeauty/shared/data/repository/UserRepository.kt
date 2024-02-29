@@ -74,7 +74,10 @@ class UserRepository(
         return userDao.getUserByUuid(userUuid)?.let { userEntity ->
             val userAddressCount =
                 userAddressDao.getUserAddressCountByUserAndCityUuid(userUuid, cityUuid)
-            val lastOrderEntity = orderDao.getLastOrderByUserUuid(userUuid)
+            val lastOrderEntity = orderDao.getOrderListByUserUuid(
+                userUuid = userUuid,
+                count = 1
+            ).firstOrNull()
             profileMapper.toProfile(
                 userUuid = userEntity.uuid,
                 userAddressCount = userAddressCount,

@@ -4,8 +4,8 @@ import com.bunbeauty.shared.data.dao.order.IOrderDao
 import com.bunbeauty.shared.data.dao.order_addition.IOrderAdditionDao
 import com.bunbeauty.shared.data.dao.order_product.IOrderProductDao
 import com.bunbeauty.shared.data.mapper.order.IOrderMapper
-import com.bunbeauty.shared.data.mapper.orderaddition.mapOrderAdditionServerToOrderAdditionEntity
 import com.bunbeauty.shared.data.mapper.order_product.mapOrderProductServerToOrderProductEntity
+import com.bunbeauty.shared.data.mapper.orderaddition.mapOrderAdditionServerToOrderAdditionEntity
 import com.bunbeauty.shared.data.network.api.NetworkConnector
 import com.bunbeauty.shared.data.network.model.order.get.OrderProductServer
 import com.bunbeauty.shared.data.network.model.order.get.OrderServer
@@ -16,11 +16,12 @@ import com.bunbeauty.shared.domain.model.order.Order
 import com.bunbeauty.shared.domain.model.order.OrderCode
 import com.bunbeauty.shared.domain.repo.OrderRepo
 import com.bunbeauty.shared.extension.getNullableResult
-import io.ktor.http.HttpHeaders
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
+
+private const val ORDER_LIMIT = 30
 
 class OrderRepository(
     private val orderDao: IOrderDao,
@@ -63,9 +64,15 @@ class OrderRepository(
     }
 
     override suspend fun getOrderListByUserUuid(token: String, userUuid: String): List<LightOrder> {
-        return networkConnector.getOrderList(token = token).getNullableResult(
+        return networkConnector.getOrderList(
+            token = token,
+            count = ORDER_LIMIT
+        ).getNullableResult(
             onError = {
-                orderDao.getOrderListByUserUuid(userUuid).map(orderMapper::toLightOrder)
+                orderDao.getOrderListByUserUuid(
+                    userUuid = userUuid,
+                    count = ORDER_LIMIT
+                ).map(orderMapper::toLightOrder)
             },
             onSuccess = { orderServerList ->
                 saveOrderListLocally(orderServerList.results)
@@ -80,9 +87,16 @@ class OrderRepository(
         token: String,
         userUuid: String,
     ): LightOrder? {
-        return networkConnector.getOrderList(token = token, count = 1).getNullableResult(
+        return networkConnector.getOrderList(
+            token = token,
+            count = 1
+        ).getNullableResult(
             onError = {
-                orderDao.getLastOrderByUserUuid(userUuid)?.let(orderMapper::toLightOrder)
+                orderDao.getOrderListByUserUuid(
+                    userUuid = userUuid,
+                    count = 1
+                ).firstOrNull()
+                    ?.let(orderMapper::toLightOrder)
             },
             onSuccess = { orderServerList ->
                 val lastOrderServer = orderServerList.results.firstOrNull()
