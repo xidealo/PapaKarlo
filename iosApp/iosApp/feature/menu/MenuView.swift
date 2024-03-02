@@ -35,18 +35,18 @@ struct MenuView: View {
                 ScrollView(.horizontal, showsIndicators:false) {
                     ScrollViewReader{ scrollReader in
                         HStack(spacing:0){
-                            ForEach(Array(viewModel.menuViewState.categoryItemModels.enumerated()), id: \.offset){ index, categoryItemModel in
+                            ForEach(Array(viewModel.menuCategoryViewState.categoryItems.enumerated()), id: \.offset){ index, categoryItemModel in
                                 CategoryItemView(
                                     categoryItemModel: categoryItemModel,
                                     action: viewModel.seletTagWithScroll
                                 )
                                 .padding(.horizontal, Diems.HALF_SMALL_PADDING)
                                 .padding(.leading, index == 0 ? 12 : 0)
-                                .padding(.trailing, index == viewModel.menuViewState.categoryItemModels.count - 1 ? 12 : 0)
+                                .padding(.trailing, index == viewModel.menuCategoryViewState.categoryItems.count - 1 ? 12 : 0)
                                 .id(categoryItemModel.id)
                             }
                         }
-                        .onChange(of: viewModel.menuViewState, perform: { menuState in
+                        .onChange(of: viewModel.menuCategoryViewState, perform: { menuState in
                             withAnimation(.spring()){
                                 scrollReader.scrollTo(menuState.scrollToHorizontalPostion)
                             }

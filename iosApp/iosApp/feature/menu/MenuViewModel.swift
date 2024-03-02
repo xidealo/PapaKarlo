@@ -12,10 +12,14 @@ class MenuViewModel : ObservableObject {
     
     @Published var menuViewState: MenuViewState = MenuViewState(
         menuItems: [],
-        categoryItemModels: [],
         isLoading: true,
         scrollToHorizontalPostion: "",
         discount: nil
+    )
+    
+    @Published var menuCategoryViewState: MenuCategoryViewState = MenuCategoryViewState(
+        categoryItems: [],
+        scrollToHorizontalPostion: ""
     )
     
     @Published var scrollToPostion = "no pos"
@@ -33,11 +37,15 @@ class MenuViewModel : ObservableObject {
             }
             
             DispatchQueue.main.async {
+                self.menuCategoryViewState = MenuCategoryViewState(
+                    categoryItems: self.getCategoryItems(menuSectionList: menuSectionList ?? []),
+                    scrollToHorizontalPostion: ""
+                )
+                
                 iosComponent.provideGetDiscountUseCase().invoke { discount, err in
                     (self.menuViewState.copy() as! MenuViewState).apply { copiedState in
                         copiedState.isLoading = false
                         copiedState.menuItems = self.getMenuItems(menuSectionList: menuSectionList ?? [])
-                        copiedState.categoryItemModels = self.getCategoryItems(menuSectionList: menuSectionList ?? [])
                         if let notNullDiscount = discount?.firstOrderDiscount {
                             copiedState.discount = "\(notNullDiscount)"
                         }
@@ -84,74 +92,81 @@ class MenuViewModel : ObservableObject {
         }
     }
     
-    func selectTagWithHorizontalScroll(selectIndex:Int){
-        (menuViewState.copy() as! MenuViewState).apply { newState in
-            newState.categoryItemModels =  newState.categoryItemModels.enumerated().map { (index, categoryItem)  in
-                if(selectIndex == index){
-                    newState.scrollToHorizontalPostion = categoryItem.id
-                    return CategoryItemModel(
-                        key: categoryItem.key,
-                        id: categoryItem.id,
-                        name: categoryItem.name,
-                        isSelected: true
-                    )
-                }else{
-                    return CategoryItemModel(
-                        key: categoryItem.key,
-                        id: categoryItem.id,
-                        name: categoryItem.name,
-                        isSelected: false
-                    )
-                }
+    func selectTagWithHorizontalScroll(selectIndex:Int) {
+        var scrollToHorizontalPostion = ""
+        
+        let categoryListWithSelectedCategory =  menuCategoryViewState.categoryItems.enumerated().map { (index, categoryItem)  in
+            if(selectIndex == index){
+                scrollToHorizontalPostion = categoryItem.id
+                return CategoryItemModel(
+                    key: categoryItem.key,
+                    id: categoryItem.id,
+                    name: categoryItem.name,
+                    isSelected: true
+                )
+            }else{
+                return CategoryItemModel(
+                    key: categoryItem.key,
+                    id: categoryItem.id,
+                    name: categoryItem.name,
+                    isSelected: false
+                )
             }
-            menuViewState = newState
         }
+        
+        self.menuCategoryViewState = MenuCategoryViewState(
+            categoryItems: categoryListWithSelectedCategory,
+            scrollToHorizontalPostion: scrollToHorizontalPostion
+        )
     }
     
     func seletTagWithScroll(tagName:String){
         canCalculate = false
-        (menuViewState.copy() as! MenuViewState).apply { newState in
-            print("seletTagWithScroll canCalculate \(canCalculate)")
-            
-            newState.categoryItemModels = newState.categoryItemModels.map { categoryItem in
-                if(tagName == categoryItem.name){
-                    
-                    let isFirstItem = newState.categoryItemModels.firstIndex(where: { categoryItem in
-                        categoryItem.name == tagName
-                    }) == 0
-                    
-                    if (newState.discount != nil && isFirstItem) {
-                        scrollToPostion = DISCOUNT_ID
-                        print("scroll to discount")
-                    }else{
-                        scrollToPostion = categoryItem.id
-                        print("scroll categoryItem.id \(categoryItem.id)")
-                    }
-                    
-                    newState.scrollToHorizontalPostion = categoryItem.id
-                    
-                    return CategoryItemModel(
-                        key: categoryItem.key,
-                        id: categoryItem.id,
-                        name: categoryItem.name,
-                        isSelected: true
-                    )
+        var scrollToHorizontalPostion = ""
+        
+        let categoryListWithSelectedCategory = menuCategoryViewState.categoryItems.map { categoryItem in
+            if(tagName == categoryItem.name){
+                
+                let isFirstItem = menuCategoryViewState.categoryItems.firstIndex(where: { categoryItem in
+                    categoryItem.name == tagName
+                }) == 0
+                
+                if (menuViewState.discount != nil && isFirstItem) {
+                    scrollToPostion = DISCOUNT_ID
+                    print("scroll to discount")
                 }else{
-                    return CategoryItemModel(
-                        key: categoryItem.key,
-                        id: categoryItem.id,
-                        name: categoryItem.name,
-                        isSelected: false
-                    )
+                    scrollToPostion = categoryItem.id
+                    print("scroll categoryItem.id \(categoryItem.id)")
                 }
+                
+                scrollToHorizontalPostion = categoryItem.id
+                
+                return CategoryItemModel(
+                    key: categoryItem.key,
+                    id: categoryItem.id,
+                    name: categoryItem.name,
+                    isSelected: true
+                )
+            }else{
+                return CategoryItemModel(
+                    key: categoryItem.key,
+                    id: categoryItem.id,
+                    name: categoryItem.name,
+                    isSelected: false
+                )
             }
-            menuViewState = newState
         }
+        
+        self.menuCategoryViewState = MenuCategoryViewState(
+            categoryItems: categoryListWithSelectedCategory,
+            scrollToHorizontalPostion: scrollToHorizontalPostion
+        )
+        
     }
     
     func checkAppear(index:Int){
         
-        let isItemWichToScrolled = scrollToPostion ==  menuViewState.categoryItemModels[index].id
+        let isItemWichToScrolled = scrollToPostion ==  menuCategoryViewState.categoryItems[index].id
         let isItDiscountItem = scrollToPostion == DISCOUNT_ID
         
         if(isItemWichToScrolled || isItDiscountItem){

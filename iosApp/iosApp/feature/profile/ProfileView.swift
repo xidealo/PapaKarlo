@@ -169,6 +169,7 @@ struct SuccessProfileView: View {
                     lightOrder: profileViewState.lastOrder!,
                     destination: OrderDetailsView(orderUuid: profileViewState.lastOrder!.uuid)
                 )
+                .padding(.bottom, Diems.SMALL_PADDING)
             }
             
             NavigationCardView(
@@ -177,7 +178,6 @@ struct SuccessProfileView: View {
                 destination: SettingsView(),
                 isSystem: false
             )
-            .padding(.top, Diems.SMALL_PADDING)
 
             NavigationCardView(
                 icon: "AddressIcon",

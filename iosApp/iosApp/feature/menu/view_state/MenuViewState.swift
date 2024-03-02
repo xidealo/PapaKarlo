@@ -9,20 +9,17 @@ import SwiftUI
 
 class MenuViewState : NSObject, NSCopying {
     var menuItems : [MenuItem]
-    var categoryItemModels : [CategoryItemModel]
     var isLoading : Bool
     var scrollToHorizontalPostion : String
     var discount : String?
 
     init(
         menuItems:[MenuItem],
-        categoryItemModels: [CategoryItemModel],
         isLoading:Bool,
         scrollToHorizontalPostion:String,
         discount:String?
     ){
         self.menuItems = menuItems
-        self.categoryItemModels = categoryItemModels
         self.isLoading = isLoading
         self.scrollToHorizontalPostion = scrollToHorizontalPostion
         self.discount = discount
@@ -31,7 +28,6 @@ class MenuViewState : NSObject, NSCopying {
     func copy(with zone: NSZone? = nil) -> Any {
         let copy = MenuViewState(
             menuItems: menuItems,
-            categoryItemModels: categoryItemModels,
             isLoading: isLoading,
             scrollToHorizontalPostion:scrollToHorizontalPostion,
             discount:discount
@@ -39,3 +35,19 @@ class MenuViewState : NSObject, NSCopying {
         return copy
     }
 }
+
+
+class MenuCategoryViewState : NSObject {
+    var categoryItems : [CategoryItemModel]
+    var scrollToHorizontalPostion : String
+
+    init(
+        categoryItems : [CategoryItemModel],
+        scrollToHorizontalPostion:String
+    ){
+        self.categoryItems = categoryItems
+        self.scrollToHorizontalPostion = scrollToHorizontalPostion
+    }
+}
+
+
