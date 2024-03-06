@@ -32,29 +32,29 @@ struct MenuView: View {
             if viewModel.menuViewState.isLoading {
                 LoadingView()
             }else{
-                ScrollView(.horizontal, showsIndicators:false) {
-                    ScrollViewReader{ scrollReader in
-                        HStack(spacing:0){
-                            ForEach(Array(viewModel.menuCategoryViewState.categoryItems.enumerated()), id: \.offset){ index, categoryItemModel in
-                                CategoryItemView(
-                                    categoryItemModel: categoryItemModel,
-                                    action: viewModel.seletTagWithScroll
-                                )
-                                .padding(.horizontal, Diems.HALF_SMALL_PADDING)
-                                .padding(.leading, index == 0 ? 12 : 0)
-                                .padding(.trailing, index == viewModel.menuCategoryViewState.categoryItems.count - 1 ? 12 : 0)
-                                .id(categoryItemModel.id)
-                            }
-                        }
-                        .onChange(of: viewModel.menuCategoryViewState, perform: { menuState in
-                            withAnimation(.spring()){
-                                scrollReader.scrollTo(menuState.scrollToHorizontalPostion)
-                            }
-                        })
-                    }
-                }
-                .padding(.vertical, Diems.SMALL_PADDING)
-                .background(AppColor.surface)
+//                ScrollView(.horizontal, showsIndicators:false) {
+//                    ScrollViewReader{ scrollReader in
+//                        HStack(spacing:0){
+//                            ForEach(Array(viewModel.menuCategoryViewState.categoryItems.enumerated()), id: \.offset){ index, categoryItemModel in
+//                                CategoryItemView(
+//                                    categoryItemModel: categoryItemModel,
+//                                    action: viewModel.seletTagWithScroll
+//                                )
+//                                .padding(.horizontal, Diems.HALF_SMALL_PADDING)
+//                                .padding(.leading, index == 0 ? 12 : 0)
+//                                .padding(.trailing, index == viewModel.menuCategoryViewState.categoryItems.count - 1 ? 12 : 0)
+//                                .id(categoryItemModel.id)
+//                            }
+//                        }
+//                        .onChange(of: viewModel.menuCategoryViewState, perform: { menuState in
+//                            withAnimation(.spring()){
+//                                scrollReader.scrollTo(menuState.scrollToHorizontalPostion)
+//                            }
+//                        })
+//                    }
+//                }
+//                .padding(.vertical, Diems.SMALL_PADDING)
+//                .background(AppColor.surface)
                 
                 ScrollView {
                     ScrollViewReader{ scrollReader in
@@ -83,6 +83,11 @@ struct MenuView: View {
                                             action: {
                                                 viewModel.addCartProductToCart(menuProductItem: menuProductItem)
                                             })
+                                        .background(GeometryReader(content: { geometry in
+                                            Color.clear.onDisappear {
+                                                print("ssss")
+                                            }
+                                        }))
                                         .onAppear(){
                                             viewModel.checkAppear(index: i)
                                         }

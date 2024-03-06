@@ -166,7 +166,7 @@ class MenuViewModel : ObservableObject {
     
     func checkAppear(index:Int){
         
-        let isItemWichToScrolled = scrollToPostion ==  menuCategoryViewState.categoryItems[index].id
+        let isItemWichToScrolled = scrollToPostion == menuCategoryViewState.categoryItems[index].id
         let isItDiscountItem = scrollToPostion == DISCOUNT_ID
         
         if(isItemWichToScrolled || isItDiscountItem){
@@ -180,12 +180,14 @@ class MenuViewModel : ObservableObject {
         }
         
         lastAppearIndex = index
+        
         if(lastDisappearIndex > lastAppearIndex){
             selectTagWithHorizontalScroll(selectIndex: index)
         }
     }
     
     func checkDisappear(index:Int){
+        print("dissapear index \(index)")
         if !canCalculate {
             return
         }
