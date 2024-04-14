@@ -24,6 +24,7 @@ import com.bunbeauty.shared.Constants.DJAN_FLAVOR_NAME
 import com.bunbeauty.shared.Constants.GUSTO_PUB_FLAVOR_NAME
 import com.bunbeauty.shared.Constants.PAPA_KARLO_FLAVOR_NAME
 import com.bunbeauty.shared.Constants.TANDIR_HOUSE_FLAVOR_NAME
+import com.bunbeauty.shared.Constants.VKUS_KAVKAZA_FLAVOR_NAME
 import com.bunbeauty.shared.Constants.YULIAR_FLAVOR_NAME
 import com.bunbeauty.shared.domain.exeptions.UnknownFlavorException
 
@@ -64,6 +65,14 @@ fun FoodDeliveryTheme(
             }
         }
         TANDIR_HOUSE_FLAVOR_NAME -> {
+            if (isDarkTheme) {
+                TandirHouseDarkColors
+            } else {
+                TandirHouseLightColors
+            }
+        }
+        VKUS_KAVKAZA_FLAVOR_NAME -> {
+            // TODO add new colors
             if (isDarkTheme) {
                 TandirHouseDarkColors
             } else {

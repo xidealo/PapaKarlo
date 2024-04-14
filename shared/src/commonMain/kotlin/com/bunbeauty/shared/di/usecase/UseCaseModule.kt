@@ -26,7 +26,6 @@ internal fun useCaseModules() = module {
             getOldTotalCostUseCase = get()
         )
     }
-
     factory {
         GetNewTotalCostUseCase(
             getDiscountUseCase = get(),

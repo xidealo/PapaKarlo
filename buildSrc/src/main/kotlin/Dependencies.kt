@@ -85,6 +85,10 @@ object TandirHouseApplication {
     const val applicationId = "com.bunbeauty.tandirhouse"
 }
 
+object VkusKavkazaApplication {
+    const val applicationId = "com.bunbeauty.vkuskavkaza"
+}
+
 object AndroidSdk {
     const val min = 24
     const val compile = 34

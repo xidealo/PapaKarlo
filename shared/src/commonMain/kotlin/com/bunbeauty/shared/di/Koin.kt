@@ -5,6 +5,7 @@ import com.bunbeauty.analytic.di.analyticModule
 import com.bunbeauty.shared.data.di.dataMapperModule
 import com.bunbeauty.shared.data.di.databaseModule
 import com.bunbeauty.shared.data.di.networkModule
+import com.bunbeauty.shared.data.di.providerModule
 import com.bunbeauty.shared.data.di.repositoryModule
 import com.bunbeauty.shared.data.mapper.user_address.UserAddressMapper
 import com.bunbeauty.shared.data.network.api.NetworkConnector
@@ -72,6 +73,7 @@ fun initKoin(appDeclaration: KoinAppDeclaration = {}) = startKoin {
     appDeclaration()
     modules(
         databaseModule(),
+        providerModule(),
         networkModule(),
         dataMapperModule(),
         repositoryModule(),
@@ -99,6 +101,7 @@ fun initKoin(appDeclaration: KoinAppDeclaration = {}) = startKoin {
 fun initKoin() = startKoin {
     modules(
         databaseModule(),
+        providerModule(),
         networkModule(),
         dataMapperModule(),
         repositoryModule(),
