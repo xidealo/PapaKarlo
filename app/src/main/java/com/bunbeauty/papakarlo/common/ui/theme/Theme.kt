@@ -18,6 +18,8 @@ import com.bunbeauty.papakarlo.common.ui.theme.color.PapaKarloDarkColors
 import com.bunbeauty.papakarlo.common.ui.theme.color.PapaKarloLightColors
 import com.bunbeauty.papakarlo.common.ui.theme.color.TandirHouseDarkColors
 import com.bunbeauty.papakarlo.common.ui.theme.color.TandirHouseLightColors
+import com.bunbeauty.papakarlo.common.ui.theme.color.VkusKavkazaDarkColors
+import com.bunbeauty.papakarlo.common.ui.theme.color.VkusKavkazaLightColors
 import com.bunbeauty.papakarlo.common.ui.theme.color.YuliarDarkColors
 import com.bunbeauty.papakarlo.common.ui.theme.color.YuliarLightColors
 import com.bunbeauty.shared.Constants.DJAN_FLAVOR_NAME
@@ -72,11 +74,10 @@ fun FoodDeliveryTheme(
             }
         }
         VKUS_KAVKAZA_FLAVOR_NAME -> {
-            // TODO add new colors
             if (isDarkTheme) {
-                TandirHouseDarkColors
+                VkusKavkazaDarkColors
             } else {
-                TandirHouseLightColors
+                VkusKavkazaLightColors
             }
         }
         else -> throw UnknownFlavorException()
