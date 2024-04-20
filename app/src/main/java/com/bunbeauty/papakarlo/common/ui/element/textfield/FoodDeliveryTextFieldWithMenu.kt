@@ -13,23 +13,29 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.PopupProperties
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.shared.presentation.Suggestion
+import com.bunbeauty.shared.presentation.SuggestionUi
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FoodDeliveryTextFieldWithMenu(
-    modifier: Modifier = Modifier,
     expanded: Boolean,
     onExpandedChange: (Boolean) -> Unit,
+    onSuggestionClick: (suggestion: SuggestionUi) -> Unit,
+    modifier: Modifier = Modifier,
     value: String = "",
     @StringRes labelStringId: Int,
     onValueChange: (value: String) -> Unit,
-    @StringRes errorMessageId: Int? = null,
-    suggestionsList: List<Suggestion> = emptyList(),
-    onSuggestionClick: (suggestion: Suggestion) -> Unit
+    @StringRes errorMessageStringId: Int? = null,
+    suggestionsList: ImmutableList<SuggestionUi> = persistentListOf(),
+    isLoading: Boolean = false
 ) {
     Column {
         ExposedDropdownMenuBox(
@@ -44,7 +50,8 @@ fun FoodDeliveryTextFieldWithMenu(
                 value = value,
                 labelStringId = labelStringId,
                 onValueChange = onValueChange,
-                isError = errorMessageId != null
+                isError = errorMessageStringId != null,
+                isLoading = isLoading
             )
 
             if (suggestionsList.isNotEmpty()) {
@@ -63,8 +70,14 @@ fun FoodDeliveryTextFieldWithMenu(
                     suggestionsList.forEach { suggestion ->
                         DropdownMenuItem(
                             text = {
+                                val text = buildAnnotatedString {
+                                    append(suggestion.value)
+                                    withStyle(SpanStyle(FoodDeliveryTheme.colors.mainColors.onSurfaceVariant)) {
+                                        append(suggestion.postfix)
+                                    }
+                                }
                                 Text(
-                                    text = suggestion.value,
+                                    text = text,
                                     color = FoodDeliveryTheme.colors.mainColors.onSurface,
                                     style = FoodDeliveryTheme.typography.bodyMedium
                                 )
@@ -77,12 +90,12 @@ fun FoodDeliveryTextFieldWithMenu(
                 }
             }
         }
-        errorMessageId?.let {
+        errorMessageStringId?.let { stringId ->
             Text(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 16.dp, top = 4.dp),
-                text = stringResource(errorMessageId),
+                text = stringResource(stringId),
                 style = FoodDeliveryTheme.typography.bodySmall,
                 color = FoodDeliveryTheme.colors.mainColors.error
             )

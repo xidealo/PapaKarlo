@@ -7,9 +7,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface IUserInteractor {
 
-    @Throws(Throwable::class)
-    suspend fun login(firebaseUserUuid: String?, firebaseUserPhone: String?)
-
     suspend fun clearUserCache()
     suspend fun isUserAuthorize(): Boolean
 

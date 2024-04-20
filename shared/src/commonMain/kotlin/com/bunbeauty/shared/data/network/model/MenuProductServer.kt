@@ -40,5 +40,11 @@ data class MenuProductServer(
     val categories: List<CategoryServer>,
 
     @SerialName("isVisible")
-    val isVisible: Boolean
+    val isVisible: Boolean,
+
+    @SerialName("isRecommended")
+    val isRecommended: Boolean,
+
+    @SerialName("additionGroups")
+    val additionGroupServers: List<AdditionGroupServer>,
 )

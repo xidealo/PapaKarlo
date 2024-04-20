@@ -1,9 +1,15 @@
 package com.bunbeauty.shared.data.di
 
+import com.bunbeauty.shared.data.dao.addition.AdditionDao
+import com.bunbeauty.shared.data.dao.addition.IAdditionDao
+import com.bunbeauty.shared.data.dao.addition_group.AdditionGroupDao
+import com.bunbeauty.shared.data.dao.addition_group.IAdditionGroupDao
 import com.bunbeauty.shared.data.dao.cafe.CafeDao
 import com.bunbeauty.shared.data.dao.cafe.ICafeDao
 import com.bunbeauty.shared.data.dao.cart_product.CartProductDao
 import com.bunbeauty.shared.data.dao.cart_product.ICartProductDao
+import com.bunbeauty.shared.data.dao.cart_product_addition.CartProductAdditionDao
+import com.bunbeauty.shared.data.dao.cart_product_addition.ICartProductAdditionDao
 import com.bunbeauty.shared.data.dao.category.CategoryDao
 import com.bunbeauty.shared.data.dao.category.ICategoryDao
 import com.bunbeauty.shared.data.dao.city.CityDao
@@ -16,12 +22,12 @@ import com.bunbeauty.shared.data.dao.menu_product_category_reference.IMenuProduc
 import com.bunbeauty.shared.data.dao.menu_product_category_reference.MenuProductCategoryReferenceDao
 import com.bunbeauty.shared.data.dao.order.IOrderDao
 import com.bunbeauty.shared.data.dao.order.OrderDao
+import com.bunbeauty.shared.data.dao.order_addition.IOrderAdditionDao
+import com.bunbeauty.shared.data.dao.order_addition.OrderAdditionDao
+import com.bunbeauty.shared.data.dao.order_product.IOrderProductDao
+import com.bunbeauty.shared.data.dao.order_product.OrderProductDao
 import com.bunbeauty.shared.data.dao.payment_method.IPaymentMethodDao
 import com.bunbeauty.shared.data.dao.payment_method.PaymentMethodDao
-import com.bunbeauty.shared.data.dao.recommendation.IRecommendationProductDao
-import com.bunbeauty.shared.data.dao.recommendation.RecommendationProductDao
-import com.bunbeauty.shared.data.dao.street.IStreetDao
-import com.bunbeauty.shared.data.dao.street.StreetDao
 import com.bunbeauty.shared.data.dao.user.IUserDao
 import com.bunbeauty.shared.data.dao.user.UserDao
 import com.bunbeauty.shared.data.dao.user_address.IUserAddressDao
@@ -47,9 +53,6 @@ fun databaseModule() = module {
     single<IMenuProductCategoryReferenceDao> {
         MenuProductCategoryReferenceDao(foodDeliveryDatabase = get())
     }
-    single<IStreetDao> {
-        StreetDao(foodDeliveryDatabase = get())
-    }
     single<IUserDao> {
         UserDao(foodDeliveryDatabase = get())
     }
@@ -65,7 +68,19 @@ fun databaseModule() = module {
     single<ILinkDao> {
         LinkDao(foodDeliveryDatabase = get())
     }
-    single<IRecommendationProductDao> {
-        RecommendationProductDao(foodDeliveryDatabase = get())
+    single<ICartProductAdditionDao> {
+        CartProductAdditionDao(foodDeliveryDatabase = get())
+    }
+    single<IOrderProductDao> {
+        OrderProductDao(foodDeliveryDatabase = get())
+    }
+    single<IAdditionDao> {
+        AdditionDao(foodDeliveryDatabase = get())
+    }
+    single<IOrderAdditionDao> {
+        OrderAdditionDao(foodDeliveryDatabase = get())
+    }
+    single<IAdditionGroupDao> {
+        AdditionGroupDao(foodDeliveryDatabase = get())
     }
 }

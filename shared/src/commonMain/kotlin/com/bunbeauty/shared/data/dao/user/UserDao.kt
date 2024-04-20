@@ -8,9 +8,9 @@ import kotlinx.coroutines.flow.Flow
 
 class UserDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IUserDao {
 
-    val userEntityQueries = foodDeliveryDatabase.userEntityQueries
+    private val userEntityQueries = foodDeliveryDatabase.userEntityQueries
 
-    override fun insertUser(userEntity: UserEntity) {
+    override suspend fun insertUser(userEntity: UserEntity) {
         userEntityQueries.insertUser(
             uuid = userEntity.uuid,
             phone = userEntity.phone,
@@ -26,7 +26,7 @@ class UserDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IUserDao {
         return userEntityQueries.getUserByUuid(uuid).asFlow().mapToOneOrNull()
     }
 
-    override fun updateUserEmailByUuid(uuid: String, email: String) {
+    override suspend fun updateUserEmailByUuid(uuid: String, email: String) {
         userEntityQueries.updateUserEmailByUuid(
             uuid = uuid,
             email = email

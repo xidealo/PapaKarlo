@@ -20,48 +20,6 @@ class OrderMapper(
     private val orderProductMapper: IOrderProductMapper,
     private val dateTimeUtil: IDateTimeUtil,
 ) : IOrderMapper {
-
-    override fun toOrderWithProductEntity(
-        orderServer: OrderServer,
-        orderProductServer: OrderProductServer,
-    ): OrderWithProductEntity {
-        return OrderWithProductEntity(
-            uuid = orderServer.uuid,
-            status = orderServer.status,
-            isDelivery = orderServer.isDelivery,
-            time = orderServer.time,
-            timeZone = orderServer.timeZone,
-            code = orderServer.code,
-            address = orderServer.address.description ?: "",
-            addressStreet = orderServer.address.street,
-            addressHouse = orderServer.address.house,
-            addressFlat = orderServer.address.flat,
-            addressEntrance = orderServer.address.entrance,
-            addressFloor = orderServer.address.floor,
-            addressComment = orderServer.address.comment,
-            comment = orderServer.comment,
-            deliveryCost = orderServer.deliveryCost,
-            deferredTime = orderServer.deferredTime,
-            userUuid = orderServer.clientUserUuid,
-            orderProductUuid = orderProductServer.uuid,
-            orderProductCount = orderProductServer.count,
-            orderProductName = orderProductServer.name,
-            orderProductNewPrice = orderProductServer.newPrice,
-            orderProductOldPrice = orderProductServer.oldPrice,
-            orderProductUtils = orderProductServer.utils,
-            orderProductNutrition = orderProductServer.nutrition,
-            orderProductDescription = orderProductServer.description,
-            orderProductComboDescription = orderProductServer.comboDescription,
-            orderProductPhotoLink = orderProductServer.photoLink,
-            orderProductBarcode = orderProductServer.barcode,
-            orderUuid = orderServer.uuid,
-            paymentMethod = orderServer.paymentMethod,
-            oldTotalCost = orderServer.oldTotalCost,
-            newTotalCost = orderServer.newTotalCost,
-            percentDiscount = orderServer.percentDiscount,
-        )
-    }
-
     override fun toLightOrder(orderEntity: OrderEntity): LightOrder {
         return LightOrder(
             uuid = orderEntity.uuid,
@@ -87,7 +45,12 @@ class OrderMapper(
     }
 
     override fun toOrder(orderWithProductEntityList: List<OrderWithProductEntity>): Order? {
-        return orderWithProductEntityList.firstOrNull()?.let { firstOrderWithProductEntity ->
+        return orderWithProductEntityList.groupBy { orderWithProductEntity ->
+            orderWithProductEntity.uuid
+        }.map { (_, groupedOrderWithProductEntityList) ->
+            val firstOrderWithProductEntity =
+                groupedOrderWithProductEntityList.first()
+
             Order(
                 uuid = firstOrderWithProductEntity.uuid,
                 code = firstOrderWithProductEntity.code,
@@ -111,14 +74,14 @@ class OrderMapper(
                 ),
                 comment = firstOrderWithProductEntity.comment,
                 deliveryCost = firstOrderWithProductEntity.deliveryCost,
-                orderProductList = orderWithProductEntityList.map(orderProductMapper::toOrderProduct),
+                orderProductList = orderProductMapper.toOrderProduct(groupedOrderWithProductEntityList),
                 paymentMethod = PaymentMethodName.values()
                     .firstOrNull { it.name == firstOrderWithProductEntity.paymentMethod },
                 oldTotalCost = firstOrderWithProductEntity.oldTotalCost,
                 newTotalCost = firstOrderWithProductEntity.newTotalCost,
                 percentDiscount = firstOrderWithProductEntity.percentDiscount,
             )
-        }
+        }.firstOrNull()
     }
 
     override fun toOrder(orderServer: OrderServer): Order {
@@ -145,6 +108,32 @@ class OrderMapper(
             orderProductList = orderServer.oderProductList.map(orderProductMapper::toOrderProduct),
             paymentMethod = PaymentMethodName.values()
                 .firstOrNull { it.name == orderServer.paymentMethod },
+            oldTotalCost = orderServer.oldTotalCost,
+            newTotalCost = orderServer.newTotalCost,
+            percentDiscount = orderServer.percentDiscount,
+        )
+    }
+
+    override fun toOrderEntity(orderServer: OrderServer): OrderEntity {
+        return OrderEntity(
+            uuid = orderServer.uuid,
+            status = orderServer.status,
+            isDelivery = orderServer.isDelivery,
+            time = orderServer.time,
+            timeZone = orderServer.timeZone,
+            code = orderServer.code,
+            address = orderServer.address.description ?: "",
+            addressStreet = orderServer.address.street,
+            addressHouse = orderServer.address.house,
+            addressFlat = orderServer.address.flat,
+            addressEntrance = orderServer.address.entrance,
+            addressFloor = orderServer.address.floor,
+            addressComment = orderServer.address.comment,
+            comment = orderServer.comment,
+            deliveryCost = orderServer.deliveryCost,
+            deferredTime = orderServer.deferredTime,
+            userUuid = orderServer.clientUserUuid,
+            paymentMethod = orderServer.paymentMethod,
             oldTotalCost = orderServer.oldTotalCost,
             newTotalCost = orderServer.newTotalCost,
             percentDiscount = orderServer.percentDiscount,

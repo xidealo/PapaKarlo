@@ -1,0 +1,24 @@
+CREATE TABLE additionGroupEntity (
+    uuid TEXT NOT NULL PRIMARY KEY,
+    name TEXT NOT NULL,
+    isVisible INTEGER AS Boolean NOT NULL,
+    singleChoice INTEGER AS Boolean NOT NULL,
+    priority INTEGER AS Int NOT NULL,
+    menuProductUuid TEXT NOT NULL,
+    FOREIGN KEY(menuProductUuid) REFERENCES menuProductEntity(uuid) ON DELETE CASCADE
+);
+
+insert:
+INSERT OR REPLACE
+INTO additionGroupEntity
+VALUES ?;
+
+getAdditionGroupByUuid:
+SELECT *
+FROM additionGroupEntity
+WHERE uuid = :uuid;
+
+getAdditionGroupListByMenuProductUuid:
+SELECT *
+FROM additionGroupEntity
+WHERE menuProductUuid = :menuProductUuid;

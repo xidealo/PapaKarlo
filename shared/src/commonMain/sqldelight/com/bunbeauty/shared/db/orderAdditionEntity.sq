@@ -1,0 +1,19 @@
+CREATE TABLE orderAdditionEntity (
+   uuid TEXT NOT NULL PRIMARY KEY,
+   name TEXT NOT NULL,
+   priority INTEGER AS Int NOT NULL,
+   orderProductUuid TEXT NOT NULL,
+   FOREIGN KEY(orderProductUuid) REFERENCES orderProductEntity(uuid) ON DELETE CASCADE
+);
+
+insert:
+INSERT OR REPLACE
+INTO orderAdditionEntity
+VALUES ?;
+
+deleteOrderAdditionByUuid:
+DELETE FROM orderAdditionEntity
+WHERE uuid = :uuid;
+
+deleteAllOrderAdditions:
+DELETE FROM orderAdditionEntity;

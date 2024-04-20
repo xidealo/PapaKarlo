@@ -2,6 +2,7 @@ package com.bunbeauty.shared.data.repository
 
 import com.bunbeauty.shared.data.UuidGenerator
 import com.bunbeauty.shared.data.dao.cart_product.ICartProductDao
+import com.bunbeauty.shared.data.dao.menu_product.IMenuProductDao
 import com.bunbeauty.shared.data.mapper.cart_product.ICartProductMapper
 import com.bunbeauty.shared.db.CartProductEntity
 import com.bunbeauty.shared.db.CartProductWithMenuProductEntity
@@ -13,6 +14,7 @@ import kotlinx.coroutines.flow.map
 class CartProductRepository(
     private val uuidGenerator: UuidGenerator,
     private val cartProductDao: ICartProductDao,
+    private val menuProductDao: IMenuProductDao,
     private val cartProductMapper: ICartProductMapper,
 ) : CartProductRepo {
 
@@ -26,13 +28,21 @@ class CartProductRepository(
         return cartProductDao.getCartProductList().toCartProductList()
     }
 
-    override suspend fun getCartProductByMenuProductUuid(menuProductUuid: String): CartProduct? {
-        return cartProductDao.getCartProductByMenuProductUuid(menuProductUuid)
+    override suspend fun getCartProduct(cartProductUuid: String): CartProduct? {
+        return cartProductDao
+            .getCartProductByUuid(cartProductUuid)
             .toCartProductList()
             .firstOrNull()
     }
 
-    override suspend fun saveAsCartProduct(menuProductUuid: String): CartProduct? {
+    override suspend fun getCartProductListByMenuProductUuid(
+        menuProductUuid: String,
+    ): List<CartProduct> {
+        return cartProductDao.getCartProductByMenuProductUuid(menuProductUuid)
+            .toCartProductList()
+    }
+
+    override suspend fun saveAsCartProduct(menuProductUuid: String): String {
         val uuid = uuidGenerator.generateUuid()
         val cartProductEntity = CartProductEntity(
             uuid = uuid,
@@ -41,16 +51,11 @@ class CartProductRepository(
         )
         cartProductDao.insertCartProduct(cartProductEntity)
 
-        return cartProductMapper
-            .toCartProductList(cartProductDao.getCartProductByUuid(uuid))
-            .firstOrNull()
+        return uuid
     }
 
-    override suspend fun updateCartProductCount(cartProductUuid: String, count: Int): CartProduct? {
+    override suspend fun updateCartProductCount(cartProductUuid: String, count: Int) {
         cartProductDao.updateCartProductCountByUuid(cartProductUuid, count)
-        return cartProductMapper
-            .toCartProductList(cartProductDao.getCartProductByUuid(cartProductUuid))
-            .firstOrNull()
     }
 
     override suspend fun deleteCartProduct(cartProductUuid: String) {
@@ -61,11 +66,20 @@ class CartProductRepository(
         cartProductDao.deleteAllCartProducts()
     }
 
-    private fun List<CartProductWithMenuProductEntity>.toCartProductList(): List<CartProduct> {
-        return cartProductMapper.toCartProductList(
-            this.filter { cartProductWithMenuProduct ->
-                cartProductWithMenuProduct.visible
-            }
-        )
+    private suspend fun List<CartProductWithMenuProductEntity>.toCartProductList(): List<CartProduct> {
+        return filter { cartProductWithMenuProductEntity ->
+            cartProductWithMenuProductEntity.visible
+        }.groupBy { cartProductWithMenuProductEntity ->
+            cartProductWithMenuProductEntity.cartProductUuid
+        }.map { (_, cartProductWithMenuProductEntityList) ->
+            val menuProductUuid = cartProductWithMenuProductEntityList.first().uuid
+            val menuProductWithCategoryList =
+                menuProductDao.getMenuProductWithCategoryListByUuid(uuid = menuProductUuid)
+
+            cartProductMapper.toCartProduct(
+                cartProductWithMenuProductEntityList = cartProductWithMenuProductEntityList,
+                menuProductWithCategoryEntityList = menuProductWithCategoryList
+            )
+        }
     }
 }

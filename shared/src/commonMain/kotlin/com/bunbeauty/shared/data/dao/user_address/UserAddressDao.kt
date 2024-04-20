@@ -23,7 +23,6 @@ class UserAddressDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IUserAddressD
             userAddressList.forEach { userAddress ->
                 userAddressEntityQueries.insertUserAddress(
                     uuid = userAddress.uuid,
-                    streetUuid = userAddress.streetUuid,
                     streetName = userAddress.streetName,
                     cityUuid = userAddress.cityUuid,
                     house = userAddress.house,

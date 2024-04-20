@@ -2,6 +2,7 @@ import Constants.DEPLOYMENT_TARGET
 import Constants.DJAN_FLAVOR_NAME
 import Constants.GUSTO_PUB_FLAVOR_NAME
 import Constants.PAPA_KARLO_FLAVOR_NAME
+import Constants.TANDIR_HOUSE_FLAVOR_NAME
 import Constants.YULIAR_FLAVOR_NAME
 
 plugins {
@@ -59,6 +60,8 @@ kotlin {
 
                 implementation(SqlDelight.runtime)
                 implementation(SqlDelight.coroutineExtensions)
+
+                implementation(CollectionsImmutable.collectionsImmutable)
             }
         }
         val commonTest by getting {
@@ -137,6 +140,7 @@ android {
         create(YULIAR_FLAVOR_NAME) {}
         create(DJAN_FLAVOR_NAME) {}
         create(GUSTO_PUB_FLAVOR_NAME) {}
+        create(TANDIR_HOUSE_FLAVOR_NAME) {}
     }
 }
 

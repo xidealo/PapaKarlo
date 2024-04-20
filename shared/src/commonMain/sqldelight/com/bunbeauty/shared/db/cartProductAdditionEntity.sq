@@ -1,0 +1,22 @@
+CREATE TABLE cartProductAdditionEntity (
+   uuid TEXT NOT NULL PRIMARY KEY,
+   name TEXT NOT NULL,
+   fullName TEXT,
+   price INTEGER AS Int,
+   additionUuid TEXT NOT NULL,
+   cartProductUuid TEXT NOT NULL,
+   priority INTEGER AS Int NOT NULL,
+   FOREIGN KEY(cartProductUuid) REFERENCES cartProductEntity(uuid) ON DELETE CASCADE
+);
+
+insertCartProductAdditionEntity:
+INSERT OR REPLACE
+INTO cartProductAdditionEntity
+VALUES ?;
+
+deleteCartProductAdditionByUuid:
+DELETE FROM cartProductAdditionEntity
+WHERE uuid = :uuid;
+
+deleteAllCartProductAdditions:
+DELETE FROM cartProductAdditionEntity;

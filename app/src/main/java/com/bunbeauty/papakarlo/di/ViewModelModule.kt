@@ -26,7 +26,7 @@ fun viewModelModule() = module {
         MenuViewModel(
             menuProductInteractor = get(),
             observeCartUseCase = get(),
-            addCartProductUseCase = get(),
+            addMenuProductUseCase = get(),
             getDiscountUseCase = get(),
             analyticService = get()
         )
@@ -40,7 +40,8 @@ fun viewModelModule() = module {
         ConsumerCartViewModel(
             userInteractor = get(),
             cartProductInteractor = get(),
-            addCartProductUseCase = get(),
+            increaseCartProductCountUseCase = get(),
+            addMenuProductUseCase = get(),
             removeCartProductUseCase = get(),
             getRecommendationsUseCase = get(),
             analyticService = get()
@@ -79,10 +80,9 @@ fun viewModelModule() = module {
     }
     viewModel {
         CreateAddressViewModel(
-            getStreetsUseCase = get(),
+            getSuggestionsUseCase = get(),
             createAddressUseCase = get(),
-            saveSelectedUserAddressUseCase = get(),
-            getFilteredStreetListUseCase = get()
+            saveSelectedUserAddressUseCase = get()
         )
     }
     viewModel {
@@ -145,10 +145,13 @@ fun viewModelModule() = module {
     }
     viewModel {
         ProductDetailsViewModel(
-            getMenuProductByUuidUseCase = get(),
+            getMenuProductUseCase = get(),
             observeCartUseCase = get(),
             addCartProductUseCase = get(),
-            analyticService = get()
+            analyticService = get(),
+            editCartProductUseCase = get(),
+            getAdditionGroupsWithSelectedAdditionUseCase = get(),
+            getSelectedAdditionsPriceUseCase = get()
         )
     }
     viewModel {

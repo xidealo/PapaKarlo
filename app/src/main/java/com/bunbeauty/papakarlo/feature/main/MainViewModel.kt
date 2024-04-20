@@ -30,14 +30,17 @@ class MainViewModel(
                 selectedItem = NavigationBarItem.CAFE_LIST,
                 navController = navController
             )
+
             R.id.menuFragment -> NavigationBarOptions.Visible(
                 selectedItem = NavigationBarItem.MENU,
                 navController = navController
             )
+
             R.id.profileFragment -> NavigationBarOptions.Visible(
                 selectedItem = NavigationBarItem.PROFILE,
                 navController = navController
             )
+
             else -> NavigationBarOptions.Hidden
         }
         mutableMainState.update { state ->
@@ -46,11 +49,17 @@ class MainViewModel(
     }
 
     fun showInfoMessage(text: String) {
-        showMessage(text, FoodDeliveryMessageType.INFO)
+        showMessage(
+            text = text,
+            type = FoodDeliveryMessageType.INFO
+        )
     }
 
     fun showErrorMessage(text: String) {
-        showMessage(text, FoodDeliveryMessageType.ERROR)
+        showMessage(
+            text = text,
+            type = FoodDeliveryMessageType.ERROR
+        )
     }
 
     fun consumeEventList(eventList: List<MainState.Event>) {
