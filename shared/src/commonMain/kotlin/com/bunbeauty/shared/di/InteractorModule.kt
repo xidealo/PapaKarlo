@@ -56,6 +56,7 @@ internal fun interactorModule() = module {
     single<IMenuProductInteractor> {
         MenuProductInteractor(
             menuProductRepo = get(),
+            getMenuProductListUseCase = get(),
         )
     }
 }

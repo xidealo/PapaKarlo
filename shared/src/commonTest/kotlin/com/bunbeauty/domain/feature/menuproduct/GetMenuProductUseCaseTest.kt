@@ -3,7 +3,7 @@ package com.bunbeauty.domain.feature.menuproduct
 import com.bunbeauty.getAddition
 import com.bunbeauty.getAdditionGroup
 import com.bunbeauty.getMenuProduct
-import com.bunbeauty.shared.domain.feature.menu_product.GetMenuProductUseCase
+import com.bunbeauty.shared.domain.feature.menuproduct.GetMenuProductUseCase
 import com.bunbeauty.shared.domain.repo.MenuProductRepo
 import io.mockk.coEvery
 import io.mockk.mockk

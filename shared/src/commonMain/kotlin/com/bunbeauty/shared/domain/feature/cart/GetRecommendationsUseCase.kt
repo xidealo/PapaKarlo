@@ -1,11 +1,11 @@
 package com.bunbeauty.shared.domain.feature.cart
 
 import com.bunbeauty.shared.data.repository.RecommendationRepository
+import com.bunbeauty.shared.domain.feature.menuproduct.GetMenuProductListUseCase
 import com.bunbeauty.shared.domain.model.cart.CartProduct
 import com.bunbeauty.shared.domain.model.category.Category
 import com.bunbeauty.shared.domain.model.product.MenuProduct
 import com.bunbeauty.shared.domain.repo.CartProductRepo
-import com.bunbeauty.shared.domain.repo.MenuProductRepo
 
 /*
 * 1 - Берем список рекомендаций
@@ -16,15 +16,14 @@ import com.bunbeauty.shared.domain.repo.MenuProductRepo
 class GetRecommendationsUseCase(
     private val recommendationRepository: RecommendationRepository,
     private val cartProductRepo: CartProductRepo,
-    private val menuProductRepository: MenuProductRepo,
+    private val getMenuProductListUseCase: GetMenuProductListUseCase,
 ) {
     suspend operator fun invoke(): List<MenuProduct> {
 
         val cartProductList = cartProductRepo.getCartProductList()
         val maxVisibleCount = recommendationRepository.getMaxVisibleCount()
 
-        val recommendationProductList = menuProductRepository.getMenuProductList()
-            .filter { it.isRecommended && it.visible }
+        val recommendationProductList = getMenuProductListUseCase().filter { it.isRecommended }
 
         val recommendationProductListNoneCategory = getFilteredRecommendationsByCategories(
             recommendationProductList = recommendationProductList,

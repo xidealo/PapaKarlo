@@ -21,19 +21,19 @@ import com.bunbeauty.papakarlo.common.ui.element.button.SmallButton
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold
-import com.bunbeauty.shared.presentation.menu.MenuProductItem
+import com.bunbeauty.papakarlo.feature.menu.model.MenuItemUi
 
 @Composable
 fun MenuProductItem(
     modifier: Modifier = Modifier,
-    menuProductItem: MenuProductItem,
-    onAddProductClick: (MenuProductItem) -> Unit,
-    onProductClick: (MenuProductItem) -> Unit
+    menuProductItem: MenuItemUi.Product,
+    onAddProductClick: (String) -> Unit,
+    onProductClick: (String) -> Unit
 ) {
     FoodDeliveryCard(
         modifier = modifier,
         onClick = {
-            onProductClick(menuProductItem)
+            onProductClick(menuProductItem.uuid)
         }
     ) {
         Column {
@@ -59,14 +59,14 @@ fun MenuProductItem(
                         Text(
                             modifier = Modifier
                                 .padding(end = FoodDeliveryTheme.dimensions.verySmallSpace),
-                            text = stringResource(id = R.string.with_ruble, oldPrice),
+                            text = oldPrice,
                             style = FoodDeliveryTheme.typography.bodySmall,
                             textDecoration = TextDecoration.LineThrough,
                             color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
                         )
                     }
                     Text(
-                        text = stringResource(id = R.string.with_ruble, menuProductItem.newPrice),
+                        text =  menuProductItem.newPrice,
                         style = FoodDeliveryTheme.typography.bodySmall.bold,
                         color = FoodDeliveryTheme.colors.mainColors.onSurface
                     )
@@ -78,7 +78,7 @@ fun MenuProductItem(
                     textStringId = R.string.action_product_want,
                     elevated = false,
                     onClick = {
-                        onAddProductClick(menuProductItem)
+                        onAddProductClick(menuProductItem.uuid)
                     }
                 )
             }
@@ -86,20 +86,20 @@ fun MenuProductItem(
     }
 }
 
-@Preview(widthDp = 200, showSystemUi = true)
+@Preview(widthDp = 200)
 @Composable
 private fun MenuProductItemPreview() {
     FoodDeliveryTheme {
         MenuProductItem(
-            menuProductItem = MenuProductItem(
+            menuProductItem = MenuItemUi.Product(
                 uuid = "",
+                key = "",
                 photoLink = "",
                 name = "Бэргер",
-                newPrice = 99,
-                oldPrice = 100,
-                hasAdditions = true
+                newPrice = "99 ₽",
+                oldPrice = "100 ₽",
             ),
-            onAddProductClick = { },
+            onAddProductClick = {},
             onProductClick = {}
         )
     }

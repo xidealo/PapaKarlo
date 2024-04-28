@@ -31,7 +31,7 @@ internal fun cartModule() = module {
         GetRecommendationsUseCase(
             recommendationRepository = get(),
             cartProductRepo = get(),
-            menuProductRepository = get()
+            getMenuProductListUseCase = get()
         )
     }
     factory {

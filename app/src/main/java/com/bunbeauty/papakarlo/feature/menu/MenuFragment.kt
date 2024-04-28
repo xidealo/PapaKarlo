@@ -46,28 +46,25 @@ import com.bunbeauty.papakarlo.common.ui.theme.bold
 import com.bunbeauty.papakarlo.databinding.LayoutComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.main.IMessageHost
-import com.bunbeauty.papakarlo.feature.menu.model.MenuUi
-import com.bunbeauty.papakarlo.feature.menu.model.MenuUiStateMapper
+import com.bunbeauty.papakarlo.feature.menu.model.MenuItemUi
+import com.bunbeauty.papakarlo.feature.menu.model.MenuViewState
 import com.bunbeauty.papakarlo.feature.menu.ui.CategoryItem
 import com.bunbeauty.papakarlo.feature.menu.ui.FirstOrderDiscountItem
 import com.bunbeauty.papakarlo.feature.menu.ui.MenuProductItem
 import com.bunbeauty.papakarlo.feature.productdetails.ProductDetailsFragmentDirections.globalConsumerCartFragment
 import com.bunbeauty.papakarlo.feature.topcart.TopCartUi
-import com.bunbeauty.shared.presentation.menu.CategoryItem
-import com.bunbeauty.shared.presentation.menu.MenuItem
-import com.bunbeauty.shared.presentation.menu.MenuProductItem
-import com.bunbeauty.shared.presentation.menu.MenuState
+import com.bunbeauty.shared.presentation.menu.model.CategoryItem
+import com.bunbeauty.shared.presentation.menu.model.MenuDataState
 import com.bunbeauty.shared.presentation.menu.MenuViewModel
 import com.bunbeauty.shared.presentation.product_details.ProductDetailsOpenedFrom
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.launch
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
 
     val viewModel: MenuViewModel by viewModel()
     override val viewBinding by viewBinding(LayoutComposeBinding::bind)
-    private val menuUiStateMapper: MenuUiStateMapper by inject()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         overrideBackPressedCallback()
@@ -76,7 +73,7 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
         viewBinding.root.setContentWithTheme {
             val menuState by viewModel.menuState.collectAsStateWithLifecycle()
             MenuScreen(
-                menuUi = menuUiStateMapper.map(menuState),
+                viewState = menuState.toMenuUi(),
                 onMenuPositionChanged = viewModel::onMenuPositionChanged,
                 errorAction = viewModel::getMenu
             )
@@ -86,10 +83,10 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
         }
     }
 
-    private fun handleEventList(eventList: List<MenuState.Event>) {
+    private fun handleEventList(eventList: List<MenuDataState.Event>) {
         eventList.forEach { event ->
             when (event) {
-                is MenuState.Event.GoToSelectedItem -> {
+                is MenuDataState.Event.GoToSelectedItem -> {
                     findNavController().navigateSafe(
                         MenuFragmentDirections.toProductFragment(
                             event.uuid,
@@ -100,7 +97,8 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
                         )
                     )
                 }
-                MenuState.Event.ShowAddProductError -> {
+
+                MenuDataState.Event.ShowAddProductError -> {
                     (activity as? IMessageHost)?.showErrorMessage(
                         resources.getString(R.string.error_consumer_cart_add_product)
                     )
@@ -112,7 +110,7 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
 
     @Composable
     private fun MenuScreen(
-        menuUi: MenuUi,
+        viewState: MenuViewState,
         onMenuPositionChanged: (Int) -> Unit,
         errorAction: () -> Unit
     ) {
@@ -121,7 +119,7 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
         FoodDeliveryScaffold(
             title = stringResource(R.string.title_menu),
             topActions = listOf(
-                FoodDeliveryCartAction(topCartUi = menuUi.topCartUi) {
+                FoodDeliveryCartAction(topCartUi = viewState.topCartUi) {
                     findNavController().navigateSafe(globalConsumerCartFragment())
                 }
             ),
@@ -129,29 +127,29 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
             backgroundColor = FoodDeliveryTheme.colors.mainColors.surface,
             drawableId = R.drawable.logo_small,
             appBarContent = {
-                if (menuUi.state is MenuState.State.Success) {
+                if (viewState.state is MenuDataState.State.Success) {
                     CategoryRow(
                         modifier = Modifier.fillMaxWidth(),
-                        categoryItemList = menuUi.categoryItemList,
+                        categoryItemList = viewState.categoryItemList,
                         menuLazyGridState = menuLazyGridState
                     )
                 }
             }
         ) {
             Crossfade(
-                targetState = menuUi.state,
+                targetState = viewState.state,
                 label = "MenuScreen"
             ) { state ->
                 when (state) {
-                    is MenuState.State.Success -> {
+                    is MenuDataState.State.Success -> {
                         MenuSuccessScreen(
-                            menu = menuUi,
+                            menu = viewState,
                             menuLazyGridState = menuLazyGridState,
                             onMenuPositionChanged = onMenuPositionChanged
                         )
                     }
 
-                    is MenuState.State.Error -> {
+                    is MenuDataState.State.Error -> {
                         ErrorScreen(
                             mainTextId = R.string.error_menu_loading,
                             onClick = errorAction
@@ -168,7 +166,7 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
 
     @Composable
     private fun MenuSuccessScreen(
-        menu: MenuUi,
+        menu: MenuViewState,
         menuLazyGridState: LazyGridState,
         onMenuPositionChanged: (Int) -> Unit
     ) {
@@ -242,7 +240,7 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
 
     @Composable
     private fun MenuColumn(
-        menu: MenuUi,
+        menu: MenuViewState,
         menuLazyListState: LazyGridState
     ) {
         LazyVerticalGrid(
@@ -258,21 +256,21 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
                 key = { _, menuItemModel -> menuItemModel.key },
                 span = { _, menuItemModel ->
                     when (menuItemModel) {
-                        is MenuItem.DiscountItem, is MenuItem.MenuCategoryHeaderItem ->
-                            GridItemSpan(maxLineSpan)
+                        is MenuItemUi.Discount,
+                        is MenuItemUi.CategoryHeader -> GridItemSpan(maxLineSpan)
 
                         else -> GridItemSpan(1)
                     }
                 }
-            ) { index, menuItemModel ->
-                when (menuItemModel) {
-                    is MenuItem.DiscountItem -> {
+            ) { index, menuItem ->
+                when (menuItem) {
+                    is MenuItemUi.Discount -> {
                         FirstOrderDiscountItem(
-                            discount = menuItemModel.discount
+                            discount = menuItem.discount
                         )
                     }
 
-                    is MenuItem.MenuCategoryHeaderItem -> {
+                    is MenuItemUi.CategoryHeader -> {
                         Text(
                             modifier = Modifier.padding(
                                 top = if (index == 0) {
@@ -281,16 +279,16 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
                                     16.dp
                                 }
                             ),
-                            text = menuItemModel.name,
+                            text = menuItem.name,
                             style = FoodDeliveryTheme.typography.titleMedium.bold,
                             color = FoodDeliveryTheme.colors.mainColors.onSurface
                         )
                     }
 
-                    is MenuItem.MenuProductListItem -> {
+                    is MenuItemUi.Product -> {
                         MenuProductItem(
                             modifier = Modifier.padding(top = 8.dp),
-                            menuProductItem = menuItemModel.product,
+                            menuProductItem = menuItem,
                             onAddProductClick = viewModel::onAddProductClicked,
                             onProductClick = viewModel::onMenuItemClicked
                         )
@@ -303,54 +301,49 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
     @Preview(showSystemUi = true)
     @Composable
     private fun MenuScreenSuccessPreview() {
-        fun getCategoryItemModel(key: String) = CategoryItem(
+        fun getCategoryItem(key: String) = CategoryItem(
             key = key,
             uuid = "",
             name = "Бургеры",
             isSelected = false
         )
 
-        fun getMenuCategoryHeaderItemModel(key: String) = MenuItem.MenuCategoryHeaderItem(
+        fun getMenuCategoryHeaderItem(key: String) = MenuItemUi.CategoryHeader(
             key = key,
-            uuid = "",
             name = "Бургеры"
         )
 
-        val menuProductItemModel = MenuProductItem(
+        fun getMenuProductItem(key: String) = MenuItemUi.Product(
             uuid = "",
+            key = key,
             photoLink = "",
             name = "Бэргер",
-            newPrice = 99,
-            oldPrice = 100,
-            hasAdditions = true
-        )
-
-        fun getMenuProductPairItemModel(key: String) = MenuItem.MenuProductListItem(
-            key = key,
-            product = menuProductItemModel
+            newPrice = "99",
+            oldPrice = "100",
         )
 
         FoodDeliveryTheme {
             MenuScreen(
-                menuUi = MenuUi(
-                    categoryItemList = listOf(
-                        getCategoryItemModel("1"),
-                        getCategoryItemModel("2"),
-                        getCategoryItemModel("3")
+                viewState = MenuViewState(
+                    categoryItemList = persistentListOf(
+                        getCategoryItem("1"),
+                        getCategoryItem("2"),
+                        getCategoryItem("3")
                     ),
-                    menuItemList = listOf(
-                        getMenuCategoryHeaderItemModel("4"),
-                        getMenuProductPairItemModel("5"),
-                        getMenuProductPairItemModel("6"),
-                        getMenuCategoryHeaderItemModel("7"),
-                        getMenuProductPairItemModel("8")
+                    menuItemList = persistentListOf(
+                        getMenuCategoryHeaderItem("4"),
+                        getMenuProductItem("5"),
+                        getMenuProductItem("6"),
+                        getMenuCategoryHeaderItem("7"),
+                        getMenuProductItem("8")
                     ),
-                    state = MenuState.State.Success,
+                    state = MenuDataState.State.Success,
                     userScrollEnabled = true,
                     topCartUi = TopCartUi(
                         cost = "100",
                         count = "2"
-                    )
+                    ),
+                    eventList = persistentListOf()
                 ),
                 onMenuPositionChanged = {},
                 errorAction = {}
@@ -363,13 +356,16 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
     private fun MenuScreenLoadingPreview() {
         FoodDeliveryTheme {
             MenuScreen(
-                menuUi = MenuUi(
-                    state = MenuState.State.Loading,
-                    userScrollEnabled = true,
+                viewState = MenuViewState(
+                    categoryItemList = persistentListOf(),
                     topCartUi = TopCartUi(
                         cost = "100",
                         count = "2"
-                    )
+                    ),
+                    menuItemList = persistentListOf(),
+                    state = MenuDataState.State.Loading,
+                    userScrollEnabled = true,
+                    eventList = persistentListOf(),
                 ),
                 onMenuPositionChanged = {},
                 errorAction = {}
@@ -382,13 +378,16 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
     private fun MenuScreenErrorPreview() {
         FoodDeliveryTheme {
             MenuScreen(
-                menuUi = MenuUi(
-                    state = MenuState.State.Error(Throwable()),
-                    userScrollEnabled = true,
+                viewState = MenuViewState(
+                    categoryItemList = persistentListOf(),
                     topCartUi = TopCartUi(
                         cost = "100",
                         count = "2"
-                    )
+                    ),
+                    menuItemList = persistentListOf(),
+                    state = MenuDataState.State.Error(Throwable()),
+                    userScrollEnabled = true,
+                    eventList = persistentListOf(),
                 ),
                 onMenuPositionChanged = {},
                 errorAction = {}

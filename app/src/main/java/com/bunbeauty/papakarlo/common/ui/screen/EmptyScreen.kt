@@ -96,7 +96,7 @@ private fun EmptyScreenPreview() {
     EmptyScreen(
         imageId = R.drawable.ic_cart_24,
         imageDescriptionId = R.string.description_consumer_cart_empty,
-        mainTextId = R.string.msg_consumer_cart_empty,
+        mainTextId = R.string.title_consumer_cart_empty,
         extraTextId = R.string.msg_consumer_cart_empty,
         buttonTextId = R.string.action_consumer_cart_menu
     )

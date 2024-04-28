@@ -3,12 +3,12 @@ package com.bunbeauty.shared.presentation.consumercart
 import com.bunbeauty.shared.presentation.base.BaseAction
 import com.bunbeauty.shared.presentation.base.BaseEvent
 import com.bunbeauty.shared.presentation.base.BaseViewDataState
-import com.bunbeauty.shared.presentation.menu.MenuProductItem
+import com.bunbeauty.shared.presentation.menu.model.MenuItem
 import com.bunbeauty.shared.presentation.product_details.ProductDetailsOpenedFrom
 
 interface ConsumerCart {
 
-    data class ViewDataState(
+    data class DataState(
         val consumerCartData: ConsumerCartData?,
         val screenState: ScreenState,
     ) : BaseViewDataState {
@@ -22,8 +22,8 @@ interface ConsumerCart {
             val cartProductList: List<CartProductItem>,
             val oldTotalCost: String?,
             val newTotalCost: String,
-            val firstOrderDiscount: String?,
-            val recommendations: List<MenuProductItem>,
+            val discount: String?,
+            val recommendationList: List<MenuItem.Product>,
         )
 
         enum class ScreenState {
@@ -53,8 +53,6 @@ interface ConsumerCart {
         data object OnErrorButtonClick : Action
         data class AddRecommendationProductToCartClick(
             val menuProductUuid: String,
-            val menuProductName: String,
-            val hasAdditions: Boolean,
         ) : Action
 
         data class RecommendationClick(val menuProductUuid: String, val name: String) : Action
