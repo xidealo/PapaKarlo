@@ -22,6 +22,6 @@ actual fun platformModule() = module {
     single {
         UuidGenerator()
     }
-    single(flavorQualifier) { targetName }
+    single(flavorQualifier) { targetName.toString() }
     single(isDebugQualifier) { Platform.isDebugBinary }
 }

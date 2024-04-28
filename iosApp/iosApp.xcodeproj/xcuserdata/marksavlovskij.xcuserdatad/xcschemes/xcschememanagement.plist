@@ -22,7 +22,12 @@
 		<key>tandirhouse.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>28</integer>
+			<integer>4</integer>
+		</dict>
+		<key>vkuskavkaza.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>31</integer>
 		</dict>
 		<key>yuliar.xcscheme_^#shared#^_</key>
 		<dict>
@@ -43,6 +48,11 @@
 			<true/>
 		</dict>
 		<key>027CB0132A346F7B00350EB2</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>02891F6D2BDAEA0D0043B466</key>
 		<dict>
 			<key>primary</key>
 			<true/>
