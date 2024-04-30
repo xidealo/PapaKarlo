@@ -9,24 +9,28 @@ import com.bunbeauty.shared.presentation.product_details.ProductDetailsOpenedFro
 interface ConsumerCart {
 
     data class DataState(
-        val consumerCartData: ConsumerCartData?,
-        val screenState: ScreenState,
+        val state: State,
+        val warningItem: WarningItem?,
+        val cartProductItemList: List<CartProductItem>,
+        val recommendationList: List<MenuItem.Product>,
+        val oldTotalCost: String?,
+        val newTotalCost: String,
+        val discount: String?,
     ) : BaseViewDataState {
 
         fun getIsLastProduct(menuProductUuid: String): Boolean {
-            return consumerCartData?.cartProductList?.find { it.menuProductUuid == menuProductUuid }?.count == 1
+            return cartProductItemList.find { cartProductItem ->
+                cartProductItem.menuProductUuid == menuProductUuid
+            }?.count == 1
         }
 
-        data class ConsumerCartData(
-            val forFreeDelivery: String,
-            val cartProductList: List<CartProductItem>,
-            val oldTotalCost: String?,
-            val newTotalCost: String,
-            val discount: String?,
-            val recommendationList: List<MenuItem.Product>,
-        )
+        sealed interface WarningItem {
+            data class MinOrderCost(val cost: String) : WarningItem
+            data class ForFreeDelivery(val increaseAmountBy: String) : WarningItem
+            data class ForLowerDelivery(val increaseAmountBy: String) : WarningItem
+        }
 
-        enum class ScreenState {
+        enum class State {
             LOADING,
             SUCCESS,
             EMPTY,

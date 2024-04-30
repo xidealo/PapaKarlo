@@ -24,7 +24,7 @@ class CreateOrderUseCase(
         isDelivery: Boolean,
         selectedUserAddress: SelectableUserAddress?,
         selectedCafe: SelectableCafe?,
-        comment: String?,
+        orderComment: String?,
         deferredTime: Time?,
         timeZone: String,
         paymentMethod: String?,
@@ -34,15 +34,17 @@ class CreateOrderUseCase(
 
         val createdOrderAddress = if (isDelivery) {
             selectedUserAddress ?: return null
-            CreatedOrderAddress(
-                uuid = selectedUserAddress.uuid,
-                street = selectedUserAddress.street,
-                house = selectedUserAddress.house,
-                flat = selectedUserAddress.flat,
-                entrance = selectedUserAddress.entrance,
-                floor = selectedUserAddress.floor,
-                comment = selectedUserAddress.comment,
-            )
+            selectedUserAddress.address.run {
+                CreatedOrderAddress(
+                    uuid = uuid,
+                    street = street,
+                    house = house,
+                    flat = flat,
+                    entrance = entrance,
+                    floor = floor,
+                    comment = comment,
+                )
+            }
         } else {
             selectedCafe ?: return null
             CreatedOrderAddress(
@@ -54,7 +56,7 @@ class CreateOrderUseCase(
         val createdOrder = CreatedOrder(
             isDelivery = isDelivery,
             address = createdOrderAddress,
-            comment = comment,
+            comment = orderComment,
             deferredTime = deferredTime?.let {
                 dateTimeUtil.getMillisByTime(deferredTime, timeZone)
             },

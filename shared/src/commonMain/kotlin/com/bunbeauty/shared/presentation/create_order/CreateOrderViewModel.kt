@@ -186,7 +186,7 @@ class CreateOrderViewModel(
                     isDelivery = stateValue.isDelivery,
                     selectedUserAddress = data.selectedUserAddress,
                     selectedCafe = data.selectedCafe,
-                    comment = stateValue.comment,
+                    orderComment = stateValue.comment,
                     deferredTime = data.deferredTime,
                     timeZone = getSelectedCityTimeZone(),
                     paymentMethod = data.selectedPaymentMethod.name.name

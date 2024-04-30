@@ -12,7 +12,7 @@ import com.bunbeauty.shared.presentation.cafe_list.CafeItem
 interface IStringUtil {
 
     fun getUserAddressString(userAddress: UserAddress?): String?
-    fun getUserAddressString(userAddress: SelectableUserAddress?): String?
+    fun getUserAddressString(selectableUserAddress: SelectableUserAddress?): String?
     fun getOrderAddressString(orderAddress: OrderAddress): String
     fun getDateTimeString(dateTime: DateTime): String
     fun getTimeString(time: Time?): String

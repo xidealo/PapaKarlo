@@ -68,35 +68,52 @@ class ConsumerCartFragment :
         viewModel.onAction(ConsumerCart.Action.Init)
     }
 
-    override fun mapState(dataState: ConsumerCart.DataState): ConsumerCartViewState {
-        return when (dataState.screenState) {
-            ConsumerCart.DataState.ScreenState.LOADING -> {
+    override fun ConsumerCart.DataState.mapState(): ConsumerCartViewState {
+        return when (state) {
+            ConsumerCart.DataState.State.LOADING -> {
                 ConsumerCartViewState.Loading
             }
 
-            ConsumerCart.DataState.ScreenState.SUCCESS -> {
+            ConsumerCart.DataState.State.SUCCESS -> {
                 ConsumerCartViewState.Success(
-                    warning = null,
-                    cartProductList = dataState.consumerCartData?.cartProductList?.toImmutableList()
-                        ?: persistentListOf(),
-                    recommendationList = dataState.consumerCartData?.recommendationList?.map { menuProduct ->
+                    warning = warningItem?.let { warningItem ->
+                        when (warningItem) {
+                            is ConsumerCart.DataState.WarningItem.MinOrderCost -> {
+                                ConsumerCartViewState.WarningUi.MinOrderCost(cost = warningItem.cost)
+                            }
+
+                            is ConsumerCart.DataState.WarningItem.ForFreeDelivery -> {
+                                ConsumerCartViewState.WarningUi.ForFreeDelivery(
+                                    increaseAmountBy = warningItem.increaseAmountBy
+                                )
+                            }
+
+                            is ConsumerCart.DataState.WarningItem.ForLowerDelivery -> {
+                                ConsumerCartViewState.WarningUi.ForLowerDelivery(
+                                    increaseAmountBy = warningItem.increaseAmountBy
+                                )
+                            }
+                        }
+                    },
+                    cartProductList = cartProductItemList.toImmutableList(),
+                    recommendationList = recommendationList.map { menuProduct ->
                         menuProduct.toMenuProductItemUi()
-                    }?.toImmutableList() ?: persistentListOf(),
-                    discount = dataState.consumerCartData?.discount,
-                    oldTotalCost = dataState.consumerCartData?.oldTotalCost,
-                    newTotalCost = dataState.consumerCartData?.newTotalCost ?: "",
+                    }.toImmutableList(),
+                    discount = discount,
+                    oldTotalCost = oldTotalCost,
+                    newTotalCost = newTotalCost,
                 )
             }
 
-            ConsumerCart.DataState.ScreenState.EMPTY -> {
+            ConsumerCart.DataState.State.EMPTY -> {
                 ConsumerCartViewState.Empty(
-                    recommendationList = dataState.consumerCartData?.recommendationList?.map { menuProduct ->
+                    recommendationList = recommendationList.map { menuProduct ->
                         menuProduct.toMenuProductItemUi()
-                    }?.toImmutableList() ?: persistentListOf()
+                    }.toImmutableList()
                 )
             }
 
-            ConsumerCart.DataState.ScreenState.ERROR -> {
+            ConsumerCart.DataState.State.ERROR -> {
                 ConsumerCartViewState.Error
             }
         }
@@ -115,7 +132,7 @@ class ConsumerCartFragment :
 
             backgroundColor = FoodDeliveryTheme.colors.mainColors.surface
         ) {
-            when(viewState) {
+            when (viewState) {
                 ConsumerCartViewState.Loading -> LoadingScreen()
 
                 is ConsumerCartViewState.Success -> {
@@ -207,23 +224,22 @@ class ConsumerCartFragment :
                     columns = GridCells.Fixed(2),
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-//                    item(
-//                        span = { GridItemSpan(maxLineSpan) },
-//                        key = "Fre"
-//                    ) {
-//                        Text(
-//                            modifier = Modifier
-//                                .fillMaxWidth()
-//                                .padding(bottom = FoodDeliveryTheme.dimensions.mediumSpace)
-//                                .padding(horizontal = 16.dp),
-//                            text = stringResource(
-//                                R.string.msg_consumer_cart_free_delivery_from,
-//                                viewState.forFreeDelivery
-//                            ),
-//                            style = FoodDeliveryTheme.typography.bodyMedium,
-//                            color = FoodDeliveryTheme.colors.mainColors.onBackground
-//                        )
-//                    }
+                    item(
+                        span = { GridItemSpan(maxLineSpan) },
+                        key = "Warning"
+                    ) {
+                        viewState.warning?.let { warning ->
+                            Text(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(bottom = FoodDeliveryTheme.dimensions.mediumSpace)
+                                    .padding(horizontal = 16.dp),
+                                text = warning.toString(),
+                                style = FoodDeliveryTheme.typography.bodyMedium,
+                                color = FoodDeliveryTheme.colors.mainColors.onBackground
+                            )
+                        }
+                    }
 
                     items(
                         items = viewState.cartProductList,

@@ -8,16 +8,20 @@ import com.bunbeauty.analytic.event.recommendation.AddRecommendationProductClick
 import com.bunbeauty.analytic.parameter.MenuProductUuidEventParameter
 import com.bunbeauty.shared.Constants.PERCENT
 import com.bunbeauty.shared.Constants.RUBLE_CURRENCY
+import com.bunbeauty.shared.domain.feature.cart.GetConsumerCartWarningUseCase
 import com.bunbeauty.shared.domain.feature.cart.GetRecommendationsUseCase
 import com.bunbeauty.shared.domain.feature.cart.IncreaseCartProductCountUseCase
 import com.bunbeauty.shared.domain.feature.cart.RemoveCartProductUseCase
+import com.bunbeauty.shared.domain.feature.cart.model.Warning
 import com.bunbeauty.shared.domain.feature.menu.AddMenuProductUseCase
 import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
 import com.bunbeauty.shared.domain.model.cart.ConsumerCartDomain
-import com.bunbeauty.shared.domain.model.cart.LightCartProduct
+import com.bunbeauty.shared.domain.model.product.MenuProduct
 import com.bunbeauty.shared.extension.launchSafe
 import com.bunbeauty.shared.presentation.base.SharedStateViewModel
+import com.bunbeauty.shared.presentation.consumercart.mapper.toCartProductItem
+import com.bunbeauty.shared.presentation.consumercart.mapper.toWarningItem
 import com.bunbeauty.shared.presentation.menu.mapper.toMenuProductItem
 import com.bunbeauty.shared.presentation.product_details.ProductDetailsOpenedFrom
 import kotlinx.coroutines.Job
@@ -31,18 +35,17 @@ class ConsumerCartViewModel(
     private val addMenuProductUseCase: AddMenuProductUseCase,
     private val removeCartProductUseCase: RemoveCartProductUseCase,
     private val getRecommendationsUseCase: GetRecommendationsUseCase,
+    private val getConsumerCartWarningUseCase: GetConsumerCartWarningUseCase,
     private val analyticService: AnalyticService,
 ) : SharedStateViewModel<ConsumerCart.DataState, ConsumerCart.Action, ConsumerCart.Event>(
     ConsumerCart.DataState(
-        consumerCartData = ConsumerCart.DataState.ConsumerCartData(
-            forFreeDelivery = "",
-            cartProductList = listOf(),
-            oldTotalCost = null,
-            newTotalCost = "",
-            discount = null,
-            recommendationList = emptyList()
-        ),
-        screenState = ConsumerCart.DataState.ScreenState.LOADING,
+        state = ConsumerCart.DataState.State.LOADING,
+        warningItem = null,
+        cartProductItemList = emptyList(),
+        recommendationList = emptyList(),
+        oldTotalCost = null,
+        newTotalCost = "",
+        discount = null
     )
 ) {
 
@@ -95,24 +98,68 @@ class ConsumerCartViewModel(
 
     private fun observeConsumerCart() {
         setState {
-            copy(screenState = ConsumerCart.DataState.ScreenState.LOADING)
+            copy(state = ConsumerCart.DataState.State.LOADING)
         }
         observeConsumerCartJob?.cancel()
         observeConsumerCartJob = cartProductInteractor.observeConsumerCart()
-            .onEach { consumerCartDomain ->
+            .onEach { consumerCart ->
+                val warning = if (consumerCart is ConsumerCartDomain.WithProducts) {
+                    getConsumerCartWarningUseCase(consumerCart)
+                } else {
+                    null
+                }
+                val menuProductList = getRecommendationsUseCase()
                 setState {
-                    if (consumerCartDomain == null) {
-                        copy(screenState = ConsumerCart.DataState.ScreenState.ERROR)
-                    } else {
-                        copy(
-                            screenState = getConsumerCartDataState(consumerCartDomain),
-                            consumerCartData = getConsumerCartData(
-                                consumerCartDomain = consumerCartDomain
-                            ),
-                        )
-                    }
+                    copyWith(
+                        consumerCart = consumerCart,
+                        warning = warning,
+                        recommendationList = menuProductList
+                    )
                 }
             }.launchIn(sharedScope)
+    }
+
+    private fun ConsumerCart.DataState.copyWith(
+        consumerCart: ConsumerCartDomain?,
+        warning: Warning?,
+        recommendationList: List<MenuProduct>
+    ): ConsumerCart.DataState {
+        return if (consumerCart is ConsumerCartDomain.WithProducts) {
+            copy(
+                state = ConsumerCart.DataState.State.SUCCESS,
+                warningItem = warning?.toWarningItem(),
+                cartProductItemList = consumerCart.cartProductList.mapIndexed { index, lightCartProduct ->
+                    lightCartProduct.toCartProductItem(
+                        isLast = index == consumerCart.cartProductList.lastIndex
+                    )
+                },
+                oldTotalCost = consumerCart.oldTotalCost?.let { oldTotalCost ->
+                    "$oldTotalCost $RUBLE_CURRENCY"
+                },
+                newTotalCost = "${consumerCart.newTotalCost} $RUBLE_CURRENCY",
+                discount = discount?.let { discount ->
+                    "$discount$PERCENT"
+                },
+                recommendationList = recommendationList.map { menuProduct ->
+                    menuProduct.toMenuProductItem()
+                }
+            )
+        } else {
+            copy(
+                state = if (consumerCart == null) {
+                    ConsumerCart.DataState.State.ERROR
+                } else {
+                    ConsumerCart.DataState.State.EMPTY
+                },
+                cartProductItemList = emptyList(),
+                oldTotalCost = null,
+                newTotalCost = "",
+                discount = null,
+                recommendationList = recommendationList.map { menuProduct ->
+                    menuProduct.toMenuProductItem()
+                }
+            )
+        }
     }
 
     private fun onMenuClicked() {
@@ -157,7 +204,7 @@ class ConsumerCartViewModel(
     }
 
     private fun addRecommendationProductClicked(menuProductUuid: String) {
-        val menuProduct = dataState.value.consumerCartData?.recommendationList?.find { menuProduct ->
+        val menuProduct = dataState.value.recommendationList.find { menuProduct ->
             menuProduct.uuid == menuProductUuid
         } ?: return
 
@@ -242,60 +289,6 @@ class ConsumerCartViewModel(
                 ),
             )
         }
-    }
-
-    private suspend fun getConsumerCartData(
-        consumerCartDomain: ConsumerCartDomain,
-    ): ConsumerCart.DataState.ConsumerCartData? {
-        return when (consumerCartDomain) {
-            is ConsumerCartDomain.Empty -> null
-            is ConsumerCartDomain.WithProducts -> ConsumerCart.DataState.ConsumerCartData(
-                forFreeDelivery = "${consumerCartDomain.forFreeDelivery} $RUBLE_CURRENCY",
-                cartProductList = consumerCartDomain.cartProductList.mapIndexed { index, lightCartProduct ->
-                    toItem(
-                        lightCartProduct = lightCartProduct,
-                        isLast = index == consumerCartDomain.cartProductList.lastIndex
-                    )
-                },
-                oldTotalCost = consumerCartDomain.oldTotalCost?.let { oldTotalCost ->
-                    "$oldTotalCost $RUBLE_CURRENCY"
-                },
-                newTotalCost = "${consumerCartDomain.newTotalCost} $RUBLE_CURRENCY",
-                discount = consumerCartDomain.discount?.let { discount ->
-                    "$discount$PERCENT"
-                },
-                recommendationList = getRecommendationsUseCase().map { menuProduct ->
-                    menuProduct.toMenuProductItem()
-                }
-            )
-        }
-    }
-
-    private fun getConsumerCartDataState(consumerCartDomain: ConsumerCartDomain): ConsumerCart.DataState.ScreenState {
-        return when (consumerCartDomain) {
-            is ConsumerCartDomain.Empty -> ConsumerCart.DataState.ScreenState.EMPTY
-            is ConsumerCartDomain.WithProducts -> ConsumerCart.DataState.ScreenState.SUCCESS
-        }
-    }
-
-    private fun toItem(lightCartProduct: LightCartProduct, isLast: Boolean): CartProductItem {
-        return CartProductItem(
-            uuid = lightCartProduct.uuid,
-            name = lightCartProduct.name,
-            newCost = "${lightCartProduct.newCost} $RUBLE_CURRENCY",
-            oldCost = lightCartProduct.oldCost?.let { oldCost -> "$oldCost $RUBLE_CURRENCY" },
-            photoLink = lightCartProduct.photoLink,
-            count = lightCartProduct.count,
-            menuProductUuid = lightCartProduct.menuProductUuid,
-            additions = lightCartProduct.cartProductAdditionList
-                .joinToString(" • ") { cartProductAddition ->
-                    cartProductAddition.fullName ?: cartProductAddition.name
-                }
-                .ifEmpty { null },
-            additionUuidList = lightCartProduct.cartProductAdditionList
-                .map { cartProductAddition -> cartProductAddition.additionUuid },
-            isLast = isLast
-        )
     }
 
 }
