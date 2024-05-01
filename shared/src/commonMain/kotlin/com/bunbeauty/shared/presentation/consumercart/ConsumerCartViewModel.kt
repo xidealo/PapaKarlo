@@ -23,6 +23,7 @@ import com.bunbeauty.shared.presentation.base.SharedStateViewModel
 import com.bunbeauty.shared.presentation.consumercart.mapper.toCartProductItem
 import com.bunbeauty.shared.presentation.consumercart.mapper.toWarningItem
 import com.bunbeauty.shared.presentation.menu.mapper.toMenuProductItem
+import com.bunbeauty.shared.presentation.menu.model.MenuItem
 import com.bunbeauty.shared.presentation.product_details.ProductDetailsOpenedFrom
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn
@@ -54,8 +55,7 @@ class ConsumerCartViewModel(
     override fun reduce(action: ConsumerCart.Action, dataState: ConsumerCart.DataState) {
         when (action) {
             is ConsumerCart.Action.AddProductToCartClick -> increaseCartProductToCartClick(
-                cartProductUuid = action.cartProductUuid,
-                menuProductUuid = action.menuProductUuid
+                cartProductUuid = action.cartProductUuid
             )
 
             ConsumerCart.Action.BackClick -> navigateBack()
@@ -63,16 +63,11 @@ class ConsumerCartViewModel(
             ConsumerCart.Action.OnCreateOrderClick -> onCreateOrderClicked()
             ConsumerCart.Action.OnErrorButtonClick -> observeConsumerCart()
             ConsumerCart.Action.OnMenuClick -> onMenuClicked()
-            is ConsumerCart.Action.OnProductClick -> onProductClicked(
-                uuid = action.cartProductItem.menuProductUuid,
-                name = action.cartProductItem.name,
-                productDetailsOpenedFrom = ProductDetailsOpenedFrom.CART_PRODUCT,
-                additionUuidList = action.cartProductItem.additionUuidList,
-                cartProductUuid = action.cartProductItem.uuid
+            is ConsumerCart.Action.OnCartProductClick -> onCartProductClicked(
+                cartProductUuid = action.cartProductUuid
             )
 
             is ConsumerCart.Action.RemoveProductFromCartClick -> onRemoveCardProductClicked(
-                menuProductUuid = action.menuProductUuid,
                 cartProductUuid = action.cartProductUuid,
             )
 
@@ -80,12 +75,8 @@ class ConsumerCartViewModel(
                 menuProductUuid = action.menuProductUuid,
             )
 
-            is ConsumerCart.Action.RecommendationClick -> onProductClicked(
-                uuid = action.menuProductUuid,
-                name = action.name,
-                productDetailsOpenedFrom = ProductDetailsOpenedFrom.RECOMMENDATION_PRODUCT,
-                additionUuidList = emptyList(),
-                cartProductUuid = null
+            is ConsumerCart.Action.RecommendationClick -> onRecommendationClicked(
+                recommendationUuid = action.menuProductUuid
             )
         }
     }
@@ -129,9 +120,7 @@ class ConsumerCartViewModel(
                 state = ConsumerCart.DataState.State.SUCCESS,
                 warningItem = warning?.toWarningItem(),
                 cartProductItemList = consumerCart.cartProductList.mapIndexed { index, lightCartProduct ->
-                    lightCartProduct.toCartProductItem(
-                        isLast = index == consumerCart.cartProductList.lastIndex
-                    )
+                    lightCartProduct.toCartProductItem()
                 },
                 oldTotalCost = consumerCart.oldTotalCost?.let { oldTotalCost ->
                     "$oldTotalCost $RUBLE_CURRENCY"
@@ -185,20 +174,30 @@ class ConsumerCartViewModel(
         )
     }
 
-    private fun onProductClicked(
-        uuid: String,
-        name: String,
-        productDetailsOpenedFrom: ProductDetailsOpenedFrom,
-        additionUuidList: List<String>,
-        cartProductUuid: String?,
-    ) {
+    private fun onCartProductClicked(cartProductUuid: String) {
+        val cartProduct = findCartProduct(cartProductUuid = cartProductUuid) ?: return
+
         addEvent {
             ConsumerCart.Event.NavigateToProduct(
-                uuid = uuid,
-                name = name,
-                productDetailsOpenedFrom = productDetailsOpenedFrom,
-                additionUuidList = additionUuidList,
-                cartProductUuid = cartProductUuid,
+                uuid = cartProduct.menuProductUuid,
+                name = cartProduct.name,
+                productDetailsOpenedFrom = ProductDetailsOpenedFrom.CART_PRODUCT,
+                additionUuidList = cartProduct.additionUuidList,
+                cartProductUuid = cartProduct.uuid,
+            )
+        }
+    }
+
+    private fun onRecommendationClicked(recommendationUuid: String) {
+        val recommendation = findRecommendation(recommendationUuid = recommendationUuid) ?: return
+
+        addEvent {
+            ConsumerCart.Event.NavigateToProduct(
+                uuid = recommendation.uuid,
+                name = recommendation.name,
+                productDetailsOpenedFrom = ProductDetailsOpenedFrom.RECOMMENDATION_PRODUCT,
+                additionUuidList = emptyList(),
+                cartProductUuid = null,
             )
         }
     }
@@ -238,15 +237,19 @@ class ConsumerCartViewModel(
         )
     }
 
-    private fun increaseCartProductToCartClick(cartProductUuid: String, menuProductUuid: String) {
+    private fun increaseCartProductToCartClick(cartProductUuid: String) {
+        val cartProduct = findCartProduct(cartProductUuid = cartProductUuid) ?: return
+
         analyticService.sendEvent(
             event = IncreaseCartProductClickEvent(
-                menuProductUuidEventParameter = MenuProductUuidEventParameter(value = menuProductUuid)
+                menuProductUuidEventParameter = MenuProductUuidEventParameter(
+                    value = cartProduct.menuProductUuid
+                )
             ),
         )
         sharedScope.launchSafe(
             block = {
-                increaseCartProductCountUseCase(cartProductUuid = cartProductUuid)
+                increaseCartProductCountUseCase(cartProductUuid = cartProduct.uuid)
             },
             onError = {
                 addEvent {
@@ -256,16 +259,13 @@ class ConsumerCartViewModel(
         )
     }
 
-    private fun onRemoveCardProductClicked(
-        menuProductUuid: String,
-        cartProductUuid: String,
-    ) {
-        handleRemoveAnalytic(menuProductUuid = menuProductUuid)
+    private fun onRemoveCardProductClicked(cartProductUuid: String) {
+        val cartProduct = findCartProduct(cartProductUuid = cartProductUuid) ?: return
+
+        handleRemoveAnalytic(menuProductUuid = cartProduct.menuProductUuid)
         sharedScope.launchSafe(
             block = {
-                removeCartProductUseCase(
-                    cartProductUuid = cartProductUuid,
-                )
+                removeCartProductUseCase(cartProductUuid = cartProduct.uuid)
             },
             onError = {
                 addEvent {
@@ -288,6 +288,18 @@ class ConsumerCartViewModel(
                     menuProductUuidEventParameter = MenuProductUuidEventParameter(value = menuProductUuid)
                 ),
             )
+        }
+    }
+
+    private fun findCartProduct(cartProductUuid: String): CartProductItem? {
+        return mutableDataState.value.cartProductItemList.find { cartProductItem ->
+            cartProductItem.uuid == cartProductUuid
+        }
+    }
+
+    private fun findRecommendation(recommendationUuid: String): MenuItem.Product? {
+        return mutableDataState.value.recommendationList.find { menuProductItem ->
+            menuProductItem.uuid == recommendationUuid
         }
     }
 

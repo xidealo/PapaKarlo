@@ -1,14 +1,14 @@
-package com.bunbeauty.papakarlo.feature.menu
+    package com.bunbeauty.papakarlo.feature.menu.mapper
 
-import com.bunbeauty.papakarlo.feature.menu.model.MenuItemUi
-import com.bunbeauty.papakarlo.feature.menu.model.MenuViewState
+import com.bunbeauty.papakarlo.feature.menu.state.MenuItemUi
+import com.bunbeauty.papakarlo.feature.menu.state.MenuViewState
 import com.bunbeauty.papakarlo.feature.topcart.TopCartUi
 import com.bunbeauty.shared.Constants.RUBLE_CURRENCY
 import com.bunbeauty.shared.presentation.menu.model.MenuItem
 import com.bunbeauty.shared.presentation.menu.model.MenuDataState
 import kotlinx.collections.immutable.toImmutableList
 
-fun MenuDataState.toMenuUi(): MenuViewState {
+fun MenuDataState.toMenuViewState(): MenuViewState {
     return MenuViewState(
         topCartUi = TopCartUi(
             cost = cartCostAndCount?.cost?.let { cost ->

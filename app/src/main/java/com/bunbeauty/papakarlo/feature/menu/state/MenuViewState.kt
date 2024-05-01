@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.feature.menu.model
+package com.bunbeauty.papakarlo.feature.menu.state
 
 import androidx.compose.runtime.Immutable
 import com.bunbeauty.papakarlo.feature.topcart.TopCartUi

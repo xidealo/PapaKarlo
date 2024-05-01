@@ -44,17 +44,16 @@ import com.bunbeauty.papakarlo.feature.consumercart.ConsumerCartFragmentDirectio
 import com.bunbeauty.papakarlo.feature.consumercart.ConsumerCartFragmentDirections.toLoginFragment
 import com.bunbeauty.papakarlo.feature.consumercart.ConsumerCartFragmentDirections.toMenuFragment
 import com.bunbeauty.papakarlo.feature.consumercart.ConsumerCartFragmentDirections.toProductFragment
+import com.bunbeauty.papakarlo.feature.consumercart.mapper.toConsumerCartViewState
+import com.bunbeauty.papakarlo.feature.consumercart.state.ConsumerCartViewState
 import com.bunbeauty.papakarlo.feature.consumercart.ui.CartProductItem
 import com.bunbeauty.papakarlo.feature.main.IMessageHost
-import com.bunbeauty.papakarlo.feature.menu.model.MenuItemUi
-import com.bunbeauty.papakarlo.feature.menu.toMenuProductItemUi
+import com.bunbeauty.papakarlo.feature.menu.state.MenuItemUi
 import com.bunbeauty.papakarlo.feature.menu.ui.MenuProductItem
 import com.bunbeauty.shared.domain.model.SuccessLoginDirection
-import com.bunbeauty.shared.presentation.consumercart.CartProductItem
 import com.bunbeauty.shared.presentation.consumercart.ConsumerCart
 import com.bunbeauty.shared.presentation.consumercart.ConsumerCartViewModel
 import kotlinx.collections.immutable.persistentListOf
-import kotlinx.collections.immutable.toImmutableList
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ConsumerCartFragment :
@@ -69,54 +68,7 @@ class ConsumerCartFragment :
     }
 
     override fun ConsumerCart.DataState.mapState(): ConsumerCartViewState {
-        return when (state) {
-            ConsumerCart.DataState.State.LOADING -> {
-                ConsumerCartViewState.Loading
-            }
-
-            ConsumerCart.DataState.State.SUCCESS -> {
-                ConsumerCartViewState.Success(
-                    warning = warningItem?.let { warningItem ->
-                        when (warningItem) {
-                            is ConsumerCart.DataState.WarningItem.MinOrderCost -> {
-                                ConsumerCartViewState.WarningUi.MinOrderCost(cost = warningItem.cost)
-                            }
-
-                            is ConsumerCart.DataState.WarningItem.ForFreeDelivery -> {
-                                ConsumerCartViewState.WarningUi.ForFreeDelivery(
-                                    increaseAmountBy = warningItem.increaseAmountBy
-                                )
-                            }
-
-                            is ConsumerCart.DataState.WarningItem.ForLowerDelivery -> {
-                                ConsumerCartViewState.WarningUi.ForLowerDelivery(
-                                    increaseAmountBy = warningItem.increaseAmountBy
-                                )
-                            }
-                        }
-                    },
-                    cartProductList = cartProductItemList.toImmutableList(),
-                    recommendationList = recommendationList.map { menuProduct ->
-                        menuProduct.toMenuProductItemUi()
-                    }.toImmutableList(),
-                    discount = discount,
-                    oldTotalCost = oldTotalCost,
-                    newTotalCost = newTotalCost,
-                )
-            }
-
-            ConsumerCart.DataState.State.EMPTY -> {
-                ConsumerCartViewState.Empty(
-                    recommendationList = recommendationList.map { menuProduct ->
-                        menuProduct.toMenuProductItemUi()
-                    }.toImmutableList()
-                )
-            }
-
-            ConsumerCart.DataState.State.ERROR -> {
-                ConsumerCartViewState.Error
-            }
-        }
+        return toConsumerCartViewState()
     }
 
     @Composable
@@ -243,7 +195,7 @@ class ConsumerCartFragment :
 
                     items(
                         items = viewState.cartProductList,
-                        key = { cartProductItem -> cartProductItem.uuid },
+                        key = { cartProductItem -> cartProductItem.key },
                         span = { _ -> GridItemSpan(maxLineSpan) }
                     ) { cartProductItem ->
                         FoodDeliveryItem(needDivider = !cartProductItem.isLast) {
@@ -252,23 +204,21 @@ class ConsumerCartFragment :
                                 onCountIncreased = {
                                     onAction(
                                         ConsumerCart.Action.AddProductToCartClick(
-                                            cartProductUuid = cartProductItem.uuid,
-                                            menuProductUuid = cartProductItem.menuProductUuid
+                                            cartProductUuid = cartProductItem.uuid
                                         )
                                     )
                                 },
                                 onCountDecreased = {
                                     onAction(
                                         ConsumerCart.Action.RemoveProductFromCartClick(
-                                            menuProductUuid = cartProductItem.menuProductUuid,
                                             cartProductUuid = cartProductItem.uuid
                                         )
                                     )
                                 },
                                 onClick = {
                                     onAction(
-                                        ConsumerCart.Action.OnProductClick(
-                                            cartProductItem = cartProductItem
+                                        ConsumerCart.Action.OnCartProductClick(
+                                            cartProductUuid = cartProductItem.uuid
                                         )
                                     )
                                 }
@@ -279,7 +229,7 @@ class ConsumerCartFragment :
                     if (viewState.recommendationList.isNotEmpty()) {
                         item(
                             span = { GridItemSpan(maxLineSpan) },
-                            key = R.string.msg_consumer_cart_recommendations
+                            key = "Recommendations"
                         ) {
                             Text(
                                 modifier = Modifier
@@ -296,7 +246,7 @@ class ConsumerCartFragment :
 
                     itemsIndexed(
                         items = viewState.recommendationList,
-                        key = { _, recommendation -> recommendation.uuid },
+                        key = { _, recommendation -> recommendation.key },
                         span = { _, _ -> GridItemSpan(1) },
                     ) { index, recommendation ->
                         MenuProductItem(
@@ -322,11 +272,10 @@ class ConsumerCartFragment :
                                     )
                                 )
                             },
-                            onProductClick = {
+                            onProductClick = { menuProductUuid ->
                                 onAction(
                                     ConsumerCart.Action.RecommendationClick(
-                                        menuProductUuid = recommendation.uuid,
-                                        name = recommendation.name
+                                        menuProductUuid = menuProductUuid
                                     )
                                 )
                             }
@@ -391,16 +340,15 @@ class ConsumerCartFragment :
     @Preview(showSystemUi = true)
     @Composable
     private fun ConsumerCartSuccessScreenPreview() {
-        fun getCartProductItemModel(uuid: String) = CartProductItem(
+        fun getCartProductItemModel(uuid: String) = ConsumerCartViewState.CartProductItemUi(
+            key = uuid,
             uuid = uuid,
             name = "Бэргер",
             newCost = "300 ₽",
             oldCost = "330 ₽",
             photoLink = "",
             count = 3,
-            menuProductUuid = "",
             additions = null,
-            additionUuidList = emptyList(),
             isLast = false
         )
 

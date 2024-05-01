@@ -21,7 +21,7 @@ import com.bunbeauty.papakarlo.common.ui.element.button.SmallButton
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold
-import com.bunbeauty.papakarlo.feature.menu.model.MenuItemUi
+import com.bunbeauty.papakarlo.feature.menu.state.MenuItemUi
 
 @Composable
 fun MenuProductItem(

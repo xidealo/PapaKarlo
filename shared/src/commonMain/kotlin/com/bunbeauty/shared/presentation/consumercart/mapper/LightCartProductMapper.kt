@@ -4,7 +4,7 @@ import com.bunbeauty.shared.Constants.RUBLE_CURRENCY
 import com.bunbeauty.shared.domain.model.cart.LightCartProduct
 import com.bunbeauty.shared.presentation.consumercart.CartProductItem
 
-fun LightCartProduct.toCartProductItem(isLast: Boolean): CartProductItem {
+fun LightCartProduct.toCartProductItem(): CartProductItem {
     return CartProductItem(
         uuid = uuid,
         name = name,
@@ -20,7 +20,6 @@ fun LightCartProduct.toCartProductItem(isLast: Boolean): CartProductItem {
         }.ifEmpty { null },
         additionUuidList = cartProductAdditionList.map { cartProductAddition ->
             cartProductAddition.additionUuid
-        },
-        isLast = isLast
+        }
     )
 }

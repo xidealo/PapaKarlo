@@ -46,8 +46,9 @@ import com.bunbeauty.papakarlo.common.ui.theme.bold
 import com.bunbeauty.papakarlo.databinding.LayoutComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.main.IMessageHost
-import com.bunbeauty.papakarlo.feature.menu.model.MenuItemUi
-import com.bunbeauty.papakarlo.feature.menu.model.MenuViewState
+import com.bunbeauty.papakarlo.feature.menu.mapper.toMenuViewState
+import com.bunbeauty.papakarlo.feature.menu.state.MenuItemUi
+import com.bunbeauty.papakarlo.feature.menu.state.MenuViewState
 import com.bunbeauty.papakarlo.feature.menu.ui.CategoryItem
 import com.bunbeauty.papakarlo.feature.menu.ui.FirstOrderDiscountItem
 import com.bunbeauty.papakarlo.feature.menu.ui.MenuProductItem
@@ -73,7 +74,7 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
         viewBinding.root.setContentWithTheme {
             val menuState by viewModel.menuState.collectAsStateWithLifecycle()
             MenuScreen(
-                viewState = menuState.toMenuUi(),
+                viewState = menuState.toMenuViewState(),
                 onMenuPositionChanged = viewModel::onMenuPositionChanged,
                 errorAction = viewModel::getMenu
             )
