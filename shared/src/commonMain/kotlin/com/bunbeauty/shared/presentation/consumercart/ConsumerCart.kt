@@ -31,7 +31,6 @@ interface ConsumerCart {
         enum class State {
             LOADING,
             SUCCESS,
-            EMPTY,
             ERROR
         }
     }

@@ -14,42 +14,40 @@ fun ConsumerCart.DataState.toConsumerCartViewState(): ConsumerCartViewState {
 
         ConsumerCart.DataState.State.SUCCESS -> {
             ConsumerCartViewState.Success(
-                motivation = motivation?.let { warningItem ->
-                    when (warningItem) {
-                        is ConsumerCart.DataState.Motivation.MinOrderCost -> {
-                            ConsumerCartViewState.MotivationUi.MinOrderCost(cost = warningItem.cost)
-                        }
-
-                        is ConsumerCart.DataState.Motivation.ForLowerDelivery -> {
-                            ConsumerCartViewState.MotivationUi.ForLowerDelivery(
-                                increaseAmountBy = warningItem.increaseAmountBy,
-                                progress = warningItem.progress,
-                                isFree = warningItem.isFree,
-                            )
-                        }
-
-                        is ConsumerCart.DataState.Motivation.LowerDeliveryAchieved -> {
-                            ConsumerCartViewState.MotivationUi.LowerDeliveryAchieved(isFree = warningItem.isFree)
-                        }
-                    }
-                },
                 cartProductList = cartProductItemList.mapIndexed { i, cartProductItem ->
                     cartProductItem.toCartProductItemUi(i == cartProductItemList.lastIndex)
                 }.toImmutableList(),
                 recommendationList = recommendationList.map { menuProduct ->
                     menuProduct.toMenuProductItemUi()
                 }.toImmutableList(),
-                discount = discount,
-                oldTotalCost = oldTotalCost,
-                newTotalCost = newTotalCost,
-            )
-        }
+                bottomPanelInfo = if (cartProductItemList.isEmpty()) {
+                    null
+                } else {
+                    ConsumerCartViewState.Success.BottomPanelInfoUi(
+                        motivation = motivation?.let { warningItem ->
+                            when (warningItem) {
+                                is ConsumerCart.DataState.Motivation.MinOrderCost -> {
+                                    ConsumerCartViewState.MotivationUi.MinOrderCost(cost = warningItem.cost)
+                                }
 
-        ConsumerCart.DataState.State.EMPTY -> {
-            ConsumerCartViewState.Empty(
-                recommendationList = recommendationList.map { menuProduct ->
-                    menuProduct.toMenuProductItemUi()
-                }.toImmutableList()
+                                is ConsumerCart.DataState.Motivation.ForLowerDelivery -> {
+                                    ConsumerCartViewState.MotivationUi.ForLowerDelivery(
+                                        increaseAmountBy = warningItem.increaseAmountBy,
+                                        progress = warningItem.progress,
+                                        isFree = warningItem.isFree,
+                                    )
+                                }
+
+                                is ConsumerCart.DataState.Motivation.LowerDeliveryAchieved -> {
+                                    ConsumerCartViewState.MotivationUi.LowerDeliveryAchieved(isFree = warningItem.isFree)
+                                }
+                            }
+                        },
+                        discount = discount,
+                        oldTotalCost = oldTotalCost,
+                        newTotalCost = newTotalCost,
+                    )
+                },
             )
         }
 

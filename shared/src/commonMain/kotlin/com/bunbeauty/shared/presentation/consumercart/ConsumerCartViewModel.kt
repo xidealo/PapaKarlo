@@ -120,7 +120,7 @@ class ConsumerCartViewModel(
             copy(
                 state = ConsumerCart.DataState.State.SUCCESS,
                 motivation = motivation?.toWarningItem(),
-                cartProductItemList = consumerCart.cartProductList.mapIndexed { index, lightCartProduct ->
+                cartProductItemList = consumerCart.cartProductList.map { lightCartProduct ->
                     lightCartProduct.toCartProductItem()
                 },
                 discount = consumerCart.discount?.let { discount ->
@@ -139,7 +139,7 @@ class ConsumerCartViewModel(
                 state = if (consumerCart == null) {
                     ConsumerCart.DataState.State.ERROR
                 } else {
-                    ConsumerCart.DataState.State.EMPTY
+                    ConsumerCart.DataState.State.SUCCESS
                 },
                 cartProductItemList = emptyList(),
                 oldTotalCost = null,

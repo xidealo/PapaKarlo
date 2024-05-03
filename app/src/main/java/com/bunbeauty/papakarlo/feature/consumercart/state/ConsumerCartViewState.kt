@@ -15,21 +15,21 @@ sealed class ConsumerCartViewState(
 
     @Immutable
     data class Success(
-        val motivation: MotivationUi?,
         val cartProductList: ImmutableList<CartProductItemUi>,
         val recommendationList: ImmutableList<MenuItemUi.Product>,
-        val discount: String?,
-        val oldTotalCost: String?,
-        val newTotalCost: String,
+        val bottomPanelInfo: BottomPanelInfoUi?,
     ) : ConsumerCartViewState(state = State.SUCCESS) {
 
-        val isOrderCreationAvailable: Boolean = motivation !is MotivationUi.MinOrderCost
+        @Immutable
+        data class BottomPanelInfoUi(
+            val motivation: MotivationUi?,
+            val discount: String?,
+            val oldTotalCost: String?,
+            val newTotalCost: String,
+        ) {
+            val isOrderCreationAvailable: Boolean = motivation !is MotivationUi.MinOrderCost
+        }
     }
-
-    @Immutable
-    data class Empty(
-        val recommendationList: ImmutableList<MenuItemUi.Product>
-    ) : ConsumerCartViewState(state = State.EMPTY)
 
     @Immutable
     data object Error : ConsumerCartViewState(state = State.ERROR)
@@ -66,7 +66,6 @@ sealed class ConsumerCartViewState(
     enum class State {
         LOADING,
         ERROR,
-        EMPTY,
         SUCCESS,
     }
 
