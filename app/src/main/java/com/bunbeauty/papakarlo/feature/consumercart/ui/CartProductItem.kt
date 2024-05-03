@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -39,6 +40,7 @@ fun CartProductItem(
     FoodDeliveryCard(
         modifier = modifier.fillMaxWidth(),
         onClick = onClick,
+        shape = RectangleShape,
         elevated = false
     ) {
         Row(

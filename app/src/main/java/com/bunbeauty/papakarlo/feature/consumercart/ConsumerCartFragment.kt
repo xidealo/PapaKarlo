@@ -2,6 +2,7 @@ package com.bunbeauty.papakarlo.feature.consumercart
 
 import android.os.Bundle
 import android.view.View
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Arrangement
@@ -28,8 +29,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.lerp
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -383,7 +387,10 @@ class ConsumerCartFragment :
 
                 val motivationText = when (motivation) {
                     is ConsumerCartViewState.MotivationUi.MinOrderCost -> {
-                        stringResource(R.string.msg_consumer_cart_min_order, motivation.cost)
+                        buildAnnotatedStringWithBold(
+                            text = stringResource(R.string.msg_consumer_cart_min_order, motivation.cost),
+                            subtextToSelect = motivation.cost
+                        )
                     }
 
                     is ConsumerCartViewState.MotivationUi.ForLowerDelivery -> {
@@ -392,7 +399,10 @@ class ConsumerCartFragment :
                         } else {
                             R.string.msg_consumer_cart_for_lower_delivery
                         }
-                        stringResource(textId, motivation.increaseAmountBy)
+                        buildAnnotatedStringWithBold(
+                            text = stringResource(textId, motivation.increaseAmountBy),
+                            subtextToSelect = motivation.increaseAmountBy
+                        )
                     }
 
                     is ConsumerCartViewState.MotivationUi.LowerDeliveryAchieved -> {
@@ -401,7 +411,9 @@ class ConsumerCartFragment :
                         } else {
                             R.string.msg_consumer_cart_lower_delivery
                         }
-                        stringResource(textId)
+                        buildAnnotatedString {
+                            append(stringResource(textId))
+                        }
                     }
                 }
                 Text(
@@ -422,16 +434,42 @@ class ConsumerCartFragment :
                     animationSpec = tween(500),
                     label = "progress"
                 )
+                val animatedColor by animateColorAsState(
+                    targetValue = lerp(
+                        FoodDeliveryTheme.colors.statusColors.warning,
+                        FoodDeliveryTheme.colors.statusColors.positive,
+                        progress
+                    ),
+                    animationSpec = tween(500),
+                    label = "color"
+                )
                 LinearProgressIndicator(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(8.dp),
                     progress = animatedProgress,
-                    color = FoodDeliveryTheme.colors.statusColors.positive,
+                    color = animatedColor,
                     trackColor = FoodDeliveryTheme.colors.mainColors.disabled,
                     strokeCap = StrokeCap.Round,
                 )
             }
+        }
+    }
+
+    @Composable
+    private fun buildAnnotatedStringWithBold(
+        text: String,
+        subtextToSelect: String,
+    ): AnnotatedString {
+        return buildAnnotatedString {
+            val startIndex = text.indexOf(subtextToSelect)
+            val endIndex = startIndex + subtextToSelect.length
+            append(text)
+            addStyle(
+                style = FoodDeliveryTheme.typography.bodyMedium.bold.toSpanStyle(),
+                start = startIndex,
+                end = endIndex
+            )
         }
     }
 
