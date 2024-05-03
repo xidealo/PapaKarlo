@@ -14,22 +14,22 @@ fun ConsumerCart.DataState.toConsumerCartViewState(): ConsumerCartViewState {
 
         ConsumerCart.DataState.State.SUCCESS -> {
             ConsumerCartViewState.Success(
-                warning = warningItem?.let { warningItem ->
+                motivation = motivation?.let { warningItem ->
                     when (warningItem) {
-                        is ConsumerCart.DataState.WarningItem.MinOrderCost -> {
-                            ConsumerCartViewState.WarningUi.MinOrderCost(cost = warningItem.cost)
+                        is ConsumerCart.DataState.Motivation.MinOrderCost -> {
+                            ConsumerCartViewState.MotivationUi.MinOrderCost(cost = warningItem.cost)
                         }
 
-                        is ConsumerCart.DataState.WarningItem.ForFreeDelivery -> {
-                            ConsumerCartViewState.WarningUi.ForFreeDelivery(
-                                increaseAmountBy = warningItem.increaseAmountBy
+                        is ConsumerCart.DataState.Motivation.ForLowerDelivery -> {
+                            ConsumerCartViewState.MotivationUi.ForLowerDelivery(
+                                increaseAmountBy = warningItem.increaseAmountBy,
+                                progress = warningItem.progress,
+                                isFree = warningItem.isFree,
                             )
                         }
 
-                        is ConsumerCart.DataState.WarningItem.ForLowerDelivery -> {
-                            ConsumerCartViewState.WarningUi.ForLowerDelivery(
-                                increaseAmountBy = warningItem.increaseAmountBy
-                            )
+                        is ConsumerCart.DataState.Motivation.LowerDeliveryAchieved -> {
+                            ConsumerCartViewState.MotivationUi.LowerDeliveryAchieved(isFree = warningItem.isFree)
                         }
                     }
                 },

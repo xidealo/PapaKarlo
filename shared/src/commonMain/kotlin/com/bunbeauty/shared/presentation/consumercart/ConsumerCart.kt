@@ -10,24 +10,22 @@ interface ConsumerCart {
 
     data class DataState(
         val state: State,
-        val warningItem: WarningItem?,
+        val motivation: Motivation?,
         val cartProductItemList: List<CartProductItem>,
         val recommendationList: List<MenuItem.Product>,
+        val discount: String?,
         val oldTotalCost: String?,
         val newTotalCost: String,
-        val discount: String?,
     ) : BaseViewDataState {
 
-        fun getIsLastProduct(menuProductUuid: String): Boolean {
-            return cartProductItemList.find { cartProductItem ->
-                cartProductItem.menuProductUuid == menuProductUuid
-            }?.count == 1
-        }
-
-        sealed interface WarningItem {
-            data class MinOrderCost(val cost: String) : WarningItem
-            data class ForFreeDelivery(val increaseAmountBy: String) : WarningItem
-            data class ForLowerDelivery(val increaseAmountBy: String) : WarningItem
+        sealed interface Motivation {
+            data class MinOrderCost(val cost: String) : Motivation
+            data class ForLowerDelivery(
+                val increaseAmountBy: String,
+                val progress: Float,
+                val isFree: Boolean,
+            ) : Motivation
+            data class LowerDeliveryAchieved(val isFree: Boolean) : Motivation
         }
 
         enum class State {

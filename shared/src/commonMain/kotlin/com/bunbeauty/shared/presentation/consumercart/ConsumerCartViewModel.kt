@@ -12,7 +12,7 @@ import com.bunbeauty.shared.domain.feature.cart.GetConsumerCartWarningUseCase
 import com.bunbeauty.shared.domain.feature.cart.GetRecommendationsUseCase
 import com.bunbeauty.shared.domain.feature.cart.IncreaseCartProductCountUseCase
 import com.bunbeauty.shared.domain.feature.cart.RemoveCartProductUseCase
-import com.bunbeauty.shared.domain.feature.cart.model.Warning
+import com.bunbeauty.shared.domain.feature.cart.model.Motivation
 import com.bunbeauty.shared.domain.feature.menu.AddMenuProductUseCase
 import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
@@ -41,12 +41,12 @@ class ConsumerCartViewModel(
 ) : SharedStateViewModel<ConsumerCart.DataState, ConsumerCart.Action, ConsumerCart.Event>(
     ConsumerCart.DataState(
         state = ConsumerCart.DataState.State.LOADING,
-        warningItem = null,
+        motivation = null,
         cartProductItemList = emptyList(),
         recommendationList = emptyList(),
+        discount = null,
         oldTotalCost = null,
         newTotalCost = "",
-        discount = null
     )
 ) {
 
@@ -96,6 +96,7 @@ class ConsumerCartViewModel(
             .onEach { consumerCart ->
                 val warning = if (consumerCart is ConsumerCartDomain.WithProducts) {
                     getConsumerCartWarningUseCase(consumerCart)
+
                 } else {
                     null
                 }
@@ -103,7 +104,7 @@ class ConsumerCartViewModel(
                 setState {
                     copyWith(
                         consumerCart = consumerCart,
-                        warning = warning,
+                        motivation = warning,
                         recommendationList = menuProductList
                     )
                 }
@@ -112,23 +113,23 @@ class ConsumerCartViewModel(
 
     private fun ConsumerCart.DataState.copyWith(
         consumerCart: ConsumerCartDomain?,
-        warning: Warning?,
+        motivation: Motivation?,
         recommendationList: List<MenuProduct>
     ): ConsumerCart.DataState {
         return if (consumerCart is ConsumerCartDomain.WithProducts) {
             copy(
                 state = ConsumerCart.DataState.State.SUCCESS,
-                warningItem = warning?.toWarningItem(),
+                motivation = motivation?.toWarningItem(),
                 cartProductItemList = consumerCart.cartProductList.mapIndexed { index, lightCartProduct ->
                     lightCartProduct.toCartProductItem()
+                },
+                discount = consumerCart.discount?.let { discount ->
+                    "$discount$PERCENT"
                 },
                 oldTotalCost = consumerCart.oldTotalCost?.let { oldTotalCost ->
                     "$oldTotalCost $RUBLE_CURRENCY"
                 },
                 newTotalCost = "${consumerCart.newTotalCost} $RUBLE_CURRENCY",
-                discount = discount?.let { discount ->
-                    "$discount$PERCENT"
-                },
                 recommendationList = recommendationList.map { menuProduct ->
                     menuProduct.toMenuProductItem()
                 }
@@ -282,7 +283,10 @@ class ConsumerCartViewModel(
             ),
         )
 
-        if (dataState.value.getIsLastProduct(menuProductUuid = menuProductUuid)) {
+        val isLast = dataState.value.cartProductItemList.find { cartProductItem ->
+            cartProductItem.menuProductUuid == menuProductUuid
+        }?.count == 1
+        if (isLast) {
             analyticService.sendEvent(
                 event = RemoveCartProductClickEvent(
                     menuProductUuidEventParameter = MenuProductUuidEventParameter(value = menuProductUuid)

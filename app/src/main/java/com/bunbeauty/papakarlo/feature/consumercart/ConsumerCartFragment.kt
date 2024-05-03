@@ -2,7 +2,10 @@ package com.bunbeauty.papakarlo.feature.consumercart
 
 import android.os.Bundle
 import android.view.View
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -10,15 +13,22 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.itemsIndexed
+import androidx.compose.material3.Icon
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
@@ -33,6 +43,7 @@ import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
 import com.bunbeauty.papakarlo.common.ui.element.card.DiscountCard
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryItem
 import com.bunbeauty.papakarlo.common.ui.element.surface.FoodDeliverySurface
+import com.bunbeauty.papakarlo.common.ui.icon24
 import com.bunbeauty.papakarlo.common.ui.screen.EmptyScreen
 import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
@@ -172,27 +183,10 @@ class ConsumerCartFragment :
             Box(modifier = Modifier.weight(1f)) {
                 LazyVerticalGrid(
                     modifier = Modifier.fillMaxSize(),
-                    contentPadding = PaddingValues(vertical = FoodDeliveryTheme.dimensions.mediumSpace),
+                    contentPadding = PaddingValues(vertical = 16.dp),
                     columns = GridCells.Fixed(2),
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    item(
-                        span = { GridItemSpan(maxLineSpan) },
-                        key = "Warning"
-                    ) {
-                        viewState.warning?.let { warning ->
-                            Text(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(bottom = FoodDeliveryTheme.dimensions.mediumSpace)
-                                    .padding(horizontal = 16.dp),
-                                text = warning.toString(),
-                                style = FoodDeliveryTheme.typography.bodyMedium,
-                                color = FoodDeliveryTheme.colors.mainColors.onBackground
-                            )
-                        }
-                    }
-
                     items(
                         items = viewState.cartProductList,
                         key = { cartProductItem -> cartProductItem.key },
@@ -284,55 +278,159 @@ class ConsumerCartFragment :
                 }
             }
 
-            FoodDeliverySurface(modifier = Modifier.fillMaxWidth()) {
-                Column(
-                    modifier = Modifier
-                        .padding(FoodDeliveryTheme.dimensions.mediumSpace)
-                ) {
-                    viewState.discount?.let { discount ->
-                        Row(modifier = Modifier.padding(bottom = 8.dp)) {
-                            Text(
-                                text = stringResource(R.string.title_consumer_cart_discount),
-                                style = FoodDeliveryTheme.typography.bodyMedium,
-                                color = FoodDeliveryTheme.colors.mainColors.onSurface
-                            )
-                            Spacer(modifier = Modifier.weight(1f))
+            BottomPanel(
+                viewState = viewState,
+                onAction = onAction,
+            )
+        }
+    }
 
-                            DiscountCard(discount = discount)
-                        }
-                    }
-
+    @Composable
+    private fun BottomPanel(
+        viewState: ConsumerCartViewState.Success,
+        onAction: (ConsumerCart.Action) -> Unit,
+        modifier: Modifier = Modifier,
+    ) {
+        FoodDeliverySurface(modifier = modifier) {
+            Column(
+                modifier = Modifier.padding(16.dp),
+                verticalArrangement = spacedBy(8.dp),
+            ) {
+                Motivation(viewState.motivation)
+                viewState.discount?.let { discount ->
                     Row {
                         Text(
-                            text = stringResource(R.string.title_consumer_cart_total),
-                            style = FoodDeliveryTheme.typography.bodyMedium.bold,
+                            text = stringResource(R.string.title_consumer_cart_discount),
+                            style = FoodDeliveryTheme.typography.bodyMedium,
                             color = FoodDeliveryTheme.colors.mainColors.onSurface
                         )
                         Spacer(modifier = Modifier.weight(1f))
-                        viewState.oldTotalCost?.let { oldTotalCost ->
-                            Text(
-                                modifier = Modifier
-                                    .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
-                                text = oldTotalCost,
-                                style = FoodDeliveryTheme.typography.bodyMedium.bold,
-                                color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
-                                textDecoration = TextDecoration.LineThrough
-                            )
-                        }
+
+                        DiscountCard(discount = discount)
+                    }
+                }
+                Row {
+                    Text(
+                        text = stringResource(R.string.title_consumer_cart_total),
+                        style = FoodDeliveryTheme.typography.bodyMedium.bold,
+                        color = FoodDeliveryTheme.colors.mainColors.onSurface
+                    )
+                    Spacer(modifier = Modifier.weight(1f))
+                    viewState.oldTotalCost?.let { oldTotalCost ->
                         Text(
-                            text = viewState.newTotalCost,
+                            modifier = Modifier
+                                .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
+                            text = oldTotalCost,
                             style = FoodDeliveryTheme.typography.bodyMedium.bold,
-                            color = FoodDeliveryTheme.colors.mainColors.onSurface
+                            color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
+                            textDecoration = TextDecoration.LineThrough
                         )
                     }
-                    MainButton(
-                        modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
-                        textStringId = R.string.action_consumer_cart_creeate_order,
-                        onClick = {
-                            onAction(ConsumerCart.Action.OnCreateOrderClick)
-                        }
+                    Text(
+                        text = viewState.newTotalCost,
+                        style = FoodDeliveryTheme.typography.bodyMedium.bold,
+                        color = FoodDeliveryTheme.colors.mainColors.onSurface
                     )
                 }
+                MainButton(
+                    modifier = Modifier.padding(top = 8.dp),
+                    textStringId = R.string.action_consumer_cart_creeate_order,
+                    isEnabled = viewState.isOrderCreationAvailable,
+                    onClick = {
+                        onAction(ConsumerCart.Action.OnCreateOrderClick)
+                    }
+                )
+            }
+        }
+    }
+
+    @Composable
+    private fun Motivation(
+        motivation: ConsumerCartViewState.MotivationUi?,
+        modifier: Modifier = Modifier,
+    ) {
+        motivation ?: return
+
+        Column(
+            modifier = modifier,
+            verticalArrangement = spacedBy(4.dp)
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = spacedBy(8.dp)
+            ) {
+                val iconId = when (motivation) {
+                    is ConsumerCartViewState.MotivationUi.MinOrderCost -> R.drawable.ic_warning
+                    is ConsumerCartViewState.MotivationUi.ForLowerDelivery,
+                    is ConsumerCartViewState.MotivationUi.LowerDeliveryAchieved -> R.drawable.ic_delivery
+                }
+                val iconTint = when (motivation) {
+                    is ConsumerCartViewState.MotivationUi.MinOrderCost -> {
+                        FoodDeliveryTheme.colors.statusColors.warning
+                    }
+
+                    is ConsumerCartViewState.MotivationUi.ForLowerDelivery,
+                    is ConsumerCartViewState.MotivationUi.LowerDeliveryAchieved -> {
+                        FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
+                    }
+                }
+                Icon(
+                    modifier = Modifier.icon24(),
+                    painter = painterResource(iconId),
+                    tint = iconTint,
+                    contentDescription = null
+                )
+
+                val motivationText = when (motivation) {
+                    is ConsumerCartViewState.MotivationUi.MinOrderCost -> {
+                        stringResource(R.string.msg_consumer_cart_min_order, motivation.cost)
+                    }
+
+                    is ConsumerCartViewState.MotivationUi.ForLowerDelivery -> {
+                        val textId = if (motivation.isFree) {
+                            R.string.msg_consumer_cart_for_free_delivery
+                        } else {
+                            R.string.msg_consumer_cart_for_lower_delivery
+                        }
+                        stringResource(textId, motivation.increaseAmountBy)
+                    }
+
+                    is ConsumerCartViewState.MotivationUi.LowerDeliveryAchieved -> {
+                        val textId = if (motivation.isFree) {
+                            R.string.msg_consumer_cart_free_delivery
+                        } else {
+                            R.string.msg_consumer_cart_lower_delivery
+                        }
+                        stringResource(textId)
+                    }
+                }
+                Text(
+                    modifier = Modifier.weight(1f),
+                    text = motivationText,
+                    style = FoodDeliveryTheme.typography.bodyMedium,
+                    color = FoodDeliveryTheme.colors.mainColors.onSurface
+                )
+            }
+
+            when (motivation) {
+                is ConsumerCartViewState.MotivationUi.MinOrderCost -> null
+                is ConsumerCartViewState.MotivationUi.ForLowerDelivery -> motivation.progress
+                is ConsumerCartViewState.MotivationUi.LowerDeliveryAchieved -> 1f
+            }?.let { progress ->
+                val animatedProgress by animateFloatAsState(
+                    targetValue = progress,
+                    animationSpec = tween(500),
+                    label = "progress"
+                )
+                LinearProgressIndicator(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(8.dp),
+                    progress = animatedProgress,
+                    color = FoodDeliveryTheme.colors.statusColors.positive,
+                    trackColor = FoodDeliveryTheme.colors.mainColors.disabled,
+                    strokeCap = StrokeCap.Round,
+                )
             }
         }
     }
@@ -355,7 +453,11 @@ class ConsumerCartFragment :
         FoodDeliveryTheme {
             Screen(
                 viewState = ConsumerCartViewState.Success(
-                    warning = null,
+                    motivation = ConsumerCartViewState.MotivationUi.ForLowerDelivery(
+                        increaseAmountBy = "550 ₽",
+                        progress = 0.5f,
+                        isFree = true,
+                    ),
                     cartProductList = persistentListOf(
                         getCartProductItemModel("1"),
                         getCartProductItemModel("2"),
@@ -363,9 +465,9 @@ class ConsumerCartFragment :
                         getCartProductItemModel("4"),
                         getCartProductItemModel("5")
                     ),
+                    discount = "10%",
                     oldTotalCost = "1650 ₽",
                     newTotalCost = "1500 ₽",
-                    discount = "10",
                     recommendationList = persistentListOf(
                         getRecommendation("6"),
                         getRecommendation("7")

@@ -15,13 +15,16 @@ sealed class ConsumerCartViewState(
 
     @Immutable
     data class Success(
-        val warning: WarningUi?,
+        val motivation: MotivationUi?,
         val cartProductList: ImmutableList<CartProductItemUi>,
         val recommendationList: ImmutableList<MenuItemUi.Product>,
         val discount: String?,
         val oldTotalCost: String?,
         val newTotalCost: String,
-    ) : ConsumerCartViewState(state = State.SUCCESS)
+    ) : ConsumerCartViewState(state = State.SUCCESS) {
+
+        val isOrderCreationAvailable: Boolean = motivation !is MotivationUi.MinOrderCost
+    }
 
     @Immutable
     data class Empty(
@@ -32,15 +35,19 @@ sealed class ConsumerCartViewState(
     data object Error : ConsumerCartViewState(state = State.ERROR)
 
     @Immutable
-    sealed interface WarningUi {
+    sealed interface MotivationUi {
         @Immutable
-        data class MinOrderCost(val cost: String) : WarningUi
+        data class MinOrderCost(val cost: String) : MotivationUi
 
         @Immutable
-        data class ForFreeDelivery(val increaseAmountBy: String) : WarningUi
+        data class ForLowerDelivery(
+            val increaseAmountBy: String,
+            val progress: Float,
+            val isFree: Boolean,
+        ) : MotivationUi
 
         @Immutable
-        data class ForLowerDelivery(val increaseAmountBy: String) : WarningUi
+        data class LowerDeliveryAchieved(val isFree: Boolean) : MotivationUi
     }
 
     @Immutable
