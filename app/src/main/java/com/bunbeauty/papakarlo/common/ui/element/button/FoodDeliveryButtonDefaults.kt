@@ -1,5 +1,7 @@
 package com.bunbeauty.papakarlo.common.ui.element.button
 
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
@@ -7,6 +9,7 @@ import androidx.compose.material3.ButtonElevation
 import androidx.compose.material3.IconButtonColors
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 
@@ -18,13 +21,34 @@ object FoodDeliveryButtonDefaults {
     private val zeroButtonElevation: ButtonElevation
         @Composable get() = ButtonDefaults.buttonElevation(0.dp)
 
-    val mainButtonColors: ButtonColors
-        @Composable get() = ButtonDefaults.buttonColors(
-            containerColor = FoodDeliveryTheme.colors.mainColors.primary,
-            contentColor = FoodDeliveryTheme.colors.mainColors.onPrimary,
-            disabledContainerColor = FoodDeliveryTheme.colors.mainColors.disabled,
-            disabledContentColor = FoodDeliveryTheme.colors.mainColors.onDisabled
+    @Composable
+    fun mainButtonColors(enabled: Boolean = true): ButtonColors {
+        val containerColor by animateColorAsState(
+            targetValue = if (enabled) {
+                FoodDeliveryTheme.colors.mainColors.primary
+            } else {
+                FoodDeliveryTheme.colors.mainColors.disabled
+            },
+            animationSpec = tween(),
+            label = "containerColor"
         )
+        val contentColor by animateColorAsState(
+            targetValue = if (enabled) {
+                FoodDeliveryTheme.colors.mainColors.onPrimary
+            } else {
+                FoodDeliveryTheme.colors.mainColors.onDisabled
+            },
+            animationSpec = tween(),
+            label = "contentColor"
+        )
+
+        return ButtonDefaults.buttonColors(
+            containerColor = containerColor,
+            contentColor = contentColor,
+            disabledContainerColor = containerColor,
+            disabledContentColor = contentColor,
+        )
+    }
 
     val secondaryButtonColors: ButtonColors
         @Composable get() = ButtonDefaults.buttonColors(

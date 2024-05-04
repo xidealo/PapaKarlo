@@ -18,16 +18,16 @@ fun MainButton(
     @StringRes textStringId: Int? = null,
     text: String? = null,
     elevated: Boolean = true,
-    isEnabled: Boolean = true,
+    enabled: Boolean = true,
     onClick: () -> Unit
 ) {
     Button(
         modifier = modifier.fillMaxWidth(),
         onClick = onClick,
-        colors = FoodDeliveryButtonDefaults.mainButtonColors,
+        colors = FoodDeliveryButtonDefaults.mainButtonColors(enabled = enabled),
         shape = FoodDeliveryButtonDefaults.buttonShape,
         elevation = FoodDeliveryButtonDefaults.getButtonElevation(elevated),
-        enabled = isEnabled
+        enabled = enabled
     ) {
         val buttonText = text ?: textStringId?.let {
             stringResource(it)
@@ -39,7 +39,7 @@ fun MainButton(
     }
 }
 
-@Preview(showSystemUi = true)
+@Preview
 @Composable
 private fun MainButtonPreview() {
     FoodDeliveryTheme {
@@ -47,13 +47,13 @@ private fun MainButtonPreview() {
     }
 }
 
-@Preview(showSystemUi = true)
+@Preview
 @Composable
 private fun MainButtonDisabledPreview() {
     FoodDeliveryTheme {
         MainButton(
             textStringId = R.string.action_login_continue,
-            isEnabled = false
+            enabled = false
         ) {}
     }
 }

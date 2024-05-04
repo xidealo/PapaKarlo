@@ -3,6 +3,7 @@ package com.bunbeauty.papakarlo.feature.consumercart
 import android.os.Bundle
 import android.view.View
 import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Arrangement
@@ -298,7 +299,7 @@ class ConsumerCartFragment :
                     MainButton(
                         modifier = Modifier.padding(top = 8.dp),
                         textStringId = R.string.action_consumer_cart_creeate_order,
-                        isEnabled = bottomPanelInfo.isOrderCreationAvailable,
+                        enabled = bottomPanelInfo.isOrderCreationAvailable,
                         onClick = {
                             onAction(ConsumerCart.Action.OnCreateOrderClick)
                         }
@@ -377,7 +378,9 @@ class ConsumerCartFragment :
                     }
                 }
                 Text(
-                    modifier = Modifier.weight(1f),
+                    modifier = Modifier
+                        .animateContentSize(tween(500))
+                        .weight(1f),
                     text = motivationText,
                     style = FoodDeliveryTheme.typography.bodyMedium,
                     color = FoodDeliveryTheme.colors.mainColors.onSurface
