@@ -4,6 +4,7 @@ import com.bunbeauty.papakarlo.feature.consumercart.state.ConsumerCartViewState
 import com.bunbeauty.papakarlo.feature.menu.mapper.toMenuProductItemUi
 import com.bunbeauty.shared.presentation.consumercart.CartProductItem
 import com.bunbeauty.shared.presentation.consumercart.ConsumerCart
+import com.bunbeauty.shared.presentation.motivation.MotivationData
 import kotlinx.collections.immutable.toImmutableList
 
 fun ConsumerCart.DataState.toConsumerCartViewState(): ConsumerCartViewState {
@@ -26,11 +27,11 @@ fun ConsumerCart.DataState.toConsumerCartViewState(): ConsumerCartViewState {
                     ConsumerCartViewState.Success.BottomPanelInfoUi(
                         motivation = motivation?.let { warningItem ->
                             when (warningItem) {
-                                is ConsumerCart.DataState.Motivation.MinOrderCost -> {
+                                is MotivationData.MinOrderCost -> {
                                     ConsumerCartViewState.MotivationUi.MinOrderCost(cost = warningItem.cost)
                                 }
 
-                                is ConsumerCart.DataState.Motivation.ForLowerDelivery -> {
+                                is MotivationData.ForLowerDelivery -> {
                                     ConsumerCartViewState.MotivationUi.ForLowerDelivery(
                                         increaseAmountBy = warningItem.increaseAmountBy,
                                         progress = warningItem.progress,
@@ -38,7 +39,7 @@ fun ConsumerCart.DataState.toConsumerCartViewState(): ConsumerCartViewState {
                                     )
                                 }
 
-                                is ConsumerCart.DataState.Motivation.LowerDeliveryAchieved -> {
+                                is MotivationData.LowerDeliveryAchieved -> {
                                     ConsumerCartViewState.MotivationUi.LowerDeliveryAchieved(isFree = warningItem.isFree)
                                 }
                             }

@@ -8,11 +8,11 @@ import com.bunbeauty.analytic.event.recommendation.AddRecommendationProductClick
 import com.bunbeauty.analytic.parameter.MenuProductUuidEventParameter
 import com.bunbeauty.shared.Constants.PERCENT
 import com.bunbeauty.shared.Constants.RUBLE_CURRENCY
-import com.bunbeauty.shared.domain.feature.cart.GetConsumerCartWarningUseCase
+import com.bunbeauty.shared.domain.feature.motivation.GetMotivationUseCase
 import com.bunbeauty.shared.domain.feature.cart.GetRecommendationsUseCase
 import com.bunbeauty.shared.domain.feature.cart.IncreaseCartProductCountUseCase
 import com.bunbeauty.shared.domain.feature.cart.RemoveCartProductUseCase
-import com.bunbeauty.shared.domain.feature.cart.model.Motivation
+import com.bunbeauty.shared.domain.feature.motivation.Motivation
 import com.bunbeauty.shared.domain.feature.menu.AddMenuProductUseCase
 import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
@@ -21,7 +21,7 @@ import com.bunbeauty.shared.domain.model.product.MenuProduct
 import com.bunbeauty.shared.extension.launchSafe
 import com.bunbeauty.shared.presentation.base.SharedStateViewModel
 import com.bunbeauty.shared.presentation.consumercart.mapper.toCartProductItem
-import com.bunbeauty.shared.presentation.consumercart.mapper.toWarningItem
+import com.bunbeauty.shared.presentation.motivation.toMotivationData
 import com.bunbeauty.shared.presentation.menu.mapper.toMenuProductItem
 import com.bunbeauty.shared.presentation.menu.model.MenuItem
 import com.bunbeauty.shared.presentation.product_details.ProductDetailsOpenedFrom
@@ -36,7 +36,7 @@ class ConsumerCartViewModel(
     private val addMenuProductUseCase: AddMenuProductUseCase,
     private val removeCartProductUseCase: RemoveCartProductUseCase,
     private val getRecommendationsUseCase: GetRecommendationsUseCase,
-    private val getConsumerCartWarningUseCase: GetConsumerCartWarningUseCase,
+    private val getMotivationUseCase: GetMotivationUseCase,
     private val analyticService: AnalyticService,
 ) : SharedStateViewModel<ConsumerCart.DataState, ConsumerCart.Action, ConsumerCart.Event>(
     ConsumerCart.DataState(
@@ -94,9 +94,8 @@ class ConsumerCartViewModel(
         observeConsumerCartJob?.cancel()
         observeConsumerCartJob = cartProductInteractor.observeConsumerCart()
             .onEach { consumerCart ->
-                val warning = if (consumerCart is ConsumerCartDomain.WithProducts) {
-                    getConsumerCartWarningUseCase(consumerCart)
-
+                val motivation = if (consumerCart is ConsumerCartDomain.WithProducts) {
+                    getMotivationUseCase(newTotalCost = consumerCart.newTotalCost)
                 } else {
                     null
                 }
@@ -104,7 +103,7 @@ class ConsumerCartViewModel(
                 setState {
                     copyWith(
                         consumerCart = consumerCart,
-                        motivation = warning,
+                        motivation = motivation,
                         recommendationList = menuProductList
                     )
                 }
@@ -119,7 +118,7 @@ class ConsumerCartViewModel(
         return if (consumerCart is ConsumerCartDomain.WithProducts) {
             copy(
                 state = ConsumerCart.DataState.State.SUCCESS,
-                motivation = motivation?.toWarningItem(),
+                motivation = motivation?.toMotivationData(),
                 cartProductItemList = consumerCart.cartProductList.map { lightCartProduct ->
                     lightCartProduct.toCartProductItem()
                 },

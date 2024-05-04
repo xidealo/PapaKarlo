@@ -1,4 +1,4 @@
-package com.bunbeauty.shared.domain.feature.cart.model
+package com.bunbeauty.shared.domain.feature.motivation
 
 sealed interface Motivation {
     data class MinOrderCost(val cost: Int) : Motivation

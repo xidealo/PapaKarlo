@@ -44,7 +44,7 @@ fun viewModelModule() = module {
             addMenuProductUseCase = get(),
             removeCartProductUseCase = get(),
             getRecommendationsUseCase = get(),
-            getConsumerCartWarningUseCase = get(),
+            getMotivationUseCase = get(),
             analyticService = get(),
         )
     }

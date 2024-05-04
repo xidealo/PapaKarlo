@@ -3,7 +3,7 @@ package com.bunbeauty.shared.domain.feature.cart.di
 import com.bunbeauty.shared.domain.feature.cart.AddCartProductUseCase
 import com.bunbeauty.shared.domain.feature.cart.EditCartProductUseCase
 import com.bunbeauty.shared.domain.feature.cart.GetCartProductCountUseCase
-import com.bunbeauty.shared.domain.feature.cart.GetConsumerCartWarningUseCase
+import com.bunbeauty.shared.domain.feature.motivation.GetMotivationUseCase
 import com.bunbeauty.shared.domain.feature.cart.GetDeliveryCostUseCase
 import com.bunbeauty.shared.domain.feature.cart.GetRecommendationsUseCase
 import com.bunbeauty.shared.domain.feature.cart.IncreaseCartProductCountUseCase
@@ -61,7 +61,7 @@ internal fun cartModule() = module {
         )
     }
     factory {
-        GetConsumerCartWarningUseCase(
+        GetMotivationUseCase(
             getCurrentUserAddressUseCase = get(),
         )
     }

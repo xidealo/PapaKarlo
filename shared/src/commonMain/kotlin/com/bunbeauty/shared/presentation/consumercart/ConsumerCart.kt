@@ -4,29 +4,20 @@ import com.bunbeauty.shared.presentation.base.BaseAction
 import com.bunbeauty.shared.presentation.base.BaseEvent
 import com.bunbeauty.shared.presentation.base.BaseViewDataState
 import com.bunbeauty.shared.presentation.menu.model.MenuItem
+import com.bunbeauty.shared.presentation.motivation.MotivationData
 import com.bunbeauty.shared.presentation.product_details.ProductDetailsOpenedFrom
 
 interface ConsumerCart {
 
     data class DataState(
         val state: State,
-        val motivation: Motivation?,
+        val motivation: MotivationData?,
         val cartProductItemList: List<CartProductItem>,
         val recommendationList: List<MenuItem.Product>,
         val discount: String?,
         val oldTotalCost: String?,
         val newTotalCost: String,
     ) : BaseViewDataState {
-
-        sealed interface Motivation {
-            data class MinOrderCost(val cost: String) : Motivation
-            data class ForLowerDelivery(
-                val increaseAmountBy: String,
-                val progress: Float,
-                val isFree: Boolean,
-            ) : Motivation
-            data class LowerDeliveryAchieved(val isFree: Boolean) : Motivation
-        }
 
         enum class State {
             LOADING,

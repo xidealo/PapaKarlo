@@ -1,36 +1,34 @@
-package com.bunbeauty.shared.domain.feature.cart
+package com.bunbeauty.shared.domain.feature.motivation
 
 import com.bunbeauty.shared.domain.feature.address.GetCurrentUserAddressUseCase
-import com.bunbeauty.shared.domain.feature.cart.model.Motivation
-import com.bunbeauty.shared.domain.model.cart.ConsumerCartDomain
 
-class GetConsumerCartWarningUseCase(
+class GetMotivationUseCase(
     private val getCurrentUserAddressUseCase: GetCurrentUserAddressUseCase
 ) {
 
-    suspend operator fun invoke(consumerCartDomain: ConsumerCartDomain.WithProducts): Motivation? {
+    suspend operator fun invoke(newTotalCost: Int): Motivation? {
         val currentUserAddress = getCurrentUserAddressUseCase()
 
         val minOrderCost = currentUserAddress?.minOrderCost
         val forLowDeliveryCost = currentUserAddress?.forLowDeliveryCost
         val lowDeliveryCost = currentUserAddress?.lowDeliveryCost
 
-        return if (minOrderCost != null && consumerCartDomain.newTotalCost < minOrderCost) {
+        return if (minOrderCost != null && newTotalCost < minOrderCost) {
             Motivation.MinOrderCost(cost = minOrderCost)
         } else if (
             (forLowDeliveryCost != null)
             && (lowDeliveryCost != null)
         ) {
-            if (consumerCartDomain.newTotalCost >= forLowDeliveryCost) {
+            if (newTotalCost >= forLowDeliveryCost) {
                 Motivation.LowerDeliveryAchieved(isFree = lowDeliveryCost <= 0)
             } else {
-                val increaseAmountBy = forLowDeliveryCost - consumerCartDomain.newTotalCost
+                val increaseAmountBy = forLowDeliveryCost - newTotalCost
                 Motivation.ForLowerDelivery(
                     increaseAmountBy = increaseAmountBy,
-                    progress = if (consumerCartDomain.newTotalCost >= forLowDeliveryCost) {
+                    progress = if (newTotalCost >= forLowDeliveryCost) {
                         1f
                     } else {
-                        consumerCartDomain.newTotalCost.toFloat() / forLowDeliveryCost
+                        newTotalCost.toFloat() / forLowDeliveryCost
                     },
                     isFree = lowDeliveryCost <= 0
                 )
