@@ -1,11 +1,11 @@
-    package com.bunbeauty.papakarlo.feature.menu.mapper
+package com.bunbeauty.papakarlo.feature.menu.mapper
 
 import com.bunbeauty.papakarlo.feature.menu.state.MenuItemUi
 import com.bunbeauty.papakarlo.feature.menu.state.MenuViewState
 import com.bunbeauty.papakarlo.feature.topcart.TopCartUi
 import com.bunbeauty.shared.Constants.RUBLE_CURRENCY
-import com.bunbeauty.shared.presentation.menu.model.MenuItem
 import com.bunbeauty.shared.presentation.menu.model.MenuDataState
+import com.bunbeauty.shared.presentation.menu.model.MenuItem
 import kotlinx.collections.immutable.toImmutableList
 
 fun MenuDataState.toMenuViewState(): MenuViewState {
@@ -33,7 +33,7 @@ fun MenuItem.Product.toMenuProductItemUi(): MenuItemUi.Product {
         photoLink = photoLink,
         name = name,
         oldPrice = oldPrice,
-        newPrice = newPrice,
+        newPrice = newPrice
     )
 }
 
@@ -42,7 +42,7 @@ private fun MenuItem.toMenuItemUi(): MenuItemUi {
         is MenuItem.CategoryHeader -> {
             MenuItemUi.CategoryHeader(
                 key = "CategoryHeader $uuid",
-                name = name,
+                name = name
             )
         }
 
@@ -53,7 +53,7 @@ private fun MenuItem.toMenuItemUi(): MenuItemUi {
         is MenuItem.Discount -> {
             MenuItemUi.Discount(
                 key = "Discount",
-                discount = discount,
+                discount = discount
             )
         }
     }

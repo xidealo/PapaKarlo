@@ -54,9 +54,9 @@ import com.bunbeauty.papakarlo.feature.menu.ui.FirstOrderDiscountItem
 import com.bunbeauty.papakarlo.feature.menu.ui.MenuProductItem
 import com.bunbeauty.papakarlo.feature.productdetails.ProductDetailsFragmentDirections.globalConsumerCartFragment
 import com.bunbeauty.papakarlo.feature.topcart.TopCartUi
+import com.bunbeauty.shared.presentation.menu.MenuViewModel
 import com.bunbeauty.shared.presentation.menu.model.CategoryItem
 import com.bunbeauty.shared.presentation.menu.model.MenuDataState
-import com.bunbeauty.shared.presentation.menu.MenuViewModel
 import com.bunbeauty.shared.presentation.product_details.ProductDetailsOpenedFrom
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.launch
@@ -320,7 +320,7 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
             photoLink = "",
             name = "Бэргер",
             newPrice = "99",
-            oldPrice = "100",
+            oldPrice = "100"
         )
 
         FoodDeliveryTheme {
@@ -366,7 +366,7 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
                     menuItemList = persistentListOf(),
                     state = MenuDataState.State.Loading,
                     userScrollEnabled = true,
-                    eventList = persistentListOf(),
+                    eventList = persistentListOf()
                 ),
                 onMenuPositionChanged = {},
                 errorAction = {}
@@ -388,7 +388,7 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
                     menuItemList = persistentListOf(),
                     state = MenuDataState.State.Error(Throwable()),
                     userScrollEnabled = true,
-                    eventList = persistentListOf(),
+                    eventList = persistentListOf()
                 ),
                 onMenuPositionChanged = {},
                 errorAction = {}

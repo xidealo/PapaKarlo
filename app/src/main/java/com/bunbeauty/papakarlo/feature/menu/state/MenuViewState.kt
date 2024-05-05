@@ -24,7 +24,7 @@ sealed interface MenuItemUi {
     @Immutable
     data class CategoryHeader(
         override val key: String,
-        val name: String,
+        val name: String
     ) : MenuItemUi
 
     @Immutable
@@ -34,7 +34,7 @@ sealed interface MenuItemUi {
         val photoLink: String,
         val name: String,
         val oldPrice: String?,
-        val newPrice: String,
+        val newPrice: String
     ) : MenuItemUi
 
     @Immutable
@@ -42,5 +42,4 @@ sealed interface MenuItemUi {
         override val key: String,
         val discount: String
     ) : MenuItemUi
-
 }

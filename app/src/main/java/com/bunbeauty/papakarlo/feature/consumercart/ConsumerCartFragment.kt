@@ -223,20 +223,20 @@ class ConsumerCartFragment :
                             imageId = R.drawable.ic_cart_24,
                             imageDescriptionId = R.string.description_consumer_cart_empty,
                             mainTextId = R.string.title_consumer_cart_empty,
-                            extraTextId = R.string.msg_consumer_cart_empty,
+                            extraTextId = R.string.msg_consumer_cart_empty
                         )
                     }
                 }
 
                 recommendationItems(
                     recommendationList = viewState.recommendationList,
-                    onAction = onAction,
+                    onAction = onAction
                 )
             }
 
             BottomPanel(
                 bottomPanelInfo = viewState.bottomPanelInfo,
-                onAction = onAction,
+                onAction = onAction
             )
         }
     }
@@ -245,12 +245,12 @@ class ConsumerCartFragment :
     private fun BottomPanel(
         bottomPanelInfo: ConsumerCartViewState.Success.BottomPanelInfoUi?,
         onAction: (ConsumerCart.Action) -> Unit,
-        modifier: Modifier = Modifier,
+        modifier: Modifier = Modifier
     ) {
         FoodDeliverySurface(modifier = modifier) {
             Column(
                 modifier = Modifier.padding(16.dp),
-                verticalArrangement = spacedBy(8.dp),
+                verticalArrangement = spacedBy(8.dp)
             ) {
                 if (bottomPanelInfo == null) {
                     MainButton(
@@ -312,7 +312,7 @@ class ConsumerCartFragment :
     @Composable
     private fun Motivation(
         motivation: ConsumerCartViewState.MotivationUi?,
-        modifier: Modifier = Modifier,
+        modifier: Modifier = Modifier
     ) {
         motivation ?: return
 
@@ -413,7 +413,7 @@ class ConsumerCartFragment :
                     progress = animatedProgress,
                     color = animatedColor,
                     trackColor = FoodDeliveryTheme.colors.mainColors.disabled,
-                    strokeCap = StrokeCap.Round,
+                    strokeCap = StrokeCap.Round
                 )
             }
         }
@@ -422,7 +422,7 @@ class ConsumerCartFragment :
     @Composable
     private fun buildAnnotatedStringWithBold(
         text: String,
-        subtextToSelect: String,
+        subtextToSelect: String
     ): AnnotatedString {
         return buildAnnotatedString {
             val startIndex = text.indexOf(subtextToSelect)
@@ -460,7 +460,7 @@ class ConsumerCartFragment :
         itemsIndexed(
             items = recommendationList,
             key = { _, recommendation -> recommendation.key },
-            span = { _, _ -> GridItemSpan(1) },
+            span = { _, _ -> GridItemSpan(1) }
         ) { index, recommendation ->
             MenuProductItem(
                 modifier = Modifier
@@ -525,11 +525,11 @@ class ConsumerCartFragment :
                         motivation = ConsumerCartViewState.MotivationUi.ForLowerDelivery(
                             increaseAmountBy = "550 ₽",
                             progress = 0.5f,
-                            isFree = true,
+                            isFree = true
                         ),
                         discount = "10%",
                         oldTotalCost = "1650 ₽",
-                        newTotalCost = "1500 ₽",
+                        newTotalCost = "1500 ₽"
                     ),
                     recommendationList = persistentListOf(
                         getRecommendation("6"),
@@ -587,6 +587,6 @@ class ConsumerCartFragment :
         photoLink = "",
         name = "Бэргер",
         newPrice = "99 ₽",
-        oldPrice = "100 ₽",
+        oldPrice = "100 ₽"
     )
 }

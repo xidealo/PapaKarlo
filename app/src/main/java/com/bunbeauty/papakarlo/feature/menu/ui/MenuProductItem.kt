@@ -66,7 +66,7 @@ fun MenuProductItem(
                         )
                     }
                     Text(
-                        text =  menuProductItem.newPrice,
+                        text = menuProductItem.newPrice,
                         style = FoodDeliveryTheme.typography.bodySmall.bold,
                         color = FoodDeliveryTheme.colors.mainColors.onSurface
                     )
@@ -97,7 +97,7 @@ private fun MenuProductItemPreview() {
                 photoLink = "",
                 name = "Бэргер",
                 newPrice = "99 ₽",
-                oldPrice = "100 ₽",
+                oldPrice = "100 ₽"
             ),
             onAddProductClick = {},
             onProductClick = {}

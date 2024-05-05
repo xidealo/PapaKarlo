@@ -35,7 +35,7 @@ fun ConsumerCart.DataState.toConsumerCartViewState(): ConsumerCartViewState {
                                     ConsumerCartViewState.MotivationUi.ForLowerDelivery(
                                         increaseAmountBy = warningItem.increaseAmountBy,
                                         progress = warningItem.progress,
-                                        isFree = warningItem.isFree,
+                                        isFree = warningItem.isFree
                                     )
                                 }
 
@@ -46,9 +46,9 @@ fun ConsumerCart.DataState.toConsumerCartViewState(): ConsumerCartViewState {
                         },
                         discount = discount,
                         oldTotalCost = oldTotalCost,
-                        newTotalCost = newTotalCost,
+                        newTotalCost = newTotalCost
                     )
-                },
+                }
             )
         }
 
@@ -68,6 +68,6 @@ private fun CartProductItem.toCartProductItemUi(isLast: Boolean): ConsumerCartVi
         photoLink = photoLink,
         count = count,
         additions = additions,
-        isLast = isLast,
+        isLast = isLast
     )
 }

@@ -46,7 +46,7 @@ object FoodDeliveryButtonDefaults {
             containerColor = containerColor,
             contentColor = contentColor,
             disabledContainerColor = containerColor,
-            disabledContentColor = contentColor,
+            disabledContentColor = contentColor
         )
     }
 

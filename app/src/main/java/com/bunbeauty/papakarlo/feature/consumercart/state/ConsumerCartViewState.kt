@@ -17,7 +17,7 @@ sealed class ConsumerCartViewState(
     data class Success(
         val cartProductList: ImmutableList<CartProductItemUi>,
         val recommendationList: ImmutableList<MenuItemUi.Product>,
-        val bottomPanelInfo: BottomPanelInfoUi?,
+        val bottomPanelInfo: BottomPanelInfoUi?
     ) : ConsumerCartViewState(state = State.SUCCESS) {
 
         @Immutable
@@ -25,7 +25,7 @@ sealed class ConsumerCartViewState(
             val motivation: MotivationUi?,
             val discount: String?,
             val oldTotalCost: String?,
-            val newTotalCost: String,
+            val newTotalCost: String
         ) {
             val isOrderCreationAvailable: Boolean = motivation !is MotivationUi.MinOrderCost
         }
@@ -43,7 +43,7 @@ sealed class ConsumerCartViewState(
         data class ForLowerDelivery(
             val increaseAmountBy: String,
             val progress: Float,
-            val isFree: Boolean,
+            val isFree: Boolean
         ) : MotivationUi
 
         @Immutable
@@ -60,13 +60,12 @@ sealed class ConsumerCartViewState(
         val photoLink: String,
         val count: Int,
         val additions: String?,
-        val isLast: Boolean,
+        val isLast: Boolean
     )
 
     enum class State {
         LOADING,
         ERROR,
-        SUCCESS,
+        SUCCESS
     }
-
 }
