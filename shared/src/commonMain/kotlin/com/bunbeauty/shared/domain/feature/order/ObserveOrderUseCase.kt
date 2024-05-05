@@ -18,11 +18,6 @@ class ObserveOrderUseCase(
     suspend operator fun invoke(orderUuid: String): Pair<String?, Flow<Order?>> {
         val token = dataStoreRepo.getToken() ?: return null to flow {}
         val order = orderRepo.getOrderByUuid(token = token, orderUuid = orderUuid)
-
-        val orderWithSortedAdditions = order?.copy(
-            orderProductList = getOrderProductListWithSortedAdditions(order)
-        )
-
         return if (order == null) {
             null to flow { emit(null) }
         } else {

@@ -42,36 +42,14 @@ internal class GetRecommendationsUseCaseTest {
     }
 
     @Test
-    fun `return empty list when has no visible recommendations`() = runTest {
+    fun `return empty list when has no menu products`() = runTest {
         coEvery { recommendationRepository.getMaxVisibleCount() } returns 3
-        coEvery { getMenuProductListUseCase() } returns listOf(
-            getMenuProductWithCategory("1", "1", visible = false),
-            getMenuProductWithCategory("2", "2", visible = false),
-            getMenuProductWithCategory("3", "3", visible = false),
-        )
-
-        coEvery { cartProductRepo.getCartProductList() } returns listOf()
-        assertTrue(getRecommendationsUseCase().isEmpty())
-    }
-
-    @Test
-    fun `return recommendation filtered by visible`() = runTest {
-        coEvery { recommendationRepository.getMaxVisibleCount() } returns 3
-        coEvery { getMenuProductListUseCase() } returns listOf(
-            getMenuProductWithCategory("1", "1", visible = false),
-            getMenuProductWithCategory("2", "2", visible = false),
-            getMenuProductWithCategory("3", "3", visible = true),
-        )
-
+        coEvery { getMenuProductListUseCase() } returns listOf()
         coEvery { cartProductRepo.getCartProductList() } returns listOf()
 
-        assertEquals(
-            expected = listOf(
-                getMenuProductWithCategory("3", "3"),
-            ),
-            actual = getRecommendationsUseCase()
-        )
+        val recommendations = getRecommendationsUseCase()
 
+        assertEquals(emptyList(), recommendations)
     }
 
     @Test

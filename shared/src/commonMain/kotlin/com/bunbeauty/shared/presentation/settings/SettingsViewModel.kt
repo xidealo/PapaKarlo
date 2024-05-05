@@ -1,7 +1,6 @@
 package com.bunbeauty.shared.presentation.settings
 
 import com.bunbeauty.analytic.AnalyticService
-import com.bunbeauty.analytic.event.EventParameter
 import com.bunbeauty.analytic.event.LogoutSettingsClickEvent
 import com.bunbeauty.shared.domain.asCommonStateFlow
 import com.bunbeauty.shared.domain.feature.city.GetCityListUseCase
@@ -12,6 +11,7 @@ import com.bunbeauty.shared.domain.feature.settings.UpdateEmailUseCase
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
 import com.bunbeauty.shared.domain.use_case.DisableUserUseCase
 import com.bunbeauty.shared.presentation.base.SharedViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flatMapLatest
@@ -109,6 +109,7 @@ class SettingsViewModel(
         }
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     private fun observeSettings() {
         observeSettingsJob?.cancel()
         observeSettingsJob = observeSelectedCityUseCase().flatMapLatest { city ->
