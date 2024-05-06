@@ -18,12 +18,15 @@ import com.bunbeauty.papakarlo.common.ui.theme.color.PapaKarloDarkColors
 import com.bunbeauty.papakarlo.common.ui.theme.color.PapaKarloLightColors
 import com.bunbeauty.papakarlo.common.ui.theme.color.TandirHouseDarkColors
 import com.bunbeauty.papakarlo.common.ui.theme.color.TandirHouseLightColors
+import com.bunbeauty.papakarlo.common.ui.theme.color.VkusKavkazaDarkColors
+import com.bunbeauty.papakarlo.common.ui.theme.color.VkusKavkazaLightColors
 import com.bunbeauty.papakarlo.common.ui.theme.color.YuliarDarkColors
 import com.bunbeauty.papakarlo.common.ui.theme.color.YuliarLightColors
 import com.bunbeauty.shared.Constants.DJAN_FLAVOR_NAME
 import com.bunbeauty.shared.Constants.GUSTO_PUB_FLAVOR_NAME
 import com.bunbeauty.shared.Constants.PAPA_KARLO_FLAVOR_NAME
 import com.bunbeauty.shared.Constants.TANDIR_HOUSE_FLAVOR_NAME
+import com.bunbeauty.shared.Constants.VKUS_KAVKAZA_FLAVOR_NAME
 import com.bunbeauty.shared.Constants.YULIAR_FLAVOR_NAME
 import com.bunbeauty.shared.domain.exeptions.UnknownFlavorException
 
@@ -68,6 +71,13 @@ fun FoodDeliveryTheme(
                 TandirHouseDarkColors
             } else {
                 TandirHouseLightColors
+            }
+        }
+        VKUS_KAVKAZA_FLAVOR_NAME -> {
+            if (isDarkTheme) {
+                VkusKavkazaDarkColors
+            } else {
+                VkusKavkazaLightColors
             }
         }
         else -> throw UnknownFlavorException()
