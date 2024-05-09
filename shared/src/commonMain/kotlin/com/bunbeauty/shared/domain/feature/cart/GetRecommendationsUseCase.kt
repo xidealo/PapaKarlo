@@ -23,7 +23,9 @@ class GetRecommendationsUseCase(
         val cartProductList = cartProductRepo.getCartProductList()
         val maxVisibleCount = recommendationRepository.getMaxVisibleCount()
 
-        val recommendationProductList = getMenuProductListUseCase().filter { it.isRecommended }
+        val recommendationProductList = getMenuProductListUseCase().filter { menuProduct ->
+            menuProduct.isRecommended
+        }
 
         val recommendationProductListNoneCategory = getFilteredRecommendationsByCategories(
             recommendationProductList = recommendationProductList,

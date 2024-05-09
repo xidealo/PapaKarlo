@@ -16,7 +16,7 @@ fun ConsumerCart.DataState.toConsumerCartViewState(): ConsumerCartViewState {
         ConsumerCart.DataState.State.SUCCESS -> {
             ConsumerCartViewState.Success(
                 cartProductList = cartProductItemList.mapIndexed { i, cartProductItem ->
-                    cartProductItem.toCartProductItemUi(i == cartProductItemList.lastIndex)
+                    cartProductItem.toCartProductItemUi(isLast = i == cartProductItemList.lastIndex)
                 }.toImmutableList(),
                 recommendationList = recommendationList.map { menuProduct ->
                     menuProduct.toMenuProductItemUi()
@@ -24,7 +24,7 @@ fun ConsumerCart.DataState.toConsumerCartViewState(): ConsumerCartViewState {
                 bottomPanelInfo = if (cartProductItemList.isEmpty()) {
                     null
                 } else {
-                    ConsumerCartViewState.Success.BottomPanelInfoUi(
+                    ConsumerCartViewState.BottomPanelInfoUi(
                         motivation = motivation?.let { warningItem ->
                             when (warningItem) {
                                 is MotivationData.MinOrderCost -> {

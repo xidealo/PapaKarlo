@@ -14,7 +14,7 @@ import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class GetMenuProductListUseCaseTest() {
+class GetMenuProductListUseCaseTest {
 
     @MockK
     private lateinit var menuProductRepo: MenuProductRepo

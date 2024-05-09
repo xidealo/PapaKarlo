@@ -1,8 +1,8 @@
 package com.bunbeauty.shared.presentation.consumercart
 
 import com.bunbeauty.shared.presentation.base.BaseAction
+import com.bunbeauty.shared.presentation.base.BaseDataState
 import com.bunbeauty.shared.presentation.base.BaseEvent
-import com.bunbeauty.shared.presentation.base.BaseViewDataState
 import com.bunbeauty.shared.presentation.menu.model.MenuItem
 import com.bunbeauty.shared.presentation.motivation.MotivationData
 import com.bunbeauty.shared.presentation.product_details.ProductDetailsOpenedFrom
@@ -17,7 +17,7 @@ interface ConsumerCart {
         val discount: String?,
         val oldTotalCost: String?,
         val newTotalCost: String,
-    ) : BaseViewDataState {
+    ) : BaseDataState {
 
         enum class State {
             LOADING,

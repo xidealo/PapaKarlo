@@ -243,7 +243,7 @@ class ConsumerCartFragment :
 
     @Composable
     private fun BottomPanel(
-        bottomPanelInfo: ConsumerCartViewState.Success.BottomPanelInfoUi?,
+        bottomPanelInfo: ConsumerCartViewState.BottomPanelInfoUi?,
         onAction: (ConsumerCart.Action) -> Unit,
         modifier: Modifier = Modifier
     ) {
@@ -521,7 +521,7 @@ class ConsumerCartFragment :
                         getCartProductItemModel("4"),
                         getCartProductItemModel("5")
                     ),
-                    bottomPanelInfo = ConsumerCartViewState.Success.BottomPanelInfoUi(
+                    bottomPanelInfo = ConsumerCartViewState.BottomPanelInfoUi(
                         motivation = ConsumerCartViewState.MotivationUi.ForLowerDelivery(
                             increaseAmountBy = "550 ₽",
                             progress = 0.5f,

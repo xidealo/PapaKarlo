@@ -13,28 +13,27 @@ class GetMotivationUseCase(
         val forLowDeliveryCost = currentUserAddress?.forLowDeliveryCost
         val lowDeliveryCost = currentUserAddress?.lowDeliveryCost
 
-        return if (minOrderCost != null && newTotalCost < minOrderCost) {
-            Motivation.MinOrderCost(cost = minOrderCost)
-        } else if (
-            (forLowDeliveryCost != null)
-            && (lowDeliveryCost != null)
-        ) {
-            if (newTotalCost >= forLowDeliveryCost) {
-                Motivation.LowerDeliveryAchieved(isFree = lowDeliveryCost <= 0)
-            } else {
-                val increaseAmountBy = forLowDeliveryCost - newTotalCost
-                Motivation.ForLowerDelivery(
-                    increaseAmountBy = increaseAmountBy,
-                    progress = if (newTotalCost >= forLowDeliveryCost) {
-                        1f
-                    } else {
-                        newTotalCost.toFloat() / forLowDeliveryCost
-                    },
-                    isFree = lowDeliveryCost <= 0
-                )
+        return when {
+            (minOrderCost != null) && (newTotalCost < minOrderCost) -> {
+                Motivation.MinOrderCost(cost = minOrderCost)
             }
-        } else {
-            null
+            (forLowDeliveryCost != null) && (lowDeliveryCost != null) -> {
+                if (newTotalCost >= forLowDeliveryCost) {
+                    Motivation.LowerDeliveryAchieved(isFree = lowDeliveryCost <= 0)
+                } else {
+                    val increaseAmountBy = forLowDeliveryCost - newTotalCost
+                    Motivation.ForLowerDelivery(
+                        increaseAmountBy = increaseAmountBy,
+                        progress = if (newTotalCost >= forLowDeliveryCost) {
+                            1f
+                        } else {
+                            newTotalCost.toFloat() / forLowDeliveryCost
+                        },
+                        isFree = lowDeliveryCost <= 0
+                    )
+                }
+            }
+            else -> null
         }
     }
 
