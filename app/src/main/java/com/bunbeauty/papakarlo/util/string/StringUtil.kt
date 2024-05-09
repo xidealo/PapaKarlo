@@ -45,18 +45,18 @@ class StringUtil(
         }
     }
 
-    override fun getUserAddressString(userAddress: SelectableUserAddress?): String? {
-        return userAddress?.let {
+    override fun getUserAddressString(selectableUserAddress: SelectableUserAddress?): String? {
+        return selectableUserAddress?.let {
             val houseShort = resourcesProvider.getString(R.string.msg_address_house_short)
             val flatShort = resourcesProvider.getString(R.string.msg_address_flat_short)
             val entranceShort = resourcesProvider.getString(R.string.msg_address_entrance_short)
             val floorShort = resourcesProvider.getString(R.string.msg_address_floor_short)
-            userAddress.street +
-                getStringPart(ADDRESS_DIVIDER, houseShort, userAddress.house) +
-                getStringPart(ADDRESS_DIVIDER, flatShort, userAddress.flat) +
-                getInvertedStringPart(ADDRESS_DIVIDER, userAddress.entrance, entranceShort) +
-                getInvertedStringPart(ADDRESS_DIVIDER, userAddress.floor, floorShort) +
-                getStringPart(ADDRESS_DIVIDER, "", userAddress.comment)
+            selectableUserAddress.address.street +
+                getStringPart(ADDRESS_DIVIDER, houseShort, selectableUserAddress.address.house) +
+                getStringPart(ADDRESS_DIVIDER, flatShort, selectableUserAddress.address.flat) +
+                getInvertedStringPart(ADDRESS_DIVIDER, selectableUserAddress.address.entrance, entranceShort) +
+                getInvertedStringPart(ADDRESS_DIVIDER, selectableUserAddress.address.floor, floorShort) +
+                getStringPart(ADDRESS_DIVIDER, "", selectableUserAddress.address.comment)
         }
     }
 

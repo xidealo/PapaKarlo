@@ -41,8 +41,8 @@ class CreateAddressFragment :
 
     override val viewModel: CreateAddressViewModel by viewModel()
 
-    override fun mapState(dataState: CreateAddress.DataState): CreateAddressViewState {
-        return dataState.mapCreateAddressState()
+    override fun CreateAddress.DataState.mapState(): CreateAddressViewState {
+        return mapCreateAddressState()
     }
 
     @Composable

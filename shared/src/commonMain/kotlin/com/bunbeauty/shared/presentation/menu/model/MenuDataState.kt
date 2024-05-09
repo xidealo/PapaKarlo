@@ -1,8 +1,8 @@
-package com.bunbeauty.shared.presentation.menu
+package com.bunbeauty.shared.presentation.menu.model
 
 import com.bunbeauty.shared.domain.model.cart.CartCostAndCount
 
-data class MenuState(
+data class MenuDataState(
     val categoryItemList: List<CategoryItem>,
     val cartCostAndCount: CartCostAndCount?,
     val menuItemList: List<MenuItem>,
@@ -24,5 +24,5 @@ data class MenuState(
     operator fun plus(event: Event) = copy(eventList = eventList + event)
     operator fun minus(events: List<Event>) = copy(eventList = eventList - events.toSet())
 
-    val hasDiscountItem = menuItemList.any { it is MenuItem.DiscountItem }
+    val hasDiscountItem = menuItemList.any { it is MenuItem.Discount }
 }

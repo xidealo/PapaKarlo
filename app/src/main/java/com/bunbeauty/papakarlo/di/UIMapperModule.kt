@@ -4,7 +4,6 @@ import com.bunbeauty.papakarlo.feature.address.mapper.UserAddressItemMapper
 import com.bunbeauty.papakarlo.feature.cafe.screen.cafelist.CafeListUiStateMapper
 import com.bunbeauty.papakarlo.feature.createorder.mapper.CreateOrderStateMapper
 import com.bunbeauty.papakarlo.feature.createorder.mapper.TimeMapper
-import com.bunbeauty.papakarlo.feature.menu.model.MenuUiStateMapper
 import com.bunbeauty.papakarlo.feature.order.screen.orderdetails.OrderDetailsUiStateMapper
 import com.bunbeauty.papakarlo.feature.order.screen.orderdetails.OrderProductItemMapper
 import com.bunbeauty.papakarlo.feature.productdetails.ProductDetailsUiStateMapper
@@ -37,11 +36,6 @@ fun uiMapperModule() = module {
     }
     factory {
         CafeListUiStateMapper(
-            stringUtil = get()
-        )
-    }
-    factory {
-        MenuUiStateMapper(
             stringUtil = get()
         )
     }

@@ -1,4 +1,4 @@
-package com.bunbeauty.shared.domain.feature.menu_product
+package com.bunbeauty.shared.domain.feature.menuproduct
 
 import com.bunbeauty.shared.domain.model.addition.AdditionGroup
 import com.bunbeauty.shared.domain.model.product.MenuProduct

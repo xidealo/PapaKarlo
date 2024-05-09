@@ -15,23 +15,29 @@ class UserAddressDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IUserAddressD
         foodDeliveryDatabase.selectedUserAddressUuidEntityQueries
 
     override suspend fun insertUserAddress(userAddress: UserAddressEntity) {
-        insertUserAddressList(listOf(userAddress))
+        insertUserAddressList(userAddressList = listOf(userAddress))
     }
 
     override suspend fun insertUserAddressList(userAddressList: List<UserAddressEntity>) {
         userAddressEntityQueries.transaction {
-            userAddressList.forEach { userAddress ->
-                userAddressEntityQueries.insertUserAddress(
-                    uuid = userAddress.uuid,
-                    streetName = userAddress.streetName,
-                    cityUuid = userAddress.cityUuid,
-                    house = userAddress.house,
-                    flat = userAddress.flat,
-                    entrance = userAddress.entrance,
-                    floor = userAddress.floor,
-                    comment = userAddress.comment,
-                    userUuid = userAddress.userUuid,
-                )
+            userAddressList.forEach { userAddressEntity ->
+                userAddressEntity.run {
+                    userAddressEntityQueries.insertUserAddress(
+                        uuid = uuid,
+                        streetName = streetName,
+                        cityUuid = cityUuid,
+                        house = house,
+                        flat = flat,
+                        entrance = entrance,
+                        floor = floor,
+                        comment = comment,
+                        minOrderCost = minOrderCost,
+                        normalDeliveryCost = normalDeliveryCost,
+                        forLowDeliveryCost = forLowDeliveryCost,
+                        lowDeliveryCost = lowDeliveryCost,
+                        userUuid = userUuid,
+                    )
+                }
             }
         }
     }

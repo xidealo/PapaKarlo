@@ -8,9 +8,12 @@ import com.bunbeauty.shared.domain.feature.discount.GetDiscountUseCase
 import com.bunbeauty.shared.domain.feature.menu.AddMenuProductUseCase
 import com.bunbeauty.shared.domain.interactor.menu_product.IMenuProductInteractor
 import com.bunbeauty.shared.domain.model.menu.MenuSection
-import com.bunbeauty.shared.domain.model.product.MenuProduct
 import com.bunbeauty.shared.extension.launchSafe
 import com.bunbeauty.shared.presentation.base.SharedViewModel
+import com.bunbeauty.shared.presentation.menu.mapper.toMenuItemList
+import com.bunbeauty.shared.presentation.menu.model.CategoryItem
+import com.bunbeauty.shared.presentation.menu.model.MenuDataState
+import com.bunbeauty.shared.presentation.menu.model.MenuItem
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -26,11 +29,11 @@ class MenuViewModel(
 ) : SharedViewModel() {
 
     private val mutableMenuState = MutableStateFlow(
-        MenuState(
+        MenuDataState(
             categoryItemList = emptyList(),
             cartCostAndCount = null,
             menuItemList = emptyList(),
-            state = MenuState.State.Loading,
+            state = MenuDataState.State.Loading,
             userScrollEnabled = true,
             eventList = emptyList(),
         )
@@ -74,7 +77,7 @@ class MenuViewModel(
     fun getMenu() {
         mutableMenuState.update { oldState ->
             oldState.copy(
-                state = MenuState.State.Loading
+                state = MenuDataState.State.Loading
             )
         }
 
@@ -85,27 +88,20 @@ class MenuViewModel(
                     selectedCategoryUuid = menuSectionList.firstOrNull()?.category?.uuid
                 }
 
-                val discountItem =
-                    getDiscountUseCase()?.firstOrderDiscount?.toString()?.let { discount ->
-                        MenuItem.DiscountItem(
-                            key = "MenuProductDiscountModel $discount",
-                            discount = discount
-                        )
+                val discountItem = getDiscountUseCase()?.firstOrderDiscount?.toString()?.let { discount ->
+                    MenuItem.Discount(discount = discount)
+                }
+                val menuItemList = listOfNotNull(discountItem) +
+                    menuSectionList.flatMap { menuSection ->
+                        menuSection.toMenuItemList()
                     }
-
-                val menuItemList =
-                    listOfNotNull(discountItem) + menuSectionList.flatMap { menuSection ->
-                        listOf(toMenuCategoryItemModel(menuSection)) +
-                            toMenuProductItemModelList(menuSection)
-                    }
-
                 mutableMenuState.update { oldState ->
                     oldState.copy(
                         categoryItemList = menuSectionList.map { menuSection ->
                             toCategoryItemModel(menuSection)
                         },
                         menuItemList = menuItemList,
-                        state = MenuState.State.Success,
+                        state = MenuDataState.State.Success,
                     )
                 }
             },
@@ -129,7 +125,7 @@ class MenuViewModel(
         sharedScope.launchSafe(
             block = {
                 val menuItemModelList = mutableMenuState.value.menuItemList
-                menuItemModelList.filterIsInstance<MenuItem.MenuCategoryHeaderItem>()
+                menuItemModelList.filterIsInstance<MenuItem.CategoryHeader>()
                     .findLast { menuItemModel ->
                         menuItemModelList.indexOf(menuItemModel) <= menuPosition
                     }?.let { menuItemModel ->
@@ -146,42 +142,54 @@ class MenuViewModel(
     private fun handleError(throwable: Throwable) {
         mutableMenuState.update { oldState ->
             oldState.copy(
-                state = MenuState.State.Error(throwable)
+                state = MenuDataState.State.Error(throwable)
             )
         }
     }
 
-    fun onMenuItemClicked(menuProductItem: MenuProductItem) {
+    fun onMenuItemClicked(menuProductUuid: String) {
+        val menuProduct = findMenuProduct(uuid = menuProductUuid) ?: return
+
         mutableMenuState.update { oldState ->
-            oldState + MenuState.Event.GoToSelectedItem(
-                uuid = menuProductItem.uuid,
-                name = menuProductItem.name
+            oldState + MenuDataState.Event.GoToSelectedItem(
+                uuid = menuProduct.uuid,
+                name = menuProduct.name
             )
         }
     }
 
-    fun onAddProductClicked(menuProductItem: MenuProductItem) {
+    private fun findMenuProduct(uuid: String): MenuItem.Product? {
+        return mutableMenuState.value.menuItemList
+            .filterIsInstance<MenuItem.Product>()
+            .find { menuItem ->
+                (menuItem.uuid == uuid)
+            }
+    }
+
+    fun onAddProductClicked(menuProductUuid: String) {
+        val menuProduct = findMenuProduct(uuid = menuProductUuid) ?: return
+
         analyticService.sendEvent(
             event = AddMenuProductClickEvent(
-                menuProductUuidEventParameter = MenuProductUuidEventParameter(value = menuProductItem.uuid)
+                menuProductUuidEventParameter = MenuProductUuidEventParameter(value = menuProduct.uuid)
             ),
         )
         sharedScope.launchSafe(
             block = {
-                if (menuProductItem.hasAdditions) {
+                if (menuProduct.hasAdditions) {
                     mutableMenuState.update { oldState ->
-                        oldState + MenuState.Event.GoToSelectedItem(
-                            uuid = menuProductItem.uuid,
-                            name = menuProductItem.name
+                        oldState + MenuDataState.Event.GoToSelectedItem(
+                            uuid = menuProduct.uuid,
+                            name = menuProduct.name
                         )
                     }
                 } else {
-                    addMenuProductUseCase(menuProductUuid = menuProductItem.uuid)
+                    addMenuProductUseCase(menuProductUuid = menuProduct.uuid)
                 }
             },
             onError = {
                 mutableMenuState.update { oldState ->
-                    oldState + MenuState.Event.ShowAddProductError
+                    oldState + MenuDataState.Event.ShowAddProductError
                 }
             }
         )
@@ -189,7 +197,7 @@ class MenuViewModel(
 
     fun getMenuListPosition(categoryItem: CategoryItem): Int {
         val index = mutableMenuState.value.menuItemList.indexOfFirst { menuItemModel ->
-            (menuItemModel as? MenuItem.MenuCategoryHeaderItem)?.uuid == categoryItem.uuid
+            (menuItemModel as? MenuItem.CategoryHeader)?.uuid == categoryItem.uuid
         }
         return if (index == 1 && mutableMenuState.value.hasDiscountItem) {
             0
@@ -245,35 +253,7 @@ class MenuViewModel(
         } ?: false
     }
 
-    private fun toMenuCategoryItemModel(menuSection: MenuSection): MenuItem.MenuCategoryHeaderItem {
-        return MenuItem.MenuCategoryHeaderItem(
-            key = "MenuCategoryHeaderItemModel ${menuSection.category.uuid}",
-            uuid = menuSection.category.uuid,
-            name = menuSection.category.name
-        )
-    }
-
-    private fun toMenuProductItemModelList(menuSection: MenuSection): List<MenuItem.MenuProductListItem> {
-        fun toMenuProductItemModel(menuProduct: MenuProduct): MenuProductItem {
-            return MenuProductItem(
-                uuid = menuProduct.uuid,
-                photoLink = menuProduct.photoLink,
-                name = menuProduct.name,
-                oldPrice = menuProduct.oldPrice,
-                newPrice = menuProduct.newPrice,
-                hasAdditions = menuProduct.additionGroups.isNotEmpty()
-            )
-        }
-
-        return menuSection.menuProductList.map { menuProduct ->
-            MenuItem.MenuProductListItem(
-                key = "MenuProductPairItemModel ${menuProduct.uuid} ${menuSection.category}",
-                product = toMenuProductItemModel(menuProduct),
-            )
-        }
-    }
-
-    fun consumeEventList(eventList: List<MenuState.Event>) {
+    fun consumeEventList(eventList: List<MenuDataState.Event>) {
         mutableMenuState.update { state ->
             state.copy(eventList = state.eventList - eventList.toSet())
         }

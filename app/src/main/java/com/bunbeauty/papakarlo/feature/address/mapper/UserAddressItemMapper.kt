@@ -6,11 +6,11 @@ import com.bunbeauty.shared.domain.model.address.SelectableUserAddress
 
 class UserAddressItemMapper(private val stringUtil: IStringUtil) {
 
-    fun toItem(userAddress: SelectableUserAddress): UserAddressItem {
+    fun toItem(selectableUserAddress: SelectableUserAddress): UserAddressItem {
         return UserAddressItem(
-            uuid = userAddress.uuid,
-            address = stringUtil.getUserAddressString(userAddress) ?: "",
-            isSelected = userAddress.isSelected
+            uuid = selectableUserAddress.address.uuid,
+            address = stringUtil.getUserAddressString(selectableUserAddress) ?: "",
+            isSelected = selectableUserAddress.isSelected
         )
     }
 }

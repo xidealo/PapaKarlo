@@ -35,7 +35,7 @@ abstract class BaseComposeFragment<DS : BaseDataState, VS : BaseViewState, A : B
                 }
             }
             Screen(
-                viewState = mapState(dataState),
+                viewState = dataState.mapState(),
                 onAction = onAction
             )
 
@@ -51,7 +51,7 @@ abstract class BaseComposeFragment<DS : BaseDataState, VS : BaseViewState, A : B
 
     abstract fun handleEvent(event: E)
 
-    abstract fun mapState(dataState: DS): VS
+    abstract fun DS.mapState(): VS
 
     @Composable
     abstract fun Screen(viewState: VS, onAction: (A) -> Unit)

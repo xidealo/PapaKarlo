@@ -85,8 +85,8 @@ class ProductDetailsFragment :
         )
     }
 
-    override fun mapState(dataState: ProductDetailsState.DataState): ProductDetailsViewState {
-        return productDetailsUiStateMapper.map(dataState)
+    override fun ProductDetailsState.DataState.mapState(): ProductDetailsViewState {
+        return productDetailsUiStateMapper.map(this)
     }
 
     override fun handleEvent(event: ProductDetailsState.Event) {

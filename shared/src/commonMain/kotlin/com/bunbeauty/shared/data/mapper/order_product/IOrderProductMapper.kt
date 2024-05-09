@@ -8,7 +8,7 @@ import com.bunbeauty.shared.domain.model.product.OrderProduct
 
 interface IOrderProductMapper {
 
-    fun toOrderProduct(orderWithProductEntity: List<OrderWithProductEntity>): List<OrderProduct>
+    fun toOrderProduct(orderWithProductEntityList: List<OrderWithProductEntity>): List<OrderProduct>
     fun toOrderProduct(orderProduct: OrderProductServer): OrderProduct
     fun toPostServerModel(createdOrderProduct: CreatedOrderProduct): OrderProductPostServer
 }

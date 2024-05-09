@@ -1,4 +1,4 @@
-package com.bunbeauty.shared.presentation.menu
+package com.bunbeauty.shared.presentation.menu.model
 
 data class CategoryItem(
     val key: String,

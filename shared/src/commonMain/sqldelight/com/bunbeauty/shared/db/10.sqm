@@ -1,0 +1,4 @@
+ALTER TABLE userAddressEntity ADD COLUMN minOrderCost INTEGER;
+ALTER TABLE userAddressEntity ADD COLUMN normalDeliveryCost INTEGER DEFAULT 0;
+ALTER TABLE userAddressEntity ADD COLUMN forLowDeliveryCost INTEGER;
+ALTER TABLE userAddressEntity ADD COLUMN lowDeliveryCost INTEGER;
