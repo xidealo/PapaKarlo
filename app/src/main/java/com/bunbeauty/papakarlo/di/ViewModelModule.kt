@@ -68,8 +68,7 @@ fun viewModelModule() = module {
     viewModel {
         CafeListViewModel(
             cafeInteractor = get(),
-            observeCafeListUseCase = get(),
-            getSelectedCityTimeZoneUseCase = get(),
+            observeCafeWithOpenStateListUseCase = get(),
             observeCartUseCase = get()
         )
     }

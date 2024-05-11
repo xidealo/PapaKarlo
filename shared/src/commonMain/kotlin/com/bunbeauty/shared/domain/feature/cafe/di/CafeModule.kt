@@ -1,11 +1,11 @@
-package com.bunbeauty.shared.di.usecase
+package com.bunbeauty.shared.domain.feature.cafe.di
 
 import com.bunbeauty.shared.domain.feature.cafe.GetCafeListUseCase
 import com.bunbeauty.shared.domain.feature.cafe.GetSelectableCafeListUseCase
-import com.bunbeauty.shared.domain.feature.cafe.ObserveCafeListUseCase
+import com.bunbeauty.shared.domain.feature.cafe.ObserveCafeWithOpenStateListUseCase
 import org.koin.dsl.module
 
-internal fun cafeUseCaseModule() = module {
+internal fun cafeModule() = module {
     factory {
         GetCafeListUseCase(
             cafeRepo = get(),
@@ -19,7 +19,7 @@ internal fun cafeUseCaseModule() = module {
         )
     }
     factory {
-        ObserveCafeListUseCase(
+        ObserveCafeWithOpenStateListUseCase(
             getSelectedCityTimeZoneUseCase = get(),
             dataTimeUtil = get(),
             getCafeListUseCase = get(),

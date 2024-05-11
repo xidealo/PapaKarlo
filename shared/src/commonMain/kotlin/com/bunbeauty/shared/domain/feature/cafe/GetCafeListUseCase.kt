@@ -6,7 +6,6 @@ import com.bunbeauty.shared.domain.exeptions.NoSelectedCityUuidException
 import com.bunbeauty.shared.domain.model.cafe.Cafe
 import com.bunbeauty.shared.domain.repo.CafeRepo
 
-//TODO (tests)
 class GetCafeListUseCase(
     private val dataStoreRepo: DataStoreRepo,
     private val cafeRepo: CafeRepo,

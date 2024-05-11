@@ -32,7 +32,7 @@ import com.bunbeauty.papakarlo.feature.cafe.ui.CafeItem
 import com.bunbeauty.papakarlo.feature.cafe.ui.CafeItemAndroid
 import com.bunbeauty.papakarlo.feature.productdetails.ProductDetailsFragmentDirections
 import com.bunbeauty.papakarlo.feature.topcart.TopCartUi
-import com.bunbeauty.shared.presentation.cafe_list.CafeItem
+import com.bunbeauty.shared.domain.model.cafe.CafeOpenState
 import com.bunbeauty.shared.presentation.cafe_list.CafeListState
 import com.bunbeauty.shared.presentation.cafe_list.CafeListViewModel
 import org.koin.android.ext.android.inject
@@ -144,25 +144,25 @@ class CafeListFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose
                             uuid = "",
                             address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж",
                             workingHours = "9:00 - 22:00",
-                            cafeOpenState = CafeItem.CafeOpenState.Opened,
                             cafeStatusText = "Open",
-                            phone = "00000000"
+                            phone = "00000000",
+                            cafeOpenState = CafeOpenState.Opened,
                         ),
                         CafeItemAndroid(
                             uuid = "",
                             address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж",
                             workingHours = "9:00 - 22:00",
-                            cafeOpenState = CafeItem.CafeOpenState.CloseSoon(30),
                             cafeStatusText = "Close soon",
-                            phone = "00000000"
+                            phone = "00000000",
+                            cafeOpenState = CafeOpenState.CloseSoon(30),
                         ),
                         CafeItemAndroid(
                             uuid = "",
                             address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж",
                             workingHours = "9:00 - 22:00",
-                            cafeOpenState = CafeItem.CafeOpenState.Closed,
                             cafeStatusText = "Closed",
-                            phone = "00000000"
+                            phone = "00000000",
+                            cafeOpenState = CafeOpenState.Closed,
                         )
                     ),
                     state = CafeListState.State.Success,

@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.medium
+import com.bunbeauty.shared.domain.model.cafe.CafeOpenState
 
 @Composable
 fun CafeItem(
@@ -64,7 +65,7 @@ private fun CafeItemOpenPreview() {
                 address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж",
                 workingHours = "9:00 - 22:00",
                 phone = "00000000",
-                cafeOpenState = com.bunbeauty.shared.presentation.cafe_list.CafeItem.CafeOpenState.Opened,
+                cafeOpenState = CafeOpenState.Opened,
                 cafeStatusText = "Open"
             ),
             onClick = {}
@@ -82,9 +83,7 @@ private fun CafeItemCloseSoonPreview() {
                 address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж",
                 workingHours = "9:00 - 22:00",
                 phone = "00000000",
-                cafeOpenState = com.bunbeauty.shared.presentation.cafe_list.CafeItem.CafeOpenState.CloseSoon(
-                    30
-                ),
+                cafeOpenState = CafeOpenState.CloseSoon(minutesUntil = 30),
                 cafeStatusText = "Closed soon 30 min"
             ),
             onClick = {}
@@ -102,7 +101,7 @@ private fun CafeItemClosedPreview() {
                 address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж",
                 workingHours = "9:00 - 22:00",
                 phone = "00000000",
-                cafeOpenState = com.bunbeauty.shared.presentation.cafe_list.CafeItem.CafeOpenState.Closed,
+                cafeOpenState = CafeOpenState.Closed,
                 cafeStatusText = "Closed"
             ),
             onClick = {}

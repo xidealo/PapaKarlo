@@ -1,6 +1,6 @@
 package com.bunbeauty.papakarlo.feature.cafe.ui
 
-import com.bunbeauty.shared.presentation.cafe_list.CafeItem
+import com.bunbeauty.shared.domain.model.cafe.CafeOpenState
 
 data class CafeItemAndroid(
     val uuid: String,
@@ -8,5 +8,5 @@ data class CafeItemAndroid(
     val phone: String,
     val workingHours: String,
     val cafeStatusText: String,
-    val cafeOpenState: CafeItem.CafeOpenState
+    val cafeOpenState: CafeOpenState
 )

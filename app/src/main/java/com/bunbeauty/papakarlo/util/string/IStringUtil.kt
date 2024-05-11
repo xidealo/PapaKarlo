@@ -3,11 +3,11 @@ package com.bunbeauty.papakarlo.util.string
 import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.model.TimeUI
 import com.bunbeauty.shared.domain.model.address.SelectableUserAddress
 import com.bunbeauty.shared.domain.model.address.UserAddress
+import com.bunbeauty.shared.domain.model.cafe.CafeOpenState
 import com.bunbeauty.shared.domain.model.date_time.DateTime
 import com.bunbeauty.shared.domain.model.date_time.Time
 import com.bunbeauty.shared.domain.model.order.OrderAddress
 import com.bunbeauty.shared.domain.model.order.OrderStatus
-import com.bunbeauty.shared.presentation.cafe_list.CafeItem
 
 interface IStringUtil {
 
@@ -26,5 +26,5 @@ interface IStringUtil {
     fun getPickupMethodString(isDelivery: Boolean): String
     fun getDeferredString(isDelivery: Boolean): String
 
-    fun getCafeStatusText(cafeOpenState: CafeItem.CafeOpenState): String
+    fun getCafeStatusText(cafeOpenState: CafeOpenState): String
 }

@@ -2,11 +2,10 @@ package com.bunbeauty.shared.presentation.cafe_list
 
 import com.bunbeauty.shared.Constants.WORKING_HOURS_DIVIDER
 import com.bunbeauty.shared.domain.asCommonStateFlow
-import com.bunbeauty.shared.domain.feature.cafe.ObserveCafeListUseCase
+import com.bunbeauty.shared.domain.feature.cafe.ObserveCafeWithOpenStateListUseCase
 import com.bunbeauty.shared.domain.feature.cart.ObserveCartUseCase
-import com.bunbeauty.shared.domain.feature.city.GetSelectedCityTimeZoneUseCase
 import com.bunbeauty.shared.domain.interactor.cafe.ICafeInteractor
-import com.bunbeauty.shared.domain.model.cafe.Cafe
+import com.bunbeauty.shared.domain.model.cafe.CafeWithOpenState
 import com.bunbeauty.shared.presentation.base.SharedViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Job
@@ -19,8 +18,7 @@ import kotlinx.coroutines.launch
 
 class CafeListViewModel(
     private val cafeInteractor: ICafeInteractor,
-    private val observeCafeListUseCase: ObserveCafeListUseCase,
-    private val getSelectedCityTimeZoneUseCase: GetSelectedCityTimeZoneUseCase,
+    private val observeCafeWithOpenStateListUseCase: ObserveCafeWithOpenStateListUseCase,
     private val observeCartUseCase: ObserveCartUseCase,
 ) : SharedViewModel() {
 
@@ -54,10 +52,12 @@ class CafeListViewModel(
     fun observeCafeList() {
         sharedScope.launch(exceptionHandler) {
             observeCafeListJob?.cancel()
-            observeCafeListJob = observeCafeListUseCase().onEach { cafeList ->
+            observeCafeListJob = observeCafeWithOpenStateListUseCase().onEach { cafeWithOpenStateList ->
                 mutableCafeItemListState.update { oldState ->
                     oldState.copy(
-                        cafeList = cafeList.toItemModels(),
+                        cafeList = cafeWithOpenStateList.map { cafeWithOpenState ->
+                            cafeWithOpenState.toCafeItem()
+                        },
                         state = CafeListState.State.Success
                     )
                 }
@@ -73,23 +73,16 @@ class CafeListViewModel(
         }
     }
 
-    private suspend fun List<Cafe>.toItemModels(): List<CafeItem> {
-        return this.map { cafe ->
-            toItemModel(cafe)
-        }
-    }
-
-    private suspend fun toItemModel(cafe: Cafe): CafeItem {
+    private fun CafeWithOpenState.toCafeItem(): CafeItem {
         val fromTime = cafeInteractor.getCafeTime(cafe.fromTime)
         val toTime = cafeInteractor.getCafeTime(cafe.toTime)
-        val timeZone = getSelectedCityTimeZoneUseCase()
 
         return CafeItem(
             uuid = cafe.uuid,
             address = cafe.address,
             phone = cafe.phone,
             workingHours = "$fromTime$WORKING_HOURS_DIVIDER$toTime",
-            cafeOpenState = cafeInteractor.getCafeStatus(cafe, timeZone),
+            cafeOpenState = openState,
         )
     }
 
