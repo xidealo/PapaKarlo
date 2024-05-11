@@ -12,7 +12,6 @@ import com.bunbeauty.shared.domain.repo.CafeRepo
 import com.bunbeauty.shared.domain.util.IDateTimeUtil
 import com.bunbeauty.shared.presentation.cafe_list.CafeItem
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
@@ -23,14 +22,6 @@ class CafeInteractor(
     private val dataStoreRepo: DataStoreRepo,
     private val dataTimeUtil: IDateTimeUtil,
 ) : ICafeInteractor {
-
-    override fun observeCafeList(timeZone: String): Flow<List<Cafe>> {
-        return observeMinutesOfDay(timeZone).map {
-            dataStoreRepo.getSelectedCityUuid()?.let { selectedCityUuid ->
-                cafeRepo.getCafeList(selectedCityUuid)
-            } ?: emptyList()
-        }
-    }
 
     override fun observeCafeAddressList(): CommonFlow<List<CafeAddress>> {
         return cafeRepo.observeCafeList().map { cafeList ->
@@ -97,14 +88,6 @@ class CafeInteractor(
 
     private fun getCurrentMinuteOfDay(timeZone: String): Int {
         return dataTimeUtil.getCurrentMinuteSecond(timeZone).minuteOfDay
-    }
-
-    private fun observeMinutesOfDay(timeZone: String): Flow<Int> = flow {
-        while (true) {
-            val currentMinuteSecond = dataTimeUtil.getCurrentMinuteSecond(timeZone)
-            emit(currentMinuteSecond.minuteOfDay)
-            delay((60 - currentMinuteSecond.secondOfMinute) * 1_000L)
-        }
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)

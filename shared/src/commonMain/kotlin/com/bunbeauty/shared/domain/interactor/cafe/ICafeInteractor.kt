@@ -4,11 +4,9 @@ import com.bunbeauty.shared.domain.CommonFlow
 import com.bunbeauty.shared.domain.model.cafe.Cafe
 import com.bunbeauty.shared.domain.model.cafe.CafeAddress
 import com.bunbeauty.shared.presentation.cafe_list.CafeItem
-import kotlinx.coroutines.flow.Flow
 
 interface ICafeInteractor {
 
-    fun observeCafeList(timeZone: String): Flow<List<Cafe>>
     fun observeCafeAddressList(): CommonFlow<List<CafeAddress>>
     fun observeSelectedCafeAddress(): CommonFlow<CafeAddress>
     suspend fun getCafeStatus(cafe: Cafe, timeZone: String): CafeItem.CafeOpenState

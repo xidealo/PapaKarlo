@@ -2,28 +2,32 @@ package com.bunbeauty.shared.presentation.cafe_list
 
 import com.bunbeauty.shared.Constants.WORKING_HOURS_DIVIDER
 import com.bunbeauty.shared.domain.asCommonStateFlow
+import com.bunbeauty.shared.domain.feature.cafe.ObserveCafeListUseCase
 import com.bunbeauty.shared.domain.feature.cart.ObserveCartUseCase
 import com.bunbeauty.shared.domain.feature.city.GetSelectedCityTimeZoneUseCase
-import com.bunbeauty.shared.domain.use_case.cafe.GetCafeListUseCase
 import com.bunbeauty.shared.domain.interactor.cafe.ICafeInteractor
 import com.bunbeauty.shared.domain.model.cafe.Cafe
 import com.bunbeauty.shared.presentation.base.SharedViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class CafeListViewModel(
     private val cafeInteractor: ICafeInteractor,
+    private val observeCafeListUseCase: ObserveCafeListUseCase,
     private val getSelectedCityTimeZoneUseCase: GetSelectedCityTimeZoneUseCase,
-    private val getCafeListUseCase: GetCafeListUseCase,
     private val observeCartUseCase: ObserveCartUseCase,
-) :  SharedViewModel() {
+) : SharedViewModel() {
 
     private val mutableCafeItemListState = MutableStateFlow(CafeListState())
     val cafeListState = mutableCafeItemListState.asCommonStateFlow()
 
-    private var observeMinutesOfDayJob: Job? = null
+    private var observeCafeListJob: Job? = null
 
     private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
         mutableCafeItemListState.update { oldState ->
@@ -47,28 +51,17 @@ class CafeListViewModel(
         }
     }
 
-    fun getCafeItemList() {
+    fun observeCafeList() {
         sharedScope.launch(exceptionHandler) {
-            observeMinutesOfDayJob?.cancel()
-
-            mutableCafeItemListState.update { oldState ->
-                oldState.copy(
-                    cafeList = getCafeListUseCase().toItemModels(),
-                    state = CafeListState.State.Success
-                )
-            }
-
-            if (mutableCafeItemListState.value.cafeList.isNotEmpty()) {
-                val timeZone = getSelectedCityTimeZoneUseCase()
-                observeMinutesOfDayJob =
-                    cafeInteractor.observeCafeList(timeZone).onEach { cafeList ->
-                        mutableCafeItemListState.update { oldState ->
-                            oldState.copy(
-                                cafeList = cafeList.toItemModels()
-                            )
-                        }
-                    }.launchIn(sharedScope)
-            }
+            observeCafeListJob?.cancel()
+            observeCafeListJob = observeCafeListUseCase().onEach { cafeList ->
+                mutableCafeItemListState.update { oldState ->
+                    oldState.copy(
+                        cafeList = cafeList.toItemModels(),
+                        state = CafeListState.State.Success
+                    )
+                }
+            }.launchIn(sharedScope)
         }
     }
 
@@ -96,7 +89,7 @@ class CafeListViewModel(
             address = cafe.address,
             phone = cafe.phone,
             workingHours = "$fromTime$WORKING_HOURS_DIVIDER$toTime",
-            cafeOpenState =  cafeInteractor.getCafeStatus(cafe, timeZone),
+            cafeOpenState = cafeInteractor.getCafeStatus(cafe, timeZone),
         )
     }
 

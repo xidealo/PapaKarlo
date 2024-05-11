@@ -92,7 +92,6 @@ fun repositoryModule() = module {
             networkConnector = get(),
             dataStoreRepo = get(),
             cafeDao = get(),
-            cafeMapper = get(),
         )
     }
     single<DeliveryRepo> {

@@ -5,7 +5,7 @@ import com.bunbeauty.shared.domain.exeptions.EmptyCafeListException
 import com.bunbeauty.shared.domain.model.cafe.Cafe
 import com.bunbeauty.shared.domain.model.cafe.SelectableCafe
 import com.bunbeauty.shared.domain.repo.CafeRepo
-import com.bunbeauty.shared.domain.use_case.cafe.GetSelectableCafeListUseCase
+import com.bunbeauty.shared.domain.feature.cafe.GetSelectableCafeListUseCase
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -133,17 +133,21 @@ class GetSelectableCafeListUseCaseTest {
         latitude = 0.0,
         longitude = 0.0,
         cityUuid = "cityUuid",
+        isVisible = true,
     )
 
     private fun generateSelectableCafe(uuid: String, isSelected: Boolean) = SelectableCafe(
-        uuid = uuid,
-        fromTime = 0,
-        toTime = 0,
-        phone = "phone",
-        address = "address",
-        latitude = 0.0,
-        longitude = 0.0,
-        cityUuid = "cityUuid",
+        cafe = Cafe(
+            uuid = uuid,
+            fromTime = 0,
+            toTime = 0,
+            phone = "phone",
+            address = "address",
+            latitude = 0.0,
+            longitude = 0.0,
+            cityUuid = "cityUuid",
+            isVisible = true,
+        ),
         isSelected = isSelected,
     )
 }

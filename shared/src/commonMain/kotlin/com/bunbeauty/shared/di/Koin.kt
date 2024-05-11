@@ -36,7 +36,7 @@ import com.bunbeauty.shared.domain.feature.order.*
 import com.bunbeauty.shared.domain.feature.payment.GetPaymentMethodListUseCase
 import com.bunbeauty.shared.domain.feature.settings.ObserveSettingsUseCase
 import com.bunbeauty.shared.domain.feature.settings.UpdateEmailUseCase
-import com.bunbeauty.shared.domain.use_case.cafe.GetCafeListUseCase
+import com.bunbeauty.shared.domain.feature.cafe.GetCafeListUseCase
 import com.bunbeauty.shared.domain.interactor.cafe.ICafeInteractor
 import com.bunbeauty.shared.domain.interactor.cart.GetCartTotalUseCase
 import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
@@ -63,7 +63,7 @@ import com.bunbeauty.shared.domain.feature.payment.SavePaymentMethodUseCase
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
 import com.bunbeauty.shared.domain.use_case.DisableUserUseCase
 import com.bunbeauty.shared.domain.use_case.address.*
-import com.bunbeauty.shared.domain.use_case.cafe.GetSelectableCafeListUseCase
+import com.bunbeauty.shared.domain.feature.cafe.GetSelectableCafeListUseCase
 import com.bunbeauty.shared.presentation.create_order.CreateOrderStateMapper
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get

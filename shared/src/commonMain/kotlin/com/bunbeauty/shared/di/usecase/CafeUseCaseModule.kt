@@ -1,7 +1,8 @@
 package com.bunbeauty.shared.di.usecase
 
-import com.bunbeauty.shared.domain.use_case.cafe.GetCafeListUseCase
-import com.bunbeauty.shared.domain.use_case.cafe.GetSelectableCafeListUseCase
+import com.bunbeauty.shared.domain.feature.cafe.GetCafeListUseCase
+import com.bunbeauty.shared.domain.feature.cafe.GetSelectableCafeListUseCase
+import com.bunbeauty.shared.domain.feature.cafe.ObserveCafeListUseCase
 import org.koin.dsl.module
 
 internal fun cafeUseCaseModule() = module {
@@ -15,6 +16,13 @@ internal fun cafeUseCaseModule() = module {
         GetSelectableCafeListUseCase(
             cafeRepo = get(),
             dataStoreRepo = get(),
+        )
+    }
+    factory {
+        ObserveCafeListUseCase(
+            getSelectedCityTimeZoneUseCase = get(),
+            dataTimeUtil = get(),
+            getCafeListUseCase = get(),
         )
     }
 

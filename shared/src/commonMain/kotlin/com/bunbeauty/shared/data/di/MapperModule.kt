@@ -1,8 +1,6 @@
 package com.bunbeauty.shared.data.di
 
 import com.bunbeauty.shared.data.mapper.SettingsMapper
-import com.bunbeauty.shared.data.mapper.cafe.CafeMapper
-import com.bunbeauty.shared.data.mapper.cafe.ICafeMapper
 import com.bunbeauty.shared.data.mapper.cart_product.CartProductMapper
 import com.bunbeauty.shared.data.mapper.cart_product.ICartProductMapper
 import com.bunbeauty.shared.data.mapper.city.CityMapper
@@ -22,7 +20,6 @@ import com.bunbeauty.shared.data.mapper.user.UserMapper
 import org.koin.dsl.module
 
 fun dataMapperModule() = module {
-    factory<ICafeMapper> { CafeMapper() }
     factory<IMenuProductMapper> { MenuProductMapper() }
     factory<ICartProductMapper> { CartProductMapper() }
     factory<IProfileMapper> {

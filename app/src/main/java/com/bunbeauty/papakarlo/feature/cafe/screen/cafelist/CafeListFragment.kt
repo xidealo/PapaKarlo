@@ -48,13 +48,13 @@ class CafeListFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose
         overrideBackPressedCallback()
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.getCafeItemList()
+        viewModel.observeCafeList()
         viewBinding.root.setContentWithTheme {
             val cafeItemList by viewModel.cafeListState.collectAsStateWithLifecycle()
             CafeListScreen(
                 cafeListUi = cafeListUiStateMapper.map(cafeItemList),
                 onCafeClicked = viewModel::onCafeCardClicked,
-                onRefreshClicked = viewModel::getCafeItemList
+                onRefreshClicked = viewModel::observeCafeList
             )
             LaunchedEffect(cafeItemList.eventList) {
                 handleEventList(cafeItemList.eventList)

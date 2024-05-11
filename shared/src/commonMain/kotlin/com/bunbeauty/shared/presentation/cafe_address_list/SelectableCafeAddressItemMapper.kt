@@ -4,9 +4,9 @@ import com.bunbeauty.shared.domain.model.cafe.SelectableCafe
 
 object SelectableCafeAddressItemMapper {
 
-    fun toSelectableCafeAddressItem(cafe: SelectableCafe) = SelectableCafeAddressItem(
-        uuid = cafe.uuid,
-        address = cafe.address,
-        isSelected = cafe.isSelected
+    fun toSelectableCafeAddressItem(selectableCafe: SelectableCafe) = SelectableCafeAddressItem(
+        uuid = selectableCafe.cafe.uuid,
+        address = selectableCafe.cafe.address,
+        isSelected = selectableCafe.isSelected
     )
 }

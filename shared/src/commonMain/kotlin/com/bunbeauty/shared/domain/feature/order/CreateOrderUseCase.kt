@@ -48,8 +48,8 @@ class CreateOrderUseCase(
         } else {
             selectedCafe ?: return null
             CreatedOrderAddress(
-                uuid = selectedCafe.uuid,
-                description = selectedCafe.address
+                uuid = selectedCafe.cafe.uuid,
+                description = selectedCafe.cafe.address
             )
         }
 

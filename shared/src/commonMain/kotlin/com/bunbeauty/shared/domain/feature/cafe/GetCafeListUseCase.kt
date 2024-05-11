@@ -1,4 +1,4 @@
-package com.bunbeauty.shared.domain.use_case.cafe
+package com.bunbeauty.shared.domain.feature.cafe
 
 import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.domain.exeptions.EmptyCafeListException
@@ -13,6 +13,11 @@ class GetCafeListUseCase(
 ) {
     suspend operator fun invoke(): List<Cafe> {
         val cityUuid = dataStoreRepo.getSelectedCityUuid() ?: throw NoSelectedCityUuidException()
-        return cafeRepo.getCafeList(cityUuid).ifEmpty { throw EmptyCafeListException() }
+        return cafeRepo.getCafeList(cityUuid)
+            .filter { cafe ->
+                cafe.isVisible
+            }.ifEmpty {
+                throw EmptyCafeListException()
+            }
     }
 }
