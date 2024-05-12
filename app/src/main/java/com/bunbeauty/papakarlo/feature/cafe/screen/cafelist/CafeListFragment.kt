@@ -146,7 +146,7 @@ class CafeListFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose
                             workingHours = "9:00 - 22:00",
                             cafeStatusText = "Open",
                             phone = "00000000",
-                            cafeOpenState = CafeOpenState.Opened,
+                            cafeOpenState = CafeOpenState.Opened
                         ),
                         CafeItemAndroid(
                             uuid = "",
@@ -154,7 +154,7 @@ class CafeListFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose
                             workingHours = "9:00 - 22:00",
                             cafeStatusText = "Close soon",
                             phone = "00000000",
-                            cafeOpenState = CafeOpenState.CloseSoon(30),
+                            cafeOpenState = CafeOpenState.CloseSoon(30)
                         ),
                         CafeItemAndroid(
                             uuid = "",
@@ -162,7 +162,7 @@ class CafeListFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose
                             workingHours = "9:00 - 22:00",
                             cafeStatusText = "Closed",
                             phone = "00000000",
-                            cafeOpenState = CafeOpenState.Closed,
+                            cafeOpenState = CafeOpenState.Closed
                         )
                     ),
                     state = CafeListState.State.Success,
