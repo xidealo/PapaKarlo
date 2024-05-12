@@ -12,7 +12,7 @@ import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
 import com.bunbeauty.shared.domain.model.date_time.Time
 import com.bunbeauty.shared.domain.use_case.address.GetSelectableUserAddressListUseCase
 import com.bunbeauty.shared.domain.use_case.address.SaveSelectedUserAddressUseCase
-import com.bunbeauty.shared.domain.use_case.cafe.GetSelectableCafeListUseCase
+import com.bunbeauty.shared.domain.feature.cafe.GetSelectableCafeListUseCase
 import com.bunbeauty.shared.domain.use_case.deferred_time.GetMinTimeUseCase
 import com.bunbeauty.shared.extension.launchSafe
 import com.bunbeauty.shared.extension.mapToStateFlow

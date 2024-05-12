@@ -1,4 +1,4 @@
-package com.bunbeauty.shared.domain.use_case.cafe
+package com.bunbeauty.shared.domain.feature.cafe
 
 import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.domain.exeptions.EmptyCafeListException
@@ -25,14 +25,7 @@ class GetSelectableCafeListUseCase(
             .ifEmpty { throw EmptyCafeListException() }
             .map { cafe ->
                 SelectableCafe(
-                    uuid = cafe.uuid,
-                    fromTime = cafe.fromTime,
-                    toTime = cafe.toTime,
-                    phone = cafe.phone,
-                    address = cafe.address,
-                    latitude = cafe.latitude,
-                    longitude = cafe.longitude,
-                    cityUuid = cafe.cityUuid,
+                    cafe = cafe,
                     isSelected = cafe.uuid == selectedCafe?.uuid,
                 )
             }

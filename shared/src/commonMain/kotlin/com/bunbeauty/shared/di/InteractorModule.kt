@@ -46,7 +46,6 @@ internal fun interactorModule() = module {
         CafeInteractor(
             cafeRepo = get(),
             dataStoreRepo = get(),
-            dataTimeUtil = get()
         )
     }
     single<IUpdateInteractor> {

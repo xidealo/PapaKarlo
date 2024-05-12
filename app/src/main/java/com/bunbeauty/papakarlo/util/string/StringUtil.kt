@@ -6,11 +6,11 @@ import com.bunbeauty.papakarlo.util.resources.IResourcesProvider
 import com.bunbeauty.shared.Constants.ADDRESS_DIVIDER
 import com.bunbeauty.shared.domain.model.address.SelectableUserAddress
 import com.bunbeauty.shared.domain.model.address.UserAddress
+import com.bunbeauty.shared.domain.model.cafe.CafeOpenState
 import com.bunbeauty.shared.domain.model.date_time.DateTime
 import com.bunbeauty.shared.domain.model.date_time.Time
 import com.bunbeauty.shared.domain.model.order.OrderAddress
 import com.bunbeauty.shared.domain.model.order.OrderStatus
-import com.bunbeauty.shared.presentation.cafe_list.CafeItem
 
 class StringUtil(
     private val resourcesProvider: IResourcesProvider
@@ -178,16 +178,16 @@ class StringUtil(
         }
     }
 
-    override fun getCafeStatusText(cafeOpenState: CafeItem.CafeOpenState): String {
+    override fun getCafeStatusText(cafeOpenState: CafeOpenState): String {
         return when (cafeOpenState) {
-            is CafeItem.CafeOpenState.Opened -> resourcesProvider.getString(R.string.msg_cafe_open)
-            is CafeItem.CafeOpenState.CloseSoon -> {
+            is CafeOpenState.Opened -> resourcesProvider.getString(R.string.msg_cafe_open)
+            is CafeOpenState.CloseSoon -> {
                 resourcesProvider.getString(R.string.msg_cafe_close_soon) +
-                    cafeOpenState.time +
-                    getMinuteString(cafeOpenState.time)
+                    cafeOpenState.minutesUntil +
+                    getMinuteString(cafeOpenState.minutesUntil)
             }
 
-            is CafeItem.CafeOpenState.Closed -> resourcesProvider.getString(R.string.msg_cafe_closed)
+            is CafeOpenState.Closed -> resourcesProvider.getString(R.string.msg_cafe_closed)
         }
     }
 

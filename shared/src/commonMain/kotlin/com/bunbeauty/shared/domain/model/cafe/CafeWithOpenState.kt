@@ -1,6 +1,6 @@
 package com.bunbeauty.shared.domain.model.cafe
 
-data class SelectableCafe(
+data class CafeWithOpenState(
     val cafe: Cafe,
-    val isSelected:Boolean
+    val openState: CafeOpenState
 )

@@ -6,7 +6,7 @@ class CreateOrderStateMapper {
             isDelivery = dataState.isDelivery,
             deliveryAddress = dataState.selectedUserAddress,
             isDeliveryAddressErrorShown = dataState.isUserAddressErrorShown,
-            pickupAddress = dataState.selectedCafe?.address,
+            pickupAddress = dataState.selectedCafe?.cafe?.address,
             comment = dataState.comment,
             deferredTime = dataState.deferredTime,
 
