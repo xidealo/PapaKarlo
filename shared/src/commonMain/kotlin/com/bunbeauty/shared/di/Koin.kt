@@ -64,6 +64,8 @@ import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
 import com.bunbeauty.shared.domain.use_case.DisableUserUseCase
 import com.bunbeauty.shared.domain.use_case.address.*
 import com.bunbeauty.shared.domain.feature.cafe.GetSelectableCafeListUseCase
+import com.bunbeauty.shared.domain.feature.cafe.ObserveCafeWithOpenStateListUseCase
+import com.bunbeauty.shared.domain.feature.motivation.GetMotivationUseCase
 import com.bunbeauty.shared.presentation.create_order.CreateOrderStateMapper
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
@@ -182,6 +184,8 @@ class IosComponent : KoinComponent {
     fun provideGetAdditionGroupsWithSelectedAdditionUseCase(): GetAdditionGroupsWithSelectedAdditionUseCase =
         get()
     fun provideGetPriceOfSelectedAdditionsUseCase(): GetPriceOfSelectedAdditionsUseCase = get()
+    fun provideObserveCafeWithOpenStateListUseCase(): ObserveCafeWithOpenStateListUseCase = get()
+    fun provideGetMotivationUseCaseUseCase(): GetMotivationUseCase = get()
 
     //Mapper
     fun provideUserAddressMapper(): UserAddressMapper = get()

@@ -539,6 +539,12 @@
 		0294FD7E29E35E8300568A10 /* AppTypography.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0294FD7C29E35E8300568A10 /* AppTypography.swift */; };
 		0294FD8029E751CC00568A10 /* AppColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0294FD7F29E751CC00568A10 /* AppColor.swift */; };
 		0294FD8129E751CC00568A10 /* AppColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0294FD7F29E751CC00568A10 /* AppColor.swift */; };
+		029FCF032BF7F68C00F0D51C /* ConsumerCartViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029FCF022BF7F68C00F0D51C /* ConsumerCartViewState.swift */; };
+		029FCF042BF7F68C00F0D51C /* ConsumerCartViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029FCF022BF7F68C00F0D51C /* ConsumerCartViewState.swift */; };
+		029FCF052BF7F68C00F0D51C /* ConsumerCartViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029FCF022BF7F68C00F0D51C /* ConsumerCartViewState.swift */; };
+		029FCF062BF7F68C00F0D51C /* ConsumerCartViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029FCF022BF7F68C00F0D51C /* ConsumerCartViewState.swift */; };
+		029FCF072BF7F68C00F0D51C /* ConsumerCartViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029FCF022BF7F68C00F0D51C /* ConsumerCartViewState.swift */; };
+		029FCF082BF7F68C00F0D51C /* ConsumerCartViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029FCF022BF7F68C00F0D51C /* ConsumerCartViewState.swift */; };
 		02A3B73A294FAFDB00C18221 /* LightOrderItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A3B739294FAFDB00C18221 /* LightOrderItemView.swift */; };
 		02A99D5529CBA0BE004D2F7B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 02A99D5729CBA0BE004D2F7B /* Localizable.strings */; };
 		02ADC33829D9D0880062A141 /* ButtonText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0253930929AB92A800C8B04B /* ButtonText.swift */; };
@@ -786,6 +792,7 @@
 		0294FD7929DF71B900568A10 /* EmptyWithIconView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyWithIconView.swift; sourceTree = "<group>"; };
 		0294FD7C29E35E8300568A10 /* AppTypography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTypography.swift; sourceTree = "<group>"; };
 		0294FD7F29E751CC00568A10 /* AppColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColor.swift; sourceTree = "<group>"; };
+		029FCF022BF7F68C00F0D51C /* ConsumerCartViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsumerCartViewState.swift; sourceTree = "<group>"; };
 		02A3B739294FAFDB00C18221 /* LightOrderItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightOrderItemView.swift; sourceTree = "<group>"; };
 		02A99D5629CBA0BE004D2F7B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		02A99D5829CBA101004D2F7B /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -922,6 +929,7 @@
 			children = (
 				02E4FEE82AC9FEB60060C827 /* CartProductView.swift */,
 				0232342B287879EF0048CF39 /* ConsumerCartView.swift */,
+				029FCF022BF7F68C00F0D51C /* ConsumerCartViewState.swift */,
 			);
 			path = consumer_cart;
 			sourceTree = "<group>";
@@ -1995,6 +2003,7 @@
 				0219B7962B8FB97C00305E2D /* AppColor.swift in Sources */,
 				0219B7972B8FB97C00305E2D /* CafeAddressListView.swift in Sources */,
 				0219B7982B8FB97C00305E2D /* CafeListView.swift in Sources */,
+				029FCF072BF7F68C00F0D51C /* ConsumerCartViewState.swift in Sources */,
 				0219B7992B8FB97C00305E2D /* ToolbarWithCartView.swift in Sources */,
 				0219B79A2B8FB97C00305E2D /* AppTypography.swift in Sources */,
 				0219B79B2B8FB97C00305E2D /* SelectCityView.swift in Sources */,
@@ -2104,6 +2113,7 @@
 				026C1F5A2A2690B900838266 /* AppColor.swift in Sources */,
 				026C1F5B2A2690B900838266 /* CafeAddressListView.swift in Sources */,
 				026C1F5C2A2690B900838266 /* CafeListView.swift in Sources */,
+				029FCF052BF7F68C00F0D51C /* ConsumerCartViewState.swift in Sources */,
 				026C1F5D2A2690B900838266 /* ToolbarWithCartView.swift in Sources */,
 				026C1F5E2A2690B900838266 /* AppTypography.swift in Sources */,
 				026C1F5F2A2690B900838266 /* SelectCityView.swift in Sources */,
@@ -2213,6 +2223,7 @@
 				027CB01D2A346F7B00350EB2 /* AppColor.swift in Sources */,
 				027CB01E2A346F7B00350EB2 /* CafeAddressListView.swift in Sources */,
 				027CB01F2A346F7B00350EB2 /* CafeListView.swift in Sources */,
+				029FCF062BF7F68C00F0D51C /* ConsumerCartViewState.swift in Sources */,
 				027CB0202A346F7B00350EB2 /* ToolbarWithCartView.swift in Sources */,
 				027CB0212A346F7B00350EB2 /* AppTypography.swift in Sources */,
 				027CB0222A346F7B00350EB2 /* SelectCityView.swift in Sources */,
@@ -2322,6 +2333,7 @@
 				02891F762BDAEA0D0043B466 /* AppColor.swift in Sources */,
 				02891F772BDAEA0D0043B466 /* CafeAddressListView.swift in Sources */,
 				02891F782BDAEA0D0043B466 /* CafeListView.swift in Sources */,
+				029FCF082BF7F68C00F0D51C /* ConsumerCartViewState.swift in Sources */,
 				02891F792BDAEA0D0043B466 /* ToolbarWithCartView.swift in Sources */,
 				02891F7A2BDAEA0D0043B466 /* AppTypography.swift in Sources */,
 				02891F7B2BDAEA0D0043B466 /* SelectCityView.swift in Sources */,
@@ -2431,6 +2443,7 @@
 				0294FD8129E751CC00568A10 /* AppColor.swift in Sources */,
 				02ADC33F29D9D0880062A141 /* CafeAddressListView.swift in Sources */,
 				02ADC34029D9D0880062A141 /* CafeListView.swift in Sources */,
+				029FCF042BF7F68C00F0D51C /* ConsumerCartViewState.swift in Sources */,
 				02ADC34129D9D0880062A141 /* ToolbarWithCartView.swift in Sources */,
 				0294FD7E29E35E8300568A10 /* AppTypography.swift in Sources */,
 				02ADC34229D9D0880062A141 /* SelectCityView.swift in Sources */,
@@ -2540,6 +2553,7 @@
 				0294FD8029E751CC00568A10 /* AppColor.swift in Sources */,
 				020FEEBF28D3AEF7002B3D69 /* CafeAddressListView.swift in Sources */,
 				02323497287879EF0048CF39 /* CafeListView.swift in Sources */,
+				029FCF032BF7F68C00F0D51C /* ConsumerCartViewState.swift in Sources */,
 				0220B1022953A6E000CD93B4 /* ToolbarWithCartView.swift in Sources */,
 				0294FD7D29E35E8300568A10 /* AppTypography.swift in Sources */,
 				0232347F287879EF0048CF39 /* SelectCityView.swift in Sources */,

@@ -66,26 +66,26 @@ class CreateOrderHolder: ObservableObject {
             return ""
         }
         
-        var address : String = creationOrderViewState.deliveryAddress?.street ?? ""
+        var address : String = creationOrderViewState.deliveryAddress?.address.street ?? ""
         
-        if(creationOrderViewState.deliveryAddress?.house != nil){
-            address += ", д. " + (creationOrderViewState.deliveryAddress?.house ?? "")
+        if(creationOrderViewState.deliveryAddress?.address.house != nil){
+            address += ", д. " + (creationOrderViewState.deliveryAddress?.address.house ?? "")
         }
         
-        if(creationOrderViewState.deliveryAddress?.flat != nil && creationOrderViewState.deliveryAddress?.flat != ""){
-            address += ", кв. " + (creationOrderViewState.deliveryAddress?.flat ?? "")
+        if(creationOrderViewState.deliveryAddress?.address.flat != nil && creationOrderViewState.deliveryAddress?.address.flat != ""){
+            address += ", кв. " + (creationOrderViewState.deliveryAddress?.address.flat ?? "")
         }
         
-        if(creationOrderViewState.deliveryAddress?.entrance != nil && creationOrderViewState.deliveryAddress?.entrance != ""){
-            address += ", подъезд " + (creationOrderViewState.deliveryAddress?.entrance ?? "")
+        if(creationOrderViewState.deliveryAddress?.address.entrance != nil && creationOrderViewState.deliveryAddress?.address.entrance != ""){
+            address += ", подъезд " + (creationOrderViewState.deliveryAddress?.address.entrance ?? "")
         }
         
-        if(creationOrderViewState.deliveryAddress?.floor != nil && creationOrderViewState.deliveryAddress?.floor != ""){
-            address += ", этаж. " + (creationOrderViewState.deliveryAddress?.floor ?? "")
+        if(creationOrderViewState.deliveryAddress?.address.floor != nil && creationOrderViewState.deliveryAddress?.address.floor != ""){
+            address += ", этаж. " + (creationOrderViewState.deliveryAddress?.address.floor ?? "")
         }
         
-        if(creationOrderViewState.deliveryAddress?.comment != nil && creationOrderViewState.deliveryAddress?.comment != ""){
-            address += ", \(creationOrderViewState.deliveryAddress?.comment ?? "")"
+        if(creationOrderViewState.deliveryAddress?.address.comment != nil && creationOrderViewState.deliveryAddress?.address.comment != ""){
+            address += ", \(creationOrderViewState.deliveryAddress?.address.comment ?? "")"
         }
         
         return address

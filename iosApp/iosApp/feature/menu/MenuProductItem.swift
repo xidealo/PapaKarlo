@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-struct MenuProductItem:Identifiable  {
+struct MenuProductItem: Identifiable {
     let id: String
     let productUuid: String
     let name: String

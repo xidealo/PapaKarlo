@@ -45,7 +45,7 @@ struct UserAddressListView: View {
             case UserAddressListState.State.success : SuccessAddressListView(
                 addressItemList: userAddressViewState.userAddressList.map({ userAddress in
                     AddressItem(
-                        id: userAddress.uuid,
+                        id: userAddress.address.uuid,
                         address: userAddress.getAddress(),
                         isClickable: isClickable,
                         isSelected: userAddress.isSelected
