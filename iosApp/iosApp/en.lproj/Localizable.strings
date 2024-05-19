@@ -19,7 +19,8 @@
 "titleCreationAddress" = "Address creation";
 "titleFeedback" = "Feedback";
 "titlePayment" = "Payment";
-//logim
+
+//login
 "loginTitleProfile" = "Login profile";
 "loginSecondProfile" = "Your profile will display shipping addresses and your order history.";
 
@@ -37,6 +38,12 @@
 //order list
 "emptyOrderListTitleProfile" = "Order list is empty";
 "emptyOrderListSecondProfile" = "Your orders will be displayed here";
+
+//Login
+"titleLoginEnterPhone" = "Введите номер вашего телефона";
+"hintLoginEnterPhone" = "Номер телефона"; //add later refactoring
+"errorLoginEnterPhone" = "Введите корректный номер телефона"; //add later refactoring
+"actionLoginContinue" = "Продолжить"; //add later refactoring
 
 //cafe list
 "msg_cafe_open" = "Open";

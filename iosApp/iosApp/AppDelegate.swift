@@ -113,6 +113,8 @@ extension AppDelegate : MessagingDelegate{
 //           userInfo: dataDict
 //         )
         
-        iosComponent.provideSubscribeToNotificationUseCase().invoke()
+        iosComponent.provideSubscribeToNotificationUseCase().invoke(
+            companyUuid: iosComponent.provideCompanyUuidProvider().companyUuid
+        )
     }
 }

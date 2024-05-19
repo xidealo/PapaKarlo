@@ -5,7 +5,7 @@ import com.bunbeauty.shared.Constants.CITY_UUID_PARAMETER
 import com.bunbeauty.shared.Constants.COMPANY_UUID_PARAMETER
 import com.bunbeauty.shared.Constants.QUERY_PARAMETER
 import com.bunbeauty.shared.Constants.UUID_PARAMETER
-import com.bunbeauty.shared.data.companyUuid
+import com.bunbeauty.shared.data.CompanyUuidProvider
 import com.bunbeauty.shared.data.network.ApiError
 import com.bunbeauty.shared.data.network.ApiResult
 import com.bunbeauty.shared.data.network.model.AddressServer
@@ -53,9 +53,10 @@ import io.ktor.http.path
 import kotlinx.coroutines.flow.Flow
 import org.koin.core.component.KoinComponent
 
-class NetworkConnectorImpl(
+internal class NetworkConnectorImpl(
     private val client: HttpClient,
     private val socketService: SocketService,
+    private val companyUuidProvider: CompanyUuidProvider,
 ) : KoinComponent, NetworkConnector {
 
     // GET
@@ -63,28 +64,28 @@ class NetworkConnectorImpl(
     override suspend fun getForceUpdateVersion(): ApiResult<ForceUpdateVersionServer> {
         return getData(
             path = "force_update_version",
-            parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuid)
+            parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuidProvider.companyUuid)
         )
     }
 
     override suspend fun getCategoryList(): ApiResult<ListServer<CategoryServer>> {
         return getData(
             path = "category",
-            parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuid)
+            parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuidProvider.companyUuid)
         )
     }
 
     override suspend fun getMenuProductList(): ApiResult<ListServer<MenuProductServer>> {
         return getData(
             path = "menu_product",
-            parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuid)
+            parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuidProvider.companyUuid)
         )
     }
 
     override suspend fun getCityList(): ApiResult<ListServer<CityServer>> {
         return getData(
             path = "city",
-            parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuid)
+            parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuidProvider.companyUuid)
         )
     }
 
@@ -105,14 +106,14 @@ class NetworkConnectorImpl(
     override suspend fun getDelivery(): ApiResult<DeliveryServer> {
         return getData(
             path = "delivery",
-            parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuid)
+            parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuidProvider.companyUuid)
         )
     }
 
     override suspend fun getDiscount(): ApiResult<DiscountServer> {
         return getData(
             path = "discount",
-            parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuid)
+            parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuidProvider.companyUuid)
         )
     }
 
@@ -185,21 +186,21 @@ class NetworkConnectorImpl(
     override suspend fun getPaymentMethodList(): ApiResult<ListServer<PaymentMethodServer>> {
         return getData(
             path = "payment_method",
-            parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuid)
+            parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuidProvider.companyUuid)
         )
     }
 
     override suspend fun getLinkList(): ApiResult<ListServer<LinkServer>> {
         return getData(
             path = "link",
-            parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuid)
+            parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuidProvider.companyUuid)
         )
     }
 
     override suspend fun getRecommendationData(): ApiResult<RecommendationDataServer> {
         return getData(
             path = "recommendation",
-            parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuid)
+            parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuidProvider.companyUuid)
         )
     }
     // POST
@@ -235,7 +236,7 @@ class NetworkConnectorImpl(
         return postData(
             path = "client/code_request",
             body = codeRequest,
-            parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuid)
+            parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuidProvider.companyUuid)
         )
     }
 

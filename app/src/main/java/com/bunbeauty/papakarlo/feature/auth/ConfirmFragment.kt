@@ -66,7 +66,7 @@ class ConfirmFragment : BaseSingleStateComposeFragment<Confirm.ViewDataState, Co
                         modifier = Modifier
                             .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
                         text = buttonText,
-                        isEnabled = viewState.isResendEnable
+                        enabled = viewState.isResendEnable
                     ) {
                         onAction(Confirm.Action.ResendCode)
                     }

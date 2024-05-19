@@ -5,8 +5,8 @@ import com.bunbeauty.getCategoryProduct
 import com.bunbeauty.getMenuProduct
 import com.bunbeauty.shared.data.repository.RecommendationRepository
 import com.bunbeauty.shared.domain.feature.cart.GetRecommendationsUseCase
+import com.bunbeauty.shared.domain.feature.menuproduct.GetMenuProductListUseCase
 import com.bunbeauty.shared.domain.repo.CartProductRepo
-import com.bunbeauty.shared.domain.repo.MenuProductRepo
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
@@ -19,7 +19,7 @@ internal class GetRecommendationsUseCaseTest {
 
     private val recommendationRepository: RecommendationRepository = mockk()
     private val cartProductRepo: CartProductRepo = mockk()
-    private val menuProductRepo: MenuProductRepo = mockk()
+    private val getMenuProductListUseCase: GetMenuProductListUseCase = mockk()
     lateinit var getRecommendationsUseCase: GetRecommendationsUseCase
 
     @BeforeTest
@@ -27,14 +27,14 @@ internal class GetRecommendationsUseCaseTest {
         getRecommendationsUseCase = GetRecommendationsUseCase(
             recommendationRepository = recommendationRepository,
             cartProductRepo = cartProductRepo,
-            menuProductRepository = menuProductRepo
+            getMenuProductListUseCase = getMenuProductListUseCase
         )
     }
 
     @Test
     fun `return empty list when has no recommendations`() = runTest {
         coEvery { recommendationRepository.getMaxVisibleCount() } returns 3
-        coEvery { menuProductRepo.getMenuProductList() } returns listOf()
+        coEvery { getMenuProductListUseCase() } returns listOf()
         coEvery { cartProductRepo.getCartProductList() } returns listOf(
             getCartProductWithCategory("1", "1")
         )
@@ -42,43 +42,21 @@ internal class GetRecommendationsUseCaseTest {
     }
 
     @Test
-    fun `return empty list when has no visible recommendations`() = runTest {
+    fun `return empty list when has no menu products`() = runTest {
         coEvery { recommendationRepository.getMaxVisibleCount() } returns 3
-        coEvery { menuProductRepo.getMenuProductList() } returns listOf(
-            getMenuProductWithCategory("1", "1", visible = false),
-            getMenuProductWithCategory("2", "2", visible = false),
-            getMenuProductWithCategory("3", "3", visible = false),
-        )
-
-        coEvery { cartProductRepo.getCartProductList() } returns listOf()
-        assertTrue(getRecommendationsUseCase().isEmpty())
-    }
-
-    @Test
-    fun `return recommendation filtered by visible`() = runTest {
-        coEvery { recommendationRepository.getMaxVisibleCount() } returns 3
-        coEvery { menuProductRepo.getMenuProductList() } returns listOf(
-            getMenuProductWithCategory("1", "1", visible = false),
-            getMenuProductWithCategory("2", "2", visible = false),
-            getMenuProductWithCategory("3", "3", visible = true),
-        )
-
+        coEvery { getMenuProductListUseCase() } returns listOf()
         coEvery { cartProductRepo.getCartProductList() } returns listOf()
 
-        assertEquals(
-            expected = listOf(
-                getMenuProductWithCategory("3", "3"),
-            ),
-            actual = getRecommendationsUseCase()
-        )
+        val recommendations = getRecommendationsUseCase()
 
+        assertEquals(emptyList(), recommendations)
     }
 
     @Test
     fun `return recommendation list when cartProductList has no same category products`() =
         runTest {
             coEvery { recommendationRepository.getMaxVisibleCount() } returns 3
-            coEvery { menuProductRepo.getMenuProductList() } returns
+            coEvery { getMenuProductListUseCase() } returns
                     listOf(
                         getMenuProductWithCategory("2", "1")
                     )
@@ -99,7 +77,7 @@ internal class GetRecommendationsUseCaseTest {
     fun `return empty recommendation list when cartProductList has same category and no other recommendations`() =
         runTest {
             coEvery { recommendationRepository.getMaxVisibleCount() } returns 3
-            coEvery { menuProductRepo.getMenuProductList() } returns listOf(
+            coEvery { getMenuProductListUseCase() } returns listOf(
                 getMenuProductWithCategory("1", "1")
             )
 
@@ -113,7 +91,7 @@ internal class GetRecommendationsUseCaseTest {
     fun `return recommendations list when cartProductList has same category but recommendations has different menuProductUuid`() =
         runTest {
             coEvery { recommendationRepository.getMaxVisibleCount() } returns 3
-            coEvery { menuProductRepo.getMenuProductList() } returns listOf(
+            coEvery { getMenuProductListUseCase() } returns listOf(
                 getMenuProductWithCategory("1", "1"),
                 getMenuProductWithCategory("1", "2")
             )
@@ -133,7 +111,7 @@ internal class GetRecommendationsUseCaseTest {
     fun `return recommendation list when cartProductList has same category but not same by uuid`() =
         runTest {
             coEvery { recommendationRepository.getMaxVisibleCount() } returns 3
-            coEvery { menuProductRepo.getMenuProductList() } returns listOf(
+            coEvery { getMenuProductListUseCase() } returns listOf(
                 getMenuProductWithCategory("1", "1"),
                 getMenuProductWithCategory("2", "2")
             )
@@ -153,7 +131,7 @@ internal class GetRecommendationsUseCaseTest {
     fun `return recommendations size equal maxVisibleCount`() =
         runTest {
             coEvery { recommendationRepository.getMaxVisibleCount() } returns 3
-            coEvery { menuProductRepo.getMenuProductList() } returns listOf(
+            coEvery { getMenuProductListUseCase() } returns listOf(
                 getMenuProductWithCategory("1", "1"),
                 getMenuProductWithCategory("2", "2"),
                 getMenuProductWithCategory("3", "3"),
@@ -178,7 +156,7 @@ internal class GetRecommendationsUseCaseTest {
     fun `return recommendations when cartProductList has same category but not all`() =
         runTest {
             coEvery { recommendationRepository.getMaxVisibleCount() } returns 4
-            coEvery { menuProductRepo.getMenuProductList() } returns listOf(
+            coEvery { getMenuProductListUseCase() } returns listOf(
                 getMenuProductWithCategory("1", "1"),
                 getMenuProductWithCategory("2", "2"),
                 getMenuProductWithCategory("3", "3"),
@@ -204,7 +182,7 @@ internal class GetRecommendationsUseCaseTest {
     fun `return recommendations when cartProducts has same category but not all and many cartProducts`() =
         runTest {
             coEvery { recommendationRepository.getMaxVisibleCount() } returns 4
-            coEvery { menuProductRepo.getMenuProductList() } returns listOf(
+            coEvery { getMenuProductListUseCase() } returns listOf(
                 getMenuProductWithCategory("1", "1"),
                 getMenuProductWithCategory("2", "2"),
                 getMenuProductWithCategory("3", "3"),

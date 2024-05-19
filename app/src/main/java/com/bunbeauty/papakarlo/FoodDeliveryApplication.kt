@@ -13,6 +13,7 @@ import com.bunbeauty.papakarlo.di.appUtilModule
 import com.bunbeauty.papakarlo.di.uiMapperModule
 import com.bunbeauty.papakarlo.di.viewModelModule
 import com.bunbeauty.shared.Constants.CHANNEL_ID
+import com.bunbeauty.shared.data.CompanyUuidProvider
 import com.bunbeauty.shared.di.initKoin
 import com.bunbeauty.shared.domain.feature.notification.SubscribeToNotificationUseCase
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -28,6 +29,7 @@ private const val NOTIFICATION_NEWS_CHANNEL_NAME = "NEWS"
 class FoodDeliveryApplication : Application(), KoinComponent {
 
     private val subscribeToNotification: SubscribeToNotificationUseCase by inject()
+    private val companyUuidProvider: CompanyUuidProvider by inject()
 
     override fun onCreate() {
         setTheme(R.style.AppTheme)
@@ -53,7 +55,7 @@ class FoodDeliveryApplication : Application(), KoinComponent {
                 .build()
         )
 
-        subscribeToNotification()
+        subscribeToNotification(companyUuid = companyUuidProvider.companyUuid)
         createNotificationChannel()
     }
 

@@ -2,43 +2,26 @@ package com.bunbeauty.shared.domain.interactor.menu_product
 
 import com.bunbeauty.shared.domain.CommonFlow
 import com.bunbeauty.shared.domain.asCommonFlow
-import com.bunbeauty.shared.domain.model.addition.Addition
-import com.bunbeauty.shared.domain.model.addition.AdditionGroup
+import com.bunbeauty.shared.domain.feature.menuproduct.GetMenuProductListUseCase
 import com.bunbeauty.shared.domain.model.menu.MenuSection
 import com.bunbeauty.shared.domain.model.product.MenuProduct
 import com.bunbeauty.shared.domain.repo.MenuProductRepo
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 
 class MenuProductInteractor(
     private val menuProductRepo: MenuProductRepo,
+    private val getMenuProductListUseCase: GetMenuProductListUseCase,
 ) : IMenuProductInteractor {
 
     override suspend fun getMenuSectionList(): List<MenuSection> {
         return withContext(Dispatchers.Default) {
-            menuProductRepo.getMenuProductList()
-                .filter { it.visible }
-                .let { menuProductList ->
-                    if (menuProductList.isEmpty()) {
-                        null
-                    } else {
-                        toMenuSectionList(menuProductList)
-                    }
-                } ?: emptyList()
+            getMenuProductListUseCase().let(::toMenuSectionList)
         }
     }
 
-    override fun observeMenuProductByUuid(menuProductUuid: String): Flow<MenuProduct?> {
-        return menuProductRepo.observeMenuProductByUuid(menuProductUuid)
-    }
-
-    override fun observeMenuProductByUuidForSwift(menuProductUuid: String): CommonFlow<MenuProduct?> {
+    override fun observeMenuProductByUuid(menuProductUuid: String): CommonFlow<MenuProduct?> {
         return menuProductRepo.observeMenuProductByUuid(menuProductUuid).asCommonFlow()
-    }
-
-    override suspend fun getMenuProductByUuid(menuProductUuid: String): MenuProduct? {
-        return menuProductRepo.getMenuProductByUuid(menuProductUuid = menuProductUuid)
     }
 
     private fun toMenuSectionList(menuProductList: List<MenuProduct>): List<MenuSection> {
@@ -58,7 +41,7 @@ class MenuProductInteractor(
                         { comparableMenuProduct ->
                             categoryWithMenuProductList.filter { (_, menuProduct) ->
                                 comparableMenuProduct.name.split(" ")[0] ==
-                                        menuProduct.name.split(" ")[0]
+                                    menuProduct.name.split(" ")[0]
                             }.maxOf { (_, menuProduct) ->
                                 menuProduct.newPrice
                             }.let { price ->

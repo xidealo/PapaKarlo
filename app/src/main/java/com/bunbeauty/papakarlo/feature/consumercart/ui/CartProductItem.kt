@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -26,12 +27,12 @@ import com.bunbeauty.papakarlo.common.ui.element.OverflowingText
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold
-import com.bunbeauty.shared.presentation.consumercart.CartProductItem
+import com.bunbeauty.papakarlo.feature.consumercart.state.ConsumerCartViewState
 
 @Composable
 fun CartProductItem(
     modifier: Modifier = Modifier,
-    cartProductItem: CartProductItem,
+    cartProductItem: ConsumerCartViewState.CartProductItemUi,
     onCountIncreased: () -> Unit,
     onCountDecreased: () -> Unit,
     onClick: () -> Unit
@@ -39,6 +40,7 @@ fun CartProductItem(
     FoodDeliveryCard(
         modifier = modifier.fillMaxWidth(),
         onClick = onClick,
+        shape = RectangleShape,
         elevated = false
     ) {
         Row(
@@ -125,21 +127,20 @@ fun CartProductItem(
     }
 }
 
-@Preview(showSystemUi = true)
+@Preview
 @Composable
 private fun CartProductItemPreview() {
     FoodDeliveryTheme {
         CartProductItem(
-            cartProductItem = CartProductItem(
+            cartProductItem = ConsumerCartViewState.CartProductItemUi(
+                key = "",
                 uuid = "",
                 name = "Бургер MINI с говядиной и плавленым сыром",
                 newCost = "99 ₽",
                 oldCost = "100 ₽",
                 photoLink = "",
                 count = 5,
-                menuProductUuid = "",
                 additions = "Обычная булка • Добавка 1 • Добавка 2",
-                additionUuidList = emptyList(),
                 isLast = false
             ),
             onCountIncreased = {},
@@ -149,21 +150,20 @@ private fun CartProductItemPreview() {
     }
 }
 
-@Preview(showSystemUi = true)
+@Preview
 @Composable
 private fun CartProductItemWithoutOldCostPreview() {
     FoodDeliveryTheme {
         CartProductItem(
-            cartProductItem = CartProductItem(
+            cartProductItem = ConsumerCartViewState.CartProductItemUi(
+                key = "",
                 uuid = "",
-                name = "Бургер MINI с говядиной и плавленым сыром",
+                name = "Бургер MINI",
                 newCost = "99 ₽",
                 oldCost = null,
                 photoLink = "",
                 count = 5,
-                menuProductUuid = "",
                 additions = "",
-                additionUuidList = emptyList(),
                 isLast = false
             ),
             onCountIncreased = {},

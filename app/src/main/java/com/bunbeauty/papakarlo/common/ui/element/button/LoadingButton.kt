@@ -28,7 +28,9 @@ fun LoadingButton(
     Button(
         modifier = modifier.fillMaxWidth(),
         onClick = onClick,
-        colors = FoodDeliveryButtonDefaults.mainButtonColors,
+        colors = FoodDeliveryButtonDefaults.mainButtonColors(
+            enabled = !isLoading
+        ),
         shape = FoodDeliveryButtonDefaults.buttonShape,
         elevation = getButtonElevation(hasShadow),
         enabled = !isLoading

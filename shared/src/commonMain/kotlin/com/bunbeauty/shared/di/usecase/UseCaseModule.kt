@@ -5,7 +5,8 @@ import com.bunbeauty.shared.domain.feature.address.GetFilteredStreetListUseCase
 import com.bunbeauty.shared.domain.feature.city.GetSelectedCityTimeZoneUseCase
 import com.bunbeauty.shared.domain.feature.discount.GetDiscountUseCase
 import com.bunbeauty.shared.domain.feature.link.GetLinkListUseCase
-import com.bunbeauty.shared.domain.feature.menu_product.GetMenuProductUseCase
+import com.bunbeauty.shared.domain.feature.menuproduct.GetMenuProductListUseCase
+import com.bunbeauty.shared.domain.feature.menuproduct.GetMenuProductUseCase
 import com.bunbeauty.shared.domain.feature.notification.SubscribeToNotificationUseCase
 import com.bunbeauty.shared.domain.feature.settings.ObserveSettingsUseCase
 import com.bunbeauty.shared.domain.feature.settings.UpdateEmailUseCase
@@ -26,7 +27,6 @@ internal fun useCaseModules() = module {
             getOldTotalCostUseCase = get()
         )
     }
-
     factory {
         GetNewTotalCostUseCase(
             getDiscountUseCase = get(),
@@ -74,6 +74,11 @@ internal fun useCaseModules() = module {
     }
     factory {
         GetMenuProductUseCase(
+            menuProductRepo = get()
+        )
+    }
+    factory {
+        GetMenuProductListUseCase(
             menuProductRepo = get()
         )
     }

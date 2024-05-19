@@ -1,35 +1,27 @@
 package com.bunbeauty.shared.presentation.consumercart
 
 import com.bunbeauty.shared.presentation.base.BaseAction
+import com.bunbeauty.shared.presentation.base.BaseDataState
 import com.bunbeauty.shared.presentation.base.BaseEvent
-import com.bunbeauty.shared.presentation.base.BaseViewDataState
-import com.bunbeauty.shared.presentation.menu.MenuProductItem
+import com.bunbeauty.shared.presentation.menu.model.MenuItem
+import com.bunbeauty.shared.presentation.motivation.MotivationData
 import com.bunbeauty.shared.presentation.product_details.ProductDetailsOpenedFrom
 
 interface ConsumerCart {
 
-    data class ViewDataState(
-        val consumerCartData: ConsumerCartData?,
-        val screenState: ScreenState,
-    ) : BaseViewDataState {
+    data class DataState(
+        val state: State,
+        val motivation: MotivationData?,
+        val cartProductItemList: List<CartProductItem>,
+        val recommendationList: List<MenuItem.Product>,
+        val discount: String?,
+        val oldTotalCost: String?,
+        val newTotalCost: String,
+    ) : BaseDataState {
 
-        fun getIsLastProduct(menuProductUuid: String): Boolean {
-            return consumerCartData?.cartProductList?.find { it.menuProductUuid == menuProductUuid }?.count == 1
-        }
-
-        data class ConsumerCartData(
-            val forFreeDelivery: String,
-            val cartProductList: List<CartProductItem>,
-            val oldTotalCost: String?,
-            val newTotalCost: String,
-            val firstOrderDiscount: String?,
-            val recommendations: List<MenuProductItem>,
-        )
-
-        enum class ScreenState {
+        enum class State {
             LOADING,
             SUCCESS,
-            EMPTY,
             ERROR
         }
     }
@@ -37,27 +29,14 @@ interface ConsumerCart {
     sealed interface Action : BaseAction {
         data object Init : Action
         data object BackClick : Action
-        data class AddProductToCartClick(
-            val cartProductUuid: String,
-            val menuProductUuid: String,
-        ) : Action
-
-        data class RemoveProductFromCartClick(
-            val menuProductUuid: String,
-            val cartProductUuid: String,
-        ) : Action
-
-        data class OnProductClick(val cartProductItem: CartProductItem) : Action
+        data class AddProductToCartClick(val cartProductUuid: String) : Action
+        data class RemoveProductFromCartClick(val cartProductUuid: String) : Action
+        data class OnCartProductClick(val cartProductUuid: String) : Action
         data object OnCreateOrderClick : Action
         data object OnMenuClick : Action
         data object OnErrorButtonClick : Action
-        data class AddRecommendationProductToCartClick(
-            val menuProductUuid: String,
-            val menuProductName: String,
-            val hasAdditions: Boolean,
-        ) : Action
-
-        data class RecommendationClick(val menuProductUuid: String, val name: String) : Action
+        data class AddRecommendationProductToCartClick(val menuProductUuid: String) : Action
+        data class RecommendationClick(val menuProductUuid: String) : Action
     }
 
     sealed interface Event : BaseEvent {

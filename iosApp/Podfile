@@ -36,3 +36,7 @@ end
 target 'tandirhouse' do
   default_pods
 end
+
+target 'vkuskavkaza' do
+  default_pods
+end

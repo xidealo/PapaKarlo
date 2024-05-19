@@ -8,7 +8,7 @@ actual fun analyticModule() = module {
     single {
         FirebaseAnalytics.getInstance(get())
     }
-    single {
+    factory {
         AnalyticService()
     }
 }

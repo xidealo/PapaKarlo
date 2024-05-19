@@ -14,7 +14,7 @@ import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCardDefaults
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.medium
-import com.bunbeauty.shared.presentation.menu.CategoryItem
+import com.bunbeauty.shared.presentation.menu.model.CategoryItem
 
 @Composable
 fun CategoryItem(

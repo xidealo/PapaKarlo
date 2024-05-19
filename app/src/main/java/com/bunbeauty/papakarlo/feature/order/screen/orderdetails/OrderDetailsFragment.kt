@@ -69,8 +69,8 @@ class OrderDetailsFragment :
         OrderDetailsScreen(viewState, onAction)
     }
 
-    override fun mapState(dataState: OrderDetails.DataState): OrderDetailsViewState {
-        return orderDetailsUiStateMapper.map(dataState)
+    override fun OrderDetails.DataState.mapState(): OrderDetailsViewState {
+        return orderDetailsUiStateMapper.map(this)
     }
 
     override fun handleEvent(event: OrderDetails.Event) {

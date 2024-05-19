@@ -2,15 +2,17 @@ package com.bunbeauty.shared.di
 
 import com.bunbeauty.analytic.AnalyticService
 import com.bunbeauty.analytic.di.analyticModule
+import com.bunbeauty.shared.data.CompanyUuidProvider
 import com.bunbeauty.shared.data.di.dataMapperModule
 import com.bunbeauty.shared.data.di.databaseModule
 import com.bunbeauty.shared.data.di.networkModule
+import com.bunbeauty.shared.data.di.providerModule
 import com.bunbeauty.shared.data.di.repositoryModule
 import com.bunbeauty.shared.data.mapper.user_address.UserAddressMapper
 import com.bunbeauty.shared.data.network.api.NetworkConnector
 import com.bunbeauty.shared.di.usecase.additionUseCaseModule
 import com.bunbeauty.shared.di.usecase.authUseCaseModule
-import com.bunbeauty.shared.di.usecase.cafeUseCaseModule
+import com.bunbeauty.shared.domain.feature.cafe.di.cafeModule
 import com.bunbeauty.shared.domain.feature.cart.di.cartModule
 import com.bunbeauty.shared.di.usecase.cityUseCaseModule
 import com.bunbeauty.shared.di.usecase.orderUseCaseModule
@@ -34,7 +36,7 @@ import com.bunbeauty.shared.domain.feature.order.*
 import com.bunbeauty.shared.domain.feature.payment.GetPaymentMethodListUseCase
 import com.bunbeauty.shared.domain.feature.settings.ObserveSettingsUseCase
 import com.bunbeauty.shared.domain.feature.settings.UpdateEmailUseCase
-import com.bunbeauty.shared.domain.use_case.cafe.GetCafeListUseCase
+import com.bunbeauty.shared.domain.feature.cafe.GetCafeListUseCase
 import com.bunbeauty.shared.domain.interactor.cafe.ICafeInteractor
 import com.bunbeauty.shared.domain.interactor.cart.GetCartTotalUseCase
 import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
@@ -55,13 +57,13 @@ import com.bunbeauty.shared.domain.feature.cart.IncreaseCartProductCountUseCase
 import com.bunbeauty.shared.domain.feature.discount.GetDiscountUseCase
 import com.bunbeauty.shared.domain.feature.menu.AddMenuProductUseCase
 import com.bunbeauty.shared.domain.feature.menu.di.menuModule
-import com.bunbeauty.shared.domain.feature.menu_product.GetMenuProductUseCase
+import com.bunbeauty.shared.domain.feature.menuproduct.GetMenuProductUseCase
 import com.bunbeauty.shared.domain.feature.payment.GetSelectablePaymentMethodListUseCase
 import com.bunbeauty.shared.domain.feature.payment.SavePaymentMethodUseCase
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
 import com.bunbeauty.shared.domain.use_case.DisableUserUseCase
 import com.bunbeauty.shared.domain.use_case.address.*
-import com.bunbeauty.shared.domain.use_case.cafe.GetSelectableCafeListUseCase
+import com.bunbeauty.shared.domain.feature.cafe.GetSelectableCafeListUseCase
 import com.bunbeauty.shared.presentation.create_order.CreateOrderStateMapper
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
@@ -72,6 +74,7 @@ fun initKoin(appDeclaration: KoinAppDeclaration = {}) = startKoin {
     appDeclaration()
     modules(
         databaseModule(),
+        providerModule(),
         networkModule(),
         dataMapperModule(),
         repositoryModule(),
@@ -83,7 +86,7 @@ fun initKoin(appDeclaration: KoinAppDeclaration = {}) = startKoin {
         userAddressUseCaseModule(),
         orderUseCaseModule(),
         cartModule(),
-        cafeUseCaseModule(),
+        cafeModule(),
         paymentUseCaseModule(),
         authUseCaseModule(),
         useCaseModules(),
@@ -99,18 +102,19 @@ fun initKoin(appDeclaration: KoinAppDeclaration = {}) = startKoin {
 fun initKoin() = startKoin {
     modules(
         databaseModule(),
+        platformModule(),
+        providerModule(),
         networkModule(),
         dataMapperModule(),
         repositoryModule(),
         interactorModule(),
         utilModule(),
-        platformModule(),
         domainMapperModule(),
         cityUseCaseModule(),
         userAddressUseCaseModule(),
         orderUseCaseModule(),
         cartModule(),
-        cafeUseCaseModule(),
+        cafeModule(),
         paymentUseCaseModule(),
         authUseCaseModule(),
         useCaseModules(),
@@ -186,5 +190,6 @@ class IosComponent : KoinComponent {
     //Other
     fun provideApiRepo(): NetworkConnector = get()
     fun provideAnalyticService(): AnalyticService = get()
+    fun provideCompanyUuidProvider(): CompanyUuidProvider = get()
 
 }
