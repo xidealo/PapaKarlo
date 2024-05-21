@@ -84,6 +84,7 @@ class ConsumerCartFragment :
         viewModel.onAction(ConsumerCart.Action.Init)
     }
 
+    @Composable
     override fun ConsumerCart.DataState.mapState(): ConsumerCartViewState {
         return toConsumerCartViewState()
     }

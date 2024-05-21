@@ -2,108 +2,80 @@ package com.bunbeauty.papakarlo.feature.createorder.screen.createorder
 
 import android.os.Bundle
 import android.view.View
+import androidx.annotation.StringRes
+import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.common.BaseFragmentWithSharedViewModel
+import com.bunbeauty.papakarlo.common.BaseComposeFragment
 import com.bunbeauty.papakarlo.common.extension.navigateSafe
 import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.papakarlo.common.ui.element.button.LoadingButton
 import com.bunbeauty.papakarlo.common.ui.element.card.DiscountCard
 import com.bunbeauty.papakarlo.common.ui.element.card.NavigationCard
 import com.bunbeauty.papakarlo.common.ui.element.card.NavigationTextCard
+import com.bunbeauty.papakarlo.common.ui.element.simmer.Shimmer
 import com.bunbeauty.papakarlo.common.ui.element.surface.FoodDeliverySurface
 import com.bunbeauty.papakarlo.common.ui.element.switcher.FoodDeliverySwitcher
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold
-import com.bunbeauty.papakarlo.databinding.LayoutComposeBinding
-import com.bunbeauty.papakarlo.extensions.setContentWithTheme
-import com.bunbeauty.papakarlo.feature.address.mapper.UserAddressItemMapper
-import com.bunbeauty.papakarlo.feature.createorder.mapper.CreateOrderStateMapper
-import com.bunbeauty.papakarlo.feature.createorder.mapper.TimeMapper
+import com.bunbeauty.papakarlo.feature.createorder.mapper.toViewState
 import com.bunbeauty.papakarlo.feature.createorder.screen.cafeaddresslist.CafeAddressListBottomSheet
 import com.bunbeauty.papakarlo.feature.createorder.screen.comment.CommentBottomSheet
 import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.CreateOrderFragmentDirections.toCreateAddressFragment
 import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.CreateOrderFragmentDirections.toProfileFragment
-import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.model.CreateOrderUi
 import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.model.SelectableCafeAddressUI
+import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.model.TimeUI
 import com.bunbeauty.papakarlo.feature.createorder.screen.deferredtime.DeferredTimeBottomSheet
 import com.bunbeauty.papakarlo.feature.createorder.screen.paymentmethod.SelectPaymentMethodBottomSheet
-import com.bunbeauty.papakarlo.feature.createorder.screen.paymentmethod.SelectablePaymentMethodUI
 import com.bunbeauty.papakarlo.feature.createorder.screen.useraddresslist.UserAddressListBottomSheet
 import com.bunbeauty.papakarlo.feature.createorder.screen.useraddresslist.model.UserAddressListResult
 import com.bunbeauty.papakarlo.feature.main.IMessageHost
 import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentMethodUI
 import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentMethodValueUI
-import com.bunbeauty.papakarlo.feature.profile.screen.profile.PaymentMethodUiStateMapper
-import com.bunbeauty.shared.presentation.create_order.CreateOrderEvent
-import com.bunbeauty.shared.presentation.create_order.CreateOrderViewModel
+import com.bunbeauty.shared.presentation.createorder.CreateOrder
+import com.bunbeauty.shared.presentation.createorder.CreateOrderViewModel
 import kotlinx.coroutines.launch
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
+class CreateOrderFragment :
+    BaseComposeFragment<CreateOrder.DataState, CreateOrderViewState, CreateOrder.Action, CreateOrder.Event>() {
 
-    val viewModel: CreateOrderViewModel by viewModel()
-    override val viewBinding by viewBinding(LayoutComposeBinding::bind)
-
-    private val userAddressItemMapper: UserAddressItemMapper by inject()
-    private val createOrderStateMapper: CreateOrderStateMapper by inject()
-    private val paymentMethodUiStateMapper: PaymentMethodUiStateMapper by inject()
-    private val timeMapper: TimeMapper by inject()
+    override val viewModel: CreateOrderViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.update()
-        viewBinding.root.setContentWithTheme {
-            val orderCreationState by viewModel.uiState.collectAsStateWithLifecycle()
-            CreateOrderScreen(
-                createOrderStateMapper.map(orderCreationState),
-                onPositionChanged = viewModel::onSwitcherPositionChanged,
-                onUserAddressClicked = viewModel::onUserAddressClicked,
-                onCafeAddressClicked = viewModel::onCafeAddressClicked,
-                onCommentClicked = viewModel::onCommentClicked,
-                onDeferredTimeClicked = viewModel::onDeferredTimeClicked,
-                onPaymentMethodClick = viewModel::onPaymentMethodClick,
-                onCreateOrderClicked = viewModel::onCreateOrderClicked
-            )
-            LaunchedEffect(orderCreationState.eventList) {
-                handleEventList(orderCreationState.eventList)
-            }
-        }
+        viewModel.onAction(CreateOrder.Action.Update)
     }
 
     @Composable
-    private fun CreateOrderScreen(
-        createOrderUi: CreateOrderUi,
-        onPositionChanged: (Int) -> Unit,
-        onUserAddressClicked: () -> Unit,
-        onCafeAddressClicked: () -> Unit,
-        onCommentClicked: () -> Unit,
-        onDeferredTimeClicked: () -> Unit,
-        onPaymentMethodClick: () -> Unit,
-        onCreateOrderClicked: () -> Unit
-    ) {
+    override fun CreateOrder.DataState.mapState(): CreateOrderViewState {
+        return toViewState()
+    }
+
+    @Composable
+    override fun Screen(viewState: CreateOrderViewState, onAction: (CreateOrder.Action) -> Unit) {
         FoodDeliveryScaffold(
             title = stringResource(id = R.string.title_create_order),
             backActionClick = {
@@ -123,31 +95,173 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_comp
                             R.string.action_create_order_delivery,
                             R.string.action_create_order_pickup
                         ),
-                        position = createOrderUi.switcherPosition,
-                        onPositionChanged = onPositionChanged
+                        position = viewState.switcherPosition,
+                        onPositionChanged = { position ->
+                            onAction(CreateOrder.Action.ChangeMethod(position))
+                        }
                     )
                     AddressCard(
-                        createOrderUi = createOrderUi,
-                        onUserAddressClicked = onUserAddressClicked,
-                        onCafeAddressClicked = onCafeAddressClicked
+                        viewState = viewState,
+                        onAction = onAction,
                     )
-                    DeliveryAddressError(createOrderUi)
+                    ErrorText(
+                        modifier = Modifier
+                            .padding(top = 4.dp)
+                            .padding(horizontal = 16.dp),
+                        messageStringId = R.string.error_select_delivery_address,
+                        isShown = viewState.isPaymentMethodErrorShown
+                    )
                     CommentCard(
-                        createOrderUi = createOrderUi,
-                        onCommentClicked = onCommentClicked
+                        viewState = viewState,
+                        onAction = onAction,
                     )
                     DeferredTimeCard(
-                        createOrderUi = createOrderUi,
-                        onDeferredTimeClicked = onDeferredTimeClicked
+                        viewState = viewState,
+                        onAction = onAction,
                     )
                     PaymentMethodCard(
-                        createOrderUi = createOrderUi,
-                        onPaymentMethodClick = onPaymentMethodClick
+                        viewState = viewState,
+                        onAction = onAction,
+                    )
+                    ErrorText(
+                        modifier = Modifier
+                            .padding(top = 4.dp)
+                            .padding(horizontal = 16.dp),
+                        messageStringId = R.string.error_select_payment_method,
+                        isShown = viewState.isPaymentMethodErrorShown
                     )
                 }
                 BottomAmountBar(
-                    createOrderUi = createOrderUi,
-                    onCreateOrderClicked = onCreateOrderClicked
+                    viewState = viewState,
+                    onAction = onAction,
+                )
+            }
+        }
+    }
+
+    override fun handleEvent(event: CreateOrder.Event) {
+        when (event) {
+            is CreateOrder.Event.OpenCreateAddressEvent -> {
+                findNavController().navigateSafe(toCreateAddressFragment())
+            }
+
+            is CreateOrder.Event.ShowUserAddressListEvent -> {
+                lifecycleScope.launch {
+                    UserAddressListBottomSheet.show(
+                        fragmentManager = childFragmentManager,
+                        addressList = emptyList()
+                    )?.let { result ->
+                        handleUserAddressListResult(result)
+                    }
+                }
+            }
+
+            is CreateOrder.Event.ShowCafeAddressListEvent -> {
+                lifecycleScope.launch {
+                    CafeAddressListBottomSheet.show(
+                        fragmentManager = childFragmentManager,
+                        addressList = event.addressList.map { selectableCafeAddressItem ->
+                            selectableCafeAddressItem.run {
+                                SelectableCafeAddressUI(
+                                    uuid = uuid,
+                                    address = address,
+                                    isSelected = isSelected
+                                )
+                            }
+                        }
+                    )?.let { addressItem ->
+                        viewModel.onAction(
+                            CreateOrder.Action.ChangeCafeAddress(
+                                cafeUuid = addressItem.uuid
+                            )
+                        )
+                    }
+                }
+            }
+
+            is CreateOrder.Event.ShowCommentInputEvent -> {
+                lifecycleScope.launch {
+                    CommentBottomSheet.show(
+                        childFragmentManager,
+                        event.comment
+                    )?.let { comment ->
+                        viewModel.onAction(
+                            CreateOrder.Action.ChangeComment(
+                                comment = comment
+                            )
+                        )
+                    }
+                }
+            }
+
+            is CreateOrder.Event.ShowDeferredTimeEvent -> {
+                lifecycleScope.launch {
+                    val titleId = if (event.isDelivery) {
+                        R.string.delivery_time
+                    } else {
+                        R.string.pickup_time
+                    }
+                    DeferredTimeBottomSheet.show(
+                        fragmentManager = childFragmentManager,
+                        deferredTime = TimeUI.ASAP,
+                        minTime = TimeUI.Time(0, 0),
+                        title = resources.getString(titleId)
+                    )?.let { deferredTime ->
+                        viewModel.onAction(
+                            CreateOrder.Action.ChangeDeferredTime(
+                                deferredTime = null
+                            )
+                        )
+                    }
+                }
+            }
+
+            is CreateOrder.Event.ShowSomethingWentWrongErrorEvent -> {
+                (activity as? IMessageHost)?.showErrorMessage(
+                    resources.getString(R.string.error_something_went_wrong)
+                )
+            }
+
+            is CreateOrder.Event.ShowUserUnauthorizedErrorEvent -> {
+                (activity as? IMessageHost)?.showErrorMessage(
+                    resources.getString(R.string.error_user)
+                )
+            }
+
+            is CreateOrder.Event.OrderCreatedEvent -> {
+                (activity as? IMessageHost)?.showInfoMessage(
+                    resources.getString(
+                        R.string.msg_order_code,
+                        event.code
+                    )
+                )
+                findNavController().navigateSafe(toProfileFragment())
+            }
+
+            is CreateOrder.Event.ShowUserAddressError -> {
+                (activity as? IMessageHost)?.showErrorMessage(
+                    resources.getString(R.string.error_user_address)
+                )
+            }
+
+            is CreateOrder.Event.ShowPaymentMethodList -> {
+                lifecycleScope.launch {
+                    SelectPaymentMethodBottomSheet.show(
+                        fragmentManager = childFragmentManager,
+                        paymentMethodList = emptyList()
+                    )?.let { paymentMethodUI ->
+                        viewModel.onAction(
+                            CreateOrder.Action.ChangePaymentMethod(
+                                paymentMethodUuid = paymentMethodUI.paymentMethodUI.uuid
+                            )
+                        )
+                    }
+                }
+            }
+
+            is CreateOrder.Event.ShowPaymentMethodError -> {
+                (activity as? IMessageHost)?.showErrorMessage(
+                    resources.getString(R.string.error_payment_method)
                 )
             }
         }
@@ -155,54 +269,128 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_comp
 
     @Composable
     private fun AddressCard(
-        createOrderUi: CreateOrderUi,
-        onUserAddressClicked: () -> Unit,
-        onCafeAddressClicked: () -> Unit
+        viewState: CreateOrderViewState,
+        onAction: (CreateOrder.Action) -> Unit,
     ) {
-        val labelStringId = if (createOrderUi.isDelivery) {
-            R.string.delivery_address
-        } else {
-            R.string.pickup_address
-        }
-        if (createOrderUi.isDelivery) {
-            if (createOrderUi.deliveryAddress == null) {
+        if (viewState.isDelivery) {
+            if (viewState.deliveryAddress == null) {
                 NavigationCard(
                     modifier = Modifier
                         .padding(top = FoodDeliveryTheme.dimensions.smallSpace),
-                    clickable = !createOrderUi.isLoading,
-                    label = stringResource(labelStringId),
-                    onClick = onUserAddressClicked
+                    clickable = viewState.isFieldsEnabled,
+                    label = stringResource(R.string.delivery_address),
+                    onClick = {
+                        onAction(CreateOrder.Action.UserAddressClick)
+                    }
                 )
             } else {
                 NavigationTextCard(
                     modifier = Modifier
                         .padding(top = FoodDeliveryTheme.dimensions.smallSpace),
-                    hintStringId = labelStringId,
-                    label = createOrderUi.deliveryAddress,
-                    clickable = !createOrderUi.isLoading,
-                    onClick = onUserAddressClicked
+                    hintStringId = R.string.delivery_address,
+                    label = viewState.deliveryAddress,
+                    clickable = viewState.isFieldsEnabled,
+                    onClick = {
+                        onAction(CreateOrder.Action.UserAddressClick)
+                    }
                 )
             }
         } else {
             NavigationTextCard(
                 modifier = Modifier
                     .padding(top = FoodDeliveryTheme.dimensions.smallSpace),
-                hintStringId = labelStringId,
-                label = createOrderUi.pickupAddress ?: "",
-                clickable = !createOrderUi.isLoading,
-                onClick = onCafeAddressClicked
+                hintStringId = R.string.pickup_address,
+                label = viewState.pickupAddress ?: "",
+                clickable = viewState.isFieldsEnabled,
+                onClick = {
+                    onAction(CreateOrder.Action.CafeAddressClick)
+                }
             )
         }
     }
 
     @Composable
-    private fun DeliveryAddressError(createOrderUi: CreateOrderUi) {
-        if (createOrderUi.isDelivery && createOrderUi.isAddressErrorShown) {
-            Text(
+    private fun CommentCard(
+        viewState: CreateOrderViewState,
+        onAction: (CreateOrder.Action) -> Unit,
+    ) {
+        if (viewState.comment == null) {
+            NavigationCard(
+                modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace),
+                label = stringResource(R.string.comment),
+                clickable = viewState.isFieldsEnabled,
+                onClick = {
+                    onAction(CreateOrder.Action.CommentClick)
+                }
+            )
+        } else {
+            NavigationTextCard(
+                modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace),
+                hintStringId = R.string.hint_create_order_comment,
+                label = viewState.comment,
+                clickable = viewState.isFieldsEnabled,
+                onClick = {
+                    onAction(CreateOrder.Action.CommentClick)
+                }
+            )
+        }
+    }
+
+    @Composable
+    private fun DeferredTimeCard(
+        viewState: CreateOrderViewState,
+        onAction: (CreateOrder.Action) -> Unit,
+    ) {
+        NavigationTextCard(
+            modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace),
+            hintStringId = viewState.deferredTimeHintStringId,
+            label = viewState.deferredTime,
+            clickable = viewState.isFieldsEnabled,
+            onClick = {
+                onAction(CreateOrder.Action.DeferredTimeClick)
+            }
+        )
+    }
+
+    @Composable
+    private fun PaymentMethodCard(
+        viewState: CreateOrderViewState,
+        onAction: (CreateOrder.Action) -> Unit,
+    ) {
+        if (viewState.selectedPaymentMethod == null) {
+            NavigationCard(
                 modifier = Modifier
-                    .padding(top = FoodDeliveryTheme.dimensions.verySmallSpace)
-                    .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
-                text = stringResource(R.string.error_select_delivery_address),
+                    .padding(top = FoodDeliveryTheme.dimensions.smallSpace),
+                label = stringResource(R.string.payment_method),
+                clickable = viewState.isFieldsEnabled,
+                onClick = {
+                    onAction(CreateOrder.Action.PaymentMethodClick)
+                }
+            )
+        } else {
+            NavigationTextCard(
+                modifier = Modifier
+                    .padding(top = FoodDeliveryTheme.dimensions.smallSpace),
+                hintStringId = R.string.payment_method,
+                label = viewState.selectedPaymentMethod.name,
+                clickable = viewState.isFieldsEnabled,
+                onClick = {
+                    onAction(CreateOrder.Action.PaymentMethodClick)
+                }
+            )
+        }
+    }
+
+    @Composable
+    private fun ErrorText(
+        modifier: Modifier = Modifier,
+        @StringRes messageStringId: Int,
+        isShown: Boolean,
+    ) {
+        if (isShown) {
+            Text(
+                modifier = modifier,
+                text = stringResource(messageStringId),
                 style = FoodDeliveryTheme.typography.bodySmall,
                 color = FoodDeliveryTheme.colors.mainColors.error
             )
@@ -210,288 +398,132 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_comp
     }
 
     @Composable
-    private fun CommentCard(
-        createOrderUi: CreateOrderUi,
-        onCommentClicked: () -> Unit
-    ) {
-        if (createOrderUi.comment == null) {
-            NavigationCard(
-                modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace),
-                label = stringResource(R.string.comment),
-                clickable = !createOrderUi.isLoading,
-                onClick = onCommentClicked
-            )
-        } else {
-            NavigationTextCard(
-                modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace),
-                hintStringId = R.string.hint_create_order_comment,
-                label = createOrderUi.comment,
-                clickable = !createOrderUi.isLoading,
-                onClick = onCommentClicked
-            )
-        }
-    }
-
-    @Composable
-    private fun DeferredTimeCard(
-        createOrderUi: CreateOrderUi,
-        onDeferredTimeClicked: () -> Unit
-    ) {
-        val hintStringId = if (createOrderUi.isDelivery) {
-            R.string.delivery_time
-        } else {
-            R.string.pickup_time
-        }
-        NavigationTextCard(
-            modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace),
-            hintStringId = hintStringId,
-            label = createOrderUi.deferredTime,
-            clickable = !createOrderUi.isLoading,
-            onClick = onDeferredTimeClicked
-        )
-    }
-
-    @Composable
-    private fun PaymentMethodCard(
-        createOrderUi: CreateOrderUi,
-        onPaymentMethodClick: () -> Unit
-    ) {
-        if (createOrderUi.selectedPaymentMethod == null) {
-            NavigationCard(
-                modifier = Modifier
-                    .padding(top = FoodDeliveryTheme.dimensions.smallSpace),
-                label = stringResource(R.string.payment_method),
-                clickable = !createOrderUi.isLoading,
-                onClick = onPaymentMethodClick
-            )
-        } else {
-            NavigationTextCard(
-                modifier = Modifier
-                    .padding(top = FoodDeliveryTheme.dimensions.smallSpace),
-                hintStringId = R.string.payment_method,
-                label = createOrderUi.selectedPaymentMethod.name,
-                clickable = !createOrderUi.isLoading,
-                onClick = onPaymentMethodClick
-            )
-        }
-    }
-
-    @Composable
     private fun BottomAmountBar(
-        createOrderUi: CreateOrderUi,
-        onCreateOrderClicked: () -> Unit
+        viewState: CreateOrderViewState,
+        onAction: (CreateOrder.Action) -> Unit,
     ) {
         FoodDeliverySurface(modifier = Modifier.fillMaxWidth()) {
-            Column(modifier = Modifier.padding(FoodDeliveryTheme.dimensions.mediumSpace)) {
-                createOrderUi.discount?.let { discount ->
-                    Row(modifier = Modifier.padding(bottom = 8.dp)) {
-                        Text(
-                            text = stringResource(R.string.msg_order_details_discount),
-                            style = FoodDeliveryTheme.typography.bodyMedium,
-                            color = FoodDeliveryTheme.colors.mainColors.onSurface
-                        )
-                        Spacer(modifier = Modifier.weight(1f))
+            Column(
+                modifier = Modifier.padding(16.dp),
+                verticalArrangement = spacedBy(8.dp)
+            ) {
+                when (viewState.cartTotal) {
+                    CartTotalUI.Loading -> {
+                        BottomAmountBarLoadingContent()
+                    }
 
-                        DiscountCard(discount = discount)
+                    is CartTotalUI.Success -> {
+                        BottomAmountBarSuccessContent(cartTotal = viewState.cartTotal)
                     }
                 }
-                Row {
-                    Text(
-                        modifier = Modifier.weight(1f),
-                        text = stringResource(R.string.msg_create_order_total_cost),
-                        style = FoodDeliveryTheme.typography.bodyMedium,
-                        color = FoodDeliveryTheme.colors.mainColors.onSurface
-                    )
-                    createOrderUi.totalCost?.let {
-                        Text(
-                            text = it,
-                            style = FoodDeliveryTheme.typography.bodyMedium,
-                            color = FoodDeliveryTheme.colors.mainColors.onSurface
-                        )
-                    }
-                }
-                if (createOrderUi.isDelivery) {
-                    Row(modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace)) {
-                        Text(
-                            modifier = Modifier.weight(1f),
-                            text = stringResource(R.string.msg_create_order_delivery_cost),
-                            style = FoodDeliveryTheme.typography.bodyMedium,
-                            color = FoodDeliveryTheme.colors.mainColors.onSurface
-                        )
-                        createOrderUi.deliveryCost?.let {
-                            Text(
-                                text = it,
-                                style = FoodDeliveryTheme.typography.bodyMedium,
-                                color = FoodDeliveryTheme.colors.mainColors.onSurface
-                            )
-                        }
-                    }
-                }
-                Row(
-                    modifier = Modifier
-                        .padding(top = FoodDeliveryTheme.dimensions.smallSpace)
-                ) {
-                    Text(
-                        modifier = Modifier.weight(1f),
-                        text = stringResource(R.string.msg_create_order_amount_to_pay),
-                        style = FoodDeliveryTheme.typography.bodyMedium.bold,
-                        color = FoodDeliveryTheme.colors.mainColors.onSurface
-                    )
-                    createOrderUi.oldFinalCost?.let { oldFinalCost ->
-                        Text(
-                            modifier = Modifier
-                                .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
-                            text = oldFinalCost,
-                            style = FoodDeliveryTheme.typography.bodyMedium.bold,
-                            color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
-                            textDecoration = TextDecoration.LineThrough
-                        )
-                    }
-                    createOrderUi.newFinalCost?.let { newFinalCost ->
-                        Text(
-                            text = newFinalCost,
-                            style = FoodDeliveryTheme.typography.bodyMedium.bold,
-                            color = FoodDeliveryTheme.colors.mainColors.onSurface
-                        )
-                    }
-                }
+
                 LoadingButton(
-                    modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
+                    modifier = Modifier.padding(top = 8.dp),
                     textStringId = R.string.action_create_order_create_order,
-                    isLoading = createOrderUi.isLoading,
-                    onClick = onCreateOrderClicked
+                    isLoading = viewState.isLoading,
+                    isEnabled = viewState.cartTotal is CartTotalUI.Success,
+                    onClick = {
+                        onAction(CreateOrder.Action.CreateClick)
+                    }
                 )
             }
         }
     }
 
-    private fun handleEventList(eventList: List<CreateOrderEvent>) {
-        eventList.forEach { event ->
-            when (event) {
-                is CreateOrderEvent.OpenCreateAddressEvent -> {
-                    findNavController().navigateSafe(toCreateAddressFragment())
-                }
+    @Composable
+    private fun BottomAmountBarLoadingContent() {
+        LoadingRow(
+            leftWidth = 50.dp,
+            rightWidth = 32.dp,
+        )
+        LoadingRow(
+            leftWidth = 64.dp,
+            rightWidth = 40.dp,
+        )
+        LoadingRow(
+            leftWidth = 96.dp,
+            rightWidth = 80.dp,
+        )
+    }
 
-                is CreateOrderEvent.ShowUserAddressListEvent -> {
-                    lifecycleScope.launch {
-                        UserAddressListBottomSheet.show(
-                            fragmentManager = childFragmentManager,
-                            addressList = event.addressList.map(userAddressItemMapper::toItem)
-                        )?.let { result ->
-                            handleUserAddressListResult(result)
-                        }
-                    }
-                }
-
-                is CreateOrderEvent.ShowCafeAddressListEvent -> {
-                    lifecycleScope.launch {
-                        CafeAddressListBottomSheet.show(
-                            fragmentManager = childFragmentManager,
-                            addressList = event.addressList.map { selectableCafeAddressItem ->
-                                selectableCafeAddressItem.run {
-                                    SelectableCafeAddressUI(
-                                        uuid = uuid,
-                                        address = address,
-                                        isSelected = isSelected
-                                    )
-                                }
-                            }
-                        )?.let { addressItem ->
-                            viewModel.onCafeAddressChanged(addressItem.uuid)
-                        }
-                    }
-                }
-
-                is CreateOrderEvent.ShowCommentInputEvent -> {
-                    lifecycleScope.launch {
-                        CommentBottomSheet.show(
-                            childFragmentManager,
-                            event.comment
-                        )?.let { comment ->
-                            viewModel.onCommentChanged(comment)
-                        }
-                    }
-                }
-
-                is CreateOrderEvent.ShowDeferredTimeEvent -> {
-                    lifecycleScope.launch {
-                        val titleId = if (event.isDelivery) {
-                            R.string.delivery_time
-                        } else {
-                            R.string.pickup_time
-                        }
-                        DeferredTimeBottomSheet.show(
-                            fragmentManager = childFragmentManager,
-                            deferredTime = timeMapper.toTimeUI(event.deferredTime),
-                            minTime = timeMapper.toTimeUI(event.minTime),
-                            title = resources.getString(titleId)
-                        )?.let { deferredTime ->
-                            viewModel.onDeferredTimeSelected(timeMapper.toTime(deferredTime))
-                        }
-                    }
-                }
-
-                is CreateOrderEvent.ShowSomethingWentWrongErrorEvent -> {
-                    (activity as? IMessageHost)?.showErrorMessage(
-                        resources.getString(R.string.error_something_went_wrong)
-                    )
-                }
-
-                is CreateOrderEvent.ShowUserUnauthorizedErrorEvent -> {
-                    (activity as? IMessageHost)?.showErrorMessage(
-                        resources.getString(R.string.error_user)
-                    )
-                }
-
-                is CreateOrderEvent.OrderCreatedEvent -> {
-                    (activity as? IMessageHost)?.showInfoMessage(
-                        resources.getString(
-                            R.string.msg_order_code,
-                            event.code
-                        )
-                    )
-                    findNavController().navigateSafe(toProfileFragment())
-                }
-
-                is CreateOrderEvent.ShowUserAddressError -> {
-                    (activity as? IMessageHost)?.showErrorMessage(
-                        resources.getString(R.string.error_user_address)
-                    )
-                }
-
-                is CreateOrderEvent.ShowPaymentMethodList -> {
-                    lifecycleScope.launch {
-                        SelectPaymentMethodBottomSheet.show(
-                            fragmentManager = childFragmentManager,
-                            paymentMethodList = event.selectablePaymentMethodList
-                                .map { selectablePaymentMethod ->
-                                    SelectablePaymentMethodUI(
-                                        paymentMethodUI = paymentMethodUiStateMapper.map(
-                                            selectablePaymentMethod.paymentMethod
-                                        ),
-                                        isSelected = selectablePaymentMethod.isSelected
-                                    )
-                                }
-                        )?.let { paymentMethodUI ->
-                            viewModel.onPaymentMethodChanged(paymentMethodUI.paymentMethodUI.uuid)
-                        }
-                    }
-                }
-
-                is CreateOrderEvent.ShowPaymentMethodError -> {
-                    (activity as? IMessageHost)?.showErrorMessage(
-                        resources.getString(R.string.error_payment_method)
-                    )
-                }
+    @Composable
+    private fun BottomAmountBarSuccessContent(cartTotal: CartTotalUI.Success) {
+        cartTotal.discount?.let { discount ->
+            Row {
+                Text(
+                    modifier = Modifier.weight(1f),
+                    text = stringResource(R.string.msg_order_details_discount),
+                    style = FoodDeliveryTheme.typography.bodyMedium,
+                    color = FoodDeliveryTheme.colors.mainColors.onSurface
+                )
+                DiscountCard(discount = discount)
             }
         }
-        viewModel.consumeEventList(eventList)
+        cartTotal.deliveryCost?.let { deliveryCost ->
+            Row {
+                Text(
+                    modifier = Modifier.weight(1f),
+                    text = stringResource(R.string.msg_create_order_total_cost),
+                    style = FoodDeliveryTheme.typography.bodyMedium,
+                    color = FoodDeliveryTheme.colors.mainColors.onSurface
+                )
+                Text(
+                    text = deliveryCost,
+                    style = FoodDeliveryTheme.typography.bodyMedium,
+                    color = FoodDeliveryTheme.colors.mainColors.onSurface
+                )
+            }
+        }
+        Row {
+            Text(
+                modifier = Modifier.weight(1f),
+                text = stringResource(R.string.msg_create_order_amount_to_pay),
+                style = FoodDeliveryTheme.typography.bodyMedium.bold,
+                color = FoodDeliveryTheme.colors.mainColors.onSurface
+            )
+            cartTotal.oldFinalCost?.let { oldFinalCost ->
+                Text(
+                    modifier = Modifier.padding(end = 4.dp),
+                    text = oldFinalCost,
+                    style = FoodDeliveryTheme.typography.bodyMedium.bold,
+                    color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
+                    textDecoration = TextDecoration.LineThrough
+                )
+            }
+            Text(
+                text = cartTotal.newFinalCost,
+                style = FoodDeliveryTheme.typography.bodyMedium.bold,
+                color = FoodDeliveryTheme.colors.mainColors.onSurface
+            )
+        }
+    }
+
+    @Composable
+    private fun LoadingRow(leftWidth: Dp, rightWidth: Dp) {
+        Row {
+            val shape = RoundedCornerShape(4.dp)
+            Shimmer(
+                modifier = Modifier
+                    .width(leftWidth)
+                    .height(20.dp)
+                    .clip(shape)
+            )
+            Spacer(modifier = Modifier.weight(1f))
+            Shimmer(
+                modifier = Modifier
+                    .width(rightWidth)
+                    .height(20.dp)
+                    .clip(shape)
+            )
+        }
     }
 
     private fun handleUserAddressListResult(result: UserAddressListResult) {
         when (result) {
             is UserAddressListResult.AddressSelected -> {
-                viewModel.onUserAddressChanged(result.userAddressItem.uuid)
+                viewModel.onAction(
+                    CreateOrder.Action.ChangeUserAddress(userAddressUuid = result.userAddressItem.uuid)
+                )
             }
 
             is UserAddressListResult.AddNewAddress -> {
@@ -502,159 +534,173 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_comp
 
     @Preview(showSystemUi = true)
     @Composable
-    private fun CreateOrderEmptyDeliveryScreenPreview() {
+    private fun CartTotalLoadingPreview() {
         FoodDeliveryTheme {
-            CreateOrderScreen(
-                createOrderUi = CreateOrderUi(
+            Screen(
+                viewState = CreateOrderViewState(
                     isDelivery = true,
-                    deliveryAddress = null,
-                    comment = null,
-                    deferredTime = "",
-                    totalCost = null,
-                    deliveryCost = null,
-                    newFinalCost = null,
-                    oldFinalCost = null,
-                    isLoading = false,
+                    deliveryAddress = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
                     pickupAddress = null,
                     isAddressErrorShown = false,
-                    discount = null,
+                    comment = "Коммент",
+                    deferredTime = "Как можно скорее",
+                    deferredTimeHintStringId = R.string.delivery_time,
                     selectedPaymentMethod = PaymentMethodUI(
-                        uuid = "uuid",
+                        uuid = "",
                         name = "Наличка",
                         value = PaymentMethodValueUI(
-                            value = "наличка",
-                            valueToCopy = "наличка"
+                            value = "Наличка",
+                            valueToCopy = "Наличка",
                         )
-                    )
+                    ),
+                    isPaymentMethodErrorShown = false,
+                    cartTotal = CartTotalUI.Loading,
+                    isLoading = false,
                 ),
-                onPositionChanged = {},
-                onUserAddressClicked = {},
-                onCafeAddressClicked = {},
-                onCommentClicked = {},
-                onDeferredTimeClicked = {},
-                onPaymentMethodClick = {},
-                onCreateOrderClicked = {}
+                onAction = {
+
+                }
             )
         }
     }
 
     @Preview(showSystemUi = true)
     @Composable
-    private fun CreateOrderDeliveryScreenPreview() {
+    private fun CartTotalSuccessPreview() {
         FoodDeliveryTheme {
-            CreateOrderScreen(
-                createOrderUi = CreateOrderUi(
+            Screen(
+                viewState = CreateOrderViewState(
                     isDelivery = true,
-                    deliveryAddress =
-                    "1" +
-                        "улица Чапаева" +
-                        "22аб" +
-                        "55" +
-                        "1" +
-                        "1" +
-                        "код домофона 555",
-                    comment = "Побыстрее пожалуйста, кушать очень хочу",
-                    deferredTime = "",
-                    totalCost = "250 $",
-                    deliveryCost = "100 $",
-                    newFinalCost = "350 $",
-                    oldFinalCost = "450 $",
-                    isLoading = false,
+                    deliveryAddress = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
                     pickupAddress = null,
                     isAddressErrorShown = false,
-                    discount = "10%",
+                    comment = "Коммент",
+                    deferredTime = "Как можно скорее",
+                    deferredTimeHintStringId = R.string.delivery_time,
                     selectedPaymentMethod = PaymentMethodUI(
-                        uuid = "uuid",
+                        uuid = "",
                         name = "Наличка",
                         value = PaymentMethodValueUI(
-                            value = "наличка",
-                            valueToCopy = "наличка"
+                            value = "Наличка",
+                            valueToCopy = "Наличка",
                         )
-                    )
+                    ),
+                    isPaymentMethodErrorShown = false,
+                    cartTotal = CartTotalUI.Success(
+                        discount = "10%",
+                        deliveryCost = "100 ₽",
+                        oldFinalCost = "700 ₽",
+                        newFinalCost = "650 ₽",
+                    ),
+                    isLoading = false,
                 ),
-                onPositionChanged = {},
-                onUserAddressClicked = {},
-                onCafeAddressClicked = {},
-                onCommentClicked = {},
-                onDeferredTimeClicked = {},
-                onPaymentMethodClick = {},
-                onCreateOrderClicked = {}
+                onAction = {
+
+                }
             )
         }
     }
 
     @Preview(showSystemUi = true)
     @Composable
-    private fun CreateOrderEmptyPickupScreenPreview() {
+    private fun PickUpPreview() {
         FoodDeliveryTheme {
-            CreateOrderScreen(
-                createOrderUi = CreateOrderUi(
+            Screen(
+                viewState = CreateOrderViewState(
                     isDelivery = false,
-                    pickupAddress = null,
-                    comment = null,
-                    deferredTime = "10:30",
-                    totalCost = null,
-                    deliveryCost = null,
-                    newFinalCost = null,
-                    oldFinalCost = null,
-                    isLoading = false,
-                    isAddressErrorShown = false,
                     deliveryAddress = null,
-                    discount = null,
-                    selectedPaymentMethod = PaymentMethodUI(
-                        uuid = "uuid",
-                        name = "Наличка",
-                        value = PaymentMethodValueUI(
-                            value = "наличка",
-                            valueToCopy = "наличка"
-                        )
-                    )
-                ),
-                onPositionChanged = {},
-                onUserAddressClicked = {},
-                onCafeAddressClicked = {},
-                onCommentClicked = {},
-                onDeferredTimeClicked = {},
-                onPaymentMethodClick = {},
-                onCreateOrderClicked = {}
-            )
-        }
-    }
-
-    @Preview(showSystemUi = true)
-    @Composable
-    private fun CreateOrderPickupScreenPreview() {
-        FoodDeliveryTheme {
-            CreateOrderScreen(
-                createOrderUi = CreateOrderUi(
-                    isDelivery = false,
                     pickupAddress = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
-                    comment = "Побыстрее пожалуйста, кушать очень хочу",
-                    deferredTime = "",
-                    totalCost = "250 $",
-                    deliveryCost = "100 $",
-                    newFinalCost = "350 $",
-                    oldFinalCost = "450 $",
-                    isLoading = true,
                     isAddressErrorShown = false,
-                    deliveryAddress = null,
-                    discount = null,
+                    comment = "",
+                    deferredTime = "18:20",
+                    deferredTimeHintStringId = R.string.pickup_time,
                     selectedPaymentMethod = PaymentMethodUI(
-                        uuid = "uuid",
+                        uuid = "Коммент",
                         name = "Наличка",
                         value = PaymentMethodValueUI(
-                            value = "наличка",
-                            valueToCopy = "наличка"
+                            value = "Наличка",
+                            valueToCopy = "Наличка",
                         )
-                    )
+                    ),
+                    isPaymentMethodErrorShown = false,
+                    cartTotal = CartTotalUI.Success(
+                        discount = null,
+                        deliveryCost = null,
+                        oldFinalCost = null,
+                        newFinalCost = "650 ₽",
+                    ),
+                    isLoading = false,
                 ),
-                onPositionChanged = {},
-                onUserAddressClicked = {},
-                onCafeAddressClicked = {},
-                onCommentClicked = {},
-                onDeferredTimeClicked = {},
-                onPaymentMethodClick = {},
-                onCreateOrderClicked = {}
+                onAction = {
+
+                }
+            )
+        }
+    }
+
+    @Preview(showSystemUi = true)
+    @Composable
+    private fun LoadingPreview() {
+        FoodDeliveryTheme {
+            Screen(
+                viewState = CreateOrderViewState(
+                    isDelivery = false,
+                    deliveryAddress = null,
+                    pickupAddress = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
+                    isAddressErrorShown = false,
+                    comment = "Коммент",
+                    deferredTime = "18:20",
+                    deferredTimeHintStringId = R.string.pickup_time,
+                    selectedPaymentMethod = PaymentMethodUI(
+                        uuid = "",
+                        name = "Наличка",
+                        value = PaymentMethodValueUI(
+                            value = "Наличка",
+                            valueToCopy = "Наличка",
+                        )
+                    ),
+                    isPaymentMethodErrorShown = false,
+                    cartTotal = CartTotalUI.Success(
+                        discount = null,
+                        deliveryCost = null,
+                        oldFinalCost = null,
+                        newFinalCost = "650 ₽",
+                    ),
+                    isLoading = true,
+                ),
+                onAction = {
+
+                }
+            )
+        }
+    }
+
+    @Preview(showSystemUi = true)
+    @Composable
+    private fun ErrorsPreview() {
+        FoodDeliveryTheme {
+            Screen(
+                viewState = CreateOrderViewState(
+                    isDelivery = false,
+                    deliveryAddress = null,
+                    pickupAddress = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
+                    isAddressErrorShown = true,
+                    comment = "",
+                    deferredTime = "18:20",
+                    deferredTimeHintStringId = R.string.pickup_time,
+                    selectedPaymentMethod = null,
+                    isPaymentMethodErrorShown = true,
+                    cartTotal = CartTotalUI.Success(
+                        discount = null,
+                        deliveryCost = null,
+                        oldFinalCost = null,
+                        newFinalCost = "650 ₽",
+                    ),
+                    isLoading = false,
+                ),
+                onAction = {
+
+                }
             )
         }
     }
