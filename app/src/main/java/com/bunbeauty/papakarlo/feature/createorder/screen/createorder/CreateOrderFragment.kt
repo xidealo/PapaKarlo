@@ -5,6 +5,7 @@ import android.view.View
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,6 +13,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -20,6 +23,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
@@ -37,8 +41,10 @@ import com.bunbeauty.papakarlo.common.ui.element.card.NavigationTextCard
 import com.bunbeauty.papakarlo.common.ui.element.simmer.Shimmer
 import com.bunbeauty.papakarlo.common.ui.element.surface.FoodDeliverySurface
 import com.bunbeauty.papakarlo.common.ui.element.switcher.FoodDeliverySwitcher
+import com.bunbeauty.papakarlo.common.ui.screen.bottomsheet.FoodDeliveryModalBottomSheet
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold
+import com.bunbeauty.papakarlo.common.ui.element.selectable.SelectableItem
 import com.bunbeauty.papakarlo.feature.createorder.mapper.toViewState
 import com.bunbeauty.papakarlo.feature.createorder.screen.cafeaddresslist.CafeAddressListBottomSheet
 import com.bunbeauty.papakarlo.feature.createorder.screen.comment.CommentBottomSheet
@@ -55,6 +61,7 @@ import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentMethodUI
 import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentMethodValueUI
 import com.bunbeauty.shared.presentation.createorder.CreateOrder
 import com.bunbeauty.shared.presentation.createorder.CreateOrderViewModel
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -136,6 +143,11 @@ class CreateOrderFragment :
                     onAction = onAction,
                 )
             }
+
+            DeliveryAddressListBottomSheet(
+                deliveryAddressList = viewState.deliveryAddressList,
+                onAction = onAction,
+            )
         }
     }
 
@@ -518,6 +530,44 @@ class CreateOrderFragment :
         }
     }
 
+    @Composable
+    private fun DeliveryAddressListBottomSheet(
+        deliveryAddressList: DeliveryAddressList,
+        onAction: (CreateOrder.Action) -> Unit
+    ) {
+        FoodDeliveryModalBottomSheet(
+            onDismissRequest = {
+                onAction(CreateOrder.Action.HideUserAddress)
+            },
+            isShown = deliveryAddressList.isShown
+        ) {
+            Text(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 16.dp),
+                text = stringResource(R.string.delivery_address),
+                style = FoodDeliveryTheme.typography.titleMedium.bold,
+                textAlign = TextAlign.Center
+            )
+            LazyColumn(
+                contentPadding = PaddingValues(16.dp),
+                verticalArrangement = spacedBy(8.dp),
+            ) {
+                items(deliveryAddressList.deliveryAddressList) { selectableAddress ->
+                    SelectableItem(
+                        title = selectableAddress.address,
+                        clickable = true,
+                        elevated = false,
+                        isSelected = selectableAddress.isSelected,
+                        onClick = {
+                            onAction(CreateOrder.Action.ChangeUserAddress(userAddressUuid = selectableAddress.uuid))
+                        }
+                    )
+                }
+            }
+        }
+    }
+
     private fun handleUserAddressListResult(result: UserAddressListResult) {
         when (result) {
             is UserAddressListResult.AddressSelected -> {
@@ -556,10 +606,12 @@ class CreateOrderFragment :
                     isPaymentMethodErrorShown = false,
                     cartTotal = CartTotalUI.Loading,
                     isLoading = false,
+                    deliveryAddressList = DeliveryAddressList(
+                        isShown = false,
+                        deliveryAddressList = persistentListOf()
+                    ),
                 ),
-                onAction = {
-
-                }
+                onAction = {}
             )
         }
     }
@@ -593,10 +645,12 @@ class CreateOrderFragment :
                         newFinalCost = "650 ₽",
                     ),
                     isLoading = false,
+                    deliveryAddressList = DeliveryAddressList(
+                        isShown = false,
+                        deliveryAddressList = persistentListOf()
+                    ),
                 ),
-                onAction = {
-
-                }
+                onAction = {}
             )
         }
     }
@@ -630,10 +684,12 @@ class CreateOrderFragment :
                         newFinalCost = "650 ₽",
                     ),
                     isLoading = false,
+                    deliveryAddressList = DeliveryAddressList(
+                        isShown = false,
+                        deliveryAddressList = persistentListOf()
+                    ),
                 ),
-                onAction = {
-
-                }
+                onAction = {}
             )
         }
     }
@@ -667,10 +723,12 @@ class CreateOrderFragment :
                         newFinalCost = "650 ₽",
                     ),
                     isLoading = true,
+                    deliveryAddressList = DeliveryAddressList(
+                        isShown = false,
+                        deliveryAddressList = persistentListOf()
+                    ),
                 ),
-                onAction = {
-
-                }
+                onAction = {}
             )
         }
     }
@@ -697,10 +755,12 @@ class CreateOrderFragment :
                         newFinalCost = "650 ₽",
                     ),
                     isLoading = false,
+                    deliveryAddressList = DeliveryAddressList(
+                        isShown = false,
+                        deliveryAddressList = persistentListOf()
+                    ),
                 ),
-                onAction = {
-
-                }
+                onAction = {}
             )
         }
     }

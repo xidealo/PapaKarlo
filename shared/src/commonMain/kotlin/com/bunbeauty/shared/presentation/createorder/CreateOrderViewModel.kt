@@ -64,6 +64,10 @@ class CreateOrderViewModel(
                 userAddressClick()
             }
 
+            CreateOrder.Action.HideUserAddress -> {
+                hideUserAddressList()
+            }
+
             is CreateOrder.Action.ChangeUserAddress -> {
                 changeUserAddress(userAddressUuid = action.userAddressUuid)
             }
@@ -133,16 +137,21 @@ class CreateOrderViewModel(
     }
 
     private fun userAddressClick() {
-        addEvent { state ->
-            if (state.userAddressList.isEmpty()) {
-                CreateOrder.Event.OpenCreateAddressEvent
-            } else {
-                CreateOrder.Event.ShowUserAddressListEvent(state.userAddressList)
-            }
+        setState {
+            copy(showUserAddressList = true)
+        }
+    }
+
+    private fun hideUserAddressList() {
+        setState {
+            copy(showUserAddressList = false)
         }
     }
 
     private fun changeUserAddress(userAddressUuid: String) {
+        setState {
+            copy(showUserAddressList = false)
+        }
         withLoading {
             saveSelectedUserAddress(userAddressUuid)
             updateSelectedUserAddress()

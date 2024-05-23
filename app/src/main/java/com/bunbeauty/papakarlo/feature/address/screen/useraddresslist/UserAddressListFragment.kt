@@ -34,7 +34,7 @@ import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.address.mapper.toUserAddressItem
 import com.bunbeauty.papakarlo.feature.address.model.UserAddressItem
 import com.bunbeauty.papakarlo.feature.address.screen.useraddresslist.UserAddressListFragmentDirections.toCreateAddressFragment
-import com.bunbeauty.papakarlo.feature.address.ui.SelectableItemView
+import com.bunbeauty.papakarlo.common.ui.element.selectable.SelectableItem
 import com.bunbeauty.shared.presentation.user_address_list.UserAddressListState
 import com.bunbeauty.shared.presentation.user_address_list.UserAddressListViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -129,11 +129,12 @@ class UserAddressListFragment : BaseFragmentWithSharedViewModel(R.layout.layout_
                 verticalArrangement = spacedBy(8.dp)
             ) {
                 itemsIndexed(userAddressItems) { i, userAddressItem ->
-                    SelectableItemView(
+                    SelectableItem(
                         title = userAddressItem.address,
-                        isClickable = false,
-                        elevated = true
-                    ) {}
+                        clickable = false,
+                        elevated = true,
+                        onClick = {}
+                    )
                 }
             }
         }

@@ -9,7 +9,7 @@ import com.bunbeauty.papakarlo.common.delegates.argument
 import com.bunbeauty.papakarlo.common.ui.ComposeBottomSheet
 import com.bunbeauty.papakarlo.common.ui.screen.bottomsheet.FoodDeliveryLazyBottomSheet
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.feature.address.ui.SelectableItemView
+import com.bunbeauty.papakarlo.common.ui.element.selectable.SelectableItem
 import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentMethodUI
 import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentMethodValueUI
 import kotlin.coroutines.resume
@@ -64,9 +64,9 @@ private fun PaymentMethodListScreen(
         scrolledToTop = scrolledToTop
     ) {
         items(paymentMethodList) { paymentItem ->
-            SelectableItemView(
+            SelectableItem(
                 title = paymentItem.paymentMethodUI.name,
-                isClickable = true,
+                clickable = true,
                 elevated = false,
                 isSelected = paymentItem.isSelected,
                 onClick = {

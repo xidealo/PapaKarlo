@@ -1,0 +1,140 @@
+package com.bunbeauty.papakarlo.common.ui.screen.bottomsheet
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.BottomSheetDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.SheetState
+import androidx.compose.material3.SheetValue
+import androidx.compose.material3.contentColorFor
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
+import kotlinx.coroutines.delay
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun FoodDeliveryModalBottomSheet(
+    onDismissRequest: () -> Unit,
+    isShown: Boolean,
+    modifier: Modifier = Modifier,
+    shape: Shape = FoodDeliveryBottomSheetDefaults.bottomSheetShape,
+    containerColor: Color = FoodDeliveryTheme.colors.mainColors.surface,
+    contentColor: Color = contentColorFor(containerColor),
+    dragHandle: @Composable (() -> Unit)? = { FoodDeliveryBottomSheetDefaults.DragHandle() },
+    windowInsets: WindowInsets = BottomSheetDefaults.windowInsets,
+    content: @Composable ColumnScope.() -> Unit,
+) {
+    var isVisible by remember {
+        mutableStateOf(false)
+    }
+    val sheetState = remember {
+        SheetState(
+            skipPartiallyExpanded = true,
+            initialValue = SheetValue.Hidden
+        )
+    }
+
+    LaunchedEffect(isShown) {
+        if (!isShown) {
+            sheetState.hide()
+        }
+
+        isVisible = isShown
+    }
+
+    if (isVisible) {
+        val systemBottomBarHeight = getSystemBottomBarHeight()
+        ModalBottomSheet(
+            onDismissRequest = onDismissRequest,
+            sheetState = sheetState,
+            shape = shape,
+            containerColor = containerColor,
+            contentColor = contentColor,
+            dragHandle = dragHandle,
+            windowInsets = windowInsets,
+            modifier = modifier
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = systemBottomBarHeight)
+            ) {
+                content()
+            }
+        }
+    }
+}
+
+@Composable
+fun getSystemBottomBarHeight(): Dp {
+    val view = LocalView.current
+    val density = LocalDensity.current
+
+    return remember {
+        val insets = ViewCompat.getRootWindowInsets(view)
+        if (insets != null) {
+            val bottomInset = insets.getInsets(WindowInsetsCompat.Type.systemBars()).bottom
+            with(density) {
+                bottomInset.toDp().value.dp
+            }
+        } else {
+            0.dp
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Preview
+@Composable
+fun FoodDeliveryModalBottomSheetPreview() {
+    var isShownState by remember {
+        mutableStateOf(false)
+    }
+    LaunchedEffect(Unit) {
+        delay(100)
+        isShownState = true
+    }
+    FoodDeliveryTheme {
+        FoodDeliveryModalBottomSheet(
+            onDismissRequest = {},
+            isShown = isShownState,
+        ) {
+            Column(
+                modifier = Modifier.padding(16.dp),
+                verticalArrangement = Arrangement.Absolute.spacedBy(8.dp)
+            ) {
+                repeat(4) {
+                    Spacer(
+                        modifier = Modifier
+                            .height(40.dp)
+                            .fillMaxWidth()
+                            .background(FoodDeliveryTheme.colors.mainColors.surface)
+                    )
+                }
+            }
+        }
+    }
+}

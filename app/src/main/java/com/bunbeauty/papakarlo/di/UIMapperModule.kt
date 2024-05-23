@@ -1,6 +1,5 @@
 package com.bunbeauty.papakarlo.di
 
-import com.bunbeauty.papakarlo.feature.address.mapper.UserAddressItemMapper
 import com.bunbeauty.papakarlo.feature.cafe.screen.cafelist.CafeListUiStateMapper
 import com.bunbeauty.papakarlo.feature.createorder.mapper.TimeMapper
 import com.bunbeauty.papakarlo.feature.order.screen.orderdetails.OrderDetailsUiStateMapper
@@ -15,11 +14,6 @@ import org.koin.dsl.module
 fun uiMapperModule() = module {
     factory {
         OrderItemMapper(
-            stringUtil = get()
-        )
-    }
-    factory {
-        UserAddressItemMapper(
             stringUtil = get()
         )
     }

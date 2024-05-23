@@ -4,21 +4,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.feature.address.model.UserAddressItem
-import com.bunbeauty.papakarlo.util.string.IStringUtil
 import com.bunbeauty.shared.Constants.ADDRESS_DIVIDER
 import com.bunbeauty.shared.domain.model.address.SelectableUserAddress
 import com.bunbeauty.shared.domain.model.address.UserAddress
-
-class UserAddressItemMapper(private val stringUtil: IStringUtil) {
-
-    fun toItem(selectableUserAddress: SelectableUserAddress): UserAddressItem {
-        return UserAddressItem(
-            uuid = selectableUserAddress.address.uuid,
-            address = stringUtil.getUserAddressString(selectableUserAddress) ?: "",
-            isSelected = selectableUserAddress.isSelected
-        )
-    }
-}
 
 @Composable
 fun SelectableUserAddress.toUserAddressItem(): UserAddressItem {
@@ -50,6 +38,6 @@ private fun List<Any?>.toStringOrEmpty(divider: String): String {
     return if (isAnyNullOrEmpty) {
         ""
     } else {
-        "$divider ${joinToString(" ")}"
+        "$divider ${joinToString("")}"
     }
 }

@@ -11,7 +11,7 @@ import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
 import com.bunbeauty.papakarlo.common.ui.screen.bottomsheet.FoodDeliveryLazyBottomSheet
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.feature.address.model.UserAddressItem
-import com.bunbeauty.papakarlo.feature.address.ui.SelectableItemView
+import com.bunbeauty.papakarlo.common.ui.element.selectable.SelectableItem
 import com.bunbeauty.papakarlo.feature.createorder.screen.useraddresslist.model.UserAddressListResult
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
@@ -78,9 +78,9 @@ private fun UserAddressListScreen(
         }
     ) {
         items(addressList) { addressItem ->
-            SelectableItemView(
+            SelectableItem(
                 title = addressItem.address,
-                isClickable = true,
+                clickable = true,
                 elevated = false,
                 isSelected = addressItem.isSelected,
                 onClick = {

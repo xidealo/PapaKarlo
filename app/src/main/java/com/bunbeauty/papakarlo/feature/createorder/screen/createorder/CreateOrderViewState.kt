@@ -4,6 +4,7 @@ import androidx.annotation.StringRes
 import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentMethodUI
 import com.bunbeauty.shared.presentation.base.BaseViewState
 import com.google.errorprone.annotations.Immutable
+import kotlinx.collections.immutable.ImmutableList
 
 @Immutable
 data class CreateOrderViewState(
@@ -18,6 +19,8 @@ data class CreateOrderViewState(
     val isPaymentMethodErrorShown: Boolean,
     val cartTotal: CartTotalUI,
     val isLoading: Boolean,
+
+   val deliveryAddressList: DeliveryAddressList
 ) : BaseViewState {
 
     val isFieldsEnabled: Boolean = !isLoading
@@ -37,3 +40,16 @@ sealed interface CartTotalUI {
         val newFinalCost: String,
     ) : CartTotalUI
 }
+
+@Immutable
+data class DeliveryAddressList(
+    val isShown: Boolean,
+    val deliveryAddressList: ImmutableList<SelectableAddressUI>,
+)
+
+@Immutable
+data class SelectableAddressUI(
+    val uuid: String,
+    val address: String,
+    val isSelected: Boolean,
+)

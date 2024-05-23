@@ -9,7 +9,7 @@ import com.bunbeauty.papakarlo.common.delegates.argument
 import com.bunbeauty.papakarlo.common.ui.ComposeBottomSheet
 import com.bunbeauty.papakarlo.common.ui.screen.bottomsheet.FoodDeliveryLazyBottomSheet
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.feature.address.ui.SelectableItemView
+import com.bunbeauty.papakarlo.common.ui.element.selectable.SelectableItem
 import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.model.SelectableCafeAddressUI
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
@@ -61,9 +61,9 @@ private fun CafeAddressListScreen(
         scrolledToTop = scrolledToTop
     ) {
         items(addressList) { addressItem ->
-            SelectableItemView(
+            SelectableItem(
                 title = addressItem.address,
-                isClickable = true,
+                clickable = true,
                 elevated = false,
                 isSelected = addressItem.isSelected,
                 onClick = {

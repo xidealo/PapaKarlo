@@ -19,6 +19,7 @@ interface CreateOrder {
 
         val userAddressList: List<SelectableUserAddress> = emptyList(),
         val selectedUserAddress: UserAddress? = null,
+        val showUserAddressList: Boolean = false,
         val isUserAddressError: Boolean = false,
 
         val cafeList: List<SelectableCafe> = emptyList(),
@@ -55,6 +56,7 @@ interface CreateOrder {
         data object Update : Action
         data class ChangeMethod(val position: Int) : Action
         data object UserAddressClick : Action
+        data object HideUserAddress : Action
         data class ChangeUserAddress(val userAddressUuid: String) : Action
         data object CafeAddressClick : Action
         data class ChangeCafeAddress(val cafeUuid: String) : Action

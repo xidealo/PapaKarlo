@@ -5,9 +5,12 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.feature.address.mapper.toAddressString
 import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.CartTotalUI
 import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.CreateOrderViewState
+import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.DeliveryAddressList
+import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.SelectableAddressUI
 import com.bunbeauty.papakarlo.feature.deferredtime.toDeferredTimeString
 import com.bunbeauty.papakarlo.feature.paymentmethod.toPaymentMethodUI
 import com.bunbeauty.shared.presentation.createorder.CreateOrder
+import kotlinx.collections.immutable.toImmutableList
 
 @Composable
 fun CreateOrder.DataState.toViewState(): CreateOrderViewState {
@@ -38,5 +41,16 @@ fun CreateOrder.DataState.toViewState(): CreateOrderViewState {
             }
         },
         isLoading = isLoading,
+        deliveryAddressList = DeliveryAddressList(
+            isShown = showUserAddressList,
+            deliveryAddressList = userAddressList.map { selectedUserAddress ->
+                SelectableAddressUI(
+                    uuid = selectedUserAddress.address.uuid,
+                    address = selectedUserAddress.address.toAddressString(),
+                    isSelected = selectedUserAddress.isSelected,
+                )
+
+            }.toImmutableList()
+        ),
     )
 }
