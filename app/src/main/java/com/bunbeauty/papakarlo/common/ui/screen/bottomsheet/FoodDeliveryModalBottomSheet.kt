@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,6 +15,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.SheetState
 import androidx.compose.material3.SheetValue
+import androidx.compose.material3.Text
 import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -26,12 +28,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
+import com.bunbeauty.papakarlo.common.ui.theme.bold
 import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -40,6 +44,13 @@ fun FoodDeliveryModalBottomSheet(
     onDismissRequest: () -> Unit,
     isShown: Boolean,
     modifier: Modifier = Modifier,
+    title: String? = null,
+    contentPadding: PaddingValues = PaddingValues(
+        top = 8.dp,
+        start = 16.dp,
+        end = 16.dp,
+        bottom = 16.dp
+    ),
     shape: Shape = FoodDeliveryBottomSheetDefaults.bottomSheetShape,
     containerColor: Color = FoodDeliveryTheme.colors.mainColors.surface,
     contentColor: Color = contentColorFor(containerColor),
@@ -80,8 +91,15 @@ fun FoodDeliveryModalBottomSheet(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .padding(paddingValues = contentPadding)
                     .padding(bottom = systemBottomBarHeight)
             ) {
+                title?.let {
+                    Title(
+                        modifier = Modifier.padding(vertical = 16.dp),
+                        title = title,
+                    )
+                }
                 content()
             }
         }
@@ -89,7 +107,7 @@ fun FoodDeliveryModalBottomSheet(
 }
 
 @Composable
-fun getSystemBottomBarHeight(): Dp {
+private fun getSystemBottomBarHeight(): Dp {
     val view = LocalView.current
     val density = LocalDensity.current
 
@@ -106,10 +124,22 @@ fun getSystemBottomBarHeight(): Dp {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun Title(
+    modifier: Modifier = Modifier,
+    title: String,
+) {
+    Text(
+        modifier = modifier.fillMaxWidth(),
+        text = title,
+        style = FoodDeliveryTheme.typography.titleMedium.bold,
+        textAlign = TextAlign.Center
+    )
+}
+
 @Preview
 @Composable
-fun FoodDeliveryModalBottomSheetPreview() {
+private fun FoodDeliveryModalBottomSheetPreview() {
     var isShownState by remember {
         mutableStateOf(false)
     }

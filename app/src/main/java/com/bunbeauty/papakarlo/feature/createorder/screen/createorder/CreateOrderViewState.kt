@@ -20,7 +20,8 @@ data class CreateOrderViewState(
     val cartTotal: CartTotalUI,
     val isLoading: Boolean,
 
-   val deliveryAddressList: DeliveryAddressList
+   val deliveryAddressList: DeliveryAddressList,
+   val pickupAddressList: PickupAddressList,
 ) : BaseViewState {
 
     val isFieldsEnabled: Boolean = !isLoading
@@ -44,7 +45,13 @@ sealed interface CartTotalUI {
 @Immutable
 data class DeliveryAddressList(
     val isShown: Boolean,
-    val deliveryAddressList: ImmutableList<SelectableAddressUI>,
+    val addressList: ImmutableList<SelectableAddressUI>,
+)
+
+@Immutable
+data class PickupAddressList(
+    val isShown: Boolean,
+    val addressList: ImmutableList<SelectableAddressUI>,
 )
 
 @Immutable

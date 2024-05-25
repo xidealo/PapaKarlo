@@ -10,7 +10,6 @@ import com.bunbeauty.shared.domain.model.payment_method.SelectablePaymentMethod
 import com.bunbeauty.shared.presentation.base.BaseAction
 import com.bunbeauty.shared.presentation.base.BaseDataState
 import com.bunbeauty.shared.presentation.base.BaseEvent
-import com.bunbeauty.shared.presentation.cafe_address_list.SelectableCafeAddressItem
 
 interface CreateOrder {
 
@@ -23,6 +22,7 @@ interface CreateOrder {
         val isUserAddressError: Boolean = false,
 
         val cafeList: List<SelectableCafe> = emptyList(),
+        val showCafeList: Boolean = false,
         val selectedCafe: Cafe? = null,
 
         val comment: String? = null,
@@ -55,11 +55,12 @@ interface CreateOrder {
     sealed interface Action : BaseAction {
         data object Update : Action
         data class ChangeMethod(val position: Int) : Action
-        data object UserAddressClick : Action
-        data object HideUserAddress : Action
-        data class ChangeUserAddress(val userAddressUuid: String) : Action
-        data object CafeAddressClick : Action
-        data class ChangeCafeAddress(val cafeUuid: String) : Action
+        data object DeliveryAddressClick : Action
+        data object HideDeliveryAddressList : Action
+        data class ChangeDeliveryAddress(val addressUuid: String) : Action
+        data object PickupAddressClick : Action
+        data object HidePickupAddressList : Action
+        data class ChangePickupAddress(val addressUuid: String) : Action
         data object PaymentMethodClick : Action
         data class ChangePaymentMethod(val paymentMethodUuid: String) : Action
         data object DeferredTimeClick : Action
@@ -71,13 +72,6 @@ interface CreateOrder {
 
     sealed interface Event : BaseEvent {
         data object OpenCreateAddressEvent : Event
-        data class ShowUserAddressListEvent(
-            val addressList: List<SelectableUserAddress>,
-        ) : Event
-
-        data class ShowCafeAddressListEvent(
-            val addressList: List<SelectableCafeAddressItem>,
-        ) : Event
 
         data class ShowDeferredTimeEvent(
             val deferredTime: DeferredTime,

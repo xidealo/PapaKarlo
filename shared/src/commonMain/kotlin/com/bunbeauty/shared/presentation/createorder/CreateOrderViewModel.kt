@@ -2,6 +2,7 @@ package com.bunbeauty.shared.presentation.createorder
 
 import com.bunbeauty.shared.Constants.PERCENT
 import com.bunbeauty.shared.Constants.RUBLE_CURRENCY
+import com.bunbeauty.shared.domain.feature.cafe.GetSelectableCafeListUseCase
 import com.bunbeauty.shared.domain.feature.city.GetSelectedCityTimeZoneUseCase
 import com.bunbeauty.shared.domain.feature.order.CreateOrderUseCase
 import com.bunbeauty.shared.domain.feature.payment.GetSelectablePaymentMethodListUseCase
@@ -13,11 +14,9 @@ import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
 import com.bunbeauty.shared.domain.model.date_time.Time
 import com.bunbeauty.shared.domain.use_case.address.GetSelectableUserAddressListUseCase
 import com.bunbeauty.shared.domain.use_case.address.SaveSelectedUserAddressUseCase
-import com.bunbeauty.shared.domain.feature.cafe.GetSelectableCafeListUseCase
 import com.bunbeauty.shared.domain.use_case.deferred_time.GetMinTimeUseCase
 import com.bunbeauty.shared.extension.launchSafe
 import com.bunbeauty.shared.presentation.base.SharedStateViewModel
-import com.bunbeauty.shared.presentation.cafe_address_list.SelectableCafeAddressItemMapper
 import kotlinx.coroutines.flow.update
 
 class CreateOrderViewModel(
@@ -60,24 +59,28 @@ class CreateOrderViewModel(
                 changeMethod(position = action.position)
             }
 
-            CreateOrder.Action.UserAddressClick -> {
+            CreateOrder.Action.DeliveryAddressClick -> {
                 userAddressClick()
             }
 
-            CreateOrder.Action.HideUserAddress -> {
+            CreateOrder.Action.HideDeliveryAddressList -> {
                 hideUserAddressList()
             }
 
-            is CreateOrder.Action.ChangeUserAddress -> {
-                changeUserAddress(userAddressUuid = action.userAddressUuid)
+            is CreateOrder.Action.ChangeDeliveryAddress -> {
+                changeUserAddress(userAddressUuid = action.addressUuid)
             }
 
-            CreateOrder.Action.CafeAddressClick -> {
+            CreateOrder.Action.PickupAddressClick -> {
                 cafeAddressClick()
             }
 
-            is CreateOrder.Action.ChangeCafeAddress -> {
-                changeCafeAddress(cafeUuid = action.cafeUuid)
+            CreateOrder.Action.HidePickupAddressList -> {
+                hideCafeList()
+            }
+
+            is CreateOrder.Action.ChangePickupAddress -> {
+                changeCafeAddress(cafeUuid = action.addressUuid)
             }
 
             CreateOrder.Action.PaymentMethodClick -> {
@@ -159,14 +162,21 @@ class CreateOrderViewModel(
     }
 
     private fun cafeAddressClick() {
-        addEvent { state ->
-            CreateOrder.Event.ShowCafeAddressListEvent(
-                state.cafeList.map(SelectableCafeAddressItemMapper::toSelectableCafeAddressItem),
-            )
+        setState {
+            copy(showCafeList = true)
+        }
+    }
+
+    private fun hideCafeList() {
+        setState {
+            copy(showCafeList = false)
         }
     }
 
     private fun changeCafeAddress(cafeUuid: String) {
+        setState {
+            copy(showCafeList = false)
+        }
         withLoading {
             cafeInteractor.saveSelectedCafe(cafeUuid)
             updateSelectedCafe()

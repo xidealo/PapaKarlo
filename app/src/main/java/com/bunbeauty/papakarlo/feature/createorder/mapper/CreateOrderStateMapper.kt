@@ -6,6 +6,7 @@ import com.bunbeauty.papakarlo.feature.address.mapper.toAddressString
 import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.CartTotalUI
 import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.CreateOrderViewState
 import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.DeliveryAddressList
+import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.PickupAddressList
 import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.SelectableAddressUI
 import com.bunbeauty.papakarlo.feature.deferredtime.toDeferredTimeString
 import com.bunbeauty.papakarlo.feature.paymentmethod.toPaymentMethodUI
@@ -43,13 +44,23 @@ fun CreateOrder.DataState.toViewState(): CreateOrderViewState {
         isLoading = isLoading,
         deliveryAddressList = DeliveryAddressList(
             isShown = showUserAddressList,
-            deliveryAddressList = userAddressList.map { selectedUserAddress ->
+            addressList = userAddressList.map { selectableUserAddress ->
                 SelectableAddressUI(
-                    uuid = selectedUserAddress.address.uuid,
-                    address = selectedUserAddress.address.toAddressString(),
-                    isSelected = selectedUserAddress.isSelected,
+                    uuid = selectableUserAddress.address.uuid,
+                    address = selectableUserAddress.address.toAddressString(),
+                    isSelected = selectableUserAddress.isSelected,
                 )
 
+            }.toImmutableList()
+        ),
+        pickupAddressList = PickupAddressList(
+            isShown = showCafeList,
+            addressList = cafeList.map { selectableCafe ->
+                SelectableAddressUI(
+                    uuid = selectableCafe.cafe.uuid,
+                    address = selectableCafe.cafe.address,
+                    isSelected = selectableCafe.isSelected,
+                )
             }.toImmutableList()
         ),
     )

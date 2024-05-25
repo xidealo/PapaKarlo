@@ -3,9 +3,11 @@ package com.bunbeauty.papakarlo.feature.createorder.screen.createorder
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.StringRes
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,7 +25,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
@@ -38,24 +39,20 @@ import com.bunbeauty.papakarlo.common.ui.element.button.LoadingButton
 import com.bunbeauty.papakarlo.common.ui.element.card.DiscountCard
 import com.bunbeauty.papakarlo.common.ui.element.card.NavigationCard
 import com.bunbeauty.papakarlo.common.ui.element.card.NavigationTextCard
+import com.bunbeauty.papakarlo.common.ui.element.selectable.SelectableItem
 import com.bunbeauty.papakarlo.common.ui.element.simmer.Shimmer
 import com.bunbeauty.papakarlo.common.ui.element.surface.FoodDeliverySurface
 import com.bunbeauty.papakarlo.common.ui.element.switcher.FoodDeliverySwitcher
 import com.bunbeauty.papakarlo.common.ui.screen.bottomsheet.FoodDeliveryModalBottomSheet
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold
-import com.bunbeauty.papakarlo.common.ui.element.selectable.SelectableItem
 import com.bunbeauty.papakarlo.feature.createorder.mapper.toViewState
-import com.bunbeauty.papakarlo.feature.createorder.screen.cafeaddresslist.CafeAddressListBottomSheet
 import com.bunbeauty.papakarlo.feature.createorder.screen.comment.CommentBottomSheet
 import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.CreateOrderFragmentDirections.toCreateAddressFragment
 import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.CreateOrderFragmentDirections.toProfileFragment
-import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.model.SelectableCafeAddressUI
 import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.model.TimeUI
 import com.bunbeauty.papakarlo.feature.createorder.screen.deferredtime.DeferredTimeBottomSheet
 import com.bunbeauty.papakarlo.feature.createorder.screen.paymentmethod.SelectPaymentMethodBottomSheet
-import com.bunbeauty.papakarlo.feature.createorder.screen.useraddresslist.UserAddressListBottomSheet
-import com.bunbeauty.papakarlo.feature.createorder.screen.useraddresslist.model.UserAddressListResult
 import com.bunbeauty.papakarlo.feature.main.IMessageHost
 import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentMethodUI
 import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentMethodValueUI
@@ -148,6 +145,10 @@ class CreateOrderFragment :
                 deliveryAddressList = viewState.deliveryAddressList,
                 onAction = onAction,
             )
+            PickupAddressListBottomSheet(
+                pickupAddressList = viewState.pickupAddressList,
+                onAction = onAction,
+            )
         }
     }
 
@@ -155,40 +156,6 @@ class CreateOrderFragment :
         when (event) {
             is CreateOrder.Event.OpenCreateAddressEvent -> {
                 findNavController().navigateSafe(toCreateAddressFragment())
-            }
-
-            is CreateOrder.Event.ShowUserAddressListEvent -> {
-                lifecycleScope.launch {
-                    UserAddressListBottomSheet.show(
-                        fragmentManager = childFragmentManager,
-                        addressList = emptyList()
-                    )?.let { result ->
-                        handleUserAddressListResult(result)
-                    }
-                }
-            }
-
-            is CreateOrder.Event.ShowCafeAddressListEvent -> {
-                lifecycleScope.launch {
-                    CafeAddressListBottomSheet.show(
-                        fragmentManager = childFragmentManager,
-                        addressList = event.addressList.map { selectableCafeAddressItem ->
-                            selectableCafeAddressItem.run {
-                                SelectableCafeAddressUI(
-                                    uuid = uuid,
-                                    address = address,
-                                    isSelected = isSelected
-                                )
-                            }
-                        }
-                    )?.let { addressItem ->
-                        viewModel.onAction(
-                            CreateOrder.Action.ChangeCafeAddress(
-                                cafeUuid = addressItem.uuid
-                            )
-                        )
-                    }
-                }
             }
 
             is CreateOrder.Event.ShowCommentInputEvent -> {
@@ -292,7 +259,7 @@ class CreateOrderFragment :
                     clickable = viewState.isFieldsEnabled,
                     label = stringResource(R.string.delivery_address),
                     onClick = {
-                        onAction(CreateOrder.Action.UserAddressClick)
+                        onAction(CreateOrder.Action.DeliveryAddressClick)
                     }
                 )
             } else {
@@ -303,7 +270,7 @@ class CreateOrderFragment :
                     label = viewState.deliveryAddress,
                     clickable = viewState.isFieldsEnabled,
                     onClick = {
-                        onAction(CreateOrder.Action.UserAddressClick)
+                        onAction(CreateOrder.Action.DeliveryAddressClick)
                     }
                 )
             }
@@ -315,7 +282,7 @@ class CreateOrderFragment :
                 label = viewState.pickupAddress ?: "",
                 clickable = viewState.isFieldsEnabled,
                 onClick = {
-                    onAction(CreateOrder.Action.CafeAddressClick)
+                    onAction(CreateOrder.Action.PickupAddressClick)
                 }
             )
         }
@@ -459,54 +426,63 @@ class CreateOrderFragment :
     }
 
     @Composable
-    private fun BottomAmountBarSuccessContent(cartTotal: CartTotalUI.Success) {
-        cartTotal.discount?.let { discount ->
+    private fun BottomAmountBarSuccessContent(
+        cartTotal: CartTotalUI.Success,
+        modifier: Modifier = Modifier,
+    ) {
+        Column(modifier = modifier) {
+            cartTotal.discount?.let { discount ->
+                Row {
+                    Text(
+                        modifier = Modifier.weight(1f),
+                        text = stringResource(R.string.msg_order_details_discount),
+                        style = FoodDeliveryTheme.typography.bodyMedium,
+                        color = FoodDeliveryTheme.colors.mainColors.onSurface
+                    )
+                    DiscountCard(discount = discount)
+                }
+            }
+            AnimatedVisibility(
+                visible = cartTotal.deliveryCost != null,
+                enter = expandVertically(),
+                exit = shrinkVertically(),
+            ) {
+                Row {
+                    Text(
+                        modifier = Modifier.weight(1f),
+                        text = stringResource(R.string.msg_delivery),
+                        style = FoodDeliveryTheme.typography.bodyMedium,
+                        color = FoodDeliveryTheme.colors.mainColors.onSurface
+                    )
+                    Text(
+                        text = cartTotal.deliveryCost.orEmpty(),
+                        style = FoodDeliveryTheme.typography.bodyMedium,
+                        color = FoodDeliveryTheme.colors.mainColors.onSurface
+                    )
+                }
+            }
             Row {
                 Text(
                     modifier = Modifier.weight(1f),
-                    text = stringResource(R.string.msg_order_details_discount),
-                    style = FoodDeliveryTheme.typography.bodyMedium,
-                    color = FoodDeliveryTheme.colors.mainColors.onSurface
-                )
-                DiscountCard(discount = discount)
-            }
-        }
-        cartTotal.deliveryCost?.let { deliveryCost ->
-            Row {
-                Text(
-                    modifier = Modifier.weight(1f),
-                    text = stringResource(R.string.msg_create_order_total_cost),
-                    style = FoodDeliveryTheme.typography.bodyMedium,
-                    color = FoodDeliveryTheme.colors.mainColors.onSurface
-                )
-                Text(
-                    text = deliveryCost,
-                    style = FoodDeliveryTheme.typography.bodyMedium,
-                    color = FoodDeliveryTheme.colors.mainColors.onSurface
-                )
-            }
-        }
-        Row {
-            Text(
-                modifier = Modifier.weight(1f),
-                text = stringResource(R.string.msg_create_order_amount_to_pay),
-                style = FoodDeliveryTheme.typography.bodyMedium.bold,
-                color = FoodDeliveryTheme.colors.mainColors.onSurface
-            )
-            cartTotal.oldFinalCost?.let { oldFinalCost ->
-                Text(
-                    modifier = Modifier.padding(end = 4.dp),
-                    text = oldFinalCost,
+                    text = stringResource(R.string.msg_create_order_amount_to_pay),
                     style = FoodDeliveryTheme.typography.bodyMedium.bold,
-                    color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
-                    textDecoration = TextDecoration.LineThrough
+                    color = FoodDeliveryTheme.colors.mainColors.onSurface
+                )
+                cartTotal.oldFinalCost?.let { oldFinalCost ->
+                    Text(
+                        modifier = Modifier.padding(end = 4.dp),
+                        text = oldFinalCost,
+                        style = FoodDeliveryTheme.typography.bodyMedium.bold,
+                        color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
+                        textDecoration = TextDecoration.LineThrough
+                    )
+                }
+                Text(
+                    text = cartTotal.newFinalCost,
+                    style = FoodDeliveryTheme.typography.bodyMedium.bold,
+                    color = FoodDeliveryTheme.colors.mainColors.onSurface
                 )
             }
-            Text(
-                text = cartTotal.newFinalCost,
-                style = FoodDeliveryTheme.typography.bodyMedium.bold,
-                color = FoodDeliveryTheme.colors.mainColors.onSurface
-            )
         }
     }
 
@@ -537,30 +513,25 @@ class CreateOrderFragment :
     ) {
         FoodDeliveryModalBottomSheet(
             onDismissRequest = {
-                onAction(CreateOrder.Action.HideUserAddress)
+                onAction(CreateOrder.Action.HideDeliveryAddressList)
             },
-            isShown = deliveryAddressList.isShown
+            isShown = deliveryAddressList.isShown,
+            title = stringResource(R.string.delivery_address),
         ) {
-            Text(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 16.dp),
-                text = stringResource(R.string.delivery_address),
-                style = FoodDeliveryTheme.typography.titleMedium.bold,
-                textAlign = TextAlign.Center
-            )
-            LazyColumn(
-                contentPadding = PaddingValues(16.dp),
-                verticalArrangement = spacedBy(8.dp),
-            ) {
-                items(deliveryAddressList.deliveryAddressList) { selectableAddress ->
+            LazyColumn(verticalArrangement = spacedBy(8.dp)) {
+                items(
+                    items = deliveryAddressList.addressList,
+                    key = { selectableAddress ->
+                        "DeliveryAddress ${selectableAddress.uuid}"
+                    }
+                ) { selectableAddress ->
                     SelectableItem(
                         title = selectableAddress.address,
                         clickable = true,
                         elevated = false,
                         isSelected = selectableAddress.isSelected,
                         onClick = {
-                            onAction(CreateOrder.Action.ChangeUserAddress(userAddressUuid = selectableAddress.uuid))
+                            onAction(CreateOrder.Action.ChangeDeliveryAddress(addressUuid = selectableAddress.uuid))
                         }
                     )
                 }
@@ -568,16 +539,38 @@ class CreateOrderFragment :
         }
     }
 
-    private fun handleUserAddressListResult(result: UserAddressListResult) {
-        when (result) {
-            is UserAddressListResult.AddressSelected -> {
-                viewModel.onAction(
-                    CreateOrder.Action.ChangeUserAddress(userAddressUuid = result.userAddressItem.uuid)
-                )
-            }
-
-            is UserAddressListResult.AddNewAddress -> {
-                findNavController().navigateSafe(toCreateAddressFragment())
+    @Composable
+    private fun PickupAddressListBottomSheet(
+        pickupAddressList: PickupAddressList,
+        onAction: (CreateOrder.Action) -> Unit
+    ) {
+        FoodDeliveryModalBottomSheet(
+            onDismissRequest = {
+                onAction(CreateOrder.Action.HidePickupAddressList)
+            },
+            isShown = pickupAddressList.isShown,
+            title = stringResource(R.string.pickup_address)
+        ) {
+            LazyColumn(
+                modifier = Modifier.padding(top = 16.dp),
+                verticalArrangement = spacedBy(8.dp),
+            ) {
+                items(
+                    items = pickupAddressList.addressList,
+                    key = { selectableAddress ->
+                        "PickupAddress ${selectableAddress.uuid}"
+                    }
+                ) { selectableAddress ->
+                    SelectableItem(
+                        title = selectableAddress.address,
+                        clickable = true,
+                        elevated = false,
+                        isSelected = selectableAddress.isSelected,
+                        onClick = {
+                            onAction(CreateOrder.Action.ChangePickupAddress(addressUuid = selectableAddress.uuid))
+                        }
+                    )
+                }
             }
         }
     }
@@ -608,7 +601,11 @@ class CreateOrderFragment :
                     isLoading = false,
                     deliveryAddressList = DeliveryAddressList(
                         isShown = false,
-                        deliveryAddressList = persistentListOf()
+                        addressList = persistentListOf()
+                    ),
+                    pickupAddressList = PickupAddressList(
+                        isShown = false,
+                        addressList = persistentListOf()
                     ),
                 ),
                 onAction = {}
@@ -647,7 +644,11 @@ class CreateOrderFragment :
                     isLoading = false,
                     deliveryAddressList = DeliveryAddressList(
                         isShown = false,
-                        deliveryAddressList = persistentListOf()
+                        addressList = persistentListOf()
+                    ),
+                    pickupAddressList = PickupAddressList(
+                        isShown = false,
+                        addressList = persistentListOf()
                     ),
                 ),
                 onAction = {}
@@ -686,7 +687,11 @@ class CreateOrderFragment :
                     isLoading = false,
                     deliveryAddressList = DeliveryAddressList(
                         isShown = false,
-                        deliveryAddressList = persistentListOf()
+                        addressList = persistentListOf()
+                    ),
+                    pickupAddressList = PickupAddressList(
+                        isShown = false,
+                        addressList = persistentListOf()
                     ),
                 ),
                 onAction = {}
@@ -725,7 +730,11 @@ class CreateOrderFragment :
                     isLoading = true,
                     deliveryAddressList = DeliveryAddressList(
                         isShown = false,
-                        deliveryAddressList = persistentListOf()
+                        addressList = persistentListOf()
+                    ),
+                    pickupAddressList = PickupAddressList(
+                        isShown = false,
+                        addressList = persistentListOf()
                     ),
                 ),
                 onAction = {}
@@ -757,7 +766,11 @@ class CreateOrderFragment :
                     isLoading = false,
                     deliveryAddressList = DeliveryAddressList(
                         isShown = false,
-                        deliveryAddressList = persistentListOf()
+                        addressList = persistentListOf()
+                    ),
+                    pickupAddressList = PickupAddressList(
+                        isShown = false,
+                        addressList = persistentListOf()
                     ),
                 ),
                 onAction = {}
