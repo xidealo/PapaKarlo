@@ -21,7 +21,13 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
@@ -39,6 +45,7 @@ import com.bunbeauty.papakarlo.common.ui.element.button.LoadingButton
 import com.bunbeauty.papakarlo.common.ui.element.card.DiscountCard
 import com.bunbeauty.papakarlo.common.ui.element.card.NavigationCard
 import com.bunbeauty.papakarlo.common.ui.element.card.NavigationTextCard
+import com.bunbeauty.papakarlo.common.ui.element.card.SimpleCard
 import com.bunbeauty.papakarlo.common.ui.element.selectable.SelectableItem
 import com.bunbeauty.papakarlo.common.ui.element.simmer.Shimmer
 import com.bunbeauty.papakarlo.common.ui.element.surface.FoodDeliverySurface
@@ -46,21 +53,26 @@ import com.bunbeauty.papakarlo.common.ui.element.switcher.FoodDeliverySwitcher
 import com.bunbeauty.papakarlo.common.ui.screen.bottomsheet.FoodDeliveryModalBottomSheet
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold
+import com.bunbeauty.papakarlo.common.ui.theme.medium
 import com.bunbeauty.papakarlo.feature.createorder.mapper.toViewState
 import com.bunbeauty.papakarlo.feature.createorder.screen.comment.CommentBottomSheet
 import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.CreateOrderFragmentDirections.toCreateAddressFragment
 import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.CreateOrderFragmentDirections.toProfileFragment
-import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.model.TimeUI
-import com.bunbeauty.papakarlo.feature.createorder.screen.deferredtime.DeferredTimeBottomSheet
 import com.bunbeauty.papakarlo.feature.createorder.screen.paymentmethod.SelectPaymentMethodBottomSheet
 import com.bunbeauty.papakarlo.feature.main.IMessageHost
 import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentMethodUI
 import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentMethodValueUI
+import com.bunbeauty.shared.domain.model.date_time.Time
 import com.bunbeauty.shared.presentation.createorder.CreateOrder
 import com.bunbeauty.shared.presentation.createorder.CreateOrderViewModel
+import com.vanpra.composematerialdialogs.MaterialDialog
+import com.vanpra.composematerialdialogs.datetime.time.TimePickerDefaults
+import com.vanpra.composematerialdialogs.datetime.time.timepicker
+import com.vanpra.composematerialdialogs.rememberMaterialDialogState
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.time.LocalTime
 
 class CreateOrderFragment :
     BaseComposeFragment<CreateOrder.DataState, CreateOrderViewState, CreateOrder.Action, CreateOrder.Event>() {
@@ -149,6 +161,15 @@ class CreateOrderFragment :
                 pickupAddressList = viewState.pickupAddressList,
                 onAction = onAction,
             )
+            DeferredTimeBottomSheet(
+                isShown = viewState.isDeferredTimeShown,
+                title = stringResource(viewState.deferredTimeStringId),
+                onAction = onAction,
+            )
+            TimePickerDialog(
+                timePicker = viewState.timePicker,
+                onAction = onAction,
+            )
         }
     }
 
@@ -167,28 +188,6 @@ class CreateOrderFragment :
                         viewModel.onAction(
                             CreateOrder.Action.ChangeComment(
                                 comment = comment
-                            )
-                        )
-                    }
-                }
-            }
-
-            is CreateOrder.Event.ShowDeferredTimeEvent -> {
-                lifecycleScope.launch {
-                    val titleId = if (event.isDelivery) {
-                        R.string.delivery_time
-                    } else {
-                        R.string.pickup_time
-                    }
-                    DeferredTimeBottomSheet.show(
-                        fragmentManager = childFragmentManager,
-                        deferredTime = TimeUI.ASAP,
-                        minTime = TimeUI.Time(0, 0),
-                        title = resources.getString(titleId)
-                    )?.let { deferredTime ->
-                        viewModel.onAction(
-                            CreateOrder.Action.ChangeDeferredTime(
-                                deferredTime = null
                             )
                         )
                     }
@@ -322,7 +321,7 @@ class CreateOrderFragment :
     ) {
         NavigationTextCard(
             modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace),
-            hintStringId = viewState.deferredTimeHintStringId,
+            hintStringId = viewState.deferredTimeStringId,
             label = viewState.deferredTime,
             clickable = viewState.isFieldsEnabled,
             onClick = {
@@ -508,7 +507,7 @@ class CreateOrderFragment :
 
     @Composable
     private fun DeliveryAddressListBottomSheet(
-        deliveryAddressList: DeliveryAddressList,
+        deliveryAddressList: DeliveryAddressListUI,
         onAction: (CreateOrder.Action) -> Unit
     ) {
         FoodDeliveryModalBottomSheet(
@@ -541,7 +540,7 @@ class CreateOrderFragment :
 
     @Composable
     private fun PickupAddressListBottomSheet(
-        pickupAddressList: PickupAddressList,
+        pickupAddressList: PickupAddressListUI,
         onAction: (CreateOrder.Action) -> Unit
     ) {
         FoodDeliveryModalBottomSheet(
@@ -567,8 +566,135 @@ class CreateOrderFragment :
                         elevated = false,
                         isSelected = selectableAddress.isSelected,
                         onClick = {
-                            onAction(CreateOrder.Action.ChangePickupAddress(addressUuid = selectableAddress.uuid))
+                            onAction(
+                                CreateOrder.Action.ChangePickupAddress(
+                                    addressUuid = selectableAddress.uuid
+                                )
+                            )
                         }
+                    )
+                }
+            }
+        }
+    }
+
+    @Composable
+    private fun DeferredTimeBottomSheet(
+        isShown: Boolean,
+        title: String,
+        onAction: (CreateOrder.Action) -> Unit
+    ) {
+        FoodDeliveryModalBottomSheet(
+            onDismissRequest = {
+                onAction(CreateOrder.Action.HideDeferredTime)
+            },
+            isShown = isShown,
+            title = title,
+        ) {
+            SimpleCard(
+                text = stringResource(R.string.action_deferred_time_asap),
+                elevated = false,
+                onClick = {
+                    onAction(CreateOrder.Action.AsapClick)
+                }
+            )
+            NavigationCard(
+                modifier = Modifier.padding(top = 8.dp),
+                elevated = false,
+                label = stringResource(R.string.action_deferred_time_select_time),
+                onClick = {
+                    onAction(CreateOrder.Action.PickTimeClick)
+                }
+            )
+        }
+    }
+
+    @Composable
+    private fun TimePickerDialog(
+        timePicker: TimePickerUI,
+        onAction: (CreateOrder.Action) -> Unit
+    ) {
+        val dialogState = rememberMaterialDialogState()
+        LaunchedEffect(timePicker.isShown) {
+            if (timePicker.isShown) {
+                dialogState.show()
+            } else {
+                dialogState.hide()
+            }
+        }
+
+        var time by remember {
+            mutableStateOf(
+                LocalTime.of(
+                    timePicker.initialTime.hours,
+                    timePicker.initialTime.minutes,
+                )
+            )
+        }
+
+        MaterialDialog(
+            dialogState = dialogState,
+            backgroundColor = FoodDeliveryTheme.colors.mainColors.surface,
+            onCloseRequest = {
+                onAction(CreateOrder.Action.HideTimePicker)
+            }
+        ) {
+            val minTime = LocalTime.of(
+                timePicker.minTime.hours,
+                timePicker.minTime.minutes,
+            )
+            timepicker(
+                colors = TimePickerDefaults.colors(
+                    activeBackgroundColor = FoodDeliveryTheme.colors.mainColors.primary.copy(0.2f),
+                    inactiveBackgroundColor = FoodDeliveryTheme.colors.mainColors.disabled,
+                    activeTextColor = FoodDeliveryTheme.colors.mainColors.primary,
+                    inactiveTextColor = FoodDeliveryTheme.colors.mainColors.onSurface,
+                    selectorColor = FoodDeliveryTheme.colors.mainColors.primary,
+                    selectorTextColor = FoodDeliveryTheme.colors.mainColors.onPrimary,
+                    headerTextColor = FoodDeliveryTheme.colors.mainColors.surface,
+                    borderColor = FoodDeliveryTheme.colors.mainColors.onSurface
+                ),
+                is24HourClock = true,
+                initialTime = LocalTime.of(
+                    timePicker.initialTime.hours,
+                    timePicker.initialTime.minutes,
+                ),
+                timeRange = minTime..LocalTime.MAX,
+                waitForPositiveButton = false,
+                onTimeChange = { newTime ->
+                    time = newTime
+                }
+            )
+            Row(modifier = Modifier.padding(bottom = 24.dp, end = 24.dp)) {
+                Spacer(modifier = Modifier.weight(1f))
+                TextButton(
+                    onClick = {
+                        onAction(CreateOrder.Action.HideTimePicker)
+                    }
+                ) {
+                    Text(
+                        text = stringResource(R.string.common_cancel),
+                        style = FoodDeliveryTheme.typography.labelLarge.medium,
+                        color = FoodDeliveryTheme.colors.mainColors.disabled
+                    )
+                }
+                TextButton(
+                    modifier = Modifier.padding(start = 8.dp),
+                    onClick = {
+                        onAction(
+                            CreateOrder.Action.ChangeDeferredTime(
+                                Time(
+                                    hours = time.hour,
+                                    minutes = time.minute
+                                )
+                            )
+                        )
+                    }
+                ) {
+                    Text(
+                        text = stringResource(R.string.common_ok),
+                        style = FoodDeliveryTheme.typography.labelLarge.medium,
+                        color = FoodDeliveryTheme.colors.mainColors.primary
                     )
                 }
             }
@@ -587,7 +713,7 @@ class CreateOrderFragment :
                     isAddressErrorShown = false,
                     comment = "Коммент",
                     deferredTime = "Как можно скорее",
-                    deferredTimeHintStringId = R.string.delivery_time,
+                    deferredTimeStringId = R.string.delivery_time,
                     selectedPaymentMethod = PaymentMethodUI(
                         uuid = "",
                         name = "Наличка",
@@ -599,13 +725,19 @@ class CreateOrderFragment :
                     isPaymentMethodErrorShown = false,
                     cartTotal = CartTotalUI.Loading,
                     isLoading = false,
-                    deliveryAddressList = DeliveryAddressList(
+                    deliveryAddressList = DeliveryAddressListUI(
                         isShown = false,
                         addressList = persistentListOf()
                     ),
-                    pickupAddressList = PickupAddressList(
+                    pickupAddressList = PickupAddressListUI(
                         isShown = false,
                         addressList = persistentListOf()
+                    ),
+                    isDeferredTimeShown = false,
+                    timePicker = TimePickerUI(
+                        isShown = false,
+                        minTime = TimeUI(0, 0),
+                        initialTime = TimeUI(0, 0),
                     ),
                 ),
                 onAction = {}
@@ -625,7 +757,7 @@ class CreateOrderFragment :
                     isAddressErrorShown = false,
                     comment = "Коммент",
                     deferredTime = "Как можно скорее",
-                    deferredTimeHintStringId = R.string.delivery_time,
+                    deferredTimeStringId = R.string.delivery_time,
                     selectedPaymentMethod = PaymentMethodUI(
                         uuid = "",
                         name = "Наличка",
@@ -642,13 +774,19 @@ class CreateOrderFragment :
                         newFinalCost = "650 ₽",
                     ),
                     isLoading = false,
-                    deliveryAddressList = DeliveryAddressList(
+                    deliveryAddressList = DeliveryAddressListUI(
                         isShown = false,
                         addressList = persistentListOf()
                     ),
-                    pickupAddressList = PickupAddressList(
+                    pickupAddressList = PickupAddressListUI(
                         isShown = false,
                         addressList = persistentListOf()
+                    ),
+                    isDeferredTimeShown = false,
+                    timePicker = TimePickerUI(
+                        isShown = false,
+                        minTime = TimeUI(0, 0),
+                        initialTime = TimeUI(0, 0),
                     ),
                 ),
                 onAction = {}
@@ -668,7 +806,7 @@ class CreateOrderFragment :
                     isAddressErrorShown = false,
                     comment = "",
                     deferredTime = "18:20",
-                    deferredTimeHintStringId = R.string.pickup_time,
+                    deferredTimeStringId = R.string.pickup_time,
                     selectedPaymentMethod = PaymentMethodUI(
                         uuid = "Коммент",
                         name = "Наличка",
@@ -685,13 +823,19 @@ class CreateOrderFragment :
                         newFinalCost = "650 ₽",
                     ),
                     isLoading = false,
-                    deliveryAddressList = DeliveryAddressList(
+                    deliveryAddressList = DeliveryAddressListUI(
                         isShown = false,
                         addressList = persistentListOf()
                     ),
-                    pickupAddressList = PickupAddressList(
+                    pickupAddressList = PickupAddressListUI(
                         isShown = false,
                         addressList = persistentListOf()
+                    ),
+                    isDeferredTimeShown = false,
+                    timePicker = TimePickerUI(
+                        isShown = false,
+                        minTime = TimeUI(0, 0),
+                        initialTime = TimeUI(0, 0),
                     ),
                 ),
                 onAction = {}
@@ -711,7 +855,7 @@ class CreateOrderFragment :
                     isAddressErrorShown = false,
                     comment = "Коммент",
                     deferredTime = "18:20",
-                    deferredTimeHintStringId = R.string.pickup_time,
+                    deferredTimeStringId = R.string.pickup_time,
                     selectedPaymentMethod = PaymentMethodUI(
                         uuid = "",
                         name = "Наличка",
@@ -728,13 +872,19 @@ class CreateOrderFragment :
                         newFinalCost = "650 ₽",
                     ),
                     isLoading = true,
-                    deliveryAddressList = DeliveryAddressList(
+                    deliveryAddressList = DeliveryAddressListUI(
                         isShown = false,
                         addressList = persistentListOf()
                     ),
-                    pickupAddressList = PickupAddressList(
+                    pickupAddressList = PickupAddressListUI(
                         isShown = false,
                         addressList = persistentListOf()
+                    ),
+                    isDeferredTimeShown = false,
+                    timePicker = TimePickerUI(
+                        isShown = false,
+                        minTime = TimeUI(0, 0),
+                        initialTime = TimeUI(0, 0),
                     ),
                 ),
                 onAction = {}
@@ -754,7 +904,7 @@ class CreateOrderFragment :
                     isAddressErrorShown = true,
                     comment = "",
                     deferredTime = "18:20",
-                    deferredTimeHintStringId = R.string.pickup_time,
+                    deferredTimeStringId = R.string.pickup_time,
                     selectedPaymentMethod = null,
                     isPaymentMethodErrorShown = true,
                     cartTotal = CartTotalUI.Success(
@@ -764,13 +914,19 @@ class CreateOrderFragment :
                         newFinalCost = "650 ₽",
                     ),
                     isLoading = false,
-                    deliveryAddressList = DeliveryAddressList(
+                    deliveryAddressList = DeliveryAddressListUI(
                         isShown = false,
                         addressList = persistentListOf()
                     ),
-                    pickupAddressList = PickupAddressList(
+                    pickupAddressList = PickupAddressListUI(
                         isShown = false,
                         addressList = persistentListOf()
+                    ),
+                    isDeferredTimeShown = false,
+                    timePicker = TimePickerUI(
+                        isShown = false,
+                        minTime = TimeUI(0, 0),
+                        initialTime = TimeUI(0, 0),
                     ),
                 ),
                 onAction = {}

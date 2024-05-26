@@ -37,7 +37,7 @@ class CreateOrderViewModel(
         isDelivery = true,
         userAddressList = emptyList(),
         selectedUserAddress = null,
-        isUserAddressError = false,
+        isAddressErrorShown = false,
         cafeList = emptyList(),
         selectedCafe = null,
         comment = "",
@@ -83,20 +83,36 @@ class CreateOrderViewModel(
                 changeCafeAddress(cafeUuid = action.addressUuid)
             }
 
+            CreateOrder.Action.DeferredTimeClick -> {
+                showDeferredTime()
+            }
+
+            CreateOrder.Action.HideDeferredTime -> {
+                hideDeferredTime()
+            }
+
+            CreateOrder.Action.AsapClick -> {
+                changeDeferredTimeToAsap()
+            }
+
+            CreateOrder.Action.PickTimeClick -> {
+                showTimePicker()
+            }
+
+            CreateOrder.Action.HideTimePicker -> {
+                hideTimePicker()
+            }
+
+            is CreateOrder.Action.ChangeDeferredTime -> {
+                changeDeferredTime(deferredTime = action.time)
+            }
+
             CreateOrder.Action.PaymentMethodClick -> {
                 paymentMethodClick()
             }
 
             is CreateOrder.Action.ChangePaymentMethod -> {
                 changePaymentMethod(paymentMethodUuid = action.paymentMethodUuid)
-            }
-
-            CreateOrder.Action.DeferredTimeClick -> {
-                deferredTimeClick()
-            }
-
-            is CreateOrder.Action.ChangeDeferredTime -> {
-                changeDeferredTime(deferredTime = action.deferredTime)
             }
 
             CreateOrder.Action.CommentClick -> {
@@ -141,19 +157,19 @@ class CreateOrderViewModel(
 
     private fun userAddressClick() {
         setState {
-            copy(showUserAddressList = true)
+            copy(isUserAddressListShown = true)
         }
     }
 
     private fun hideUserAddressList() {
         setState {
-            copy(showUserAddressList = false)
+            copy(isUserAddressListShown = false)
         }
     }
 
     private fun changeUserAddress(userAddressUuid: String) {
         setState {
-            copy(showUserAddressList = false)
+            copy(isUserAddressListShown = false)
         }
         withLoading {
             saveSelectedUserAddress(userAddressUuid)
@@ -163,23 +179,84 @@ class CreateOrderViewModel(
 
     private fun cafeAddressClick() {
         setState {
-            copy(showCafeList = true)
+            copy(isCafeListShown = true)
         }
     }
 
     private fun hideCafeList() {
         setState {
-            copy(showCafeList = false)
+            copy(isCafeListShown = false)
         }
     }
 
     private fun changeCafeAddress(cafeUuid: String) {
         setState {
-            copy(showCafeList = false)
+            copy(isCafeListShown = false)
         }
         withLoading {
             cafeInteractor.saveSelectedCafe(cafeUuid)
             updateSelectedCafe()
+        }
+    }
+
+    private fun showDeferredTime() {
+        setState {
+            copy(isDeferredTimeShown = true)
+        }
+    }
+
+    private fun hideDeferredTime() {
+        setState {
+            copy(isDeferredTimeShown = false)
+        }
+    }
+
+    private fun showTimePicker() {
+        sharedScope.launchSafe(
+            block = {
+                val timeZone = getSelectedCityTimeZone()
+                val minDeferredTime = getMinTime(timeZone)
+
+                setState {
+                    copy(
+                        isTimePickerShown = true,
+                        minDeferredTime = getMinTime(timeZone),
+                        initialDeferredTime = if (deferredTime is CreateOrder.DeferredTime.Later) {
+                            deferredTime.time
+                        } else {
+                            minDeferredTime
+                        },
+                    )
+                }
+            },
+            onError = {}
+        )
+    }
+
+    private fun hideTimePicker() {
+        setState {
+            copy(isTimePickerShown = false)
+        }
+    }
+
+    private fun changeDeferredTime(deferredTime: Time) {
+        setState {
+            copy(
+                isDeferredTimeShown = false,
+                isTimePickerShown = false,
+                deferredTime = CreateOrder.DeferredTime.Later(
+                    time = deferredTime
+                )
+            )
+        }
+    }
+
+    private fun changeDeferredTimeToAsap() {
+        setState {
+            copy(
+                isDeferredTimeShown = false,
+                deferredTime = CreateOrder.DeferredTime.Asap
+            )
         }
     }
 
@@ -195,36 +272,6 @@ class CreateOrderViewModel(
         withLoading {
             savePaymentMethodUseCase(paymentMethodUuid)
             updatePaymentMethods()
-        }
-    }
-
-    private fun deferredTimeClick() {
-        sharedScope.launchSafe(
-            block = {
-                val timeZone = getSelectedCityTimeZone()
-                addEvent { state ->
-                    CreateOrder.Event.ShowDeferredTimeEvent(
-                        deferredTime = state.deferredTime,
-                        minTime = getMinTime(timeZone),
-                        isDelivery = state.isDelivery
-                    )
-                }
-            },
-            onError = {}
-        )
-    }
-
-    private fun changeDeferredTime(deferredTime: Time?) {
-        setState {
-            copy(
-                deferredTime = if (deferredTime == null) {
-                    CreateOrder.DeferredTime.Asap
-                } else {
-                    CreateOrder.DeferredTime.Later(
-                        time = deferredTime
-                    )
-                }
-            )
         }
     }
 
@@ -247,7 +294,7 @@ class CreateOrderViewModel(
 
         val isDeliveryAddressNotSelected = state.isDelivery && (state.selectedUserAddress == null)
         setState {
-            copy(isUserAddressError = isDeliveryAddressNotSelected)
+            copy(isAddressErrorShown = isDeliveryAddressNotSelected)
         }
 
         if (isDeliveryAddressNotSelected) {
@@ -259,7 +306,7 @@ class CreateOrderViewModel(
 
         val isPaymentMethodNotSelected = state.selectedPaymentMethod == null
         setState {
-            copy(isPaymentMethodError = isPaymentMethodNotSelected)
+            copy(isPaymentMethodErrorShown = isPaymentMethodNotSelected)
         }
         if (isPaymentMethodNotSelected) {
             addEvent {
@@ -338,7 +385,7 @@ class CreateOrderViewModel(
         }
         if (selectableUserAddress != null) {
             setState {
-                copy(isUserAddressError = false)
+                copy(isAddressErrorShown = false)
             }
         }
     }

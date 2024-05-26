@@ -18,19 +18,30 @@ interface CreateOrder {
 
         val userAddressList: List<SelectableUserAddress> = emptyList(),
         val selectedUserAddress: UserAddress? = null,
-        val showUserAddressList: Boolean = false,
-        val isUserAddressError: Boolean = false,
+        val isUserAddressListShown: Boolean = false,
+        val isAddressErrorShown: Boolean = false,
 
         val cafeList: List<SelectableCafe> = emptyList(),
-        val showCafeList: Boolean = false,
+        val isCafeListShown: Boolean = false,
         val selectedCafe: Cafe? = null,
 
-        val comment: String? = null,
         val deferredTime: DeferredTime = DeferredTime.Asap,
+        val isDeferredTimeShown: Boolean = false,
+        val isTimePickerShown: Boolean = false,
+        val minDeferredTime: Time = Time(
+            hours = 0,
+            minutes = 0
+        ),
+        val initialDeferredTime: Time = Time(
+            hours = 0,
+            minutes = 0
+        ),
 
         val paymentMethodList: List<SelectablePaymentMethod> = emptyList(),
         val selectedPaymentMethod: PaymentMethod? = null,
-        val isPaymentMethodError: Boolean = false,
+        val isPaymentMethodErrorShown: Boolean = false,
+
+        val comment: String? = null,
 
         val cartTotal: CartTotal,
 
@@ -54,30 +65,35 @@ interface CreateOrder {
 
     sealed interface Action : BaseAction {
         data object Update : Action
+
         data class ChangeMethod(val position: Int) : Action
+
         data object DeliveryAddressClick : Action
         data object HideDeliveryAddressList : Action
         data class ChangeDeliveryAddress(val addressUuid: String) : Action
+
         data object PickupAddressClick : Action
         data object HidePickupAddressList : Action
         data class ChangePickupAddress(val addressUuid: String) : Action
+
+        data object DeferredTimeClick : Action
+        data object HideDeferredTime : Action
+        data object AsapClick : Action
+        data object PickTimeClick : Action
+        data object HideTimePicker : Action
+        data class ChangeDeferredTime(val time: Time) : Action
+
         data object PaymentMethodClick : Action
         data class ChangePaymentMethod(val paymentMethodUuid: String) : Action
-        data object DeferredTimeClick : Action
-        data class ChangeDeferredTime(val deferredTime: Time?): Action
+
         data object CommentClick : Action
-        data class ChangeComment(val comment: String): Action
+        data class ChangeComment(val comment: String) : Action
+
         data object CreateClick : Action
     }
 
     sealed interface Event : BaseEvent {
         data object OpenCreateAddressEvent : Event
-
-        data class ShowDeferredTimeEvent(
-            val deferredTime: DeferredTime,
-            val minTime: Time,
-            val isDelivery: Boolean,
-        ) : Event
 
         data class ShowCommentInputEvent(val comment: String?) : Event
         data object ShowUserUnauthorizedErrorEvent : Event

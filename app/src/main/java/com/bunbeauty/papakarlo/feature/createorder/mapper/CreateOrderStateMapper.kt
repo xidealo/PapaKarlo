@@ -5,10 +5,12 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.feature.address.mapper.toAddressString
 import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.CartTotalUI
 import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.CreateOrderViewState
-import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.DeliveryAddressList
-import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.PickupAddressList
+import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.DeliveryAddressListUI
+import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.PickupAddressListUI
 import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.SelectableAddressUI
+import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.TimePickerUI
 import com.bunbeauty.papakarlo.feature.deferredtime.toDeferredTimeString
+import com.bunbeauty.papakarlo.feature.deferredtime.toTimeUI
 import com.bunbeauty.papakarlo.feature.paymentmethod.toPaymentMethodUI
 import com.bunbeauty.shared.presentation.createorder.CreateOrder
 import kotlinx.collections.immutable.toImmutableList
@@ -19,16 +21,16 @@ fun CreateOrder.DataState.toViewState(): CreateOrderViewState {
         isDelivery = isDelivery,
         deliveryAddress = selectedUserAddress?.toAddressString(),
         pickupAddress = selectedCafe?.address,
-        isAddressErrorShown = isDelivery && isUserAddressError,
+        isAddressErrorShown = isDelivery && isAddressErrorShown,
         comment = comment,
-        deferredTimeHintStringId = if (isDelivery) {
+        deferredTimeStringId = if (isDelivery) {
             R.string.delivery_time
         } else {
             R.string.pickup_time
         },
         deferredTime = deferredTime.toDeferredTimeString(),
         selectedPaymentMethod = selectedPaymentMethod?.toPaymentMethodUI(),
-        isPaymentMethodErrorShown = isPaymentMethodError,
+        isPaymentMethodErrorShown = isPaymentMethodErrorShown,
         cartTotal = when (cartTotal) {
             CreateOrder.CartTotal.Loading -> CartTotalUI.Loading
             is CreateOrder.CartTotal.Success -> {
@@ -42,8 +44,8 @@ fun CreateOrder.DataState.toViewState(): CreateOrderViewState {
             }
         },
         isLoading = isLoading,
-        deliveryAddressList = DeliveryAddressList(
-            isShown = showUserAddressList,
+        deliveryAddressList = DeliveryAddressListUI(
+            isShown = isUserAddressListShown,
             addressList = userAddressList.map { selectableUserAddress ->
                 SelectableAddressUI(
                     uuid = selectableUserAddress.address.uuid,
@@ -53,8 +55,8 @@ fun CreateOrder.DataState.toViewState(): CreateOrderViewState {
 
             }.toImmutableList()
         ),
-        pickupAddressList = PickupAddressList(
-            isShown = showCafeList,
+        pickupAddressList = PickupAddressListUI(
+            isShown = isCafeListShown,
             addressList = cafeList.map { selectableCafe ->
                 SelectableAddressUI(
                     uuid = selectableCafe.cafe.uuid,
@@ -62,6 +64,12 @@ fun CreateOrder.DataState.toViewState(): CreateOrderViewState {
                     isSelected = selectableCafe.isSelected,
                 )
             }.toImmutableList()
+        ),
+        isDeferredTimeShown = isDeferredTimeShown,
+        timePicker = TimePickerUI(
+            isShown = isTimePickerShown,
+            minTime = minDeferredTime.toTimeUI(),
+            initialTime = initialDeferredTime.toTimeUI(),
         ),
     )
 }
