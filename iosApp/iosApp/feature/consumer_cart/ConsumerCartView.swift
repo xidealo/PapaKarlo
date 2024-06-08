@@ -34,6 +34,7 @@ struct ConsumerCartView: View {
     //State
     @State var openCreateOrder: Bool = false
     @State var openLogin: Bool = false
+    @State var openProductDetails: Bool = false
     // ---
     
     //for back after createOrder
@@ -47,8 +48,14 @@ struct ConsumerCartView: View {
     @State var edited: Bool = false
     //--
     
+    //for back after createOrder
+    @State private var selectedMenuProductUuid : String = ""
+    @State private var selectedMenuProductName : String  = ""
+    @State private var selectedCartProductItemIos : String = ""
+    @State private var selectedAdditionUuidList : [String] = []
+    //--
+    
     var body: some View {
-        Text("")
         VStack(spacing:0){
             ToolbarView(
                 title: "titleCartProducts",
@@ -57,7 +64,7 @@ struct ConsumerCartView: View {
                 }
             )
             NavigationLink(
-                destination:LoginView(rootIsActive: $openLogin, isGoToCreateOrder: $openCreateOrder),
+                destination: LoginView(rootIsActive: $openLogin, isGoToCreateOrder: $openCreateOrder),
                 isActive: $openLogin
             ){
                 EmptyView()
@@ -66,18 +73,38 @@ struct ConsumerCartView: View {
             
             NavigationLink(
                 destination: CreateOrderView(
-                    isRootActive: self.$isRootActive,
-                    selection: self.$selection,
+                    isRootActive: $isRootActive,
+                    selection: $selection,
                     showOrderCreated: $showOrderCreated
                 ),
                 isActive: $openCreateOrder
             ){
                 EmptyView()
             }
+            
+            NavigationLink(
+                destination:
+                    ProductDetailsView(
+                        menuProductUuid: selectedMenuProductUuid,
+                        menuProductName: selectedMenuProductName,
+                        cartProductUuid: selectedCartProductItemIos,
+                        additionUuidList: selectedAdditionUuidList,
+                        productDetailsOpenedFrom: ProductDetailsOpenedFrom.cartProduct,
+                        isRootActive: $isRootActive,
+                        selection: $selection,
+                        showOrderCreated: $showOrderCreated,
+                        created: $created,
+                        edited: $edited
+                    ),
+                isActive: $openProductDetails
+            ){
+                EmptyView()
+            }
+            
             switch consumerCartViewState.state {
             case .success(let cartProductItems, let consumerCartProducts, let bottomPanelInfo):
                 ConsumerCartSuccessScreen(
-                    cartProductItemUi: cartProductItems,
+                    cartProductItemUiList: cartProductItems,
                     recommendationProductList: consumerCartProducts,
                     bottomPanelInfoUi: bottomPanelInfo,
                     isRootActive: isRootActive,
@@ -87,7 +114,6 @@ struct ConsumerCartView: View {
                     edited: $edited,
                     action: viewModel.onAction
                 )
-                
             case .loading: LoadingView()
             case .error: ErrorView(
                 mainText: "Что-то пошло не так",
@@ -95,8 +121,7 @@ struct ConsumerCartView: View {
             ){
                 
             }
-            default:
-                EmptyView()
+                
             }
         }
         .background(AppColor.background2)
@@ -131,7 +156,7 @@ struct ConsumerCartView: View {
         viewModel.onAction(action: ConsumerCartActionInit())
         listener = viewModel.dataState.watch { consumerCartStateVM in
             if let consumerCartStateVM =  consumerCartStateVM {
-                switch consumerCartStateVM{
+                switch consumerCartStateVM.state {
                 case ConsumerCartDataState.State.loading : consumerCartViewState = ConsumerCartViewState(state: ConsumerCartState.loading)
                 case ConsumerCartDataState.State.error : consumerCartViewState = ConsumerCartViewState(state: ConsumerCartState.error)
                 case ConsumerCartDataState.State.success : consumerCartViewState =  ConsumerCartViewState(state: ConsumerCartState.success(
@@ -145,17 +170,19 @@ struct ConsumerCartView: View {
                             isLast: index == consumerCartStateVM.cartProductItemList.count - 1
                         )
                     }),
-                    consumerCartStateVM.recommendationList.map({ menuProduct in
-                        MenuProductItem(
-                            id: menuProduct.uuid,
-                            productUuid: menuProduct.uuid,
-                            name: menuProduct.name,
-                            newPrice: String(menuProduct.newPrice) + Strings.CURRENCY,
-                            oldPrice: menuProduct.oldPrice as? Int,
-                            photoLink: menuProduct.photoLink,
-                            hasAdditions: !menuProduct.hasAdditions
-                        )
-                    }),
+                    consumerCartStateVM.recommendationList.map(
+                        { menuProduct in
+                            MenuProductItem(
+                                id: menuProduct.uuid,
+                                productUuid: menuProduct.uuid,
+                                name: menuProduct.name,
+                                newPrice: String(menuProduct.newPrice) + Strings.CURRENCY,
+                                oldPrice: nil,
+                                photoLink: menuProduct.photoLink,
+                                hasAdditions: !menuProduct.hasAdditions
+                            )
+                        }
+                    ),
                     getBottomPanelInfoUi(dataState: consumerCartStateVM)
                 )
                 )
@@ -170,6 +197,7 @@ struct ConsumerCartView: View {
         if(dataState.cartProductItemList.isEmpty){
             return nil
         }
+        print(dataState)
         
         let motivationUi: MotivationUi? = {
             if let warningItem = dataState.motivation {
@@ -191,7 +219,7 @@ struct ConsumerCartView: View {
             return nil
         }()
         
-       return BottomPanelInfoUi(
+        return BottomPanelInfoUi(
             motivation: motivationUi,
             discount: dataState.discount,
             oldTotalCost: dataState.oldTotalCost,
@@ -206,10 +234,21 @@ struct ConsumerCartView: View {
                 
                 consumerCartEvents.forEach { event in
                     print(event)
+                    
                     switch(event){
-                    case is ConsumerCartEventNavigateBack : self.mode.wrappedValue.dismiss()
+                    case is ConsumerCartEventNavigateBack :
+                        self.mode.wrappedValue.dismiss()
                     case is ConsumerCartEventNavigateToCreateOrder : openCreateOrder = true
                     case is ConsumerCartEventNavigateToLogin: openLogin = true
+                    case is ConsumerCartEventNavigateToProduct:
+                        let consumerCartEventNavigateToProduct = event as? ConsumerCartEventNavigateToProduct
+                        
+                        selectedMenuProductUuid = consumerCartEventNavigateToProduct?.uuid ?? ""
+                        selectedMenuProductName = consumerCartEventNavigateToProduct?.name ?? ""
+                        selectedCartProductItemIos = consumerCartEventNavigateToProduct?.cartProductUuid ?? ""
+                        selectedAdditionUuidList = consumerCartEventNavigateToProduct?.additionUuidList ?? []
+                        
+                        openProductDetails = true
                     default:
                         print("def")
                     }
@@ -232,20 +271,18 @@ struct ConsumerCartView: View {
 
 struct ConsumerCartSuccessScreen: View {
     
-    let cartProductItemUi : [CartProductItemUi]
+    let cartProductItemUiList : [CartProductItemUi]
     let recommendationProductList : [MenuProductItem]
     let bottomPanelInfoUi : BottomPanelInfoUi?
     
-    
     //for back after createOrder
-    @State var isRootActive:Bool
-    @State var selection:Int
-    @State var showOrderCreated:Bool
-    
+    @State var isRootActive : Bool
+    @State var selection : Int
+    @State var showOrderCreated : Bool
     
     //for add or edit product
-    @Binding var created:Bool
-    @Binding var edited:Bool
+    @Binding var created : Bool
+    @Binding var edited : Bool
     
     let action: (ConsumerCartAction) -> Void
     
@@ -258,160 +295,237 @@ struct ConsumerCartSuccessScreen: View {
         VStack(spacing:0){
             ZStack(alignment: .bottom){
                 ScrollView {
-                    //                    LazyVStack(spacing:0){
-                    //                        Text("Бесплатная доставка от \(consumerCartUI.forFreeDelivery)")
-                    //                            .bodyMedium()
-                    //                            .frame(maxWidth: .infinity, alignment: .leading)
-                    //                            .padding(.horizontal, Diems.MEDIUM_PADDING)
-                    //                            .padding(.bottom, Diems.MEDIUM_PADDING)
-                    //                            .padding(.top, Diems.SMALL_PADDING)
-                    //
-                    //                        ForEach(cartProductListIos){ cartProductItemIos in
-                    //                            VStack(spacing:0){
-                    //                                CartProductView(
-                    //                                    cartProductItem: cartProductItemIos.cartProductItem,
-                    //                                    isRootActive : $isRootActive,
-                    //                                    selection : $selection,
-                    //                                    showOrderCreated : $showOrderCreated,
-                    //                                    created: $created,
-                    //                                    edited: $edited,
-                    //                                plusAction: {
-                    //                                    action(
-                    //                                        ConsumerCartActionAddProductToCartClick(
-                    //                                            cartProductUuid: cartProductItemIos.cartProductItem.uuid,
-                    //                                            menuProductUuid: cartProductItemIos.cartProductItem.menuProductUuid
-                    //                                        )
-                    //                                    )
-                    //                                },
-                    //                                minusAction: {
-                    //                                    action(
-                    //                                        ConsumerCartActionRemoveProductFromCartClick(
-                    //                                            menuProductUuid: cartProductItemIos.cartProductItem.menuProductUuid,
-                    //                                            cartProductUuid: cartProductItemIos.cartProductItem.uuid
-                    //                                        )
-                    //                                    )
-                    //                                })
-                    //                                .padding(.horizontal, Diems.MEDIUM_PADDING)
-                    //                                .padding(.bottom, 8)
-                    //                                if(cartProductListIos.last?.id != cartProductItemIos.id){
-                    //                                    Divider()
-                    //                                        .frame(height: 2)
-                    //                                        .overlay(AppColor.stroke)
-                    //                                        .padding(.horizontal, Diems.MEDIUM_PADDING)
-                    //                                        .padding(.bottom, 8)
-                    //                                }
-                    //                            }
-                    //                        }
-                    //                    }
-                    //
-                    //                    if(!recommendationProductList.isEmpty){
-                    //                        Text("consumer_cart_recommendations")
-                    //                            .titleMedium(weight: .medium)
-                    //                            .frame(maxWidth: .infinity, alignment: .leading)
-                    //                            .padding(.horizontal, Diems.MEDIUM_PADDING)
-                    //                            .padding(.bottom, 8)
-                    //                            .padding(.top, 16)
-                    //                    }
-                    //
-                    //                    LazyVGrid(columns: columns, spacing: 8) {
-                    //                        ForEach(recommendationProductList){ menuProductItem in
-                    //                            MenuItemView(
-                    //                                menuProductItem: menuProductItem,
-                    //                                productDetailsOpenedFrom: ProductDetailsOpenedFrom.recommendationProduct,
-                    //                                isRootActive : $isRootActive,
-                    //                                selection : $selection,
-                    //                                showOrderCreated : $showOrderCreated,
-                    //                                created: $created,
-                    //                                edited: $edited,
-                    //                                action: {
-                    //                                    action(
-                    //                                        ConsumerCartActionAddRecommendationProductToCartClick(
-                    //                                            menuProductUuid: menuProductItem.id,
-                    //                                            menuProductName: menuProductItem.name,
-                    //                                            hasAdditions: menuProductItem.hasAdditions
-                    //                                        )
-                    //                                    )
-                    //                                }
-                    //                            )
-                    //                        }
-                    //                    }
-                    //                    .padding(.horizontal, Diems.MEDIUM_PADDING)
-                    //                    .padding(.bottom, 8)
-                    //                }
-                    //            }
-                    //
-                    //            VStack(spacing:0){
-                    //                if let discount = consumerCartUI.firstOrderDiscount{
-                    //                    HStack(spacing:0){
-                    //                        Text("consumer_cart_discount")
-                    //                            .bodyMedium()
-                    //                            .foregroundColor(AppColor.onSurface)
-                    //
-                    //                        Spacer()
-                    //
-                    //                        DiscountCard(text:discount)
-                    //                    }.padding(.top, 16)
-                    //                        .padding(.horizontal, 16)
-                    //                }
-                    //
-                    //                HStack(spacing:0){
-                    //                    Text("consumer_cart_total")
-                    //                        .bodyMedium(weight: .bold)
-                    //                        .foregroundColor(AppColor.onSurface)
-                    //
-                    //                    Spacer()
-                    //
-                    //                    if let oldTotalCost = consumerCartUI.oldTotalCost{
-                    //                        Text(oldTotalCost)
-                    //                            .strikethrough()
-                    //                            .bodyMedium(weight: .bold)
-                    //                            .foregroundColor(AppColor.onSurfaceVariant)
-                    //                            .padding(.trailing, 4)
-                    //                    }
-                    //
-                    //                    Text(consumerCartUI.newTotalCost)
-                    //                        .bodyMedium(weight: .bold)
-                    //                        .foregroundColor(AppColor.onSurface)
-                    //                }.padding(.top, 8)
-                    //                    .padding(.horizontal, 16)
-                    //
-                    //                Button {
-                    //                    action(ConsumerCartActionOnCreateOrderClick())
-                    //                } label: {
-                    //                    ButtonText(text: Strings.ACTION_CART_PRODUCT_CREATE_ORDER)
+                    LazyVStack(spacing:0){
+                        
+                        ForEach(cartProductItemUiList){ cartProductItemIos in
+                            VStack(spacing:0){
+                                Button {
+                                    action(
+                                        ConsumerCartActionOnCartProductClick(
+                                            cartProductUuid: cartProductItemIos.id
+                                        )
+                                    )
+                                } label: {
+                                    CartProductView(
+                                        cartProductItem: cartProductItemIos,
+                                        plusAction: {
+                                            action(
+                                                ConsumerCartActionAddProductToCartClick(
+                                                    cartProductUuid: cartProductItemIos.id
+                                                )
+                                            )
+                                        },
+                                        minusAction: {
+                                            action(
+                                                ConsumerCartActionRemoveProductFromCartClick(
+                                                    cartProductUuid: cartProductItemIos.id
+                                                )
+                                            )
+                                        })
+                                    .padding(.horizontal, Diems.MEDIUM_PADDING)
+                                    .padding(.bottom, 8)
+                                    
+                                }
+                                
+                                //   if(cartProductListIos.last?.id != cartProductItemIos.id){
+                                //       Divider()
+                                //           .frame(height: 2)
+                                //           .overlay(AppColor.stroke)
+                                //           .padding(.horizontal, Diems.MEDIUM_PADDING)
+                                //           .padding(.bottom, 8)
+                                //  }
+                            }
+                        }
+                    }
+                    
+                    if(!recommendationProductList.isEmpty){
+                        Text("consumer_cart_recommendations")
+                            .titleMedium(weight: .medium)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.horizontal, Diems.MEDIUM_PADDING)
+                            .padding(.bottom, 8)
+                            .padding(.top, 16)
+                    }
+                    
+                    LazyVGrid(columns: columns, spacing: 8) {
+                        ForEach(recommendationProductList){ menuProductItem in
+                            MenuItemView(
+                                menuProductItem: menuProductItem,
+                                productDetailsOpenedFrom: ProductDetailsOpenedFrom.recommendationProduct,
+                                isRootActive : $isRootActive,
+                                selection : $selection,
+                                showOrderCreated : $showOrderCreated,
+                                created: $created,
+                                edited: $edited,
+                                action: {
+                                    action(
+                                        ConsumerCartActionAddRecommendationProductToCartClick(
+                                            menuProductUuid: menuProductItem.id
+                                        )
+                                    )
+                                }
+                            )
+                        }
+                    }
+                    .padding(.horizontal, Diems.MEDIUM_PADDING)
+                    .padding(.bottom, 8)
                 }
-                .padding(.horizontal, Diems.MEDIUM_PADDING)
-                .padding(.vertical, Diems.MEDIUM_PADDING)
-            }.background(AppColor.surface)
+                
+                VStack(spacing:0){
+                    if let motivation = bottomPanelInfoUi?.motivation{
+                        
+                        VStack(spacing:0){
+                            HStack(spacing:0){
+                                getMotivationIcon(motivation: motivation)
+                                getMotivationText(motivation: motivation)
+                                    .foregroundColor(AppColor.onSurface)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .padding(.leading, 8)
+                                
+                            }
+                            
+                            if let progress = getMotivationProgress(motivation: motivation){
+                                ProgressView(value: progress)
+                                    .tint(progress < 1 ? AppColor.warning : AppColor.positive)
+                                    .frame(height: 8)
+                                    .progressViewStyle(LinearProgressViewStyle())
+                                    .cornerRadius(4)
+                                    .animation(.easeIn(duration: 3), value: progress)
+                                    .padding(.top, 4)
+                                
+                                
+                                
+                                //                          .progressViewStyle(LinearProgressViewStyle(tint: getAnimatedColor(progress: progress)))
+                                
+                            }
+                        }.padding(.horizontal, 16)
+                            .padding(.top, 16)
+                    }
+                    
+                    if let discount = bottomPanelInfoUi?.discount{
+                        HStack(spacing:0){
+                            Text("consumer_cart_discount")
+                                .bodyMedium()
+                                .foregroundColor(AppColor.onSurface)
+                            
+                            Spacer()
+                            
+                            DiscountCard(text:discount)
+                        }.padding(.top, 8)
+                            .padding(.horizontal, 16)
+                    }
+                    
+                    HStack(spacing:0){
+                        Text("consumer_cart_total")
+                            .bodyMedium(weight: .bold)
+                            .foregroundColor(AppColor.onSurface)
+                        
+                        Spacer()
+                        
+                        if let oldTotalCost = bottomPanelInfoUi?.oldTotalCost{
+                            Text(oldTotalCost)
+                                .strikethrough()
+                                .bodyMedium(weight: .bold)
+                                .foregroundColor(AppColor.onSurfaceVariant)
+                                .padding(.trailing, 4)
+                        }
+                        
+                        if let newTotalCost = bottomPanelInfoUi?.newTotalCost{
+                            Text(newTotalCost)
+                                .bodyMedium(weight: .bold)
+                                .foregroundColor(AppColor.onSurface)
+                        }
+                    }.padding(.top, 8)
+                        .padding(.horizontal, 16)
+                    
+                    Button {
+                        action(ConsumerCartActionOnCreateOrderClick())
+                    } label: {
+                        ButtonText(text: Strings.ACTION_CART_PRODUCT_CREATE_ORDER)
+                    }
+                    .padding(.horizontal, Diems.MEDIUM_PADDING)
+                    .padding(.vertical, Diems.MEDIUM_PADDING)
+                }.background(AppColor.surface)
+            }
         }
     }
     
-}
-
-struct ConsumerCartEmptyScreen: View {
-    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    
-    @Binding var isRootActive:Bool
-    @Binding var selection:Int
-    
-    var body: some View {
-        VStack(spacing:0){
-            Spacer()
+    func getMotivationProgress(motivation: MotivationUi) -> Float?  {
+        switch(motivation){
+        case .MinOrderCost(_):
+            return nil
             
-            EmptyWithIconView(
-                imageName:  "CartIcon",
-                title: "emptyCartTitleProfile",
-                secondText: "emptyCartSecondProfile"
+        case .ForLowerDelivery(_, let progress, _):
+            return progress
+            
+        case .LowerDeliveryAchieved(_):
+            return 1
+        }
+    }
+    
+    //    func getAnimatedColor(progress:Int) -> Color {
+    //        let warningColor = AppColor.warning
+    //        let positiveColor = AppColor.positive
+    //          return Color(red: Double(1.0 - progress) * warningColor + Double(progress) * positiveColor,
+    //                       green: Double(1.0 - progress) * warningColor + Double(progress) * positiveColor,
+    //                       blue: Double(1.0 - progress) * warningColor. + Double(progress) * positiveColor)
+    //      }
+    //
+    func getMotivationText(motivation: MotivationUi) -> some View  {
+        switch(motivation){
+        case .MinOrderCost(let cost):
+            return (
+                Text("Минимальая сумма заказа: ").bodySmall() + Text(cost).bodySmall(weight: .bold)
             )
             
-            Spacer()
+        case .ForLowerDelivery(let increaseAmountBy, _, let isFree):
+            return isFree ? (Text("Добавте еще на ") + Text(increaseAmountBy).bold() + Text(" для бесплатной доставки")).bodySmall() : (Text("Добавте еще на ") + Text(increaseAmountBy).bold() + Text(" для уменьшения стоимости доставки")).bodySmall()
+        case .LowerDeliveryAchieved(let isFree):
+            return Text(isFree ? "Бесплатная доставка" : "Уменьшенная стоимость доставки").bodySmall()
+        }
+    }
+    
+    func getMotivationIcon(motivation: MotivationUi) -> some View  {
+        switch(motivation){
+        case .MinOrderCost(_):
+            return IconImage(imageName: "ic_warning")
+                .foregroundColor(AppColor.warning)
             
-            Button {
-                isRootActive = false
-                selection = 1
-            } label: {
-                ButtonText(text: Strings.ACTION_CART_PRODUCT_MENU)
-            }.padding(Diems.MEDIUM_PADDING)
+        case .ForLowerDelivery(_, _, _):
+            return IconImage(imageName: "ic_delivery")
+                .foregroundColor(AppColor.onSurfaceVariant)
+            
+        case .LowerDeliveryAchieved(_):
+            return IconImage(imageName: "ic_delivery")
+                .foregroundColor(AppColor.onSurfaceVariant)
+        }
+    }
+    
+    struct ConsumerCartEmptyScreen: View {
+        @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+        
+        @Binding var isRootActive:Bool
+        @Binding var selection:Int
+        
+        var body: some View {
+            VStack(spacing:0){
+                Spacer()
+                
+                EmptyWithIconView(
+                    imageName:  "CartIcon",
+                    title: "emptyCartTitleProfile",
+                    secondText: "emptyCartSecondProfile"
+                )
+                
+                Spacer()
+                
+                Button {
+                    isRootActive = false
+                    selection = 1
+                } label: {
+                    ButtonText(text: Strings.ACTION_CART_PRODUCT_MENU)
+                }.padding(Diems.MEDIUM_PADDING)
+            }
         }
     }
 }

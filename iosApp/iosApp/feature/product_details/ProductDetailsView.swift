@@ -16,12 +16,12 @@ struct ProductDetailsView: View {
     let cartProductUuid:String?
     let additionUuidList:[String]
     
-    let productDetailsOpenedFrom:ProductDetailsOpenedFrom
-    @Binding var isRootActive:Bool
-    @Binding var selection:Int
-    @Binding var showOrderCreated:Bool
-    @Binding var created:Bool
-    @Binding var edited:Bool
+    let productDetailsOpenedFrom: ProductDetailsOpenedFrom
+    @Binding var isRootActive: Bool
+    @Binding var selection: Int
+    @Binding var showOrderCreated: Bool
+    @Binding var created: Bool
+    @Binding var edited: Bool
     
     @State var viewModel = ProductDetailsViewModel(
         getMenuProductUseCase: iosComponent.provideGetMenuProductByUuidUseCase(),

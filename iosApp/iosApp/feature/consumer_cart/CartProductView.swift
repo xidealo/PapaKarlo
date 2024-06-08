@@ -11,15 +11,7 @@ import shared
 
 struct CartProductView: View {
     
-    let cartProductItem: CartProductItem
-    
-    // Navigation to ProductDetails
-    @Binding var isRootActive:Bool
-    @Binding var selection:Int
-    @Binding var showOrderCreated:Bool
-    @State var openProductDetails:Bool = false
-    @Binding var created:Bool
-    @Binding var edited:Bool
+    let cartProductItem: CartProductItemUi
     
     // ----
     
@@ -29,22 +21,6 @@ struct CartProductView: View {
     // ----
     
     var body: some View {
-        NavigationLink(
-            destination:
-                ProductDetailsView(
-                    menuProductUuid: cartProductItem.menuProductUuid,
-                    menuProductName: cartProductItem.name,
-                    cartProductUuid: cartProductItem.uuid,
-                    additionUuidList: cartProductItem.additionUuidList,
-                    productDetailsOpenedFrom: ProductDetailsOpenedFrom.cartProduct,
-                    isRootActive: self.$isRootActive,
-                    selection: self.$selection,
-                    showOrderCreated: $showOrderCreated,
-                    created: $created,
-                    edited: $edited
-                ),
-            isActive: $openProductDetails
-        ){
             HStack(alignment: .top, spacing:0){
                 KFImage(URL(string: cartProductItem.photoLink))
                     .resizable()
@@ -95,6 +71,6 @@ struct CartProductView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.leading, Diems.SMALL_PADDING)
             }.frame(maxWidth:.infinity, alignment: .topLeading)
-        }.isDetailLink(false)
+           
     }
 }
