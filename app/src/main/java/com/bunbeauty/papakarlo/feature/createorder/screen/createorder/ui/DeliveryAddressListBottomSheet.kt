@@ -27,11 +27,11 @@ fun DeliveryAddressListBottomSheet(
             onAction(CreateOrder.Action.HideDeliveryAddressList)
         },
         isShown = deliveryAddressList.isShown,
-        title = stringResource(R.string.delivery_address),
+        title = stringResource(R.string.delivery_address)
     ) {
         DeliveryAddressListBottomSheetContent(
             addressList = deliveryAddressList.addressList,
-            onAction = onAction,
+            onAction = onAction
         )
     }
 }
@@ -77,14 +77,14 @@ private fun DeliveryAddressListBottomPreview() {
             SelectableAddressUI(
                 uuid = "1",
                 address = "улица Чапаева, д. 22А",
-                isSelected = false,
+                isSelected = false
             ),
             SelectableAddressUI(
                 uuid = "2",
                 address = "улица Чапаева, д. 22А кв. 55, 1 подъезд, 1 этаж",
-                isSelected = true,
+                isSelected = true
             )
         ),
-        onAction = {},
+        onAction = {}
     )
 }

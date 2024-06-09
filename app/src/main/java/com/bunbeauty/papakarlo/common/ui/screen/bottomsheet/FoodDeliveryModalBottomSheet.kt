@@ -56,7 +56,7 @@ fun FoodDeliveryModalBottomSheet(
     contentColor: Color = contentColorFor(containerColor),
     dragHandle: @Composable (() -> Unit)? = { FoodDeliveryBottomSheetDefaults.DragHandle() },
     windowInsets: WindowInsets = BottomSheetDefaults.windowInsets,
-    content: @Composable ColumnScope.() -> Unit,
+    content: @Composable ColumnScope.() -> Unit
 ) {
     var isVisible by remember {
         mutableStateOf(false)
@@ -97,7 +97,7 @@ fun FoodDeliveryModalBottomSheet(
                 title?.let {
                     Title(
                         modifier = Modifier.padding(vertical = 16.dp),
-                        title = title,
+                        title = title
                     )
                 }
                 content()
@@ -127,7 +127,7 @@ private fun getSystemBottomBarHeight(): Dp {
 @Composable
 private fun Title(
     modifier: Modifier = Modifier,
-    title: String,
+    title: String
 ) {
     Text(
         modifier = modifier.fillMaxWidth(),
@@ -150,7 +150,7 @@ private fun FoodDeliveryModalBottomSheetPreview() {
     FoodDeliveryTheme {
         FoodDeliveryModalBottomSheet(
             onDismissRequest = {},
-            isShown = isShownState,
+            isShown = isShownState
         ) {
             Column(
                 modifier = Modifier.padding(16.dp),

@@ -39,7 +39,7 @@ fun Shimmer(
     val shimmerColors = listOf(
         FoodDeliveryTheme.colors.mainColors.onSurfaceVariant.copy(alpha = 0.6f),
         FoodDeliveryTheme.colors.mainColors.onSurfaceVariant.copy(alpha = 0.3f),
-        FoodDeliveryTheme.colors.mainColors.onSurfaceVariant.copy(alpha = 0.6f),
+        FoodDeliveryTheme.colors.mainColors.onSurfaceVariant.copy(alpha = 0.6f)
     )
 
     val brush = Brush.linearGradient(

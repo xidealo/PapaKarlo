@@ -46,7 +46,7 @@ fun TimePickerDialog(
         mutableStateOf(
             LocalTime.of(
                 timePicker.initialTime.hours,
-                timePicker.initialTime.minutes,
+                timePicker.initialTime.minutes
             )
         )
     }
@@ -60,7 +60,7 @@ fun TimePickerDialog(
     ) {
         val minTime = LocalTime.of(
             timePicker.minTime.hours,
-            timePicker.minTime.minutes,
+            timePicker.minTime.minutes
         )
         timepicker(
             colors = TimePickerDefaults.colors(
@@ -76,7 +76,7 @@ fun TimePickerDialog(
             is24HourClock = true,
             initialTime = LocalTime.of(
                 timePicker.initialTime.hours,
-                timePicker.initialTime.minutes,
+                timePicker.initialTime.minutes
             ),
             timeRange = minTime..LocalTime.MAX,
             waitForPositiveButton = false,
@@ -127,7 +127,7 @@ private fun TimePickerDialogPreview() {
         timePicker = TimePickerUI(
             isShown = true,
             minTime = TimeUI(1, 30),
-            initialTime = TimeUI(2, 30),
+            initialTime = TimeUI(2, 30)
         ),
         onAction = {}
     )

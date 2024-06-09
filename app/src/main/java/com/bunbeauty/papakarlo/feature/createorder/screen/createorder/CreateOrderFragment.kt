@@ -104,7 +104,7 @@ class CreateOrderFragment :
                     )
                     AddressCard(
                         viewState = viewState,
-                        onAction = onAction,
+                        onAction = onAction
                     )
                     ErrorText(
                         modifier = Modifier
@@ -115,15 +115,15 @@ class CreateOrderFragment :
                     )
                     CommentCard(
                         viewState = viewState,
-                        onAction = onAction,
+                        onAction = onAction
                     )
                     DeferredTimeCard(
                         viewState = viewState,
-                        onAction = onAction,
+                        onAction = onAction
                     )
                     PaymentMethodCard(
                         viewState = viewState,
-                        onAction = onAction,
+                        onAction = onAction
                     )
                     ErrorText(
                         modifier = Modifier
@@ -135,30 +135,30 @@ class CreateOrderFragment :
                 }
                 BottomAmountBar(
                     viewState = viewState,
-                    onAction = onAction,
+                    onAction = onAction
                 )
             }
 
             DeliveryAddressListBottomSheet(
                 deliveryAddressList = viewState.deliveryAddressList,
-                onAction = onAction,
+                onAction = onAction
             )
             PickupAddressListBottomSheet(
                 pickupAddressList = viewState.pickupAddressList,
-                onAction = onAction,
+                onAction = onAction
             )
             DeferredTimeBottomSheet(
                 isShown = viewState.isDeferredTimeShown,
                 title = stringResource(viewState.deferredTimeStringId),
-                onAction = onAction,
+                onAction = onAction
             )
             TimePickerDialog(
                 timePicker = viewState.timePicker,
-                onAction = onAction,
+                onAction = onAction
             )
             PaymentMethodListBottomSheet(
                 paymentMethodList = viewState.paymentMethodList,
-                onAction = onAction,
+                onAction = onAction
             )
         }
     }
@@ -223,7 +223,7 @@ class CreateOrderFragment :
     @Composable
     private fun AddressCard(
         viewState: CreateOrderViewState,
-        onAction: (CreateOrder.Action) -> Unit,
+        onAction: (CreateOrder.Action) -> Unit
     ) {
         if (viewState.isDelivery) {
             if (viewState.deliveryAddress == null) {
@@ -265,7 +265,7 @@ class CreateOrderFragment :
     @Composable
     private fun CommentCard(
         viewState: CreateOrderViewState,
-        onAction: (CreateOrder.Action) -> Unit,
+        onAction: (CreateOrder.Action) -> Unit
     ) {
         if (viewState.comment == null) {
             NavigationCard(
@@ -292,7 +292,7 @@ class CreateOrderFragment :
     @Composable
     private fun DeferredTimeCard(
         viewState: CreateOrderViewState,
-        onAction: (CreateOrder.Action) -> Unit,
+        onAction: (CreateOrder.Action) -> Unit
     ) {
         NavigationTextCard(
             modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace),
@@ -308,7 +308,7 @@ class CreateOrderFragment :
     @Composable
     private fun PaymentMethodCard(
         viewState: CreateOrderViewState,
-        onAction: (CreateOrder.Action) -> Unit,
+        onAction: (CreateOrder.Action) -> Unit
     ) {
         if (viewState.selectedPaymentMethod == null) {
             NavigationCard(
@@ -338,7 +338,7 @@ class CreateOrderFragment :
     private fun ErrorText(
         modifier: Modifier = Modifier,
         @StringRes messageStringId: Int,
-        isShown: Boolean,
+        isShown: Boolean
     ) {
         if (isShown) {
             Text(
@@ -353,7 +353,7 @@ class CreateOrderFragment :
     @Composable
     private fun BottomAmountBar(
         viewState: CreateOrderViewState,
-        onAction: (CreateOrder.Action) -> Unit,
+        onAction: (CreateOrder.Action) -> Unit
     ) {
         FoodDeliverySurface(modifier = Modifier.fillMaxWidth()) {
             Column(
@@ -387,22 +387,22 @@ class CreateOrderFragment :
     private fun BottomAmountBarLoadingContent() {
         LoadingRow(
             leftWidth = 50.dp,
-            rightWidth = 32.dp,
+            rightWidth = 32.dp
         )
         LoadingRow(
             leftWidth = 64.dp,
-            rightWidth = 40.dp,
+            rightWidth = 40.dp
         )
         LoadingRow(
             leftWidth = 96.dp,
-            rightWidth = 80.dp,
+            rightWidth = 80.dp
         )
     }
 
     @Composable
     private fun BottomAmountBarSuccessContent(
         cartTotal: CartTotalUI.Success,
-        modifier: Modifier = Modifier,
+        modifier: Modifier = Modifier
     ) {
         Column(modifier = modifier) {
             cartTotal.discount?.let { discount ->
@@ -419,7 +419,7 @@ class CreateOrderFragment :
             AnimatedVisibility(
                 visible = cartTotal.deliveryCost != null,
                 enter = expandVertically(),
-                exit = shrinkVertically(),
+                exit = shrinkVertically()
             ) {
                 Row {
                     Text(
@@ -498,7 +498,7 @@ class CreateOrderFragment :
                         name = "Наличка",
                         value = PaymentMethodValueUI(
                             value = "Наличка",
-                            valueToCopy = "Наличка",
+                            valueToCopy = "Наличка"
                         )
                     ),
                     isPaymentMethodErrorShown = false,
@@ -516,12 +516,12 @@ class CreateOrderFragment :
                     timePicker = TimePickerUI(
                         isShown = false,
                         minTime = TimeUI(0, 0),
-                        initialTime = TimeUI(0, 0),
+                        initialTime = TimeUI(0, 0)
                     ),
                     paymentMethodList = PaymentMethodListUI(
                         isShown = false,
                         paymentMethodList = persistentListOf()
-                    ),
+                    )
                 ),
                 onAction = {}
             )
@@ -546,7 +546,7 @@ class CreateOrderFragment :
                         name = "Наличка",
                         value = PaymentMethodValueUI(
                             value = "Наличка",
-                            valueToCopy = "Наличка",
+                            valueToCopy = "Наличка"
                         )
                     ),
                     isPaymentMethodErrorShown = false,
@@ -554,7 +554,7 @@ class CreateOrderFragment :
                         discount = "10%",
                         deliveryCost = "100 ₽",
                         oldFinalCost = "700 ₽",
-                        newFinalCost = "650 ₽",
+                        newFinalCost = "650 ₽"
                     ),
                     isLoading = false,
                     deliveryAddressList = DeliveryAddressListUI(
@@ -569,12 +569,12 @@ class CreateOrderFragment :
                     timePicker = TimePickerUI(
                         isShown = false,
                         minTime = TimeUI(0, 0),
-                        initialTime = TimeUI(0, 0),
+                        initialTime = TimeUI(0, 0)
                     ),
                     paymentMethodList = PaymentMethodListUI(
                         isShown = false,
                         paymentMethodList = persistentListOf()
-                    ),
+                    )
                 ),
                 onAction = {}
             )
@@ -599,7 +599,7 @@ class CreateOrderFragment :
                         name = "Наличка",
                         value = PaymentMethodValueUI(
                             value = "Наличка",
-                            valueToCopy = "Наличка",
+                            valueToCopy = "Наличка"
                         )
                     ),
                     isPaymentMethodErrorShown = false,
@@ -607,7 +607,7 @@ class CreateOrderFragment :
                         discount = null,
                         deliveryCost = null,
                         oldFinalCost = null,
-                        newFinalCost = "650 ₽",
+                        newFinalCost = "650 ₽"
                     ),
                     isLoading = false,
                     deliveryAddressList = DeliveryAddressListUI(
@@ -622,12 +622,12 @@ class CreateOrderFragment :
                     timePicker = TimePickerUI(
                         isShown = false,
                         minTime = TimeUI(0, 0),
-                        initialTime = TimeUI(0, 0),
+                        initialTime = TimeUI(0, 0)
                     ),
                     paymentMethodList = PaymentMethodListUI(
                         isShown = false,
                         paymentMethodList = persistentListOf()
-                    ),
+                    )
                 ),
                 onAction = {}
             )
@@ -652,7 +652,7 @@ class CreateOrderFragment :
                         name = "Наличка",
                         value = PaymentMethodValueUI(
                             value = "Наличка",
-                            valueToCopy = "Наличка",
+                            valueToCopy = "Наличка"
                         )
                     ),
                     isPaymentMethodErrorShown = false,
@@ -660,7 +660,7 @@ class CreateOrderFragment :
                         discount = null,
                         deliveryCost = null,
                         oldFinalCost = null,
-                        newFinalCost = "650 ₽",
+                        newFinalCost = "650 ₽"
                     ),
                     isLoading = true,
                     deliveryAddressList = DeliveryAddressListUI(
@@ -675,12 +675,12 @@ class CreateOrderFragment :
                     timePicker = TimePickerUI(
                         isShown = false,
                         minTime = TimeUI(0, 0),
-                        initialTime = TimeUI(0, 0),
+                        initialTime = TimeUI(0, 0)
                     ),
                     paymentMethodList = PaymentMethodListUI(
                         isShown = false,
                         paymentMethodList = persistentListOf()
-                    ),
+                    )
                 ),
                 onAction = {}
             )
@@ -706,7 +706,7 @@ class CreateOrderFragment :
                         discount = null,
                         deliveryCost = null,
                         oldFinalCost = null,
-                        newFinalCost = "650 ₽",
+                        newFinalCost = "650 ₽"
                     ),
                     isLoading = false,
                     deliveryAddressList = DeliveryAddressListUI(
@@ -721,12 +721,12 @@ class CreateOrderFragment :
                     timePicker = TimePickerUI(
                         isShown = false,
                         minTime = TimeUI(0, 0),
-                        initialTime = TimeUI(0, 0),
+                        initialTime = TimeUI(0, 0)
                     ),
                     paymentMethodList = PaymentMethodListUI(
                         isShown = false,
                         paymentMethodList = persistentListOf()
-                    ),
+                    )
                 ),
                 onAction = {}
             )

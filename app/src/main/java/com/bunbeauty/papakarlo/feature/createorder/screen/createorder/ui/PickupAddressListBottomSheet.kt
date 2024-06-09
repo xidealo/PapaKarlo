@@ -30,7 +30,7 @@ fun PickupAddressListBottomSheet(
     ) {
         PickupAddressListBottomSheetContent(
             addressList = pickupAddressList.addressList,
-            onAction = onAction,
+            onAction = onAction
         )
     }
 }
@@ -72,14 +72,14 @@ fun PickupAddressListBottomSheet() {
             SelectableAddressUI(
                 uuid = "1",
                 address = "улица Чапаева, д. 22А",
-                isSelected = false,
+                isSelected = false
             ),
             SelectableAddressUI(
                 uuid = "2",
                 address = "улица Чапаева, д. 22А кв. 55, 1 подъезд, 1 этаж",
-                isSelected = true,
+                isSelected = true
             )
         ),
-        onAction = {},
+        onAction = {}
     )
 }

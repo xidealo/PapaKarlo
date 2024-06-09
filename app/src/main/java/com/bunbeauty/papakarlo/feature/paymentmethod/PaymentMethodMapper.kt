@@ -15,7 +15,7 @@ fun SelectablePaymentMethod.toSelectablePaymentMethodUI(): SelectablePaymentMeth
     return SelectablePaymentMethodUI(
         uuid = paymentMethod.uuid,
         name = paymentMethod.name.toPaymentMethodString(),
-        isSelected = isSelected,
+        isSelected = isSelected
     )
 }
 

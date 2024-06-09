@@ -41,7 +41,7 @@ fun CreateOrder.DataState.toViewState(): CreateOrderViewState {
                     discount = successCartTotal.discount,
                     deliveryCost = successCartTotal.deliveryCost,
                     oldFinalCost = successCartTotal.oldFinalCost,
-                    newFinalCost = successCartTotal.newFinalCost,
+                    newFinalCost = successCartTotal.newFinalCost
                 )
             }
         },
@@ -52,9 +52,8 @@ fun CreateOrder.DataState.toViewState(): CreateOrderViewState {
                 SelectableAddressUI(
                     uuid = selectableUserAddress.address.uuid,
                     address = selectableUserAddress.address.toAddressString(),
-                    isSelected = selectableUserAddress.isSelected,
+                    isSelected = selectableUserAddress.isSelected
                 )
-
             }.toImmutableList()
         ),
         pickupAddressList = PickupAddressListUI(
@@ -63,7 +62,7 @@ fun CreateOrder.DataState.toViewState(): CreateOrderViewState {
                 SelectableAddressUI(
                     uuid = selectableCafe.cafe.uuid,
                     address = selectableCafe.cafe.address,
-                    isSelected = selectableCafe.isSelected,
+                    isSelected = selectableCafe.isSelected
                 )
             }.toImmutableList()
         ),
@@ -71,13 +70,13 @@ fun CreateOrder.DataState.toViewState(): CreateOrderViewState {
         timePicker = TimePickerUI(
             isShown = isTimePickerShown,
             minTime = minDeferredTime.toTimeUI(),
-            initialTime = initialDeferredTime.toTimeUI(),
+            initialTime = initialDeferredTime.toTimeUI()
         ),
         paymentMethodList = PaymentMethodListUI(
             isShown = isPaymentMethodListShown,
             paymentMethodList = paymentMethodList.map { selectablePaymentMethod ->
                 selectablePaymentMethod.toSelectablePaymentMethodUI()
             }.toImmutableList()
-        ),
+        )
     )
 }

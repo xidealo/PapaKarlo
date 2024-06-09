@@ -25,7 +25,7 @@ fun DeferredTimeBottomSheet(
             onAction(CreateOrder.Action.HideDeferredTime)
         },
         isShown = isShown,
-        title = title,
+        title = title
     ) {
         DeferredTimeBottomSheetContent(onAction = onAction)
     }

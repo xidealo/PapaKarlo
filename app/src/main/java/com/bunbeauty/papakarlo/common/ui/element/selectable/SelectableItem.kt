@@ -24,7 +24,7 @@ fun SelectableItem(
     elevated: Boolean,
     onClick: (() -> Unit),
     modifier: Modifier = Modifier,
-    isSelected: Boolean = false,
+    isSelected: Boolean = false
 ) {
     FoodDeliveryCard(
         modifier = modifier.fillMaxWidth(),

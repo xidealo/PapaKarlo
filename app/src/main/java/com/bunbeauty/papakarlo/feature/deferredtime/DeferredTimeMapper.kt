@@ -24,7 +24,7 @@ fun CreateOrder.DeferredTime.toDeferredTimeString(): String {
 fun Time.toTimeUI(): TimeUI {
     return TimeUI(
         hours = hours,
-        minutes = minutes,
+        minutes = minutes
     )
 }
 

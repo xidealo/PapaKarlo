@@ -30,7 +30,7 @@ fun PaymentMethodListBottomSheet(
     ) {
         PaymentMethodListBottomSheetContent(
             paymentMethodList = paymentMethodList.paymentMethodList,
-            onAction = onAction,
+            onAction = onAction
         )
     }
 }
@@ -72,14 +72,14 @@ private fun PaymentMethodListBottomSheetPreview() {
             SelectablePaymentMethodUI(
                 uuid = "1",
                 name = "Налика",
-                isSelected = false,
+                isSelected = false
             ),
             SelectablePaymentMethodUI(
                 uuid = "2",
                 name = "Картой курьеру",
-                isSelected = true,
+                isSelected = true
             )
         ),
-        onAction = {},
+        onAction = {}
     )
 }
