@@ -38,6 +38,7 @@ interface CreateOrder {
         ),
 
         val paymentMethodList: List<SelectablePaymentMethod> = emptyList(),
+        val isPaymentMethodListShown: Boolean = false,
         val selectedPaymentMethod: PaymentMethod? = null,
         val isPaymentMethodErrorShown: Boolean = false,
 
@@ -69,6 +70,7 @@ interface CreateOrder {
         data class ChangeMethod(val position: Int) : Action
 
         data object DeliveryAddressClick : Action
+        data object AddAddressClick : Action
         data object HideDeliveryAddressList : Action
         data class ChangeDeliveryAddress(val addressUuid: String) : Action
 
@@ -84,6 +86,7 @@ interface CreateOrder {
         data class ChangeDeferredTime(val time: Time) : Action
 
         data object PaymentMethodClick : Action
+        data object HidePaymentMethodList : Action
         data class ChangePaymentMethod(val paymentMethodUuid: String) : Action
 
         data object CommentClick : Action
@@ -101,7 +104,6 @@ interface CreateOrder {
         data class OrderCreatedEvent(val code: String) : Event
         data object ShowUserAddressError : Event
         data object ShowPaymentMethodError : Event
-        data class ShowPaymentMethodList(val selectablePaymentMethodList: List<SelectablePaymentMethod>) : Event
     }
 
 }

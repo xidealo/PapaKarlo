@@ -6,12 +6,14 @@ import com.bunbeauty.papakarlo.feature.address.mapper.toAddressString
 import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.CartTotalUI
 import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.CreateOrderViewState
 import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.DeliveryAddressListUI
+import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.PaymentMethodListUI
 import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.PickupAddressListUI
 import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.SelectableAddressUI
 import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.TimePickerUI
 import com.bunbeauty.papakarlo.feature.deferredtime.toDeferredTimeString
 import com.bunbeauty.papakarlo.feature.deferredtime.toTimeUI
 import com.bunbeauty.papakarlo.feature.paymentmethod.toPaymentMethodUI
+import com.bunbeauty.papakarlo.feature.paymentmethod.toSelectablePaymentMethodUI
 import com.bunbeauty.shared.presentation.createorder.CreateOrder
 import kotlinx.collections.immutable.toImmutableList
 
@@ -70,6 +72,12 @@ fun CreateOrder.DataState.toViewState(): CreateOrderViewState {
             isShown = isTimePickerShown,
             minTime = minDeferredTime.toTimeUI(),
             initialTime = initialDeferredTime.toTimeUI(),
+        ),
+        paymentMethodList = PaymentMethodListUI(
+            isShown = isPaymentMethodListShown,
+            paymentMethodList = paymentMethodList.map { selectablePaymentMethod ->
+                selectablePaymentMethod.toSelectablePaymentMethodUI()
+            }.toImmutableList()
         ),
     )
 }

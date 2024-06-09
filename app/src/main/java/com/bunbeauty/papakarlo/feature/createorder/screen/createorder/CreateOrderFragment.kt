@@ -15,19 +15,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
@@ -45,34 +37,28 @@ import com.bunbeauty.papakarlo.common.ui.element.button.LoadingButton
 import com.bunbeauty.papakarlo.common.ui.element.card.DiscountCard
 import com.bunbeauty.papakarlo.common.ui.element.card.NavigationCard
 import com.bunbeauty.papakarlo.common.ui.element.card.NavigationTextCard
-import com.bunbeauty.papakarlo.common.ui.element.card.SimpleCard
-import com.bunbeauty.papakarlo.common.ui.element.selectable.SelectableItem
 import com.bunbeauty.papakarlo.common.ui.element.simmer.Shimmer
 import com.bunbeauty.papakarlo.common.ui.element.surface.FoodDeliverySurface
 import com.bunbeauty.papakarlo.common.ui.element.switcher.FoodDeliverySwitcher
-import com.bunbeauty.papakarlo.common.ui.screen.bottomsheet.FoodDeliveryModalBottomSheet
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold
-import com.bunbeauty.papakarlo.common.ui.theme.medium
 import com.bunbeauty.papakarlo.feature.createorder.mapper.toViewState
 import com.bunbeauty.papakarlo.feature.createorder.screen.comment.CommentBottomSheet
 import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.CreateOrderFragmentDirections.toCreateAddressFragment
 import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.CreateOrderFragmentDirections.toProfileFragment
-import com.bunbeauty.papakarlo.feature.createorder.screen.paymentmethod.SelectPaymentMethodBottomSheet
+import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.ui.DeferredTimeBottomSheet
+import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.ui.DeliveryAddressListBottomSheet
+import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.ui.PaymentMethodListBottomSheet
+import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.ui.PickupAddressListBottomSheet
+import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.ui.TimePickerDialog
 import com.bunbeauty.papakarlo.feature.main.IMessageHost
 import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentMethodUI
 import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentMethodValueUI
-import com.bunbeauty.shared.domain.model.date_time.Time
 import com.bunbeauty.shared.presentation.createorder.CreateOrder
 import com.bunbeauty.shared.presentation.createorder.CreateOrderViewModel
-import com.vanpra.composematerialdialogs.MaterialDialog
-import com.vanpra.composematerialdialogs.datetime.time.TimePickerDefaults
-import com.vanpra.composematerialdialogs.datetime.time.timepicker
-import com.vanpra.composematerialdialogs.rememberMaterialDialogState
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.time.LocalTime
 
 class CreateOrderFragment :
     BaseComposeFragment<CreateOrder.DataState, CreateOrderViewState, CreateOrder.Action, CreateOrder.Event>() {
@@ -125,7 +111,7 @@ class CreateOrderFragment :
                             .padding(top = 4.dp)
                             .padding(horizontal = 16.dp),
                         messageStringId = R.string.error_select_delivery_address,
-                        isShown = viewState.isPaymentMethodErrorShown
+                        isShown = viewState.isAddressErrorShown
                     )
                     CommentCard(
                         viewState = viewState,
@@ -168,6 +154,10 @@ class CreateOrderFragment :
             )
             TimePickerDialog(
                 timePicker = viewState.timePicker,
+                onAction = onAction,
+            )
+            PaymentMethodListBottomSheet(
+                paymentMethodList = viewState.paymentMethodList,
                 onAction = onAction,
             )
         }
@@ -220,21 +210,6 @@ class CreateOrderFragment :
                 (activity as? IMessageHost)?.showErrorMessage(
                     resources.getString(R.string.error_user_address)
                 )
-            }
-
-            is CreateOrder.Event.ShowPaymentMethodList -> {
-                lifecycleScope.launch {
-                    SelectPaymentMethodBottomSheet.show(
-                        fragmentManager = childFragmentManager,
-                        paymentMethodList = emptyList()
-                    )?.let { paymentMethodUI ->
-                        viewModel.onAction(
-                            CreateOrder.Action.ChangePaymentMethod(
-                                paymentMethodUuid = paymentMethodUI.paymentMethodUI.uuid
-                            )
-                        )
-                    }
-                }
             }
 
             is CreateOrder.Event.ShowPaymentMethodError -> {
@@ -505,202 +480,6 @@ class CreateOrderFragment :
         }
     }
 
-    @Composable
-    private fun DeliveryAddressListBottomSheet(
-        deliveryAddressList: DeliveryAddressListUI,
-        onAction: (CreateOrder.Action) -> Unit
-    ) {
-        FoodDeliveryModalBottomSheet(
-            onDismissRequest = {
-                onAction(CreateOrder.Action.HideDeliveryAddressList)
-            },
-            isShown = deliveryAddressList.isShown,
-            title = stringResource(R.string.delivery_address),
-        ) {
-            LazyColumn(verticalArrangement = spacedBy(8.dp)) {
-                items(
-                    items = deliveryAddressList.addressList,
-                    key = { selectableAddress ->
-                        "DeliveryAddress ${selectableAddress.uuid}"
-                    }
-                ) { selectableAddress ->
-                    SelectableItem(
-                        title = selectableAddress.address,
-                        clickable = true,
-                        elevated = false,
-                        isSelected = selectableAddress.isSelected,
-                        onClick = {
-                            onAction(CreateOrder.Action.ChangeDeliveryAddress(addressUuid = selectableAddress.uuid))
-                        }
-                    )
-                }
-            }
-        }
-    }
-
-    @Composable
-    private fun PickupAddressListBottomSheet(
-        pickupAddressList: PickupAddressListUI,
-        onAction: (CreateOrder.Action) -> Unit
-    ) {
-        FoodDeliveryModalBottomSheet(
-            onDismissRequest = {
-                onAction(CreateOrder.Action.HidePickupAddressList)
-            },
-            isShown = pickupAddressList.isShown,
-            title = stringResource(R.string.pickup_address)
-        ) {
-            LazyColumn(
-                modifier = Modifier.padding(top = 16.dp),
-                verticalArrangement = spacedBy(8.dp),
-            ) {
-                items(
-                    items = pickupAddressList.addressList,
-                    key = { selectableAddress ->
-                        "PickupAddress ${selectableAddress.uuid}"
-                    }
-                ) { selectableAddress ->
-                    SelectableItem(
-                        title = selectableAddress.address,
-                        clickable = true,
-                        elevated = false,
-                        isSelected = selectableAddress.isSelected,
-                        onClick = {
-                            onAction(
-                                CreateOrder.Action.ChangePickupAddress(
-                                    addressUuid = selectableAddress.uuid
-                                )
-                            )
-                        }
-                    )
-                }
-            }
-        }
-    }
-
-    @Composable
-    private fun DeferredTimeBottomSheet(
-        isShown: Boolean,
-        title: String,
-        onAction: (CreateOrder.Action) -> Unit
-    ) {
-        FoodDeliveryModalBottomSheet(
-            onDismissRequest = {
-                onAction(CreateOrder.Action.HideDeferredTime)
-            },
-            isShown = isShown,
-            title = title,
-        ) {
-            SimpleCard(
-                text = stringResource(R.string.action_deferred_time_asap),
-                elevated = false,
-                onClick = {
-                    onAction(CreateOrder.Action.AsapClick)
-                }
-            )
-            NavigationCard(
-                modifier = Modifier.padding(top = 8.dp),
-                elevated = false,
-                label = stringResource(R.string.action_deferred_time_select_time),
-                onClick = {
-                    onAction(CreateOrder.Action.PickTimeClick)
-                }
-            )
-        }
-    }
-
-    @Composable
-    private fun TimePickerDialog(
-        timePicker: TimePickerUI,
-        onAction: (CreateOrder.Action) -> Unit
-    ) {
-        val dialogState = rememberMaterialDialogState()
-        LaunchedEffect(timePicker.isShown) {
-            if (timePicker.isShown) {
-                dialogState.show()
-            } else {
-                dialogState.hide()
-            }
-        }
-
-        var time by remember {
-            mutableStateOf(
-                LocalTime.of(
-                    timePicker.initialTime.hours,
-                    timePicker.initialTime.minutes,
-                )
-            )
-        }
-
-        MaterialDialog(
-            dialogState = dialogState,
-            backgroundColor = FoodDeliveryTheme.colors.mainColors.surface,
-            onCloseRequest = {
-                onAction(CreateOrder.Action.HideTimePicker)
-            }
-        ) {
-            val minTime = LocalTime.of(
-                timePicker.minTime.hours,
-                timePicker.minTime.minutes,
-            )
-            timepicker(
-                colors = TimePickerDefaults.colors(
-                    activeBackgroundColor = FoodDeliveryTheme.colors.mainColors.primary.copy(0.2f),
-                    inactiveBackgroundColor = FoodDeliveryTheme.colors.mainColors.disabled,
-                    activeTextColor = FoodDeliveryTheme.colors.mainColors.primary,
-                    inactiveTextColor = FoodDeliveryTheme.colors.mainColors.onSurface,
-                    selectorColor = FoodDeliveryTheme.colors.mainColors.primary,
-                    selectorTextColor = FoodDeliveryTheme.colors.mainColors.onPrimary,
-                    headerTextColor = FoodDeliveryTheme.colors.mainColors.surface,
-                    borderColor = FoodDeliveryTheme.colors.mainColors.onSurface
-                ),
-                is24HourClock = true,
-                initialTime = LocalTime.of(
-                    timePicker.initialTime.hours,
-                    timePicker.initialTime.minutes,
-                ),
-                timeRange = minTime..LocalTime.MAX,
-                waitForPositiveButton = false,
-                onTimeChange = { newTime ->
-                    time = newTime
-                }
-            )
-            Row(modifier = Modifier.padding(bottom = 24.dp, end = 24.dp)) {
-                Spacer(modifier = Modifier.weight(1f))
-                TextButton(
-                    onClick = {
-                        onAction(CreateOrder.Action.HideTimePicker)
-                    }
-                ) {
-                    Text(
-                        text = stringResource(R.string.common_cancel),
-                        style = FoodDeliveryTheme.typography.labelLarge.medium,
-                        color = FoodDeliveryTheme.colors.mainColors.disabled
-                    )
-                }
-                TextButton(
-                    modifier = Modifier.padding(start = 8.dp),
-                    onClick = {
-                        onAction(
-                            CreateOrder.Action.ChangeDeferredTime(
-                                Time(
-                                    hours = time.hour,
-                                    minutes = time.minute
-                                )
-                            )
-                        )
-                    }
-                ) {
-                    Text(
-                        text = stringResource(R.string.common_ok),
-                        style = FoodDeliveryTheme.typography.labelLarge.medium,
-                        color = FoodDeliveryTheme.colors.mainColors.primary
-                    )
-                }
-            }
-        }
-    }
-
     @Preview(showSystemUi = true)
     @Composable
     private fun CartTotalLoadingPreview() {
@@ -738,6 +517,10 @@ class CreateOrderFragment :
                         isShown = false,
                         minTime = TimeUI(0, 0),
                         initialTime = TimeUI(0, 0),
+                    ),
+                    paymentMethodList = PaymentMethodListUI(
+                        isShown = false,
+                        paymentMethodList = persistentListOf()
                     ),
                 ),
                 onAction = {}
@@ -788,6 +571,10 @@ class CreateOrderFragment :
                         minTime = TimeUI(0, 0),
                         initialTime = TimeUI(0, 0),
                     ),
+                    paymentMethodList = PaymentMethodListUI(
+                        isShown = false,
+                        paymentMethodList = persistentListOf()
+                    ),
                 ),
                 onAction = {}
             )
@@ -836,6 +623,10 @@ class CreateOrderFragment :
                         isShown = false,
                         minTime = TimeUI(0, 0),
                         initialTime = TimeUI(0, 0),
+                    ),
+                    paymentMethodList = PaymentMethodListUI(
+                        isShown = false,
+                        paymentMethodList = persistentListOf()
                     ),
                 ),
                 onAction = {}
@@ -886,6 +677,10 @@ class CreateOrderFragment :
                         minTime = TimeUI(0, 0),
                         initialTime = TimeUI(0, 0),
                     ),
+                    paymentMethodList = PaymentMethodListUI(
+                        isShown = false,
+                        paymentMethodList = persistentListOf()
+                    ),
                 ),
                 onAction = {}
             )
@@ -927,6 +722,10 @@ class CreateOrderFragment :
                         isShown = false,
                         minTime = TimeUI(0, 0),
                         initialTime = TimeUI(0, 0),
+                    ),
+                    paymentMethodList = PaymentMethodListUI(
+                        isShown = false,
+                        paymentMethodList = persistentListOf()
                     ),
                 ),
                 onAction = {}

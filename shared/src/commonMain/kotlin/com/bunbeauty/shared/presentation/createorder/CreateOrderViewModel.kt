@@ -17,7 +17,6 @@ import com.bunbeauty.shared.domain.use_case.address.SaveSelectedUserAddressUseCa
 import com.bunbeauty.shared.domain.use_case.deferred_time.GetMinTimeUseCase
 import com.bunbeauty.shared.extension.launchSafe
 import com.bunbeauty.shared.presentation.base.SharedStateViewModel
-import kotlinx.coroutines.flow.update
 
 class CreateOrderViewModel(
     private val cartProductInteractor: ICartProductInteractor,
@@ -40,7 +39,7 @@ class CreateOrderViewModel(
         isAddressErrorShown = false,
         cafeList = emptyList(),
         selectedCafe = null,
-        comment = "",
+        comment = null,
         deferredTime = CreateOrder.DeferredTime.Asap,
         paymentMethodList = emptyList(),
         selectedPaymentMethod = null,
@@ -61,6 +60,10 @@ class CreateOrderViewModel(
 
             CreateOrder.Action.DeliveryAddressClick -> {
                 userAddressClick()
+            }
+
+            CreateOrder.Action.AddAddressClick -> {
+                addAddressClick()
             }
 
             CreateOrder.Action.HideDeliveryAddressList -> {
@@ -111,6 +114,10 @@ class CreateOrderViewModel(
                 paymentMethodClick()
             }
 
+            CreateOrder.Action.HidePaymentMethodList -> {
+                hidePaymentMethodList()
+            }
+
             is CreateOrder.Action.ChangePaymentMethod -> {
                 changePaymentMethod(paymentMethodUuid = action.paymentMethodUuid)
             }
@@ -158,6 +165,12 @@ class CreateOrderViewModel(
     private fun userAddressClick() {
         setState {
             copy(isUserAddressListShown = true)
+        }
+    }
+
+    private fun addAddressClick() {
+        addEvent {
+            CreateOrder.Event.OpenCreateAddressEvent
         }
     }
 
@@ -261,14 +274,27 @@ class CreateOrderViewModel(
     }
 
     private fun paymentMethodClick() {
-        addEvent { state ->
-            CreateOrder.Event.ShowPaymentMethodList(
-                selectablePaymentMethodList = state.paymentMethodList
+        setState {
+            copy(
+                isPaymentMethodListShown = true
+            )
+        }
+    }
+
+    private fun hidePaymentMethodList() {
+        setState {
+            copy(
+                isPaymentMethodListShown = false
             )
         }
     }
 
     private fun changePaymentMethod(paymentMethodUuid: String) {
+        setState {
+            copy(
+                isPaymentMethodListShown = false
+            )
+        }
         withLoading {
             savePaymentMethodUseCase(paymentMethodUuid)
             updatePaymentMethods()
@@ -365,11 +391,17 @@ class CreateOrderViewModel(
 
     private suspend fun updatePaymentMethods() {
         val paymentMethodList = getSelectablePaymentMethodListUseCase()
+        val selectedPaymentMethod = paymentMethodList.find { it.isSelected }?.paymentMethod
         setState {
             copy(
                 paymentMethodList = paymentMethodList,
                 selectedPaymentMethod = paymentMethodList.find { it.isSelected }?.paymentMethod
             )
+        }
+        if (selectedPaymentMethod != null) {
+            setState {
+                copy(isPaymentMethodErrorShown = false)
+            }
         }
     }
 
@@ -431,15 +463,13 @@ class CreateOrderViewModel(
     private inline fun withLoading(crossinline block: suspend () -> Unit) {
         sharedScope.launchSafe(
             {
-                mutableDataState.update { state ->
-                    state.copy(isLoading = true)
+                setState {
+                    copy(isLoading = true)
                 }
+
                 block()
                 setState {
                     copy(isLoading = false)
-                }
-                mutableDataState.update { state ->
-                    state.copy(isLoading = false)
                 }
             },
             onError = {

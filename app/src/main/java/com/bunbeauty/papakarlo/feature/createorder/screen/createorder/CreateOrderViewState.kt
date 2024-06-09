@@ -24,6 +24,7 @@ data class CreateOrderViewState(
     val pickupAddressList: PickupAddressListUI,
     val isDeferredTimeShown: Boolean,
     val timePicker: TimePickerUI,
+    val paymentMethodList: PaymentMethodListUI,
 ) : BaseViewState {
 
     val isFieldsEnabled: Boolean = !isLoading
@@ -57,6 +58,12 @@ data class PickupAddressListUI(
 )
 
 @Immutable
+data class PaymentMethodListUI(
+    val isShown: Boolean,
+    val paymentMethodList: ImmutableList<SelectablePaymentMethodUI>,
+)
+
+@Immutable
 data class TimePickerUI(
     val isShown: Boolean,
     val minTime: TimeUI,
@@ -73,5 +80,12 @@ data class TimeUI(
 data class SelectableAddressUI(
     val uuid: String,
     val address: String,
+    val isSelected: Boolean,
+)
+
+@Immutable
+data class SelectablePaymentMethodUI(
+    val uuid: String,
+    val name: String,
     val isSelected: Boolean,
 )
