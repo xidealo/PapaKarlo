@@ -85,6 +85,7 @@ class ProductDetailsFragment :
         )
     }
 
+    @Composable
     override fun ProductDetailsState.DataState.mapState(): ProductDetailsViewState {
         return productDetailsUiStateMapper.map(this)
     }

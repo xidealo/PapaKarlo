@@ -69,6 +69,7 @@ class OrderDetailsFragment :
         OrderDetailsScreen(viewState, onAction)
     }
 
+    @Composable
     override fun OrderDetails.DataState.mapState(): OrderDetailsViewState {
         return orderDetailsUiStateMapper.map(this)
     }

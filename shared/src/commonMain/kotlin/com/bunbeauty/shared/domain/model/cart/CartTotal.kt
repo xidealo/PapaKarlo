@@ -1,9 +1,8 @@
 package com.bunbeauty.shared.domain.model.cart
 
 data class CartTotal(
-    val totalCost: Int,
-    val oldFinalCost: Int?,
-    val deliveryCost: Int,
-    val newFinalCost: Int,
     val discount: Int?,
+    val deliveryCost: Int?,
+    val oldFinalCost: Int?,
+    val newFinalCost: Int,
 )
