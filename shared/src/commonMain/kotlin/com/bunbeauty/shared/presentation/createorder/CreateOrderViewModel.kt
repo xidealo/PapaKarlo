@@ -18,6 +18,8 @@ import com.bunbeauty.shared.domain.use_case.deferred_time.GetMinTimeUseCase
 import com.bunbeauty.shared.extension.launchSafe
 import com.bunbeauty.shared.presentation.base.SharedStateViewModel
 
+private const val DELIVERY_POSITION = 0
+
 class CreateOrderViewModel(
     private val cartProductInteractor: ICartProductInteractor,
     private val cafeInteractor: ICafeInteractor,
@@ -152,7 +154,7 @@ class CreateOrderViewModel(
     }
 
     private fun changeMethod(position: Int) {
-        (position == 0).let { isDelivery ->
+        (position == DELIVERY_POSITION).let { isDelivery ->
             setState {
                 copy(isDelivery = isDelivery)
             }
