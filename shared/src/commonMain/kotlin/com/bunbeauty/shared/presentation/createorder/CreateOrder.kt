@@ -10,6 +10,7 @@ import com.bunbeauty.shared.domain.model.payment_method.SelectablePaymentMethod
 import com.bunbeauty.shared.presentation.base.BaseAction
 import com.bunbeauty.shared.presentation.base.BaseDataState
 import com.bunbeauty.shared.presentation.base.BaseEvent
+import com.bunbeauty.shared.presentation.motivation.MotivationData
 
 interface CreateOrder {
 
@@ -57,6 +58,7 @@ interface CreateOrder {
     sealed interface CartTotal {
         data object Loading : CartTotal
         data class Success(
+            val motivation: MotivationData?,
             val discount: String?,
             val deliveryCost: String?,
             val oldFinalCost: String?,

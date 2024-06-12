@@ -16,6 +16,7 @@ import com.bunbeauty.papakarlo.feature.paymentmethod.toPaymentMethodUI
 import com.bunbeauty.papakarlo.feature.paymentmethod.toSelectablePaymentMethodUI
 import com.bunbeauty.shared.presentation.createorder.CreateOrder
 import kotlinx.collections.immutable.toImmutableList
+import com.bunbeauty.papakarlo.feature.motivation.toMotivationUi
 
 @Composable
 fun CreateOrder.DataState.toViewState(): CreateOrderViewState {
@@ -38,6 +39,7 @@ fun CreateOrder.DataState.toViewState(): CreateOrderViewState {
             is CreateOrder.CartTotal.Success -> {
                 val successCartTotal = cartTotal as CreateOrder.CartTotal.Success
                 CartTotalUI.Success(
+                    motivation = successCartTotal.motivation?.toMotivationUi(),
                     discount = successCartTotal.discount,
                     deliveryCost = successCartTotal.deliveryCost,
                     oldFinalCost = successCartTotal.oldFinalCost,

@@ -52,6 +52,8 @@ import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.ui.Payment
 import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.ui.PickupAddressListBottomSheet
 import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.ui.TimePickerDialog
 import com.bunbeauty.papakarlo.feature.main.IMessageHost
+import com.bunbeauty.papakarlo.feature.motivation.Motivation
+import com.bunbeauty.papakarlo.feature.motivation.MotivationUi
 import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentMethodUI
 import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentMethodValueUI
 import com.bunbeauty.shared.presentation.createorder.CreateOrder
@@ -358,7 +360,7 @@ class CreateOrderFragment :
         FoodDeliverySurface(modifier = Modifier.fillMaxWidth()) {
             Column(
                 modifier = Modifier.padding(16.dp),
-                verticalArrangement = spacedBy(8.dp)
+                verticalArrangement = spacedBy(16.dp)
             ) {
                 when (viewState.cartTotal) {
                     CartTotalUI.Loading -> {
@@ -371,7 +373,6 @@ class CreateOrderFragment :
                 }
 
                 LoadingButton(
-                    modifier = Modifier.padding(top = 8.dp),
                     textStringId = R.string.action_create_order_create_order,
                     isLoading = viewState.isLoading,
                     isEnabled = viewState.cartTotal is CartTotalUI.Success,
@@ -404,7 +405,11 @@ class CreateOrderFragment :
         cartTotal: CartTotalUI.Success,
         modifier: Modifier = Modifier
     ) {
-        Column(modifier = modifier) {
+        Column(
+            modifier = modifier,
+            verticalArrangement = spacedBy(8.dp)
+        ) {
+            Motivation(motivation = cartTotal.motivation)
             cartTotal.discount?.let { discount ->
                 Row {
                     Text(
@@ -551,6 +556,7 @@ class CreateOrderFragment :
                     ),
                     isPaymentMethodErrorShown = false,
                     cartTotal = CartTotalUI.Success(
+                        motivation = MotivationUi.MinOrderCost("800 ₽"),
                         discount = "10%",
                         deliveryCost = "100 ₽",
                         oldFinalCost = "700 ₽",
@@ -604,6 +610,7 @@ class CreateOrderFragment :
                     ),
                     isPaymentMethodErrorShown = false,
                     cartTotal = CartTotalUI.Success(
+                        motivation = null,
                         discount = null,
                         deliveryCost = null,
                         oldFinalCost = null,
@@ -657,6 +664,7 @@ class CreateOrderFragment :
                     ),
                     isPaymentMethodErrorShown = false,
                     cartTotal = CartTotalUI.Success(
+                        motivation = null,
                         discount = null,
                         deliveryCost = null,
                         oldFinalCost = null,
@@ -703,6 +711,7 @@ class CreateOrderFragment :
                     selectedPaymentMethod = null,
                     isPaymentMethodErrorShown = true,
                     cartTotal = CartTotalUI.Success(
+                        motivation = null,
                         discount = null,
                         deliveryCost = null,
                         oldFinalCost = null,

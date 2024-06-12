@@ -4,6 +4,7 @@ import com.bunbeauty.shared.Constants.PERCENT
 import com.bunbeauty.shared.Constants.RUBLE_CURRENCY
 import com.bunbeauty.shared.domain.feature.cafe.GetSelectableCafeListUseCase
 import com.bunbeauty.shared.domain.feature.city.GetSelectedCityTimeZoneUseCase
+import com.bunbeauty.shared.domain.feature.motivation.GetMotivationUseCase
 import com.bunbeauty.shared.domain.feature.order.CreateOrderUseCase
 import com.bunbeauty.shared.domain.feature.payment.GetSelectablePaymentMethodListUseCase
 import com.bunbeauty.shared.domain.feature.payment.SavePaymentMethodUseCase
@@ -17,6 +18,7 @@ import com.bunbeauty.shared.domain.use_case.address.SaveSelectedUserAddressUseCa
 import com.bunbeauty.shared.domain.use_case.deferred_time.GetMinTimeUseCase
 import com.bunbeauty.shared.extension.launchSafe
 import com.bunbeauty.shared.presentation.base.SharedStateViewModel
+import com.bunbeauty.shared.presentation.motivation.toMotivationData
 
 private const val DELIVERY_POSITION = 0
 
@@ -27,6 +29,7 @@ class CreateOrderViewModel(
     private val getSelectableUserAddressList: GetSelectableUserAddressListUseCase,
     private val getSelectableCafeList: GetSelectableCafeListUseCase,
     private val getCartTotal: GetCartTotalUseCase,
+    private val getMotivationUseCase: GetMotivationUseCase,
     private val getMinTime: GetMinTimeUseCase,
     private val createOrder: CreateOrderUseCase,
     private val getSelectedCityTimeZone: GetSelectedCityTimeZoneUseCase,
@@ -445,8 +448,10 @@ class CreateOrderViewModel(
         }
         setState {
             val cartTotal = getCartTotal(isDelivery = isDelivery)
+            val motivation = getMotivationUseCase(newTotalCost = cartTotal.newTotalCost)
             copy(
                 cartTotal = CreateOrder.CartTotal.Success(
+                    motivation = motivation?.toMotivationData(),
                     discount = cartTotal.discount?.let { discount ->
                         "$discount$PERCENT"
                     },

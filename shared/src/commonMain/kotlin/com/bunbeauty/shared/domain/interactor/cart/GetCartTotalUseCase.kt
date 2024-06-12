@@ -29,6 +29,8 @@ class GetCartTotalUseCase(
         return CartTotal(
             discount = getDiscountUseCase()?.firstOrderDiscount,
             deliveryCost = deliveryCost,
+            oldTotalCost = oldTotalCost,
+            newTotalCost = newTotalCost,
             oldFinalCost = oldTotalCost?.let {
                 oldTotalCost + (deliveryCost ?: 0)
             },

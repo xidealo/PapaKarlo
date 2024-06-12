@@ -1,6 +1,7 @@
 package com.bunbeauty.papakarlo.feature.createorder.screen.createorder
 
 import androidx.annotation.StringRes
+import com.bunbeauty.papakarlo.feature.motivation.MotivationUi
 import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentMethodUI
 import com.bunbeauty.shared.presentation.base.BaseViewState
 import com.google.errorprone.annotations.Immutable
@@ -38,6 +39,7 @@ sealed interface CartTotalUI {
 
     @Immutable
     data class Success(
+        val motivation: MotivationUi?,
         val discount: String?,
         val deliveryCost: String?,
         val oldFinalCost: String?,
