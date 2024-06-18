@@ -17,7 +17,7 @@ data class CreateOrderViewState(
     @StringRes val deferredTimeStringId: Int,
     val selectedPaymentMethod: PaymentMethodUI?,
     val isPaymentMethodErrorShown: Boolean,
-    val comment: String?,
+    val comment: String,
     val cartTotal: CartTotalUI,
     val isLoading: Boolean,
 

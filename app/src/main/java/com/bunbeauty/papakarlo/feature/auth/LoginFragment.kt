@@ -37,6 +37,7 @@ import com.bunbeauty.papakarlo.common.extension.navigateSafe
 import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.papakarlo.common.ui.element.button.LoadingButton
 import com.bunbeauty.papakarlo.common.ui.element.textfield.FoodDeliveryTextField
+import com.bunbeauty.papakarlo.common.ui.element.textfield.FoodDeliveryTextFieldDefaults
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.feature.main.IMessageHost
 import com.bunbeauty.shared.presentation.login.Login
@@ -100,7 +101,9 @@ class LoginFragment : BaseSingleStateComposeFragment<Login.ViewDataState, Login.
                     color = FoodDeliveryTheme.colors.mainColors.onSurface
                 )
 
-                val focusRequester = remember { FocusRequester() }
+                val focusRequester = remember {
+                    FocusRequester()
+                }
                 FoodDeliveryTextField(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -111,8 +114,10 @@ class LoginFragment : BaseSingleStateComposeFragment<Login.ViewDataState, Login.
                         selection = TextRange(viewState.phoneNumberCursorPosition)
                     ),
                     labelStringId = R.string.hint_login_phone,
-                    keyboardType = KeyboardType.Phone,
-                    imeAction = ImeAction.Done,
+                    keyboardOptions = FoodDeliveryTextFieldDefaults.keyboardOptions(
+                        keyboardType = KeyboardType.Phone,
+                        imeAction = ImeAction.Done,
+                    ),
                     onValueChange = { value ->
                         onAction(Login.Action.ChangePhoneNumber(value.text, value.selection.start))
                     },

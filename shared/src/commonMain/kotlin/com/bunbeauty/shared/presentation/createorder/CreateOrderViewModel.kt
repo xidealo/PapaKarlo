@@ -44,7 +44,7 @@ class CreateOrderViewModel(
         isAddressErrorShown = false,
         cafeList = emptyList(),
         selectedCafe = null,
-        comment = null,
+        comment = "",
         deferredTime = CreateOrder.DeferredTime.Asap,
         paymentMethodList = emptyList(),
         selectedPaymentMethod = null,
@@ -316,7 +316,7 @@ class CreateOrderViewModel(
 
     private fun onCommentChanged(comment: String) {
         setState {
-            copy(comment = comment.ifEmpty { null })
+            copy(comment = comment)
         }
     }
 

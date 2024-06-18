@@ -22,6 +22,7 @@ import com.bunbeauty.papakarlo.common.delegates.nullableArgument
 import com.bunbeauty.papakarlo.common.ui.ComposeBottomSheet
 import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
 import com.bunbeauty.papakarlo.common.ui.element.textfield.FoodDeliveryTextField
+import com.bunbeauty.papakarlo.common.ui.element.textfield.FoodDeliveryTextFieldDefaults
 import com.bunbeauty.papakarlo.common.ui.screen.bottomsheet.FoodDeliveryBottomSheet
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import kotlin.coroutines.resume
@@ -80,7 +81,9 @@ private fun CommentScreen(
             focusRequester = focusRequester,
             value = textFieldValue,
             labelStringId = R.string.comment,
-            imeAction = ImeAction.Done,
+            keyboardOptions = FoodDeliveryTextFieldDefaults.keyboardOptions(
+                imeAction = ImeAction.Done
+            ),
             onValueChange = { value ->
                 textFieldValue = value
             }

@@ -43,7 +43,7 @@ interface CreateOrder {
         val selectedPaymentMethod: PaymentMethod? = null,
         val isPaymentMethodErrorShown: Boolean = false,
 
-        val comment: String? = null,
+        val comment: String = "",
 
         val cartTotal: CartTotal,
 
