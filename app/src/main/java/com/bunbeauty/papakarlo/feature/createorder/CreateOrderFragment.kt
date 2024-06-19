@@ -46,9 +46,9 @@ import com.bunbeauty.papakarlo.common.ui.element.textfield.FoodDeliveryTextField
 import com.bunbeauty.papakarlo.common.ui.element.textfield.FoodDeliveryTextFieldDefaults
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold
-import com.bunbeauty.papakarlo.feature.createorder.mapper.toViewState
 import com.bunbeauty.papakarlo.feature.createorder.CreateOrderFragmentDirections.toCreateAddressFragment
 import com.bunbeauty.papakarlo.feature.createorder.CreateOrderFragmentDirections.toProfileFragment
+import com.bunbeauty.papakarlo.feature.createorder.mapper.toViewState
 import com.bunbeauty.papakarlo.feature.createorder.ui.DeferredTimeBottomSheet
 import com.bunbeauty.papakarlo.feature.createorder.ui.DeliveryAddressListBottomSheet
 import com.bunbeauty.papakarlo.feature.createorder.ui.PaymentMethodListBottomSheet
@@ -144,7 +144,7 @@ class CreateOrderFragment :
                         value = viewState.comment,
                         labelStringId = R.string.comment,
                         keyboardOptions = FoodDeliveryTextFieldDefaults.keyboardOptions(
-                            imeAction = ImeAction.Done,
+                            imeAction = ImeAction.Done
                         ),
                         keyboardActions = FoodDeliveryTextFieldDefaults.keyboardActions(
                             onDone = {

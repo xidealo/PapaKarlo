@@ -116,7 +116,7 @@ class LoginFragment : BaseSingleStateComposeFragment<Login.ViewDataState, Login.
                     labelStringId = R.string.hint_login_phone,
                     keyboardOptions = FoodDeliveryTextFieldDefaults.keyboardOptions(
                         keyboardType = KeyboardType.Phone,
-                        imeAction = ImeAction.Done,
+                        imeAction = ImeAction.Done
                     ),
                     onValueChange = { value ->
                         onAction(Login.Action.ChangePhoneNumber(value.text, value.selection.start))

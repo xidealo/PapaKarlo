@@ -85,7 +85,7 @@ private fun EmailScreen(
             labelStringId = R.string.common_email,
             keyboardOptions = FoodDeliveryTextFieldDefaults.keyboardOptions(
                 keyboardType = KeyboardType.Email,
-                imeAction = ImeAction.Done,
+                imeAction = ImeAction.Done
             ),
             onValueChange = { value ->
                 textFieldValue = value

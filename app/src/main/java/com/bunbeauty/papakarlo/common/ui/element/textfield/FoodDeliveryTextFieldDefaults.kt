@@ -116,7 +116,7 @@ object FoodDeliveryTextFieldDefaults {
         return KeyboardOptions(
             autoCorrect = autoCorrect,
             keyboardType = keyboardType,
-            imeAction = imeAction,
+            imeAction = imeAction
         )
     }
 
@@ -127,5 +127,4 @@ object FoodDeliveryTextFieldDefaults {
             onDone = onDone
         )
     }
-
 }
