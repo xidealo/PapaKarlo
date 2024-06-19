@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.feature.createorder.screen.createorder.ui
+package com.bunbeauty.papakarlo.feature.createorder.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.lazy.LazyColumn
@@ -11,8 +11,8 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
 import com.bunbeauty.papakarlo.common.ui.element.selectable.SelectableItem
 import com.bunbeauty.papakarlo.common.ui.screen.bottomsheet.FoodDeliveryModalBottomSheet
-import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.DeliveryAddressListUI
-import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.SelectableAddressUI
+import com.bunbeauty.papakarlo.feature.createorder.DeliveryAddressListUI
+import com.bunbeauty.papakarlo.feature.createorder.SelectableAddressUI
 import com.bunbeauty.shared.presentation.createorder.CreateOrder
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf

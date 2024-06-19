@@ -127,10 +127,6 @@ class CreateOrderViewModel(
                 changePaymentMethod(paymentMethodUuid = action.paymentMethodUuid)
             }
 
-            CreateOrder.Action.CommentClick -> {
-                commentClick()
-            }
-
             is CreateOrder.Action.ChangeComment -> {
                 onCommentChanged(comment = action.comment)
             }
@@ -303,14 +299,6 @@ class CreateOrderViewModel(
         withLoading {
             savePaymentMethodUseCase(paymentMethodUuid)
             updatePaymentMethods()
-        }
-    }
-
-    private fun commentClick() {
-        addEvent { state ->
-            CreateOrder.Event.ShowCommentInputEvent(
-                comment = state.comment
-            )
         }
     }
 

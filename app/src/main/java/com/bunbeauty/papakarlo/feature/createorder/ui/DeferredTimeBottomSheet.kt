@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.feature.createorder.screen.createorder.ui
+package com.bunbeauty.papakarlo.feature.createorder.ui
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope

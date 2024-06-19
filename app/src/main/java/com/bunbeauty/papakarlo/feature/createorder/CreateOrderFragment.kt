@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.feature.createorder.screen.createorder
+package com.bunbeauty.papakarlo.feature.createorder
 
 import android.os.Bundle
 import android.view.View
@@ -30,7 +30,6 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseComposeFragment
@@ -48,14 +47,13 @@ import com.bunbeauty.papakarlo.common.ui.element.textfield.FoodDeliveryTextField
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold
 import com.bunbeauty.papakarlo.feature.createorder.mapper.toViewState
-import com.bunbeauty.papakarlo.feature.createorder.screen.comment.CommentBottomSheet
-import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.CreateOrderFragmentDirections.toCreateAddressFragment
-import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.CreateOrderFragmentDirections.toProfileFragment
-import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.ui.DeferredTimeBottomSheet
-import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.ui.DeliveryAddressListBottomSheet
-import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.ui.PaymentMethodListBottomSheet
-import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.ui.PickupAddressListBottomSheet
-import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.ui.TimePickerDialog
+import com.bunbeauty.papakarlo.feature.createorder.CreateOrderFragmentDirections.toCreateAddressFragment
+import com.bunbeauty.papakarlo.feature.createorder.CreateOrderFragmentDirections.toProfileFragment
+import com.bunbeauty.papakarlo.feature.createorder.ui.DeferredTimeBottomSheet
+import com.bunbeauty.papakarlo.feature.createorder.ui.DeliveryAddressListBottomSheet
+import com.bunbeauty.papakarlo.feature.createorder.ui.PaymentMethodListBottomSheet
+import com.bunbeauty.papakarlo.feature.createorder.ui.PickupAddressListBottomSheet
+import com.bunbeauty.papakarlo.feature.createorder.ui.TimePickerDialog
 import com.bunbeauty.papakarlo.feature.main.IMessageHost
 import com.bunbeauty.papakarlo.feature.motivation.Motivation
 import com.bunbeauty.papakarlo.feature.motivation.MotivationUi
@@ -64,7 +62,6 @@ import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentMethodValue
 import com.bunbeauty.shared.presentation.createorder.CreateOrder
 import com.bunbeauty.shared.presentation.createorder.CreateOrderViewModel
 import kotlinx.collections.immutable.persistentListOf
-import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CreateOrderFragment :
@@ -195,21 +192,6 @@ class CreateOrderFragment :
         when (event) {
             is CreateOrder.Event.OpenCreateAddressEvent -> {
                 findNavController().navigateSafe(toCreateAddressFragment())
-            }
-
-            is CreateOrder.Event.ShowCommentInputEvent -> {
-                lifecycleScope.launch {
-                    CommentBottomSheet.show(
-                        childFragmentManager,
-                        event.comment
-                    )?.let { comment ->
-                        viewModel.onAction(
-                            CreateOrder.Action.ChangeComment(
-                                comment = comment
-                            )
-                        )
-                    }
-                }
             }
 
             is CreateOrder.Event.ShowSomethingWentWrongErrorEvent -> {

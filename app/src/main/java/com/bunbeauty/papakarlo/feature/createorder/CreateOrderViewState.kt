@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.feature.createorder.screen.createorder
+package com.bunbeauty.papakarlo.feature.createorder
 
 import androidx.annotation.StringRes
 import com.bunbeauty.papakarlo.feature.motivation.MotivationUi

@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.feature.createorder.screen.createorder.ui
+package com.bunbeauty.papakarlo.feature.createorder.ui
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -18,8 +18,8 @@ import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.medium
-import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.TimePickerUI
-import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.TimeUI
+import com.bunbeauty.papakarlo.feature.createorder.TimePickerUI
+import com.bunbeauty.papakarlo.feature.createorder.TimeUI
 import com.bunbeauty.shared.domain.model.date_time.Time
 import com.bunbeauty.shared.presentation.createorder.CreateOrder
 import com.vanpra.composematerialdialogs.MaterialDialog

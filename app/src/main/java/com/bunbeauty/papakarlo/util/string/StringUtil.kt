@@ -1,7 +1,6 @@
 package com.bunbeauty.papakarlo.util.string
 
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.model.TimeUI
 import com.bunbeauty.papakarlo.util.resources.IResourcesProvider
 import com.bunbeauty.shared.Constants.ADDRESS_DIVIDER
 import com.bunbeauty.shared.domain.model.address.SelectableUserAddress
@@ -103,18 +102,6 @@ class StringUtil(
             resourcesProvider.getString(R.string.asap)
         } else {
             "${addFirstZero(time.hours)}:${addFirstZero(time.minutes)}"
-        }
-    }
-
-    override fun getTimeString(time: TimeUI): String {
-        return when (time) {
-            is TimeUI.ASAP -> {
-                resourcesProvider.getString(R.string.asap)
-            }
-
-            is TimeUI.Time -> {
-                "${addFirstZero(time.hours)}:${addFirstZero(time.minutes)}"
-            }
         }
     }
 
