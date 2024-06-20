@@ -2,10 +2,6 @@ package com.bunbeauty.papakarlo.feature.consumercart
 
 import android.os.Bundle
 import android.view.View
-import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.animateContentSize
-import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
 import androidx.compose.foundation.layout.Column
@@ -14,7 +10,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
@@ -22,19 +17,10 @@ import androidx.compose.foundation.lazy.grid.LazyGridScope
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.itemsIndexed
-import androidx.compose.material3.Icon
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.graphics.lerp
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -48,7 +34,6 @@ import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
 import com.bunbeauty.papakarlo.common.ui.element.card.DiscountCard
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryItem
 import com.bunbeauty.papakarlo.common.ui.element.surface.FoodDeliverySurface
-import com.bunbeauty.papakarlo.common.ui.icon24
 import com.bunbeauty.papakarlo.common.ui.screen.EmptyScreen
 import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
@@ -66,6 +51,8 @@ import com.bunbeauty.papakarlo.feature.consumercart.ui.CartProductItem
 import com.bunbeauty.papakarlo.feature.main.IMessageHost
 import com.bunbeauty.papakarlo.feature.menu.state.MenuItemUi
 import com.bunbeauty.papakarlo.feature.menu.ui.MenuProductItem
+import com.bunbeauty.papakarlo.feature.motivation.Motivation
+import com.bunbeauty.papakarlo.feature.motivation.MotivationUi
 import com.bunbeauty.shared.domain.model.SuccessLoginDirection
 import com.bunbeauty.shared.presentation.consumercart.ConsumerCart
 import com.bunbeauty.shared.presentation.consumercart.ConsumerCartViewModel
@@ -310,133 +297,6 @@ class ConsumerCartFragment :
         }
     }
 
-    @Composable
-    private fun Motivation(
-        motivation: ConsumerCartViewState.MotivationUi?,
-        modifier: Modifier = Modifier
-    ) {
-        motivation ?: return
-
-        Column(
-            modifier = modifier,
-            verticalArrangement = spacedBy(4.dp)
-        ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = spacedBy(8.dp)
-            ) {
-                val iconId = when (motivation) {
-                    is ConsumerCartViewState.MotivationUi.MinOrderCost -> R.drawable.ic_warning
-                    is ConsumerCartViewState.MotivationUi.ForLowerDelivery,
-                    is ConsumerCartViewState.MotivationUi.LowerDeliveryAchieved -> R.drawable.ic_delivery
-                }
-                val iconTint = when (motivation) {
-                    is ConsumerCartViewState.MotivationUi.MinOrderCost -> {
-                        FoodDeliveryTheme.colors.statusColors.warning
-                    }
-
-                    is ConsumerCartViewState.MotivationUi.ForLowerDelivery,
-                    is ConsumerCartViewState.MotivationUi.LowerDeliveryAchieved -> {
-                        FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
-                    }
-                }
-                Icon(
-                    modifier = Modifier.icon24(),
-                    painter = painterResource(iconId),
-                    tint = iconTint,
-                    contentDescription = null
-                )
-
-                val motivationText = when (motivation) {
-                    is ConsumerCartViewState.MotivationUi.MinOrderCost -> {
-                        buildAnnotatedStringWithBold(
-                            text = stringResource(R.string.msg_consumer_cart_min_order, motivation.cost),
-                            subtextToSelect = motivation.cost
-                        )
-                    }
-
-                    is ConsumerCartViewState.MotivationUi.ForLowerDelivery -> {
-                        val textId = if (motivation.isFree) {
-                            R.string.msg_consumer_cart_for_free_delivery
-                        } else {
-                            R.string.msg_consumer_cart_for_lower_delivery
-                        }
-                        buildAnnotatedStringWithBold(
-                            text = stringResource(textId, motivation.increaseAmountBy),
-                            subtextToSelect = motivation.increaseAmountBy
-                        )
-                    }
-
-                    is ConsumerCartViewState.MotivationUi.LowerDeliveryAchieved -> {
-                        val textId = if (motivation.isFree) {
-                            R.string.msg_consumer_cart_free_delivery
-                        } else {
-                            R.string.msg_consumer_cart_lower_delivery
-                        }
-                        buildAnnotatedString {
-                            append(stringResource(textId))
-                        }
-                    }
-                }
-                Text(
-                    modifier = Modifier
-                        .animateContentSize(tween(500))
-                        .weight(1f),
-                    text = motivationText,
-                    style = FoodDeliveryTheme.typography.bodyMedium,
-                    color = FoodDeliveryTheme.colors.mainColors.onSurface
-                )
-            }
-
-            when (motivation) {
-                is ConsumerCartViewState.MotivationUi.MinOrderCost -> null
-                is ConsumerCartViewState.MotivationUi.ForLowerDelivery -> motivation.progress
-                is ConsumerCartViewState.MotivationUi.LowerDeliveryAchieved -> 1f
-            }?.let { progress ->
-                val animatedProgress by animateFloatAsState(
-                    targetValue = progress,
-                    animationSpec = tween(500),
-                    label = "progress"
-                )
-                val animatedColor by animateColorAsState(
-                    targetValue = lerp(
-                        FoodDeliveryTheme.colors.statusColors.warning,
-                        FoodDeliveryTheme.colors.statusColors.positive,
-                        progress
-                    ),
-                    animationSpec = tween(500),
-                    label = "color"
-                )
-                LinearProgressIndicator(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(8.dp),
-                    progress = animatedProgress,
-                    color = animatedColor,
-                    trackColor = FoodDeliveryTheme.colors.mainColors.disabled,
-                    strokeCap = StrokeCap.Round
-                )
-            }
-        }
-    }
-
-    @Composable
-    private fun buildAnnotatedStringWithBold(
-        text: String,
-        subtextToSelect: String
-    ): AnnotatedString {
-        return buildAnnotatedString {
-            val startIndex = text.indexOf(subtextToSelect)
-            val endIndex = startIndex + subtextToSelect.length
-            append(text)
-            addStyle(
-                style = FoodDeliveryTheme.typography.bodyMedium.bold.toSpanStyle(),
-                start = startIndex,
-                end = endIndex
-            )
-        }
-    }
-
     private fun LazyGridScope.recommendationItems(
         recommendationList: ImmutableList<MenuItemUi.Product>,
         onAction: (ConsumerCart.Action) -> Unit
@@ -523,7 +383,7 @@ class ConsumerCartFragment :
                         getCartProductItemModel("5")
                     ),
                     bottomPanelInfo = ConsumerCartViewState.BottomPanelInfoUi(
-                        motivation = ConsumerCartViewState.MotivationUi.ForLowerDelivery(
+                        motivation = MotivationUi.ForLowerDelivery(
                             increaseAmountBy = "550 ₽",
                             progress = 0.5f,
                             isFree = true

@@ -1,7 +1,6 @@
 package com.bunbeauty.papakarlo.di
 
 import com.bunbeauty.papakarlo.feature.cafe.screen.cafelist.CafeListUiStateMapper
-import com.bunbeauty.papakarlo.feature.createorder.mapper.TimeMapper
 import com.bunbeauty.papakarlo.feature.order.screen.orderdetails.OrderDetailsUiStateMapper
 import com.bunbeauty.papakarlo.feature.order.screen.orderdetails.OrderProductItemMapper
 import com.bunbeauty.papakarlo.feature.productdetails.ProductDetailsUiStateMapper
@@ -52,8 +51,5 @@ fun uiMapperModule() = module {
     }
     factory {
         LinkUiStateMapper()
-    }
-    factory {
-        TimeMapper()
     }
 }

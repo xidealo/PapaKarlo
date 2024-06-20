@@ -1,6 +1,7 @@
-package com.bunbeauty.papakarlo.feature.createorder.screen.createorder
+package com.bunbeauty.papakarlo.feature.createorder
 
 import androidx.annotation.StringRes
+import com.bunbeauty.papakarlo.feature.motivation.MotivationUi
 import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentMethodUI
 import com.bunbeauty.shared.presentation.base.BaseViewState
 import com.google.errorprone.annotations.Immutable
@@ -16,7 +17,7 @@ data class CreateOrderViewState(
     @StringRes val deferredTimeStringId: Int,
     val selectedPaymentMethod: PaymentMethodUI?,
     val isPaymentMethodErrorShown: Boolean,
-    val comment: String?,
+    val comment: String,
     val cartTotal: CartTotalUI,
     val isLoading: Boolean,
 
@@ -38,6 +39,7 @@ sealed interface CartTotalUI {
 
     @Immutable
     data class Success(
+        val motivation: MotivationUi?,
         val discount: String?,
         val deliveryCost: String?,
         val oldFinalCost: String?,

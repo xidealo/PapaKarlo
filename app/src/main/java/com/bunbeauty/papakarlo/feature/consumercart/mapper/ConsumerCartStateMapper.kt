@@ -2,9 +2,9 @@ package com.bunbeauty.papakarlo.feature.consumercart.mapper
 
 import com.bunbeauty.papakarlo.feature.consumercart.state.ConsumerCartViewState
 import com.bunbeauty.papakarlo.feature.menu.mapper.toMenuProductItemUi
+import com.bunbeauty.papakarlo.feature.motivation.toMotivationUi
 import com.bunbeauty.shared.presentation.consumercart.CartProductItem
 import com.bunbeauty.shared.presentation.consumercart.ConsumerCart
-import com.bunbeauty.shared.presentation.motivation.MotivationData
 import kotlinx.collections.immutable.toImmutableList
 
 fun ConsumerCart.DataState.toConsumerCartViewState(): ConsumerCartViewState {
@@ -25,25 +25,7 @@ fun ConsumerCart.DataState.toConsumerCartViewState(): ConsumerCartViewState {
                     null
                 } else {
                     ConsumerCartViewState.BottomPanelInfoUi(
-                        motivation = motivation?.let { warningItem ->
-                            when (warningItem) {
-                                is MotivationData.MinOrderCost -> {
-                                    ConsumerCartViewState.MotivationUi.MinOrderCost(cost = warningItem.cost)
-                                }
-
-                                is MotivationData.ForLowerDelivery -> {
-                                    ConsumerCartViewState.MotivationUi.ForLowerDelivery(
-                                        increaseAmountBy = warningItem.increaseAmountBy,
-                                        progress = warningItem.progress,
-                                        isFree = warningItem.isFree
-                                    )
-                                }
-
-                                is MotivationData.LowerDeliveryAchieved -> {
-                                    ConsumerCartViewState.MotivationUi.LowerDeliveryAchieved(isFree = warningItem.isFree)
-                                }
-                            }
-                        },
+                        motivation = motivation?.toMotivationUi(),
                         discount = discount,
                         oldTotalCost = oldTotalCost,
                         newTotalCost = newTotalCost

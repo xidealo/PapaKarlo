@@ -56,6 +56,7 @@ fun viewModelModule() = module {
             getSelectableUserAddressList = get(),
             getSelectableCafeList = get(),
             getCartTotal = get(),
+            getMotivationUseCase = get(),
             getMinTime = get(),
             createOrder = get(),
             getSelectedCityTimeZone = get(),

@@ -3,7 +3,7 @@ package com.bunbeauty.papakarlo.feature.paymentmethod
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.SelectablePaymentMethodUI
+import com.bunbeauty.papakarlo.feature.createorder.SelectablePaymentMethodUI
 import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentMethodUI
 import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentMethodValueUI
 import com.bunbeauty.shared.domain.model.payment_method.PaymentMethod

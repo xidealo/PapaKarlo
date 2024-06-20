@@ -4,6 +4,8 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -11,22 +13,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.ui.applyIfNotNull
+import com.bunbeauty.papakarlo.common.ui.element.textfield.FoodDeliveryTextFieldDefaults.keyboardActions
+import com.bunbeauty.papakarlo.common.ui.element.textfield.FoodDeliveryTextFieldDefaults.keyboardOptions
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 
 @Composable
 fun FoodDeliveryTextField(
     modifier: Modifier = Modifier,
+    focusRequester: FocusRequester? = null,
     value: String = "",
     @StringRes labelStringId: Int,
-    keyboardType: KeyboardType = KeyboardType.Text,
-    imeAction: ImeAction = ImeAction.Next,
+    keyboardOptions: KeyboardOptions = keyboardOptions(),
+    keyboardActions: KeyboardActions = keyboardActions(),
     onValueChange: (value: String) -> Unit,
     maxSymbols: Int = Int.MAX_VALUE,
     maxLines: Int = 1,
@@ -34,11 +37,15 @@ fun FoodDeliveryTextField(
 ) {
     Column(modifier = modifier) {
         FoodDeliveryBaseTextField(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .applyIfNotNull(focusRequester) {
+                    focusRequester(it)
+                },
             value = value,
             labelStringId = labelStringId,
-            keyboardType = keyboardType,
-            imeAction = imeAction,
+            keyboardOptions = keyboardOptions,
+            keyboardActions = keyboardActions,
             onValueChange = onValueChange,
             maxSymbols = maxSymbols,
             maxLines = maxLines,
@@ -63,8 +70,8 @@ fun FoodDeliveryTextField(
     focusRequester: FocusRequester? = null,
     value: TextFieldValue = TextFieldValue(""),
     @StringRes labelStringId: Int,
-    keyboardType: KeyboardType = KeyboardType.Text,
-    imeAction: ImeAction = ImeAction.Next,
+    keyboardOptions: KeyboardOptions = keyboardOptions(),
+    keyboardActions: KeyboardActions = keyboardActions(),
     onValueChange: (value: TextFieldValue) -> Unit,
     maxSymbols: Int = Int.MAX_VALUE,
     maxLines: Int = 1,
@@ -79,8 +86,8 @@ fun FoodDeliveryTextField(
                 },
             value = value,
             labelStringId = labelStringId,
-            keyboardType = keyboardType,
-            imeAction = imeAction,
+            keyboardOptions = keyboardOptions,
+            keyboardActions = keyboardActions,
             onValueChange = onValueChange,
             maxSymbols = maxSymbols,
             maxLines = maxLines,

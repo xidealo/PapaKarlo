@@ -10,6 +10,7 @@ import com.bunbeauty.shared.domain.model.payment_method.SelectablePaymentMethod
 import com.bunbeauty.shared.presentation.base.BaseAction
 import com.bunbeauty.shared.presentation.base.BaseDataState
 import com.bunbeauty.shared.presentation.base.BaseEvent
+import com.bunbeauty.shared.presentation.motivation.MotivationData
 
 interface CreateOrder {
 
@@ -42,7 +43,7 @@ interface CreateOrder {
         val selectedPaymentMethod: PaymentMethod? = null,
         val isPaymentMethodErrorShown: Boolean = false,
 
-        val comment: String? = null,
+        val comment: String = "",
 
         val cartTotal: CartTotal,
 
@@ -57,6 +58,7 @@ interface CreateOrder {
     sealed interface CartTotal {
         data object Loading : CartTotal
         data class Success(
+            val motivation: MotivationData?,
             val discount: String?,
             val deliveryCost: String?,
             val oldFinalCost: String?,
@@ -89,7 +91,6 @@ interface CreateOrder {
         data object HidePaymentMethodList : Action
         data class ChangePaymentMethod(val paymentMethodUuid: String) : Action
 
-        data object CommentClick : Action
         data class ChangeComment(val comment: String) : Action
 
         data object CreateClick : Action
@@ -98,7 +99,6 @@ interface CreateOrder {
     sealed interface Event : BaseEvent {
         data object OpenCreateAddressEvent : Event
 
-        data class ShowCommentInputEvent(val comment: String?) : Event
         data object ShowUserUnauthorizedErrorEvent : Event
         data object ShowSomethingWentWrongErrorEvent : Event
         data class OrderCreatedEvent(val code: String) : Event

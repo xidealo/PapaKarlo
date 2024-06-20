@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.feature.createorder.screen.createorder
+package com.bunbeauty.papakarlo.feature.createorder
 
 import android.os.Bundle
 import android.view.View
@@ -22,12 +22,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusManager
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseComposeFragment
@@ -40,24 +42,26 @@ import com.bunbeauty.papakarlo.common.ui.element.card.NavigationTextCard
 import com.bunbeauty.papakarlo.common.ui.element.simmer.Shimmer
 import com.bunbeauty.papakarlo.common.ui.element.surface.FoodDeliverySurface
 import com.bunbeauty.papakarlo.common.ui.element.switcher.FoodDeliverySwitcher
+import com.bunbeauty.papakarlo.common.ui.element.textfield.FoodDeliveryTextField
+import com.bunbeauty.papakarlo.common.ui.element.textfield.FoodDeliveryTextFieldDefaults
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold
+import com.bunbeauty.papakarlo.feature.createorder.CreateOrderFragmentDirections.toCreateAddressFragment
+import com.bunbeauty.papakarlo.feature.createorder.CreateOrderFragmentDirections.toProfileFragment
 import com.bunbeauty.papakarlo.feature.createorder.mapper.toViewState
-import com.bunbeauty.papakarlo.feature.createorder.screen.comment.CommentBottomSheet
-import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.CreateOrderFragmentDirections.toCreateAddressFragment
-import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.CreateOrderFragmentDirections.toProfileFragment
-import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.ui.DeferredTimeBottomSheet
-import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.ui.DeliveryAddressListBottomSheet
-import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.ui.PaymentMethodListBottomSheet
-import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.ui.PickupAddressListBottomSheet
-import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.ui.TimePickerDialog
+import com.bunbeauty.papakarlo.feature.createorder.ui.DeferredTimeBottomSheet
+import com.bunbeauty.papakarlo.feature.createorder.ui.DeliveryAddressListBottomSheet
+import com.bunbeauty.papakarlo.feature.createorder.ui.PaymentMethodListBottomSheet
+import com.bunbeauty.papakarlo.feature.createorder.ui.PickupAddressListBottomSheet
+import com.bunbeauty.papakarlo.feature.createorder.ui.TimePickerDialog
 import com.bunbeauty.papakarlo.feature.main.IMessageHost
+import com.bunbeauty.papakarlo.feature.motivation.Motivation
+import com.bunbeauty.papakarlo.feature.motivation.MotivationUi
 import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentMethodUI
 import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentMethodValueUI
 import com.bunbeauty.shared.presentation.createorder.CreateOrder
 import com.bunbeauty.shared.presentation.createorder.CreateOrderViewModel
 import kotlinx.collections.immutable.persistentListOf
-import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CreateOrderFragment :
@@ -91,6 +95,8 @@ class CreateOrderFragment :
                         .verticalScroll(rememberScrollState())
                         .padding(FoodDeliveryTheme.dimensions.mediumSpace)
                 ) {
+                    val focusManager = LocalFocusManager.current
+
                     FoodDeliverySwitcher(
                         modifier = Modifier.fillMaxWidth(),
                         optionResIdList = listOf(
@@ -99,11 +105,13 @@ class CreateOrderFragment :
                         ),
                         position = viewState.switcherPosition,
                         onPositionChanged = { position ->
+                            focusManager.clearFocus()
                             onAction(CreateOrder.Action.ChangeMethod(position))
                         }
                     )
                     AddressCard(
                         viewState = viewState,
+                        focusManager = focusManager,
                         onAction = onAction
                     )
                     ErrorText(
@@ -113,16 +121,14 @@ class CreateOrderFragment :
                         messageStringId = R.string.error_select_delivery_address,
                         isShown = viewState.isAddressErrorShown
                     )
-                    CommentCard(
-                        viewState = viewState,
-                        onAction = onAction
-                    )
                     DeferredTimeCard(
                         viewState = viewState,
+                        focusManager = focusManager,
                         onAction = onAction
                     )
                     PaymentMethodCard(
                         viewState = viewState,
+                        focusManager = focusManager,
                         onAction = onAction
                     )
                     ErrorText(
@@ -131,6 +137,25 @@ class CreateOrderFragment :
                             .padding(horizontal = 16.dp),
                         messageStringId = R.string.error_select_payment_method,
                         isShown = viewState.isPaymentMethodErrorShown
+                    )
+
+                    FoodDeliveryTextField(
+                        modifier = Modifier.fillMaxWidth(),
+                        value = viewState.comment,
+                        labelStringId = R.string.comment,
+                        keyboardOptions = FoodDeliveryTextFieldDefaults.keyboardOptions(
+                            imeAction = ImeAction.Done
+                        ),
+                        keyboardActions = FoodDeliveryTextFieldDefaults.keyboardActions(
+                            onDone = {
+                                focusManager.clearFocus()
+                            }
+                        ),
+                        onValueChange = { value ->
+                            onAction(CreateOrder.Action.ChangeComment(comment = value))
+                        },
+                        maxSymbols = 100,
+                        maxLines = 3
                     )
                 }
                 BottomAmountBar(
@@ -167,21 +192,6 @@ class CreateOrderFragment :
         when (event) {
             is CreateOrder.Event.OpenCreateAddressEvent -> {
                 findNavController().navigateSafe(toCreateAddressFragment())
-            }
-
-            is CreateOrder.Event.ShowCommentInputEvent -> {
-                lifecycleScope.launch {
-                    CommentBottomSheet.show(
-                        childFragmentManager,
-                        event.comment
-                    )?.let { comment ->
-                        viewModel.onAction(
-                            CreateOrder.Action.ChangeComment(
-                                comment = comment
-                            )
-                        )
-                    }
-                }
             }
 
             is CreateOrder.Event.ShowSomethingWentWrongErrorEvent -> {
@@ -223,6 +233,7 @@ class CreateOrderFragment :
     @Composable
     private fun AddressCard(
         viewState: CreateOrderViewState,
+        focusManager: FocusManager,
         onAction: (CreateOrder.Action) -> Unit
     ) {
         if (viewState.isDelivery) {
@@ -233,6 +244,7 @@ class CreateOrderFragment :
                     clickable = viewState.isFieldsEnabled,
                     label = stringResource(R.string.delivery_address),
                     onClick = {
+                        focusManager.clearFocus()
                         onAction(CreateOrder.Action.DeliveryAddressClick)
                     }
                 )
@@ -244,6 +256,7 @@ class CreateOrderFragment :
                     label = viewState.deliveryAddress,
                     clickable = viewState.isFieldsEnabled,
                     onClick = {
+                        focusManager.clearFocus()
                         onAction(CreateOrder.Action.DeliveryAddressClick)
                     }
                 )
@@ -256,34 +269,8 @@ class CreateOrderFragment :
                 label = viewState.pickupAddress ?: "",
                 clickable = viewState.isFieldsEnabled,
                 onClick = {
+                    focusManager.clearFocus()
                     onAction(CreateOrder.Action.PickupAddressClick)
-                }
-            )
-        }
-    }
-
-    @Composable
-    private fun CommentCard(
-        viewState: CreateOrderViewState,
-        onAction: (CreateOrder.Action) -> Unit
-    ) {
-        if (viewState.comment == null) {
-            NavigationCard(
-                modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace),
-                label = stringResource(R.string.comment),
-                clickable = viewState.isFieldsEnabled,
-                onClick = {
-                    onAction(CreateOrder.Action.CommentClick)
-                }
-            )
-        } else {
-            NavigationTextCard(
-                modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace),
-                hintStringId = R.string.hint_create_order_comment,
-                label = viewState.comment,
-                clickable = viewState.isFieldsEnabled,
-                onClick = {
-                    onAction(CreateOrder.Action.CommentClick)
                 }
             )
         }
@@ -292,6 +279,7 @@ class CreateOrderFragment :
     @Composable
     private fun DeferredTimeCard(
         viewState: CreateOrderViewState,
+        focusManager: FocusManager,
         onAction: (CreateOrder.Action) -> Unit
     ) {
         NavigationTextCard(
@@ -300,6 +288,7 @@ class CreateOrderFragment :
             label = viewState.deferredTime,
             clickable = viewState.isFieldsEnabled,
             onClick = {
+                focusManager.clearFocus()
                 onAction(CreateOrder.Action.DeferredTimeClick)
             }
         )
@@ -308,6 +297,7 @@ class CreateOrderFragment :
     @Composable
     private fun PaymentMethodCard(
         viewState: CreateOrderViewState,
+        focusManager: FocusManager,
         onAction: (CreateOrder.Action) -> Unit
     ) {
         if (viewState.selectedPaymentMethod == null) {
@@ -317,6 +307,7 @@ class CreateOrderFragment :
                 label = stringResource(R.string.payment_method),
                 clickable = viewState.isFieldsEnabled,
                 onClick = {
+                    focusManager.clearFocus()
                     onAction(CreateOrder.Action.PaymentMethodClick)
                 }
             )
@@ -358,7 +349,7 @@ class CreateOrderFragment :
         FoodDeliverySurface(modifier = Modifier.fillMaxWidth()) {
             Column(
                 modifier = Modifier.padding(16.dp),
-                verticalArrangement = spacedBy(8.dp)
+                verticalArrangement = spacedBy(16.dp)
             ) {
                 when (viewState.cartTotal) {
                     CartTotalUI.Loading -> {
@@ -371,7 +362,6 @@ class CreateOrderFragment :
                 }
 
                 LoadingButton(
-                    modifier = Modifier.padding(top = 8.dp),
                     textStringId = R.string.action_create_order_create_order,
                     isLoading = viewState.isLoading,
                     isEnabled = viewState.cartTotal is CartTotalUI.Success,
@@ -404,7 +394,11 @@ class CreateOrderFragment :
         cartTotal: CartTotalUI.Success,
         modifier: Modifier = Modifier
     ) {
-        Column(modifier = modifier) {
+        Column(
+            modifier = modifier,
+            verticalArrangement = spacedBy(8.dp)
+        ) {
+            Motivation(motivation = cartTotal.motivation)
             cartTotal.discount?.let { discount ->
                 Row {
                     Text(
@@ -551,6 +545,7 @@ class CreateOrderFragment :
                     ),
                     isPaymentMethodErrorShown = false,
                     cartTotal = CartTotalUI.Success(
+                        motivation = MotivationUi.MinOrderCost("800 ₽"),
                         discount = "10%",
                         deliveryCost = "100 ₽",
                         oldFinalCost = "700 ₽",
@@ -604,6 +599,7 @@ class CreateOrderFragment :
                     ),
                     isPaymentMethodErrorShown = false,
                     cartTotal = CartTotalUI.Success(
+                        motivation = null,
                         discount = null,
                         deliveryCost = null,
                         oldFinalCost = null,
@@ -657,6 +653,7 @@ class CreateOrderFragment :
                     ),
                     isPaymentMethodErrorShown = false,
                     cartTotal = CartTotalUI.Success(
+                        motivation = null,
                         discount = null,
                         deliveryCost = null,
                         oldFinalCost = null,
@@ -703,6 +700,7 @@ class CreateOrderFragment :
                     selectedPaymentMethod = null,
                     isPaymentMethodErrorShown = true,
                     cartTotal = CartTotalUI.Success(
+                        motivation = null,
                         discount = null,
                         deliveryCost = null,
                         oldFinalCost = null,

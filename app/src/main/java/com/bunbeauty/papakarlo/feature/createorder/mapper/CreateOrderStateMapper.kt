@@ -3,15 +3,16 @@ package com.bunbeauty.papakarlo.feature.createorder.mapper
 import androidx.compose.runtime.Composable
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.feature.address.mapper.toAddressString
-import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.CartTotalUI
-import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.CreateOrderViewState
-import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.DeliveryAddressListUI
-import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.PaymentMethodListUI
-import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.PickupAddressListUI
-import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.SelectableAddressUI
-import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.TimePickerUI
+import com.bunbeauty.papakarlo.feature.createorder.CartTotalUI
+import com.bunbeauty.papakarlo.feature.createorder.CreateOrderViewState
+import com.bunbeauty.papakarlo.feature.createorder.DeliveryAddressListUI
+import com.bunbeauty.papakarlo.feature.createorder.PaymentMethodListUI
+import com.bunbeauty.papakarlo.feature.createorder.PickupAddressListUI
+import com.bunbeauty.papakarlo.feature.createorder.SelectableAddressUI
+import com.bunbeauty.papakarlo.feature.createorder.TimePickerUI
 import com.bunbeauty.papakarlo.feature.deferredtime.toDeferredTimeString
 import com.bunbeauty.papakarlo.feature.deferredtime.toTimeUI
+import com.bunbeauty.papakarlo.feature.motivation.toMotivationUi
 import com.bunbeauty.papakarlo.feature.paymentmethod.toPaymentMethodUI
 import com.bunbeauty.papakarlo.feature.paymentmethod.toSelectablePaymentMethodUI
 import com.bunbeauty.shared.presentation.createorder.CreateOrder
@@ -38,6 +39,7 @@ fun CreateOrder.DataState.toViewState(): CreateOrderViewState {
             is CreateOrder.CartTotal.Success -> {
                 val successCartTotal = cartTotal as CreateOrder.CartTotal.Success
                 CartTotalUI.Success(
+                    motivation = successCartTotal.motivation?.toMotivationUi(),
                     discount = successCartTotal.discount,
                     deliveryCost = successCartTotal.deliveryCost,
                     oldFinalCost = successCartTotal.oldFinalCost,

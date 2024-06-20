@@ -2,6 +2,7 @@ package com.bunbeauty.papakarlo.feature.consumercart.state
 
 import androidx.compose.runtime.Immutable
 import com.bunbeauty.papakarlo.feature.menu.state.MenuItemUi
+import com.bunbeauty.papakarlo.feature.motivation.MotivationUi
 import com.bunbeauty.shared.presentation.base.BaseViewState
 import kotlinx.collections.immutable.ImmutableList
 
@@ -31,22 +32,6 @@ sealed class ConsumerCartViewState(
         val newTotalCost: String
     ) {
         val isOrderCreationAvailable: Boolean = motivation !is MotivationUi.MinOrderCost
-    }
-
-    @Immutable
-    sealed interface MotivationUi {
-        @Immutable
-        data class MinOrderCost(val cost: String) : MotivationUi
-
-        @Immutable
-        data class ForLowerDelivery(
-            val increaseAmountBy: String,
-            val progress: Float,
-            val isFree: Boolean
-        ) : MotivationUi
-
-        @Immutable
-        data class LowerDeliveryAchieved(val isFree: Boolean) : MotivationUi
     }
 
     @Immutable
