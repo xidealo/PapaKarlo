@@ -1,6 +1,5 @@
 package com.bunbeauty.papakarlo.util.string
 
-import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.model.TimeUI
 import com.bunbeauty.shared.domain.model.address.SelectableUserAddress
 import com.bunbeauty.shared.domain.model.address.UserAddress
 import com.bunbeauty.shared.domain.model.cafe.CafeOpenState
@@ -16,7 +15,6 @@ interface IStringUtil {
     fun getOrderAddressString(orderAddress: OrderAddress): String
     fun getDateTimeString(dateTime: DateTime): String
     fun getTimeString(time: Time?): String
-    fun getTimeString(time: TimeUI): String
     fun getCostString(cost: Int?): String?
     fun getCostString(cost: Int): String
     fun getCostString(cost: String): String

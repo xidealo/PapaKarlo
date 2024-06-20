@@ -1,10 +1,15 @@
 package com.bunbeauty.papakarlo.common.ui.element.textfield
 
+import androidx.compose.foundation.text.KeyboardActionScope
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.selection.TextSelectionColors
 import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 
 object FoodDeliveryTextFieldDefaults {
@@ -102,4 +107,24 @@ object FoodDeliveryTextFieldDefaults {
             handleColor = Color.Transparent,
             backgroundColor = Color.Transparent
         )
+
+    fun keyboardOptions(
+        autoCorrect: Boolean = false,
+        keyboardType: KeyboardType = KeyboardType.Text,
+        imeAction: ImeAction = ImeAction.Next
+    ): KeyboardOptions {
+        return KeyboardOptions(
+            autoCorrect = autoCorrect,
+            keyboardType = keyboardType,
+            imeAction = imeAction
+        )
+    }
+
+    fun keyboardActions(
+        onDone: (KeyboardActionScope.() -> Unit)? = null
+    ): KeyboardActions {
+        return KeyboardActions(
+            onDone = onDone
+        )
+    }
 }

@@ -189,7 +189,6 @@ class IosComponent : KoinComponent {
 
     //Mapper
     fun provideUserAddressMapper(): UserAddressMapper = get()
-    fun provideCreateOrderStateMapper(): CreateOrderStateMapper = get()
 
     //Other
     fun provideApiRepo(): NetworkConnector = get()

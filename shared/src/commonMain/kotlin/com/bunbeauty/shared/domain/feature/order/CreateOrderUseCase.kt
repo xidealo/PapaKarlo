@@ -1,8 +1,8 @@
 package com.bunbeauty.shared.domain.feature.order
 
 import com.bunbeauty.shared.DataStoreRepo
-import com.bunbeauty.shared.domain.model.address.SelectableUserAddress
-import com.bunbeauty.shared.domain.model.cafe.SelectableCafe
+import com.bunbeauty.shared.domain.model.address.UserAddress
+import com.bunbeauty.shared.domain.model.cafe.Cafe
 import com.bunbeauty.shared.domain.model.cart.CartProduct
 import com.bunbeauty.shared.domain.model.date_time.Time
 import com.bunbeauty.shared.domain.model.order.CreatedOrder
@@ -22,8 +22,8 @@ class CreateOrderUseCase(
 
     suspend operator fun invoke(
         isDelivery: Boolean,
-        selectedUserAddress: SelectableUserAddress?,
-        selectedCafe: SelectableCafe?,
+        selectedUserAddress: UserAddress?,
+        selectedCafe: Cafe?,
         orderComment: String?,
         deferredTime: Time?,
         timeZone: String,
@@ -34,7 +34,7 @@ class CreateOrderUseCase(
 
         val createdOrderAddress = if (isDelivery) {
             selectedUserAddress ?: return null
-            selectedUserAddress.address.run {
+            selectedUserAddress.run {
                 CreatedOrderAddress(
                     uuid = uuid,
                     street = street,
@@ -48,8 +48,8 @@ class CreateOrderUseCase(
         } else {
             selectedCafe ?: return null
             CreatedOrderAddress(
-                uuid = selectedCafe.cafe.uuid,
-                description = selectedCafe.cafe.address
+                uuid = selectedCafe.uuid,
+                description = selectedCafe.address
             )
         }
 

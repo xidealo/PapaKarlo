@@ -1,16 +1,16 @@
 package com.bunbeauty.shared.domain.interactor.cart
 
+import com.bunbeauty.shared.domain.feature.cart.GetDeliveryCostUseCase
 import com.bunbeauty.shared.domain.feature.discount.GetDiscountUseCase
 import com.bunbeauty.shared.domain.model.cart.CartTotal
 import com.bunbeauty.shared.domain.repo.CartProductRepo
-import com.bunbeauty.shared.domain.repo.DeliveryRepo
 
 class GetCartTotalUseCase(
     private val cartProductRepo: CartProductRepo,
-    private val deliveryRepo: DeliveryRepo,
     private val getDiscountUseCase: GetDiscountUseCase,
     private val getNewTotalCostUseCase: GetNewTotalCostUseCase,
     private val getOldTotalCostUseCase: GetOldTotalCostUseCase,
+    private val getDeliveryCostUseCase: GetDeliveryCostUseCase,
 ) {
 
     suspend operator fun invoke(isDelivery: Boolean): CartTotal {
@@ -21,27 +21,21 @@ class GetCartTotalUseCase(
             oldTotalCost = getOldTotalCostUseCase(cartProductList),
             newTotalCost = newTotalCost
         )
-
-        val deliveryCost = getDeliveryCost(isDelivery, newTotalCost)
+        val deliveryCost = getDeliveryCostUseCase(
+            newTotalCost = newTotalCost,
+            isDelivery = isDelivery
+        )
 
         return CartTotal(
-            totalCost = newTotalCost,
+            discount = getDiscountUseCase()?.firstOrderDiscount,
             deliveryCost = deliveryCost,
+            oldTotalCost = oldTotalCost,
+            newTotalCost = newTotalCost,
             oldFinalCost = oldTotalCost?.let {
-                oldTotalCost + deliveryCost
+                oldTotalCost + (deliveryCost ?: 0)
             },
-            newFinalCost = newTotalCost + deliveryCost,
-            discount = getDiscountUseCase()?.firstOrderDiscount
+            newFinalCost = newTotalCost + (deliveryCost ?: 0),
         )
-    }
-
-    private suspend fun getDeliveryCost(isDelivery: Boolean, newTotalCost: Int): Int {
-        val delivery = deliveryRepo.getDelivery() ?: error("Delivery info is not found")
-        return if (isDelivery && newTotalCost < delivery.forFree) {
-            delivery.cost
-        } else {
-            0
-        }
     }
 
     private fun checkOldTotalCost(oldTotalCost: Int, newTotalCost: Int): Int? {

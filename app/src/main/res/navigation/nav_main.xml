@@ -240,7 +240,7 @@
 
     <fragment
         android:id="@+id/createOrderFragment"
-        android:name="com.bunbeauty.papakarlo.feature.createorder.screen.createorder.CreateOrderFragment"
+        android:name="com.bunbeauty.papakarlo.feature.createorder.CreateOrderFragment"
         android:label="@string/title_create_order">
         <action
             android:id="@+id/to_profileFragment"
