@@ -15,9 +15,6 @@ struct MenuItemView: View {
     let productDetailsOpenedFrom:ProductDetailsOpenedFrom
     
     //for back after createOrder
-    @Binding var isRootActive: Bool
-    @Binding var selection: Int
-    @Binding var showOrderCreated: Bool
     @State var openProductDetails: Bool = false
     @Binding var created: Bool
     @Binding var edited: Bool
@@ -33,9 +30,6 @@ struct MenuItemView: View {
                     cartProductUuid: nil,
                     additionUuidList: [],
                     productDetailsOpenedFrom: productDetailsOpenedFrom,
-                    isRootActive: self.$isRootActive,
-                    selection: self.$selection,
-                    showOrderCreated: $showOrderCreated,
                     created: $created,
                     edited: $edited
                 ),

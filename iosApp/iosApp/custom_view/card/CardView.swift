@@ -9,24 +9,24 @@
 import SwiftUI
 
 struct CardView: View {
-    let icon:String?
+    let icon : String?
     
-    let label:String
-    let isSystemImageName:Bool
-    let isShowRightArrow:Bool
+    let label : String
+    let isSystemImageName : Bool
+    let isShowRightArrow : Bool
     
     var placeHolder:LocalizedStringKey? = nil
 
     var body: some View {
         HStack(spacing:0){
-            if icon != nil{
+            if let notNullIcon = icon {
                 if(isSystemImageName){
-                    Image(systemName: icon ?? "")
+                    Image(systemName: notNullIcon)
                     .foregroundColor(
                         AppColor.onSurfaceVariant
                     )
                 }else{
-                    Image(icon ?? "")
+                    Image(notNullIcon)
                         .resizable()
                         .foregroundColor(AppColor.onSurfaceVariant)
                         .frame(width: 23, height: 24)
@@ -34,7 +34,7 @@ struct CardView: View {
             }
             
             VStack(spacing:0){
-                if let placeHolder = placeHolder{
+                if let placeHolder = placeHolder {
                     Text(placeHolder)
                         .labelSmall(weight: .medium)
                         .foregroundColor(AppColor.onSurfaceVariant)

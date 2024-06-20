@@ -30,7 +30,7 @@ struct SplashView: View {
             }
             case .isGoMenu: NavigationView{
                 NavigationLink(
-                    destination:ContainerView(selection: 1),
+                    destination:ContainerView(selection: MainContainerState.menu),
                     isActive: .constant(true)
                 ){
                     EmptyView()

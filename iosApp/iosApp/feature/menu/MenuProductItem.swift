@@ -12,7 +12,7 @@ struct MenuProductItem: Identifiable {
     let productUuid: String
     let name: String
     let newPrice: String
-    let oldPrice: Int?
+    let oldPrice: String?
     let photoLink: String
     let hasAdditions:Bool
 }

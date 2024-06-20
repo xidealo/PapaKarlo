@@ -86,8 +86,8 @@ struct ProfileView: View {
         viewModel.update()
         viewModel.observeLastOrder()
         listener = viewModel.profileState.watch { profileStateVM in
-            if(profileStateVM != nil ){
-                profileState = profileStateVM!
+            if let notNullprofileStateVM = profileStateVM {
+                profileState = notNullprofileStateVM
             }
         }
     }
@@ -163,11 +163,10 @@ struct SuccessProfileView: View {
     
     var body: some View {
         VStack(spacing:0){
-            
-            if(profileViewState.lastOrder != nil){
+            if let lastOrder =  profileViewState.lastOrder {
                 LightOrderItemView(
-                    lightOrder: profileViewState.lastOrder!,
-                    destination: OrderDetailsView(orderUuid: profileViewState.lastOrder!.uuid)
+                    lightOrder: lastOrder,
+                    destination: OrderDetailsView(orderUuid: lastOrder.uuid)
                 )
             }
             

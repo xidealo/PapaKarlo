@@ -47,8 +47,8 @@ struct EditTextView: View {
             }
             .keyboardType(keyBoadrType)
             
-            if(errorMessage != nil){
-                Text(errorMessage ?? "")
+            if let notNullErrorMessage = errorMessage {
+                Text(notNullErrorMessage)
                     .bodySmall()
                     .foregroundColor(AppColor.error)
                     .frame(maxWidth:.infinity, alignment: .leading)

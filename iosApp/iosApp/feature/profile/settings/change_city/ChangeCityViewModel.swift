@@ -42,10 +42,6 @@ class ChangeCityViewModel: ObservableObject {
     
     func selectCity(uuid:String){
         iosComponent.provideSaveSelectedCityUseCase().invoke(cityUuid: uuid) { err in
-            if(err != nil){
-                print(err ?? "empty err")
-            }
-            
             (self.changeCityViewState.copy() as! ChangeCityViewState).apply { newState in
                 newState.changeCityState = ChangeCityState.back
                 self.changeCityViewState = newState

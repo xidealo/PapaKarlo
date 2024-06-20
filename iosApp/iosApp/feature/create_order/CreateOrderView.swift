@@ -12,24 +12,24 @@ import Combine
 struct CreateOrderView: View {
     
     @StateObject private var viewModel = CreateOrderHolder()
-    @State var showCreatedAddress:Bool = false
-    @State var showAddressError:Bool = false
-    @State var showCommonError:Bool = false
-    @State var showPaymentMethodError:Bool = false
-    @State var goToUserAddress:Bool = false
-    @State var goToCafeAddress:Bool = false
-    @State var goToSelectPaymentMethod:Bool = false
+    @State var showCreatedAddress: Bool = false
+    @State var showAddressError: Bool = false
+    @State var showCommonError: Bool = false
+    @State var showPaymentMethodError: Bool = false
+    @State var goToUserAddress: Bool = false
+    @State var goToCafeAddress: Bool = false
+    @State var goToSelectPaymentMethod: Bool = false
     
     //for back after createOrder
-    @Binding var isRootActive:Bool
-    @Binding var selection:Int
-    @Binding var showOrderCreated:Bool
+    @Binding var isRootActive: Bool
+    @Binding var selection: MainContainerState
+    @Binding var showOrderCreated: Bool
     
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     
     @State var addressList: [SelectableCafeAddressItem] = []
     @State var paymentList: [SelectablePaymentMethod] = []
-    @State var selectedPaymentUuid:String? = nil
+    @State var selectedPaymentUuid: String? = nil
     
     var body: some View {
         VStack(spacing: 0){
@@ -145,21 +145,21 @@ struct CreateOrderSuccessView: View {
     
     @ObservedObject var viewModel:CreateOrderHolder
     @State var addressLable = Strings.HINT_CREATION_ORDER_ADDRESS_DELIVERY
-    @Binding var showCreatedAddress:Bool
-    @Binding var showAddressError:Bool
-    @Binding var showCommonError:Bool
-    @Binding var showPaymentMethodError:Bool
-    @Binding var goToUserAddress:Bool
-    @Binding var goToCafeAddress:Bool
-    @Binding var goToSelectPaymentMethod:Bool
+    @Binding var showCreatedAddress: Bool
+    @Binding var showAddressError: Bool
+    @Binding var showCommonError: Bool
+    @Binding var showPaymentMethodError: Bool
+    @Binding var goToUserAddress: Bool
+    @Binding var goToCafeAddress: Bool
+    @Binding var goToSelectPaymentMethod: Bool
     @State var isDelivery = true
     @State var comment = ""
     @State var faster = true
     @State var deferredTime: Foundation.Date = Foundation.Date()
     
-    @Binding var isRootActive:Bool
-    @Binding var selection:Int
-    @Binding var showOrderCreated:Bool
+    @Binding var isRootActive: Bool
+    @Binding var selection: MainContainerState
+    @Binding var showOrderCreated: Bool
     @Binding var addressList: [SelectableCafeAddressItem]
     @Binding var paymentList: [SelectablePaymentMethod]
     
@@ -415,7 +415,7 @@ struct CreateOrderSuccessView: View {
                 case is CreateOrderEventShowUserAddressError : showAddressError = true
                 case is CreateOrderEventShowSomethingWentWrongErrorEvent : showCommonError = true
                 case is CreateOrderEventOrderCreatedEvent : isRootActive = false
-                    selection = 2
+                    selection = MainContainerState.profile
                     showOrderCreated = true
                 case is CreateOrderEventShowCafeAddressListEvent :
                     addressList = (event as? CreateOrderEventShowCafeAddressListEvent)?.addressList ?? []

@@ -39,7 +39,7 @@ struct ConsumerCartView: View {
     
     //for back after createOrder
     @Binding var isRootActive: Bool
-    @Binding var selection: Int
+    @Binding var selection: MainContainerState
     @Binding var showOrderCreated: Bool
     //--
     
@@ -90,9 +90,6 @@ struct ConsumerCartView: View {
                         cartProductUuid: selectedCartProductItemIos,
                         additionUuidList: selectedAdditionUuidList,
                         productDetailsOpenedFrom: ProductDetailsOpenedFrom.cartProduct,
-                        isRootActive: $isRootActive,
-                        selection: $selection,
-                        showOrderCreated: $showOrderCreated,
                         created: $created,
                         edited: $edited
                     ),
@@ -107,9 +104,9 @@ struct ConsumerCartView: View {
                     cartProductItemUiList: cartProductItems,
                     recommendationProductList: consumerCartProducts,
                     bottomPanelInfoUi: bottomPanelInfo,
-                    isRootActive: isRootActive,
-                    selection: selection,
-                    showOrderCreated: showOrderCreated,
+                    isRootActive: $isRootActive,
+                    selection: $selection,
+                    showOrderCreated: $showOrderCreated,
                     created: $created,
                     edited: $edited,
                     action: viewModel.onAction
@@ -119,9 +116,7 @@ struct ConsumerCartView: View {
                 mainText: "Что-то пошло не так",
                 extratext: ""
             ){
-                
             }
-                
             }
         }
         .background(AppColor.background2)
@@ -165,8 +160,10 @@ struct ConsumerCartView: View {
                             id: cartProductItem.uuid,
                             name: cartProductItem.name,
                             newCost: cartProductItem.newCost,
+                            oldCost: cartProductItem.oldCost,
                             photoLink: cartProductItem.photoLink,
                             count: Int(cartProductItem.count),
+                            additions: cartProductItem.additions,
                             isLast: index == consumerCartStateVM.cartProductItemList.count - 1
                         )
                     }),
@@ -176,8 +173,8 @@ struct ConsumerCartView: View {
                                 id: menuProduct.uuid,
                                 productUuid: menuProduct.uuid,
                                 name: menuProduct.name,
-                                newPrice: String(menuProduct.newPrice) + Strings.CURRENCY,
-                                oldPrice: nil,
+                                newPrice: menuProduct.newPrice,
+                                oldPrice: menuProduct.oldPrice,
                                 photoLink: menuProduct.photoLink,
                                 hasAdditions: !menuProduct.hasAdditions
                             )
@@ -197,7 +194,6 @@ struct ConsumerCartView: View {
         if(dataState.cartProductItemList.isEmpty){
             return nil
         }
-        print(dataState)
         
         let motivationUi: MotivationUi? = {
             if let warningItem = dataState.motivation {
@@ -261,7 +257,7 @@ struct ConsumerCartView: View {
         })
     }
     
-    func unsubscribe(){
+    func unsubscribe() {
         listener?.close()
         listener = nil
         eventsListener?.close()
@@ -276,9 +272,9 @@ struct ConsumerCartSuccessScreen: View {
     let bottomPanelInfoUi : BottomPanelInfoUi?
     
     //for back after createOrder
-    @State var isRootActive : Bool
-    @State var selection : Int
-    @State var showOrderCreated : Bool
+    @Binding var isRootActive : Bool
+    @Binding var selection : MainContainerState
+    @Binding var showOrderCreated : Bool
     
     //for add or edit product
     @Binding var created : Bool
@@ -295,45 +291,48 @@ struct ConsumerCartSuccessScreen: View {
         VStack(spacing:0){
             ZStack(alignment: .bottom){
                 ScrollView {
-                    LazyVStack(spacing:0){
-                        
-                        ForEach(cartProductItemUiList){ cartProductItemIos in
-                            VStack(spacing:0){
-                                Button {
-                                    action(
-                                        ConsumerCartActionOnCartProductClick(
-                                            cartProductUuid: cartProductItemIos.id
+                    if(cartProductItemUiList.isEmpty){
+                        ConsumerCartEmptyScreen(isRootActive: $isRootActive, selection: $selection)
+                    }else{
+                        LazyVStack(spacing:0){
+                            ForEach(cartProductItemUiList){ cartProductItemIos in
+                                VStack(spacing:0){
+                                    Button {
+                                        action(
+                                            ConsumerCartActionOnCartProductClick(
+                                                cartProductUuid: cartProductItemIos.id
+                                            )
                                         )
-                                    )
-                                } label: {
-                                    CartProductView(
-                                        cartProductItem: cartProductItemIos,
-                                        plusAction: {
-                                            action(
-                                                ConsumerCartActionAddProductToCartClick(
-                                                    cartProductUuid: cartProductItemIos.id
+                                    } label: {
+                                        CartProductView(
+                                            cartProductItem: cartProductItemIos,
+                                            plusAction: {
+                                                action(
+                                                    ConsumerCartActionAddProductToCartClick(
+                                                        cartProductUuid: cartProductItemIos.id
+                                                    )
                                                 )
-                                            )
-                                        },
-                                        minusAction: {
-                                            action(
-                                                ConsumerCartActionRemoveProductFromCartClick(
-                                                    cartProductUuid: cartProductItemIos.id
+                                            },
+                                            minusAction: {
+                                                action(
+                                                    ConsumerCartActionRemoveProductFromCartClick(
+                                                        cartProductUuid: cartProductItemIos.id
+                                                    )
                                                 )
-                                            )
-                                        })
-                                    .padding(.horizontal, Diems.MEDIUM_PADDING)
-                                    .padding(.bottom, 8)
+                                            })
+                                        .padding(.horizontal, Diems.MEDIUM_PADDING)
+                                        .padding(.bottom, 8)
+                                        
+                                    }
                                     
+                                    if(cartProductItemUiList.last?.id != cartProductItemIos.id){
+                                        Divider()
+                                            .frame(height: 2)
+                                            .overlay(AppColor.stroke)
+                                            .padding(.horizontal, Diems.MEDIUM_PADDING)
+                                            .padding(.bottom, 8)
+                                    }
                                 }
-                                
-                                //   if(cartProductListIos.last?.id != cartProductItemIos.id){
-                                //       Divider()
-                                //           .frame(height: 2)
-                                //           .overlay(AppColor.stroke)
-                                //           .padding(.horizontal, Diems.MEDIUM_PADDING)
-                                //           .padding(.bottom, 8)
-                                //  }
                             }
                         }
                     }
@@ -352,9 +351,6 @@ struct ConsumerCartSuccessScreen: View {
                             MenuItemView(
                                 menuProductItem: menuProductItem,
                                 productDetailsOpenedFrom: ProductDetailsOpenedFrom.recommendationProduct,
-                                isRootActive : $isRootActive,
-                                selection : $selection,
-                                showOrderCreated : $showOrderCreated,
                                 created: $created,
                                 edited: $edited,
                                 action: {
@@ -368,12 +364,11 @@ struct ConsumerCartSuccessScreen: View {
                         }
                     }
                     .padding(.horizontal, Diems.MEDIUM_PADDING)
-                    .padding(.bottom, 8)
+                    .padding(.bottom, 160)
                 }
                 
                 VStack(spacing:0){
-                    if let motivation = bottomPanelInfoUi?.motivation{
-                        
+                    if let motivation = bottomPanelInfoUi?.motivation {
                         VStack(spacing:0){
                             HStack(spacing:0){
                                 getMotivationIcon(motivation: motivation)
@@ -392,11 +387,6 @@ struct ConsumerCartSuccessScreen: View {
                                     .cornerRadius(4)
                                     .animation(.easeIn(duration: 3), value: progress)
                                     .padding(.top, 4)
-                                
-                                
-                                
-                                //                          .progressViewStyle(LinearProgressViewStyle(tint: getAnimatedColor(progress: progress)))
-                                
                             }
                         }.padding(.horizontal, 16)
                             .padding(.top, 16)
@@ -463,14 +453,6 @@ struct ConsumerCartSuccessScreen: View {
         }
     }
     
-    //    func getAnimatedColor(progress:Int) -> Color {
-    //        let warningColor = AppColor.warning
-    //        let positiveColor = AppColor.positive
-    //          return Color(red: Double(1.0 - progress) * warningColor + Double(progress) * positiveColor,
-    //                       green: Double(1.0 - progress) * warningColor + Double(progress) * positiveColor,
-    //                       blue: Double(1.0 - progress) * warningColor. + Double(progress) * positiveColor)
-    //      }
-    //
     func getMotivationText(motivation: MotivationUi) -> some View  {
         switch(motivation){
         case .MinOrderCost(let cost):
@@ -504,28 +486,15 @@ struct ConsumerCartSuccessScreen: View {
     struct ConsumerCartEmptyScreen: View {
         @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
         
-        @Binding var isRootActive:Bool
-        @Binding var selection:Int
+        @Binding var isRootActive: Bool
+        @Binding var selection: MainContainerState
         
         var body: some View {
-            VStack(spacing:0){
-                Spacer()
-                
-                EmptyWithIconView(
-                    imageName:  "CartIcon",
-                    title: "emptyCartTitleProfile",
-                    secondText: "emptyCartSecondProfile"
-                )
-                
-                Spacer()
-                
-                Button {
-                    isRootActive = false
-                    selection = 1
-                } label: {
-                    ButtonText(text: Strings.ACTION_CART_PRODUCT_MENU)
-                }.padding(Diems.MEDIUM_PADDING)
-            }
+            EmptyWithIconView(
+                imageName:  "CartIcon",
+                title: "emptyCartTitleProfile",
+                secondText: "emptyCartSecondProfile"
+            )
         }
     }
 }
