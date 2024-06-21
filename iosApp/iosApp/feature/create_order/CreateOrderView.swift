@@ -31,6 +31,25 @@ struct CreateOrderView: View {
     @State var paymentList: [SelectablePaymentMethod] = []
     @State var selectedPaymentUuid: String? = nil
     
+    @State var listener: Closeable? = nil
+    @State var eventsListener: Closeable? = nil
+    
+    @State var kmmViewModel = CreateOrderViewModel(
+        cartProductInteractor: iosComponent.provideCartProductInteractor(),
+        cafeInteractor: iosComponent.provideCafeInteractor(),
+        userInteractor: iosComponent.provideIUserInteractor(),
+        createOrderStateMapper: iosComponent.provideCreateOrderStateMapper(),
+        getSelectableUserAddressList: iosComponent.provideGetSelectableUserAddressListUseCase(),
+        getSelectableCafeList: iosComponent.provideGetSelectableCafeListUseCase(),
+        getCartTotal: iosComponent.provideGetCartTotalUseCase(),
+        getMinTime: iosComponent.provideGetMinTimeUseCase(),
+        createOrder: iosComponent.provideCreateOrderUseCase(),
+        getSelectedCityTimeZone: iosComponent.provideGetSelectedCityTimeZoneUseCase(),
+        saveSelectedUserAddress : iosComponent.provideSaveSelectedUserAddressUseCase(),
+        getSelectablePaymentMethodListUseCase : iosComponent.provideGetSelectablePaymentMethodListUseCase(),
+        savePaymentMethodUseCase : iosComponent.provideSavePaymentMethodUseCase()
+    )
+    
     var body: some View {
         VStack(spacing: 0){
             ToolbarView(
@@ -70,7 +89,7 @@ struct CreateOrderView: View {
                 EmptyView()
             }
             .onChange(of: $selectedPaymentUuid.wrappedValue, perform: { value in
-                viewModel.kmmViewModel.onPaymentMethodChanged(paymentMethodUuid:selectedPaymentUuid ?? "")
+                //viewModel.kmmViewModel.onPaymentMethodChanged(paymentMethodUuid:selectedPaymentUuid ?? "")
             })
             
             if(viewModel.creationOrderViewState.isLoading){
@@ -96,10 +115,11 @@ struct CreateOrderView: View {
         .background(AppColor.background)
         .hiddenNavigationBarStyle()
         .onAppear(){
-            viewModel.update()
+            subscribe()
+            eventsSubscribe()
         }
         .onDisappear(){
-            viewModel.removeListener()
+            unsubscribe()
         }
         .overlay(
             overlayView: ToastView(
@@ -137,7 +157,90 @@ struct CreateOrderView: View {
             ),
             show: $showPaymentMethodError
         )
-        
+    }
+    
+    func subscribe(){
+        viewModel.onAction(action: ConsumerCartActionInit())
+        listener = viewModel.dataState.watch { consumerCartStateVM in
+            if let consumerCartStateVM =  consumerCartStateVM {
+                switch consumerCartStateVM.state {
+                case ConsumerCartDataState.State.loading : consumerCartViewState = ConsumerCartViewState(state: ConsumerCartState.loading)
+                case ConsumerCartDataState.State.error : consumerCartViewState = ConsumerCartViewState(state: ConsumerCartState.error)
+                case ConsumerCartDataState.State.success : consumerCartViewState =  ConsumerCartViewState(state: ConsumerCartState.success(
+                    consumerCartStateVM.cartProductItemList.enumerated().map({ (index, cartProductItem) in
+                        CartProductItemUi(
+                            id: cartProductItem.uuid,
+                            name: cartProductItem.name,
+                            newCost: cartProductItem.newCost,
+                            oldCost: cartProductItem.oldCost,
+                            photoLink: cartProductItem.photoLink,
+                            count: Int(cartProductItem.count),
+                            additions: cartProductItem.additions,
+                            isLast: index == consumerCartStateVM.cartProductItemList.count - 1
+                        )
+                    }),
+                    consumerCartStateVM.recommendationList.map(
+                        { menuProduct in
+                            MenuProductItem(
+                                id: menuProduct.uuid,
+                                productUuid: menuProduct.uuid,
+                                name: menuProduct.name,
+                                newPrice: menuProduct.newPrice,
+                                oldPrice: menuProduct.oldPrice,
+                                photoLink: menuProduct.photoLink,
+                                hasAdditions: !menuProduct.hasAdditions
+                            )
+                        }
+                    ),
+                    getBottomPanelInfoUi(dataState: consumerCartStateVM)
+                )
+                )
+                default:
+                    consumerCartViewState =  ConsumerCartViewState(state: ConsumerCartState.error)
+                }
+            }
+        }
+    }
+    
+    func eventsSubscribe(){
+        eventsListener = viewModel.events.watch(block: { _events in
+            if let events = _events{
+                let consumerCartEvents = events as? [ConsumerCartEvent] ?? []
+                
+                consumerCartEvents.forEach { event in
+                    print(event)
+                    
+                    switch(event){
+                    case is ConsumerCartEventNavigateBack :
+                        self.mode.wrappedValue.dismiss()
+                    case is ConsumerCartEventNavigateToCreateOrder : openCreateOrder = true
+                    case is ConsumerCartEventNavigateToLogin: openLogin = true
+                    case is ConsumerCartEventNavigateToProduct:
+                        let consumerCartEventNavigateToProduct = event as? ConsumerCartEventNavigateToProduct
+                        
+                        selectedMenuProductUuid = consumerCartEventNavigateToProduct?.uuid ?? ""
+                        selectedMenuProductName = consumerCartEventNavigateToProduct?.name ?? ""
+                        selectedCartProductItemIos = consumerCartEventNavigateToProduct?.cartProductUuid ?? ""
+                        selectedAdditionUuidList = consumerCartEventNavigateToProduct?.additionUuidList ?? []
+                        
+                        openProductDetails = true
+                    default:
+                        print("def")
+                    }
+                }
+                
+                if !consumerCartEvents.isEmpty {
+                    viewModel.consumeEvents(events: consumerCartEvents)
+                }
+            }
+        })
+    }
+    
+    func unsubscribe() {
+        listener?.close()
+        listener = nil
+        eventsListener?.close()
+        eventsListener = nil
     }
 }
 
@@ -436,5 +539,36 @@ struct CreateOrderSuccessView: View {
             }
         })
     }
+    
+    
+//    func getUserAddressList() -> String {
+//        if(creationOrderViewState.deliveryAddress == nil){
+//            return ""
+//        }
+//        
+//        var address : String = creationOrderViewState.deliveryAddress?.address.street ?? ""
+//        
+//        if(creationOrderViewState.deliveryAddress?.address.house != nil){
+//            address += ", д. " + (creationOrderViewState.deliveryAddress?.address.house ?? "")
+//        }
+//        
+//        if(creationOrderViewState.deliveryAddress?.address.flat != nil && creationOrderViewState.deliveryAddress?.address.flat != ""){
+//            address += ", кв. " + (creationOrderViewState.deliveryAddress?.address.flat ?? "")
+//        }
+//        
+//        if(creationOrderViewState.deliveryAddress?.address.entrance != nil && creationOrderViewState.deliveryAddress?.address.entrance != ""){
+//            address += ", подъезд " + (creationOrderViewState.deliveryAddress?.address.entrance ?? "")
+//        }
+//        
+//        if(creationOrderViewState.deliveryAddress?.address.floor != nil && creationOrderViewState.deliveryAddress?.address.floor != ""){
+//            address += ", этаж. " + (creationOrderViewState.deliveryAddress?.address.floor ?? "")
+//        }
+//        
+//        if(creationOrderViewState.deliveryAddress?.address.comment != nil && creationOrderViewState.deliveryAddress?.address.comment != ""){
+//            address += ", \(creationOrderViewState.deliveryAddress?.address.comment ?? "")"
+//        }
+//        
+//        return address
+//    }
 }
 

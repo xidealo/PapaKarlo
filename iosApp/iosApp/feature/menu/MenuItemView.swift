@@ -23,8 +23,7 @@ struct MenuItemView: View {
     
     var body: some View {
         NavigationLink(
-            destination:
-                ProductDetailsView(
+            destination: ProductDetailsView(
                     menuProductUuid: menuProductItem.productUuid,
                     menuProductName: menuProductItem.name, 
                     cartProductUuid: nil,
