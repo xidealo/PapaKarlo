@@ -11,11 +11,11 @@ import Combine
 
 struct CreateOrderView: View {
     
-    @StateObject private var viewModel = CreateOrderHolder()
+    // errors ----------------
     @State var showCreatedAddress: Bool = false
-    @State var showAddressError: Bool = false
     @State var showCommonError: Bool = false
-    @State var showPaymentMethodError: Bool = false
+    // ----------------
+    
     @State var goToUserAddress: Bool = false
     @State var goToCafeAddress: Bool = false
     @State var goToSelectPaymentMethod: Bool = false
@@ -34,14 +34,14 @@ struct CreateOrderView: View {
     @State var listener: Closeable? = nil
     @State var eventsListener: Closeable? = nil
     
-    @State var kmmViewModel = CreateOrderViewModel(
+    @State var viewModel = CreateOrderViewModel(
         cartProductInteractor: iosComponent.provideCartProductInteractor(),
         cafeInteractor: iosComponent.provideCafeInteractor(),
         userInteractor: iosComponent.provideIUserInteractor(),
-        createOrderStateMapper: iosComponent.provideCreateOrderStateMapper(),
         getSelectableUserAddressList: iosComponent.provideGetSelectableUserAddressListUseCase(),
         getSelectableCafeList: iosComponent.provideGetSelectableCafeListUseCase(),
         getCartTotal: iosComponent.provideGetCartTotalUseCase(),
+        getMotivationUseCase: iosComponent.provideGetMotivationUseCaseUseCase(),
         getMinTime: iosComponent.provideGetMinTimeUseCase(),
         createOrder: iosComponent.provideCreateOrderUseCase(),
         getSelectedCityTimeZone: iosComponent.provideGetSelectedCityTimeZoneUseCase(),
@@ -49,6 +49,8 @@ struct CreateOrderView: View {
         getSelectablePaymentMethodListUseCase : iosComponent.provideGetSelectablePaymentMethodListUseCase(),
         savePaymentMethodUseCase : iosComponent.provideSavePaymentMethodUseCase()
     )
+    
+    @State var createOrderViewState: CreateOrderViewState? = nil
     
     var body: some View {
         VStack(spacing: 0){
@@ -88,28 +90,30 @@ struct CreateOrderView: View {
             ){
                 EmptyView()
             }
-            .onChange(of: $selectedPaymentUuid.wrappedValue, perform: { value in
+            .onChange(
+                of: $selectedPaymentUuid.wrappedValue, 
+                perform: { value in
                 //viewModel.kmmViewModel.onPaymentMethodChanged(paymentMethodUuid:selectedPaymentUuid ?? "")
-            })
+                }
+            )
             
-            if(viewModel.creationOrderViewState.isLoading){
-                LoadingView()
-            }else{
-                CreateOrderSuccessView(
-                    viewModel: viewModel,
-                    showCreatedAddress: $showCreatedAddress,
-                    showAddressError: $showAddressError,
-                    showCommonError: $showCommonError,
-                    showPaymentMethodError:$showPaymentMethodError,
-                    goToUserAddress:$goToUserAddress,
-                    goToCafeAddress:$goToCafeAddress,
-                    goToSelectPaymentMethod : $goToSelectPaymentMethod,
-                    isRootActive: $isRootActive,
-                    selection: $selection,
-                    showOrderCreated: $showOrderCreated,
-                    addressList: $addressList,
-                    paymentList: $paymentList
-                )
+            if let createOrderViewStateNN = createOrderViewState{
+                if(createOrderViewStateNN.isLoading){
+                    LoadingView()
+                }else{
+                    CreateOrderSuccessView(
+                        showCreatedAddress: $showCreatedAddress,
+                        showCommonError: $showCommonError,
+                        goToUserAddress: $goToUserAddress,
+                        goToCafeAddress: $goToCafeAddress,
+                        goToSelectPaymentMethod: $goToSelectPaymentMethod,
+                        isRootActive: $isRootActive,
+                        selection: $selection,
+                        showOrderCreated: $showOrderCreated,
+                        createOrderViewState: createOrderViewStateNN, 
+                        action: viewModel.onAction
+                    )
+                }
             }
         }
         .background(AppColor.background)
@@ -132,72 +136,74 @@ struct CreateOrderView: View {
         )
         .overlay(
             overlayView: ToastView(
-                toast: Toast(title: "Не указан адрес"),
-                show: $showAddressError,
-                backgroundColor:AppColor.error,
-                foregroundColor: AppColor.onError
-            ),
-            show: $showAddressError
-        )
-        .overlay(
-            overlayView: ToastView(
-                toast: Toast(title: "Что-то пошло не так")
-                , show: $showCommonError,
-                backgroundColor:AppColor.error,
+                toast: Toast(title: "Что-то пошло не так"),
+                show: $showCommonError,
+                backgroundColor: AppColor.error,
                 foregroundColor: AppColor.onError
             ),
             show: $showCommonError
         )
-        .overlay(
-            overlayView: ToastView(
-                toast: Toast(title: "Способ оплаты не выбран"),
-                show: $showPaymentMethodError,
-                backgroundColor:AppColor.error,
-                foregroundColor: AppColor.onError
-            ),
-            show: $showPaymentMethodError
-        )
     }
     
     func subscribe(){
-        viewModel.onAction(action: ConsumerCartActionInit())
-        listener = viewModel.dataState.watch { consumerCartStateVM in
-            if let consumerCartStateVM =  consumerCartStateVM {
-                switch consumerCartStateVM.state {
-                case ConsumerCartDataState.State.loading : consumerCartViewState = ConsumerCartViewState(state: ConsumerCartState.loading)
-                case ConsumerCartDataState.State.error : consumerCartViewState = ConsumerCartViewState(state: ConsumerCartState.error)
-                case ConsumerCartDataState.State.success : consumerCartViewState =  ConsumerCartViewState(state: ConsumerCartState.success(
-                    consumerCartStateVM.cartProductItemList.enumerated().map({ (index, cartProductItem) in
-                        CartProductItemUi(
-                            id: cartProductItem.uuid,
-                            name: cartProductItem.name,
-                            newCost: cartProductItem.newCost,
-                            oldCost: cartProductItem.oldCost,
-                            photoLink: cartProductItem.photoLink,
-                            count: Int(cartProductItem.count),
-                            additions: cartProductItem.additions,
-                            isLast: index == consumerCartStateVM.cartProductItemList.count - 1
-                        )
-                    }),
-                    consumerCartStateVM.recommendationList.map(
-                        { menuProduct in
-                            MenuProductItem(
-                                id: menuProduct.uuid,
-                                productUuid: menuProduct.uuid,
-                                name: menuProduct.name,
-                                newPrice: menuProduct.newPrice,
-                                oldPrice: menuProduct.oldPrice,
-                                photoLink: menuProduct.photoLink,
-                                hasAdditions: !menuProduct.hasAdditions
+        viewModel.onAction(action: CreateOrderActionUpdate())
+        listener = viewModel.dataState.watch { createOrderDataState in
+            if let createOrderDataStateNN = createOrderDataState {
+                createOrderViewState = CreateOrderViewState(
+                    isDelivery: createOrderDataStateNN.isDelivery,
+                    deliveryAddress: createOrderDataStateNN.selectedUserAddress?.getAddress(),
+                    pickupAddress: createOrderDataStateNN.selectedCafe?.address,
+                    isAddressErrorShown: createOrderDataStateNN.isDelivery && createOrderDataStateNN.isAddressErrorShown,
+                    deferredTime: getDeferredTimeString(deferredTime: createOrderDataStateNN.deferredTime),
+                    deferredTimeStringLocolized: getDeferredTimeStringId(isDelivery: createOrderDataStateNN.isDelivery),
+                    selectedPaymentMethod: getPaymentMethodUI(paymentMethod: createOrderDataStateNN.selectedPaymentMethod),
+                    isPaymentMethodErrorShown: createOrderDataStateNN.isPaymentMethodErrorShown,
+                    comment: createOrderDataStateNN.comment,
+                    cartTotal: getCartTotalUI(cartTotal: createOrderDataStateNN.cartTotal),
+                    isLoading: createOrderDataStateNN.isLoading,
+                    deliveryAddressList: DeliveryAddressListUI(
+                        isShown: createOrderDataStateNN.isUserAddressListShown,
+                        addressList: createOrderDataStateNN.userAddressList.map({ selectableUserAddress in
+                            SelectableAddressUI(
+                                uuid: selectableUserAddress.address.uuid,
+                                address: selectableUserAddress.address.getAddress(),
+                                isSelected: selectableUserAddress.isSelected
                             )
-                        }
+                        })
                     ),
-                    getBottomPanelInfoUi(dataState: consumerCartStateVM)
+                    pickupAddressList: PickupAddressListUI(
+                        isShown: createOrderDataStateNN.isCafeListShown,
+                        addressList: createOrderDataStateNN.cafeList.map({ selectableCafe in
+                            SelectableAddressUI(
+                                uuid: selectableCafe.cafe.uuid,
+                                address: selectableCafe.cafe.address,
+                                isSelected: selectableCafe.isSelected
+                            )
+                        })
+                    ),
+                    isDeferredTimeShown: createOrderDataStateNN.isDeferredTimeShown,
+                    timePicker: TimePickerUI(
+                        isShown: createOrderDataStateNN.isTimePickerShown,
+                        minTime: TimeUI(
+                            hours: Int(createOrderDataStateNN.minDeferredTime.hours),
+                            minutes: Int(createOrderDataStateNN.minDeferredTime.minutes)
+                        ),
+                        initialTime: TimeUI(
+                            hours: Int(createOrderDataStateNN.initialDeferredTime.hours),
+                            minutes: Int(createOrderDataStateNN.initialDeferredTime.minutes)
+                        )
+                    ),
+                    paymentMethodList: PaymentMethodListUI(
+                        isShown: createOrderDataStateNN.isPaymentMethodListShown,
+                        paymentMethodList: createOrderDataStateNN.paymentMethodList.map({ selectablePaymentMethod in
+                            SelectablePaymentMethodUI(
+                                uuid: selectablePaymentMethod.paymentMethod.uuid,
+                                name: selectablePaymentMethod.paymentMethod.name.getPaymentMethod(),
+                                isSelected: selectablePaymentMethod.isSelected
+                            )
+                        })
+                    )
                 )
-                )
-                default:
-                    consumerCartViewState =  ConsumerCartViewState(state: ConsumerCartState.error)
-                }
             }
         }
     }
@@ -205,35 +211,34 @@ struct CreateOrderView: View {
     func eventsSubscribe(){
         eventsListener = viewModel.events.watch(block: { _events in
             if let events = _events{
-                let consumerCartEvents = events as? [ConsumerCartEvent] ?? []
+                let createOrderEvents = events as? [CreateOrderEvent] ?? []
                 
-                consumerCartEvents.forEach { event in
+                createOrderEvents.forEach { event in
                     print(event)
                     
                     switch(event){
-                    case is ConsumerCartEventNavigateBack :
-                        self.mode.wrappedValue.dismiss()
-                    case is ConsumerCartEventNavigateToCreateOrder : openCreateOrder = true
-                    case is ConsumerCartEventNavigateToLogin: openLogin = true
-                    case is ConsumerCartEventNavigateToProduct:
-                        let consumerCartEventNavigateToProduct = event as? ConsumerCartEventNavigateToProduct
-                        
-                        selectedMenuProductUuid = consumerCartEventNavigateToProduct?.uuid ?? ""
-                        selectedMenuProductName = consumerCartEventNavigateToProduct?.name ?? ""
-                        selectedCartProductItemIos = consumerCartEventNavigateToProduct?.cartProductUuid ?? ""
-                        selectedAdditionUuidList = consumerCartEventNavigateToProduct?.additionUuidList ?? []
-                        
-                        openProductDetails = true
-                    default:
-                        print("def")
+                        case is CreateOrderEventOpenCreateAddressEvent :
+                            self.mode.wrappedValue.dismiss()
+                        case is CreateOrderEventShowUserUnauthorizedErrorEvent :
+                            self.mode.wrappedValue.dismiss()
+                        case is CreateOrderEventShowSomethingWentWrongErrorEvent:
+                            self.mode.wrappedValue.dismiss()
+                        case is CreateOrderEventOrderCreatedEvent:
+                            self.mode.wrappedValue.dismiss()
+                        case is CreateOrderEventShowUserAddressError:
+                            self.mode.wrappedValue.dismiss()
+                        case is CreateOrderEventShowPaymentMethodError:
+                            self.mode.wrappedValue.dismiss()
+                        default:
+                            print("def")
+                        }
+                    }
+                    if !createOrderEvents.isEmpty {
+                        viewModel.consumeEvents(events: createOrderEvents)
                     }
                 }
-                
-                if !consumerCartEvents.isEmpty {
-                    viewModel.consumeEvents(events: consumerCartEvents)
-                }
             }
-        })
+        )
     }
     
     func unsubscribe() {
@@ -242,19 +247,86 @@ struct CreateOrderView: View {
         eventsListener?.close()
         eventsListener = nil
     }
+    
+    
+    func getDeferredTimeStringId(isDelivery:Bool) -> LocalizedStringKey{
+        if(isDelivery) {
+            return "title_create_order_time_delivery"
+        } else {
+            return "title_create_order_time_pickup"
+        }
+    }
+    
+    func getDeferredTimeString(deferredTime: CreateOrderDeferredTime) -> String {
+        switch deferredTime {
+        case _ as CreateOrderDeferredTimeAsap:
+            return NSLocalizedString("asap", comment: "ASAP delivery time")
+        case let defTime as CreateOrderDeferredTimeLater:
+            return "\(defTime.time.hours.withFirstZero()):\(defTime.time.minutes.withFirstZero())"
+        default:
+            return  ""
+        }
+    }
+    
+    func getPaymentValue(valueToShow: String?, valueToCopy: String?) -> PaymentMethodValueUI? {
+        if let valueToShowNN = valueToShow {
+            if let valueToCopyNN = valueToCopy {
+                return PaymentMethodValueUI(
+                    value: valueToShowNN,
+                    valueToCopy: valueToCopyNN
+                )
+            }
+        }
+        
+        return nil
+    }
+    
+    
+    func getCartTotalUI(cartTotal:CreateOrderCartTotal) -> CartTotalUI {
+        switch cartTotal {
+        case _ as CreateOrderCartTotalLoading :
+            return CartTotalUI.Loading
+        case let cartTotalSuccess as CreateOrderCartTotalSuccess:
+            return CartTotalUI.Success(
+                cartTotalSuccess.motivation?.getMotivationUi(),
+                cartTotalSuccess.discount,
+                cartTotalSuccess.deliveryCost,
+                cartTotalSuccess.oldFinalCost,
+                cartTotalSuccess.newFinalCost
+            )
+        default:
+            return CartTotalUI.Loading
+        }
+    }
+    
+    func getPaymentMethodUI(paymentMethod:PaymentMethod?) -> PaymentMethodUI? {
+        if let paymentMethodNN = paymentMethod{
+            return  PaymentMethodUI(
+                uuid: paymentMethodNN.uuid,
+                name: paymentMethodNN.name.getPaymentMethod(),
+                value: getPaymentValue(
+                    valueToShow: paymentMethodNN.valueToShow,
+                    valueToCopy: paymentMethodNN.valueToCopy
+                )
+            )
+            
+        }
+        return nil
+    }
 }
 
 struct CreateOrderSuccessView: View {
     
-    @ObservedObject var viewModel:CreateOrderHolder
     @State var addressLable = Strings.HINT_CREATION_ORDER_ADDRESS_DELIVERY
+    // errors
     @Binding var showCreatedAddress: Bool
-    @Binding var showAddressError: Bool
     @Binding var showCommonError: Bool
-    @Binding var showPaymentMethodError: Bool
+    
+    //navigations
     @Binding var goToUserAddress: Bool
     @Binding var goToCafeAddress: Bool
     @Binding var goToSelectPaymentMethod: Bool
+    
     @State var isDelivery = true
     @State var comment = ""
     @State var faster = true
@@ -263,11 +335,12 @@ struct CreateOrderSuccessView: View {
     @Binding var isRootActive: Bool
     @Binding var selection: MainContainerState
     @Binding var showOrderCreated: Bool
-    @Binding var addressList: [SelectableCafeAddressItem]
-    @Binding var paymentList: [SelectablePaymentMethod]
-    
     let calendar = Calendar.current
+
     
+    let createOrderViewState: CreateOrderViewState
+    let action: (CreateOrderAction) -> Void
+
     var body: some View{
         ZStack (alignment: .bottom){
             ScrollView{
@@ -278,16 +351,16 @@ struct CreateOrderSuccessView: View {
                         isLeftSelected: $isDelivery
                     ){ isDelivery in
                         if(isDelivery){
-                            viewModel.kmmViewModel.onSwitcherPositionChanged(position: 0)
+                            action(CreateOrderActionChangeMethod(position: 0))
                         }else{
-                            viewModel.kmmViewModel.onSwitcherPositionChanged(position: 1)
+                            action(CreateOrderActionChangeMethod(position: 1))
                         }
                     }
                     .padding(.top, Diems.MEDIUM_PADDING)
                     .padding(.horizontal, Diems.MEDIUM_PADDING)
                     
-                    if(viewModel.creationOrderViewState.isDelivery){
-                        if viewModel.creationOrderViewState.deliveryAddress == nil{
+                    if(createOrderViewState.isDelivery){
+                        if createOrderViewState.deliveryAddress == nil {
                             NavigationCardView(
                                 icon: nil,
                                 label: addressLable,
@@ -295,56 +368,59 @@ struct CreateOrderSuccessView: View {
                             )
                             .padding(.top, Diems.SMALL_PADDING)
                             .padding(.horizontal, Diems.MEDIUM_PADDING)
-                        }else{
+                        } else {
                             ActionTextCardView(
                                 placeHolder: addressLable,
-                                text: viewModel.getUserAddressList()
+                                text: createOrderViewState.deliveryAddress ?? ""
                             ){
-                                viewModel.goToAddress()
+                                action(CreateOrderActionDeliveryAddressClick())
                             }
                             .padding(.top, Diems.SMALL_PADDING)
                             .padding(.horizontal, Diems.MEDIUM_PADDING)
                         }
-                    }else{
+                    } else {
                         ActionTextCardView(
                             placeHolder: addressLable,
-                            text: "\(viewModel.creationOrderViewState.pickupAddress ?? "")"
+                            text: "\(createOrderViewState.pickupAddress ?? "")"
                         ){
-                            viewModel.goToAddress()
+                            action(CreateOrderActionPickupAddressClick())
                         }
                         .padding(.top, Diems.SMALL_PADDING)
                         .padding(.horizontal, Diems.MEDIUM_PADDING)
                     }
                     
-                    if(viewModel.creationOrderViewState.paymentMethod == nil){
+                    // TODO add error text for address
+                    
+                    if(createOrderViewState.selectedPaymentMethod == nil){
                         ActionCardView(
                             icon: nil,
                             label: "Способ оплаты",
                             isSystemImageName: false,
                             isShowRightArrow: true
                         ){
-                            viewModel.onPaymentMethodClick()
+                            action(CreateOrderActionPaymentMethodClick())
                         }
                         .padding(.top, Diems.SMALL_PADDING)
                         .padding(.horizontal, Diems.MEDIUM_PADDING)
                     }else{
                         ActionLocalizedTextCardView(
                             placeHolder: "selectable_payment_method",
-                            text: viewModel.creationOrderViewState.paymentMethod!.name.getPaymentMethod()
+                            text: createOrderViewState.selectedPaymentMethod?.name ?? ""
                         ){
-                            viewModel.onPaymentMethodClick()
+                            action(CreateOrderActionPaymentMethodClick())
                         }
                         .padding(.top, Diems.SMALL_PADDING)
                         .padding(.horizontal, Diems.MEDIUM_PADDING)
                     }
-                    
+                    // TODO add error text for payment
+
                     EditTextView(
                         hint: Strings.HINT_CREATE_COMMENT_COMMENT,
                         text: $comment,
                         limit: 255,
                         errorMessage: .constant(nil),
-                        textChanged: { str in
-                            viewModel.kmmViewModel.onCommentChanged(comment: comment)
+                        textChanged: { comment in
+                            action(CreateOrderActionChangeComment(comment: comment))
                         }
                     )
                     .padding(.top, Diems.SMALL_PADDING)
@@ -352,17 +428,17 @@ struct CreateOrderSuccessView: View {
                     
                     Toggle(isOn: $faster.onChange({ faster in
                         if(faster) {
-                            viewModel.kmmViewModel.onDeferredTimeSelected(deferredTime: nil)
+                            //viewModel.kmmViewModel.onDeferredTimeSelected(deferredTime: nil)
                         }else{
-                            let date =  Date.now + 60 * 60
-                            
-                            viewModel.kmmViewModel.onDeferredTimeSelected(
-                                deferredTime: Time(
-                                    hours: Int32(calendar.component(.hour, from: date)),
-                                    minutes: Int32(calendar.component(.minute, from: date)
-                                                  )
-                                )
-                            )
+//                            let date =  Date.now + 60 * 60
+//                            
+//                            viewModel.kmmViewModel.onDeferredTimeSelected(
+//                                deferredTime: Time(
+//                                    hours: Int32(calendar.component(.hour, from: date)),
+//                                    minutes: Int32(calendar.component(.minute, from: date)
+//                                                  )
+//                                )
+//                            )
                         }
                     })){
                         Text("Как можно скорее")
@@ -373,17 +449,17 @@ struct CreateOrderSuccessView: View {
                     .padding(.horizontal, Diems.MEDIUM_PADDING)
                     
                     if(!faster){
-                        if(viewModel.creationOrderViewState.isDelivery){
+                        if(createOrderViewState.isDelivery){
                             DatePicker(
                                 selection: $deferredTime.onChange(
                                     { date in
-                                        viewModel.kmmViewModel.onDeferredTimeSelected(
-                                            deferredTime: Time(
-                                                hours: Int32(calendar.component(.hour, from: date)),
-                                                minutes: Int32(calendar.component(.minute, from: date)
-                                                              )
-                                            )
-                                        )
+//                                        viewModel.kmmViewModel.onDeferredTimeSelected(
+//                                            deferredTime: Time(
+//                                                hours: Int32(calendar.component(.hour, from: date)),
+//                                                minutes: Int32(calendar.component(.minute, from: date)
+//                                                              )
+//                                            )
+//                                        )
                                     }
                                 ),
                                 in: (Date.now + 60 * 60)...,
@@ -398,13 +474,13 @@ struct CreateOrderSuccessView: View {
                             DatePicker(
                                 selection: $deferredTime.onChange(
                                     { date in
-                                        viewModel.kmmViewModel.onDeferredTimeSelected(
-                                            deferredTime: Time(
-                                                hours: Int32(calendar.component(.hour, from: date)),
-                                                minutes: Int32(calendar.component(.minute, from: date)
-                                                              )
-                                            )
-                                        )
+//                                        viewModel.kmmViewModel.onDeferredTimeSelected(
+//                                            deferredTime: Time(
+//                                                hours: Int32(calendar.component(.hour, from: date)),
+//                                                minutes: Int32(calendar.component(.minute, from: date)
+//                                                              )
+//                                            )
+//                                        )
                                     }
                                 ),
                                 in: (Date.now + 60 * 60)...,
@@ -422,78 +498,78 @@ struct CreateOrderSuccessView: View {
             .background(AppColor.background)
             
             VStack(spacing:0){
-                if let discount = viewModel.creationOrderViewState.discount{
-                    HStack(spacing:0){
-                        Text("create_order_discount")
-                            .bodyMedium()
-                            .foregroundColor(AppColor.onSurface)
-                        
-                        Spacer()
-                        
-                        DiscountCard(text:discount)
-                    }.padding(.top, 8)
-                        .padding(.horizontal, 16)
-                }
-                
-                HStack(spacing:0){
-                    Text(Strings.MSG_CREATION_ORDER_RESULT)
-                        .bodyMedium()
-                        .foregroundColor(AppColor.onSurface)
-                    Spacer()
-                    if let totalCost = viewModel.creationOrderViewState.totalCost{
-                        let totaCostString = "\(totalCost)\(Strings.CURRENCY)"
-                        Text(totaCostString)
-                            .bodyMedium()
-                            .foregroundColor(AppColor.onSurface)
-                    }
-                }
-                .padding(.top, Diems.SMALL_PADDING)
-                .padding(.horizontal, Diems.MEDIUM_PADDING)
-         
-                if(viewModel.creationOrderViewState.isDelivery){
-                    if let deliveryCost = viewModel.creationOrderViewState.deliveryCost {
-                        HStack(spacing:0){
-                            Text(Strings.MSG_CREATION_ORDER_DELIVERY)
-                                .bodyMedium()
-                                .foregroundColor(AppColor.onSurface)
-                            Spacer()
-                            Text("\(deliveryCost)\(Strings.CURRENCY)")
-                                .bodyMedium()
-                                .foregroundColor(AppColor.onSurface)
-                        }
-                        .padding(.top, Diems.SMALL_PADDING)
-                        .padding(.horizontal, Diems.MEDIUM_PADDING)
-                    }
-                }
-                
-                HStack(spacing:0){
-                    Text(Strings.MSG_CREATION_ORDER_FINAL_AMOUNT)
-                        .bodyMedium(weight: .bold)
-                        .foregroundColor(AppColor.onSurface)
-                    Spacer()
-                    
-                    
-                    if let oldFinalCost = viewModel.creationOrderViewState.oldFinalCost{
-                        Text("\(oldFinalCost)" + Strings.CURRENCY)
-                            .strikethrough()
-                            .bodyMedium(weight: .bold)
-                            .foregroundColor(AppColor.onSurfaceVariant)
-                            .padding(.trailing, 4)
-                    }
-                    
-                    if let finalCost = viewModel.creationOrderViewState.newFinalCost {
-                        Text("\(finalCost)" + Strings.CURRENCY)
-                            .bodyMedium(weight: .bold)
-                            .foregroundColor(AppColor.onSurface)
-                    }
-                    
-                }
-                .padding(.top, Diems.SMALL_PADDING)
-                .padding(.horizontal, Diems.MEDIUM_PADDING)
+//                if let discount = viewModel.creationOrderViewState.discount{
+//                    HStack(spacing:0){
+//                        Text("create_order_discount")
+//                            .bodyMedium()
+//                            .foregroundColor(AppColor.onSurface)
+//                        
+//                        Spacer()
+//                        
+//                        DiscountCard(text:discount)
+//                    }.padding(.top, 8)
+//                        .padding(.horizontal, 16)
+//                }
+//                
+//                HStack(spacing:0){
+//                    Text(Strings.MSG_CREATION_ORDER_RESULT)
+//                        .bodyMedium()
+//                        .foregroundColor(AppColor.onSurface)
+//                    Spacer()
+//                    if let totalCost = viewModel.creationOrderViewState.totalCost{
+//                        let totaCostString = "\(totalCost)\(Strings.CURRENCY)"
+//                        Text(totaCostString)
+//                            .bodyMedium()
+//                            .foregroundColor(AppColor.onSurface)
+//                    }
+//                }
+//                .padding(.top, Diems.SMALL_PADDING)
+//                .padding(.horizontal, Diems.MEDIUM_PADDING)
+//                
+//                if(viewModel.creationOrderViewState.isDelivery){
+//                    if let deliveryCost = viewModel.creationOrderViewState.deliveryCost {
+//                        HStack(spacing:0){
+//                            Text(Strings.MSG_CREATION_ORDER_DELIVERY)
+//                                .bodyMedium()
+//                                .foregroundColor(AppColor.onSurface)
+//                            Spacer()
+//                            Text("\(deliveryCost)\(Strings.CURRENCY)")
+//                                .bodyMedium()
+//                                .foregroundColor(AppColor.onSurface)
+//                        }
+//                        .padding(.top, Diems.SMALL_PADDING)
+//                        .padding(.horizontal, Diems.MEDIUM_PADDING)
+//                    }
+//                }
+//                
+//                HStack(spacing:0){
+//                    Text(Strings.MSG_CREATION_ORDER_FINAL_AMOUNT)
+//                        .bodyMedium(weight: .bold)
+//                        .foregroundColor(AppColor.onSurface)
+//                    Spacer()
+//                    
+//                    
+//                    if let oldFinalCost = viewModel.creationOrderViewState.oldFinalCost{
+//                        Text("\(oldFinalCost)" + Strings.CURRENCY)
+//                            .strikethrough()
+//                            .bodyMedium(weight: .bold)
+//                            .foregroundColor(AppColor.onSurfaceVariant)
+//                            .padding(.trailing, 4)
+//                    }
+//                    
+//                    if let finalCost = viewModel.creationOrderViewState.newFinalCost {
+//                        Text("\(finalCost)" + Strings.CURRENCY)
+//                            .bodyMedium(weight: .bold)
+//                            .foregroundColor(AppColor.onSurface)
+//                    }
+//                    
+//                }
+//                .padding(.top, Diems.SMALL_PADDING)
+//                .padding(.horizontal, Diems.MEDIUM_PADDING)
                 
                 Button(
                     action: {
-                        viewModel.createOrder()
+                      //  viewModel.createOrder()
                     }, label: {
                         ButtonText(text: Strings.ACTION_CART_PRODUCT_CREATE_ORDER)
                     }
@@ -504,71 +580,5 @@ struct CreateOrderSuccessView: View {
             .background(AppColor.surface)
         }
         .background(AppColor.surface)
-        .onReceive(viewModel.$creationOrderViewState, perform: { creationOrderViewState in
-            if(creationOrderViewState.isDelivery){
-                addressLable = Strings.HINT_CREATION_ORDER_ADDRESS_DELIVERY
-            }else{
-                addressLable = Strings.HINT_CREATION_ORDER_ADDRESS_CAFE
-            }
-            
-            print(creationOrderViewState.eventList)
-            
-            creationOrderViewState.eventList.forEach { event in
-                switch(event){
-                case is CreateOrderEventShowUserAddressError : showAddressError = true
-                case is CreateOrderEventShowSomethingWentWrongErrorEvent : showCommonError = true
-                case is CreateOrderEventOrderCreatedEvent : isRootActive = false
-                    selection = MainContainerState.profile
-                    showOrderCreated = true
-                case is CreateOrderEventShowCafeAddressListEvent :
-                    addressList = (event as? CreateOrderEventShowCafeAddressListEvent)?.addressList ?? []
-                    goToCafeAddress = true
-                case is CreateOrderEventShowUserAddressListEvent : goToUserAddress = true
-                case is CreateOrderEventShowPaymentMethodList :
-                    paymentList = (event as? CreateOrderEventShowPaymentMethodList)?.selectablePaymentMethodList ?? []
-                    goToSelectPaymentMethod = true
-                case is CreateOrderEventShowPaymentMethodError:
-                    showPaymentMethodError = true
-                default:
-                    print("def")
-                }
-            }
-            
-            if !creationOrderViewState.eventList.isEmpty{
-                viewModel.kmmViewModel.consumeEventList(eventList: creationOrderViewState.eventList)
-            }
-        })
     }
-    
-    
-//    func getUserAddressList() -> String {
-//        if(creationOrderViewState.deliveryAddress == nil){
-//            return ""
-//        }
-//        
-//        var address : String = creationOrderViewState.deliveryAddress?.address.street ?? ""
-//        
-//        if(creationOrderViewState.deliveryAddress?.address.house != nil){
-//            address += ", д. " + (creationOrderViewState.deliveryAddress?.address.house ?? "")
-//        }
-//        
-//        if(creationOrderViewState.deliveryAddress?.address.flat != nil && creationOrderViewState.deliveryAddress?.address.flat != ""){
-//            address += ", кв. " + (creationOrderViewState.deliveryAddress?.address.flat ?? "")
-//        }
-//        
-//        if(creationOrderViewState.deliveryAddress?.address.entrance != nil && creationOrderViewState.deliveryAddress?.address.entrance != ""){
-//            address += ", подъезд " + (creationOrderViewState.deliveryAddress?.address.entrance ?? "")
-//        }
-//        
-//        if(creationOrderViewState.deliveryAddress?.address.floor != nil && creationOrderViewState.deliveryAddress?.address.floor != ""){
-//            address += ", этаж. " + (creationOrderViewState.deliveryAddress?.address.floor ?? "")
-//        }
-//        
-//        if(creationOrderViewState.deliveryAddress?.address.comment != nil && creationOrderViewState.deliveryAddress?.address.comment != ""){
-//            address += ", \(creationOrderViewState.deliveryAddress?.address.comment ?? "")"
-//        }
-//        
-//        return address
-//    }
 }
-

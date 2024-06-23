@@ -99,3 +99,7 @@
 "hint_create_address_floor" = "Floor";
 "hint_create_address_comment" = "Comment for couriers";
 "msg_create_address_created" = "Address added";
+
+//Create order
+"title_create_order_time_delivery" = "Delivery time";
+"title_create_order_time_pickup" = "Pickup time";

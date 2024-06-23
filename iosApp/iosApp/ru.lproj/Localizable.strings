@@ -96,3 +96,8 @@
 "hint_create_address_floor" = "Этаж";
 "hint_create_address_comment" = "Комментарий для курьера";
 "msg_create_address_created" = "Адрес добавлен";
+
+
+//Create order
+"title_create_order_time_delivery" = "Время доставки";
+"title_create_order_time_pickup" = "Время самовывоза";

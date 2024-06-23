@@ -216,6 +216,12 @@
 		025775182ACCA01600DDBC94 /* DiscountCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025775142ACCA01600DDBC94 /* DiscountCard.swift */; };
 		0265D2A02AC9B1BF00B862FF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0265D29C2AC9B14A00B862FF /* GoogleService-Info.plist */; };
 		0265D2A12AC9B1C200B862FF /* pepe.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0251DCA029DE11680008DBA5 /* pepe.plist */; };
+		0269DB3E2C263DEA009D36AE /* PaymentMethodUi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0269DB3D2C263DEA009D36AE /* PaymentMethodUi.swift */; };
+		0269DB3F2C263DEA009D36AE /* PaymentMethodUi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0269DB3D2C263DEA009D36AE /* PaymentMethodUi.swift */; };
+		0269DB402C263DEA009D36AE /* PaymentMethodUi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0269DB3D2C263DEA009D36AE /* PaymentMethodUi.swift */; };
+		0269DB412C263DEA009D36AE /* PaymentMethodUi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0269DB3D2C263DEA009D36AE /* PaymentMethodUi.swift */; };
+		0269DB422C263DEA009D36AE /* PaymentMethodUi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0269DB3D2C263DEA009D36AE /* PaymentMethodUi.swift */; };
+		0269DB432C263DEA009D36AE /* PaymentMethodUi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0269DB3D2C263DEA009D36AE /* PaymentMethodUi.swift */; };
 		026C1F532A2690B900838266 /* ButtonText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0253930929AB92A800C8B04B /* ButtonText.swift */; };
 		026C1F542A2690B900838266 /* CategoryItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323465287879EF0048CF39 /* CategoryItemModel.swift */; };
 		026C1F552A2690B900838266 /* NavigationTextCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023234B328787A180048CF39 /* NavigationTextCard.swift */; };
@@ -528,6 +534,12 @@
 		028920212BDAF5A70043B466 /* vkusKavkaza.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 028920192BDAF5A70043B466 /* vkusKavkaza.xcassets */; };
 		028920272BDAF5A70043B466 /* vkusKavkaza.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0289201A2BDAF5A70043B466 /* vkusKavkaza.plist */; };
 		0289202D2BDAF5A70043B466 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0289201B2BDAF5A70043B466 /* GoogleService-Info.plist */; };
+		0294126A2C2754D1000BE3BE /* MotivationDataMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029412692C2754D1000BE3BE /* MotivationDataMapper.swift */; };
+		0294126B2C2754D1000BE3BE /* MotivationDataMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029412692C2754D1000BE3BE /* MotivationDataMapper.swift */; };
+		0294126C2C2754D1000BE3BE /* MotivationDataMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029412692C2754D1000BE3BE /* MotivationDataMapper.swift */; };
+		0294126D2C2754D1000BE3BE /* MotivationDataMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029412692C2754D1000BE3BE /* MotivationDataMapper.swift */; };
+		0294126E2C2754D1000BE3BE /* MotivationDataMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029412692C2754D1000BE3BE /* MotivationDataMapper.swift */; };
+		0294126F2C2754D1000BE3BE /* MotivationDataMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029412692C2754D1000BE3BE /* MotivationDataMapper.swift */; };
 		0294FD7A29DF71B900568A10 /* EmptyWithIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0294FD7929DF71B900568A10 /* EmptyWithIconView.swift */; };
 		0294FD7B29DF71B900568A10 /* EmptyWithIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0294FD7929DF71B900568A10 /* EmptyWithIconView.swift */; };
 		0294FD7D29E35E8300568A10 /* AppTypography.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0294FD7C29E35E8300568A10 /* AppTypography.swift */; };
@@ -768,6 +780,7 @@
 		025775142ACCA01600DDBC94 /* DiscountCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscountCard.swift; sourceTree = "<group>"; };
 		0265D29C2AC9B14A00B862FF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		026643F02A22AF3C000310BF /* papakarlo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = papakarlo.entitlements; sourceTree = "<group>"; };
+		0269DB3D2C263DEA009D36AE /* PaymentMethodUi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodUi.swift; sourceTree = "<group>"; };
 		026C1FCB2A2690B900838266 /* djan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = djan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		026C1FCD2A2691B000838266 /* djan.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = djan.plist; sourceTree = "<group>"; };
 		026C1FD12A2691E500838266 /* djanAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = djanAssets.xcassets; sourceTree = "<group>"; };
@@ -782,6 +795,7 @@
 		028920192BDAF5A70043B466 /* vkusKavkaza.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = vkusKavkaza.xcassets; sourceTree = "<group>"; };
 		0289201A2BDAF5A70043B466 /* vkusKavkaza.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = vkusKavkaza.plist; sourceTree = "<group>"; };
 		0289201B2BDAF5A70043B466 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		029412692C2754D1000BE3BE /* MotivationDataMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotivationDataMapper.swift; sourceTree = "<group>"; };
 		0294FD7929DF71B900568A10 /* EmptyWithIconView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyWithIconView.swift; sourceTree = "<group>"; };
 		0294FD7C29E35E8300568A10 /* AppTypography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTypography.swift; sourceTree = "<group>"; };
 		0294FD7F29E751CC00568A10 /* AppColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColor.swift; sourceTree = "<group>"; };
@@ -900,6 +914,7 @@
 		02323425287879EF0048CF39 /* feature */ = {
 			isa = PBXGroup;
 			children = (
+				029412682C2754B8000BE3BE /* motivation */,
 				024E877D287A15C000728CB3 /* splash */,
 				02323426287879EF0048CF39 /* consumer_cart */,
 				0232342C287879EF0048CF39 /* update */,
@@ -1267,6 +1282,14 @@
 			path = vkusKavkazaRes;
 			sourceTree = "<group>";
 		};
+		029412682C2754B8000BE3BE /* motivation */ = {
+			isa = PBXGroup;
+			children = (
+				029412692C2754D1000BE3BE /* MotivationDataMapper.swift */,
+			);
+			path = motivation;
+			sourceTree = "<group>";
+		};
 		02ADC3B329D9D2480062A141 /* yuliarRes */ = {
 			isa = PBXGroup;
 			children = (
@@ -1292,6 +1315,7 @@
 			children = (
 				021E0A9328D4AAB900CB6A15 /* PaymentView.swift */,
 				02CBBE342A6BE979000260FC /* SelectablePaymentListView.swift */,
+				0269DB3D2C263DEA009D36AE /* PaymentMethodUi.swift */,
 			);
 			path = payment;
 			sourceTree = "<group>";
@@ -2022,6 +2046,7 @@
 				0219B7B02B8FB97C00305E2D /* CityItemView.swift in Sources */,
 				0219B7B12B8FB97C00305E2D /* ContainerView.swift in Sources */,
 				0219B7B22B8FB97C00305E2D /* CreateOrderView.swift in Sources */,
+				0269DB422C263DEA009D36AE /* PaymentMethodUi.swift in Sources */,
 				0219B7B32B8FB97C00305E2D /* NavigationCardView.swift in Sources */,
 				0219B7B42B8FB97C00305E2D /* MenuProductItem.swift in Sources */,
 				0219B7B52B8FB97C00305E2D /* CountPicker.swift in Sources */,
@@ -2055,6 +2080,7 @@
 				0219B7D22B8FB97C00305E2D /* SelectCityViewModel.swift in Sources */,
 				0219B7D32B8FB97C00305E2D /* CafeAddressViewState.swift in Sources */,
 				0219B7D42B8FB97C00305E2D /* CategoryItemView.swift in Sources */,
+				0294126E2C2754D1000BE3BE /* MotivationDataMapper.swift in Sources */,
 				0219B7D52B8FB97C00305E2D /* OrderDetailsView.swift in Sources */,
 				0219B7D62B8FB97C00305E2D /* ChangeCityViewState.swift in Sources */,
 				0219B7D72B8FB97C00305E2D /* PlaceholderText.swift in Sources */,
@@ -2131,6 +2157,7 @@
 				026C1F742A2690B900838266 /* CityItemView.swift in Sources */,
 				026C1F752A2690B900838266 /* ContainerView.swift in Sources */,
 				026C1F762A2690B900838266 /* CreateOrderView.swift in Sources */,
+				0269DB402C263DEA009D36AE /* PaymentMethodUi.swift in Sources */,
 				026C1F772A2690B900838266 /* NavigationCardView.swift in Sources */,
 				026C1F792A2690B900838266 /* MenuProductItem.swift in Sources */,
 				026C1F7A2A2690B900838266 /* CountPicker.swift in Sources */,
@@ -2164,6 +2191,7 @@
 				026C1F962A2690B900838266 /* SelectCityViewModel.swift in Sources */,
 				026C1F972A2690B900838266 /* CafeAddressViewState.swift in Sources */,
 				026C1F982A2690B900838266 /* CategoryItemView.swift in Sources */,
+				0294126C2C2754D1000BE3BE /* MotivationDataMapper.swift in Sources */,
 				026C1F992A2690B900838266 /* OrderDetailsView.swift in Sources */,
 				026C1F9A2A2690B900838266 /* ChangeCityViewState.swift in Sources */,
 				026C1F9C2A2690B900838266 /* PlaceholderText.swift in Sources */,
@@ -2240,6 +2268,7 @@
 				027CB0372A346F7B00350EB2 /* CityItemView.swift in Sources */,
 				027CB0382A346F7B00350EB2 /* ContainerView.swift in Sources */,
 				027CB0392A346F7B00350EB2 /* CreateOrderView.swift in Sources */,
+				0269DB412C263DEA009D36AE /* PaymentMethodUi.swift in Sources */,
 				027CB03A2A346F7B00350EB2 /* NavigationCardView.swift in Sources */,
 				027CB03C2A346F7B00350EB2 /* MenuProductItem.swift in Sources */,
 				027CB03D2A346F7B00350EB2 /* CountPicker.swift in Sources */,
@@ -2273,6 +2302,7 @@
 				027CB0592A346F7B00350EB2 /* SelectCityViewModel.swift in Sources */,
 				027CB05A2A346F7B00350EB2 /* CafeAddressViewState.swift in Sources */,
 				027CB05B2A346F7B00350EB2 /* CategoryItemView.swift in Sources */,
+				0294126D2C2754D1000BE3BE /* MotivationDataMapper.swift in Sources */,
 				027CB05C2A346F7B00350EB2 /* OrderDetailsView.swift in Sources */,
 				027CB05D2A346F7B00350EB2 /* ChangeCityViewState.swift in Sources */,
 				027CB05F2A346F7B00350EB2 /* PlaceholderText.swift in Sources */,
@@ -2349,6 +2379,7 @@
 				02891F902BDAEA0D0043B466 /* CityItemView.swift in Sources */,
 				02891F912BDAEA0D0043B466 /* ContainerView.swift in Sources */,
 				02891F922BDAEA0D0043B466 /* CreateOrderView.swift in Sources */,
+				0269DB432C263DEA009D36AE /* PaymentMethodUi.swift in Sources */,
 				02891F932BDAEA0D0043B466 /* NavigationCardView.swift in Sources */,
 				02891F942BDAEA0D0043B466 /* MenuProductItem.swift in Sources */,
 				02891F952BDAEA0D0043B466 /* CountPicker.swift in Sources */,
@@ -2382,6 +2413,7 @@
 				02891FB22BDAEA0D0043B466 /* SelectCityViewModel.swift in Sources */,
 				02891FB32BDAEA0D0043B466 /* CafeAddressViewState.swift in Sources */,
 				02891FB42BDAEA0D0043B466 /* CategoryItemView.swift in Sources */,
+				0294126F2C2754D1000BE3BE /* MotivationDataMapper.swift in Sources */,
 				02891FB52BDAEA0D0043B466 /* OrderDetailsView.swift in Sources */,
 				02891FB62BDAEA0D0043B466 /* ChangeCityViewState.swift in Sources */,
 				02891FB72BDAEA0D0043B466 /* PlaceholderText.swift in Sources */,
@@ -2458,6 +2490,7 @@
 				02ADC35829D9D0880062A141 /* CityItemView.swift in Sources */,
 				02ADC35929D9D0880062A141 /* ContainerView.swift in Sources */,
 				02ADC35A29D9D0880062A141 /* CreateOrderView.swift in Sources */,
+				0269DB3F2C263DEA009D36AE /* PaymentMethodUi.swift in Sources */,
 				02ADC35B29D9D0880062A141 /* NavigationCardView.swift in Sources */,
 				02ADC35D29D9D0880062A141 /* MenuProductItem.swift in Sources */,
 				02ADC35E29D9D0880062A141 /* CountPicker.swift in Sources */,
@@ -2491,6 +2524,7 @@
 				02ADC37929D9D0880062A141 /* SelectCityViewModel.swift in Sources */,
 				02ADC37A29D9D0880062A141 /* CafeAddressViewState.swift in Sources */,
 				02ADC37B29D9D0880062A141 /* CategoryItemView.swift in Sources */,
+				0294126B2C2754D1000BE3BE /* MotivationDataMapper.swift in Sources */,
 				02ADC37C29D9D0880062A141 /* OrderDetailsView.swift in Sources */,
 				02ADC37D29D9D0880062A141 /* ChangeCityViewState.swift in Sources */,
 				02ADC37F29D9D0880062A141 /* PlaceholderText.swift in Sources */,
@@ -2567,6 +2601,7 @@
 				0232347E287879EF0048CF39 /* CityItemView.swift in Sources */,
 				023234A9287879EF0048CF39 /* ContainerView.swift in Sources */,
 				023234AD287879EF0048CF39 /* CreateOrderView.swift in Sources */,
+				0269DB3E2C263DEA009D36AE /* PaymentMethodUi.swift in Sources */,
 				023234C928787A180048CF39 /* NavigationCardView.swift in Sources */,
 				023234A3287879EF0048CF39 /* MenuProductItem.swift in Sources */,
 				023234D228787A180048CF39 /* CountPicker.swift in Sources */,
@@ -2600,6 +2635,7 @@
 				0232347D287879EF0048CF39 /* SelectCityViewModel.swift in Sources */,
 				021A009028E082DE00EFCC63 /* CafeAddressViewState.swift in Sources */,
 				023234CF28787A180048CF39 /* CategoryItemView.swift in Sources */,
+				0294126A2C2754D1000BE3BE /* MotivationDataMapper.swift in Sources */,
 				02323486287879EF0048CF39 /* OrderDetailsView.swift in Sources */,
 				024CBDDB28E9D3BE002A39DF /* ChangeCityViewState.swift in Sources */,
 				023234D828787A180048CF39 /* PlaceholderText.swift in Sources */,

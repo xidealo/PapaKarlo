@@ -10,7 +10,7 @@ import SwiftUI
 
 struct CommentView: View {
     //TODO(Make 
-    @ObservedObject var createOrderViewModel:CreateOrderHolder
+    
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
 
     var body: some View {
@@ -37,11 +37,5 @@ struct CommentView: View {
         .padding(Diems.MEDIUM_PADDING)
         .background(AppColor.background)
         .hiddenNavigationBarStyle()
-    }
-}
-
-struct CommentView_Previews: PreviewProvider {
-    static var previews: some View {
-        CommentView(createOrderViewModel: CreateOrderHolder())
     }
 }

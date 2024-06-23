@@ -151,3 +151,10 @@ extension PaymentMethodName{
         }
     }
 }
+
+
+extension Int32 {
+    func withFirstZero() -> String {
+        return String(format: "%02d", self)
+    }
+}
