@@ -64,7 +64,6 @@ import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
 import com.bunbeauty.shared.domain.use_case.DisableUserUseCase
 import com.bunbeauty.shared.domain.use_case.address.*
 import com.bunbeauty.shared.domain.feature.cafe.GetSelectableCafeListUseCase
-import com.bunbeauty.shared.presentation.create_order.CreateOrderStateMapper
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 import org.koin.core.context.startKoin
@@ -185,7 +184,6 @@ class IosComponent : KoinComponent {
 
     //Mapper
     fun provideUserAddressMapper(): UserAddressMapper = get()
-    fun provideCreateOrderStateMapper(): CreateOrderStateMapper = get()
 
     //Other
     fun provideApiRepo(): NetworkConnector = get()

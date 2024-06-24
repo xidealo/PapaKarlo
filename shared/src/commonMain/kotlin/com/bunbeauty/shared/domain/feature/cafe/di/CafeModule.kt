@@ -16,6 +16,7 @@ internal fun cafeModule() = module {
         GetSelectableCafeListUseCase(
             cafeRepo = get(),
             dataStoreRepo = get(),
+            getCafeListUseCase = get(),
         )
     }
     factory {

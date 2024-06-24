@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.feature.address.ui
+package com.bunbeauty.papakarlo.common.ui.element.selectable
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,18 +18,18 @@ import com.bunbeauty.papakarlo.common.ui.icon16
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 
 @Composable
-fun SelectableItemView(
-    modifier: Modifier = Modifier,
+fun SelectableItem(
     title: String,
-    isClickable: Boolean,
+    clickable: Boolean,
     elevated: Boolean,
-    isSelected: Boolean = false,
-    onClick: (() -> Unit)
+    onClick: (() -> Unit),
+    modifier: Modifier = Modifier,
+    isSelected: Boolean = false
 ) {
     FoodDeliveryCard(
         modifier = modifier.fillMaxWidth(),
         onClick = onClick,
-        clickable = isClickable,
+        clickable = clickable,
         elevated = elevated
     ) {
         Row(
@@ -59,26 +59,26 @@ fun SelectableItemView(
     }
 }
 
-@Preview(showSystemUi = true)
+@Preview
 @Composable
 private fun AddressItemPreview() {
     FoodDeliveryTheme {
-        SelectableItemView(
+        SelectableItem(
             title = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
-            isClickable = false,
+            clickable = false,
             elevated = false,
             onClick = {}
         )
     }
 }
 
-@Preview(showSystemUi = true)
+@Preview
 @Composable
 private fun AddressItemSelectedPreview() {
     FoodDeliveryTheme {
-        SelectableItemView(
+        SelectableItem(
             title = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
-            isClickable = false,
+            clickable = false,
             elevated = false,
             isSelected = true,
             onClick = {}

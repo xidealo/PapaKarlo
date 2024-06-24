@@ -26,26 +26,23 @@ import com.bunbeauty.papakarlo.common.BaseFragmentWithSharedViewModel
 import com.bunbeauty.papakarlo.common.extension.navigateSafe
 import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
+import com.bunbeauty.papakarlo.common.ui.element.selectable.SelectableItem
 import com.bunbeauty.papakarlo.common.ui.screen.EmptyScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.LayoutComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
-import com.bunbeauty.papakarlo.feature.address.mapper.UserAddressItemMapper
+import com.bunbeauty.papakarlo.feature.address.mapper.toUserAddressItem
 import com.bunbeauty.papakarlo.feature.address.model.UserAddressItem
 import com.bunbeauty.papakarlo.feature.address.screen.useraddresslist.UserAddressListFragmentDirections.toCreateAddressFragment
-import com.bunbeauty.papakarlo.feature.address.ui.SelectableItemView
 import com.bunbeauty.shared.presentation.user_address_list.UserAddressListState
 import com.bunbeauty.shared.presentation.user_address_list.UserAddressListViewModel
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class UserAddressListFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
 
     override val viewBinding by viewBinding(LayoutComposeBinding::bind)
     private val viewModel: UserAddressListViewModel by viewModel()
-
-    val userAddressItemMapper: UserAddressItemMapper by inject()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -56,7 +53,7 @@ class UserAddressListFragment : BaseFragmentWithSharedViewModel(R.layout.layout_
             UserAddressListScreen(
                 userAddressListState = UserAddressListUi(
                     userAddressItems = addressListState.userAddressList.map { userAddress ->
-                        userAddressItemMapper.toItem(userAddress)
+                        userAddress.toUserAddressItem()
                     },
                     state = addressListState.state,
                     eventList = addressListState.eventList
@@ -132,11 +129,12 @@ class UserAddressListFragment : BaseFragmentWithSharedViewModel(R.layout.layout_
                 verticalArrangement = spacedBy(8.dp)
             ) {
                 itemsIndexed(userAddressItems) { i, userAddressItem ->
-                    SelectableItemView(
+                    SelectableItem(
                         title = userAddressItem.address,
-                        isClickable = false,
-                        elevated = true
-                    ) {}
+                        clickable = false,
+                        elevated = true,
+                        onClick = {}
+                    )
                 }
             }
         }
