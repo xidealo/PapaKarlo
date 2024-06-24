@@ -19,6 +19,7 @@ data class CreateOrderViewState(
     val isPaymentMethodErrorShown: Boolean,
     val showChange: Boolean,
     val withoutChange: String,
+    val changeFrom: String,
     val withoutChangeChecked: Boolean,
     val change: String,
     val isChangeErrorShown: Boolean,

@@ -37,6 +37,7 @@ fun CreateOrder.DataState.toViewState(): CreateOrderViewState {
         isPaymentMethodErrorShown = isPaymentMethodErrorShown,
         showChange = paymentByCash,
         withoutChange = stringResource(R.string.msg_without_change),
+        changeFrom = stringResource(R.string.msg_change_from),
         withoutChangeChecked = withoutChangeChecked,
         change = change?.toString() ?: "",
         isChangeErrorShown = isChangeErrorShown,

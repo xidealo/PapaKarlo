@@ -140,7 +140,10 @@ class CreateOrderViewModel(
             }
 
             is CreateOrder.Action.CreateClick -> {
-                createClick(withoutChange = action.withoutChange)
+                createClick(
+                    withoutChange = action.withoutChange,
+                    changeFrom = action.changeFrom,
+                )
             }
         }
     }
@@ -328,7 +331,10 @@ class CreateOrderViewModel(
         }
     }
 
-    private fun createClick(withoutChange: String) {
+    private fun createClick(
+        withoutChange: String,
+        changeFrom: String
+    ) {
         val state = mutableDataState.value
 
         val isDeliveryAddressNotSelected = state.isDelivery && (state.selectedUserAddress == null)
@@ -376,7 +382,8 @@ class CreateOrderViewModel(
                     selectedCafe = state.selectedCafe,
                     orderComment = getExtendedComment(
                         state = state,
-                        withoutChange = withoutChange
+                        withoutChange = withoutChange,
+                        changeFrom = changeFrom,
                     ).takeIf { comment ->
                         comment.isNotBlank()
                     },
@@ -498,15 +505,20 @@ class CreateOrderViewModel(
     private fun getExtendedComment(
         state: CreateOrder.DataState,
         withoutChange: String,
+        changeFrom: String,
     ): String {
         return buildString {
-            append(state.comment)
+            state.comment.takeIf { comment ->
+                comment.isNotBlank()
+            }?.let { comment ->
+                append("$comment ")
+            }
             if (state.paymentByCash) {
-                append(" (")
+                append("(")
                 if (state.withoutChangeChecked) {
                     append(withoutChange)
                 } else {
-                    append("${state.change} $RUBLE_CURRENCY")
+                    append("$changeFrom ${state.change} $RUBLE_CURRENCY")
                 }
                 append(")")
             }

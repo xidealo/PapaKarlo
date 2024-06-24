@@ -100,12 +100,15 @@ interface CreateOrder {
         data object HidePaymentMethodList : Action
         data class ChangePaymentMethod(val paymentMethodUuid: String) : Action
 
-        data class ChangeWithoutChangeChecked(val isChecked: Boolean): Action
-        data class ChangeChange(val change: String): Action
+        data class ChangeWithoutChangeChecked(val isChecked: Boolean) : Action
+        data class ChangeChange(val change: String) : Action
 
         data class ChangeComment(val comment: String) : Action
 
-        data class CreateClick(val withoutChange: String) : Action
+        data class CreateClick(
+            val withoutChange: String,
+            val changeFrom: String
+        ) : Action
     }
 
     sealed interface Event : BaseEvent {

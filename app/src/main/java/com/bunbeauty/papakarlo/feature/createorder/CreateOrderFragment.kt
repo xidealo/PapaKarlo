@@ -454,7 +454,8 @@ class CreateOrderFragment :
                     onClick = {
                         onAction(
                             CreateOrder.Action.CreateClick(
-                                withoutChange = viewState.withoutChange
+                                withoutChange = viewState.withoutChange,
+                                changeFrom = viewState.changeFrom
                             )
                         )
                     }
@@ -588,6 +589,7 @@ class CreateOrderFragment :
                     isPaymentMethodErrorShown = false,
                     showChange = true,
                     withoutChange = "Без сдачи",
+                    changeFrom = "Cдача с",
                     withoutChangeChecked = true,
                     change = "",
                     isChangeErrorShown = false,
@@ -643,6 +645,7 @@ class CreateOrderFragment :
                     change = "",
                     withoutChangeChecked = false,
                     withoutChange = "Без сдачи",
+                    changeFrom = "Cдача с",
                     isChangeErrorShown = false,
                     cartTotal = CartTotalUI.Success(
                         motivation = MotivationUi.MinOrderCost("800 ₽"),
@@ -700,6 +703,7 @@ class CreateOrderFragment :
                     isPaymentMethodErrorShown = false,
                     showChange = true,
                     withoutChange = "Без сдачи",
+                    changeFrom = "Cдача с",
                     withoutChangeChecked = false,
                     change = "100",
                     isChangeErrorShown = false,
@@ -759,6 +763,7 @@ class CreateOrderFragment :
                     isPaymentMethodErrorShown = false,
                     showChange = false,
                     withoutChange = "Без сдачи",
+                    changeFrom = "Cдача с",
                     withoutChangeChecked = false,
                     change = "100",
                     isChangeErrorShown = false,
@@ -813,6 +818,7 @@ class CreateOrderFragment :
                     change = "100",
                     isChangeErrorShown = true,
                     withoutChange = "Без сдачи",
+                    changeFrom = "Cдача с",
                     withoutChangeChecked = false,
                     cartTotal = CartTotalUI.Success(
                         motivation = null,
