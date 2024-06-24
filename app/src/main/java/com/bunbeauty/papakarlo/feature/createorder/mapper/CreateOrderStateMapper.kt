@@ -1,6 +1,7 @@
 package com.bunbeauty.papakarlo.feature.createorder.mapper
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.feature.address.mapper.toAddressString
 import com.bunbeauty.papakarlo.feature.createorder.CartTotalUI
@@ -34,6 +35,11 @@ fun CreateOrder.DataState.toViewState(): CreateOrderViewState {
         deferredTime = deferredTime.toDeferredTimeString(),
         selectedPaymentMethod = selectedPaymentMethod?.toPaymentMethodUI(),
         isPaymentMethodErrorShown = isPaymentMethodErrorShown,
+        showChange = paymentByCash,
+        withoutChange = stringResource(R.string.msg_without_change),
+        withoutChangeChecked = withoutChangeChecked,
+        change = change?.toString() ?: "",
+        isChangeErrorShown = isChangeErrorShown,
         cartTotal = when (cartTotal) {
             CreateOrder.CartTotal.Loading -> CartTotalUI.Loading
             is CreateOrder.CartTotal.Success -> {
@@ -79,6 +85,6 @@ fun CreateOrder.DataState.toViewState(): CreateOrderViewState {
             paymentMethodList = paymentMethodList.map { selectablePaymentMethod ->
                 selectablePaymentMethod.toSelectablePaymentMethodUI()
             }.toImmutableList()
-        )
+        ),
     )
 }

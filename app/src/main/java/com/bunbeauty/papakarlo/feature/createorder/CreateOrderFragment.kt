@@ -14,12 +14,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusManager
@@ -37,6 +39,7 @@ import com.bunbeauty.papakarlo.common.extension.navigateSafe
 import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.papakarlo.common.ui.element.button.LoadingButton
 import com.bunbeauty.papakarlo.common.ui.element.card.DiscountCard
+import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCheckbox
 import com.bunbeauty.papakarlo.common.ui.element.card.NavigationCard
 import com.bunbeauty.papakarlo.common.ui.element.card.NavigationTextCard
 import com.bunbeauty.papakarlo.common.ui.element.simmer.Shimmer
@@ -59,6 +62,7 @@ import com.bunbeauty.papakarlo.feature.motivation.Motivation
 import com.bunbeauty.papakarlo.feature.motivation.MotivationUi
 import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentMethodUI
 import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentMethodValueUI
+import com.bunbeauty.shared.Constants.RUBLE_CURRENCY
 import com.bunbeauty.shared.presentation.createorder.CreateOrder
 import com.bunbeauty.shared.presentation.createorder.CreateOrderViewModel
 import kotlinx.collections.immutable.persistentListOf
@@ -110,6 +114,7 @@ class CreateOrderFragment :
                         }
                     )
                     AddressCard(
+                        modifier = Modifier.padding(top = 8.dp),
                         viewState = viewState,
                         focusManager = focusManager,
                         onAction = onAction
@@ -122,11 +127,13 @@ class CreateOrderFragment :
                         isShown = viewState.isAddressErrorShown
                     )
                     DeferredTimeCard(
+                        modifier = Modifier.padding(top = 8.dp),
                         viewState = viewState,
                         focusManager = focusManager,
                         onAction = onAction
                     )
                     PaymentMethodCard(
+                        modifier = Modifier.padding(top = 8.dp),
                         viewState = viewState,
                         focusManager = focusManager,
                         onAction = onAction
@@ -138,9 +145,16 @@ class CreateOrderFragment :
                         messageStringId = R.string.error_select_payment_method,
                         isShown = viewState.isPaymentMethodErrorShown
                     )
+                    ChangeBlock(
+                        modifier = Modifier.padding(top = 8.dp),
+                        viewState = viewState,
+                        onAction = onAction
+                    )
 
                     FoodDeliveryTextField(
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier
+                            .padding(top = 8.dp)
+                            .fillMaxWidth(),
                         value = viewState.comment,
                         labelStringId = R.string.comment,
                         keyboardOptions = FoodDeliveryTextFieldDefaults.keyboardOptions(
@@ -155,7 +169,7 @@ class CreateOrderFragment :
                             onAction(CreateOrder.Action.ChangeComment(comment = value))
                         },
                         maxSymbols = 100,
-                        maxLines = 3
+                        maxLines = 3,
                     )
                 }
                 BottomAmountBar(
@@ -190,17 +204,17 @@ class CreateOrderFragment :
 
     override fun handleEvent(event: CreateOrder.Event) {
         when (event) {
-            is CreateOrder.Event.OpenCreateAddressEvent -> {
+            CreateOrder.Event.OpenCreateAddressEvent -> {
                 findNavController().navigateSafe(toCreateAddressFragment())
             }
 
-            is CreateOrder.Event.ShowSomethingWentWrongErrorEvent -> {
+            CreateOrder.Event.ShowSomethingWentWrongErrorEvent -> {
                 (activity as? IMessageHost)?.showErrorMessage(
                     resources.getString(R.string.error_something_went_wrong)
                 )
             }
 
-            is CreateOrder.Event.ShowUserUnauthorizedErrorEvent -> {
+            CreateOrder.Event.ShowUserUnauthorizedErrorEvent -> {
                 (activity as? IMessageHost)?.showErrorMessage(
                     resources.getString(R.string.error_user)
                 )
@@ -216,15 +230,21 @@ class CreateOrderFragment :
                 findNavController().navigateSafe(toProfileFragment())
             }
 
-            is CreateOrder.Event.ShowUserAddressError -> {
+            CreateOrder.Event.ShowUserAddressError -> {
                 (activity as? IMessageHost)?.showErrorMessage(
                     resources.getString(R.string.error_user_address)
                 )
             }
 
-            is CreateOrder.Event.ShowPaymentMethodError -> {
+            CreateOrder.Event.ShowPaymentMethodError -> {
                 (activity as? IMessageHost)?.showErrorMessage(
                     resources.getString(R.string.error_payment_method)
+                )
+            }
+
+            CreateOrder.Event.ShowChangeError -> {
+                (activity as? IMessageHost)?.showErrorMessage(
+                    resources.getString(R.string.error_change)
                 )
             }
         }
@@ -234,13 +254,13 @@ class CreateOrderFragment :
     private fun AddressCard(
         viewState: CreateOrderViewState,
         focusManager: FocusManager,
-        onAction: (CreateOrder.Action) -> Unit
+        onAction: (CreateOrder.Action) -> Unit,
+        modifier: Modifier = Modifier
     ) {
         if (viewState.isDelivery) {
             if (viewState.deliveryAddress == null) {
                 NavigationCard(
-                    modifier = Modifier
-                        .padding(top = FoodDeliveryTheme.dimensions.smallSpace),
+                    modifier = modifier,
                     clickable = viewState.isFieldsEnabled,
                     label = stringResource(R.string.delivery_address),
                     onClick = {
@@ -250,8 +270,7 @@ class CreateOrderFragment :
                 )
             } else {
                 NavigationTextCard(
-                    modifier = Modifier
-                        .padding(top = FoodDeliveryTheme.dimensions.smallSpace),
+                    modifier = modifier,
                     hintStringId = R.string.delivery_address,
                     label = viewState.deliveryAddress,
                     clickable = viewState.isFieldsEnabled,
@@ -263,8 +282,7 @@ class CreateOrderFragment :
             }
         } else {
             NavigationTextCard(
-                modifier = Modifier
-                    .padding(top = FoodDeliveryTheme.dimensions.smallSpace),
+                modifier = modifier,
                 hintStringId = R.string.pickup_address,
                 label = viewState.pickupAddress ?: "",
                 clickable = viewState.isFieldsEnabled,
@@ -280,10 +298,11 @@ class CreateOrderFragment :
     private fun DeferredTimeCard(
         viewState: CreateOrderViewState,
         focusManager: FocusManager,
-        onAction: (CreateOrder.Action) -> Unit
+        onAction: (CreateOrder.Action) -> Unit,
+        modifier: Modifier = Modifier
     ) {
         NavigationTextCard(
-            modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace),
+            modifier = modifier,
             hintStringId = viewState.deferredTimeStringId,
             label = viewState.deferredTime,
             clickable = viewState.isFieldsEnabled,
@@ -298,12 +317,12 @@ class CreateOrderFragment :
     private fun PaymentMethodCard(
         viewState: CreateOrderViewState,
         focusManager: FocusManager,
-        onAction: (CreateOrder.Action) -> Unit
+        onAction: (CreateOrder.Action) -> Unit,
+        modifier: Modifier = Modifier
     ) {
         if (viewState.selectedPaymentMethod == null) {
             NavigationCard(
-                modifier = Modifier
-                    .padding(top = FoodDeliveryTheme.dimensions.smallSpace),
+                modifier = modifier,
                 label = stringResource(R.string.payment_method),
                 clickable = viewState.isFieldsEnabled,
                 onClick = {
@@ -313,13 +332,80 @@ class CreateOrderFragment :
             )
         } else {
             NavigationTextCard(
-                modifier = Modifier
-                    .padding(top = FoodDeliveryTheme.dimensions.smallSpace),
+                modifier = modifier,
                 hintStringId = R.string.payment_method,
                 label = viewState.selectedPaymentMethod.name,
                 clickable = viewState.isFieldsEnabled,
                 onClick = {
                     onAction(CreateOrder.Action.PaymentMethodClick)
+                }
+            )
+        }
+    }
+
+    @Composable
+    private fun ChangeBlock(
+        viewState: CreateOrderViewState,
+        onAction: (CreateOrder.Action) -> Unit,
+        modifier: Modifier = Modifier
+    ) {
+        if (!viewState.showChange) {
+            return
+        }
+
+        Row(
+            modifier = modifier.padding(vertical = 8.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            FoodDeliveryCheckbox(
+                modifier = Modifier.size(24.dp),
+                checked = viewState.withoutChangeChecked,
+                onCheckedChange = { isChecked ->
+                    onAction(
+                        CreateOrder.Action.ChangeWithoutChangeChecked(isChecked = isChecked)
+                    )
+                }
+            )
+            Text(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 4.dp),
+                text = stringResource(R.string.msg_without_change),
+                style = FoodDeliveryTheme.typography.bodyMedium,
+                color = FoodDeliveryTheme.colors.mainColors.onSurface
+            )
+        }
+        if (!viewState.withoutChangeChecked) {
+            val focusManager = LocalFocusManager.current
+            FoodDeliveryTextField(
+                modifier = Modifier
+                    .padding(top = 8.dp)
+                    .fillMaxWidth(),
+                value = viewState.change,
+                labelStringId = R.string.hint_change,
+                keyboardOptions = FoodDeliveryTextFieldDefaults.keyboardOptions(
+                    imeAction = ImeAction.Done
+                ),
+                keyboardActions = FoodDeliveryTextFieldDefaults.keyboardActions(
+                    onDone = {
+                        focusManager.clearFocus()
+                    }
+                ),
+                onValueChange = { value ->
+                    onAction(
+                        CreateOrder.Action.ChangeChange(change = value)
+                    )
+                },
+                maxSymbols = 10,
+                errorMessageStringId = R.string.error_enter_correct_amount.takeIf {
+                    viewState.isChangeErrorShown
+                },
+                trailingIcon = {
+                    Text(
+                        text = RUBLE_CURRENCY,
+                        style = FoodDeliveryTheme.typography.bodyLarge,
+                        color = FoodDeliveryTheme.colors.mainColors.onSurface,
+                    )
                 }
             )
         }
@@ -366,7 +452,11 @@ class CreateOrderFragment :
                     isLoading = viewState.isLoading,
                     isEnabled = viewState.cartTotal is CartTotalUI.Success,
                     onClick = {
-                        onAction(CreateOrder.Action.CreateClick)
+                        onAction(
+                            CreateOrder.Action.CreateClick(
+                                withoutChange = viewState.withoutChange,
+                            )
+                        )
                     }
                 )
             }
@@ -496,6 +586,11 @@ class CreateOrderFragment :
                         )
                     ),
                     isPaymentMethodErrorShown = false,
+                    showChange = true,
+                    withoutChange = "Без сдачи",
+                    withoutChangeChecked = true,
+                    change = "",
+                    isChangeErrorShown = false,
                     cartTotal = CartTotalUI.Loading,
                     isLoading = false,
                     deliveryAddressList = DeliveryAddressListUI(
@@ -515,7 +610,7 @@ class CreateOrderFragment :
                     paymentMethodList = PaymentMethodListUI(
                         isShown = false,
                         paymentMethodList = persistentListOf()
-                    )
+                    ),
                 ),
                 onAction = {}
             )
@@ -544,6 +639,11 @@ class CreateOrderFragment :
                         )
                     ),
                     isPaymentMethodErrorShown = false,
+                    showChange = true,
+                    change = "",
+                    withoutChangeChecked = false,
+                    withoutChange = "Без сдачи",
+                    isChangeErrorShown = false,
                     cartTotal = CartTotalUI.Success(
                         motivation = MotivationUi.MinOrderCost("800 ₽"),
                         discount = "10%",
@@ -598,6 +698,11 @@ class CreateOrderFragment :
                         )
                     ),
                     isPaymentMethodErrorShown = false,
+                    showChange = true,
+                    withoutChange = "Без сдачи",
+                    withoutChangeChecked = false,
+                    change = "100",
+                    isChangeErrorShown = false,
                     cartTotal = CartTotalUI.Success(
                         motivation = null,
                         discount = null,
@@ -645,13 +750,18 @@ class CreateOrderFragment :
                     deferredTimeStringId = R.string.pickup_time,
                     selectedPaymentMethod = PaymentMethodUI(
                         uuid = "",
-                        name = "Наличка",
+                        name = "Картой",
                         value = PaymentMethodValueUI(
-                            value = "Наличка",
-                            valueToCopy = "Наличка"
+                            value = "1111 1111 1111 1111",
+                            valueToCopy = ""
                         )
                     ),
                     isPaymentMethodErrorShown = false,
+                    showChange = false,
+                    withoutChange = "Без сдачи",
+                    withoutChangeChecked = false,
+                    change = "100",
+                    isChangeErrorShown = false,
                     cartTotal = CartTotalUI.Success(
                         motivation = null,
                         discount = null,
@@ -699,6 +809,11 @@ class CreateOrderFragment :
                     deferredTimeStringId = R.string.pickup_time,
                     selectedPaymentMethod = null,
                     isPaymentMethodErrorShown = true,
+                    showChange = true,
+                    change = "100",
+                    isChangeErrorShown = true,
+                    withoutChange = "Без сдачи",
+                    withoutChangeChecked = false,
                     cartTotal = CartTotalUI.Success(
                         motivation = null,
                         discount = null,
