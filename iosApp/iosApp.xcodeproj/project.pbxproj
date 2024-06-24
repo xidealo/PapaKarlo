@@ -546,6 +546,12 @@
 		0294FD7E29E35E8300568A10 /* AppTypography.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0294FD7C29E35E8300568A10 /* AppTypography.swift */; };
 		0294FD8029E751CC00568A10 /* AppColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0294FD7F29E751CC00568A10 /* AppColor.swift */; };
 		0294FD8129E751CC00568A10 /* AppColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0294FD7F29E751CC00568A10 /* AppColor.swift */; };
+		0296C3CB2C29E79E00538FCE /* Motivation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0296C3CA2C29E79E00538FCE /* Motivation.swift */; };
+		0296C3CC2C29E79E00538FCE /* Motivation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0296C3CA2C29E79E00538FCE /* Motivation.swift */; };
+		0296C3CD2C29E79E00538FCE /* Motivation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0296C3CA2C29E79E00538FCE /* Motivation.swift */; };
+		0296C3CE2C29E79E00538FCE /* Motivation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0296C3CA2C29E79E00538FCE /* Motivation.swift */; };
+		0296C3CF2C29E79E00538FCE /* Motivation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0296C3CA2C29E79E00538FCE /* Motivation.swift */; };
+		0296C3D02C29E79E00538FCE /* Motivation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0296C3CA2C29E79E00538FCE /* Motivation.swift */; };
 		029FCF032BF7F68C00F0D51C /* ConsumerCartViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029FCF022BF7F68C00F0D51C /* ConsumerCartViewState.swift */; };
 		029FCF042BF7F68C00F0D51C /* ConsumerCartViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029FCF022BF7F68C00F0D51C /* ConsumerCartViewState.swift */; };
 		029FCF052BF7F68C00F0D51C /* ConsumerCartViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029FCF022BF7F68C00F0D51C /* ConsumerCartViewState.swift */; };
@@ -799,6 +805,7 @@
 		0294FD7929DF71B900568A10 /* EmptyWithIconView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyWithIconView.swift; sourceTree = "<group>"; };
 		0294FD7C29E35E8300568A10 /* AppTypography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTypography.swift; sourceTree = "<group>"; };
 		0294FD7F29E751CC00568A10 /* AppColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColor.swift; sourceTree = "<group>"; };
+		0296C3CA2C29E79E00538FCE /* Motivation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Motivation.swift; sourceTree = "<group>"; };
 		029FCF022BF7F68C00F0D51C /* ConsumerCartViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsumerCartViewState.swift; sourceTree = "<group>"; };
 		02A3B739294FAFDB00C18221 /* LightOrderItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightOrderItemView.swift; sourceTree = "<group>"; };
 		02A99D5629CBA0BE004D2F7B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -1286,6 +1293,7 @@
 			isa = PBXGroup;
 			children = (
 				029412692C2754D1000BE3BE /* MotivationDataMapper.swift */,
+				0296C3CA2C29E79E00538FCE /* Motivation.swift */,
 			);
 			path = motivation;
 			sourceTree = "<group>";
@@ -2045,6 +2053,7 @@
 				0219B7AF2B8FB97C00305E2D /* CreateAddressViewState.swift in Sources */,
 				0219B7B02B8FB97C00305E2D /* CityItemView.swift in Sources */,
 				0219B7B12B8FB97C00305E2D /* ContainerView.swift in Sources */,
+				0296C3CF2C29E79E00538FCE /* Motivation.swift in Sources */,
 				0219B7B22B8FB97C00305E2D /* CreateOrderView.swift in Sources */,
 				0269DB422C263DEA009D36AE /* PaymentMethodUi.swift in Sources */,
 				0219B7B32B8FB97C00305E2D /* NavigationCardView.swift in Sources */,
@@ -2156,6 +2165,7 @@
 				021920C62B7417F5004EE254 /* CreateAddressViewState.swift in Sources */,
 				026C1F742A2690B900838266 /* CityItemView.swift in Sources */,
 				026C1F752A2690B900838266 /* ContainerView.swift in Sources */,
+				0296C3CD2C29E79E00538FCE /* Motivation.swift in Sources */,
 				026C1F762A2690B900838266 /* CreateOrderView.swift in Sources */,
 				0269DB402C263DEA009D36AE /* PaymentMethodUi.swift in Sources */,
 				026C1F772A2690B900838266 /* NavigationCardView.swift in Sources */,
@@ -2267,6 +2277,7 @@
 				021920C72B7417F5004EE254 /* CreateAddressViewState.swift in Sources */,
 				027CB0372A346F7B00350EB2 /* CityItemView.swift in Sources */,
 				027CB0382A346F7B00350EB2 /* ContainerView.swift in Sources */,
+				0296C3CE2C29E79E00538FCE /* Motivation.swift in Sources */,
 				027CB0392A346F7B00350EB2 /* CreateOrderView.swift in Sources */,
 				0269DB412C263DEA009D36AE /* PaymentMethodUi.swift in Sources */,
 				027CB03A2A346F7B00350EB2 /* NavigationCardView.swift in Sources */,
@@ -2378,6 +2389,7 @@
 				02891F8F2BDAEA0D0043B466 /* CreateAddressViewState.swift in Sources */,
 				02891F902BDAEA0D0043B466 /* CityItemView.swift in Sources */,
 				02891F912BDAEA0D0043B466 /* ContainerView.swift in Sources */,
+				0296C3D02C29E79E00538FCE /* Motivation.swift in Sources */,
 				02891F922BDAEA0D0043B466 /* CreateOrderView.swift in Sources */,
 				0269DB432C263DEA009D36AE /* PaymentMethodUi.swift in Sources */,
 				02891F932BDAEA0D0043B466 /* NavigationCardView.swift in Sources */,
@@ -2489,6 +2501,7 @@
 				021920C52B7417F5004EE254 /* CreateAddressViewState.swift in Sources */,
 				02ADC35829D9D0880062A141 /* CityItemView.swift in Sources */,
 				02ADC35929D9D0880062A141 /* ContainerView.swift in Sources */,
+				0296C3CC2C29E79E00538FCE /* Motivation.swift in Sources */,
 				02ADC35A29D9D0880062A141 /* CreateOrderView.swift in Sources */,
 				0269DB3F2C263DEA009D36AE /* PaymentMethodUi.swift in Sources */,
 				02ADC35B29D9D0880062A141 /* NavigationCardView.swift in Sources */,
@@ -2600,6 +2613,7 @@
 				021920C42B7417F5004EE254 /* CreateAddressViewState.swift in Sources */,
 				0232347E287879EF0048CF39 /* CityItemView.swift in Sources */,
 				023234A9287879EF0048CF39 /* ContainerView.swift in Sources */,
+				0296C3CB2C29E79E00538FCE /* Motivation.swift in Sources */,
 				023234AD287879EF0048CF39 /* CreateOrderView.swift in Sources */,
 				0269DB3E2C263DEA009D36AE /* PaymentMethodUi.swift in Sources */,
 				023234C928787A180048CF39 /* NavigationCardView.swift in Sources */,

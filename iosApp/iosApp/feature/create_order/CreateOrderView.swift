@@ -91,9 +91,9 @@ struct CreateOrderView: View {
                 EmptyView()
             }
             .onChange(
-                of: $selectedPaymentUuid.wrappedValue, 
+                of: $selectedPaymentUuid.wrappedValue,
                 perform: { value in
-                //viewModel.kmmViewModel.onPaymentMethodChanged(paymentMethodUuid:selectedPaymentUuid ?? "")
+                    //viewModel.kmmViewModel.onPaymentMethodChanged(paymentMethodUuid:selectedPaymentUuid ?? "")
                 }
             )
             
@@ -110,7 +110,7 @@ struct CreateOrderView: View {
                         isRootActive: $isRootActive,
                         selection: $selection,
                         showOrderCreated: $showOrderCreated,
-                        createOrderViewState: createOrderViewStateNN, 
+                        createOrderViewState: createOrderViewStateNN,
                         action: viewModel.onAction
                     )
                 }
@@ -217,27 +217,27 @@ struct CreateOrderView: View {
                     print(event)
                     
                     switch(event){
-                        case is CreateOrderEventOpenCreateAddressEvent :
-                            self.mode.wrappedValue.dismiss()
-                        case is CreateOrderEventShowUserUnauthorizedErrorEvent :
-                            self.mode.wrappedValue.dismiss()
-                        case is CreateOrderEventShowSomethingWentWrongErrorEvent:
-                            self.mode.wrappedValue.dismiss()
-                        case is CreateOrderEventOrderCreatedEvent:
-                            self.mode.wrappedValue.dismiss()
-                        case is CreateOrderEventShowUserAddressError:
-                            self.mode.wrappedValue.dismiss()
-                        case is CreateOrderEventShowPaymentMethodError:
-                            self.mode.wrappedValue.dismiss()
-                        default:
-                            print("def")
-                        }
-                    }
-                    if !createOrderEvents.isEmpty {
-                        viewModel.consumeEvents(events: createOrderEvents)
+                    case is CreateOrderEventOpenCreateAddressEvent :
+                        self.mode.wrappedValue.dismiss()
+                    case is CreateOrderEventShowUserUnauthorizedErrorEvent :
+                        self.mode.wrappedValue.dismiss()
+                    case is CreateOrderEventShowSomethingWentWrongErrorEvent:
+                        self.mode.wrappedValue.dismiss()
+                    case is CreateOrderEventOrderCreatedEvent:
+                        self.mode.wrappedValue.dismiss()
+                    case is CreateOrderEventShowUserAddressError:
+                        self.mode.wrappedValue.dismiss()
+                    case is CreateOrderEventShowPaymentMethodError:
+                        self.mode.wrappedValue.dismiss()
+                    default:
+                        print("def")
                     }
                 }
+                if !createOrderEvents.isEmpty {
+                    viewModel.consumeEvents(events: createOrderEvents)
+                }
             }
+        }
         )
     }
     
@@ -336,11 +336,11 @@ struct CreateOrderSuccessView: View {
     @Binding var selection: MainContainerState
     @Binding var showOrderCreated: Bool
     let calendar = Calendar.current
-
+    
     
     let createOrderViewState: CreateOrderViewState
     let action: (CreateOrderAction) -> Void
-
+    
     var body: some View{
         ZStack (alignment: .bottom){
             ScrollView{
@@ -413,7 +413,7 @@ struct CreateOrderSuccessView: View {
                         .padding(.horizontal, Diems.MEDIUM_PADDING)
                     }
                     // TODO add error text for payment
-
+                    
                     EditTextView(
                         hint: Strings.HINT_CREATE_COMMENT_COMMENT,
                         text: $comment,
@@ -426,21 +426,27 @@ struct CreateOrderSuccessView: View {
                     .padding(.top, Diems.SMALL_PADDING)
                     .padding(.horizontal, Diems.MEDIUM_PADDING)
                     
-                    Toggle(isOn: $faster.onChange({ faster in
-                        if(faster) {
-                            //viewModel.kmmViewModel.onDeferredTimeSelected(deferredTime: nil)
-                        }else{
-//                            let date =  Date.now + 60 * 60
-//                            
-//                            viewModel.kmmViewModel.onDeferredTimeSelected(
-//                                deferredTime: Time(
-//                                    hours: Int32(calendar.component(.hour, from: date)),
-//                                    minutes: Int32(calendar.component(.minute, from: date)
-//                                                  )
-//                                )
-//                            )
-                        }
-                    })){
+                    Toggle(
+                        isOn: $faster.onChange(
+                            { faster in
+                                if(faster) {
+                                    action(CreateOrderActionAsapClick())
+                                }else{
+                                    let date =  Date.now + 60 * 60
+                                    action(
+                                        CreateOrderActionChangeDeferredTime(
+                                            time: Time(
+                                                hours: Int32(calendar.component(.hour, from: date)),
+                                                minutes: Int32(calendar.component(.minute, from: date)
+                                                              )
+                                            )
+                                        )
+                                    )
+                                    
+                                }
+                            }
+                        )
+                    ){
                         Text("Как можно скорее")
                             .bodyLarge()
                     }
@@ -453,13 +459,15 @@ struct CreateOrderSuccessView: View {
                             DatePicker(
                                 selection: $deferredTime.onChange(
                                     { date in
-//                                        viewModel.kmmViewModel.onDeferredTimeSelected(
-//                                            deferredTime: Time(
-//                                                hours: Int32(calendar.component(.hour, from: date)),
-//                                                minutes: Int32(calendar.component(.minute, from: date)
-//                                                              )
-//                                            )
-//                                        )
+                                        action(
+                                            CreateOrderActionChangeDeferredTime(
+                                                time: Time(
+                                                    hours: Int32(calendar.component(.hour, from: date)),
+                                                    minutes: Int32(calendar.component(.minute, from: date)
+                                                                  )
+                                                )
+                                            )
+                                        )
                                     }
                                 ),
                                 in: (Date.now + 60 * 60)...,
@@ -474,13 +482,15 @@ struct CreateOrderSuccessView: View {
                             DatePicker(
                                 selection: $deferredTime.onChange(
                                     { date in
-//                                        viewModel.kmmViewModel.onDeferredTimeSelected(
-//                                            deferredTime: Time(
-//                                                hours: Int32(calendar.component(.hour, from: date)),
-//                                                minutes: Int32(calendar.component(.minute, from: date)
-//                                                              )
-//                                            )
-//                                        )
+                                        action(
+                                            CreateOrderActionChangeDeferredTime(
+                                                time: Time(
+                                                    hours: Int32(calendar.component(.hour, from: date)),
+                                                    minutes: Int32(calendar.component(.minute, from: date)
+                                                                  )
+                                                )
+                                            )
+                                        )
                                     }
                                 ),
                                 in: (Date.now + 60 * 60)...,
@@ -498,78 +508,26 @@ struct CreateOrderSuccessView: View {
             .background(AppColor.background)
             
             VStack(spacing:0){
-//                if let discount = viewModel.creationOrderViewState.discount{
-//                    HStack(spacing:0){
-//                        Text("create_order_discount")
-//                            .bodyMedium()
-//                            .foregroundColor(AppColor.onSurface)
-//                        
-//                        Spacer()
-//                        
-//                        DiscountCard(text:discount)
-//                    }.padding(.top, 8)
-//                        .padding(.horizontal, 16)
-//                }
-//                
-//                HStack(spacing:0){
-//                    Text(Strings.MSG_CREATION_ORDER_RESULT)
-//                        .bodyMedium()
-//                        .foregroundColor(AppColor.onSurface)
-//                    Spacer()
-//                    if let totalCost = viewModel.creationOrderViewState.totalCost{
-//                        let totaCostString = "\(totalCost)\(Strings.CURRENCY)"
-//                        Text(totaCostString)
-//                            .bodyMedium()
-//                            .foregroundColor(AppColor.onSurface)
-//                    }
-//                }
-//                .padding(.top, Diems.SMALL_PADDING)
-//                .padding(.horizontal, Diems.MEDIUM_PADDING)
-//                
-//                if(viewModel.creationOrderViewState.isDelivery){
-//                    if let deliveryCost = viewModel.creationOrderViewState.deliveryCost {
-//                        HStack(spacing:0){
-//                            Text(Strings.MSG_CREATION_ORDER_DELIVERY)
-//                                .bodyMedium()
-//                                .foregroundColor(AppColor.onSurface)
-//                            Spacer()
-//                            Text("\(deliveryCost)\(Strings.CURRENCY)")
-//                                .bodyMedium()
-//                                .foregroundColor(AppColor.onSurface)
-//                        }
-//                        .padding(.top, Diems.SMALL_PADDING)
-//                        .padding(.horizontal, Diems.MEDIUM_PADDING)
-//                    }
-//                }
-//                
-//                HStack(spacing:0){
-//                    Text(Strings.MSG_CREATION_ORDER_FINAL_AMOUNT)
-//                        .bodyMedium(weight: .bold)
-//                        .foregroundColor(AppColor.onSurface)
-//                    Spacer()
-//                    
-//                    
-//                    if let oldFinalCost = viewModel.creationOrderViewState.oldFinalCost{
-//                        Text("\(oldFinalCost)" + Strings.CURRENCY)
-//                            .strikethrough()
-//                            .bodyMedium(weight: .bold)
-//                            .foregroundColor(AppColor.onSurfaceVariant)
-//                            .padding(.trailing, 4)
-//                    }
-//                    
-//                    if let finalCost = viewModel.creationOrderViewState.newFinalCost {
-//                        Text("\(finalCost)" + Strings.CURRENCY)
-//                            .bodyMedium(weight: .bold)
-//                            .foregroundColor(AppColor.onSurface)
-//                    }
-//                    
-//                }
-//                .padding(.top, Diems.SMALL_PADDING)
-//                .padding(.horizontal, Diems.MEDIUM_PADDING)
+                
+                switch createOrderViewState.cartTotal {
+                case .Loading:
+                    ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle(tint: AppColor.primary))
+                        .scaleEffect(1.0)
+                        .padding(8)
+                case .Success(let motivationUi, let discount, let deliveryCost, let oldFinalCost, let newFinalCost):
+                    BottomAmountBarSuccessView(
+                        motivation: motivationUi,
+                        discount: discount,
+                        deliveryCost: deliveryCost,
+                        oldFinalCost: oldFinalCost,
+                        newFinalCost: newFinalCost
+                    )
+                }
                 
                 Button(
                     action: {
-                      //  viewModel.createOrder()
+                        action(CreateOrderActionCreateClick())
                     }, label: {
                         ButtonText(text: Strings.ACTION_CART_PRODUCT_CREATE_ORDER)
                     }
@@ -580,5 +538,71 @@ struct CreateOrderSuccessView: View {
             .background(AppColor.surface)
         }
         .background(AppColor.surface)
+    }
+}
+
+struct BottomAmountBarSuccessView: View {
+    let motivation : MotivationUi?
+    let discount: String?
+    let deliveryCost: String?
+    let oldFinalCost: String?
+    let newFinalCost: String
+    
+    var body: some View{
+        VStack(spacing: 0){
+            if let motivation = motivation {
+                Motivation(motivation: motivation)
+            }
+            
+            if let discount = discount {
+                HStack(spacing:0) {
+                    Text("create_order_discount")
+                        .bodyMedium()
+                        .foregroundColor(AppColor.onSurface)
+                    
+                    Spacer()
+                    
+                    DiscountCard(text:discount)
+                }.padding(.top, 8)
+                    .padding(.horizontal, 16)
+            }
+            
+            if let deliveryCost = deliveryCost {
+                HStack(spacing:0){
+                    Text(Strings.MSG_CREATION_ORDER_DELIVERY)
+                        .bodyMedium()
+                        .foregroundColor(AppColor.onSurface)
+                    Spacer()
+                    Text(deliveryCost)
+                        .bodyMedium()
+                        .foregroundColor(AppColor.onSurface)
+                }
+                .padding(.top, Diems.SMALL_PADDING)
+                .padding(.horizontal, Diems.MEDIUM_PADDING)
+            }
+            
+            HStack(spacing:0){
+                Text(Strings.MSG_CREATION_ORDER_FINAL_AMOUNT)
+                    .bodyMedium(weight: .bold)
+                    .foregroundColor(AppColor.onSurface)
+                Spacer()
+                
+                if let oldFinalCost = oldFinalCost {
+                    Text(oldFinalCost)
+                        .strikethrough()
+                        .bodyMedium(weight: .bold)
+                        .foregroundColor(AppColor.onSurfaceVariant)
+                        .padding(.trailing, 4)
+                }
+                
+                Text(newFinalCost)
+                    .bodyMedium(weight: .bold)
+                    .foregroundColor(AppColor.onSurface)
+                
+            }
+            .padding(.top, Diems.SMALL_PADDING)
+            .padding(.horizontal, Diems.MEDIUM_PADDING)
+            
+        }
     }
 }
