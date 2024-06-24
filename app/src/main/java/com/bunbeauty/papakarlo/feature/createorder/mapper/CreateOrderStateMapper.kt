@@ -40,19 +40,7 @@ fun CreateOrder.DataState.toViewState(): CreateOrderViewState {
         withoutChangeChecked = withoutChangeChecked,
         change = change?.toString() ?: "",
         isChangeErrorShown = isChangeErrorShown,
-        cartTotal = when (cartTotal) {
-            CreateOrder.CartTotal.Loading -> CartTotalUI.Loading
-            is CreateOrder.CartTotal.Success -> {
-                val successCartTotal = cartTotal as CreateOrder.CartTotal.Success
-                CartTotalUI.Success(
-                    motivation = successCartTotal.motivation?.toMotivationUi(),
-                    discount = successCartTotal.discount,
-                    deliveryCost = successCartTotal.deliveryCost,
-                    oldFinalCost = successCartTotal.oldFinalCost,
-                    newFinalCost = successCartTotal.newFinalCost
-                )
-            }
-        },
+        cartTotal = cartTotal.toCartTotalUI(),
         isLoading = isLoading,
         deliveryAddressList = DeliveryAddressListUI(
             isShown = isUserAddressListShown,
@@ -85,6 +73,21 @@ fun CreateOrder.DataState.toViewState(): CreateOrderViewState {
             paymentMethodList = paymentMethodList.map { selectablePaymentMethod ->
                 selectablePaymentMethod.toSelectablePaymentMethodUI()
             }.toImmutableList()
-        ),
+        )
     )
+}
+
+private fun CreateOrder.CartTotal.toCartTotalUI(): CartTotalUI {
+    return when (this) {
+        CreateOrder.CartTotal.Loading -> CartTotalUI.Loading
+        is CreateOrder.CartTotal.Success -> {
+            CartTotalUI.Success(
+                motivation = motivation?.toMotivationUi(),
+                discount = discount,
+                deliveryCost = deliveryCost,
+                oldFinalCost = oldFinalCost,
+                newFinalCost = newFinalCost
+            )
+        }
+    }
 }

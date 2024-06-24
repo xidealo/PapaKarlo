@@ -10,7 +10,7 @@ fun FoodDeliveryCheckbox(
     checked: Boolean,
     onCheckedChange: ((Boolean) -> Unit),
     modifier: Modifier = Modifier,
-    colors: CheckboxColors = FoodDeliveryCheckboxDefaults.checkboxColors,
+    colors: CheckboxColors = FoodDeliveryCheckboxDefaults.checkboxColors
 ) {
     Checkbox(
         modifier = modifier,

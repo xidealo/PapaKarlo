@@ -169,7 +169,7 @@ class CreateOrderFragment :
                             onAction(CreateOrder.Action.ChangeComment(comment = value))
                         },
                         maxSymbols = 100,
-                        maxLines = 3,
+                        maxLines = 3
                     )
                 }
                 BottomAmountBar(
@@ -404,7 +404,7 @@ class CreateOrderFragment :
                     Text(
                         text = RUBLE_CURRENCY,
                         style = FoodDeliveryTheme.typography.bodyLarge,
-                        color = FoodDeliveryTheme.colors.mainColors.onSurface,
+                        color = FoodDeliveryTheme.colors.mainColors.onSurface
                     )
                 }
             )
@@ -454,7 +454,7 @@ class CreateOrderFragment :
                     onClick = {
                         onAction(
                             CreateOrder.Action.CreateClick(
-                                withoutChange = viewState.withoutChange,
+                                withoutChange = viewState.withoutChange
                             )
                         )
                     }
@@ -610,7 +610,7 @@ class CreateOrderFragment :
                     paymentMethodList = PaymentMethodListUI(
                         isShown = false,
                         paymentMethodList = persistentListOf()
-                    ),
+                    )
                 ),
                 onAction = {}
             )

@@ -51,7 +51,7 @@ fun FoodDeliveryTextField(
             maxSymbols = maxSymbols,
             maxLines = maxLines,
             isError = errorMessageStringId != null,
-            trailingIcon = trailingIcon,
+            trailingIcon = trailingIcon
         )
         errorMessageStringId?.let {
             Text(
