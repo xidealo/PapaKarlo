@@ -140,7 +140,7 @@ class CreateOrderFragment :
                         modifier = Modifier.padding(top = 8.dp),
                         comment = viewState.comment,
                         focusManager = focusManager,
-                        onAction = onAction,
+                        onAction = onAction
                     )
                 }
                 BottomAmountBar(
@@ -268,7 +268,7 @@ class CreateOrderFragment :
                 modifier = Modifier
                     .padding(top = 4.dp)
                     .padding(horizontal = 16.dp),
-                messageStringId = R.string.error_select_delivery_address,
+                messageStringId = R.string.error_select_delivery_address
             )
         }
     }
@@ -325,7 +325,7 @@ class CreateOrderFragment :
                 modifier = Modifier
                     .padding(top = 4.dp)
                     .padding(horizontal = 16.dp),
-                messageStringId = R.string.error_select_payment_method,
+                messageStringId = R.string.error_select_payment_method
             )
         }
     }
@@ -403,7 +403,7 @@ class CreateOrderFragment :
         comment: String,
         focusManager: FocusManager,
         onAction: (CreateOrder.Action) -> Unit,
-        modifier: Modifier = Modifier,
+        modifier: Modifier = Modifier
     ) {
         FoodDeliveryTextField(
             modifier = modifier.fillMaxWidth(),
@@ -428,7 +428,7 @@ class CreateOrderFragment :
     @Composable
     private fun ErrorText(
         modifier: Modifier = Modifier,
-        @StringRes messageStringId: Int,
+        @StringRes messageStringId: Int
     ) {
         Text(
             modifier = modifier,
