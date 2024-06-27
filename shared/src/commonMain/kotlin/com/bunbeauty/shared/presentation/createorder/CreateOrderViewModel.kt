@@ -361,9 +361,10 @@ class CreateOrderViewModel(
         }
 
         val newFinalCost = (state.cartTotal as? CreateOrder.CartTotal.Success)?.newFinalCostValue ?: 0
+        val isChangeLessThenCost = (state.change ?: 0) < newFinalCost
         val isChangeIncorrect = state.paymentByCash &&
             !state.withoutChangeChecked &&
-            ((state.change ?: 0) < newFinalCost)
+            isChangeLessThenCost
         setState {
             copy(isChangeErrorShown = isChangeIncorrect)
         }
@@ -522,7 +523,7 @@ class CreateOrderViewModel(
                 }
                 append(")")
             }
-        }
+        }.trim()
     }
 
     private inline fun withLoading(crossinline block: suspend () -> Unit) {

@@ -119,13 +119,6 @@ class CreateOrderFragment :
                         focusManager = focusManager,
                         onAction = onAction
                     )
-                    ErrorText(
-                        modifier = Modifier
-                            .padding(top = 4.dp)
-                            .padding(horizontal = 16.dp),
-                        messageStringId = R.string.error_select_delivery_address,
-                        isShown = viewState.isAddressErrorShown
-                    )
                     DeferredTimeCard(
                         modifier = Modifier.padding(top = 8.dp),
                         viewState = viewState,
@@ -138,38 +131,16 @@ class CreateOrderFragment :
                         focusManager = focusManager,
                         onAction = onAction
                     )
-                    ErrorText(
-                        modifier = Modifier
-                            .padding(top = 4.dp)
-                            .padding(horizontal = 16.dp),
-                        messageStringId = R.string.error_select_payment_method,
-                        isShown = viewState.isPaymentMethodErrorShown
-                    )
                     ChangeBlock(
                         modifier = Modifier.padding(top = 8.dp),
                         viewState = viewState,
                         onAction = onAction
                     )
-
-                    FoodDeliveryTextField(
-                        modifier = Modifier
-                            .padding(top = 8.dp)
-                            .fillMaxWidth(),
-                        value = viewState.comment,
-                        labelStringId = R.string.comment,
-                        keyboardOptions = FoodDeliveryTextFieldDefaults.keyboardOptions(
-                            imeAction = ImeAction.Done
-                        ),
-                        keyboardActions = FoodDeliveryTextFieldDefaults.keyboardActions(
-                            onDone = {
-                                focusManager.clearFocus()
-                            }
-                        ),
-                        onValueChange = { value ->
-                            onAction(CreateOrder.Action.ChangeComment(comment = value))
-                        },
-                        maxSymbols = 100,
-                        maxLines = 3
+                    CommentTextField(
+                        modifier = Modifier.padding(top = 8.dp),
+                        comment = viewState.comment,
+                        focusManager = focusManager,
+                        onAction = onAction,
                     )
                 }
                 BottomAmountBar(
@@ -292,6 +263,14 @@ class CreateOrderFragment :
                 }
             )
         }
+        if (viewState.isAddressErrorShown) {
+            ErrorText(
+                modifier = Modifier
+                    .padding(top = 4.dp)
+                    .padding(horizontal = 16.dp),
+                messageStringId = R.string.error_select_delivery_address,
+            )
+        }
     }
 
     @Composable
@@ -339,6 +318,14 @@ class CreateOrderFragment :
                 onClick = {
                     onAction(CreateOrder.Action.PaymentMethodClick)
                 }
+            )
+        }
+        if (viewState.isPaymentMethodErrorShown) {
+            ErrorText(
+                modifier = Modifier
+                    .padding(top = 4.dp)
+                    .padding(horizontal = 16.dp),
+                messageStringId = R.string.error_select_payment_method,
             )
         }
     }
@@ -412,19 +399,43 @@ class CreateOrderFragment :
     }
 
     @Composable
+    private fun CommentTextField(
+        comment: String,
+        focusManager: FocusManager,
+        onAction: (CreateOrder.Action) -> Unit,
+        modifier: Modifier = Modifier,
+    ) {
+        FoodDeliveryTextField(
+            modifier = modifier.fillMaxWidth(),
+            value = comment,
+            labelStringId = R.string.comment,
+            keyboardOptions = FoodDeliveryTextFieldDefaults.keyboardOptions(
+                imeAction = ImeAction.Done
+            ),
+            keyboardActions = FoodDeliveryTextFieldDefaults.keyboardActions(
+                onDone = {
+                    focusManager.clearFocus()
+                }
+            ),
+            onValueChange = { value ->
+                onAction(CreateOrder.Action.ChangeComment(comment = value))
+            },
+            maxSymbols = 100,
+            maxLines = 3
+        )
+    }
+
+    @Composable
     private fun ErrorText(
         modifier: Modifier = Modifier,
         @StringRes messageStringId: Int,
-        isShown: Boolean
     ) {
-        if (isShown) {
-            Text(
-                modifier = modifier,
-                text = stringResource(messageStringId),
-                style = FoodDeliveryTheme.typography.bodySmall,
-                color = FoodDeliveryTheme.colors.mainColors.error
-            )
-        }
+        Text(
+            modifier = modifier,
+            text = stringResource(messageStringId),
+            style = FoodDeliveryTheme.typography.bodySmall,
+            color = FoodDeliveryTheme.colors.mainColors.error
+        )
     }
 
     @Composable
