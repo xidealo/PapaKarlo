@@ -16,12 +16,10 @@ struct ProductDetailsView: View {
     let cartProductUuid:String?
     let additionUuidList:[String]
     
-    let productDetailsOpenedFrom:ProductDetailsOpenedFrom
-    @Binding var isRootActive:Bool
-    @Binding var selection:Int
-    @Binding var showOrderCreated:Bool
-    @Binding var created:Bool
-    @Binding var edited:Bool
+    let productDetailsOpenedFrom: ProductDetailsOpenedFrom
+
+    @Binding var created: Bool
+    @Binding var edited: Bool
     
     @State var viewModel = ProductDetailsViewModel(
         getMenuProductUseCase: iosComponent.provideGetMenuProductByUuidUseCase(),
@@ -32,8 +30,6 @@ struct ProductDetailsView: View {
         getAdditionGroupsWithSelectedAdditionUseCase: iosComponent.provideGetAdditionGroupsWithSelectedAdditionUseCase(),
         getSelectedAdditionsPriceUseCase: iosComponent.provideGetPriceOfSelectedAdditionsUseCase()
     )
-    //State
-    @State var cartCostAndCount : CartCostAndCount? = nil
     
     @State var productDetailsViewState = ProductDetailsViewState(
         photoLink: "",
@@ -59,17 +55,11 @@ struct ProductDetailsView: View {
     var body: some View {
         ZStack (alignment: .bottom){
             VStack(spacing: 0){
-                ToolbarWithCartView(
+                ToolbarView(
                     title: LocalizedStringKey(menuProductName),
-                    cost: cartCostAndCount?.cost,
-                    count: cartCostAndCount?.count,
-                    isShowLogo: .constant(false),
                     back: {
                         viewModel.onAction(action: ProductDetailsStateActionBackClick())
-                    },
-                    isRootActive: $isRootActive,
-                    selection: $selection,
-                    showOrderCreated: $showOrderCreated
+                    }
                 )
                 
                 ScrollView{
@@ -248,7 +238,6 @@ struct ProductDetailsView: View {
                     additionList: getAdditionItemList(menuProduct: productDetailsStateVM.menuProduct),
                     screenState: productDetailsStateVM.screenState
                 )
-                cartCostAndCount = productDetailsStateVM.cartCostAndCount
             }
         }
     }

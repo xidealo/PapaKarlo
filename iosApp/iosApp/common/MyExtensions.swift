@@ -87,23 +87,23 @@ extension UserAddress {
 extension SelectableUserAddress {
     func getAddress() -> String {
         
-        var address = self.street
-        address += ", д. " + (self.house)
+        var address = self.address.street
+        address += ", д. " + (self.address.house)
         
-        if(self.flat != nil && self.flat != ""){
-            address += ", кв. " + (self.flat ?? "")
+        if(self.address.flat != nil && self.address.flat != ""){
+            address += ", кв. " + (self.address.flat ?? "")
         }
         
-        if(self.entrance != nil && self.entrance != ""){
-            address += ", подъезд " + (self.entrance ?? "")
+        if(self.address.entrance != nil && self.address.entrance != ""){
+            address += ", подъезд " + (self.address.entrance ?? "")
         }
         
-        if(self.floor != nil && self.floor != ""){
-            address += ", этаж. " + (self.floor ?? "")
+        if(self.address.floor != nil && self.address.floor != ""){
+            address += ", этаж. " + (self.address.floor ?? "")
         }
         
-        if(self.comment != nil && self.comment != ""){
-            address += ", \(self.comment ?? "")"
+        if(self.address.comment != nil && self.address.comment != ""){
+            address += ", \(self.address.comment ?? "")"
         }
         
         return address

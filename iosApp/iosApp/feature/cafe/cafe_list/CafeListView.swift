@@ -18,9 +18,8 @@ struct CafeListView: View {
     )
     
     var viewModel = CafeListViewModel(
-        cafeInteractor: iosComponent.provideCafeInteractor(),
-        getSelectedCityTimeZoneUseCase: iosComponent.provideGetSelectedCityTimeZoneUseCase(),
-        getCafeListUseCase: iosComponent.provideGetCafeListUseCase(),
+        cafeInteractor: iosComponent.provideCafeInteractor(), 
+        observeCafeWithOpenStateListUseCase: iosComponent.provideObserveCafeWithOpenStateListUseCase(),
         observeCartUseCase: iosComponent.provideObserveCartUseCase()
     )
     
@@ -53,7 +52,7 @@ struct CafeListView: View {
             .background(AppColor.background)
             .hiddenNavigationBarStyle()
             .onAppear(){
-                viewModel.getCafeItemList()
+                viewModel.observeCafeList()
                 listener = viewModel.cafeListState.watch { cafeListStateVM in
                     if let cafeListStateVM = cafeListStateVM{
                         cafeViewState = cafeListStateVM
