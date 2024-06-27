@@ -12,40 +12,32 @@ import SwiftUI
 
 struct SelectablePaymentListView: View {
     
-    //@ObservedObject private var viewModel : CafeAddressViewModel
     var title: LocalizedStringKey = "selectable_payment_method"
-    var paymentList: [SelectablePaymentMethod]
+    var paymentList: [SelectablePaymentMethodUI]
     @Binding var selectedPaymentUuid:String?
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
+    var closedCallback: () -> Void
 
     var body: some View {
         VStack(spacing:0){
             ToolbarView(
                 title: title,
                 back: {
+                    closedCallback()
                     self.mode.wrappedValue.dismiss()
                 }
             )
             SuccessSelectablePaymentListView(
-                paymentList: paymentList.map({ selectablePayment in
-                PaymentItem(id: selectablePayment.paymentMethod.uuid, selectablePayment: selectablePayment)
-            }),
-                selectedPaymentUuid : $selectedPaymentUuid)
+                paymentList: paymentList,
+                selectedPaymentUuid : $selectedPaymentUuid
+            )
         }.hiddenNavigationBarStyle()
             .background(AppColor.background)
     }
 }
 
-//
-  //
-//            .onReceive(viewModel.$cafeAddressViewState, perform: { cafeAddressViewState in
-//                if(cafeAddressViewState.cafeAddressState == CafeAddressState.goBack){
-//                    self.mode.wrappedValue.dismiss()
-//                }
-//            })
-
 struct SuccessSelectablePaymentListView: View {
-    var paymentList: [PaymentItem]
+    var paymentList: [SelectablePaymentMethodUI]
     @Binding var selectedPaymentUuid:String?
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     
@@ -59,8 +51,8 @@ struct SuccessSelectablePaymentListView: View {
                             self.mode.wrappedValue.dismiss()
                         }) {
                             SelectableElementCard(
-                                locolized:payment.selectablePayment.paymentMethod.name.getPaymentMethod(),
-                                isSelected:payment.selectablePayment.isSelected
+                                locolized: payment.name,
+                                isSelected: payment.isSelected
                             )
                             .padding(.horizontal, Diems.MEDIUM_PADDING)
                             .padding(.top, Diems.SMALL_PADDING)
@@ -70,10 +62,4 @@ struct SuccessSelectablePaymentListView: View {
             }
         }
     }
-}
-
-//payment.paymentMethod.name.getPaymentMethod()
-struct PaymentItem:Identifiable {
-    var id : String
-    var selectablePayment:SelectablePaymentMethod
 }

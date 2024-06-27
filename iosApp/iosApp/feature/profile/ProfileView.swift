@@ -181,7 +181,12 @@ struct SuccessProfileView: View {
             NavigationCardView(
                 icon: "AddressIcon",
                 label: Strings.TITLE_PROFILE_MY_ADDRESSES,
-                destination: UserAddressListView(isClickable: false),
+                destination: UserAddressListView(
+                    isClickable: false,
+                    closedCallback: {
+                        //stub dont need
+                    }
+                ),
                 isSystem: false
             )
             .padding(.top, Diems.SMALL_PADDING)

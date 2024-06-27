@@ -14,6 +14,7 @@ struct CreateOrderView: View {
     // errors ----------------
     @State var showCreatedAddress: Bool = false
     @State var showCommonError: Bool = false
+    @State var showPaymentMethodError: Bool = false
     // ----------------
     
     @State var goToUserAddress: Bool = false
@@ -61,9 +62,14 @@ struct CreateOrderView: View {
                 }
             )
             NavigationLink(
-                destination:UserAddressListView(
+                destination: UserAddressListView(
                     title: "title_delivery_addresses",
-                    isClickable: true
+                    isClickable: true, 
+                    closedCallback: {
+                        viewModel.onAction(
+                            action: CreateOrderActionHideDeliveryAddressList()
+                        )
+                    }
                 ),
                 isActive: $goToUserAddress
             ){
@@ -71,10 +77,15 @@ struct CreateOrderView: View {
             }
             
             NavigationLink(
-                destination:CafeAddressListView(
+                destination: CafeAddressListView(
                     isClickable: true,
                     _title: "title_pickup_addresses",
-                    addressList: addressList
+                    addressList: createOrderViewState?.pickupAddressList.addressList ?? [],
+                    _closedCallback: {
+                        viewModel.onAction(
+                            action: CreateOrderActionHidePickupAddressList()
+                        )
+                    }
                 ),
                 isActive: $goToCafeAddress
             ){
@@ -82,9 +93,14 @@ struct CreateOrderView: View {
             }
             
             NavigationLink(
-                destination:SelectablePaymentListView(
-                    paymentList: paymentList,
-                    selectedPaymentUuid : $selectedPaymentUuid
+                destination: SelectablePaymentListView(
+                    paymentList: createOrderViewState?.paymentMethodList.paymentMethodList ?? [],
+                    selectedPaymentUuid : $selectedPaymentUuid,
+                    closedCallback: {
+                        viewModel.onAction(
+                            action: CreateOrderActionHidePaymentMethodList()
+                        )
+                    }
                 ),
                 isActive: $goToSelectPaymentMethod
             ){
@@ -93,7 +109,9 @@ struct CreateOrderView: View {
             .onChange(
                 of: $selectedPaymentUuid.wrappedValue,
                 perform: { value in
-                    //viewModel.kmmViewModel.onPaymentMethodChanged(paymentMethodUuid:selectedPaymentUuid ?? "")
+                    viewModel.onAction(
+                        action: CreateOrderActionChangePaymentMethod(paymentMethodUuid: selectedPaymentUuid ?? "")
+                    )
                 }
             )
             
@@ -142,6 +160,14 @@ struct CreateOrderView: View {
                 foregroundColor: AppColor.onError
             ),
             show: $showCommonError
+        ) .overlay(
+            overlayView: ToastView(
+                toast: Toast(title: "Способ оплаты не выбран"),
+                show: $showPaymentMethodError,
+                backgroundColor: AppColor.error,
+                foregroundColor: AppColor.onError
+            ),
+            show: $showPaymentMethodError
         )
     }
     
@@ -149,6 +175,13 @@ struct CreateOrderView: View {
         viewModel.onAction(action: CreateOrderActionUpdate())
         listener = viewModel.dataState.watch { createOrderDataState in
             if let createOrderDataStateNN = createOrderDataState {
+                
+                print(createOrderDataState)
+                
+                goToUserAddress = createOrderDataStateNN.isUserAddressListShown
+                goToCafeAddress = createOrderDataStateNN.isCafeListShown
+                goToSelectPaymentMethod = createOrderDataStateNN.isPaymentMethodListShown
+                
                 createOrderViewState = CreateOrderViewState(
                     isDelivery: createOrderDataStateNN.isDelivery,
                     deliveryAddress: createOrderDataStateNN.selectedUserAddress?.getAddress(),
@@ -197,7 +230,7 @@ struct CreateOrderView: View {
                         isShown: createOrderDataStateNN.isPaymentMethodListShown,
                         paymentMethodList: createOrderDataStateNN.paymentMethodList.map({ selectablePaymentMethod in
                             SelectablePaymentMethodUI(
-                                uuid: selectablePaymentMethod.paymentMethod.uuid,
+                                id: selectablePaymentMethod.paymentMethod.uuid,
                                 name: selectablePaymentMethod.paymentMethod.name.getPaymentMethod(),
                                 isSelected: selectablePaymentMethod.isSelected
                             )
@@ -218,17 +251,19 @@ struct CreateOrderView: View {
                     
                     switch(event){
                     case is CreateOrderEventOpenCreateAddressEvent :
-                        self.mode.wrappedValue.dismiss()
+                        print("CreateOrderEventOpenCreateAddressEvent but open from navview")
                     case is CreateOrderEventShowUserUnauthorizedErrorEvent :
-                        self.mode.wrappedValue.dismiss()
+                        showCommonError = true
                     case is CreateOrderEventShowSomethingWentWrongErrorEvent:
-                        self.mode.wrappedValue.dismiss()
+                        showCommonError = true
                     case is CreateOrderEventOrderCreatedEvent:
-                        self.mode.wrappedValue.dismiss()
+                        isRootActive = false
+                        selection = MainContainerState.profile
+                        showOrderCreated = true
                     case is CreateOrderEventShowUserAddressError:
-                        self.mode.wrappedValue.dismiss()
+                        goToUserAddress = true
                     case is CreateOrderEventShowPaymentMethodError:
-                        self.mode.wrappedValue.dismiss()
+                        showPaymentMethodError = true
                     default:
                         print("def")
                     }
@@ -389,7 +424,13 @@ struct CreateOrderSuccessView: View {
                         .padding(.horizontal, Diems.MEDIUM_PADDING)
                     }
                     
-                    // TODO add error text for address
+                    if(createOrderViewState.isAddressErrorShown){
+                        Text("error_select_delivery_address")
+                            .bodySmall()
+                            .foregroundColor(AppColor.error)
+                            .padding(.top, 4)
+                            .padding(.horizontal, 16)
+                    }
                     
                     if(createOrderViewState.selectedPaymentMethod == nil){
                         ActionCardView(
@@ -412,8 +453,14 @@ struct CreateOrderSuccessView: View {
                         .padding(.top, Diems.SMALL_PADDING)
                         .padding(.horizontal, Diems.MEDIUM_PADDING)
                     }
-                    // TODO add error text for payment
                     
+                    if(createOrderViewState.isPaymentMethodErrorShown){
+                        Text("error_select_payment_method")
+                            .bodySmall()
+                            .foregroundColor(AppColor.error)
+                            .padding(.top, 4)
+                            .padding(.horizontal, 16)
+                    }
                     EditTextView(
                         hint: Strings.HINT_CREATE_COMMENT_COMMENT,
                         text: $comment,

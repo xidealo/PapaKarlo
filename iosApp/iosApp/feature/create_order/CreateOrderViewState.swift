@@ -61,8 +61,8 @@ struct SelectableAddressUI {
     var isSelected: Bool
 }
 
-struct SelectablePaymentMethodUI {
-    var uuid: String
+struct SelectablePaymentMethodUI : Identifiable {
+    var id: String
     var name: LocalizedStringKey
     var isSelected: Bool
 }

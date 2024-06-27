@@ -103,3 +103,7 @@
 //Create order
 "title_create_order_time_delivery" = "Delivery time";
 "title_create_order_time_pickup" = "Pickup time";
+"error_select_delivery_address" = "Select delivery address";
+"error_select_payment_method" = "Select payment method";
+"error_payment_method" = "Payment method was not select";
+
