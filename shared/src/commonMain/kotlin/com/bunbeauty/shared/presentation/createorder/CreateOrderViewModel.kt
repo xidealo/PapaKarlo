@@ -483,7 +483,10 @@ class CreateOrderViewModel(
         }
         setState {
             val cartTotal = getCartTotal(isDelivery = isDelivery)
-            val motivation = getMotivationUseCase(newTotalCost = cartTotal.newTotalCost)
+            val motivation = getMotivationUseCase(
+                newTotalCost = cartTotal.newTotalCost,
+                isDelivery = isDelivery
+            )
             copy(
                 cartTotal = CreateOrder.CartTotal.Success(
                     motivation = motivation?.toMotivationData(),

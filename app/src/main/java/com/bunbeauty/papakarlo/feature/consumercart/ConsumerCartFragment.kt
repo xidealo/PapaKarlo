@@ -287,7 +287,6 @@ class ConsumerCartFragment :
                     MainButton(
                         modifier = Modifier.padding(top = 8.dp),
                         textStringId = R.string.action_consumer_cart_creeate_order,
-                        enabled = bottomPanelInfo.isOrderCreationAvailable,
                         onClick = {
                             onAction(ConsumerCart.Action.OnCreateOrderClick)
                         }

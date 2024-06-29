@@ -67,7 +67,7 @@
     <string name="title_consumer_cart_empty">Корзина пуста</string>
     <string name="msg_consumer_cart_empty">Добавьте товар из «Меню»</string>
     <string name="msg_consumer_cart_recommendations">Рекомендуем</string>
-    <string name="msg_consumer_cart_min_order">Минимальная сумма заказа: %s</string>
+    <string name="msg_consumer_cart_min_order">Минимальная сумма заказа на доставку: %s</string>
     <string name="msg_consumer_cart_for_lower_delivery">Добавте еще на %s для уменьшения стоимости доставки</string>
     <string name="msg_consumer_cart_for_free_delivery">Добавте еще на %s для бесплатной доставки</string>
     <string name="msg_consumer_cart_lower_delivery">Уменьшенная стоимость доставки</string>

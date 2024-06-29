@@ -63,6 +63,7 @@ internal fun cartModule() = module {
     factory {
         GetMotivationUseCase(
             getCurrentUserAddressUseCase = get(),
+            getUserAddressListUseCase = get(),
         )
     }
     factory {
