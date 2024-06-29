@@ -6,6 +6,7 @@ import com.bunbeauty.shared.domain.model.cafe.Cafe
 import com.bunbeauty.shared.domain.model.cafe.SelectableCafe
 import com.bunbeauty.shared.domain.model.date_time.Time
 import com.bunbeauty.shared.domain.model.payment_method.PaymentMethod
+import com.bunbeauty.shared.domain.model.payment_method.PaymentMethodName
 import com.bunbeauty.shared.domain.model.payment_method.SelectablePaymentMethod
 import com.bunbeauty.shared.presentation.base.BaseAction
 import com.bunbeauty.shared.presentation.base.BaseDataState
@@ -43,12 +44,19 @@ interface CreateOrder {
         val selectedPaymentMethod: PaymentMethod? = null,
         val isPaymentMethodErrorShown: Boolean = false,
 
+        val withoutChangeChecked: Boolean = false,
+        val change: Int? = null,
+        val isChangeErrorShown: Boolean = false,
+
         val comment: String = "",
 
         val cartTotal: CartTotal,
 
         val isLoading: Boolean,
-    ) : BaseDataState
+    ) : BaseDataState {
+
+        val paymentByCash: Boolean = selectedPaymentMethod?.name == PaymentMethodName.CASH
+    }
 
     sealed interface DeferredTime {
         data object Asap : DeferredTime
@@ -63,6 +71,7 @@ interface CreateOrder {
             val deliveryCost: String?,
             val oldFinalCost: String?,
             val newFinalCost: String,
+            val newFinalCostValue: Int,
         ) : CartTotal
     }
 
@@ -91,9 +100,15 @@ interface CreateOrder {
         data object HidePaymentMethodList : Action
         data class ChangePaymentMethod(val paymentMethodUuid: String) : Action
 
+        data class ChangeWithoutChangeChecked(val isChecked: Boolean) : Action
+        data class ChangeChange(val change: String) : Action
+
         data class ChangeComment(val comment: String) : Action
 
-        data object CreateClick : Action
+        data class CreateClick(
+            val withoutChange: String,
+            val changeFrom: String
+        ) : Action
     }
 
     sealed interface Event : BaseEvent {
@@ -104,6 +119,7 @@ interface CreateOrder {
         data class OrderCreatedEvent(val code: String) : Event
         data object ShowUserAddressError : Event
         data object ShowPaymentMethodError : Event
+        data object ShowChangeError : Event
     }
 
 }

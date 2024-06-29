@@ -105,18 +105,17 @@ struct SettingsView: View {
         .onAppear(){
             viewModel.loadData()
             listener = viewModel.settingsState.watch { settingsStateVM in
-                if(settingsStateVM != nil ){
-                    state = settingsStateVM!
-                    settingsStateVM!.eventList.forEach { event in
+                if let notNullSettingsStateVM = settingsStateVM {
+                    state = notNullSettingsStateVM
+                    notNullSettingsStateVM.eventList.forEach { event in
                         switch(event){
                         case is SettingsStateEventBack : self.mode.wrappedValue.dismiss()
                         default:
                             print("def")
                         }
                     }
-                    if !settingsStateVM!.eventList.isEmpty{
-                        viewModel
-                            .consumeEventList(eventList: settingsStateVM!.eventList)
+                    if !notNullSettingsStateVM.eventList.isEmpty{
+                        viewModel.consumeEventList(eventList: settingsStateVM!.eventList)
                     }
                 }
             }

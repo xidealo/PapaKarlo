@@ -45,7 +45,7 @@ struct UserAddressListView: View {
             case UserAddressListState.State.success : SuccessAddressListView(
                 addressItemList: userAddressViewState.userAddressList.map({ userAddress in
                     AddressItem(
-                        id: userAddress.uuid,
+                        id: userAddress.address.uuid,
                         address: userAddress.getAddress(),
                         isClickable: isClickable,
                         isSelected: userAddress.isSelected
@@ -62,24 +62,9 @@ struct UserAddressListView: View {
         .hiddenNavigationBarStyle()
         .onAppear(){
             listener = viewModel.addressListState.watch { addressListVM in
-                if(addressListVM != nil ){
-                    userAddressViewState = addressListVM!
+                if let notNullAddressListVM = addressListVM{
+                    userAddressViewState = notNullAddressListVM
                 }
-                // work with actions
-                //UPDATE (переделать через StateObject как на создании адреса)
-                //                print("eventsS \(userAddressViewState.state)")
-                //                userAddressViewState.eventList.forEach { event in
-                //                    switch(event){
-                //                    case is UserAddressListStateEventGoBack :  self.mode.wrappedValue.dismiss()
-                //                    default:
-                //                        print("def")
-                //                    }
-                //                }
-                //
-                //                if !userAddressViewState.eventList.isEmpty{
-                //                    viewModel.consumeEventList(eventList: userAddressViewState.eventList)
-                //                }
-                
             }
             viewModel.update()
         }
@@ -132,9 +117,11 @@ struct SuccessAddressListView: View {
             }.padding(Diems.MEDIUM_PADDING)
         }.onAppear(){
             viewModel.addressListState.watch { addressListVM in
-                if(addressListVM != nil ){
-                    userAddressListState = addressListVM!
+                
+                if let notNullAddressListVM = addressListVM {
+                    userAddressListState = notNullAddressListVM
                 }
+                
                 // work with actions
                 userAddressListState.eventList.forEach { event in
                     switch(event){

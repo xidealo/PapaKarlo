@@ -75,8 +75,9 @@ struct OrderListView: View {
         viewModel.observeOrders()
 
         listener = viewModel.orderListState.watch { orderListVM in
-            if(orderListVM != nil ){
-                orderListState = orderListVM!
+            
+            if let notNullorderListVM = orderListVM {
+                orderListState = notNullorderListVM
             }
         }
     }

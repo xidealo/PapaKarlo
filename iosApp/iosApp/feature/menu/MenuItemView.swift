@@ -15,27 +15,20 @@ struct MenuItemView: View {
     let productDetailsOpenedFrom:ProductDetailsOpenedFrom
     
     //for back after createOrder
-    @Binding var isRootActive:Bool
-    @Binding var selection:Int
-    @Binding var showOrderCreated:Bool
-    @State var openProductDetails:Bool = false
-    @Binding var created:Bool
-    @Binding var edited:Bool
+    @State var openProductDetails: Bool = false
+    @Binding var created: Bool
+    @Binding var edited: Bool
     
     let action: () -> Void
     
     var body: some View {
         NavigationLink(
-            destination:
-                ProductDetailsView(
+            destination: ProductDetailsView(
                     menuProductUuid: menuProductItem.productUuid,
                     menuProductName: menuProductItem.name, 
                     cartProductUuid: nil,
                     additionUuidList: [],
                     productDetailsOpenedFrom: productDetailsOpenedFrom,
-                    isRootActive: self.$isRootActive,
-                    selection: self.$selection,
-                    showOrderCreated: $showOrderCreated,
                     created: $created,
                     edited: $edited
                 ),

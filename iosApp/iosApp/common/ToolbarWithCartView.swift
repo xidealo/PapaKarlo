@@ -10,19 +10,19 @@ import SwiftUI
 
 struct ToolbarWithCartView: View {
     
-    let title:LocalizedStringKey
-    let titleString:String? = nil
+    let title: LocalizedStringKey
+    let titleString: String? = nil
     
-    let cost:String?
-    let count:String?
+    let cost: String?
+    let count: String?
     @Binding var isShowLogo: Bool
     
     var logout: (() -> Void)? = nil
     var back: (() -> Void)? = nil
     
-    @Binding var isRootActive:Bool
-    @Binding var selection:Int
-    @Binding var showOrderCreated:Bool
+    @Binding var isRootActive: Bool
+    @Binding var selection: MainContainerState
+    @Binding var showOrderCreated: Bool
     
     var body: some View {
         ZStack{
@@ -31,7 +31,7 @@ struct ToolbarWithCartView: View {
                 ToolbarView(title: title, back: back)
             
                 NavigationLink(
-                    destination:ConsumerCartView(
+                    destination : ConsumerCartView(
                         isRootActive: self.$isRootActive,
                         selection: self.$selection,
                         showOrderCreated: $showOrderCreated
@@ -64,7 +64,6 @@ struct ToolbarWithCartView: View {
                 .isDetailLink(false)
                 .padding(.vertical, Diems.SMALL_PADDING)
                 .padding(.trailing, Diems.SMALL_PADDING)
-                
             }.background(AppColor.surface)
             
             if(isShowLogo){

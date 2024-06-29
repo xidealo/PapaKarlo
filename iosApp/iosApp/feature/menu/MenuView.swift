@@ -16,11 +16,12 @@ struct MenuView: View {
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     
     //for back after createOrder
-    @Binding var isRootActive:Bool
-    @Binding var selection:Int
-    @Binding var showOrderCreated:Bool
-    @State var created:Bool = false
-    @State var edited:Bool = false
+    @Binding var isRootActive: Bool
+    @Binding var selection: MainContainerState
+    @Binding var showOrderCreated: Bool
+    
+    @State var created: Bool = false
+    @State var edited: Bool = false
     
     let columns = [
         GridItem(.flexible(), spacing: 8, alignment: .top),
@@ -75,9 +76,6 @@ struct MenuView: View {
                                         MenuItemView(
                                             menuProductItem: menuProductItem,
                                             productDetailsOpenedFrom : ProductDetailsOpenedFrom.menuProduct,
-                                            isRootActive : $isRootActive,
-                                            selection : $selection,
-                                            showOrderCreated : $showOrderCreated,
                                             created: $created,
                                             edited: $edited,
                                             action: {
