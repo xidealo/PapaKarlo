@@ -34,7 +34,8 @@ fun FoodDeliveryBaseTextField(
     maxSymbols: Int = Int.MAX_VALUE,
     maxLines: Int = 1,
     isError: Boolean = false,
-    isLoading: Boolean = false
+    isLoading: Boolean = false,
+    trailingIcon: (@Composable () -> Unit)? = null
 ) {
     OutlinedTextField(
         modifier = modifier,
@@ -51,13 +52,17 @@ fun FoodDeliveryBaseTextField(
             )
         },
         trailingIcon = {
-            TrailingIcon(
-                isLoading = isLoading,
-                textValue = value,
-                onClick = {
-                    onValueChange("")
-                }
-            )
+            if (trailingIcon == null) {
+                TrailingIcon(
+                    isLoading = isLoading,
+                    textValue = value,
+                    onClick = {
+                        onValueChange("")
+                    }
+                )
+            } else {
+                trailingIcon()
+            }
         },
         isError = isError,
         keyboardOptions = keyboardOptions,
@@ -79,7 +84,8 @@ fun FoodDeliveryBaseTextField(
     maxSymbols: Int = Int.MAX_VALUE,
     maxLines: Int = 1,
     isError: Boolean = false,
-    isLoading: Boolean = false
+    isLoading: Boolean = false,
+    trailingIcon: (@Composable () -> Unit)? = null
 ) {
     CompositionLocalProvider(
         LocalTextSelectionColors provides FoodDeliveryTextFieldDefaults.textSelectionColors
@@ -103,13 +109,17 @@ fun FoodDeliveryBaseTextField(
                 )
             },
             trailingIcon = {
-                TrailingIcon(
-                    isLoading = isLoading,
-                    textValue = value.text,
-                    onClick = {
-                        onValueChange(TextFieldValue(""))
-                    }
-                )
+                if (trailingIcon == null) {
+                    TrailingIcon(
+                        isLoading = isLoading,
+                        textValue = value.text,
+                        onClick = {
+                            onValueChange(TextFieldValue(""))
+                        }
+                    )
+                } else {
+                    trailingIcon()
+                }
             },
             isError = isError,
             keyboardOptions = keyboardOptions,
@@ -180,6 +190,25 @@ private fun FoodDeliveryTextBaseFieldWithErrorPreview() {
             labelStringId = R.string.hint_create_order_comment,
             onValueChange = {},
             isError = true
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun FoodDeliveryTextBaseFieldWithTrailingIconPreview() {
+    FoodDeliveryTheme {
+        FoodDeliveryBaseTextField(
+            value = "Нужно больше еды \n ...",
+            labelStringId = R.string.hint_create_order_comment,
+            onValueChange = {},
+            trailingIcon = {
+                Icon(
+                    modifier = Modifier.size(24.dp),
+                    painter = painterResource(R.drawable.ic_address),
+                    contentDescription = null
+                )
+            }
         )
     }
 }
