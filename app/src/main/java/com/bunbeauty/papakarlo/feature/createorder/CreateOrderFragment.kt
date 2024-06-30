@@ -29,6 +29,7 @@ import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
@@ -372,7 +373,8 @@ class CreateOrderFragment :
                 value = viewState.change,
                 labelStringId = R.string.hint_change,
                 keyboardOptions = FoodDeliveryTextFieldDefaults.keyboardOptions(
-                    imeAction = ImeAction.Done
+                    keyboardType = KeyboardType.Number,
+                    imeAction = ImeAction.Done,
                 ),
                 keyboardActions = FoodDeliveryTextFieldDefaults.keyboardActions(
                     onDone = {
