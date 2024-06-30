@@ -30,9 +30,7 @@ sealed class ConsumerCartViewState(
         val discount: String?,
         val oldTotalCost: String?,
         val newTotalCost: String
-    ) {
-        val isOrderCreationAvailable: Boolean = motivation !is MotivationUi.MinOrderCost
-    }
+    )
 
     @Immutable
     data class CartProductItemUi(

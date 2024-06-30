@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
@@ -461,7 +462,7 @@ class CreateOrderFragment :
                 LoadingButton(
                     textStringId = R.string.action_create_order_create_order,
                     isLoading = viewState.isLoading,
-                    isEnabled = viewState.cartTotal is CartTotalUI.Success,
+                    isEnabled = viewState.isOrderCreationEnabled,
                     onClick = {
                         onAction(
                             CreateOrder.Action.CreateClick(
@@ -500,7 +501,17 @@ class CreateOrderFragment :
             modifier = modifier,
             verticalArrangement = spacedBy(8.dp)
         ) {
-            Motivation(motivation = cartTotal.motivation)
+            AnimatedVisibility(
+                visible = cartTotal.motivation != null,
+                enter = expandVertically(
+                    animationSpec = tween(500)
+                ),
+                exit = shrinkVertically(
+                    animationSpec = tween(500)
+                )
+            ) {
+                Motivation(motivation = cartTotal.motivation)
+            }
             cartTotal.discount?.let { discount ->
                 Row {
                     Text(
@@ -514,8 +525,12 @@ class CreateOrderFragment :
             }
             AnimatedVisibility(
                 visible = cartTotal.deliveryCost != null,
-                enter = expandVertically(),
-                exit = shrinkVertically()
+                enter = expandVertically(
+                    animationSpec = tween(500)
+                ),
+                exit = shrinkVertically(
+                    animationSpec = tween(500)
+                )
             ) {
                 Row {
                     Text(
