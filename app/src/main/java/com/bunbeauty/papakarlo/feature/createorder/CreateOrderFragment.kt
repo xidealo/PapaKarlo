@@ -238,7 +238,7 @@ class CreateOrderFragment :
                     label = stringResource(R.string.delivery_address),
                     onClick = {
                         focusManager.clearFocus()
-                        onAction(CreateOrder.Action.DeliveryAddressClick)
+                        onAction(CreateOrder.Action.AddAddressClick)
                     }
                 )
             } else {

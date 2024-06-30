@@ -38,7 +38,7 @@ import com.bunbeauty.shared.domain.feature.settings.ObserveSettingsUseCase
 import com.bunbeauty.shared.domain.feature.settings.UpdateEmailUseCase
 import com.bunbeauty.shared.domain.feature.cafe.GetCafeListUseCase
 import com.bunbeauty.shared.domain.interactor.cafe.ICafeInteractor
-import com.bunbeauty.shared.domain.interactor.cart.GetCartTotalUseCase
+import com.bunbeauty.shared.domain.interactor.cart.GetCartTotalFlowUseCase
 import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
 import com.bunbeauty.shared.domain.interactor.city.ICityInteractor
 import com.bunbeauty.shared.domain.use_case.deferred_time.GetMinTimeUseCase
@@ -140,7 +140,7 @@ class IosComponent : KoinComponent {
     fun provideGetSelectableUserAddressListUseCase(): GetSelectableUserAddressListUseCase = get()
     fun provideGetCafeListUseCase(): GetCafeListUseCase = get()
     fun provideGetSelectableCafeListUseCase(): GetSelectableCafeListUseCase = get()
-    fun provideGetCartTotalUseCase(): GetCartTotalUseCase = get()
+    fun provideGetCartTotalUseCase(): GetCartTotalFlowUseCase = get()
     fun provideGetMinTimeUseCase(): GetMinTimeUseCase = get()
     fun provideCreateOrderUseCase(): CreateOrderUseCase = get()
     fun provideGetSelectedCityTimeZoneUseCase(): GetSelectedCityTimeZoneUseCase = get()

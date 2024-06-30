@@ -7,13 +7,12 @@ import com.bunbeauty.shared.domain.model.cart.CartProduct
 import com.bunbeauty.shared.domain.model.cart.ConsumerCartDomain
 import com.bunbeauty.shared.domain.model.cart.LightCartProduct
 import com.bunbeauty.shared.domain.repo.CartProductRepo
-import com.bunbeauty.shared.domain.repo.DeliveryRepo
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 
 class CartProductInteractor(
     private val cartProductRepo: CartProductRepo,
-    private val deliveryRepo: DeliveryRepo,
-    private val getCartTotal: GetCartTotalUseCase,
+    private val getCartTotalFlowUseCase: GetCartTotalFlowUseCase,
     private val cartProductAdditionRepository: CartProductAdditionRepository,
 ) : ICartProductInteractor {
 
@@ -32,16 +31,16 @@ class CartProductInteractor(
         return if (cartProductList.isEmpty()) {
             ConsumerCartDomain.Empty
         } else {
-            deliveryRepo.getDelivery()?.let { delivery ->
-                val cartTotal = getCartTotal(isDelivery = false)
-                ConsumerCartDomain.WithProducts(
-                    forFreeDelivery = delivery.forFree,
-                    cartProductList = cartProductList.map(::toLightCartProduct),
-                    oldTotalCost = cartTotal.oldFinalCost,
-                    newTotalCost = cartTotal.newFinalCost,
-                    discount = cartTotal.discount
-                )
-            }
+            getCartTotalFlowUseCase(isDelivery = false)
+                .firstOrNull()
+                ?.let { cartTotal ->
+                    ConsumerCartDomain.WithProducts(
+                        cartProductList = cartProductList.map(::toLightCartProduct),
+                        oldTotalCost = cartTotal.oldFinalCost,
+                        newTotalCost = cartTotal.newFinalCost,
+                        discount = cartTotal.discount
+                    )
+                }
         }
     }
 

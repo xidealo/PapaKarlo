@@ -1,19 +1,21 @@
 package com.bunbeauty.shared.domain.interactor.cart
 
-import com.bunbeauty.shared.domain.feature.cart.GetDeliveryCostUseCase
+import com.bunbeauty.shared.domain.feature.cart.GetDeliveryCostFlowUseCase
 import com.bunbeauty.shared.domain.feature.discount.GetDiscountUseCase
 import com.bunbeauty.shared.domain.model.cart.CartTotal
 import com.bunbeauty.shared.domain.repo.CartProductRepo
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
-class GetCartTotalUseCase(
+class GetCartTotalFlowUseCase(
     private val cartProductRepo: CartProductRepo,
     private val getDiscountUseCase: GetDiscountUseCase,
     private val getNewTotalCostUseCase: GetNewTotalCostUseCase,
     private val getOldTotalCostUseCase: GetOldTotalCostUseCase,
-    private val getDeliveryCostUseCase: GetDeliveryCostUseCase,
+    private val getDeliveryCostFlowUseCase: GetDeliveryCostFlowUseCase,
 ) {
 
-    suspend operator fun invoke(isDelivery: Boolean): CartTotal {
+    suspend operator fun invoke(isDelivery: Boolean): Flow<CartTotal> {
         val cartProductList = cartProductRepo.getCartProductList()
 
         val newTotalCost = getNewTotalCostUseCase(cartProductList)
@@ -21,21 +23,22 @@ class GetCartTotalUseCase(
             oldTotalCost = getOldTotalCostUseCase(cartProductList),
             newTotalCost = newTotalCost
         )
-        val deliveryCost = getDeliveryCostUseCase(
+
+        return getDeliveryCostFlowUseCase(
             newTotalCost = newTotalCost,
             isDelivery = isDelivery
-        )
-
-        return CartTotal(
-            discount = getDiscountUseCase()?.firstOrderDiscount,
-            deliveryCost = deliveryCost,
-            oldTotalCost = oldTotalCost,
-            newTotalCost = newTotalCost,
-            oldFinalCost = oldTotalCost?.let {
-                oldTotalCost + (deliveryCost ?: 0)
-            },
-            newFinalCost = newTotalCost + (deliveryCost ?: 0),
-        )
+        ).map { deliveryCost ->
+            CartTotal(
+                discount = getDiscountUseCase()?.firstOrderDiscount,
+                deliveryCost = deliveryCost,
+                oldTotalCost = oldTotalCost,
+                newTotalCost = newTotalCost,
+                oldFinalCost = oldTotalCost?.let {
+                    oldTotalCost + (deliveryCost ?: 0)
+                },
+                newFinalCost = newTotalCost + (deliveryCost ?: 0),
+            )
+        }
     }
 
     private fun checkOldTotalCost(oldTotalCost: Int, newTotalCost: Int): Int? {
