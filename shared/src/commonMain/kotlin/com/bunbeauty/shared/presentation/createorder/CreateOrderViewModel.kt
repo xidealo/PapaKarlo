@@ -9,7 +9,7 @@ import com.bunbeauty.shared.domain.feature.order.CreateOrderUseCase
 import com.bunbeauty.shared.domain.feature.payment.GetSelectablePaymentMethodListUseCase
 import com.bunbeauty.shared.domain.feature.payment.SavePaymentMethodUseCase
 import com.bunbeauty.shared.domain.interactor.cafe.ICafeInteractor
-import com.bunbeauty.shared.domain.interactor.cart.GetCartTotalUseCase
+import com.bunbeauty.shared.domain.interactor.cart.GetCartTotalFlowUseCase
 import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
 import com.bunbeauty.shared.domain.model.date_time.Time
@@ -19,6 +19,7 @@ import com.bunbeauty.shared.domain.use_case.deferred_time.GetMinTimeUseCase
 import com.bunbeauty.shared.extension.launchSafe
 import com.bunbeauty.shared.presentation.base.SharedStateViewModel
 import com.bunbeauty.shared.presentation.motivation.toMotivationData
+import kotlinx.coroutines.Job
 
 private const val DELIVERY_POSITION = 0
 
@@ -28,7 +29,7 @@ class CreateOrderViewModel(
     private val userInteractor: IUserInteractor,
     private val getSelectableUserAddressList: GetSelectableUserAddressListUseCase,
     private val getSelectableCafeList: GetSelectableCafeListUseCase,
-    private val getCartTotal: GetCartTotalUseCase,
+    private val getCartTotalFlowUseCase: GetCartTotalFlowUseCase,
     private val getMotivationUseCase: GetMotivationUseCase,
     private val getMinTime: GetMinTimeUseCase,
     private val createOrder: CreateOrderUseCase,
@@ -52,6 +53,8 @@ class CreateOrderViewModel(
         isLoading = true,
     )
 ) {
+
+    private var getCartTotalJob: Job? = null
 
     override fun reduce(action: CreateOrder.Action, dataState: CreateOrder.DataState) {
         when (action) {
@@ -478,32 +481,37 @@ class CreateOrderViewModel(
     }
 
     private suspend fun updateCartTotal() {
-        setState {
-            copy(cartTotal = CreateOrder.CartTotal.Loading)
-        }
-        setState {
-            val cartTotal = getCartTotal(isDelivery = isDelivery)
-            val motivation = getMotivationUseCase(
-                newTotalCost = cartTotal.newTotalCost,
-                isDelivery = isDelivery
-            )
-            copy(
-                cartTotal = CreateOrder.CartTotal.Success(
-                    motivation = motivation?.toMotivationData(),
-                    discount = cartTotal.discount?.let { discount ->
-                        "$discount$PERCENT"
-                    },
-                    deliveryCost = cartTotal.deliveryCost?.let { deliveryCost ->
-                        "$deliveryCost $RUBLE_CURRENCY"
-                    },
-                    oldFinalCost = cartTotal.oldFinalCost?.let { oldFinalCost ->
-                        "$oldFinalCost $RUBLE_CURRENCY"
-                    },
-                    newFinalCost = "${cartTotal.newFinalCost} $RUBLE_CURRENCY",
-                    newFinalCostValue = cartTotal.newFinalCost,
-                )
-            )
-        }
+        getCartTotalJob?.cancel()
+        getCartTotalJob = sharedScope.launchSafe(
+            block = {
+                val isDelivery = mutableDataState.value.isDelivery
+                getCartTotalFlowUseCase(isDelivery = isDelivery).collect {  cartTotal ->
+                    val motivation = getMotivationUseCase(
+                        newTotalCost = cartTotal.newTotalCost,
+                        isDelivery = isDelivery
+                    )
+                    setState {
+                        copy(
+                            cartTotal = CreateOrder.CartTotal.Success(
+                                motivation = motivation?.toMotivationData(),
+                                discount = cartTotal.discount?.let { discount ->
+                                    "$discount$PERCENT"
+                                },
+                                deliveryCost = cartTotal.deliveryCost?.let { deliveryCost ->
+                                    "$deliveryCost $RUBLE_CURRENCY"
+                                },
+                                oldFinalCost = cartTotal.oldFinalCost?.let { oldFinalCost ->
+                                    "$oldFinalCost $RUBLE_CURRENCY"
+                                },
+                                newFinalCost = "${cartTotal.newFinalCost} $RUBLE_CURRENCY",
+                                newFinalCostValue = cartTotal.newFinalCost,
+                            )
+                        )
+                    }
+                }
+            },
+            onError = {}
+        )
     }
 
     private fun getExtendedComment(
