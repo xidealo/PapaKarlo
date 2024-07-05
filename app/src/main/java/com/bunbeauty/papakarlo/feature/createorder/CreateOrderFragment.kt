@@ -374,7 +374,7 @@ class CreateOrderFragment :
                 labelStringId = R.string.hint_change,
                 keyboardOptions = FoodDeliveryTextFieldDefaults.keyboardOptions(
                     keyboardType = KeyboardType.Number,
-                    imeAction = ImeAction.Done,
+                    imeAction = ImeAction.Done
                 ),
                 keyboardActions = FoodDeliveryTextFieldDefaults.keyboardActions(
                     onDone = {
