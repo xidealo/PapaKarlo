@@ -95,7 +95,10 @@ class ConsumerCartViewModel(
         observeConsumerCartJob = cartProductInteractor.observeConsumerCart()
             .onEach { consumerCart ->
                 val motivation = if (consumerCart is ConsumerCartDomain.WithProducts) {
-                    getMotivationUseCase(newTotalCost = consumerCart.newTotalCost)
+                    getMotivationUseCase(
+                        newTotalCost = consumerCart.newTotalCost,
+                        isDelivery = true
+                    )
                 } else {
                     null
                 }

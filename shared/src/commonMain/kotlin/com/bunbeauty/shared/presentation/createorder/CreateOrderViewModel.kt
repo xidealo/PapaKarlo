@@ -9,7 +9,7 @@ import com.bunbeauty.shared.domain.feature.order.CreateOrderUseCase
 import com.bunbeauty.shared.domain.feature.payment.GetSelectablePaymentMethodListUseCase
 import com.bunbeauty.shared.domain.feature.payment.SavePaymentMethodUseCase
 import com.bunbeauty.shared.domain.interactor.cafe.ICafeInteractor
-import com.bunbeauty.shared.domain.interactor.cart.GetCartTotalUseCase
+import com.bunbeauty.shared.domain.interactor.cart.GetCartTotalFlowUseCase
 import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
 import com.bunbeauty.shared.domain.model.date_time.Time
@@ -19,6 +19,7 @@ import com.bunbeauty.shared.domain.use_case.deferred_time.GetMinTimeUseCase
 import com.bunbeauty.shared.extension.launchSafe
 import com.bunbeauty.shared.presentation.base.SharedStateViewModel
 import com.bunbeauty.shared.presentation.motivation.toMotivationData
+import kotlinx.coroutines.Job
 
 private const val DELIVERY_POSITION = 0
 
@@ -28,7 +29,7 @@ class CreateOrderViewModel(
     private val userInteractor: IUserInteractor,
     private val getSelectableUserAddressList: GetSelectableUserAddressListUseCase,
     private val getSelectableCafeList: GetSelectableCafeListUseCase,
-    private val getCartTotal: GetCartTotalUseCase,
+    private val getCartTotalFlowUseCase: GetCartTotalFlowUseCase,
     private val getMotivationUseCase: GetMotivationUseCase,
     private val getMinTime: GetMinTimeUseCase,
     private val createOrder: CreateOrderUseCase,
@@ -52,6 +53,8 @@ class CreateOrderViewModel(
         isLoading = true,
     )
 ) {
+
+    private var getCartTotalJob: Job? = null
 
     override fun reduce(action: CreateOrder.Action, dataState: CreateOrder.DataState) {
         when (action) {
@@ -127,12 +130,23 @@ class CreateOrderViewModel(
                 changePaymentMethod(paymentMethodUuid = action.paymentMethodUuid)
             }
 
-            is CreateOrder.Action.ChangeComment -> {
-                onCommentChanged(comment = action.comment)
+            is CreateOrder.Action.ChangeWithoutChangeChecked -> {
+                changeWithoutChangeChecked(isChecked = action.isChecked)
             }
 
-            CreateOrder.Action.CreateClick -> {
-                createClick()
+            is CreateOrder.Action.ChangeChange -> {
+                changeChange(change = action.change)
+            }
+
+            is CreateOrder.Action.ChangeComment -> {
+                changeComment(comment = action.comment)
+            }
+
+            is CreateOrder.Action.CreateClick -> {
+                createClick(
+                    withoutChange = action.withoutChange,
+                    changeFrom = action.changeFrom,
+                )
             }
         }
     }
@@ -302,13 +316,28 @@ class CreateOrderViewModel(
         }
     }
 
-    private fun onCommentChanged(comment: String) {
+    private fun changeWithoutChangeChecked(isChecked: Boolean) {
+        setState {
+            copy(withoutChangeChecked = isChecked)
+        }
+    }
+
+    private fun changeChange(change: String) {
+        setState {
+            copy(change = change.toIntOrNull())
+        }
+    }
+
+    private fun changeComment(comment: String) {
         setState {
             copy(comment = comment)
         }
     }
 
-    private fun createClick() {
+    private fun createClick(
+        withoutChange: String,
+        changeFrom: String
+    ) {
         val state = mutableDataState.value
 
         val isDeliveryAddressNotSelected = state.isDelivery && (state.selectedUserAddress == null)
@@ -334,13 +363,34 @@ class CreateOrderViewModel(
             return
         }
 
+        val newFinalCost = (state.cartTotal as? CreateOrder.CartTotal.Success)?.newFinalCostValue ?: 0
+        val isChangeLessThenCost = (state.change ?: 0) < newFinalCost
+        val isChangeIncorrect = state.paymentByCash &&
+            !state.withoutChangeChecked &&
+            isChangeLessThenCost
+        setState {
+            copy(isChangeErrorShown = isChangeIncorrect)
+        }
+        if (isChangeIncorrect) {
+            addEvent {
+                CreateOrder.Event.ShowChangeError
+            }
+            return
+        }
+
         withLoading {
             if (userInteractor.isUserAuthorize()) {
                 val orderCode = createOrder(
                     isDelivery = state.isDelivery,
                     selectedUserAddress = state.selectedUserAddress,
                     selectedCafe = state.selectedCafe,
-                    orderComment = state.comment,
+                    orderComment = getExtendedComment(
+                        state = state,
+                        withoutChange = withoutChange,
+                        changeFrom = changeFrom,
+                    ).takeIf { comment ->
+                        comment.isNotBlank()
+                    },
                     deferredTime = when (state.deferredTime) {
                         CreateOrder.DeferredTime.Asap -> null
                         is CreateOrder.DeferredTime.Later -> state.deferredTime.time
@@ -431,28 +481,60 @@ class CreateOrderViewModel(
     }
 
     private suspend fun updateCartTotal() {
-        setState {
-            copy(cartTotal = CreateOrder.CartTotal.Loading)
-        }
-        setState {
-            val cartTotal = getCartTotal(isDelivery = isDelivery)
-            val motivation = getMotivationUseCase(newTotalCost = cartTotal.newTotalCost)
-            copy(
-                cartTotal = CreateOrder.CartTotal.Success(
-                    motivation = motivation?.toMotivationData(),
-                    discount = cartTotal.discount?.let { discount ->
-                        "$discount$PERCENT"
-                    },
-                    deliveryCost = cartTotal.deliveryCost?.let { deliveryCost ->
-                        "$deliveryCost $RUBLE_CURRENCY"
-                    },
-                    oldFinalCost = cartTotal.oldFinalCost?.let { oldFinalCost ->
-                        "$oldFinalCost $RUBLE_CURRENCY"
-                    },
-                    newFinalCost = "${cartTotal.newFinalCost} $RUBLE_CURRENCY",
-                )
-            )
-        }
+        getCartTotalJob?.cancel()
+        getCartTotalJob = sharedScope.launchSafe(
+            block = {
+                val isDelivery = mutableDataState.value.isDelivery
+                getCartTotalFlowUseCase(isDelivery = isDelivery).collect {  cartTotal ->
+                    val motivation = getMotivationUseCase(
+                        newTotalCost = cartTotal.newTotalCost,
+                        isDelivery = isDelivery
+                    )
+                    setState {
+                        copy(
+                            cartTotal = CreateOrder.CartTotal.Success(
+                                motivation = motivation?.toMotivationData(),
+                                discount = cartTotal.discount?.let { discount ->
+                                    "$discount$PERCENT"
+                                },
+                                deliveryCost = cartTotal.deliveryCost?.let { deliveryCost ->
+                                    "$deliveryCost $RUBLE_CURRENCY"
+                                },
+                                oldFinalCost = cartTotal.oldFinalCost?.let { oldFinalCost ->
+                                    "$oldFinalCost $RUBLE_CURRENCY"
+                                },
+                                newFinalCost = "${cartTotal.newFinalCost} $RUBLE_CURRENCY",
+                                newFinalCostValue = cartTotal.newFinalCost,
+                            )
+                        )
+                    }
+                }
+            },
+            onError = {}
+        )
+    }
+
+    private fun getExtendedComment(
+        state: CreateOrder.DataState,
+        withoutChange: String,
+        changeFrom: String,
+    ): String {
+        return buildString {
+            state.comment.takeIf { comment ->
+                comment.isNotBlank()
+            }?.let { comment ->
+                append("$comment ")
+            }
+            if (state.paymentByCash) {
+                append("(")
+                if (state.withoutChangeChecked) {
+                    append(withoutChange)
+                } else {
+                    append("$changeFrom ${state.change} $RUBLE_CURRENCY")
+                }
+                append(")")
+            }
+        }.trim()
     }
 
     private inline fun withLoading(crossinline block: suspend () -> Unit) {

@@ -17,6 +17,12 @@ data class CreateOrderViewState(
     @StringRes val deferredTimeStringId: Int,
     val selectedPaymentMethod: PaymentMethodUI?,
     val isPaymentMethodErrorShown: Boolean,
+    val showChange: Boolean,
+    val withoutChange: String,
+    val changeFrom: String,
+    val withoutChangeChecked: Boolean,
+    val change: String,
+    val isChangeErrorShown: Boolean,
     val comment: String,
     val cartTotal: CartTotalUI,
     val isLoading: Boolean,
@@ -30,6 +36,9 @@ data class CreateOrderViewState(
 
     val isFieldsEnabled: Boolean = !isLoading
     val switcherPosition = if (isDelivery) 0 else 1
+    val isOrderCreationEnabled: Boolean =
+        (cartTotal != CartTotalUI.Loading) &&
+            ((cartTotal as? CartTotalUI.Success)?.motivation !is MotivationUi.MinOrderCost)
 }
 
 @Immutable

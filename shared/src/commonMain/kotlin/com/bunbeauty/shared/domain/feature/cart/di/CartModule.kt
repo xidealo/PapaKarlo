@@ -4,7 +4,7 @@ import com.bunbeauty.shared.domain.feature.cart.AddCartProductUseCase
 import com.bunbeauty.shared.domain.feature.cart.EditCartProductUseCase
 import com.bunbeauty.shared.domain.feature.cart.GetCartProductCountUseCase
 import com.bunbeauty.shared.domain.feature.motivation.GetMotivationUseCase
-import com.bunbeauty.shared.domain.feature.cart.GetDeliveryCostUseCase
+import com.bunbeauty.shared.domain.feature.cart.GetDeliveryCostFlowUseCase
 import com.bunbeauty.shared.domain.feature.cart.GetRecommendationsUseCase
 import com.bunbeauty.shared.domain.feature.cart.IncreaseCartProductCountUseCase
 import com.bunbeauty.shared.domain.feature.cart.ObserveCartUseCase
@@ -63,11 +63,12 @@ internal fun cartModule() = module {
     factory {
         GetMotivationUseCase(
             getCurrentUserAddressUseCase = get(),
+            getUserAddressListUseCase = get(),
         )
     }
     factory {
-        GetDeliveryCostUseCase(
-            getCurrentUserAddressUseCase = get(),
+        GetDeliveryCostFlowUseCase(
+            getCurrentUserAddressFlowUseCase = get(),
         )
     }
 }

@@ -1,12 +1,19 @@
 package com.bunbeauty.shared.domain.feature.motivation
 
 import com.bunbeauty.shared.domain.feature.address.GetCurrentUserAddressUseCase
+import com.bunbeauty.shared.domain.use_case.address.GetUserAddressListUseCase
 
 class GetMotivationUseCase(
-    private val getCurrentUserAddressUseCase: GetCurrentUserAddressUseCase
+    private val getCurrentUserAddressUseCase: GetCurrentUserAddressUseCase,
+    private val getUserAddressListUseCase: GetUserAddressListUseCase
 ) {
 
-    suspend operator fun invoke(newTotalCost: Int): Motivation? {
+    suspend operator fun invoke(newTotalCost: Int, isDelivery: Boolean): Motivation? {
+        if (!isDelivery) {
+            return null
+        }
+
+        getUserAddressListUseCase()
         val currentUserAddress = getCurrentUserAddressUseCase()
 
         val minOrderCost = currentUserAddress?.minOrderCost

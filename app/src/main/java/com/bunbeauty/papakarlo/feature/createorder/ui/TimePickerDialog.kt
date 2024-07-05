@@ -94,7 +94,7 @@ fun TimePickerDialog(
                 Text(
                     text = stringResource(R.string.common_cancel),
                     style = FoodDeliveryTheme.typography.labelLarge.medium,
-                    color = FoodDeliveryTheme.colors.mainColors.disabled
+                    color = FoodDeliveryTheme.colors.mainColors.onSecondary
                 )
             }
             TextButton(

@@ -2,15 +2,15 @@ package com.bunbeauty.domain.feature.cart
 
 import com.bunbeauty.getCartProduct
 import com.bunbeauty.getMenuProduct
+import com.bunbeauty.shared.domain.feature.cart.GetDeliveryCostFlowUseCase
 import com.bunbeauty.shared.domain.feature.discount.GetDiscountUseCase
-import com.bunbeauty.shared.domain.interactor.cart.GetCartTotalUseCase
+import com.bunbeauty.shared.domain.interactor.cart.GetCartTotalFlowUseCase
 import com.bunbeauty.shared.domain.interactor.cart.GetNewTotalCostUseCase
 import com.bunbeauty.shared.domain.interactor.cart.GetOldTotalCostUseCase
-import com.bunbeauty.shared.domain.model.Delivery
 import com.bunbeauty.shared.domain.repo.CartProductRepo
-import com.bunbeauty.shared.domain.repo.DeliveryRepo
 import io.mockk.coEvery
 import io.mockk.mockk
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -19,20 +19,20 @@ import kotlin.test.assertEquals
 class GetCartTotalUseCaseTest {
 
     private val cartProductRepo: CartProductRepo = mockk()
-    private val deliveryRepo: DeliveryRepo = mockk()
     private val getDiscountUseCase: GetDiscountUseCase = mockk()
     private val getNewTotalCostUseCase: GetNewTotalCostUseCase = mockk()
     private val getOldTotalCostUseCase: GetOldTotalCostUseCase = mockk()
-    private lateinit var getCartTotalUseCase: GetCartTotalUseCase
+    private val getDeliveryCostFlowUseCase: GetDeliveryCostFlowUseCase = mockk()
+    private lateinit var getCartTotalFlowUseCase: GetCartTotalFlowUseCase
 
     @BeforeTest
     fun setup() {
-        getCartTotalUseCase = GetCartTotalUseCase(
+        getCartTotalFlowUseCase = GetCartTotalFlowUseCase(
             cartProductRepo = cartProductRepo,
-            deliveryRepo = deliveryRepo,
             getDiscountUseCase = getDiscountUseCase,
             getNewTotalCostUseCase = getNewTotalCostUseCase,
-            getOldTotalCostUseCase = getOldTotalCostUseCase
+            getOldTotalCostUseCase = getOldTotalCostUseCase,
+            getDeliveryCostFlowUseCase = getDeliveryCostFlowUseCase
         )
     }
 
@@ -42,20 +42,16 @@ class GetCartTotalUseCaseTest {
 
         coEvery { cartProductRepo.getCartProductList() } returns listOf()
         coEvery { getDiscountUseCase() } returns null
-        coEvery { deliveryRepo.getDelivery() } returns Delivery(
-            cost = 10,
-            forFree = 100
-        )
         coEvery { getNewTotalCostUseCase(listOf()) } returns 0
         coEvery { getOldTotalCostUseCase(listOf()) } returns 0
 
         // When
-        val cartTotal = getCartTotalUseCase(isDelivery = false)
+        val cartTotal = getCartTotalFlowUseCase(isDelivery = false)
 
         // Then
         assertEquals(
             expected = 0,
-            actual = cartTotal.totalCost
+            actual = cartTotal.first().newTotalCost
         )
     }
 
@@ -65,20 +61,16 @@ class GetCartTotalUseCaseTest {
 
         coEvery { cartProductRepo.getCartProductList() } returns listOf()
         coEvery { getDiscountUseCase() } returns null
-        coEvery { deliveryRepo.getDelivery() } returns Delivery(
-            cost = 10,
-            forFree = 100
-        )
         coEvery { getNewTotalCostUseCase(listOf()) } returns 0
         coEvery { getOldTotalCostUseCase(listOf()) } returns 0
 
         // When
-        val cartTotal = getCartTotalUseCase(isDelivery = false)
+        val cartTotal = getCartTotalFlowUseCase(isDelivery = false)
 
         // Then
         assertEquals(
             expected = null,
-            actual = cartTotal.oldFinalCost
+            actual = cartTotal.first().oldFinalCost
         )
     }
 
@@ -88,20 +80,16 @@ class GetCartTotalUseCaseTest {
 
         coEvery { cartProductRepo.getCartProductList() } returns listOf()
         coEvery { getDiscountUseCase() } returns null
-        coEvery { deliveryRepo.getDelivery() } returns Delivery(
-            cost = 10,
-            forFree = 100
-        )
         coEvery { getNewTotalCostUseCase(listOf()) } returns 0
         coEvery { getOldTotalCostUseCase(listOf()) } returns 0
 
         // When
-        val cartTotal = getCartTotalUseCase(isDelivery = false)
+        val cartTotal = getCartTotalFlowUseCase(isDelivery = false)
 
         // Then
         assertEquals(
             expected = null,
-            actual = cartTotal.oldFinalCost
+            actual = cartTotal.first().oldFinalCost
         )
     }
 
@@ -110,20 +98,16 @@ class GetCartTotalUseCaseTest {
         // Given
         coEvery { cartProductRepo.getCartProductList() } returns listOf()
         coEvery { getDiscountUseCase() } returns null
-        coEvery { deliveryRepo.getDelivery() } returns Delivery(
-            cost = 10,
-            forFree = 100
-        )
         coEvery { getNewTotalCostUseCase(listOf()) } returns 0
         coEvery { getOldTotalCostUseCase(listOf()) } returns 0
 
         // When
-        val cartTotal = getCartTotalUseCase(isDelivery = false)
+        val cartTotal = getCartTotalFlowUseCase(isDelivery = false)
 
         // Then
         assertEquals(
             expected = null,
-            actual = cartTotal.discount
+            actual = cartTotal.first().discount
         )
     }
 
@@ -144,20 +128,16 @@ class GetCartTotalUseCaseTest {
             coEvery { cartProductRepo.getCartProductList() } returns cartProductListMockData
 
             coEvery { getDiscountUseCase() } returns null
-            coEvery { deliveryRepo.getDelivery() } returns Delivery(
-                cost = 10,
-                forFree = 100000
-            )
             coEvery { getNewTotalCostUseCase(cartProductListMockData) } returns 100
             coEvery { getOldTotalCostUseCase(cartProductListMockData) } returns 200
 
             // When
-            val cartTotal = getCartTotalUseCase(isDelivery = true)
+            val cartTotal = getCartTotalFlowUseCase(isDelivery = true)
 
             // Then
             assertEquals(
                 expected = 210,
-                actual = cartTotal.oldFinalCost
+                actual = cartTotal.first().oldFinalCost
             )
         }
 
@@ -178,20 +158,16 @@ class GetCartTotalUseCaseTest {
             coEvery { cartProductRepo.getCartProductList() } returns cartProductListMockData
 
             coEvery { getDiscountUseCase() } returns null
-            coEvery { deliveryRepo.getDelivery() } returns Delivery(
-                cost = 10,
-                forFree = 100000
-            )
             coEvery { getNewTotalCostUseCase(cartProductListMockData) } returns 100
             coEvery { getOldTotalCostUseCase(cartProductListMockData) } returns 0
 
             // When
-            val cartTotal = getCartTotalUseCase(isDelivery = true)
+            val cartTotal = getCartTotalFlowUseCase(isDelivery = true)
 
             // Then
             assertEquals(
                 expected = 110,
-                actual = cartTotal.newFinalCost
+                actual = cartTotal.first().newFinalCost
             )
         }
 

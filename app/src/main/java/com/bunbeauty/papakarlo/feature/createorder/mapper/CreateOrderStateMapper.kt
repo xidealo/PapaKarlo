@@ -1,6 +1,7 @@
 package com.bunbeauty.papakarlo.feature.createorder.mapper
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.feature.address.mapper.toAddressString
 import com.bunbeauty.papakarlo.feature.createorder.CartTotalUI
@@ -34,19 +35,13 @@ fun CreateOrder.DataState.toViewState(): CreateOrderViewState {
         deferredTime = deferredTime.toDeferredTimeString(),
         selectedPaymentMethod = selectedPaymentMethod?.toPaymentMethodUI(),
         isPaymentMethodErrorShown = isPaymentMethodErrorShown,
-        cartTotal = when (cartTotal) {
-            CreateOrder.CartTotal.Loading -> CartTotalUI.Loading
-            is CreateOrder.CartTotal.Success -> {
-                val successCartTotal = cartTotal as CreateOrder.CartTotal.Success
-                CartTotalUI.Success(
-                    motivation = successCartTotal.motivation?.toMotivationUi(),
-                    discount = successCartTotal.discount,
-                    deliveryCost = successCartTotal.deliveryCost,
-                    oldFinalCost = successCartTotal.oldFinalCost,
-                    newFinalCost = successCartTotal.newFinalCost
-                )
-            }
-        },
+        showChange = paymentByCash,
+        withoutChange = stringResource(R.string.msg_without_change),
+        changeFrom = stringResource(R.string.msg_change_from),
+        withoutChangeChecked = withoutChangeChecked,
+        change = change?.toString() ?: "",
+        isChangeErrorShown = isChangeErrorShown,
+        cartTotal = cartTotal.toCartTotalUI(),
         isLoading = isLoading,
         deliveryAddressList = DeliveryAddressListUI(
             isShown = isUserAddressListShown,
@@ -81,4 +76,19 @@ fun CreateOrder.DataState.toViewState(): CreateOrderViewState {
             }.toImmutableList()
         )
     )
+}
+
+private fun CreateOrder.CartTotal.toCartTotalUI(): CartTotalUI {
+    return when (this) {
+        CreateOrder.CartTotal.Loading -> CartTotalUI.Loading
+        is CreateOrder.CartTotal.Success -> {
+            CartTotalUI.Success(
+                motivation = motivation?.toMotivationUi(),
+                discount = discount,
+                deliveryCost = deliveryCost,
+                oldFinalCost = oldFinalCost,
+                newFinalCost = newFinalCost
+            )
+        }
+    }
 }
