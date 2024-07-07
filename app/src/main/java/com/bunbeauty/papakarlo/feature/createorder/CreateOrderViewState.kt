@@ -31,14 +31,12 @@ data class CreateOrderViewState(
     val pickupAddressList: PickupAddressListUI,
     val isDeferredTimeShown: Boolean,
     val timePicker: TimePickerUI,
-    val paymentMethodList: PaymentMethodListUI
+    val paymentMethodList: PaymentMethodListUI,
+    val isOrderCreationEnabled: Boolean
 ) : BaseViewState {
 
     val isFieldsEnabled: Boolean = !isLoading
     val switcherPosition = if (isDelivery) 0 else 1
-    val isOrderCreationEnabled: Boolean =
-        (cartTotal != CartTotalUI.Loading) &&
-            ((cartTotal as? CartTotalUI.Success)?.motivation !is MotivationUi.MinOrderCost)
 }
 
 @Immutable

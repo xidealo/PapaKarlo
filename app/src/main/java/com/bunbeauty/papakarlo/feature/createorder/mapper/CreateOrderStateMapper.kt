@@ -74,7 +74,8 @@ fun CreateOrder.DataState.toViewState(): CreateOrderViewState {
             paymentMethodList = paymentMethodList.map { selectablePaymentMethod ->
                 selectablePaymentMethod.toSelectablePaymentMethodUI()
             }.toImmutableList()
-        )
+        ),
+        isOrderCreationEnabled = isOrderCreationEnabled
     )
 }
 

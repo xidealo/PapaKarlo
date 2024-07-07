@@ -247,7 +247,8 @@ struct CreateOrderView: View {
                     changeFrom: "msg_change_from",
                     withoutChangeChecked:   createOrderDataStateNN.withoutChangeChecked,
                     change: getChange(change: createOrderDataStateNN.change),
-                    isChangeErrorShown: createOrderDataStateNN.isChangeErrorShown
+                    isChangeErrorShown: createOrderDataStateNN.isChangeErrorShown,
+                    isOrderCreationEnabled: createOrderDataStateNN.isOrderCreationEnabled
                 )
             }
         }
@@ -651,9 +652,14 @@ struct CreateOrderSuccessView: View {
                             )
                         )
                     }, label: {
-                        ButtonText(text: Strings.ACTION_CART_PRODUCT_CREATE_ORDER)
+                        ButtonText(
+                            text: Strings.ACTION_CART_PRODUCT_CREATE_ORDER,
+                            background: createOrderViewState.isOrderCreationEnabled ?  AppColor.primary : AppColor.disabled,
+                            foregroundColor: createOrderViewState.isOrderCreationEnabled ? AppColor.onPrimary : AppColor.onDisabled
+                        )
                     }
                 )
+                .disabled(!createOrderViewState.isOrderCreationEnabled)
                 .padding(.vertical, Diems.MEDIUM_PADDING)
                 .padding(.horizontal, Diems.MEDIUM_PADDING)
             }

@@ -31,6 +31,7 @@ struct CreateOrderViewState {
     var withoutChangeChecked: Bool
     var change: String
     var isChangeErrorShown: Bool
+    var isOrderCreationEnabled: Bool
     
     func switchPosition(isDelivery:Bool) -> Int {
         if (isDelivery) {

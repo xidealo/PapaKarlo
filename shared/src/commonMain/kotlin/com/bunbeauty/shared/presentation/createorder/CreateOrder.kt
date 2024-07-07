@@ -53,6 +53,7 @@ interface CreateOrder {
         val cartTotal: CartTotal,
 
         val isLoading: Boolean,
+        val isOrderCreationEnabled: Boolean
     ) : BaseDataState {
 
         val paymentByCash: Boolean = selectedPaymentMethod?.name == PaymentMethodName.CASH
