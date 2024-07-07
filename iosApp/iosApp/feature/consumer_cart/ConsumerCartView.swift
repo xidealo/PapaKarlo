@@ -53,6 +53,7 @@ struct ConsumerCartView: View {
     @State private var selectedMenuProductName : String  = ""
     @State private var selectedCartProductItemIos : String = ""
     @State private var selectedAdditionUuidList : [String] = []
+    @State private var productDetailsOpenedFrom : ProductDetailsOpenedFrom = ProductDetailsOpenedFrom.cartProduct
     //--
 
     var body: some View {
@@ -89,7 +90,7 @@ struct ConsumerCartView: View {
                         menuProductName: selectedMenuProductName,
                         cartProductUuid: selectedCartProductItemIos,
                         additionUuidList: selectedAdditionUuidList,
-                        productDetailsOpenedFrom: ProductDetailsOpenedFrom.cartProduct,
+                        productDetailsOpenedFrom: productDetailsOpenedFrom,
                         created: $created,
                         edited: $edited
                     ),
@@ -243,6 +244,7 @@ struct ConsumerCartView: View {
                         selectedMenuProductName = consumerCartEventNavigateToProduct?.name ?? ""
                         selectedCartProductItemIos = consumerCartEventNavigateToProduct?.cartProductUuid ?? ""
                         selectedAdditionUuidList = consumerCartEventNavigateToProduct?.additionUuidList ?? []
+                        productDetailsOpenedFrom = consumerCartEventNavigateToProduct?.productDetailsOpenedFrom ?? ProductDetailsOpenedFrom.cartProduct
 
                         openProductDetails = true
                     default:
