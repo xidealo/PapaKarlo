@@ -343,7 +343,7 @@ class CreateOrderFragment :
         }
 
         Row(
-            modifier = modifier.padding(vertical = 8.dp),
+            modifier = modifier.padding(top = 8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             FoodDeliveryCheckbox(
@@ -640,7 +640,8 @@ class CreateOrderFragment :
                     paymentMethodList = PaymentMethodListUI(
                         isShown = false,
                         paymentMethodList = persistentListOf()
-                    )
+                    ),
+                    isOrderCreationEnabled = false
                 ),
                 onAction = {}
             )
@@ -700,7 +701,8 @@ class CreateOrderFragment :
                     paymentMethodList = PaymentMethodListUI(
                         isShown = false,
                         paymentMethodList = persistentListOf()
-                    )
+                    ),
+                    isOrderCreationEnabled = true
                 ),
                 onAction = {}
             )
@@ -760,7 +762,8 @@ class CreateOrderFragment :
                     paymentMethodList = PaymentMethodListUI(
                         isShown = false,
                         paymentMethodList = persistentListOf()
-                    )
+                    ),
+                    isOrderCreationEnabled = true
                 ),
                 onAction = {}
             )
@@ -820,7 +823,8 @@ class CreateOrderFragment :
                     paymentMethodList = PaymentMethodListUI(
                         isShown = false,
                         paymentMethodList = persistentListOf()
-                    )
+                    ),
+                    isOrderCreationEnabled = true
                 ),
                 onAction = {}
             )
@@ -873,7 +877,8 @@ class CreateOrderFragment :
                     paymentMethodList = PaymentMethodListUI(
                         isShown = false,
                         paymentMethodList = persistentListOf()
-                    )
+                    ),
+                    isOrderCreationEnabled = true
                 ),
                 onAction = {}
             )

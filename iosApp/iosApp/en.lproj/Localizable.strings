@@ -99,3 +99,13 @@
 "hint_create_address_floor" = "Floor";
 "hint_create_address_comment" = "Comment for couriers";
 "msg_create_address_created" = "Address added";
+
+//Create order
+"title_create_order_time_delivery" = "Delivery time";
+"title_create_order_time_pickup" = "Pickup time";
+"error_select_delivery_address" = "Select delivery address";
+"error_select_payment_method" = "Select payment method";
+"error_payment_method" = "Payment method was not select";
+"msg_without_change" = "Without change";
+"msg_change_from" = "Change from";
+"error_enter_correct_amount" = "Enter correct amount";

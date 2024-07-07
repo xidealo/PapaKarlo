@@ -15,7 +15,6 @@ fun CreateOrder.DeferredTime.toDeferredTimeString(): String {
         }
 
         is CreateOrder.DeferredTime.Later -> {
-            stringResource(R.string.asap)
             "${time.hours.withFirstZero()}:${time.minutes.withFirstZero()}"
         }
     }

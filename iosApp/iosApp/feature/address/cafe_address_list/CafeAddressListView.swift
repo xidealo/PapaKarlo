@@ -14,17 +14,21 @@ struct CafeAddressListView: View {
     @ObservedObject private var viewModel : CafeAddressViewModel
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     var title: LocalizedStringKey = "titleCafeAddresses"
-
+    
+    var closedCallback: () -> Void
+    
     init(
         isClickable:Bool,
         _title : LocalizedStringKey = "titleCafeAddresses",
-        addressList: [SelectableCafeAddressItem]
+        addressList: [SelectableAddressUI],
+        _closedCallback: @escaping () -> Void
     ){
         title = _title
         viewModel = CafeAddressViewModel(
             isClickable: true,
-            addressList:addressList
+            addressList: addressList
         )
+        closedCallback = _closedCallback
     }
     
     var body: some View {
@@ -32,34 +36,35 @@ struct CafeAddressListView: View {
             ToolbarView(
                 title: title,
                 back: {
-                    self.mode.wrappedValue.dismiss()
+                    back()
                 }
             )
-            
             switch(viewModel.cafeAddressViewState.cafeAddressState){
-            case CafeAddressState.loading : LoadingView()
-            default : SuccessCafeAddressListView(viewModel: viewModel)
+                case CafeAddressState.loading : LoadingView()
+                default : SuccessCafeAddressListView(viewModel: viewModel)
             }
         }.hiddenNavigationBarStyle()
             .background(AppColor.background)
-            .onReceive(viewModel.$cafeAddressViewState, perform: { cafeAddressViewState in
-                if(cafeAddressViewState.cafeAddressState == CafeAddressState.goBack){
-                    self.mode.wrappedValue.dismiss()
+            .onReceive(
+                viewModel.$cafeAddressViewState,
+                perform: { cafeAddressViewState in
+                    if(cafeAddressViewState.cafeAddressState == CafeAddressState.goBack){
+                        back()
+                    }
                 }
-            })
+            )
     }
-}
-
-struct CafeAddressListView_Previews: PreviewProvider {
-    static var previews: some View {
-        CafeAddressListView(isClickable: false, addressList: [])
+    
+    func back() {
+        closedCallback()
+        self.mode.wrappedValue.dismiss()
     }
 }
 
 
 struct SuccessCafeAddressListView: View {
     let viewModel: CafeAddressViewModel
-
+    
     var body: some View {
         VStack(spacing:0){
             ScrollView {

@@ -18,8 +18,10 @@ import com.bunbeauty.shared.domain.use_case.address.SaveSelectedUserAddressUseCa
 import com.bunbeauty.shared.domain.use_case.deferred_time.GetMinTimeUseCase
 import com.bunbeauty.shared.extension.launchSafe
 import com.bunbeauty.shared.presentation.base.SharedStateViewModel
+import com.bunbeauty.shared.presentation.motivation.MotivationData
 import com.bunbeauty.shared.presentation.motivation.toMotivationData
 import kotlinx.coroutines.Job
+import kotlin.test.fail
 
 private const val DELIVERY_POSITION = 0
 
@@ -51,6 +53,7 @@ class CreateOrderViewModel(
         selectedPaymentMethod = null,
         cartTotal = CreateOrder.CartTotal.Loading,
         isLoading = true,
+        isOrderCreationEnabled = false
     )
 ) {
 
@@ -490,10 +493,11 @@ class CreateOrderViewModel(
                         newTotalCost = cartTotal.newTotalCost,
                         isDelivery = isDelivery
                     )
+                    val motivationData = motivation?.toMotivationData()
                     setState {
                         copy(
                             cartTotal = CreateOrder.CartTotal.Success(
-                                motivation = motivation?.toMotivationData(),
+                                motivation = motivationData,
                                 discount = cartTotal.discount?.let { discount ->
                                     "$discount$PERCENT"
                                 },
@@ -505,7 +509,8 @@ class CreateOrderViewModel(
                                 },
                                 newFinalCost = "${cartTotal.newFinalCost} $RUBLE_CURRENCY",
                                 newFinalCostValue = cartTotal.newFinalCost,
-                            )
+                            ),
+                            isOrderCreationEnabled = motivationData !is MotivationData.MinOrderCost
                         )
                     }
                 }

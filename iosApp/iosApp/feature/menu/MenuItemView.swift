@@ -53,7 +53,7 @@ struct MenuItemView: View {
                     
                     HStack(spacing:0){
                         if let oldPrice = menuProductItem.oldPrice{
-                            Text(String(oldPrice) + Strings.CURRENCY)
+                            Text(String(oldPrice))
                                 .strikethrough()
                                 .bodySmall()
                                 .foregroundColor(AppColor.onSurfaceVariant)

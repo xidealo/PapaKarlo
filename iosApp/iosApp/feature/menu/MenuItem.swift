@@ -9,5 +9,5 @@ import SwiftUI
 
 struct MenuItem: Identifiable {
     var id = UUID()
-    let categorySectionItem:CategorySectionItem
+    let categorySectionItem: CategorySectionItem
 }

@@ -31,11 +31,14 @@ struct UserAddressListView: View {
     
     @State var listener: Closeable? = nil
     
+    var closedCallback: () -> Void
+
     var body: some View {
         VStack(spacing:0){
             ToolbarView(
                 title: title,
                 back: {
+                    closedCallback()
                     self.mode.wrappedValue.dismiss()
                 }
             )
@@ -53,7 +56,8 @@ struct UserAddressListView: View {
                 }),
                 show: show,
                 viewModel: viewModel,
-                userAddressListState: userAddressViewState
+                userAddressListState: userAddressViewState,
+                closedCallback: closedCallback
             )
             default : EmptyView()
             }
@@ -86,6 +90,8 @@ struct SuccessAddressListView: View {
     @State var userAddressListState : UserAddressListState
     @State var listener: Closeable? = nil
     
+    var closedCallback: () -> Void
+
     var body: some View {
         ZStack(alignment:.bottom){
             ScrollView {
@@ -125,7 +131,9 @@ struct SuccessAddressListView: View {
                 // work with actions
                 userAddressListState.eventList.forEach { event in
                     switch(event){
-                    case is UserAddressListStateEventGoBack : self.mode.wrappedValue.dismiss()
+                    case is UserAddressListStateEventGoBack : 
+                        closedCallback()
+                        self.mode.wrappedValue.dismiss()
                     default:
                         print("def")
                     }

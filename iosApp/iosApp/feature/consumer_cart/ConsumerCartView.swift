@@ -36,7 +36,7 @@ struct ConsumerCartView: View {
     @State var openLogin: Bool = false
     @State var openProductDetails: Bool = false
     // ---
-    
+
     //for back after createOrder
     @Binding var isRootActive: Bool
     @Binding var selection: MainContainerState
@@ -47,14 +47,15 @@ struct ConsumerCartView: View {
     @State var created: Bool = false
     @State var edited: Bool = false
     //--
-    
+
     //for back after createOrder
     @State private var selectedMenuProductUuid : String = ""
     @State private var selectedMenuProductName : String  = ""
     @State private var selectedCartProductItemIos : String = ""
     @State private var selectedAdditionUuidList : [String] = []
+    @State private var productDetailsOpenedFrom : ProductDetailsOpenedFrom = ProductDetailsOpenedFrom.cartProduct
     //--
-    
+
     var body: some View {
         VStack(spacing:0){
             ToolbarView(
@@ -81,7 +82,7 @@ struct ConsumerCartView: View {
             ){
                 EmptyView()
             }
-            
+
             NavigationLink(
                 destination:
                     ProductDetailsView(
@@ -89,7 +90,7 @@ struct ConsumerCartView: View {
                         menuProductName: selectedMenuProductName,
                         cartProductUuid: selectedCartProductItemIos,
                         additionUuidList: selectedAdditionUuidList,
-                        productDetailsOpenedFrom: ProductDetailsOpenedFrom.cartProduct,
+                        productDetailsOpenedFrom: productDetailsOpenedFrom,
                         created: $created,
                         edited: $edited
                     ),
@@ -97,7 +98,7 @@ struct ConsumerCartView: View {
             ){
                 EmptyView()
             }
-            
+
             switch consumerCartViewState.state {
             case .success(let cartProductItems, let consumerCartProducts, let bottomPanelInfo):
                 ConsumerCartSuccessScreen(
@@ -146,7 +147,7 @@ struct ConsumerCartView: View {
             show: $edited
         )
     }
-    
+
     func subscribe(){
         viewModel.onAction(action: ConsumerCartActionInit())
         listener = viewModel.dataState.watch { consumerCartStateVM in
@@ -189,12 +190,12 @@ struct ConsumerCartView: View {
             }
         }
     }
-    
+
     func getBottomPanelInfoUi(dataState: ConsumerCartDataState) -> BottomPanelInfoUi? {
         if(dataState.cartProductItemList.isEmpty){
             return nil
         }
-        
+
         let motivationUi: MotivationUi? = {
             if let warningItem = dataState.motivation {
                 switch warningItem {
@@ -214,7 +215,7 @@ struct ConsumerCartView: View {
             }
             return nil
         }()
-        
+
         return BottomPanelInfoUi(
             motivation: motivationUi,
             discount: dataState.discount,
@@ -222,15 +223,15 @@ struct ConsumerCartView: View {
             newTotalCost: dataState.newTotalCost
         )
     }
-    
+
     func eventsSubscribe(){
         eventsListener = viewModel.events.watch(block: { _events in
             if let events = _events{
                 let consumerCartEvents = events as? [ConsumerCartEvent] ?? []
-                
+
                 consumerCartEvents.forEach { event in
                     print(event)
-                    
+
                     switch(event){
                     case is ConsumerCartEventNavigateBack :
                         self.mode.wrappedValue.dismiss()
@@ -238,18 +239,19 @@ struct ConsumerCartView: View {
                     case is ConsumerCartEventNavigateToLogin: openLogin = true
                     case is ConsumerCartEventNavigateToProduct:
                         let consumerCartEventNavigateToProduct = event as? ConsumerCartEventNavigateToProduct
-                        
+
                         selectedMenuProductUuid = consumerCartEventNavigateToProduct?.uuid ?? ""
                         selectedMenuProductName = consumerCartEventNavigateToProduct?.name ?? ""
                         selectedCartProductItemIos = consumerCartEventNavigateToProduct?.cartProductUuid ?? ""
                         selectedAdditionUuidList = consumerCartEventNavigateToProduct?.additionUuidList ?? []
-                        
+                        productDetailsOpenedFrom = consumerCartEventNavigateToProduct?.productDetailsOpenedFrom ?? ProductDetailsOpenedFrom.cartProduct
+
                         openProductDetails = true
                     default:
                         print("def")
                     }
                 }
-                
+
                 if !consumerCartEvents.isEmpty {
                     viewModel.consumeEvents(events: consumerCartEvents)
                 }
@@ -270,7 +272,7 @@ struct ConsumerCartSuccessScreen: View {
     let cartProductItemUiList : [CartProductItemUi]
     let recommendationProductList : [MenuProductItem]
     let bottomPanelInfoUi : BottomPanelInfoUi?
-    
+
     //for back after createOrder
     @Binding var isRootActive : Bool
     @Binding var selection : MainContainerState
@@ -281,7 +283,7 @@ struct ConsumerCartSuccessScreen: View {
     @Binding var edited : Bool
     
     let action: (ConsumerCartAction) -> Void
-    
+
     let columns = [
         GridItem(.flexible(), spacing: 8, alignment: .top),
         GridItem(.flexible(), spacing: 8, alignment: .top)
@@ -322,9 +324,9 @@ struct ConsumerCartSuccessScreen: View {
                                             })
                                         .padding(.horizontal, Diems.MEDIUM_PADDING)
                                         .padding(.bottom, 8)
-                                        
+
                                     }
-                                    
+
                                     if(cartProductItemUiList.last?.id != cartProductItemIos.id){
                                         Divider()
                                             .frame(height: 2)
@@ -336,7 +338,7 @@ struct ConsumerCartSuccessScreen: View {
                             }
                         }
                     }
-                    
+
                     if(!recommendationProductList.isEmpty){
                         Text("consumer_cart_recommendations")
                             .titleMedium(weight: .medium)
@@ -345,7 +347,7 @@ struct ConsumerCartSuccessScreen: View {
                             .padding(.bottom, 8)
                             .padding(.top, 16)
                     }
-                    
+
                     LazyVGrid(columns: columns, spacing: 8) {
                         ForEach(recommendationProductList){ menuProductItem in
                             MenuItemView(
@@ -366,52 +368,32 @@ struct ConsumerCartSuccessScreen: View {
                     .padding(.horizontal, Diems.MEDIUM_PADDING)
                     .padding(.bottom, 160)
                 }
-                
+
                 VStack(spacing:0){
                     if let motivation = bottomPanelInfoUi?.motivation {
-                        VStack(spacing:0){
-                            HStack(spacing:0){
-                                getMotivationIcon(motivation: motivation)
-                                getMotivationText(motivation: motivation)
-                                    .foregroundColor(AppColor.onSurface)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    .padding(.leading, 8)
-                                
-                            }
-                            
-                            if let progress = getMotivationProgress(motivation: motivation){
-                                ProgressView(value: progress)
-                                    .tint(progress < 1 ? AppColor.warning : AppColor.positive)
-                                    .frame(height: 8)
-                                    .progressViewStyle(LinearProgressViewStyle())
-                                    .cornerRadius(4)
-                                    .animation(.easeIn(duration: 3), value: progress)
-                                    .padding(.top, 4)
-                            }
-                        }.padding(.horizontal, 16)
-                            .padding(.top, 16)
+                        Motivation(motivation: motivation)
                     }
-                    
+
                     if let discount = bottomPanelInfoUi?.discount{
                         HStack(spacing:0){
                             Text("consumer_cart_discount")
                                 .bodyMedium()
                                 .foregroundColor(AppColor.onSurface)
-                            
+
                             Spacer()
-                            
+
                             DiscountCard(text:discount)
                         }.padding(.top, 8)
                             .padding(.horizontal, 16)
                     }
-                    
+
                     HStack(spacing:0){
                         Text("consumer_cart_total")
                             .bodyMedium(weight: .bold)
                             .foregroundColor(AppColor.onSurface)
-                        
+
                         Spacer()
-                        
+
                         if let oldTotalCost = bottomPanelInfoUi?.oldTotalCost{
                             Text(oldTotalCost)
                                 .strikethrough()
@@ -419,7 +401,7 @@ struct ConsumerCartSuccessScreen: View {
                                 .foregroundColor(AppColor.onSurfaceVariant)
                                 .padding(.trailing, 4)
                         }
-                        
+
                         if let newTotalCost = bottomPanelInfoUi?.newTotalCost{
                             Text(newTotalCost)
                                 .bodyMedium(weight: .bold)
@@ -427,7 +409,7 @@ struct ConsumerCartSuccessScreen: View {
                         }
                     }.padding(.top, 8)
                         .padding(.horizontal, 16)
-                    
+
                     Button {
                         action(ConsumerCartActionOnCreateOrderClick())
                     } label: {
@@ -439,56 +421,13 @@ struct ConsumerCartSuccessScreen: View {
             }
         }
     }
-    
-    func getMotivationProgress(motivation: MotivationUi) -> Float?  {
-        switch(motivation){
-        case .MinOrderCost(_):
-            return nil
-            
-        case .ForLowerDelivery(_, let progress, _):
-            return progress
-            
-        case .LowerDeliveryAchieved(_):
-            return 1
-        }
-    }
-    
-    func getMotivationText(motivation: MotivationUi) -> some View  {
-        switch(motivation){
-        case .MinOrderCost(let cost):
-            return (
-                Text("Минимальая сумма заказа: ").bodySmall() + Text(cost).bodySmall(weight: .bold)
-            )
-            
-        case .ForLowerDelivery(let increaseAmountBy, _, let isFree):
-            return isFree ? (Text("Добавте еще на ") + Text(increaseAmountBy).bold() + Text(" для бесплатной доставки")).bodySmall() : (Text("Добавте еще на ") + Text(increaseAmountBy).bold() + Text(" для уменьшения стоимости доставки")).bodySmall()
-        case .LowerDeliveryAchieved(let isFree):
-            return Text(isFree ? "Бесплатная доставка" : "Уменьшенная стоимость доставки").bodySmall()
-        }
-    }
-    
-    func getMotivationIcon(motivation: MotivationUi) -> some View  {
-        switch(motivation){
-        case .MinOrderCost(_):
-            return IconImage(imageName: "ic_warning")
-                .foregroundColor(AppColor.warning)
-            
-        case .ForLowerDelivery(_, _, _):
-            return IconImage(imageName: "ic_delivery")
-                .foregroundColor(AppColor.onSurfaceVariant)
-            
-        case .LowerDeliveryAchieved(_):
-            return IconImage(imageName: "ic_delivery")
-                .foregroundColor(AppColor.onSurfaceVariant)
-        }
-    }
-    
+
     struct ConsumerCartEmptyScreen: View {
         @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-        
+
         @Binding var isRootActive: Bool
         @Binding var selection: MainContainerState
-        
+
         var body: some View {
             EmptyWithIconView(
                 imageName:  "CartIcon",

@@ -6,64 +6,32 @@
 //
 
 import Foundation
+import SwiftUI
 
-//deprecated
-class CreateOrderViewState: NSObject, NSCopying {
-    
-    var isDelivery:Bool
-    var address:String?
+struct CreateOrderViewState {
+    var isDelivery: Bool
+    var deliveryAddress:String?
+    var pickupAddress: String?
+    var isAddressErrorShown: Bool
+    var deferredTime: String
+    var deferredTimeStringLocolized: LocalizedStringKey
+    var selectedPaymentMethod: PaymentMethodUI?
+    var isPaymentMethodErrorShown: Bool
     var comment: String
-    var deferredTime: Date
-    var totalCost: String
-    var deliveryCost: String
-    var amountToPay: String
-    var amountToPayWithDeliveryCost: String
-    var userUuid:String?
-    var cafeUuid:String?
-    var notNeedDeferredTime:Bool
-
-    init(
-        isDelivery:Bool,
-        address:String?,
-        comment:String,
-        deferredTime:Date,
-        totalCost: String,
-        deliveryCost: String,
-        amountToPay:String,
-        amountToPayWithDeliveryCost: String,
-        userUuid:String?,
-        cafeUuid:String?,
-        notNeedDeferredTime:Bool
-    ){
-        self.isDelivery = isDelivery
-        self.address = address
-        self.comment = comment
-        self.deferredTime = deferredTime
-        self.totalCost = totalCost
-        self.deliveryCost = deliveryCost
-        self.amountToPay = amountToPay
-        self.amountToPayWithDeliveryCost = amountToPayWithDeliveryCost
-        self.userUuid = userUuid
-        self.cafeUuid = cafeUuid
-        self.notNeedDeferredTime = notNeedDeferredTime
-    }
-    
-    func copy(with zone: NSZone? = nil) -> Any {
-        let copy = CreateOrderViewState(
-            isDelivery : isDelivery,
-            address : address,
-            comment : comment,
-            deferredTime : deferredTime,
-            totalCost : totalCost,
-            deliveryCost : deliveryCost,
-            amountToPay : amountToPay,
-            amountToPayWithDeliveryCost : amountToPayWithDeliveryCost,
-            userUuid : userUuid,
-            cafeUuid : cafeUuid,
-            notNeedDeferredTime:notNeedDeferredTime
-        )
-        return copy
-    }
+    var cartTotal: CartTotalUI
+    var isLoading: Bool
+    var deliveryAddressList: DeliveryAddressListUI
+    var pickupAddressList: PickupAddressListUI
+    var isDeferredTimeShown: Bool
+    var timePicker: TimePickerUI
+    var paymentMethodList: PaymentMethodListUI
+    var showChange: Bool
+    var withoutChange: LocalizedStringKey
+    var changeFrom: LocalizedStringKey
+    var withoutChangeChecked: Bool
+    var change: String
+    var isChangeErrorShown: Bool
+    var isOrderCreationEnabled: Bool
     
     func switchPosition(isDelivery:Bool) -> Int {
         if (isDelivery) {
@@ -72,4 +40,47 @@ class CreateOrderViewState: NSObject, NSCopying {
             return 1
         }
     }
+}
+
+enum CartTotalUI {
+    case Loading
+    case Success(MotivationUi?, String?, String?, String?, String)
+}
+
+struct DeliveryAddressListUI {
+    var isShown: Bool
+    var addressList: [SelectableAddressUI]
+}
+
+struct PickupAddressListUI {
+    var isShown: Bool
+    var addressList: [SelectableAddressUI]
+}
+
+struct PaymentMethodListUI {
+    var isShown: Bool
+    var paymentMethodList: [SelectablePaymentMethodUI]
+}
+
+struct SelectableAddressUI {
+    var uuid: String
+    var address: String
+    var isSelected: Bool
+}
+
+struct SelectablePaymentMethodUI : Identifiable {
+    var id: String
+    var name: LocalizedStringKey
+    var isSelected: Bool
+}
+
+struct TimePickerUI {
+    var isShown: Bool
+    var minTime: TimeUI
+    var initialTime: TimeUI
+}
+
+struct TimeUI {
+    var hours: Int
+    var minutes: Int
 }
