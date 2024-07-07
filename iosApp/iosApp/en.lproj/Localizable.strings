@@ -106,4 +106,6 @@
 "error_select_delivery_address" = "Select delivery address";
 "error_select_payment_method" = "Select payment method";
 "error_payment_method" = "Payment method was not select";
-
+"msg_without_change" = "Without change";
+"msg_change_from" = "Change from";
+"error_enter_correct_amount" = "Enter correct amount";

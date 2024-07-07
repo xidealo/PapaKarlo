@@ -31,7 +31,8 @@ struct CreateOrderView: View {
     @State var addressList: [SelectableCafeAddressItem] = []
     @State var paymentList: [SelectablePaymentMethod] = []
     @State var selectedPaymentUuid: String? = nil
-    
+    @State var changeError : LocalizedStringKey?
+
     @State var listener: Closeable? = nil
     @State var eventsListener: Closeable? = nil
     
@@ -41,7 +42,7 @@ struct CreateOrderView: View {
         userInteractor: iosComponent.provideIUserInteractor(),
         getSelectableUserAddressList: iosComponent.provideGetSelectableUserAddressListUseCase(),
         getSelectableCafeList: iosComponent.provideGetSelectableCafeListUseCase(),
-        getCartTotal: iosComponent.provideGetCartTotalUseCase(),
+        getCartTotalFlowUseCase: iosComponent.provideGetCartTotalUseCase(),
         getMotivationUseCase: iosComponent.provideGetMotivationUseCaseUseCase(),
         getMinTime: iosComponent.provideGetMinTimeUseCase(),
         createOrder: iosComponent.provideCreateOrderUseCase(),
@@ -64,7 +65,7 @@ struct CreateOrderView: View {
             NavigationLink(
                 destination: UserAddressListView(
                     title: "title_delivery_addresses",
-                    isClickable: true, 
+                    isClickable: true,
                     closedCallback: {
                         viewModel.onAction(
                             action: CreateOrderActionHideDeliveryAddressList()
@@ -125,6 +126,7 @@ struct CreateOrderView: View {
                         goToUserAddress: $goToUserAddress,
                         goToCafeAddress: $goToCafeAddress,
                         goToSelectPaymentMethod: $goToSelectPaymentMethod,
+                        changeError: $changeError,
                         isRootActive: $isRootActive,
                         selection: $selection,
                         showOrderCreated: $showOrderCreated,
@@ -176,11 +178,15 @@ struct CreateOrderView: View {
         listener = viewModel.dataState.watch { createOrderDataState in
             if let createOrderDataStateNN = createOrderDataState {
                 
-                print(createOrderDataState)
-                
                 goToUserAddress = createOrderDataStateNN.isUserAddressListShown
                 goToCafeAddress = createOrderDataStateNN.isCafeListShown
                 goToSelectPaymentMethod = createOrderDataStateNN.isPaymentMethodListShown
+                
+                if(createOrderDataStateNN.isChangeErrorShown){
+                    changeError = "error_enter_correct_amount"
+                }else{
+                    changeError = nil
+                }
                 
                 createOrderViewState = CreateOrderViewState(
                     isDelivery: createOrderDataStateNN.isDelivery,
@@ -235,7 +241,13 @@ struct CreateOrderView: View {
                                 isSelected: selectablePaymentMethod.isSelected
                             )
                         })
-                    )
+                    ),
+                    showChange: createOrderDataStateNN.paymentByCash,
+                    withoutChange: "msg_without_change",
+                    changeFrom: "msg_change_from",
+                    withoutChangeChecked:   createOrderDataStateNN.withoutChangeChecked,
+                    change: getChange(change: createOrderDataStateNN.change),
+                    isChangeErrorShown: createOrderDataStateNN.isChangeErrorShown
                 )
             }
         }
@@ -243,7 +255,7 @@ struct CreateOrderView: View {
     
     func eventsSubscribe(){
         eventsListener = viewModel.events.watch(block: { _events in
-            if let events = _events{
+            if let events = _events {
                 let createOrderEvents = events as? [CreateOrderEvent] ?? []
                 
                 createOrderEvents.forEach { event in
@@ -348,6 +360,14 @@ struct CreateOrderView: View {
         }
         return nil
     }
+    
+    func getChange(change:KotlinInt?) -> String{
+        if let change = change {
+            return "\(change)"
+        }
+        
+        return ""
+    }
 }
 
 struct CreateOrderSuccessView: View {
@@ -364,9 +384,11 @@ struct CreateOrderSuccessView: View {
     
     @State var isDelivery = true
     @State var comment = ""
+    @State var changeTextField = ""
     @State var faster = true
     @State var deferredTime: Foundation.Date = Foundation.Date()
-    
+    @Binding var changeError : LocalizedStringKey?
+
     @Binding var isRootActive: Bool
     @Binding var selection: MainContainerState
     @Binding var showOrderCreated: Bool
@@ -461,6 +483,54 @@ struct CreateOrderSuccessView: View {
                             .padding(.top, 4)
                             .padding(.horizontal, 16)
                     }
+                    
+                    if(createOrderViewState.showChange){
+                        HStack(spacing:0){
+                            Button(action: {
+                                action(
+                                    CreateOrderActionChangeWithoutChangeChecked(
+                                        isChecked: !createOrderViewState.withoutChangeChecked
+                                    )
+                                )
+                            }) {
+                                FoodDeliveryCheckBox(
+                                    isSelected: createOrderViewState.withoutChangeChecked,
+                                    action: {
+                                        action(
+                                            CreateOrderActionChangeWithoutChangeChecked(
+                                                isChecked: !createOrderViewState.withoutChangeChecked
+                                            )
+                                        )
+                                    }
+                                )
+                                
+                                Text("msg_without_change")
+                                    .foregroundColor(AppColor.onSurface)
+                                    .bodyMedium()
+                                
+                                Spacer()
+                            }
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 8)
+                            .padding(.horizontal, 16)
+                        }
+                        .padding(.vertical, 8)
+                        if(!createOrderViewState.withoutChangeChecked){
+                            EditTextView(
+                                hint: "С какой суммы подготовить сдачу?*",
+                                text: $changeTextField,
+                                limit: 10,
+                                keyBoadrType: UIKeyboardType.numberPad,
+                                errorMessage: $changeError,
+                                textChanged: { comment in
+                                    action(CreateOrderActionChangeChange(change: changeTextField))
+                                }
+                            )
+                            .padding(.top, 8)
+                            .padding(.horizontal, 16)
+                        }
+                    }
+                    
                     EditTextView(
                         hint: Strings.HINT_CREATE_COMMENT_COMMENT,
                         text: $comment,
@@ -470,8 +540,8 @@ struct CreateOrderSuccessView: View {
                             action(CreateOrderActionChangeComment(comment: comment))
                         }
                     )
-                    .padding(.top, Diems.SMALL_PADDING)
-                    .padding(.horizontal, Diems.MEDIUM_PADDING)
+                    .padding(.top, 8)
+                    .padding(.horizontal, 16)
                     
                     Toggle(
                         isOn: $faster.onChange(
@@ -574,7 +644,12 @@ struct CreateOrderSuccessView: View {
                 
                 Button(
                     action: {
-                        action(CreateOrderActionCreateClick())
+                        action(
+                            CreateOrderActionCreateClick(
+                                withoutChange: createOrderViewState.withoutChange.stringValue(),
+                                changeFrom: createOrderViewState.changeFrom.stringValue()
+                            )
+                        )
                     }, label: {
                         ButtonText(text: Strings.ACTION_CART_PRODUCT_CREATE_ORDER)
                     }

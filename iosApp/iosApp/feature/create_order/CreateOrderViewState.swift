@@ -25,7 +25,13 @@ struct CreateOrderViewState {
     var isDeferredTimeShown: Bool
     var timePicker: TimePickerUI
     var paymentMethodList: PaymentMethodListUI
-
+    var showChange: Bool
+    var withoutChange: LocalizedStringKey
+    var changeFrom: LocalizedStringKey
+    var withoutChangeChecked: Bool
+    var change: String
+    var isChangeErrorShown: Bool
+    
     func switchPosition(isDelivery:Bool) -> Int {
         if (isDelivery) {
             return 0

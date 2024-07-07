@@ -174,10 +174,7 @@ struct ProductDetailsView: View {
                                                     )
                                                 }
                                             }.frame(maxWidth: .infinity, alignment: .leading)
-                                                .onAppear(){
-                                                    print(addition.product.isLast)
-                                                }
-                                            
+                                    
                                             if(!addition.product.isLast){
                                                 Divider()
                                                     .padding(.vertical, 8)

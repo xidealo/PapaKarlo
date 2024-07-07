@@ -658,6 +658,12 @@
 		02ADC3B529D9D2610062A141 /* yuliarAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 02ADC3B429D9D2610062A141 /* yuliarAssets.xcassets */; };
 		02ADC3B929D9F85E0062A141 /* papakarloAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 02ADC3B829D9F85E0062A141 /* papakarloAssets.xcassets */; };
 		02ADC3BA29D9F8820062A141 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557BA273AAA24004C7B11 /* Assets.xcassets */; };
+		02BDC9DE2C387ACF005E1CA7 /* FoodDeliveryCheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BDC9DD2C387ACF005E1CA7 /* FoodDeliveryCheckBox.swift */; };
+		02BDC9DF2C387ACF005E1CA7 /* FoodDeliveryCheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BDC9DD2C387ACF005E1CA7 /* FoodDeliveryCheckBox.swift */; };
+		02BDC9E02C387ACF005E1CA7 /* FoodDeliveryCheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BDC9DD2C387ACF005E1CA7 /* FoodDeliveryCheckBox.swift */; };
+		02BDC9E12C387ACF005E1CA7 /* FoodDeliveryCheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BDC9DD2C387ACF005E1CA7 /* FoodDeliveryCheckBox.swift */; };
+		02BDC9E22C387ACF005E1CA7 /* FoodDeliveryCheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BDC9DD2C387ACF005E1CA7 /* FoodDeliveryCheckBox.swift */; };
+		02BDC9E32C387ACF005E1CA7 /* FoodDeliveryCheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BDC9DD2C387ACF005E1CA7 /* FoodDeliveryCheckBox.swift */; };
 		02C21FF928D265E900DCF537 /* ActionTextCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C21FF828D265E900DCF537 /* ActionTextCardView.swift */; };
 		02CBBE352A6BE979000260FC /* SelectablePaymentListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CBBE342A6BE979000260FC /* SelectablePaymentListView.swift */; };
 		02CBBE362A6BE979000260FC /* SelectablePaymentListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CBBE342A6BE979000260FC /* SelectablePaymentListView.swift */; };
@@ -814,6 +820,7 @@
 		02ADC3B429D9D2610062A141 /* yuliarAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = yuliarAssets.xcassets; sourceTree = "<group>"; };
 		02ADC3B829D9F85E0062A141 /* papakarloAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = papakarloAssets.xcassets; sourceTree = "<group>"; };
 		02B3E3472A65D27F00939099 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		02BDC9DD2C387ACF005E1CA7 /* FoodDeliveryCheckBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodDeliveryCheckBox.swift; sourceTree = "<group>"; };
 		02C21FF828D265E900DCF537 /* ActionTextCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionTextCardView.swift; sourceTree = "<group>"; };
 		02CBBE342A6BE979000260FC /* SelectablePaymentListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectablePaymentListView.swift; sourceTree = "<group>"; };
 		02E4FEE82AC9FEB60060C827 /* CartProductView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartProductView.swift; sourceTree = "<group>"; };
@@ -1180,6 +1187,7 @@
 				022BC67128CC8A6700F3ED27 /* OrderChip.swift */,
 				023041D228D61C3700ACF30B /* ToastView.swift */,
 				0294FD7929DF71B900568A10 /* EmptyWithIconView.swift */,
+				02BDC9DD2C387ACF005E1CA7 /* FoodDeliveryCheckBox.swift */,
 			);
 			path = custom_view;
 			sourceTree = "<group>";
@@ -2056,6 +2064,7 @@
 				0296C3CF2C29E79E00538FCE /* Motivation.swift in Sources */,
 				0219B7B22B8FB97C00305E2D /* CreateOrderView.swift in Sources */,
 				0269DB422C263DEA009D36AE /* PaymentMethodUi.swift in Sources */,
+				02BDC9E22C387ACF005E1CA7 /* FoodDeliveryCheckBox.swift in Sources */,
 				0219B7B32B8FB97C00305E2D /* NavigationCardView.swift in Sources */,
 				0219B7B42B8FB97C00305E2D /* MenuProductItem.swift in Sources */,
 				0219B7B52B8FB97C00305E2D /* CountPicker.swift in Sources */,
@@ -2168,6 +2177,7 @@
 				0296C3CD2C29E79E00538FCE /* Motivation.swift in Sources */,
 				026C1F762A2690B900838266 /* CreateOrderView.swift in Sources */,
 				0269DB402C263DEA009D36AE /* PaymentMethodUi.swift in Sources */,
+				02BDC9E02C387ACF005E1CA7 /* FoodDeliveryCheckBox.swift in Sources */,
 				026C1F772A2690B900838266 /* NavigationCardView.swift in Sources */,
 				026C1F792A2690B900838266 /* MenuProductItem.swift in Sources */,
 				026C1F7A2A2690B900838266 /* CountPicker.swift in Sources */,
@@ -2280,6 +2290,7 @@
 				0296C3CE2C29E79E00538FCE /* Motivation.swift in Sources */,
 				027CB0392A346F7B00350EB2 /* CreateOrderView.swift in Sources */,
 				0269DB412C263DEA009D36AE /* PaymentMethodUi.swift in Sources */,
+				02BDC9E12C387ACF005E1CA7 /* FoodDeliveryCheckBox.swift in Sources */,
 				027CB03A2A346F7B00350EB2 /* NavigationCardView.swift in Sources */,
 				027CB03C2A346F7B00350EB2 /* MenuProductItem.swift in Sources */,
 				027CB03D2A346F7B00350EB2 /* CountPicker.swift in Sources */,
@@ -2392,6 +2403,7 @@
 				0296C3D02C29E79E00538FCE /* Motivation.swift in Sources */,
 				02891F922BDAEA0D0043B466 /* CreateOrderView.swift in Sources */,
 				0269DB432C263DEA009D36AE /* PaymentMethodUi.swift in Sources */,
+				02BDC9E32C387ACF005E1CA7 /* FoodDeliveryCheckBox.swift in Sources */,
 				02891F932BDAEA0D0043B466 /* NavigationCardView.swift in Sources */,
 				02891F942BDAEA0D0043B466 /* MenuProductItem.swift in Sources */,
 				02891F952BDAEA0D0043B466 /* CountPicker.swift in Sources */,
@@ -2504,6 +2516,7 @@
 				0296C3CC2C29E79E00538FCE /* Motivation.swift in Sources */,
 				02ADC35A29D9D0880062A141 /* CreateOrderView.swift in Sources */,
 				0269DB3F2C263DEA009D36AE /* PaymentMethodUi.swift in Sources */,
+				02BDC9DF2C387ACF005E1CA7 /* FoodDeliveryCheckBox.swift in Sources */,
 				02ADC35B29D9D0880062A141 /* NavigationCardView.swift in Sources */,
 				02ADC35D29D9D0880062A141 /* MenuProductItem.swift in Sources */,
 				02ADC35E29D9D0880062A141 /* CountPicker.swift in Sources */,
@@ -2616,6 +2629,7 @@
 				0296C3CB2C29E79E00538FCE /* Motivation.swift in Sources */,
 				023234AD287879EF0048CF39 /* CreateOrderView.swift in Sources */,
 				0269DB3E2C263DEA009D36AE /* PaymentMethodUi.swift in Sources */,
+				02BDC9DE2C387ACF005E1CA7 /* FoodDeliveryCheckBox.swift in Sources */,
 				023234C928787A180048CF39 /* NavigationCardView.swift in Sources */,
 				023234A3287879EF0048CF39 /* MenuProductItem.swift in Sources */,
 				023234D228787A180048CF39 /* CountPicker.swift in Sources */,

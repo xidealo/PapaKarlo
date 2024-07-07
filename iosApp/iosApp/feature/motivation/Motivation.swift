@@ -12,7 +12,6 @@ import shared
 
 struct Motivation: View {
     
-    
     let motivation: MotivationUi
     
     var body: some View {
