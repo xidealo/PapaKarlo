@@ -13,6 +13,7 @@ struct CreateOrderView: View {
     
     // errors ----------------
     @State var showCreatedAddress: Bool = false
+    @State var showUserAddressError: Bool = false
     @State var showCommonError: Bool = false
     @State var showPaymentMethodError: Bool = false
     // ----------------
@@ -30,7 +31,6 @@ struct CreateOrderView: View {
     
     @State var addressList: [SelectableCafeAddressItem] = []
     @State var paymentList: [SelectablePaymentMethod] = []
-    @State var selectedPaymentUuid: String? = nil
     @State var changeError : LocalizedStringKey?
 
     @State var listener: Closeable? = nil
@@ -96,8 +96,14 @@ struct CreateOrderView: View {
             NavigationLink(
                 destination: SelectablePaymentListView(
                     paymentList: createOrderViewState?.paymentMethodList.paymentMethodList ?? [],
-                    selectedPaymentUuid : $selectedPaymentUuid,
-                    closedCallback: {
+                    closedCallback: { paymentUuid in
+                        if let paymentUuid = paymentUuid {
+                            viewModel.onAction(
+                                action: CreateOrderActionChangePaymentMethod(paymentMethodUuid: paymentUuid)
+                            )
+                            return
+                        }
+                        
                         viewModel.onAction(
                             action: CreateOrderActionHidePaymentMethodList()
                         )
@@ -107,16 +113,8 @@ struct CreateOrderView: View {
             ){
                 EmptyView()
             }
-            .onChange(
-                of: $selectedPaymentUuid.wrappedValue,
-                perform: { value in
-                    viewModel.onAction(
-                        action: CreateOrderActionChangePaymentMethod(paymentMethodUuid: selectedPaymentUuid ?? "")
-                    )
-                }
-            )
             
-            if let createOrderViewStateNN = createOrderViewState{
+            if let createOrderViewStateNN = createOrderViewState {
                 if(createOrderViewStateNN.isLoading){
                     LoadingView()
                 }else{
@@ -170,6 +168,14 @@ struct CreateOrderView: View {
                 foregroundColor: AppColor.onError
             ),
             show: $showPaymentMethodError
+        ).overlay(
+            overlayView: ToastView(
+                toast: Toast(title: "Адрес не выбран"),
+                show: $showUserAddressError,
+                backgroundColor: AppColor.error,
+                foregroundColor: AppColor.onError
+            ),
+            show: $showUserAddressError
         )
     }
     
@@ -274,7 +280,7 @@ struct CreateOrderView: View {
                         selection = MainContainerState.profile
                         showOrderCreated = true
                     case is CreateOrderEventShowUserAddressError:
-                        goToUserAddress = true
+                        showUserAddressError = true
                     case is CreateOrderEventShowPaymentMethodError:
                         showPaymentMethodError = true
                     default:
@@ -428,7 +434,7 @@ struct CreateOrderSuccessView: View {
                             .padding(.horizontal, Diems.MEDIUM_PADDING)
                         } else {
                             ActionTextCardView(
-                                placeHolder: addressLable,
+                                placeHolder: LocalizedStringKey("title_delivery_address").stringValue(),
                                 text: createOrderViewState.deliveryAddress ?? ""
                             ){
                                 action(CreateOrderActionDeliveryAddressClick())
@@ -438,7 +444,7 @@ struct CreateOrderSuccessView: View {
                         }
                     } else {
                         ActionTextCardView(
-                            placeHolder: addressLable,
+                            placeHolder: LocalizedStringKey("title_pickup_address").stringValue(),
                             text: "\(createOrderViewState.pickupAddress ?? "")"
                         ){
                             action(CreateOrderActionPickupAddressClick())
@@ -450,6 +456,7 @@ struct CreateOrderSuccessView: View {
                     if(createOrderViewState.isAddressErrorShown){
                         Text("error_select_delivery_address")
                             .bodySmall()
+                            .frame(maxWidth: .infinity, alignment: .leading)
                             .foregroundColor(AppColor.error)
                             .padding(.top, 4)
                             .padding(.horizontal, 16)
@@ -480,6 +487,7 @@ struct CreateOrderSuccessView: View {
                     if(createOrderViewState.isPaymentMethodErrorShown){
                         Text("error_select_payment_method")
                             .bodySmall()
+                            .frame(maxWidth: .infinity, alignment: .leading)
                             .foregroundColor(AppColor.error)
                             .padding(.top, 4)
                             .padding(.horizontal, 16)
@@ -515,7 +523,8 @@ struct CreateOrderSuccessView: View {
                             .padding(.vertical, 8)
                             .padding(.horizontal, 16)
                         }
-                        .padding(.vertical, 8)
+                        .padding(.top, 8)
+                
                         if(!createOrderViewState.withoutChangeChecked){
                             EditTextView(
                                 hint: "С какой суммы подготовить сдачу?*",

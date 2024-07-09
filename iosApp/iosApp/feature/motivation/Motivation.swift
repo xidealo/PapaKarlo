@@ -29,7 +29,6 @@ struct Motivation: View {
                 if let progress = getMotivationProgress(motivation: motivation){
                     ProgressView(value: progress)
                         .tint(progress < 1 ? AppColor.warning : AppColor.positive)
-                        .frame(height: 8)
                         .progressViewStyle(LinearProgressViewStyle())
                         .cornerRadius(4)
                         .animation(.easeIn(duration: 3), value: progress)

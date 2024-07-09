@@ -14,22 +14,21 @@ struct SelectablePaymentListView: View {
     
     var title: LocalizedStringKey = "selectable_payment_method"
     var paymentList: [SelectablePaymentMethodUI]
-    @Binding var selectedPaymentUuid:String?
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
-    var closedCallback: () -> Void
+    var closedCallback: (String?) -> Void
 
     var body: some View {
         VStack(spacing:0){
             ToolbarView(
                 title: title,
                 back: {
-                    closedCallback()
+                    closedCallback(nil)
                     self.mode.wrappedValue.dismiss()
                 }
             )
             SuccessSelectablePaymentListView(
                 paymentList: paymentList,
-                selectedPaymentUuid : $selectedPaymentUuid
+                closedCallback: closedCallback
             )
         }.hiddenNavigationBarStyle()
             .background(AppColor.background)
@@ -38,16 +37,17 @@ struct SelectablePaymentListView: View {
 
 struct SuccessSelectablePaymentListView: View {
     var paymentList: [SelectablePaymentMethodUI]
-    @Binding var selectedPaymentUuid:String?
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     
+    var closedCallback: (String?) -> Void
+
     var body: some View {
         VStack(spacing:0){
             ScrollView {
                 LazyVStack(spacing:0){
                     ForEach(paymentList){ payment in
                         Button(action: {
-                            selectedPaymentUuid = payment.id
+                            closedCallback(payment.id)
                             self.mode.wrappedValue.dismiss()
                         }) {
                             SelectableElementCard(

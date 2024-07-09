@@ -247,6 +247,8 @@ struct ConsumerCartView: View {
                         productDetailsOpenedFrom = consumerCartEventNavigateToProduct?.productDetailsOpenedFrom ?? ProductDetailsOpenedFrom.cartProduct
 
                         openProductDetails = true
+                    case is ConsumerCartEventNavigateToMenu :
+                        self.mode.wrappedValue.dismiss()
                     default:
                         print("def")
                     }
@@ -370,53 +372,64 @@ struct ConsumerCartSuccessScreen: View {
                 }
 
                 VStack(spacing:0){
-                    if let motivation = bottomPanelInfoUi?.motivation {
-                        Motivation(motivation: motivation)
-                    }
+                    if(bottomPanelInfoUi == nil) {
+                        Button {
+                            action(ConsumerCartActionOnMenuClick())
+                        } label: {
+                            ButtonText(text: Strings.ACTION_CART_PRODUCT_MENU)
+                        }
+                        .padding(.horizontal, Diems.MEDIUM_PADDING)
+                        .padding(.vertical, Diems.MEDIUM_PADDING)
+                    } else {
+                        if let motivation = bottomPanelInfoUi?.motivation {
+                            Motivation(motivation: motivation)
+                        }
 
-                    if let discount = bottomPanelInfoUi?.discount{
+                        if let discount = bottomPanelInfoUi?.discount{
+                            HStack(spacing:0){
+                                Text("consumer_cart_discount")
+                                    .bodyMedium()
+                                    .foregroundColor(AppColor.onSurface)
+
+                                Spacer()
+
+                                DiscountCard(text:discount)
+                            }
+                            .padding(.top, 8)
+                            .padding(.horizontal, 16)
+                        }
+
                         HStack(spacing:0){
-                            Text("consumer_cart_discount")
-                                .bodyMedium()
+                            Text("consumer_cart_total")
+                                .bodyMedium(weight: .bold)
                                 .foregroundColor(AppColor.onSurface)
 
                             Spacer()
 
-                            DiscountCard(text:discount)
+                            if let oldTotalCost = bottomPanelInfoUi?.oldTotalCost{
+                                Text(oldTotalCost)
+                                    .strikethrough()
+                                    .bodyMedium(weight: .bold)
+                                    .foregroundColor(AppColor.onSurfaceVariant)
+                                    .padding(.trailing, 4)
+                            }
+
+                            if let newTotalCost = bottomPanelInfoUi?.newTotalCost{
+                                Text(newTotalCost)
+                                    .bodyMedium(weight: .bold)
+                                    .foregroundColor(AppColor.onSurface)
+                            }
                         }.padding(.top, 8)
                             .padding(.horizontal, 16)
-                    }
 
-                    HStack(spacing:0){
-                        Text("consumer_cart_total")
-                            .bodyMedium(weight: .bold)
-                            .foregroundColor(AppColor.onSurface)
-
-                        Spacer()
-
-                        if let oldTotalCost = bottomPanelInfoUi?.oldTotalCost{
-                            Text(oldTotalCost)
-                                .strikethrough()
-                                .bodyMedium(weight: .bold)
-                                .foregroundColor(AppColor.onSurfaceVariant)
-                                .padding(.trailing, 4)
+                        Button {
+                            action(ConsumerCartActionOnCreateOrderClick())
+                        } label: {
+                            ButtonText(text: Strings.ACTION_CART_PRODUCT_CREATE_ORDER)
                         }
-
-                        if let newTotalCost = bottomPanelInfoUi?.newTotalCost{
-                            Text(newTotalCost)
-                                .bodyMedium(weight: .bold)
-                                .foregroundColor(AppColor.onSurface)
-                        }
-                    }.padding(.top, 8)
-                        .padding(.horizontal, 16)
-
-                    Button {
-                        action(ConsumerCartActionOnCreateOrderClick())
-                    } label: {
-                        ButtonText(text: Strings.ACTION_CART_PRODUCT_CREATE_ORDER)
+                        .padding(.horizontal, Diems.MEDIUM_PADDING)
+                        .padding(.vertical, Diems.MEDIUM_PADDING)
                     }
-                    .padding(.horizontal, Diems.MEDIUM_PADDING)
-                    .padding(.vertical, Diems.MEDIUM_PADDING)
                 }.background(AppColor.surface)
             }
         }
