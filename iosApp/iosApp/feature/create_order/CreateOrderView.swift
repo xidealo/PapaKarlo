@@ -32,7 +32,7 @@ struct CreateOrderView: View {
     @State var addressList: [SelectableCafeAddressItem] = []
     @State var paymentList: [SelectablePaymentMethod] = []
     @State var changeError : LocalizedStringKey?
-
+    
     @State var listener: Closeable? = nil
     @State var eventsListener: Closeable? = nil
     
@@ -114,10 +114,10 @@ struct CreateOrderView: View {
                 EmptyView()
             }
             
-            if let createOrderViewStateNN = createOrderViewState {
-                if(createOrderViewStateNN.isLoading){
-                    LoadingView()
-                }else{
+            if(createOrderViewState?.isLoading == true || createOrderViewState?.isLoading == nil){
+                LoadingView()
+            }else{
+                if let createOrderViewStateNN = createOrderViewState {
                     CreateOrderSuccessView(
                         showCreatedAddress: $showCreatedAddress,
                         showCommonError: $showCommonError,
@@ -395,7 +395,7 @@ struct CreateOrderSuccessView: View {
     @State var faster = true
     @State var deferredTime: Foundation.Date = Foundation.Date()
     @Binding var changeError : LocalizedStringKey?
-
+    
     @Binding var isRootActive: Bool
     @Binding var selection: MainContainerState
     @Binding var showOrderCreated: Bool
@@ -524,7 +524,7 @@ struct CreateOrderSuccessView: View {
                             .padding(.horizontal, 16)
                         }
                         .padding(.top, 8)
-                
+                        
                         if(!createOrderViewState.withoutChangeChecked){
                             EditTextView(
                                 hint: "С какой суммы подготовить сдачу?*",
