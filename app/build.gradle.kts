@@ -5,6 +5,8 @@ import Constants.TANDIR_HOUSE_FLAVOR_NAME
 import Constants.VKUS_KAVKAZA_FLAVOR_NAME
 import Constants.YULIAR_FLAVOR_NAME
 import com.android.build.gradle.internal.api.BaseVariantOutputImpl
+import com.github.triplet.gradle.androidpublisher.ReleaseStatus
+import com.github.triplet.gradle.play.PlayPublisherExtension
 import java.io.FileInputStream
 import java.util.Properties
 
@@ -18,6 +20,7 @@ plugins {
     id(Plugin.kotlinParcelize)
     id(Plugin.crashlytics)
     id("org.jlleitschuh.gradle.ktlint") version "11.5.1"
+    id(Plugin.tripletPlay)
 }
 
 android {
@@ -126,6 +129,28 @@ android {
         checkDependencies = true
         disable.add("VectorPath")
     }
+
+    playConfigs {
+        register(PAPA_KARLO_FLAVOR_NAME) {
+            commonPlayConfig(this, this@Build_gradle)
+        }
+        register(YULIAR_FLAVOR_NAME) {
+            commonPlayConfig(this, this@Build_gradle)
+        }
+        register(DJAN_FLAVOR_NAME) {
+            commonPlayConfig(this, this@Build_gradle)
+        }
+        register(GUSTO_PUB_FLAVOR_NAME) {
+            commonPlayConfig(this, this@Build_gradle)
+        }
+        register(TANDIR_HOUSE_FLAVOR_NAME) {
+            commonPlayConfig(this, this@Build_gradle)
+        }
+        register(VKUS_KAVKAZA_FLAVOR_NAME) {
+            commonPlayConfig(this, this@Build_gradle)
+        }
+    }
+
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
@@ -208,4 +233,31 @@ dependencies {
     androidTestImplementation(Kaspresso.kaspressoComposeSupport)
 
     implementation(CollectionsImmutable.collectionsImmutable)
+}
+
+
+tasks.register("assembleAndPublishAllRelease") {
+    dependsOn(PAPA_KARLO_FLAVOR_NAME.getAssembleBundleRelease())
+    dependsOn(YULIAR_FLAVOR_NAME.getAssembleBundleRelease())
+    dependsOn(DJAN_FLAVOR_NAME.getAssembleBundleRelease())
+    dependsOn(GUSTO_PUB_FLAVOR_NAME.getAssembleBundleRelease())
+    dependsOn(TANDIR_HOUSE_FLAVOR_NAME.getAssembleBundleRelease())
+    dependsOn(VKUS_KAVKAZA_FLAVOR_NAME.getAssembleBundleRelease())
+
+    dependsOn(PAPA_KARLO_FLAVOR_NAME.getPublishReleaseBundle())
+    dependsOn(YULIAR_FLAVOR_NAME.getPublishReleaseBundle())
+    dependsOn(DJAN_FLAVOR_NAME.getPublishReleaseBundle())
+    dependsOn(GUSTO_PUB_FLAVOR_NAME.getPublishReleaseBundle())
+    dependsOn(TANDIR_HOUSE_FLAVOR_NAME.getPublishReleaseBundle())
+    dependsOn(VKUS_KAVKAZA_FLAVOR_NAME.getPublishReleaseBundle())
+}
+
+fun commonPlayConfig(
+    playPublisherExtension: PlayPublisherExtension,
+    buildGradle: Build_gradle,
+) {
+    playPublisherExtension.track.set("production")
+    playPublisherExtension.defaultToAppBundles.set(true)
+    playPublisherExtension.serviceAccountCredentials.set(buildGradle.file("google-play-api-key.json"))
+    playPublisherExtension.releaseStatus.set(ReleaseStatus.DRAFT)
 }

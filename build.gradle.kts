@@ -7,6 +7,8 @@ buildscript {
         mavenCentral().content {
             excludeGroup("Kotlin/Native")
         }
+
+        maven("https://plugins.gradle.org/m2/")
     }
     dependencies {
         classpath(ClassPath.gradle)
@@ -16,6 +18,7 @@ buildscript {
         classpath(ClassPath.firebaseCrashlyticsGradle)
         classpath(ClassPath.navigationSafeArgs)
         classpath(ClassPath.sqlDelight)
+        classpath(ClassPath.publisher)
     }
 }
 
