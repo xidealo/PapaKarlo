@@ -23,15 +23,18 @@ fun LoadingButton(
     isLoading: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    isEnabled: Boolean = true,
     hasShadow: Boolean = true
 ) {
     Button(
         modifier = modifier.fillMaxWidth(),
         onClick = onClick,
-        colors = FoodDeliveryButtonDefaults.mainButtonColors,
+        colors = FoodDeliveryButtonDefaults.mainButtonColors(
+            enabled = isEnabled && !isLoading
+        ),
         shape = FoodDeliveryButtonDefaults.buttonShape,
         elevation = getButtonElevation(hasShadow),
-        enabled = !isLoading
+        enabled = isEnabled && !isLoading
     ) {
         if (isLoading) {
             CircularProgressIndicator(
@@ -42,7 +45,11 @@ fun LoadingButton(
             Text(
                 text = stringResource(textStringId),
                 style = FoodDeliveryTheme.typography.labelLarge.medium,
-                color = FoodDeliveryTheme.colors.mainColors.onPrimary,
+                color = if (isEnabled) {
+                    FoodDeliveryTheme.colors.mainColors.onPrimary
+                } else {
+                    FoodDeliveryTheme.colors.mainColors.onDisabled
+                },
                 textAlign = TextAlign.Center
             )
         }
@@ -68,6 +75,19 @@ private fun LoadingButtonLoadingPreview() {
         LoadingButton(
             textStringId = R.string.action_create_order_create_order,
             isLoading = true,
+            onClick = {}
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun LoadingButtonDisabledPreview() {
+    FoodDeliveryTheme {
+        LoadingButton(
+            textStringId = R.string.action_create_order_create_order,
+            isLoading = false,
+            isEnabled = false,
             onClick = {}
         )
     }

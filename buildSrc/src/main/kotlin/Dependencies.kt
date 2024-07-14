@@ -58,10 +58,10 @@ object Namespace {
 
 object CommonApplication {
     const val versionMajor = 2
-    const val versionMinor = 0
-    const val versionPatch = 2
+    const val versionMinor = 1
+    const val versionPatch = 0
 
-    const val versionCode = 202
+    const val versionCode = 210
     const val versionName = "$versionMajor.$versionMinor.$versionPatch"
 }
 
@@ -83,6 +83,10 @@ object GustoPubApplication {
 
 object TandirHouseApplication {
     const val applicationId = "com.bunbeauty.tandirhouse"
+}
+
+object VkusKavkazaApplication {
+    const val applicationId = "com.bunbeauty.vkuskavkaza"
 }
 
 object AndroidSdk {

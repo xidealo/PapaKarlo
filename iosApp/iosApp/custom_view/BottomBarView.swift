@@ -10,8 +10,8 @@ import SwiftUI
 
 struct BottomBarView: View {
     
-    @Binding var selection:Int
-    @Binding var title:LocalizedStringKey
+    @Binding var selection: MainContainerState
+    @Binding var title: LocalizedStringKey
 
     let iconSize = CGFloat(22)
     let iconBlockHeight = CGFloat(24)
@@ -20,11 +20,11 @@ struct BottomBarView: View {
     var body: some View {
         HStack(spacing:0){
             Button {
-                selection = 0
+                selection = .cafeList
                 title = "title_restaurants"
             } label: {
                 VStack(spacing:0){
-                    if(selection == 0){
+                    if(selection == .cafeList){
                         ZStack{
                             IconImage(width: 24, height: 24, imageName: "CafesIcon")
                                 .padding(.top, iconTopPaddig)
@@ -53,11 +53,11 @@ struct BottomBarView: View {
             }
 
             Button {
-                selection = 1
+                selection = .menu
                 title = "title_menu"
             } label: {
                 VStack(spacing:0){
-                    if(selection == 1){
+                    if(selection == .menu){
                         ZStack{
                             IconImage(width: 24, height: 24, imageName: "MenuIcon")
                                 .padding(.top, iconTopPaddig)
@@ -86,11 +86,11 @@ struct BottomBarView: View {
             }
             
             Button {
-                selection = 2
+                selection = .profile
                 title = "title_profile"
             } label: {
                 VStack(spacing:0){
-                    if(selection == 2){
+                    if(selection == .profile){
                         ZStack{
                             IconImage(width: 24, height: 24, imageName: "ProfileIcon")
                                 .padding(.top, iconTopPaddig)

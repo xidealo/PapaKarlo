@@ -28,6 +28,7 @@ import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.papakarlo.common.ui.element.button.LoadingButton
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.papakarlo.common.ui.element.textfield.FoodDeliveryTextField
+import com.bunbeauty.papakarlo.common.ui.element.textfield.FoodDeliveryTextFieldDefaults
 import com.bunbeauty.papakarlo.common.ui.element.textfield.FoodDeliveryTextFieldWithMenu
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.feature.main.IMessageHost
@@ -41,8 +42,9 @@ class CreateAddressFragment :
 
     override val viewModel: CreateAddressViewModel by viewModel()
 
-    override fun mapState(dataState: CreateAddress.DataState): CreateAddressViewState {
-        return dataState.mapCreateAddressState()
+    @Composable
+    override fun CreateAddress.DataState.mapState(): CreateAddressViewState {
+        return mapCreateAddressState()
     }
 
     @Composable
@@ -191,7 +193,9 @@ class CreateAddressFragment :
                         modifier = Modifier.fillMaxWidth(),
                         value = viewState.comment,
                         labelStringId = R.string.hint_create_address_comment,
-                        imeAction = ImeAction.Done,
+                        keyboardOptions = FoodDeliveryTextFieldDefaults.keyboardOptions(
+                            imeAction = ImeAction.Done
+                        ),
                         maxLines = 5,
                         onValueChange = { value ->
                             onAction(CreateAddress.Action.CommentTextChange(comment = value))

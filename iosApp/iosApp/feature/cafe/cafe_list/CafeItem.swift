@@ -12,7 +12,7 @@ struct CafeItemUi:Identifiable {
     let id:String
     let address:String
     let workingHours:String
-    let cafeOpenState: CafeItem.CafeOpenState
+    let cafeOpenState: CafeOpenState
     let phone:String
     let latitude:Float
     let longitude:Float

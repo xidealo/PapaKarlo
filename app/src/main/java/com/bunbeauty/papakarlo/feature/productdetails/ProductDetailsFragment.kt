@@ -85,8 +85,9 @@ class ProductDetailsFragment :
         )
     }
 
-    override fun mapState(dataState: ProductDetailsState.DataState): ProductDetailsViewState {
-        return productDetailsUiStateMapper.map(dataState)
+    @Composable
+    override fun ProductDetailsState.DataState.mapState(): ProductDetailsViewState {
+        return productDetailsUiStateMapper.map(this)
     }
 
     override fun handleEvent(event: ProductDetailsState.Event) {

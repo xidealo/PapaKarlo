@@ -16,6 +16,7 @@ fun userAddressUseCaseModule() = module {
         GetSelectableUserAddressListUseCase(
             dataStoreRepo = get(),
             userAddressRepo = get(),
+            getCurrentUserAddressUseCase = get(),
         )
     }
     factory {

@@ -42,30 +42,30 @@ struct CafeItemView: View {
 }
 
 
-func getCafeStatusColor(cafeStatus: CafeItem.CafeOpenState) -> Color {
+func getCafeStatusColor(cafeStatus: CafeOpenState) -> Color {
     switch cafeStatus {
-    case is CafeItem.CafeOpenStateOpened:
+    case is CafeOpenState.Opened:
         return AppColor.positive
-    case is CafeItem.CafeOpenStateCloseSoon:
+    case is CafeOpenState.CloseSoon:
         return AppColor.warning
-    case is CafeItem.CafeOpenStateClosed:
+    case is CafeOpenState.Closed:
         return AppColor.negative
     default:
         return AppColor.warning
     }
 }
 
-func getCafeStatusText(cafeStatus: CafeItem.CafeOpenState) -> String {
+func getCafeStatusText(cafeStatus: CafeOpenState) -> String {
     switch cafeStatus {
-    case is CafeItem.CafeOpenStateOpened:
+    case is CafeOpenState.Opened:
         return NSLocalizedString("msg_cafe_open", comment: "")
-    case is CafeItem.CafeOpenStateCloseSoon :
-        let minutes = Int((cafeStatus as? CafeItem.CafeOpenStateCloseSoon)?.time ?? 0)
+    case is CafeOpenState.CloseSoon :
+        let minutes = Int((cafeStatus as? CafeOpenState.CloseSoon)?.minutesUntil ?? 0)
         let minuteString = getMinuteString(
             closeIn: minutes
         )
         return NSLocalizedString("msg_cafe_close_soon", comment: "") + String(minutes) + " " + minuteString
-    case is CafeItem.CafeOpenStateClosed:
+    case is CafeOpenState.Closed:
         return NSLocalizedString("msg_cafe_closed", comment: "")
     default:
         return "CLose"

@@ -97,6 +97,10 @@ internal class CreateAddressUseCaseTest {
             entrance = "entrance",
             comment = "comment",
             floor = "floor",
+            minOrderCost = null,
+            normalDeliveryCost = 100,
+            forLowDeliveryCost = null,
+            lowDeliveryCost = null,
             userUuid = "userUuid"
         )
 

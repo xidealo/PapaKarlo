@@ -8,7 +8,7 @@ import com.bunbeauty.shared.presentation.cafe_list.CafeListViewModel
 import com.bunbeauty.shared.presentation.confirm.ConfirmViewModel
 import com.bunbeauty.shared.presentation.consumercart.ConsumerCartViewModel
 import com.bunbeauty.shared.presentation.create_address.CreateAddressViewModel
-import com.bunbeauty.shared.presentation.create_order.CreateOrderViewModel
+import com.bunbeauty.shared.presentation.createorder.CreateOrderViewModel
 import com.bunbeauty.shared.presentation.login.LoginViewModel
 import com.bunbeauty.shared.presentation.menu.MenuViewModel
 import com.bunbeauty.shared.presentation.order_details.OrderDetailsViewModel
@@ -44,6 +44,7 @@ fun viewModelModule() = module {
             addMenuProductUseCase = get(),
             removeCartProductUseCase = get(),
             getRecommendationsUseCase = get(),
+            getMotivationUseCase = get(),
             analyticService = get()
         )
     }
@@ -52,10 +53,10 @@ fun viewModelModule() = module {
             cartProductInteractor = get(),
             cafeInteractor = get(),
             userInteractor = get(),
-            createOrderStateMapper = get(),
             getSelectableUserAddressList = get(),
             getSelectableCafeList = get(),
-            getCartTotal = get(),
+            getCartTotalFlowUseCase = get(),
+            getMotivationUseCase = get(),
             getMinTime = get(),
             createOrder = get(),
             getSelectedCityTimeZone = get(),
@@ -67,8 +68,7 @@ fun viewModelModule() = module {
     viewModel {
         CafeListViewModel(
             cafeInteractor = get(),
-            getSelectedCityTimeZoneUseCase = get(),
-            getCafeListUseCase = get(),
+            observeCafeWithOpenStateListUseCase = get(),
             observeCartUseCase = get()
         )
     }

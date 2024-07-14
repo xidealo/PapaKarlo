@@ -15,30 +15,23 @@ struct MenuItemView: View {
     let productDetailsOpenedFrom:ProductDetailsOpenedFrom
     
     //for back after createOrder
-    @Binding var isRootActive:Bool
-    @Binding var selection:Int
-    @Binding var showOrderCreated:Bool
-    @State var openProductDetails:Bool = false
-    @Binding var created:Bool
-    @Binding var edited:Bool
+    @State var openProductDetails: Bool = false
+    @Binding var created: Bool
+    @Binding var edited: Bool
     
     let action: () -> Void
     
     var body: some View {
         NavigationLink(
-            destination:
-                ProductDetailsView(
-                    menuProductUuid: menuProductItem.productUuid,
-                    menuProductName: menuProductItem.name, 
-                    cartProductUuid: nil,
-                    additionUuidList: [],
-                    productDetailsOpenedFrom: productDetailsOpenedFrom,
-                    isRootActive: self.$isRootActive,
-                    selection: self.$selection,
-                    showOrderCreated: $showOrderCreated,
-                    created: $created,
-                    edited: $edited
-                ),
+            destination: ProductDetailsView(
+                menuProductUuid: menuProductItem.productUuid,
+                menuProductName: menuProductItem.name,
+                cartProductUuid: nil,
+                additionUuidList: [],
+                productDetailsOpenedFrom: productDetailsOpenedFrom,
+                created: $created,
+                edited: $edited
+            ),
             isActive: $openProductDetails
         ){
             VStack(spacing:0){
@@ -60,7 +53,7 @@ struct MenuItemView: View {
                     
                     HStack(spacing:0){
                         if let oldPrice = menuProductItem.oldPrice{
-                            Text(String(oldPrice) + Strings.CURRENCY)
+                            Text(String(oldPrice))
                                 .strikethrough()
                                 .bodySmall()
                                 .foregroundColor(AppColor.onSurfaceVariant)
@@ -76,26 +69,28 @@ struct MenuItemView: View {
                 }
                 .padding(.top, 8)
                 .padding(.horizontal, 8)
-                
-                Button(action: {
-                    if(menuProductItem.hasAdditions){
-                        openProductDetails = true
-                    }else{
-                        action()
+                Button(
+                    action: {
+                        print(menuProductItem)
+                        
+                        if(menuProductItem.hasAdditions) {
+                            openProductDetails = true
+                        }else{
+                            action()
+                        }
+                    }) {
+                        Text(Strings.ACTION_MENU_PRODUCT_WANT)
+                            .labelLarge(weight: .medium)
+                            .frame(maxWidth:.infinity, minHeight: 40, maxHeight:40)
+                            .foregroundColor(AppColor.primary)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: Diems.BUTTON_RADIUS)
+                                    .stroke(AppColor.primary, lineWidth: 2)
+                            )
+                            .padding(.horizontal, 8)
                     }
-                }) {
-                    Text(Strings.ACTION_MENU_PRODUCT_WANT)
-                        .labelLarge(weight: .medium)
-                        .frame(maxWidth:.infinity, minHeight: 40, maxHeight:40)
-                        .foregroundColor(AppColor.primary)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: Diems.BUTTON_RADIUS)
-                                .stroke(AppColor.primary, lineWidth: 2)
-                        )
-                        .padding(.horizontal, 8)
-                }
-                .padding(.top, 8)
-                .padding(.bottom, 8)
+                    .padding(.top, 8)
+                    .padding(.bottom, 8)
             }
             .frame(maxWidth: .infinity)
             .background(AppColor.surface)

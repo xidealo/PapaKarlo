@@ -11,7 +11,7 @@ import com.bunbeauty.shared.domain.feature.addition.GetPriceOfSelectedAdditionsU
 import com.bunbeauty.shared.domain.feature.cart.AddCartProductUseCase
 import com.bunbeauty.shared.domain.feature.cart.EditCartProductUseCase
 import com.bunbeauty.shared.domain.feature.cart.ObserveCartUseCase
-import com.bunbeauty.shared.domain.feature.menu_product.GetMenuProductUseCase
+import com.bunbeauty.shared.domain.feature.menuproduct.GetMenuProductUseCase
 import com.bunbeauty.shared.domain.model.addition.AdditionGroup
 import com.bunbeauty.shared.domain.model.product.MenuProduct
 import com.bunbeauty.shared.extension.launchSafe

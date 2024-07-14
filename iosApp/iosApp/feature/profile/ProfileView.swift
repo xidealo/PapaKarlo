@@ -86,8 +86,8 @@ struct ProfileView: View {
         viewModel.update()
         viewModel.observeLastOrder()
         listener = viewModel.profileState.watch { profileStateVM in
-            if(profileStateVM != nil ){
-                profileState = profileStateVM!
+            if let notNullprofileStateVM = profileStateVM {
+                profileState = notNullprofileStateVM
             }
         }
     }
@@ -163,11 +163,10 @@ struct SuccessProfileView: View {
     
     var body: some View {
         VStack(spacing:0){
-            
-            if(profileViewState.lastOrder != nil){
+            if let lastOrder =  profileViewState.lastOrder {
                 LightOrderItemView(
-                    lightOrder: profileViewState.lastOrder!,
-                    destination: OrderDetailsView(orderUuid: profileViewState.lastOrder!.uuid)
+                    lightOrder: lastOrder,
+                    destination: OrderDetailsView(orderUuid: lastOrder.uuid)
                 )
             }
             
@@ -182,7 +181,12 @@ struct SuccessProfileView: View {
             NavigationCardView(
                 icon: "AddressIcon",
                 label: Strings.TITLE_PROFILE_MY_ADDRESSES,
-                destination: UserAddressListView(isClickable: false),
+                destination: UserAddressListView(
+                    isClickable: false,
+                    closedCallback: {
+                        //stub dont need
+                    }
+                ),
                 isSystem: false
             )
             .padding(.top, Diems.SMALL_PADDING)

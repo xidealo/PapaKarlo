@@ -10,7 +10,6 @@
 
     <!-- COMMON -->
     <string name="part_ruble">&#160;₽</string>
-    <string name="with_ruble">%d ₽</string>
     <string name="description_ic_next">Переход</string>
     <string name="description_ic_checked">Выбрано</string>
     <string name="description_product">Фото блюда</string>
@@ -67,9 +66,13 @@
     <string name="action_consumer_cart_menu">Меню</string>
     <string name="title_consumer_cart_empty">Корзина пуста</string>
     <string name="msg_consumer_cart_empty">Добавьте товар из «Меню»</string>
-    <string name="msg_consumer_cart_free_delivery_from">Бесплатная доставка от %s</string>
-    <string name="msg_consumer_cart_recommendations">Что-нибудь еще?</string>
-    <string name="title_consumer_cart_total">Итого</string>
+    <string name="msg_consumer_cart_recommendations">Рекомендуем</string>
+    <string name="msg_consumer_cart_min_order">Минимальная сумма заказа на доставку: %s</string>
+    <string name="msg_consumer_cart_for_lower_delivery">Добавте еще на %s для уменьшения стоимости доставки</string>
+    <string name="msg_consumer_cart_for_free_delivery">Добавте еще на %s для бесплатной доставки</string>
+    <string name="msg_consumer_cart_lower_delivery">Уменьшенная стоимость доставки</string>
+    <string name="msg_consumer_cart_free_delivery">Бесплатная доставка</string>
+    <string name="title_consumer_cart_total">Cумма заказа</string>
     <string name="title_consumer_cart_discount">Скидка</string>
     <string name="description_consumer_cart_increase">Увеличить</string>
     <string name="description_consumer_cart_decrease">Уменьшить</string>
@@ -87,17 +90,20 @@
     <string name="payment_method">Способ оплаты</string>
     <string name="delivery_address">Адрес доставки</string>
     <string name="pickup_address">Адрес самовывоза</string>
-    <string name="pickup_payment_method">Способ оплаты</string>
-    <string name="comment">Комментарий</string>
     <string name="hint_create_order_comment">Комментарий</string>
+    <string name="comment">Комментарий</string>
+    <string name="msg_without_change">Без сдачи</string>
+    <string name="hint_change">С какой суммы подготовить сдачу?*</string>
+    <string name="msg_change_from">Сдача с</string>
     <string name="action_create_order_create_order">Оформить заказ</string>
     <string name="error_select_delivery_address">Выберите адрес доставки</string>
     <string name="error_user">Пользователь не авторизован</string>
     <string name="error_user_address">Адрес не выбран</string>
     <string name="error_payment_method">Способ оплаты не выбран</string>
+    <string name="error_select_payment_method">Выберите cпособ оплаты</string>
+    <string name="error_change">Укажите с какой суммы подготовить сдачу</string>
+    <string name="error_enter_correct_amount">Укажите корректную сумму</string>
     <string name="msg_order_code">Код заказа %s</string>
-    <string name="msg_create_order_total_cost">Итого</string>
-    <string name="msg_create_order_delivery_cost">Доставка</string>
     <string name="msg_create_order_amount_to_pay">Сумма к оплате</string>
 
     <!-- DEFERRED TIME -->

@@ -315,19 +315,16 @@ struct OrderDetailsTextView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
                 
-                if(orderDetails.deferredTime != nil){
+                if let deferredTime = orderDetails.deferredTime {
                     VStack(spacing:0){
                         Text(orderDetails.deferredTimeHint)
                             .labelSmall(weight: .medium)
                             .foregroundColor(AppColor.onSurfaceVariant)
                             .frame(maxWidth: .infinity, alignment: .leading)
                         
-                        if let time = orderDetails.deferredTime{
-                            Text(time)
+                            Text(deferredTime)
                                 .bodyMedium()
                                 .frame(maxWidth: .infinity, alignment: .leading)
-                        }
-                        
                     }
                 }
             }

@@ -11,8 +11,8 @@ import com.bunbeauty.shared.domain.model.product.OrderProduct
 
 class OrderProductMapper : IOrderProductMapper {
 
-    override fun toOrderProduct(orderWithProductEntity: List<OrderWithProductEntity>): List<OrderProduct> {
-        return orderWithProductEntity.groupBy { orderWithProductEntity ->
+    override fun toOrderProduct(orderWithProductEntityList: List<OrderWithProductEntity>): List<OrderProduct> {
+        return orderWithProductEntityList.groupBy { orderWithProductEntity ->
             orderWithProductEntity.orderProductUuid
         }.map { (_, groupedOrderWithProductEntityList) ->
             val firstOrderWithProductEntity =

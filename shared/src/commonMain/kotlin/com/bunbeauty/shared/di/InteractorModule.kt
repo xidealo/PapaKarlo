@@ -37,8 +37,7 @@ internal fun interactorModule() = module {
     single<ICartProductInteractor> {
         CartProductInteractor(
             cartProductRepo = get(),
-            deliveryRepo = get(),
-            getCartTotal = get(),
+            getCartTotalFlowUseCase = get(),
             cartProductAdditionRepository = get()
         )
     }
@@ -46,7 +45,6 @@ internal fun interactorModule() = module {
         CafeInteractor(
             cafeRepo = get(),
             dataStoreRepo = get(),
-            dataTimeUtil = get()
         )
     }
     single<IUpdateInteractor> {
@@ -56,6 +54,7 @@ internal fun interactorModule() = module {
     single<IMenuProductInteractor> {
         MenuProductInteractor(
             menuProductRepo = get(),
+            getMenuProductListUseCase = get(),
         )
     }
 }

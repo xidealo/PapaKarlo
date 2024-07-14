@@ -87,23 +87,23 @@ extension UserAddress {
 extension SelectableUserAddress {
     func getAddress() -> String {
         
-        var address = self.street
-        address += ", д. " + (self.house)
+        var address = self.address.street
+        address += ", д. " + (self.address.house)
         
-        if(self.flat != nil && self.flat != ""){
-            address += ", кв. " + (self.flat ?? "")
+        if(self.address.flat != nil && self.address.flat != ""){
+            address += ", кв. " + (self.address.flat ?? "")
         }
         
-        if(self.entrance != nil && self.entrance != ""){
-            address += ", подъезд " + (self.entrance ?? "")
+        if(self.address.entrance != nil && self.address.entrance != ""){
+            address += ", подъезд " + (self.address.entrance ?? "")
         }
         
-        if(self.floor != nil && self.floor != ""){
-            address += ", этаж. " + (self.floor ?? "")
+        if(self.address.floor != nil && self.address.floor != ""){
+            address += ", этаж. " + (self.address.floor ?? "")
         }
         
-        if(self.comment != nil && self.comment != ""){
-            address += ", \(self.comment ?? "")"
+        if(self.address.comment != nil && self.address.comment != ""){
+            address += ", \(self.address.comment ?? "")"
         }
         
         return address
@@ -149,5 +149,37 @@ extension PaymentMethodName{
         case PaymentMethodName.phoneNumber: return "msg_payment_phone_number"
         default : return ""
         }
+    }
+}
+
+
+extension Int32 {
+    func withFirstZero() -> String {
+        return String(format: "%02d", self)
+    }
+}
+
+extension LocalizedStringKey {
+    var stringKey: String? {
+        Mirror(reflecting: self).children.first(where: { $0.label == "key" })?.value as? String
+    }
+}
+
+extension String {
+    static func localizedString(for key: String,
+                                locale: Locale = .current) -> String {
+        
+        let language = locale.languageCode
+        let path = Bundle.main.path(forResource: language, ofType: "lproj")!
+        let bundle = Bundle(path: path)!
+        let localizedString = NSLocalizedString(key, bundle: bundle, comment: "")
+        
+        return localizedString
+    }
+}
+
+extension LocalizedStringKey {
+    func stringValue(locale: Locale = .current) -> String {
+        return .localizedString(for: self.stringKey ?? "", locale: locale)
     }
 }

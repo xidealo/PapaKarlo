@@ -27,6 +27,18 @@ data class AddressServer(
     @SerialName("comment")
     val comment: String?,
 
+    @SerialName("minOrderCost")
+    val minOrderCost: Int?,
+
+    @SerialName("normalDeliveryCost")
+    val normalDeliveryCost: Int,
+
+    @SerialName("forLowDeliveryCost")
+    val forLowDeliveryCost: Int?,
+
+    @SerialName("lowDeliveryCost")
+    val lowDeliveryCost: Int?,
+
     @SerialName("userUuid")
     val userUuid: String,
 

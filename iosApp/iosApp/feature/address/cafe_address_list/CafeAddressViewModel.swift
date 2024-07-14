@@ -10,16 +10,15 @@ import Foundation
 import shared
 class CafeAddressViewModel: ObservableObject {
     
-    @Published var cafeAddressViewState:CafeAddressViewState = CafeAddressViewState(
+    @Published var cafeAddressViewState: CafeAddressViewState = CafeAddressViewState(
         cafeAddressState: CafeAddressState.loading, addressItemList: []
     )
     
-    init(isClickable:Bool, addressList: [SelectableCafeAddressItem]){
+    init(isClickable:Bool, addressList: [SelectableAddressUI]){
         loadData(isClickable: isClickable, addressList: addressList )
     }
     
-    func loadData(isClickable:Bool, addressList: [SelectableCafeAddressItem]) {
-        
+    func loadData(isClickable:Bool, addressList: [SelectableAddressUI]) {
         self.cafeAddressViewState = CafeAddressViewState(cafeAddressState: CafeAddressState.success, addressItemList: (addressList).map({ cafeAddress in
             AddressItem(
                 id: cafeAddress.uuid,

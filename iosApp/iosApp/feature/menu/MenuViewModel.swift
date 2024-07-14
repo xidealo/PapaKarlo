@@ -52,17 +52,22 @@ class MenuViewModel : ObservableObject {
     
     private func getMenuItems(menuSectionList:[MenuSection]) -> [MenuItem] {
         return menuSectionList.map { menuSection in
-            MenuItem(categorySectionItem: CategorySectionItem(id: menuSection.category.uuid, name: menuSection.category.name, menuProdctItems: menuSection.menuProductList.map({ menuProduct in
-                MenuProductItem(
-                    id: menuProduct.uuid + menuSection.category.uuid,
-                    productUuid: menuProduct.uuid,
-                    name: menuProduct.name,
-                    newPrice: String(menuProduct.newPrice) + Strings.CURRENCY,
-                    oldPrice: menuProduct.oldPrice as? Int,
-                    photoLink: menuProduct.photoLink,
-                    hasAdditions: !menuProduct.additionGroups.isEmpty
-                )
-            }))
+            MenuItem(categorySectionItem: CategorySectionItem(
+                id: menuSection.category.uuid,
+                name: menuSection.category.name,
+                menuProdctItems: menuSection.menuProductList.map({ menuProduct in
+                    let oldPriceInt = Int(truncating: menuProduct.oldPrice ?? 0)
+                    print(oldPriceInt)
+                    return MenuProductItem(
+                        id: menuProduct.uuid + menuSection.category.uuid,
+                        productUuid: menuProduct.uuid,
+                        name: menuProduct.name,
+                        newPrice: String(menuProduct.newPrice) + Strings.CURRENCY,
+                        oldPrice: oldPriceInt == 0 ? "" : String(oldPriceInt) + Strings.CURRENCY,
+                        photoLink: menuProduct.photoLink,
+                        hasAdditions: !menuProduct.additionGroups.isEmpty
+                    )
+                }))
             )
         }
     }

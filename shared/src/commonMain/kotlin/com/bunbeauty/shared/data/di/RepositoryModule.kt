@@ -49,6 +49,7 @@ fun repositoryModule() = module {
         NetworkConnectorImpl(
             client = get(),
             socketService = get(),
+            companyUuidProvider = get(),
         )
     }
     single<CartProductRepo> {
@@ -91,7 +92,6 @@ fun repositoryModule() = module {
             networkConnector = get(),
             dataStoreRepo = get(),
             cafeDao = get(),
-            cafeMapper = get(),
         )
     }
     single<DeliveryRepo> {

@@ -2,13 +2,12 @@ package com.bunbeauty.domain.feature.cafe
 
 import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.domain.exeptions.EmptyCafeListException
+import com.bunbeauty.shared.domain.feature.cafe.GetSelectableCafeListUseCase
 import com.bunbeauty.shared.domain.model.cafe.Cafe
 import com.bunbeauty.shared.domain.model.cafe.SelectableCafe
 import com.bunbeauty.shared.domain.repo.CafeRepo
-import com.bunbeauty.shared.domain.use_case.cafe.GetSelectableCafeListUseCase
 import io.mockk.coEvery
 import io.mockk.mockk
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -31,7 +30,6 @@ class GetSelectableCafeListUseCaseTest {
 
     @Test
     fun `return cafe list with selected cafe`() = runTest {
-        // Arrange
         val selectedCityUuid = "cityUuid"
         val userUuid = "userUuid"
         val selectedCafeUuid = "selectedCafeUuid"
@@ -57,17 +55,13 @@ class GetSelectableCafeListUseCaseTest {
         } returns selectedCafe
         coEvery { cafeRepo.getCafeList(selectedCityUuid) } returns cafeList
 
-        // Act
         val result = getSelectableCafeListUseCase()
 
-        // Assert
         assertContentEquals(expectedResult, result)
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun `return cafe list with first selected cafe if cafe is not selected`() = runTest {
-        // Arrange
         val selectedCityUuid = "cityUuid"
         val userUuid = "userUuid"
         val cafeList = listOf(
@@ -92,17 +86,13 @@ class GetSelectableCafeListUseCaseTest {
         coEvery { cafeRepo.getFirstCafeCityUuid(selectedCityUuid) } returns generateCafe("uuid1")
         coEvery { cafeRepo.getCafeList(selectedCityUuid) } returns cafeList
 
-        // Act
         val result = getSelectableCafeListUseCase()
 
-        // Assert
         assertContentEquals(expectedResult, result)
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun `throw exception if cafe list is empty`() {
-        // Arrange
         val selectedCityUuid = "cityUuid"
         val userUuid = "userUuid"
 
@@ -116,7 +106,6 @@ class GetSelectableCafeListUseCaseTest {
         } returns generateCafe(selectedCityUuid)
         coEvery { cafeRepo.getCafeList(selectedCityUuid) } returns emptyList()
 
-        // Act & Assert
         assertFailsWith<EmptyCafeListException> {
             runTest {
                 getSelectableCafeListUseCase()
@@ -133,17 +122,21 @@ class GetSelectableCafeListUseCaseTest {
         latitude = 0.0,
         longitude = 0.0,
         cityUuid = "cityUuid",
+        isVisible = true,
     )
 
     private fun generateSelectableCafe(uuid: String, isSelected: Boolean) = SelectableCafe(
-        uuid = uuid,
-        fromTime = 0,
-        toTime = 0,
-        phone = "phone",
-        address = "address",
-        latitude = 0.0,
-        longitude = 0.0,
-        cityUuid = "cityUuid",
+        cafe = Cafe(
+            uuid = uuid,
+            fromTime = 0,
+            toTime = 0,
+            phone = "phone",
+            address = "address",
+            latitude = 0.0,
+            longitude = 0.0,
+            cityUuid = "cityUuid",
+            isVisible = true,
+        ),
         isSelected = isSelected,
     )
 }

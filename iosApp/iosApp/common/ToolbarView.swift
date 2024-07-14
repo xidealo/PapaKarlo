@@ -10,30 +10,28 @@ import shared
 
 struct ToolbarView: View {
     
-    let title:LocalizedStringKey
+    let title: LocalizedStringKey
     
-    var logout: (() -> Void)? = nil
     var back: (() -> Void)? = nil
     @State private var showingAlert = false
     
     var body: some View {
         HStack(spacing:0){
-            Button(action: {
-                back!()
-            }) {
-                if(back != nil){
+            if let backAction = back{
+                Button(action: {
+                    backAction()
+                }) {
                     Image(systemName: "arrow.backward")
                         .foregroundColor(AppColor.onSurface)
-                        .padding(.horizontal, Diems.SMALL_PADDING)
-                }
-            }.padding(Diems.SMALL_PADDING)
-            
+                }.padding(.vertical, Diems.SMALL_PADDING)
+                    .padding(.leading, 8)
+            }
             Text(title)
                 .foregroundColor(AppColor.onSurface)
                 .titleMedium(weight: .bold)
                 .lineLimit(1)
                 .padding(.vertical, Diems.MEDIUM_PADDING)
-            
+                .padding(.leading, 8)
             Spacer()
         }.background(AppColor.surface)
     }

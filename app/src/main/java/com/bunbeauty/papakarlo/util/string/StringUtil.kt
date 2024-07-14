@@ -1,16 +1,15 @@
 package com.bunbeauty.papakarlo.util.string
 
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.model.TimeUI
 import com.bunbeauty.papakarlo.util.resources.IResourcesProvider
 import com.bunbeauty.shared.Constants.ADDRESS_DIVIDER
 import com.bunbeauty.shared.domain.model.address.SelectableUserAddress
 import com.bunbeauty.shared.domain.model.address.UserAddress
+import com.bunbeauty.shared.domain.model.cafe.CafeOpenState
 import com.bunbeauty.shared.domain.model.date_time.DateTime
 import com.bunbeauty.shared.domain.model.date_time.Time
 import com.bunbeauty.shared.domain.model.order.OrderAddress
 import com.bunbeauty.shared.domain.model.order.OrderStatus
-import com.bunbeauty.shared.presentation.cafe_list.CafeItem
 
 class StringUtil(
     private val resourcesProvider: IResourcesProvider
@@ -45,18 +44,18 @@ class StringUtil(
         }
     }
 
-    override fun getUserAddressString(userAddress: SelectableUserAddress?): String? {
-        return userAddress?.let {
+    override fun getUserAddressString(selectableUserAddress: SelectableUserAddress?): String? {
+        return selectableUserAddress?.let {
             val houseShort = resourcesProvider.getString(R.string.msg_address_house_short)
             val flatShort = resourcesProvider.getString(R.string.msg_address_flat_short)
             val entranceShort = resourcesProvider.getString(R.string.msg_address_entrance_short)
             val floorShort = resourcesProvider.getString(R.string.msg_address_floor_short)
-            userAddress.street +
-                getStringPart(ADDRESS_DIVIDER, houseShort, userAddress.house) +
-                getStringPart(ADDRESS_DIVIDER, flatShort, userAddress.flat) +
-                getInvertedStringPart(ADDRESS_DIVIDER, userAddress.entrance, entranceShort) +
-                getInvertedStringPart(ADDRESS_DIVIDER, userAddress.floor, floorShort) +
-                getStringPart(ADDRESS_DIVIDER, "", userAddress.comment)
+            selectableUserAddress.address.street +
+                getStringPart(ADDRESS_DIVIDER, houseShort, selectableUserAddress.address.house) +
+                getStringPart(ADDRESS_DIVIDER, flatShort, selectableUserAddress.address.flat) +
+                getInvertedStringPart(ADDRESS_DIVIDER, selectableUserAddress.address.entrance, entranceShort) +
+                getInvertedStringPart(ADDRESS_DIVIDER, selectableUserAddress.address.floor, floorShort) +
+                getStringPart(ADDRESS_DIVIDER, "", selectableUserAddress.address.comment)
         }
     }
 
@@ -103,18 +102,6 @@ class StringUtil(
             resourcesProvider.getString(R.string.asap)
         } else {
             "${addFirstZero(time.hours)}:${addFirstZero(time.minutes)}"
-        }
-    }
-
-    override fun getTimeString(time: TimeUI): String {
-        return when (time) {
-            is TimeUI.ASAP -> {
-                resourcesProvider.getString(R.string.asap)
-            }
-
-            is TimeUI.Time -> {
-                "${addFirstZero(time.hours)}:${addFirstZero(time.minutes)}"
-            }
         }
     }
 
@@ -178,16 +165,16 @@ class StringUtil(
         }
     }
 
-    override fun getCafeStatusText(cafeOpenState: CafeItem.CafeOpenState): String {
+    override fun getCafeStatusText(cafeOpenState: CafeOpenState): String {
         return when (cafeOpenState) {
-            is CafeItem.CafeOpenState.Opened -> resourcesProvider.getString(R.string.msg_cafe_open)
-            is CafeItem.CafeOpenState.CloseSoon -> {
+            is CafeOpenState.Opened -> resourcesProvider.getString(R.string.msg_cafe_open)
+            is CafeOpenState.CloseSoon -> {
                 resourcesProvider.getString(R.string.msg_cafe_close_soon) +
-                    cafeOpenState.time +
-                    getMinuteString(cafeOpenState.time)
+                    cafeOpenState.minutesUntil +
+                    getMinuteString(cafeOpenState.minutesUntil)
             }
 
-            is CafeItem.CafeOpenState.Closed -> resourcesProvider.getString(R.string.msg_cafe_closed)
+            is CafeOpenState.Closed -> resourcesProvider.getString(R.string.msg_cafe_closed)
         }
     }
 

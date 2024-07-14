@@ -6,12 +6,13 @@
 //
 
 import SwiftUI
-struct MenuProductItem:Identifiable  {
+
+struct MenuProductItem: Identifiable {
     let id: String
     let productUuid: String
     let name: String
     let newPrice: String
-    let oldPrice: Int?
+    let oldPrice: String?
     let photoLink: String
     let hasAdditions:Bool
 }

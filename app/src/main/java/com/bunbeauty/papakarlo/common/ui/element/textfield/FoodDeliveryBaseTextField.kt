@@ -4,6 +4,7 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.selection.LocalTextSelectionColors
 import androidx.compose.material3.Icon
@@ -14,8 +15,6 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -29,13 +28,14 @@ fun FoodDeliveryBaseTextField(
     modifier: Modifier = Modifier,
     value: String = "",
     @StringRes labelStringId: Int,
-    keyboardType: KeyboardType = KeyboardType.Text,
-    imeAction: ImeAction = ImeAction.Next,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    keyboardActions: KeyboardActions = KeyboardActions.Default,
     onValueChange: (value: String) -> Unit,
     maxSymbols: Int = Int.MAX_VALUE,
     maxLines: Int = 1,
     isError: Boolean = false,
-    isLoading: Boolean = false
+    isLoading: Boolean = false,
+    trailingIcon: (@Composable () -> Unit)? = null
 ) {
     OutlinedTextField(
         modifier = modifier,
@@ -52,20 +52,21 @@ fun FoodDeliveryBaseTextField(
             )
         },
         trailingIcon = {
-            TrailingIcon(
-                isLoading = isLoading,
-                textValue = value,
-                onClick = {
-                    onValueChange("")
-                }
-            )
+            if (trailingIcon == null) {
+                TrailingIcon(
+                    isLoading = isLoading,
+                    textValue = value,
+                    onClick = {
+                        onValueChange("")
+                    }
+                )
+            } else {
+                trailingIcon()
+            }
         },
         isError = isError,
-        keyboardOptions = KeyboardOptions(
-            autoCorrect = false,
-            keyboardType = keyboardType,
-            imeAction = imeAction
-        ),
+        keyboardOptions = keyboardOptions,
+        keyboardActions = keyboardActions,
         singleLine = maxLines == 1,
         maxLines = maxLines,
         colors = FoodDeliveryTextFieldDefaults.textFieldColors
@@ -77,13 +78,14 @@ fun FoodDeliveryBaseTextField(
     modifier: Modifier = Modifier,
     value: TextFieldValue = TextFieldValue(""),
     @StringRes labelStringId: Int,
-    keyboardType: KeyboardType = KeyboardType.Text,
-    imeAction: ImeAction = ImeAction.Next,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    keyboardActions: KeyboardActions = KeyboardActions.Default,
     onValueChange: (value: TextFieldValue) -> Unit,
     maxSymbols: Int = Int.MAX_VALUE,
     maxLines: Int = 1,
     isError: Boolean = false,
-    isLoading: Boolean = false
+    isLoading: Boolean = false,
+    trailingIcon: (@Composable () -> Unit)? = null
 ) {
     CompositionLocalProvider(
         LocalTextSelectionColors provides FoodDeliveryTextFieldDefaults.textSelectionColors
@@ -107,20 +109,21 @@ fun FoodDeliveryBaseTextField(
                 )
             },
             trailingIcon = {
-                TrailingIcon(
-                    isLoading = isLoading,
-                    textValue = value.text,
-                    onClick = {
-                        onValueChange(TextFieldValue(""))
-                    }
-                )
+                if (trailingIcon == null) {
+                    TrailingIcon(
+                        isLoading = isLoading,
+                        textValue = value.text,
+                        onClick = {
+                            onValueChange(TextFieldValue(""))
+                        }
+                    )
+                } else {
+                    trailingIcon()
+                }
             },
             isError = isError,
-            keyboardOptions = KeyboardOptions(
-                autoCorrect = false,
-                keyboardType = keyboardType,
-                imeAction = imeAction
-            ),
+            keyboardOptions = keyboardOptions,
+            keyboardActions = keyboardActions,
             singleLine = maxLines == 1,
             maxLines = maxLines,
             colors = FoodDeliveryTextFieldDefaults.textFieldColors
@@ -187,6 +190,25 @@ private fun FoodDeliveryTextBaseFieldWithErrorPreview() {
             labelStringId = R.string.hint_create_order_comment,
             onValueChange = {},
             isError = true
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun FoodDeliveryTextBaseFieldWithTrailingIconPreview() {
+    FoodDeliveryTheme {
+        FoodDeliveryBaseTextField(
+            value = "Нужно больше еды \n ...",
+            labelStringId = R.string.hint_create_order_comment,
+            onValueChange = {},
+            trailingIcon = {
+                Icon(
+                    modifier = Modifier.size(24.dp),
+                    painter = painterResource(R.drawable.ic_address),
+                    contentDescription = null
+                )
+            }
         )
     }
 }

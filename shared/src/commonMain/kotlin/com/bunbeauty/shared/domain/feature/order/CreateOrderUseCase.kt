@@ -1,8 +1,8 @@
 package com.bunbeauty.shared.domain.feature.order
 
 import com.bunbeauty.shared.DataStoreRepo
-import com.bunbeauty.shared.domain.model.address.SelectableUserAddress
-import com.bunbeauty.shared.domain.model.cafe.SelectableCafe
+import com.bunbeauty.shared.domain.model.address.UserAddress
+import com.bunbeauty.shared.domain.model.cafe.Cafe
 import com.bunbeauty.shared.domain.model.cart.CartProduct
 import com.bunbeauty.shared.domain.model.date_time.Time
 import com.bunbeauty.shared.domain.model.order.CreatedOrder
@@ -22,9 +22,9 @@ class CreateOrderUseCase(
 
     suspend operator fun invoke(
         isDelivery: Boolean,
-        selectedUserAddress: SelectableUserAddress?,
-        selectedCafe: SelectableCafe?,
-        comment: String?,
+        selectedUserAddress: UserAddress?,
+        selectedCafe: Cafe?,
+        orderComment: String?,
         deferredTime: Time?,
         timeZone: String,
         paymentMethod: String?,
@@ -34,15 +34,17 @@ class CreateOrderUseCase(
 
         val createdOrderAddress = if (isDelivery) {
             selectedUserAddress ?: return null
-            CreatedOrderAddress(
-                uuid = selectedUserAddress.uuid,
-                street = selectedUserAddress.street,
-                house = selectedUserAddress.house,
-                flat = selectedUserAddress.flat,
-                entrance = selectedUserAddress.entrance,
-                floor = selectedUserAddress.floor,
-                comment = selectedUserAddress.comment,
-            )
+            selectedUserAddress.run {
+                CreatedOrderAddress(
+                    uuid = uuid,
+                    street = street,
+                    house = house,
+                    flat = flat,
+                    entrance = entrance,
+                    floor = floor,
+                    comment = comment,
+                )
+            }
         } else {
             selectedCafe ?: return null
             CreatedOrderAddress(
@@ -54,7 +56,7 @@ class CreateOrderUseCase(
         val createdOrder = CreatedOrder(
             isDelivery = isDelivery,
             address = createdOrderAddress,
-            comment = comment,
+            comment = orderComment,
             deferredTime = deferredTime?.let {
                 dateTimeUtil.getMillisByTime(deferredTime, timeZone)
             },

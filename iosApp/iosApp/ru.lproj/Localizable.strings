@@ -27,7 +27,7 @@
 "emptyCartSecondProfile" = "Добавьте товар из «Меню»";
 "consumer_cart_total" = "Итого";
 "consumer_cart_discount" = "Скидка";
-"consumer_cart_recommendations" = "Что-нибудь еще?";
+"consumer_cart_recommendations" = "Рекомендуем";
 
 //User address list
 "emptyAddressListTitleProfile" = "Список адресов пуст";
@@ -96,3 +96,16 @@
 "hint_create_address_floor" = "Этаж";
 "hint_create_address_comment" = "Комментарий для курьера";
 "msg_create_address_created" = "Адрес добавлен";
+
+
+//Create order
+"title_create_order_time_delivery" = "Время доставки";
+"title_create_order_time_pickup" = "Время самовывоза";
+"error_select_delivery_address" = "Выберите адрес доставки";
+"error_select_payment_method" = "Выберите cпособ оплаты";
+"error_payment_method" = "Способ оплаты не выбран";
+"msg_without_change" = "Без сдачи";
+"msg_change_from" = "Сдача с";
+"error_enter_correct_amount" = "Укажите корректную сумму";
+"title_delivery_address" = "Адрес доставки";
+"title_pickup_address" = "Адрес самовывоза";
