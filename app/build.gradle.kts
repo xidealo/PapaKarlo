@@ -150,7 +150,6 @@ android {
             commonPlayConfig(this, this@Build_gradle)
         }
     }
-
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
@@ -235,7 +234,6 @@ dependencies {
     implementation(CollectionsImmutable.collectionsImmutable)
 }
 
-
 tasks.register("assembleAndPublishAllRelease") {
     dependsOn(PAPA_KARLO_FLAVOR_NAME.getAssembleBundleRelease())
     dependsOn(YULIAR_FLAVOR_NAME.getAssembleBundleRelease())
@@ -254,7 +252,7 @@ tasks.register("assembleAndPublishAllRelease") {
 
 fun commonPlayConfig(
     playPublisherExtension: PlayPublisherExtension,
-    buildGradle: Build_gradle,
+    buildGradle: Build_gradle
 ) {
     playPublisherExtension.track.set("production")
     playPublisherExtension.defaultToAppBundles.set(true)
