@@ -1,6 +1,10 @@
 name: Android CI
 
-on: [ pull_request ]
+on:
+  pull_request:
+  push:
+    branches:
+      - master
 
 jobs:
   build_job:
@@ -102,3 +106,10 @@ jobs:
         run: ./gradlew testPapaKarloDebug
       - name: run Yuliar tests
         run: ./gradlew testYuliarDebug
+
+  merge_to_master_job:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
+    steps:
+      - name: Print greeting
+        run: echo "Привет"
