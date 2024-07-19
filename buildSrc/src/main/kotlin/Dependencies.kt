@@ -12,6 +12,7 @@ object Versions {
     const val mockK = "1.12.5"
 
     const val sqlDelight = "1.5.5"
+    const val publisher = "3.7.0"
 
     const val junit = "4.13.2"
     const val testRunner = "1.3.0"
@@ -105,6 +106,7 @@ object ClassPath {
     const val navigationSafeArgs =
         "androidx.navigation:navigation-safe-args-gradle-plugin:${Versions.navigation}"
     const val sqlDelight = "com.squareup.sqldelight:gradle-plugin:${Versions.sqlDelight}"
+    const val publisher = "com.github.triplet.gradle:play-publisher:${Versions.publisher}"
 }
 
 object Plugin {
@@ -118,6 +120,7 @@ object Plugin {
     const val navigation = "androidx.navigation.safeargs"
     const val multiplatform = "multiplatform"
     const val googleService = "com.google.gms.google-services"
+    const val tripletPlay = "com.github.triplet.play"
     const val crashlytics = "com.google.firebase.crashlytics"
     const val sqldelight = "com.squareup.sqldelight"
 }

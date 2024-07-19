@@ -8,3 +8,10 @@ object Constants {
 
     const val DEPLOYMENT_TARGET = "12.0"
 }
+
+fun String.getAssembleBundleRelease() =
+    "assemble${this.replaceFirstChar { oldChar -> oldChar.uppercase() }}Release"
+
+fun String.getPublishReleaseBundle() =
+    "publish${this.replaceFirstChar { oldChar -> oldChar.uppercase() }}ReleaseBundle"
+
