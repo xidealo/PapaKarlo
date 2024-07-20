@@ -106,6 +106,8 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
         ) { padding ->
             Column(modifier = Modifier.padding(padding)) {
                 ConnectionErrorMessage(visible = mainState.connectionLost)
+                OrderAvailableMessage(visible = !mainState.isOrderAvailable)
+
                 Box(modifier = Modifier.weight(1f)) {
                     AndroidViewBinding(factory = ::fragmentContainerFactory)
                 }
@@ -137,6 +139,29 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
     }
 
     @Composable
+    private fun OrderAvailableMessage(visible: Boolean) {
+        AnimatedVisibility(
+            visible = visible,
+            enter = fadeIn(tween(300)),
+            exit = fadeOut(tween(300))
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(FoodDeliveryTheme.colors.statusColors.warning)
+                    .padding(8.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = resources.getString(R.string.warning_no_internet),
+                    style = FoodDeliveryTheme.typography.bodyMedium,
+                    color = FoodDeliveryTheme.colors.mainColors.onError
+                )
+            }
+        }
+    }
+
+    @Composable
     private fun FoodDeliverySnackbarHost(snackbarHostState: SnackbarHostState) {
         SnackbarHost(hostState = snackbarHostState) { snackbarData ->
             (snackbarData.visuals as? FoodDeliverySnackbarVisuals)?.let { visuals ->
@@ -159,7 +184,7 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
 
     private fun handleEventList(
         eventList: List<MainState.Event>,
-        snackbarHostState: SnackbarHostState
+        snackbarHostState: SnackbarHostState,
     ) {
         eventList.forEach { event ->
             when (event) {
@@ -183,7 +208,7 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
     private fun fragmentContainerFactory(
         inflater: LayoutInflater,
         parent: ViewGroup,
-        attachToParent: Boolean
+        attachToParent: Boolean,
     ): FragmentContainerBinding =
         FragmentContainerBinding.inflate(inflater, parent, attachToParent).also {
             setupNavigationListener()

@@ -6,6 +6,7 @@ import com.bunbeauty.analytic.parameter.MenuProductUuidEventParameter
 import com.bunbeauty.shared.domain.feature.cart.ObserveCartUseCase
 import com.bunbeauty.shared.domain.feature.discount.GetDiscountUseCase
 import com.bunbeauty.shared.domain.feature.menu.AddMenuProductUseCase
+import com.bunbeauty.shared.domain.feature.orderavailable.GetIsOrderAvailableUseCase
 import com.bunbeauty.shared.domain.interactor.menu_product.IMenuProductInteractor
 import com.bunbeauty.shared.domain.model.menu.MenuSection
 import com.bunbeauty.shared.extension.launchSafe
@@ -88,13 +89,14 @@ class MenuViewModel(
                     selectedCategoryUuid = menuSectionList.firstOrNull()?.category?.uuid
                 }
 
-                val discountItem = getDiscountUseCase()?.firstOrderDiscount?.toString()?.let { discount ->
-                    MenuItem.Discount(discount = discount)
-                }
-                val menuItemList = listOfNotNull(discountItem) +
-                    menuSectionList.flatMap { menuSection ->
-                        menuSection.toMenuItemList()
+                val discountItem =
+                    getDiscountUseCase()?.firstOrderDiscount?.toString()?.let { discount ->
+                        MenuItem.Discount(discount = discount)
                     }
+                val menuItemList = listOfNotNull(discountItem) +
+                        menuSectionList.flatMap { menuSection ->
+                            menuSection.toMenuItemList()
+                        }
                 mutableMenuState.update { oldState ->
                     oldState.copy(
                         categoryItemList = menuSectionList.map { menuSection ->

@@ -33,7 +33,8 @@ fun viewModelModule() = module {
     }
     viewModel {
         MainViewModel(
-            networkUtil = get()
+            networkUtil = get(),
+            getIsOrderAvailableUseCase = get()
         )
     }
     viewModel {

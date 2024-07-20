@@ -4,6 +4,7 @@ import com.bunbeauty.shared.domain.model.Delivery
 import com.bunbeauty.shared.domain.model.Discount
 import com.bunbeauty.shared.domain.model.Settings
 import com.bunbeauty.shared.domain.model.UserCityUuid
+import com.bunbeauty.shared.domain.model.order.OrderAvailable
 import kotlinx.coroutines.flow.Flow
 
 interface DataStoreRepo {

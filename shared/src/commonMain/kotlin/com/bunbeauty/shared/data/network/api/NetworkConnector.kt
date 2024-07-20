@@ -8,6 +8,7 @@ import com.bunbeauty.shared.data.network.model.CityServer
 import com.bunbeauty.shared.data.network.model.DeliveryServer
 import com.bunbeauty.shared.data.network.model.DiscountServer
 import com.bunbeauty.shared.data.network.model.ForceUpdateVersionServer
+import com.bunbeauty.shared.data.network.model.OrderAvailableServer
 import com.bunbeauty.shared.data.network.model.LinkServer
 import com.bunbeauty.shared.data.network.model.ListServer
 import com.bunbeauty.shared.data.network.model.MenuProductServer
@@ -64,6 +65,7 @@ interface NetworkConnector {
     suspend fun getPaymentMethodList(): ApiResult<ListServer<PaymentMethodServer>>
     suspend fun getLinkList(): ApiResult<ListServer<LinkServer>>
     suspend fun getRecommendationData(): ApiResult<RecommendationDataServer>
+    suspend fun getIsOrderAvailableData(): ApiResult<OrderAvailableServer>
 
     @Deprecated("Outdated login method")
     suspend fun postLogin(loginPostServer: LoginPostServer): ApiResult<AuthResponseServer>

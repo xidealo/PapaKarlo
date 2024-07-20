@@ -27,19 +27,6 @@ class UserInteractor(
         return dataStoreRepo.getToken() != null
     }
 
-    override fun observeIsUserAuthorize(): CommonFlow<Boolean> {
-        return dataStoreRepo.token.map { token ->
-            token != null
-        }.asCommonFlow()
-    }
-
-    @OptIn(ExperimentalCoroutinesApi::class)
-    override fun observeUser(): Flow<User?> {
-        return dataStoreRepo.userUuid.flatMapLatest { userUuid ->
-            userRepo.observeUserByUuid(userUuid ?: "")
-        }
-    }
-
     override suspend fun getProfile(): Profile? {
         val token = dataStoreRepo.getToken() ?: return Profile.Unauthorized
         return if (isUserAuthorize()) {

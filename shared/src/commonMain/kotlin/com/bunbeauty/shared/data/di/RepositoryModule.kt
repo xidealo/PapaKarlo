@@ -14,6 +14,7 @@ import com.bunbeauty.shared.data.repository.DeliveryRepository
 import com.bunbeauty.shared.data.repository.DiscountRepository
 import com.bunbeauty.shared.data.repository.LinkRepository
 import com.bunbeauty.shared.data.repository.MenuProductRepository
+import com.bunbeauty.shared.data.repository.OrderAvailableRepository
 import com.bunbeauty.shared.data.repository.OrderRepository
 import com.bunbeauty.shared.data.repository.PaymentRepository
 import com.bunbeauty.shared.data.repository.RecommendationRepository
@@ -179,6 +180,11 @@ fun repositoryModule() = module {
     }
     single<SuggestionRepo> {
         SuggestionRepository(
+            networkConnector = get(),
+        )
+    }
+    single {
+        OrderAvailableRepository(
             networkConnector = get(),
         )
     }

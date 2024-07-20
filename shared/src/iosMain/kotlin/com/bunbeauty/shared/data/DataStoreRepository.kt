@@ -6,10 +6,12 @@ import com.bunbeauty.shared.domain.model.Discount
 import com.bunbeauty.shared.domain.model.Payment
 import com.bunbeauty.shared.domain.model.Settings
 import com.bunbeauty.shared.domain.model.UserCityUuid
+import com.bunbeauty.shared.domain.model.order.OrderAvailable
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import org.koin.core.component.KoinComponent
 import platform.Foundation.NSUserDefaults
 
@@ -175,7 +177,10 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
     }
 
     actual override suspend fun saveRecommendationMaxVisible(recommendationMaxVisible: Int) {
-        NSUserDefaults.standardUserDefaults.setObject(recommendationMaxVisible, RECOMMENDATION_MAX_VISIBLE_KEY)
+        NSUserDefaults.standardUserDefaults.setObject(
+            recommendationMaxVisible,
+            RECOMMENDATION_MAX_VISIBLE_KEY
+        )
     }
 
     actual override suspend fun clearUserData() {
