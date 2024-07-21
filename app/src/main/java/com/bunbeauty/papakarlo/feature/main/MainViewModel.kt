@@ -20,7 +20,7 @@ private const val MAIN_VIEW_MODEL_TAG = "MainViewModel"
 
 class MainViewModel(
     private val networkUtil: INetworkUtil,
-    private val getIsOrderAvailableUseCase: GetIsOrderAvailableUseCase
+    private val getIsOrderAvailableUseCase: GetIsOrderAvailableUseCase,
 ) : ViewModel() {
 
     private val mutableMainState: MutableStateFlow<MainState> = MutableStateFlow(MainState())
@@ -98,7 +98,7 @@ class MainViewModel(
         viewModelScope.launchSafe(
             block = {
                 mutableMainState.update { state ->
-                    state.copy(isOrderAvailable = getIsOrderAvailableUseCase())
+                    state.copy(showOrderNotAvailable = getIsOrderAvailableUseCase().not())
                 }
             },
             onError = { error ->

@@ -5,7 +5,7 @@ import com.bunbeauty.papakarlo.common.ui.element.bottombar.NavigationBarItem
 
 data class MainState(
     val connectionLost: Boolean = false,
-    val isOrderAvailable: Boolean = true,
+    val showOrderNotAvailable: Boolean = false,
     val navigationBarOptions: NavigationBarOptions = NavigationBarOptions.Hidden,
     val eventList: List<Event> = emptyList()
 ) {

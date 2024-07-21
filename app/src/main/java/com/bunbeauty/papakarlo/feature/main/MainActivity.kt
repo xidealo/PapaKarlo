@@ -106,7 +106,7 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
         ) { padding ->
             Column(modifier = Modifier.padding(padding)) {
                 ConnectionErrorMessage(visible = mainState.connectionLost)
-                OrderAvailableMessage(visible = !mainState.isOrderAvailable)
+                OrderAvailableMessage(visible = mainState.showOrderNotAvailable)
 
                 Box(modifier = Modifier.weight(1f)) {
                     AndroidViewBinding(factory = ::fragmentContainerFactory)
