@@ -6,7 +6,7 @@ import com.bunbeauty.shared.domain.model.cart.CartProduct
 
 class GetNewTotalCostUseCase(
     private val getDiscountUseCase: GetDiscountUseCase,
-    private val getCartProductAdditionsPriceUseCase: GetCartProductAdditionsPriceUseCase,
+    private val getCartProductAdditionsPriceUseCase: GetCartProductAdditionsPriceUseCase
 ) {
     suspend operator fun invoke(cartProductList: List<CartProduct>): Int {
         val newTotalCost = cartProductList.sumOf { cartProduct ->

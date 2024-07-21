@@ -2,8 +2,8 @@ package com.bunbeauty
 
 import com.bunbeauty.shared.domain.model.addition.Addition
 import com.bunbeauty.shared.domain.model.addition.AdditionGroup
-import com.bunbeauty.shared.domain.model.cart.CartProduct
 import com.bunbeauty.shared.domain.model.addition.CartProductAddition
+import com.bunbeauty.shared.domain.model.cart.CartProduct
 import com.bunbeauty.shared.domain.model.category.Category
 import com.bunbeauty.shared.domain.model.product.MenuProduct
 
@@ -14,7 +14,7 @@ fun getMenuProduct(
     categoryList: List<Category> = emptyList(),
     isRecommended: Boolean = false,
     visible: Boolean = true,
-    additionGroups: List<AdditionGroup> = emptyList(),
+    additionGroups: List<AdditionGroup> = emptyList()
 ) = MenuProduct(
     uuid = uuid,
     name = "Kapusta",
@@ -28,14 +28,14 @@ fun getMenuProduct(
     categoryList = categoryList,
     visible = visible,
     isRecommended = isRecommended,
-    additionGroups = additionGroups,
+    additionGroups = additionGroups
 )
 
 fun getCartProduct(
     uuid: String = "1",
     count: Int = 0,
     menuProduct: MenuProduct = getMenuProduct(),
-    cartProductAdditionList: List<CartProductAddition> = emptyList(),
+    cartProductAdditionList: List<CartProductAddition> = emptyList()
 ) = CartProduct(
     uuid = uuid,
     count = count,
@@ -66,7 +66,7 @@ fun getAddition(
     additionGroupUuid: String = "",
     isVisible: Boolean = true,
     price: Int? = 0,
-    isSelected: Boolean = false,
+    isSelected: Boolean = false
 ) = Addition(
     uuid = uuid,
     name = "",
@@ -84,7 +84,7 @@ fun getAdditionGroup(
     priority: Int = 0,
     additions: List<Addition> = emptyList(),
     isVisible: Boolean = true,
-    singleChoice: Boolean = false,
+    singleChoice: Boolean = false
 ) = AdditionGroup(
     uuid = uuid,
     name = "",

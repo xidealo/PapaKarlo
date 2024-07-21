@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.map
 
 class ObserveCartUseCase(
     private val cartProductRepo: CartProductRepo,
-    private val getNewTotalCostUseCase: GetNewTotalCostUseCase,
+    private val getNewTotalCostUseCase: GetNewTotalCostUseCase
 ) {
     operator fun invoke(): CommonFlow<CartCostAndCount> {
         return cartProductRepo.observeCartProductList().map { cartProductList ->
@@ -17,7 +17,7 @@ class ObserveCartUseCase(
                 cost = getNewTotalCostUseCase(cartProductList).toString(),
                 count = cartProductList.sumOf { cartProduct ->
                     cartProduct.count
-                }.toString(),
+                }.toString()
             )
         }.asCommonFlow()
     }

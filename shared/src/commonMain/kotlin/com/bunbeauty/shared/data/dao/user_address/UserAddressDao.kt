@@ -35,7 +35,7 @@ class UserAddressDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IUserAddressD
                         normalDeliveryCost = normalDeliveryCost,
                         forLowDeliveryCost = forLowDeliveryCost,
                         lowDeliveryCost = lowDeliveryCost,
-                        userUuid = userUuid,
+                        userUuid = userUuid
                     )
                 }
             }
@@ -46,7 +46,7 @@ class UserAddressDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IUserAddressD
         selectedUserAddressUuidEntityQueries.insertSelectedUserAddressUuid(
             userUuid = selectedUserAddressUuidEntity.userUuid,
             cityUuid = selectedUserAddressUuidEntity.cityUuid,
-            userAddressUuid = selectedUserAddressUuidEntity.userAddressUuid,
+            userAddressUuid = selectedUserAddressUuidEntity.userAddressUuid
         )
     }
 
@@ -119,5 +119,4 @@ class UserAddressDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IUserAddressD
             cityUuid = cityUuid
         ).asFlow().mapToList()
     }
-
 }

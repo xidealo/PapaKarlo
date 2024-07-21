@@ -4,7 +4,6 @@ import com.bunbeauty.shared.db.CafeEntity
 import com.bunbeauty.shared.db.SelectedCafeUuidEntity
 import kotlinx.coroutines.flow.Flow
 
-
 interface ICafeDao {
 
     suspend fun insertCafeList(cafeList: List<CafeEntity>)

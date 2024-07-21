@@ -5,8 +5,8 @@ import com.bunbeauty.shared.data.repository.AdditionGroupRepository
 import com.bunbeauty.shared.data.repository.AdditionRepository
 import com.bunbeauty.shared.data.repository.CartProductAdditionRepository
 import com.bunbeauty.shared.domain.exeptions.CartProductLimitReachedException
-import com.bunbeauty.shared.domain.feature.addition.GetAdditionPriorityUseCase
 import com.bunbeauty.shared.domain.feature.addition.AreAdditionsEqualUseCase
+import com.bunbeauty.shared.domain.feature.addition.GetAdditionPriorityUseCase
 import com.bunbeauty.shared.domain.model.cart.CartProduct
 import com.bunbeauty.shared.domain.repo.CartProductRepo
 
@@ -17,11 +17,11 @@ class AddCartProductUseCase(
     private val additionRepository: AdditionRepository,
     private val areAdditionsEqualUseCase: AreAdditionsEqualUseCase,
     private val additionGroupRepository: AdditionGroupRepository,
-    private val getAdditionPriorityUseCase: GetAdditionPriorityUseCase,
+    private val getAdditionPriorityUseCase: GetAdditionPriorityUseCase
 ) {
     suspend operator fun invoke(
         menuProductUuid: String,
-        additionUuidList: List<String>,
+        additionUuidList: List<String>
     ) {
         if (getCartProductCountUseCase() >= CART_PRODUCT_LIMIT) {
             throw CartProductLimitReachedException()
@@ -29,7 +29,7 @@ class AddCartProductUseCase(
 
         val cartProductWithSameAdditions = getCartProductWithSameAdditions(
             cartProductList = cartProductRepo.getCartProductListByMenuProductUuid(
-                menuProductUuid,
+                menuProductUuid
             ),
             additionUuidList = additionUuidList
         )
@@ -59,7 +59,7 @@ class AddCartProductUseCase(
 
     private fun getCartProductWithSameAdditions(
         cartProductList: List<CartProduct>,
-        additionUuidList: List<String>,
+        additionUuidList: List<String>
     ): CartProduct? {
         return cartProductList.firstOrNull { cartProduct ->
             areAdditionsEqualUseCase(

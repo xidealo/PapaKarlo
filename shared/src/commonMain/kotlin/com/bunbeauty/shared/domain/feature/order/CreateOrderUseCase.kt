@@ -17,7 +17,7 @@ class CreateOrderUseCase(
     private val dataStoreRepo: DataStoreRepo,
     private val cartProductRepo: CartProductRepo,
     private val dateTimeUtil: IDateTimeUtil,
-    private val orderRepo: OrderRepo,
+    private val orderRepo: OrderRepo
 ) {
 
     suspend operator fun invoke(
@@ -27,7 +27,7 @@ class CreateOrderUseCase(
         orderComment: String?,
         deferredTime: Time?,
         timeZone: String,
-        paymentMethod: String?,
+        paymentMethod: String?
     ): OrderCode? {
         val token = dataStoreRepo.getToken() ?: return null
         val cartProductList = cartProductRepo.getCartProductList()
@@ -42,7 +42,7 @@ class CreateOrderUseCase(
                     flat = flat,
                     entrance = entrance,
                     floor = floor,
-                    comment = comment,
+                    comment = comment
                 )
             }
         } else {

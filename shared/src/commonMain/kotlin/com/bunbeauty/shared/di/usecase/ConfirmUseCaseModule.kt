@@ -11,18 +11,18 @@ import org.koin.dsl.module
 internal fun authUseCaseModule() = module {
     factory {
         ResendCodeUseCase(
-            authRepo = get(),
+            authRepo = get()
         )
     }
     factory {
         CheckCodeUseCase(
             authRepo = get(),
-            dataStoreRepo = get(),
+            dataStoreRepo = get()
         )
     }
     factory {
         RequestCodeUseCase(
-            authRepo = get(),
+            authRepo = get()
         )
     }
     factory {
@@ -30,7 +30,7 @@ internal fun authUseCaseModule() = module {
     }
     factory {
         GetPhoneNumberCursorPositionUseCase(
-            formatPhoneNumber = get(),
+            formatPhoneNumber = get()
         )
     }
     factory {

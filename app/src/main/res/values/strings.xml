@@ -34,7 +34,7 @@
     <string name="msg_address_floor_short">&#160;этаж</string>
 
     <string name="error_no_internet">Нет подключения к интернету</string>
-    <string name="warning_no_internet">Заказы временно не принимаются</string>
+    <string name="warning_no_order_available">Заказы временно не принимаются</string>
 
     <!-- SELECT CITY -->
     <string name="title_select_city">Выбор города</string>

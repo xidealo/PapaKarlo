@@ -14,6 +14,6 @@ fun MenuProduct.toMenuProductItem(categoryUuid: String? = null): MenuItem.Produc
             "$oldPrice ${Constants.RUBLE_CURRENCY}"
         },
         newPrice = "$newPrice ${Constants.RUBLE_CURRENCY}",
-        hasAdditions = additionGroups.isNotEmpty(),
+        hasAdditions = additionGroups.isNotEmpty()
     )
 }

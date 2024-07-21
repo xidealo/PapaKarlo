@@ -32,7 +32,7 @@ class OrderProductMapper : IOrderProductMapper {
                     newCommonPrice = firstOrderWithProductEntity.orderProductNewCommonPrice,
                     oldCommonPrice = firstOrderWithProductEntity.orderProductOldCommonPrice,
                     newTotalCost = firstOrderWithProductEntity.orderProductNewTotalCost,
-                    oldTotalCost = firstOrderWithProductEntity.orderProductOldTotalCost,
+                    oldTotalCost = firstOrderWithProductEntity.orderProductOldTotalCost
                 ),
                 orderAdditionList = groupedOrderWithProductEntityList.mapNotNull { orderWithProductEntity ->
                     orderWithProductEntity.orderAdditionEntityUuid?.let { orderAdditionEntityUuid ->
@@ -63,12 +63,11 @@ class OrderProductMapper : IOrderProductMapper {
                 newCommonPrice = orderProduct.newCommonPrice,
                 oldCommonPrice = orderProduct.oldCommonPrice,
                 newTotalCost = orderProduct.newTotalCost,
-                oldTotalCost = orderProduct.oldTotalCost,
+                oldTotalCost = orderProduct.oldTotalCost
             ),
             orderAdditionList = orderProduct.additions.map(mapOrderAdditionServerToOrderAddition)
         )
     }
-
 
     override fun toPostServerModel(createdOrderProduct: CreatedOrderProduct): OrderProductPostServer {
         return OrderProductPostServer(

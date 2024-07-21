@@ -28,7 +28,7 @@ class SettingsViewModel(
     private val saveSelectedCityUseCase: SaveSelectedCityUseCase,
     private val disableUserUseCase: DisableUserUseCase,
     private val userInteractor: IUserInteractor,
-    private val analyticService: AnalyticService,
+    private val analyticService: AnalyticService
 ) : SharedViewModel() {
 
     private val mutableSettingsState = MutableStateFlow(SettingsState())
@@ -51,7 +51,7 @@ class SettingsViewModel(
         analyticService.sendEvent(
             event = LogoutSettingsClickEvent(
                 phone = settingsState.value.settings?.phoneNumber.toString()
-            ),
+            )
         )
         mutableSettingsState.update { settingsState ->
             settingsState + SettingsState.Event.ShowLogoutEvent
@@ -138,5 +138,4 @@ class SettingsViewModel(
             }
         }
     }
-
 }

@@ -8,7 +8,7 @@ data class MenuDataState(
     val menuItemList: List<MenuItem>,
     val state: State,
     val userScrollEnabled: Boolean,
-    val eventList: List<Event>,
+    val eventList: List<Event>
 ) {
     sealed class State {
         data object Success : State()

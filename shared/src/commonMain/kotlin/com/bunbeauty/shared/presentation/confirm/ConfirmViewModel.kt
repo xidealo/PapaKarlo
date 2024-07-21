@@ -6,10 +6,10 @@ import com.bunbeauty.shared.domain.exeptions.AuthSessionTimeoutException
 import com.bunbeauty.shared.domain.exeptions.InvalidCodeException
 import com.bunbeauty.shared.domain.exeptions.NoAttemptsException
 import com.bunbeauty.shared.domain.exeptions.TooManyRequestsException
-import com.bunbeauty.shared.domain.feature.auth.FormatPhoneNumberUseCase
-import com.bunbeauty.shared.domain.model.SuccessLoginDirection
 import com.bunbeauty.shared.domain.feature.auth.CheckCodeUseCase
+import com.bunbeauty.shared.domain.feature.auth.FormatPhoneNumberUseCase
 import com.bunbeauty.shared.domain.feature.auth.ResendCodeUseCase
+import com.bunbeauty.shared.domain.model.SuccessLoginDirection
 import com.bunbeauty.shared.extension.launchSafe
 import com.bunbeauty.shared.presentation.base.SharedStateViewModel
 import kotlinx.coroutines.Job
@@ -23,12 +23,12 @@ class ConfirmViewModel(
     private val formatPhoneNumber: FormatPhoneNumberUseCase,
     private val checkCode: CheckCodeUseCase,
     private val resendCode: ResendCodeUseCase,
-    private val analyticService: AnalyticService,
+    private val analyticService: AnalyticService
 ) : SharedStateViewModel<Confirm.ViewDataState, Confirm.Action, Confirm.Event>(
     initDataState = Confirm.ViewDataState(
         phoneNumber = "",
         resendSeconds = TIMER_SECONDS,
-        isLoading = false,
+        isLoading = false
     )
 ) {
 
@@ -119,7 +119,7 @@ class ConfirmViewModel(
                     is AuthSessionTimeoutException -> "AuthSessionTimeout"
                     else -> "SomethingWentWrong"
                 }
-            ),
+            )
         )
 
         addEvent {

@@ -14,7 +14,7 @@ class PaymentMethodDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IPaymentMet
                     uuid = paymentMethod.uuid,
                     name = paymentMethod.name,
                     value_ = paymentMethod.value_,
-                    valueToCopy = paymentMethod.valueToCopy,
+                    valueToCopy = paymentMethod.valueToCopy
                 )
             }
         }

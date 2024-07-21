@@ -25,7 +25,7 @@ class MenuViewModel(
     private val observeCartUseCase: ObserveCartUseCase,
     private val addMenuProductUseCase: AddMenuProductUseCase,
     private val getDiscountUseCase: GetDiscountUseCase,
-    private val analyticService: AnalyticService,
+    private val analyticService: AnalyticService
 ) : SharedViewModel() {
 
     private val mutableMenuState = MutableStateFlow(
@@ -35,7 +35,7 @@ class MenuViewModel(
             menuItemList = emptyList(),
             state = MenuDataState.State.Loading,
             userScrollEnabled = true,
-            eventList = emptyList(),
+            eventList = emptyList()
         )
     )
     val menuState = mutableMenuState.asStateFlow()
@@ -93,16 +93,16 @@ class MenuViewModel(
                         MenuItem.Discount(discount = discount)
                     }
                 val menuItemList = listOfNotNull(discountItem) +
-                        menuSectionList.flatMap { menuSection ->
-                            menuSection.toMenuItemList()
-                        }
+                    menuSectionList.flatMap { menuSection ->
+                        menuSection.toMenuItemList()
+                    }
                 mutableMenuState.update { oldState ->
                     oldState.copy(
                         categoryItemList = menuSectionList.map { menuSection ->
                             toCategoryItemModel(menuSection)
                         },
                         menuItemList = menuItemList,
-                        state = MenuDataState.State.Success,
+                        state = MenuDataState.State.Success
                     )
                 }
             },
@@ -173,7 +173,7 @@ class MenuViewModel(
         analyticService.sendEvent(
             event = AddMenuProductClickEvent(
                 menuProductUuidEventParameter = MenuProductUuidEventParameter(value = menuProduct.uuid)
-            ),
+            )
         )
         sharedScope.launchSafe(
             block = {

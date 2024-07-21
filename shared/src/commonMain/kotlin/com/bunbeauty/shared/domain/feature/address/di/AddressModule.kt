@@ -9,19 +9,19 @@ internal fun addressModule() = module {
     factory {
         GetSuggestionsUseCase(
             suggestionRepo = get(),
-            dataStoreRepo = get(),
+            dataStoreRepo = get()
         )
     }
     factory {
         GetCurrentUserAddressUseCase(
             dataStoreRepo = get(),
-            userAddressRepo = get(),
+            userAddressRepo = get()
         )
     }
     factory {
         GetCurrentUserAddressFlowUseCase(
             dataStoreRepo = get(),
-            userAddressRepo = get(),
+            userAddressRepo = get()
         )
     }
 }

@@ -19,5 +19,5 @@ data class StreetServer(
     val cafeUuid: String,
 
     @SerialName("isVisible")
-    val isVisible: Boolean,
+    val isVisible: Boolean
 )

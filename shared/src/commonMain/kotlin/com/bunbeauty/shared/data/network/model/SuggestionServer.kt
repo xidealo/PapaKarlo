@@ -13,6 +13,6 @@ class SuggestionServer(
     val street: String,
 
     @SerialName("details")
-    val details: String,
+    val details: String
 
 )

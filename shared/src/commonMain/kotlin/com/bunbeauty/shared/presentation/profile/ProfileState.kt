@@ -11,14 +11,14 @@ data class ProfileState(
     val cartCostAndCount: CartCostAndCount? = null,
     val paymentMethodList: List<PaymentMethod> = emptyList(),
     val linkList: List<Link> = emptyList(),
-    val eventList: List<Event> = emptyList(),
+    val eventList: List<Event> = emptyList()
 ) {
 
     enum class State {
         AUTHORIZED,
         UNAUTHORIZED,
         ERROR,
-        LOADING,
+        LOADING
     }
 
     sealed interface Event {

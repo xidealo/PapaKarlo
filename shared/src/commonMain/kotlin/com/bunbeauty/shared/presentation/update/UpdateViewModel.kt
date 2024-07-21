@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 class UpdateViewModel(
-    private val getLinkListUseCase: GetLinkListUseCase,
+    private val getLinkListUseCase: GetLinkListUseCase
 ) : SharedViewModel() {
 
     private val mutableUiState = MutableStateFlow<UpdateUiState>(UpdateUiState.Loading)
@@ -28,5 +28,4 @@ class UpdateViewModel(
             }
         )
     }
-
 }

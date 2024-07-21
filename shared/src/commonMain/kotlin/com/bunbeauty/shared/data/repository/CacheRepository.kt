@@ -11,7 +11,7 @@ abstract class CacheRepository<D> : BaseRepository() {
         crossinline onApiRequest: suspend () -> ApiResult<S>,
         crossinline onLocalRequest: suspend () -> D?,
         crossinline onSaveLocally: suspend (S) -> Unit,
-        crossinline serverToDomainModel: (S) -> D,
+        crossinline serverToDomainModel: (S) -> D
     ): D? {
         val cacheData = cache
         return if (cacheData != null && isCacheValid(cacheData)) {

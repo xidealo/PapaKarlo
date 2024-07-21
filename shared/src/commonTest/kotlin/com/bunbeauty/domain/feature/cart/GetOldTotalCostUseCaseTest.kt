@@ -14,7 +14,6 @@ import kotlin.test.assertEquals
 
 class GetOldTotalCostUseCaseTest {
 
-
     private lateinit var getOldTotalCostUseCase: GetOldTotalCostUseCase
     private val getCartProductAdditionsPriceUseCase: GetCartProductAdditionsPriceUseCase = mockk()
 
@@ -27,7 +26,6 @@ class GetOldTotalCostUseCaseTest {
 
     @Test
     fun `should return zero newFinalCost when product list is empty`() = runTest {
-
         // When
         val oldFinalCost = getOldTotalCostUseCase(emptyList())
         coEvery { getCartProductAdditionsPriceUseCase(any()) } returns 0
@@ -56,14 +54,18 @@ class GetOldTotalCostUseCaseTest {
                         getCartProductAddition(price = 75),
                         getCartProductAddition(price = 75)
                     )
-                ),
+                )
             )
             coEvery { getCartProductAdditionsPriceUseCase(listOf(getCartProductAddition(price = 100))) } returns 100
 
-            coEvery { getCartProductAdditionsPriceUseCase(listOf(
-                getCartProductAddition(price = 75),
-                getCartProductAddition(price = 75)
-            )) } returns 150
+            coEvery {
+                getCartProductAdditionsPriceUseCase(
+                    listOf(
+                        getCartProductAddition(price = 75),
+                        getCartProductAddition(price = 75)
+                    )
+                )
+            } returns 150
 
             // When
             val oldFinalCost = getOldTotalCostUseCase(cartProductListMockData)
@@ -74,5 +76,4 @@ class GetOldTotalCostUseCaseTest {
                 actual = oldFinalCost
             )
         }
-
 }

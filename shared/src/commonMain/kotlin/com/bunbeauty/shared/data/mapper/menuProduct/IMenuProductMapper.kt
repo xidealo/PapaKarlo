@@ -7,7 +7,6 @@ import com.bunbeauty.shared.db.CategoryEntity
 import com.bunbeauty.shared.db.MenuProductCategoryReference
 import com.bunbeauty.shared.db.MenuProductEntity
 import com.bunbeauty.shared.db.MenuProductWithCategoryEntity
-import com.bunbeauty.shared.domain.model.addition.AdditionGroup
 import com.bunbeauty.shared.domain.model.product.MenuProduct
 
 interface IMenuProductMapper {
@@ -19,6 +18,6 @@ interface IMenuProductMapper {
     fun toMenuProduct(menuProduct: MenuProductEntity): MenuProduct
     fun toMenuProduct(menuProductServer: MenuProductServer): MenuProduct
     fun toMenuProductList(
-        menuProductWithCategoryEntityList: List<MenuProductWithCategoryEntity>,
+        menuProductWithCategoryEntityList: List<MenuProductWithCategoryEntity>
     ): List<MenuProduct>
 }

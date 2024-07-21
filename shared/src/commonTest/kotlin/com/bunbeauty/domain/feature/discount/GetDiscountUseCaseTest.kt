@@ -25,7 +25,7 @@ class GetDiscountUseCaseTest {
         getDiscountUseCase = GetDiscountUseCase(
             discountRepository = discountRepository,
             orderRepository = orderRepository,
-            dataStoreRepo = dataStoreRepo,
+            dataStoreRepo = dataStoreRepo
         )
     }
 
@@ -64,7 +64,6 @@ class GetDiscountUseCaseTest {
             actual = discount?.firstOrderDiscount
         )
     }
-
 
     @Test
     fun `should return firstDiscount 10 when lastOrder is null`() = runTest {
@@ -106,7 +105,7 @@ class GetDiscountUseCaseTest {
             uuid = "uuid",
             status = mockk(),
             code = "code",
-            dateTime = mockk(),
+            dateTime = mockk()
         )
 
         coEvery { discountRepository.getDiscount() } returns Discount(10)

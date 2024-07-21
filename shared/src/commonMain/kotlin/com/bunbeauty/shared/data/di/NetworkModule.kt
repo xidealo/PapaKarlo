@@ -38,7 +38,7 @@ fun networkModule() = module {
                         800 -> throw TooManyRequestsException()
                         801 -> throw NoAttemptsException()
                         802 -> throw InvalidCodeException()
-                        803 ->  throw AuthSessionTimeoutException()
+                        803 -> throw AuthSessionTimeoutException()
                     }
                 }
             }

@@ -4,7 +4,7 @@ import com.bunbeauty.shared.domain.asCommonStateFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 
-abstract class SharedStateViewModel<DS: BaseDataState, A: BaseAction, E: BaseEvent>(initDataState: DS) : SharedViewModel() {
+abstract class SharedStateViewModel<DS : BaseDataState, A : BaseAction, E : BaseEvent>(initDataState: DS) : SharedViewModel() {
 
     protected val mutableDataState = MutableStateFlow(initDataState)
     val dataState = mutableDataState.asCommonStateFlow()

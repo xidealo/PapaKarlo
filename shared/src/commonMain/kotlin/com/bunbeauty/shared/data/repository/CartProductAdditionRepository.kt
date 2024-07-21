@@ -7,7 +7,7 @@ import com.bunbeauty.shared.domain.model.addition.Addition
 
 class CartProductAdditionRepository(
     private val uuidGenerator: UuidGenerator,
-    private val cartProductAdditionDao: ICartProductAdditionDao,
+    private val cartProductAdditionDao: ICartProductAdditionDao
 ) {
     suspend fun saveAsCartProductAddition(cartProductUuid: String, addition: Addition) {
         val uuid = uuidGenerator.generateUuid()

@@ -22,7 +22,7 @@ class UserRepository(
     private val userDao: IUserDao,
     private val userAddressDao: IUserAddressDao,
     private val orderDao: IOrderDao,
-    private val dataStoreRepo: DataStoreRepo,
+    private val dataStoreRepo: DataStoreRepo
 ) : DatabaseCacheRepository(), UserRepo {
 
     override val tag: String = "USER_TAG"
@@ -35,7 +35,7 @@ class UserRepository(
     override suspend fun getProfileByUserUuidAndCityUuid(
         userUuid: String,
         cityUuid: String,
-        token: String,
+        token: String
     ): Profile.Authorized? {
         val profile = getCacheOrData(
             isCacheValid = {
@@ -85,5 +85,4 @@ class UserRepository(
             )
         }
     }
-
 }

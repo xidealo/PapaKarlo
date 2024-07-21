@@ -11,7 +11,7 @@ import kotlinx.coroutines.withContext
 
 class MenuProductInteractor(
     private val menuProductRepo: MenuProductRepo,
-    private val getMenuProductListUseCase: GetMenuProductListUseCase,
+    private val getMenuProductListUseCase: GetMenuProductListUseCase
 ) : IMenuProductInteractor {
 
     override suspend fun getMenuSectionList(): List<MenuSection> {

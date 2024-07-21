@@ -9,7 +9,7 @@ import com.bunbeauty.shared.domain.repo.CafeRepo
 class GetSelectableCafeListUseCase(
     private val dataStoreRepo: DataStoreRepo,
     private val cafeRepo: CafeRepo,
-    private val getCafeListUseCase: GetCafeListUseCase,
+    private val getCafeListUseCase: GetCafeListUseCase
 ) {
     suspend operator fun invoke(): List<SelectableCafe> {
         val cityUuid = dataStoreRepo.getSelectedCityUuid() ?: throw NoSelectedCityUuidException()
@@ -18,13 +18,13 @@ class GetSelectableCafeListUseCase(
         val cafeList = getCafeListUseCase()
         val selectedCafe = cafeRepo.getSelectedCafeByUserAndCityUuid(
             userUuid = userUuid,
-            cityUuid = cityUuid,
+            cityUuid = cityUuid
         ) ?: cafeList.firstOrNull()
 
         return getCafeListUseCase().map { cafe ->
             SelectableCafe(
                 cafe = cafe,
-                isSelected = cafe.uuid == selectedCafe?.uuid,
+                isSelected = cafe.uuid == selectedCafe?.uuid
             )
         }
     }

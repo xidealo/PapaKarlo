@@ -154,5 +154,4 @@ class FormatPhoneNumberUseCaseTest {
 
         assertEquals(expected, formatPhoneNumber)
     }
-
 }

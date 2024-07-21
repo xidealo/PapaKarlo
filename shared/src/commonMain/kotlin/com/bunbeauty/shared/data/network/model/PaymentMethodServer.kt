@@ -16,5 +16,5 @@ class PaymentMethodServer(
     val value: String?,
 
     @SerialName("valueToCopy")
-    val valueToCopy: String?,
+    val valueToCopy: String?
 )

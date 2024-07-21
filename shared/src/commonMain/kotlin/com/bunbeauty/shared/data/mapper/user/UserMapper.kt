@@ -11,7 +11,7 @@ class UserMapper : IUserMapper {
         return UserEntity(
             uuid = profileServer.uuid,
             phone = profileServer.phoneNumber,
-            email = profileServer.email,
+            email = profileServer.email
         )
     }
 
@@ -19,7 +19,7 @@ class UserMapper : IUserMapper {
         return User(
             uuid = userEntity.uuid,
             phone = userEntity.phone,
-            email = userEntity.email,
+            email = userEntity.email
         )
     }
 
@@ -27,7 +27,7 @@ class UserMapper : IUserMapper {
         return User(
             uuid = profileServer.uuid,
             phone = profileServer.phoneNumber,
-            email = profileServer.email,
+            email = profileServer.email
         )
     }
 

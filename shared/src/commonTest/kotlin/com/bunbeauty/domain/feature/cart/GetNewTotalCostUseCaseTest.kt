@@ -3,7 +3,6 @@ package com.bunbeauty.domain.feature.cart
 import com.bunbeauty.getCartProduct
 import com.bunbeauty.getCartProductAddition
 import com.bunbeauty.getMenuProduct
-import com.bunbeauty.shared.domain.feature.addition.GetAdditionPriorityUseCase
 import com.bunbeauty.shared.domain.feature.addition.GetCartProductAdditionsPriceUseCase
 import com.bunbeauty.shared.domain.feature.discount.GetDiscountUseCase
 import com.bunbeauty.shared.domain.interactor.cart.GetNewTotalCostUseCase
@@ -108,7 +107,7 @@ class GetNewTotalCostUseCaseTest {
                 getCartProduct(
                     count = 1,
                     menuProduct = getMenuProduct(newPrice = 666, oldPrice = 1000)
-                ),
+                )
             )
             coEvery { getDiscountUseCase() } returns Discount(firstOrderDiscount = 10)
             coEvery { getCartProductAdditionsPriceUseCase(any()) } returns 0
@@ -131,7 +130,7 @@ class GetNewTotalCostUseCaseTest {
                 getCartProduct(
                     count = 1,
                     menuProduct = getMenuProduct(newPrice = 666, oldPrice = 1000)
-                ),
+                )
             )
             coEvery { getDiscountUseCase() } returns Discount(firstOrderDiscount = 100)
             coEvery { getCartProductAdditionsPriceUseCase(any()) } returns 0
@@ -179,7 +178,7 @@ class GetNewTotalCostUseCaseTest {
                     menuProduct = getMenuProduct(newPrice = 666, oldPrice = 1000),
                     cartProductAdditionList = listOf(
                         getCartProductAddition(price = 50),
-                        getCartProductAddition(price = 50),
+                        getCartProductAddition(price = 50)
                     )
                 )
             )

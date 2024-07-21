@@ -28,12 +28,12 @@ class OrderRepository(
     private val networkConnector: NetworkConnector,
     private val orderMapper: IOrderMapper,
     private val orderAdditionDao: IOrderAdditionDao,
-    private val orderProductDao: IOrderProductDao,
+    private val orderProductDao: IOrderProductDao
 ) : OrderRepo {
 
     data class CacheLastLightOrder(
         val lastOrder: LightOrder? = null,
-        val isValid: Boolean = false,
+        val isValid: Boolean = false
     )
 
     private var cacheLastLightOrder = CacheLastLightOrder()
@@ -47,7 +47,7 @@ class OrderRepository(
 
     override suspend fun observeOrderListUpdates(
         token: String,
-        userUuid: String,
+        userUuid: String
     ): Pair<String?, Flow<List<Order>>> {
         val (uuid, orderUpdatesFlow) = observeOrderUpdatesServer(token)
         return uuid to orderUpdatesFlow.map {
@@ -85,7 +85,7 @@ class OrderRepository(
 
     override suspend fun getLastOrderByUserUuidNetworkFirst(
         token: String,
-        userUuid: String,
+        userUuid: String
     ): LightOrder? {
         return networkConnector.getOrderList(
             token = token,
@@ -117,7 +117,7 @@ class OrderRepository(
 
     override suspend fun getLastOrderByUserUuidLocalFirst(
         token: String,
-        userUuid: String,
+        userUuid: String
     ): LightOrder? {
         return if (cacheLastLightOrder.isValid) {
             cacheLastLightOrder.lastOrder
@@ -161,7 +161,7 @@ class OrderRepository(
         return uuid to orderUpdatesFlow.onEach { orderUpdateServer ->
             orderDao.updateOrderStatusByUuid(
                 uuid = orderUpdateServer.uuid,
-                status = orderUpdateServer.status,
+                status = orderUpdateServer.status
             )
         }
     }
@@ -181,7 +181,7 @@ class OrderRepository(
     }
 
     private suspend fun insertOrderAdditions(
-        orderProductServer: OrderProductServer,
+        orderProductServer: OrderProductServer
     ) {
         orderProductServer.additions.map { orderAdditionServer ->
             orderAdditionDao.insert(

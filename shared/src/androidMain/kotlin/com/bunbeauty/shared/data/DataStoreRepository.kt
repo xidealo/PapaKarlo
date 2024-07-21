@@ -3,7 +3,6 @@ package com.bunbeauty.shared.data
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
@@ -13,7 +12,6 @@ import com.bunbeauty.shared.domain.model.Delivery
 import com.bunbeauty.shared.domain.model.Discount
 import com.bunbeauty.shared.domain.model.Settings
 import com.bunbeauty.shared.domain.model.UserCityUuid
-import com.bunbeauty.shared.domain.model.order.OrderAvailable
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flatMapLatest
@@ -64,7 +62,6 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
 
     actual override suspend fun getDelivery() = delivery.firstOrNull()
 
-
     actual override suspend fun saveDelivery(delivery: Delivery) {
         context.deliveryDataStore.edit {
             it[DELIVERY_COST_KEY] = delivery.cost
@@ -78,14 +75,13 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
                 Settings(
                     userUuid = userUuid,
                     phoneNumber = phoneNumber,
-                    email = it[SETTINGS_EMAIL_KEY],
+                    email = it[SETTINGS_EMAIL_KEY]
                 )
             }
         }
     }
 
     actual override suspend fun getSettings() = settings.firstOrNull()
-
 
     actual override suspend fun saveSettings(settings: Settings) {
         context.settingsDataStore.edit {
@@ -161,7 +157,7 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
     override val discount: Flow<Discount?> = context.discountDataStore.data.map {
         it[FIRST_ORDER_DISCOUNT_KEY]?.let { firstOrderDiscount ->
             Discount(
-                firstOrderDiscount = firstOrderDiscount,
+                firstOrderDiscount = firstOrderDiscount
             )
         }
     }

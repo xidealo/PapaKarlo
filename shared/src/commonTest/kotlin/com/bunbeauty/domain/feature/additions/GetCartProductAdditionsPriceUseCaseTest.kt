@@ -22,7 +22,7 @@ class GetCartProductAdditionsPriceUseCaseTest {
         val additionList = listOf(
             getCartProductAddition(price = 10),
             getCartProductAddition(price = 10),
-            getCartProductAddition(price = null),
+            getCartProductAddition(price = null)
         )
 
         // When

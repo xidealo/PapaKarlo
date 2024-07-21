@@ -16,7 +16,6 @@ internal var createViewModelScope: () -> CoroutineScope = {
 
 internal fun createUIDispatcher(): CoroutineDispatcher = UIDispatcher()
 
-
 @Suppress("EmptyDefaultConstructor")
 actual open class SharedViewModel actual constructor() {
     protected actual val sharedScope: CoroutineScope = createViewModelScope()

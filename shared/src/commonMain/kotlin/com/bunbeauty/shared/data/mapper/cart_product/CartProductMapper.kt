@@ -32,12 +32,12 @@ class CartProductMapper : ICartProductMapper {
                     Category(
                         uuid = menuProductWithCategoryEntity.categoryUuid,
                         name = menuProductWithCategoryEntity.categoryName,
-                        priority = menuProductWithCategoryEntity.categoryPriority,
+                        priority = menuProductWithCategoryEntity.categoryPriority
                     )
                 },
                 visible = firstCartProductWithCategoryEntity.visible,
                 isRecommended = firstCartProductWithCategoryEntity.isRecommended,
-                additionGroups = emptyList(),
+                additionGroups = emptyList()
             ),
             additionList = cartProductWithMenuProductEntityList.mapNotNull { cartProductWithMenuProductEntity ->
                 cartProductWithMenuProductEntity.cartProductAdditionUuid?.let {
@@ -59,7 +59,7 @@ class CartProductMapper : ICartProductMapper {
         return CartProductEntity(
             uuid = cartProduct.uuid,
             count = cartProduct.count,
-            menuProductUuid = cartProduct.product.uuid,
+            menuProductUuid = cartProduct.product.uuid
         )
     }
 }

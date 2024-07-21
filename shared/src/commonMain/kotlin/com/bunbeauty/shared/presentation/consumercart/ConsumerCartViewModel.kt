@@ -9,13 +9,13 @@ import com.bunbeauty.analytic.parameter.MenuProductUuidEventParameter
 import com.bunbeauty.core.Logger
 import com.bunbeauty.shared.Constants.PERCENT
 import com.bunbeauty.shared.Constants.RUBLE_CURRENCY
-import com.bunbeauty.shared.domain.feature.motivation.GetMotivationUseCase
 import com.bunbeauty.shared.domain.feature.cart.GetRecommendationsUseCase
 import com.bunbeauty.shared.domain.feature.cart.IncreaseCartProductCountUseCase
 import com.bunbeauty.shared.domain.feature.cart.RemoveCartProductUseCase
-import com.bunbeauty.shared.domain.feature.motivation.Motivation
 import com.bunbeauty.shared.domain.feature.menu.AddMenuProductUseCase
-import com.bunbeauty.shared.domain.feature.orderavailable.GetOrderAvailableUseCase
+import com.bunbeauty.shared.domain.feature.motivation.GetMotivationUseCase
+import com.bunbeauty.shared.domain.feature.motivation.Motivation
+import com.bunbeauty.shared.domain.feature.orderavailable.IsOrderAvailableUseCase
 import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
 import com.bunbeauty.shared.domain.model.cart.ConsumerCartDomain
@@ -23,9 +23,9 @@ import com.bunbeauty.shared.domain.model.product.MenuProduct
 import com.bunbeauty.shared.extension.launchSafe
 import com.bunbeauty.shared.presentation.base.SharedStateViewModel
 import com.bunbeauty.shared.presentation.consumercart.mapper.toCartProductItem
-import com.bunbeauty.shared.presentation.motivation.toMotivationData
 import com.bunbeauty.shared.presentation.menu.mapper.toMenuProductItem
 import com.bunbeauty.shared.presentation.menu.model.MenuItem
+import com.bunbeauty.shared.presentation.motivation.toMotivationData
 import com.bunbeauty.shared.presentation.product_details.ProductDetailsOpenedFrom
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn
@@ -41,7 +41,7 @@ class ConsumerCartViewModel(
     private val getRecommendationsUseCase: GetRecommendationsUseCase,
     private val getMotivationUseCase: GetMotivationUseCase,
     private val analyticService: AnalyticService,
-    private val getOrderAvailableUseCase: GetOrderAvailableUseCase,
+    private val isOrderAvailableUseCase: IsOrderAvailableUseCase
 ) : SharedStateViewModel<ConsumerCart.DataState, ConsumerCart.Action, ConsumerCart.Event>(
     ConsumerCart.DataState(
         state = ConsumerCart.DataState.State.LOADING,
@@ -77,11 +77,11 @@ class ConsumerCartViewModel(
             )
 
             is ConsumerCart.Action.RemoveProductFromCartClick -> onRemoveCardProductClicked(
-                cartProductUuid = action.cartProductUuid,
+                cartProductUuid = action.cartProductUuid
             )
 
             is ConsumerCart.Action.AddRecommendationProductToCartClick -> addRecommendationProductClicked(
-                menuProductUuid = action.menuProductUuid,
+                menuProductUuid = action.menuProductUuid
             )
 
             is ConsumerCart.Action.RecommendationClick -> onRecommendationClicked(
@@ -125,7 +125,7 @@ class ConsumerCartViewModel(
     private fun ConsumerCart.DataState.copyWith(
         consumerCart: ConsumerCartDomain?,
         motivation: Motivation?,
-        recommendationList: List<MenuProduct>,
+        recommendationList: List<MenuProduct>
     ): ConsumerCart.DataState {
         return if (consumerCart is ConsumerCartDomain.WithProducts) {
             copy(
@@ -195,7 +195,7 @@ class ConsumerCartViewModel(
                 name = cartProduct.name,
                 productDetailsOpenedFrom = ProductDetailsOpenedFrom.CART_PRODUCT,
                 additionUuidList = cartProduct.additionUuidList,
-                cartProductUuid = cartProduct.uuid,
+                cartProductUuid = cartProduct.uuid
             )
         }
     }
@@ -209,7 +209,7 @@ class ConsumerCartViewModel(
                 name = recommendation.name,
                 productDetailsOpenedFrom = ProductDetailsOpenedFrom.RECOMMENDATION_PRODUCT,
                 additionUuidList = emptyList(),
-                cartProductUuid = null,
+                cartProductUuid = null
             )
         }
     }
@@ -222,7 +222,7 @@ class ConsumerCartViewModel(
         analyticService.sendEvent(
             event = AddRecommendationProductClickEvent(
                 menuProductUuidEventParameter = MenuProductUuidEventParameter(value = menuProductUuid)
-            ),
+            )
         )
 
         sharedScope.launchSafe(
@@ -234,7 +234,7 @@ class ConsumerCartViewModel(
                             name = menuProduct.name,
                             productDetailsOpenedFrom = ProductDetailsOpenedFrom.RECOMMENDATION_PRODUCT,
                             additionUuidList = emptyList(),
-                            cartProductUuid = null,
+                            cartProductUuid = null
                         )
                     }
                 } else {
@@ -257,7 +257,7 @@ class ConsumerCartViewModel(
                 menuProductUuidEventParameter = MenuProductUuidEventParameter(
                     value = cartProduct.menuProductUuid
                 )
-            ),
+            )
         )
         sharedScope.launchSafe(
             block = {
@@ -291,7 +291,7 @@ class ConsumerCartViewModel(
         analyticService.sendEvent(
             event = DecreaseCartProductClickEvent(
                 menuProductUuidEventParameter = MenuProductUuidEventParameter(value = menuProductUuid)
-            ),
+            )
         )
 
         val isLast = dataState.value.cartProductItemList.find { cartProductItem ->
@@ -301,7 +301,7 @@ class ConsumerCartViewModel(
             analyticService.sendEvent(
                 event = RemoveCartProductClickEvent(
                     menuProductUuidEventParameter = MenuProductUuidEventParameter(value = menuProductUuid)
-                ),
+                )
             )
         }
     }
@@ -322,7 +322,7 @@ class ConsumerCartViewModel(
         sharedScope.launchSafe(
             block = {
                 setState {
-                    copy(orderAvailable = getOrderAvailableUseCase())
+                    copy(orderAvailable = isOrderAvailableUseCase())
                 }
             },
             onError = { error ->
@@ -330,5 +330,4 @@ class ConsumerCartViewModel(
             }
         )
     }
-
 }

@@ -25,5 +25,4 @@ class CategoryDao(foodDeliveryDatabase: FoodDeliveryDatabase) : ICategoryDao {
     override fun observeCategoryList(): Flow<List<CategoryEntity>> {
         return categoryEntityQueries.getCategoryList().asFlow().mapToList()
     }
-
 }

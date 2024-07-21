@@ -48,7 +48,7 @@ class MenuProductMapper : IMenuProductMapper {
                 CategoryEntity(
                     uuid = categoryServer.uuid,
                     name = categoryServer.name,
-                    priority = categoryServer.priority,
+                    priority = categoryServer.priority
                 )
             }
     }
@@ -66,7 +66,7 @@ class MenuProductMapper : IMenuProductMapper {
                         additionGroupUuid = additionGroupServer.uuid,
                         photoLink = additionServer.photoLink,
                         fullName = additionServer.fullName,
-                        priority = additionServer.priority,
+                        priority = additionServer.priority
                     )
                 }
             }
@@ -82,7 +82,7 @@ class MenuProductMapper : IMenuProductMapper {
                     isVisible = additionServer.isVisible,
                     menuProductUuid = menuProductServer.uuid,
                     priority = additionServer.priority,
-                    singleChoice = additionServer.singleChoice,
+                    singleChoice = additionServer.singleChoice
                 )
             }
         }
@@ -121,7 +121,7 @@ class MenuProductMapper : IMenuProductMapper {
                 Category(
                     uuid = categoryServer.uuid,
                     name = categoryServer.name,
-                    priority = categoryServer.priority,
+                    priority = categoryServer.priority
                 )
             },
             visible = menuProductServer.isVisible,
@@ -152,7 +152,7 @@ class MenuProductMapper : IMenuProductMapper {
     }
 
     override fun toMenuProductList(
-        menuProductWithCategoryEntityList: List<MenuProductWithCategoryEntity>,
+        menuProductWithCategoryEntityList: List<MenuProductWithCategoryEntity>
     ): List<MenuProduct> {
         return menuProductWithCategoryEntityList.groupBy { menuProductWithCategoryEntity ->
             menuProductWithCategoryEntity.uuid

@@ -7,5 +7,4 @@ interface IPaymentMethodDao {
     suspend fun insertPaymentMethodList(paymentMethodList: List<PaymentMethodEntity>)
 
     suspend fun getPaymentMethodList(): List<PaymentMethodEntity>
-
 }

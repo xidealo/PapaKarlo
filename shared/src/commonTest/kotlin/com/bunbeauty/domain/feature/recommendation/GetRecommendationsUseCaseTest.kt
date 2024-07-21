@@ -57,9 +57,9 @@ internal class GetRecommendationsUseCaseTest {
         runTest {
             coEvery { recommendationRepository.getMaxVisibleCount() } returns 3
             coEvery { getMenuProductListUseCase() } returns
-                    listOf(
-                        getMenuProductWithCategory("2", "1")
-                    )
+                listOf(
+                    getMenuProductWithCategory("2", "1")
+                )
 
             coEvery { cartProductRepo.getCartProductList() } returns listOf(
                 getCartProductWithCategory("1", "1")
@@ -165,7 +165,7 @@ internal class GetRecommendationsUseCaseTest {
             )
 
             coEvery { cartProductRepo.getCartProductList() } returns listOf(
-                getCartProductWithCategory("1", "1"),
+                getCartProductWithCategory("1", "1")
             )
 
             assertEquals(
@@ -211,13 +211,13 @@ internal class GetRecommendationsUseCaseTest {
     private fun getMenuProductWithCategory(
         categoryUuid: String,
         menuProductUuid: String,
-        visible: Boolean = true,
+        visible: Boolean = true
     ) =
         getMenuProduct(
             uuid = menuProductUuid,
             categoryList = listOf(
                 getCategoryProduct(
-                    uuid = categoryUuid,
+                    uuid = categoryUuid
                 )
             ),
             visible = visible,

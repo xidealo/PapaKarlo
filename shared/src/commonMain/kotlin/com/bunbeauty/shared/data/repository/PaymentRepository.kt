@@ -10,7 +10,7 @@ import com.bunbeauty.shared.extension.getNullableResult
 class PaymentRepository(
     private val networkConnector: NetworkConnector,
     private val paymentMethodMapper: PaymentMethodMapper,
-    private val paymentMethodDao: IPaymentMethodDao,
+    private val paymentMethodDao: IPaymentMethodDao
 ) : PaymentRepo {
 
     private var paymentMethodListCache: List<PaymentMethod>? = null

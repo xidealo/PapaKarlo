@@ -4,7 +4,7 @@ import com.bunbeauty.shared.domain.model.street.Street
 
 class GetFilteredStreetListUseCase {
 
-    operator fun invoke(query: String, streetList: List<Street>) : List<Street> {
+    operator fun invoke(query: String, streetList: List<Street>): List<Street> {
         return if (query.isEmpty()) {
             emptyList()
         } else {

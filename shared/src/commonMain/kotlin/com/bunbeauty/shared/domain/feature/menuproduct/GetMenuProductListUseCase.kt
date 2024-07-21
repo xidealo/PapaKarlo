@@ -4,11 +4,11 @@ import com.bunbeauty.shared.domain.model.product.MenuProduct
 import com.bunbeauty.shared.domain.repo.MenuProductRepo
 
 class GetMenuProductListUseCase(
-    private val menuProductRepo: MenuProductRepo,
+    private val menuProductRepo: MenuProductRepo
 ) {
 
     suspend operator fun invoke(): List<MenuProduct> {
-        return  menuProductRepo.getMenuProductList()
+        return menuProductRepo.getMenuProductList()
             .filter { menuProduct ->
                 menuProduct.visible
             }
@@ -20,5 +20,4 @@ class GetMenuProductListUseCase(
                 )
             }
     }
-
 }

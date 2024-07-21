@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.collectLatest
 
 class OrderDetailsViewModel(
     private val observeOrderUseCase: ObserveOrderUseCase,
-    private val stopObserveOrdersUseCase: StopObserveOrdersUseCase,
+    private val stopObserveOrdersUseCase: StopObserveOrdersUseCase
 ) : SharedStateViewModel<OrderDetails.DataState, OrderDetails.Action, OrderDetails.Event>(
     OrderDetails.DataState(
         orderDetailsData = OrderDetails.DataState.OrderDetailsData(
@@ -45,7 +45,7 @@ class OrderDetailsViewModel(
     private fun reloadOrder(orderUuid: String) {
         setState {
             copy(
-                screenState = OrderDetails.DataState.ScreenState.LOADING,
+                screenState = OrderDetails.DataState.ScreenState.LOADING
             )
         }
         stopObserveOrders()
@@ -75,7 +75,7 @@ class OrderDetailsViewModel(
                                         "$discount$PERCENT"
                                     }
                                 ),
-                                screenState = OrderDetails.DataState.ScreenState.SUCCESS,
+                                screenState = OrderDetails.DataState.ScreenState.SUCCESS
                             )
                         }
                     }
@@ -85,12 +85,11 @@ class OrderDetailsViewModel(
                 setState {
                     copy(
                         orderUuid = orderUuid,
-                        screenState = OrderDetails.DataState.ScreenState.ERROR,
+                        screenState = OrderDetails.DataState.ScreenState.ERROR
                     )
                 }
-            },
+            }
         )
-
     }
 
     private fun stopObserveOrders() {
@@ -101,8 +100,7 @@ class OrderDetailsViewModel(
                     stopObserveOrdersUseCase(uuid)
                 },
                 onError = {
-
-                },
+                }
             )
         }
         orderObservationUuid = null
@@ -133,5 +131,4 @@ class OrderDetailsViewModel(
                 isLast = index == order.orderProductList.lastIndex
             )
         }
-
 }

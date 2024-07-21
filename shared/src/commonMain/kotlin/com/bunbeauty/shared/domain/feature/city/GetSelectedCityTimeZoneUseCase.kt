@@ -7,7 +7,7 @@ private const val DEFAULT_TIME_ZONE = "UTC+3"
 
 class GetSelectedCityTimeZoneUseCase(
     private val cityRepo: CityRepo,
-    private val dataStoreRepo: DataStoreRepo,
+    private val dataStoreRepo: DataStoreRepo
 ) {
 
     suspend operator fun invoke(): String {

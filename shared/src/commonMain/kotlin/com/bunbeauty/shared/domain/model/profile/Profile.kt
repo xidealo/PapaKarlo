@@ -11,5 +11,4 @@ sealed class Profile {
     ) : Profile()
 
     object Unauthorized : Profile()
-
 }

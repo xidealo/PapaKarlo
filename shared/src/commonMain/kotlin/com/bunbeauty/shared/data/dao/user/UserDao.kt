@@ -14,7 +14,7 @@ class UserDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IUserDao {
         userEntityQueries.insertUser(
             uuid = userEntity.uuid,
             phone = userEntity.phone,
-            email = userEntity.email,
+            email = userEntity.email
         )
     }
 
@@ -32,5 +32,4 @@ class UserDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IUserDao {
             email = email
         )
     }
-
 }

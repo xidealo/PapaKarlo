@@ -23,7 +23,7 @@ class ProfileViewModel(
     private val stopObserveOrdersUseCase: StopObserveOrdersUseCase,
     private val observeCartUseCase: ObserveCartUseCase,
     private val getPaymentMethodListUseCase: GetPaymentMethodListUseCase,
-    private val getLinkListUseCase: GetLinkListUseCase,
+    private val getLinkListUseCase: GetLinkListUseCase
 ) : SharedViewModel() {
 
     private val mutableProfileState = MutableStateFlow(ProfileState())
@@ -51,7 +51,7 @@ class ProfileViewModel(
                 val newProfileState = profileState.copy(
                     lastOrder = getLastOrderUseCase(),
                     paymentMethodList = getPaymentMethodListUseCase(),
-                    linkList = getLinkListUseCase(),
+                    linkList = getLinkListUseCase()
                 )
 
                 if (userInteractor.isUserAuthorize()) {

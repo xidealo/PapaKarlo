@@ -7,5 +7,5 @@ class MenuProductAdditionItem(
     val price: String?,
     val isLast: Boolean,
     val photoLink: String,
-    val groupId: String,
+    val groupId: String
 )
