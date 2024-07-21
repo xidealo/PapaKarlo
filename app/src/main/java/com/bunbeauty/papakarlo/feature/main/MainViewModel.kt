@@ -20,7 +20,7 @@ private const val MAIN_VIEW_MODEL_TAG = "MainViewModel"
 
 class MainViewModel(
     private val networkUtil: INetworkUtil,
-    private val getIsOrderAvailableUseCase: GetIsOrderAvailableUseCase,
+    private val getIsOrderAvailableUseCase: GetIsOrderAvailableUseCase
 ) : ViewModel() {
 
     private val mutableMainState: MutableStateFlow<MainState> = MutableStateFlow(MainState())
@@ -103,7 +103,7 @@ class MainViewModel(
             },
             onError = { error ->
                 Logger.logD(MAIN_VIEW_MODEL_TAG, error.stackTraceToString())
-            },
+            }
         )
     }
 }

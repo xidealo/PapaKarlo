@@ -29,7 +29,8 @@ sealed class ConsumerCartViewState(
         val motivation: MotivationUi?,
         val discount: String?,
         val oldTotalCost: String?,
-        val newTotalCost: String
+        val newTotalCost: String,
+        val orderAvailable: Boolean
     )
 
     @Immutable

@@ -6,6 +6,7 @@ import com.bunbeauty.analytic.event.cart.IncreaseCartProductClickEvent
 import com.bunbeauty.analytic.event.cart.RemoveCartProductClickEvent
 import com.bunbeauty.analytic.event.recommendation.AddRecommendationProductClickEvent
 import com.bunbeauty.analytic.parameter.MenuProductUuidEventParameter
+import com.bunbeauty.core.Logger
 import com.bunbeauty.shared.Constants.PERCENT
 import com.bunbeauty.shared.Constants.RUBLE_CURRENCY
 import com.bunbeauty.shared.domain.feature.motivation.GetMotivationUseCase
@@ -14,6 +15,7 @@ import com.bunbeauty.shared.domain.feature.cart.IncreaseCartProductCountUseCase
 import com.bunbeauty.shared.domain.feature.cart.RemoveCartProductUseCase
 import com.bunbeauty.shared.domain.feature.motivation.Motivation
 import com.bunbeauty.shared.domain.feature.menu.AddMenuProductUseCase
+import com.bunbeauty.shared.domain.feature.orderavailable.GetIsOrderAvailableUseCase
 import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
 import com.bunbeauty.shared.domain.model.cart.ConsumerCartDomain
@@ -29,6 +31,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
+private const val CONSUMER_CART_VIEW_MODEL_TAG = "ConsumerCartViewModel"
 class ConsumerCartViewModel(
     private val userInteractor: IUserInteractor,
     private val cartProductInteractor: ICartProductInteractor,
@@ -38,6 +41,7 @@ class ConsumerCartViewModel(
     private val getRecommendationsUseCase: GetRecommendationsUseCase,
     private val getMotivationUseCase: GetMotivationUseCase,
     private val analyticService: AnalyticService,
+    private val getIsOrderAvailableUseCase: GetIsOrderAvailableUseCase,
 ) : SharedStateViewModel<ConsumerCart.DataState, ConsumerCart.Action, ConsumerCart.Event>(
     ConsumerCart.DataState(
         state = ConsumerCart.DataState.State.LOADING,
@@ -47,6 +51,7 @@ class ConsumerCartViewModel(
         discount = null,
         oldTotalCost = null,
         newTotalCost = "",
+        orderAvailable = false
     )
 ) {
 
@@ -59,7 +64,11 @@ class ConsumerCartViewModel(
             )
 
             ConsumerCart.Action.BackClick -> navigateBack()
-            ConsumerCart.Action.Init -> observeConsumerCart()
+            ConsumerCart.Action.Init -> {
+                observeConsumerCart()
+                checkOrderAvailable()
+            }
+
             ConsumerCart.Action.OnCreateOrderClick -> onCreateOrderClicked()
             ConsumerCart.Action.OnErrorButtonClick -> observeConsumerCart()
             ConsumerCart.Action.OnMenuClick -> onMenuClicked()
@@ -116,7 +125,7 @@ class ConsumerCartViewModel(
     private fun ConsumerCart.DataState.copyWith(
         consumerCart: ConsumerCartDomain?,
         motivation: Motivation?,
-        recommendationList: List<MenuProduct>
+        recommendationList: List<MenuProduct>,
     ): ConsumerCart.DataState {
         return if (consumerCart is ConsumerCartDomain.WithProducts) {
             copy(
@@ -307,6 +316,19 @@ class ConsumerCartViewModel(
         return mutableDataState.value.recommendationList.find { menuProductItem ->
             menuProductItem.uuid == recommendationUuid
         }
+    }
+
+    private fun checkOrderAvailable() {
+        sharedScope.launchSafe(
+            block = {
+                setState {
+                    copy(orderAvailable = getIsOrderAvailableUseCase())
+                }
+            },
+            onError = { error ->
+                Logger.logD(CONSUMER_CART_VIEW_MODEL_TAG, error.stackTraceToString())
+            }
+        )
     }
 
 }

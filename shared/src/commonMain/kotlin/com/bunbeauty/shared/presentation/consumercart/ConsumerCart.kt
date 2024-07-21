@@ -17,6 +17,7 @@ interface ConsumerCart {
         val discount: String?,
         val oldTotalCost: String?,
         val newTotalCost: String,
+        val orderAvailable: Boolean,
     ) : BaseDataState {
 
         enum class State {

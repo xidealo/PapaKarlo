@@ -6,6 +6,7 @@ import com.bunbeauty.shared.domain.feature.cafe.GetSelectableCafeListUseCase
 import com.bunbeauty.shared.domain.feature.city.GetSelectedCityTimeZoneUseCase
 import com.bunbeauty.shared.domain.feature.motivation.GetMotivationUseCase
 import com.bunbeauty.shared.domain.feature.order.CreateOrderUseCase
+import com.bunbeauty.shared.domain.feature.orderavailable.GetIsOrderAvailableUseCase
 import com.bunbeauty.shared.domain.feature.payment.GetSelectablePaymentMethodListUseCase
 import com.bunbeauty.shared.domain.feature.payment.SavePaymentMethodUseCase
 import com.bunbeauty.shared.domain.interactor.cafe.ICafeInteractor
@@ -39,6 +40,7 @@ class CreateOrderViewModel(
     private val saveSelectedUserAddress: SaveSelectedUserAddressUseCase,
     private val getSelectablePaymentMethodListUseCase: GetSelectablePaymentMethodListUseCase,
     private val savePaymentMethodUseCase: SavePaymentMethodUseCase,
+    private val getIsOrderAvailableUseCase: GetIsOrderAvailableUseCase,
 ) : SharedStateViewModel<CreateOrder.DataState, CreateOrder.Action, CreateOrder.Event>(
     initDataState = CreateOrder.DataState(
         isDelivery = true,
@@ -339,7 +341,7 @@ class CreateOrderViewModel(
 
     private fun createClick(
         withoutChange: String,
-        changeFrom: String
+        changeFrom: String,
     ) {
         val state = mutableDataState.value
 
@@ -366,11 +368,12 @@ class CreateOrderViewModel(
             return
         }
 
-        val newFinalCost = (state.cartTotal as? CreateOrder.CartTotal.Success)?.newFinalCostValue ?: 0
+        val newFinalCost =
+            (state.cartTotal as? CreateOrder.CartTotal.Success)?.newFinalCostValue ?: 0
         val isChangeLessThenCost = (state.change ?: 0) < newFinalCost
         val isChangeIncorrect = state.paymentByCash &&
-            !state.withoutChangeChecked &&
-            isChangeLessThenCost
+                !state.withoutChangeChecked &&
+                isChangeLessThenCost
         setState {
             copy(isChangeErrorShown = isChangeIncorrect)
         }
@@ -488,7 +491,7 @@ class CreateOrderViewModel(
         getCartTotalJob = sharedScope.launchSafe(
             block = {
                 val isDelivery = mutableDataState.value.isDelivery
-                getCartTotalFlowUseCase(isDelivery = isDelivery).collect {  cartTotal ->
+                getCartTotalFlowUseCase(isDelivery = isDelivery).collect { cartTotal ->
                     val motivation = getMotivationUseCase(
                         newTotalCost = cartTotal.newTotalCost,
                         isDelivery = isDelivery
@@ -511,6 +514,7 @@ class CreateOrderViewModel(
                                 newFinalCostValue = cartTotal.newFinalCost,
                             ),
                             isOrderCreationEnabled = motivationData !is MotivationData.MinOrderCost
+                                    && getIsOrderAvailableUseCase()
                         )
                     }
                 }
