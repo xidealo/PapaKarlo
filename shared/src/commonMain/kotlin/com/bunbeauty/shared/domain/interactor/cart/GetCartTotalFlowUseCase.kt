@@ -12,7 +12,7 @@ class GetCartTotalFlowUseCase(
     private val getDiscountUseCase: GetDiscountUseCase,
     private val getNewTotalCostUseCase: GetNewTotalCostUseCase,
     private val getOldTotalCostUseCase: GetOldTotalCostUseCase,
-    private val getDeliveryCostFlowUseCase: GetDeliveryCostFlowUseCase,
+    private val getDeliveryCostFlowUseCase: GetDeliveryCostFlowUseCase
 ) {
 
     suspend operator fun invoke(isDelivery: Boolean): Flow<CartTotal> {
@@ -36,7 +36,7 @@ class GetCartTotalFlowUseCase(
                 oldFinalCost = oldTotalCost?.let {
                     oldTotalCost + (deliveryCost ?: 0)
                 },
-                newFinalCost = newTotalCost + (deliveryCost ?: 0),
+                newFinalCost = newTotalCost + (deliveryCost ?: 0)
             )
         }
     }

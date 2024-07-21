@@ -4,7 +4,7 @@ import com.bunbeauty.shared.domain.feature.addition.GetCartProductAdditionsPrice
 import com.bunbeauty.shared.domain.model.cart.CartProduct
 
 class GetOldTotalCostUseCase(
-    private val getCartProductAdditionsPriceUseCase: GetCartProductAdditionsPriceUseCase,
+    private val getCartProductAdditionsPriceUseCase: GetCartProductAdditionsPriceUseCase
 ) {
     operator fun invoke(cartProductList: List<CartProduct>): Int {
         val oldTotalCost = cartProductList.sumOf { cartProduct ->

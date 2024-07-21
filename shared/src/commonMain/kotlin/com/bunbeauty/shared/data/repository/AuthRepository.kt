@@ -33,10 +33,9 @@ class AuthRepository(private val networkConnector: NetworkConnector) : AuthRepo 
             ).dataOrNull()?.let { authResponse ->
                 AuthResponse(
                     token = authResponse.token,
-                    userUuid = authResponse.userUuid,
+                    userUuid = authResponse.userUuid
                 )
             }
         }
     }
-
 }

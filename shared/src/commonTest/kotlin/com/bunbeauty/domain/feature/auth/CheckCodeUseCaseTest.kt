@@ -23,7 +23,7 @@ class CheckCodeUseCaseTest {
     fun setup() {
         checkCodeUseCase = CheckCodeUseCase(
             authRepo = authRepo,
-            dataStoreRepo = dataStoreRepo,
+            dataStoreRepo = dataStoreRepo
         )
     }
 
@@ -32,9 +32,9 @@ class CheckCodeUseCaseTest {
         val code = "123456"
         val token = "token"
         val userUuid = "userUuid"
-        coEvery{ authRepo.checkCode(code) } returns AuthResponse(
+        coEvery { authRepo.checkCode(code) } returns AuthResponse(
             token = token,
-            userUuid = userUuid,
+            userUuid = userUuid
         )
         coEvery { dataStoreRepo.saveToken(token) } returns Unit
         coEvery { dataStoreRepo.saveUserUuid(userUuid) } returns Unit
@@ -48,7 +48,7 @@ class CheckCodeUseCaseTest {
     @Test
     fun `should throw SomethingWentWrongException when checking code is failed`() = runTest {
         val code = "123456"
-        coEvery{ authRepo.checkCode(code) } returns null
+        coEvery { authRepo.checkCode(code) } returns null
 
         assertFailsWith(
             exceptionClass = SomethingWentWrongException::class,
@@ -57,5 +57,4 @@ class CheckCodeUseCaseTest {
             }
         )
     }
-
 }

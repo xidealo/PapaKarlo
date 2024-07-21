@@ -6,7 +6,7 @@ import com.bunbeauty.shared.domain.repo.SuggestionRepo
 import com.bunbeauty.shared.extension.dataOrNull
 
 class SuggestionRepository(
-    private val networkConnector: NetworkConnector,
+    private val networkConnector: NetworkConnector
 ) : SuggestionRepo {
 
     private val cache: MutableMap<String, List<Suggestion>> = mutableMapOf()
@@ -24,7 +24,7 @@ class SuggestionRepository(
             Suggestion(
                 fiasId = suggestionServer.fiasId,
                 street = suggestionServer.street,
-                details = suggestionServer.details,
+                details = suggestionServer.details
             )
         }
         if (suggestions != null) {
@@ -33,5 +33,4 @@ class SuggestionRepository(
 
         return suggestions
     }
-
 }

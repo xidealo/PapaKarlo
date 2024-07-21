@@ -26,7 +26,7 @@ class CafeDao(foodDeliveryDatabase: FoodDeliveryDatabase) : ICafeDao {
                     longitude = cafeEntity.longitude,
                     address = cafeEntity.address,
                     cityUuid = cafeEntity.cityUuid,
-                    isVisible = cafeEntity.isVisible,
+                    isVisible = cafeEntity.isVisible
                 )
             }
         }
@@ -36,7 +36,7 @@ class CafeDao(foodDeliveryDatabase: FoodDeliveryDatabase) : ICafeDao {
         selectedCafeUuidEntityQueries.insertSelectedCafeUuid(
             userUuid = selectedCafeUuidEntity.userUuid,
             cityUuid = selectedCafeUuidEntity.cityUuid,
-            cafeUuid = selectedCafeUuidEntity.cafeUuid,
+            cafeUuid = selectedCafeUuidEntity.cafeUuid
         )
     }
 

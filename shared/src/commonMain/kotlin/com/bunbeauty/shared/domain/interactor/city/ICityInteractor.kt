@@ -3,7 +3,6 @@ package com.bunbeauty.shared.domain.interactor.city
 import com.bunbeauty.shared.domain.CommonFlow
 import com.bunbeauty.shared.domain.model.city.City
 import com.bunbeauty.shared.domain.model.city.SelectableCity
-import kotlinx.coroutines.flow.Flow
 
 interface ICityInteractor {
 

@@ -33,5 +33,4 @@ class FormatPhoneNumberUseCase {
 
         return result
     }
-
 }

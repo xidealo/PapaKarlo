@@ -6,7 +6,7 @@ class AreAdditionsEqualUseCase {
 
     operator fun invoke(
         cartProduct: CartProduct,
-        additionUuidList: List<String>,
+        additionUuidList: List<String>
     ): Boolean {
         if (cartProduct.additionList.size != additionUuidList.size) {
             return false

@@ -8,11 +8,11 @@ import com.bunbeauty.shared.domain.repo.CartProductRepo
 class EditCartProductUseCase(
     private val cartProductRepo: CartProductRepo,
     private val cartProductAdditionRepository: CartProductAdditionRepository,
-    private val areAdditionsEqualUseCase: AreAdditionsEqualUseCase,
+    private val areAdditionsEqualUseCase: AreAdditionsEqualUseCase
 ) {
     suspend operator fun invoke(
         cartProductUuid: String,
-        additionList: List<Addition>,
+        additionList: List<Addition>
     ) {
         val cartProduct =
             cartProductRepo.getCartProduct(cartProductUuid = cartProductUuid) ?: return

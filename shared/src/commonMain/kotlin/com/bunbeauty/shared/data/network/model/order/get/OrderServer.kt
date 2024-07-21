@@ -52,7 +52,7 @@ class OrderServer(
     val newTotalCost: Int,
 
     @SerialName("percentDiscount")
-    val percentDiscount: Int?,
+    val percentDiscount: Int?
 )
 
 @Serializable
@@ -77,7 +77,7 @@ class OrderAddressServer(
     val floor: String?,
 
     @SerialName("comment")
-    val comment: String?,
+    val comment: String?
 )
 
 @Serializable
@@ -132,7 +132,7 @@ class OrderProductServer(
     val orderUuid: String,
 
     @SerialName("additions")
-    val additions: List<OrderAdditionServer>,
+    val additions: List<OrderAdditionServer>
 )
 
 @Serializable
@@ -142,5 +142,5 @@ class OrderAdditionServer(
     @SerialName("name")
     val name: String,
     @SerialName("priority")
-    val priority: Int,
+    val priority: Int
 )

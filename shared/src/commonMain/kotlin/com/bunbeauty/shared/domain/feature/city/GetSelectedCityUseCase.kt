@@ -6,7 +6,7 @@ import com.bunbeauty.shared.domain.repo.CityRepo
 
 class GetSelectedCityUseCase(
     private val cityRepo: CityRepo,
-    private val dataStoreRepo: DataStoreRepo,
+    private val dataStoreRepo: DataStoreRepo
 ) {
 
     suspend operator fun invoke(): City? {

@@ -8,5 +8,5 @@ data class PatchUserServer(
     @SerialName("email")
     val email: String? = null,
     @SerialName("isActive")
-    val isActive: Boolean? = null,
+    val isActive: Boolean? = null
 )

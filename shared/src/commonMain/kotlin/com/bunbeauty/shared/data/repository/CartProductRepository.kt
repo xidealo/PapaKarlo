@@ -15,7 +15,7 @@ class CartProductRepository(
     private val uuidGenerator: UuidGenerator,
     private val cartProductDao: ICartProductDao,
     private val menuProductDao: IMenuProductDao,
-    private val cartProductMapper: ICartProductMapper,
+    private val cartProductMapper: ICartProductMapper
 ) : CartProductRepo {
 
     override fun observeCartProductList(): Flow<List<CartProduct>> {
@@ -36,7 +36,7 @@ class CartProductRepository(
     }
 
     override suspend fun getCartProductListByMenuProductUuid(
-        menuProductUuid: String,
+        menuProductUuid: String
     ): List<CartProduct> {
         return cartProductDao.getCartProductByMenuProductUuid(menuProductUuid)
             .toCartProductList()

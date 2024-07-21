@@ -6,23 +6,23 @@ import com.bunbeauty.shared.domain.feature.order.ObserveLastOrderUseCase
 import com.bunbeauty.shared.domain.feature.order.ObserveOrderListUseCase
 import com.bunbeauty.shared.domain.feature.order.ObserveOrderUseCase
 import com.bunbeauty.shared.domain.feature.order.StopObserveOrdersUseCase
+import com.bunbeauty.shared.domain.feature.orderavailable.IsOrderAvailableUseCase
 import org.koin.dsl.module
 
 internal fun orderUseCaseModule() = module {
-
     factory {
         CreateOrderUseCase(
             dataStoreRepo = get(),
             cartProductRepo = get(),
             dateTimeUtil = get(),
-            orderRepo = get(),
+            orderRepo = get()
         )
     }
     factory {
         ObserveLastOrderUseCase(
             dataStoreRepo = get(),
             orderRepo = get(),
-            lightOrderMapper = get(),
+            lightOrderMapper = get()
         )
     }
     factory {
@@ -34,13 +34,13 @@ internal fun orderUseCaseModule() = module {
         ObserveOrderListUseCase(
             dataStoreRepo = get(),
             orderRepo = get(),
-            lightOrderMapper = get(),
+            lightOrderMapper = get()
         )
     }
     factory {
         ObserveOrderUseCase(
             dataStoreRepo = get(),
-            orderRepo = get(),
+            orderRepo = get()
         )
     }
     factory {
@@ -50,4 +50,9 @@ internal fun orderUseCaseModule() = module {
         )
     }
 
+    factory {
+        IsOrderAvailableUseCase(
+            orderAvailableRepository = get()
+        )
+    }
 }

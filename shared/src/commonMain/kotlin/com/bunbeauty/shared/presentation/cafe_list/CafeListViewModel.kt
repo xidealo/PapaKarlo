@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 class CafeListViewModel(
     private val cafeInteractor: ICafeInteractor,
     private val observeCafeWithOpenStateListUseCase: ObserveCafeWithOpenStateListUseCase,
-    private val observeCartUseCase: ObserveCartUseCase,
+    private val observeCartUseCase: ObserveCartUseCase
 ) : SharedViewModel() {
 
     private val mutableCafeItemListState = MutableStateFlow(CafeListState())
@@ -82,7 +82,7 @@ class CafeListViewModel(
             address = cafe.address,
             phone = cafe.phone,
             workingHours = "$fromTime$WORKING_HOURS_DIVIDER$toTime",
-            cafeOpenState = openState,
+            cafeOpenState = openState
         )
     }
 

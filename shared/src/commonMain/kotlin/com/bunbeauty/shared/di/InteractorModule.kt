@@ -44,7 +44,7 @@ internal fun interactorModule() = module {
     single<ICafeInteractor> {
         CafeInteractor(
             cafeRepo = get(),
-            dataStoreRepo = get(),
+            dataStoreRepo = get()
         )
     }
     single<IUpdateInteractor> {
@@ -54,7 +54,7 @@ internal fun interactorModule() = module {
     single<IMenuProductInteractor> {
         MenuProductInteractor(
             menuProductRepo = get(),
-            getMenuProductListUseCase = get(),
+            getMenuProductListUseCase = get()
         )
     }
 }

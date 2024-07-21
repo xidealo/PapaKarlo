@@ -61,7 +61,7 @@ class GetMenuProductListUseCaseTest {
             additionGroups = listOf(
                 additionGroup11,
                 additionGroup12,
-                additionGroup13,
+                additionGroup13
             )
         )
         val menuProduct2 = getFakeMenuProduct(
@@ -69,7 +69,7 @@ class GetMenuProductListUseCaseTest {
             visible = true,
             additionGroups = listOf(
                 additionGroup21,
-                additionGroup22,
+                additionGroup22
             )
         )
         val initialList = listOf(
@@ -83,7 +83,7 @@ class GetMenuProductListUseCaseTest {
             visible = true,
             additionGroups = listOf(
                 additionGroup11,
-                additionGroup13,
+                additionGroup13
             )
         )
         val updatedMenuProduct2 = getFakeMenuProduct(
@@ -139,8 +139,7 @@ class GetMenuProductListUseCaseTest {
             isVisible = isVisible,
             name = "name",
             singleChoice = true,
-            priority = 1,
+            priority = 1
         )
     }
-
 }

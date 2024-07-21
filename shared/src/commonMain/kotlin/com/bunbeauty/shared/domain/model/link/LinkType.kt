@@ -6,5 +6,5 @@ enum class LinkType {
     GOOGLE_PLAY,
     APP_STORE,
     FACEBOOK,
-    UNKNOWN,
+    UNKNOWN
 }

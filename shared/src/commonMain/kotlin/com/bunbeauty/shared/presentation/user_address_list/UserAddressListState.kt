@@ -11,10 +11,10 @@ data class UserAddressListState(
     enum class State {
         SUCCESS,
         EMPTY,
-        LOADING,
+        LOADING
     }
 
-    sealed interface Event{
+    sealed interface Event {
         object OpenCreateAddressEvent : Event
         object GoBack : Event
     }

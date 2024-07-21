@@ -27,19 +27,19 @@ class AreAdditionsEqualUseCaseTest {
                 cartProductAdditionList = listOf(
                     getCartProductAddition(
                         uuid = "1",
-                        additionUuid = "1",
+                        additionUuid = "1"
                     ),
                     getCartProductAddition(
                         uuid = "2",
-                        additionUuid = "2",
+                        additionUuid = "2"
                     ),
                     getCartProductAddition(
                         uuid = "3",
-                        additionUuid = "3",
+                        additionUuid = "3"
                     )
                 )
             ),
-            additionUuidList = listOf("1", "2", "3"),
+            additionUuidList = listOf("1", "2", "3")
         )
 
         assertTrue(result)
@@ -53,19 +53,19 @@ class AreAdditionsEqualUseCaseTest {
                 cartProductAdditionList = listOf(
                     getCartProductAddition(
                         uuid = "1",
-                        additionUuid = "1",
+                        additionUuid = "1"
                     ),
                     getCartProductAddition(
                         uuid = "2",
-                        additionUuid = "2",
+                        additionUuid = "2"
                     ),
                     getCartProductAddition(
                         uuid = "3",
-                        additionUuid = "3",
+                        additionUuid = "3"
                     )
                 )
             ),
-            additionUuidList = listOf("3", "2", "1"),
+            additionUuidList = listOf("3", "2", "1")
         )
 
         assertTrue(result)
@@ -79,23 +79,23 @@ class AreAdditionsEqualUseCaseTest {
                 cartProductAdditionList = listOf(
                     getCartProductAddition(
                         uuid = "1",
-                        additionUuid = "1",
+                        additionUuid = "1"
                     ),
                     getCartProductAddition(
                         uuid = "2",
-                        additionUuid = "2",
+                        additionUuid = "2"
                     ),
                     getCartProductAddition(
                         uuid = "3",
-                        additionUuid = "3",
+                        additionUuid = "3"
                     ),
                     getCartProductAddition(
                         uuid = "4",
-                        additionUuid = "4",
+                        additionUuid = "4"
                     )
                 )
             ),
-            additionUuidList = listOf("1", "2", "3"),
+            additionUuidList = listOf("1", "2", "3")
         )
 
         assertFalse(result)
@@ -109,15 +109,15 @@ class AreAdditionsEqualUseCaseTest {
                 cartProductAdditionList = listOf(
                     getCartProductAddition(
                         uuid = "1",
-                        additionUuid = "1",
+                        additionUuid = "1"
                     ),
                     getCartProductAddition(
                         uuid = "2",
-                        additionUuid = "2",
+                        additionUuid = "2"
                     )
                 )
             ),
-            additionUuidList = listOf("1", "2", "3"),
+            additionUuidList = listOf("1", "2", "3")
         )
 
         assertFalse(result)
@@ -132,24 +132,23 @@ class AreAdditionsEqualUseCaseTest {
                     getCartProductAddition(
                         uuid = "1",
                         price = null,
-                        additionUuid = "1",
+                        additionUuid = "1"
                     ),
                     getCartProductAddition(
                         uuid = "2",
                         price = null,
-                        additionUuid = "2",
+                        additionUuid = "2"
                     ),
                     getCartProductAddition(
                         uuid = "3",
                         price = null,
-                        additionUuid = "3",
-                    ),
+                        additionUuid = "3"
+                    )
                 )
             ),
-            additionUuidList = listOf("1", "2", "4"),
+            additionUuidList = listOf("1", "2", "4")
         )
 
         assertFalse(result)
     }
-
 }

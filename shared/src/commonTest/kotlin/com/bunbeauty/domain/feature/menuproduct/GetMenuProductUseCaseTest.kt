@@ -94,7 +94,6 @@ class GetMenuProductUseCaseTest {
             )
         }
 
-
     @Test
     fun `should return menu product with addition list sorted by priority`() =
         runTest {
@@ -109,7 +108,7 @@ class GetMenuProductUseCaseTest {
                         addition10,
                         addition2
                     )
-                ),
+                )
             )
 
             val additionGroupsWithSortedAdditions = listOf(
@@ -118,7 +117,7 @@ class GetMenuProductUseCaseTest {
                         addition2,
                         addition10
                     )
-                ),
+                )
             )
 
             val initialMenuProduct = getMenuProduct(
@@ -155,7 +154,7 @@ class GetMenuProductUseCaseTest {
                         addition10,
                         addition2
                     )
-                ),
+                )
             )
 
             val additionGroupsWithFilttredAdditions = listOf(
@@ -163,7 +162,7 @@ class GetMenuProductUseCaseTest {
                     additions = listOf(
                         addition10
                     )
-                ),
+                )
             )
 
             val initialMenuProduct = getMenuProduct(
@@ -185,5 +184,4 @@ class GetMenuProductUseCaseTest {
                 actual = result
             )
         }
-
 }

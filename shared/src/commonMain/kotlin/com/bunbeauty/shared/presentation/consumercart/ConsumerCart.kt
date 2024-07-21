@@ -17,6 +17,7 @@ interface ConsumerCart {
         val discount: String?,
         val oldTotalCost: String?,
         val newTotalCost: String,
+        val orderAvailable: Boolean
     ) : BaseDataState {
 
         enum class State {
@@ -48,7 +49,7 @@ interface ConsumerCart {
             val name: String,
             val productDetailsOpenedFrom: ProductDetailsOpenedFrom,
             val additionUuidList: List<String>,
-            val cartProductUuid: String?,
+            val cartProductUuid: String?
         ) : Event
 
         data object NavigateBack : Event
@@ -56,4 +57,3 @@ interface ConsumerCart {
         data object ShowRemoveProductError : Event
     }
 }
-

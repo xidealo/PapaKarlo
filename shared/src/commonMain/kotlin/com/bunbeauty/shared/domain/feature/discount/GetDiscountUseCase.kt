@@ -8,7 +8,7 @@ import com.bunbeauty.shared.domain.repo.OrderRepo
 class GetDiscountUseCase(
     private val discountRepository: DiscountRepository,
     private val orderRepository: OrderRepo,
-    private val dataStoreRepo: DataStoreRepo,
+    private val dataStoreRepo: DataStoreRepo
 ) {
     suspend operator fun invoke(): Discount? {
         val userUuid = dataStoreRepo.getUserUuid()

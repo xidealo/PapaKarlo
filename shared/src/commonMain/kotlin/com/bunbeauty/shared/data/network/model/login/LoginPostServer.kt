@@ -13,5 +13,5 @@ data class LoginPostServer(
     val phoneNumber: String,
 
     @SerialName("companyUuid")
-    val companyUuid: String,
+    val companyUuid: String
 )

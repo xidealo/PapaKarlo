@@ -33,7 +33,8 @@ fun viewModelModule() = module {
     }
     viewModel {
         MainViewModel(
-            networkUtil = get()
+            networkUtil = get(),
+            isOrderAvailableUseCase = get()
         )
     }
     viewModel {
@@ -45,7 +46,8 @@ fun viewModelModule() = module {
             removeCartProductUseCase = get(),
             getRecommendationsUseCase = get(),
             getMotivationUseCase = get(),
-            analyticService = get()
+            analyticService = get(),
+            isOrderAvailableUseCase = get()
         )
     }
     viewModel {
@@ -62,7 +64,8 @@ fun viewModelModule() = module {
             getSelectedCityTimeZone = get(),
             saveSelectedUserAddress = get(),
             getSelectablePaymentMethodListUseCase = get(),
-            savePaymentMethodUseCase = get()
+            savePaymentMethodUseCase = get(),
+            isOrderAvailableUseCase = get()
         )
     }
     viewModel {

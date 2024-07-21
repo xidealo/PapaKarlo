@@ -50,13 +50,13 @@ internal class CreateAddressUseCaseTest {
                     street = Suggestion(
                         fiasId = "fiasId",
                         street = "street",
-                        details = null,
+                        details = null
                     ),
                     house = "house",
                     flat = "flat",
                     entrance = "entrance",
                     comment = "comment",
-                    floor = "floor",
+                    floor = "floor"
                 )
             }
         )
@@ -73,13 +73,13 @@ internal class CreateAddressUseCaseTest {
                     street = Suggestion(
                         fiasId = "fiasId",
                         street = "street",
-                        details = null,
+                        details = null
                     ),
                     house = "house",
                     flat = "flat",
                     entrance = "entrance",
                     comment = "comment",
-                    floor = "floor",
+                    floor = "floor"
                 )
             }
         )
@@ -111,7 +111,7 @@ internal class CreateAddressUseCaseTest {
                     street = Suggestion(
                         fiasId = "fiasId",
                         street = "street",
-                        details = null,
+                        details = null
                     ),
                     house = "house",
                     flat = "flat",
@@ -128,13 +128,13 @@ internal class CreateAddressUseCaseTest {
             street = Suggestion(
                 fiasId = "fiasId",
                 street = "street",
-                details = null,
+                details = null
             ),
             house = "house",
             flat = "flat",
             entrance = "entrance",
             comment = "comment",
-            floor = "floor",
+            floor = "floor"
         )
 
         assertEquals(userAddress, createdUserAddress)

@@ -258,7 +258,8 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
                 span = { _, menuItemModel ->
                     when (menuItemModel) {
                         is MenuItemUi.Discount,
-                        is MenuItemUi.CategoryHeader -> GridItemSpan(maxLineSpan)
+                        is MenuItemUi.CategoryHeader
+                        -> GridItemSpan(maxLineSpan)
 
                         else -> GridItemSpan(1)
                     }

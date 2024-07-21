@@ -1,8 +1,8 @@
 package com.bunbeauty.domain.feature.motivation
 
 import com.bunbeauty.shared.domain.feature.address.GetCurrentUserAddressUseCase
-import com.bunbeauty.shared.domain.feature.motivation.Motivation
 import com.bunbeauty.shared.domain.feature.motivation.GetMotivationUseCase
+import com.bunbeauty.shared.domain.feature.motivation.Motivation
 import com.bunbeauty.shared.domain.model.address.UserAddress
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
@@ -82,7 +82,7 @@ class GetMotivationUseCaseTest {
         val expected = Motivation.ForLowerDelivery(
             increaseAmountBy = 400,
             progress = 0.6f,
-            isFree = true,
+            isFree = true
         )
 
         val motivation = getMotivationUseCase(newTotalCost = 600)
@@ -104,6 +104,4 @@ class GetMotivationUseCaseTest {
 
         assertEquals(expected, motivation)
     }
-
-
 }

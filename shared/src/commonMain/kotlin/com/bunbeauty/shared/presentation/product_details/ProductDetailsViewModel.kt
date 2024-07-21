@@ -26,7 +26,7 @@ class ProductDetailsViewModel(
     private val analyticService: AnalyticService,
     private val editCartProductUseCase: EditCartProductUseCase,
     private val getAdditionGroupsWithSelectedAdditionUseCase: GetAdditionGroupsWithSelectedAdditionUseCase,
-    private val getSelectedAdditionsPriceUseCase: GetPriceOfSelectedAdditionsUseCase,
+    private val getSelectedAdditionsPriceUseCase: GetPriceOfSelectedAdditionsUseCase
 ) : SharedStateViewModel<ProductDetailsState.DataState, ProductDetailsState.Action, ProductDetailsState.Event>(
     ProductDetailsState.DataState(
         cartCostAndCount = null,
@@ -42,19 +42,19 @@ class ProductDetailsViewModel(
             additionGroups = listOf(),
             currency = RUBLE_CURRENCY
         ),
-        screenState = ProductDetailsState.DataState.ScreenState.INIT,
+        screenState = ProductDetailsState.DataState.ScreenState.INIT
     )
 ) {
     private var observeConsumerCartJob: Job? = null
 
     override fun reduce(
         action: ProductDetailsState.Action,
-        dataState: ProductDetailsState.DataState,
+        dataState: ProductDetailsState.DataState
     ) {
         when (action) {
             is ProductDetailsState.Action.AddProductToCartClick -> onWantClicked(
                 productDetailsOpenedFrom = action.productDetailsOpenedFrom,
-                cartProductUuid = action.cartProductUuid,
+                cartProductUuid = action.cartProductUuid
             )
 
             ProductDetailsState.Action.BackClick -> addEvent {
@@ -102,7 +102,7 @@ class ProductDetailsViewModel(
 
     private fun getMenuProduct(
         menuProductUuid: String,
-        selectedAdditionUuidList: List<String>,
+        selectedAdditionUuidList: List<String>
     ) {
         sharedScope.launchSafe(
             block = {
@@ -133,7 +133,7 @@ class ProductDetailsViewModel(
 
     private fun onWantClicked(
         productDetailsOpenedFrom: ProductDetailsOpenedFrom,
-        cartProductUuid: String?,
+        cartProductUuid: String?
     ) {
         val menuProduct = dataState.value.menuProduct
 
@@ -153,7 +153,7 @@ class ProductDetailsViewModel(
                     cartProductUuid?.let { cartProductUuid ->
                         editCartProductUseCase(
                             cartProductUuid = cartProductUuid,
-                            additionList = selectedAdditionList,
+                            additionList = selectedAdditionList
                         )
                         addEvent {
                             ProductDetailsState.Event.EditedProduct
@@ -180,7 +180,7 @@ class ProductDetailsViewModel(
 
     private fun sendOnWantedClickedAnalytic(
         menuProductUuid: String,
-        productDetailsOpenedFrom: ProductDetailsOpenedFrom,
+        productDetailsOpenedFrom: ProductDetailsOpenedFrom
     ) {
         analyticService.sendEvent(
             event = when (productDetailsOpenedFrom) {
@@ -222,7 +222,7 @@ class ProductDetailsViewModel(
         menuProduct: MenuProduct,
         selectedAdditionUuidList: List<String>,
         isInit: Boolean,
-        stateAdditionGroupList: List<AdditionGroup>,
+        stateAdditionGroupList: List<AdditionGroup>
     ): ProductDetailsState.DataState.MenuProduct {
         val groupWithSelectedAdditionFromConsumerCart = when {
             !isInit -> stateAdditionGroupList
@@ -258,7 +258,7 @@ class ProductDetailsViewModel(
 
     private fun getAdditionGroupsWithSelectedAddition(
         menuProduct: MenuProduct,
-        selectedAdditionUuidList: List<String>,
+        selectedAdditionUuidList: List<String>
     ) = menuProduct.additionGroups.map { additionGroup ->
         additionGroup.copy(
             additionList = additionGroup.additionList.map { addition ->
@@ -268,5 +268,4 @@ class ProductDetailsViewModel(
             }
         )
     }
-
 }

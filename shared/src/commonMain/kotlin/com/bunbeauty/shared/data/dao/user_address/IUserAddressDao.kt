@@ -33,5 +33,4 @@ interface IUserAddressDao {
         userUuid: String,
         cityUuid: String
     ): Flow<List<UserAddressEntity>>
-
 }

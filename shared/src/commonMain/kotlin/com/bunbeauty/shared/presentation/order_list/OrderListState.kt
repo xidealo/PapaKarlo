@@ -11,7 +11,7 @@ data class OrderListState(
     enum class State {
         SUCCESS,
         EMPTY,
-        LOADING,
+        LOADING
     }
 
     sealed interface Event

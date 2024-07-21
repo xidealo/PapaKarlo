@@ -6,5 +6,4 @@ class CheckPhoneNumberUseCase {
         val phoneNumberRegex = Regex("^\\+7[0-9]{10}$")
         return phoneNumberRegex.matches(phoneNumber)
     }
-
 }

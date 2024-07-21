@@ -54,7 +54,7 @@ internal class GetPaymentMethodListUseCaseTest {
                 cashMethod,
                 cardMethod,
                 cardNumberMethod,
-                phoneNumber,
+                phoneNumber
             ),
             paymentMethodList
         )

@@ -3,9 +3,12 @@ package com.bunbeauty.papakarlo.feature.main
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
+import com.bunbeauty.core.Logger
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.ui.element.bottombar.NavigationBarItem
 import com.bunbeauty.papakarlo.feature.main.network.INetworkUtil
+import com.bunbeauty.shared.domain.feature.orderavailable.IsOrderAvailableUseCase
+import com.bunbeauty.shared.extension.launchSafe
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -13,8 +16,11 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 
+private const val MAIN_VIEW_MODEL_TAG = "MainViewModel"
+
 class MainViewModel(
-    private val networkUtil: INetworkUtil
+    private val networkUtil: INetworkUtil,
+    private val isOrderAvailableUseCase: IsOrderAvailableUseCase
 ) : ViewModel() {
 
     private val mutableMainState: MutableStateFlow<MainState> = MutableStateFlow(MainState())
@@ -22,6 +28,7 @@ class MainViewModel(
 
     init {
         observeNetworkConnection()
+        checkIsOrderAvailable()
     }
 
     fun onNavDestinationUpdated(destinationId: Int, navController: NavController) {
@@ -85,5 +92,18 @@ class MainViewModel(
                 state.copy(connectionLost = !isOnline)
             }
         }.launchIn(viewModelScope)
+    }
+
+    private fun checkIsOrderAvailable() {
+        viewModelScope.launchSafe(
+            block = {
+                mutableMainState.update { state ->
+                    state.copy(showOrderNotAvailable = isOrderAvailableUseCase().not())
+                }
+            },
+            onError = { error ->
+                Logger.logE(MAIN_VIEW_MODEL_TAG, error.stackTraceToString())
+            }
+        )
     }
 }

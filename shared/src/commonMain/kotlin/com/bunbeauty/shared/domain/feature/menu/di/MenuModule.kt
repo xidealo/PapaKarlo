@@ -7,7 +7,7 @@ internal fun menuModule() = module {
     factory {
         AddMenuProductUseCase(
             getCartProductCountUseCase = get(),
-            cartProductRepo = get(),
+            cartProductRepo = get()
         )
     }
 }

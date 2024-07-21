@@ -1,21 +1,14 @@
 package com.bunbeauty.shared.domain.interactor.user
 
 import com.bunbeauty.shared.DataStoreRepo
-import com.bunbeauty.shared.domain.CommonFlow
-import com.bunbeauty.shared.domain.asCommonFlow
 import com.bunbeauty.shared.domain.model.profile.Profile
-import com.bunbeauty.shared.domain.model.profile.User
 import com.bunbeauty.shared.domain.repo.OrderRepo
 import com.bunbeauty.shared.domain.repo.UserRepo
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.map
 
 class UserInteractor(
     private val userRepo: UserRepo,
     private val orderRepo: OrderRepo,
-    private val dataStoreRepo: DataStoreRepo,
+    private val dataStoreRepo: DataStoreRepo
 ) : IUserInteractor {
 
     override suspend fun clearUserCache() {
@@ -25,19 +18,6 @@ class UserInteractor(
 
     override suspend fun isUserAuthorize(): Boolean {
         return dataStoreRepo.getToken() != null
-    }
-
-    override fun observeIsUserAuthorize(): CommonFlow<Boolean> {
-        return dataStoreRepo.token.map { token ->
-            token != null
-        }.asCommonFlow()
-    }
-
-    @OptIn(ExperimentalCoroutinesApi::class)
-    override fun observeUser(): Flow<User?> {
-        return dataStoreRepo.userUuid.flatMapLatest { userUuid ->
-            userRepo.observeUserByUuid(userUuid ?: "")
-        }
     }
 
     override suspend fun getProfile(): Profile? {
@@ -54,5 +34,4 @@ class UserInteractor(
             Profile.Unauthorized
         }
     }
-
 }
