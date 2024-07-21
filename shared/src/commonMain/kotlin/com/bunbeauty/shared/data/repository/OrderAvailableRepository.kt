@@ -6,7 +6,7 @@ import com.bunbeauty.shared.domain.model.order.OrderAvailability
 import com.bunbeauty.shared.extension.getNullableResult
 
 class OrderAvailableRepository(
-    private val networkConnector: NetworkConnector
+    private val networkConnector: NetworkConnector,
 ) {
 
     private var cache: OrderAvailability? = null
@@ -14,7 +14,8 @@ class OrderAvailableRepository(
     suspend fun fetchOrderAvailable(): OrderAvailability? {
         return networkConnector.getIsOrderAvailableData()
             .getNullableResult { orderAvailableServer ->
-                val orderAvailable = orderAvailableServer.mapOrderAvailableServerToOrderAvailability()
+                val orderAvailable =
+                    orderAvailableServer.mapOrderAvailableServerToOrderAvailability()
                 cache = orderAvailable
                 orderAvailable
             }
@@ -22,5 +23,9 @@ class OrderAvailableRepository(
 
     suspend fun getOrderAvailable(): OrderAvailability? {
         return cache ?: fetchOrderAvailable()
+    }
+
+    fun update(orderAvailability: OrderAvailability) {
+        cache = orderAvailability
     }
 }

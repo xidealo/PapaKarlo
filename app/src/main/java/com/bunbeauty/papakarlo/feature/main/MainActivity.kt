@@ -86,6 +86,10 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
         viewModel.showErrorMessage(text)
     }
 
+    fun setOrderNotAvailable() {
+        viewModel.setOrderNotAvailable()
+    }
+
     private fun checkNotificationPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (!NotificationManagerCompat.from(this).areNotificationsEnabled()) {
@@ -184,7 +188,7 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
 
     private fun handleEventList(
         eventList: List<MainState.Event>,
-        snackbarHostState: SnackbarHostState
+        snackbarHostState: SnackbarHostState,
     ) {
         eventList.forEach { event ->
             when (event) {
@@ -208,7 +212,7 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
     private fun fragmentContainerFactory(
         inflater: LayoutInflater,
         parent: ViewGroup,
-        attachToParent: Boolean
+        attachToParent: Boolean,
     ): FragmentContainerBinding =
         FragmentContainerBinding.inflate(inflater, parent, attachToParent).also {
             setupNavigationListener()

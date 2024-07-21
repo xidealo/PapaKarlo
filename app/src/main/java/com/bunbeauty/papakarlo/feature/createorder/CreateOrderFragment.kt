@@ -60,6 +60,7 @@ import com.bunbeauty.papakarlo.feature.createorder.ui.PaymentMethodListBottomShe
 import com.bunbeauty.papakarlo.feature.createorder.ui.PickupAddressListBottomSheet
 import com.bunbeauty.papakarlo.feature.createorder.ui.TimePickerDialog
 import com.bunbeauty.papakarlo.feature.main.IMessageHost
+import com.bunbeauty.papakarlo.feature.main.MainActivity
 import com.bunbeauty.papakarlo.feature.motivation.Motivation
 import com.bunbeauty.papakarlo.feature.motivation.MotivationUi
 import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentMethodUI
@@ -220,6 +221,13 @@ class CreateOrderFragment :
                     resources.getString(R.string.error_change)
                 )
             }
+
+            CreateOrder.Event.OrderNotAvailableErrorEvent -> {
+                (activity as? MainActivity)?.setOrderNotAvailable()
+                (activity as? IMessageHost)?.showErrorMessage(
+                    resources.getString(R.string.warning_no_order_available)
+                )
+            }
         }
     }
 
@@ -228,7 +236,7 @@ class CreateOrderFragment :
         viewState: CreateOrderViewState,
         focusManager: FocusManager,
         onAction: (CreateOrder.Action) -> Unit,
-        modifier: Modifier = Modifier
+        modifier: Modifier = Modifier,
     ) {
         if (viewState.isDelivery) {
             if (viewState.deliveryAddress == null) {
@@ -280,7 +288,7 @@ class CreateOrderFragment :
         viewState: CreateOrderViewState,
         focusManager: FocusManager,
         onAction: (CreateOrder.Action) -> Unit,
-        modifier: Modifier = Modifier
+        modifier: Modifier = Modifier,
     ) {
         NavigationTextCard(
             modifier = modifier,
@@ -299,7 +307,7 @@ class CreateOrderFragment :
         viewState: CreateOrderViewState,
         focusManager: FocusManager,
         onAction: (CreateOrder.Action) -> Unit,
-        modifier: Modifier = Modifier
+        modifier: Modifier = Modifier,
     ) {
         if (viewState.selectedPaymentMethod == null) {
             NavigationCard(
@@ -336,7 +344,7 @@ class CreateOrderFragment :
     private fun ChangeBlock(
         viewState: CreateOrderViewState,
         onAction: (CreateOrder.Action) -> Unit,
-        modifier: Modifier = Modifier
+        modifier: Modifier = Modifier,
     ) {
         if (!viewState.showChange) {
             return
@@ -406,7 +414,7 @@ class CreateOrderFragment :
         comment: String,
         focusManager: FocusManager,
         onAction: (CreateOrder.Action) -> Unit,
-        modifier: Modifier = Modifier
+        modifier: Modifier = Modifier,
     ) {
         FoodDeliveryTextField(
             modifier = modifier.fillMaxWidth(),
@@ -431,7 +439,7 @@ class CreateOrderFragment :
     @Composable
     private fun ErrorText(
         modifier: Modifier = Modifier,
-        @StringRes messageStringId: Int
+        @StringRes messageStringId: Int,
     ) {
         Text(
             modifier = modifier,
@@ -444,7 +452,7 @@ class CreateOrderFragment :
     @Composable
     private fun BottomAmountBar(
         viewState: CreateOrderViewState,
-        onAction: (CreateOrder.Action) -> Unit
+        onAction: (CreateOrder.Action) -> Unit,
     ) {
         FoodDeliverySurface(modifier = Modifier.fillMaxWidth()) {
             Column(
@@ -497,7 +505,7 @@ class CreateOrderFragment :
     @Composable
     private fun BottomAmountBarSuccessContent(
         cartTotal: CartTotalUI.Success,
-        modifier: Modifier = Modifier
+        modifier: Modifier = Modifier,
     ) {
         Column(
             modifier = modifier,
