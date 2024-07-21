@@ -7,7 +7,7 @@ import com.bunbeauty.core.Logger
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.ui.element.bottombar.NavigationBarItem
 import com.bunbeauty.papakarlo.feature.main.network.INetworkUtil
-import com.bunbeauty.shared.domain.feature.orderavailable.GetIsOrderAvailableUseCase
+import com.bunbeauty.shared.domain.feature.orderavailable.GetOrderAvailableUseCase
 import com.bunbeauty.shared.extension.launchSafe
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -20,7 +20,7 @@ private const val MAIN_VIEW_MODEL_TAG = "MainViewModel"
 
 class MainViewModel(
     private val networkUtil: INetworkUtil,
-    private val getIsOrderAvailableUseCase: GetIsOrderAvailableUseCase,
+    private val getOrderAvailableUseCase: GetOrderAvailableUseCase
 ) : ViewModel() {
 
     private val mutableMainState: MutableStateFlow<MainState> = MutableStateFlow(MainState())
@@ -98,11 +98,11 @@ class MainViewModel(
         viewModelScope.launchSafe(
             block = {
                 mutableMainState.update { state ->
-                    state.copy(showOrderNotAvailable = getIsOrderAvailableUseCase().not())
+                    state.copy(showOrderNotAvailable = getOrderAvailableUseCase().not())
                 }
             },
             onError = { error ->
-                Logger.logD(MAIN_VIEW_MODEL_TAG, error.stackTraceToString())
+                Logger.logE(MAIN_VIEW_MODEL_TAG, error.stackTraceToString())
             }
         )
     }

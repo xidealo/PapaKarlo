@@ -1,12 +1,13 @@
 package com.bunbeauty.shared.presentation.createorder
 
+import com.bunbeauty.core.Logger
 import com.bunbeauty.shared.Constants.PERCENT
 import com.bunbeauty.shared.Constants.RUBLE_CURRENCY
 import com.bunbeauty.shared.domain.feature.cafe.GetSelectableCafeListUseCase
 import com.bunbeauty.shared.domain.feature.city.GetSelectedCityTimeZoneUseCase
 import com.bunbeauty.shared.domain.feature.motivation.GetMotivationUseCase
 import com.bunbeauty.shared.domain.feature.order.CreateOrderUseCase
-import com.bunbeauty.shared.domain.feature.orderavailable.GetIsOrderAvailableUseCase
+import com.bunbeauty.shared.domain.feature.orderavailable.GetOrderAvailableUseCase
 import com.bunbeauty.shared.domain.feature.payment.GetSelectablePaymentMethodListUseCase
 import com.bunbeauty.shared.domain.feature.payment.SavePaymentMethodUseCase
 import com.bunbeauty.shared.domain.interactor.cafe.ICafeInteractor
@@ -22,9 +23,9 @@ import com.bunbeauty.shared.presentation.base.SharedStateViewModel
 import com.bunbeauty.shared.presentation.motivation.MotivationData
 import com.bunbeauty.shared.presentation.motivation.toMotivationData
 import kotlinx.coroutines.Job
-import kotlin.test.fail
 
 private const val DELIVERY_POSITION = 0
+private const val CREATION_ORDER_VIEW_MODEL_TAG = "CreateOrderViewModel"
 
 class CreateOrderViewModel(
     private val cartProductInteractor: ICartProductInteractor,
@@ -40,7 +41,7 @@ class CreateOrderViewModel(
     private val saveSelectedUserAddress: SaveSelectedUserAddressUseCase,
     private val getSelectablePaymentMethodListUseCase: GetSelectablePaymentMethodListUseCase,
     private val savePaymentMethodUseCase: SavePaymentMethodUseCase,
-    private val getIsOrderAvailableUseCase: GetIsOrderAvailableUseCase,
+    private val getOrderAvailableUseCase: GetOrderAvailableUseCase,
 ) : SharedStateViewModel<CreateOrder.DataState, CreateOrder.Action, CreateOrder.Event>(
     initDataState = CreateOrder.DataState(
         isDelivery = true,
@@ -497,6 +498,7 @@ class CreateOrderViewModel(
                         isDelivery = isDelivery
                     )
                     val motivationData = motivation?.toMotivationData()
+                    val orderAvailable = getOrderAvailableUseCase()
                     setState {
                         copy(
                             cartTotal = CreateOrder.CartTotal.Success(
@@ -514,12 +516,14 @@ class CreateOrderViewModel(
                                 newFinalCostValue = cartTotal.newFinalCost,
                             ),
                             isOrderCreationEnabled = motivationData !is MotivationData.MinOrderCost
-                                    && getIsOrderAvailableUseCase()
+                                    && orderAvailable
                         )
                     }
                 }
             },
-            onError = {}
+            onError = { error ->
+                Logger.logE(CREATION_ORDER_VIEW_MODEL_TAG, error.stackTraceToString())
+            }
         )
     }
 

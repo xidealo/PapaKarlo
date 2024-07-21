@@ -15,7 +15,7 @@ import com.bunbeauty.shared.domain.feature.cart.IncreaseCartProductCountUseCase
 import com.bunbeauty.shared.domain.feature.cart.RemoveCartProductUseCase
 import com.bunbeauty.shared.domain.feature.motivation.Motivation
 import com.bunbeauty.shared.domain.feature.menu.AddMenuProductUseCase
-import com.bunbeauty.shared.domain.feature.orderavailable.GetIsOrderAvailableUseCase
+import com.bunbeauty.shared.domain.feature.orderavailable.GetOrderAvailableUseCase
 import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
 import com.bunbeauty.shared.domain.model.cart.ConsumerCartDomain
@@ -41,7 +41,7 @@ class ConsumerCartViewModel(
     private val getRecommendationsUseCase: GetRecommendationsUseCase,
     private val getMotivationUseCase: GetMotivationUseCase,
     private val analyticService: AnalyticService,
-    private val getIsOrderAvailableUseCase: GetIsOrderAvailableUseCase,
+    private val getOrderAvailableUseCase: GetOrderAvailableUseCase,
 ) : SharedStateViewModel<ConsumerCart.DataState, ConsumerCart.Action, ConsumerCart.Event>(
     ConsumerCart.DataState(
         state = ConsumerCart.DataState.State.LOADING,
@@ -322,11 +322,11 @@ class ConsumerCartViewModel(
         sharedScope.launchSafe(
             block = {
                 setState {
-                    copy(orderAvailable = getIsOrderAvailableUseCase())
+                    copy(orderAvailable = getOrderAvailableUseCase())
                 }
             },
             onError = { error ->
-                Logger.logD(CONSUMER_CART_VIEW_MODEL_TAG, error.stackTraceToString())
+                Logger.logE(CONSUMER_CART_VIEW_MODEL_TAG, error.stackTraceToString())
             }
         )
     }

@@ -4,7 +4,7 @@ import com.bunbeauty.shared.data.repository.OrderAvailableRepository
 
 private const val ORDER_AVAILABLE = true
 
-class GetIsOrderAvailableUseCase(
+class GetOrderAvailableUseCase(
     private val orderAvailableRepository: OrderAvailableRepository,
 ) {
     suspend operator fun invoke(): Boolean {
