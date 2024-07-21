@@ -22,7 +22,7 @@ private const val MAIN_VIEW_MODEL_TAG = "MainViewModel"
 class MainViewModel(
     private val networkUtil: INetworkUtil,
     private val isOrderAvailableUseCase: IsOrderAvailableUseCase,
-    private val setOrderNotAvailableUseCase: SetOrderNotAvailableUseCase,
+    private val setOrderNotAvailableUseCase: SetOrderNotAvailableUseCase
 ) : ViewModel() {
 
     private val mutableMainState: MutableStateFlow<MainState> = MutableStateFlow(MainState())

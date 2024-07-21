@@ -236,7 +236,7 @@ class CreateOrderFragment :
         viewState: CreateOrderViewState,
         focusManager: FocusManager,
         onAction: (CreateOrder.Action) -> Unit,
-        modifier: Modifier = Modifier,
+        modifier: Modifier = Modifier
     ) {
         if (viewState.isDelivery) {
             if (viewState.deliveryAddress == null) {
@@ -288,7 +288,7 @@ class CreateOrderFragment :
         viewState: CreateOrderViewState,
         focusManager: FocusManager,
         onAction: (CreateOrder.Action) -> Unit,
-        modifier: Modifier = Modifier,
+        modifier: Modifier = Modifier
     ) {
         NavigationTextCard(
             modifier = modifier,
@@ -307,7 +307,7 @@ class CreateOrderFragment :
         viewState: CreateOrderViewState,
         focusManager: FocusManager,
         onAction: (CreateOrder.Action) -> Unit,
-        modifier: Modifier = Modifier,
+        modifier: Modifier = Modifier
     ) {
         if (viewState.selectedPaymentMethod == null) {
             NavigationCard(
@@ -344,7 +344,7 @@ class CreateOrderFragment :
     private fun ChangeBlock(
         viewState: CreateOrderViewState,
         onAction: (CreateOrder.Action) -> Unit,
-        modifier: Modifier = Modifier,
+        modifier: Modifier = Modifier
     ) {
         if (!viewState.showChange) {
             return
@@ -414,7 +414,7 @@ class CreateOrderFragment :
         comment: String,
         focusManager: FocusManager,
         onAction: (CreateOrder.Action) -> Unit,
-        modifier: Modifier = Modifier,
+        modifier: Modifier = Modifier
     ) {
         FoodDeliveryTextField(
             modifier = modifier.fillMaxWidth(),
@@ -439,7 +439,7 @@ class CreateOrderFragment :
     @Composable
     private fun ErrorText(
         modifier: Modifier = Modifier,
-        @StringRes messageStringId: Int,
+        @StringRes messageStringId: Int
     ) {
         Text(
             modifier = modifier,
@@ -452,7 +452,7 @@ class CreateOrderFragment :
     @Composable
     private fun BottomAmountBar(
         viewState: CreateOrderViewState,
-        onAction: (CreateOrder.Action) -> Unit,
+        onAction: (CreateOrder.Action) -> Unit
     ) {
         FoodDeliverySurface(modifier = Modifier.fillMaxWidth()) {
             Column(
@@ -505,7 +505,7 @@ class CreateOrderFragment :
     @Composable
     private fun BottomAmountBarSuccessContent(
         cartTotal: CartTotalUI.Success,
-        modifier: Modifier = Modifier,
+        modifier: Modifier = Modifier
     ) {
         Column(
             modifier = modifier,
