@@ -36,7 +36,7 @@ import com.bunbeauty.papakarlo.common.BaseFragmentWithSharedViewModel
 import com.bunbeauty.papakarlo.common.extension.navigateSafe
 import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
-import com.bunbeauty.papakarlo.common.ui.element.card.NavigationIconCard
+import com.bunbeauty.papakarlo.common.ui.element.card.NavigationIconCardWithDivider
 import com.bunbeauty.papakarlo.common.ui.element.topbar.FoodDeliveryCartAction
 import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
@@ -104,7 +104,7 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
         onLastOrderClicked: (String, String) -> Unit,
         onSettingsClicked: () -> Unit,
         onYourAddressesClicked: () -> Unit,
-        onOrderHistoryClicked: () -> Unit
+        onOrderHistoryClicked: () -> Unit,
     ) {
         FoodDeliveryScaffold(
             title = stringResource(R.string.title_profile),
@@ -115,6 +115,7 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
                     findNavController().navigateSafe(ProductDetailsFragmentDirections.globalConsumerCartFragment())
                 }
             ),
+            backgroundColor = FoodDeliveryTheme.colors.mainColors.surface,
             actionButton = {
                 if (profileUi.state == ProfileState.State.UNAUTHORIZED) {
                     MainButton(
@@ -221,13 +222,12 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
         onLastOrderClicked: (String, String) -> Unit,
         onSettingsClick: () -> Unit,
         onYourAddressesClicked: () -> Unit,
-        onOrderHistoryClicked: () -> Unit
+        onOrderHistoryClicked: () -> Unit,
     ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
-                .padding(FoodDeliveryTheme.dimensions.mediumSpace)
         ) {
             profile.orderItem?.let { orderItem ->
                 OrderItem(
@@ -238,26 +238,24 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
                     }
                 )
             }
-            NavigationIconCard(
+            NavigationIconCardWithDivider(
                 modifier = Modifier.fillMaxWidth(),
                 iconId = R.drawable.ic_settings,
                 iconDescriptionStringId = R.string.description_ic_settings,
                 labelStringId = R.string.action_profile_settings,
                 onClick = onSettingsClick
             )
-            NavigationIconCard(
+            NavigationIconCardWithDivider(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 8.dp),
+                    .fillMaxWidth(),
                 iconId = R.drawable.ic_address,
                 iconDescriptionStringId = R.string.description_ic_my_addresses,
                 labelStringId = R.string.action_profile_my_addresses,
                 onClick = onYourAddressesClicked
             )
-            NavigationIconCard(
+            NavigationIconCardWithDivider(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 8.dp),
+                    .fillMaxWidth(),
                 iconId = R.drawable.ic_history,
                 iconDescriptionStringId = R.string.description_ic_my_orders,
                 labelStringId = R.string.action_profile_my_orders,
@@ -273,7 +271,6 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
-                .padding(FoodDeliveryTheme.dimensions.mediumSpace)
         ) {
             ProfileInfoCards()
 
@@ -322,26 +319,24 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
     @Composable
     private fun ProfileInfoCards(modifier: Modifier = Modifier) {
         Column(modifier = modifier) {
-            NavigationIconCard(
+            NavigationIconCardWithDivider(
                 modifier = Modifier.fillMaxWidth(),
                 iconId = R.drawable.ic_payment,
                 iconDescriptionStringId = R.string.description_ic_payment,
                 labelStringId = R.string.action_profile_payment,
                 onClick = viewModel::onPaymentClicked
             )
-            NavigationIconCard(
+            NavigationIconCardWithDivider(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 8.dp),
+                    .fillMaxWidth(),
                 iconId = R.drawable.ic_star,
                 iconDescriptionStringId = R.string.description_ic_feedback,
                 labelStringId = R.string.title_feedback,
                 onClick = viewModel::onFeedbackClicked
             )
-            NavigationIconCard(
+            NavigationIconCardWithDivider(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 8.dp),
+                    .fillMaxWidth(),
                 iconId = R.drawable.ic_info,
                 iconDescriptionStringId = R.string.description_ic_about,
                 labelStringId = R.string.title_about_app,
