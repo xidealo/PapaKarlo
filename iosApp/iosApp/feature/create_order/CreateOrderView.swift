@@ -401,7 +401,6 @@ struct CreateOrderSuccessView: View {
     @Binding var showOrderCreated: Bool
     let calendar = Calendar.current
     
-    
     let createOrderViewState: CreateOrderViewState
     let action: (CreateOrderAction) -> Void
     
@@ -460,6 +459,7 @@ struct CreateOrderSuccessView: View {
                             .foregroundColor(AppColor.error)
                             .padding(.top, 4)
                             .padding(.horizontal, 16)
+                            .padding(.leading, 16)
                     }
                     
                     if(createOrderViewState.selectedPaymentMethod == nil){
@@ -491,6 +491,7 @@ struct CreateOrderSuccessView: View {
                             .foregroundColor(AppColor.error)
                             .padding(.top, 4)
                             .padding(.horizontal, 16)
+                            .padding(.leading, 16)
                     }
                     
                     if(createOrderViewState.showChange){

@@ -117,7 +117,6 @@
 		0219B7F72B8FB97C00305E2D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */; };
 		0219B7F82B8FB97C00305E2D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 02A99D5729CBA0BE004D2F7B /* Localizable.strings */; };
 		0219B7F92B8FB97C00305E2D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557BA273AAA24004C7B11 /* Assets.xcassets */; };
-		0219B80C2B8FBA2C00305E2D /* tandirHouse.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0219B8082B8FBA2900305E2D /* tandirHouse.plist */; };
 		0219B80D2B8FBA3000305E2D /* tandirHouseAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0219B8092B8FBA2900305E2D /* tandirHouseAssets.xcassets */; };
 		0219B80F2B8FBC3500305E2D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0219B80E2B8FBC3500305E2D /* GoogleService-Info.plist */; };
 		021A009028E082DE00EFCC63 /* CafeAddressViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021A008F28E082DE00EFCC63 /* CafeAddressViewState.swift */; };
@@ -210,6 +209,7 @@
 		0254EF952B6CFA5700982CA5 /* OrderDetailsViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0254EF932B6CFA5700982CA5 /* OrderDetailsViewState.swift */; };
 		0254EF962B6CFA5700982CA5 /* OrderDetailsViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0254EF932B6CFA5700982CA5 /* OrderDetailsViewState.swift */; };
 		0254EF972B6CFA5700982CA5 /* OrderDetailsViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0254EF932B6CFA5700982CA5 /* OrderDetailsViewState.swift */; };
+		0256E3EE2C4462DF000E48C4 /* tandirHouse.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0219B8082B8FBA2900305E2D /* tandirHouse.plist */; };
 		025775152ACCA01600DDBC94 /* DiscountCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025775142ACCA01600DDBC94 /* DiscountCard.swift */; };
 		025775162ACCA01600DDBC94 /* DiscountCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025775142ACCA01600DDBC94 /* DiscountCard.swift */; };
 		025775172ACCA01600DDBC94 /* DiscountCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025775142ACCA01600DDBC94 /* DiscountCard.swift */; };
@@ -1595,8 +1595,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				0219B80D2B8FBA3000305E2D /* tandirHouseAssets.xcassets in Resources */,
+				0256E3EE2C4462DF000E48C4 /* tandirHouse.plist in Resources */,
 				0219B7F72B8FB97C00305E2D /* Preview Assets.xcassets in Resources */,
-				0219B80C2B8FBA2C00305E2D /* tandirHouse.plist in Resources */,
 				0219B7F82B8FB97C00305E2D /* Localizable.strings in Resources */,
 				0219B7F92B8FB97C00305E2D /* Assets.xcassets in Resources */,
 				0219B80F2B8FBC3500305E2D /* GoogleService-Info.plist in Resources */,
@@ -2723,18 +2723,18 @@
 				CODE_SIGN_ENTITLEMENTS = yuliar.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 25;
+				CURRENT_PROJECT_VERSION = 26;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
 				DEVELOPMENT_TEAM = 77HLJ933B9;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = iosApp/papakarloRes/tandirHouse.plist;
+				INFOPLIST_FILE = iosApp/tandirHouseRes/tandirHouse.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.food-and-drink";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.7.0;
+				MARKETING_VERSION = 2.1.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -2812,18 +2812,18 @@
 				CODE_SIGN_ENTITLEMENTS = yuliar.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 25;
+				CURRENT_PROJECT_VERSION = 26;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
 				DEVELOPMENT_TEAM = 77HLJ933B9;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = iosApp/papakarloRes/tandirHouse.plist;
+				INFOPLIST_FILE = iosApp/tandirHouseRes/tandirHouse.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.food-and-drink";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.7.0;
+				MARKETING_VERSION = 2.1.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -2901,7 +2901,7 @@
 				CODE_SIGN_ENTITLEMENTS = yuliar.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 25;
+				CURRENT_PROJECT_VERSION = 26;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
 				DEVELOPMENT_TEAM = 77HLJ933B9;
 				ENABLE_PREVIEWS = YES;
@@ -2912,7 +2912,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.4;
+				MARKETING_VERSION = 2.1.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -2990,7 +2990,7 @@
 				CODE_SIGN_ENTITLEMENTS = yuliar.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 25;
+				CURRENT_PROJECT_VERSION = 26;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
 				DEVELOPMENT_TEAM = 77HLJ933B9;
 				ENABLE_PREVIEWS = YES;
@@ -3001,7 +3001,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.4;
+				MARKETING_VERSION = 2.1.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -3079,7 +3079,7 @@
 				CODE_SIGN_ENTITLEMENTS = yuliar.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 25;
+				CURRENT_PROJECT_VERSION = 26;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
 				DEVELOPMENT_TEAM = 77HLJ933B9;
 				ENABLE_PREVIEWS = YES;
@@ -3090,7 +3090,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.4;
+				MARKETING_VERSION = 2.1.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -3168,7 +3168,7 @@
 				CODE_SIGN_ENTITLEMENTS = yuliar.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 25;
+				CURRENT_PROJECT_VERSION = 26;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
 				DEVELOPMENT_TEAM = 77HLJ933B9;
 				ENABLE_PREVIEWS = YES;
@@ -3179,7 +3179,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.4;
+				MARKETING_VERSION = 2.1.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -3257,7 +3257,7 @@
 				CODE_SIGN_ENTITLEMENTS = yuliar.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 25;
+				CURRENT_PROJECT_VERSION = 26;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
 				DEVELOPMENT_TEAM = 77HLJ933B9;
 				ENABLE_PREVIEWS = YES;
@@ -3268,7 +3268,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.4;
+				MARKETING_VERSION = 2.1.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -3346,7 +3346,7 @@
 				CODE_SIGN_ENTITLEMENTS = yuliar.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 25;
+				CURRENT_PROJECT_VERSION = 26;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
 				DEVELOPMENT_TEAM = 77HLJ933B9;
 				ENABLE_PREVIEWS = YES;
@@ -3357,7 +3357,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.4;
+				MARKETING_VERSION = 2.1.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -3435,7 +3435,7 @@
 				CODE_SIGN_ENTITLEMENTS = yuliar.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 25;
+				CURRENT_PROJECT_VERSION = 26;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
 				DEVELOPMENT_TEAM = 77HLJ933B9;
 				ENABLE_PREVIEWS = YES;
@@ -3446,7 +3446,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.4;
+				MARKETING_VERSION = 2.1.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -3524,7 +3524,7 @@
 				CODE_SIGN_ENTITLEMENTS = yuliar.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 25;
+				CURRENT_PROJECT_VERSION = 26;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
 				DEVELOPMENT_TEAM = 77HLJ933B9;
 				ENABLE_PREVIEWS = YES;
@@ -3535,7 +3535,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.4;
+				MARKETING_VERSION = 2.1.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -3731,7 +3731,7 @@
 				CODE_SIGN_ENTITLEMENTS = papakarlo.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 25;
+				CURRENT_PROJECT_VERSION = 26;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
 				DEVELOPMENT_TEAM = 77HLJ933B9;
 				ENABLE_PREVIEWS = YES;
@@ -3742,7 +3742,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.4;
+				MARKETING_VERSION = 2.1.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -3820,7 +3820,7 @@
 				CODE_SIGN_ENTITLEMENTS = papakarlo.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 25;
+				CURRENT_PROJECT_VERSION = 26;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
 				DEVELOPMENT_TEAM = 77HLJ933B9;
 				ENABLE_PREVIEWS = YES;
@@ -3831,7 +3831,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.4;
+				MARKETING_VERSION = 2.1.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

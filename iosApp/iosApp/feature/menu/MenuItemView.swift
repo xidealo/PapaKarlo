@@ -24,14 +24,14 @@ struct MenuItemView: View {
     var body: some View {
         NavigationLink(
             destination: ProductDetailsView(
-                    menuProductUuid: menuProductItem.productUuid,
-                    menuProductName: menuProductItem.name, 
-                    cartProductUuid: nil,
-                    additionUuidList: [],
-                    productDetailsOpenedFrom: productDetailsOpenedFrom,
-                    created: $created,
-                    edited: $edited
-                ),
+                menuProductUuid: menuProductItem.productUuid,
+                menuProductName: menuProductItem.name,
+                cartProductUuid: nil,
+                additionUuidList: [],
+                productDetailsOpenedFrom: productDetailsOpenedFrom,
+                created: $created,
+                edited: $edited
+            ),
             isActive: $openProductDetails
         ){
             VStack(spacing:0){
@@ -69,26 +69,28 @@ struct MenuItemView: View {
                 }
                 .padding(.top, 8)
                 .padding(.horizontal, 8)
-                
-                Button(action: {
-                    if(menuProductItem.hasAdditions){
-                        openProductDetails = true
-                    }else{
-                        action()
+                Button(
+                    action: {
+                        print(menuProductItem)
+                        
+                        if(menuProductItem.hasAdditions) {
+                            openProductDetails = true
+                        }else{
+                            action()
+                        }
+                    }) {
+                        Text(Strings.ACTION_MENU_PRODUCT_WANT)
+                            .labelLarge(weight: .medium)
+                            .frame(maxWidth:.infinity, minHeight: 40, maxHeight:40)
+                            .foregroundColor(AppColor.primary)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: Diems.BUTTON_RADIUS)
+                                    .stroke(AppColor.primary, lineWidth: 2)
+                            )
+                            .padding(.horizontal, 8)
                     }
-                }) {
-                    Text(Strings.ACTION_MENU_PRODUCT_WANT)
-                        .labelLarge(weight: .medium)
-                        .frame(maxWidth:.infinity, minHeight: 40, maxHeight:40)
-                        .foregroundColor(AppColor.primary)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: Diems.BUTTON_RADIUS)
-                                .stroke(AppColor.primary, lineWidth: 2)
-                        )
-                        .padding(.horizontal, 8)
-                }
-                .padding(.top, 8)
-                .padding(.bottom, 8)
+                    .padding(.top, 8)
+                    .padding(.bottom, 8)
             }
             .frame(maxWidth: .infinity)
             .background(AppColor.surface)
