@@ -60,6 +60,7 @@ import com.bunbeauty.papakarlo.feature.createorder.ui.PaymentMethodListBottomShe
 import com.bunbeauty.papakarlo.feature.createorder.ui.PickupAddressListBottomSheet
 import com.bunbeauty.papakarlo.feature.createorder.ui.TimePickerDialog
 import com.bunbeauty.papakarlo.feature.main.IMessageHost
+import com.bunbeauty.papakarlo.feature.main.MainActivity
 import com.bunbeauty.papakarlo.feature.motivation.Motivation
 import com.bunbeauty.papakarlo.feature.motivation.MotivationUi
 import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentMethodUI
@@ -218,6 +219,13 @@ class CreateOrderFragment :
             CreateOrder.Event.ShowChangeError -> {
                 (activity as? IMessageHost)?.showErrorMessage(
                     resources.getString(R.string.error_change)
+                )
+            }
+
+            CreateOrder.Event.OrderNotAvailableErrorEvent -> {
+                (activity as? MainActivity)?.setOrderNotAvailable()
+                (activity as? IMessageHost)?.showErrorMessage(
+                    resources.getString(R.string.warning_no_order_available)
                 )
             }
         }

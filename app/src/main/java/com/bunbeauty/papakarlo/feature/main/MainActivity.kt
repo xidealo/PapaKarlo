@@ -86,6 +86,10 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
         viewModel.showErrorMessage(text)
     }
 
+    fun setOrderNotAvailable() {
+        viewModel.setOrderNotAvailable()
+    }
+
     private fun checkNotificationPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (!NotificationManagerCompat.from(this).areNotificationsEnabled()) {

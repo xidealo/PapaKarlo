@@ -117,6 +117,7 @@ interface CreateOrder {
 
         data object ShowUserUnauthorizedErrorEvent : Event
         data object ShowSomethingWentWrongErrorEvent : Event
+        data object OrderNotAvailableErrorEvent : Event
         data class OrderCreatedEvent(val code: String) : Event
         data object ShowUserAddressError : Event
         data object ShowPaymentMethodError : Event
