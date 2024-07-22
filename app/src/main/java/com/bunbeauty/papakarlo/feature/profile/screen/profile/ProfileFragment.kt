@@ -6,12 +6,15 @@ import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredWidthIn
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
@@ -34,8 +37,10 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragmentWithSharedViewModel
 import com.bunbeauty.papakarlo.common.extension.navigateSafe
+import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryDivider
 import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
+import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.papakarlo.common.ui.element.card.NavigationIconCardWithDivider
 import com.bunbeauty.papakarlo.common.ui.element.topbar.FoodDeliveryCartAction
 import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
@@ -46,6 +51,7 @@ import com.bunbeauty.papakarlo.databinding.LayoutComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.order.model.OrderItem
 import com.bunbeauty.papakarlo.feature.order.ui.OrderItem
+import com.bunbeauty.papakarlo.feature.order.ui.OrderStatusChip
 import com.bunbeauty.papakarlo.feature.productdetails.ProductDetailsFragmentDirections
 import com.bunbeauty.papakarlo.feature.profile.screen.feedback.FeedbackBottomSheet
 import com.bunbeauty.papakarlo.feature.profile.screen.feedback.model.FeedbackArgument
@@ -104,7 +110,7 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
         onLastOrderClicked: (String, String) -> Unit,
         onSettingsClicked: () -> Unit,
         onYourAddressesClicked: () -> Unit,
-        onOrderHistoryClicked: () -> Unit,
+        onOrderHistoryClicked: () -> Unit
     ) {
         FoodDeliveryScaffold(
             title = stringResource(R.string.title_profile),
@@ -222,7 +228,7 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
         onLastOrderClicked: (String, String) -> Unit,
         onSettingsClick: () -> Unit,
         onYourAddressesClicked: () -> Unit,
-        onOrderHistoryClicked: () -> Unit,
+        onOrderHistoryClicked: () -> Unit
     ) {
         Column(
             modifier = Modifier
@@ -230,8 +236,7 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
                 .verticalScroll(rememberScrollState())
         ) {
             profile.orderItem?.let { orderItem ->
-                OrderItem(
-                    modifier = Modifier.padding(bottom = 16.dp),
+                OrderProfile(
                     orderItem = orderItem,
                     onClick = {
                         onLastOrderClicked(orderItem.uuid, orderItem.code)
@@ -342,6 +347,55 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
                 labelStringId = R.string.title_about_app,
                 onClick = viewModel::onAboutAppClicked
             )
+        }
+    }
+
+    @Composable
+    private fun OrderProfile(
+        modifier: Modifier = Modifier,
+        orderItem: OrderItem,
+        onClick: () -> Unit
+    ) {
+        FoodDeliveryCard(
+            modifier = modifier,
+            onClick = onClick,
+            elevated = false
+        ) {
+            Column {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp)
+                        .padding(vertical = 16.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = orderItem.code,
+                        modifier = Modifier
+                            .requiredWidthIn(min = FoodDeliveryTheme.dimensions.codeWidth)
+                            .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
+                        style = FoodDeliveryTheme.typography.titleMedium.bold,
+                        color = FoodDeliveryTheme.colors.mainColors.onSurface
+                    )
+                    OrderStatusChip(orderStatus = orderItem.status, statusName = orderItem.statusName)
+                    Text(
+                        modifier = Modifier
+                            .weight(1f)
+                            .wrapContentWidth(Alignment.End),
+                        text = orderItem.dateTime,
+                        style = FoodDeliveryTheme.typography.bodySmall,
+                        color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
+                        textAlign = TextAlign.End
+                    )
+                }
+
+                FoodDeliveryDivider(
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp),
+                    thickness = 1.dp,
+                    color = FoodDeliveryTheme.colors.mainColors.stroke
+                )
+            }
         }
     }
 
