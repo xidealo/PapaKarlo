@@ -3,11 +3,12 @@ package com.bunbeauty.shared.presentation.createorder
 import com.bunbeauty.core.Logger
 import com.bunbeauty.shared.Constants.PERCENT
 import com.bunbeauty.shared.Constants.RUBLE_CURRENCY
+import com.bunbeauty.shared.domain.exeptions.OrderNotAvailableException
 import com.bunbeauty.shared.domain.feature.cafe.GetSelectableCafeListUseCase
 import com.bunbeauty.shared.domain.feature.city.GetSelectedCityTimeZoneUseCase
 import com.bunbeauty.shared.domain.feature.motivation.GetMotivationUseCase
 import com.bunbeauty.shared.domain.feature.order.CreateOrderUseCase
-import com.bunbeauty.shared.domain.feature.orderavailable.GetOrderAvailableUseCase
+import com.bunbeauty.shared.domain.feature.orderavailable.IsOrderAvailableUseCase
 import com.bunbeauty.shared.domain.feature.payment.GetSelectablePaymentMethodListUseCase
 import com.bunbeauty.shared.domain.feature.payment.SavePaymentMethodUseCase
 import com.bunbeauty.shared.domain.interactor.cafe.ICafeInteractor
@@ -41,7 +42,7 @@ class CreateOrderViewModel(
     private val saveSelectedUserAddress: SaveSelectedUserAddressUseCase,
     private val getSelectablePaymentMethodListUseCase: GetSelectablePaymentMethodListUseCase,
     private val savePaymentMethodUseCase: SavePaymentMethodUseCase,
-    private val getOrderAvailableUseCase: GetOrderAvailableUseCase,
+    private val isOrderAvailableUseCase: IsOrderAvailableUseCase,
 ) : SharedStateViewModel<CreateOrder.DataState, CreateOrder.Action, CreateOrder.Event>(
     initDataState = CreateOrder.DataState(
         isDelivery = true,
@@ -151,7 +152,7 @@ class CreateOrderViewModel(
             is CreateOrder.Action.CreateClick -> {
                 createClick(
                     withoutChange = action.withoutChange,
-                    changeFrom = action.changeFrom,
+                    changeFrom = action.changeFrom
                 )
             }
         }
@@ -259,7 +260,7 @@ class CreateOrderViewModel(
                             deferredTime.time
                         } else {
                             minDeferredTime
-                        },
+                        }
                     )
                 }
             },
@@ -394,7 +395,7 @@ class CreateOrderViewModel(
                     orderComment = getExtendedComment(
                         state = state,
                         withoutChange = withoutChange,
-                        changeFrom = changeFrom,
+                        changeFrom = changeFrom
                     ).takeIf { comment ->
                         comment.isNotBlank()
                     },
@@ -498,7 +499,7 @@ class CreateOrderViewModel(
                         isDelivery = isDelivery
                     )
                     val motivationData = motivation?.toMotivationData()
-                    val orderAvailable = getOrderAvailableUseCase()
+                    val orderAvailable = isOrderAvailableUseCase()
                     setState {
                         copy(
                             cartTotal = CreateOrder.CartTotal.Success(
@@ -513,10 +514,10 @@ class CreateOrderViewModel(
                                     "$oldFinalCost $RUBLE_CURRENCY"
                                 },
                                 newFinalCost = "${cartTotal.newFinalCost} $RUBLE_CURRENCY",
-                                newFinalCostValue = cartTotal.newFinalCost,
+                                newFinalCostValue = cartTotal.newFinalCost
                             ),
-                            isOrderCreationEnabled = motivationData !is MotivationData.MinOrderCost
-                                    && orderAvailable
+                            isOrderCreationEnabled = motivationData !is MotivationData.MinOrderCost &&
+                                    orderAvailable
                         )
                     }
                 }
@@ -562,9 +563,20 @@ class CreateOrderViewModel(
                     copy(isLoading = false)
                 }
             },
-            onError = {
-                addEvent {
-                    CreateOrder.Event.ShowSomethingWentWrongErrorEvent
+            onError = { throwable ->
+                when (throwable) {
+                    is OrderNotAvailableException -> {
+                        addEvent {
+                            CreateOrder.Event.OrderNotAvailableErrorEvent
+                        }
+                    }
+
+                    else -> addEvent {
+                        CreateOrder.Event.ShowSomethingWentWrongErrorEvent
+                    }
+                }
+                setState {
+                    copy(isLoading = false)
                 }
             }
         )

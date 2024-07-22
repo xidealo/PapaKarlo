@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 class SettingsRepository(
     private val dataStoreRepo: DataStoreRepo,
     private val networkConnector: NetworkConnector,
-    private val settingsMapper: SettingsMapper,
+    private val settingsMapper: SettingsMapper
 ) : BaseRepository() {
 
     override val tag: String = "SETTINGS_TAG"
@@ -29,5 +29,4 @@ class SettingsRepository(
             settings
         }
     }
-
 }

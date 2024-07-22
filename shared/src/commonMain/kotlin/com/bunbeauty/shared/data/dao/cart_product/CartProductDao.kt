@@ -15,7 +15,7 @@ class CartProductDao(foodDeliveryDatabase: FoodDeliveryDatabase) : ICartProductD
         cartProductEntityQueries.insertCartProduct(
             uuid = cartProductEntity.uuid,
             count = cartProductEntity.count,
-            menuProductUuid = cartProductEntity.menuProductUuid,
+            menuProductUuid = cartProductEntity.menuProductUuid
         )
     }
 
@@ -51,5 +51,4 @@ class CartProductDao(foodDeliveryDatabase: FoodDeliveryDatabase) : ICartProductD
     override suspend fun deleteAllCartProducts() {
         cartProductEntityQueries.deleteAllCartProducts()
     }
-
 }

@@ -10,12 +10,12 @@ interface Confirm {
     data class ViewDataState(
         val phoneNumber: String,
         val resendSeconds: Int,
-        val isLoading: Boolean,
-    ): BaseViewDataState {
+        val isLoading: Boolean
+    ) : BaseViewDataState {
         val isResendEnable: Boolean = resendSeconds == 0
     }
 
-    sealed interface Event: BaseEvent {
+    sealed interface Event : BaseEvent {
 
         data object ShowTooManyRequestsError : Event
         data object ShowNoAttemptsError : Event
@@ -27,11 +27,10 @@ interface Confirm {
         data object NavigateBack : Event
     }
 
-    sealed interface Action: BaseAction {
-        data class Init(val phoneNumber: String, val direction: SuccessLoginDirection): Action
-        data class CheckCode(val code: String): Action
-        data object ResendCode: Action
+    sealed interface Action : BaseAction {
+        data class Init(val phoneNumber: String, val direction: SuccessLoginDirection) : Action
+        data class CheckCode(val code: String) : Action
+        data object ResendCode : Action
         data object BackClick : Action
     }
-
 }

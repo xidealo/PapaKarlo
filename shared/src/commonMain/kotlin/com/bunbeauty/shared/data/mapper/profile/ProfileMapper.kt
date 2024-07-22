@@ -43,7 +43,7 @@ class ProfileMapper(
         return UserEntity(
             uuid = profileServer.uuid,
             phone = profileServer.phoneNumber,
-            email = profileServer.email,
+            email = profileServer.email
         )
     }
 

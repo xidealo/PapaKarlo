@@ -5,5 +5,5 @@ data class OrderProductWithCosts(
     val count: Int,
     val newCost: Int,
     val oldCost: Int?,
-    val product: OrderMenuProduct,
+    val product: OrderMenuProduct
 )

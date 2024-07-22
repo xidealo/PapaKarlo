@@ -10,5 +10,4 @@ class OrderAdditionDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IOrderAddit
     override suspend fun insert(orderAdditionEntity: OrderAdditionEntity) {
         orderAdditionEntityQueries.insert(orderAdditionEntity = orderAdditionEntity)
     }
-
 }

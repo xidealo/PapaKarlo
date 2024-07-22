@@ -5,7 +5,7 @@ import com.bunbeauty.shared.domain.repo.CartProductRepo
 
 class RemoveCartProductUseCase(
     private val cartProductRepo: CartProductRepo,
-    private val cartProductAdditionRepository: CartProductAdditionRepository,
+    private val cartProductAdditionRepository: CartProductAdditionRepository
 ) {
 
     suspend operator fun invoke(cartProductUuid: String): Boolean {

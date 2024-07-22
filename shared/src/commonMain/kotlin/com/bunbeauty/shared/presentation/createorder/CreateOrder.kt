@@ -72,7 +72,7 @@ interface CreateOrder {
             val deliveryCost: String?,
             val oldFinalCost: String?,
             val newFinalCost: String,
-            val newFinalCostValue: Int,
+            val newFinalCostValue: Int
         ) : CartTotal
     }
 
@@ -117,10 +117,10 @@ interface CreateOrder {
 
         data object ShowUserUnauthorizedErrorEvent : Event
         data object ShowSomethingWentWrongErrorEvent : Event
+        data object OrderNotAvailableErrorEvent : Event
         data class OrderCreatedEvent(val code: String) : Event
         data object ShowUserAddressError : Event
         data object ShowPaymentMethodError : Event
         data object ShowChangeError : Event
     }
-
 }

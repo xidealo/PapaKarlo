@@ -24,7 +24,7 @@ class GetSelectableCafeListUseCaseTest {
     fun setup() {
         getSelectableCafeListUseCase = GetSelectableCafeListUseCase(
             dataStoreRepo = dataStoreRepo,
-            cafeRepo = cafeRepo,
+            cafeRepo = cafeRepo
         )
     }
 
@@ -37,12 +37,12 @@ class GetSelectableCafeListUseCaseTest {
         val cafeList = listOf(
             generateCafe("uuid1"),
             generateCafe("uuid2"),
-            generateCafe(selectedCafeUuid),
+            generateCafe(selectedCafeUuid)
         )
         val expectedResult = listOf(
             generateSelectableCafe("uuid1", false),
             generateSelectableCafe("uuid2", false),
-            generateSelectableCafe(selectedCafeUuid, true),
+            generateSelectableCafe(selectedCafeUuid, true)
         )
 
         coEvery { dataStoreRepo.getSelectedCityUuid() } returns selectedCityUuid
@@ -67,12 +67,12 @@ class GetSelectableCafeListUseCaseTest {
         val cafeList = listOf(
             generateCafe("uuid1"),
             generateCafe("uuid2"),
-            generateCafe("uuid3"),
+            generateCafe("uuid3")
         )
         val expectedResult = listOf(
             generateSelectableCafe("uuid1", true),
             generateSelectableCafe("uuid2", false),
-            generateSelectableCafe("uuid3", false),
+            generateSelectableCafe("uuid3", false)
         )
 
         coEvery { dataStoreRepo.getSelectedCityUuid() } returns selectedCityUuid
@@ -122,7 +122,7 @@ class GetSelectableCafeListUseCaseTest {
         latitude = 0.0,
         longitude = 0.0,
         cityUuid = "cityUuid",
-        isVisible = true,
+        isVisible = true
     )
 
     private fun generateSelectableCafe(uuid: String, isSelected: Boolean) = SelectableCafe(
@@ -135,8 +135,8 @@ class GetSelectableCafeListUseCaseTest {
             latitude = 0.0,
             longitude = 0.0,
             cityUuid = "cityUuid",
-            isVisible = true,
+            isVisible = true
         ),
-        isSelected = isSelected,
+        isSelected = isSelected
     )
 }

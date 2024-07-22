@@ -19,7 +19,7 @@ data class Order(
     val paymentMethod: PaymentMethodName?,
     val oldTotalCost: Int?,
     val newTotalCost: Int,
-    val percentDiscount: Int?,
+    val percentDiscount: Int?
 )
 
 data class OrderAddress(
@@ -29,5 +29,5 @@ data class OrderAddress(
     val flat: String?,
     val entrance: String?,
     val floor: String?,
-    val comment: String?,
+    val comment: String?
 )

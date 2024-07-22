@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.merge
 class ObserveOrderListUseCase(
     private val dataStoreRepo: DataStoreRepo,
     private val orderRepo: OrderRepo,
-    private val lightOrderMapper: LightOrderMapper,
+    private val lightOrderMapper: LightOrderMapper
 ) {
 
     suspend operator fun invoke(): Pair<String?, Flow<List<LightOrder>>> {

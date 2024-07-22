@@ -1,13 +1,11 @@
 package com.bunbeauty.shared.data.mapper.orderavailable
 
 import com.bunbeauty.shared.data.network.model.OrderAvailableServer
-import com.bunbeauty.shared.domain.model.addition.OrderAddition
-import com.bunbeauty.shared.domain.model.order.OrderAvailable
+import com.bunbeauty.shared.domain.model.order.OrderAvailability
 
-
-val mapOrderAvailableServerToOrderAvailable: OrderAvailableServer.() -> OrderAvailable =
+val mapOrderAvailableServerToOrderAvailability: OrderAvailableServer.() -> OrderAvailability =
     {
-        OrderAvailable(
+        OrderAvailability(
             available = available
         )
     }

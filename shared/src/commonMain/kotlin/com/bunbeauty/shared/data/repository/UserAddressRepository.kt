@@ -82,9 +82,9 @@ class UserAddressRepository(
         token: String
     ): List<UserAddress> {
         val cache = userAddressCache
-        return if (cache != null
-            && cache.userUuid == userUuid
-            && cache.cityUuid == cityUuid
+        return if (cache != null &&
+            cache.userUuid == userUuid &&
+            cache.cityUuid == cityUuid
         ) {
             cache.userAddressList
         } else {
@@ -102,7 +102,7 @@ class UserAddressRepository(
                             userAddressCache = UserAddressCache(
                                 userAddressList = userAddressList,
                                 userUuid = userUuid,
-                                cityUuid = cityUuid,
+                                cityUuid = cityUuid
                             )
                         }
                 }
@@ -119,7 +119,6 @@ class UserAddressRepository(
             cityUuid = cityUuid
         ).mapFlow(userAddressMapper::toUserAddress)
     }
-
 
     override fun observeFirstUserAddressByUserAndCityUuid(
         userUuid: String,

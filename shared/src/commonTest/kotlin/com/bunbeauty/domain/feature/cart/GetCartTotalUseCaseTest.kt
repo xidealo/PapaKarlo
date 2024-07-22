@@ -123,7 +123,7 @@ class GetCartTotalUseCaseTest {
                 getCartProduct(
                     count = 1,
                     menuProduct = getMenuProduct(newPrice = 50, oldPrice = 100)
-                ),
+                )
             )
             coEvery { cartProductRepo.getCartProductList() } returns cartProductListMockData
 
@@ -153,7 +153,7 @@ class GetCartTotalUseCaseTest {
                 getCartProduct(
                     count = 1,
                     menuProduct = getMenuProduct(newPrice = 50, oldPrice = 100)
-                ),
+                )
             )
             coEvery { cartProductRepo.getCartProductList() } returns cartProductListMockData
 
@@ -170,5 +170,4 @@ class GetCartTotalUseCaseTest {
                 actual = cartTotal.first().newFinalCost
             )
         }
-
 }

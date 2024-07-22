@@ -16,7 +16,7 @@ class PaymentMethodMapper {
             uuid = paymentMethodServer.uuid,
             name = name,
             valueToShow = paymentMethodServer.value,
-            valueToCopy = paymentMethodServer.valueToCopy,
+            valueToCopy = paymentMethodServer.valueToCopy
         )
     }
 
@@ -29,7 +29,7 @@ class PaymentMethodMapper {
             uuid = paymentMethodEntity.uuid,
             name = name,
             valueToShow = paymentMethodEntity.value_,
-            valueToCopy = paymentMethodEntity.valueToCopy,
+            valueToCopy = paymentMethodEntity.valueToCopy
         )
     }
 
@@ -38,7 +38,7 @@ class PaymentMethodMapper {
             uuid = paymentMethod.uuid,
             name = paymentMethod.name.name,
             value_ = paymentMethod.valueToShow,
-            valueToCopy = paymentMethod.valueToCopy,
+            valueToCopy = paymentMethod.valueToCopy
         )
     }
 }

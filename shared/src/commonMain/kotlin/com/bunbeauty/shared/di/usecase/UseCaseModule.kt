@@ -45,19 +45,19 @@ internal fun useCaseModules() = module {
     factory {
         DisableUserUseCase(
             userRepo = get(),
-            dataStoreRepo = get(),
+            dataStoreRepo = get()
         )
     }
     factory {
         ObserveSettingsUseCase(
             settingsRepository = get(),
-            dataStoreRepo = get(),
+            dataStoreRepo = get()
         )
     }
     factory {
         UpdateEmailUseCase(
             settingsRepository = get(),
-            dataStoreRepo = get(),
+            dataStoreRepo = get()
         )
     }
     factory {
@@ -69,7 +69,7 @@ internal fun useCaseModules() = module {
     factory {
         CreateAddressUseCase(
             dataStoreRepo = get(),
-            userAddressRepo = get(),
+            userAddressRepo = get()
         )
     }
     factory {
@@ -98,8 +98,7 @@ internal fun useCaseModules() = module {
         GetDiscountUseCase(
             discountRepository = get(),
             orderRepository = get(),
-            dataStoreRepo = get(),
+            dataStoreRepo = get()
         )
     }
-
 }

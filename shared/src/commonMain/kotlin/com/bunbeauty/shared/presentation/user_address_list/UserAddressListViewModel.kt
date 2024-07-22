@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 
 class UserAddressListViewModel(
     private val getSelectableUserAddressListUseCase: GetSelectableUserAddressListUseCase,
-    private val saveSelectedUserAddressUseCase: SaveSelectedUserAddressUseCase,
+    private val saveSelectedUserAddressUseCase: SaveSelectedUserAddressUseCase
 ) : SharedViewModel() {
 
     private val mutableAddressListState = MutableStateFlow(UserAddressListState())
@@ -25,10 +25,11 @@ class UserAddressListViewModel(
             mutableAddressListState.update { state ->
                 state.copy(
                     userAddressList = addressList,
-                    state = if (addressList.isEmpty())
+                    state = if (addressList.isEmpty()) {
                         UserAddressListState.State.EMPTY
-                    else
+                    } else {
                         UserAddressListState.State.SUCCESS
+                    }
                 )
             }
         }
@@ -46,7 +47,7 @@ class UserAddressListViewModel(
         }
     }
 
-    //using for ios
+    // using for ios
     fun onUserAddressChanged(userAddressUuid: String) {
         sharedScope.launch {
             saveSelectedUserAddressUseCase(userAddressUuid)

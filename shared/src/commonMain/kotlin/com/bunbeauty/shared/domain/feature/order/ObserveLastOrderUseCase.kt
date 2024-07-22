@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.merge
 class ObserveLastOrderUseCase(
     private val dataStoreRepo: DataStoreRepo,
     private val orderRepo: OrderRepo,
-    private val lightOrderMapper: LightOrderMapper,
+    private val lightOrderMapper: LightOrderMapper
 ) {
 
     suspend operator fun invoke(): Pair<String?, Flow<LightOrder?>> {

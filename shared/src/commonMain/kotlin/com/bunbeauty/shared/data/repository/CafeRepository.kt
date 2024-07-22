@@ -19,7 +19,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 class CafeRepository(
     private val networkConnector: NetworkConnector,
     private val dataStoreRepo: DataStoreRepo,
-    private val cafeDao: ICafeDao,
+    private val cafeDao: ICafeDao
 ) : CacheListRepository<Cafe>(), CafeRepo {
 
     override val tag: String = "CAFE_TAG"
@@ -61,7 +61,7 @@ class CafeRepository(
         val selectedCafeUuidEntity = SelectedCafeUuidEntity(
             userUuid = userUuid,
             cityUuid = selectedCityUuid,
-            cafeUuid = cafeUuid,
+            cafeUuid = cafeUuid
         )
         cafeDao.insertSelectedCafeUuid(selectedCafeUuidEntity)
     }

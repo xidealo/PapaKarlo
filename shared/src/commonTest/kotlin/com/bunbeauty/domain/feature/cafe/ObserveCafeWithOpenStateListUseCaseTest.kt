@@ -45,11 +45,11 @@ class ObserveCafeWithOpenStateListUseCaseTest {
             dataTimeUtil.getCurrentMinuteSecond(timeZone)
         } returns MinuteSecond(
             minuteOfDay = 7 * 60, // 7:00:00
-            secondOfMinute = 0,
+            secondOfMinute = 0
         )
         val cafe = getFakeCafe(
             fromTime = 8 * 60 * 60, // 8:00:00
-            toTime = 20 * 60 * 60, // 20:00:00
+            toTime = 20 * 60 * 60 // 20:00:00
         )
         coEvery { getCafeListUseCase() } returns listOf(cafe)
         val expected = listOf(
@@ -72,11 +72,11 @@ class ObserveCafeWithOpenStateListUseCaseTest {
             dataTimeUtil.getCurrentMinuteSecond(timeZone)
         } returns MinuteSecond(
             minuteOfDay = 8 * 60, // 8:00:30
-            secondOfMinute = 30,
+            secondOfMinute = 30
         )
         val cafe = getFakeCafe(
             fromTime = 8 * 60 * 60, // 8:00:00
-            toTime = 20 * 60 * 60, // 20:00:00
+            toTime = 20 * 60 * 60 // 20:00:00
         )
         coEvery { getCafeListUseCase() } returns listOf(cafe)
         val expected = listOf(
@@ -99,11 +99,11 @@ class ObserveCafeWithOpenStateListUseCaseTest {
             dataTimeUtil.getCurrentMinuteSecond(timeZone)
         } returns MinuteSecond(
             minuteOfDay = 19 * 60 + 30, // 19:30:00
-            secondOfMinute = 0,
+            secondOfMinute = 0
         )
         val cafe = getFakeCafe(
             fromTime = 8 * 60 * 60, // 8:00:00
-            toTime = 20 * 60 * 60, // 20:00:00
+            toTime = 20 * 60 * 60 // 20:00:00
         )
         coEvery { getCafeListUseCase() } returns listOf(cafe)
         val expected = listOf(
@@ -126,11 +126,11 @@ class ObserveCafeWithOpenStateListUseCaseTest {
             dataTimeUtil.getCurrentMinuteSecond(timeZone)
         } returns MinuteSecond(
             minuteOfDay = 20 * 60 + 1, // 20:01:00
-            secondOfMinute = 0,
+            secondOfMinute = 0
         )
         val cafe = getFakeCafe(
             fromTime = 8 * 60 * 60, // 8:00:00
-            toTime = 20 * 60 * 60, // 20:00:00
+            toTime = 20 * 60 * 60 // 20:00:00
         )
         coEvery { getCafeListUseCase() } returns listOf(cafe)
         val expected = listOf(
@@ -155,7 +155,7 @@ class ObserveCafeWithOpenStateListUseCaseTest {
             latitude = 0.0,
             longitude = 0.0,
             cityUuid = "cityUuid",
-            isVisible = true,
+            isVisible = true
         )
     }
 }

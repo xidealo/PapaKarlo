@@ -28,7 +28,7 @@ class UserAddressPostServer(
     val isVisible: Boolean,
 
     @SerialName("cityUuid")
-    val cityUuid: String,
+    val cityUuid: String
 )
 
 @Serializable
@@ -38,6 +38,5 @@ class UserAddressStreetPostServer(
     val fiasId: String,
 
     @SerialName("name")
-    val name: String,
+    val name: String
 )
-

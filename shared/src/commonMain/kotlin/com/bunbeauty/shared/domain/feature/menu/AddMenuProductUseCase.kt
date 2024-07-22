@@ -7,7 +7,7 @@ import com.bunbeauty.shared.domain.repo.CartProductRepo
 
 class AddMenuProductUseCase(
     private val getCartProductCountUseCase: GetCartProductCountUseCase,
-    private val cartProductRepo: CartProductRepo,
+    private val cartProductRepo: CartProductRepo
 ) {
 
     suspend operator fun invoke(menuProductUuid: String) {
@@ -25,5 +25,4 @@ class AddMenuProductUseCase(
             )
         }
     }
-
 }

@@ -10,5 +10,4 @@ class UpdateInteractor(
         val forceUpdateVersion = versionRepo.getForceUpdateVersion()
         return forceUpdateVersion <= currentVersion
     }
-
 }

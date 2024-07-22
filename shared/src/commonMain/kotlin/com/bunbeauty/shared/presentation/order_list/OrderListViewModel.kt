@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 
 class OrderListViewModel(
     private val observeOrderListUseCase: ObserveOrderListUseCase,
-    private val stopObserveOrdersUseCase: StopObserveOrdersUseCase,
+    private val stopObserveOrdersUseCase: StopObserveOrdersUseCase
 ) : SharedViewModel() {
 
     private val mutableOrderListState = MutableStateFlow(OrderListState())
@@ -41,10 +41,11 @@ class OrderListViewModel(
                 mutableOrderListState.update { state ->
                     state.copy(
                         orderList = orderList,
-                        state = if (orderList.isEmpty())
+                        state = if (orderList.isEmpty()) {
                             OrderListState.State.EMPTY
-                        else
+                        } else {
                             OrderListState.State.SUCCESS
+                        }
                     )
                 }
             }

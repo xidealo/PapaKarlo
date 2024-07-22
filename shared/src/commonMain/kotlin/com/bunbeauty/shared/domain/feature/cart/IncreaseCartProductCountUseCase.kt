@@ -21,5 +21,4 @@ class IncreaseCartProductCountUseCase(
             count = cartProduct.count + 1
         )
     }
-
 }

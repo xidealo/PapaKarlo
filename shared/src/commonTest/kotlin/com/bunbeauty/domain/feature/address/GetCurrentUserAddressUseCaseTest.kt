@@ -70,6 +70,4 @@ class GetCurrentUserAddressUseCaseTest {
 
         assertEquals(userAddressMock, currentUserAddress)
     }
-
-
 }

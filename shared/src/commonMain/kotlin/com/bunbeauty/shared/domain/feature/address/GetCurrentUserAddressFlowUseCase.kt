@@ -20,12 +20,12 @@ class GetCurrentUserAddressFlowUseCase(
 
         return userAddressRepo.observeSelectedUserAddressByUserAndCityUuid(
             userUuid = userUuid,
-            cityUuid = cityUuid,
+            cityUuid = cityUuid
         ).flatMapLatest { userAddress ->
             if (userAddress == null) {
                 userAddressRepo.observeFirstUserAddressByUserAndCityUuid(
                     userUuid = userUuid,
-                    cityUuid = cityUuid,
+                    cityUuid = cityUuid
                 )
             } else {
                 flowOf(userAddress)

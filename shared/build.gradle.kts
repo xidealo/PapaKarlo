@@ -1,9 +1,9 @@
 import Constants.DEPLOYMENT_TARGET
 
 plugins {
-    kotlin("multiplatform")
+    kotlin(Plugin.multiplatform)
     kotlin("native.cocoapods")
-    id("com.android.library")
+    id(Plugin.androidLibrary)
     id(Plugin.sqldelight)
     id(Plugin.kotlinSerialization)
 }

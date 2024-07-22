@@ -12,7 +12,7 @@ interface CartProductRepo {
     suspend fun getCartProduct(cartProductUuid: String): CartProduct?
 
     suspend fun getCartProductListByMenuProductUuid(
-        menuProductUuid: String,
+        menuProductUuid: String
     ): List<CartProduct>
 
     suspend fun saveAsCartProduct(menuProductUuid: String): String

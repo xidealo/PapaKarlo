@@ -13,5 +13,5 @@ class LinkServer(
     val type: String,
 
     @SerialName("value")
-    val value: String,
+    val value: String
 )

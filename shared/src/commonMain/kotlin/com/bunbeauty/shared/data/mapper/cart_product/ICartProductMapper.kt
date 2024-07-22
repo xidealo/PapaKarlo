@@ -9,7 +9,7 @@ interface ICartProductMapper {
 
     fun toCartProduct(
         cartProductWithMenuProductEntityList: List<CartProductWithMenuProductEntity>,
-        menuProductWithCategoryEntityList: List<MenuProductWithCategoryEntity>,
+        menuProductWithCategoryEntityList: List<MenuProductWithCategoryEntity>
     ): CartProduct
     fun toEntityModel(cartProduct: CartProduct): CartProductEntity
 }

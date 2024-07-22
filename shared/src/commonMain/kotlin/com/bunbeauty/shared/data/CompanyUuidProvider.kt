@@ -17,7 +17,7 @@ import com.bunbeauty.shared.domain.exeptions.UnknownFlavorException
 
 class CompanyUuidProvider(
     flavor: String,
-    isDebug: Boolean,
+    isDebug: Boolean
 ) {
 
     val companyUuid: String = if (isDebug) {
@@ -33,5 +33,4 @@ class CompanyUuidProvider(
             else -> throw UnknownFlavorException()
         }
     }
-
 }

@@ -7,5 +7,5 @@ data class CafeItem(
     val address: String,
     val phone: String,
     val workingHours: String,
-    val cafeOpenState: CafeOpenState,
+    val cafeOpenState: CafeOpenState
 )

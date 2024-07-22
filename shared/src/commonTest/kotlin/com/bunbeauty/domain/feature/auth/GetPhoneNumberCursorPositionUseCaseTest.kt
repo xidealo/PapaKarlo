@@ -113,5 +113,4 @@ class GetPhoneNumberCursorPositionUseCaseTest {
 
         assertEquals(expectedCursorPosition, cursorPosition)
     }
-
 }

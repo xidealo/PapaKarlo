@@ -9,22 +9,21 @@ internal fun cafeModule() = module {
     factory {
         GetCafeListUseCase(
             cafeRepo = get(),
-            dataStoreRepo = get(),
+            dataStoreRepo = get()
         )
     }
     factory {
         GetSelectableCafeListUseCase(
             cafeRepo = get(),
             dataStoreRepo = get(),
-            getCafeListUseCase = get(),
+            getCafeListUseCase = get()
         )
     }
     factory {
         ObserveCafeWithOpenStateListUseCase(
             getSelectedCityTimeZoneUseCase = get(),
             dataTimeUtil = get(),
-            getCafeListUseCase = get(),
+            getCafeListUseCase = get()
         )
     }
-
 }

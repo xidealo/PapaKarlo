@@ -46,5 +46,5 @@ data class MenuProductServer(
     val isRecommended: Boolean,
 
     @SerialName("additionGroups")
-    val additionGroupServers: List<AdditionGroupServer>,
+    val additionGroupServers: List<AdditionGroupServer>
 )

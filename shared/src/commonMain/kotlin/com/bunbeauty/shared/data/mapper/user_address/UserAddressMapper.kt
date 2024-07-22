@@ -23,7 +23,7 @@ class UserAddressMapper {
                 normalDeliveryCost = normalDeliveryCost,
                 forLowDeliveryCost = forLowDeliveryCost,
                 lowDeliveryCost = lowDeliveryCost,
-                userUuid = userUuid,
+                userUuid = userUuid
             )
         }
     }
@@ -42,7 +42,7 @@ class UserAddressMapper {
                 normalDeliveryCost = normalDeliveryCost,
                 forLowDeliveryCost = forLowDeliveryCost,
                 lowDeliveryCost = lowDeliveryCost,
-                userUuid = userUuid,
+                userUuid = userUuid
             )
         }
     }
@@ -62,7 +62,7 @@ class UserAddressMapper {
                 normalDeliveryCost = normalDeliveryCost,
                 forLowDeliveryCost = forLowDeliveryCost,
                 lowDeliveryCost = lowDeliveryCost,
-                userUuid = userUuid,
+                userUuid = userUuid
             )
         }
     }
@@ -71,7 +71,7 @@ class UserAddressMapper {
         return UserAddressPostServer(
             street = UserAddressStreetPostServer(
                 fiasId = createdUserAddress.street.fiasId,
-                name = createdUserAddress.street.street,
+                name = createdUserAddress.street.street
             ),
             house = createdUserAddress.house,
             flat = createdUserAddress.flat,
@@ -79,7 +79,7 @@ class UserAddressMapper {
             floor = createdUserAddress.floor,
             comment = createdUserAddress.comment,
             isVisible = createdUserAddress.isVisible,
-            cityUuid = createdUserAddress.cityUuid,
+            cityUuid = createdUserAddress.cityUuid
         )
     }
 }

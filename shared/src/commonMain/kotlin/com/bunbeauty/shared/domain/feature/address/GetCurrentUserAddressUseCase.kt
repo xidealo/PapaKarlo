@@ -15,10 +15,10 @@ class GetCurrentUserAddressUseCase(
 
         return userAddressRepo.getSelectedAddressByUserAndCityUuid(
             userUuid = userUuid,
-            cityUuid = cityUuid,
+            cityUuid = cityUuid
         ) ?: userAddressRepo.getFirstUserAddressByUserAndCityUuid(
             userUuid = userUuid,
-            cityUuid = cityUuid,
+            cityUuid = cityUuid
         )
     }
 }

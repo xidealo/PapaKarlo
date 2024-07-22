@@ -6,5 +6,5 @@ data class CartTotal(
     val oldTotalCost: Int?,
     val newTotalCost: Int,
     val oldFinalCost: Int?,
-    val newFinalCost: Int,
+    val newFinalCost: Int
 )

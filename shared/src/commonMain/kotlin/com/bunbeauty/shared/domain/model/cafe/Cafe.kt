@@ -9,5 +9,5 @@ data class Cafe(
     val latitude: Double,
     val longitude: Double,
     val cityUuid: String,
-    val isVisible: Boolean,
+    val isVisible: Boolean
 )

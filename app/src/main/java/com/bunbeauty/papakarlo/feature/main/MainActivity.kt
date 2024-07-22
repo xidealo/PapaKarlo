@@ -9,8 +9,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -86,6 +86,10 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
         viewModel.showErrorMessage(text)
     }
 
+    fun setOrderNotAvailable() {
+        viewModel.setOrderNotAvailable()
+    }
+
     private fun checkNotificationPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (!NotificationManagerCompat.from(this).areNotificationsEnabled()) {
@@ -119,8 +123,8 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
     private fun ConnectionErrorMessage(visible: Boolean) {
         AnimatedVisibility(
             visible = visible,
-            enter = fadeIn(tween(300)),
-            exit = fadeOut(tween(300))
+            enter = slideInVertically(tween(300)),
+            exit = slideOutVertically(tween(300))
         ) {
             Box(
                 modifier = Modifier
@@ -142,8 +146,8 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
     private fun OrderAvailableMessage(visible: Boolean) {
         AnimatedVisibility(
             visible = visible,
-            enter = fadeIn(tween(300)),
-            exit = fadeOut(tween(300))
+            enter = slideInVertically(tween(300)),
+            exit = slideOutVertically(tween(300))
         ) {
             Box(
                 modifier = Modifier
@@ -153,9 +157,9 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = resources.getString(R.string.warning_no_internet),
+                    text = resources.getString(R.string.warning_no_order_available),
                     style = FoodDeliveryTheme.typography.bodyMedium,
-                    color = FoodDeliveryTheme.colors.mainColors.onError
+                    color = FoodDeliveryTheme.colors.statusColors.onStatus
                 )
             }
         }

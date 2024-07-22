@@ -9,7 +9,7 @@ class SettingsMapper() {
         return Settings(
             userUuid = settingsServer.userUuid,
             phoneNumber = settingsServer.phoneNumber,
-            email = settingsServer.email,
+            email = settingsServer.email
         )
     }
 }

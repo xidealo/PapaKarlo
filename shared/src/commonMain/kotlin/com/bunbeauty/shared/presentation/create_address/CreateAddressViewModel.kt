@@ -23,7 +23,7 @@ private const val SUGGESTION_REQUEST_DEBOUNCE_MILLIS = 1_000L
 class CreateAddressViewModel(
     private val getSuggestionsUseCase: GetSuggestionsUseCase,
     private val createAddressUseCase: CreateAddressUseCase,
-    private val saveSelectedUserAddressUseCase: SaveSelectedUserAddressUseCase,
+    private val saveSelectedUserAddressUseCase: SaveSelectedUserAddressUseCase
 ) : SharedStateViewModel<CreateAddress.DataState, CreateAddress.Action, CreateAddress.Event>(
     initDataState = CreateAddress.DataState(
         street = "",
@@ -38,7 +38,7 @@ class CreateAddressViewModel(
         entrance = "",
         floor = "",
         comment = "",
-        isCreateLoading = false,
+        isCreateLoading = false
     )
 ) {
 
@@ -92,7 +92,6 @@ class CreateAddressViewModel(
             CreateAddress.Action.BackClick -> addEvent {
                 CreateAddress.Event.Back
             }
-
         }
     }
 
@@ -103,13 +102,13 @@ class CreateAddressViewModel(
                 copy(
                     street = street,
                     streetSuggestionList = persistentListOf(),
-                    isSuggestionLoading = false,
+                    isSuggestionLoading = false
                 )
             }
         } else {
             setState {
                 copy(
-                    street = street,
+                    street = street
                 )
             }
         }
@@ -130,7 +129,7 @@ class CreateAddressViewModel(
                 streetSuggestionList = persistentListOf(),
                 selectedStreetSuggestion = suggestion,
                 isSuggestionLoading = false,
-                hasStreetError = false,
+                hasStreetError = false
             )
         }
     }
@@ -144,7 +143,7 @@ class CreateAddressViewModel(
             setState {
                 copy(
                     house = house,
-                    hasHouseError = false,
+                    hasHouseError = false
                 )
             }
         }
@@ -181,7 +180,7 @@ class CreateAddressViewModel(
         setState {
             copy(
                 hasStreetError = hasStreetError,
-                hasHouseError = hasHouseError,
+                hasHouseError = hasHouseError
             )
         }
 
@@ -204,7 +203,7 @@ class CreateAddressViewModel(
                     flat = dataState.value.flat,
                     entrance = dataState.value.entrance,
                     floor = dataState.value.floor,
-                    comment = dataState.value.comment,
+                    comment = dataState.value.comment
                 )
 
                 if (userAddress == null) {
@@ -237,7 +236,7 @@ class CreateAddressViewModel(
             CreateAddress.StreetField(
                 street = state.street,
                 isFocused = state.streetFocused,
-                selectedSuggestion = state.selectedStreetSuggestion,
+                selectedSuggestion = state.selectedStreetSuggestion
             )
         }.distinctUntilChanged()
             .debounce(SUGGESTION_REQUEST_DEBOUNCE_MILLIS)
@@ -262,7 +261,7 @@ class CreateAddressViewModel(
                 setState {
                     copy(
                         streetSuggestionList = suggestionList.map(::mapSuggestion),
-                        isSuggestionLoading = false,
+                        isSuggestionLoading = false
                     )
                 }
             },
@@ -283,9 +282,7 @@ class CreateAddressViewModel(
             value = suggestion.street,
             postfix = suggestion.details?.let { details ->
                 ", $details"
-            },
+            }
         )
     }
-
-
 }

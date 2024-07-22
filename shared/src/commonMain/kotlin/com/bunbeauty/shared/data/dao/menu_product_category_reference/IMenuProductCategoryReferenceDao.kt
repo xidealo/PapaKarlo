@@ -5,5 +5,4 @@ import com.bunbeauty.shared.db.MenuProductCategoryReference
 interface IMenuProductCategoryReferenceDao {
 
     suspend fun updateMenuProductReferenceList(menuProductCategoryReferenceList: List<MenuProductCategoryReference>)
-
 }

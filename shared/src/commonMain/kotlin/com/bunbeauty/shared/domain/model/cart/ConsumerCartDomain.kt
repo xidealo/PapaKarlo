@@ -6,6 +6,6 @@ sealed class ConsumerCartDomain {
         val cartProductList: List<LightCartProduct>,
         val oldTotalCost: Int?,
         val newTotalCost: Int,
-        val discount: Int?,
+        val discount: Int?
     ) : ConsumerCartDomain()
 }

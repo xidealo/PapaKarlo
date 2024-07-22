@@ -11,7 +11,7 @@ interface ProductDetailsState {
     data class DataState(
         val cartCostAndCount: CartCostAndCount?,
         val menuProduct: MenuProduct,
-        val screenState: ScreenState,
+        val screenState: ScreenState
     ) : BaseDataState {
         data class MenuProduct(
             val uuid: String,
@@ -23,7 +23,7 @@ interface ProductDetailsState {
             val currency: String,
             val priceWithAdditions: Int,
             val description: String,
-            val additionGroups: List<AdditionGroup>,
+            val additionGroups: List<AdditionGroup>
         ) {
             val additionList =
                 additionGroups.flatMap { additionGroups -> additionGroups.additionList }
@@ -33,7 +33,7 @@ interface ProductDetailsState {
             SUCCESS,
             ERROR,
             LOADING,
-            INIT,
+            INIT
         }
     }
 
@@ -46,7 +46,7 @@ interface ProductDetailsState {
         data class AdditionClick(val uuid: String, val groupUuid: String) : Action
         data class AddProductToCartClick(
             val productDetailsOpenedFrom: ProductDetailsOpenedFrom,
-            val cartProductUuid: String?,
+            val cartProductUuid: String?
         ) : Action
     }
 
@@ -55,7 +55,6 @@ interface ProductDetailsState {
         data object NavigateToConsumerCart : Event
         data object AddedProduct : Event
         data object EditedProduct : Event
-        data object ShowAddProductError: Event
+        data object ShowAddProductError : Event
     }
 }
-

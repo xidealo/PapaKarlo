@@ -9,7 +9,7 @@ fun providerModule() = module {
     factory {
         CompanyUuidProvider(
             flavor = get(flavorQualifier),
-            isDebug = get(isDebugQualifier),
+            isDebug = get(isDebugQualifier)
         )
     }
 }

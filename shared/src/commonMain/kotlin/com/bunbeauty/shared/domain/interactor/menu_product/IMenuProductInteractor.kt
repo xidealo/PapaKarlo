@@ -8,5 +8,4 @@ interface IMenuProductInteractor {
 
     suspend fun getMenuSectionList(): List<MenuSection>
     fun observeMenuProductByUuid(menuProductUuid: String): CommonFlow<MenuProduct?>
-
 }

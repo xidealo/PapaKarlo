@@ -5,7 +5,7 @@ import com.bunbeauty.shared.domain.model.product.MenuProduct
 import com.bunbeauty.shared.domain.repo.MenuProductRepo
 
 class GetMenuProductUseCase(
-    private val menuProductRepo: MenuProductRepo,
+    private val menuProductRepo: MenuProductRepo
 ) {
 
     suspend operator fun invoke(menuProductUuid: String): MenuProduct? {

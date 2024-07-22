@@ -47,5 +47,4 @@ class GetPhoneNumberCursorPositionUseCase(
             newPosition
         }
     }
-
 }

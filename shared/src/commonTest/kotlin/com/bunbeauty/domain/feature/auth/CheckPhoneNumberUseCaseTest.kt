@@ -33,5 +33,4 @@ class CheckPhoneNumberUseCaseTest {
 
         assertTrue(isCorrect)
     }
-
 }

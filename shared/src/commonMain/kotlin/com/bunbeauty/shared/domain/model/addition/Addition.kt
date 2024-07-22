@@ -9,5 +9,5 @@ data class Addition(
     val price: Int?,
     val uuid: String,
     val additionGroupUuid: String,
-    val priority: Int,
+    val priority: Int
 )

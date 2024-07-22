@@ -1,12 +1,7 @@
 package com.bunbeauty.shared.data.dao.cart_product_addition
 
 import com.bunbeauty.shared.db.CartProductAdditionEntity
-import com.bunbeauty.shared.db.CartProductEntity
-import com.bunbeauty.shared.db.CartProductWithMenuProductEntity
 import com.bunbeauty.shared.db.FoodDeliveryDatabase
-import com.squareup.sqldelight.runtime.coroutines.asFlow
-import com.squareup.sqldelight.runtime.coroutines.mapToList
-import kotlinx.coroutines.flow.Flow
 
 class CartProductAdditionDao(foodDeliveryDatabase: FoodDeliveryDatabase) : ICartProductAdditionDao {
 
@@ -24,5 +19,4 @@ class CartProductAdditionDao(foodDeliveryDatabase: FoodDeliveryDatabase) : ICart
     override suspend fun deleteAll() {
         cartProductAdditionEntityQueries.deleteAllCartProductAdditions()
     }
-
 }
