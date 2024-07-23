@@ -50,7 +50,6 @@ import com.bunbeauty.papakarlo.common.ui.theme.bold
 import com.bunbeauty.papakarlo.databinding.LayoutComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.order.model.OrderItem
-import com.bunbeauty.papakarlo.feature.order.ui.OrderItem
 import com.bunbeauty.papakarlo.feature.order.ui.OrderStatusChip
 import com.bunbeauty.papakarlo.feature.productdetails.ProductDetailsFragmentDirections
 import com.bunbeauty.papakarlo.feature.profile.screen.feedback.FeedbackBottomSheet
