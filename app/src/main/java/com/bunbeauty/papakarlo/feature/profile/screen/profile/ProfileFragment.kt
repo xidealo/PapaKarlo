@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -239,7 +240,14 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
                     orderItem = orderItem,
                     onClick = {
                         onLastOrderClicked(orderItem.uuid, orderItem.code)
-                    }
+                    },
+                    modifier = Modifier.padding(bottom = 16.dp)
+                )
+
+                FoodDeliveryHorizontalDivider(
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp),
+                    thickness = 1.dp
                 )
             }
             NavigationIconCardWithDivider(
@@ -307,7 +315,9 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
                     textAlign = TextAlign.Center
                 )
                 Text(
-                    modifier = Modifier.padding(top = 8.dp),
+                    modifier = Modifier
+                        .padding(top = 8.dp)
+                        .padding(horizontal = 16.dp),
                     text = stringResource(R.string.msg_profile_no_profile),
                     style = FoodDeliveryTheme.typography.bodyLarge,
                     color = FoodDeliveryTheme.colors.mainColors.onBackground,
@@ -358,40 +368,36 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
         FoodDeliveryCard(
             modifier = modifier,
             onClick = onClick,
-            elevated = false
+            elevated = false,
+            shape = RoundedCornerShape(0.dp)
         ) {
-            Column {
-                Row(
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp)
+                    .padding(vertical = 16.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = orderItem.code,
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp)
-                        .padding(vertical = 16.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        text = orderItem.code,
-                        modifier = Modifier
-                            .requiredWidthIn(min = FoodDeliveryTheme.dimensions.codeWidth)
-                            .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
-                        style = FoodDeliveryTheme.typography.titleMedium.bold,
-                        color = FoodDeliveryTheme.colors.mainColors.onSurface
-                    )
-                    OrderStatusChip(orderStatus = orderItem.status, statusName = orderItem.statusName)
-                    Text(
-                        modifier = Modifier
-                            .weight(1f)
-                            .wrapContentWidth(Alignment.End),
-                        text = orderItem.dateTime,
-                        style = FoodDeliveryTheme.typography.bodySmall,
-                        color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
-                        textAlign = TextAlign.End
-                    )
-                }
-
-                FoodDeliveryHorizontalDivider(
+                        .requiredWidthIn(min = FoodDeliveryTheme.dimensions.codeWidth)
+                        .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
+                    style = FoodDeliveryTheme.typography.titleMedium.bold,
+                    color = FoodDeliveryTheme.colors.mainColors.onSurface
+                )
+                OrderStatusChip(
+                    orderStatus = orderItem.status,
+                    statusName = orderItem.statusName
+                )
+                Text(
                     modifier = Modifier
-                        .padding(horizontal = 16.dp),
-                    thickness = 1.dp
+                        .weight(1f)
+                        .wrapContentWidth(Alignment.End),
+                    text = orderItem.dateTime,
+                    style = FoodDeliveryTheme.typography.bodySmall,
+                    color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
+                    textAlign = TextAlign.End
                 )
             }
         }
