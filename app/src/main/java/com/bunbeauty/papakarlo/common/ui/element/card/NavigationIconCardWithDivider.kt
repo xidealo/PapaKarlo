@@ -16,7 +16,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryDivider
+import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryHorizontalDivider
 import com.bunbeauty.papakarlo.common.ui.element.OverflowingText
 import com.bunbeauty.papakarlo.common.ui.icon16
 import com.bunbeauty.papakarlo.common.ui.icon24
@@ -24,9 +24,9 @@ import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 
 @Composable
 fun NavigationIconCardWithDivider(
-    modifier: Modifier = Modifier,
     @DrawableRes iconId: Int,
-    @StringRes iconDescriptionStringId: Int? = null,
+    @StringRes iconDescriptionStringId: Int?,
+    modifier: Modifier = Modifier,
     @StringRes labelStringId: Int? = null,
     label: String = "",
     elevated: Boolean = false,
@@ -72,11 +72,10 @@ fun NavigationIconCardWithDivider(
                     contentDescription = stringResource(R.string.description_ic_next)
                 )
             }
-            FoodDeliveryDivider(
+            FoodDeliveryHorizontalDivider(
                 modifier = Modifier
                     .padding(horizontal = 16.dp),
-                thickness = 1.dp,
-                color = FoodDeliveryTheme.colors.mainColors.stroke
+                thickness = 1.dp
             )
         }
     }

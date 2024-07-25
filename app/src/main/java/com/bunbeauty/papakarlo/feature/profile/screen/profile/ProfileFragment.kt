@@ -37,7 +37,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragmentWithSharedViewModel
 import com.bunbeauty.papakarlo.common.extension.navigateSafe
-import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryDivider
+import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryHorizontalDivider
 import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
@@ -265,7 +265,7 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
                 labelStringId = R.string.action_profile_my_orders,
                 onClick = onOrderHistoryClicked
             )
-            ProfileInfoCards(modifier = Modifier.padding(top = 8.dp))
+            ProfileInfoCards()
         }
     }
 
@@ -388,11 +388,10 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
                     )
                 }
 
-                FoodDeliveryDivider(
+                FoodDeliveryHorizontalDivider(
                     modifier = Modifier
                         .padding(horizontal = 16.dp),
-                    thickness = 1.dp,
-                    color = FoodDeliveryTheme.colors.mainColors.stroke
+                    thickness = 1.dp
                 )
             }
         }

@@ -25,7 +25,7 @@ object Versions {
     const val material = "1.9.0"
 
     const val composeCompiler = "1.5.0"
-    const val composeBom = "2023.06.01"
+    const val composeBom = "2024.06.00"
     const val activityCompose = "1.7.2"
     const val lifecycleRuntimeCompose = "2.6.1"
 
