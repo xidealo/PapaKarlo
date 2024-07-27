@@ -1,4 +1,4 @@
-# 🍕 FoodDelivery app
+# 🍕 Food Delivery App
 
 The app allows customers to order food online from a restaurant and have it delivered to their doorstep. It features an easy-to-use interface that allows users to browse menu, select their desired dishes, and place orders for delivery or pickup.
 
@@ -24,4 +24,4 @@ Download on the [App Store](https://apps.apple.com/ru/app/%D0%BF%D0%B0%D0%BF%D0%
 - [Jetpack compose](https://developer.android.com/jetpack/compose): UI (Android)
 - [SwiftUI](https://developer.apple.com/xcode/swiftui/): UI (iOS)
 
-![Frame 14](https://user-images.githubusercontent.com/36783631/233739520-24db4fd9-6ee4-4cc4-9ec6-8abb3a6b2ff5.jpg)
+![Frame 10](https://github.com/user-attachments/assets/e38eda17-7996-45b9-937b-576ae92cd7f9)
