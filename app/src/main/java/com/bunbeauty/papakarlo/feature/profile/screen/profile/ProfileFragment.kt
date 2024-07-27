@@ -246,8 +246,7 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
 
                 FoodDeliveryHorizontalDivider(
                     modifier = Modifier
-                        .padding(horizontal = 16.dp),
-                    thickness = 1.dp
+                        .padding(horizontal = 16.dp)
                 )
             }
             NavigationIconCardWithDivider(

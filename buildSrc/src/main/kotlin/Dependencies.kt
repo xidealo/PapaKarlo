@@ -1,6 +1,6 @@
 object Versions {
-    const val gradle = "8.1.1"
-    const val kotlin = "1.9.0"
+    const val gradle = "8.5.0"
+    const val kotlin = "2.0.10-RC"
     const val googleServices = "4.3.15"
     const val crashlytics = "2.9.9"
     const val navigation = "2.7.1"
@@ -16,24 +16,22 @@ object Versions {
 
     const val junit = "4.13.2"
     const val testRunner = "1.3.0"
-    const val appCompact = "1.6.1"
-    const val coreKtx = "1.9.0"
+    const val appCompact = "1.7.0"
+    const val coreKtx = "1.13.1"
     const val coil = "2.4.0"
     const val datetime = "0.9.0"
     const val desugar = "2.0.3"
 
     const val material = "1.9.0"
 
-    const val composeCompiler = "1.5.0"
     const val composeBom = "2024.06.00"
     const val activityCompose = "1.7.2"
-    const val lifecycleRuntimeCompose = "2.6.1"
 
     const val dataStorePreferences = "1.0.0"
 
-    const val activity = "1.8.1"
-    const val fragment = "1.5.7"
-    const val lifecycle = "2.6.1"
+    const val activity = "1.9.1"
+    const val fragment = "1.8.1"
+    const val lifecycle = "2.8.4"
 
     const val viewBindingDelegate = "1.5.3"
 
@@ -150,7 +148,7 @@ object Compose {
     const val uiViewbinding = "androidx.compose.ui:ui-viewbinding"
     const val activity = "androidx.activity:activity-compose:${Versions.activityCompose}"
     const val lifecycle =
-        "androidx.lifecycle:lifecycle-runtime-compose:${Versions.lifecycleRuntimeCompose}"
+        "androidx.lifecycle:lifecycle-runtime-compose:${Versions.lifecycle}"
 }
 
 object Lifecycle {

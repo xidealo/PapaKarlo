@@ -74,8 +74,7 @@ fun NavigationIconCardWithDivider(
             }
             FoodDeliveryHorizontalDivider(
                 modifier = Modifier
-                    .padding(horizontal = 16.dp),
-                thickness = 1.dp
+                    .padding(horizontal = 16.dp)
             )
         }
     }

@@ -112,7 +112,6 @@ android {
     defaultConfig {
         minSdk = AndroidSdk.min
         compileSdk = AndroidSdk.compile
-        targetSdk = AndroidSdk.target
     }
     buildTypes {
         debug {}
