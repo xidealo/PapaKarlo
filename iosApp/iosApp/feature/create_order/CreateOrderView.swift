@@ -49,7 +49,8 @@ struct CreateOrderView: View {
         getSelectedCityTimeZone: iosComponent.provideGetSelectedCityTimeZoneUseCase(),
         saveSelectedUserAddress : iosComponent.provideSaveSelectedUserAddressUseCase(),
         getSelectablePaymentMethodListUseCase : iosComponent.provideGetSelectablePaymentMethodListUseCase(),
-        savePaymentMethodUseCase : iosComponent.provideSavePaymentMethodUseCase()
+        savePaymentMethodUseCase : iosComponent.provideSavePaymentMethodUseCase(),
+        isOrderAvailableUseCase: iosComponent.provideIsOrderAvailableUseCase()
     )
     
     @State var createOrderViewState: CreateOrderViewState? = nil
@@ -565,8 +566,9 @@ struct CreateOrderSuccessView: View {
                                         CreateOrderActionChangeDeferredTime(
                                             time: Time(
                                                 hours: Int32(calendar.component(.hour, from: date)),
-                                                minutes: Int32(calendar.component(.minute, from: date)
-                                                              )
+                                                minutes: Int32(
+                                                    calendar.component(.minute, from: date)
+                                                    )
                                             )
                                         )
                                     )

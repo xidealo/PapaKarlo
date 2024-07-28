@@ -63,7 +63,7 @@ struct ProfileView: View {
             .isDetailLink(false)
         }
         .frame(maxWidth:.infinity, maxHeight: .infinity)
-        .background(AppColor.background)
+        .background(AppColor.surface)
         .hiddenNavigationBarStyle()
         .onAppear(){
             subscribe()
@@ -106,28 +106,26 @@ struct EmptyProfileView: View {
     
     var body: some View {
         VStack(spacing:0){
-            NavigationCardView(
+            NavigationIconCardWithDivider(
                 icon: "ic_payment",
                 label: "Оплата",
                 destination: PaymentView(paymentMethodList:paymentMethodList),
                 isSystem: false
             )
             
-            NavigationCardView(
+            NavigationIconCardWithDivider(
                 icon: "ic_star",
                 label: Strings.TITLE_PROFILE_FEEDBACK,
                 destination: FeedbackView(linkList: linkList),
                 isSystem: false
             )
-            .padding(.top, Diems.SMALL_PADDING)
 
-            NavigationCardView(
+            NavigationIconCardWithDivider(
                 icon: "ic_info",
                 label: Strings.TITLE_PROFILE_ABOUT_APP,
                 destination: AboutAppView(),
                 isSystem: false
             )
-            .padding(.top, Diems.SMALL_PADDING)
             
             Spacer()
                         
@@ -136,6 +134,7 @@ struct EmptyProfileView: View {
                 title : "loginTitleProfile",
                 secondText: "loginSecondProfile"
             )
+            .padding(.horizontal, Diems.MEDIUM_PADDING)
 
             Spacer()
             
@@ -146,7 +145,9 @@ struct EmptyProfileView: View {
                     ButtonText(text: Strings.ACTION_PROFILE_LOGIN)
                 }
             )
-        }.padding(Diems.MEDIUM_PADDING)
+            .padding(.horizontal, Diems.MEDIUM_PADDING)
+            .padding(.bottom, 16)
+        }
     }
 }
 
@@ -164,21 +165,20 @@ struct SuccessProfileView: View {
     var body: some View {
         VStack(spacing:0){
             if let lastOrder =  profileViewState.lastOrder {
-                LightOrderItemView(
+                OrderProfileView(
                     lightOrder: lastOrder,
                     destination: OrderDetailsView(orderUuid: lastOrder.uuid)
                 )
             }
             
-            NavigationCardView(
+            NavigationIconCardWithDivider(
                 icon: "ic_settings",
                 label: Strings.TITLE_PROFILE_SETTINGS,
                 destination: SettingsView(),
                 isSystem: false
             )
-            .padding(.top, Diems.SMALL_PADDING)
 
-            NavigationCardView(
+            NavigationIconCardWithDivider(
                 icon: "AddressIcon",
                 label: Strings.TITLE_PROFILE_MY_ADDRESSES,
                 destination: UserAddressListView(
@@ -189,43 +189,37 @@ struct SuccessProfileView: View {
                 ),
                 isSystem: false
             )
-            .padding(.top, Diems.SMALL_PADDING)
-            
-            NavigationCardView(
+
+            NavigationIconCardWithDivider(
                 icon: "ic_history",
                 label: Strings.TITLE_PROFILE_MY_ORDERS,
                 destination: OrderListView(),
                 isSystem: false
             )
-            .padding(.top, Diems.SMALL_PADDING)
-            
-            NavigationCardView(
+
+            NavigationIconCardWithDivider(
                 icon: "ic_payment",
                 label: Strings.TITLE_PROFILE_PAYMENT,
                 destination: PaymentView(paymentMethodList:profileViewState.paymentMethodList),
                 isSystem: false
             )
-            .padding(.top, Diems.SMALL_PADDING)
-            
-            NavigationCardView(
+
+            NavigationIconCardWithDivider(
                 icon: "ic_star",
                 label: Strings.TITLE_PROFILE_FEEDBACK,
                 destination: FeedbackView(linkList: profileViewState.linkList),
                 isSystem: false
             )
-            .padding(.top, Diems.SMALL_PADDING)
-            
-            NavigationCardView(
+
+            NavigationIconCardWithDivider(
                 icon: "ic_info",
                 label: Strings.TITLE_PROFILE_ABOUT_APP,
                 destination: AboutAppView(),
                 isSystem: false
             )
-            .padding(.top, Diems.SMALL_PADDING)
-            
+
             Spacer()
-            
-        }.padding(Diems.MEDIUM_PADDING)
+        }
             .overlay(
                 overlayView: ToastView(
                     toast: Toast(title: "Код заказа: \(profileViewState.lastOrder?.code ?? "")"),
@@ -243,5 +237,40 @@ struct SuccessProfileView: View {
                     foregroundColor: AppColor.onPrimary),
                 show: $showCreatedAddress
             )
+    }
+}
+
+
+struct OrderProfileView<Content: View>: View {
+    let lightOrder: LightOrder
+    let destination: Content
+
+    var body: some View {
+        NavigationLink(
+            destination:destination
+        ){
+            
+            VStack(spacing:0){
+                HStack(spacing:0){
+                    Text(lightOrder.code)
+                        .foregroundColor(AppColor.onSurface)
+                        .titleMedium(weight: .bold)
+                    
+                    OrderChip(orderStatus: lightOrder.status)
+                        .padding(.leading, Diems.SMALL_PADDING)
+                    
+                    Spacer()
+                    
+                    Text(dateUtil.getDateTimeString(dateTime: lightOrder.dateTime))
+                        .bodySmall()
+                        .foregroundColor(AppColor.onSurfaceVariant)
+                }.frame(maxWidth:.infinity)
+                    .padding(16)
+                    .background(AppColor.surface)
+                
+                FoodDeliveryDivider()
+                    .padding(.horizontal, 16)
+            }
+        }
     }
 }

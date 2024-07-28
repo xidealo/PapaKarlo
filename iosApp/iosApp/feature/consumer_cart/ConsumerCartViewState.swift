@@ -34,6 +34,7 @@ struct BottomPanelInfoUi {
     var discount: String?
     var oldTotalCost: String?
     var newTotalCost: String
+    var orderAvailable: Bool
 }
 
 enum MotivationUi {
