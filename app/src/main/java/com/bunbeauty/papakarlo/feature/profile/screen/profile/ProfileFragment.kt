@@ -6,14 +6,18 @@ import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredWidthIn
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -34,9 +38,11 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragmentWithSharedViewModel
 import com.bunbeauty.papakarlo.common.extension.navigateSafe
+import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryHorizontalDivider
 import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
-import com.bunbeauty.papakarlo.common.ui.element.card.NavigationIconCard
+import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
+import com.bunbeauty.papakarlo.common.ui.element.card.NavigationIconCardWithDivider
 import com.bunbeauty.papakarlo.common.ui.element.topbar.FoodDeliveryCartAction
 import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
@@ -45,7 +51,7 @@ import com.bunbeauty.papakarlo.common.ui.theme.bold
 import com.bunbeauty.papakarlo.databinding.LayoutComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.order.model.OrderItem
-import com.bunbeauty.papakarlo.feature.order.ui.OrderItem
+import com.bunbeauty.papakarlo.feature.order.ui.OrderStatusChip
 import com.bunbeauty.papakarlo.feature.productdetails.ProductDetailsFragmentDirections
 import com.bunbeauty.papakarlo.feature.profile.screen.feedback.FeedbackBottomSheet
 import com.bunbeauty.papakarlo.feature.profile.screen.feedback.model.FeedbackArgument
@@ -115,6 +121,7 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
                     findNavController().navigateSafe(ProductDetailsFragmentDirections.globalConsumerCartFragment())
                 }
             ),
+            backgroundColor = FoodDeliveryTheme.colors.mainColors.surface,
             actionButton = {
                 if (profileUi.state == ProfileState.State.UNAUTHORIZED) {
                     MainButton(
@@ -227,43 +234,45 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
-                .padding(FoodDeliveryTheme.dimensions.mediumSpace)
         ) {
             profile.orderItem?.let { orderItem ->
-                OrderItem(
-                    modifier = Modifier.padding(bottom = 16.dp),
+                OrderProfile(
                     orderItem = orderItem,
                     onClick = {
                         onLastOrderClicked(orderItem.uuid, orderItem.code)
-                    }
+                    },
+                    modifier = Modifier.padding(bottom = 16.dp)
+                )
+
+                FoodDeliveryHorizontalDivider(
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp)
                 )
             }
-            NavigationIconCard(
+            NavigationIconCardWithDivider(
                 modifier = Modifier.fillMaxWidth(),
                 iconId = R.drawable.ic_settings,
                 iconDescriptionStringId = R.string.description_ic_settings,
                 labelStringId = R.string.action_profile_settings,
                 onClick = onSettingsClick
             )
-            NavigationIconCard(
+            NavigationIconCardWithDivider(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 8.dp),
+                    .fillMaxWidth(),
                 iconId = R.drawable.ic_address,
                 iconDescriptionStringId = R.string.description_ic_my_addresses,
                 labelStringId = R.string.action_profile_my_addresses,
                 onClick = onYourAddressesClicked
             )
-            NavigationIconCard(
+            NavigationIconCardWithDivider(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 8.dp),
+                    .fillMaxWidth(),
                 iconId = R.drawable.ic_history,
                 iconDescriptionStringId = R.string.description_ic_my_orders,
                 labelStringId = R.string.action_profile_my_orders,
                 onClick = onOrderHistoryClicked
             )
-            ProfileInfoCards(modifier = Modifier.padding(top = 8.dp))
+            ProfileInfoCards()
         }
     }
 
@@ -273,7 +282,6 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
-                .padding(FoodDeliveryTheme.dimensions.mediumSpace)
         ) {
             ProfileInfoCards()
 
@@ -306,7 +314,9 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
                     textAlign = TextAlign.Center
                 )
                 Text(
-                    modifier = Modifier.padding(top = 8.dp),
+                    modifier = Modifier
+                        .padding(top = 8.dp)
+                        .padding(horizontal = 16.dp),
                     text = stringResource(R.string.msg_profile_no_profile),
                     style = FoodDeliveryTheme.typography.bodyLarge,
                     color = FoodDeliveryTheme.colors.mainColors.onBackground,
@@ -322,31 +332,73 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
     @Composable
     private fun ProfileInfoCards(modifier: Modifier = Modifier) {
         Column(modifier = modifier) {
-            NavigationIconCard(
+            NavigationIconCardWithDivider(
                 modifier = Modifier.fillMaxWidth(),
                 iconId = R.drawable.ic_payment,
                 iconDescriptionStringId = R.string.description_ic_payment,
                 labelStringId = R.string.action_profile_payment,
                 onClick = viewModel::onPaymentClicked
             )
-            NavigationIconCard(
+            NavigationIconCardWithDivider(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 8.dp),
+                    .fillMaxWidth(),
                 iconId = R.drawable.ic_star,
                 iconDescriptionStringId = R.string.description_ic_feedback,
                 labelStringId = R.string.title_feedback,
                 onClick = viewModel::onFeedbackClicked
             )
-            NavigationIconCard(
+            NavigationIconCardWithDivider(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 8.dp),
+                    .fillMaxWidth(),
                 iconId = R.drawable.ic_info,
                 iconDescriptionStringId = R.string.description_ic_about,
                 labelStringId = R.string.title_about_app,
                 onClick = viewModel::onAboutAppClicked
             )
+        }
+    }
+
+    @Composable
+    private fun OrderProfile(
+        modifier: Modifier = Modifier,
+        orderItem: OrderItem,
+        onClick: () -> Unit
+    ) {
+        FoodDeliveryCard(
+            modifier = modifier,
+            onClick = onClick,
+            elevated = false,
+            shape = RoundedCornerShape(0.dp)
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp)
+                    .padding(vertical = 16.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = orderItem.code,
+                    modifier = Modifier
+                        .requiredWidthIn(min = FoodDeliveryTheme.dimensions.codeWidth)
+                        .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
+                    style = FoodDeliveryTheme.typography.titleMedium.bold,
+                    color = FoodDeliveryTheme.colors.mainColors.onSurface
+                )
+                OrderStatusChip(
+                    orderStatus = orderItem.status,
+                    statusName = orderItem.statusName
+                )
+                Text(
+                    modifier = Modifier
+                        .weight(1f)
+                        .wrapContentWidth(Alignment.End),
+                    text = orderItem.dateTime,
+                    style = FoodDeliveryTheme.typography.bodySmall,
+                    color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
+                    textAlign = TextAlign.End
+                )
+            }
         }
     }
 

@@ -20,6 +20,7 @@ plugins {
     id(Plugin.kotlinParcelize)
     id(Plugin.crashlytics)
     id("org.jlleitschuh.gradle.ktlint") version "11.5.1"
+    id("org.jetbrains.kotlin.plugin.compose") version Versions.kotlin
     id(Plugin.tripletPlay)
 }
 
@@ -111,10 +112,6 @@ android {
         viewBinding = true
         compose = true
         buildConfig = true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = Versions.composeCompiler
     }
 
     compileOptions {
