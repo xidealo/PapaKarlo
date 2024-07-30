@@ -6,6 +6,7 @@ plugins {
     id(Plugin.androidLibrary)
     id(Plugin.sqldelight)
     id(Plugin.kotlinSerialization)
+    id("io.kotest.multiplatform") version "5.0.2"
 }
 
 kotlin {
@@ -61,9 +62,11 @@ kotlin {
         }
         val commonTest by getting {
             dependencies {
-                implementation(MockK.main)
-                implementation(MockK.common)
+                //implementation(MockK.main)
+                //implementation(MockK.common)
                 implementation(Coroutine.test)
+
+                implementation("io.kotest:kotest-framework-engine:5.0.2")
 
                 implementation(kotlin("test-common"))
                 implementation(kotlin("test-annotations-common"))
@@ -81,6 +84,7 @@ kotlin {
                 implementation(SqlDelight.androidDriver)
             }
         }
+
         val iosX64Main by getting
         val iosArm64Main by getting
         val iosSimulatorArm64Main by getting
@@ -122,6 +126,9 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
+}
+dependencies {
+    testImplementation("org.testng:testng:6.9.6")
 }
 
 sqldelight {

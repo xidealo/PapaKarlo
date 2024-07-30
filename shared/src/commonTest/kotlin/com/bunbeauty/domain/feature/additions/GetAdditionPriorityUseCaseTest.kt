@@ -3,22 +3,18 @@ package com.bunbeauty.domain.feature.additions
 import com.bunbeauty.getAddition
 import com.bunbeauty.getAdditionGroup
 import com.bunbeauty.shared.domain.feature.addition.GetAdditionPriorityUseCase
-import kotlinx.coroutines.test.runTest
-import kotlin.test.BeforeTest
-import kotlin.test.Test
-import kotlin.test.assertEquals
+import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.shouldBe
 
-class GetAdditionPriorityUseCaseTest {
+class GetAdditionPriorityUseCaseTest : StringSpec({
 
-    private lateinit var useCase: GetAdditionPriorityUseCase
+    lateinit var useCase: GetAdditionPriorityUseCase
 
-    @BeforeTest
-    fun setup() {
+    beforeTest {
         useCase = GetAdditionPriorityUseCase()
     }
 
-    @Test
-    fun `calculate correct priority`() = runTest {
+    "calculate correct priority" {
         // Given
         val addition = getAddition(priority = 1)
         val additionGroup = getAdditionGroup(priority = 1)
@@ -30,6 +26,6 @@ class GetAdditionPriorityUseCaseTest {
         )
 
         // Then
-        assertEquals(11, result)
+        result shouldBe 11
     }
-}
+})
