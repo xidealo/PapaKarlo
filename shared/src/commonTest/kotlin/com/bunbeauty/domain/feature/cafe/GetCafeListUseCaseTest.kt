@@ -81,7 +81,7 @@ class GetCafeListUseCaseTest {
             latitude = 0.0,
             longitude = 0.0,
             cityUuid = "cityUuid",
-            isVisible = isVisible,
+            isVisible = isVisible
         )
     }
 }

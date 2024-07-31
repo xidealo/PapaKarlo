@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.map
 class ObserveCafeWithOpenStateListUseCase(
     private val getSelectedCityTimeZoneUseCase: GetSelectedCityTimeZoneUseCase,
     private val dataTimeUtil: IDateTimeUtil,
-    private val getCafeListUseCase: GetCafeListUseCase,
+    private val getCafeListUseCase: GetCafeListUseCase
 ) {
 
     suspend operator fun invoke(): Flow<List<CafeWithOpenState>> {
@@ -60,8 +60,8 @@ class ObserveCafeWithOpenStateListUseCase(
     }
 
     private fun isClosed(fromTime: Int, toTime: Int, minutesOfDay: Int): Boolean {
-        return (minutesOfDay < fromTime / SECONDS_IN_MINUTE)
-            || (minutesOfDay >= toTime / SECONDS_IN_MINUTE)
+        return (minutesOfDay < fromTime / SECONDS_IN_MINUTE) ||
+            (minutesOfDay >= toTime / SECONDS_IN_MINUTE)
     }
 
     private fun isCloseSoon(toTime: Int, minutesOfDay: Int): Boolean {
@@ -87,5 +87,4 @@ class ObserveCafeWithOpenStateListUseCase(
             delay((SECONDS_IN_MINUTE - currentMinuteSecond.secondOfMinute) * 1_000L)
         }
     }
-
 }

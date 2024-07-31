@@ -11,7 +11,7 @@ interface OrderRepo {
     suspend fun observeOrderUpdates(token: String): Pair<String?, Flow<Order>>
     suspend fun observeOrderListUpdates(
         token: String,
-        userUuid: String,
+        userUuid: String
     ): Pair<String?, Flow<List<Order>>>
 
     suspend fun stopOrderUpdatesObservation(uuid: String)

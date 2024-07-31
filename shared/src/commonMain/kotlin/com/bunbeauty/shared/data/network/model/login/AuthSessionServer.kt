@@ -6,5 +6,5 @@ import kotlinx.serialization.Serializable
 @Serializable
 class AuthSessionServer(
     @SerialName("uuid")
-    val uuid: String,
+    val uuid: String
 )

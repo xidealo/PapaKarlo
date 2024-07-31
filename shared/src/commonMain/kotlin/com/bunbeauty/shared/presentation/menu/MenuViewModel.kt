@@ -25,7 +25,7 @@ class MenuViewModel(
     private val observeCartUseCase: ObserveCartUseCase,
     private val addMenuProductUseCase: AddMenuProductUseCase,
     private val getDiscountUseCase: GetDiscountUseCase,
-    private val analyticService: AnalyticService,
+    private val analyticService: AnalyticService
 ) : SharedViewModel() {
 
     private val mutableMenuState = MutableStateFlow(
@@ -35,7 +35,7 @@ class MenuViewModel(
             menuItemList = emptyList(),
             state = MenuDataState.State.Loading,
             userScrollEnabled = true,
-            eventList = emptyList(),
+            eventList = emptyList()
         )
     )
     val menuState = mutableMenuState.asStateFlow()
@@ -88,9 +88,10 @@ class MenuViewModel(
                     selectedCategoryUuid = menuSectionList.firstOrNull()?.category?.uuid
                 }
 
-                val discountItem = getDiscountUseCase()?.firstOrderDiscount?.toString()?.let { discount ->
-                    MenuItem.Discount(discount = discount)
-                }
+                val discountItem =
+                    getDiscountUseCase()?.firstOrderDiscount?.toString()?.let { discount ->
+                        MenuItem.Discount(discount = discount)
+                    }
                 val menuItemList = listOfNotNull(discountItem) +
                     menuSectionList.flatMap { menuSection ->
                         menuSection.toMenuItemList()
@@ -101,7 +102,7 @@ class MenuViewModel(
                             toCategoryItemModel(menuSection)
                         },
                         menuItemList = menuItemList,
-                        state = MenuDataState.State.Success,
+                        state = MenuDataState.State.Success
                     )
                 }
             },
@@ -172,7 +173,7 @@ class MenuViewModel(
         analyticService.sendEvent(
             event = AddMenuProductClickEvent(
                 menuProductUuidEventParameter = MenuProductUuidEventParameter(value = menuProduct.uuid)
-            ),
+            )
         )
         sharedScope.launchSafe(
             block = {

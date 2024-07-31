@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.flow
 
 class ObserveSettingsUseCase(
     private val settingsRepository: SettingsRepository,
-    private val dataStoreRepo: DataStoreRepo,
+    private val dataStoreRepo: DataStoreRepo
 ) {
 
     suspend operator fun invoke(): Flow<Settings?> {

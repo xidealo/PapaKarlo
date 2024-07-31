@@ -31,5 +31,5 @@ data class CafeServer(
     val cityUuid: String,
 
     @SerialName("isVisible")
-    val isVisible: Boolean,
+    val isVisible: Boolean
 )

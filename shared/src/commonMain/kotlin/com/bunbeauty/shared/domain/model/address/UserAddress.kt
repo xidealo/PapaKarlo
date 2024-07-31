@@ -12,5 +12,5 @@ data class UserAddress(
     val normalDeliveryCost: Int,
     val forLowDeliveryCost: Int?,
     val lowDeliveryCost: Int?,
-    val userUuid: String,
+    val userUuid: String
 )

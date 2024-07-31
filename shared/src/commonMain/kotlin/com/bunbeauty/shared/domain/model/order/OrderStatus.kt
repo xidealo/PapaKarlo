@@ -9,4 +9,3 @@ enum class OrderStatus {
     DONE,
     CANCELED
 }
-

@@ -3,11 +3,9 @@ package com.bunbeauty.shared.data
 import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.domain.model.Delivery
 import com.bunbeauty.shared.domain.model.Discount
-import com.bunbeauty.shared.domain.model.Payment
 import com.bunbeauty.shared.domain.model.Settings
 import com.bunbeauty.shared.domain.model.UserCityUuid
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
 import org.koin.core.component.KoinComponent
@@ -119,7 +117,7 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
                     ).toString(),
                     cityUuid = NSUserDefaults.standardUserDefaults.stringForKey(
                         SELECTED_CITY_UUID_KEY
-                    ).toString(),
+                    ).toString()
                 )
             )
         }
@@ -132,7 +130,6 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
         )
     }
 
-
     actual override val settings: Flow<Settings?> = flow {
         emit(
             Settings(
@@ -144,7 +141,7 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
                 ).toString(),
                 email = NSUserDefaults.standardUserDefaults.stringForKey(
                     SETTINGS_EMAIL_KEY
-                ).toString(),
+                ).toString()
             )
         )
     }
@@ -175,7 +172,10 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
     }
 
     actual override suspend fun saveRecommendationMaxVisible(recommendationMaxVisible: Int) {
-        NSUserDefaults.standardUserDefaults.setObject(recommendationMaxVisible, RECOMMENDATION_MAX_VISIBLE_KEY)
+        NSUserDefaults.standardUserDefaults.setObject(
+            recommendationMaxVisible,
+            RECOMMENDATION_MAX_VISIBLE_KEY
+        )
     }
 
     actual override suspend fun clearUserData() {
@@ -204,5 +204,4 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
         private const val FIRST_DISCOUNT_KEY = "FIRST_DISCOUNT_KEY"
         private const val RECOMMENDATION_MAX_VISIBLE_KEY = "RECOMMENDATION_MAX_VISIBLE_KEY"
     }
-
 }

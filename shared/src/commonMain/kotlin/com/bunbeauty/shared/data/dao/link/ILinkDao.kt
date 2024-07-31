@@ -7,5 +7,4 @@ interface ILinkDao {
     suspend fun insertLinkList(linkList: List<LinkEntity>)
 
     suspend fun getLinkList(): List<LinkEntity>
-
 }

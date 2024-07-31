@@ -5,7 +5,7 @@ import com.bunbeauty.shared.data.network.api.NetworkConnector
 
 class RecommendationRepository(
     private val networkConnector: NetworkConnector,
-    private val dataStoreRepo: DataStoreRepo,
+    private val dataStoreRepo: DataStoreRepo
 ) : CacheRepository<Int>() {
     companion object {
         private const val DEFAULT_RECOMMENDATIONS_COUNT = 6

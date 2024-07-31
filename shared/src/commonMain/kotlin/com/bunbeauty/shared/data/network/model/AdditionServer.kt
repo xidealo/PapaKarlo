@@ -1,6 +1,5 @@
 package com.bunbeauty.shared.data.network.model
 
-
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -21,5 +20,5 @@ data class AdditionServer(
     @SerialName("uuid")
     val uuid: String,
     @SerialName("priority")
-    val priority: Int,
+    val priority: Int
 )

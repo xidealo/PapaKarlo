@@ -28,7 +28,8 @@ fun ConsumerCart.DataState.toConsumerCartViewState(): ConsumerCartViewState {
                         motivation = motivation?.toMotivationUi(),
                         discount = discount,
                         oldTotalCost = oldTotalCost,
-                        newTotalCost = newTotalCost
+                        newTotalCost = newTotalCost,
+                        orderAvailable = orderAvailable
                     )
                 }
             )

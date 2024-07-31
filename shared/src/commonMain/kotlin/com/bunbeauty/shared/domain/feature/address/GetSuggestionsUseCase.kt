@@ -9,7 +9,7 @@ import com.bunbeauty.shared.domain.repo.SuggestionRepo
 
 class GetSuggestionsUseCase(
     private val suggestionRepo: SuggestionRepo,
-    private val dataStoreRepo: DataStoreRepo,
+    private val dataStoreRepo: DataStoreRepo
 ) {
 
     suspend operator fun invoke(query: String): List<Suggestion> {

@@ -8,4 +8,4 @@ interface BaseDataState
 
 interface BaseViewState
 
-interface BaseViewDataState: BaseDataState, BaseViewState
+interface BaseViewDataState : BaseDataState, BaseViewState

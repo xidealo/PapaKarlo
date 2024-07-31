@@ -1,14 +1,14 @@
 package com.bunbeauty.shared.presentation.settings
 
-import com.bunbeauty.shared.domain.model.city.City
 import com.bunbeauty.shared.domain.model.Settings
+import com.bunbeauty.shared.domain.model.city.City
 
 data class SettingsState(
     val settings: Settings? = null,
     val selectedCity: City? = null,
     val cityList: List<City> = emptyList(),
     val state: State = State.LOADING,
-    val eventList: List<Event> = emptyList(),
+    val eventList: List<Event> = emptyList()
 ) {
 
     sealed interface Event {
@@ -23,10 +23,9 @@ data class SettingsState(
     enum class State {
         SUCCESS,
         ERROR,
-        LOADING,
+        LOADING
     }
 
     operator fun plus(event: Event) = copy(eventList = eventList + event)
     operator fun minus(events: List<Event>) = copy(eventList = eventList - events.toSet())
 }
-

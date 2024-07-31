@@ -4,7 +4,6 @@ import com.bunbeauty.getAddition
 import com.bunbeauty.getCartProduct
 import com.bunbeauty.getCartProductAddition
 import com.bunbeauty.getMenuProduct
-import com.bunbeauty.shared.data.repository.AdditionRepository
 import com.bunbeauty.shared.data.repository.CartProductAdditionRepository
 import com.bunbeauty.shared.domain.feature.addition.AreAdditionsEqualUseCase
 import com.bunbeauty.shared.domain.feature.cart.EditCartProductUseCase
@@ -96,7 +95,7 @@ internal class EditCartProductUseCaseTest {
         coVerify {
             cartProductAdditionRepository.saveAsCartProductAddition(
                 cartProductUuid = initialCartProduct.uuid,
-                addition = initialAddition,
+                addition = initialAddition
             )
         }
     }
@@ -142,7 +141,7 @@ internal class EditCartProductUseCaseTest {
         coVerify(exactly = 0) {
             cartProductAdditionRepository.saveAsCartProductAddition(
                 cartProductUuid = initialCartProduct.uuid,
-                addition = initialAddition,
+                addition = initialAddition
             )
         }
     }
@@ -182,9 +181,8 @@ internal class EditCartProductUseCaseTest {
         coVerify(exactly = 0) {
             cartProductAdditionRepository.saveAsCartProductAddition(
                 cartProductUuid = initialCartProduct.uuid,
-                addition = initialAddition,
+                addition = initialAddition
             )
         }
     }
-
 }

@@ -1,11 +1,14 @@
 package com.bunbeauty.shared.presentation.createorder
 
+import com.bunbeauty.core.Logger
 import com.bunbeauty.shared.Constants.PERCENT
 import com.bunbeauty.shared.Constants.RUBLE_CURRENCY
+import com.bunbeauty.shared.domain.exeptions.OrderNotAvailableException
 import com.bunbeauty.shared.domain.feature.cafe.GetSelectableCafeListUseCase
 import com.bunbeauty.shared.domain.feature.city.GetSelectedCityTimeZoneUseCase
 import com.bunbeauty.shared.domain.feature.motivation.GetMotivationUseCase
 import com.bunbeauty.shared.domain.feature.order.CreateOrderUseCase
+import com.bunbeauty.shared.domain.feature.orderavailable.IsOrderAvailableUseCase
 import com.bunbeauty.shared.domain.feature.payment.GetSelectablePaymentMethodListUseCase
 import com.bunbeauty.shared.domain.feature.payment.SavePaymentMethodUseCase
 import com.bunbeauty.shared.domain.interactor.cafe.ICafeInteractor
@@ -21,9 +24,9 @@ import com.bunbeauty.shared.presentation.base.SharedStateViewModel
 import com.bunbeauty.shared.presentation.motivation.MotivationData
 import com.bunbeauty.shared.presentation.motivation.toMotivationData
 import kotlinx.coroutines.Job
-import kotlin.test.fail
 
 private const val DELIVERY_POSITION = 0
+private const val CREATION_ORDER_VIEW_MODEL_TAG = "CreateOrderViewModel"
 
 class CreateOrderViewModel(
     private val cartProductInteractor: ICartProductInteractor,
@@ -39,6 +42,7 @@ class CreateOrderViewModel(
     private val saveSelectedUserAddress: SaveSelectedUserAddressUseCase,
     private val getSelectablePaymentMethodListUseCase: GetSelectablePaymentMethodListUseCase,
     private val savePaymentMethodUseCase: SavePaymentMethodUseCase,
+    private val isOrderAvailableUseCase: IsOrderAvailableUseCase,
 ) : SharedStateViewModel<CreateOrder.DataState, CreateOrder.Action, CreateOrder.Event>(
     initDataState = CreateOrder.DataState(
         isDelivery = true,
@@ -148,7 +152,7 @@ class CreateOrderViewModel(
             is CreateOrder.Action.CreateClick -> {
                 createClick(
                     withoutChange = action.withoutChange,
-                    changeFrom = action.changeFrom,
+                    changeFrom = action.changeFrom
                 )
             }
         }
@@ -256,7 +260,7 @@ class CreateOrderViewModel(
                             deferredTime.time
                         } else {
                             minDeferredTime
-                        },
+                        }
                     )
                 }
             },
@@ -339,7 +343,7 @@ class CreateOrderViewModel(
 
     private fun createClick(
         withoutChange: String,
-        changeFrom: String
+        changeFrom: String,
     ) {
         val state = mutableDataState.value
 
@@ -366,11 +370,12 @@ class CreateOrderViewModel(
             return
         }
 
-        val newFinalCost = (state.cartTotal as? CreateOrder.CartTotal.Success)?.newFinalCostValue ?: 0
+        val newFinalCost =
+            (state.cartTotal as? CreateOrder.CartTotal.Success)?.newFinalCostValue ?: 0
         val isChangeLessThenCost = (state.change ?: 0) < newFinalCost
         val isChangeIncorrect = state.paymentByCash &&
-            !state.withoutChangeChecked &&
-            isChangeLessThenCost
+                !state.withoutChangeChecked &&
+                isChangeLessThenCost
         setState {
             copy(isChangeErrorShown = isChangeIncorrect)
         }
@@ -390,7 +395,7 @@ class CreateOrderViewModel(
                     orderComment = getExtendedComment(
                         state = state,
                         withoutChange = withoutChange,
-                        changeFrom = changeFrom,
+                        changeFrom = changeFrom
                     ).takeIf { comment ->
                         comment.isNotBlank()
                     },
@@ -488,12 +493,13 @@ class CreateOrderViewModel(
         getCartTotalJob = sharedScope.launchSafe(
             block = {
                 val isDelivery = mutableDataState.value.isDelivery
-                getCartTotalFlowUseCase(isDelivery = isDelivery).collect {  cartTotal ->
+                getCartTotalFlowUseCase(isDelivery = isDelivery).collect { cartTotal ->
                     val motivation = getMotivationUseCase(
                         newTotalCost = cartTotal.newTotalCost,
                         isDelivery = isDelivery
                     )
                     val motivationData = motivation?.toMotivationData()
+                    val orderAvailable = isOrderAvailableUseCase()
                     setState {
                         copy(
                             cartTotal = CreateOrder.CartTotal.Success(
@@ -508,14 +514,17 @@ class CreateOrderViewModel(
                                     "$oldFinalCost $RUBLE_CURRENCY"
                                 },
                                 newFinalCost = "${cartTotal.newFinalCost} $RUBLE_CURRENCY",
-                                newFinalCostValue = cartTotal.newFinalCost,
+                                newFinalCostValue = cartTotal.newFinalCost
                             ),
-                            isOrderCreationEnabled = motivationData !is MotivationData.MinOrderCost
+                            isOrderCreationEnabled = motivationData !is MotivationData.MinOrderCost &&
+                                    orderAvailable
                         )
                     }
                 }
             },
-            onError = {}
+            onError = { error ->
+                Logger.logE(CREATION_ORDER_VIEW_MODEL_TAG, error.stackTraceToString())
+            }
         )
     }
 
@@ -554,9 +563,20 @@ class CreateOrderViewModel(
                     copy(isLoading = false)
                 }
             },
-            onError = {
-                addEvent {
-                    CreateOrder.Event.ShowSomethingWentWrongErrorEvent
+            onError = { throwable ->
+                when (throwable) {
+                    is OrderNotAvailableException -> {
+                        addEvent {
+                            CreateOrder.Event.OrderNotAvailableErrorEvent
+                        }
+                    }
+
+                    else -> addEvent {
+                        CreateOrder.Event.ShowSomethingWentWrongErrorEvent
+                    }
+                }
+                setState {
+                    copy(isLoading = false)
                 }
             }
         )

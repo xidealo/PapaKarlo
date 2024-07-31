@@ -1,7 +1,6 @@
 package com.bunbeauty.shared.data.mapper.order
 
 import com.bunbeauty.shared.data.mapper.order_product.IOrderProductMapper
-import com.bunbeauty.shared.data.network.model.order.get.OrderProductServer
 import com.bunbeauty.shared.data.network.model.order.get.OrderServer
 import com.bunbeauty.shared.data.network.model.order.post.OrderAddressPostServer
 import com.bunbeauty.shared.data.network.model.order.post.OrderPostServer
@@ -18,7 +17,7 @@ import com.bunbeauty.shared.domain.util.IDateTimeUtil
 
 class OrderMapper(
     private val orderProductMapper: IOrderProductMapper,
-    private val dateTimeUtil: IDateTimeUtil,
+    private val dateTimeUtil: IDateTimeUtil
 ) : IOrderMapper {
     override fun toLightOrder(orderEntity: OrderEntity): LightOrder {
         return LightOrder(
@@ -70,7 +69,7 @@ class OrderMapper(
                     flat = firstOrderWithProductEntity.addressFlat,
                     entrance = firstOrderWithProductEntity.addressEntrance,
                     floor = firstOrderWithProductEntity.addressFloor,
-                    comment = firstOrderWithProductEntity.addressComment,
+                    comment = firstOrderWithProductEntity.addressComment
                 ),
                 comment = firstOrderWithProductEntity.comment,
                 deliveryCost = firstOrderWithProductEntity.deliveryCost,
@@ -79,7 +78,7 @@ class OrderMapper(
                     .firstOrNull { it.name == firstOrderWithProductEntity.paymentMethod },
                 oldTotalCost = firstOrderWithProductEntity.oldTotalCost,
                 newTotalCost = firstOrderWithProductEntity.newTotalCost,
-                percentDiscount = firstOrderWithProductEntity.percentDiscount,
+                percentDiscount = firstOrderWithProductEntity.percentDiscount
             )
         }.firstOrNull()
     }
@@ -101,7 +100,7 @@ class OrderMapper(
                 flat = orderServer.address.flat,
                 entrance = orderServer.address.entrance,
                 floor = orderServer.address.floor,
-                comment = orderServer.address.comment,
+                comment = orderServer.address.comment
             ),
             comment = orderServer.comment,
             deliveryCost = orderServer.deliveryCost,
@@ -110,7 +109,7 @@ class OrderMapper(
                 .firstOrNull { it.name == orderServer.paymentMethod },
             oldTotalCost = orderServer.oldTotalCost,
             newTotalCost = orderServer.newTotalCost,
-            percentDiscount = orderServer.percentDiscount,
+            percentDiscount = orderServer.percentDiscount
         )
     }
 
@@ -136,7 +135,7 @@ class OrderMapper(
             paymentMethod = orderServer.paymentMethod,
             oldTotalCost = orderServer.oldTotalCost,
             newTotalCost = orderServer.newTotalCost,
-            percentDiscount = orderServer.percentDiscount,
+            percentDiscount = orderServer.percentDiscount
         )
     }
 
@@ -151,7 +150,7 @@ class OrderMapper(
                 flat = createdOrder.address.flat,
                 entrance = createdOrder.address.entrance,
                 floor = createdOrder.address.floor,
-                comment = createdOrder.address.comment,
+                comment = createdOrder.address.comment
             ),
             comment = createdOrder.comment,
             deferredTime = createdOrder.deferredTime,

@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.map
 class CartProductInteractor(
     private val cartProductRepo: CartProductRepo,
     private val getCartTotalFlowUseCase: GetCartTotalFlowUseCase,
-    private val cartProductAdditionRepository: CartProductAdditionRepository,
+    private val cartProductAdditionRepository: CartProductAdditionRepository
 ) : ICartProductInteractor {
 
     override fun observeConsumerCart(): CommonFlow<ConsumerCartDomain?> {
@@ -60,16 +60,20 @@ class CartProductInteractor(
     }
 
     private fun getNewTotalCost(cartProduct: CartProduct): Int {
-        return (cartProduct.product.newPrice + cartProduct.additionList.sumOf { addition ->
-            addition.price ?: 0
-        }) * cartProduct.count
+        return (
+            cartProduct.product.newPrice + cartProduct.additionList.sumOf { addition ->
+                addition.price ?: 0
+            }
+            ) * cartProduct.count
     }
 
     private fun getOldTotalCost(cartProduct: CartProduct): Int? {
         val oldPrice = cartProduct.product.oldPrice ?: return null
 
-        return (oldPrice + cartProduct.additionList.sumOf { addition ->
-            addition.price ?: 0
-        }) * cartProduct.count
+        return (
+            oldPrice + cartProduct.additionList.sumOf { addition ->
+                addition.price ?: 0
+            }
+            ) * cartProduct.count
     }
 }

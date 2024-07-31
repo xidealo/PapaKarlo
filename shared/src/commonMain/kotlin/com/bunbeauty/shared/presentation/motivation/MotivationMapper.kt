@@ -15,7 +15,7 @@ fun Motivation.toMotivationData(): MotivationData {
             MotivationData.ForLowerDelivery(
                 increaseAmountBy = "$increaseAmountBy $RUBLE_CURRENCY",
                 progress = progress,
-                isFree = isFree,
+                isFree = isFree
             )
         }
 

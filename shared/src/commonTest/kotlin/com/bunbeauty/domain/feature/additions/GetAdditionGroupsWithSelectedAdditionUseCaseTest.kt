@@ -15,18 +15,18 @@ class GetAdditionGroupsWithSelectedAdditionUseCaseTest {
         // Given
         val addition1 = getAddition(
             uuid = "uuid1",
-            isSelected = true,
+            isSelected = true
         )
 
         val addition2 = getAddition(
             uuid = "uuid2",
-            isSelected = false,
+            isSelected = false
         )
 
         val additionGroup = getAdditionGroup(
             uuid = "groupUuid",
             singleChoice = true,
-            additions = listOf(addition1, addition2),
+            additions = listOf(addition1, addition2)
         )
 
         // When
@@ -46,18 +46,18 @@ class GetAdditionGroupsWithSelectedAdditionUseCaseTest {
         // Given
         val addition1 = getAddition(
             uuid = "uuid1",
-            isSelected = true,
+            isSelected = true
         )
 
         val addition2 = getAddition(
             uuid = "uuid2",
-            isSelected = false,
+            isSelected = false
         )
 
         val additionGroup = getAdditionGroup(
             uuid = "groupUuid",
             singleChoice = false,
-            additions = listOf(addition1, addition2),
+            additions = listOf(addition1, addition2)
         )
 
         // When
@@ -77,19 +77,19 @@ class GetAdditionGroupsWithSelectedAdditionUseCaseTest {
         // Arrange
         val addition1 = getAddition(
             uuid = "uuid1",
-            isSelected = false,
+            isSelected = false
         )
 
         val additionGroup1 = getAdditionGroup(
             uuid = "groupUuid1",
             singleChoice = true,
-            additions = listOf(addition1),
+            additions = listOf(addition1)
         )
 
         val additionGroup2 = getAdditionGroup(
             uuid = "groupUuid2",
             singleChoice = false,
-            additions = listOf(addition1),
+            additions = listOf(addition1)
         )
 
         // Act

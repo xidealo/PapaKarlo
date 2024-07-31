@@ -20,13 +20,13 @@ interface CreateAddress {
         val entrance: String,
         val floor: String,
         val comment: String,
-        val isCreateLoading: Boolean,
+        val isCreateLoading: Boolean
     ) : BaseDataState
 
     data class StreetField(
         val street: String,
         val isFocused: Boolean,
-        val selectedSuggestion: SuggestionUi?,
+        val selectedSuggestion: SuggestionUi?
     )
 
     sealed interface Event : BaseEvent {
@@ -37,17 +37,16 @@ interface CreateAddress {
     }
 
     sealed interface Action : BaseAction {
-        data object Init: Action
-        data class StreetTextChange(val street: String): Action
-        data class StreetFocusChange(val isFocused: Boolean): Action
-        data class SuggestionSelect(val suggestion: SuggestionUi): Action
-        data class HouseTextChange(val house: String): Action
-        data class FlatTextChange(val flat: String): Action
-        data class EntranceTextChange(val entrance: String): Action
-        data class FloorTextChange(val floor: String): Action
-        data class CommentTextChange(val comment: String): Action
-        data object SaveClick: Action
-        data object BackClick: Action
+        data object Init : Action
+        data class StreetTextChange(val street: String) : Action
+        data class StreetFocusChange(val isFocused: Boolean) : Action
+        data class SuggestionSelect(val suggestion: SuggestionUi) : Action
+        data class HouseTextChange(val house: String) : Action
+        data class FlatTextChange(val flat: String) : Action
+        data class EntranceTextChange(val entrance: String) : Action
+        data class FloorTextChange(val floor: String) : Action
+        data class CommentTextChange(val comment: String) : Action
+        data object SaveClick : Action
+        data object BackClick : Action
     }
-
 }

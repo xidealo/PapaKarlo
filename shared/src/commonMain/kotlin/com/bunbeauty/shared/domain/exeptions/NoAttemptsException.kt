@@ -1,3 +1,3 @@
 package com.bunbeauty.shared.domain.exeptions
 
-class NoAttemptsException: FoodDeliveryNetworkException()
+class NoAttemptsException : FoodDeliveryNetworkException()

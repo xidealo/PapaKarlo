@@ -7,7 +7,7 @@ import com.bunbeauty.shared.domain.model.Discount
 
 class DiscountRepository(
     private val networkConnector: NetworkConnector,
-    private val dataStoreRepo: DataStoreRepo,
+    private val dataStoreRepo: DataStoreRepo
 ) : CacheRepository<Discount>() {
 
     override val tag: String = "DISCOUNT_TAG"

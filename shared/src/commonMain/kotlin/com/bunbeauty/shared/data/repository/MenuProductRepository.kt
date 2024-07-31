@@ -1,11 +1,11 @@
 package com.bunbeauty.shared.data.repository
 
-import com.bunbeauty.shared.data.mapper.addition.mapAdditionEntityToAddition
 import com.bunbeauty.shared.data.dao.addition.IAdditionDao
 import com.bunbeauty.shared.data.dao.addition_group.IAdditionGroupDao
 import com.bunbeauty.shared.data.dao.category.ICategoryDao
 import com.bunbeauty.shared.data.dao.menu_product.IMenuProductDao
 import com.bunbeauty.shared.data.dao.menu_product_category_reference.IMenuProductCategoryReferenceDao
+import com.bunbeauty.shared.data.mapper.addition.mapAdditionEntityToAddition
 import com.bunbeauty.shared.data.mapper.additiongroup.mapAdditionGroupEntityToGroup
 import com.bunbeauty.shared.data.mapper.menuProduct.IMenuProductMapper
 import com.bunbeauty.shared.data.network.api.NetworkConnector
@@ -24,7 +24,7 @@ class MenuProductRepository(
     private val menuProductCategoryReferenceDao: IMenuProductCategoryReferenceDao,
     private val menuProductMapper: IMenuProductMapper,
     private val additionDao: IAdditionDao,
-    private val additionGroupDao: IAdditionGroupDao,
+    private val additionGroupDao: IAdditionGroupDao
 ) : CacheListRepository<MenuProduct>(), MenuProductRepo {
 
     override val tag: String = "MENU_PRODUCT_TAG"
@@ -47,7 +47,7 @@ class MenuProductRepository(
     }
 
     private suspend fun getAdditionGroups(
-        menuProduct: MenuProduct,
+        menuProduct: MenuProduct
     ) = additionGroupDao.getAdditionGroupEntityList(
         menuProduct = menuProduct.uuid
     ).map(mapAdditionGroupEntityToGroup)

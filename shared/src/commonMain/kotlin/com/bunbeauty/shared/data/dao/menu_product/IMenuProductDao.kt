@@ -17,5 +17,4 @@ interface IMenuProductDao {
     fun observeMenuProductByUuid(uuid: String): Flow<MenuProductEntity?>
 
     suspend fun getMenuProductByUuid(uuid: String): MenuProductEntity?
-
 }

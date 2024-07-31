@@ -13,7 +13,6 @@ import com.bunbeauty.shared.domain.model.Discount
 import com.bunbeauty.shared.domain.model.Settings
 import com.bunbeauty.shared.domain.model.UserCityUuid
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
@@ -39,9 +38,7 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
         it[TOKEN_KEY]
     }
 
-    actual override suspend fun getToken(): String? {
-        return token.first()
-    }
+    actual override suspend fun getToken() = token.firstOrNull()
 
     actual override suspend fun saveToken(token: String) {
         context.tokenDataStore.edit {
@@ -63,9 +60,7 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
         }
     }
 
-    actual override suspend fun getDelivery(): Delivery? {
-        return delivery.firstOrNull()
-    }
+    actual override suspend fun getDelivery() = delivery.firstOrNull()
 
     actual override suspend fun saveDelivery(delivery: Delivery) {
         context.deliveryDataStore.edit {
@@ -80,15 +75,13 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
                 Settings(
                     userUuid = userUuid,
                     phoneNumber = phoneNumber,
-                    email = it[SETTINGS_EMAIL_KEY],
+                    email = it[SETTINGS_EMAIL_KEY]
                 )
             }
         }
     }
 
-    actual override suspend fun getSettings(): Settings? {
-        return settings.firstOrNull()
-    }
+    actual override suspend fun getSettings() = settings.firstOrNull()
 
     actual override suspend fun saveSettings(settings: Settings) {
         context.settingsDataStore.edit {
@@ -113,9 +106,7 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
         it[USER_UUID_KEY]
     }
 
-    actual override suspend fun getUserUuid(): String? {
-        return userUuid.firstOrNull()
-    }
+    actual override suspend fun getUserUuid() = userUuid.firstOrNull()
 
     actual override suspend fun saveUserUuid(userId: String) {
         context.userUuidDataStore.edit {
@@ -166,14 +157,12 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
     override val discount: Flow<Discount?> = context.discountDataStore.data.map {
         it[FIRST_ORDER_DISCOUNT_KEY]?.let { firstOrderDiscount ->
             Discount(
-                firstOrderDiscount = firstOrderDiscount,
+                firstOrderDiscount = firstOrderDiscount
             )
         }
     }
 
-    override suspend fun getDiscount(): Discount? {
-        return discount.firstOrNull()
-    }
+    override suspend fun getDiscount(): Discount? = discount.firstOrNull()
 
     override suspend fun saveDiscount(discount: Discount) {
         context.discountDataStore.edit {
@@ -184,13 +173,13 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
         }
     }
 
-    actual override val recommendationMaxVisible: Flow<Int?> = context.recommendationDataStore.data.map {
-        it[RECOMMENDATION_MAX_VISIBLE_KEY]
-    }
+    actual override val recommendationMaxVisible: Flow<Int?> =
+        context.recommendationDataStore.data.map {
+            it[RECOMMENDATION_MAX_VISIBLE_KEY]
+        }
 
-    actual override suspend fun getRecommendationMaxVisible(): Int? {
-        return recommendationMaxVisible.firstOrNull()
-    }
+    actual override suspend fun getRecommendationMaxVisible() =
+        recommendationMaxVisible.firstOrNull()
 
     actual override suspend fun saveRecommendationMaxVisible(recommendationMaxVisible: Int) {
         context.recommendationDataStore.edit {
@@ -249,6 +238,5 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
         private const val RECOMMENDATION_DATA_STORE = "recommendation"
         private const val RECOMMENDATION_MAX_VISIBLE = "recommendation max visible"
         private val RECOMMENDATION_MAX_VISIBLE_KEY = intPreferencesKey(RECOMMENDATION_MAX_VISIBLE)
-
     }
 }

@@ -5,7 +5,7 @@ import com.bunbeauty.shared.domain.feature.address.GetCurrentUserAddressUseCase
 import com.bunbeauty.shared.domain.model.address.SelectableUserAddress
 import com.bunbeauty.shared.domain.repo.UserAddressRepo
 
-//TODO test
+// TODO test
 class GetSelectableUserAddressListUseCase(
     private val dataStoreRepo: DataStoreRepo,
     private val userAddressRepo: UserAddressRepo,
@@ -20,11 +20,11 @@ class GetSelectableUserAddressListUseCase(
         return userAddressRepo.getUserAddressListByUserAndCityUuid(
             userUuid = userUuid,
             cityUuid = cityUuid,
-            token = token,
+            token = token
         ).map { userAddress ->
             SelectableUserAddress(
                 address = userAddress,
-                isSelected = userAddress.uuid == currentUserAddress?.uuid,
+                isSelected = userAddress.uuid == currentUserAddress?.uuid
             )
         }
     }

@@ -72,5 +72,4 @@ internal class GetLastOrderUseCaseTest {
 
         assertEquals(lightOrder, getLastOrderUseCase())
     }
-
 }

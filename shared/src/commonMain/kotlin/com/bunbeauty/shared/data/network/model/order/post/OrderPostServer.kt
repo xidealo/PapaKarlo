@@ -22,7 +22,7 @@ class OrderPostServer(
     val orderProducts: List<OrderProductPostServer>,
 
     @SerialName("paymentMethod")
-    val paymentMethod: String?,
+    val paymentMethod: String?
 )
 
 @Serializable
@@ -50,7 +50,7 @@ class OrderAddressPostServer(
     val floor: String?,
 
     @SerialName("comment")
-    val comment: String?,
+    val comment: String?
 )
 
 @Serializable
@@ -63,5 +63,5 @@ class OrderProductPostServer(
     val menuProductUuid: String,
 
     @SerialName("additionUuids")
-    val additionUuids: List<String>,
+    val additionUuids: List<String>
 )

@@ -15,5 +15,5 @@ data class CityServer(
     val timeZone: String,
 
     @SerialName("isVisible")
-    val isVisible: Boolean,
+    val isVisible: Boolean
 )

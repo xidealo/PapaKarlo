@@ -13,7 +13,7 @@ val <T> ApiResult<T>.isSuccess: Boolean
 
 suspend fun <T, R> ApiResult<T>.map(
     onError: (suspend (ApiError) -> R),
-    onSuccess: (suspend (T?) -> R),
+    onSuccess: (suspend (T?) -> R)
 ): R = when (this) {
     is ApiResult.Success -> {
         onSuccess(data)
@@ -26,7 +26,7 @@ suspend fun <T, R> ApiResult<T>.map(
 
 suspend fun <T, R> ApiResult<T>.getNullableResult(
     onError: (suspend (ApiError) -> R?)? = null,
-    onSuccess: (suspend (T) -> R?),
+    onSuccess: (suspend (T) -> R?)
 ): R? = when (this) {
     is ApiResult.Success -> {
         data?.let {
@@ -42,7 +42,7 @@ suspend fun <T, R> ApiResult<T>.getNullableResult(
 
 suspend fun <T, R> ApiResult<ListServer<T>>.getListResult(
     onError: (suspend (ApiError) -> R),
-    onSuccess: (suspend (List<T>) -> R),
+    onSuccess: (suspend (List<T>) -> R)
 ): R = when (this) {
     is ApiResult.Success -> {
         data?.let {

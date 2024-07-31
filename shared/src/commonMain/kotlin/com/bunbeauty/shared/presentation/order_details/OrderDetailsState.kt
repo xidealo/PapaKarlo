@@ -14,7 +14,7 @@ interface OrderDetails {
     data class DataState(
         val orderUuid: String,
         val orderDetailsData: OrderDetailsData,
-        val screenState: ScreenState,
+        val screenState: ScreenState
     ) : BaseDataState {
 
         data class OrderDetailsData(
@@ -22,7 +22,7 @@ interface OrderDetails {
             val orderInfo: OrderInfo?,
             val deliveryCost: String?,
             val newTotalCost: String,
-            val discount: String?,
+            val discount: String?
         ) {
             data class OrderInfo(
                 val code: String,
@@ -32,7 +32,7 @@ interface OrderDetails {
                 val address: OrderAddress,
                 val comment: String?,
                 val isDelivery: Boolean,
-                val paymentMethod: PaymentMethodName?,
+                val paymentMethod: PaymentMethodName?
             )
 
             data class OrderProductItem(
@@ -43,7 +43,7 @@ interface OrderDetails {
                 val photoLink: String,
                 val count: String,
                 val additions: List<OrderAddition>,
-                val isLast: Boolean,
+                val isLast: Boolean
             )
         }
 

@@ -18,6 +18,7 @@ import com.bunbeauty.shared.data.network.model.ForceUpdateVersionServer
 import com.bunbeauty.shared.data.network.model.LinkServer
 import com.bunbeauty.shared.data.network.model.ListServer
 import com.bunbeauty.shared.data.network.model.MenuProductServer
+import com.bunbeauty.shared.data.network.model.OrderAvailableServer
 import com.bunbeauty.shared.data.network.model.PaymentMethodServer
 import com.bunbeauty.shared.data.network.model.PaymentServer
 import com.bunbeauty.shared.data.network.model.RecommendationDataServer
@@ -56,7 +57,7 @@ import org.koin.core.component.KoinComponent
 internal class NetworkConnectorImpl(
     private val client: HttpClient,
     private val socketService: SocketService,
-    private val companyUuidProvider: CompanyUuidProvider,
+    private val companyUuidProvider: CompanyUuidProvider
 ) : KoinComponent, NetworkConnector {
 
     // GET
@@ -126,7 +127,7 @@ internal class NetworkConnectorImpl(
             path = "street/suggestions",
             parameters = mapOf(
                 QUERY_PARAMETER to query,
-                CITY_UUID_PARAMETER to cityUuid,
+                CITY_UUID_PARAMETER to cityUuid
             ),
             token = token
         )
@@ -134,7 +135,7 @@ internal class NetworkConnectorImpl(
 
     override suspend fun getUserAddressListByCityUuid(
         token: String,
-        cityUuid: String,
+        cityUuid: String
     ): ApiResult<ListServer<AddressServer>> {
         return getData(
             path = "v2/address",
@@ -160,7 +161,7 @@ internal class NetworkConnectorImpl(
     override suspend fun getOrderList(
         token: String,
         count: Int?,
-        uuid: String?,
+        uuid: String?
     ): ApiResult<ListServer<OrderServer>> {
         return getData(
             path = "v2/client/order",
@@ -203,19 +204,26 @@ internal class NetworkConnectorImpl(
             parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuidProvider.companyUuid)
         )
     }
+
+    override suspend fun getIsOrderAvailableData(): ApiResult<OrderAvailableServer> {
+        return getData(
+            path = "order_availability",
+            parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuidProvider.companyUuid)
+        )
+    }
     // POST
 
     @Deprecated("Outdated login method")
     override suspend fun postLogin(loginPostServer: LoginPostServer): ApiResult<AuthResponseServer> {
         return postData(
             path = "client/login",
-            body = loginPostServer,
+            body = loginPostServer
         )
     }
 
     override suspend fun postUserAddress(
         token: String,
-        userAddress: UserAddressPostServer,
+        userAddress: UserAddressPostServer
     ): ApiResult<AddressServer> {
         return postData(
             path = "v2/address",
@@ -244,7 +252,7 @@ internal class NetworkConnectorImpl(
 
     override suspend fun patchSettings(
         token: String,
-        patchUserServer: PatchUserServer,
+        patchUserServer: PatchUserServer
     ): ApiResult<SettingsServer> {
         return patchData(
             path = "client/settings",
@@ -289,7 +297,7 @@ internal class NetworkConnectorImpl(
     private suspend inline fun <reified R> getData(
         path: String,
         parameters: Map<String, Any> = mapOf(),
-        token: String? = null,
+        token: String? = null
     ): ApiResult<R> {
         return safeCall {
             client.get {
@@ -306,7 +314,7 @@ internal class NetworkConnectorImpl(
         path: String,
         parameters: Map<String, String> = mapOf(),
         body: Any,
-        token: String? = null,
+        token: String? = null
     ): ApiResult<R> {
         return safeCall {
             client.post {
@@ -324,7 +332,7 @@ internal class NetworkConnectorImpl(
         path: String,
         body: Any,
         parameters: Map<String, String> = mapOf(),
-        token: String? = null,
+        token: String? = null
     ): ApiResult<R> {
         return safeCall {
             client.patch {
@@ -342,7 +350,7 @@ internal class NetworkConnectorImpl(
         path: String,
         body: Any? = null,
         parameters: Map<String, String> = mapOf(),
-        token: String? = null,
+        token: String? = null
     ): ApiResult<R> {
         return safeCall {
             client.put {
@@ -357,7 +365,7 @@ internal class NetworkConnectorImpl(
     }
 
     private suspend inline fun <reified R> safeCall(
-        networkCall: () -> HttpResponse,
+        networkCall: () -> HttpResponse
     ): ApiResult<R> {
         return try {
             val call = networkCall()
@@ -375,7 +383,7 @@ internal class NetworkConnectorImpl(
         path: String,
         parameters: Map<String, Any> = mapOf(),
         body: Any? = null,
-        token: String? = null,
+        token: String? = null
     ) {
         if (body != null) {
             setBody(body)
@@ -390,5 +398,4 @@ internal class NetworkConnectorImpl(
             header(AUTHORIZATION_HEADER, "Bearer $token")
         }
     }
-
 }

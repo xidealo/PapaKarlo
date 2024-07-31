@@ -9,7 +9,7 @@ import com.bunbeauty.shared.domain.repo.CafeRepo
 
 class CafeInteractor(
     private val cafeRepo: CafeRepo,
-    private val dataStoreRepo: DataStoreRepo,
+    private val dataStoreRepo: DataStoreRepo
 ) : ICafeInteractor {
 
     override suspend fun getCafeByUuid(cafeUuid: String): Cafe? {

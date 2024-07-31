@@ -85,5 +85,4 @@ object Constants {
 
     const val MAPS_LINK = "https://maps.google.com/maps?daddr="
     const val PHONE_LINK = "tel:"
-
 }

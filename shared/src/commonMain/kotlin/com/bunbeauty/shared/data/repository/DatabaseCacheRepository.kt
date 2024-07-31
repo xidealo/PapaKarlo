@@ -9,7 +9,7 @@ abstract class DatabaseCacheRepository : BaseRepository() {
         crossinline onLocalRequest: suspend () -> D?,
         crossinline onApiRequest: suspend () -> ApiResult<S>,
         crossinline onSaveLocally: suspend (S) -> Unit,
-        crossinline serverToDomainModel: (S) -> D,
+        crossinline serverToDomainModel: (S) -> D
     ): D? {
         return if (isCacheValid()) {
             onLocalRequest() ?: getDataFromServer(onApiRequest, onSaveLocally, serverToDomainModel)
@@ -35,5 +35,4 @@ abstract class DatabaseCacheRepository : BaseRepository() {
             serverToDomainModel(serverModel)
         }
     )
-
 }

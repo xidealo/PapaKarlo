@@ -14,6 +14,7 @@ import com.bunbeauty.shared.data.repository.DeliveryRepository
 import com.bunbeauty.shared.data.repository.DiscountRepository
 import com.bunbeauty.shared.data.repository.LinkRepository
 import com.bunbeauty.shared.data.repository.MenuProductRepository
+import com.bunbeauty.shared.data.repository.OrderAvailableRepository
 import com.bunbeauty.shared.data.repository.OrderRepository
 import com.bunbeauty.shared.data.repository.PaymentRepository
 import com.bunbeauty.shared.data.repository.RecommendationRepository
@@ -42,14 +43,14 @@ fun repositoryModule() = module {
         SocketService(
             uuidGenerator = get(),
             client = get(),
-            json = get(),
+            json = get()
         )
     }
     single<NetworkConnector> {
         NetworkConnectorImpl(
             client = get(),
             socketService = get(),
-            companyUuidProvider = get(),
+            companyUuidProvider = get()
         )
     }
     single<CartProductRepo> {
@@ -57,7 +58,7 @@ fun repositoryModule() = module {
             uuidGenerator = get(),
             cartProductDao = get(),
             menuProductDao = get(),
-            cartProductMapper = get(),
+            cartProductMapper = get()
         )
     }
     single<OrderRepo> {
@@ -84,20 +85,20 @@ fun repositoryModule() = module {
         UserAddressRepository(
             networkConnector = get(),
             userAddressDao = get(),
-            userAddressMapper = get(),
+            userAddressMapper = get()
         )
     }
     single<CafeRepo> {
         CafeRepository(
             networkConnector = get(),
             dataStoreRepo = get(),
-            cafeDao = get(),
+            cafeDao = get()
         )
     }
     single<DeliveryRepo> {
         DeliveryRepository(
             networkConnector = get(),
-            dataStoreRepo = get(),
+            dataStoreRepo = get()
         )
     }
     single<UserRepo> {
@@ -108,51 +109,51 @@ fun repositoryModule() = module {
             userDao = get(),
             userAddressDao = get(),
             orderDao = get(),
-            dataStoreRepo = get(),
+            dataStoreRepo = get()
         )
     }
     single<CityRepo> {
         CityRepository(
             networkConnector = get(),
             cityDao = get(),
-            cityMapper = get(),
+            cityMapper = get()
         )
     }
     single<VersionRepo> {
         VersionRepository(
-            networkConnector = get(),
+            networkConnector = get()
         )
     }
     single {
         SettingsRepository(
             dataStoreRepo = get(),
             networkConnector = get(),
-            settingsMapper = get(),
+            settingsMapper = get()
         )
     }
     single<PaymentRepo> {
         PaymentRepository(
             networkConnector = get(),
             paymentMethodMapper = get(),
-            paymentMethodDao = get(),
+            paymentMethodDao = get()
         )
     }
     single<LinkRepo> {
         LinkRepository(
             networkConnector = get(),
             linkMapper = get(),
-            linkDao = get(),
+            linkDao = get()
         )
     }
     single {
         DiscountRepository(
             networkConnector = get(),
-            dataStoreRepo = get(),
+            dataStoreRepo = get()
         )
     }
     single<AuthRepo> {
         AuthRepository(
-            networkConnector = get(),
+            networkConnector = get()
         )
     }
     single {
@@ -169,19 +170,22 @@ fun repositoryModule() = module {
     }
     single {
         AdditionRepository(
-            additionDao = get(),
+            additionDao = get()
         )
     }
     single {
         AdditionGroupRepository(
-            additionGroupDao = get(),
+            additionGroupDao = get()
         )
     }
     single<SuggestionRepo> {
         SuggestionRepository(
-            networkConnector = get(),
+            networkConnector = get()
+        )
+    }
+    single {
+        OrderAvailableRepository(
+            networkConnector = get()
         )
     }
 }
-
-

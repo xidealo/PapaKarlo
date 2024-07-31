@@ -6,7 +6,7 @@ class GetAdditionGroupsWithSelectedAdditionUseCase {
     operator fun invoke(
         additionGroups: List<AdditionGroup>,
         groupUuid: String,
-        additionUuid: String,
+        additionUuid: String
     ) = additionGroups.map { additionGroup ->
         if (additionGroup.uuid == groupUuid) {
             additionGroup.copy(

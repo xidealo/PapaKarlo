@@ -15,7 +15,7 @@ class GetUserAddressListUseCase(
         return userAddressRepo.getUserAddressListByUserAndCityUuid(
             userUuid = userUuid,
             cityUuid = cityUuid,
-            token = token,
+            token = token
         )
     }
 }

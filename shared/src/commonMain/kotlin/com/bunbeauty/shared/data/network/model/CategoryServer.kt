@@ -13,5 +13,5 @@ class CategoryServer(
     val name: String,
 
     @SerialName("priority")
-    val priority: Int,
+    val priority: Int
 )

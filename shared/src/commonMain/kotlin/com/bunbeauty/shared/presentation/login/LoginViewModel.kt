@@ -13,7 +13,7 @@ class LoginViewModel(
     private val requestCode: RequestCodeUseCase,
     private val formatPhoneNumber: FormatPhoneNumberUseCase,
     private val getPhoneNumberCursorPosition: GetPhoneNumberCursorPositionUseCase,
-    private val checkPhoneNumber: CheckPhoneNumberUseCase,
+    private val checkPhoneNumber: CheckPhoneNumberUseCase
 ) : SharedStateViewModel<Login.ViewDataState, Login.Action, Login.Event>(Login.ViewDataState()) {
 
     override fun reduce(action: Login.Action, dataState: Login.ViewDataState) {
@@ -108,5 +108,4 @@ class LoginViewModel(
             }
         }
     }
-
 }

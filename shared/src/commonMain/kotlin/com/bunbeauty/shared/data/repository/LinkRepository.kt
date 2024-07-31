@@ -10,8 +10,8 @@ import com.bunbeauty.shared.extension.getNullableResult
 class LinkRepository(
     private val networkConnector: NetworkConnector,
     private val linkMapper: LinkMapper,
-    private val linkDao: ILinkDao,
-): LinkRepo {
+    private val linkDao: ILinkDao
+) : LinkRepo {
 
     private var linkListCache: List<Link>? = null
 
@@ -47,6 +47,4 @@ class LinkRepository(
             linkList.map(linkMapper::toLinkEntity)
         )
     }
-
-
 }

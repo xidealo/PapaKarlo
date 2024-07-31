@@ -11,7 +11,7 @@ class GetDeliveryCostFlowUseCase(
 
     suspend operator fun invoke(
         newTotalCost: Int,
-        isDelivery: Boolean? = null,
+        isDelivery: Boolean? = null
     ): Flow<Int?> {
         if (isDelivery == false) {
             return flowOf(null)

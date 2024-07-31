@@ -289,7 +289,8 @@ class ConsumerCartFragment :
                         textStringId = R.string.action_consumer_cart_creeate_order,
                         onClick = {
                             onAction(ConsumerCart.Action.OnCreateOrderClick)
-                        }
+                        },
+                        enabled = bottomPanelInfo.orderAvailable
                     )
                 }
             }
@@ -389,7 +390,8 @@ class ConsumerCartFragment :
                         ),
                         discount = "10%",
                         oldTotalCost = "1650 ₽",
-                        newTotalCost = "1500 ₽"
+                        newTotalCost = "1500 ₽",
+                        orderAvailable = true
                     ),
                     recommendationList = persistentListOf(
                         getRecommendation("6"),

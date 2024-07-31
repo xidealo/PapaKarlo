@@ -59,7 +59,7 @@ class DateTimeUtil : IDateTimeUtil {
     fun getMillisByHourAndMinute(
         currentMillis: Long,
         time: Time,
-        timeZone: String,
+        timeZone: String
     ): Long {
         val currentLocalDateTime = getLocalDateTime(currentMillis, timeZone)
         return LocalDateTime(
@@ -85,7 +85,7 @@ class DateTimeUtil : IDateTimeUtil {
     private val LocalDateTime.time
         get() = Time(
             hours = hour,
-            minutes = minute,
+            minutes = minute
         )
 
     private val LocalDateTime.dateTime

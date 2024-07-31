@@ -1,7 +1,6 @@
 package com.bunbeauty.shared.data.dao.order_product
 
 import com.bunbeauty.shared.db.FoodDeliveryDatabase
-import com.bunbeauty.shared.db.OrderAdditionEntity
 import com.bunbeauty.shared.db.OrderProductEntity
 
 class OrderProductDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IOrderProductDao {
@@ -11,5 +10,4 @@ class OrderProductDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IOrderProduc
     override suspend fun insert(orderProductEntity: OrderProductEntity) {
         orderProductEntityQueries.insert(orderProductEntity)
     }
-
 }

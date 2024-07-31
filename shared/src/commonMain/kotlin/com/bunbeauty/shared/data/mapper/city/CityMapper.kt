@@ -19,7 +19,7 @@ class CityMapper : ICityMapper {
         return City(
             uuid = cityServer.uuid,
             name = cityServer.name,
-            timeZone = cityServer.timeZone,
+            timeZone = cityServer.timeZone
         )
     }
 
@@ -27,7 +27,7 @@ class CityMapper : ICityMapper {
         return City(
             uuid = cityEntity.uuid,
             name = cityEntity.name,
-            timeZone = cityEntity.timeZone,
+            timeZone = cityEntity.timeZone
         )
     }
 }

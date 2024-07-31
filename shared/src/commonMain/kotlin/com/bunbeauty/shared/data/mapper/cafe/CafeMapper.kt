@@ -16,7 +16,7 @@ fun CafeServer.toCafeEntity(): CafeEntity {
         longitude = longitude,
         address = address,
         cityUuid = cityUuid,
-        isVisible = isVisible,
+        isVisible = isVisible
     )
 }
 
@@ -30,7 +30,7 @@ fun CafeEntity.toCafe(): Cafe {
         longitude = longitude,
         address = address,
         cityUuid = cityUuid,
-        isVisible = isVisible,
+        isVisible = isVisible
     )
 }
 
@@ -44,13 +44,13 @@ fun CafeServer.toCafe(): Cafe {
         longitude = longitude,
         address = address,
         cityUuid = cityUuid,
-        isVisible = isVisible,
+        isVisible = isVisible
     )
 }
 
 fun CafeEntity.toCafeAddress(): CafeAddress {
     return CafeAddress(
         address = address,
-        cafeUuid = uuid,
+        cafeUuid = uuid
     )
 }
