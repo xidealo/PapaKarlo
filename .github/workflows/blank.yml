@@ -120,6 +120,10 @@ jobs:
         env:
           GOOGLE_SERVICE_JSON: ${{ secrets.GOOGLE_SERVICE_JSON }}
         run: echo $GOOGLE_SERVICE_JSON > app/google-services.json
+      - name: Decode keystore
+        env:
+          KEY_STORE: ${{ secrets.KEY_STORE }}
+        run: echo $KEY_STORE > app/keystore
       - name: Decode google-play-api-key.json
         env:
           GOOGLE_SERVICE_JSON: ${{ secrets.GOOGLE_PLAY_API_KEY }}
