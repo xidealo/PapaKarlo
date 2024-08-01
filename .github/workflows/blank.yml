@@ -148,6 +148,12 @@ jobs:
       - name: Set up Gradle
         uses: gradle/gradle-build-action@v2
 
+      - name: Verify resources
+        run: ls app/src/main/res/values/strings.xml
+
+      - name: Clean project
+        run: ./gradlew clean
+
       - name: start assemble
         run: ./gradlew assembleAll
 
