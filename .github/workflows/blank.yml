@@ -151,5 +151,3 @@ jobs:
       - name: start assemble
         run: ./gradlew assembleAll
 
-      - name: start publish
-        run: ./gradlew publishAll
