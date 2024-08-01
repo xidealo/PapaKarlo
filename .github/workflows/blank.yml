@@ -112,22 +112,27 @@ jobs:
     if: github.ref == 'refs/heads/master'
     steps:
       - uses: actions/checkout@v2
+
       - name: set up JDK 17
         uses: actions/setup-java@v1
         with:
           java-version: 17
+
       - name: Decode google-services.json
         env:
           GOOGLE_SERVICE_JSON: ${{ secrets.GOOGLE_SERVICE_JSON }}
         run: echo "${GOOGLE_SERVICE_JSON}" > app/google-services.json
+
       - name: Decode keystore
         env:
           KEY_STORE: ${{ secrets.KEY_STORE }}
         run: echo "${KEY_STORE}" | base64 --decode > app/keystore
+
       - name: Decode google-play-api-key.json
         env:
           GOOGLE_PLAY_API_KEY: ${{ secrets.GOOGLE_PLAY_API_KEY }}
         run: echo "${GOOGLE_PLAY_API_KEY}" > app/google-play-api-key.json
+
       - name: Create local properties
         env:
           RELEASE_STORE_FILE: ${{ secrets.RELEASE_STORE_FILE }}
@@ -139,5 +144,12 @@ jobs:
           RELEASE_STORE_PASSWORD=${RELEASE_STORE_PASSWORD}
           RELEASE_KEY_ALIAS=${RELEASE_KEY_ALIAS}
           RELEASE_KEY_PASSWORD=${RELEASE_KEY_PASSWORD}" > local.properties
-      - name: start assemble and publish
-        run: ./gradlew assembleAndPublishAllRelease
+
+      - name: Set up Gradle
+        uses: gradle/gradle-build-action@v2
+
+      - name: start assemble
+        run: ./gradlew assembleAll
+
+      - name: start publish
+        run: ./gradlew publishAll

@@ -231,14 +231,17 @@ dependencies {
     implementation(CollectionsImmutable.collectionsImmutable)
 }
 
-tasks.register("assembleAndPublishAllRelease") {
+tasks.register("assembleAll") {
     dependsOn(PAPA_KARLO_FLAVOR_NAME.getAssembleBundleRelease())
     dependsOn(YULIAR_FLAVOR_NAME.getAssembleBundleRelease())
     dependsOn(DJAN_FLAVOR_NAME.getAssembleBundleRelease())
     dependsOn(GUSTO_PUB_FLAVOR_NAME.getAssembleBundleRelease())
     dependsOn(TANDIR_HOUSE_FLAVOR_NAME.getAssembleBundleRelease())
     dependsOn(VKUS_KAVKAZA_FLAVOR_NAME.getAssembleBundleRelease())
+}
 
+tasks.register("publishAll") {
+    mustRunAfter("assembleAll")
     dependsOn(PAPA_KARLO_FLAVOR_NAME.getPublishReleaseBundle())
     dependsOn(YULIAR_FLAVOR_NAME.getPublishReleaseBundle())
     dependsOn(DJAN_FLAVOR_NAME.getPublishReleaseBundle())
@@ -249,7 +252,7 @@ tasks.register("assembleAndPublishAllRelease") {
 
 fun commonPlayConfig(
     playPublisherExtension: PlayPublisherExtension,
-    buildGradle: Build_gradle
+    buildGradle: Build_gradle,
 ) {
     playPublisherExtension.track.set("production")
     playPublisherExtension.defaultToAppBundles.set(true)
