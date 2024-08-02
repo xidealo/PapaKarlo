@@ -10,7 +10,7 @@ object Constants {
 }
 
 fun String.getAssembleBundleRelease() =
-    "assemble${this.replaceFirstChar { oldChar -> oldChar.uppercase() }}"
+    "assemble${this.replaceFirstChar { oldChar -> oldChar.uppercase() }}Release"
 
 fun String.getPublishReleaseBundle() =
     "publish${this.replaceFirstChar { oldChar -> oldChar.uppercase() }}ReleaseBundle"
