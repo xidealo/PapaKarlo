@@ -238,10 +238,10 @@ tasks.register("assembleAll") {
         DJAN_FLAVOR_NAME.getAssembleBundleRelease(),
         GUSTO_PUB_FLAVOR_NAME.getAssembleBundleRelease(),
         TANDIR_HOUSE_FLAVOR_NAME.getAssembleBundleRelease(),
-        VKUS_KAVKAZA_FLAVOR_NAME.getAssembleBundleRelease(),
+        VKUS_KAVKAZA_FLAVOR_NAME.getAssembleBundleRelease()
     )
 }
-//- name: start publish
+// - name: start publish
 //        run: ./gradlew publishAll
 tasks.register("publishAll") {
     mustRunAfter("assembleAll")
@@ -255,7 +255,7 @@ tasks.register("publishAll") {
 
 fun commonPlayConfig(
     playPublisherExtension: PlayPublisherExtension,
-    buildGradle: Build_gradle,
+    buildGradle: Build_gradle
 ) {
     playPublisherExtension.track.set("production")
     playPublisherExtension.defaultToAppBundles.set(true)
