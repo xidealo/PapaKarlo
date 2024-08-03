@@ -131,7 +131,7 @@ jobs:
       - name: Decode google-play-api-key.json
         env:
           GOOGLE_PLAY_API_KEY: ${{ secrets.GOOGLE_PLAY_API_KEY }}
-        run: echo "${GOOGLE_PLAY_API_KEY}" > app/google-play-api-key.json
+        run: echo "${GOOGLE_PLAY_API_KEY}" | base64 --decode > app/google-play-api-key.json
 
       - name: Create local properties
         env:
