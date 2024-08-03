@@ -236,7 +236,7 @@ tasks.register("assembleAll") {
         PAPA_KARLO_FLAVOR_NAME.getAssembleBundleRelease(),
         YULIAR_FLAVOR_NAME.getAssembleBundleRelease(),
         DJAN_FLAVOR_NAME.getAssembleBundleRelease(),
-        // GUSTO_PUB_FLAVOR_NAME.getAssembleBundleRelease(),
+        GUSTO_PUB_FLAVOR_NAME.getAssembleBundleRelease(),
         TANDIR_HOUSE_FLAVOR_NAME.getAssembleBundleRelease(),
         VKUS_KAVKAZA_FLAVOR_NAME.getAssembleBundleRelease()
     )
