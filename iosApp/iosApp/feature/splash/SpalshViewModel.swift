@@ -11,7 +11,7 @@ import shared
 
 class SplashViewModel:ObservableObject {
     
-    @Published var splashViewState:SplashViewState = SplashViewState(splashState: .checking)
+    @Published var splashViewState: SplashViewState = SplashViewState(splashState: .checking)
     
     init(){
         iosComponent.provideCityInteractor().checkIsCitySelected { isSelected, err in

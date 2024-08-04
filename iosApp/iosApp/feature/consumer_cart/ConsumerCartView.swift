@@ -19,7 +19,8 @@ struct ConsumerCartView: View {
         removeCartProductUseCase: iosComponent.provideRemoveCartProductUseCase(),
         getRecommendationsUseCase: iosComponent.provideGetRecommendationsUseCase(),
         getMotivationUseCase: iosComponent.provideGetMotivationUseCaseUseCase(),
-        analyticService: iosComponent.provideAnalyticService()
+        analyticService: iosComponent.provideAnalyticService(), 
+        isOrderAvailableUseCase: iosComponent.provideIsOrderAvailableUseCase()
     )
     
     @State var consumerCartViewState = ConsumerCartViewState(
@@ -220,7 +221,8 @@ struct ConsumerCartView: View {
             motivation: motivationUi,
             discount: dataState.discount,
             oldTotalCost: dataState.oldTotalCost,
-            newTotalCost: dataState.newTotalCost
+            newTotalCost: dataState.newTotalCost,
+            orderAvailable: dataState.orderAvailable
         )
     }
 
@@ -422,13 +424,23 @@ struct ConsumerCartSuccessScreen: View {
                         }.padding(.top, 8)
                             .padding(.horizontal, 16)
 
-                        Button {
-                            action(ConsumerCartActionOnCreateOrderClick())
-                        } label: {
-                            ButtonText(text: Strings.ACTION_CART_PRODUCT_CREATE_ORDER)
+                        if let orderAvailable = bottomPanelInfoUi?.orderAvailable {
+                            Button(
+                                action: {
+                                    action(ConsumerCartActionOnCreateOrderClick())
+                                },
+                                label: {
+                                    ButtonText(
+                                        text: Strings.ACTION_CART_PRODUCT_CREATE_ORDER,
+                                        background: orderAvailable ?  AppColor.primary : AppColor.disabled,
+                                        foregroundColor: orderAvailable ? AppColor.onPrimary : AppColor.onDisabled
+                                    )
+                                }
+                            )
+                            .disabled(!orderAvailable)
+                            .padding(.horizontal, Diems.MEDIUM_PADDING)
+                            .padding(.vertical, Diems.MEDIUM_PADDING)
                         }
-                        .padding(.horizontal, Diems.MEDIUM_PADDING)
-                        .padding(.vertical, Diems.MEDIUM_PADDING)
                     }
                 }.background(AppColor.surface)
             }

@@ -109,3 +109,6 @@
 "msg_without_change" = "Without change";
 "msg_change_from" = "Change from";
 "error_enter_correct_amount" = "Enter correct amount";
+
+
+"warning_no_order_available" = "No order available";
