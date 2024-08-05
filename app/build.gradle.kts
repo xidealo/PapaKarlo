@@ -231,20 +231,27 @@ dependencies {
     implementation(CollectionsImmutable.collectionsImmutable)
 }
 
-tasks.register("assembleAndPublishAllRelease") {
-    dependsOn(PAPA_KARLO_FLAVOR_NAME.getAssembleBundleRelease())
-    dependsOn(YULIAR_FLAVOR_NAME.getAssembleBundleRelease())
-    dependsOn(DJAN_FLAVOR_NAME.getAssembleBundleRelease())
-    dependsOn(GUSTO_PUB_FLAVOR_NAME.getAssembleBundleRelease())
-    dependsOn(TANDIR_HOUSE_FLAVOR_NAME.getAssembleBundleRelease())
-    dependsOn(VKUS_KAVKAZA_FLAVOR_NAME.getAssembleBundleRelease())
+tasks.register("assembleAll") {
+    dependsOn(
+        PAPA_KARLO_FLAVOR_NAME.getAssembleBundleRelease(),
+        YULIAR_FLAVOR_NAME.getAssembleBundleRelease(),
+        DJAN_FLAVOR_NAME.getAssembleBundleRelease(),
+        GUSTO_PUB_FLAVOR_NAME.getAssembleBundleRelease(),
+        TANDIR_HOUSE_FLAVOR_NAME.getAssembleBundleRelease(),
+        VKUS_KAVKAZA_FLAVOR_NAME.getAssembleBundleRelease()
+    )
+}
 
-    dependsOn(PAPA_KARLO_FLAVOR_NAME.getPublishReleaseBundle())
-    dependsOn(YULIAR_FLAVOR_NAME.getPublishReleaseBundle())
-    dependsOn(DJAN_FLAVOR_NAME.getPublishReleaseBundle())
-    dependsOn(GUSTO_PUB_FLAVOR_NAME.getPublishReleaseBundle())
-    dependsOn(TANDIR_HOUSE_FLAVOR_NAME.getPublishReleaseBundle())
-    dependsOn(VKUS_KAVKAZA_FLAVOR_NAME.getPublishReleaseBundle())
+tasks.register("publishAll") {
+    mustRunAfter("assembleAll")
+    dependsOn(
+        PAPA_KARLO_FLAVOR_NAME.getPublishReleaseBundle(),
+        YULIAR_FLAVOR_NAME.getPublishReleaseBundle(),
+        DJAN_FLAVOR_NAME.getPublishReleaseBundle(),
+        GUSTO_PUB_FLAVOR_NAME.getPublishReleaseBundle(),
+        TANDIR_HOUSE_FLAVOR_NAME.getPublishReleaseBundle(),
+        VKUS_KAVKAZA_FLAVOR_NAME.getPublishReleaseBundle()
+    )
 }
 
 fun commonPlayConfig(
