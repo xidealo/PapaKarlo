@@ -216,6 +216,18 @@
 		025775182ACCA01600DDBC94 /* DiscountCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025775142ACCA01600DDBC94 /* DiscountCard.swift */; };
 		0265D2A02AC9B1BF00B862FF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0265D29C2AC9B14A00B862FF /* GoogleService-Info.plist */; };
 		0265D2A12AC9B1C200B862FF /* pepe.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0251DCA029DE11680008DBA5 /* pepe.plist */; };
+		026867972C565E38003E3EC3 /* NavigationIconCardWithDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026867962C565E38003E3EC3 /* NavigationIconCardWithDivider.swift */; };
+		026867982C565E38003E3EC3 /* NavigationIconCardWithDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026867962C565E38003E3EC3 /* NavigationIconCardWithDivider.swift */; };
+		026867992C565E38003E3EC3 /* NavigationIconCardWithDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026867962C565E38003E3EC3 /* NavigationIconCardWithDivider.swift */; };
+		0268679A2C565E38003E3EC3 /* NavigationIconCardWithDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026867962C565E38003E3EC3 /* NavigationIconCardWithDivider.swift */; };
+		0268679B2C565E38003E3EC3 /* NavigationIconCardWithDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026867962C565E38003E3EC3 /* NavigationIconCardWithDivider.swift */; };
+		0268679C2C565E38003E3EC3 /* NavigationIconCardWithDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026867962C565E38003E3EC3 /* NavigationIconCardWithDivider.swift */; };
+		0268679E2C5661E1003E3EC3 /* FoodDeliveryDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0268679D2C5661E1003E3EC3 /* FoodDeliveryDivider.swift */; };
+		0268679F2C5661E1003E3EC3 /* FoodDeliveryDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0268679D2C5661E1003E3EC3 /* FoodDeliveryDivider.swift */; };
+		026867A02C5661E1003E3EC3 /* FoodDeliveryDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0268679D2C5661E1003E3EC3 /* FoodDeliveryDivider.swift */; };
+		026867A12C5661E1003E3EC3 /* FoodDeliveryDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0268679D2C5661E1003E3EC3 /* FoodDeliveryDivider.swift */; };
+		026867A22C5661E1003E3EC3 /* FoodDeliveryDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0268679D2C5661E1003E3EC3 /* FoodDeliveryDivider.swift */; };
+		026867A32C5661E1003E3EC3 /* FoodDeliveryDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0268679D2C5661E1003E3EC3 /* FoodDeliveryDivider.swift */; };
 		0269DB3E2C263DEA009D36AE /* PaymentMethodUi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0269DB3D2C263DEA009D36AE /* PaymentMethodUi.swift */; };
 		0269DB3F2C263DEA009D36AE /* PaymentMethodUi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0269DB3D2C263DEA009D36AE /* PaymentMethodUi.swift */; };
 		0269DB402C263DEA009D36AE /* PaymentMethodUi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0269DB3D2C263DEA009D36AE /* PaymentMethodUi.swift */; };
@@ -792,6 +804,8 @@
 		025775142ACCA01600DDBC94 /* DiscountCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscountCard.swift; sourceTree = "<group>"; };
 		0265D29C2AC9B14A00B862FF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		026643F02A22AF3C000310BF /* papakarlo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = papakarlo.entitlements; sourceTree = "<group>"; };
+		026867962C565E38003E3EC3 /* NavigationIconCardWithDivider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationIconCardWithDivider.swift; sourceTree = "<group>"; };
+		0268679D2C5661E1003E3EC3 /* FoodDeliveryDivider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodDeliveryDivider.swift; sourceTree = "<group>"; };
 		0269DB3D2C263DEA009D36AE /* PaymentMethodUi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodUi.swift; sourceTree = "<group>"; };
 		026C1FCB2A2690B900838266 /* djan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = djan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		026C1FCD2A2691B000838266 /* djan.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = djan.plist; sourceTree = "<group>"; };
@@ -1188,6 +1202,7 @@
 				023041D228D61C3700ACF30B /* ToastView.swift */,
 				0294FD7929DF71B900568A10 /* EmptyWithIconView.swift */,
 				02BDC9DD2C387ACF005E1CA7 /* FoodDeliveryCheckBox.swift */,
+				0268679D2C5661E1003E3EC3 /* FoodDeliveryDivider.swift */,
 			);
 			path = custom_view;
 			sourceTree = "<group>";
@@ -1210,6 +1225,7 @@
 				02C21FF828D265E900DCF537 /* ActionTextCardView.swift */,
 				022A868428D79D5F00DBE5EC /* CardView.swift */,
 				025775142ACCA01600DDBC94 /* DiscountCard.swift */,
+				026867962C565E38003E3EC3 /* NavigationIconCardWithDivider.swift */,
 			);
 			path = card;
 			sourceTree = "<group>";
@@ -2057,6 +2073,7 @@
 				0219B7AB2B8FB97C00305E2D /* MenuViewState.swift in Sources */,
 				0219B7AC2B8FB97C00305E2D /* SpalshViewModel.swift in Sources */,
 				0219B7AD2B8FB97C00305E2D /* ChangeCityView.swift in Sources */,
+				026867A22C5661E1003E3EC3 /* FoodDeliveryDivider.swift in Sources */,
 				0219B7AE2B8FB97C00305E2D /* SplashScreen.swift in Sources */,
 				0219B7AF2B8FB97C00305E2D /* CreateAddressViewState.swift in Sources */,
 				0219B7B02B8FB97C00305E2D /* CityItemView.swift in Sources */,
@@ -2068,6 +2085,7 @@
 				0219B7B32B8FB97C00305E2D /* NavigationCardView.swift in Sources */,
 				0219B7B42B8FB97C00305E2D /* MenuProductItem.swift in Sources */,
 				0219B7B52B8FB97C00305E2D /* CountPicker.swift in Sources */,
+				0268679B2C565E38003E3EC3 /* NavigationIconCardWithDivider.swift in Sources */,
 				0219B7B72B8FB97C00305E2D /* DateUtil.swift in Sources */,
 				0219B7B82B8FB97C00305E2D /* PaymentView.swift in Sources */,
 				0219B7B92B8FB97C00305E2D /* ProfileView.swift in Sources */,
@@ -2170,6 +2188,7 @@
 				026C1F6F2A2690B900838266 /* MenuViewState.swift in Sources */,
 				026C1F702A2690B900838266 /* SpalshViewModel.swift in Sources */,
 				026C1F712A2690B900838266 /* ChangeCityView.swift in Sources */,
+				026867A02C5661E1003E3EC3 /* FoodDeliveryDivider.swift in Sources */,
 				026C1F722A2690B900838266 /* SplashScreen.swift in Sources */,
 				021920C62B7417F5004EE254 /* CreateAddressViewState.swift in Sources */,
 				026C1F742A2690B900838266 /* CityItemView.swift in Sources */,
@@ -2181,6 +2200,7 @@
 				026C1F772A2690B900838266 /* NavigationCardView.swift in Sources */,
 				026C1F792A2690B900838266 /* MenuProductItem.swift in Sources */,
 				026C1F7A2A2690B900838266 /* CountPicker.swift in Sources */,
+				026867992C565E38003E3EC3 /* NavigationIconCardWithDivider.swift in Sources */,
 				026C1F7C2A2690B900838266 /* DateUtil.swift in Sources */,
 				026C1F7D2A2690B900838266 /* PaymentView.swift in Sources */,
 				026C1F7E2A2690B900838266 /* ProfileView.swift in Sources */,
@@ -2283,6 +2303,7 @@
 				027CB0322A346F7B00350EB2 /* MenuViewState.swift in Sources */,
 				027CB0332A346F7B00350EB2 /* SpalshViewModel.swift in Sources */,
 				027CB0342A346F7B00350EB2 /* ChangeCityView.swift in Sources */,
+				026867A12C5661E1003E3EC3 /* FoodDeliveryDivider.swift in Sources */,
 				027CB0352A346F7B00350EB2 /* SplashScreen.swift in Sources */,
 				021920C72B7417F5004EE254 /* CreateAddressViewState.swift in Sources */,
 				027CB0372A346F7B00350EB2 /* CityItemView.swift in Sources */,
@@ -2294,6 +2315,7 @@
 				027CB03A2A346F7B00350EB2 /* NavigationCardView.swift in Sources */,
 				027CB03C2A346F7B00350EB2 /* MenuProductItem.swift in Sources */,
 				027CB03D2A346F7B00350EB2 /* CountPicker.swift in Sources */,
+				0268679A2C565E38003E3EC3 /* NavigationIconCardWithDivider.swift in Sources */,
 				027CB03F2A346F7B00350EB2 /* DateUtil.swift in Sources */,
 				027CB0402A346F7B00350EB2 /* PaymentView.swift in Sources */,
 				027CB0412A346F7B00350EB2 /* ProfileView.swift in Sources */,
@@ -2396,6 +2418,7 @@
 				02891F8B2BDAEA0D0043B466 /* MenuViewState.swift in Sources */,
 				02891F8C2BDAEA0D0043B466 /* SpalshViewModel.swift in Sources */,
 				02891F8D2BDAEA0D0043B466 /* ChangeCityView.swift in Sources */,
+				026867A32C5661E1003E3EC3 /* FoodDeliveryDivider.swift in Sources */,
 				02891F8E2BDAEA0D0043B466 /* SplashScreen.swift in Sources */,
 				02891F8F2BDAEA0D0043B466 /* CreateAddressViewState.swift in Sources */,
 				02891F902BDAEA0D0043B466 /* CityItemView.swift in Sources */,
@@ -2407,6 +2430,7 @@
 				02891F932BDAEA0D0043B466 /* NavigationCardView.swift in Sources */,
 				02891F942BDAEA0D0043B466 /* MenuProductItem.swift in Sources */,
 				02891F952BDAEA0D0043B466 /* CountPicker.swift in Sources */,
+				0268679C2C565E38003E3EC3 /* NavigationIconCardWithDivider.swift in Sources */,
 				02891F972BDAEA0D0043B466 /* DateUtil.swift in Sources */,
 				02891F982BDAEA0D0043B466 /* PaymentView.swift in Sources */,
 				02891F992BDAEA0D0043B466 /* ProfileView.swift in Sources */,
@@ -2509,6 +2533,7 @@
 				02ADC35329D9D0880062A141 /* MenuViewState.swift in Sources */,
 				02ADC35429D9D0880062A141 /* SpalshViewModel.swift in Sources */,
 				02ADC35529D9D0880062A141 /* ChangeCityView.swift in Sources */,
+				0268679F2C5661E1003E3EC3 /* FoodDeliveryDivider.swift in Sources */,
 				02ADC35629D9D0880062A141 /* SplashScreen.swift in Sources */,
 				021920C52B7417F5004EE254 /* CreateAddressViewState.swift in Sources */,
 				02ADC35829D9D0880062A141 /* CityItemView.swift in Sources */,
@@ -2520,6 +2545,7 @@
 				02ADC35B29D9D0880062A141 /* NavigationCardView.swift in Sources */,
 				02ADC35D29D9D0880062A141 /* MenuProductItem.swift in Sources */,
 				02ADC35E29D9D0880062A141 /* CountPicker.swift in Sources */,
+				026867982C565E38003E3EC3 /* NavigationIconCardWithDivider.swift in Sources */,
 				02ADC36029D9D0880062A141 /* DateUtil.swift in Sources */,
 				02ADC36129D9D0880062A141 /* PaymentView.swift in Sources */,
 				02ADC36229D9D0880062A141 /* ProfileView.swift in Sources */,
@@ -2622,6 +2648,7 @@
 				023234A1287879EF0048CF39 /* MenuViewState.swift in Sources */,
 				024E877F287A15D000728CB3 /* SpalshViewModel.swift in Sources */,
 				0232348C287879EF0048CF39 /* ChangeCityView.swift in Sources */,
+				0268679E2C5661E1003E3EC3 /* FoodDeliveryDivider.swift in Sources */,
 				02323422287878520048CF39 /* SplashScreen.swift in Sources */,
 				021920C42B7417F5004EE254 /* CreateAddressViewState.swift in Sources */,
 				0232347E287879EF0048CF39 /* CityItemView.swift in Sources */,
@@ -2633,6 +2660,7 @@
 				023234C928787A180048CF39 /* NavigationCardView.swift in Sources */,
 				023234A3287879EF0048CF39 /* MenuProductItem.swift in Sources */,
 				023234D228787A180048CF39 /* CountPicker.swift in Sources */,
+				026867972C565E38003E3EC3 /* NavigationIconCardWithDivider.swift in Sources */,
 				022BC66E28CC895800F3ED27 /* DateUtil.swift in Sources */,
 				021E0A9428D4AAB900CB6A15 /* PaymentView.swift in Sources */,
 				0232348F287879EF0048CF39 /* ProfileView.swift in Sources */,

@@ -9,14 +9,14 @@
 import SwiftUI
 import shared
 
-struct LightOrderItemView<Content: View>: View{
+struct LightOrderItemView<Content: View>: View {
     
-    let lightOrder:LightOrder
-    let destination:Content
+    let lightOrder: LightOrder
+    let destination: Content
     
     var body: some View {
         NavigationLink(
-            destination:destination
+            destination: destination
         ){
             HStack(spacing:0){
                 Text(lightOrder.code)

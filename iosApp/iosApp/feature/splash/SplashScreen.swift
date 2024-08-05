@@ -11,13 +11,24 @@ import shared
 struct SplashView: View {
     
     @ObservedObject private var viewModel = SplashViewModel()
+    @State var showOrderNotAvailable = false
     
     init(){
         UINavigationBar.setAnimationsEnabled(false)
     }
     
     var body: some View {
-        HStack(spacing:0){
+        VStack(spacing:0){
+            if(showOrderNotAvailable){
+                Text("warning_no_order_available")
+                    .bodyMedium()
+                    .foregroundColor(AppColor.onStatus)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 4)
+                    .padding(.horizontal, 16)
+                    .background(AppColor.warning)
+            }
+    
             switch viewModel.splashViewState.splashState {
             case .isGoSelectCity:NavigationView{
                 NavigationLink(
@@ -38,7 +49,13 @@ struct SplashView: View {
             }
             default : EmptyView()
             }
-        }
+        }.onAppear(perform: {
+            iosComponent.provideIsOrderAvailableUseCase().invoke { isAvailable, err in
+                if let isAvailable = isAvailable{
+                    showOrderNotAvailable = !(isAvailable as! Bool)
+                }
+            }
+        })
     }
 }
 

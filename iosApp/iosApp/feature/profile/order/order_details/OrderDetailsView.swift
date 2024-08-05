@@ -70,7 +70,7 @@ struct OrderDetailsView: View {
                                     .padding(.top, Diems.SMALL_PADDING)
                                 
                                 if(!orderProductItem.isLast){
-                                    Divider()
+                                    FoodDeliveryDivider()
                                         .padding(.top, 8)
                                         .padding(.horizontal, 16)
                                 }
