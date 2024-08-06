@@ -6,7 +6,7 @@ plugins {
     id(Plugin.androidLibrary)
     id(Plugin.sqldelight)
     id(Plugin.kotlinSerialization)
-    id("io.kotest.multiplatform") version "5.0.2"
+    id("io.kotest.multiplatform") version "5.9.1"
 }
 
 kotlin {
@@ -66,7 +66,10 @@ kotlin {
                 //implementation(MockK.common)
                 implementation(Coroutine.test)
 
-                implementation("io.kotest:kotest-framework-engine:5.0.2")
+               implementation("io.kotest:kotest-framework-engine:5.9.1")
+               implementation("io.kotest:kotest-assertions-core:5.9.1")
+
+                implementation("com.willowtreeapps.assertk:assertk:0.28.1")
 
                 implementation(kotlin("test-common"))
                 implementation(kotlin("test-annotations-common"))
@@ -82,6 +85,13 @@ kotlin {
                 implementation(Firebase.messaging)
 
                 implementation(SqlDelight.androidDriver)
+            }
+        }
+        val androidUnitTest by getting {
+            dependencies {
+                implementation(kotlin("test"))
+                implementation(kotlin("test-common"))
+                implementation(kotlin("test-annotations-common"))
             }
         }
 
@@ -126,9 +136,6 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-}
-dependencies {
-    testImplementation("org.testng:testng:6.9.6")
 }
 
 sqldelight {

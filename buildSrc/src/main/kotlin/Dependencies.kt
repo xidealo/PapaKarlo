@@ -1,6 +1,6 @@
 object Versions {
     const val gradle = "8.5.0"
-    const val kotlin = "2.0.10-RC"
+    const val kotlin = "2.0.10"
     const val googleServices = "4.3.15"
     const val crashlytics = "2.9.9"
     const val navigation = "2.7.1"
