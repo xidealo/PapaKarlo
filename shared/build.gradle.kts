@@ -1,4 +1,5 @@
 import Constants.DEPLOYMENT_TARGET
+import org.apache.groovy.json.internal.Chr.add
 
 plugins {
     kotlin(Plugin.multiplatform)
@@ -6,7 +7,7 @@ plugins {
     id(Plugin.androidLibrary)
     id(Plugin.sqldelight)
     id(Plugin.kotlinSerialization)
-    id("io.kotest.multiplatform") version "5.9.1"
+    id(Plugin.kapt)
 }
 
 kotlin {
@@ -62,15 +63,10 @@ kotlin {
         }
         val commonTest by getting {
             dependencies {
-                //implementation(MockK.main)
-                //implementation(MockK.common)
                 implementation(Coroutine.test)
+                implementation("io.mockative:mockative:2.2.2")
 
-               implementation("io.kotest:kotest-framework-engine:5.9.1")
-               implementation("io.kotest:kotest-assertions-core:5.9.1")
-
-                implementation("com.willowtreeapps.assertk:assertk:0.28.1")
-
+                implementation(kotlin("test"))
                 implementation(kotlin("test-common"))
                 implementation(kotlin("test-annotations-common"))
             }
@@ -142,4 +138,12 @@ sqldelight {
     database("FoodDeliveryDatabase") {
         packageName = "com.bunbeauty.shared.db"
     }
+}
+
+dependencies {
+    configurations
+        .filter { it.name.startsWith("ksp") && it.name.contains("Test") }
+        .forEach {
+            add(it.name, "io.mockative:mockative-processor:2.2.2")
+        }
 }

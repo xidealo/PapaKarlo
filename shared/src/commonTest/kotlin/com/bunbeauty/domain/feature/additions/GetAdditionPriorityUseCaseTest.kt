@@ -1,23 +1,24 @@
 package com.bunbeauty.domain.feature.additions
 
-import assertk.assertThat
-import assertk.assertions.isEqualTo
 import com.bunbeauty.getAddition
 import com.bunbeauty.getAdditionGroup
 import com.bunbeauty.shared.domain.feature.addition.GetAdditionPriorityUseCase
-import io.kotest.core.spec.style.StringSpec
-import io.kotest.matchers.shouldBe
+import kotlinx.coroutines.test.runTest
+import kotlin.test.BeforeTest
 import kotlin.test.Test
+import kotlin.test.assertEquals
 
-class GetAdditionPriorityUseCaseTests : StringSpec({
+class GetAdditionPriorityUseCaseTest {
 
-    lateinit var useCase: GetAdditionPriorityUseCase
+    private lateinit var useCase: GetAdditionPriorityUseCase
 
-    beforeTest {
+    @BeforeTest
+    fun setup() {
         useCase = GetAdditionPriorityUseCase()
     }
 
-    "calculate correct priority" {
+    @Test
+    fun `calculate correct priority`() = runTest {
         // Given
         val addition = getAddition(priority = 1)
         val additionGroup = getAdditionGroup(priority = 1)
@@ -29,23 +30,6 @@ class GetAdditionPriorityUseCaseTests : StringSpec({
         )
 
         // Then
-        result shouldBe 11
-    }
-})
-
-class GetAdditionPriorityUseCaseTest {
-    val useCase = GetAdditionPriorityUseCase()
-
-    @Test
-    fun testName() {
-        val addition = getAddition(priority = 1)
-        val additionGroup = getAdditionGroup(priority = 1)
-
-        val result = useCase(
-            additionGroup = additionGroup,
-            addition = addition
-        )
-
-        assertThat(result).isEqualTo(11)
+        assertEquals(11, result)
     }
 }

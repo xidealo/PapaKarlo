@@ -5,7 +5,7 @@ object Versions {
     const val crashlytics = "2.9.9"
     const val navigation = "2.7.1"
 
-    const val kotlinCoroutines = "1.7.3"
+    const val kotlinCoroutines = "1.9.0-RC"
     const val ktor = "2.3.3"
     const val kotlinxSerialization = "1.5.1"
     const val koin = "3.4.3"
@@ -170,7 +170,7 @@ object Koin {
     const val compose = "io.insert-koin:koin-androidx-compose:${Versions.koin}"
 }
 
-object MockK {
+object Kotest {
     const val main = "io.mockk:mockk:${Versions.mockK}"
     const val common = "io.mockk:mockk-common:${Versions.mockK}"
 }
