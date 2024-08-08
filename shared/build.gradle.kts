@@ -61,8 +61,8 @@ kotlin {
         }
         val commonTest by getting {
             dependencies {
-                implementation(MockK.main)
-                implementation(MockK.common)
+                //implementation(MockK.main)
+                //implementation(MockK.common)
                 implementation(Coroutine.test)
 
                 implementation(kotlin("test-common"))
