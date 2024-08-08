@@ -1,7 +1,7 @@
 package com.bunbeauty.papakarlo.feature.menu.ui
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
@@ -28,7 +28,7 @@ fun CategoryItem(
         FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
     }
     FoodDeliveryCard(
-        modifier = modifier.defaultMinSize(minHeight = FoodDeliveryTheme.dimensions.smallButtonSize),
+        modifier = modifier,
         elevated = false,
         onClick = onClick,
         colors = FoodDeliveryCardDefaults.transparentCardColors,
@@ -38,17 +38,19 @@ fun CategoryItem(
             color = color
         )
     ) {
-        Text(
-            modifier = Modifier
-                .padding(
-                    horizontal = 12.dp,
-                    vertical = 6.dp
-                ),
-            text = categoryItem.name,
-            style = FoodDeliveryTheme.typography.labelLarge.medium,
-            color = color,
-            textAlign = TextAlign.Center
-        )
+        Box() {
+            Text(
+                modifier = Modifier
+                    .padding(
+                        horizontal = 12.dp,
+                        vertical = 6.dp
+                    ),
+                text = categoryItem.name,
+                style = FoodDeliveryTheme.typography.labelLarge.medium,
+                color = color,
+                textAlign = TextAlign.Center
+            )
+        }
     }
 }
 
