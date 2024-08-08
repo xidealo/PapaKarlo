@@ -1,7 +1,6 @@
 package com.bunbeauty.papakarlo.feature.menu.ui
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
@@ -38,19 +37,17 @@ fun CategoryItem(
             color = color
         )
     ) {
-        Box() {
-            Text(
-                modifier = Modifier
-                    .padding(
-                        horizontal = 12.dp,
-                        vertical = 6.dp
-                    ),
-                text = categoryItem.name,
-                style = FoodDeliveryTheme.typography.labelLarge.medium,
-                color = color,
-                textAlign = TextAlign.Center
-            )
-        }
+        Text(
+            modifier = Modifier
+                .padding(
+                    horizontal = 12.dp,
+                    vertical = 6.dp
+                ),
+            text = categoryItem.name,
+            style = FoodDeliveryTheme.typography.labelLarge.medium,
+            color = color,
+            textAlign = TextAlign.Center
+        )
     }
 }
 
