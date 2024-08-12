@@ -102,10 +102,8 @@ jobs:
           \nRELEASE_STORE_PASSWORD=$RELEASE_STORE_PASSWORD
           \nRELEASE_KEY_ALIAS=$RELEASE_KEY_ALIAS
           \nRELEASE_KEY_PASSWORD=$RELEASE_KEY_PASSWORD" > local.properties
-      - name: run PapaKarlo tests
-        run: ./gradlew testPapaKarloDebug
-      - name: run Yuliar tests
-        run: ./gradlew testYuliarDebug
+      - name: run tests
+        run: ./gradlew test
 
   merge_to_master_job:
     runs-on: ubuntu-latest
