@@ -2,9 +2,16 @@ package com.bunbeauty.shared.domain.feature.addition
 
 import com.bunbeauty.shared.domain.model.cart.CartProduct
 
-class AreAdditionsEqualUseCase {
-
+interface AreAdditionsEqualUseCase {
     operator fun invoke(
+        cartProduct: CartProduct,
+        additionUuidList: List<String>
+    ): Boolean
+}
+
+class AreAdditionsEqualUseCaseImpl : AreAdditionsEqualUseCase {
+
+    override operator fun invoke(
         cartProduct: CartProduct,
         additionUuidList: List<String>
     ): Boolean {

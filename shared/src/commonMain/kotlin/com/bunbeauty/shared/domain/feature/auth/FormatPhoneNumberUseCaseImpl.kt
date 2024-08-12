@@ -2,9 +2,13 @@ package com.bunbeauty.shared.domain.feature.auth
 
 import com.bunbeauty.shared.Constants
 
-class FormatPhoneNumberUseCase {
+interface FormatPhoneNumberUseCase {
+    operator fun invoke(phoneNumber: String): String
+}
 
-    operator fun invoke(phoneNumber: String): String {
+class FormatPhoneNumberUseCaseImpl : FormatPhoneNumberUseCase {
+
+    override operator fun invoke(phoneNumber: String): String {
         val numbers = phoneNumber.run {
             if (!contains(Constants.PHONE_CODE) && isNotEmpty()) {
                 ""

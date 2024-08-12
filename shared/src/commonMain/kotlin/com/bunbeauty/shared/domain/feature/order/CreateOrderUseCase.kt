@@ -11,12 +11,12 @@ import com.bunbeauty.shared.domain.model.order.OrderCode
 import com.bunbeauty.shared.domain.model.product.CreatedOrderProduct
 import com.bunbeauty.shared.domain.repo.CartProductRepo
 import com.bunbeauty.shared.domain.repo.OrderRepo
-import com.bunbeauty.shared.domain.util.IDateTimeUtil
+import com.bunbeauty.shared.domain.util.DateTimeUtil
 
 class CreateOrderUseCase(
     private val dataStoreRepo: DataStoreRepo,
     private val cartProductRepo: CartProductRepo,
-    private val dateTimeUtil: IDateTimeUtil,
+    private val dateTimeUtil: DateTimeUtil,
     private val orderRepo: OrderRepo
 ) {
 

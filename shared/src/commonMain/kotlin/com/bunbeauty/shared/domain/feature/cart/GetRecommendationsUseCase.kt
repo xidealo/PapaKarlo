@@ -1,11 +1,11 @@
 package com.bunbeauty.shared.domain.feature.cart
 
-import com.bunbeauty.shared.data.repository.RecommendationRepository
 import com.bunbeauty.shared.domain.feature.menuproduct.GetMenuProductListUseCase
 import com.bunbeauty.shared.domain.model.cart.CartProduct
 import com.bunbeauty.shared.domain.model.category.Category
 import com.bunbeauty.shared.domain.model.product.MenuProduct
 import com.bunbeauty.shared.domain.repo.CartProductRepo
+import com.bunbeauty.shared.domain.repo.RecommendationRepo
 
 /*
 * 1 - Берем список рекомендаций
@@ -14,7 +14,7 @@ import com.bunbeauty.shared.domain.repo.CartProductRepo
 * 4 - Рекомендуем первые 4 (maxVisibleCount)
 * */
 class GetRecommendationsUseCase(
-    private val recommendationRepository: RecommendationRepository,
+    private val recommendationRepository: RecommendationRepo,
     private val cartProductRepo: CartProductRepo,
     private val getMenuProductListUseCase: GetMenuProductListUseCase
 ) {

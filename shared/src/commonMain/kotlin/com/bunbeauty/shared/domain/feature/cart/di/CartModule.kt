@@ -3,7 +3,9 @@ package com.bunbeauty.shared.domain.feature.cart.di
 import com.bunbeauty.shared.domain.feature.cart.AddCartProductUseCase
 import com.bunbeauty.shared.domain.feature.cart.EditCartProductUseCase
 import com.bunbeauty.shared.domain.feature.cart.GetCartProductCountUseCase
+import com.bunbeauty.shared.domain.feature.cart.GetCartProductCountUseCaseImpl
 import com.bunbeauty.shared.domain.feature.cart.GetDeliveryCostFlowUseCase
+import com.bunbeauty.shared.domain.feature.cart.GetDeliveryCostFlowUseCaseImpl
 import com.bunbeauty.shared.domain.feature.cart.GetRecommendationsUseCase
 import com.bunbeauty.shared.domain.feature.cart.IncreaseCartProductCountUseCase
 import com.bunbeauty.shared.domain.feature.cart.ObserveCartUseCase
@@ -55,8 +57,8 @@ internal fun cartModule() = module {
             cartProductRepo = get()
         )
     }
-    factory {
-        GetCartProductCountUseCase(
+    factory<GetCartProductCountUseCase> {
+        GetCartProductCountUseCaseImpl(
             cartProductRepo = get()
         )
     }
@@ -66,8 +68,8 @@ internal fun cartModule() = module {
             getUserAddressListUseCase = get()
         )
     }
-    factory {
-        GetDeliveryCostFlowUseCase(
+    factory<GetDeliveryCostFlowUseCase> {
+        GetDeliveryCostFlowUseCaseImpl(
             getCurrentUserAddressFlowUseCase = get()
         )
     }

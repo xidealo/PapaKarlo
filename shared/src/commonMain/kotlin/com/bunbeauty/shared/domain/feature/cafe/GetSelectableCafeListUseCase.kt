@@ -1,6 +1,7 @@
 package com.bunbeauty.shared.domain.feature.cafe
 
 import com.bunbeauty.shared.DataStoreRepo
+import com.bunbeauty.shared.domain.exeptions.EmptyCafeListException
 import com.bunbeauty.shared.domain.exeptions.NoSelectedCityUuidException
 import com.bunbeauty.shared.domain.exeptions.NoUserUuidException
 import com.bunbeauty.shared.domain.model.cafe.SelectableCafe
@@ -15,7 +16,7 @@ class GetSelectableCafeListUseCase(
         val cityUuid = dataStoreRepo.getSelectedCityUuid() ?: throw NoSelectedCityUuidException()
         val userUuid = dataStoreRepo.getUserUuid() ?: throw NoUserUuidException()
 
-        val cafeList = getCafeListUseCase()
+        val cafeList = getCafeListUseCase().ifEmpty { throw EmptyCafeListException() }
         val selectedCafe = cafeRepo.getSelectedCafeByUserAndCityUuid(
             userUuid = userUuid,
             cityUuid = cityUuid

@@ -1,5 +1,4 @@
 import Constants.DEPLOYMENT_TARGET
-import org.apache.groovy.json.internal.Chr.add
 
 plugins {
     kotlin(Plugin.multiplatform)
@@ -8,6 +7,7 @@ plugins {
     id(Plugin.sqldelight)
     id(Plugin.kotlinSerialization)
     id(Plugin.kapt)
+    id("dev.mokkery") version "2.2.0"
 }
 
 kotlin {
@@ -64,7 +64,6 @@ kotlin {
         val commonTest by getting {
             dependencies {
                 implementation(Coroutine.test)
-                implementation("io.mockative:mockative:2.2.2")
 
                 implementation(kotlin("test"))
                 implementation(kotlin("test-common"))

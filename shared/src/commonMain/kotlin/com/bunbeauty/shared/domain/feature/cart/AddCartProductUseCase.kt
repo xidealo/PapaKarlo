@@ -1,22 +1,22 @@
 package com.bunbeauty.shared.domain.feature.cart
 
 import com.bunbeauty.shared.Constants.CART_PRODUCT_LIMIT
-import com.bunbeauty.shared.data.repository.AdditionGroupRepository
-import com.bunbeauty.shared.data.repository.AdditionRepository
-import com.bunbeauty.shared.data.repository.CartProductAdditionRepository
 import com.bunbeauty.shared.domain.exeptions.CartProductLimitReachedException
 import com.bunbeauty.shared.domain.feature.addition.AreAdditionsEqualUseCase
 import com.bunbeauty.shared.domain.feature.addition.GetAdditionPriorityUseCase
 import com.bunbeauty.shared.domain.model.cart.CartProduct
+import com.bunbeauty.shared.domain.repo.AdditionGroupRepo
+import com.bunbeauty.shared.domain.repo.AdditionRepo
+import com.bunbeauty.shared.domain.repo.CartProductAdditionRepo
 import com.bunbeauty.shared.domain.repo.CartProductRepo
 
 class AddCartProductUseCase(
     private val getCartProductCountUseCase: GetCartProductCountUseCase,
     private val cartProductRepo: CartProductRepo,
-    private val cartProductAdditionRepository: CartProductAdditionRepository,
-    private val additionRepository: AdditionRepository,
+    private val cartProductAdditionRepository: CartProductAdditionRepo,
+    private val additionRepository: AdditionRepo,
     private val areAdditionsEqualUseCase: AreAdditionsEqualUseCase,
-    private val additionGroupRepository: AdditionGroupRepository,
+    private val additionGroupRepository: AdditionGroupRepo,
     private val getAdditionPriorityUseCase: GetAdditionPriorityUseCase
 ) {
     suspend operator fun invoke(
@@ -35,15 +35,20 @@ class AddCartProductUseCase(
         )
 
         if (cartProductWithSameAdditions == null) {
-            val cartProductUuid = cartProductRepo.saveAsCartProduct(menuProductUuid = menuProductUuid)
+            val cartProductUuid =
+                cartProductRepo.saveAsCartProduct(menuProductUuid = menuProductUuid)
             additionUuidList.forEach { additionUuid ->
                 additionRepository.getAddition(uuid = additionUuid)?.let { addition ->
-                    val additionGroup = additionGroupRepository.getAdditionGroup(uuid = addition.additionGroupUuid)
+                    val additionGroup =
+                        additionGroupRepository.getAdditionGroup(uuid = addition.additionGroupUuid)
                     cartProductAdditionRepository.saveAsCartProductAddition(
                         cartProductUuid = cartProductUuid,
                         addition = addition.copy(
                             priority = additionGroup?.let {
-                                getAdditionPriorityUseCase(additionGroup = additionGroup, addition = addition)
+                                getAdditionPriorityUseCase(
+                                    additionGroup = additionGroup,
+                                    addition = addition
+                                )
                             } ?: addition.priority
                         )
                     )
