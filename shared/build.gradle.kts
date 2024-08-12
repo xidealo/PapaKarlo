@@ -2,11 +2,11 @@ import Constants.DEPLOYMENT_TARGET
 
 plugins {
     kotlin(Plugin.multiplatform)
-    kotlin("native.cocoapods")
+    kotlin(Plugin.cocoa)
     id(Plugin.androidLibrary)
     id(Plugin.sqldelight)
     id(Plugin.kotlinSerialization)
-    id("dev.mokkery") version "2.2.0"
+    id(Plugin.mokkery) version Versions.mokkery
 }
 
 kotlin {

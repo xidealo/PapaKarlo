@@ -20,6 +20,7 @@ object Versions {
     const val coil = "2.4.0"
     const val datetime = "0.9.0"
     const val desugar = "2.0.3"
+    const val mokkery = "2.2.0"
 
     const val material = "1.9.0"
 
@@ -116,10 +117,12 @@ object Plugin {
     const val kapt = "kotlin-kapt"
     const val navigation = "androidx.navigation.safeargs"
     const val multiplatform = "multiplatform"
+    const val cocoa = "native.cocoapods"
     const val googleService = "com.google.gms.google-services"
     const val tripletPlay = "com.github.triplet.play"
     const val crashlytics = "com.google.firebase.crashlytics"
     const val sqldelight = "com.squareup.sqldelight"
+    const val mokkery = "dev.mokkery"
 }
 
 object AndroidX {
