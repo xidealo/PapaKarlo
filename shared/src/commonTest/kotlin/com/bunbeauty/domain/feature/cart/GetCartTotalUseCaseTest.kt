@@ -10,8 +10,10 @@ import com.bunbeauty.shared.domain.interactor.cart.GetOldTotalCostUseCase
 import com.bunbeauty.shared.domain.repo.CartProductRepo
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
+import dev.mokkery.matcher.any
 import dev.mokkery.mock
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -39,6 +41,7 @@ class GetCartTotalUseCaseTest {
         everySuspend { getDiscountUseCase() } returns null
         everySuspend { getNewTotalCostUseCase(listOf()) } returns 0
         everySuspend { getOldTotalCostUseCase(listOf()) } returns 0
+        everySuspend { getDeliveryCostFlowUseCase(any(), any()) } returns flow { emit(null) }
 
         // When
         val cartTotal = getCartTotalFlowUseCase(isDelivery = false)
@@ -58,6 +61,7 @@ class GetCartTotalUseCaseTest {
         everySuspend { getDiscountUseCase() } returns null
         everySuspend { getNewTotalCostUseCase(listOf()) } returns 0
         everySuspend { getOldTotalCostUseCase(listOf()) } returns 0
+        everySuspend { getDeliveryCostFlowUseCase(any(), any()) } returns flow { emit(null) }
 
         // When
         val cartTotal = getCartTotalFlowUseCase(isDelivery = false)
@@ -77,6 +81,7 @@ class GetCartTotalUseCaseTest {
         everySuspend { getDiscountUseCase() } returns null
         everySuspend { getNewTotalCostUseCase(listOf()) } returns 0
         everySuspend { getOldTotalCostUseCase(listOf()) } returns 0
+        everySuspend { getDeliveryCostFlowUseCase(any(), any()) } returns flow { emit(null) }
 
         // When
         val cartTotal = getCartTotalFlowUseCase(isDelivery = false)
@@ -95,6 +100,7 @@ class GetCartTotalUseCaseTest {
         everySuspend { getDiscountUseCase() } returns null
         everySuspend { getNewTotalCostUseCase(listOf()) } returns 0
         everySuspend { getOldTotalCostUseCase(listOf()) } returns 0
+        everySuspend { getDeliveryCostFlowUseCase(any(), any()) } returns flow { emit(null) }
 
         // When
         val cartTotal = getCartTotalFlowUseCase(isDelivery = false)
@@ -125,6 +131,7 @@ class GetCartTotalUseCaseTest {
             everySuspend { getDiscountUseCase() } returns null
             everySuspend { getNewTotalCostUseCase(cartProductListMockData) } returns 100
             everySuspend { getOldTotalCostUseCase(cartProductListMockData) } returns 200
+            everySuspend { getDeliveryCostFlowUseCase(any(), any()) } returns flow { emit(10) }
 
             // When
             val cartTotal = getCartTotalFlowUseCase(isDelivery = true)
@@ -155,6 +162,7 @@ class GetCartTotalUseCaseTest {
             everySuspend { getDiscountUseCase() } returns null
             everySuspend { getNewTotalCostUseCase(cartProductListMockData) } returns 100
             everySuspend { getOldTotalCostUseCase(cartProductListMockData) } returns 0
+            everySuspend { getDeliveryCostFlowUseCase(any(), any()) } returns flow { emit(10) }
 
             // When
             val cartTotal = getCartTotalFlowUseCase(isDelivery = true)

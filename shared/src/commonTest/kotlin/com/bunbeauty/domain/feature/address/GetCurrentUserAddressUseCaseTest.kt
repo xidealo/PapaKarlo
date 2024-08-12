@@ -1,7 +1,7 @@
 package com.bunbeauty.domain.feature.address
 
 import com.bunbeauty.shared.DataStoreRepo
-import com.bunbeauty.shared.domain.feature.address.GetCurrentUserAddressUseCase
+import com.bunbeauty.shared.domain.feature.address.GetCurrentUserAddressUseCaseImpl
 import com.bunbeauty.shared.domain.model.address.UserAddress
 import com.bunbeauty.shared.domain.repo.UserAddressRepo
 import dev.mokkery.answering.returns
@@ -37,8 +37,8 @@ class GetCurrentUserAddressUseCaseTest {
 
     private val userAddressRepo: UserAddressRepo = mock()
 
-    private val getCurrentUserAddressUseCase: GetCurrentUserAddressUseCase =
-        GetCurrentUserAddressUseCase(
+    private val getCurrentUserAddressUseCase: GetCurrentUserAddressUseCaseImpl =
+        GetCurrentUserAddressUseCaseImpl(
             dataStoreRepo = dataStoreRepo,
             userAddressRepo = userAddressRepo
         )
