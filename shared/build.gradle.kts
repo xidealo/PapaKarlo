@@ -6,7 +6,6 @@ plugins {
     id(Plugin.androidLibrary)
     id(Plugin.sqldelight)
     id(Plugin.kotlinSerialization)
-    id(Plugin.kapt)
     id("dev.mokkery") version "2.2.0"
 }
 
@@ -137,12 +136,4 @@ sqldelight {
     database("FoodDeliveryDatabase") {
         packageName = "com.bunbeauty.shared.db"
     }
-}
-
-dependencies {
-    configurations
-        .filter { it.name.startsWith("ksp") && it.name.contains("Test") }
-        .forEach {
-            add(it.name, "io.mockative:mockative-processor:2.2.2")
-        }
 }
