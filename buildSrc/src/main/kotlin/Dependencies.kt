@@ -9,7 +9,6 @@ object Versions {
     const val ktor = "2.3.3"
     const val kotlinxSerialization = "1.5.1"
     const val koin = "3.4.3"
-    const val mockK = "1.12.5"
 
     const val sqlDelight = "1.5.5"
     const val publisher = "3.7.0"
@@ -168,11 +167,6 @@ object Koin {
     const val test = "io.insert-koin:koin-test:${Versions.koin}"
     const val android = "io.insert-koin:koin-android:${Versions.koin}"
     const val compose = "io.insert-koin:koin-androidx-compose:${Versions.koin}"
-}
-
-object Kotest {
-    const val main = "io.mockk:mockk:${Versions.mockK}"
-    const val common = "io.mockk:mockk-common:${Versions.mockK}"
 }
 
 object Navigation {
