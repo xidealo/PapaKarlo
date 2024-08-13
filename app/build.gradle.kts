@@ -256,7 +256,7 @@ tasks.register("publishAll") {
 
 fun commonPlayConfig(
     playPublisherExtension: PlayPublisherExtension,
-    buildGradle: Build_gradle,
+    buildGradle: Build_gradle
 ) {
     with(playPublisherExtension) {
         track.set("production")
