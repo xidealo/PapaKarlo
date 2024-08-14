@@ -8,42 +8,40 @@ import com.bunbeauty.shared.domain.interactor.cart.GetCartTotalFlowUseCase
 import com.bunbeauty.shared.domain.interactor.cart.GetNewTotalCostUseCase
 import com.bunbeauty.shared.domain.interactor.cart.GetOldTotalCostUseCase
 import com.bunbeauty.shared.domain.repo.CartProductRepo
-import io.mockk.coEvery
-import io.mockk.mockk
+import dev.mokkery.answering.returns
+import dev.mokkery.everySuspend
+import dev.mokkery.matcher.any
+import dev.mokkery.mock
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest
-import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class GetCartTotalUseCaseTest {
 
-    private val cartProductRepo: CartProductRepo = mockk()
-    private val getDiscountUseCase: GetDiscountUseCase = mockk()
-    private val getNewTotalCostUseCase: GetNewTotalCostUseCase = mockk()
-    private val getOldTotalCostUseCase: GetOldTotalCostUseCase = mockk()
-    private val getDeliveryCostFlowUseCase: GetDeliveryCostFlowUseCase = mockk()
-    private lateinit var getCartTotalFlowUseCase: GetCartTotalFlowUseCase
-
-    @BeforeTest
-    fun setup() {
-        getCartTotalFlowUseCase = GetCartTotalFlowUseCase(
-            cartProductRepo = cartProductRepo,
-            getDiscountUseCase = getDiscountUseCase,
-            getNewTotalCostUseCase = getNewTotalCostUseCase,
-            getOldTotalCostUseCase = getOldTotalCostUseCase,
-            getDeliveryCostFlowUseCase = getDeliveryCostFlowUseCase
-        )
-    }
+    private val cartProductRepo: CartProductRepo = mock()
+    private val getDiscountUseCase: GetDiscountUseCase = mock()
+    private val getNewTotalCostUseCase: GetNewTotalCostUseCase = mock()
+    private val getOldTotalCostUseCase: GetOldTotalCostUseCase = mock()
+    private val getDeliveryCostFlowUseCase: GetDeliveryCostFlowUseCase = mock()
+    private val getCartTotalFlowUseCase: GetCartTotalFlowUseCase = GetCartTotalFlowUseCase(
+        cartProductRepo = cartProductRepo,
+        getDiscountUseCase = getDiscountUseCase,
+        getNewTotalCostUseCase = getNewTotalCostUseCase,
+        getOldTotalCostUseCase = getOldTotalCostUseCase,
+        getDeliveryCostFlowUseCase = getDeliveryCostFlowUseCase
+    )
 
     @Test
     fun `should return zero totalCost when product list is empty`() = runTest {
         // Given
 
-        coEvery { cartProductRepo.getCartProductList() } returns listOf()
-        coEvery { getDiscountUseCase() } returns null
-        coEvery { getNewTotalCostUseCase(listOf()) } returns 0
-        coEvery { getOldTotalCostUseCase(listOf()) } returns 0
+        everySuspend { cartProductRepo.getCartProductList() } returns listOf()
+        everySuspend { getDiscountUseCase() } returns null
+        everySuspend { getNewTotalCostUseCase(listOf()) } returns 0
+        everySuspend { getOldTotalCostUseCase(listOf()) } returns 0
+        everySuspend { getDeliveryCostFlowUseCase(any(), any()) } returns flow { emit(null) }
 
         // When
         val cartTotal = getCartTotalFlowUseCase(isDelivery = false)
@@ -59,10 +57,11 @@ class GetCartTotalUseCaseTest {
     fun `should return null oldFinalCost when product list is empty`() = runTest {
         // Given
 
-        coEvery { cartProductRepo.getCartProductList() } returns listOf()
-        coEvery { getDiscountUseCase() } returns null
-        coEvery { getNewTotalCostUseCase(listOf()) } returns 0
-        coEvery { getOldTotalCostUseCase(listOf()) } returns 0
+        everySuspend { cartProductRepo.getCartProductList() } returns listOf()
+        everySuspend { getDiscountUseCase() } returns null
+        everySuspend { getNewTotalCostUseCase(listOf()) } returns 0
+        everySuspend { getOldTotalCostUseCase(listOf()) } returns 0
+        everySuspend { getDeliveryCostFlowUseCase(any(), any()) } returns flow { emit(null) }
 
         // When
         val cartTotal = getCartTotalFlowUseCase(isDelivery = false)
@@ -78,10 +77,11 @@ class GetCartTotalUseCaseTest {
     fun `should return null oldFinalCost when oldTotal cast is same as newTotalCost`() = runTest {
         // Given
 
-        coEvery { cartProductRepo.getCartProductList() } returns listOf()
-        coEvery { getDiscountUseCase() } returns null
-        coEvery { getNewTotalCostUseCase(listOf()) } returns 0
-        coEvery { getOldTotalCostUseCase(listOf()) } returns 0
+        everySuspend { cartProductRepo.getCartProductList() } returns listOf()
+        everySuspend { getDiscountUseCase() } returns null
+        everySuspend { getNewTotalCostUseCase(listOf()) } returns 0
+        everySuspend { getOldTotalCostUseCase(listOf()) } returns 0
+        everySuspend { getDeliveryCostFlowUseCase(any(), any()) } returns flow { emit(null) }
 
         // When
         val cartTotal = getCartTotalFlowUseCase(isDelivery = false)
@@ -96,10 +96,11 @@ class GetCartTotalUseCaseTest {
     @Test
     fun `should return null discount when no discount`() = runTest {
         // Given
-        coEvery { cartProductRepo.getCartProductList() } returns listOf()
-        coEvery { getDiscountUseCase() } returns null
-        coEvery { getNewTotalCostUseCase(listOf()) } returns 0
-        coEvery { getOldTotalCostUseCase(listOf()) } returns 0
+        everySuspend { cartProductRepo.getCartProductList() } returns listOf()
+        everySuspend { getDiscountUseCase() } returns null
+        everySuspend { getNewTotalCostUseCase(listOf()) } returns 0
+        everySuspend { getOldTotalCostUseCase(listOf()) } returns 0
+        everySuspend { getDeliveryCostFlowUseCase(any(), any()) } returns flow { emit(null) }
 
         // When
         val cartTotal = getCartTotalFlowUseCase(isDelivery = false)
@@ -125,11 +126,12 @@ class GetCartTotalUseCaseTest {
                     menuProduct = getMenuProduct(newPrice = 50, oldPrice = 100)
                 )
             )
-            coEvery { cartProductRepo.getCartProductList() } returns cartProductListMockData
+            everySuspend { cartProductRepo.getCartProductList() } returns cartProductListMockData
 
-            coEvery { getDiscountUseCase() } returns null
-            coEvery { getNewTotalCostUseCase(cartProductListMockData) } returns 100
-            coEvery { getOldTotalCostUseCase(cartProductListMockData) } returns 200
+            everySuspend { getDiscountUseCase() } returns null
+            everySuspend { getNewTotalCostUseCase(cartProductListMockData) } returns 100
+            everySuspend { getOldTotalCostUseCase(cartProductListMockData) } returns 200
+            everySuspend { getDeliveryCostFlowUseCase(any(), any()) } returns flow { emit(10) }
 
             // When
             val cartTotal = getCartTotalFlowUseCase(isDelivery = true)
@@ -155,11 +157,12 @@ class GetCartTotalUseCaseTest {
                     menuProduct = getMenuProduct(newPrice = 50, oldPrice = 100)
                 )
             )
-            coEvery { cartProductRepo.getCartProductList() } returns cartProductListMockData
+            everySuspend { cartProductRepo.getCartProductList() } returns cartProductListMockData
 
-            coEvery { getDiscountUseCase() } returns null
-            coEvery { getNewTotalCostUseCase(cartProductListMockData) } returns 100
-            coEvery { getOldTotalCostUseCase(cartProductListMockData) } returns 0
+            everySuspend { getDiscountUseCase() } returns null
+            everySuspend { getNewTotalCostUseCase(cartProductListMockData) } returns 100
+            everySuspend { getOldTotalCostUseCase(cartProductListMockData) } returns 0
+            everySuspend { getDeliveryCostFlowUseCase(any(), any()) } returns flow { emit(10) }
 
             // When
             val cartTotal = getCartTotalFlowUseCase(isDelivery = true)

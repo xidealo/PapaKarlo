@@ -12,7 +12,7 @@ import com.bunbeauty.shared.domain.model.address.UserAddressCache
 import com.bunbeauty.shared.domain.repo.UserAddressRepo
 import kotlinx.coroutines.flow.Flow
 
-class UserAddressRepository(
+open class UserAddressRepository(
     private val networkConnector: NetworkConnector,
     private val userAddressDao: IUserAddressDao,
     private val userAddressMapper: UserAddressMapper

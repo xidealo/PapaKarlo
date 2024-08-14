@@ -6,11 +6,15 @@ import com.bunbeauty.shared.domain.exeptions.NoSelectedCityUuidException
 import com.bunbeauty.shared.domain.model.cafe.Cafe
 import com.bunbeauty.shared.domain.repo.CafeRepo
 
-class GetCafeListUseCase(
+interface GetCafeListUseCase {
+    suspend operator fun invoke(): List<Cafe>
+}
+
+class GetCafeListUseCaseImpl(
     private val dataStoreRepo: DataStoreRepo,
     private val cafeRepo: CafeRepo
-) {
-    suspend operator fun invoke(): List<Cafe> {
+) : GetCafeListUseCase {
+    override suspend operator fun invoke(): List<Cafe> {
         val cityUuid = dataStoreRepo.getSelectedCityUuid() ?: throw NoSelectedCityUuidException()
         return cafeRepo.getCafeList(cityUuid)
             .filter { cafe ->

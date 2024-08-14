@@ -5,30 +5,27 @@ import com.bunbeauty.getCartProductAddition
 import com.bunbeauty.getMenuProduct
 import com.bunbeauty.shared.domain.feature.addition.GetCartProductAdditionsPriceUseCase
 import com.bunbeauty.shared.domain.interactor.cart.GetOldTotalCostUseCase
-import io.mockk.coEvery
-import io.mockk.mockk
+import com.bunbeauty.shared.domain.interactor.cart.GetOldTotalCostUseCaseImpl
+import dev.mokkery.answering.returns
+import dev.mokkery.everySuspend
+import dev.mokkery.matcher.any
+import dev.mokkery.mock
 import kotlinx.coroutines.test.runTest
-import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class GetOldTotalCostUseCaseTest {
 
-    private lateinit var getOldTotalCostUseCase: GetOldTotalCostUseCase
-    private val getCartProductAdditionsPriceUseCase: GetCartProductAdditionsPriceUseCase = mockk()
-
-    @BeforeTest
-    fun setup() {
-        getOldTotalCostUseCase = GetOldTotalCostUseCase(
-            getCartProductAdditionsPriceUseCase = getCartProductAdditionsPriceUseCase
-        )
-    }
+    private val getCartProductAdditionsPriceUseCase: GetCartProductAdditionsPriceUseCase = mock()
+    private val getOldTotalCostUseCase: GetOldTotalCostUseCase = GetOldTotalCostUseCaseImpl(
+        getCartProductAdditionsPriceUseCase = getCartProductAdditionsPriceUseCase
+    )
 
     @Test
     fun `should return zero newFinalCost when product list is empty`() = runTest {
         // When
         val oldFinalCost = getOldTotalCostUseCase(emptyList())
-        coEvery { getCartProductAdditionsPriceUseCase(any()) } returns 0
+        everySuspend { getCartProductAdditionsPriceUseCase(any()) } returns 0
 
         // Then
         assertEquals(
@@ -56,9 +53,9 @@ class GetOldTotalCostUseCaseTest {
                     )
                 )
             )
-            coEvery { getCartProductAdditionsPriceUseCase(listOf(getCartProductAddition(price = 100))) } returns 100
+            everySuspend { getCartProductAdditionsPriceUseCase(listOf(getCartProductAddition(price = 100))) } returns 100
 
-            coEvery {
+            everySuspend {
                 getCartProductAdditionsPriceUseCase(
                     listOf(
                         getCartProductAddition(price = 75),

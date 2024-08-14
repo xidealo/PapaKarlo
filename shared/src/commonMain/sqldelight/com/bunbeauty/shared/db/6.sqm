@@ -30,4 +30,4 @@ SELECT cartProductEntity.uuid AS cartProductUuid,
  FROM cartProductEntity
  JOIN menuProductEntity ON menuProductEntity.uuid = cartProductEntity.menuProductUuid
  JOIN menuProductCategoryReference ON menuProductCategoryReference.menuProductUuidReference = menuProductEntity.uuid
- JOIN categoryEntity ON menuProductCategoryReference.categoryUuidReference = categoryEntity.uuid
+ JOIN categoryEntity ON menuProductCategoryReference.categoryUuidReference = categoryEntity.uuid;

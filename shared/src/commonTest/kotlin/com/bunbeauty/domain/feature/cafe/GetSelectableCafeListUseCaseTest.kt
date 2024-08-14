@@ -2,31 +2,31 @@ package com.bunbeauty.domain.feature.cafe
 
 import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.domain.exeptions.EmptyCafeListException
+import com.bunbeauty.shared.domain.feature.cafe.GetCafeListUseCase
 import com.bunbeauty.shared.domain.feature.cafe.GetSelectableCafeListUseCase
 import com.bunbeauty.shared.domain.model.cafe.Cafe
 import com.bunbeauty.shared.domain.model.cafe.SelectableCafe
 import com.bunbeauty.shared.domain.repo.CafeRepo
-import io.mockk.coEvery
-import io.mockk.mockk
+import dev.mokkery.answering.returns
+import dev.mokkery.everySuspend
+import dev.mokkery.mock
 import kotlinx.coroutines.test.runTest
-import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertContentEquals
 import kotlin.test.assertFailsWith
 
 class GetSelectableCafeListUseCaseTest {
 
-    private val dataStoreRepo: DataStoreRepo = mockk()
-    private val cafeRepo: CafeRepo = mockk()
-    private lateinit var getSelectableCafeListUseCase: GetSelectableCafeListUseCase
+    private val dataStoreRepo: DataStoreRepo = mock()
+    private val cafeRepo: CafeRepo = mock()
+    private val getCafeListUseCase: GetCafeListUseCase = mock()
 
-    @BeforeTest
-    fun setup() {
-        getSelectableCafeListUseCase = GetSelectableCafeListUseCase(
+    private val getSelectableCafeListUseCase: GetSelectableCafeListUseCase =
+        GetSelectableCafeListUseCase(
             dataStoreRepo = dataStoreRepo,
-            cafeRepo = cafeRepo
+            cafeRepo = cafeRepo,
+            getCafeListUseCase = getCafeListUseCase
         )
-    }
 
     @Test
     fun `return cafe list with selected cafe`() = runTest {
@@ -45,15 +45,15 @@ class GetSelectableCafeListUseCaseTest {
             generateSelectableCafe(selectedCafeUuid, true)
         )
 
-        coEvery { dataStoreRepo.getSelectedCityUuid() } returns selectedCityUuid
-        coEvery { dataStoreRepo.getUserUuid() } returns userUuid
-        coEvery {
+        everySuspend { dataStoreRepo.getSelectedCityUuid() } returns selectedCityUuid
+        everySuspend { dataStoreRepo.getUserUuid() } returns userUuid
+        everySuspend {
             cafeRepo.getSelectedCafeByUserAndCityUuid(
                 userUuid,
                 selectedCityUuid
             )
         } returns selectedCafe
-        coEvery { cafeRepo.getCafeList(selectedCityUuid) } returns cafeList
+        everySuspend { getCafeListUseCase() } returns cafeList
 
         val result = getSelectableCafeListUseCase()
 
@@ -75,16 +75,16 @@ class GetSelectableCafeListUseCaseTest {
             generateSelectableCafe("uuid3", false)
         )
 
-        coEvery { dataStoreRepo.getSelectedCityUuid() } returns selectedCityUuid
-        coEvery { dataStoreRepo.getUserUuid() } returns userUuid
-        coEvery {
+        everySuspend { dataStoreRepo.getSelectedCityUuid() } returns selectedCityUuid
+        everySuspend { dataStoreRepo.getUserUuid() } returns userUuid
+        everySuspend {
             cafeRepo.getSelectedCafeByUserAndCityUuid(
                 userUuid,
                 selectedCityUuid
             )
         } returns null
-        coEvery { cafeRepo.getFirstCafeCityUuid(selectedCityUuid) } returns generateCafe("uuid1")
-        coEvery { cafeRepo.getCafeList(selectedCityUuid) } returns cafeList
+        everySuspend { cafeRepo.getFirstCafeCityUuid(selectedCityUuid) } returns generateCafe("uuid1")
+        everySuspend { getCafeListUseCase() } returns cafeList
 
         val result = getSelectableCafeListUseCase()
 
@@ -96,15 +96,15 @@ class GetSelectableCafeListUseCaseTest {
         val selectedCityUuid = "cityUuid"
         val userUuid = "userUuid"
 
-        coEvery { dataStoreRepo.getSelectedCityUuid() } returns selectedCityUuid
-        coEvery { dataStoreRepo.getUserUuid() } returns userUuid
-        coEvery {
+        everySuspend { dataStoreRepo.getSelectedCityUuid() } returns selectedCityUuid
+        everySuspend { dataStoreRepo.getUserUuid() } returns userUuid
+        everySuspend {
             cafeRepo.getSelectedCafeByUserAndCityUuid(
                 userUuid,
                 selectedCityUuid
             )
         } returns generateCafe(selectedCityUuid)
-        coEvery { cafeRepo.getCafeList(selectedCityUuid) } returns emptyList()
+        everySuspend { getCafeListUseCase() } returns emptyList()
 
         assertFailsWith<EmptyCafeListException> {
             runTest {

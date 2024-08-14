@@ -1,15 +1,14 @@
 object Versions {
     const val gradle = "8.5.0"
-    const val kotlin = "2.0.10-RC"
+    const val kotlin = "2.0.10"
     const val googleServices = "4.3.15"
     const val crashlytics = "2.9.9"
     const val navigation = "2.7.1"
 
-    const val kotlinCoroutines = "1.7.3"
+    const val kotlinCoroutines = "1.9.0-RC"
     const val ktor = "2.3.3"
     const val kotlinxSerialization = "1.5.1"
     const val koin = "3.4.3"
-    const val mockK = "1.12.5"
 
     const val sqlDelight = "1.5.5"
     const val publisher = "3.7.0"
@@ -21,6 +20,7 @@ object Versions {
     const val coil = "2.4.0"
     const val datetime = "0.9.0"
     const val desugar = "2.0.3"
+    const val mokkery = "2.2.0"
 
     const val material = "1.9.0"
 
@@ -117,10 +117,12 @@ object Plugin {
     const val kapt = "kotlin-kapt"
     const val navigation = "androidx.navigation.safeargs"
     const val multiplatform = "multiplatform"
+    const val cocoa = "native.cocoapods"
     const val googleService = "com.google.gms.google-services"
     const val tripletPlay = "com.github.triplet.play"
     const val crashlytics = "com.google.firebase.crashlytics"
     const val sqldelight = "com.squareup.sqldelight"
+    const val mokkery = "dev.mokkery"
 }
 
 object AndroidX {
@@ -168,11 +170,6 @@ object Koin {
     const val test = "io.insert-koin:koin-test:${Versions.koin}"
     const val android = "io.insert-koin:koin-android:${Versions.koin}"
     const val compose = "io.insert-koin:koin-androidx-compose:${Versions.koin}"
-}
-
-object MockK {
-    const val main = "io.mockk:mockk:${Versions.mockK}"
-    const val common = "io.mockk:mockk-common:${Versions.mockK}"
 }
 
 object Navigation {

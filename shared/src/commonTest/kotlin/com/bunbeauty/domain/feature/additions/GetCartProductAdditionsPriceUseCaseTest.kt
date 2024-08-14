@@ -1,7 +1,7 @@
 package com.bunbeauty.domain.feature.additions
 
 import com.bunbeauty.getCartProductAddition
-import com.bunbeauty.shared.domain.feature.addition.GetCartProductAdditionsPriceUseCase
+import com.bunbeauty.shared.domain.feature.addition.GetCartProductAdditionsPriceUseCaseImpl
 import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -9,11 +9,11 @@ import kotlin.test.assertEquals
 
 class GetCartProductAdditionsPriceUseCaseTest {
 
-    private lateinit var useCase: GetCartProductAdditionsPriceUseCase
+    private lateinit var useCase: GetCartProductAdditionsPriceUseCaseImpl
 
     @BeforeTest
     fun setup() {
-        useCase = GetCartProductAdditionsPriceUseCase()
+        useCase = GetCartProductAdditionsPriceUseCaseImpl()
     }
 
     @Test

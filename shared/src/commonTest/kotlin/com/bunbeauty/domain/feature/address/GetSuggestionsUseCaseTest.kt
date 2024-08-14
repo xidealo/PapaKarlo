@@ -6,35 +6,28 @@ import com.bunbeauty.shared.domain.exeptions.NoTokenException
 import com.bunbeauty.shared.domain.feature.address.GetSuggestionsUseCase
 import com.bunbeauty.shared.domain.model.Suggestion
 import com.bunbeauty.shared.domain.repo.SuggestionRepo
-import io.mockk.MockKAnnotations
-import io.mockk.coEvery
-import io.mockk.impl.annotations.InjectMockKs
-import io.mockk.impl.annotations.MockK
+import dev.mokkery.answering.returns
+import dev.mokkery.everySuspend
+import dev.mokkery.mock
 import kotlinx.coroutines.test.runTest
-import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
 class GetSuggestionsUseCaseTest {
 
-    @MockK(relaxed = true)
-    private lateinit var dataStoreRepo: DataStoreRepo
+    private val dataStoreRepo: DataStoreRepo = mock()
 
-    @MockK(relaxed = true)
-    private lateinit var suggestionRepo: SuggestionRepo
+    private val suggestionRepo: SuggestionRepo = mock()
 
-    @InjectMockKs
-    private lateinit var getSuggestionsUseCase: GetSuggestionsUseCase
-
-    @BeforeTest
-    fun setup() {
-        MockKAnnotations.init(this)
-    }
+    private val getSuggestionsUseCase: GetSuggestionsUseCase = GetSuggestionsUseCase(
+        suggestionRepo = suggestionRepo,
+        dataStoreRepo = dataStoreRepo
+    )
 
     @Test
     fun `return NoTokenException when token is null`() = runTest {
-        coEvery { dataStoreRepo.getToken() } returns null
+        everySuspend { dataStoreRepo.getToken() } returns null
 
         assertFailsWith(
             exceptionClass = NoTokenException::class,
@@ -46,8 +39,8 @@ class GetSuggestionsUseCaseTest {
 
     @Test
     fun `return NoSelectedCityUuidException when token is null`() = runTest {
-        coEvery { dataStoreRepo.getToken() } returns "token"
-        coEvery { dataStoreRepo.getSelectedCityUuid() } returns null
+        everySuspend { dataStoreRepo.getToken() } returns "token"
+        everySuspend { dataStoreRepo.getSelectedCityUuid() } returns null
 
         assertFailsWith(
             exceptionClass = NoSelectedCityUuidException::class,
@@ -59,8 +52,8 @@ class GetSuggestionsUseCaseTest {
 
     @Test
     fun `return suggestion list when all data is ok`() = runTest {
-        coEvery { dataStoreRepo.getToken() } returns "token"
-        coEvery { dataStoreRepo.getSelectedCityUuid() } returns "cityUuid"
+        everySuspend { dataStoreRepo.getToken() } returns "token"
+        everySuspend { dataStoreRepo.getSelectedCityUuid() } returns "cityUuid"
 
         val query = "ул Киро"
         val suggestionList = listOf(
@@ -75,7 +68,7 @@ class GetSuggestionsUseCaseTest {
                 details = null
             )
         )
-        coEvery {
+        everySuspend {
             suggestionRepo.getSuggestionList(
                 token = "token",
                 query = query,

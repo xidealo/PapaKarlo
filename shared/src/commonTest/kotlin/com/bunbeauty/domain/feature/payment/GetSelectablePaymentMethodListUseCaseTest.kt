@@ -6,27 +6,22 @@ import com.bunbeauty.shared.domain.model.payment_method.PaymentMethod
 import com.bunbeauty.shared.domain.model.payment_method.PaymentMethodName
 import com.bunbeauty.shared.domain.model.payment_method.SelectablePaymentMethod
 import com.bunbeauty.shared.domain.repo.PaymentRepo
-import io.mockk.coEvery
-import io.mockk.coVerify
-import io.mockk.mockk
+import dev.mokkery.answering.returns
+import dev.mokkery.everySuspend
+import dev.mokkery.mock
+import dev.mokkery.verify.VerifyMode
+import dev.mokkery.verifySuspend
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.test.runTest
-import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class GetSelectablePaymentMethodListUseCaseTest {
 
-    private lateinit var useCase: GetSelectablePaymentMethodListUseCase
-    private lateinit var paymentRepo: PaymentRepo
-    private lateinit var dataStoreRepo: DataStoreRepo
-
-    @BeforeTest
-    fun setUp() {
-        paymentRepo = mockk()
-        dataStoreRepo = mockk()
-        useCase = GetSelectablePaymentMethodListUseCase(paymentRepo, dataStoreRepo)
-    }
+    private val paymentRepo: PaymentRepo = mock()
+    private val dataStoreRepo: DataStoreRepo = mock()
+    private val useCase: GetSelectablePaymentMethodListUseCase =
+        GetSelectablePaymentMethodListUseCase(paymentRepo, dataStoreRepo)
 
     @Test
     fun `should return selectable payment method list`() = runTest {
@@ -38,8 +33,8 @@ class GetSelectablePaymentMethodListUseCaseTest {
 
         val selectedPaymentMethodUuid = "uuid2"
 
-        coEvery { paymentRepo.getPaymentMethodList() } returns paymentMethodList
-        coEvery { dataStoreRepo.selectedPaymentMethodUuid } returns MutableStateFlow(
+        everySuspend { paymentRepo.getPaymentMethodList() } returns paymentMethodList
+        everySuspend { dataStoreRepo.selectedPaymentMethodUuid } returns MutableStateFlow(
             selectedPaymentMethodUuid
         )
 
@@ -53,8 +48,8 @@ class GetSelectablePaymentMethodListUseCaseTest {
 
         assertEquals(expectedSelectablePaymentMethodList, result)
 
-        coVerify(exactly = 1) { paymentRepo.getPaymentMethodList() }
-        coVerify(exactly = 1) { dataStoreRepo.selectedPaymentMethodUuid }
+        verifySuspend(mode = VerifyMode.atLeast(1)) { paymentRepo.getPaymentMethodList() }
+        verifySuspend(mode = VerifyMode.atLeast(1)) { dataStoreRepo.selectedPaymentMethodUuid }
     }
 
     @Test
@@ -67,8 +62,8 @@ class GetSelectablePaymentMethodListUseCaseTest {
 
         val selectedPaymentMethodUuid = null
 
-        coEvery { paymentRepo.getPaymentMethodList() } returns paymentMethodList
-        coEvery { dataStoreRepo.selectedPaymentMethodUuid } returns MutableStateFlow(
+        everySuspend { paymentRepo.getPaymentMethodList() } returns paymentMethodList
+        everySuspend { dataStoreRepo.selectedPaymentMethodUuid } returns MutableStateFlow(
             selectedPaymentMethodUuid
         )
 
@@ -82,7 +77,7 @@ class GetSelectablePaymentMethodListUseCaseTest {
 
         assertEquals(expectedSelectablePaymentMethodList, result)
 
-        coVerify(exactly = 1) { paymentRepo.getPaymentMethodList() }
-        coVerify(exactly = 1) { dataStoreRepo.selectedPaymentMethodUuid }
+        verifySuspend(mode = VerifyMode.atLeast(1)) { paymentRepo.getPaymentMethodList() }
+        verifySuspend(mode = VerifyMode.atLeast(1)) { dataStoreRepo.selectedPaymentMethodUuid }
     }
 }

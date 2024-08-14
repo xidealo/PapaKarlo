@@ -8,10 +8,9 @@ import com.bunbeauty.shared.domain.model.Suggestion
 import com.bunbeauty.shared.domain.model.address.CreatedUserAddress
 import com.bunbeauty.shared.domain.model.address.UserAddress
 import com.bunbeauty.shared.domain.repo.UserAddressRepo
-import io.mockk.MockKAnnotations
-import io.mockk.coEvery
-import io.mockk.impl.annotations.InjectMockKs
-import io.mockk.impl.annotations.MockK
+import dev.mokkery.answering.returns
+import dev.mokkery.everySuspend
+import dev.mokkery.mock
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -21,27 +20,26 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
-@OptIn(ExperimentalCoroutinesApi::class)
-internal class CreateAddressUseCaseTest {
+class CreateAddressUseCaseTest {
 
-    @MockK(relaxed = true)
-    private lateinit var dataStoreRepo: DataStoreRepo
+    private val dataStoreRepo = mock<DataStoreRepo>()
 
-    @MockK(relaxed = true)
-    private lateinit var userAddressRepo: UserAddressRepo
+    private val userAddressRepo = mock<UserAddressRepo>()
 
-    @InjectMockKs
-    private lateinit var createAddressUseCase: CreateAddressUseCase
+    private val createAddressUseCase: CreateAddressUseCase = CreateAddressUseCase(
+        dataStoreRepo = dataStoreRepo,
+        userAddressRepo = userAddressRepo
+    )
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     @BeforeTest
     fun setup() {
-        MockKAnnotations.init(this)
         Dispatchers.setMain(Dispatchers.Unconfined)
     }
 
     @Test
     fun `return NoTokenException when token is null`() = runTest {
-        coEvery { dataStoreRepo.getToken() } returns null
+        everySuspend { dataStoreRepo.getToken() } returns null
 
         assertFailsWith(
             exceptionClass = NoTokenException::class,
@@ -64,7 +62,9 @@ internal class CreateAddressUseCaseTest {
 
     @Test
     fun `return NoSelectedCityUuidException when selected city uuid is null`() = runTest {
-        coEvery { dataStoreRepo.getSelectedCityUuid() } returns null
+        everySuspend { dataStoreRepo.getToken() } returns ""
+
+        everySuspend { dataStoreRepo.getSelectedCityUuid() } returns null
 
         assertFailsWith(
             exceptionClass = NoSelectedCityUuidException::class,
@@ -87,8 +87,8 @@ internal class CreateAddressUseCaseTest {
 
     @Test
     fun `return userAddress when all data is ok`() = runTest {
-        coEvery { dataStoreRepo.getToken() } returns "token"
-        coEvery { dataStoreRepo.getSelectedCityUuid() } returns "cityUuid"
+        everySuspend { dataStoreRepo.getToken() }.returns("token")
+        everySuspend { dataStoreRepo.getSelectedCityUuid() }.returns("cityUuid")
         val userAddress = UserAddress(
             uuid = "uuid",
             street = "street",
@@ -104,7 +104,7 @@ internal class CreateAddressUseCaseTest {
             userUuid = "userUuid"
         )
 
-        coEvery {
+        everySuspend {
             userAddressRepo.saveUserAddress(
                 token = "token",
                 createdUserAddress = CreatedUserAddress(
@@ -122,7 +122,7 @@ internal class CreateAddressUseCaseTest {
                     isVisible = true
                 )
             )
-        } returns userAddress
+        }.returns(userAddress)
 
         val createdUserAddress = createAddressUseCase(
             street = Suggestion(

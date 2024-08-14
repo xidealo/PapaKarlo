@@ -7,41 +7,36 @@ import com.bunbeauty.shared.domain.model.cafe.Cafe
 import com.bunbeauty.shared.domain.model.cafe.CafeOpenState
 import com.bunbeauty.shared.domain.model.cafe.CafeWithOpenState
 import com.bunbeauty.shared.domain.model.date_time.MinuteSecond
-import com.bunbeauty.shared.domain.util.IDateTimeUtil
-import io.mockk.MockKAnnotations
-import io.mockk.coEvery
-import io.mockk.impl.annotations.InjectMockKs
-import io.mockk.impl.annotations.MockK
+import com.bunbeauty.shared.domain.util.DateTimeUtil
+import dev.mokkery.answering.returns
+import dev.mokkery.everySuspend
+import dev.mokkery.mock
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
-import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class ObserveCafeWithOpenStateListUseCaseTest {
 
-    @MockK
-    private lateinit var getSelectedCityTimeZoneUseCase: GetSelectedCityTimeZoneUseCase
+    private val getSelectedCityTimeZoneUseCase: GetSelectedCityTimeZoneUseCase = mock()
 
-    @MockK
-    private lateinit var dataTimeUtil: IDateTimeUtil
+    private val dataTimeUtil: DateTimeUtil = mock()
 
-    @MockK
-    private lateinit var getCafeListUseCase: GetCafeListUseCase
+    private val getCafeListUseCase: GetCafeListUseCase = mock()
 
-    @InjectMockKs
-    private lateinit var observeCafeWithOpenStateListUseCase: ObserveCafeWithOpenStateListUseCase
+    private val observeCafeWithOpenStateListUseCase: ObserveCafeWithOpenStateListUseCase =
+        ObserveCafeWithOpenStateListUseCase(
+            getSelectedCityTimeZoneUseCase = getSelectedCityTimeZoneUseCase,
+            dataTimeUtil = dataTimeUtil,
+            getCafeListUseCase = getCafeListUseCase
 
-    @BeforeTest
-    fun setup() {
-        MockKAnnotations.init(this)
-    }
+        )
 
     @Test
     fun `return closed cafe when time is before opening`() = runTest {
         val timeZone = "GMT+3"
-        coEvery { getSelectedCityTimeZoneUseCase() } returns timeZone
-        coEvery {
+        everySuspend { getSelectedCityTimeZoneUseCase() } returns timeZone
+        everySuspend {
             dataTimeUtil.getCurrentMinuteSecond(timeZone)
         } returns MinuteSecond(
             minuteOfDay = 7 * 60, // 7:00:00
@@ -51,7 +46,7 @@ class ObserveCafeWithOpenStateListUseCaseTest {
             fromTime = 8 * 60 * 60, // 8:00:00
             toTime = 20 * 60 * 60 // 20:00:00
         )
-        coEvery { getCafeListUseCase() } returns listOf(cafe)
+        everySuspend { getCafeListUseCase() } returns listOf(cafe)
         val expected = listOf(
             CafeWithOpenState(
                 cafe = cafe,
@@ -67,8 +62,8 @@ class ObserveCafeWithOpenStateListUseCaseTest {
     @Test
     fun `return open cafe when time is after opening`() = runTest {
         val timeZone = "GMT+3"
-        coEvery { getSelectedCityTimeZoneUseCase() } returns timeZone
-        coEvery {
+        everySuspend { getSelectedCityTimeZoneUseCase() } returns timeZone
+        everySuspend {
             dataTimeUtil.getCurrentMinuteSecond(timeZone)
         } returns MinuteSecond(
             minuteOfDay = 8 * 60, // 8:00:30
@@ -78,7 +73,7 @@ class ObserveCafeWithOpenStateListUseCaseTest {
             fromTime = 8 * 60 * 60, // 8:00:00
             toTime = 20 * 60 * 60 // 20:00:00
         )
-        coEvery { getCafeListUseCase() } returns listOf(cafe)
+        everySuspend { getCafeListUseCase() } returns listOf(cafe)
         val expected = listOf(
             CafeWithOpenState(
                 cafe = cafe,
@@ -94,8 +89,8 @@ class ObserveCafeWithOpenStateListUseCaseTest {
     @Test
     fun `return close soon cafe when time is close to closing`() = runTest {
         val timeZone = "GMT+3"
-        coEvery { getSelectedCityTimeZoneUseCase() } returns timeZone
-        coEvery {
+        everySuspend { getSelectedCityTimeZoneUseCase() } returns timeZone
+        everySuspend {
             dataTimeUtil.getCurrentMinuteSecond(timeZone)
         } returns MinuteSecond(
             minuteOfDay = 19 * 60 + 30, // 19:30:00
@@ -105,7 +100,7 @@ class ObserveCafeWithOpenStateListUseCaseTest {
             fromTime = 8 * 60 * 60, // 8:00:00
             toTime = 20 * 60 * 60 // 20:00:00
         )
-        coEvery { getCafeListUseCase() } returns listOf(cafe)
+        everySuspend { getCafeListUseCase() } returns listOf(cafe)
         val expected = listOf(
             CafeWithOpenState(
                 cafe = cafe,
@@ -121,8 +116,8 @@ class ObserveCafeWithOpenStateListUseCaseTest {
     @Test
     fun `return closed cafe when time is after closing`() = runTest {
         val timeZone = "GMT+3"
-        coEvery { getSelectedCityTimeZoneUseCase() } returns timeZone
-        coEvery {
+        everySuspend { getSelectedCityTimeZoneUseCase() } returns timeZone
+        everySuspend {
             dataTimeUtil.getCurrentMinuteSecond(timeZone)
         } returns MinuteSecond(
             minuteOfDay = 20 * 60 + 1, // 20:01:00
@@ -132,7 +127,7 @@ class ObserveCafeWithOpenStateListUseCaseTest {
             fromTime = 8 * 60 * 60, // 8:00:00
             toTime = 20 * 60 * 60 // 20:00:00
         )
-        coEvery { getCafeListUseCase() } returns listOf(cafe)
+        everySuspend { getCafeListUseCase() } returns listOf(cafe)
         val expected = listOf(
             CafeWithOpenState(
                 cafe = cafe,

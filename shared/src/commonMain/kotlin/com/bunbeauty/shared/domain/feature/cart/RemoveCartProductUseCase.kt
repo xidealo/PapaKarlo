@@ -1,11 +1,11 @@
 package com.bunbeauty.shared.domain.feature.cart
 
-import com.bunbeauty.shared.data.repository.CartProductAdditionRepository
+import com.bunbeauty.shared.domain.repo.CartProductAdditionRepo
 import com.bunbeauty.shared.domain.repo.CartProductRepo
 
 class RemoveCartProductUseCase(
     private val cartProductRepo: CartProductRepo,
-    private val cartProductAdditionRepository: CartProductAdditionRepository
+    private val cartProductAdditionRepository: CartProductAdditionRepo
 ) {
 
     suspend operator fun invoke(cartProductUuid: String): Boolean {

@@ -42,7 +42,7 @@ class CreateOrderViewModel(
     private val saveSelectedUserAddress: SaveSelectedUserAddressUseCase,
     private val getSelectablePaymentMethodListUseCase: GetSelectablePaymentMethodListUseCase,
     private val savePaymentMethodUseCase: SavePaymentMethodUseCase,
-    private val isOrderAvailableUseCase: IsOrderAvailableUseCase,
+    private val isOrderAvailableUseCase: IsOrderAvailableUseCase
 ) : SharedStateViewModel<CreateOrder.DataState, CreateOrder.Action, CreateOrder.Event>(
     initDataState = CreateOrder.DataState(
         isDelivery = true,
@@ -343,7 +343,7 @@ class CreateOrderViewModel(
 
     private fun createClick(
         withoutChange: String,
-        changeFrom: String,
+        changeFrom: String
     ) {
         val state = mutableDataState.value
 
@@ -374,8 +374,8 @@ class CreateOrderViewModel(
             (state.cartTotal as? CreateOrder.CartTotal.Success)?.newFinalCostValue ?: 0
         val isChangeLessThenCost = (state.change ?: 0) < newFinalCost
         val isChangeIncorrect = state.paymentByCash &&
-                !state.withoutChangeChecked &&
-                isChangeLessThenCost
+            !state.withoutChangeChecked &&
+            isChangeLessThenCost
         setState {
             copy(isChangeErrorShown = isChangeIncorrect)
         }
@@ -517,7 +517,7 @@ class CreateOrderViewModel(
                                 newFinalCostValue = cartTotal.newFinalCost
                             ),
                             isOrderCreationEnabled = motivationData !is MotivationData.MinOrderCost &&
-                                    orderAvailable
+                                orderAvailable
                         )
                     }
                 }
@@ -531,7 +531,7 @@ class CreateOrderViewModel(
     private fun getExtendedComment(
         state: CreateOrder.DataState,
         withoutChange: String,
-        changeFrom: String,
+        changeFrom: String
     ): String {
         return buildString {
             state.comment.takeIf { comment ->

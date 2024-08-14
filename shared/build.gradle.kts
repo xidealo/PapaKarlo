@@ -2,10 +2,11 @@ import Constants.DEPLOYMENT_TARGET
 
 plugins {
     kotlin(Plugin.multiplatform)
-    kotlin("native.cocoapods")
+    kotlin(Plugin.cocoa)
     id(Plugin.androidLibrary)
     id(Plugin.sqldelight)
     id(Plugin.kotlinSerialization)
+    id(Plugin.mokkery) version Versions.mokkery
 }
 
 kotlin {
@@ -61,10 +62,9 @@ kotlin {
         }
         val commonTest by getting {
             dependencies {
-                //implementation(MockK.main)
-                //implementation(MockK.common)
                 implementation(Coroutine.test)
 
+                implementation(kotlin("test"))
                 implementation(kotlin("test-common"))
                 implementation(kotlin("test-annotations-common"))
             }
@@ -81,6 +81,14 @@ kotlin {
                 implementation(SqlDelight.androidDriver)
             }
         }
+        val androidUnitTest by getting {
+            dependencies {
+                implementation(kotlin("test"))
+                implementation(kotlin("test-common"))
+                implementation(kotlin("test-annotations-common"))
+            }
+        }
+
         val iosX64Main by getting
         val iosArm64Main by getting
         val iosSimulatorArm64Main by getting

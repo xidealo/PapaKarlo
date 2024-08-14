@@ -4,11 +4,15 @@ import com.bunbeauty.shared.domain.feature.addition.GetCartProductAdditionsPrice
 import com.bunbeauty.shared.domain.feature.discount.GetDiscountUseCase
 import com.bunbeauty.shared.domain.model.cart.CartProduct
 
-class GetNewTotalCostUseCase(
+interface GetNewTotalCostUseCase {
+    suspend operator fun invoke(cartProductList: List<CartProduct>): Int
+}
+
+class GetNewTotalCostUseCaseImpl(
     private val getDiscountUseCase: GetDiscountUseCase,
     private val getCartProductAdditionsPriceUseCase: GetCartProductAdditionsPriceUseCase
-) {
-    suspend operator fun invoke(cartProductList: List<CartProduct>): Int {
+) : GetNewTotalCostUseCase {
+    override suspend operator fun invoke(cartProductList: List<CartProduct>): Int {
         val newTotalCost = cartProductList.sumOf { cartProduct ->
             val sumOfNewPriceAndAdditions =
                 cartProduct.product.newPrice + getCartProductAdditionsPriceUseCase(additionList = cartProduct.additionList)

@@ -3,6 +3,7 @@ package com.bunbeauty.shared.di.usecase
 import com.bunbeauty.shared.domain.feature.auth.CheckCodeUseCase
 import com.bunbeauty.shared.domain.feature.auth.CheckPhoneNumberUseCase
 import com.bunbeauty.shared.domain.feature.auth.FormatPhoneNumberUseCase
+import com.bunbeauty.shared.domain.feature.auth.FormatPhoneNumberUseCaseImpl
 import com.bunbeauty.shared.domain.feature.auth.GetPhoneNumberCursorPositionUseCase
 import com.bunbeauty.shared.domain.feature.auth.RequestCodeUseCase
 import com.bunbeauty.shared.domain.feature.auth.ResendCodeUseCase
@@ -25,8 +26,8 @@ internal fun authUseCaseModule() = module {
             authRepo = get()
         )
     }
-    factory {
-        FormatPhoneNumberUseCase()
+    factory<FormatPhoneNumberUseCase> {
+        FormatPhoneNumberUseCaseImpl()
     }
     factory {
         GetPhoneNumberCursorPositionUseCase(

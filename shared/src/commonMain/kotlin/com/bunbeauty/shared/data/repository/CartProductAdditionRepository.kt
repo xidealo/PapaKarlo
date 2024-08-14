@@ -4,12 +4,13 @@ import com.bunbeauty.shared.data.UuidGenerator
 import com.bunbeauty.shared.data.dao.cart_product_addition.ICartProductAdditionDao
 import com.bunbeauty.shared.db.CartProductAdditionEntity
 import com.bunbeauty.shared.domain.model.addition.Addition
+import com.bunbeauty.shared.domain.repo.CartProductAdditionRepo
 
 class CartProductAdditionRepository(
     private val uuidGenerator: UuidGenerator,
     private val cartProductAdditionDao: ICartProductAdditionDao
-) {
-    suspend fun saveAsCartProductAddition(cartProductUuid: String, addition: Addition) {
+) : CartProductAdditionRepo {
+    override suspend fun saveAsCartProductAddition(cartProductUuid: String, addition: Addition) {
         val uuid = uuidGenerator.generateUuid()
         val cartProductAdditionEntity = CartProductAdditionEntity(
             uuid = uuid,
@@ -23,11 +24,11 @@ class CartProductAdditionRepository(
         cartProductAdditionDao.insertCartProductAddition(cartProductAdditionEntity)
     }
 
-    suspend fun delete(cartProductAdditionUuid: String) {
+    override suspend fun delete(cartProductAdditionUuid: String) {
         cartProductAdditionDao.delete(cartProductAdditionUuid = cartProductAdditionUuid)
     }
 
-    suspend fun deleteAll() {
+    override suspend fun deleteAll() {
         cartProductAdditionDao.deleteAll()
     }
 }

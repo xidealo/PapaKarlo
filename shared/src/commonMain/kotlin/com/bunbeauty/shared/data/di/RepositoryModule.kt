@@ -23,15 +23,21 @@ import com.bunbeauty.shared.data.repository.SuggestionRepository
 import com.bunbeauty.shared.data.repository.UserAddressRepository
 import com.bunbeauty.shared.data.repository.UserRepository
 import com.bunbeauty.shared.data.repository.VersionRepository
+import com.bunbeauty.shared.domain.repo.AdditionGroupRepo
+import com.bunbeauty.shared.domain.repo.AdditionRepo
 import com.bunbeauty.shared.domain.repo.AuthRepo
 import com.bunbeauty.shared.domain.repo.CafeRepo
+import com.bunbeauty.shared.domain.repo.CartProductAdditionRepo
 import com.bunbeauty.shared.domain.repo.CartProductRepo
 import com.bunbeauty.shared.domain.repo.CityRepo
 import com.bunbeauty.shared.domain.repo.DeliveryRepo
+import com.bunbeauty.shared.domain.repo.DiscountRepo
 import com.bunbeauty.shared.domain.repo.LinkRepo
 import com.bunbeauty.shared.domain.repo.MenuProductRepo
+import com.bunbeauty.shared.domain.repo.OrderAvailableRepo
 import com.bunbeauty.shared.domain.repo.OrderRepo
 import com.bunbeauty.shared.domain.repo.PaymentRepo
+import com.bunbeauty.shared.domain.repo.RecommendationRepo
 import com.bunbeauty.shared.domain.repo.SuggestionRepo
 import com.bunbeauty.shared.domain.repo.UserAddressRepo
 import com.bunbeauty.shared.domain.repo.UserRepo
@@ -145,7 +151,7 @@ fun repositoryModule() = module {
             linkDao = get()
         )
     }
-    single {
+    single<DiscountRepo> {
         DiscountRepository(
             networkConnector = get(),
             dataStoreRepo = get()
@@ -156,24 +162,24 @@ fun repositoryModule() = module {
             networkConnector = get()
         )
     }
-    single {
+    single<RecommendationRepo> {
         RecommendationRepository(
             networkConnector = get(),
             dataStoreRepo = get()
         )
     }
-    single {
+    single<CartProductAdditionRepo> {
         CartProductAdditionRepository(
             uuidGenerator = get(),
             cartProductAdditionDao = get()
         )
     }
-    single {
+    single<AdditionRepo> {
         AdditionRepository(
             additionDao = get()
         )
     }
-    single {
+    single<AdditionGroupRepo> {
         AdditionGroupRepository(
             additionGroupDao = get()
         )
@@ -183,7 +189,7 @@ fun repositoryModule() = module {
             networkConnector = get()
         )
     }
-    single {
+    single<OrderAvailableRepo> {
         OrderAvailableRepository(
             networkConnector = get()
         )

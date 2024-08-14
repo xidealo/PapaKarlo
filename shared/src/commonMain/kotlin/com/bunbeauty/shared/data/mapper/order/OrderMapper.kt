@@ -13,11 +13,11 @@ import com.bunbeauty.shared.domain.model.order.OrderAddress
 import com.bunbeauty.shared.domain.model.order.OrderCode
 import com.bunbeauty.shared.domain.model.order.OrderStatus
 import com.bunbeauty.shared.domain.model.payment_method.PaymentMethodName
-import com.bunbeauty.shared.domain.util.IDateTimeUtil
+import com.bunbeauty.shared.domain.util.DateTimeUtil
 
 class OrderMapper(
     private val orderProductMapper: IOrderProductMapper,
-    private val dateTimeUtil: IDateTimeUtil
+    private val dateTimeUtil: DateTimeUtil
 ) : IOrderMapper {
     override fun toLightOrder(orderEntity: OrderEntity): LightOrder {
         return LightOrder(

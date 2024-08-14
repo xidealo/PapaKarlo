@@ -1,36 +1,29 @@
 package com.bunbeauty.domain.feature.orderavailable
 
-import com.bunbeauty.shared.data.repository.OrderAvailableRepository
 import com.bunbeauty.shared.domain.feature.orderavailable.IsOrderAvailableUseCase
 import com.bunbeauty.shared.domain.model.order.OrderAvailability
-import io.mockk.MockKAnnotations
-import io.mockk.coEvery
-import io.mockk.impl.annotations.InjectMockKs
-import io.mockk.impl.annotations.MockK
+import com.bunbeauty.shared.domain.repo.OrderAvailableRepo
+import dev.mokkery.answering.returns
+import dev.mokkery.everySuspend
+import dev.mokkery.mock
 import kotlinx.coroutines.test.runTest
-import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class GetIsOrderAvailableUseCaseTest {
 
-    @MockK
-    private lateinit var orderAvailableRepository: OrderAvailableRepository
+    private val orderAvailableRepository: OrderAvailableRepo = mock()
 
-    @InjectMockKs
-    private lateinit var isOrderAvailableUseCase: IsOrderAvailableUseCase
-
-    @BeforeTest
-    fun setup() {
-        MockKAnnotations.init(this)
-    }
+    private var isOrderAvailableUseCase: IsOrderAvailableUseCase = IsOrderAvailableUseCase(
+        orderAvailableRepository = orderAvailableRepository
+    )
 
     @Test
     fun `invoke returns true when order is available`() = runTest {
         // Given
         val orderAvailable = orderAvailabilityMock.copy(available = true)
-        coEvery { orderAvailableRepository.getOrderAvailable() } returns orderAvailable
+        everySuspend { orderAvailableRepository.getOrderAvailable() } returns orderAvailable
 
         // When
         val result = isOrderAvailableUseCase.invoke()
@@ -43,7 +36,7 @@ class GetIsOrderAvailableUseCaseTest {
     fun `invoke returns false when order is not available`() = runTest {
         // Given
         val orderAvailable = orderAvailabilityMock.copy(available = false)
-        coEvery { orderAvailableRepository.getOrderAvailable() } returns orderAvailable
+        everySuspend { orderAvailableRepository.getOrderAvailable() } returns orderAvailable
 
         // When
         val result = isOrderAvailableUseCase.invoke()
@@ -55,7 +48,7 @@ class GetIsOrderAvailableUseCaseTest {
     @Test
     fun `invoke returns default true when order is null`() = runTest {
         // Given
-        coEvery { orderAvailableRepository.getOrderAvailable() } returns null
+        everySuspend { orderAvailableRepository.getOrderAvailable() } returns null
 
         // When
         val result = isOrderAvailableUseCase.invoke()

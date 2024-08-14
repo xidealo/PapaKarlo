@@ -6,34 +6,31 @@ import com.bunbeauty.getMenuProduct
 import com.bunbeauty.shared.domain.feature.addition.GetCartProductAdditionsPriceUseCase
 import com.bunbeauty.shared.domain.feature.discount.GetDiscountUseCase
 import com.bunbeauty.shared.domain.interactor.cart.GetNewTotalCostUseCase
+import com.bunbeauty.shared.domain.interactor.cart.GetNewTotalCostUseCaseImpl
 import com.bunbeauty.shared.domain.model.Discount
-import io.mockk.coEvery
-import io.mockk.mockk
+import dev.mokkery.answering.returns
+import dev.mokkery.everySuspend
+import dev.mokkery.matcher.any
+import dev.mokkery.mock
 import kotlinx.coroutines.test.runTest
-import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class GetNewTotalCostUseCaseTest {
 
-    private val getDiscountUseCase: GetDiscountUseCase = mockk()
-    private val getCartProductAdditionsPriceUseCase: GetCartProductAdditionsPriceUseCase = mockk()
+    private val getDiscountUseCase: GetDiscountUseCase = mock()
+    private val getCartProductAdditionsPriceUseCase: GetCartProductAdditionsPriceUseCase = mock()
 
-    private lateinit var getNewTotalCostUseCase: GetNewTotalCostUseCase
-
-    @BeforeTest
-    fun setup() {
-        getNewTotalCostUseCase = GetNewTotalCostUseCase(
-            getDiscountUseCase = getDiscountUseCase,
-            getCartProductAdditionsPriceUseCase = getCartProductAdditionsPriceUseCase
-        )
-    }
+    private val getNewTotalCostUseCase: GetNewTotalCostUseCase = GetNewTotalCostUseCaseImpl(
+        getDiscountUseCase = getDiscountUseCase,
+        getCartProductAdditionsPriceUseCase = getCartProductAdditionsPriceUseCase
+    )
 
     @Test
     fun `should return zero newFinalCost when product list is empty`() = runTest {
         // Given
 
-        coEvery { getDiscountUseCase() } returns null
+        everySuspend { getDiscountUseCase() } returns null
 
         // When
         val newFinalCost = getNewTotalCostUseCase(emptyList())
@@ -59,8 +56,8 @@ class GetNewTotalCostUseCaseTest {
                     menuProduct = getMenuProduct(newPrice = 50, oldPrice = 100)
                 )
             )
-            coEvery { getDiscountUseCase() } returns null
-            coEvery { getCartProductAdditionsPriceUseCase(any()) } returns 0
+            everySuspend { getDiscountUseCase() } returns null
+            everySuspend { getCartProductAdditionsPriceUseCase(any()) } returns 0
 
             // When
             val newFinalCost = getNewTotalCostUseCase(cartProductListMockData)
@@ -86,8 +83,8 @@ class GetNewTotalCostUseCaseTest {
                     menuProduct = getMenuProduct(newPrice = 50, oldPrice = 100)
                 )
             )
-            coEvery { getDiscountUseCase() } returns Discount(firstOrderDiscount = 10)
-            coEvery { getCartProductAdditionsPriceUseCase(any()) } returns 0
+            everySuspend { getDiscountUseCase() } returns Discount(firstOrderDiscount = 10)
+            everySuspend { getCartProductAdditionsPriceUseCase(any()) } returns 0
 
             // When
             val newFinalCost = getNewTotalCostUseCase(cartProductListMockData)
@@ -109,8 +106,8 @@ class GetNewTotalCostUseCaseTest {
                     menuProduct = getMenuProduct(newPrice = 666, oldPrice = 1000)
                 )
             )
-            coEvery { getDiscountUseCase() } returns Discount(firstOrderDiscount = 10)
-            coEvery { getCartProductAdditionsPriceUseCase(any()) } returns 0
+            everySuspend { getDiscountUseCase() } returns Discount(firstOrderDiscount = 10)
+            everySuspend { getCartProductAdditionsPriceUseCase(any()) } returns 0
 
             // When
             val newFinalCost = getNewTotalCostUseCase(cartProductListMockData)
@@ -132,8 +129,8 @@ class GetNewTotalCostUseCaseTest {
                     menuProduct = getMenuProduct(newPrice = 666, oldPrice = 1000)
                 )
             )
-            coEvery { getDiscountUseCase() } returns Discount(firstOrderDiscount = 100)
-            coEvery { getCartProductAdditionsPriceUseCase(any()) } returns 0
+            everySuspend { getDiscountUseCase() } returns Discount(firstOrderDiscount = 100)
+            everySuspend { getCartProductAdditionsPriceUseCase(any()) } returns 0
 
             // When
             val newFinalCost = getNewTotalCostUseCase(cartProductListMockData)
@@ -155,8 +152,8 @@ class GetNewTotalCostUseCaseTest {
                     menuProduct = getMenuProduct(newPrice = 666, oldPrice = 1000)
                 )
             )
-            coEvery { getDiscountUseCase() } returns Discount(firstOrderDiscount = 0)
-            coEvery { getCartProductAdditionsPriceUseCase(any()) } returns 0
+            everySuspend { getDiscountUseCase() } returns Discount(firstOrderDiscount = 0)
+            everySuspend { getCartProductAdditionsPriceUseCase(any()) } returns 0
 
             // When
             val newFinalCost = getNewTotalCostUseCase(cartProductListMockData)
@@ -182,8 +179,8 @@ class GetNewTotalCostUseCaseTest {
                     )
                 )
             )
-            coEvery { getDiscountUseCase() } returns Discount(firstOrderDiscount = 0)
-            coEvery { getCartProductAdditionsPriceUseCase(any()) } returns 100
+            everySuspend { getDiscountUseCase() } returns Discount(firstOrderDiscount = 0)
+            everySuspend { getCartProductAdditionsPriceUseCase(any()) } returns 100
 
             // When
             val newFinalCost = getNewTotalCostUseCase(cartProductListMockData)

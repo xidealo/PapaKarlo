@@ -1,16 +1,13 @@
 package com.bunbeauty.domain.feature.address
 
 import com.bunbeauty.shared.DataStoreRepo
-import com.bunbeauty.shared.domain.feature.address.GetCurrentUserAddressUseCase
+import com.bunbeauty.shared.domain.feature.address.GetCurrentUserAddressUseCaseImpl
 import com.bunbeauty.shared.domain.model.address.UserAddress
 import com.bunbeauty.shared.domain.repo.UserAddressRepo
-import io.mockk.MockKAnnotations
-import io.mockk.coEvery
-import io.mockk.impl.annotations.InjectMockKs
-import io.mockk.impl.annotations.MockK
-import io.mockk.mockk
+import dev.mokkery.answering.returns
+import dev.mokkery.everySuspend
+import dev.mokkery.mock
 import kotlinx.coroutines.test.runTest
-import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -18,28 +15,37 @@ class GetCurrentUserAddressUseCaseTest {
 
     private val fakeUserUuid = "userUuid"
     private val fakeSelectedCityUuid = "selectedCityUuid"
-    private val userAddressMock: UserAddress = mockk(name = "userAddressMock")
+    private val userAddressMock: UserAddress = UserAddress(
+        uuid = "pulvinar",
+        street = "conclusionemque",
+        house = "purus",
+        flat = null,
+        entrance = null,
+        floor = null,
+        comment = null,
+        minOrderCost = null,
+        normalDeliveryCost = 2028,
+        forLowDeliveryCost = null,
+        lowDeliveryCost = null,
+        userUuid = "his"
+    )
 
-    @MockK
-    private val dataStoreRepo: DataStoreRepo = mockk {
-        coEvery { getUserUuid() } returns fakeUserUuid
-        coEvery { getSelectedCityUuid() } returns fakeSelectedCityUuid
+    private val dataStoreRepo: DataStoreRepo = mock {
+        everySuspend { getUserUuid() } returns fakeUserUuid
+        everySuspend { getSelectedCityUuid() } returns fakeSelectedCityUuid
     }
 
-    @MockK
-    private lateinit var userAddressRepo: UserAddressRepo
+    private val userAddressRepo: UserAddressRepo = mock()
 
-    @InjectMockKs
-    private lateinit var getCurrentUserAddressUseCase: GetCurrentUserAddressUseCase
-
-    @BeforeTest
-    fun setup() {
-        MockKAnnotations.init(this)
-    }
+    private val getCurrentUserAddressUseCase: GetCurrentUserAddressUseCaseImpl =
+        GetCurrentUserAddressUseCaseImpl(
+            dataStoreRepo = dataStoreRepo,
+            userAddressRepo = userAddressRepo
+        )
 
     @Test
     fun `return selected address address is selected`() = runTest {
-        coEvery {
+        everySuspend {
             userAddressRepo.getSelectedAddressByUserAndCityUuid(
                 userUuid = fakeUserUuid,
                 cityUuid = fakeSelectedCityUuid
@@ -53,13 +59,13 @@ class GetCurrentUserAddressUseCaseTest {
 
     @Test
     fun `return first address when address is not selected`() = runTest {
-        coEvery {
+        everySuspend {
             userAddressRepo.getSelectedAddressByUserAndCityUuid(
                 userUuid = fakeUserUuid,
                 cityUuid = fakeSelectedCityUuid
             )
         } returns null
-        coEvery {
+        everySuspend {
             userAddressRepo.getFirstUserAddressByUserAndCityUuid(
                 userUuid = fakeUserUuid,
                 cityUuid = fakeSelectedCityUuid

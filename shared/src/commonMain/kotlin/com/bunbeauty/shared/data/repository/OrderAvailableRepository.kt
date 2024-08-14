@@ -3,15 +3,16 @@ package com.bunbeauty.shared.data.repository
 import com.bunbeauty.shared.data.mapper.orderavailable.mapOrderAvailableServerToOrderAvailability
 import com.bunbeauty.shared.data.network.api.NetworkConnector
 import com.bunbeauty.shared.domain.model.order.OrderAvailability
+import com.bunbeauty.shared.domain.repo.OrderAvailableRepo
 import com.bunbeauty.shared.extension.getNullableResult
 
 class OrderAvailableRepository(
-    private val networkConnector: NetworkConnector,
-) {
+    private val networkConnector: NetworkConnector
+) : OrderAvailableRepo {
 
     private var cache: OrderAvailability? = null
 
-    suspend fun fetchOrderAvailable(): OrderAvailability? {
+    override suspend fun fetchOrderAvailable(): OrderAvailability? {
         return networkConnector.getIsOrderAvailableData()
             .getNullableResult { orderAvailableServer ->
                 val orderAvailable =
@@ -21,11 +22,11 @@ class OrderAvailableRepository(
             }
     }
 
-    suspend fun getOrderAvailable(): OrderAvailability? {
+    override suspend fun getOrderAvailable(): OrderAvailability? {
         return cache ?: fetchOrderAvailable()
     }
 
-    fun update(orderAvailability: OrderAvailability) {
+    override fun update(orderAvailability: OrderAvailability) {
         cache = orderAvailability
     }
 }

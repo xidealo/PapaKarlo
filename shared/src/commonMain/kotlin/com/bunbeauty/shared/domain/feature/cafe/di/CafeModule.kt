@@ -1,13 +1,14 @@
 package com.bunbeauty.shared.domain.feature.cafe.di
 
 import com.bunbeauty.shared.domain.feature.cafe.GetCafeListUseCase
+import com.bunbeauty.shared.domain.feature.cafe.GetCafeListUseCaseImpl
 import com.bunbeauty.shared.domain.feature.cafe.GetSelectableCafeListUseCase
 import com.bunbeauty.shared.domain.feature.cafe.ObserveCafeWithOpenStateListUseCase
 import org.koin.dsl.module
 
 internal fun cafeModule() = module {
-    factory {
-        GetCafeListUseCase(
+    factory<GetCafeListUseCase> {
+        GetCafeListUseCaseImpl(
             cafeRepo = get(),
             dataStoreRepo = get()
         )
