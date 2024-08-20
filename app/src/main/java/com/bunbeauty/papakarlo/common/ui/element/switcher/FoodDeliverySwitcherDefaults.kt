@@ -10,10 +10,10 @@ object FoodDeliverySwitcherDefaults {
 
     val switcherButtonColor: CardColors
         @Composable get() = CardDefaults.cardColors(
-            containerColor = FoodDeliveryTheme.colors.mainColors.secondary,
+            containerColor = FoodDeliveryTheme.colors.mainColors.stroke,
             contentColor = FoodDeliveryTheme.colors.mainColors.onSecondary,
-            disabledContainerColor = FoodDeliveryTheme.colors.mainColors.primary,
-            disabledContentColor = FoodDeliveryTheme.colors.mainColors.onPrimary
+            disabledContainerColor = FoodDeliveryTheme.colors.mainColors.secondary,
+            disabledContentColor = FoodDeliveryTheme.colors.mainColors.primary
         )
 
     val switcherShape: RoundedCornerShape

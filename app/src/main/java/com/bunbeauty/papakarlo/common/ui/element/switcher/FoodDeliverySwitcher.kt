@@ -4,11 +4,9 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -21,16 +19,21 @@ import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCardDefaults
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.medium
 
+
+private const val FIRST_OPTION = 0
+
 @Composable
 fun FoodDeliverySwitcher(
     @StringRes optionResIdList: List<Int>,
     modifier: Modifier = Modifier,
     position: Int = 0,
-    onPositionChanged: (Int) -> Unit
+    onPositionChanged: (Int) -> Unit,
 ) {
     FoodDeliverySwitcher(
         modifier = modifier,
-        optionList = optionResIdList.map { stringResource(it) },
+        optionList = optionResIdList.map { optionIdRes ->
+            stringResource(optionIdRes)
+        },
         position = position,
         onPositionChanged = onPositionChanged
     )
@@ -41,17 +44,17 @@ fun FoodDeliverySwitcher(
     modifier: Modifier = Modifier,
     optionList: List<String> = emptyList(),
     position: Int = 0,
-    onPositionChanged: (Int) -> Unit
+    onPositionChanged: (Int) -> Unit,
 ) {
     Card(
-        modifier = modifier.fillMaxWidth(),
-        elevation = FoodDeliveryCardDefaults.getCardElevation(true),
+        modifier = modifier,
+        elevation = FoodDeliveryCardDefaults.getCardElevation(false),
         shape = FoodDeliverySwitcherDefaults.switcherShape,
-        colors = FoodDeliveryCardDefaults.cardColors
+        colors = FoodDeliveryCardDefaults.switcherColors
     ) {
         Row(modifier = Modifier.padding(4.dp)) {
             optionList.onEachIndexed { i, text ->
-                val startSpace = if (i == 0) {
+                val startSpace = if (i == FIRST_OPTION) {
                     0.dp
                 } else {
                     FoodDeliveryTheme.dimensions.smallSpace
@@ -71,13 +74,12 @@ fun FoodDeliverySwitcher(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun SwitcherButton(
     modifier: Modifier = Modifier,
     text: String,
     enabled: Boolean,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     Card(
         modifier = modifier.height(40.dp),

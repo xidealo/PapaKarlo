@@ -17,6 +17,12 @@ object FoodDeliveryCardDefaults {
             disabledContainerColor = FoodDeliveryTheme.colors.mainColors.surface
         )
 
+    val switcherColors: CardColors
+        @Composable get() = CardDefaults.cardColors(
+            containerColor = FoodDeliveryTheme.colors.mainColors.stroke,
+            disabledContainerColor = FoodDeliveryTheme.colors.mainColors.stroke
+        )
+
     val transparentCardColors: CardColors
         @Composable get() = CardDefaults.cardColors(
             containerColor = Color.Transparent,
@@ -33,6 +39,9 @@ object FoodDeliveryCardDefaults {
 
     val smallCardShape: RoundedCornerShape
         @Composable get() = RoundedCornerShape(4.dp)
+
+    val zeroCardShape: RoundedCornerShape
+        @Composable get() = RoundedCornerShape(0.dp)
 
     @Composable
     fun getCardElevation(elevated: Boolean): CardElevation = if (elevated) {
