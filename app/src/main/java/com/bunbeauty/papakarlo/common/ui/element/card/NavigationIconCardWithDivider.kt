@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -31,7 +30,7 @@ fun NavigationIconCardWithDivider(
     @StringRes labelStringId: Int? = null,
     label: String = "",
     elevated: Boolean = false,
-    onClick: () -> Unit,
+    onClick: () -> Unit
 ) {
     FoodDeliveryCard(
         modifier = modifier,

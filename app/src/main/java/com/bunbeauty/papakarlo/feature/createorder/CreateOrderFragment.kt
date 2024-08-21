@@ -6,7 +6,6 @@ import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandVertically
-import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
 import androidx.compose.foundation.layout.Column
@@ -21,7 +20,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -47,7 +45,6 @@ import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCardDefaults
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCheckbox
 import com.bunbeauty.papakarlo.common.ui.element.card.NavigationCardWithDivider
-import com.bunbeauty.papakarlo.common.ui.element.card.NavigationTextCardWithDivider
 import com.bunbeauty.papakarlo.common.ui.element.simmer.Shimmer
 import com.bunbeauty.papakarlo.common.ui.element.surface.FoodDeliverySurface
 import com.bunbeauty.papakarlo.common.ui.element.switcher.FoodDeliverySwitcher
@@ -243,36 +240,24 @@ class CreateOrderFragment :
         viewState: CreateOrderViewState,
         focusManager: FocusManager,
         onAction: (CreateOrder.Action) -> Unit,
-        modifier: Modifier = Modifier,
+        modifier: Modifier = Modifier
     ) {
         if (viewState.isDelivery) {
-            if (viewState.deliveryAddress == null) {
-                NavigationCardWithDivider(
-                    modifier = modifier,
-                    clickable = viewState.isFieldsEnabled,
-                    label = stringResource(R.string.delivery_address),
-                    onClick = {
-                        focusManager.clearFocus()
-                        onAction(CreateOrder.Action.AddAddressClick)
-                    }
-                )
-            } else {
-                NavigationTextCardWithDivider(
-                    modifier = modifier,
-                    hintStringId = R.string.delivery_address,
-                    label = viewState.deliveryAddress,
-                    clickable = viewState.isFieldsEnabled,
-                    onClick = {
-                        focusManager.clearFocus()
-                        onAction(CreateOrder.Action.DeliveryAddressClick)
-                    }
-                )
-            }
-        } else {
-            NavigationTextCardWithDivider(
+            NavigationCardWithDivider(
                 modifier = modifier,
-                hintStringId = R.string.pickup_address,
-                label = viewState.pickupAddress ?: "",
+                label = stringResource(R.string.delivery_address),
+                value = viewState.deliveryAddress,
+                clickable = viewState.isFieldsEnabled,
+                onClick = {
+                    focusManager.clearFocus()
+                    onAction(CreateOrder.Action.DeliveryAddressClick)
+                }
+            )
+        } else {
+            NavigationCardWithDivider(
+                modifier = modifier,
+                label = stringResource(id = R.string.pickup_address),
+                value = viewState.pickupAddress ?: "",
                 clickable = viewState.isFieldsEnabled,
                 onClick = {
                     focusManager.clearFocus()
@@ -295,12 +280,12 @@ class CreateOrderFragment :
         viewState: CreateOrderViewState,
         focusManager: FocusManager,
         onAction: (CreateOrder.Action) -> Unit,
-        modifier: Modifier = Modifier,
+        modifier: Modifier = Modifier
     ) {
-        NavigationTextCardWithDivider(
+        NavigationCardWithDivider(
             modifier = modifier,
-            hintStringId = viewState.deferredTimeStringId,
-            label = viewState.deferredTime,
+            label = stringResource(id = viewState.deferredTimeStringId),
+            value = viewState.deferredTime,
             clickable = viewState.isFieldsEnabled,
             onClick = {
                 focusManager.clearFocus()
@@ -314,29 +299,19 @@ class CreateOrderFragment :
         viewState: CreateOrderViewState,
         focusManager: FocusManager,
         onAction: (CreateOrder.Action) -> Unit,
-        modifier: Modifier = Modifier,
+        modifier: Modifier = Modifier
     ) {
-        if (viewState.selectedPaymentMethod == null) {
-            NavigationCardWithDivider(
-                modifier = modifier,
-                label = stringResource(R.string.payment_method),
-                clickable = viewState.isFieldsEnabled,
-                onClick = {
-                    focusManager.clearFocus()
-                    onAction(CreateOrder.Action.PaymentMethodClick)
-                }
-            )
-        } else {
-            NavigationTextCardWithDivider(
-                modifier = modifier,
-                hintStringId = R.string.payment_method,
-                label = viewState.selectedPaymentMethod.name,
-                clickable = viewState.isFieldsEnabled,
-                onClick = {
-                    onAction(CreateOrder.Action.PaymentMethodClick)
-                }
-            )
-        }
+        NavigationCardWithDivider(
+            modifier = modifier,
+            label = stringResource(R.string.payment_method),
+            value = viewState.selectedPaymentMethod?.name,
+            clickable = viewState.isFieldsEnabled,
+            onClick = {
+                focusManager.clearFocus()
+                onAction(CreateOrder.Action.PaymentMethodClick)
+            }
+        )
+
         if (viewState.isPaymentMethodErrorShown) {
             ErrorText(
                 modifier = Modifier
@@ -351,7 +326,7 @@ class CreateOrderFragment :
     private fun ChangeBlock(
         viewState: CreateOrderViewState,
         onAction: (CreateOrder.Action) -> Unit,
-        modifier: Modifier = Modifier,
+        modifier: Modifier = Modifier
     ) {
         if (!viewState.showChange) {
             return
@@ -437,7 +412,7 @@ class CreateOrderFragment :
         comment: String,
         focusManager: FocusManager,
         onAction: (CreateOrder.Action) -> Unit,
-        modifier: Modifier = Modifier,
+        modifier: Modifier = Modifier
     ) {
         FoodDeliveryTextField(
             modifier = modifier
@@ -465,7 +440,7 @@ class CreateOrderFragment :
     @Composable
     private fun ErrorText(
         modifier: Modifier = Modifier,
-        @StringRes messageStringId: Int,
+        @StringRes messageStringId: Int
     ) {
         Text(
             modifier = modifier,
@@ -478,7 +453,7 @@ class CreateOrderFragment :
     @Composable
     private fun BottomAmountBar(
         viewState: CreateOrderViewState,
-        onAction: (CreateOrder.Action) -> Unit,
+        onAction: (CreateOrder.Action) -> Unit
     ) {
         FoodDeliverySurface(modifier = Modifier.fillMaxWidth()) {
             Column(
@@ -531,7 +506,7 @@ class CreateOrderFragment :
     @Composable
     private fun BottomAmountBarSuccessContent(
         cartTotal: CartTotalUI.Success,
-        modifier: Modifier = Modifier,
+        modifier: Modifier = Modifier
     ) {
         Column(
             modifier = modifier,

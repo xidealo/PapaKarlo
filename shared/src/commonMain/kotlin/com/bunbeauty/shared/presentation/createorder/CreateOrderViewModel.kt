@@ -138,7 +138,7 @@ class CreateOrderViewModel(
             }
 
             is CreateOrder.Action.ChangeWithoutChangeChecked -> {
-                changeWithoutChangeChecked(isChecked = dataState.withoutChangeChecked)
+                changeWithoutChangeChecked()
             }
 
             is CreateOrder.Action.ChangeChange -> {
@@ -327,9 +327,9 @@ class CreateOrderViewModel(
         }
     }
 
-    private fun changeWithoutChangeChecked(isChecked: Boolean) {
+    private fun changeWithoutChangeChecked() {
         setState {
-            copy(withoutChangeChecked = !isChecked)
+            copy(withoutChangeChecked = !withoutChangeChecked)
         }
     }
 

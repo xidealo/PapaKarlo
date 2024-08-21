@@ -1,6 +1,7 @@
 package com.bunbeauty.papakarlo.common.ui.element.switcher
 
 import androidx.annotation.StringRes
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,10 +16,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.R
+import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCardDefaults
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.medium
-
 
 private const val FIRST_OPTION = 0
 
@@ -27,7 +28,7 @@ fun FoodDeliverySwitcher(
     @StringRes optionResIdList: List<Int>,
     modifier: Modifier = Modifier,
     position: Int = 0,
-    onPositionChanged: (Int) -> Unit,
+    onPositionChanged: (Int) -> Unit
 ) {
     FoodDeliverySwitcher(
         modifier = modifier,
@@ -44,25 +45,22 @@ fun FoodDeliverySwitcher(
     modifier: Modifier = Modifier,
     optionList: List<String> = emptyList(),
     position: Int = 0,
-    onPositionChanged: (Int) -> Unit,
+    onPositionChanged: (Int) -> Unit
 ) {
-    Card(
+    FoodDeliveryCard(
         modifier = modifier,
-        elevation = FoodDeliveryCardDefaults.getCardElevation(false),
+        elevated = false,
         shape = FoodDeliverySwitcherDefaults.switcherShape,
         colors = FoodDeliveryCardDefaults.switcherColors
     ) {
-        Row(modifier = Modifier.padding(4.dp)) {
+        Row(
+            modifier = Modifier.padding(4.dp),
+            horizontalArrangement = Arrangement.spacedBy(4.dp)
+        ) {
             optionList.onEachIndexed { i, text ->
-                val startSpace = if (i == FIRST_OPTION) {
-                    0.dp
-                } else {
-                    FoodDeliveryTheme.dimensions.smallSpace
-                }
                 SwitcherButton(
                     modifier = Modifier
-                        .weight(1f)
-                        .padding(start = startSpace),
+                        .weight(1f),
                     text = text,
                     enabled = position != i,
                     onClick = {
@@ -79,7 +77,7 @@ private fun SwitcherButton(
     modifier: Modifier = Modifier,
     text: String,
     enabled: Boolean,
-    onClick: () -> Unit,
+    onClick: () -> Unit
 ) {
     Card(
         modifier = modifier.height(40.dp),

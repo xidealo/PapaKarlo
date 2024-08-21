@@ -6,6 +6,8 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CardElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 
@@ -40,8 +42,8 @@ object FoodDeliveryCardDefaults {
     val smallCardShape: RoundedCornerShape
         @Composable get() = RoundedCornerShape(4.dp)
 
-    val zeroCardShape: RoundedCornerShape
-        @Composable get() = RoundedCornerShape(0.dp)
+    val zeroCardShape: Shape
+        @Composable get() = RectangleShape
 
     @Composable
     fun getCardElevation(elevated: Boolean): CardElevation = if (elevated) {
