@@ -1,6 +1,7 @@
 package com.bunbeauty.papakarlo.common.ui.element.switcher
 
 import androidx.annotation.StringRes
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -16,12 +17,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
-import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCardDefaults
+import com.bunbeauty.papakarlo.common.ui.element.switcher.FoodDeliverySwitcherDefaults.switcherShape
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.medium
-
-private const val FIRST_OPTION = 0
 
 @Composable
 fun FoodDeliverySwitcher(
@@ -47,27 +45,25 @@ fun FoodDeliverySwitcher(
     position: Int = 0,
     onPositionChanged: (Int) -> Unit
 ) {
-    FoodDeliveryCard(
-        modifier = modifier,
-        elevated = false,
-        shape = FoodDeliverySwitcherDefaults.switcherShape,
-        colors = FoodDeliveryCardDefaults.switcherColors
+    Row(
+        modifier = modifier
+            .background(
+                color = FoodDeliveryTheme.colors.mainColors.stroke,
+                shape = switcherShape
+            )
+            .padding(4.dp),
+        horizontalArrangement = Arrangement.spacedBy(4.dp)
     ) {
-        Row(
-            modifier = Modifier.padding(4.dp),
-            horizontalArrangement = Arrangement.spacedBy(4.dp)
-        ) {
-            optionList.onEachIndexed { i, text ->
-                SwitcherButton(
-                    modifier = Modifier
-                        .weight(1f),
-                    text = text,
-                    enabled = position != i,
-                    onClick = {
-                        onPositionChanged(i)
-                    }
-                )
-            }
+        optionList.onEachIndexed { i, text ->
+            SwitcherButton(
+                modifier = Modifier
+                    .weight(1f),
+                text = text,
+                enabled = position != i,
+                onClick = {
+                    onPositionChanged(i)
+                }
+            )
         }
     }
 }
