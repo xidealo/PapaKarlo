@@ -14,6 +14,7 @@ struct CreateOrderView: View {
     // errors ----------------
     @State var showCreatedAddress: Bool = false
     @State var showUserAddressError: Bool = false
+    @State var showOrderNotAvailableError: Bool = false
     @State var showCommonError: Bool = false
     @State var showPaymentMethodError: Bool = false
     // ----------------
@@ -49,7 +50,8 @@ struct CreateOrderView: View {
         getSelectedCityTimeZone: iosComponent.provideGetSelectedCityTimeZoneUseCase(),
         saveSelectedUserAddress : iosComponent.provideSaveSelectedUserAddressUseCase(),
         getSelectablePaymentMethodListUseCase : iosComponent.provideGetSelectablePaymentMethodListUseCase(),
-        savePaymentMethodUseCase : iosComponent.provideSavePaymentMethodUseCase()
+        savePaymentMethodUseCase : iosComponent.provideSavePaymentMethodUseCase(),
+        isOrderAvailableUseCase: iosComponent.provideIsOrderAvailableUseCase()
     )
     
     @State var createOrderViewState: CreateOrderViewState? = nil
@@ -120,7 +122,6 @@ struct CreateOrderView: View {
                 if let createOrderViewStateNN = createOrderViewState {
                     CreateOrderSuccessView(
                         showCreatedAddress: $showCreatedAddress,
-                        showCommonError: $showCommonError,
                         goToUserAddress: $goToUserAddress,
                         goToCafeAddress: $goToCafeAddress,
                         goToSelectPaymentMethod: $goToSelectPaymentMethod,
@@ -176,6 +177,14 @@ struct CreateOrderView: View {
                 foregroundColor: AppColor.onError
             ),
             show: $showUserAddressError
+        ).overlay(
+            overlayView: ToastView(
+                toast: Toast(title: "Заказы временно не принимаются"),
+                show: $showOrderNotAvailableError,
+                backgroundColor: AppColor.error,
+                foregroundColor: AppColor.onError
+            ),
+            show: $showOrderNotAvailableError
         )
     }
     
@@ -282,7 +291,9 @@ struct CreateOrderView: View {
                     case is CreateOrderEventShowUserAddressError:
                         showUserAddressError = true
                     case is CreateOrderEventShowPaymentMethodError:
-                        showPaymentMethodError = true
+                        showPaymentMethodError = true   
+                    case is CreateOrderEventOrderNotAvailableErrorEvent:
+                        showOrderNotAvailableError = true
                     default:
                         print("def")
                     }
@@ -382,8 +393,7 @@ struct CreateOrderSuccessView: View {
     @State var addressLable = Strings.HINT_CREATION_ORDER_ADDRESS_DELIVERY
     // errors
     @Binding var showCreatedAddress: Bool
-    @Binding var showCommonError: Bool
-    
+
     //navigations
     @Binding var goToUserAddress: Bool
     @Binding var goToCafeAddress: Bool
@@ -565,8 +575,9 @@ struct CreateOrderSuccessView: View {
                                         CreateOrderActionChangeDeferredTime(
                                             time: Time(
                                                 hours: Int32(calendar.component(.hour, from: date)),
-                                                minutes: Int32(calendar.component(.minute, from: date)
-                                                              )
+                                                minutes: Int32(
+                                                    calendar.component(.minute, from: date)
+                                                    )
                                             )
                                         )
                                     )
@@ -643,7 +654,13 @@ struct CreateOrderSuccessView: View {
                         .progressViewStyle(CircularProgressViewStyle(tint: AppColor.primary))
                         .scaleEffect(1.0)
                         .padding(8)
-                case .Success(let motivationUi, let discount, let deliveryCost, let oldFinalCost, let newFinalCost):
+                case .Success(
+                    let motivationUi,
+                    let discount,
+                    let deliveryCost,
+                    let oldFinalCost,
+                    let newFinalCost
+                ):
                     BottomAmountBarSuccessView(
                         motivation: motivationUi,
                         discount: discount,

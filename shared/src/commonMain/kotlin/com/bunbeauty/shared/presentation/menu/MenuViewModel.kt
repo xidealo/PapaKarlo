@@ -2,7 +2,10 @@ package com.bunbeauty.shared.presentation.menu
 
 import com.bunbeauty.analytic.AnalyticService
 import com.bunbeauty.analytic.event.menu.AddMenuProductClickEvent
+import com.bunbeauty.analytic.event.menu.LoadedMenuEvent
 import com.bunbeauty.analytic.parameter.MenuProductUuidEventParameter
+import com.bunbeauty.analytic.parameter.TimeParameter
+import com.bunbeauty.core.Logger
 import com.bunbeauty.shared.domain.feature.cart.ObserveCartUseCase
 import com.bunbeauty.shared.domain.feature.discount.GetDiscountUseCase
 import com.bunbeauty.shared.domain.feature.menu.AddMenuProductUseCase
@@ -19,13 +22,16 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlin.time.measureTime
+
+private const val MAIN_MENU_VIEW_MODEL_TAG = "MenuViewModel"
 
 class MenuViewModel(
     private val menuProductInteractor: IMenuProductInteractor,
     private val observeCartUseCase: ObserveCartUseCase,
     private val addMenuProductUseCase: AddMenuProductUseCase,
     private val getDiscountUseCase: GetDiscountUseCase,
-    private val analyticService: AnalyticService
+    private val analyticService: AnalyticService,
 ) : SharedViewModel() {
 
     private val mutableMenuState = MutableStateFlow(
@@ -75,6 +81,8 @@ class MenuViewModel(
     }
 
     fun getMenu() {
+        Logger.logD(MAIN_MENU_VIEW_MODEL_TAG, "getMenu")
+
         mutableMenuState.update { oldState ->
             oldState.copy(
                 state = MenuDataState.State.Loading
@@ -83,28 +91,39 @@ class MenuViewModel(
 
         sharedScope.launchSafe(
             block = {
-                val menuSectionList = menuProductInteractor.getMenuSectionList()
-                if (selectedCategoryUuid == null) {
-                    selectedCategoryUuid = menuSectionList.firstOrNull()?.category?.uuid
-                }
+                val time = measureTime {
 
-                val discountItem =
-                    getDiscountUseCase()?.firstOrderDiscount?.toString()?.let { discount ->
-                        MenuItem.Discount(discount = discount)
+                    val menuSectionList = menuProductInteractor.getMenuSectionList()
+
+                    if (selectedCategoryUuid == null) {
+                        selectedCategoryUuid = menuSectionList.firstOrNull()?.category?.uuid
                     }
-                val menuItemList = listOfNotNull(discountItem) +
-                    menuSectionList.flatMap { menuSection ->
-                        menuSection.toMenuItemList()
+
+                    val discountItem =
+                        getDiscountUseCase()?.firstOrderDiscount?.toString()?.let { discount ->
+                            MenuItem.Discount(discount = discount)
+                        }
+                    val menuItemList = listOfNotNull(discountItem) +
+                            menuSectionList.flatMap { menuSection ->
+                                menuSection.toMenuItemList()
+                            }
+                    mutableMenuState.update { oldState ->
+                        oldState.copy(
+                            categoryItemList = menuSectionList.map { menuSection ->
+                                toCategoryItemModel(menuSection)
+                            },
+                            menuItemList = menuItemList,
+                            state = MenuDataState.State.Success
+                        )
                     }
-                mutableMenuState.update { oldState ->
-                    oldState.copy(
-                        categoryItemList = menuSectionList.map { menuSection ->
-                            toCategoryItemModel(menuSection)
-                        },
-                        menuItemList = menuItemList,
-                        state = MenuDataState.State.Success
-                    )
                 }
+                analyticService.sendEvent(
+                    event = LoadedMenuEvent(
+                        timeParameter = TimeParameter(
+                            value = time.toString()
+                        )
+                    )
+                )
             },
             onError = { throwable ->
                 handleError(throwable)

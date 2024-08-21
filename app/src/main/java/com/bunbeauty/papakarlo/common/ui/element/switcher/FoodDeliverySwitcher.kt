@@ -1,14 +1,14 @@
 package com.bunbeauty.papakarlo.common.ui.element.switcher
 
 import androidx.annotation.StringRes
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -17,7 +17,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCardDefaults
+import com.bunbeauty.papakarlo.common.ui.element.switcher.FoodDeliverySwitcherDefaults.switcherShape
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.medium
 
@@ -30,7 +30,9 @@ fun FoodDeliverySwitcher(
 ) {
     FoodDeliverySwitcher(
         modifier = modifier,
-        optionList = optionResIdList.map { stringResource(it) },
+        optionList = optionResIdList.map { optionIdRes ->
+            stringResource(optionIdRes)
+        },
         position = position,
         onPositionChanged = onPositionChanged
     )
@@ -43,35 +45,29 @@ fun FoodDeliverySwitcher(
     position: Int = 0,
     onPositionChanged: (Int) -> Unit
 ) {
-    Card(
-        modifier = modifier.fillMaxWidth(),
-        elevation = FoodDeliveryCardDefaults.getCardElevation(true),
-        shape = FoodDeliverySwitcherDefaults.switcherShape,
-        colors = FoodDeliveryCardDefaults.cardColors
+    Row(
+        modifier = modifier
+            .background(
+                color = FoodDeliveryTheme.colors.mainColors.stroke,
+                shape = switcherShape
+            )
+            .padding(4.dp),
+        horizontalArrangement = Arrangement.spacedBy(4.dp)
     ) {
-        Row(modifier = Modifier.padding(4.dp)) {
-            optionList.onEachIndexed { i, text ->
-                val startSpace = if (i == 0) {
-                    0.dp
-                } else {
-                    FoodDeliveryTheme.dimensions.smallSpace
+        optionList.onEachIndexed { i, text ->
+            SwitcherButton(
+                modifier = Modifier
+                    .weight(1f),
+                text = text,
+                enabled = position != i,
+                onClick = {
+                    onPositionChanged(i)
                 }
-                SwitcherButton(
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(start = startSpace),
-                    text = text,
-                    enabled = position != i,
-                    onClick = {
-                        onPositionChanged(i)
-                    }
-                )
-            }
+            )
         }
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun SwitcherButton(
     modifier: Modifier = Modifier,

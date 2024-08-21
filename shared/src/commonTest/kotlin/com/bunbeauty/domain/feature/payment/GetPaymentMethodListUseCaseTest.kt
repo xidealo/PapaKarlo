@@ -4,22 +4,17 @@ import com.bunbeauty.shared.domain.feature.payment.GetPaymentMethodListUseCase
 import com.bunbeauty.shared.domain.model.payment_method.PaymentMethod
 import com.bunbeauty.shared.domain.model.payment_method.PaymentMethodName
 import com.bunbeauty.shared.domain.repo.PaymentRepo
-import io.mockk.coEvery
-import io.mockk.mockk
+import dev.mokkery.answering.returns
+import dev.mokkery.everySuspend
+import dev.mokkery.mock
 import kotlinx.coroutines.test.runTest
-import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertContentEquals
 
-internal class GetPaymentMethodListUseCaseTest {
+class GetPaymentMethodListUseCaseTest {
 
-    private val paymentRepo: PaymentRepo = mockk()
-    private lateinit var getPaymentMethodList: GetPaymentMethodListUseCase
-
-    @BeforeTest
-    fun setup() {
-        getPaymentMethodList = GetPaymentMethodListUseCase(paymentRepo)
-    }
+    private val paymentRepo: PaymentRepo = mock()
+    private val getPaymentMethodList: GetPaymentMethodListUseCase = GetPaymentMethodListUseCase(paymentRepo)
 
     @Test
     fun `should return non-copyable methods first and then copyable ones`() = runTest {
@@ -38,7 +33,7 @@ internal class GetPaymentMethodListUseCaseTest {
             "+7 (900) 111-22-33",
             "+79001112233"
         )
-        coEvery { paymentRepo.getPaymentMethodList() } returns listOf(
+        everySuspend { paymentRepo.getPaymentMethodList() } returns listOf(
             cashMethod,
             cardNumberMethod,
             cardMethod,

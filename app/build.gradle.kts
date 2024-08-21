@@ -258,8 +258,10 @@ fun commonPlayConfig(
     playPublisherExtension: PlayPublisherExtension,
     buildGradle: Build_gradle
 ) {
-    playPublisherExtension.track.set("production")
-    playPublisherExtension.defaultToAppBundles.set(true)
-    playPublisherExtension.serviceAccountCredentials.set(buildGradle.file("google-play-api-key.json"))
-    playPublisherExtension.releaseStatus.set(ReleaseStatus.DRAFT)
+    with(playPublisherExtension) {
+        track.set("production")
+        defaultToAppBundles.set(true)
+        serviceAccountCredentials.set(buildGradle.file("google-play-api-key.json"))
+        releaseStatus.set(ReleaseStatus.IN_PROGRESS)
+    }
 }

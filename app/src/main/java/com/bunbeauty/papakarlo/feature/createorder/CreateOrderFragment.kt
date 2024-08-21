@@ -41,9 +41,10 @@ import com.bunbeauty.papakarlo.common.extension.navigateSafe
 import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.papakarlo.common.ui.element.button.LoadingButton
 import com.bunbeauty.papakarlo.common.ui.element.card.DiscountCard
+import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
+import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCardDefaults
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCheckbox
-import com.bunbeauty.papakarlo.common.ui.element.card.NavigationCard
-import com.bunbeauty.papakarlo.common.ui.element.card.NavigationTextCard
+import com.bunbeauty.papakarlo.common.ui.element.card.NavigationCardWithDivider
 import com.bunbeauty.papakarlo.common.ui.element.simmer.Shimmer
 import com.bunbeauty.papakarlo.common.ui.element.surface.FoodDeliverySurface
 import com.bunbeauty.papakarlo.common.ui.element.switcher.FoodDeliverySwitcher
@@ -92,20 +93,24 @@ class CreateOrderFragment :
         FoodDeliveryScaffold(
             title = stringResource(id = R.string.title_create_order),
             backActionClick = {
-                findNavController().popBackStack()
-            }
+                onAction(CreateOrder.Action.Back)
+            },
+            backgroundColor = FoodDeliveryTheme.colors.mainColors.surface
         ) {
             Column(modifier = Modifier.fillMaxSize()) {
                 Column(
                     modifier = Modifier
                         .weight(1f)
                         .verticalScroll(rememberScrollState())
-                        .padding(FoodDeliveryTheme.dimensions.mediumSpace)
+                        .padding(vertical = FoodDeliveryTheme.dimensions.mediumSpace)
                 ) {
                     val focusManager = LocalFocusManager.current
 
                     FoodDeliverySwitcher(
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp)
+                            .padding(bottom = 8.dp),
                         optionResIdList = listOf(
                             R.string.action_create_order_delivery,
                             R.string.action_create_order_pickup
@@ -117,30 +122,25 @@ class CreateOrderFragment :
                         }
                     )
                     AddressCard(
-                        modifier = Modifier.padding(top = 8.dp),
                         viewState = viewState,
                         focusManager = focusManager,
                         onAction = onAction
                     )
                     DeferredTimeCard(
-                        modifier = Modifier.padding(top = 8.dp),
                         viewState = viewState,
                         focusManager = focusManager,
                         onAction = onAction
                     )
                     PaymentMethodCard(
-                        modifier = Modifier.padding(top = 8.dp),
                         viewState = viewState,
                         focusManager = focusManager,
                         onAction = onAction
                     )
                     ChangeBlock(
-                        modifier = Modifier.padding(top = 8.dp),
                         viewState = viewState,
                         onAction = onAction
                     )
                     CommentTextField(
-                        modifier = Modifier.padding(top = 8.dp),
                         comment = viewState.comment,
                         focusManager = focusManager,
                         onAction = onAction
@@ -228,6 +228,10 @@ class CreateOrderFragment :
                     resources.getString(R.string.warning_no_order_available)
                 )
             }
+
+            CreateOrder.Event.Back -> {
+                findNavController().popBackStack()
+            }
         }
     }
 
@@ -239,33 +243,21 @@ class CreateOrderFragment :
         modifier: Modifier = Modifier
     ) {
         if (viewState.isDelivery) {
-            if (viewState.deliveryAddress == null) {
-                NavigationCard(
-                    modifier = modifier,
-                    clickable = viewState.isFieldsEnabled,
-                    label = stringResource(R.string.delivery_address),
-                    onClick = {
-                        focusManager.clearFocus()
-                        onAction(CreateOrder.Action.AddAddressClick)
-                    }
-                )
-            } else {
-                NavigationTextCard(
-                    modifier = modifier,
-                    hintStringId = R.string.delivery_address,
-                    label = viewState.deliveryAddress,
-                    clickable = viewState.isFieldsEnabled,
-                    onClick = {
-                        focusManager.clearFocus()
-                        onAction(CreateOrder.Action.DeliveryAddressClick)
-                    }
-                )
-            }
-        } else {
-            NavigationTextCard(
+            NavigationCardWithDivider(
                 modifier = modifier,
-                hintStringId = R.string.pickup_address,
-                label = viewState.pickupAddress ?: "",
+                label = stringResource(R.string.delivery_address),
+                value = viewState.deliveryAddress,
+                clickable = viewState.isFieldsEnabled,
+                onClick = {
+                    focusManager.clearFocus()
+                    onAction(CreateOrder.Action.DeliveryAddressClick)
+                }
+            )
+        } else {
+            NavigationCardWithDivider(
+                modifier = modifier,
+                label = stringResource(id = R.string.pickup_address),
+                value = viewState.pickupAddress ?: "",
                 clickable = viewState.isFieldsEnabled,
                 onClick = {
                     focusManager.clearFocus()
@@ -290,10 +282,10 @@ class CreateOrderFragment :
         onAction: (CreateOrder.Action) -> Unit,
         modifier: Modifier = Modifier
     ) {
-        NavigationTextCard(
+        NavigationCardWithDivider(
             modifier = modifier,
-            hintStringId = viewState.deferredTimeStringId,
-            label = viewState.deferredTime,
+            label = stringResource(id = viewState.deferredTimeStringId),
+            value = viewState.deferredTime,
             clickable = viewState.isFieldsEnabled,
             onClick = {
                 focusManager.clearFocus()
@@ -309,27 +301,17 @@ class CreateOrderFragment :
         onAction: (CreateOrder.Action) -> Unit,
         modifier: Modifier = Modifier
     ) {
-        if (viewState.selectedPaymentMethod == null) {
-            NavigationCard(
-                modifier = modifier,
-                label = stringResource(R.string.payment_method),
-                clickable = viewState.isFieldsEnabled,
-                onClick = {
-                    focusManager.clearFocus()
-                    onAction(CreateOrder.Action.PaymentMethodClick)
-                }
-            )
-        } else {
-            NavigationTextCard(
-                modifier = modifier,
-                hintStringId = R.string.payment_method,
-                label = viewState.selectedPaymentMethod.name,
-                clickable = viewState.isFieldsEnabled,
-                onClick = {
-                    onAction(CreateOrder.Action.PaymentMethodClick)
-                }
-            )
-        }
+        NavigationCardWithDivider(
+            modifier = modifier,
+            label = stringResource(R.string.payment_method),
+            value = viewState.selectedPaymentMethod?.name,
+            clickable = viewState.isFieldsEnabled,
+            onClick = {
+                focusManager.clearFocus()
+                onAction(CreateOrder.Action.PaymentMethodClick)
+            }
+        )
+
         if (viewState.isPaymentMethodErrorShown) {
             ErrorText(
                 modifier = Modifier
@@ -350,33 +332,49 @@ class CreateOrderFragment :
             return
         }
 
-        Row(
-            modifier = modifier.padding(top = 8.dp),
-            verticalAlignment = Alignment.CenterVertically
+        FoodDeliveryCard(
+            modifier = modifier,
+            elevated = false,
+            shape = FoodDeliveryCardDefaults.zeroCardShape,
+            onClick = {
+                onAction(
+                    CreateOrder.Action.ChangeWithoutChangeChecked
+                )
+            }
         ) {
-            FoodDeliveryCheckbox(
-                modifier = Modifier.size(24.dp),
-                checked = viewState.withoutChangeChecked,
-                onCheckedChange = { isChecked ->
-                    onAction(
-                        CreateOrder.Action.ChangeWithoutChangeChecked(isChecked = isChecked)
-                    )
-                }
-            )
-            Text(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 4.dp),
-                text = stringResource(R.string.msg_without_change),
-                style = FoodDeliveryTheme.typography.bodyMedium,
-                color = FoodDeliveryTheme.colors.mainColors.onSurface
-            )
+            Row(
+                modifier = Modifier.padding(
+                    vertical = 8.dp,
+                    horizontal = 16.dp
+                ),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                FoodDeliveryCheckbox(
+                    modifier = Modifier.size(24.dp),
+                    checked = viewState.withoutChangeChecked,
+                    onCheckedChange = {
+                        onAction(
+                            CreateOrder.Action.ChangeWithoutChangeChecked
+                        )
+                    }
+                )
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 4.dp),
+                    text = stringResource(R.string.msg_without_change),
+                    style = FoodDeliveryTheme.typography.bodyMedium,
+                    color = FoodDeliveryTheme.colors.mainColors.onSurface
+                )
+            }
         }
+
         if (!viewState.withoutChangeChecked) {
             val focusManager = LocalFocusManager.current
             FoodDeliveryTextField(
                 modifier = Modifier
                     .padding(top = 8.dp)
+                    .padding(horizontal = 16.dp)
                     .fillMaxWidth(),
                 value = viewState.change,
                 labelStringId = R.string.hint_change,
@@ -417,7 +415,10 @@ class CreateOrderFragment :
         modifier: Modifier = Modifier
     ) {
         FoodDeliveryTextField(
-            modifier = modifier.fillMaxWidth(),
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(top = 8.dp)
+                .padding(horizontal = 16.dp),
             value = comment,
             labelStringId = R.string.comment,
             keyboardOptions = FoodDeliveryTextFieldDefaults.keyboardOptions(

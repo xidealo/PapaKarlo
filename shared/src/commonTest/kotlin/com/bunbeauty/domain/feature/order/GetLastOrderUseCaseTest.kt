@@ -8,51 +8,41 @@ import com.bunbeauty.shared.domain.model.date_time.Time
 import com.bunbeauty.shared.domain.model.order.LightOrder
 import com.bunbeauty.shared.domain.model.order.OrderStatus
 import com.bunbeauty.shared.domain.repo.OrderRepo
-import io.mockk.MockKAnnotations
-import io.mockk.coEvery
-import io.mockk.impl.annotations.InjectMockKs
-import io.mockk.impl.annotations.MockK
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import dev.mokkery.MockMode
+import dev.mokkery.answering.returns
+import dev.mokkery.everySuspend
+import dev.mokkery.matcher.any
+import dev.mokkery.mock
 import kotlinx.coroutines.test.runTest
-import kotlinx.coroutines.test.setMain
-import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-@OptIn(ExperimentalCoroutinesApi::class)
-internal class GetLastOrderUseCaseTest {
+class GetLastOrderUseCaseTest {
 
-    @MockK(relaxed = true)
-    private lateinit var orderRepo: OrderRepo
+    private val orderRepo: OrderRepo = mock(MockMode.autofill)
 
-    @MockK(relaxed = true)
-    private lateinit var dataStoreRepo: DataStoreRepo
+    private val dataStoreRepo: DataStoreRepo = mock(MockMode.autofill)
 
-    @InjectMockKs
-    private lateinit var getLastOrderUseCase: GetLastOrderUseCase
-
-    @BeforeTest
-    fun setup() {
-        MockKAnnotations.init(this)
-        Dispatchers.setMain(Dispatchers.Unconfined)
-    }
+    private val getLastOrderUseCase: GetLastOrderUseCase = GetLastOrderUseCase(
+        orderRepo = orderRepo,
+        dataStoreRepo = dataStoreRepo
+    )
 
     @Test
     fun `return null when token are invalid`() = runTest {
-        coEvery { dataStoreRepo.getToken() } returns null
+        everySuspend { dataStoreRepo.getToken() } returns null
         assertEquals(null, getLastOrderUseCase())
     }
 
     @Test
     fun `return null when user are not authorized`() = runTest {
-        coEvery { dataStoreRepo.getUserUuid() } returns null
+        everySuspend { dataStoreRepo.getUserUuid() } returns null
         assertEquals(null, getLastOrderUseCase())
     }
 
     @Test
     fun `return null when user are authorized but doesn't have last order `() = runTest {
-        coEvery { orderRepo.getLastOrderByUserUuidLocalFirst(any(), any()) } returns null
+        everySuspend { orderRepo.getLastOrderByUserUuidLocalFirst(any(), any()) } returns null
         assertEquals(null, getLastOrderUseCase())
     }
 
@@ -68,7 +58,7 @@ internal class GetLastOrderUseCaseTest {
             code = code,
             dateTime = dateTime
         )
-        coEvery { orderRepo.getLastOrderByUserUuidLocalFirst(any(), any()) } returns lightOrder
+        everySuspend { orderRepo.getLastOrderByUserUuidLocalFirst(any(), any()) } returns lightOrder
 
         assertEquals(lightOrder, getLastOrderUseCase())
     }

@@ -1,6 +1,6 @@
 package com.bunbeauty.domain.feature.auth
 
-import com.bunbeauty.shared.domain.feature.auth.FormatPhoneNumberUseCase
+import com.bunbeauty.shared.domain.feature.auth.FormatPhoneNumberUseCaseImpl
 import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -8,11 +8,11 @@ import kotlin.test.assertEquals
 
 class FormatPhoneNumberUseCaseTest {
 
-    private lateinit var formatPhoneNumber: FormatPhoneNumberUseCase
+    private lateinit var formatPhoneNumber: FormatPhoneNumberUseCaseImpl
 
     @BeforeTest
     fun setup() {
-        formatPhoneNumber = FormatPhoneNumberUseCase()
+        formatPhoneNumber = FormatPhoneNumberUseCaseImpl()
     }
 
     @Test

@@ -1,31 +1,25 @@
 package com.bunbeauty.domain.feature.menuproduct
 
-import com.bunbeauty.shared.domain.feature.menuproduct.GetMenuProductListUseCase
+import com.bunbeauty.shared.domain.feature.menuproduct.GetMenuProductListUseCaseImpl
 import com.bunbeauty.shared.domain.model.addition.AdditionGroup
 import com.bunbeauty.shared.domain.model.category.Category
 import com.bunbeauty.shared.domain.model.product.MenuProduct
 import com.bunbeauty.shared.domain.repo.MenuProductRepo
-import io.mockk.MockKAnnotations
-import io.mockk.coEvery
-import io.mockk.impl.annotations.InjectMockKs
-import io.mockk.impl.annotations.MockK
+import dev.mokkery.answering.returns
+import dev.mokkery.everySuspend
+import dev.mokkery.mock
 import kotlinx.coroutines.test.runTest
-import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class GetMenuProductListUseCaseTest {
 
-    @MockK
-    private lateinit var menuProductRepo: MenuProductRepo
+    private val menuProductRepo: MenuProductRepo = mock()
 
-    @InjectMockKs
-    private lateinit var getMenuProductListUseCase: GetMenuProductListUseCase
+    private var getMenuProductListUseCase: GetMenuProductListUseCaseImpl = GetMenuProductListUseCaseImpl(
+        menuProductRepo = menuProductRepo
 
-    @BeforeTest
-    fun setup() {
-        MockKAnnotations.init(this)
-    }
+    )
 
     @Test
     fun `return only visible menu products`() = runTest {
@@ -37,7 +31,7 @@ class GetMenuProductListUseCaseTest {
             menuProduct2,
             menuProduct3
         )
-        coEvery { menuProductRepo.getMenuProductList() } returns initialList
+        everySuspend { menuProductRepo.getMenuProductList() } returns initialList
         val expectedList = listOf(
             menuProduct1,
             menuProduct3
@@ -76,7 +70,7 @@ class GetMenuProductListUseCaseTest {
             menuProduct1,
             menuProduct2
         )
-        coEvery { menuProductRepo.getMenuProductList() } returns initialList
+        everySuspend { menuProductRepo.getMenuProductList() } returns initialList
 
         val updatedMenuProduct1 = getFakeMenuProduct(
             uuid = "1",

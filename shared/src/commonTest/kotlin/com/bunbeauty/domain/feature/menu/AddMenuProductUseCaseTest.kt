@@ -5,37 +5,33 @@ import com.bunbeauty.shared.domain.exeptions.CartProductLimitReachedException
 import com.bunbeauty.shared.domain.feature.cart.GetCartProductCountUseCase
 import com.bunbeauty.shared.domain.feature.menu.AddMenuProductUseCase
 import com.bunbeauty.shared.domain.repo.CartProductRepo
-import io.mockk.MockKAnnotations
-import io.mockk.coEvery
-import io.mockk.coVerify
-import io.mockk.impl.annotations.InjectMockKs
-import io.mockk.impl.annotations.MockK
+import dev.mokkery.MockMode
+import dev.mokkery.answering.returns
+import dev.mokkery.everySuspend
+import dev.mokkery.matcher.any
+import dev.mokkery.mock
+import dev.mokkery.verify.VerifyMode
+import dev.mokkery.verifySuspend
 import kotlinx.coroutines.test.runTest
-import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertFailsWith
 
 class AddMenuProductUseCaseTest {
 
-    @MockK(relaxed = true)
-    private lateinit var getCartProductCountUseCase: GetCartProductCountUseCase
+    private val getCartProductCountUseCase: GetCartProductCountUseCase = mock(MockMode.autofill)
 
-    @MockK(relaxed = true)
-    private lateinit var cartProductRepo: CartProductRepo
+    private val cartProductRepo: CartProductRepo = mock(MockMode.autofill)
 
-    @InjectMockKs
-    private lateinit var addMenuProductUseCase: AddMenuProductUseCase
-
-    @BeforeTest
-    fun setup() {
-        MockKAnnotations.init(this)
-    }
+    private val addMenuProductUseCase: AddMenuProductUseCase = AddMenuProductUseCase(
+        getCartProductCountUseCase = getCartProductCountUseCase,
+        cartProductRepo = cartProductRepo
+    )
 
     @Test
     fun `throws CartProductLimitReachedException when cart is full`() = runTest {
         // Given
         val menuProductUuid = "menuProductUuid"
-        coEvery {
+        everySuspend {
             getCartProductCountUseCase()
         } returns 99
 
@@ -43,13 +39,13 @@ class AddMenuProductUseCaseTest {
         assertFailsWith(CartProductLimitReachedException::class) {
             addMenuProductUseCase(menuProductUuid = menuProductUuid)
         }
-        coVerify(exactly = 0) {
+        verifySuspend(mode = VerifyMode.atLeast(0)) {
             cartProductRepo.getCartProductListByMenuProductUuid(menuProductUuid = menuProductUuid)
         }
-        coVerify(exactly = 0) {
+        verifySuspend(mode = VerifyMode.atLeast(0)) {
             cartProductRepo.saveAsCartProduct(menuProductUuid = menuProductUuid)
         }
-        coVerify(exactly = 0) {
+        verifySuspend(mode = VerifyMode.atLeast(0)) {
             cartProductRepo.updateCartProductCount(
                 cartProductUuid = menuProductUuid,
                 count = any()
@@ -61,12 +57,12 @@ class AddMenuProductUseCaseTest {
     fun `save as new cart product when there is no cart product with the same uuid`() = runTest {
         val menuProductUuid = "menuProductUuid"
         val cartProductUuid = "cartProductUuid"
-        coEvery { cartProductRepo.getCartProductListByMenuProductUuid(menuProductUuid) } returns emptyList()
-        coEvery { cartProductRepo.saveAsCartProduct(menuProductUuid) } returns cartProductUuid
+        everySuspend { cartProductRepo.getCartProductListByMenuProductUuid(menuProductUuid) } returns emptyList()
+        everySuspend { cartProductRepo.saveAsCartProduct(menuProductUuid) } returns cartProductUuid
 
         addMenuProductUseCase(menuProductUuid)
 
-        coVerify(exactly = 1) {
+        verifySuspend(mode = VerifyMode.atLeast(1)) {
             cartProductRepo.saveAsCartProduct(menuProductUuid)
         }
     }
@@ -78,12 +74,12 @@ class AddMenuProductUseCaseTest {
         val cartProductList = listOf(
             getCartProduct(uuid = cartProductUuid, count = 2)
         )
-        coEvery {
+        everySuspend {
             cartProductRepo.getCartProductListByMenuProductUuid(
                 menuProductUuid = menuProductUuid
             )
         } returns cartProductList
-        coEvery {
+        everySuspend {
             cartProductRepo.updateCartProductCount(
                 cartProductUuid = cartProductUuid,
                 count = 3
@@ -92,7 +88,7 @@ class AddMenuProductUseCaseTest {
 
         addMenuProductUseCase(menuProductUuid)
 
-        coVerify(exactly = 1) {
+        verifySuspend(mode = VerifyMode.atLeast(1)) {
             cartProductRepo.updateCartProductCount(
                 cartProductUuid = cartProductUuid,
                 count = 3

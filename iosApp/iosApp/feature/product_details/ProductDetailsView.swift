@@ -176,7 +176,7 @@ struct ProductDetailsView: View {
                                             }.frame(maxWidth: .infinity, alignment: .leading)
                                     
                                             if(!addition.product.isLast){
-                                                Divider()
+                                                FoodDeliveryDivider()
                                                     .padding(.vertical, 8)
                                             }
                                         }

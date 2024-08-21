@@ -3,7 +3,7 @@ package com.bunbeauty.domain.feature.additions
 import com.bunbeauty.getCartProduct
 import com.bunbeauty.getCartProductAddition
 import com.bunbeauty.getMenuProduct
-import com.bunbeauty.shared.domain.feature.addition.AreAdditionsEqualUseCase
+import com.bunbeauty.shared.domain.feature.addition.AreAdditionsEqualUseCaseImpl
 import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -12,11 +12,11 @@ import kotlin.test.assertTrue
 
 class AreAdditionsEqualUseCaseTest {
 
-    private lateinit var areAdditionsEqualUseCase: AreAdditionsEqualUseCase
+    private lateinit var areAdditionsEqualUseCase: AreAdditionsEqualUseCaseImpl
 
     @BeforeTest
     fun setup() {
-        areAdditionsEqualUseCase = AreAdditionsEqualUseCase()
+        areAdditionsEqualUseCase = AreAdditionsEqualUseCaseImpl()
     }
 
     @Test

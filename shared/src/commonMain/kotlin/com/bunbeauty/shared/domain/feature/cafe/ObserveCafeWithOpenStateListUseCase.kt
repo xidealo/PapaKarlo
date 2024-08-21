@@ -5,7 +5,7 @@ import com.bunbeauty.shared.domain.feature.city.GetSelectedCityTimeZoneUseCase
 import com.bunbeauty.shared.domain.model.cafe.Cafe
 import com.bunbeauty.shared.domain.model.cafe.CafeOpenState
 import com.bunbeauty.shared.domain.model.cafe.CafeWithOpenState
-import com.bunbeauty.shared.domain.util.IDateTimeUtil
+import com.bunbeauty.shared.domain.util.DateTimeUtil
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.map
 
 class ObserveCafeWithOpenStateListUseCase(
     private val getSelectedCityTimeZoneUseCase: GetSelectedCityTimeZoneUseCase,
-    private val dataTimeUtil: IDateTimeUtil,
+    private val dataTimeUtil: DateTimeUtil,
     private val getCafeListUseCase: GetCafeListUseCase
 ) {
 

@@ -2,24 +2,20 @@ package com.bunbeauty.domain.feature.auth
 
 import com.bunbeauty.shared.domain.feature.auth.FormatPhoneNumberUseCase
 import com.bunbeauty.shared.domain.feature.auth.GetPhoneNumberCursorPositionUseCase
-import io.mockk.every
-import io.mockk.mockk
+import dev.mokkery.answering.returns
+import dev.mokkery.every
+import dev.mokkery.mock
 import kotlinx.coroutines.test.runTest
-import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class GetPhoneNumberCursorPositionUseCaseTest {
 
-    private val formatPhoneNumber: FormatPhoneNumberUseCase = mockk()
-    private lateinit var getPhoneNumberCursorPosition: GetPhoneNumberCursorPositionUseCase
-
-    @BeforeTest
-    fun setup() {
-        getPhoneNumberCursorPosition = GetPhoneNumberCursorPositionUseCase(
+    private val formatPhoneNumber: FormatPhoneNumberUseCase = mock()
+    private val getPhoneNumberCursorPosition: GetPhoneNumberCursorPositionUseCase =
+        GetPhoneNumberCursorPositionUseCase(
             formatPhoneNumber = formatPhoneNumber
         )
-    }
 
     @Test
     fun `should return cursor position when editing phone number code`() = runTest {

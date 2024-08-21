@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -18,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryHorizontalDivider
 import com.bunbeauty.papakarlo.common.ui.element.OverflowingText
+import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCardDefaults.zeroCardShape
 import com.bunbeauty.papakarlo.common.ui.icon16
 import com.bunbeauty.papakarlo.common.ui.icon24
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
@@ -36,7 +36,7 @@ fun NavigationIconCardWithDivider(
         modifier = modifier,
         onClick = onClick,
         elevated = elevated,
-        shape = RoundedCornerShape(0.dp)
+        shape = zeroCardShape
     ) {
         Column {
             Row(

@@ -5,25 +5,20 @@ import com.bunbeauty.getAdditionGroup
 import com.bunbeauty.getMenuProduct
 import com.bunbeauty.shared.domain.feature.menuproduct.GetMenuProductUseCase
 import com.bunbeauty.shared.domain.repo.MenuProductRepo
-import io.mockk.coEvery
-import io.mockk.mockk
+import dev.mokkery.answering.returns
+import dev.mokkery.everySuspend
+import dev.mokkery.mock
 import kotlinx.coroutines.test.runTest
-import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class GetMenuProductUseCaseTest {
-    private val menuProductRepo: MenuProductRepo = mockk()
+    private val menuProductRepo: MenuProductRepo = mock()
     private val menuProductUuid = "menuProductUuid"
 
-    private lateinit var getMenuProductUseCase: GetMenuProductUseCase
-
-    @BeforeTest
-    fun setup() {
-        getMenuProductUseCase = GetMenuProductUseCase(
-            menuProductRepo = menuProductRepo
-        )
-    }
+    private val getMenuProductUseCase: GetMenuProductUseCase = GetMenuProductUseCase(
+        menuProductRepo = menuProductRepo
+    )
 
     @Test
     fun `should return menu product with addition group list sorted by priority`() =
@@ -48,7 +43,7 @@ class GetMenuProductUseCaseTest {
                 )
             )
 
-            coEvery { menuProductRepo.getMenuProductByUuid(menuProductUuid) } returns initialMenuProduct
+            everySuspend { menuProductRepo.getMenuProductByUuid(menuProductUuid) } returns initialMenuProduct
 
             // When
             val result = getMenuProductUseCase(menuProductUuid)
@@ -82,7 +77,7 @@ class GetMenuProductUseCaseTest {
                 )
             )
 
-            coEvery { menuProductRepo.getMenuProductByUuid(menuProductUuid) } returns initialMenuProduct
+            everySuspend { menuProductRepo.getMenuProductByUuid(menuProductUuid) } returns initialMenuProduct
 
             // When
             val result = getMenuProductUseCase(menuProductUuid)
@@ -128,7 +123,7 @@ class GetMenuProductUseCaseTest {
                 additionGroups = additionGroupsWithSortedAdditions
             )
 
-            coEvery { menuProductRepo.getMenuProductByUuid(menuProductUuid) } returns initialMenuProduct
+            everySuspend { menuProductRepo.getMenuProductByUuid(menuProductUuid) } returns initialMenuProduct
 
             // When
             val result = getMenuProductUseCase(menuProductUuid)
@@ -173,7 +168,7 @@ class GetMenuProductUseCaseTest {
                 additionGroups = additionGroupsWithFilttredAdditions
             )
 
-            coEvery { menuProductRepo.getMenuProductByUuid(menuProductUuid) } returns initialMenuProduct
+            everySuspend { menuProductRepo.getMenuProductByUuid(menuProductUuid) } returns initialMenuProduct
 
             // When
             val result = getMenuProductUseCase(menuProductUuid)

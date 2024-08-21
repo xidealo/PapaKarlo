@@ -2,7 +2,7 @@ package com.bunbeauty.domain.feature.additions
 
 import com.bunbeauty.getAddition
 import com.bunbeauty.getAdditionGroup
-import com.bunbeauty.shared.domain.feature.addition.GetAdditionPriorityUseCase
+import com.bunbeauty.shared.domain.feature.addition.GetAdditionPriorityUseCaseImpl
 import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -10,11 +10,11 @@ import kotlin.test.assertEquals
 
 class GetAdditionPriorityUseCaseTest {
 
-    private lateinit var useCase: GetAdditionPriorityUseCase
+    private lateinit var useCase: GetAdditionPriorityUseCaseImpl
 
     @BeforeTest
     fun setup() {
-        useCase = GetAdditionPriorityUseCase()
+        useCase = GetAdditionPriorityUseCaseImpl()
     }
 
     @Test

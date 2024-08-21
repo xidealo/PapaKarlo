@@ -3,37 +3,30 @@ package com.bunbeauty.domain.feature.cafe
 import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.domain.exeptions.EmptyCafeListException
 import com.bunbeauty.shared.domain.exeptions.NoSelectedCityUuidException
-import com.bunbeauty.shared.domain.feature.cafe.GetCafeListUseCase
+import com.bunbeauty.shared.domain.feature.cafe.GetCafeListUseCaseImpl
 import com.bunbeauty.shared.domain.model.cafe.Cafe
 import com.bunbeauty.shared.domain.repo.CafeRepo
-import io.mockk.MockKAnnotations
-import io.mockk.coEvery
-import io.mockk.impl.annotations.InjectMockKs
-import io.mockk.impl.annotations.MockK
+import dev.mokkery.answering.returns
+import dev.mokkery.everySuspend
+import dev.mokkery.mock
 import kotlinx.coroutines.test.runTest
-import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
 class GetCafeListUseCaseTest {
-    @MockK
-    private lateinit var dataStoreRepo: DataStoreRepo
+    private val dataStoreRepo: DataStoreRepo = mock()
 
-    @MockK
-    private lateinit var cafeRepo: CafeRepo
+    private val cafeRepo: CafeRepo = mock()
 
-    @InjectMockKs
-    private lateinit var getCafeListUseCase: GetCafeListUseCase
-
-    @BeforeTest
-    fun setup() {
-        MockKAnnotations.init(this)
-    }
+    private val getCafeListUseCase: GetCafeListUseCaseImpl = GetCafeListUseCaseImpl(
+        dataStoreRepo = dataStoreRepo,
+        cafeRepo = cafeRepo
+    )
 
     @Test
     fun `throw NoSelectedCityUuidException when no city is selected`() = runTest {
-        coEvery { dataStoreRepo.getSelectedCityUuid() } returns null
+        everySuspend { dataStoreRepo.getSelectedCityUuid() } returns null
 
         assertFailsWith<NoSelectedCityUuidException> {
             getCafeListUseCase()
@@ -43,8 +36,8 @@ class GetCafeListUseCaseTest {
     @Test
     fun `throw EmptyCafeListException when no visible cafes`() = runTest {
         val cityUuid = "cityUuid"
-        coEvery { dataStoreRepo.getSelectedCityUuid() } returns cityUuid
-        coEvery {
+        everySuspend { dataStoreRepo.getSelectedCityUuid() } returns cityUuid
+        everySuspend {
             cafeRepo.getCafeList(cityUuid)
         } returns listOf(
             getFakeCafe(uuid = "1", isVisible = false)
@@ -62,8 +55,8 @@ class GetCafeListUseCaseTest {
         val cafe2 = getFakeCafe(uuid = "2", isVisible = false)
         val cafe3 = getFakeCafe(uuid = "3", isVisible = true)
         val cafeList = listOf(cafe1, cafe2, cafe3)
-        coEvery { dataStoreRepo.getSelectedCityUuid() } returns cityUuid
-        coEvery { cafeRepo.getCafeList(cityUuid) } returns cafeList
+        everySuspend { dataStoreRepo.getSelectedCityUuid() } returns cityUuid
+        everySuspend { cafeRepo.getCafeList(cityUuid) } returns cafeList
         val expected = listOf(cafe1, cafe3)
 
         val result = getCafeListUseCase()

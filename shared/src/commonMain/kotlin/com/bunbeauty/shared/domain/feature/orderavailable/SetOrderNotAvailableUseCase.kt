@@ -1,10 +1,10 @@
 package com.bunbeauty.shared.domain.feature.orderavailable
 
-import com.bunbeauty.shared.data.repository.OrderAvailableRepository
 import com.bunbeauty.shared.domain.model.order.OrderAvailability
+import com.bunbeauty.shared.domain.repo.OrderAvailableRepo
 
 class SetOrderNotAvailableUseCase(
-    private val orderAvailableRepository: OrderAvailableRepository,
+    private val orderAvailableRepository: OrderAvailableRepo
 ) {
     operator fun invoke() {
         orderAvailableRepository.update(

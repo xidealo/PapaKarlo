@@ -5,12 +5,15 @@ import com.bunbeauty.shared.domain.repo.CityRepo
 
 private const val DEFAULT_TIME_ZONE = "UTC+3"
 
-class GetSelectedCityTimeZoneUseCase(
+interface GetSelectedCityTimeZoneUseCase {
+    suspend operator fun invoke(): String
+}
+
+class GetSelectedCityTimeZoneUseCaseImpl(
     private val cityRepo: CityRepo,
     private val dataStoreRepo: DataStoreRepo
-) {
-
-    suspend operator fun invoke(): String {
+) : GetSelectedCityTimeZoneUseCase {
+    override suspend operator fun invoke(): String {
         return dataStoreRepo.getSelectedCityUuid()?.let { cityUuid ->
             cityRepo.getCityByUuid(cityUuid)
         }?.timeZone ?: DEFAULT_TIME_ZONE

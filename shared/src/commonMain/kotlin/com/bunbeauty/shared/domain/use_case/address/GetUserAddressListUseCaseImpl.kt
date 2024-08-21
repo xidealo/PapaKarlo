@@ -4,11 +4,15 @@ import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.domain.model.address.UserAddress
 import com.bunbeauty.shared.domain.repo.UserAddressRepo
 
-class GetUserAddressListUseCase(
+interface GetUserAddressListUseCase {
+    suspend operator fun invoke(): List<UserAddress>
+}
+
+class GetUserAddressListUseCaseImpl(
     private val dataStoreRepo: DataStoreRepo,
     private val userAddressRepo: UserAddressRepo
-) {
-    suspend operator fun invoke(): List<UserAddress> {
+) : GetUserAddressListUseCase {
+    override suspend operator fun invoke(): List<UserAddress> {
         val userUuid = dataStoreRepo.getUserUuid() ?: return emptyList()
         val cityUuid = dataStoreRepo.getSelectedCityUuid() ?: return emptyList()
         val token = dataStoreRepo.getToken() ?: return emptyList()
