@@ -57,10 +57,10 @@ object Namespace {
 
 object CommonApplication {
     const val versionMajor = 2
-    const val versionMinor = 2
+    const val versionMinor = 3
     const val versionPatch = 0
 
-    const val versionCode = 220
+    const val versionCode = 230
     const val versionName = "$versionMajor.$versionMinor.$versionPatch"
 }
 
