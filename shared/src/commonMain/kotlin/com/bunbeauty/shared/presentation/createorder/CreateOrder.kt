@@ -78,6 +78,7 @@ interface CreateOrder {
 
     sealed interface Action : BaseAction {
         data object Update : Action
+        data object Back : Action
 
         data class ChangeMethod(val position: Int) : Action
 
@@ -101,7 +102,7 @@ interface CreateOrder {
         data object HidePaymentMethodList : Action
         data class ChangePaymentMethod(val paymentMethodUuid: String) : Action
 
-        data class ChangeWithoutChangeChecked(val isChecked: Boolean) : Action
+        data object ChangeWithoutChangeChecked : Action
         data class ChangeChange(val change: String) : Action
 
         data class ChangeComment(val comment: String) : Action
@@ -122,5 +123,6 @@ interface CreateOrder {
         data object ShowUserAddressError : Event
         data object ShowPaymentMethodError : Event
         data object ShowChangeError : Event
+        data object Back : Event
     }
 }

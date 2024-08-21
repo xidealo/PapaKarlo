@@ -15,3 +15,6 @@ fun String.getAssembleBundleRelease() =
 fun String.getPublishReleaseBundle() =
     "publish${this.replaceFirstChar { oldChar -> oldChar.uppercase() }}ReleaseBundle"
 
+fun String.getBootstrapReleaseBundle() =
+    "bootstrap${this.replaceFirstChar { oldChar -> oldChar.uppercase() }}ReleaseListing"
+
