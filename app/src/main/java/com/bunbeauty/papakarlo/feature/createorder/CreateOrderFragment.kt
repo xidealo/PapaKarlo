@@ -141,7 +141,7 @@ class CreateOrderFragment :
                         onAction = onAction
                     )
                     CommentTextField(
-                        comment = viewState.comment,
+                        viewState = viewState,
                         focusManager = focusManager,
                         onAction = onAction
                     )
@@ -249,8 +249,11 @@ class CreateOrderFragment :
                 value = viewState.deliveryAddress,
                 clickable = viewState.isFieldsEnabled,
                 onClick = {
-                    focusManager.clearFocus()
-                    onAction(CreateOrder.Action.DeliveryAddressClick)
+                    if (viewState.deliveryAddress == null) {
+                        onAction(CreateOrder.Action.AddAddressClick)
+                    } else {
+                        onAction(CreateOrder.Action.DeliveryAddressClick)
+                    }
                 }
             )
         } else {
@@ -369,11 +372,19 @@ class CreateOrderFragment :
             }
         }
 
-        if (!viewState.withoutChangeChecked) {
+        AnimatedVisibility(
+            visible = !viewState.withoutChangeChecked,
+            enter = expandVertically(
+                animationSpec = tween(500)
+            ),
+            exit = shrinkVertically(
+                animationSpec = tween(500)
+            )
+        ) {
             val focusManager = LocalFocusManager.current
             FoodDeliveryTextField(
                 modifier = Modifier
-                    .padding(top = 8.dp)
+                    .padding(top = 16.dp)
                     .padding(horizontal = 16.dp)
                     .fillMaxWidth(),
                 value = viewState.change,
@@ -409,7 +420,7 @@ class CreateOrderFragment :
 
     @Composable
     private fun CommentTextField(
-        comment: String,
+        viewState: CreateOrderViewState,
         focusManager: FocusManager,
         onAction: (CreateOrder.Action) -> Unit,
         modifier: Modifier = Modifier
@@ -417,9 +428,15 @@ class CreateOrderFragment :
         FoodDeliveryTextField(
             modifier = modifier
                 .fillMaxWidth()
-                .padding(top = 8.dp)
+                .padding(
+                    top = if (viewState.withoutChangeChecked) {
+                        16.dp
+                    } else {
+                        8.dp
+                    }
+                )
                 .padding(horizontal = 16.dp),
-            value = comment,
+            value = viewState.comment,
             labelStringId = R.string.comment,
             keyboardOptions = FoodDeliveryTextFieldDefaults.keyboardOptions(
                 imeAction = ImeAction.Done
