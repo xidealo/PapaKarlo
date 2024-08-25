@@ -15,12 +15,14 @@ struct Switcher: View {
     let action: (_ isDelivery:Bool) -> Void
     
     var body: some View {
-        HStack{
+        HStack(spacing : 0){
             if isLeftSelected{
-                Button(action: {
-                    isLeftSelected = true
-                    action(true)
-                }) {
+                Button(
+                    action: {
+                        isLeftSelected = true
+                        action(true)
+                    }
+                ) {
                     SelectedSwicher(title: leftTitle)
                 }
                 
@@ -30,7 +32,7 @@ struct Switcher: View {
                 }) {
                     Text(rightTitle)
                         .labelLarge(weight: .medium)
-                        .foregroundColor(AppColor.onSurfaceVariant)
+                        .foregroundColor(AppColor.onSecondary)
                         .frame(maxWidth:.infinity)
                 }
             }else{
@@ -40,7 +42,7 @@ struct Switcher: View {
                 }) {
                     Text(leftTitle)
                         .labelLarge(weight: .medium)
-                        .foregroundColor(AppColor.onSurfaceVariant)
+                        .foregroundColor(AppColor.onSecondary)
                         .frame(maxWidth:.infinity)
                 }
                 
@@ -53,7 +55,7 @@ struct Switcher: View {
             }
         }
         .padding(4)
-        .background(AppColor.surface)
+        .background(AppColor.stroke)
         .cornerRadius(Diems.BUTTON_RADIUS)
         .frame(maxWidth:.infinity)
     }
@@ -73,8 +75,8 @@ struct SelectedSwicher: View {
             .labelLarge(weight: .medium)
             .frame(maxWidth:.infinity)
             .padding(Diems.SMALL_PADDING)
-            .background(AppColor.primary)
-            .foregroundColor(AppColor.onPrimary)
+            .background(AppColor.surface)
+            .foregroundColor(AppColor.primary)
             .cornerRadius(Diems.BUTTON_RADIUS)
     }
 }

@@ -546,6 +546,12 @@
 		028920212BDAF5A70043B466 /* vkusKavkaza.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 028920192BDAF5A70043B466 /* vkusKavkaza.xcassets */; };
 		028920272BDAF5A70043B466 /* vkusKavkaza.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0289201A2BDAF5A70043B466 /* vkusKavkaza.plist */; };
 		0289202D2BDAF5A70043B466 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0289201B2BDAF5A70043B466 /* GoogleService-Info.plist */; };
+		028D4ADC2C778C2F00594D61 /* NavigationCardWithDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028D4ADB2C778C2F00594D61 /* NavigationCardWithDivider.swift */; };
+		028D4ADD2C778C2F00594D61 /* NavigationCardWithDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028D4ADB2C778C2F00594D61 /* NavigationCardWithDivider.swift */; };
+		028D4ADE2C778C2F00594D61 /* NavigationCardWithDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028D4ADB2C778C2F00594D61 /* NavigationCardWithDivider.swift */; };
+		028D4ADF2C778C2F00594D61 /* NavigationCardWithDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028D4ADB2C778C2F00594D61 /* NavigationCardWithDivider.swift */; };
+		028D4AE02C778C2F00594D61 /* NavigationCardWithDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028D4ADB2C778C2F00594D61 /* NavigationCardWithDivider.swift */; };
+		028D4AE12C778C2F00594D61 /* NavigationCardWithDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028D4ADB2C778C2F00594D61 /* NavigationCardWithDivider.swift */; };
 		0294126A2C2754D1000BE3BE /* MotivationDataMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029412692C2754D1000BE3BE /* MotivationDataMapper.swift */; };
 		0294126B2C2754D1000BE3BE /* MotivationDataMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029412692C2754D1000BE3BE /* MotivationDataMapper.swift */; };
 		0294126C2C2754D1000BE3BE /* MotivationDataMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029412692C2754D1000BE3BE /* MotivationDataMapper.swift */; };
@@ -821,6 +827,7 @@
 		028920192BDAF5A70043B466 /* vkusKavkaza.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = vkusKavkaza.xcassets; sourceTree = "<group>"; };
 		0289201A2BDAF5A70043B466 /* vkusKavkaza.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = vkusKavkaza.plist; sourceTree = "<group>"; };
 		0289201B2BDAF5A70043B466 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		028D4ADB2C778C2F00594D61 /* NavigationCardWithDivider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationCardWithDivider.swift; sourceTree = "<group>"; };
 		029412692C2754D1000BE3BE /* MotivationDataMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotivationDataMapper.swift; sourceTree = "<group>"; };
 		0294FD7929DF71B900568A10 /* EmptyWithIconView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyWithIconView.swift; sourceTree = "<group>"; };
 		0294FD7C29E35E8300568A10 /* AppTypography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTypography.swift; sourceTree = "<group>"; };
@@ -1226,6 +1233,7 @@
 				022A868428D79D5F00DBE5EC /* CardView.swift */,
 				025775142ACCA01600DDBC94 /* DiscountCard.swift */,
 				026867962C565E38003E3EC3 /* NavigationIconCardWithDivider.swift */,
+				028D4ADB2C778C2F00594D61 /* NavigationCardWithDivider.swift */,
 			);
 			path = card;
 			sourceTree = "<group>";
@@ -2112,6 +2120,7 @@
 				0219B7CE2B8FB97C00305E2D /* ProductDetailsView.swift in Sources */,
 				0219B7CF2B8FB97C00305E2D /* StrikeText.swift in Sources */,
 				0219B7D02B8FB97C00305E2D /* StatusChip.swift in Sources */,
+				028D4AE02C778C2F00594D61 /* NavigationCardWithDivider.swift in Sources */,
 				0219B7D12B8FB97C00305E2D /* OrderItem.swift in Sources */,
 				0219B7D22B8FB97C00305E2D /* SelectCityViewModel.swift in Sources */,
 				0219B7D32B8FB97C00305E2D /* CafeAddressViewState.swift in Sources */,
@@ -2227,6 +2236,7 @@
 				026C1F922A2690B900838266 /* ProductDetailsView.swift in Sources */,
 				026C1F932A2690B900838266 /* StrikeText.swift in Sources */,
 				026C1F942A2690B900838266 /* StatusChip.swift in Sources */,
+				028D4ADE2C778C2F00594D61 /* NavigationCardWithDivider.swift in Sources */,
 				026C1F952A2690B900838266 /* OrderItem.swift in Sources */,
 				026C1F962A2690B900838266 /* SelectCityViewModel.swift in Sources */,
 				026C1F972A2690B900838266 /* CafeAddressViewState.swift in Sources */,
@@ -2342,6 +2352,7 @@
 				027CB0552A346F7B00350EB2 /* ProductDetailsView.swift in Sources */,
 				027CB0562A346F7B00350EB2 /* StrikeText.swift in Sources */,
 				027CB0572A346F7B00350EB2 /* StatusChip.swift in Sources */,
+				028D4ADF2C778C2F00594D61 /* NavigationCardWithDivider.swift in Sources */,
 				027CB0582A346F7B00350EB2 /* OrderItem.swift in Sources */,
 				027CB0592A346F7B00350EB2 /* SelectCityViewModel.swift in Sources */,
 				027CB05A2A346F7B00350EB2 /* CafeAddressViewState.swift in Sources */,
@@ -2457,6 +2468,7 @@
 				02891FAE2BDAEA0D0043B466 /* ProductDetailsView.swift in Sources */,
 				02891FAF2BDAEA0D0043B466 /* StrikeText.swift in Sources */,
 				02891FB02BDAEA0D0043B466 /* StatusChip.swift in Sources */,
+				028D4AE12C778C2F00594D61 /* NavigationCardWithDivider.swift in Sources */,
 				02891FB12BDAEA0D0043B466 /* OrderItem.swift in Sources */,
 				02891FB22BDAEA0D0043B466 /* SelectCityViewModel.swift in Sources */,
 				02891FB32BDAEA0D0043B466 /* CafeAddressViewState.swift in Sources */,
@@ -2572,6 +2584,7 @@
 				02ADC37529D9D0880062A141 /* ProductDetailsView.swift in Sources */,
 				02ADC37629D9D0880062A141 /* StrikeText.swift in Sources */,
 				02ADC37729D9D0880062A141 /* StatusChip.swift in Sources */,
+				028D4ADD2C778C2F00594D61 /* NavigationCardWithDivider.swift in Sources */,
 				02ADC37829D9D0880062A141 /* OrderItem.swift in Sources */,
 				02ADC37929D9D0880062A141 /* SelectCityViewModel.swift in Sources */,
 				02ADC37A29D9D0880062A141 /* CafeAddressViewState.swift in Sources */,
@@ -2687,6 +2700,7 @@
 				023234A7287879EF0048CF39 /* ProductDetailsView.swift in Sources */,
 				023234D728787A180048CF39 /* StrikeText.swift in Sources */,
 				023234D128787A180048CF39 /* StatusChip.swift in Sources */,
+				028D4ADC2C778C2F00594D61 /* NavigationCardWithDivider.swift in Sources */,
 				02323489287879EF0048CF39 /* OrderItem.swift in Sources */,
 				0232347D287879EF0048CF39 /* SelectCityViewModel.swift in Sources */,
 				021A009028E082DE00EFCC63 /* CafeAddressViewState.swift in Sources */,
@@ -2751,7 +2765,7 @@
 				CODE_SIGN_ENTITLEMENTS = yuliar.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 27;
+				CURRENT_PROJECT_VERSION = 31;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
 				DEVELOPMENT_TEAM = 77HLJ933B9;
 				ENABLE_PREVIEWS = YES;
@@ -2840,7 +2854,7 @@
 				CODE_SIGN_ENTITLEMENTS = yuliar.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 27;
+				CURRENT_PROJECT_VERSION = 31;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
 				DEVELOPMENT_TEAM = 77HLJ933B9;
 				ENABLE_PREVIEWS = YES;
@@ -2929,7 +2943,7 @@
 				CODE_SIGN_ENTITLEMENTS = yuliar.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 27;
+				CURRENT_PROJECT_VERSION = 31;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
 				DEVELOPMENT_TEAM = 77HLJ933B9;
 				ENABLE_PREVIEWS = YES;
@@ -3018,7 +3032,7 @@
 				CODE_SIGN_ENTITLEMENTS = yuliar.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 27;
+				CURRENT_PROJECT_VERSION = 31;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
 				DEVELOPMENT_TEAM = 77HLJ933B9;
 				ENABLE_PREVIEWS = YES;
@@ -3107,7 +3121,7 @@
 				CODE_SIGN_ENTITLEMENTS = yuliar.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 27;
+				CURRENT_PROJECT_VERSION = 31;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
 				DEVELOPMENT_TEAM = 77HLJ933B9;
 				ENABLE_PREVIEWS = YES;
@@ -3196,7 +3210,7 @@
 				CODE_SIGN_ENTITLEMENTS = yuliar.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 27;
+				CURRENT_PROJECT_VERSION = 31;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
 				DEVELOPMENT_TEAM = 77HLJ933B9;
 				ENABLE_PREVIEWS = YES;
@@ -3285,7 +3299,7 @@
 				CODE_SIGN_ENTITLEMENTS = yuliar.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 27;
+				CURRENT_PROJECT_VERSION = 31;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
 				DEVELOPMENT_TEAM = 77HLJ933B9;
 				ENABLE_PREVIEWS = YES;
@@ -3374,7 +3388,7 @@
 				CODE_SIGN_ENTITLEMENTS = yuliar.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 27;
+				CURRENT_PROJECT_VERSION = 31;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
 				DEVELOPMENT_TEAM = 77HLJ933B9;
 				ENABLE_PREVIEWS = YES;
@@ -3463,7 +3477,7 @@
 				CODE_SIGN_ENTITLEMENTS = yuliar.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 27;
+				CURRENT_PROJECT_VERSION = 31;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
 				DEVELOPMENT_TEAM = 77HLJ933B9;
 				ENABLE_PREVIEWS = YES;
@@ -3552,7 +3566,7 @@
 				CODE_SIGN_ENTITLEMENTS = yuliar.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 27;
+				CURRENT_PROJECT_VERSION = 31;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
 				DEVELOPMENT_TEAM = 77HLJ933B9;
 				ENABLE_PREVIEWS = YES;
@@ -3759,7 +3773,7 @@
 				CODE_SIGN_ENTITLEMENTS = papakarlo.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 27;
+				CURRENT_PROJECT_VERSION = 31;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
 				DEVELOPMENT_TEAM = 77HLJ933B9;
 				ENABLE_PREVIEWS = YES;
@@ -3770,7 +3784,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.2.0;
+				MARKETING_VERSION = 2.3.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -3848,7 +3862,7 @@
 				CODE_SIGN_ENTITLEMENTS = papakarlo.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 27;
+				CURRENT_PROJECT_VERSION = 31;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
 				DEVELOPMENT_TEAM = 77HLJ933B9;
 				ENABLE_PREVIEWS = YES;
@@ -3859,7 +3873,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.2.0;
+				MARKETING_VERSION = 2.3.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
