@@ -86,4 +86,5 @@ Package.resolved
 *.ipa
 *.zip
 *.p8
-*.env
+.env.default
+GoogleService-Info.plist

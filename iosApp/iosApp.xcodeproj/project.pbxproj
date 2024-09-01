@@ -2779,7 +2779,7 @@
 				CODE_SIGN_ENTITLEMENTS = yuliar.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 49;
+				CURRENT_PROJECT_VERSION = 51;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
 				DEVELOPMENT_TEAM = 77HLJ933B9;
 				ENABLE_PREVIEWS = YES;
@@ -2868,7 +2868,7 @@
 				CODE_SIGN_ENTITLEMENTS = yuliar.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 49;
+				CURRENT_PROJECT_VERSION = 51;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
 				DEVELOPMENT_TEAM = 77HLJ933B9;
 				ENABLE_PREVIEWS = YES;
@@ -2957,7 +2957,7 @@
 				CODE_SIGN_ENTITLEMENTS = yuliar.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 49;
+				CURRENT_PROJECT_VERSION = 51;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
 				DEVELOPMENT_TEAM = 77HLJ933B9;
 				ENABLE_PREVIEWS = YES;
@@ -3046,7 +3046,7 @@
 				CODE_SIGN_ENTITLEMENTS = yuliar.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 49;
+				CURRENT_PROJECT_VERSION = 51;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
 				DEVELOPMENT_TEAM = 77HLJ933B9;
 				ENABLE_PREVIEWS = YES;
@@ -3135,7 +3135,7 @@
 				CODE_SIGN_ENTITLEMENTS = yuliar.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 49;
+				CURRENT_PROJECT_VERSION = 51;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
 				DEVELOPMENT_TEAM = 77HLJ933B9;
 				ENABLE_PREVIEWS = YES;
@@ -3224,7 +3224,7 @@
 				CODE_SIGN_ENTITLEMENTS = yuliar.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 49;
+				CURRENT_PROJECT_VERSION = 51;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
 				DEVELOPMENT_TEAM = 77HLJ933B9;
 				ENABLE_PREVIEWS = YES;

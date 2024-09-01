@@ -9,7 +9,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Шашлык Джан</string>
+	<string>Тандыр Хаус</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -31,7 +31,7 @@
 			<string>Encoded app ID</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>app-1-1098337969858-ios-19f374df375b55fe97bd5b</string>
+				<string>app-1-1098337969858-ios-c8a1a76976022f3f97bd5b</string>
 			</array>
 		</dict>
 	</array>

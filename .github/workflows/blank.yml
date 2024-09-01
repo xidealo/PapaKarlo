@@ -157,3 +157,37 @@ jobs:
 
       - name: start publish
         run: ./gradlew publishAll
+
+  test_ios_deploy:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+
+      - name: Bundle install for iOS Gemfile
+        timeout-minutes: 5
+        run: cd ./ios && bundle install
+
+      - name: Decode env.default.json
+        env:
+          IOS_ENV: ${{ secrets.IOS_ENV }}
+        run: echo "${IOS_ENV}" | base64 --decode > iosApp/.env.default
+
+      - name: Decode p8.json
+        env:
+          IOS_P8: ${{ secrets.IOS_P8 }}
+        run: echo "${IOS_P8}" | base64 --decode > iosApp/AuthKey_C274Y8J9DV
+
+      - name: Decode papkarlo.plist
+        env:
+          IOS_PAPAKARLO_GOOGLE_JSON: ${{ secrets.IOS_PAPAKARLO_GOOGLE_JSON }}
+        run: echo "${IOS_PAPAKARLO_GOOGLE_JSON}" | base64 --decode > iosApp/papakarloRes/GoogleService-Info.plist
+
+      - name: Build and Deploy to TestFlight
+        run: |
+            cd ./ios
+            bundle exec fastlane papakarlo
