@@ -189,10 +189,7 @@ jobs:
           mkdir -p iosApp/papakarloRes
           echo "${IOS_PAPAKARLO_GOOGLE_JSON}" | base64 --decode > iosApp/papakarloRes/GoogleService-Info.plist
 
-      - name: Check installed gems
-        run: bundle show fastlane
-
       - name: Build and Deploy to TestFlight
         run: |
             cd ./iosApp
-            bundle exec fastlane papakarlo
+            fastlane papakarlo
