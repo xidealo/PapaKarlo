@@ -179,7 +179,7 @@ jobs:
 
       - name: Decode p8.json
         env:
-          IOS_P8: ${{ secrets.IOS_AUTHP8 }}
+          IOS_AUTHP8: ${{ secrets.IOS_AUTHP8 }}
         run: echo "${IOS_AUTHP8}" | base64 --decode > iosApp/AuthKey_C274Y8J9DV.p8
 
       - name: Decode papkarlo.plist
