@@ -83,3 +83,7 @@ Package.resolved
 */build
 /captures
 .cxx
+*.ipa
+*.zip
+*.p8
+*.env

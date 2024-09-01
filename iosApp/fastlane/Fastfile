@@ -1,0 +1,61 @@
+# This file contains the fastlane.tools configuration
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:ios)
+
+platform :ios do
+
+  app_store_connect_api_key(
+    key_id: "C274Y8J9DV",
+    issuer_id: "6f64ae73-786c-49a7-894e-02a6ec8b231d",
+    key_filepath: "./AuthKey_C274Y8J9DV.p8",
+    in_house: false                 
+  )
+	
+  lane :deployAll do 
+     papakarlo
+     gustopub
+     yuliar
+     tandirhouse
+     vkuskavkaza
+     djan
+  end  
+
+  def build_and_upload(app_identifier, scheme)
+    increment_build_number(xcodeproj: "iosApp.xcodeproj")
+    build_app(workspace: "iosApp.xcworkspace", scheme: scheme)
+    upload_to_testflight
+  end
+
+ desc "Push a new papakarlo release build to the App Store"
+  lane :papakarlo do
+    build_and_upload("com.bunbeauty.papakarlo", "papakarlo")
+  end
+
+  desc "Push a new gustopub release build to the App Store"
+  lane :gustopub do
+    build_and_upload("com.bunbeauty.gustopub", "gustoPub")
+  end
+
+  desc "Push a new yuliar release build to the App Store"
+  lane :yuliar do
+    build_and_upload("com.bunbeauty.yuliar", "yuliar")
+  end
+
+  desc "Push a new tandirhouse release build to the App Store"
+  lane :tandirhouse do
+    build_and_upload("com.bunbeauty.tandirhouse", "tandirhouse")
+  end
+
+  desc "Push a new vkuskavkaza release build to the App Store"
+  lane :vkuskavkaza do
+    build_and_upload("com.bunbeauty.vkuskavkaza", "vkuskavkaza")
+  end
+
+  desc "Push a new djan release build to the App Store"
+  lane :djan do
+    build_and_upload("com.bunbeauty.djan", "djan")
+  end
+end

@@ -757,7 +757,6 @@ struct BottomAmountBarSuccessView: View {
             }
             .padding(.top, Diems.SMALL_PADDING)
             .padding(.horizontal, Diems.MEDIUM_PADDING)
-            
         }
     }
 }
