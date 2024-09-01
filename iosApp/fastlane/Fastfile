@@ -11,7 +11,8 @@ platform :ios do
     key_id: ENV['APP_STORE_KEY_ID'],
     issuer_id: ENV['APP_STORE_ISSUER_ID'],
     key_filepath: ENV['PATH_P8'],
-    in_house: false
+    in_house: false,
+    is_key_content_base64: true
   )
 	
   lane :deployAll do 
