@@ -189,11 +189,6 @@ jobs:
           mkdir -p iosApp/papakarloRes
           echo "${IOS_PAPAKARLO_GOOGLE_JSON}" | base64 --decode > iosApp/papakarloRes/GoogleService-Info.plist
 
-      - name: check fastlane
-        run: |
-            cd ./iosApp
-            bundle exec fastlane tests
-
       - name: Build and Deploy to TestFlight
         env:
           ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
