@@ -192,7 +192,7 @@ jobs:
       - name: check fastlane
         run: |
             cd ./iosApp
-            bundle exec fastlane pilot list
+            bundle exec fastlane lanes
 
       - name: Build and Deploy to TestFlight
         run: |
