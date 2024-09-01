@@ -29,26 +29,6 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
         NSUserDefaults.standardUserDefaults.removeObjectForKey(TOKEN_KEY)
     }
 
-    actual override val delivery: Flow<Delivery?> = flow {
-        emit(
-            Delivery(
-                cost = NSUserDefaults.standardUserDefaults.integerForKey(DELIVERY_COST_KEY).toInt(),
-                forFree = NSUserDefaults.standardUserDefaults.integerForKey(
-                    DELIVERY_FOR_FREE_KEY
-                ).toInt()
-            )
-        )
-    }
-
-    actual override suspend fun getDelivery(): Delivery? {
-        return delivery.firstOrNull()
-    }
-
-    actual override suspend fun saveDelivery(delivery: Delivery) {
-        NSUserDefaults.standardUserDefaults.setObject(delivery.cost, DELIVERY_COST_KEY)
-        NSUserDefaults.standardUserDefaults.setObject(delivery.forFree, DELIVERY_FOR_FREE_KEY)
-    }
-
     actual override val userUuid: Flow<String?> = flow {
         emit(NSUserDefaults.standardUserDefaults.stringForKey(USER_UUID_KEY))
     }

@@ -24,15 +24,4 @@ class CityInteractor(
     override suspend fun saveSelectedCity(city: City) {
         dataStoreRepo.saveSelectedCityUuid(city.uuid)
     }
-
-    override fun observeCityList(): CommonFlow<List<SelectableCity>> {
-        return cityRepo.observeCityList().map { cityList ->
-            cityList.map { city ->
-                SelectableCity(
-                    city = city,
-                    isSelected = dataStoreRepo.getSelectedCityUuid() == city.uuid
-                )
-            }
-        }.asCommonFlow()
-    }
 }

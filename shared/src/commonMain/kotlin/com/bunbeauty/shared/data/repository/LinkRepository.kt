@@ -3,46 +3,33 @@ package com.bunbeauty.shared.data.repository
 import com.bunbeauty.shared.data.dao.link.ILinkDao
 import com.bunbeauty.shared.data.mapper.link.LinkMapper
 import com.bunbeauty.shared.data.network.api.NetworkConnector
+import com.bunbeauty.shared.data.network.model.LinkServer
+import com.bunbeauty.shared.data.repository.base.CacheListRepository
 import com.bunbeauty.shared.domain.model.link.Link
 import com.bunbeauty.shared.domain.repo.LinkRepo
-import com.bunbeauty.shared.extension.getNullableResult
 
 class LinkRepository(
     private val networkConnector: NetworkConnector,
     private val linkMapper: LinkMapper,
-    private val linkDao: ILinkDao
-) : LinkRepo {
+    private val linkDao: ILinkDao,
+) : CacheListRepository<Link>(), LinkRepo {
 
-    private var linkListCache: List<Link>? = null
+    override val tag: String = "LINK_TAG"
 
     override suspend fun getLinkList(): List<Link> {
-        val cache = linkListCache
-        return if (cache == null) {
-            val linkList = getRemoteLinkList()
-            if (linkList == null) {
-                getLocalLinkList()
-            } else {
-                saveLinkListLocally(linkList)
-                linkListCache = linkList
-                linkList
-            }
-        } else {
-            cache
-        }
+        return getCacheOrListData(
+            onApiRequest = networkConnector::getLinkList,
+            onLocalRequest = ::getLocalLinkList,
+            onSaveLocally = ::saveLinkListLocally,
+            serverToDomainModel = linkMapper::toLink
+        )
     }
 
-    suspend fun getRemoteLinkList(): List<Link>? {
-        return networkConnector.getLinkList()
-            .getNullableResult { linkServerList ->
-                linkServerList.results.map(linkMapper::toLink)
-            }
-    }
-
-    suspend fun getLocalLinkList(): List<Link> {
+    private suspend fun getLocalLinkList(): List<Link> {
         return linkDao.getLinkList().map(linkMapper::toLink)
     }
 
-    suspend fun saveLinkListLocally(linkList: List<Link>) {
+    private suspend fun saveLinkListLocally(linkList: List<LinkServer>) {
         linkDao.insertLinkList(
             linkList.map(linkMapper::toLinkEntity)
         )

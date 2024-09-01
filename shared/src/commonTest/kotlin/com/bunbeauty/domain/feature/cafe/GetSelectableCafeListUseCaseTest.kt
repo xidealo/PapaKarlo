@@ -83,7 +83,6 @@ class GetSelectableCafeListUseCaseTest {
                 selectedCityUuid
             )
         } returns null
-        everySuspend { cafeRepo.getFirstCafeCityUuid(selectedCityUuid) } returns generateCafe("uuid1")
         everySuspend { getCafeListUseCase() } returns cafeList
 
         val result = getSelectableCafeListUseCase()

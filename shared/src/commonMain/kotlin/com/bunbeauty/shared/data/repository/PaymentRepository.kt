@@ -3,49 +3,35 @@ package com.bunbeauty.shared.data.repository
 import com.bunbeauty.shared.data.dao.payment_method.IPaymentMethodDao
 import com.bunbeauty.shared.data.mapper.payment.PaymentMethodMapper
 import com.bunbeauty.shared.data.network.api.NetworkConnector
+import com.bunbeauty.shared.data.network.model.PaymentMethodServer
+import com.bunbeauty.shared.data.repository.base.CacheListRepository
 import com.bunbeauty.shared.domain.model.payment_method.PaymentMethod
 import com.bunbeauty.shared.domain.repo.PaymentRepo
-import com.bunbeauty.shared.extension.getNullableResult
 
 class PaymentRepository(
     private val networkConnector: NetworkConnector,
     private val paymentMethodMapper: PaymentMethodMapper,
-    private val paymentMethodDao: IPaymentMethodDao
-) : PaymentRepo {
+    private val paymentMethodDao: IPaymentMethodDao,
+) : CacheListRepository<PaymentMethod>(), PaymentRepo {
 
-    private var paymentMethodListCache: List<PaymentMethod>? = null
+    override val tag: String = "PAYMENT_TAG"
 
     override suspend fun getPaymentMethodList(): List<PaymentMethod> {
-        val cache = paymentMethodListCache
-        return if (cache == null) {
-            val paymentMethodList = getRemotePaymentMethodList()
-            if (paymentMethodList == null) {
-                getLocalPaymentMethodList()
-            } else {
-                savePaymentMethodListLocally(paymentMethodList)
-                paymentMethodListCache = paymentMethodList
-                paymentMethodList
-            }
-        } else {
-            cache
-        }
+        return getCacheOrListData(
+            onApiRequest = networkConnector::getPaymentMethodList,
+            onLocalRequest = ::getLocalPaymentMethodList,
+            onSaveLocally = ::savePaymentMethodListLocally,
+            serverToDomainModel = paymentMethodMapper::toPaymentMethod
+        )
     }
 
-    suspend fun getRemotePaymentMethodList(): List<PaymentMethod>? {
-        return networkConnector.getPaymentMethodList()
-            .getNullableResult { paymentMethodServerList ->
-                paymentMethodServerList.results.mapNotNull(paymentMethodMapper::toPaymentMethod)
-            }
+    private suspend fun getLocalPaymentMethodList(): List<PaymentMethod> {
+        return paymentMethodDao.getPaymentMethodList().map(paymentMethodMapper::toPaymentMethod)
     }
 
-    suspend fun getLocalPaymentMethodList(): List<PaymentMethod> {
-        return paymentMethodDao.getPaymentMethodList()
-            .mapNotNull(paymentMethodMapper::toPaymentMethod)
-    }
-
-    suspend fun savePaymentMethodListLocally(paymentMethodList: List<PaymentMethod>) {
+    private suspend fun savePaymentMethodListLocally(paymentMethodServerList: List<PaymentMethodServer>) {
         paymentMethodDao.insertPaymentMethodList(
-            paymentMethodList.map(paymentMethodMapper::toPaymentMethodEntity)
+            paymentMethodServerList.map(paymentMethodMapper::toPaymentMethodEntity)
         )
     }
 }

@@ -28,8 +28,6 @@ import com.bunbeauty.shared.data.dao.order_product.IOrderProductDao
 import com.bunbeauty.shared.data.dao.order_product.OrderProductDao
 import com.bunbeauty.shared.data.dao.payment_method.IPaymentMethodDao
 import com.bunbeauty.shared.data.dao.payment_method.PaymentMethodDao
-import com.bunbeauty.shared.data.dao.user.IUserDao
-import com.bunbeauty.shared.data.dao.user.UserDao
 import com.bunbeauty.shared.data.dao.user_address.IUserAddressDao
 import com.bunbeauty.shared.data.dao.user_address.UserAddressDao
 import org.koin.dsl.module
@@ -52,9 +50,6 @@ fun databaseModule() = module {
     }
     single<IMenuProductCategoryReferenceDao> {
         MenuProductCategoryReferenceDao(foodDeliveryDatabase = get())
-    }
-    single<IUserDao> {
-        UserDao(foodDeliveryDatabase = get())
     }
     single<IUserAddressDao> {
         UserAddressDao(foodDeliveryDatabase = get())

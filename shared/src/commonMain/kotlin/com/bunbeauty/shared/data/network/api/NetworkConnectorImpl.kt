@@ -104,13 +104,6 @@ internal class NetworkConnectorImpl(
         )
     }
 
-    override suspend fun getDelivery(): ApiResult<DeliveryServer> {
-        return getData(
-            path = "delivery",
-            parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuidProvider.companyUuid)
-        )
-    }
-
     override suspend fun getDiscount(): ApiResult<DiscountServer> {
         return getData(
             path = "discount",

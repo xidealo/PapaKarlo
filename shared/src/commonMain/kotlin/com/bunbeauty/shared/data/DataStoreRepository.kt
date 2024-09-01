@@ -19,10 +19,6 @@ expect class DataStoreRepository : DataStoreRepo, KoinComponent {
     override suspend fun saveUserUuid(userId: String)
     override suspend fun clearUserUuid()
 
-    override val delivery: Flow<Delivery?>
-    override suspend fun getDelivery(): Delivery?
-    override suspend fun saveDelivery(delivery: Delivery)
-
     override val settings: Flow<Settings?>
     override suspend fun getSettings(): Settings?
     override suspend fun saveSettings(settings: Settings)

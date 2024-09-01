@@ -22,10 +22,6 @@ interface DataStoreRepo {
     @Deprecated("use clearUserData")
     suspend fun clearUserUuid()
 
-    val delivery: Flow<Delivery?>
-    suspend fun getDelivery(): Delivery?
-    suspend fun saveDelivery(delivery: Delivery)
-
     val settings: Flow<Settings?>
     suspend fun getSettings(): Settings?
     suspend fun saveSettings(settings: Settings)

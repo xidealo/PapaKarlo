@@ -10,12 +10,10 @@ import com.bunbeauty.shared.data.mapper.additiongroup.mapAdditionGroupEntityToGr
 import com.bunbeauty.shared.data.mapper.menuProduct.IMenuProductMapper
 import com.bunbeauty.shared.data.network.api.NetworkConnector
 import com.bunbeauty.shared.data.network.model.MenuProductServer
-import com.bunbeauty.shared.domain.mapFlow
+import com.bunbeauty.shared.data.repository.base.CacheListRepository
 import com.bunbeauty.shared.domain.model.addition.AdditionGroup
 import com.bunbeauty.shared.domain.model.product.MenuProduct
 import com.bunbeauty.shared.domain.repo.MenuProductRepo
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 
 class MenuProductRepository(
     private val networkConnector: NetworkConnector,
@@ -56,17 +54,6 @@ class MenuProductRepository(
                 additionList = getAdditions(additionGroup)
             )
         }
-
-    override fun observeMenuProductList(): Flow<List<MenuProduct>> {
-        return menuProductDao.observeMenuProductList().map { menuProductWithCategoryEntityList ->
-            menuProductMapper.toMenuProductList(menuProductWithCategoryEntityList)
-        }
-    }
-
-    override fun observeMenuProductByUuid(menuProductUuid: String): Flow<MenuProduct?> {
-        return menuProductDao.observeMenuProductByUuid(menuProductUuid)
-            .mapFlow(menuProductMapper::toMenuProduct)
-    }
 
     override suspend fun getMenuProductByUuid(menuProductUuid: String): MenuProduct? {
         return getCacheOrListData(

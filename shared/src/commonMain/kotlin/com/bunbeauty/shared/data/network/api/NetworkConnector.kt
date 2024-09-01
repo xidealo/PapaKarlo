@@ -40,7 +40,7 @@ interface NetworkConnector {
     suspend fun getCityList(): ApiResult<ListServer<CityServer>>
     suspend fun getCafeListByCityUuid(cityUuid: String): ApiResult<ListServer<CafeServer>>
     suspend fun getStreetListByCityUuid(cityUuid: String): ApiResult<ListServer<StreetServer>>
-    suspend fun getDelivery(): ApiResult<DeliveryServer>
+
     suspend fun getDiscount(): ApiResult<DiscountServer>
     suspend fun getSuggestions(
         token: String,

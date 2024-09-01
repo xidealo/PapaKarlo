@@ -3,16 +3,14 @@ package com.bunbeauty.shared.data.repository
 import com.bunbeauty.shared.data.dao.city.ICityDao
 import com.bunbeauty.shared.data.mapper.city.ICityMapper
 import com.bunbeauty.shared.data.network.api.NetworkConnector
-import com.bunbeauty.shared.domain.mapFlow
-import com.bunbeauty.shared.domain.mapListFlow
+import com.bunbeauty.shared.data.repository.base.CacheListRepository
 import com.bunbeauty.shared.domain.model.city.City
 import com.bunbeauty.shared.domain.repo.CityRepo
-import kotlinx.coroutines.flow.Flow
 
 class CityRepository(
     private val networkConnector: NetworkConnector,
     private val cityDao: ICityDao,
-    private val cityMapper: ICityMapper
+    private val cityMapper: ICityMapper,
 ) : CacheListRepository<City>(), CityRepo {
 
     override val tag: String = "CITY_TAG"
@@ -31,16 +29,8 @@ class CityRepository(
     }
 
     override suspend fun getCityByUuid(cityUuid: String): City? {
-        return cityDao.getCityByUuid(cityUuid)?.let { cityEntity ->
-            cityMapper.toCity(cityEntity)
+        return cityDao.getCityByUuid(uuid = cityUuid)?.let { cityEntity ->
+            cityMapper.toCity(cityEntity = cityEntity)
         }
-    }
-
-    override fun observeCityList(): Flow<List<City>> {
-        return cityDao.observeCityList().mapListFlow(cityMapper::toCity)
-    }
-
-    override fun observeCityByUuid(cityUuid: String): Flow<City?> {
-        return cityDao.observeCityByUuid(cityUuid).mapFlow(cityMapper::toCity)
     }
 }

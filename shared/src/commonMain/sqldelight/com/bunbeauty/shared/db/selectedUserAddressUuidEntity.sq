@@ -4,8 +4,7 @@ CREATE TABLE selectedUserAddressUuidEntity (
     userAddressUuid TEXT NOT NULL,
     PRIMARY KEY (userUuid, cityUuid),
     FOREIGN KEY (cityUuid) REFERENCES cityEntity(uuid) ON DELETE CASCADE,
-    FOREIGN KEY (userAddressUuid) REFERENCES userAddressEntity(uuid) ON DELETE CASCADE,
-    FOREIGN KEY (userUuid) REFERENCES userEntity(uuid) ON DELETE CASCADE
+    FOREIGN KEY (userAddressUuid) REFERENCES userAddressEntity(uuid) ON DELETE CASCADE
 );
 
 insertSelectedUserAddressUuid:

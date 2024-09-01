@@ -19,9 +19,8 @@ CREATE TABLE IF NOT EXISTS orderEntity (
     paymentMethod TEXT,
     oldTotalCost INTEGER AS Int,
     newTotalCost INTEGER AS Int  NOT NULL,
-    percentDiscount INTEGER AS Int,
-    FOREIGN KEY (userUuid) REFERENCES userEntity(uuid) ON DELETE CASCADE
-);
+    percentDiscount INTEGER AS Int
+    );
 CREATE VIEW orderWithProductEntity AS
 SELECT orderEntity.*,
     orderProductEntity.uuid AS orderProductUuid,

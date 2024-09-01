@@ -13,18 +13,6 @@ interface CafeRepo {
         cafeUuid: String
     )
 
-    suspend fun getCafeList(): List<Cafe>
     suspend fun getCafeByUuid(cafeUuid: String): Cafe?
     suspend fun getSelectedCafeByUserAndCityUuid(userUuid: String, cityUuid: String): Cafe?
-    suspend fun getFirstCafeCityUuid(cityUuid: String): Cafe?
-
-    fun observeSelectedCafeByUserAndCityUuid(
-        userUuid: String,
-        cityUuid: String
-    ): Flow<Cafe?>
-
-    fun observeFirstCafeCityUuid(cityUuid: String): Flow<Cafe?>
-    fun observeCafeList(): Flow<List<Cafe>>
-    fun observeCafeAddressList(): Flow<List<CafeAddress>>
-    fun observeCafeAddressByUuid(cafeUuid: String): Flow<CafeAddress?>
 }

@@ -3,9 +3,9 @@ package com.bunbeauty.shared.data.repository
 import com.bunbeauty.shared.data.dao.user_address.IUserAddressDao
 import com.bunbeauty.shared.data.mapper.user_address.UserAddressMapper
 import com.bunbeauty.shared.data.network.api.NetworkConnector
+import com.bunbeauty.shared.data.repository.base.BaseRepository
 import com.bunbeauty.shared.db.SelectedUserAddressUuidEntity
 import com.bunbeauty.shared.domain.mapFlow
-import com.bunbeauty.shared.domain.mapListFlow
 import com.bunbeauty.shared.domain.model.address.CreatedUserAddress
 import com.bunbeauty.shared.domain.model.address.UserAddress
 import com.bunbeauty.shared.domain.model.address.UserAddressCache
@@ -128,15 +128,5 @@ open class UserAddressRepository(
             userUuid = userUuid,
             cityUuid = cityUuid
         ).mapFlow(userAddressMapper::toUserAddress)
-    }
-
-    override fun observeUserAddressListByUserUuidAndCityUuid(
-        userUuid: String,
-        cityUuid: String
-    ): Flow<List<UserAddress>> {
-        return userAddressDao.observeUserAddressListByUserAndCityUuid(
-            userUuid = userUuid,
-            cityUuid = cityUuid
-        ).mapListFlow(userAddressMapper::toUserAddress)
     }
 }

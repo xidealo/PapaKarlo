@@ -8,7 +8,7 @@ import com.bunbeauty.shared.domain.model.payment_method.PaymentMethod
 import com.bunbeauty.shared.domain.model.payment_method.PaymentMethodName
 
 class PaymentMethodUiStateMapper(
-    private val resources: Resources
+    private val resources: Resources,
 ) {
 
     fun map(paymentMethodList: List<PaymentMethod>): List<PaymentMethodUI> {
@@ -49,6 +49,7 @@ class PaymentMethodUiStateMapper(
             PaymentMethodName.CARD -> R.string.msg_payment_card
             PaymentMethodName.CARD_NUMBER -> R.string.msg_payment_card_number
             PaymentMethodName.PHONE_NUMBER -> R.string.msg_payment_phone_number
+            PaymentMethodName.UNKNOWN -> R.string.msg_payment_unknown
         }.let { nameResId ->
             resources.getString(nameResId)
         }

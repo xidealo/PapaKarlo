@@ -1,4 +1,4 @@
-package com.bunbeauty.shared.data.repository
+package com.bunbeauty.shared.data.repository.base
 
 import com.bunbeauty.shared.data.network.ApiResult
 

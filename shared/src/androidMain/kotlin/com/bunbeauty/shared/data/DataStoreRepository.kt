@@ -8,7 +8,6 @@ import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.bunbeauty.shared.DataStoreRepo
-import com.bunbeauty.shared.domain.model.Delivery
 import com.bunbeauty.shared.domain.model.Discount
 import com.bunbeauty.shared.domain.model.Settings
 import com.bunbeauty.shared.domain.model.UserCityUuid
@@ -24,7 +23,6 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
     private val context: Context by inject()
 
     private val Context.tokenDataStore: DataStore<Preferences> by preferencesDataStore(name = TOKEN_DATA_STORE)
-    private val Context.deliveryDataStore: DataStore<Preferences> by preferencesDataStore(name = DELIVERY_DATA_STORE)
     private val Context.settingsDataStore: DataStore<Preferences> by preferencesDataStore(name = SETTINGS_DATA_STORE)
     private val Context.userUuidDataStore: DataStore<Preferences> by preferencesDataStore(name = USER_UUID_DATA_STORE)
     private val Context.selectedCityDataStore: DataStore<Preferences> by preferencesDataStore(name = SELECTED_CITY_DATA_STORE)
@@ -49,23 +47,6 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
     actual override suspend fun clearToken() {
         context.tokenDataStore.edit {
             it.clear()
-        }
-    }
-
-    actual override val delivery: Flow<Delivery?> = context.deliveryDataStore.data.map {
-        it[DELIVERY_COST_KEY]?.let { cost ->
-            it[FOR_FREE_DELIVERY_KEY]?.let { forFree ->
-                Delivery(cost = cost, forFree = forFree)
-            }
-        }
-    }
-
-    actual override suspend fun getDelivery() = delivery.firstOrNull()
-
-    actual override suspend fun saveDelivery(delivery: Delivery) {
-        context.deliveryDataStore.edit {
-            it[DELIVERY_COST_KEY] = delivery.cost
-            it[FOR_FREE_DELIVERY_KEY] = delivery.forFree
         }
     }
 
@@ -203,12 +184,6 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
         private const val TOKEN_DATA_STORE = "token data store"
         private const val TOKEN = "token"
         private val TOKEN_KEY = stringPreferencesKey(TOKEN)
-
-        private const val DELIVERY_DATA_STORE = "delivery data store"
-        private const val DELIVERY_COST = "delivery cost"
-        private const val FOR_FREE_DELIVERY = "for free delivery"
-        private val DELIVERY_COST_KEY = intPreferencesKey(DELIVERY_COST)
-        private val FOR_FREE_DELIVERY_KEY = intPreferencesKey(FOR_FREE_DELIVERY)
 
         private const val SETTINGS_DATA_STORE = "settings data store"
         private const val SETTINGS_USER_UUID = "settings user uuid"

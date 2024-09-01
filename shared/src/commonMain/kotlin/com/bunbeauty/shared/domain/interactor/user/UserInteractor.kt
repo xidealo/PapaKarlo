@@ -1,7 +1,6 @@
 package com.bunbeauty.shared.domain.interactor.user
 
 import com.bunbeauty.shared.DataStoreRepo
-import com.bunbeauty.shared.domain.model.profile.Profile
 import com.bunbeauty.shared.domain.repo.OrderRepo
 import com.bunbeauty.shared.domain.repo.UserRepo
 
@@ -20,18 +19,4 @@ class UserInteractor(
         return dataStoreRepo.getToken() != null
     }
 
-    override suspend fun getProfile(): Profile? {
-        val token = dataStoreRepo.getToken() ?: return Profile.Unauthorized
-        return if (isUserAuthorize()) {
-            dataStoreRepo.getUserAndCityUuid().let { userCityUuid ->
-                userRepo.getProfileByUserUuidAndCityUuid(
-                    userUuid = userCityUuid.userUuid,
-                    cityUuid = userCityUuid.cityUuid,
-                    token = token
-                )
-            }
-        } else {
-            Profile.Unauthorized
-        }
-    }
 }

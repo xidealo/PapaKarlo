@@ -7,10 +7,10 @@ import com.bunbeauty.shared.domain.model.payment_method.PaymentMethodName
 
 class PaymentMethodMapper {
 
-    fun toPaymentMethod(paymentMethodServer: PaymentMethodServer): PaymentMethod? {
-        val name = PaymentMethodName.values().find { paymentMethodName ->
+    fun toPaymentMethod(paymentMethodServer: PaymentMethodServer): PaymentMethod {
+        val name = PaymentMethodName.entries.find { paymentMethodName ->
             paymentMethodName.name == paymentMethodServer.name
-        } ?: return null
+        } ?: PaymentMethodName.UNKNOWN
 
         return PaymentMethod(
             uuid = paymentMethodServer.uuid,
@@ -20,10 +20,10 @@ class PaymentMethodMapper {
         )
     }
 
-    fun toPaymentMethod(paymentMethodEntity: PaymentMethodEntity): PaymentMethod? {
-        val name = PaymentMethodName.values().find { paymentMethodName ->
+    fun toPaymentMethod(paymentMethodEntity: PaymentMethodEntity): PaymentMethod {
+        val name = PaymentMethodName.entries.find { paymentMethodName ->
             paymentMethodName.name == paymentMethodEntity.name
-        } ?: return null
+        } ?: PaymentMethodName.UNKNOWN
 
         return PaymentMethod(
             uuid = paymentMethodEntity.uuid,
@@ -39,6 +39,15 @@ class PaymentMethodMapper {
             name = paymentMethod.name.name,
             value_ = paymentMethod.valueToShow,
             valueToCopy = paymentMethod.valueToCopy
+        )
+    }
+
+    fun toPaymentMethodEntity(paymentMethodServer: PaymentMethodServer): PaymentMethodEntity {
+        return PaymentMethodEntity(
+            uuid = paymentMethodServer.uuid,
+            name = paymentMethodServer.name,
+            value_ = paymentMethodServer.value,
+            valueToCopy = paymentMethodServer.valueToCopy
         )
     }
 }
