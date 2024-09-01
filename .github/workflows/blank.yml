@@ -192,4 +192,4 @@ jobs:
       - name: Build and Deploy to TestFlight
         run: |
             cd ./iosApp
-            fastlane papakarlo
+            bundle exec fastlane papakarlo
