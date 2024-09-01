@@ -185,7 +185,9 @@ jobs:
       - name: Decode papkarlo.plist
         env:
           IOS_PAPAKARLO_GOOGLE_JSON: ${{ secrets.IOS_PAPAKARLO_GOOGLE_JSON }}
-        run: echo "${IOS_PAPAKARLO_GOOGLE_JSON}" | base64 --decode > iosApp/papakarloRes/GoogleService-Info.plist
+        run: |
+        mkdir -p iosApp/papakarloRes
+        echo "${IOS_PAPAKARLO_GOOGLE_JSON}" | base64 --decode > iosApp/papakarloRes/GoogleService-Info.plist
 
       - name: Build and Deploy to TestFlight
         run: |
