@@ -75,7 +75,7 @@ Pods/
 Packages/
 Package.pins
 Package.resolved
-*.xcodeproj
+#*.xcodeproj
 
 .gradle
 /local.properties
