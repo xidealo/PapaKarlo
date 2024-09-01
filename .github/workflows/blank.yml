@@ -170,7 +170,7 @@ jobs:
 
       - name: Bundle install for iOS Gemfile
         timeout-minutes: 5
-        run: cd ./ios && bundle install
+        run: cd ./iosApp && bundle install
 
       - name: Decode env.default.json
         env:
