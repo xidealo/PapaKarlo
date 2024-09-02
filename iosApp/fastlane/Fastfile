@@ -23,7 +23,6 @@ platform :ios do
   )
 
   lane :deployAll do
-     xcversion(version: "15.4")
      papakarlo
      gustopub
      yuliar
