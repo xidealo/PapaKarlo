@@ -172,6 +172,9 @@ jobs:
         timeout-minutes: 5
         run: cd ./iosApp && bundle install
 
+      - name: List installed Xcode versions
+        run: ls /Applications | grep Xcode
+
       - name: Decode env.default.json
         env:
           IOS_ENV: ${{ secrets.IOS_ENV }}
