@@ -188,6 +188,12 @@ jobs:
         run: |
           mkdir -p iosApp/papakarloRes
           echo "${IOS_PAPAKARLO_GOOGLE_JSON}" | base64 --decode > iosApp/papakarloRes/GoogleService-Info.plist
+
+      - name: Generate KMM iOS framework
+        run: |
+          cd ./shared
+          ./gradlew :shared:packForXcode
+
       - name: Install CocoaPods dependencies
         run: |
             cd ./iosApp
