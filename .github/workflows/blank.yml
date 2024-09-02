@@ -210,7 +210,7 @@ jobs:
 
       - name: Generate KMM iOS framework
         run: |
-          ./gradlew podspec
+          ./gradlew :shared:generateDummyFramework
 
       - name: Install CocoaPods dependencies
         run: |
