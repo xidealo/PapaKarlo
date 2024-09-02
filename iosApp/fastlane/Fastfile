@@ -7,13 +7,21 @@ default_platform(:ios)
 
 platform :ios do
 
+  before_all do
+      # Select the version of Xcode for this build only
+      xcodes(version: "14.1", select_for_current_build_only: true)
+
+      # Make sure that the correct version of Xcode is selected
+      ensure_xcode_version(version: "14.1")
+  end
+
   app_store_connect_api_key(
     key_id: ENV['APP_STORE_KEY_ID'],
     issuer_id: ENV['APP_STORE_ISSUER_ID'],
     key_filepath: ENV['PATH_P8'],
     in_house: false
   )
-	
+
   lane :deployAll do
      xcversion(version: "15.4")
      papakarlo
