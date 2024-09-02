@@ -189,10 +189,16 @@ jobs:
           mkdir -p iosApp/papakarloRes
           echo "${IOS_PAPAKARLO_GOOGLE_JSON}" | base64 --decode > iosApp/papakarloRes/GoogleService-Info.plist
 
+      - name: set up JDK 17
+        uses: actions/setup-java@v1
+        with:
+          java-version: 17
+      - name: Set up Gradle
+        uses: gradle/gradle-build-action@v2
+
       - name: Generate KMM iOS framework
         run: |
-          cd ./shared
-          ./gradlew :shared:packForXcode
+          ./gradlew podspec
 
       - name: Install CocoaPods dependencies
         run: |
