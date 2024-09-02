@@ -200,4 +200,4 @@ jobs:
           ASC_KEY_P8: ${{ secrets.IOS_AUTHP8 }}
         run: |
             cd ./iosApp
-            bundle exec fastlane deployAll
+            bundle exec fastlane yuliar
