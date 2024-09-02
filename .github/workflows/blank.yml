@@ -196,6 +196,18 @@ jobs:
       - name: Set up Gradle
         uses: gradle/gradle-build-action@v2
 
+      - name: Create local properties
+        env:
+          RELEASE_STORE_FILE: ${{ secrets.RELEASE_STORE_FILE }}
+          RELEASE_STORE_PASSWORD: ${{ secrets.RELEASE_STORE_PASSWORD }}
+          RELEASE_KEY_ALIAS: ${{ secrets.RELEASE_KEY_ALIAS }}
+          RELEASE_KEY_PASSWORD: ${{ secrets.RELEASE_KEY_PASSWORD }}
+        run: |
+          echo -e "RELEASE_STORE_FILE=${RELEASE_STORE_FILE}
+          RELEASE_STORE_PASSWORD=${RELEASE_STORE_PASSWORD}
+          RELEASE_KEY_ALIAS=${RELEASE_KEY_ALIAS}
+          RELEASE_KEY_PASSWORD=${RELEASE_KEY_PASSWORD}" > local.properties
+
       - name: Generate KMM iOS framework
         run: |
           ./gradlew podspec
