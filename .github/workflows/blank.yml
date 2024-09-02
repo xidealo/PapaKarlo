@@ -188,6 +188,10 @@ jobs:
         run: |
           mkdir -p iosApp/papakarloRes
           echo "${IOS_PAPAKARLO_GOOGLE_JSON}" | base64 --decode > iosApp/papakarloRes/GoogleService-Info.plist
+      - name: Install CocoaPods dependencies
+        run: |
+            cd ./iosApp
+            pod install
 
       - name: Build and Deploy to TestFlight
         env:
