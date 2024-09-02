@@ -22,6 +22,7 @@ struct CreateOrderView: View {
     @State var goToUserAddress: Bool = false
     @State var goToCafeAddress: Bool = false
     @State var goToSelectPaymentMethod: Bool = false
+    @State var goToCreateAddress: Bool = false
     
     //for back after createOrder
     @Binding var isRootActive: Bool
@@ -114,6 +115,12 @@ struct CreateOrderView: View {
                 isActive: $goToSelectPaymentMethod
             ){
                 EmptyView()
+            }      
+            NavigationLink(
+                destination: CreateAddressView(show: $showCreatedAddress),
+                isActive: $goToCreateAddress
+            ){
+                EmptyView()
             }
             
             if(createOrderViewState?.isLoading == true || createOrderViewState?.isLoading == nil){
@@ -125,6 +132,7 @@ struct CreateOrderView: View {
                         goToUserAddress: $goToUserAddress,
                         goToCafeAddress: $goToCafeAddress,
                         goToSelectPaymentMethod: $goToSelectPaymentMethod,
+                        goToCreateAddress: $goToCreateAddress, 
                         changeError: $changeError,
                         isRootActive: $isRootActive,
                         selection: $selection,
@@ -135,7 +143,6 @@ struct CreateOrderView: View {
                 }
             }
         }
-        .background(AppColor.background)
         .hiddenNavigationBarStyle()
         .onAppear(){
             subscribe()
@@ -143,8 +150,7 @@ struct CreateOrderView: View {
         }
         .onDisappear(){
             unsubscribe()
-        }
-        .overlay(
+        }.overlay(
             overlayView: ToastView(
                 toast: Toast(title: "Адрес добавлен"),
                 show: $showCreatedAddress,
@@ -152,8 +158,7 @@ struct CreateOrderView: View {
                 foregroundColor: AppColor.onPrimary
             ),
             show: $showCreatedAddress
-        )
-        .overlay(
+        ).overlay(
             overlayView: ToastView(
                 toast: Toast(title: "Что-то пошло не так"),
                 show: $showCommonError,
@@ -161,7 +166,7 @@ struct CreateOrderView: View {
                 foregroundColor: AppColor.onError
             ),
             show: $showCommonError
-        ) .overlay(
+        ).overlay(
             overlayView: ToastView(
                 toast: Toast(title: "Способ оплаты не выбран"),
                 show: $showPaymentMethodError,
@@ -398,6 +403,7 @@ struct CreateOrderSuccessView: View {
     @Binding var goToUserAddress: Bool
     @Binding var goToCafeAddress: Bool
     @Binding var goToSelectPaymentMethod: Bool
+    @Binding var goToCreateAddress: Bool
     
     @State var isDelivery = true
     @State var comment = ""
@@ -434,32 +440,41 @@ struct CreateOrderSuccessView: View {
                     
                     if(createOrderViewState.isDelivery){
                         if createOrderViewState.deliveryAddress == nil {
-                            NavigationCardView(
+                            NavigationCardWithDivider(
                                 icon: nil,
                                 label: addressLable,
-                                destination: CreateAddressView(show: $showCreatedAddress)
+                                value: nil,
+                                action: {
+                                    goToCreateAddress = true
+                                }
                             )
                             .padding(.top, Diems.SMALL_PADDING)
-                            .padding(.horizontal, Diems.MEDIUM_PADDING)
+                            .padding(.horizontal, 16)
+
                         } else {
-                            ActionTextCardView(
-                                placeHolder: LocalizedStringKey("title_delivery_address").stringValue(),
-                                text: createOrderViewState.deliveryAddress ?? ""
-                            ){
-                                action(CreateOrderActionDeliveryAddressClick())
-                            }
+                            NavigationCardWithDivider(
+                                icon: nil,
+                                label: LocalizedStringKey("title_delivery_address").stringValue(),
+                                value: createOrderViewState.deliveryAddress ?? "",
+                                action: {
+                                    action(CreateOrderActionDeliveryAddressClick())
+                                }
+                            )
                             .padding(.top, Diems.SMALL_PADDING)
-                            .padding(.horizontal, Diems.MEDIUM_PADDING)
+                            .padding(.horizontal, 16)
+
                         }
                     } else {
-                        ActionTextCardView(
-                            placeHolder: LocalizedStringKey("title_pickup_address").stringValue(),
-                            text: "\(createOrderViewState.pickupAddress ?? "")"
-                        ){
-                            action(CreateOrderActionPickupAddressClick())
-                        }
+                        NavigationCardWithDivider(
+                            icon: nil,
+                            label: LocalizedStringKey("title_pickup_address").stringValue(),
+                            value: "\(createOrderViewState.pickupAddress ?? "")",
+                            action: {
+                                action(CreateOrderActionPickupAddressClick())
+                            }
+                        )
                         .padding(.top, Diems.SMALL_PADDING)
-                        .padding(.horizontal, Diems.MEDIUM_PADDING)
+                        .padding(.horizontal, 16)
                     }
                     
                     if(createOrderViewState.isAddressErrorShown){
@@ -472,27 +487,16 @@ struct CreateOrderSuccessView: View {
                             .padding(.leading, 16)
                     }
                     
-                    if(createOrderViewState.selectedPaymentMethod == nil){
-                        ActionCardView(
-                            icon: nil,
-                            label: "Способ оплаты",
-                            isSystemImageName: false,
-                            isShowRightArrow: true
-                        ){
+                    NavigationCardWithDivider(
+                        icon: nil,
+                        label: LocalizedStringKey("selectable_payment_method").stringValue(),
+                        value: createOrderViewState.selectedPaymentMethod?.name.stringValue(),
+                        action: {
                             action(CreateOrderActionPaymentMethodClick())
                         }
-                        .padding(.top, Diems.SMALL_PADDING)
-                        .padding(.horizontal, Diems.MEDIUM_PADDING)
-                    }else{
-                        ActionLocalizedTextCardView(
-                            placeHolder: "selectable_payment_method",
-                            text: createOrderViewState.selectedPaymentMethod?.name ?? ""
-                        ){
-                            action(CreateOrderActionPaymentMethodClick())
-                        }
-                        .padding(.top, Diems.SMALL_PADDING)
-                        .padding(.horizontal, Diems.MEDIUM_PADDING)
-                    }
+                    )
+                    .padding(.top, Diems.SMALL_PADDING)
+                    .padding(.horizontal, 16)
                     
                     if(createOrderViewState.isPaymentMethodErrorShown){
                         Text("error_select_payment_method")
@@ -508,18 +512,14 @@ struct CreateOrderSuccessView: View {
                         HStack(spacing:0){
                             Button(action: {
                                 action(
-                                    CreateOrderActionChangeWithoutChangeChecked(
-                                        isChecked: !createOrderViewState.withoutChangeChecked
-                                    )
+                                    CreateOrderActionChangeWithoutChangeChecked()
                                 )
                             }) {
                                 FoodDeliveryCheckBox(
                                     isSelected: createOrderViewState.withoutChangeChecked,
                                     action: {
                                         action(
-                                            CreateOrderActionChangeWithoutChangeChecked(
-                                                isChecked: !createOrderViewState.withoutChangeChecked
-                                            )
+                                            CreateOrderActionChangeWithoutChangeChecked()
                                         )
                                     }
                                 )
@@ -547,7 +547,7 @@ struct CreateOrderSuccessView: View {
                                     action(CreateOrderActionChangeChange(change: changeTextField))
                                 }
                             )
-                            .padding(.top, 8)
+                            .padding(.top, 16)
                             .padding(.horizontal, 16)
                         }
                     }
@@ -561,7 +561,7 @@ struct CreateOrderSuccessView: View {
                             action(CreateOrderActionChangeComment(comment: comment))
                         }
                     )
-                    .padding(.top, 8)
+                    .padding(.top, createOrderViewState.showChange ? 8 : 16)
                     .padding(.horizontal, 16)
                     
                     Toggle(
@@ -644,7 +644,7 @@ struct CreateOrderSuccessView: View {
                     }
                 }
             }
-            .background(AppColor.background)
+            .background(AppColor.surface)
             
             VStack(spacing:0){
                 
@@ -757,7 +757,6 @@ struct BottomAmountBarSuccessView: View {
             }
             .padding(.top, Diems.SMALL_PADDING)
             .padding(.horizontal, Diems.MEDIUM_PADDING)
-            
         }
     }
 }
