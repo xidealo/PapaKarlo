@@ -8,7 +8,7 @@ import com.bunbeauty.shared.domain.model.payment_method.PaymentMethod
 import com.bunbeauty.shared.domain.model.payment_method.PaymentMethodName
 
 class PaymentMethodUiStateMapper(
-    private val resources: Resources,
+    private val resources: Resources
 ) {
 
     fun map(paymentMethodList: List<PaymentMethod>): List<PaymentMethodUI> {

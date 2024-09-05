@@ -1,7 +1,6 @@
 package com.bunbeauty.shared.data
 
 import com.bunbeauty.shared.DataStoreRepo
-import com.bunbeauty.shared.domain.model.Delivery
 import com.bunbeauty.shared.domain.model.Discount
 import com.bunbeauty.shared.domain.model.Settings
 import com.bunbeauty.shared.domain.model.UserCityUuid

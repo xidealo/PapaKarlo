@@ -11,7 +11,7 @@ import com.bunbeauty.shared.domain.repo.LinkRepo
 class LinkRepository(
     private val networkConnector: NetworkConnector,
     private val linkMapper: LinkMapper,
-    private val linkDao: ILinkDao,
+    private val linkDao: ILinkDao
 ) : CacheListRepository<Link>(), LinkRepo {
 
     override val tag: String = "LINK_TAG"

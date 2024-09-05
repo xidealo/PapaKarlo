@@ -6,10 +6,9 @@ import com.bunbeauty.shared.domain.model.payment_method.SelectablePaymentMethod
 import com.bunbeauty.shared.domain.repo.PaymentRepo
 import kotlinx.coroutines.flow.firstOrNull
 
-//TODO TEST
 class GetSelectablePaymentMethodListUseCase(
     private val paymentRepo: PaymentRepo,
-    private val dataStoreRepo: DataStoreRepo,
+    private val dataStoreRepo: DataStoreRepo
 ) {
     suspend operator fun invoke(): List<SelectablePaymentMethod> {
         val paymentMethodList = paymentRepo.getPaymentMethodList()

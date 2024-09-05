@@ -11,7 +11,7 @@ import com.bunbeauty.shared.domain.repo.PaymentRepo
 class PaymentRepository(
     private val networkConnector: NetworkConnector,
     private val paymentMethodMapper: PaymentMethodMapper,
-    private val paymentMethodDao: IPaymentMethodDao,
+    private val paymentMethodDao: IPaymentMethodDao
 ) : CacheListRepository<PaymentMethod>(), PaymentRepo {
 
     override val tag: String = "PAYMENT_TAG"

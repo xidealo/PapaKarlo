@@ -9,7 +9,7 @@ import com.bunbeauty.shared.domain.repo.UserRepo
 
 class UserRepository(
     private val networkConnector: NetworkConnector,
-    private val dataStoreRepo: DataStoreRepo,
+    private val dataStoreRepo: DataStoreRepo
 ) : CacheRepository<User>(), UserRepo {
 
     override val tag: String = "USER_TAG"

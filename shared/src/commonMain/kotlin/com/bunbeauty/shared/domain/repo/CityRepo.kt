@@ -1,7 +1,6 @@
 package com.bunbeauty.shared.domain.repo
 
 import com.bunbeauty.shared.domain.model.city.City
-import kotlinx.coroutines.flow.Flow
 
 interface CityRepo {
     suspend fun getCityList(): List<City>

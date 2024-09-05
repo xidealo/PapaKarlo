@@ -7,7 +7,7 @@ import com.bunbeauty.shared.domain.model.order.OrderAvailability
 import com.bunbeauty.shared.domain.repo.OrderAvailableRepo
 
 class OrderAvailableRepository(
-    private val networkConnector: NetworkConnector,
+    private val networkConnector: NetworkConnector
 ) : CacheRepository<OrderAvailability>(), OrderAvailableRepo {
 
     override val tag: String = "ORDER_AVAILABLE_TAG"
@@ -19,7 +19,7 @@ class OrderAvailableRepository(
                 null
             },
             onSaveLocally = {
-                //stub
+                // stub
             },
             serverToDomainModel = mapOrderAvailableServerToOrderAvailability
         )

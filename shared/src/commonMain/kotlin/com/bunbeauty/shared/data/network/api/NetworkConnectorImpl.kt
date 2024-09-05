@@ -12,7 +12,6 @@ import com.bunbeauty.shared.data.network.model.AddressServer
 import com.bunbeauty.shared.data.network.model.CafeServer
 import com.bunbeauty.shared.data.network.model.CategoryServer
 import com.bunbeauty.shared.data.network.model.CityServer
-import com.bunbeauty.shared.data.network.model.DeliveryServer
 import com.bunbeauty.shared.data.network.model.DiscountServer
 import com.bunbeauty.shared.data.network.model.ForceUpdateVersionServer
 import com.bunbeauty.shared.data.network.model.LinkServer

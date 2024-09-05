@@ -4,9 +4,8 @@ import com.bunbeauty.shared.domain.model.payment_method.PaymentMethod
 import com.bunbeauty.shared.domain.model.payment_method.PaymentMethodName
 import com.bunbeauty.shared.domain.repo.PaymentRepo
 
-//TODO TEST
 class GetPaymentMethodListUseCase(
-    private val paymentRepo: PaymentRepo,
+    private val paymentRepo: PaymentRepo
 ) {
     suspend operator fun invoke(): List<PaymentMethod> {
         return paymentRepo.getPaymentMethodList()

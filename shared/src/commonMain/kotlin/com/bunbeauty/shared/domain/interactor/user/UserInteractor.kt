@@ -18,5 +18,4 @@ class UserInteractor(
     override suspend fun isUserAuthorize(): Boolean {
         return dataStoreRepo.getToken() != null
     }
-
 }

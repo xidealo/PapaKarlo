@@ -10,7 +10,7 @@ import com.bunbeauty.shared.domain.repo.CityRepo
 class CityRepository(
     private val networkConnector: NetworkConnector,
     private val cityDao: ICityDao,
-    private val cityMapper: ICityMapper,
+    private val cityMapper: ICityMapper
 ) : CacheListRepository<City>(), CityRepo {
 
     override val tag: String = "CITY_TAG"
