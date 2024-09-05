@@ -34,9 +34,4 @@ interface UserAddressRepo {
         userUuid: String,
         cityUuid: String
     ): Flow<UserAddress?>
-
-    fun observeUserAddressListByUserUuidAndCityUuid(
-        userUuid: String,
-        cityUuid: String
-    ): Flow<List<UserAddress>>
 }

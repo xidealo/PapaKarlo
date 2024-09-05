@@ -80,4 +80,34 @@ class GetSelectablePaymentMethodListUseCaseTest {
         verifySuspend(mode = VerifyMode.atLeast(1)) { paymentRepo.getPaymentMethodList() }
         verifySuspend(mode = VerifyMode.atLeast(1)) { dataStoreRepo.selectedPaymentMethodUuid }
     }
+
+    @Test
+    fun `should return list without UNKNOWN element`() = runTest {
+        val paymentMethodList = listOf(
+            PaymentMethod("uuid1", PaymentMethodName.CARD, null, null),
+            PaymentMethod("uuid2", PaymentMethodName.CASH, null, null),
+            PaymentMethod("uuid3", PaymentMethodName.CARD_NUMBER, null, null),
+            PaymentMethod("uuid4", PaymentMethodName.UNKNOWN, null, null)
+        )
+
+        val selectedPaymentMethodUuid = null
+
+        everySuspend { paymentRepo.getPaymentMethodList() } returns paymentMethodList
+        everySuspend { dataStoreRepo.selectedPaymentMethodUuid } returns MutableStateFlow(
+            selectedPaymentMethodUuid
+        )
+
+        val result = useCase.invoke()
+
+        val expectedSelectablePaymentMethodList = listOf(
+            SelectablePaymentMethod(paymentMethodList[0], false),
+            SelectablePaymentMethod(paymentMethodList[1], false),
+            SelectablePaymentMethod(paymentMethodList[2], false)
+        )
+
+        assertEquals(expectedSelectablePaymentMethodList, result)
+
+        verifySuspend(mode = VerifyMode.atLeast(1)) { paymentRepo.getPaymentMethodList() }
+        verifySuspend(mode = VerifyMode.atLeast(1)) { dataStoreRepo.selectedPaymentMethodUuid }
+    }
 }

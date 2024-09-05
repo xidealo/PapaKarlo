@@ -10,6 +10,7 @@ class CartProductAdditionRepository(
     private val uuidGenerator: UuidGenerator,
     private val cartProductAdditionDao: ICartProductAdditionDao
 ) : CartProductAdditionRepo {
+
     override suspend fun saveAsCartProductAddition(cartProductUuid: String, addition: Addition) {
         val uuid = uuidGenerator.generateUuid()
         val cartProductAdditionEntity = CartProductAdditionEntity(

@@ -42,6 +42,7 @@ private fun PaymentMethodName.toPaymentMethodString(): String {
         PaymentMethodName.CARD -> R.string.msg_payment_card
         PaymentMethodName.CARD_NUMBER -> R.string.msg_payment_card_number
         PaymentMethodName.PHONE_NUMBER -> R.string.msg_payment_phone_number
+        PaymentMethodName.UNKNOWN -> R.string.msg_payment_unknown
     }.let { nameResId ->
         stringResource(nameResId)
     }

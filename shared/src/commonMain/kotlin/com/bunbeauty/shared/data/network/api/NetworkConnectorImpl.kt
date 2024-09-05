@@ -12,7 +12,6 @@ import com.bunbeauty.shared.data.network.model.AddressServer
 import com.bunbeauty.shared.data.network.model.CafeServer
 import com.bunbeauty.shared.data.network.model.CategoryServer
 import com.bunbeauty.shared.data.network.model.CityServer
-import com.bunbeauty.shared.data.network.model.DeliveryServer
 import com.bunbeauty.shared.data.network.model.DiscountServer
 import com.bunbeauty.shared.data.network.model.ForceUpdateVersionServer
 import com.bunbeauty.shared.data.network.model.LinkServer
@@ -101,13 +100,6 @@ internal class NetworkConnectorImpl(
         return getData(
             path = "street",
             parameters = hashMapOf(CITY_UUID_PARAMETER to cityUuid)
-        )
-    }
-
-    override suspend fun getDelivery(): ApiResult<DeliveryServer> {
-        return getData(
-            path = "delivery",
-            parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuidProvider.companyUuid)
         )
     }
 

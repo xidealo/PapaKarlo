@@ -1,16 +1,12 @@
 package com.bunbeauty.shared.domain.interactor.menu_product
 
-import com.bunbeauty.shared.domain.CommonFlow
-import com.bunbeauty.shared.domain.asCommonFlow
 import com.bunbeauty.shared.domain.feature.menuproduct.GetMenuProductListUseCase
 import com.bunbeauty.shared.domain.model.menu.MenuSection
 import com.bunbeauty.shared.domain.model.product.MenuProduct
-import com.bunbeauty.shared.domain.repo.MenuProductRepo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class MenuProductInteractor(
-    private val menuProductRepo: MenuProductRepo,
     private val getMenuProductListUseCase: GetMenuProductListUseCase
 ) : IMenuProductInteractor {
 
@@ -18,10 +14,6 @@ class MenuProductInteractor(
         return withContext(Dispatchers.Default) {
             getMenuProductListUseCase().let(::toMenuSectionList)
         }
-    }
-
-    override fun observeMenuProductByUuid(menuProductUuid: String): CommonFlow<MenuProduct?> {
-        return menuProductRepo.observeMenuProductByUuid(menuProductUuid).asCommonFlow()
     }
 
     private fun toMenuSectionList(menuProductList: List<MenuProduct>): List<MenuSection> {

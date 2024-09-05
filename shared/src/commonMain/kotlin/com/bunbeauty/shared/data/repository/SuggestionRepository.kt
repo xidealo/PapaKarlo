@@ -8,10 +8,16 @@ import com.bunbeauty.shared.extension.dataOrNull
 class SuggestionRepository(
     private val networkConnector: NetworkConnector
 ) : SuggestionRepo {
-
+    /**
+     * Made custom cache with map for speed
+     * */
     private val cache: MutableMap<String, List<Suggestion>> = mutableMapOf()
 
-    override suspend fun getSuggestionList(token: String, query: String, cityUuid: String): List<Suggestion>? {
+    override suspend fun getSuggestionList(
+        token: String,
+        query: String,
+        cityUuid: String
+    ): List<Suggestion>? {
         if (cache[query] != null) {
             return cache[query]
         }
@@ -27,6 +33,7 @@ class SuggestionRepository(
                 details = suggestionServer.details
             )
         }
+
         if (suggestions != null) {
             cache[query] = suggestions
         }

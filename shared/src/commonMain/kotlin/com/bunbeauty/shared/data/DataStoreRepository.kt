@@ -1,7 +1,6 @@
 package com.bunbeauty.shared.data
 
 import com.bunbeauty.shared.DataStoreRepo
-import com.bunbeauty.shared.domain.model.Delivery
 import com.bunbeauty.shared.domain.model.Settings
 import com.bunbeauty.shared.domain.model.UserCityUuid
 import kotlinx.coroutines.flow.Flow
@@ -18,10 +17,6 @@ expect class DataStoreRepository : DataStoreRepo, KoinComponent {
     override suspend fun getUserUuid(): String?
     override suspend fun saveUserUuid(userId: String)
     override suspend fun clearUserUuid()
-
-    override val delivery: Flow<Delivery?>
-    override suspend fun getDelivery(): Delivery?
-    override suspend fun saveDelivery(delivery: Delivery)
 
     override val settings: Flow<Settings?>
     override suspend fun getSettings(): Settings?

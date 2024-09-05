@@ -31,7 +31,7 @@ class MenuViewModel(
     private val observeCartUseCase: ObserveCartUseCase,
     private val addMenuProductUseCase: AddMenuProductUseCase,
     private val getDiscountUseCase: GetDiscountUseCase,
-    private val analyticService: AnalyticService,
+    private val analyticService: AnalyticService
 ) : SharedViewModel() {
 
     private val mutableMenuState = MutableStateFlow(
@@ -92,7 +92,6 @@ class MenuViewModel(
         sharedScope.launchSafe(
             block = {
                 val time = measureTime {
-
                     val menuSectionList = menuProductInteractor.getMenuSectionList()
 
                     if (selectedCategoryUuid == null) {
@@ -104,9 +103,9 @@ class MenuViewModel(
                             MenuItem.Discount(discount = discount)
                         }
                     val menuItemList = listOfNotNull(discountItem) +
-                            menuSectionList.flatMap { menuSection ->
-                                menuSection.toMenuItemList()
-                            }
+                        menuSectionList.flatMap { menuSection ->
+                            menuSection.toMenuItemList()
+                        }
                     mutableMenuState.update { oldState ->
                         oldState.copy(
                             categoryItemList = menuSectionList.map { menuSection ->
