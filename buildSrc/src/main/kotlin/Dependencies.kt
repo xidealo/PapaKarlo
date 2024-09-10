@@ -14,7 +14,6 @@ object Versions {
     const val publisher = "3.7.0"
 
     const val junit = "4.13.2"
-    const val testRunner = "1.3.0"
     const val appCompact = "1.7.0"
     const val coreKtx = "1.13.1"
     const val coil = "2.4.0"
@@ -43,8 +42,6 @@ object Versions {
 
     const val firebase = "32.2.3"
 
-    const val pinEntryEditText = "2.0.6"
-
     const val kaspresso = "1.5.3"
 
     const val collectionsImmutable = "0.3.7"
@@ -62,30 +59,8 @@ object CommonApplication {
 
     const val versionCode = 231
     const val versionName = "$versionMajor.$versionMinor.$versionPatch"
-}
 
-object PapaKarloApplication {
-    const val applicationId = "com.bunbeuaty.papakarlo"
-}
-
-object YuliarApplication {
-    const val applicationId = "com.bunbeuaty.yuliar"
-}
-
-object DjanApplication {
-    const val applicationId = "com.bunbeauty.djan"
-}
-
-object GustoPubApplication {
-    const val applicationId = "com.bunbeauty.gustopub"
-}
-
-object TandirHouseApplication {
-    const val applicationId = "com.bunbeauty.tandirhouse"
-}
-
-object VkusKavkazaApplication {
-    const val applicationId = "com.bunbeauty.vkuskavkaza"
+    const val deploymentTarget = "12.0"
 }
 
 object AndroidSdk {
@@ -130,10 +105,6 @@ object AndroidX {
     const val coreKtx = "androidx.core:core-ktx:${Versions.coreKtx}"
 }
 
-object Google {
-    const val androidMaps = "com.google.maps.android:android-maps-utils:${Versions.googleMapUtils}"
-}
-
 object Material {
     const val material = "com.google.android.material:material:${Versions.material}"
 }
@@ -159,10 +130,6 @@ object Lifecycle {
     const val runtime = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycle}"
     const val activity = "androidx.activity:activity-ktx:${Versions.activity}"
     const val fragment = "androidx.fragment:fragment-ktx:${Versions.fragment}"
-}
-
-object Test {
-    const val junit = "junit:junit:${Versions.junit}"
 }
 
 object Koin {

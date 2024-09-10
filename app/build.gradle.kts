@@ -1,9 +1,3 @@
-import Constants.DJAN_FLAVOR_NAME
-import Constants.GUSTO_PUB_FLAVOR_NAME
-import Constants.PAPA_KARLO_FLAVOR_NAME
-import Constants.TANDIR_HOUSE_FLAVOR_NAME
-import Constants.VKUS_KAVKAZA_FLAVOR_NAME
-import Constants.YULIAR_FLAVOR_NAME
 import com.android.build.gradle.internal.api.BaseVariantOutputImpl
 import com.github.triplet.gradle.androidpublisher.ReleaseStatus
 import com.github.triplet.gradle.play.PlayPublisherExtension
@@ -72,35 +66,12 @@ android {
 
     flavorDimensions.add("default")
     productFlavors {
-        create(PAPA_KARLO_FLAVOR_NAME) {
-            applicationId = PapaKarloApplication.applicationId
-            versionCode = CommonApplication.versionCode
-            versionName = CommonApplication.versionName
-        }
-        create(YULIAR_FLAVOR_NAME) {
-            applicationId = YuliarApplication.applicationId
-            versionCode = CommonApplication.versionCode
-            versionName = CommonApplication.versionName
-        }
-        create(DJAN_FLAVOR_NAME) {
-            applicationId = DjanApplication.applicationId
-            versionCode = CommonApplication.versionCode
-            versionName = CommonApplication.versionName
-        }
-        create(GUSTO_PUB_FLAVOR_NAME) {
-            applicationId = GustoPubApplication.applicationId
-            versionCode = CommonApplication.versionCode
-            versionName = CommonApplication.versionName
-        }
-        create(TANDIR_HOUSE_FLAVOR_NAME) {
-            applicationId = TandirHouseApplication.applicationId
-            versionCode = CommonApplication.versionCode
-            versionName = CommonApplication.versionName
-        }
-        create(VKUS_KAVKAZA_FLAVOR_NAME) {
-            applicationId = VkusKavkazaApplication.applicationId
-            versionCode = CommonApplication.versionCode
-            versionName = CommonApplication.versionName
+        FoodDeliveryFlavor.values().forEach { flavor ->
+            create(flavor.key) {
+                applicationId = flavor.applicationId
+                versionCode = CommonApplication.versionCode
+                versionName = CommonApplication.versionName
+            }
         }
     }
 
@@ -128,23 +99,10 @@ android {
     }
 
     playConfigs {
-        register(PAPA_KARLO_FLAVOR_NAME) {
-            commonPlayConfig(this, this@Build_gradle)
-        }
-        register(YULIAR_FLAVOR_NAME) {
-            commonPlayConfig(this, this@Build_gradle)
-        }
-        register(DJAN_FLAVOR_NAME) {
-            commonPlayConfig(this, this@Build_gradle)
-        }
-        register(GUSTO_PUB_FLAVOR_NAME) {
-            commonPlayConfig(this, this@Build_gradle)
-        }
-        register(TANDIR_HOUSE_FLAVOR_NAME) {
-            commonPlayConfig(this, this@Build_gradle)
-        }
-        register(VKUS_KAVKAZA_FLAVOR_NAME) {
-            commonPlayConfig(this, this@Build_gradle)
+        FoodDeliveryFlavor.values().forEach { flavor ->
+            register(flavor.key) {
+                commonPlayConfig(this, this@Build_gradle)
+            }
         }
     }
 }
@@ -233,24 +191,18 @@ dependencies {
 
 tasks.register("assembleAll") {
     dependsOn(
-        PAPA_KARLO_FLAVOR_NAME.getAssembleBundleRelease(),
-        YULIAR_FLAVOR_NAME.getAssembleBundleRelease(),
-        DJAN_FLAVOR_NAME.getAssembleBundleRelease(),
-        GUSTO_PUB_FLAVOR_NAME.getAssembleBundleRelease(),
-        TANDIR_HOUSE_FLAVOR_NAME.getAssembleBundleRelease(),
-        VKUS_KAVKAZA_FLAVOR_NAME.getAssembleBundleRelease()
+        FoodDeliveryFlavor.values().map { flavor ->
+            flavor.assembleReleaseBundle
+        }
     )
 }
 
 tasks.register("publishAll") {
     mustRunAfter("assembleAll")
     dependsOn(
-        PAPA_KARLO_FLAVOR_NAME.getPublishReleaseBundle(),
-        YULIAR_FLAVOR_NAME.getPublishReleaseBundle(),
-        DJAN_FLAVOR_NAME.getPublishReleaseBundle(),
-        GUSTO_PUB_FLAVOR_NAME.getPublishReleaseBundle(),
-        TANDIR_HOUSE_FLAVOR_NAME.getPublishReleaseBundle(),
-        VKUS_KAVKAZA_FLAVOR_NAME.getPublishReleaseBundle()
+        FoodDeliveryFlavor.values().map { flavor ->
+            flavor.publishReleaseBundle
+        }
     )
 }
 

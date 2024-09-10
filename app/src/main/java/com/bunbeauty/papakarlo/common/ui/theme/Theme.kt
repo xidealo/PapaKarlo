@@ -22,12 +22,7 @@ import com.bunbeauty.papakarlo.common.ui.theme.color.VkusKavkazaDarkColors
 import com.bunbeauty.papakarlo.common.ui.theme.color.VkusKavkazaLightColors
 import com.bunbeauty.papakarlo.common.ui.theme.color.YuliarDarkColors
 import com.bunbeauty.papakarlo.common.ui.theme.color.YuliarLightColors
-import com.bunbeauty.shared.Constants.DJAN_FLAVOR_NAME
-import com.bunbeauty.shared.Constants.GUSTO_PUB_FLAVOR_NAME
-import com.bunbeauty.shared.Constants.PAPA_KARLO_FLAVOR_NAME
-import com.bunbeauty.shared.Constants.TANDIR_HOUSE_FLAVOR_NAME
-import com.bunbeauty.shared.Constants.VKUS_KAVKAZA_FLAVOR_NAME
-import com.bunbeauty.shared.Constants.YULIAR_FLAVOR_NAME
+import com.bunbeauty.shared.FoodDeliveryCompany
 import com.bunbeauty.shared.domain.exeptions.UnknownFlavorException
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -37,43 +32,44 @@ fun FoodDeliveryTheme(
     isDarkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
-    val colors = when (flavor) {
-        PAPA_KARLO_FLAVOR_NAME -> {
+    val company = FoodDeliveryCompany.getByFlavor(flavor)
+    val colors = when (company) {
+        FoodDeliveryCompany.PAPA_KARLO -> {
             if (isDarkTheme) {
                 PapaKarloDarkColors
             } else {
                 PapaKarloLightColors
             }
         }
-        YULIAR_FLAVOR_NAME -> {
+        FoodDeliveryCompany.YULIAR -> {
             if (isDarkTheme) {
                 YuliarDarkColors
             } else {
                 YuliarLightColors
             }
         }
-        DJAN_FLAVOR_NAME -> {
+        FoodDeliveryCompany.DJAN -> {
             if (isDarkTheme) {
                 DjanDarkColors
             } else {
                 DjanLightColors
             }
         }
-        GUSTO_PUB_FLAVOR_NAME -> {
+        FoodDeliveryCompany.GUSTO_PUB -> {
             if (isDarkTheme) {
                 GustoPubDarkColors
             } else {
                 GustoPubLightColors
             }
         }
-        TANDIR_HOUSE_FLAVOR_NAME -> {
+        FoodDeliveryCompany.TANDIR_HOUSE -> {
             if (isDarkTheme) {
                 TandirHouseDarkColors
             } else {
                 TandirHouseLightColors
             }
         }
-        VKUS_KAVKAZA_FLAVOR_NAME -> {
+        FoodDeliveryCompany.VKUS_KAVKAZA -> {
             if (isDarkTheme) {
                 VkusKavkazaDarkColors
             } else {
