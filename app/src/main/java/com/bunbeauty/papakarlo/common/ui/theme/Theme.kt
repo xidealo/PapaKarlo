@@ -25,7 +25,6 @@ import com.bunbeauty.papakarlo.common.ui.theme.color.VkusKavkazaLightColors
 import com.bunbeauty.papakarlo.common.ui.theme.color.YuliarDarkColors
 import com.bunbeauty.papakarlo.common.ui.theme.color.YuliarLightColors
 import com.bunbeauty.shared.FoodDeliveryCompany
-import com.bunbeauty.shared.domain.exeptions.UnknownFlavorException
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -85,7 +84,6 @@ fun FoodDeliveryTheme(
                 AntalyaKebabLightColors
             }
         }
-        else -> throw UnknownFlavorException()
     }
     val rememberedColors = remember {
         colors.copy()

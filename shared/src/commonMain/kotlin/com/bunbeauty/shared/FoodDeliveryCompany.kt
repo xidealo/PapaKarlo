@@ -1,6 +1,6 @@
 package com.bunbeauty.shared
 
-import com.bunbeauty.shared.domain.exeptions.UnknownFlavorException
+import com.bunbeauty.shared.domain.exeptions.UnknownCompanyException
 
 enum class FoodDeliveryCompany(
     val flavor: String,
@@ -40,7 +40,7 @@ enum class FoodDeliveryCompany(
         fun getByFlavor(flavor: String): FoodDeliveryCompany {
             return FoodDeliveryCompany.entries.find { company ->
                 company.flavor == flavor
-            } ?: throw UnknownFlavorException()
+            } ?: throw UnknownCompanyException(flavor = flavor)
         }
     }
 }
