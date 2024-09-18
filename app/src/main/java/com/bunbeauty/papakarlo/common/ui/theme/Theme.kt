@@ -29,62 +29,10 @@ import com.bunbeauty.shared.FoodDeliveryCompany
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun FoodDeliveryTheme(
-    flavor: String = BuildConfig.FLAVOR,
     isDarkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
-    val company = FoodDeliveryCompany.getByFlavor(flavor)
-    val colors = when (company) {
-        FoodDeliveryCompany.PAPA_KARLO -> {
-            if (isDarkTheme) {
-                PapaKarloDarkColors
-            } else {
-                PapaKarloLightColors
-            }
-        }
-        FoodDeliveryCompany.YULIAR -> {
-            if (isDarkTheme) {
-                YuliarDarkColors
-            } else {
-                YuliarLightColors
-            }
-        }
-        FoodDeliveryCompany.DJAN -> {
-            if (isDarkTheme) {
-                DjanDarkColors
-            } else {
-                DjanLightColors
-            }
-        }
-        FoodDeliveryCompany.GUSTO_PUB -> {
-            if (isDarkTheme) {
-                GustoPubDarkColors
-            } else {
-                GustoPubLightColors
-            }
-        }
-        FoodDeliveryCompany.TANDIR_HOUSE -> {
-            if (isDarkTheme) {
-                TandirHouseDarkColors
-            } else {
-                TandirHouseLightColors
-            }
-        }
-        FoodDeliveryCompany.VKUS_KAVKAZA -> {
-            if (isDarkTheme) {
-                VkusKavkazaDarkColors
-            } else {
-                VkusKavkazaLightColors
-            }
-        }
-        FoodDeliveryCompany.ANTALYA_KABAB -> {
-            if (isDarkTheme) {
-                AntalyaKebabDarkColors
-            } else {
-                AntalyaKebabLightColors
-            }
-        }
-    }
+    val colors = getAppColors(isDarkTheme = isDarkTheme)
     val rememberedColors = remember {
         colors.copy()
     }.apply {
@@ -98,6 +46,70 @@ fun FoodDeliveryTheme(
         LocalAppTypography provides AppTypography(),
         content = content
     )
+}
+
+private fun getAppColors(
+    flavor: String = BuildConfig.FLAVOR,
+    isDarkTheme: Boolean
+): AppColors {
+    val company = FoodDeliveryCompany.getByFlavor(flavor)
+    return when (company) {
+        FoodDeliveryCompany.PAPA_KARLO -> {
+            if (isDarkTheme) {
+                PapaKarloDarkColors
+            } else {
+                PapaKarloLightColors
+            }
+        }
+
+        FoodDeliveryCompany.YULIAR -> {
+            if (isDarkTheme) {
+                YuliarDarkColors
+            } else {
+                YuliarLightColors
+            }
+        }
+
+        FoodDeliveryCompany.DJAN -> {
+            if (isDarkTheme) {
+                DjanDarkColors
+            } else {
+                DjanLightColors
+            }
+        }
+
+        FoodDeliveryCompany.GUSTO_PUB -> {
+            if (isDarkTheme) {
+                GustoPubDarkColors
+            } else {
+                GustoPubLightColors
+            }
+        }
+
+        FoodDeliveryCompany.TANDIR_HOUSE -> {
+            if (isDarkTheme) {
+                TandirHouseDarkColors
+            } else {
+                TandirHouseLightColors
+            }
+        }
+
+        FoodDeliveryCompany.VKUS_KAVKAZA -> {
+            if (isDarkTheme) {
+                VkusKavkazaDarkColors
+            } else {
+                VkusKavkazaLightColors
+            }
+        }
+
+        FoodDeliveryCompany.ANTALYA_KABAB -> {
+            if (isDarkTheme) {
+                AntalyaKebabDarkColors
+            } else {
+                AntalyaKebabLightColors
+            }
+        }
+    }
 }
 
 object FoodDeliveryTheme {
