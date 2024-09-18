@@ -8,6 +8,8 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.remember
 import com.bunbeauty.papakarlo.BuildConfig
+import com.bunbeauty.papakarlo.common.ui.theme.color.AntalyaKebabDarkColors
+import com.bunbeauty.papakarlo.common.ui.theme.color.AntalyaKebabLightColors
 import com.bunbeauty.papakarlo.common.ui.theme.color.AppColors
 import com.bunbeauty.papakarlo.common.ui.theme.color.DjanDarkColors
 import com.bunbeauty.papakarlo.common.ui.theme.color.DjanLightColors
@@ -22,66 +24,15 @@ import com.bunbeauty.papakarlo.common.ui.theme.color.VkusKavkazaDarkColors
 import com.bunbeauty.papakarlo.common.ui.theme.color.VkusKavkazaLightColors
 import com.bunbeauty.papakarlo.common.ui.theme.color.YuliarDarkColors
 import com.bunbeauty.papakarlo.common.ui.theme.color.YuliarLightColors
-import com.bunbeauty.shared.Constants.DJAN_FLAVOR_NAME
-import com.bunbeauty.shared.Constants.GUSTO_PUB_FLAVOR_NAME
-import com.bunbeauty.shared.Constants.PAPA_KARLO_FLAVOR_NAME
-import com.bunbeauty.shared.Constants.TANDIR_HOUSE_FLAVOR_NAME
-import com.bunbeauty.shared.Constants.VKUS_KAVKAZA_FLAVOR_NAME
-import com.bunbeauty.shared.Constants.YULIAR_FLAVOR_NAME
-import com.bunbeauty.shared.domain.exeptions.UnknownFlavorException
+import com.bunbeauty.shared.FoodDeliveryCompany
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun FoodDeliveryTheme(
-    flavor: String = BuildConfig.FLAVOR,
     isDarkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
-    val colors = when (flavor) {
-        PAPA_KARLO_FLAVOR_NAME -> {
-            if (isDarkTheme) {
-                PapaKarloDarkColors
-            } else {
-                PapaKarloLightColors
-            }
-        }
-        YULIAR_FLAVOR_NAME -> {
-            if (isDarkTheme) {
-                YuliarDarkColors
-            } else {
-                YuliarLightColors
-            }
-        }
-        DJAN_FLAVOR_NAME -> {
-            if (isDarkTheme) {
-                DjanDarkColors
-            } else {
-                DjanLightColors
-            }
-        }
-        GUSTO_PUB_FLAVOR_NAME -> {
-            if (isDarkTheme) {
-                GustoPubDarkColors
-            } else {
-                GustoPubLightColors
-            }
-        }
-        TANDIR_HOUSE_FLAVOR_NAME -> {
-            if (isDarkTheme) {
-                TandirHouseDarkColors
-            } else {
-                TandirHouseLightColors
-            }
-        }
-        VKUS_KAVKAZA_FLAVOR_NAME -> {
-            if (isDarkTheme) {
-                VkusKavkazaDarkColors
-            } else {
-                VkusKavkazaLightColors
-            }
-        }
-        else -> throw UnknownFlavorException()
-    }
+    val colors = getAppColors(isDarkTheme = isDarkTheme)
     val rememberedColors = remember {
         colors.copy()
     }.apply {
@@ -95,6 +46,70 @@ fun FoodDeliveryTheme(
         LocalAppTypography provides AppTypography(),
         content = content
     )
+}
+
+private fun getAppColors(
+    flavor: String = BuildConfig.FLAVOR,
+    isDarkTheme: Boolean
+): AppColors {
+    val company = FoodDeliveryCompany.getByFlavor(flavor)
+    return when (company) {
+        FoodDeliveryCompany.PAPA_KARLO -> {
+            if (isDarkTheme) {
+                PapaKarloDarkColors
+            } else {
+                PapaKarloLightColors
+            }
+        }
+
+        FoodDeliveryCompany.YULIAR -> {
+            if (isDarkTheme) {
+                YuliarDarkColors
+            } else {
+                YuliarLightColors
+            }
+        }
+
+        FoodDeliveryCompany.DJAN -> {
+            if (isDarkTheme) {
+                DjanDarkColors
+            } else {
+                DjanLightColors
+            }
+        }
+
+        FoodDeliveryCompany.GUSTO_PUB -> {
+            if (isDarkTheme) {
+                GustoPubDarkColors
+            } else {
+                GustoPubLightColors
+            }
+        }
+
+        FoodDeliveryCompany.TANDIR_HOUSE -> {
+            if (isDarkTheme) {
+                TandirHouseDarkColors
+            } else {
+                TandirHouseLightColors
+            }
+        }
+
+        FoodDeliveryCompany.VKUS_KAVKAZA -> {
+            if (isDarkTheme) {
+                VkusKavkazaDarkColors
+            } else {
+                VkusKavkazaLightColors
+            }
+        }
+
+        FoodDeliveryCompany.ANTALYA_KABAB -> {
+            if (isDarkTheme) {
+                AntalyaKebabDarkColors
+            } else {
+                AntalyaKebabLightColors
+            }
+        }
+    }
 }
 
 object FoodDeliveryTheme {

@@ -91,12 +91,12 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
         }
     }
 
-    override val selectedPaymentMethodUuid: Flow<String?> =
+    actual override val selectedPaymentMethodUuid: Flow<String?> =
         context.selectedPaymentMethodDataStore.data.map {
             it[SELECTED_PAYMENT_METHOD_UUID_KEY]
         }
 
-    override suspend fun saveSelectedPaymentMethodUuid(selectedPaymentMethodUuid: String) {
+    actual override suspend fun saveSelectedPaymentMethodUuid(selectedPaymentMethodUuid: String) {
         context.selectedPaymentMethodDataStore.edit {
             it[SELECTED_PAYMENT_METHOD_UUID_KEY] = selectedPaymentMethodUuid
         }
@@ -154,7 +154,7 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
         )
     }
 
-    override val discount: Flow<Discount?> = context.discountDataStore.data.map {
+    actual override val discount: Flow<Discount?> = context.discountDataStore.data.map {
         it[FIRST_ORDER_DISCOUNT_KEY]?.let { firstOrderDiscount ->
             Discount(
                 firstOrderDiscount = firstOrderDiscount
@@ -162,9 +162,9 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
         }
     }
 
-    override suspend fun getDiscount(): Discount? = discount.firstOrNull()
+    actual override suspend fun getDiscount(): Discount? = discount.firstOrNull()
 
-    override suspend fun saveDiscount(discount: Discount) {
+    actual override suspend fun saveDiscount(discount: Discount) {
         context.discountDataStore.edit {
             it.remove(FIRST_ORDER_DISCOUNT_KEY)
             discount.firstOrderDiscount?.let { firstOrderDiscount ->

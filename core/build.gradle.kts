@@ -1,4 +1,4 @@
-import Constants.DEPLOYMENT_TARGET
+import CommonApplication.deploymentTarget
 
 plugins {
     kotlin("multiplatform")
@@ -19,7 +19,7 @@ kotlin {
         summary = "Core module with common features"
         homepage = "Link to the Shared Module homepage"
         version = "1.0"
-        ios.deploymentTarget = DEPLOYMENT_TARGET
+        ios.deploymentTarget = deploymentTarget
         podfile = project.file("../iosApp/Podfile")
 
         framework {

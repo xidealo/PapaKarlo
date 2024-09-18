@@ -77,18 +77,18 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
         return NSUserDefaults.standardUserDefaults.stringForKey(SELECTED_CITY_UUID_KEY)
     }
 
-    override val selectedPaymentMethodUuid: Flow<String?> = flow {
+    actual override val selectedPaymentMethodUuid: Flow<String?> = flow {
         emit(NSUserDefaults.standardUserDefaults.stringForKey(SELECTED_PAYMENT_METHOD_UUID_KEY))
     }
 
-    override suspend fun saveSelectedPaymentMethodUuid(selectedPaymentMethodUuid: String) {
+    actual override suspend fun saveSelectedPaymentMethodUuid(selectedPaymentMethodUuid: String) {
         NSUserDefaults.standardUserDefaults.setObject(
             selectedPaymentMethodUuid,
             SELECTED_PAYMENT_METHOD_UUID_KEY
         )
     }
 
-    override val discount: Flow<Discount?> = flow {
+    actual override val discount: Flow<Discount?> = flow {
         emit(
             Discount(
                 firstOrderDiscount = NSUserDefaults.standardUserDefaults
@@ -97,11 +97,11 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
         )
     }
 
-    override suspend fun getDiscount(): Discount? {
+    actual override suspend fun getDiscount(): Discount? {
         return discount.firstOrNull()
     }
 
-    override suspend fun saveDiscount(discount: Discount) {
+    actual override suspend fun saveDiscount(discount: Discount) {
         NSUserDefaults.standardUserDefaults.setObject(
             discount.firstOrderDiscount,
             FIRST_DISCOUNT_KEY
