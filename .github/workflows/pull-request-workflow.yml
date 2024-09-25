@@ -47,7 +47,6 @@ jobs:
     strategy:
       matrix:
         flavor: [ "papakarlo", "yuliar", "djan", "gustopub", "tandirhouse", "vkuskavkaza" ]
-        type: [ "Debug", "Release" ]
     steps:
       - uses: actions/checkout@v4
       - name: "Set up JDK 17"
@@ -65,8 +64,8 @@ jobs:
         with:
           name: local-properties
           path: .
-      - name: "Assemble ${{ matrix.flavor }}${{ matrix.type }}"
-        run: ./gradlew assemble${{ matrix.flavor }}${{ matrix.type }}
+      - name: "Assemble ${{ matrix.flavor }}"
+        run: ./gradlew assemble${{ matrix.flavor }}Debug
 
   test:
     name: "Unit tests"
