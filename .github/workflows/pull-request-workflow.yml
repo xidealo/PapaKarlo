@@ -65,7 +65,7 @@ jobs:
           name: local-properties
           path: .
       - name: "Assemble ${{ matrix.flavor }}"
-        run: ./gradlew assemble${{ matrix.flavor }}Debug
+        run: ./gradlew --continue assemble${{ matrix.flavor }}Debug
 
   linter:
     name: "Linter"
@@ -92,7 +92,7 @@ jobs:
           name: local-properties
           path: .
       - name: "Lint ${{ matrix.flavor }}"
-        run: ./gradlew lint${{ matrix.flavor }}Debug
+        run: ./gradlew --continue lint${{ matrix.flavor }}Debug
 
   test:
     name: "Unit tests"
