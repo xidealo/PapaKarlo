@@ -92,7 +92,7 @@ jobs:
           name: local-properties
           path: .
       - name: "Lint ${{ matrix.flavor }}"
-        run: ./gradlew lint{{ matrix.flavor }}Debug
+        run: ./gradlew lint${{ matrix.flavor }}Debug
 
   test:
     name: "Unit tests"
