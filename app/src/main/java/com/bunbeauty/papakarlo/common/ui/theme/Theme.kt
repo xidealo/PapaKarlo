@@ -15,6 +15,8 @@ import com.bunbeauty.papakarlo.common.ui.theme.color.DjanDarkColors
 import com.bunbeauty.papakarlo.common.ui.theme.color.DjanLightColors
 import com.bunbeauty.papakarlo.common.ui.theme.color.GustoPubDarkColors
 import com.bunbeauty.papakarlo.common.ui.theme.color.GustoPubLightColors
+import com.bunbeauty.papakarlo.common.ui.theme.color.LegendaDarkColors
+import com.bunbeauty.papakarlo.common.ui.theme.color.LegendaLightColors
 import com.bunbeauty.papakarlo.common.ui.theme.color.LocalAppColors
 import com.bunbeauty.papakarlo.common.ui.theme.color.PapaKarloDarkColors
 import com.bunbeauty.papakarlo.common.ui.theme.color.PapaKarloLightColors
@@ -107,6 +109,14 @@ private fun getAppColors(
                 AntalyaKebabDarkColors
             } else {
                 AntalyaKebabLightColors
+            }
+        }
+
+        FoodDeliveryCompany.LEGENDA -> {
+            if (isDarkTheme) {
+                LegendaDarkColors
+            } else {
+                LegendaLightColors
             }
         }
     }

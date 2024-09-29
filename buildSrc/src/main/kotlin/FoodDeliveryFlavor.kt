@@ -29,6 +29,10 @@ enum class FoodDeliveryFlavor(
     ANTALYA_KABAB(
         key = "antalyakebab",
         applicationId = "com.bunbeauty.antalyakebab"
+    ),
+    LEGENDA(
+        key = "legenda",
+        applicationId = "com.bunbeauty.legenda"
     );
 
     val assembleReleaseBundle: String
