@@ -4,7 +4,6 @@ import com.bunbeauty.shared.data.dao.cafe.ICafeDao
 import com.bunbeauty.shared.data.mapper.cafe.toCafe
 import com.bunbeauty.shared.data.mapper.cafe.toCafeEntity
 import com.bunbeauty.shared.data.network.api.NetworkConnector
-import com.bunbeauty.shared.data.repository.base.CacheListRepository
 import com.bunbeauty.shared.db.SelectedCafeUuidEntity
 import com.bunbeauty.shared.domain.model.cafe.Cafe
 import com.bunbeauty.shared.domain.repo.CafeRepo

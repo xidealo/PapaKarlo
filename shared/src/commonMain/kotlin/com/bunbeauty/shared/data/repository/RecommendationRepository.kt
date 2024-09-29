@@ -2,7 +2,6 @@ package com.bunbeauty.shared.data.repository
 
 import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.data.network.api.NetworkConnector
-import com.bunbeauty.shared.data.repository.base.CacheRepository
 import com.bunbeauty.shared.domain.repo.RecommendationRepo
 
 class RecommendationRepository(

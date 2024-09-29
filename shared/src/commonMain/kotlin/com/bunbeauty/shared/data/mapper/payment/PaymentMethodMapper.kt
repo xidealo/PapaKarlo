@@ -7,10 +7,10 @@ import com.bunbeauty.shared.domain.model.payment_method.PaymentMethodName
 
 class PaymentMethodMapper {
 
-    fun toPaymentMethod(paymentMethodServer: PaymentMethodServer): PaymentMethod {
+    fun toPaymentMethod(paymentMethodServer: PaymentMethodServer): PaymentMethod? {
         val name = PaymentMethodName.entries.find { paymentMethodName ->
             paymentMethodName.name == paymentMethodServer.name
-        } ?: PaymentMethodName.UNKNOWN
+        } ?: return null
 
         return PaymentMethod(
             uuid = paymentMethodServer.uuid,
@@ -20,25 +20,16 @@ class PaymentMethodMapper {
         )
     }
 
-    fun toPaymentMethod(paymentMethodEntity: PaymentMethodEntity): PaymentMethod {
+    fun toPaymentMethod(paymentMethodEntity: PaymentMethodEntity): PaymentMethod? {
         val name = PaymentMethodName.entries.find { paymentMethodName ->
             paymentMethodName.name == paymentMethodEntity.name
-        } ?: PaymentMethodName.UNKNOWN
+        } ?: return null
 
         return PaymentMethod(
             uuid = paymentMethodEntity.uuid,
             name = name,
             valueToShow = paymentMethodEntity.value_,
             valueToCopy = paymentMethodEntity.valueToCopy
-        )
-    }
-
-    fun toPaymentMethodEntity(paymentMethod: PaymentMethod): PaymentMethodEntity {
-        return PaymentMethodEntity(
-            uuid = paymentMethod.uuid,
-            name = paymentMethod.name.name,
-            value_ = paymentMethod.valueToShow,
-            valueToCopy = paymentMethod.valueToCopy
         )
     }
 

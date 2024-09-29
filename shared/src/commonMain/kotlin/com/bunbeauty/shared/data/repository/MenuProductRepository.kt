@@ -10,7 +10,6 @@ import com.bunbeauty.shared.data.mapper.additiongroup.mapAdditionGroupEntityToGr
 import com.bunbeauty.shared.data.mapper.menuProduct.IMenuProductMapper
 import com.bunbeauty.shared.data.network.api.NetworkConnector
 import com.bunbeauty.shared.data.network.model.MenuProductServer
-import com.bunbeauty.shared.data.repository.base.CacheListRepository
 import com.bunbeauty.shared.domain.model.addition.AdditionGroup
 import com.bunbeauty.shared.domain.model.product.MenuProduct
 import com.bunbeauty.shared.domain.repo.MenuProductRepo

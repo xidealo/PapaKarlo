@@ -4,7 +4,6 @@ import com.bunbeauty.shared.data.dao.link.ILinkDao
 import com.bunbeauty.shared.data.mapper.link.LinkMapper
 import com.bunbeauty.shared.data.network.api.NetworkConnector
 import com.bunbeauty.shared.data.network.model.LinkServer
-import com.bunbeauty.shared.data.repository.base.CacheListRepository
 import com.bunbeauty.shared.domain.model.link.Link
 import com.bunbeauty.shared.domain.repo.LinkRepo
 

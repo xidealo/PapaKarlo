@@ -13,8 +13,8 @@ internal fun paymentUseCaseModule() = module {
     }
     factory {
         GetSelectablePaymentMethodListUseCase(
-            paymentRepo = get(),
-            dataStoreRepo = get()
+            dataStoreRepo = get(),
+            getPaymentMethodListUseCase = get()
         )
     }
     factory {

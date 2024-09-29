@@ -5,5 +5,4 @@ enum class PaymentMethodName {
     CARD,
     CARD_NUMBER,
     PHONE_NUMBER,
-    UNKNOWN
 }

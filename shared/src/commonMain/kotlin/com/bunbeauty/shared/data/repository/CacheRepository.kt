@@ -1,6 +1,7 @@
-package com.bunbeauty.shared.data.repository.base
+package com.bunbeauty.shared.data.repository
 
 import com.bunbeauty.shared.data.network.ApiResult
+import com.bunbeauty.shared.data.repository.base.BaseRepository
 
 abstract class CacheRepository<D> : BaseRepository() {
 
@@ -23,8 +24,8 @@ abstract class CacheRepository<D> : BaseRepository() {
                 },
                 onSuccess = { serverModel ->
                     onSaveLocally(serverModel)
-                    serverToDomainModel(serverModel).also { domainModelList ->
-                        cache = domainModelList
+                    serverToDomainModel(serverModel).also { domainModel ->
+                        cache = domainModel
                     }
                 }
             )

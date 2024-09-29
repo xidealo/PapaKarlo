@@ -3,7 +3,6 @@ package com.bunbeauty.shared.data.repository
 import com.bunbeauty.shared.data.dao.city.ICityDao
 import com.bunbeauty.shared.data.mapper.city.ICityMapper
 import com.bunbeauty.shared.data.network.api.NetworkConnector
-import com.bunbeauty.shared.data.repository.base.CacheListRepository
 import com.bunbeauty.shared.domain.model.city.City
 import com.bunbeauty.shared.domain.repo.CityRepo
 
