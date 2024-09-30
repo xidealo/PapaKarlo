@@ -45,6 +45,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: setup
     strategy:
+      fail-fast: false
       matrix:
         flavor: [ "papakarlo", "yuliar", "djan", "gustopub", "tandirhouse", "vkuskavkaza" ]
     steps:
@@ -72,6 +73,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: setup
     strategy:
+      fail-fast: false
       matrix:
         flavor: [ "papakarlo", "yuliar", "djan", "gustopub", "tandirhouse", "vkuskavkaza" ]
     steps:
