@@ -1,4 +1,4 @@
-name: Pull request workflow
+name: "Pull request workflow"
 
 on:
   pull_request:
@@ -124,6 +124,3 @@ jobs:
           path: .
       - name: "Run unit tests"
         run: ./gradlew test
-
-#       1 - TODO move release to separate workflow
-#       2 - TODO remove old workflow
