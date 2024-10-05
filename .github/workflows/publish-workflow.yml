@@ -3,8 +3,7 @@ name: "Publish workflow"
 on:
   push:
     branches:
-      - develop
-#      - master
+      - master
 
 jobs:
   setup:
@@ -27,7 +26,8 @@ jobs:
           RELEASE_STORE_PASSWORD: ${{ secrets.RELEASE_STORE_PASSWORD }}
           RELEASE_KEY_ALIAS: ${{ secrets.RELEASE_KEY_ALIAS }}
           RELEASE_KEY_PASSWORD: ${{ secrets.RELEASE_KEY_PASSWORD }}
-        run: echo -e "RELEASE_STORE_FILE=$RELEASE_STORE_FILE" > local.properties
+        run: |
+          echo -e "RELEASE_STORE_FILE=$RELEASE_STORE_FILE" > local.properties
           echo -e "RELEASE_STORE_PASSWORD=$RELEASE_STORE_PASSWORD" >> local.properties
           echo -e "RELEASE_KEY_ALIAS=$RELEASE_KEY_ALIAS" >> local.properties
           echo -e "RELEASE_KEY_PASSWORD=$RELEASE_KEY_PASSWORD" >> local.properties
@@ -84,8 +84,6 @@ jobs:
         with:
           name: keystore
           path: ./app
-      - name: "Print local.properties"
-        run: cat local.properties
       - name: "Download google-play-api-key.json"
         uses: actions/download-artifact@v4
         with:
@@ -99,8 +97,8 @@ jobs:
         run: ./gradlew clean
       - name: "Assemble ${{ matrix.flavor }}"
         run: ./gradlew assemble${{ matrix.flavor }}Release
-#      - name: "Publish ${{ matrix.flavor }}"
-#        run: ./gradlew publish{{ matrix.flavor }}Release
+      - name: "Publish ${{ matrix.flavor }}"
+        run: ./gradlew publish{{ matrix.flavor }}Release
 
 #  TODO fix ios publishing
 #  test_ios_deploy:
