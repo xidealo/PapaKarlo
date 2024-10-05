@@ -84,8 +84,8 @@ jobs:
         with:
           name: keystore
           path: ./app
-      - name: "Print local.properties"
-        run: cat local.properties
+      - name: "Print RELEASE_STORE_FILE"
+        run: echo ${{ secrets.RELEASE_STORE_FILE }}
       - name: "Download google-play-api-key.json"
         uses: actions/download-artifact@v4
         with:
