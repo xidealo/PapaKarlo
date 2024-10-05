@@ -27,10 +27,10 @@ jobs:
           RELEASE_STORE_PASSWORD: ${{ secrets.RELEASE_STORE_PASSWORD }}
           RELEASE_KEY_ALIAS: ${{ secrets.RELEASE_KEY_ALIAS }}
           RELEASE_KEY_PASSWORD: ${{ secrets.RELEASE_KEY_PASSWORD }}
-        run: echo -e "RELEASE_STORE_FILE=$RELEASE_STORE_FILE
-          \nRELEASE_STORE_PASSWORD=$RELEASE_STORE_PASSWORD
-          \nRELEASE_KEY_ALIAS=$RELEASE_KEY_ALIAS
-          \nRELEASE_KEY_PASSWORD=$RELEASE_KEY_PASSWORD" > local.properties
+        run: echo -e "RELEASE_STORE_FILE=$RELEASE_STORE_FILE" > local.properties
+          echo -e "RELEASE_STORE_PASSWORD=$RELEASE_STORE_PASSWORD" >> local.properties
+          echo -e "RELEASE_KEY_ALIAS=$RELEASE_KEY_ALIAS" >> local.properties
+          echo -e "RELEASE_KEY_PASSWORD=$RELEASE_KEY_PASSWORD" >> local.properties
       - name: "Upload local.properties"
         uses: actions/upload-artifact@v4
         with:
@@ -84,8 +84,8 @@ jobs:
         with:
           name: keystore
           path: ./app
-      - name: "Print RELEASE_STORE_FILE"
-        run: echo ${{ secrets.RELEASE_STORE_FILE }}
+      - name: "Print local.properties"
+        run: cat local.properties
       - name: "Download google-play-api-key.json"
         uses: actions/download-artifact@v4
         with:
