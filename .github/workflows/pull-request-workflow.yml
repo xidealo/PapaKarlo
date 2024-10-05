@@ -24,7 +24,7 @@ jobs:
         with:
           name: google-services
           path: app/google-services.json
-      - name: "Decode build config"
+      - name: "Decode local.properties"
         env:
           RELEASE_STORE_FILE: ${{ secrets.RELEASE_STORE_FILE }}
           RELEASE_STORE_PASSWORD: ${{ secrets.RELEASE_STORE_PASSWORD }}
@@ -55,12 +55,12 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
-      - name: "Upload google-services.json"
+      - name: "Download google-services.json"
         uses: actions/download-artifact@v4
         with:
           name: google-services
           path: ./app
-      - name: "Upload local.properties"
+      - name: "Download local.properties"
         uses: actions/download-artifact@v4
         with:
           name: local-properties
@@ -84,12 +84,12 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
-      - name: "Upload google-services.json"
+      - name: "Download google-services.json"
         uses: actions/download-artifact@v4
         with:
           name: google-services
           path: ./app
-      - name: "Upload local.properties"
+      - name: "Download local.properties"
         uses: actions/download-artifact@v4
         with:
           name: local-properties
@@ -112,12 +112,12 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
-      - name: "Upload google-services.json"
+      - name: "Download google-services.json"
         uses: actions/download-artifact@v4
         with:
           name: google-services
           path: ./app
-      - name: "Upload local.properties"
+      - name: "Download local.properties"
         uses: actions/download-artifact@v4
         with:
           name: local-properties
