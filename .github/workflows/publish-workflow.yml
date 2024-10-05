@@ -84,8 +84,8 @@ jobs:
         with:
           name: keystore
           path: ./app
-      - name: "Print local.properties"
-        run: cat local.properties
+      - name: "List app/"
+        run: las app
       - name: "Download google-play-api-key.json"
         uses: actions/download-artifact@v4
         with:
