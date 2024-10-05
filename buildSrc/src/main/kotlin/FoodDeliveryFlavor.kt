@@ -33,6 +33,10 @@ enum class FoodDeliveryFlavor(
     LEGENDA(
         key = "legenda",
         applicationId = "com.bunbeauty.legenda"
+    ),
+    USADBA(
+        key = "usadba",
+        applicationId = "com.bunbeauty.usadba"
     );
 
     val assembleReleaseBundle: String

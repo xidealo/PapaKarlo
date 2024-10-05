@@ -37,6 +37,10 @@ enum class FoodDeliveryCompany(
     LEGENDA(
         flavor = "legenda",
         companyUuid = "05a0b970-501e-47a5-8988-ffe18ee61bb1"
+    ),
+    USADBA(
+        flavor = "usadba",
+        companyUuid = "27c34bd1-9620-452a-95e1-b51638df01d4"
     );
 
     companion object {
