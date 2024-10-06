@@ -1,15 +1,15 @@
 package com.bunbeauty.papakarlo.common.ui.theme.color
 
+import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Green100
+import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Green50
+import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Green500
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.LightBlue
-import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Red100
-import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Red400
-import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Red50
 
-val LegendaLightColors = AppColors(
+val UsadbaLightColors = AppColors(
     mainColors = ColorDefaults.lightMainColors(
-        primary = Red400,
-        surfaceVariant = Red50,
-        strokeVariant = Red100
+        primary = Green500,
+        surfaceVariant = Green50,
+        strokeVariant = Green100
     ),
     orderColors = ColorDefaults.orderColors(),
     statusColors = ColorDefaults.statusColors(),
@@ -17,9 +17,9 @@ val LegendaLightColors = AppColors(
     isLight = true
 )
 
-val LegendaDarkColors = AppColors(
+val UsadbaDarkColors = AppColors(
     mainColors = ColorDefaults.darkMainColors(
-        primary = Red400
+        primary = Green500
     ),
     orderColors = ColorDefaults.orderColors(),
     statusColors = ColorDefaults.statusColors(),
