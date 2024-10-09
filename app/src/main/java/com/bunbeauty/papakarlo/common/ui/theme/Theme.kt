@@ -22,6 +22,8 @@ import com.bunbeauty.papakarlo.common.ui.theme.color.PapaKarloDarkColors
 import com.bunbeauty.papakarlo.common.ui.theme.color.PapaKarloLightColors
 import com.bunbeauty.papakarlo.common.ui.theme.color.TandirHouseDarkColors
 import com.bunbeauty.papakarlo.common.ui.theme.color.TandirHouseLightColors
+import com.bunbeauty.papakarlo.common.ui.theme.color.UsadbaDarkColors
+import com.bunbeauty.papakarlo.common.ui.theme.color.UsadbaLightColors
 import com.bunbeauty.papakarlo.common.ui.theme.color.VkusKavkazaDarkColors
 import com.bunbeauty.papakarlo.common.ui.theme.color.VkusKavkazaLightColors
 import com.bunbeauty.papakarlo.common.ui.theme.color.YuliarDarkColors
@@ -117,6 +119,14 @@ private fun getAppColors(
                 LegendaDarkColors
             } else {
                 LegendaLightColors
+            }
+        }
+
+        FoodDeliveryCompany.USADBA -> {
+            if (isDarkTheme) {
+                UsadbaDarkColors
+            } else {
+                UsadbaLightColors
             }
         }
     }
