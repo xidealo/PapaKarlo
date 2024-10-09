@@ -225,7 +225,6 @@ class StatusColors(
     positive: Color,
     warning: Color,
     negative: Color,
-    info: Color,
     onStatus: Color
 ) {
     var positive by mutableStateOf(positive)
@@ -234,8 +233,6 @@ class StatusColors(
         private set
     var negative by mutableStateOf(negative)
         private set
-    var info by mutableStateOf(info)
-        private set
     var onStatus by mutableStateOf(onStatus)
         private set
 
@@ -243,13 +240,11 @@ class StatusColors(
         positive: Color = this.positive,
         warning: Color = this.warning,
         negative: Color = this.negative,
-        info: Color = this.info,
         onStatus: Color = this.onStatus
     ) = StatusColors(
         positive = positive,
         warning = warning,
         negative = negative,
-        info = info,
         onStatus = onStatus
     )
 
@@ -257,7 +252,6 @@ class StatusColors(
         positive = other.positive
         warning = other.warning
         negative = other.negative
-        info = other.info
         onStatus = other.onStatus
     }
 }
