@@ -14,6 +14,7 @@ object Versions {
     const val publisher = "3.7.0"
 
     const val junit = "4.13.2"
+    const val junitCompose = "1.5.0"
     const val appCompact = "1.7.0"
     const val coreKtx = "1.13.1"
     const val coil = "2.4.0"
@@ -211,6 +212,11 @@ object SqlDelight {
     const val androidDriver = "com.squareup.sqldelight:android-driver:${Versions.sqlDelight}"
 
     const val nativeDriver = "com.squareup.sqldelight:native-driver:${Versions.sqlDelight}"
+}
+
+object Test {
+    const val junit = "junit:junit:${Versions.junit}"
+    const val junitCompose = "androidx.compose.ui:ui-test-junit4:${Versions.junitCompose}"
 }
 
 object Coroutine {

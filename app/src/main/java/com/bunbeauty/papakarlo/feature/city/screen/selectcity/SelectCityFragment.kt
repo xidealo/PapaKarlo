@@ -7,11 +7,15 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -52,7 +56,9 @@ class SelectCityFragment : BaseFragment(R.layout.layout_compose) {
 
     @Composable
     private fun SelectCityScreen(cityListState: SelectCityUIState.CityListState) {
-        FoodDeliveryScaffold(title = stringResource(R.string.title_select_city)) {
+        FoodDeliveryScaffold(
+            title = stringResource(R.string.title_select_city),
+            modifier = Modifier.semantics { testTag = "SelectCityScreen" }) {
             when (cityListState) {
                 SelectCityUIState.CityListState.Loading -> {
                     LoadingScreen()
@@ -78,8 +84,9 @@ class SelectCityFragment : BaseFragment(R.layout.layout_compose) {
             verticalArrangement = spacedBy(8.dp),
             contentPadding = PaddingValues(FoodDeliveryTheme.dimensions.mediumSpace)
         ) {
-            items(cityList) { city ->
+            itemsIndexed(cityList) { i, city ->
                 CityItem(
+                    modifier = Modifier.testTag("position=$i"),
                     cityName = city.name,
                     onClick = {
                         viewModel.onCitySelected(city)
@@ -92,7 +99,9 @@ class SelectCityFragment : BaseFragment(R.layout.layout_compose) {
     private fun handleEventList(eventList: List<SelectCityEvent>) {
         eventList.forEach { event ->
             when (event) {
-                SelectCityEvent.NavigateToMenu -> findNavController().navigateSafe(toMenuFragment())
+                SelectCityEvent.NavigateToMenu -> findNavController().navigateSafe(
+                    toMenuFragment()
+                )
             }
         }
         viewModel.consumeEventList(eventList)

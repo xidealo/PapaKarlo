@@ -25,6 +25,7 @@ import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FoodDeliveryScaffold(
+    modifier: Modifier = Modifier,
     title: String? = null,
     backActionClick: (() -> Unit)? = null,
     topActions: List<FoodDeliveryToolbarActions> = emptyList(),
@@ -33,14 +34,14 @@ fun FoodDeliveryScaffold(
     @DrawableRes drawableId: Int? = null,
     actionButton: @Composable () -> Unit = {},
     appBarContent: @Composable () -> Unit = {},
-    content: (@Composable () -> Unit)
+    content: (@Composable () -> Unit),
 ) {
     val appBarState = rememberTopAppBarState()
     val behavior = TopAppBarDefaults.pinnedScrollBehavior(appBarState)
     val scrollBehavior = remember { behavior }
 
     Scaffold(
-        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             FoodDeliveryTopAppBar(
                 title = title,

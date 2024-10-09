@@ -37,6 +37,8 @@ android {
         minSdk = AndroidSdk.min
         compileSdk = AndroidSdk.compile
         targetSdk = AndroidSdk.target
+
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -178,15 +180,24 @@ dependencies {
     implementation(Coil.coilCompose)
 
     implementation(MaterialDialogs.datetime)
+    implementation(CollectionsImmutable.collectionsImmutable)
     coreLibraryDesugaring(AndroidTools.desugar)
 
     debugImplementation(Leakcanary.android)
 
-    androidTestImplementation(Kaspresso.kaspresso)
-    androidTestImplementation(Kaspresso.kaspressoAllureSupport)
-    androidTestImplementation(Kaspresso.kaspressoComposeSupport)
+    androidTestImplementation("com.kaspersky.android-components:kaspresso:1.5.5")
+    androidTestImplementation("com.kaspersky.android-components:kaspresso-allure-support:1.5.5")
+    androidTestImplementation("com.kaspersky.android-components:kaspresso-compose-support:1.5.5")
 
-    implementation(CollectionsImmutable.collectionsImmutable)
+    androidTestImplementation("androidx.test:core:1.6.1")
+    androidTestImplementation("androidx.test:core-ktx:1.6.1")
+    androidTestImplementation("androidx.test:rules:1.6.1")
+    androidTestImplementation("androidx.test:runner:1.6.2")
+    androidTestImplementation("androidx.compose.ui:ui-test-manifest:1.7.3")
+    androidTestImplementation("androidx.test.ext:junit:1.2.1")
+    androidTestImplementation("androidx.test.ext:junit-ktx:1.2.1")
+    androidTestImplementation("junit:junit:4.13.2")
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.7.3")
 }
 
 tasks.register("assembleAll") {
@@ -208,7 +219,7 @@ tasks.register("publishAll") {
 
 fun commonPlayConfig(
     playPublisherExtension: PlayPublisherExtension,
-    buildGradle: Build_gradle
+    buildGradle: Build_gradle,
 ) {
     with(playPublisherExtension) {
         track.set("production")
