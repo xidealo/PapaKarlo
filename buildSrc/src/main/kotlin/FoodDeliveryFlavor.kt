@@ -37,6 +37,10 @@ enum class FoodDeliveryFlavor(
     USADBA(
         key = "usadba",
         applicationId = "com.bunbeauty.usadba"
+    ),
+    EMOJI(
+        key = "emoji",
+        applicationId = "com.bunbeauty.emoji"
     );
 
     val assembleReleaseBundle: String

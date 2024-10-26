@@ -3,6 +3,8 @@ package com.bunbeauty.papakarlo.common.ui.theme.color
 import androidx.compose.ui.graphics.Color
 
 object FoodDeliveryColors {
+    val Yellow500 = Color(0xFFFFC12D)
+
     val Orange50 = Color(0xFFFCF5ED)
     val Orange100 = Color(0xFFFDE0BE)
     val Orange300 = Color(0xFFFF8243)
