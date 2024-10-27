@@ -13,6 +13,8 @@ import com.bunbeauty.papakarlo.common.ui.theme.color.AntalyaKebabLightColors
 import com.bunbeauty.papakarlo.common.ui.theme.color.AppColors
 import com.bunbeauty.papakarlo.common.ui.theme.color.DjanDarkColors
 import com.bunbeauty.papakarlo.common.ui.theme.color.DjanLightColors
+import com.bunbeauty.papakarlo.common.ui.theme.color.EmojiDarkColors
+import com.bunbeauty.papakarlo.common.ui.theme.color.EmojiLightColors
 import com.bunbeauty.papakarlo.common.ui.theme.color.GustoPubDarkColors
 import com.bunbeauty.papakarlo.common.ui.theme.color.GustoPubLightColors
 import com.bunbeauty.papakarlo.common.ui.theme.color.LegendaDarkColors
@@ -127,6 +129,14 @@ private fun getAppColors(
                 UsadbaDarkColors
             } else {
                 UsadbaLightColors
+            }
+        }
+
+        FoodDeliveryCompany.EMOJI -> {
+            if (isDarkTheme) {
+                EmojiDarkColors
+            } else {
+                EmojiLightColors
             }
         }
     }
