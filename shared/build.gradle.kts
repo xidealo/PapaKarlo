@@ -23,7 +23,6 @@ kotlin {
         podfile = project.file("../iosApp/Podfile")
 
         pod("FirebaseMessaging")
-
         framework {
             baseName = "shared"
             isStatic = true
