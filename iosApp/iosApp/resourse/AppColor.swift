@@ -35,7 +35,6 @@ class AppColor{
     static let positive = Color("positive")
     static let warning = Color("warning")
     static let negative = Color("negative")
-    static let info = Color("info")
     static let onStatus = Color("onStatus")
     static let stroke = Color("stroke")
 }

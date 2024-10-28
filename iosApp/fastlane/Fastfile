@@ -65,4 +65,14 @@ platform :ios do
   lane :djan do
     build_and_upload("com.bunbeauty.djan", "djan")
   end
+
+  desc "Push a new usadba release build to the App Store"
+  lane :usaba do
+    build_and_upload("com.bunbeauty.usadba", "usadba")
+  end
+  
+  desc "Push a new legenda release build to the App Store"
+  lane :legenda do
+    build_and_upload("com.bunbeauty.legenda", "legenda")
+  end
 end

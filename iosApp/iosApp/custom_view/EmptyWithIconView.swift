@@ -17,7 +17,10 @@ struct EmptyWithIconView: View {
         VStack(spacing:0){
             ZStack(alignment: .center){
                 Circle()
-                    .fill(AppColor.info)
+                    .fill(
+                        AppColor.primary
+                        .opacity(0.8)
+                    )
                     .frame(width: 120, height: 120)
                 IconImage(
                     width: 64,
