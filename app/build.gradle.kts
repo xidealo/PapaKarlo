@@ -95,6 +95,9 @@ android {
         checkDependencies = true
         disable.add("VectorPath")
     }
+    lint {
+        disable += "GradleDependency"
+    }
 
     playConfigs {
         FoodDeliveryFlavor.values().forEach { flavor ->

@@ -3,7 +3,7 @@ gradle = "8.7.1"
 kotlin = "2.0.20"
 googleServices = "4.4.2"
 crashlytics = "3.0.2"
-navigation = "2.8.3"
+navigation = "2.9.0-alpha01"
 kotlinCoroutines = "1.9.0-RC"
 ktor = "2.3.3"
 kotlinxSerialization = "1.5.1"
@@ -15,7 +15,7 @@ coreKtx = "1.13.1"
 coil = "2.6.0"
 datetime = "0.9.0"
 desugar = "2.1.2"
-mokkery = "2.2.0"
+mokkery = "2.4.0"
 material = "1.12.0"
 composeBom = "2024.06.00"
 activityCompose = "1.9.3"
@@ -31,7 +31,6 @@ kaspresso = "1.5.3"
 collectionsImmutable = "0.3.7"
 ktLint = "11.5.1"
 tripletPlay = "3.11.0"
-application = "8.3.2"
 
 [libraries]
 appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appCompact" }
@@ -112,7 +111,7 @@ play-publisher = { module = "com.github.triplet.gradle:play-publisher", version.
 
 [plugins]
 
-application = { id = "com.android.application", version.ref = "application" }
+application = { id = "com.android.application", version.ref = "gradle" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
 navigation = { id = "androidx.navigation.safeargs", version.ref = "navigation" }
