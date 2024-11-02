@@ -75,4 +75,9 @@ platform :ios do
   lane :legenda do
     build_and_upload("com.bunbeauty.legenda", "legenda")
   end
+
+  desc "Push a new emoji release build to the App Store"
+  lane :emoji do
+    build_and_upload("com.bunbeauty.emoji", "emoji")
+  end
 end

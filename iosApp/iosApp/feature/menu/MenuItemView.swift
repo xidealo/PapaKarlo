@@ -34,7 +34,7 @@ struct MenuItemView: View {
             ),
             isActive: $openProductDetails
         ){
-            VStack(spacing:0){
+            VStack(spacing:0) {
                 KFImage(
                     URL(string: menuProductItem.photoLink)
                 )
@@ -42,7 +42,7 @@ struct MenuItemView: View {
                 .aspectRatio(contentMode: .fill)
                 .frame(height:110)
                 
-                VStack(spacing:0){
+                VStack(spacing:0) {
                     Text(menuProductItem.name)
                         .titleSmall(weight: .bold)
                         .lineLimit(1)
@@ -51,14 +51,13 @@ struct MenuItemView: View {
                         .padding(.top, Diems.SMALL_PADDING)
                         .multilineTextAlignment(.leading)
                     
-                    HStack(spacing:0){
-                        if let oldPrice = menuProductItem.oldPrice{
+                    HStack(spacing:0) {
+                        if let oldPrice = menuProductItem.oldPrice {
                             Text(String(oldPrice))
                                 .strikethrough()
                                 .bodySmall()
                                 .foregroundColor(AppColor.onSurfaceVariant)
                                 .padding(.trailing, Diems.SMALL_PADDING)
-                            
                         }
                         Text(menuProductItem.newPrice)
                             .bodySmall(weight: .bold)
@@ -72,7 +71,6 @@ struct MenuItemView: View {
                 Button(
                     action: {
                         print(menuProductItem)
-                        
                         if(menuProductItem.hasAdditions) {
                             openProductDetails = true
                         }else{
