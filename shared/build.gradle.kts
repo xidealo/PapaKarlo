@@ -1,12 +1,12 @@
 import CommonApplication.deploymentTarget
 
 plugins {
-    kotlin(Plugin.multiplatform)
-    kotlin(Plugin.cocoa)
-    id(Plugin.androidLibrary)
-    id(Plugin.sqldelight)
-    id(Plugin.kotlinSerialization)
-    id(Plugin.mokkery) version Versions.mokkery
+    alias(libs.plugins.multiplatform)
+    alias(libs.plugins.cocoa)
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.sqldelight)
+    alias(libs.plugins.mokkery)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 kotlin {
@@ -35,33 +35,26 @@ kotlin {
                 implementation(project(":analytic"))
                 implementation(project(":core"))
 
-                Ktor.run {
-                    implementation(clientSerialization)
-                    implementation(clientLogging)
-                    implementation(clientWebsockets)
-                    implementation(negotiation)
-                    implementation(serializerJson)
-                    implementation(clientJson)
-                    implementation(clientAuth)
-                }
-                implementation(Coroutine.core)
+                implementation(libs.bundles.ktor)
 
-                implementation(Serialization.json)
+                implementation(libs.kotlinx.coroutines.core)
 
-                implementation(Koin.core)
-                api(Koin.test)
+                implementation(libs.kotlinx.serialization.json)
 
-                implementation(KotlinxDateTime.dateTime)
+                implementation(libs.koin.core)
+                api(libs.koin.test)
 
-                implementation(SqlDelight.runtime)
-                implementation(SqlDelight.coroutineExtensions)
+                implementation(libs.kotlinx.datetime)
 
-                implementation(CollectionsImmutable.collectionsImmutable)
+                implementation(libs.sqlDelight.runtime)
+                implementation(libs.sqlDelight.coroutines.extensions)
+
+                implementation(libs.kotlinx.collections.immutable)
             }
         }
         val commonTest by getting {
             dependencies {
-                implementation(Coroutine.test)
+                implementation(libs.kotlinx.coroutines.test)
 
                 implementation(kotlin("test"))
                 implementation(kotlin("test-common"))
@@ -70,14 +63,13 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
-                implementation(DataStore.dataStorePreferences)
-                implementation(Ktor.clientOkhttp)
-                implementation(Lifecycle.viewmodel)
+                implementation(libs.ktor.client.okhttp)
+                implementation(libs.datastore.preferences)
+                implementation(libs.lifecycle.viewmodel.ktx)
 
-                implementation(project.dependencies.platform(Firebase.bom))
-                implementation(Firebase.messaging)
-
-                implementation(SqlDelight.androidDriver)
+                implementation(project.dependencies.platform(libs.firebase.bom))
+                implementation(libs.firebase.messaging.ktx)
+                implementation(libs.sqlDelight.android)
             }
         }
         val androidUnitTest by getting {
@@ -93,8 +85,8 @@ kotlin {
         val iosSimulatorArm64Main by getting
         val iosMain by creating {
             dependencies {
-                implementation(SqlDelight.nativeDriver)
-                implementation(Ktor.clientDarwin)
+                implementation(libs.sqlDelight.native)
+                implementation(libs.ktor.client.darwin)
             }
             dependsOn(commonMain)
             iosX64Main.dependsOn(this)
