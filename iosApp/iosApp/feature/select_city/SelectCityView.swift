@@ -56,7 +56,6 @@ struct SelectCitySuccessView : View {
             }
         }
         .padding(.top, Diems.MEDIUM_PADDING)
-        .preferredColorScheme(.light)
 
     }
 }

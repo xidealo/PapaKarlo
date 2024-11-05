@@ -11,7 +11,7 @@ import SwiftUI
 struct ButtonText: View {
     let text:String
     var background = AppColor.primary
-    var foregroundColor = AppColor.surface
+    var foregroundColor = AppColor.onPrimary
 
     var body: some View {
         Text(text)
