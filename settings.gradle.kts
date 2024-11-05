@@ -1,3 +1,11 @@
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+
 include(
     ":app",
     ":shared",
@@ -5,3 +13,5 @@ include(
 rootProject.name = "PapaKarlo"
 include(":analytic")
 include(":core")
+
+

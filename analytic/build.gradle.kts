@@ -1,9 +1,9 @@
 import CommonApplication.deploymentTarget
 
 plugins {
-    kotlin("multiplatform")
-    kotlin("native.cocoapods")
-    id("com.android.library")
+    alias(libs.plugins.multiplatform)
+    alias(libs.plugins.cocoa)
+    alias(libs.plugins.android.library)
 }
 
 @OptIn(org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi::class)
@@ -34,13 +34,13 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(project(":core"))
-                implementation(Koin.core)
+                implementation(libs.koin.core)
             }
         }
         val androidMain by getting {
             dependencies {
-                implementation(project.dependencies.platform(Firebase.bom))
-                implementation(Firebase.analyticsKtx)
+                implementation(project.dependencies.platform(libs.firebase.bom))
+                implementation(libs.firebase.analytics.ktx)
             }
         }
     }

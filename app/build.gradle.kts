@@ -5,17 +5,15 @@ import java.io.FileInputStream
 import java.util.Properties
 
 plugins {
-    kotlin(Plugin.android)
-    id(Plugin.application)
-    id(Plugin.kotlinAndroid)
-    id(Plugin.kapt)
-    id(Plugin.navigation)
-    id(Plugin.googleService)
-    id(Plugin.kotlinParcelize)
-    id(Plugin.crashlytics)
-    id("org.jlleitschuh.gradle.ktlint") version "11.5.1"
-    id("org.jetbrains.kotlin.plugin.compose") version Versions.kotlin
-    id(Plugin.tripletPlay)
+    alias(libs.plugins.application)
+    alias(libs.plugins.compose)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.navigation)
+    alias(libs.plugins.google.service)
+    alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.crashlytics)
+    alias(libs.plugins.ktLint)
+    alias(libs.plugins.triplet.play)
 }
 
 android {
@@ -97,6 +95,9 @@ android {
         checkDependencies = true
         disable.add("VectorPath")
     }
+    lint {
+        disable += "GradleDependency"
+    }
 
     playConfigs {
         FoodDeliveryFlavor.values().forEach { flavor ->
@@ -129,64 +130,41 @@ dependencies {
     implementation(project(":analytic"))
     implementation(project(":core"))
 
-    implementation(AndroidX.appCompat)
-    implementation(AndroidX.coreKtx)
+    implementation(libs.appcompat)
+    implementation(libs.core.ktx)
+    implementation(libs.material)
 
-    implementation(Material.material)
+    implementation(libs.bundles.navigation)
+    androidTestImplementation(libs.navigation.testing)
 
-    implementation(platform(Compose.bom))
-    implementation(Compose.foundation)
-    implementation(Compose.foundationLayout)
-    implementation(Compose.ui)
-    implementation(Compose.material3)
-    implementation(Compose.uiTooling)
-    implementation(Compose.uiToolingPreview)
-    implementation(Compose.uiViewbinding)
-    implementation(Compose.activity)
-    implementation(Compose.lifecycle)
+    implementation(libs.bundles.lifecycle)
+    implementation(libs.activity.ktx)
+    implementation(libs.fragment.ktx)
 
-    implementation(Navigation.navigationFragment)
-    implementation(Navigation.navigationFragmentKtx)
-    implementation(Navigation.navigationRuntime)
-    implementation(Navigation.navigationRuntimeKtx)
-    implementation(Navigation.navigationUI)
-    implementation(Navigation.navigationUIKtx)
-    androidTestImplementation(Navigation.navigationTesting)
+    implementation(libs.viewbindingpropertydelegate)
+    implementation(libs.bundles.di)
+    testImplementation(libs.koin.test)
 
-    implementation(Lifecycle.extensions)
-    implementation(Lifecycle.viewmodel)
-    implementation(Lifecycle.activity)
-    implementation(Lifecycle.fragment)
-    implementation(Lifecycle.runtime)
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.kotlinx.coroutines.core)
 
-    implementation(ViewBindingDelegate.viewBindingDelegate)
+    implementation(libs.bundles.coil)
+    implementation(libs.material.dialogs.datetime)
+    implementation(libs.kotlinx.collections.immutable)
 
-    implementation(Koin.core)
-    implementation(Koin.android)
-    implementation(Koin.test)
+    debugImplementation(libs.leakcanary.android)
 
-    implementation(Serialization.json)
+    coreLibraryDesugaring(libs.desugar.jdk.libs)
 
-    implementation(Coroutine.core)
+    androidTestImplementation(libs.bundles.kaspresso)
 
-    implementation(platform(Firebase.bom))
-    implementation(Firebase.crashlyticsKtx)
-    implementation(Firebase.analyticsKtx)
-    implementation(Firebase.messaging)
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.bundles.firebase)
 
-    implementation(Coil.coil)
-    implementation(Coil.coilCompose)
+    implementation(platform(libs.compose.bom))
+    implementation(libs.bundles.compose)
 
-    implementation(MaterialDialogs.datetime)
-    coreLibraryDesugaring(AndroidTools.desugar)
-
-    debugImplementation(Leakcanary.android)
-
-    androidTestImplementation(Kaspresso.kaspresso)
-    androidTestImplementation(Kaspresso.kaspressoAllureSupport)
-    androidTestImplementation(Kaspresso.kaspressoComposeSupport)
-
-    implementation(CollectionsImmutable.collectionsImmutable)
+    implementation(libs.activity.compose)
 }
 
 tasks.register("assembleAll") {

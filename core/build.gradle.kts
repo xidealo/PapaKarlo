@@ -1,9 +1,9 @@
 import CommonApplication.deploymentTarget
 
 plugins {
-    kotlin("multiplatform")
-    kotlin("native.cocoapods")
-    id("com.android.library")
+    alias(libs.plugins.multiplatform)
+    alias(libs.plugins.cocoa)
+    alias(libs.plugins.android.library)
 }
 
 @OptIn(org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi::class)
@@ -31,7 +31,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(Koin.core)
+                implementation(libs.koin.core)
             }
         }
         val commonTest by getting {
