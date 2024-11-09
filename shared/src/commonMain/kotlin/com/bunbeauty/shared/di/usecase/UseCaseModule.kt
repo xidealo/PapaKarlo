@@ -13,6 +13,9 @@ import com.bunbeauty.shared.domain.feature.menuproduct.GetMenuProductUseCase
 import com.bunbeauty.shared.domain.feature.notification.SubscribeToNotificationUseCase
 import com.bunbeauty.shared.domain.feature.settings.ObserveSettingsUseCase
 import com.bunbeauty.shared.domain.feature.settings.UpdateEmailUseCase
+import com.bunbeauty.shared.domain.feature.splash.CheckOneCityUseCase
+import com.bunbeauty.shared.domain.feature.splash.CheckUpdateUseCase
+import com.bunbeauty.shared.domain.feature.splash.SaveOneCityUseCase
 import com.bunbeauty.shared.domain.interactor.cart.GetCartTotalFlowUseCase
 import com.bunbeauty.shared.domain.interactor.cart.GetNewTotalCostUseCase
 import com.bunbeauty.shared.domain.interactor.cart.GetNewTotalCostUseCaseImpl
@@ -103,6 +106,18 @@ internal fun useCaseModules() = module {
         GetDiscountUseCaseImpl(
             discountRepository = get(),
             orderRepository = get(),
+            dataStoreRepo = get()
+        )
+    }
+    factory {
+        CheckUpdateUseCase(versionRepo = get())
+    }
+    factory {
+        CheckOneCityUseCase(cityRepo = get())
+    }
+    factory {
+        SaveOneCityUseCase(
+            cityRepo = get(),
             dataStoreRepo = get()
         )
     }

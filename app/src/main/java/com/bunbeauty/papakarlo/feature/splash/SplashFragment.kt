@@ -1,52 +1,82 @@
 package com.bunbeauty.papakarlo.feature.splash
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.fragment.findNavController
-import by.kirich1409.viewbindingdelegate.viewBinding
+import com.bunbeauty.papakarlo.BuildConfig
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.common.BaseFragment
+import com.bunbeauty.papakarlo.common.BaseComposeFragment
 import com.bunbeauty.papakarlo.common.extension.navigateSafe
-import com.bunbeauty.papakarlo.databinding.FragmentSplashBinding
+import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.feature.splash.SplashFragmentDirections.toMenuFragment
 import com.bunbeauty.papakarlo.feature.splash.SplashFragmentDirections.toSelectCityFragment
 import com.bunbeauty.papakarlo.feature.splash.SplashFragmentDirections.toUpdateFragment
-import kotlinx.coroutines.launch
+import com.bunbeauty.shared.presentation.splash.Splash
+import com.bunbeauty.shared.presentation.splash.SplashViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class SplashFragment : BaseFragment(R.layout.fragment_splash) {
+class SplashFragment :
+    BaseComposeFragment<Splash.DataState, SplashViewState, Splash.Action, Splash.Event>() {
 
     override val viewModel: SplashViewModel by viewModel()
-    override val viewBinding by viewBinding(FragmentSplashBinding::bind)
 
-    @SuppressLint("UnsafeRepeatOnLifecycleDetector")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.checkAppVersion()
+        viewModel.onAction(Splash.Action.Init(version = BuildConfig.VERSION_CODE))
+    }
+
+    @Composable
+    override fun Splash.DataState.mapState(): SplashViewState {
+        return SplashViewState
+    }
+
+    @Composable
+    override fun Screen(viewState: SplashViewState, onAction: (Splash.Action) -> Unit) {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            Image(
+                painter = painterResource(R.drawable.logo_medium),
+                contentDescription = stringResource(R.string.description_company_logo)
+            )
+        }
+    }
+
+    override fun handleEvent(event: Splash.Event) {
+        when (event) {
+            Splash.Event.NavigateToMenuEvent -> {
+                findNavController().navigateSafe(toMenuFragment())
+            }
+
+            Splash.Event.NavigateToSelectCityEvent -> {
+                findNavController().navigateSafe(toSelectCityFragment())
+            }
+
+            Splash.Event.NavigateToUpdateEvent -> {
+                findNavController().navigateSafe(toUpdateFragment())
             }
         }
-        viewModel.eventList.startedLaunch { eventList ->
-            eventList.forEach { event ->
-                when (event) {
-                    SplashEvent.NavigateToUpdateEvent -> {
-                        findNavController().navigateSafe(toUpdateFragment())
-                    }
-                    SplashEvent.NavigateToSelectCityEvent -> {
-                        findNavController().navigateSafe(toSelectCityFragment())
-                    }
-                    SplashEvent.NavigateToMenuEvent -> {
-                        findNavController().navigateSafe(toMenuFragment())
-                    }
-                }
-                viewModel.consumeEventList(eventList)
-            }
+    }
+
+    @Preview(showBackground = true)
+    @Composable
+    private fun SplashPreview() {
+        FoodDeliveryTheme {
+            Screen(
+                viewState = SplashViewState,
+                onAction = {}
+            )
         }
     }
 }
