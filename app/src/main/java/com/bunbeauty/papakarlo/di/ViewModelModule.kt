@@ -168,7 +168,7 @@ fun viewModelModule() = module {
             checkUpdateUseCase = get(),
             cityInteractor = get(),
             getIsOneCityUseCase = get(),
-            saveOneCityUseCase = get(),
+            saveOneCityUseCase = get()
         )
     }
     viewModel {
