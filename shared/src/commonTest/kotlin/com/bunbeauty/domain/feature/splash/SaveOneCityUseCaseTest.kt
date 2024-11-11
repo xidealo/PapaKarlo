@@ -2,6 +2,7 @@ package com.bunbeauty.domain.feature.splash
 
 import com.bunbeauty.getCity
 import com.bunbeauty.shared.DataStoreRepo
+import com.bunbeauty.shared.domain.exeptions.NoCityException
 import com.bunbeauty.shared.domain.exeptions.NoTokenException
 import com.bunbeauty.shared.domain.feature.splash.SaveOneCityUseCase
 import com.bunbeauty.shared.domain.repo.CityRepo
@@ -42,6 +43,6 @@ class SaveOneCityUseCaseTest {
         everySuspend { cityRepo.getCityList() } returns emptyList()
 
         // When & Then
-        assertFailsWith<NoTokenException> { useCase.invoke() }
+        assertFailsWith<NoCityException> { useCase.invoke() }
     }
 }
