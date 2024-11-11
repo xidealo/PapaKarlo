@@ -1,5 +1,6 @@
 package com.bunbeauty.shared.di
 
+import com.bunbeauty.core.buildVersionQualifier
 import com.bunbeauty.core.flavorQualifier
 import com.bunbeauty.core.isDebugQualifier
 import com.bunbeauty.core.targetName
@@ -24,4 +25,7 @@ actual fun platformModule() = module {
     }
     single(flavorQualifier) { targetName.toString() }
     single(isDebugQualifier) { Platform.isDebugBinary }
+    single(buildVersionQualifier) {
+        platform.Foundation.NSBundle.mainBundle.infoDictionary?.get("CFBundleVersion")
+    }
 }

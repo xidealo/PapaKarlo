@@ -8,8 +8,7 @@ import com.bunbeauty.shared.domain.interactor.city.CityInteractor
 import com.bunbeauty.shared.domain.interactor.city.ICityInteractor
 import com.bunbeauty.shared.domain.interactor.menu_product.IMenuProductInteractor
 import com.bunbeauty.shared.domain.interactor.menu_product.MenuProductInteractor
-import com.bunbeauty.shared.domain.interactor.update.IUpdateInteractor
-import com.bunbeauty.shared.domain.interactor.update.UpdateInteractor
+import com.bunbeauty.shared.domain.feature.splash.CheckUpdateUseCase
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
 import com.bunbeauty.shared.domain.interactor.user.UserInteractor
 import org.koin.dsl.module
@@ -47,10 +46,6 @@ internal fun interactorModule() = module {
             dataStoreRepo = get()
         )
     }
-    single<IUpdateInteractor> {
-        UpdateInteractor(versionRepo = get())
-    }
-
     single<IMenuProductInteractor> {
         MenuProductInteractor(
             menuProductRepo = get(),
