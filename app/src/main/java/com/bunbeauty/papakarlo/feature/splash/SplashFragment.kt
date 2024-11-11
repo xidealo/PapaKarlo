@@ -13,7 +13,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.fragment.findNavController
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.common.BaseComposeFragment
+import com.bunbeauty.papakarlo.common.BaseSingleStateComposeFragment
 import com.bunbeauty.papakarlo.common.extension.navigateSafe
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.feature.splash.SplashFragmentDirections.toMenuFragment
@@ -24,7 +24,7 @@ import com.bunbeauty.shared.presentation.splash.SplashViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SplashFragment :
-    BaseComposeFragment<Splash.DataState, SplashViewState, Splash.Action, Splash.Event>() {
+    BaseSingleStateComposeFragment<Splash.DataState, Splash.Action, Splash.Event>() {
 
     override val viewModel: SplashViewModel by viewModel()
 
@@ -35,12 +35,7 @@ class SplashFragment :
     }
 
     @Composable
-    override fun Splash.DataState.mapState(): SplashViewState {
-        return SplashViewState
-    }
-
-    @Composable
-    override fun Screen(viewState: SplashViewState, onAction: (Splash.Action) -> Unit) {
+    override fun Screen(viewState: Splash.DataState, onAction: (Splash.Action) -> Unit) {
         Box(
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center
@@ -73,7 +68,7 @@ class SplashFragment :
     private fun SplashPreview() {
         FoodDeliveryTheme {
             Screen(
-                viewState = SplashViewState,
+                viewState = Splash.DataState,
                 onAction = {}
             )
         }
