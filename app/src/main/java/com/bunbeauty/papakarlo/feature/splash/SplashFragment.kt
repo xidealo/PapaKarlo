@@ -12,7 +12,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.fragment.findNavController
-import com.bunbeauty.papakarlo.BuildConfig
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseComposeFragment
 import com.bunbeauty.papakarlo.common.extension.navigateSafe
@@ -32,7 +31,7 @@ class SplashFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.onAction(Splash.Action.Init(version = BuildConfig.VERSION_CODE))
+        viewModel.onAction(Splash.Action.Init)
     }
 
     @Composable

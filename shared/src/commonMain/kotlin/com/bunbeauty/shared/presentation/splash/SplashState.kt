@@ -9,7 +9,7 @@ interface Splash {
     data object DataState : BaseDataState
 
     sealed interface Action : BaseAction {
-        data class Init(val version: Int) : Action
+        data object Init : Action
     }
 
     sealed interface Event : BaseEvent {

@@ -1,5 +1,6 @@
 package com.bunbeauty.shared.di.usecase
 
+import com.bunbeauty.core.buildVersionQualifier
 import com.bunbeauty.shared.domain.feature.address.CreateAddressUseCase
 import com.bunbeauty.shared.domain.feature.address.GetFilteredStreetListUseCase
 import com.bunbeauty.shared.domain.feature.city.GetSelectedCityTimeZoneUseCase
@@ -110,7 +111,10 @@ internal fun useCaseModules() = module {
         )
     }
     factory {
-        CheckUpdateUseCase(versionRepo = get())
+        CheckUpdateUseCase(
+            versionRepo = get(),
+            buildVersion = get(buildVersionQualifier)
+        )
     }
     factory {
         CheckOneCityUseCase(cityRepo = get())

@@ -18,14 +18,14 @@ class SplashViewModel(
 
     override fun reduce(action: Splash.Action, dataState: Splash.DataState) {
         when (action) {
-            is Splash.Action.Init -> checkAppVersion(version = action.version)
+            is Splash.Action.Init -> checkAppVersion()
         }
     }
 
-    private fun checkAppVersion(version: Int) {
+    private fun checkAppVersion() {
         sharedScope.launchSafe(
             block = {
-                if (checkUpdateUseCase(currentVersion = version)) {
+                if (checkUpdateUseCase()) {
                     checkIsCitySelected()
                 } else {
                     addEvent {
