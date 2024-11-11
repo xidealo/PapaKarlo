@@ -1,3 +1,3 @@
 package com.bunbeauty.shared.domain.exeptions
 
-class NoCityException : Exception()
+class NoCityException : Exception("No city")
