@@ -3,8 +3,6 @@ package com.bunbeauty.papakarlo.feature.cafe.screen.cafelist
 import android.os.Bundle
 import android.view.View
 import androidx.compose.animation.Crossfade
-import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -12,7 +10,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.navigation.fragment.findNavController
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseComposeFragment
@@ -61,7 +58,7 @@ class CafeListFragment :
     @Composable
     private fun CafeListScreen(
         cafeListViewState: CafeListViewState,
-        onAction: (CafeList.Action) -> Unit,
+        onAction: (CafeList.Action) -> Unit
     ) {
         FoodDeliveryScaffold(
             title = stringResource(R.string.title_cafe_list),
@@ -69,11 +66,11 @@ class CafeListFragment :
                 FoodDeliveryCartAction(
                     topCartUi = cafeListViewState.topCartUi,
                     onClick = {
-                        onAction(CafeList.Action.onCartClicked)
-                    },
+                        onAction(CafeList.Action.OnCartClicked)
+                    }
                 )
             ),
-            backgroundColor = FoodDeliveryTheme.colors.mainColors.surface,
+            backgroundColor = FoodDeliveryTheme.colors.mainColors.surface
         ) {
             Crossfade(
                 targetState = cafeListViewState.state,
@@ -83,7 +80,7 @@ class CafeListFragment :
                     is CafeListViewState.State.Error -> ErrorScreen(
                         mainTextId = R.string.error_cafe_list_loading,
                         onClick = {
-                            onAction(CafeList.Action.onRefreshClicked)
+                            onAction(CafeList.Action.OnRefreshClicked)
                         }
                     )
 
@@ -100,10 +97,10 @@ class CafeListFragment :
     @Composable
     private fun CafeListSuccessScreen(
         cafeItemList: List<CafeItemAndroid>,
-        onAction: (CafeList.Action) -> Unit,
+        onAction: (CafeList.Action) -> Unit
     ) {
         LazyColumn(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.fillMaxSize()
         ) {
             itemsIndexed(cafeItemList) { i, cafeItem ->
                 FoodDeliveryItem(needDivider = !cafeItem.isLast) {
@@ -111,7 +108,7 @@ class CafeListFragment :
                         modifier = Modifier,
                         cafeItem = cafeItem,
                         onClick = {
-                            onAction(CafeList.Action.onCafeClicked(cafeUuid = cafeItem.uuid))
+                            onAction(CafeList.Action.OnCafeClicked(cafeUuid = cafeItem.uuid))
                         }
                     )
                 }

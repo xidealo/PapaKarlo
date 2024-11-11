@@ -9,5 +9,5 @@ data class CafeItemAndroid(
     val workingHours: String,
     val cafeStatusText: String,
     val cafeOpenState: CafeOpenState,
-    val isLast: Boolean,
+    val isLast: Boolean
 )

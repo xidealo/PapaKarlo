@@ -17,9 +17,9 @@ interface CafeList {
 
     sealed interface Action : BaseAction {
         data object Init : Action
-        data class onCafeClicked(val cafeUuid: String) : Action
-        data object onRefreshClicked : Action
-        data object onCartClicked : Action
+        data class OnCafeClicked(val cafeUuid: String) : Action
+        data object OnRefreshClicked : Action
+        data object OnCartClicked : Action
     }
 
     sealed interface Event : BaseEvent {

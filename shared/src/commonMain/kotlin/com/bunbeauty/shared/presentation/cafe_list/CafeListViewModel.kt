@@ -33,17 +33,17 @@ class CafeListViewModel(
                 observeCafeList()
             }
 
-            is CafeList.Action.onCafeClicked -> addEvent {
+            is CafeList.Action.OnCafeClicked -> addEvent {
                 CafeList.Event.OpenCafeOptionsBottomSheet(uuid = action.cafeUuid)
             }
 
-            CafeList.Action.onCartClicked -> {
+            CafeList.Action.OnCartClicked -> {
                 addEvent {
                     CafeList.Event.OpenConsumerCartProduct
                 }
             }
 
-            CafeList.Action.onRefreshClicked -> {
+            CafeList.Action.OnRefreshClicked -> {
                 observeCafeList()
             }
         }

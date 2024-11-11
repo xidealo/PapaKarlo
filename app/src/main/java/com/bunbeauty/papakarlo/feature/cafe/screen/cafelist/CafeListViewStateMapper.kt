@@ -9,7 +9,7 @@ private const val EMPTY_COST = ""
 private const val EMPTY_COUNT = ""
 
 class CafeListViewStateMapper(
-    private val stringUtil: IStringUtil,
+    private val stringUtil: IStringUtil
 ) {
     fun map(cafeListState: CafeList.DataState): CafeListViewState {
         val throwable = cafeListState.throwable
