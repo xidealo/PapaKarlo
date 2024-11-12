@@ -13,18 +13,23 @@ import kotlinx.coroutines.test.runTest
 class CheckUpdateUseCaseTest {
 
     private val versionRepo: VersionRepo = mock()
-    private val checkUpdateUseCase: CheckUpdateUseCase =
-        CheckUpdateUseCase(versionRepo = versionRepo)
 
     @Test
     fun `returns true when currentVersion is equal to or above forceUpdateVersion`() = runTest {
+
         // Given
-        val currentVersion = 5
+        val currentVersion = 5L
         val forceUpdateVersion = 5
+        val checkUpdateUseCase: CheckUpdateUseCase =
+            CheckUpdateUseCase(
+                versionRepo = versionRepo,
+                buildVersion = currentVersion
+            )
         everySuspend { versionRepo.getForceUpdateVersion() } returns forceUpdateVersion
 
+
         // When
-        val result = checkUpdateUseCase.invoke(currentVersion)
+        val result = checkUpdateUseCase.invoke()
 
         // Then
         assertTrue(result)
@@ -33,12 +38,17 @@ class CheckUpdateUseCaseTest {
     @Test
     fun `returns false when currentVersion is below forceUpdateVersion`() = runTest {
         // Given
-        val currentVersion = 3
+        val currentVersion = 3L
         val forceUpdateVersion = 5
+        val checkUpdateUseCase: CheckUpdateUseCase =
+            CheckUpdateUseCase(
+                versionRepo = versionRepo,
+                buildVersion = currentVersion
+            )
         everySuspend { versionRepo.getForceUpdateVersion() } returns forceUpdateVersion
 
         // When
-        val result = checkUpdateUseCase.invoke(currentVersion)
+        val result = checkUpdateUseCase.invoke()
 
         // Then
         assertFalse(result)
