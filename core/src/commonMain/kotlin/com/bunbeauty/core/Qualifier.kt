@@ -4,4 +4,5 @@ import org.koin.core.qualifier.named
 
 val isDebugQualifier = named("isDebug")
 val flavorQualifier = named("flavor")
+val buildVersionQualifier = named("buildVersion")
 
