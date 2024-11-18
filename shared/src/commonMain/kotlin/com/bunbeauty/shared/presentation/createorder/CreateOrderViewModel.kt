@@ -43,7 +43,7 @@ class CreateOrderViewModel(
     private val getSelectablePaymentMethodListUseCase: GetSelectablePaymentMethodListUseCase,
     private val savePaymentMethodUseCase: SavePaymentMethodUseCase,
     private val isOrderAvailableUseCase: IsOrderAvailableUseCase,
-) : SharedStateViewModel<CreateOrder.DataState, CreateOrder.Action, CreateOrder.Event>(
+) : SharedStateViewModel<CreateOrder.DataState, CreateOrder.Action, CreateOrder.Event> (
     initDataState = CreateOrder.DataState(
         isDelivery = true,
         userAddressList = emptyList(),
