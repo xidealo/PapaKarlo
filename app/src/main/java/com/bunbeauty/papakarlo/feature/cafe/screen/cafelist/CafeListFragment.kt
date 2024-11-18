@@ -27,18 +27,17 @@ import com.bunbeauty.papakarlo.feature.topcart.TopCartUi
 import com.bunbeauty.shared.domain.model.cafe.CafeOpenState
 import com.bunbeauty.shared.presentation.cafe_list.CafeList
 import com.bunbeauty.shared.presentation.cafe_list.CafeListViewModel
-import org.koin.android.ext.android.inject
+import kotlinx.collections.immutable.persistentListOf
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CafeListFragment :
     BaseComposeFragment<CafeList.DataState, CafeListViewState, CafeList.Action, CafeList.Event>() {
 
     override val viewModel: CafeListViewModel by viewModel()
-    private val cafeListViewStateMapper: CafeListViewStateMapper by inject()
 
     @Composable
     override fun CafeList.DataState.mapState(): CafeListViewState {
-        return cafeListViewStateMapper.map(cafeListState = this)
+        return toViewState()
     }
 
     @Composable
@@ -62,7 +61,7 @@ class CafeListFragment :
     ) {
         FoodDeliveryScaffold(
             title = stringResource(R.string.title_cafe_list),
-            topActions = listOf(
+            topActions = persistentListOf(
                 FoodDeliveryCartAction(
                     topCartUi = cafeListViewState.topCartUi,
                     onClick = {
@@ -105,7 +104,6 @@ class CafeListFragment :
             itemsIndexed(cafeItemList) { i, cafeItem ->
                 FoodDeliveryItem(needDivider = !cafeItem.isLast) {
                     CafeItem(
-                        modifier = Modifier,
                         cafeItem = cafeItem,
                         onClick = {
                             onAction(CafeList.Action.OnCafeClicked(cafeUuid = cafeItem.uuid))
@@ -134,7 +132,7 @@ class CafeListFragment :
         FoodDeliveryTheme {
             CafeListScreen(
                 cafeListViewState = CafeListViewState(
-                    cafeList = listOf(
+                    cafeList = persistentListOf(
                         CafeItemAndroid(
                             uuid = "",
                             address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж",
@@ -185,7 +183,7 @@ class CafeListFragment :
                         cost = "100",
                         count = "2"
                     ),
-                    cafeList = emptyList()
+                    cafeList = persistentListOf()
                 ),
                 onAction = {}
             )
@@ -203,7 +201,7 @@ class CafeListFragment :
                         cost = "100",
                         count = "2"
                     ),
-                    cafeList = emptyList()
+                    cafeList = persistentListOf()
                 ),
                 onAction = {}
             )

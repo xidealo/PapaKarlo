@@ -1,5 +1,6 @@
 package com.bunbeauty.shared.presentation.cafe_list
 
+import com.bunbeauty.shared.Constants.RUBLE_CURRENCY
 import com.bunbeauty.shared.Constants.WORKING_HOURS_DIVIDER
 import com.bunbeauty.shared.domain.feature.cafe.ObserveCafeWithOpenStateListUseCase
 import com.bunbeauty.shared.domain.feature.cart.ObserveCartUseCase
@@ -11,6 +12,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlin.math.cos
 
 class CafeListViewModel(
     private val cafeInteractor: ICafeInteractor,
@@ -25,6 +27,7 @@ class CafeListViewModel(
 ) {
 
     private var observeCafeListJob: Job? = null
+    private var observeCart: Job? = null
 
     override fun reduce(action: CafeList.Action, dataState: CafeList.DataState) {
         when (action) {
@@ -50,12 +53,16 @@ class CafeListViewModel(
     }
 
     private fun observeCart() {
-        sharedScope.launchSafe(
+        observeCart?.cancel()
+        observeCart = sharedScope.launchSafe(
             block = {
                 observeCartUseCase().collectLatest { cartTotalAndCount ->
+                    val cartTotalWithCurrency = cartTotalAndCount.copy(
+                        cost = "${cartTotalAndCount.cost} $RUBLE_CURRENCY"
+                    )
                     setState {
                         copy(
-                            cartCostAndCount = cartTotalAndCount
+                            cartCostAndCount = cartTotalWithCurrency
                         )
                     }
                 }
@@ -67,11 +74,11 @@ class CafeListViewModel(
     }
 
     private fun observeCafeList() {
-        sharedScope.launchSafe(
+        observeCafeListJob?.cancel()
+        observeCafeListJob = sharedScope.launchSafe(
             block = {
-                observeCafeListJob?.cancel()
-                observeCafeListJob = observeCafeWithOpenStateListUseCase()
-                    .onEach { cafeWithOpenStateList ->
+                observeCafeWithOpenStateListUseCase()
+                    .collectLatest { cafeWithOpenStateList ->
                         setState {
                             copy(
                                 cafeList = cafeWithOpenStateList.mapIndexed { index, cafeWithOpenState ->
@@ -82,7 +89,7 @@ class CafeListViewModel(
                                 isLoading = false
                             )
                         }
-                    }.launchIn(sharedScope)
+                    }
             },
             onError = {
 

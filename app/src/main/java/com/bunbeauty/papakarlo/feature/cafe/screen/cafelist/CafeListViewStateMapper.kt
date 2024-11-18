@@ -1,41 +1,65 @@
 package com.bunbeauty.papakarlo.feature.cafe.screen.cafelist
 
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
+import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.feature.cafe.ui.CafeItemAndroid
 import com.bunbeauty.papakarlo.feature.topcart.TopCartUi
-import com.bunbeauty.papakarlo.util.string.IStringUtil
+import com.bunbeauty.shared.domain.model.cafe.CafeOpenState
 import com.bunbeauty.shared.presentation.cafe_list.CafeList
+import kotlinx.collections.immutable.toPersistentList
 
 private const val EMPTY_COST = ""
 private const val EMPTY_COUNT = ""
 
-class CafeListViewStateMapper(
-    private val stringUtil: IStringUtil
-) {
-    fun map(cafeListState: CafeList.DataState): CafeListViewState {
-        val throwable = cafeListState.throwable
-        return CafeListViewState(
-            topCartUi = TopCartUi(
-                cost = cafeListState.cartCostAndCount?.cost?.let { cost ->
-                    stringUtil.getCostString(cost)
-                } ?: EMPTY_COST,
-                count = cafeListState.cartCostAndCount?.count ?: EMPTY_COUNT
-            ),
-            cafeList = cafeListState.cafeList.map { cafeItem ->
-                CafeItemAndroid(
-                    uuid = cafeItem.uuid,
-                    address = cafeItem.address,
-                    phone = cafeItem.phone,
-                    workingHours = cafeItem.workingHours,
-                    cafeStatusText = stringUtil.getCafeStatusText(cafeItem.cafeOpenState),
-                    cafeOpenState = cafeItem.cafeOpenState,
-                    isLast = cafeItem.isLast
-                )
-            },
-            state = when {
-                throwable != null -> CafeListViewState.State.Error(throwable)
-                cafeListState.isLoading -> CafeListViewState.State.Loading
-                else -> CafeListViewState.State.Success
-            }
-        )
+@Composable
+fun CafeList.DataState.toViewState(): CafeListViewState {
+    val throwable = throwable
+    return CafeListViewState(
+        topCartUi = TopCartUi(
+            cost = cartCostAndCount?.cost ?: EMPTY_COST,
+            count = cartCostAndCount?.count ?: EMPTY_COUNT
+        ),
+        cafeList = cafeList.map { cafeItem ->
+            CafeItemAndroid(
+                uuid = cafeItem.uuid,
+                address = cafeItem.address,
+                phone = cafeItem.phone,
+                workingHours = cafeItem.workingHours,
+                cafeStatusText = getCafeStatusText(cafeItem.cafeOpenState),
+                cafeOpenState = cafeItem.cafeOpenState,
+                isLast = cafeItem.isLast
+            )
+        }.toPersistentList(),
+        state = when {
+            throwable != null -> CafeListViewState.State.Error(throwable)
+            isLoading -> CafeListViewState.State.Loading
+            else -> CafeListViewState.State.Success
+        }
+    )
+}
+
+@Composable
+private fun getCafeStatusText(cafeOpenState: CafeOpenState): String {
+    return when (cafeOpenState) {
+        is CafeOpenState.Opened -> stringResource(R.string.msg_cafe_open)
+        is CafeOpenState.CloseSoon -> {
+            stringResource(R.string.msg_cafe_close_soon) +
+                cafeOpenState.minutesUntil +
+                getMinuteString(cafeOpenState.minutesUntil)
+        }
+
+        is CafeOpenState.Closed -> stringResource(R.string.msg_cafe_closed)
     }
+}
+
+@Composable
+private fun getMinuteString(closeIn: Int): String {
+    val minuteStringId = when {
+        (closeIn / 10 == 1) -> R.string.msg_cafe_minutes
+        (closeIn % 10 == 1) -> R.string.msg_cafe_minute
+        (closeIn % 10 in 2..4) -> R.string.msg_cafe_minutes_234
+        else -> R.string.msg_cafe_minutes
+    }
+    return stringResource(minuteStringId)
 }

@@ -49,6 +49,7 @@ import com.bunbeauty.shared.presentation.product_details.AdditionItem
 import com.bunbeauty.shared.presentation.product_details.MenuProductAdditionItem
 import com.bunbeauty.shared.presentation.product_details.ProductDetailsState
 import com.bunbeauty.shared.presentation.product_details.ProductDetailsViewModel
+import kotlinx.collections.immutable.persistentListOf
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -137,7 +138,7 @@ class ProductDetailsFragment :
                 onAction(ProductDetailsState.Action.BackClick)
             },
             topActions = if (productDetailsViewState is ProductDetailsViewState.Success) {
-                listOf(
+                persistentListOf(
                     FoodDeliveryCartAction(topCartUi = productDetailsViewState.topCartUi) {
                         val backQueue = findNavController().currentBackStack.value
                         if ((backQueue.size > 1) &&
@@ -150,7 +151,7 @@ class ProductDetailsFragment :
                     }
                 )
             } else {
-                emptyList()
+                persistentListOf()
             },
             actionButton = {
                 if (productDetailsViewState is ProductDetailsViewState.Success) {
