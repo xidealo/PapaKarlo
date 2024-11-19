@@ -21,13 +21,15 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import com.bunbeauty.papakarlo.common.ui.element.topbar.FoodDeliveryToolbarActions
 import com.bunbeauty.papakarlo.common.ui.element.topbar.FoodDeliveryTopAppBar
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FoodDeliveryScaffold(
     title: String? = null,
     backActionClick: (() -> Unit)? = null,
-    topActions: List<FoodDeliveryToolbarActions> = emptyList(),
+    topActions: ImmutableList<FoodDeliveryToolbarActions> = persistentListOf(),
     scrollableState: ScrollableState? = null,
     backgroundColor: Color = FoodDeliveryTheme.colors.mainColors.background,
     @DrawableRes drawableId: Int? = null,
