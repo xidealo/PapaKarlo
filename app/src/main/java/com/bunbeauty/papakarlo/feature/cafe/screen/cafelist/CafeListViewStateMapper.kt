@@ -15,28 +15,27 @@ private const val EMPTY_COUNT = ""
 @Composable
 fun CafeList.DataState.toViewState(): CafeListViewState {
     val throwable = throwable
-    return CafeListViewState(
-        topCartUi = TopCartUi(
-            cost = cartCostAndCount?.cost ?: EMPTY_COST,
-            count = cartCostAndCount?.count ?: EMPTY_COUNT
-        ),
-        cafeList = cafeList.map { cafeItem ->
-            CafeItemAndroid(
-                uuid = cafeItem.uuid,
-                address = cafeItem.address,
-                phone = cafeItem.phone,
-                workingHours = cafeItem.workingHours,
-                cafeStatusText = getCafeStatusText(cafeItem.cafeOpenState),
-                cafeOpenState = cafeItem.cafeOpenState,
-                isLast = cafeItem.isLast
-            )
-        }.toPersistentList(),
-        state = when {
-            throwable != null -> CafeListViewState.State.Error(throwable)
-            isLoading -> CafeListViewState.State.Loading
-            else -> CafeListViewState.State.Success
-        }
-    )
+    return when {
+        throwable != null -> CafeListViewState.Error(throwable = throwable)
+        isLoading -> CafeListViewState.Loading
+        else -> CafeListViewState.Success(
+            topCartUi = TopCartUi(
+                cost = cartCostAndCount?.cost ?: EMPTY_COST,
+                count = cartCostAndCount?.count ?: EMPTY_COUNT
+            ),
+            cafeList = cafeList.map { cafeItem ->
+                CafeItemAndroid(
+                    uuid = cafeItem.uuid,
+                    address = cafeItem.address,
+                    phone = cafeItem.phone,
+                    workingHours = cafeItem.workingHours,
+                    cafeStatusText = getCafeStatusText(cafeItem.cafeOpenState),
+                    cafeOpenState = cafeItem.cafeOpenState,
+                    isLast = cafeItem.isLast
+                )
+            }.toPersistentList()
+        )
+    }
 }
 
 @Composable

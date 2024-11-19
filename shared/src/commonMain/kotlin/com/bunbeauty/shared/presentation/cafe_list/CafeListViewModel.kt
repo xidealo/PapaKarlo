@@ -10,9 +10,6 @@ import com.bunbeauty.shared.extension.launchSafe
 import com.bunbeauty.shared.presentation.base.SharedStateViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
-import kotlin.math.cos
 
 class CafeListViewModel(
     private val cafeInteractor: ICafeInteractor,
@@ -27,7 +24,7 @@ class CafeListViewModel(
 ) {
 
     private var observeCafeListJob: Job? = null
-    private var observeCart: Job? = null
+    private var observeCartJob: Job? = null
 
     override fun reduce(action: CafeList.Action, dataState: CafeList.DataState) {
         when (action) {
@@ -53,8 +50,8 @@ class CafeListViewModel(
     }
 
     private fun observeCart() {
-        observeCart?.cancel()
-        observeCart = sharedScope.launchSafe(
+        observeCartJob?.cancel()
+        observeCartJob = sharedScope.launchSafe(
             block = {
                 observeCartUseCase().collectLatest { cartTotalAndCount ->
                     val cartTotalWithCurrency = cartTotalAndCount.copy(

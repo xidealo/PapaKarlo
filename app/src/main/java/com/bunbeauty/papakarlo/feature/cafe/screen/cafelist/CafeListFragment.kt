@@ -2,7 +2,11 @@ package com.bunbeauty.papakarlo.feature.cafe.screen.cafelist
 
 import android.os.Bundle
 import android.view.View
-import androidx.compose.animation.Crossfade
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.ContentTransform
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -29,6 +33,9 @@ import com.bunbeauty.shared.presentation.cafe_list.CafeList
 import com.bunbeauty.shared.presentation.cafe_list.CafeListViewModel
 import kotlinx.collections.immutable.persistentListOf
 import org.koin.androidx.viewmodel.ext.android.viewModel
+
+private const val ANIMATION_LABEL = "CafeListScreen"
+private const val ANIMATION_DURATION_MILLIS = 200
 
 class CafeListFragment :
     BaseComposeFragment<CafeList.DataState, CafeListViewState, CafeList.Action, CafeList.Event>() {
@@ -61,31 +68,48 @@ class CafeListFragment :
     ) {
         FoodDeliveryScaffold(
             title = stringResource(R.string.title_cafe_list),
-            topActions = persistentListOf(
-                FoodDeliveryCartAction(
-                    topCartUi = cafeListViewState.topCartUi,
-                    onClick = {
-                        onAction(CafeList.Action.OnCartClicked)
-                    }
+            topActions = if (cafeListViewState is CafeListViewState.Success) {
+                persistentListOf(
+                    FoodDeliveryCartAction(
+                        topCartUi = cafeListViewState.topCartUi,
+                        onClick = {
+                            onAction(CafeList.Action.OnCartClicked)
+                        }
+                    )
                 )
-            ),
+            } else {
+                persistentListOf()
+            },
             backgroundColor = FoodDeliveryTheme.colors.mainColors.surface
         ) {
-            Crossfade(
-                targetState = cafeListViewState.state,
-                label = "CafeListScreen"
+            AnimatedContent(
+                targetState = cafeListViewState,
+                label = ANIMATION_LABEL,
+                contentKey = { state ->
+                    state::class.java
+                },
+                transitionSpec = {
+                    ContentTransform(
+                        targetContentEnter = fadeIn(
+                            animationSpec = tween(delayMillis = ANIMATION_DURATION_MILLIS)
+                        ),
+                        initialContentExit = fadeOut(
+                            animationSpec = tween(delayMillis = ANIMATION_DURATION_MILLIS)
+                        )
+                    )
+                }
             ) { state ->
                 when (state) {
-                    is CafeListViewState.State.Error -> ErrorScreen(
+                    is CafeListViewState.Error -> ErrorScreen(
                         mainTextId = R.string.error_cafe_list_loading,
                         onClick = {
                             onAction(CafeList.Action.OnRefreshClicked)
                         }
                     )
 
-                    CafeListViewState.State.Loading -> LoadingScreen()
-                    CafeListViewState.State.Success -> CafeListSuccessScreen(
-                        cafeListViewState.cafeList,
+                    CafeListViewState.Loading -> LoadingScreen()
+                    is CafeListViewState.Success -> CafeListSuccessScreen(
+                        state.cafeList,
                         onAction = onAction
                     )
                 }
@@ -131,7 +155,7 @@ class CafeListFragment :
     private fun CafeListSuccessScreenPreview() {
         FoodDeliveryTheme {
             CafeListScreen(
-                cafeListViewState = CafeListViewState(
+                cafeListViewState = CafeListViewState.Success(
                     cafeList = persistentListOf(
                         CafeItemAndroid(
                             uuid = "",
@@ -164,8 +188,7 @@ class CafeListFragment :
                     topCartUi = TopCartUi(
                         cost = "100",
                         count = "2"
-                    ),
-                    state = CafeListViewState.State.Success
+                    )
                 ),
                 onAction = {}
             )
@@ -177,14 +200,7 @@ class CafeListFragment :
     private fun CafeListLoadingScreenPreview() {
         FoodDeliveryTheme {
             CafeListScreen(
-                cafeListViewState = CafeListViewState(
-                    state = CafeListViewState.State.Loading,
-                    topCartUi = TopCartUi(
-                        cost = "100",
-                        count = "2"
-                    ),
-                    cafeList = persistentListOf()
-                ),
+                cafeListViewState = CafeListViewState.Loading,
                 onAction = {}
             )
         }
@@ -195,14 +211,7 @@ class CafeListFragment :
     private fun CafeListErrorScreenPreview() {
         FoodDeliveryTheme {
             CafeListScreen(
-                cafeListViewState = CafeListViewState(
-                    state = CafeListViewState.State.Error(Throwable()),
-                    topCartUi = TopCartUi(
-                        cost = "100",
-                        count = "2"
-                    ),
-                    cafeList = persistentListOf()
-                ),
+                cafeListViewState = CafeListViewState.Error(Throwable()),
                 onAction = {}
             )
         }

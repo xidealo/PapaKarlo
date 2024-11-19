@@ -2,6 +2,11 @@ package com.bunbeauty.papakarlo.feature.productdetails
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.ContentTransform
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -52,6 +57,9 @@ import com.bunbeauty.shared.presentation.product_details.ProductDetailsViewModel
 import kotlinx.collections.immutable.persistentListOf
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+
+private const val ANIMATION_LABEL = "ProductDetailsFragment"
+private const val ANIMATION_DURATION_MILLIS = 200
 
 class ProductDetailsFragment :
     BaseComposeFragment<ProductDetailsState.DataState, ProductDetailsViewState, ProductDetailsState.Action, ProductDetailsState.Event>() {
@@ -174,26 +182,44 @@ class ProductDetailsFragment :
             },
             backgroundColor = FoodDeliveryTheme.colors.mainColors.surface
         ) {
-            when (productDetailsViewState) {
-                is ProductDetailsViewState.Success -> {
-                    ProductDetailsSuccessScreen(
-                        productDetailsViewState.menuProductUi,
-                        onAction = onAction
+            AnimatedContent(
+                targetState = productDetailsViewState,
+                label = ANIMATION_LABEL,
+                contentKey = { state ->
+                    state::class.java
+                },
+                transitionSpec = {
+                    ContentTransform(
+                        targetContentEnter = fadeIn(
+                            animationSpec = tween(delayMillis = ANIMATION_DURATION_MILLIS)
+                        ),
+                        initialContentExit = fadeOut(
+                            animationSpec = tween(delayMillis = ANIMATION_DURATION_MILLIS)
+                        )
                     )
                 }
-
-                is ProductDetailsViewState.Loading -> {
-                    LoadingScreen()
-                }
-
-                is ProductDetailsViewState.Error -> {
-                    ErrorScreen(mainTextId = R.string.common_error) {
-                        onAction(
-                            ProductDetailsState.Action.Init(
-                                menuProductUuid = menuProductUuid,
-                                selectedAdditionUuidList = additionUuidList
-                            )
+            ) { productDetailsViewState ->
+                when (productDetailsViewState) {
+                    is ProductDetailsViewState.Success -> {
+                        ProductDetailsSuccessScreen(
+                            productDetailsViewState.menuProductUi,
+                            onAction = onAction
                         )
+                    }
+
+                    is ProductDetailsViewState.Loading -> {
+                        LoadingScreen()
+                    }
+
+                    is ProductDetailsViewState.Error -> {
+                        ErrorScreen(mainTextId = R.string.common_error) {
+                            onAction(
+                                ProductDetailsState.Action.Init(
+                                    menuProductUuid = menuProductUuid,
+                                    selectedAdditionUuidList = additionUuidList
+                                )
+                            )
+                        }
                     }
                 }
             }
@@ -429,7 +455,7 @@ class ProductDetailsFragment :
                         newPrice = "280 ₽",
                         description = "Сочная котлетка, сыр Чедр, маринованный огурчик, помидор, " +
                             "красный лук, салат, фирменный соус, булочка с кунжутом",
-                        additionList = listOf(
+                        additionList = persistentListOf(
                             AdditionItem.AdditionHeaderItem(
                                 key = "key1",
                                 uuid = "uuid1",

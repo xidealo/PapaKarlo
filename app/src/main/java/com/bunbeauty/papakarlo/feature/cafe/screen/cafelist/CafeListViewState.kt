@@ -7,14 +7,25 @@ import com.bunbeauty.shared.presentation.base.BaseViewState
 import kotlinx.collections.immutable.ImmutableList
 
 @Immutable
-data class CafeListViewState(
-    val cafeList: ImmutableList<CafeItemAndroid>,
-    val topCartUi: TopCartUi,
+sealed class CafeListViewState(
     val state: State
 ) : BaseViewState {
-    sealed interface State {
-        data object Success : State
-        data object Loading : State
-        data class Error(val throwable: Throwable) : State
+
+    @Immutable
+    data class Success(
+        val cafeList: ImmutableList<CafeItemAndroid>,
+        val topCartUi: TopCartUi
+    ) : CafeListViewState(state = State.SUCCESS)
+
+    @Immutable
+    data object Loading : CafeListViewState(state = State.LOADING)
+
+    @Immutable
+    data class Error(val throwable: Throwable) : CafeListViewState(state = State.ERROR)
+
+    enum class State {
+        LOADING,
+        ERROR,
+        SUCCESS
     }
 }
