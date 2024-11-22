@@ -5,7 +5,6 @@ import com.bunbeauty.papakarlo.util.resources.IResourcesProvider
 import com.bunbeauty.shared.Constants.ADDRESS_DIVIDER
 import com.bunbeauty.shared.domain.model.address.SelectableUserAddress
 import com.bunbeauty.shared.domain.model.address.UserAddress
-import com.bunbeauty.shared.domain.model.cafe.CafeOpenState
 import com.bunbeauty.shared.domain.model.date_time.DateTime
 import com.bunbeauty.shared.domain.model.date_time.Time
 import com.bunbeauty.shared.domain.model.order.OrderAddress
@@ -163,28 +162,5 @@ class StringUtil(
         } else {
             resourcesProvider.getString(R.string.pickup_time)
         }
-    }
-
-    override fun getCafeStatusText(cafeOpenState: CafeOpenState): String {
-        return when (cafeOpenState) {
-            is CafeOpenState.Opened -> resourcesProvider.getString(R.string.msg_cafe_open)
-            is CafeOpenState.CloseSoon -> {
-                resourcesProvider.getString(R.string.msg_cafe_close_soon) +
-                    cafeOpenState.minutesUntil +
-                    getMinuteString(cafeOpenState.minutesUntil)
-            }
-
-            is CafeOpenState.Closed -> resourcesProvider.getString(R.string.msg_cafe_closed)
-        }
-    }
-
-    private fun getMinuteString(closeIn: Int): String {
-        val minuteStringId = when {
-            (closeIn / 10 == 1) -> R.string.msg_cafe_minutes
-            (closeIn % 10 == 1) -> R.string.msg_cafe_minute
-            (closeIn % 10 in 2..4) -> R.string.msg_cafe_minutes_234
-            else -> R.string.msg_cafe_minutes
-        }
-        return resourcesProvider.getString(minuteStringId)
     }
 }

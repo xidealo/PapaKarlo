@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
@@ -22,7 +23,9 @@ fun CafeItem(
 ) {
     FoodDeliveryCard(
         modifier = modifier.fillMaxWidth(),
-        onClick = onClick
+        onClick = onClick,
+        shape = RectangleShape,
+        elevated = false
     ) {
         Column(
             modifier = Modifier
@@ -66,7 +69,8 @@ private fun CafeItemOpenPreview() {
                 workingHours = "9:00 - 22:00",
                 phone = "00000000",
                 cafeOpenState = CafeOpenState.Opened,
-                cafeStatusText = "Open"
+                cafeStatusText = "Open",
+                isLast = true
             ),
             onClick = {}
         )
@@ -84,7 +88,8 @@ private fun CafeItemCloseSoonPreview() {
                 workingHours = "9:00 - 22:00",
                 phone = "00000000",
                 cafeOpenState = CafeOpenState.CloseSoon(minutesUntil = 30),
-                cafeStatusText = "Closed soon 30 min"
+                cafeStatusText = "Closed soon 30 min",
+                isLast = true
             ),
             onClick = {}
         )
@@ -102,7 +107,8 @@ private fun CafeItemClosedPreview() {
                 workingHours = "9:00 - 22:00",
                 phone = "00000000",
                 cafeOpenState = CafeOpenState.Closed,
-                cafeStatusText = "Closed"
+                cafeStatusText = "Closed",
+                isLast = true
             ),
             onClick = {}
         )

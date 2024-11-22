@@ -62,6 +62,7 @@ import com.bunbeauty.shared.domain.model.SuccessLoginDirection
 import com.bunbeauty.shared.domain.model.order.OrderStatus
 import com.bunbeauty.shared.presentation.profile.ProfileState
 import com.bunbeauty.shared.presentation.profile.ProfileViewModel
+import kotlinx.collections.immutable.persistentListOf
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -114,7 +115,7 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
     ) {
         FoodDeliveryScaffold(
             title = stringResource(R.string.title_profile),
-            topActions = listOf(
+            topActions = persistentListOf(
                 FoodDeliveryCartAction(
                     topCartUi = profileUi.topCartUi
                 ) {
