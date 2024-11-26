@@ -10,7 +10,7 @@ import shared
 
 struct CafeItemView: View {
 
-    var cafeItem: CafeItemUi
+    var cafeItem: CafeItem
 
     var body: some View {
         VStack(spacing:0){
@@ -86,14 +86,4 @@ private func getMinuteString(closeIn: Int) -> String {
         minuteStringId = "msg_cafe_minutes"
     }
     return NSLocalizedString(minuteStringId, comment: "")
-}
-
-struct CafeView_Previews: PreviewProvider {
-    static var previews: some View {
-        EmptyView()
-//        CafeItemView(
-//            cafeItem: CafeItem(id: "UUID", address: "Kimry chapaevo 22a", workingHours: "9:00 - 22:00", isOpenMessage: "Open", isOpenColor: Color.green, phone: "8999999999", latitude: 0, longitude: 0
-//            )
-//        )
-    }
 }

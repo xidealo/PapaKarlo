@@ -118,6 +118,7 @@ struct ConsumerCartView: View {
                 mainText: "Что-то пошло не так",
                 extratext: ""
             ){
+                
             }
             }
         }

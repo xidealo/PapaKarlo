@@ -8,13 +8,13 @@ import SwiftUI
 import Foundation
 import shared
 
-struct CafeItemUi:Identifiable {
-    let id:String
-    let address:String
-    let workingHours:String
+struct CafeItem: Identifiable {
+    let id: String
+    let address: String
+    let phone: String
+    let workingHours: String
     let cafeOpenState: CafeOpenState
-    let phone:String
-    let latitude:Float
-    let longitude:Float
+    let latitude: Float
+    let longitude: Float
 }
 
