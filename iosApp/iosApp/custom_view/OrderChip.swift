@@ -15,7 +15,7 @@ struct OrderChip: View {
     var body: some View {
         Text(OrderChip.getStatusName(status: orderStatus))
             .labelSmall(weight: .medium)
-            .foregroundColor(AppColor.surface)
+            .foregroundColor(AppColor.onOrder)
             .padding(.horizontal, 16)
             .padding(.vertical, 8)
             .background(OrderChip.getColor(status: orderStatus))

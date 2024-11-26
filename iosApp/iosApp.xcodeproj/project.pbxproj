@@ -198,6 +198,15 @@
 		023234E028787A360048CF39 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023234DE28787A360048CF39 /* Strings.swift */; };
 		023234E128787A360048CF39 /* Diems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023234DF28787A360048CF39 /* Diems.swift */; };
 		023761C328C3612600FD33BD /* IconImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023761C228C3612600FD33BD /* IconImage.swift */; };
+		023B6B062CDAB33C0051D6E1 /* CommonColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 023B6B052CDAB33C0051D6E1 /* CommonColors.xcassets */; };
+		023B6B072CDAB33C0051D6E1 /* CommonColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 023B6B052CDAB33C0051D6E1 /* CommonColors.xcassets */; };
+		023B6B082CDAB33C0051D6E1 /* CommonColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 023B6B052CDAB33C0051D6E1 /* CommonColors.xcassets */; };
+		023B6B092CDAB33C0051D6E1 /* CommonColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 023B6B052CDAB33C0051D6E1 /* CommonColors.xcassets */; };
+		023B6B0A2CDAB33C0051D6E1 /* CommonColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 023B6B052CDAB33C0051D6E1 /* CommonColors.xcassets */; };
+		023B6B0B2CDAB33C0051D6E1 /* CommonColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 023B6B052CDAB33C0051D6E1 /* CommonColors.xcassets */; };
+		023B6B0C2CDAB33C0051D6E1 /* CommonColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 023B6B052CDAB33C0051D6E1 /* CommonColors.xcassets */; };
+		023B6B0D2CDAB33C0051D6E1 /* CommonColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 023B6B052CDAB33C0051D6E1 /* CommonColors.xcassets */; };
+		023B6B0E2CDAB33C0051D6E1 /* CommonColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 023B6B052CDAB33C0051D6E1 /* CommonColors.xcassets */; };
 		023E247528BFE49200F19676 /* CommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023E247428BFE49200F19676 /* CommentView.swift */; };
 		024670ED29A4F5EB00ACB424 /* CreateAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024670EC29A4F5EB00ACB424 /* CreateAddressView.swift */; };
 		024CBDD828E9D2F1002A39DF /* ChangeCityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024CBDD728E9D2F1002A39DF /* ChangeCityViewModel.swift */; };
@@ -1154,6 +1163,7 @@
 		023234DE28787A360048CF39 /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		023234DF28787A360048CF39 /* Diems.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Diems.swift; sourceTree = "<group>"; };
 		023761C228C3612600FD33BD /* IconImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconImage.swift; sourceTree = "<group>"; };
+		023B6B052CDAB33C0051D6E1 /* CommonColors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = CommonColors.xcassets; sourceTree = "<group>"; };
 		023E247428BFE49200F19676 /* CommentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentView.swift; sourceTree = "<group>"; };
 		024670EC29A4F5EB00ACB424 /* CreateAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAddressView.swift; sourceTree = "<group>"; };
 		024CBDD728E9D2F1002A39DF /* ChangeCityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeCityViewModel.swift; sourceTree = "<group>"; };
@@ -1864,6 +1874,7 @@
 		7555FF7D242A565900829871 /* iosApp */ = {
 			isa = PBXGroup;
 			children = (
+				023B6B052CDAB33C0051D6E1 /* CommonColors.xcassets */,
 				025F78742CD14C4A00C87D99 /* emojiRes */,
 				025F43892CD02A5300C854AF /* usadbaRes */,
 				025F43802CD0297F00C854AF /* legendaRes */,
@@ -2122,6 +2133,7 @@
 				0219B80D2B8FBA3000305E2D /* tandirHouseAssets.xcassets in Resources */,
 				0256E3EE2C4462DF000E48C4 /* tandirHouse.plist in Resources */,
 				0219B7F72B8FB97C00305E2D /* Preview Assets.xcassets in Resources */,
+				023B6B0A2CDAB33C0051D6E1 /* CommonColors.xcassets in Resources */,
 				0219B7F82B8FB97C00305E2D /* Localizable.strings in Resources */,
 				0219B7F92B8FB97C00305E2D /* Assets.xcassets in Resources */,
 				0219B80F2B8FBC3500305E2D /* GoogleService-Info.plist in Resources */,
@@ -2136,6 +2148,7 @@
 				025BF7E82CAB354D00DF0946 /* Preview Assets.xcassets in Resources */,
 				025F43842CD029B500C854AF /* GoogleService-Info.plist in Resources */,
 				025BF7EA2CAB354D00DF0946 /* Localizable.strings in Resources */,
+				023B6B0C2CDAB33C0051D6E1 /* CommonColors.xcassets in Resources */,
 				025F43882CD02A4B00C854AF /* legendaAssets.xcassets in Resources */,
 				025BF7EB2CAB354D00DF0946 /* Assets.xcassets in Resources */,
 				025F43852CD029B500C854AF /* legenda.plist in Resources */,
@@ -2150,6 +2163,7 @@
 				025F43432CD0159400C854AF /* Version.xcconfig in Resources */,
 				025F438E2CD02BCA00C854AF /* usadba.plist in Resources */,
 				025F43462CD0159400C854AF /* Preview Assets.xcassets in Resources */,
+				023B6B0D2CDAB33C0051D6E1 /* CommonColors.xcassets in Resources */,
 				025F43472CD0159400C854AF /* Localizable.strings in Resources */,
 				025F43492CD0159400C854AF /* Assets.xcassets in Resources */,
 				025F438F2CD02BCA00C854AF /* GoogleService-Info.plist in Resources */,
@@ -2164,6 +2178,7 @@
 				025F78652CD14C3400C87D99 /* Version.xcconfig in Resources */,
 				025F78672CD14C3400C87D99 /* Preview Assets.xcassets in Resources */,
 				025F78682CD14C3400C87D99 /* Localizable.strings in Resources */,
+				023B6B0E2CDAB33C0051D6E1 /* CommonColors.xcassets in Resources */,
 				025F78692CD14C3400C87D99 /* Assets.xcassets in Resources */,
 				025F78802CD14DB100C87D99 /* GoogleService-Info.plist in Resources */,
 				025F787E2CD14DB100C87D99 /* emoji.plist in Resources */,
@@ -2178,6 +2193,7 @@
 				026C1FCF2A2691BF00838266 /* djan.plist in Resources */,
 				026C1FC02A2690B900838266 /* Preview Assets.xcassets in Resources */,
 				026C1FC12A2690B900838266 /* Localizable.strings in Resources */,
+				023B6B082CDAB33C0051D6E1 /* CommonColors.xcassets in Resources */,
 				026C1FC22A2690B900838266 /* Assets.xcassets in Resources */,
 				026C1FD32A2691F300838266 /* djanAssets.xcassets in Resources */,
 				028868412A3B9E3D00EC2A22 /* GoogleService-Info.plist in Resources */,
@@ -2192,6 +2208,7 @@
 				027CB0832A346F7B00350EB2 /* Preview Assets.xcassets in Resources */,
 				027CB0842A346F7B00350EB2 /* Localizable.strings in Resources */,
 				027CB0852A346F7B00350EB2 /* Assets.xcassets in Resources */,
+				023B6B092CDAB33C0051D6E1 /* CommonColors.xcassets in Resources */,
 				02FFD2E32A350902000B03E8 /* gustoPub.plist in Resources */,
 				02FFD2E42A3509E3000B03E8 /* gustoPubAssets.xcassets in Resources */,
 				028868422A3BA5AD00EC2A22 /* GoogleService-Info.plist in Resources */,
@@ -2206,6 +2223,7 @@
 				02891FD82BDAEA0D0043B466 /* Preview Assets.xcassets in Resources */,
 				02891FDA2BDAEA0D0043B466 /* Localizable.strings in Resources */,
 				028920212BDAF5A70043B466 /* vkusKavkaza.xcassets in Resources */,
+				023B6B0B2CDAB33C0051D6E1 /* CommonColors.xcassets in Resources */,
 				028920272BDAF5A70043B466 /* vkusKavkaza.plist in Resources */,
 				02891FDB2BDAEA0D0043B466 /* Assets.xcassets in Resources */,
 				0289202D2BDAF5A70043B466 /* GoogleService-Info.plist in Resources */,
@@ -2220,6 +2238,7 @@
 				02ADC3B529D9D2610062A141 /* yuliarAssets.xcassets in Resources */,
 				02ADC3A329D9D0880062A141 /* Preview Assets.xcassets in Resources */,
 				02ADC3A429D9D0880062A141 /* Localizable.strings in Resources */,
+				023B6B072CDAB33C0051D6E1 /* CommonColors.xcassets in Resources */,
 				02ADC3BA29D9F8820062A141 /* Assets.xcassets in Resources */,
 				026C1FD02A2691C600838266 /* yuliar.plist in Resources */,
 				0288683D2A3B9A4900EC2A22 /* GoogleService-Info.plist in Resources */,
@@ -2234,6 +2253,7 @@
 				02ADC3B929D9F85E0062A141 /* papakarloAssets.xcassets in Resources */,
 				058557D9273AAEEB004C7B11 /* Preview Assets.xcassets in Resources */,
 				0265D2A12AC9B1C200B862FF /* pepe.plist in Resources */,
+				023B6B062CDAB33C0051D6E1 /* CommonColors.xcassets in Resources */,
 				02A99D5529CBA0BE004D2F7B /* Localizable.strings in Resources */,
 				058557BB273AAA24004C7B11 /* Assets.xcassets in Resources */,
 				0265D2A02AC9B1BF00B862FF /* GoogleService-Info.plist in Resources */,

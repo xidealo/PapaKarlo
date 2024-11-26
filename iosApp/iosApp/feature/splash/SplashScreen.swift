@@ -65,7 +65,6 @@ struct HiddenNavigationBar: ViewModifier {
             .navigationBarHidden(true)
             .navigationBarBackButtonHidden(true)
             .navigationBarTitle("", displayMode: .inline)
-            .preferredColorScheme(.light)
     }
 }
 

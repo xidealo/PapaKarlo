@@ -63,7 +63,7 @@ class MenuViewModel : ObservableObject {
                         productUuid: menuProduct.uuid,
                         name: menuProduct.name,
                         newPrice: String(menuProduct.newPrice) + Strings.CURRENCY,
-                        oldPrice: oldPriceInt == 0 ? "" : String(oldPriceInt) + Strings.CURRENCY,
+                        oldPrice: oldPriceInt == 0 ? nil : String(oldPriceInt) + Strings.CURRENCY,
                         photoLink: menuProduct.photoLink,
                         hasAdditions: !menuProduct.additionGroups.isEmpty
                     )

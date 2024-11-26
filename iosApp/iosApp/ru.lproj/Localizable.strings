@@ -78,7 +78,7 @@
 "title_pickup_addresses" = "Адрес самовывоза";
 
 //SelectablePaymentMethod
-"selectable_payment_method" = "Спопсоб оплаты";
+"selectable_payment_method" = "Способ оплаты";
 
 "create_order_discount" = "Скидка";
 

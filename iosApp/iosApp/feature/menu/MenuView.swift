@@ -105,7 +105,6 @@ struct MenuView: View {
         .background(AppColor.background2)
         .navigationBarTitle("")
         .hiddenNavigationBarStyle()
-        .preferredColorScheme(.light)
         .overlay(
             overlayView: ToastView(
                 toast: Toast(title: "Добавлено"),
