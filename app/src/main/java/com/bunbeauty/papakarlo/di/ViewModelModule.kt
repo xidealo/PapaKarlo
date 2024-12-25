@@ -173,7 +173,7 @@ fun viewModelModule() = module {
     }
     viewModel {
         UpdateViewModel(
-            getLinkListUseCase = get()
+            getLinkUseCase = get()
         )
     }
 }
