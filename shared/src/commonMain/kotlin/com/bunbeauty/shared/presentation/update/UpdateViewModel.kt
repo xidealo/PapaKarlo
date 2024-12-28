@@ -1,31 +1,54 @@
 package com.bunbeauty.shared.presentation.update
 
-import com.bunbeauty.shared.domain.feature.link.GetLinkListUseCase
+import com.bunbeauty.shared.domain.feature.link.GetLinkUseCase
 import com.bunbeauty.shared.domain.model.link.LinkType
 import com.bunbeauty.shared.extension.launchSafe
-import com.bunbeauty.shared.presentation.base.SharedViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import com.bunbeauty.shared.presentation.base.SharedStateViewModel
 
 class UpdateViewModel(
-    private val getLinkListUseCase: GetLinkListUseCase
-) : SharedViewModel() {
+    private val getLinkUseCase: GetLinkUseCase,
+) : SharedStateViewModel<UpdateState.DataState, UpdateState.Action, UpdateState.Event>(
+    initDataState = UpdateState.DataState(
+        link = null,
+        state = UpdateState.DataState.State.LOADING
+    )
+) {
 
-    private val mutableUiState = MutableStateFlow<UpdateUiState>(UpdateUiState.Loading)
-    val uiState = mutableUiState.asStateFlow()
+    override fun reduce(action: UpdateState.Action, dataState: UpdateState.DataState) {
+        when (action) {
+            is UpdateState.Action.Init -> updateLink(linkType = action.linkType)
 
-    fun updateGooglePlayLink() {
+            is UpdateState.Action.UpdateClick -> {
+                addEvent {
+                    UpdateState.Event.NavigateToUpdateEvent(linkValue = action.linkValue)
+                }
+            }
+        }
+    }
+
+    private fun updateLink(linkType: LinkType) {
         sharedScope.launchSafe(
             block = {
-                mutableUiState.value = getLinkListUseCase.invoke().find { link ->
-                    link.type == LinkType.GOOGLE_PLAY
-                }?.let { link ->
-                    UpdateUiState.Success(link)
-                } ?: UpdateUiState.Error
+                val link = getLinkUseCase(linkType = linkType)
+                setState {
+                    copy(
+                        state = if (link == null) {
+                            UpdateState.DataState.State.ERROR
+                        } else {
+                            UpdateState.DataState.State.SUCCESS
+                        },
+                        link = link
+                    )
+                }
             },
             onError = {
-                mutableUiState.value = UpdateUiState.Error
+                setState {
+                    copy(
+                        state = UpdateState.DataState.State.ERROR
+                    )
+                }
             }
         )
     }
+
 }

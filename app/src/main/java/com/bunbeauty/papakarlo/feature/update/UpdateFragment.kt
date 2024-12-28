@@ -1,6 +1,5 @@
 package com.bunbeauty.papakarlo.feature.update
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -17,7 +16,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -26,80 +24,98 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.common.BaseFragmentWithSharedViewModel
+import com.bunbeauty.papakarlo.common.BaseComposeFragment
 import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
 import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold
-import com.bunbeauty.papakarlo.databinding.LayoutComposeBinding
-import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.shared.domain.model.link.Link
 import com.bunbeauty.shared.domain.model.link.LinkType
-import com.bunbeauty.shared.presentation.update.UpdateUiState
+import com.bunbeauty.shared.presentation.update.UpdateState
 import com.bunbeauty.shared.presentation.update.UpdateViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class UpdateFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
+class UpdateFragment :
+    BaseComposeFragment<UpdateState.DataState, UpdateViewState, UpdateState.Action, UpdateState.Event>() {
 
-    private val viewModel: UpdateViewModel by viewModel()
-    override val viewBinding by viewBinding(LayoutComposeBinding::bind)
+    override val viewModel: UpdateViewModel by viewModel()
 
-    @SuppressLint("UnsafeRepeatOnLifecycleDetector")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         overrideBackPressedCallback()
         super.onViewCreated(view, savedInstanceState)
-
-        launchOnLifecycle {
-            viewModel.updateGooglePlayLink()
-        }
-
-        viewBinding.root.setContentWithTheme {
-            val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-            UpdateScreen(
-                uiState = uiState,
-                onRepeatClick = viewModel::updateGooglePlayLink
+        viewModel.onAction(
+            UpdateState.Action.Init(
+                linkType = LinkType.GOOGLE_PLAY
             )
+        )
+    }
+
+    @Composable
+    override fun Screen(viewState: UpdateViewState, onAction: (UpdateState.Action) -> Unit) {
+        UpdateScreen(
+            viewState = viewState,
+            onAction = onAction
+        )
+    }
+
+    @Composable
+    override fun UpdateState.DataState.mapState(): UpdateViewState {
+        return UpdateViewState(
+            state = when (state) {
+                UpdateState.DataState.State.LOADING -> UpdateViewState.State.Loading
+                UpdateState.DataState.State.SUCCESS -> UpdateViewState.State.Success(link = link)
+                UpdateState.DataState.State.ERROR -> UpdateViewState.State.Error
+            }
+        )
+    }
+
+    override fun handleEvent(event: UpdateState.Event) {
+        when (event) {
+            is UpdateState.Event.NavigateToUpdateEvent -> {
+                val uri = Uri.parse(event.linkValue)
+                val intent = Intent(Intent.ACTION_VIEW, uri)
+                startActivity(intent)
+            }
         }
     }
 
     @Composable
     private fun UpdateScreen(
-        uiState: UpdateUiState,
-        onRepeatClick: () -> Unit
+        viewState: UpdateViewState,
+        onAction: (UpdateState.Action) -> Unit
     ) {
         FoodDeliveryScaffold(
-            title = stringResource(R.string.title_update_new_app_version),
-            actionButton = {
-                if (uiState is UpdateUiState.Success) {
-                    MainButton(
-                        modifier = Modifier.padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
-                        textStringId = R.string.action_update_update
-                    ) {
-                        val uri = Uri.parse(uiState.googlePayLink.linkValue)
-                        val intent = Intent(Intent.ACTION_VIEW, uri)
-                        startActivity(intent)
-                    }
-                }
-            }
+            title = stringResource(R.string.title_update_new_app_version)
         ) {
-            when (uiState) {
-                UpdateUiState.Loading -> LoadingScreen()
-                UpdateUiState.Error -> ErrorScreen(
+            when (viewState.state) {
+                UpdateViewState.State.Loading -> LoadingScreen()
+                UpdateViewState.State.Error -> ErrorScreen(
                     mainTextId = R.string.error_common_data_loading,
-                    onClick = onRepeatClick
+                    onClick = {
+                        onAction(
+                            UpdateState.Action.Init(
+                                linkType = LinkType.GOOGLE_PLAY
+                            )
+                        )
+                    }
                 )
-                is UpdateUiState.Success -> UpdateScreenSuccess()
+
+                is UpdateViewState.State.Success -> UpdateScreenSuccess(
+                    viewState = viewState.state,
+                    onAction = onAction
+                )
             }
         }
     }
 
     @Composable
-    private fun UpdateScreenSuccess() {
+    private fun UpdateScreenSuccess(
+        viewState: UpdateViewState.State.Success,
+        onAction: (UpdateState.Action) -> Unit
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -124,6 +140,7 @@ class UpdateFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) 
                     contentDescription = stringResource(R.string.description_google_play)
                 )
             }
+
             Text(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -144,6 +161,14 @@ class UpdateFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) 
             )
 
             Spacer(modifier = Modifier.weight(1f))
+
+            MainButton(
+                textStringId = R.string.action_update_update
+            ) {
+                viewState.link?.linkValue?.let { link ->
+                    onAction(UpdateState.Action.UpdateClick(linkValue = link))
+                }
+            }
         }
     }
 
@@ -152,14 +177,16 @@ class UpdateFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) 
     private fun UpdateScreenSuccessPreview() {
         FoodDeliveryTheme {
             UpdateScreen(
-                uiState = UpdateUiState.Success(
-                    Link(
-                        uuid = "1",
-                        type = LinkType.GOOGLE_PLAY,
-                        linkValue = "https://play.google.com/store/apps/details?id=1"
+                viewState = UpdateViewState(
+                    state = UpdateViewState.State.Success(
+                        Link(
+                            uuid = "1",
+                            type = LinkType.GOOGLE_PLAY,
+                            linkValue = "https://play.google.com/store/apps/details?id=1"
+                        )
                     )
                 ),
-                onRepeatClick = {}
+                onAction = {}
             )
         }
     }
@@ -169,8 +196,10 @@ class UpdateFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) 
     private fun UpdateScreenErrorPreview() {
         FoodDeliveryTheme {
             UpdateScreen(
-                uiState = UpdateUiState.Error,
-                onRepeatClick = {}
+                viewState = UpdateViewState(
+                    state = UpdateViewState.State.Error
+                ),
+                onAction = {}
             )
         }
     }
@@ -180,8 +209,10 @@ class UpdateFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) 
     private fun UpdateScreenLoadingPreview() {
         FoodDeliveryTheme {
             UpdateScreen(
-                uiState = UpdateUiState.Loading,
-                onRepeatClick = {}
+                viewState = UpdateViewState(
+                    state = UpdateViewState.State.Loading
+                ),
+                onAction = {}
             )
         }
     }
