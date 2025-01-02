@@ -18,7 +18,7 @@ import com.bunbeauty.shared.data.network.model.ForceUpdateVersionServer
 import com.bunbeauty.shared.data.network.model.LinkServer
 import com.bunbeauty.shared.data.network.model.ListServer
 import com.bunbeauty.shared.data.network.model.MenuProductServer
-import com.bunbeauty.shared.data.network.model.OrderAvailableServer
+import com.bunbeauty.shared.data.network.model.WorkInfoServer
 import com.bunbeauty.shared.data.network.model.PaymentMethodServer
 import com.bunbeauty.shared.data.network.model.PaymentServer
 import com.bunbeauty.shared.data.network.model.RecommendationDataServer
@@ -205,9 +205,9 @@ internal class NetworkConnectorImpl(
         )
     }
 
-    override suspend fun getIsOrderAvailableData(): ApiResult<OrderAvailableServer> {
+    override suspend fun getWorkInfo(): ApiResult<WorkInfoServer> {
         return getData(
-            path = "order_availability",
+            path = "work_info",
             parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuidProvider.companyUuid)
         )
     }

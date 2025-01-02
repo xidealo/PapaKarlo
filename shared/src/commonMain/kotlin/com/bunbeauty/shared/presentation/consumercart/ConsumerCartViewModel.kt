@@ -15,6 +15,7 @@ import com.bunbeauty.shared.domain.feature.cart.RemoveCartProductUseCase
 import com.bunbeauty.shared.domain.feature.menu.AddMenuProductUseCase
 import com.bunbeauty.shared.domain.feature.motivation.GetMotivationUseCase
 import com.bunbeauty.shared.domain.feature.motivation.Motivation
+import com.bunbeauty.shared.domain.feature.orderavailable.GetWorkInfoUseCase
 import com.bunbeauty.shared.domain.feature.orderavailable.IsOrderAvailableUseCase
 import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
@@ -32,6 +33,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 private const val CONSUMER_CART_VIEW_MODEL_TAG = "ConsumerCartViewModel"
+
 class ConsumerCartViewModel(
     private val userInteractor: IUserInteractor,
     private val cartProductInteractor: ICartProductInteractor,
@@ -41,7 +43,7 @@ class ConsumerCartViewModel(
     private val getRecommendationsUseCase: GetRecommendationsUseCase,
     private val getMotivationUseCase: GetMotivationUseCase,
     private val analyticService: AnalyticService,
-    private val isOrderAvailableUseCase: IsOrderAvailableUseCase
+    private val isOrderAvailableUseCase: IsOrderAvailableUseCase,
 ) : SharedStateViewModel<ConsumerCart.DataState, ConsumerCart.Action, ConsumerCart.Event>(
     ConsumerCart.DataState(
         state = ConsumerCart.DataState.State.LOADING,
@@ -125,7 +127,7 @@ class ConsumerCartViewModel(
     private fun ConsumerCart.DataState.copyWith(
         consumerCart: ConsumerCartDomain?,
         motivation: Motivation?,
-        recommendationList: List<MenuProduct>
+        recommendationList: List<MenuProduct>,
     ): ConsumerCart.DataState {
         return if (consumerCart is ConsumerCartDomain.WithProducts) {
             copy(
