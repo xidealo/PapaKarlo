@@ -111,11 +111,9 @@ class CreateOrderFragment :
                             .fillMaxWidth()
                             .padding(horizontal = 16.dp)
                             .padding(bottom = 8.dp),
-                        optionResIdList = listOf(
-                            R.string.action_create_order_delivery,
-                            R.string.action_create_order_pickup
-                        ),
+                        optionResIdList = viewState.switcherOptionList,
                         position = viewState.switcherPosition,
+                        isLoading = viewState.isLoadingSwitcher,
                         onPositionChanged = { position ->
                             focusManager.clearFocus()
                             onAction(CreateOrder.Action.ChangeMethod(position))
@@ -242,25 +240,56 @@ class CreateOrderFragment :
         onAction: (CreateOrder.Action) -> Unit,
         modifier: Modifier = Modifier
     ) {
-        if (viewState.isDelivery) {
-            NavigationCardWithDivider(
-                modifier = modifier,
-                label = stringResource(R.string.delivery_address),
-                value = viewState.deliveryAddress,
-                clickable = viewState.isFieldsEnabled,
-                onClick = {
-                    if (viewState.deliveryAddress == null) {
-                        onAction(CreateOrder.Action.AddAddressClick)
-                    } else {
-                        onAction(CreateOrder.Action.DeliveryAddressClick)
+        when (viewState.workType) {
+            CreateOrderViewState.WorkType.Delivery -> {
+                NavigationCardWithDivider(
+                    modifier = modifier,
+                    label = stringResource(R.string.delivery_address),
+                    value = viewState.deliveryAddress,
+                    clickable = viewState.isFieldsEnabled,
+                    onClick = {
+                        if (viewState.deliveryAddress == null) {
+                            onAction(CreateOrder.Action.AddAddressClick)
+                        } else {
+                            onAction(CreateOrder.Action.DeliveryAddressClick)
+                        }
                     }
+                )
+            }
+
+            is CreateOrderViewState.WorkType.DeliveryAndPickup -> {
+                if (viewState.workType.isDelivery) {
+                    NavigationCardWithDivider(
+                        modifier = modifier,
+                        label = stringResource(R.string.delivery_address),
+                        value = viewState.deliveryAddress,
+                        clickable = viewState.isFieldsEnabled,
+                        onClick = {
+                            if (viewState.deliveryAddress == null) {
+                                onAction(CreateOrder.Action.AddAddressClick)
+                            } else {
+                                onAction(CreateOrder.Action.DeliveryAddressClick)
+                            }
+                        }
+                    )
+                } else {
+                    NavigationCardWithDivider(
+                        modifier = modifier,
+                        label = stringResource(id = R.string.pickup_address),
+                        value = viewState.pickupAddress.orEmpty(),
+                        clickable = viewState.isFieldsEnabled,
+                        onClick = {
+                            focusManager.clearFocus()
+                            onAction(CreateOrder.Action.PickupAddressClick)
+                        }
+                    )
                 }
-            )
-        } else {
-            NavigationCardWithDivider(
+            }
+
+            CreateOrderViewState.WorkType.Pickup -> NavigationCardWithDivider(
                 modifier = modifier,
                 label = stringResource(id = R.string.pickup_address),
-                value = viewState.pickupAddress ?: "",
+                value = viewState.pickupAddress.orEmpty(),
                 clickable = viewState.isFieldsEnabled,
                 onClick = {
                     focusManager.clearFocus()
@@ -268,6 +297,7 @@ class CreateOrderFragment :
                 }
             )
         }
+
         if (viewState.isAddressErrorShown) {
             ErrorText(
                 modifier = Modifier
@@ -625,7 +655,7 @@ class CreateOrderFragment :
         FoodDeliveryTheme {
             Screen(
                 viewState = CreateOrderViewState(
-                    isDelivery = true,
+                    workType = CreateOrderViewState.WorkType.DeliveryAndPickup(isDelivery = true),
                     deliveryAddress = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
                     pickupAddress = null,
                     isAddressErrorShown = false,
@@ -667,7 +697,12 @@ class CreateOrderFragment :
                         isShown = false,
                         paymentMethodList = persistentListOf()
                     ),
-                    isOrderCreationEnabled = false
+                    isOrderCreationEnabled = false,
+                    switcherOptionList = persistentListOf(
+                        "Доставка",
+                        "Самовывоз"
+                    ),
+                    isLoadingSwitcher = false
                 ),
                 onAction = {}
             )
@@ -676,11 +711,11 @@ class CreateOrderFragment :
 
     @Preview(showSystemUi = true)
     @Composable
-    private fun CartTotalSuccessPreview() {
+    private fun SelectedDeliveryPreview() {
         FoodDeliveryTheme {
             Screen(
                 viewState = CreateOrderViewState(
-                    isDelivery = true,
+                    workType = CreateOrderViewState.WorkType.DeliveryAndPickup(isDelivery = true),
                     deliveryAddress = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
                     pickupAddress = null,
                     isAddressErrorShown = false,
@@ -728,7 +763,12 @@ class CreateOrderFragment :
                         isShown = false,
                         paymentMethodList = persistentListOf()
                     ),
-                    isOrderCreationEnabled = true
+                    isOrderCreationEnabled = true,
+                    switcherOptionList = persistentListOf(
+                        "Доставка",
+                        "Самовывоз"
+                    ),
+                    isLoadingSwitcher = false
                 ),
                 onAction = {}
             )
@@ -737,11 +777,76 @@ class CreateOrderFragment :
 
     @Preview(showSystemUi = true)
     @Composable
-    private fun PickUpPreview() {
+    private fun OnlyDeliveryPreview() {
         FoodDeliveryTheme {
             Screen(
                 viewState = CreateOrderViewState(
-                    isDelivery = false,
+                    workType = CreateOrderViewState.WorkType.Delivery,
+                    deliveryAddress = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
+                    pickupAddress = null,
+                    isAddressErrorShown = false,
+                    comment = "Коммент",
+                    deferredTime = "Как можно скорее",
+                    deferredTimeStringId = R.string.delivery_time,
+                    selectedPaymentMethod = PaymentMethodUI(
+                        uuid = "",
+                        name = "Наличка",
+                        value = PaymentMethodValueUI(
+                            value = "Наличка",
+                            valueToCopy = "Наличка"
+                        )
+                    ),
+                    isPaymentMethodErrorShown = false,
+                    showChange = true,
+                    change = "",
+                    withoutChangeChecked = false,
+                    withoutChange = "Без сдачи",
+                    changeFrom = "Cдача с",
+                    isChangeErrorShown = false,
+                    cartTotal = CartTotalUI.Success(
+                        motivation = MotivationUi.MinOrderCost("800 ₽"),
+                        discount = "10%",
+                        deliveryCost = "100 ₽",
+                        oldFinalCost = "700 ₽",
+                        newFinalCost = "650 ₽"
+                    ),
+                    isLoading = false,
+                    deliveryAddressList = DeliveryAddressListUI(
+                        isShown = false,
+                        addressList = persistentListOf()
+                    ),
+                    pickupAddressList = PickupAddressListUI(
+                        isShown = false,
+                        addressList = persistentListOf()
+                    ),
+                    isDeferredTimeShown = false,
+                    timePicker = TimePickerUI(
+                        isShown = false,
+                        minTime = TimeUI(0, 0),
+                        initialTime = TimeUI(0, 0)
+                    ),
+                    paymentMethodList = PaymentMethodListUI(
+                        isShown = false,
+                        paymentMethodList = persistentListOf()
+                    ),
+                    isOrderCreationEnabled = true,
+                    switcherOptionList = persistentListOf(
+                        "Доставка"
+                    ),
+                    isLoadingSwitcher = false
+                ),
+                onAction = {}
+            )
+        }
+    }
+
+    @Preview(showSystemUi = true)
+    @Composable
+    private fun SelectedPickUpPreview() {
+        FoodDeliveryTheme {
+            Screen(
+                viewState = CreateOrderViewState(
+                    workType = CreateOrderViewState.WorkType.DeliveryAndPickup(isDelivery = false),
                     deliveryAddress = null,
                     pickupAddress = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
                     isAddressErrorShown = false,
@@ -789,7 +894,77 @@ class CreateOrderFragment :
                         isShown = false,
                         paymentMethodList = persistentListOf()
                     ),
-                    isOrderCreationEnabled = true
+                    isOrderCreationEnabled = true,
+                    switcherOptionList = persistentListOf(
+                        "Доставка",
+                        "Самовывоз"
+                    ),
+                    isLoadingSwitcher = false
+                ),
+                onAction = {}
+            )
+        }
+    }
+
+    @Preview(showSystemUi = true)
+    @Composable
+    private fun OnlyPickUpPreview() {
+        FoodDeliveryTheme {
+            Screen(
+                viewState = CreateOrderViewState(
+                    workType = CreateOrderViewState.WorkType.Pickup,
+                    deliveryAddress = null,
+                    pickupAddress = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
+                    isAddressErrorShown = false,
+                    comment = "",
+                    deferredTime = "18:20",
+                    deferredTimeStringId = R.string.pickup_time,
+                    selectedPaymentMethod = PaymentMethodUI(
+                        uuid = "Коммент",
+                        name = "Наличка",
+                        value = PaymentMethodValueUI(
+                            value = "Наличка",
+                            valueToCopy = "Наличка"
+                        )
+                    ),
+                    isPaymentMethodErrorShown = false,
+                    showChange = true,
+                    withoutChange = "Без сдачи",
+                    changeFrom = "Cдача с",
+                    withoutChangeChecked = false,
+                    change = "100",
+                    isChangeErrorShown = false,
+                    cartTotal = CartTotalUI.Success(
+                        motivation = null,
+                        discount = null,
+                        deliveryCost = null,
+                        oldFinalCost = null,
+                        newFinalCost = "650 ₽"
+                    ),
+                    isLoading = false,
+                    deliveryAddressList = DeliveryAddressListUI(
+                        isShown = false,
+                        addressList = persistentListOf()
+                    ),
+                    pickupAddressList = PickupAddressListUI(
+                        isShown = false,
+                        addressList = persistentListOf()
+                    ),
+                    isDeferredTimeShown = false,
+                    timePicker = TimePickerUI(
+                        isShown = false,
+                        minTime = TimeUI(0, 0),
+                        initialTime = TimeUI(0, 0)
+                    ),
+                    paymentMethodList = PaymentMethodListUI(
+                        isShown = false,
+                        paymentMethodList = persistentListOf()
+                    ),
+                    isOrderCreationEnabled = true,
+                    switcherOptionList = persistentListOf(
+                        "Самовывоз"
+                    ),
+                    isLoadingSwitcher = false
                 ),
                 onAction = {}
             )
@@ -802,7 +977,7 @@ class CreateOrderFragment :
         FoodDeliveryTheme {
             Screen(
                 viewState = CreateOrderViewState(
-                    isDelivery = false,
+                    workType = CreateOrderViewState.WorkType.DeliveryAndPickup(isDelivery = false),
                     deliveryAddress = null,
                     pickupAddress = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
                     isAddressErrorShown = false,
@@ -850,7 +1025,12 @@ class CreateOrderFragment :
                         isShown = false,
                         paymentMethodList = persistentListOf()
                     ),
-                    isOrderCreationEnabled = true
+                    isOrderCreationEnabled = true,
+                    switcherOptionList = persistentListOf(
+                        "Доставка",
+                        "Самовывоз"
+                    ),
+                    isLoadingSwitcher = true
                 ),
                 onAction = {}
             )
@@ -863,7 +1043,7 @@ class CreateOrderFragment :
         FoodDeliveryTheme {
             Screen(
                 viewState = CreateOrderViewState(
-                    isDelivery = false,
+                    workType = CreateOrderViewState.WorkType.DeliveryAndPickup(isDelivery = false),
                     deliveryAddress = null,
                     pickupAddress = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
                     isAddressErrorShown = true,
@@ -904,7 +1084,12 @@ class CreateOrderFragment :
                         isShown = false,
                         paymentMethodList = persistentListOf()
                     ),
-                    isOrderCreationEnabled = true
+                    isOrderCreationEnabled = true,
+                    switcherOptionList = persistentListOf(
+                        "Доставка",
+                        "Самовывоз"
+                    ),
+                    isLoadingSwitcher = false
                 ),
                 onAction = {}
             )

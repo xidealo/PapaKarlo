@@ -8,6 +8,7 @@ import com.bunbeauty.shared.domain.feature.cafe.GetSelectableCafeListUseCase
 import com.bunbeauty.shared.domain.feature.city.GetSelectedCityTimeZoneUseCase
 import com.bunbeauty.shared.domain.feature.motivation.GetMotivationUseCase
 import com.bunbeauty.shared.domain.feature.order.CreateOrderUseCase
+import com.bunbeauty.shared.domain.feature.orderavailable.GetWorkInfoUseCase
 import com.bunbeauty.shared.domain.feature.orderavailable.IsOrderAvailableUseCase
 import com.bunbeauty.shared.domain.feature.payment.GetSelectablePaymentMethodListUseCase
 import com.bunbeauty.shared.domain.feature.payment.SavePaymentMethodUseCase
@@ -16,6 +17,7 @@ import com.bunbeauty.shared.domain.interactor.cart.GetCartTotalFlowUseCase
 import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
 import com.bunbeauty.shared.domain.model.date_time.Time
+import com.bunbeauty.shared.domain.model.order.WorkInfo
 import com.bunbeauty.shared.domain.use_case.address.GetSelectableUserAddressListUseCase
 import com.bunbeauty.shared.domain.use_case.address.SaveSelectedUserAddressUseCase
 import com.bunbeauty.shared.domain.use_case.deferred_time.GetMinTimeUseCase
@@ -42,7 +44,7 @@ class CreateOrderViewModel(
     private val saveSelectedUserAddress: SaveSelectedUserAddressUseCase,
     private val getSelectablePaymentMethodListUseCase: GetSelectablePaymentMethodListUseCase,
     private val savePaymentMethodUseCase: SavePaymentMethodUseCase,
-    private val isOrderAvailableUseCase: IsOrderAvailableUseCase,
+    private val getWorkInfoUseCase: GetWorkInfoUseCase,
 ) : SharedStateViewModel<CreateOrder.DataState, CreateOrder.Action, CreateOrder.Event>(
     initDataState = CreateOrder.DataState(
         isDelivery = true,
@@ -57,7 +59,7 @@ class CreateOrderViewModel(
         selectedPaymentMethod = null,
         cartTotal = CreateOrder.CartTotal.Loading,
         isLoading = true,
-        isOrderCreationEnabled = false
+        workType = CreateOrder.DataState.WorkType.DELIVERY_AND_PICKUP
     )
 ) {
 
@@ -503,7 +505,9 @@ class CreateOrderViewModel(
                         isDelivery = isDelivery
                     )
                     val motivationData = motivation?.toMotivationData()
-                    val orderAvailable = isOrderAvailableUseCase()
+                    val workInfoType =
+                        getWorkInfoUseCase()?.workInfoType
+                            ?: WorkInfo.WorkInfoType.DELIVERY_AND_PICKUP
 
                     setState {
                         copy(
@@ -521,8 +525,17 @@ class CreateOrderViewModel(
                                 newFinalCost = "${cartTotal.newFinalCost} $RUBLE_CURRENCY",
                                 newFinalCostValue = cartTotal.newFinalCost
                             ),
-                            isOrderCreationEnabled = motivationData !is MotivationData.MinOrderCost &&
-                                    orderAvailable
+                            workType = getWorkType(
+                                motivationData = motivationData,
+                                workType = workInfoType
+                            ),
+                            isDelivery = when (workInfoType) {
+                                WorkInfo.WorkInfoType.DELIVERY -> true
+                                WorkInfo.WorkInfoType.PICKUP -> false
+                                WorkInfo.WorkInfoType.DELIVERY_AND_PICKUP -> isDelivery
+                                WorkInfo.WorkInfoType.CLOSED -> true
+                            },
+                            isLoadingSwitcher = false
                         )
                     }
                 }
@@ -531,6 +544,22 @@ class CreateOrderViewModel(
                 Logger.logE(CREATION_ORDER_VIEW_MODEL_TAG, error.stackTraceToString())
             }
         )
+    }
+
+    private fun getWorkType(
+        motivationData: MotivationData?,
+        workType: WorkInfo.WorkInfoType,
+    ): CreateOrder.DataState.WorkType {
+        return if (motivationData is MotivationData.MinOrderCost) {
+            CreateOrder.DataState.WorkType.CLOSED
+        } else {
+            when (workType) {
+                WorkInfo.WorkInfoType.DELIVERY -> CreateOrder.DataState.WorkType.DELIVERY
+                WorkInfo.WorkInfoType.PICKUP -> CreateOrder.DataState.WorkType.PICKUP
+                WorkInfo.WorkInfoType.DELIVERY_AND_PICKUP -> CreateOrder.DataState.WorkType.DELIVERY_AND_PICKUP
+                WorkInfo.WorkInfoType.CLOSED -> CreateOrder.DataState.WorkType.CLOSED
+            }
+        }
     }
 
     private fun getExtendedComment(
