@@ -9,7 +9,6 @@ import com.bunbeauty.shared.domain.feature.city.GetSelectedCityTimeZoneUseCase
 import com.bunbeauty.shared.domain.feature.motivation.GetMotivationUseCase
 import com.bunbeauty.shared.domain.feature.order.CreateOrderUseCase
 import com.bunbeauty.shared.domain.feature.orderavailable.GetWorkInfoUseCase
-import com.bunbeauty.shared.domain.feature.orderavailable.IsOrderAvailableUseCase
 import com.bunbeauty.shared.domain.feature.payment.GetSelectablePaymentMethodListUseCase
 import com.bunbeauty.shared.domain.feature.payment.SavePaymentMethodUseCase
 import com.bunbeauty.shared.domain.interactor.cafe.ICafeInteractor
