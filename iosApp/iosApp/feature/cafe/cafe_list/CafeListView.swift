@@ -10,90 +10,106 @@ import shared
 
 struct CafeListView: View {
     
-    @State var cafeViewState = CafeListState(
-        cafeList: [],
-        cartCostAndCount: nil,
-        state: CafeListState.StateLoading(),
-        eventList: []
-    )
+    @State var cafeViewState = CafeListViewState(state: .loading)
     
     var viewModel = CafeListViewModel(
-        cafeInteractor: iosComponent.provideCafeInteractor(), 
+        cafeInteractor: iosComponent.provideCafeInteractor(),
         observeCafeWithOpenStateListUseCase: iosComponent.provideObserveCafeWithOpenStateListUseCase(),
         observeCartUseCase: iosComponent.provideObserveCartUseCase()
     )
     
     @State var listener: Closeable? = nil
+    @State var eventsListener: Closeable? = nil
     
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
-
+    
     var body: some View {
-            VStack(spacing:0){
-                switch(cafeViewState.state){
-                case is CafeListState.StateLoading : LoadingView()
-                case is CafeListState.StateSuccess : SuccessCafeListView(
-                    cafeList: cafeViewState.cafeList.map({ cafe in
-                        CafeItemUi(
-                            id: cafe.uuid,
-                            address: cafe.address,
-                            workingHours: cafe.workingHours,
-                            cafeOpenState: cafe.cafeOpenState,
-                            phone: cafe.phone,
-                            latitude: 0.0,
-                            longitude: 0.0
-                        )
-                    })
+        VStack(spacing:0){
+            
+            switch cafeViewState.state {
+            case .success(let cafeItemList, let costAndCount):
+                SuccessCafeListView(
+                    cafeList: cafeItemList
                 )
-                default:
-                    EmptyView()
-                }
+            case .loading: LoadingView()
+            case .error: ErrorView(
+                mainText: "Что-то пошло не так",
+                extratext: ""
+            ){
                 
             }
-            .background(AppColor.background)
-            .hiddenNavigationBarStyle()
-            .onAppear(){
-                viewModel.observeCafeList()
-                listener = viewModel.cafeListState.watch { cafeListStateVM in
-                    if let cafeListStateVM = cafeListStateVM{
-                        cafeViewState = cafeListStateVM
-                        cafeViewState.eventList.forEach { event in
-                            switch(event){
-                            default:
-                                print("def")
-                            }
-                        }
-                        if !cafeListStateVM.eventList.isEmpty{
-                            viewModel
-                                .consumeEventList(eventList: cafeListStateVM.eventList)
-                        }
-                    }
+            }
+        }
+        .background(AppColor.surface)
+        .hiddenNavigationBarStyle()
+        .onAppear(){
+            subscribe()
+        }
+        .onDisappear(){
+            listener?.close()
+            listener = nil
+        }
+    }
+    
+    
+    func subscribe(){
+        viewModel.onAction(action: CafeListActionInit())
+        listener = viewModel.dataState.watch { cafeListStateVM in
+            if let cafeListStateVM =  cafeListStateVM {
+                
+                if(cafeListStateVM.throwable != nil){
+                    cafeViewState = CafeListViewState(state: CafeListCartState.error)
+                    return
                 }
+                
+                if(cafeListStateVM.isLoading){
+                    cafeViewState = CafeListViewState(state: CafeListCartState.loading)
+                    return
+                }
+                cafeViewState = CafeListViewState(
+                    state: CafeListCartState.success(
+                        cafeListStateVM.cafeList.map(
+                            { cafe in
+                                CafeItem(
+                                    id: cafe.uuid,
+                                    address: cafe.address,
+                                    phone: cafe.phone,
+                                    workingHours: cafe.workingHours,
+                                    cafeOpenState: cafe.cafeOpenState,
+                                    latitude: 0.0,
+                                    longitude: 0.0
+                                )
+                            }
+                ),
+                        CartCostAndCount(
+                            cost: cafeListStateVM.cartCostAndCount?.cost ?? "",
+                            count: cafeListStateVM.cartCostAndCount?.count ?? ""
+                        )
+                )
+                )
             }
-            .onDisappear(){
-                listener?.close()
-                listener = nil
-            }
+        }
     }
 }
 
 
 struct SuccessCafeListView: View {
-    let cafeList : [CafeItemUi]
+    let cafeList : [CafeItem]
     
     var body: some View {
         ScrollView {
-           LazyVStack(spacing:0){
-               ForEach(cafeList){ cafe in
-                   NavigationLink(
-                       destination: CafeOptionsView(phone: cafe.phone, address: cafe.address, latitude: cafe.latitude, longitude: cafe.longitude)
-                   ){
-                       CafeItemView(cafeItem: cafe)
-                           .padding(.bottom, Diems.SMALL_PADDING)
-                           .padding(.horizontal, Diems.MEDIUM_PADDING)
-                   }
-               }
-           }.padding(.top, Diems.MEDIUM_PADDING)
-       }
+            LazyVStack(spacing:0){
+                ForEach(cafeList){ cafe in
+                    NavigationLink(
+                        destination: CafeOptionsView(phone: cafe.phone, address: cafe.address, latitude: cafe.latitude, longitude: cafe.longitude)
+                    ){
+                        CafeItemView(cafeItem: cafe)
+                            .padding(.bottom, Diems.SMALL_PADDING)
+                            .padding(.horizontal, Diems.MEDIUM_PADDING)
+                    }
+                }
+            }.padding(.top, Diems.MEDIUM_PADDING)
+        }
     }
 }
 

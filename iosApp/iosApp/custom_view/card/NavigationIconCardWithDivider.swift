@@ -20,7 +20,7 @@ struct NavigationIconCardWithDivider<Content: View>: View {
     
     var body: some View {
         NavigationLink(
-            destination:destination
+            destination: destination
         ){
             VStack(spacing:0){
                 HStack(spacing:0){

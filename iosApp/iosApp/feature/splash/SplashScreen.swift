@@ -8,10 +8,23 @@
 import SwiftUI
 import shared
 
-struct SplashView: View {
+struct SplashView: View, SharedLifecycle {
     
-    @ObservedObject private var viewModel = SplashViewModel()
     @State var showOrderNotAvailable = false
+    
+    @State var viewModel: SplashViewModel = SplashViewModel(
+        checkUpdateUseCase: iosComponent.provideCheckUpdateUseCase(),
+        cityInteractor: iosComponent.provideCityInteractor(),
+        getIsOneCityUseCase: iosComponent.provideCheckOneCityUseCase(),
+        saveOneCityUseCase: iosComponent.provideSaveOneCityUseCase()
+    )
+    
+    @State var eventsListener: Closeable?
+    
+    //Navigation
+    @State var openSelectCity: Bool = false
+    @State var openMainMenu: Bool = false
+    // ---
     
     init(){
         UINavigationBar.setAnimationsEnabled(false)
@@ -19,44 +32,95 @@ struct SplashView: View {
     
     var body: some View {
         VStack(spacing:0){
-            if(showOrderNotAvailable){
-                Text("warning_no_order_available")
-                    .bodyMedium()
-                    .foregroundColor(AppColor.onStatus)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 4)
-                    .padding(.horizontal, 16)
-                    .background(AppColor.warning)
+            if(openSelectCity){
+                if(showOrderNotAvailable){
+                    Text("warning_no_order_available")
+                        .bodyMedium()
+                        .foregroundColor(AppColor.onStatus)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 4)
+                        .padding(.horizontal, 16)
+                        .background(AppColor.warning)
+                }
+                
+                NavigationView{
+                    NavigationLink(
+                        destination: SelectCityView(),
+                        isActive: $openSelectCity
+                    ){
+                        LoadingView()
+                    }.isDetailLink(false)
+                }
             }
-    
-            switch viewModel.splashViewState.splashState {
-            case .isGoSelectCity:NavigationView{
-                NavigationLink(
-                    destination:SelectCityView(),
-                    isActive: .constant(true)
-                ){
-                    EmptyView()
-                }.isDetailLink(false)
-
+            
+            if(openMainMenu){
+                if(showOrderNotAvailable){
+                    Text("warning_no_order_available")
+                        .bodyMedium()
+                        .foregroundColor(AppColor.onStatus)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 4)
+                        .padding(.horizontal, 16)
+                        .background(AppColor.warning)
+                }
+                NavigationView{
+                    NavigationLink(
+                        destination: ContainerView(selection: MainContainerState.menu),
+                        isActive: $openMainMenu
+                    ){
+                        LoadingView()
+                    }.isDetailLink(false)
+                }
             }
-            case .isGoMenu: NavigationView{
-                NavigationLink(
-                    destination:ContainerView(selection: MainContainerState.menu),
-                    isActive: .constant(true)
-                ){
-                    EmptyView()
-                }.isDetailLink(false)
-            }
-            default : EmptyView()
-            }
+            
         }.onAppear(perform: {
+            viewModel.onAction(action: SplashActionInit())
+            eventsSubscribe()
             iosComponent.provideIsOrderAvailableUseCase().invoke { isAvailable, err in
                 if let isAvailable = isAvailable{
                     showOrderNotAvailable = !(isAvailable as! Bool)
                 }
             }
         })
+        .onDisappear(){
+            unsubscribe()
+        }
     }
+    
+    func eventsSubscribe() {
+        eventsListener = viewModel.events.watch(block: { _events in
+            if let events = _events{
+                let splashEvents = events as? [SplashEvent] ?? []
+                
+                splashEvents.forEach { event in
+                    print("MYYY EVENTNNN")
+                    print(event)
+                    
+                    switch(event){
+                    case is SplashEventNavigateToUpdateEvent :
+                        print("Update screen")
+                    case is SplashEventNavigateToMenuEvent :
+                        openMainMenu = true
+                    case is SplashEventNavigateToSelectCityEvent:
+                        openSelectCity = true
+                    default:
+                        print("def")
+                    }
+                }
+                
+                if !splashEvents.isEmpty {
+                    viewModel.consumeEvents(events: splashEvents)
+                }
+            }
+        })
+        
+    }
+    
+    func unsubscribe() {
+        eventsListener?.close()
+        eventsListener = nil
+    }
+    
 }
 
 struct HiddenNavigationBar: ViewModifier {

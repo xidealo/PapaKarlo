@@ -31,7 +31,10 @@ class SelectCityViewModel : ObservableObject {
             newState.isGoToMenu = true
             selectCityViewState = newState
         }
-        iosComponent.provideCityInteractor().saveSelectedCity(city: city, completionHandler: { err in })
+        iosComponent.provideCityInteractor().saveSelectedCity(
+            city: city,
+            completionHandler: { err in }
+        )
     }
 }
 
@@ -47,8 +50,12 @@ class SelectCityViewState:NSObject, NSCopying{
     }
     
     func copy(with zone: NSZone? = nil) -> Any {
-        let copy = SelectCityViewState(isLoading: isLoading, cityList: cityList, isGoToMenu: isGoToMenu)
+        let copy = SelectCityViewState(
+            isLoading: isLoading,
+            cityList: cityList,
+            isGoToMenu: isGoToMenu
+        )
             return copy
-        }
+    }
     
 }

@@ -58,6 +58,9 @@ import com.bunbeauty.shared.domain.feature.payment.GetSelectablePaymentMethodLis
 import com.bunbeauty.shared.domain.feature.payment.SavePaymentMethodUseCase
 import com.bunbeauty.shared.domain.feature.settings.ObserveSettingsUseCase
 import com.bunbeauty.shared.domain.feature.settings.UpdateEmailUseCase
+import com.bunbeauty.shared.domain.feature.splash.CheckOneCityUseCase
+import com.bunbeauty.shared.domain.feature.splash.CheckUpdateUseCase
+import com.bunbeauty.shared.domain.feature.splash.SaveOneCityUseCase
 import com.bunbeauty.shared.domain.interactor.cafe.ICafeInteractor
 import com.bunbeauty.shared.domain.interactor.cart.GetCartTotalFlowUseCase
 import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
@@ -188,6 +191,9 @@ class IosComponent : KoinComponent {
     fun provideObserveCafeWithOpenStateListUseCase(): ObserveCafeWithOpenStateListUseCase = get()
     fun provideGetMotivationUseCaseUseCase(): GetMotivationUseCase = get()
     fun provideIsOrderAvailableUseCase(): IsOrderAvailableUseCase = get()
+    fun provideCheckUpdateUseCase(): CheckUpdateUseCase = get()
+    fun provideCheckOneCityUseCase(): CheckOneCityUseCase = get()
+    fun provideSaveOneCityUseCase(): SaveOneCityUseCase = get()
 
     // Mapper
     fun provideUserAddressMapper(): UserAddressMapper = get()
