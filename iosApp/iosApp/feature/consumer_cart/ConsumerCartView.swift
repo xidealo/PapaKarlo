@@ -32,7 +32,7 @@ struct ConsumerCartView: View {
     
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     
-    //State
+    //Navigation
     @State var openCreateOrder: Bool = false
     @State var openLogin: Bool = false
     @State var openProductDetails: Bool = false
@@ -118,6 +118,7 @@ struct ConsumerCartView: View {
                 mainText: "Что-то пошло не так",
                 extratext: ""
             ){
+                
             }
             }
         }
@@ -149,7 +150,7 @@ struct ConsumerCartView: View {
         )
     }
 
-    func subscribe(){
+    func subscribe() {
         viewModel.onAction(action: ConsumerCartActionInit())
         listener = viewModel.dataState.watch { consumerCartStateVM in
             if let consumerCartStateVM =  consumerCartStateVM {
@@ -226,7 +227,7 @@ struct ConsumerCartView: View {
         )
     }
 
-    func eventsSubscribe(){
+    func eventsSubscribe() {
         eventsListener = viewModel.events.watch(block: { _events in
             if let events = _events{
                 let consumerCartEvents = events as? [ConsumerCartEvent] ?? []

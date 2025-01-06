@@ -1,5 +1,6 @@
 package com.bunbeauty.shared.di
 
+import com.bunbeauty.core.Logger
 import com.bunbeauty.core.buildVersionQualifier
 import com.bunbeauty.core.flavorQualifier
 import com.bunbeauty.core.isDebugQualifier
@@ -23,9 +24,13 @@ actual fun platformModule() = module {
     single {
         UuidGenerator()
     }
-    single(flavorQualifier) { targetName.toString() }
+    single(flavorQualifier) { targetName }
     single(isDebugQualifier) { Platform.isDebugBinary }
     single(buildVersionQualifier) {
-        platform.Foundation.NSBundle.mainBundle.infoDictionary?.get("CFBundleVersion")
+        platform.Foundation.NSBundle.mainBundle
+            .infoDictionary
+            ?.get("CFBundleVersion")
+            .toString()
+            .toLong()
     }
 }
