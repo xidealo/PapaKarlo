@@ -59,9 +59,3 @@ struct NavigationCardView<Content: View>: View {
         }
     }
 }
-
-struct NavigationCardView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationCardView(icon: "person", label: "О приложении", destination: SplashView())
-    }
-}
