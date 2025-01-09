@@ -9,17 +9,16 @@ import SwiftUI
 
 struct Switcher: View {
     
-    let leftTitle:String
-    let rightTitle:String
-    @Binding var isLeftSelected:Bool
-    let action: (_ isDelivery:Bool) -> Void
+    let leftTitle: String
+    let rightTitle: String
+    let isLeftSelected: Bool
+    let action: (_ isDelivery: Bool) -> Void
     
     var body: some View {
         HStack(spacing : 0){
-            if isLeftSelected{
+            if isLeftSelected {
                 Button(
                     action: {
-                        isLeftSelected = true
                         action(true)
                     }
                 ) {
@@ -27,7 +26,6 @@ struct Switcher: View {
                 }
                 
                 Button(action: {
-                    isLeftSelected = false
                     action(false)
                 }) {
                     Text(rightTitle)
@@ -37,7 +35,6 @@ struct Switcher: View {
                 }
             }else{
                 Button(action: {
-                    isLeftSelected = true
                     action(true)
                 }) {
                     Text(leftTitle)
@@ -47,7 +44,6 @@ struct Switcher: View {
                 }
                 
                 Button(action: {
-                    isLeftSelected = false
                     action(false)
                 }) {
                     SelectedSwicher(title: rightTitle).frame(maxWidth:.infinity)
@@ -61,11 +57,21 @@ struct Switcher: View {
     }
 }
 
-struct Switcher_Previews: PreviewProvider {
-    static var previews: some View {
-        Switcher(leftTitle: "Доставка", rightTitle: "Самовывоз", isLeftSelected: .constant(true), action: {_ in })
+
+struct OneVariantSwitcher: View {
+    let title:String
+
+    var body: some View {
+        HStack(spacing : 0){
+            SelectedSwicher(title: title)
+        }
+        .padding(4)
+        .background(AppColor.stroke)
+        .cornerRadius(Diems.BUTTON_RADIUS)
+        .frame(maxWidth:.infinity)
     }
 }
+
 
 struct SelectedSwicher: View {
     let title:String

@@ -43,10 +43,13 @@ data class CreateOrderViewState(
         is WorkType.DeliveryAndPickup -> if (workType.isDelivery) 0 else 1
         WorkType.Pickup -> 0
     }
-
+    @Immutable
     sealed interface WorkType {
+        @Immutable
         data object Pickup : WorkType
+        @Immutable
         data object Delivery : WorkType
+        @Immutable
         data class DeliveryAndPickup(val isDelivery: Boolean) : WorkType
     }
 }

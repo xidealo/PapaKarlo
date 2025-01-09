@@ -109,6 +109,8 @@
 "error_enter_correct_amount" = "Укажите корректную сумму";
 "title_delivery_address" = "Адрес доставки";
 "title_pickup_address" = "Адрес самовывоза";
+"title_pickup" = "Самовывоз";
+"title_delivery" = "Доставка";
 
 
 "warning_no_order_available" = "Заказы временно не принимаются";

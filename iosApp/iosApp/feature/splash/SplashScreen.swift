@@ -93,9 +93,6 @@ struct SplashView: View, SharedLifecycle {
                 let splashEvents = events as? [SplashEvent] ?? []
                 
                 splashEvents.forEach { event in
-                    print("MYYY EVENTNNN")
-                    print(event)
-                    
                     switch(event){
                     case is SplashEventNavigateToUpdateEvent :
                         print("Update screen")

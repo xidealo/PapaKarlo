@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct CreateOrderViewState {
-    var isDelivery: Bool
+    var workType: WorkType
     var deliveryAddress:String?
     var pickupAddress: String?
     var isAddressErrorShown: Bool
@@ -45,6 +45,12 @@ struct CreateOrderViewState {
 enum CartTotalUI {
     case Loading
     case Success(MotivationUi?, String?, String?, String?, String)
+}
+
+enum WorkType {
+    case Pickup
+    case Delivery
+    case DeliveryAndPickup(Bool)
 }
 
 struct DeliveryAddressListUI {
