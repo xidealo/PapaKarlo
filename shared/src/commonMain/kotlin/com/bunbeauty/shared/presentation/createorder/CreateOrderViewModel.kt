@@ -447,11 +447,15 @@ class CreateOrderViewModel(
 
     private suspend fun updatePaymentMethods() {
         val paymentMethodList = getSelectablePaymentMethodListUseCase()
-        val selectedPaymentMethod = paymentMethodList.find { it.isSelected }?.paymentMethod
+        val selectedPaymentMethod = paymentMethodList.find { paymentMethod ->
+            paymentMethod.isSelected
+        }?.paymentMethod
         setState {
             copy(
                 paymentMethodList = paymentMethodList,
-                selectedPaymentMethod = paymentMethodList.find { it.isSelected }?.paymentMethod
+                selectedPaymentMethod = paymentMethodList.find { paymentMethod ->
+                    paymentMethod.isSelected
+                }?.paymentMethod
             )
         }
         if (selectedPaymentMethod != null) {
@@ -466,7 +470,8 @@ class CreateOrderViewModel(
         setState {
             copy(userAddressList = userAddressList)
         }
-        val selectableUserAddress = userAddressList.find { it.isSelected }
+        val selectableUserAddress =
+            userAddressList.find { selectableUserAddress -> selectableUserAddress.isSelected }
 
         setState {
             copy(selectedUserAddress = selectableUserAddress?.address)
@@ -497,16 +502,24 @@ class CreateOrderViewModel(
         getCartTotalJob?.cancel()
         getCartTotalJob = sharedScope.launchSafe(
             block = {
-                val isDelivery = mutableDataState.value.isDelivery
+                val workInfoType =
+                    getWorkInfoUseCase()?.workInfoType
+                        ?: WorkInfo.WorkInfoType.DELIVERY_AND_PICKUP
+
+                val isDelivery = when (workInfoType) {
+                    WorkInfo.WorkInfoType.DELIVERY -> true
+                    WorkInfo.WorkInfoType.PICKUP -> false
+                    WorkInfo.WorkInfoType.DELIVERY_AND_PICKUP -> mutableDataState.value.isDelivery
+                    WorkInfo.WorkInfoType.CLOSED -> mutableDataState.value.isDelivery
+                }
+
                 getCartTotalFlowUseCase(isDelivery = isDelivery).collect { cartTotal ->
+
                     val motivation = getMotivationUseCase(
                         newTotalCost = cartTotal.newTotalCost,
                         isDelivery = isDelivery
                     )
                     val motivationData = motivation?.toMotivationData()
-                    val workInfoType =
-                        getWorkInfoUseCase()?.workInfoType
-                            ?: WorkInfo.WorkInfoType.DELIVERY_AND_PICKUP
 
                     setState {
                         copy(
@@ -528,12 +541,7 @@ class CreateOrderViewModel(
                                 motivationData = motivationData,
                                 workType = workInfoType
                             ),
-                            isDelivery = when (workInfoType) {
-                                WorkInfo.WorkInfoType.DELIVERY -> true
-                                WorkInfo.WorkInfoType.PICKUP -> false
-                                WorkInfo.WorkInfoType.DELIVERY_AND_PICKUP -> isDelivery
-                                WorkInfo.WorkInfoType.CLOSED -> true
-                            },
+                            isDelivery = isDelivery,
                             isLoadingSwitcher = false
                         )
                     }
