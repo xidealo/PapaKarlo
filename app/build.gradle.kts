@@ -94,9 +94,8 @@ android {
         warningsAsErrors = true
         checkDependencies = true
         disable.add("VectorPath")
-    }
-    lint {
-        disable += "GradleDependency"
+        disable.add("GradleDependency")
+        disable.add("AndroidGradlePluginVersion")
     }
 
     playConfigs {
