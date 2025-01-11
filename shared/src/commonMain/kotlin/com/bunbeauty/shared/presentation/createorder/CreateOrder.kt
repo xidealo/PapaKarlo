@@ -54,14 +54,18 @@ interface CreateOrder {
 
         val isLoading: Boolean,
         val workType: WorkType,
-        val isLoadingSwitcher: Boolean = true,
+        val isLoadingSwitcher: Boolean = true
     ) : BaseDataState {
+
+        val isOrderCreationEnabled =
+            workType != WorkType.CLOSED && workType != WorkType.CLOSED_DELIVERY
 
         enum class WorkType {
             DELIVERY,
             PICKUP,
             DELIVERY_AND_PICKUP,
             CLOSED,
+            CLOSED_DELIVERY
         }
 
         val paymentByCash: Boolean = selectedPaymentMethod?.name == PaymentMethodName.CASH
@@ -80,7 +84,7 @@ interface CreateOrder {
             val deliveryCost: String?,
             val oldFinalCost: String?,
             val newFinalCost: String,
-            val newFinalCostValue: Int,
+            val newFinalCostValue: Int
         ) : CartTotal
     }
 
@@ -117,7 +121,7 @@ interface CreateOrder {
 
         data class CreateClick(
             val withoutChange: String,
-            val changeFrom: String,
+            val changeFrom: String
         ) : Action
     }
 

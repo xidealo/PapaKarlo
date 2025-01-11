@@ -1,15 +1,9 @@
 package com.bunbeauty.domain.feature.link
 
-import com.bunbeauty.shared.DataStoreRepo
-import com.bunbeauty.shared.domain.feature.discount.GetDiscountUseCase
-import com.bunbeauty.shared.domain.feature.discount.GetDiscountUseCaseImpl
 import com.bunbeauty.shared.domain.feature.link.GetLinkUseCase
-import com.bunbeauty.shared.domain.model.Discount
 import com.bunbeauty.shared.domain.model.link.Link
 import com.bunbeauty.shared.domain.model.link.LinkType
-import com.bunbeauty.shared.domain.repo.DiscountRepo
 import com.bunbeauty.shared.domain.repo.LinkRepo
-import com.bunbeauty.shared.domain.repo.OrderRepo
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.mock
@@ -56,6 +50,3 @@ class GetLinkUseCaseTest {
         assertNull(result)
     }
 }
-
-
-

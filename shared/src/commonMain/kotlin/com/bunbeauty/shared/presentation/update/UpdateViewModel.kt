@@ -6,7 +6,7 @@ import com.bunbeauty.shared.extension.launchSafe
 import com.bunbeauty.shared.presentation.base.SharedStateViewModel
 
 class UpdateViewModel(
-    private val getLinkUseCase: GetLinkUseCase,
+    private val getLinkUseCase: GetLinkUseCase
 ) : SharedStateViewModel<UpdateState.DataState, UpdateState.Action, UpdateState.Event>(
     initDataState = UpdateState.DataState(
         link = null,
@@ -50,5 +50,4 @@ class UpdateViewModel(
             }
         )
     }
-
 }

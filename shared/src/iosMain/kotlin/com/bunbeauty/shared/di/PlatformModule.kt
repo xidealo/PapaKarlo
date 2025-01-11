@@ -1,6 +1,5 @@
 package com.bunbeauty.shared.di
 
-import com.bunbeauty.core.Logger
 import com.bunbeauty.core.buildVersionQualifier
 import com.bunbeauty.core.flavorQualifier
 import com.bunbeauty.core.isDebugQualifier

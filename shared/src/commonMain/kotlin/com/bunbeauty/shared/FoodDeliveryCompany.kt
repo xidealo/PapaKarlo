@@ -4,7 +4,7 @@ import com.bunbeauty.shared.domain.exeptions.UnknownCompanyException
 
 enum class FoodDeliveryCompany(
     val flavor: String,
-    val companyUuid: String,
+    val companyUuid: String
 ) {
     PAPA_KARLO(
         flavor = "papakarlo",

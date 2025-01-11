@@ -26,6 +26,8 @@ fun CreateOrder.DataState.toViewState(): CreateOrderViewState {
     return CreateOrderViewState(
         workType = when (workType) {
             CreateOrder.DataState.WorkType.DELIVERY -> CreateOrderViewState.WorkType.Delivery
+            CreateOrder.DataState.WorkType.CLOSED_DELIVERY -> CreateOrderViewState.WorkType.Delivery
+
             CreateOrder.DataState.WorkType.PICKUP -> CreateOrderViewState.WorkType.Pickup
             CreateOrder.DataState.WorkType.DELIVERY_AND_PICKUP -> CreateOrderViewState.WorkType.DeliveryAndPickup(
                 isDelivery = isDelivery
@@ -87,7 +89,7 @@ fun CreateOrder.DataState.toViewState(): CreateOrderViewState {
                 selectablePaymentMethod.toSelectablePaymentMethodUI()
             }.toImmutableList()
         ),
-        isOrderCreationEnabled = workType != CreateOrder.DataState.WorkType.CLOSED,
+        isOrderCreationEnabled = isOrderCreationEnabled,
         switcherOptionList = getSwitcherOptionList(workType),
         isLoadingSwitcher = isLoadingSwitcher
     )
@@ -112,6 +114,10 @@ private fun getSwitcherOptionList(workType: CreateOrder.DataState.WorkType): Imm
         CreateOrder.DataState.WorkType.CLOSED -> persistentListOf(
             stringResource(R.string.action_create_order_delivery),
             stringResource(R.string.action_create_order_pickup)
+        )
+
+        CreateOrder.DataState.WorkType.CLOSED_DELIVERY -> persistentListOf(
+            stringResource(R.string.action_create_order_delivery)
         )
     }
 }

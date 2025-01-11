@@ -11,7 +11,6 @@ import com.bunbeauty.shared.data.network.model.ForceUpdateVersionServer
 import com.bunbeauty.shared.data.network.model.LinkServer
 import com.bunbeauty.shared.data.network.model.ListServer
 import com.bunbeauty.shared.data.network.model.MenuProductServer
-import com.bunbeauty.shared.data.network.model.WorkInfoServer
 import com.bunbeauty.shared.data.network.model.PaymentMethodServer
 import com.bunbeauty.shared.data.network.model.PaymentServer
 import com.bunbeauty.shared.data.network.model.RecommendationDataServer
@@ -19,6 +18,7 @@ import com.bunbeauty.shared.data.network.model.SettingsServer
 import com.bunbeauty.shared.data.network.model.StreetServer
 import com.bunbeauty.shared.data.network.model.SuggestionServer
 import com.bunbeauty.shared.data.network.model.UserAddressPostServer
+import com.bunbeauty.shared.data.network.model.WorkInfoServer
 import com.bunbeauty.shared.data.network.model.login.AuthResponseServer
 import com.bunbeauty.shared.data.network.model.login.AuthSessionServer
 import com.bunbeauty.shared.data.network.model.login.CodeRequestServer
