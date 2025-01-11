@@ -6,8 +6,9 @@ import com.bunbeauty.shared.domain.feature.order.ObserveLastOrderUseCase
 import com.bunbeauty.shared.domain.feature.order.ObserveOrderListUseCase
 import com.bunbeauty.shared.domain.feature.order.ObserveOrderUseCase
 import com.bunbeauty.shared.domain.feature.order.StopObserveOrdersUseCase
+import com.bunbeauty.shared.domain.feature.orderavailable.GetWorkInfoUseCase
 import com.bunbeauty.shared.domain.feature.orderavailable.IsOrderAvailableUseCase
-import com.bunbeauty.shared.domain.feature.orderavailable.SetOrderNotAvailableUseCase
+import com.bunbeauty.shared.domain.feature.orderavailable.SetClosedWorkInfoUseCase
 import org.koin.dsl.module
 
 internal fun orderUseCaseModule() = module {
@@ -51,13 +52,18 @@ internal fun orderUseCaseModule() = module {
         )
     }
     factory {
-        IsOrderAvailableUseCase(
-            orderAvailableRepository = get()
+        GetWorkInfoUseCase(
+            workInfoRepository = get()
         )
     }
     factory {
-        SetOrderNotAvailableUseCase(
-            orderAvailableRepository = get()
+        IsOrderAvailableUseCase(
+            workInfoRepository = get()
+        )
+    }
+    factory {
+        SetClosedWorkInfoUseCase(
+            workInfoRepository = get()
         )
     }
 }

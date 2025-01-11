@@ -32,6 +32,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 private const val CONSUMER_CART_VIEW_MODEL_TAG = "ConsumerCartViewModel"
+
 class ConsumerCartViewModel(
     private val userInteractor: IUserInteractor,
     private val cartProductInteractor: ICartProductInteractor,

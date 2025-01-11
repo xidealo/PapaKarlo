@@ -6,7 +6,7 @@ import com.bunbeauty.shared.domain.repo.CityRepo
 
 class SaveOneCityUseCase(
     private val cityRepo: CityRepo,
-    private val dataStoreRepo: DataStoreRepo,
+    private val dataStoreRepo: DataStoreRepo
 ) {
     suspend operator fun invoke() {
         val city = cityRepo.getCityList().firstOrNull() ?: throw NoCityException()

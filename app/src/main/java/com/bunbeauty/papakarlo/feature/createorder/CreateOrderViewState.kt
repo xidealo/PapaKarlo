@@ -9,7 +9,7 @@ import kotlinx.collections.immutable.ImmutableList
 
 @Immutable
 data class CreateOrderViewState(
-    val isDelivery: Boolean,
+    val workType: WorkType,
     val deliveryAddress: String?,
     val pickupAddress: String?,
     val isAddressErrorShown: Boolean,
@@ -32,11 +32,23 @@ data class CreateOrderViewState(
     val isDeferredTimeShown: Boolean,
     val timePicker: TimePickerUI,
     val paymentMethodList: PaymentMethodListUI,
-    val isOrderCreationEnabled: Boolean
+    val isOrderCreationEnabled: Boolean,
+    val switcherOptionList: ImmutableList<String>,
+    val isLoadingSwitcher: Boolean
 ) : BaseViewState {
 
     val isFieldsEnabled: Boolean = !isLoading
-    val switcherPosition = if (isDelivery) 0 else 1
+    val switcherPosition = when (workType) {
+        WorkType.Delivery -> 0
+        is WorkType.DeliveryAndPickup -> if (workType.isDelivery) 0 else 1
+        WorkType.Pickup -> 0
+    }
+
+    sealed interface WorkType {
+        data object Pickup : WorkType
+        data object Delivery : WorkType
+        data class DeliveryAndPickup(val isDelivery: Boolean) : WorkType
+    }
 }
 
 @Immutable

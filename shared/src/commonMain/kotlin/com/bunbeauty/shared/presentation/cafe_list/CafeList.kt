@@ -11,9 +11,8 @@ interface CafeList {
         val cafeList: List<CafeItem> = emptyList(),
         val cartCostAndCount: CartCostAndCount? = null,
         val isLoading: Boolean,
-        val throwable: Throwable? = null,
+        val throwable: Throwable? = null
     ) : BaseDataState
-
 
     sealed interface Action : BaseAction {
         data object Init : Action

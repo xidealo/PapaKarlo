@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class OrderAvailableServer(
-    @SerialName("isAvailable")
-    val available: Boolean
+data class WorkInfoServer(
+    @SerialName("workType")
+    val workType: String
 )

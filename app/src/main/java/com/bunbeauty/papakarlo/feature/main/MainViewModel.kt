@@ -7,8 +7,9 @@ import com.bunbeauty.core.Logger
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.ui.element.bottombar.NavigationBarItem
 import com.bunbeauty.papakarlo.feature.main.network.INetworkUtil
-import com.bunbeauty.shared.domain.feature.orderavailable.IsOrderAvailableUseCase
-import com.bunbeauty.shared.domain.feature.orderavailable.SetOrderNotAvailableUseCase
+import com.bunbeauty.shared.domain.feature.orderavailable.GetWorkInfoUseCase
+import com.bunbeauty.shared.domain.feature.orderavailable.SetClosedWorkInfoUseCase
+import com.bunbeauty.shared.domain.model.order.WorkInfo
 import com.bunbeauty.shared.extension.launchSafe
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -21,8 +22,8 @@ private const val MAIN_VIEW_MODEL_TAG = "MainViewModel"
 
 class MainViewModel(
     private val networkUtil: INetworkUtil,
-    private val isOrderAvailableUseCase: IsOrderAvailableUseCase,
-    private val setOrderNotAvailableUseCase: SetOrderNotAvailableUseCase
+    private val getWorkInfoUseCase: GetWorkInfoUseCase,
+    private val setClosedWorkInfoUseCase: SetClosedWorkInfoUseCase
 ) : ViewModel() {
 
     private val mutableMainState: MutableStateFlow<MainState> = MutableStateFlow(MainState())
@@ -30,7 +31,7 @@ class MainViewModel(
 
     init {
         observeNetworkConnection()
-        checkIsOrderAvailable()
+        checkStatusBarMessage()
     }
 
     fun onNavDestinationUpdated(destinationId: Int, navController: NavController) {
@@ -96,11 +97,23 @@ class MainViewModel(
         }.launchIn(viewModelScope)
     }
 
-    private fun checkIsOrderAvailable() {
+    private fun checkStatusBarMessage() {
         viewModelScope.launchSafe(
             block = {
+                val workInfo = getWorkInfoUseCase()
                 mutableMainState.update { state ->
-                    state.copy(showOrderNotAvailable = isOrderAvailableUseCase().not())
+                    state.copy(
+                        statusBarMessage = MainState.StatusBarMessage(
+                            isVisible = workInfo?.workInfoType != WorkInfo.WorkInfoType.DELIVERY_AND_PICKUP,
+                            workInfoType = when (workInfo?.workInfoType) {
+                                WorkInfo.WorkInfoType.DELIVERY -> MainState.StatusBarMessage.WorkType.DELIVERY
+                                WorkInfo.WorkInfoType.PICKUP -> MainState.StatusBarMessage.WorkType.PICKUP
+                                WorkInfo.WorkInfoType.CLOSED -> MainState.StatusBarMessage.WorkType.CLOSED
+                                WorkInfo.WorkInfoType.DELIVERY_AND_PICKUP -> null
+                                null -> null
+                            }
+                        )
+                    )
                 }
             },
             onError = { error ->
@@ -110,9 +123,14 @@ class MainViewModel(
     }
 
     fun setOrderNotAvailable() {
-        setOrderNotAvailableUseCase()
+        setClosedWorkInfoUseCase()
         mutableMainState.update { state ->
-            state.copy(showOrderNotAvailable = true)
+            state.copy(
+                statusBarMessage = MainState.StatusBarMessage(
+                    isVisible = true,
+                    workInfoType = MainState.StatusBarMessage.WorkType.CLOSED
+                )
+            )
         }
     }
 }
