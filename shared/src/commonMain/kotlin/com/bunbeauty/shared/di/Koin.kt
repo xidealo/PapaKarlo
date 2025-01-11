@@ -55,7 +55,6 @@ import com.bunbeauty.shared.domain.feature.notification.SubscribeToNotificationU
 import com.bunbeauty.shared.domain.feature.order.*
 import com.bunbeauty.shared.domain.feature.orderavailable.GetWorkInfoUseCase
 import com.bunbeauty.shared.domain.feature.orderavailable.IsOrderAvailableUseCase
-import com.bunbeauty.shared.domain.feature.orderavailable.GetWorkInfoUseCase
 import com.bunbeauty.shared.domain.feature.payment.GetPaymentMethodListUseCase
 import com.bunbeauty.shared.domain.feature.payment.GetSelectablePaymentMethodListUseCase
 import com.bunbeauty.shared.domain.feature.payment.SavePaymentMethodUseCase
@@ -194,7 +193,7 @@ class IosComponent : KoinComponent {
     fun provideGetPriceOfSelectedAdditionsUseCase(): GetPriceOfSelectedAdditionsUseCase = get()
     fun provideObserveCafeWithOpenStateListUseCase(): ObserveCafeWithOpenStateListUseCase = get()
     fun provideGetMotivationUseCaseUseCase(): GetMotivationUseCase = get()
-    fun provideIsOrderAvailableUseCase(): GetWorkInfoUseCase = get()
+    fun provideIsOrderAvailableUseCase(): IsOrderAvailableUseCase = get()
     fun provideCheckUpdateUseCase(): CheckUpdateUseCase = get()
     fun provideCheckOneCityUseCase(): CheckOneCityUseCase = get()
     fun provideSaveOneCityUseCase(): SaveOneCityUseCase = get()

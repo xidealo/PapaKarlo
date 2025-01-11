@@ -26,7 +26,6 @@ import com.bunbeauty.shared.data.network.model.SettingsServer
 import com.bunbeauty.shared.data.network.model.StreetServer
 import com.bunbeauty.shared.data.network.model.SuggestionServer
 import com.bunbeauty.shared.data.network.model.UserAddressPostServer
-import com.bunbeauty.shared.data.network.model.WorkInfoServer
 import com.bunbeauty.shared.data.network.model.login.AuthResponseServer
 import com.bunbeauty.shared.data.network.model.login.AuthSessionServer
 import com.bunbeauty.shared.data.network.model.login.CodeRequestServer
