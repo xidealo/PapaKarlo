@@ -1064,6 +1064,15 @@
 		02BDC9E22C387ACF005E1CA7 /* FoodDeliveryCheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BDC9DD2C387ACF005E1CA7 /* FoodDeliveryCheckBox.swift */; };
 		02BDC9E32C387ACF005E1CA7 /* FoodDeliveryCheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BDC9DD2C387ACF005E1CA7 /* FoodDeliveryCheckBox.swift */; };
 		02C21FF928D265E900DCF537 /* ActionTextCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C21FF828D265E900DCF537 /* ActionTextCardView.swift */; };
+		02C33C552D30611C00E7955F /* UpdateViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C33C542D30611C00E7955F /* UpdateViewState.swift */; };
+		02C33C562D30611C00E7955F /* UpdateViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C33C542D30611C00E7955F /* UpdateViewState.swift */; };
+		02C33C572D30611C00E7955F /* UpdateViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C33C542D30611C00E7955F /* UpdateViewState.swift */; };
+		02C33C582D30611C00E7955F /* UpdateViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C33C542D30611C00E7955F /* UpdateViewState.swift */; };
+		02C33C592D30611C00E7955F /* UpdateViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C33C542D30611C00E7955F /* UpdateViewState.swift */; };
+		02C33C5A2D30611C00E7955F /* UpdateViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C33C542D30611C00E7955F /* UpdateViewState.swift */; };
+		02C33C5B2D30611C00E7955F /* UpdateViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C33C542D30611C00E7955F /* UpdateViewState.swift */; };
+		02C33C5C2D30611C00E7955F /* UpdateViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C33C542D30611C00E7955F /* UpdateViewState.swift */; };
+		02C33C5D2D30611C00E7955F /* UpdateViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C33C542D30611C00E7955F /* UpdateViewState.swift */; };
 		02CBBE352A6BE979000260FC /* SelectablePaymentListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CBBE342A6BE979000260FC /* SelectablePaymentListView.swift */; };
 		02CBBE362A6BE979000260FC /* SelectablePaymentListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CBBE342A6BE979000260FC /* SelectablePaymentListView.swift */; };
 		02CBBE372A6BE979000260FC /* SelectablePaymentListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CBBE342A6BE979000260FC /* SelectablePaymentListView.swift */; };
@@ -1081,8 +1090,8 @@
 		31D3632D6D0DFCC127603E44 /* Pods_papakarlo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F641783192467255CD0A1E5C /* Pods_papakarlo.framework */; };
 		340F901A4B6D1DB749DCE934 /* Pods_tandirhouse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C00C2F3445BD1E895A3BFB61 /* Pods_tandirhouse.framework */; };
 		380453D71FA2DE201C963303 /* Pods_yuliar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FDA0C82C1386DBF3A949D64 /* Pods_yuliar.framework */; };
-		4A0B25C2EBE3215D0FC6C121 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		4E7FC62A990EFBCC2E806359 /* Pods_papakarlo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38D202D40AA10F535F05F169 /* Pods_papakarlo.framework */; };
+		4A0B25C2EBE3215D0FC6C121 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		4E7FC62A990EFBCC2E806359 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		7555FF83242A565900829871 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* ContentView.swift */; };
 		93C0E565BA5E60481B064792 /* Pods_djan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE0F819C306ACDA06793BF95 /* Pods_djan.framework */; };
 		9AD55F15248489DA4A48059D /* Pods_gustopub.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A953BF6520A52D2E5BCEA50C /* Pods_gustopub.framework */; };
@@ -1090,7 +1099,7 @@
 		B921CDDA7FABDDBAA9E6227D /* Pods_legenda.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 510C373D12CD9C2B4B280987 /* Pods_legenda.framework */; };
 		BB9B6781D5F9D1E433F87476 /* Pods_usadba.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F89DFB6B8275B456A0CE858D /* Pods_usadba.framework */; };
 		EC3899AB5397ECD5D865A9DA /* Pods_vkuskavkaza.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38EDB9AB0F9EF93FD7F39980 /* Pods_vkuskavkaza.framework */; };
-		EFA9E2E0F12AB7A3BA2D93B1 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		EFA9E2E0F12AB7A3BA2D93B1 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -1247,6 +1256,7 @@
 		02B3E3472A65D27F00939099 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		02BDC9DD2C387ACF005E1CA7 /* FoodDeliveryCheckBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodDeliveryCheckBox.swift; sourceTree = "<group>"; };
 		02C21FF828D265E900DCF537 /* ActionTextCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionTextCardView.swift; sourceTree = "<group>"; };
+		02C33C542D30611C00E7955F /* UpdateViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateViewState.swift; sourceTree = "<group>"; };
 		02CBBE342A6BE979000260FC /* SelectablePaymentListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectablePaymentListView.swift; sourceTree = "<group>"; };
 		02E4FEE82AC9FEB60060C827 /* CartProductView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartProductView.swift; sourceTree = "<group>"; };
 		02FFD2E22A350902000B03E8 /* gustoPub.plist */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc.preprocessed; fileEncoding = 4; path = gustoPub.plist; sourceTree = "<group>"; };
@@ -1289,7 +1299,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EFA9E2E0F12AB7A3BA2D93B1 /* BuildFile in Frameworks */,
+				EFA9E2E0F12AB7A3BA2D93B1 /* (null) in Frameworks */,
 				340F901A4B6D1DB749DCE934 /* Pods_tandirhouse.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1322,7 +1332,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4A0B25C2EBE3215D0FC6C121 /* BuildFile in Frameworks */,
+				4A0B25C2EBE3215D0FC6C121 /* (null) in Frameworks */,
 				93C0E565BA5E60481B064792 /* Pods_djan.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1356,7 +1366,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4E7FC62A990EFBCC2E806359 /* Pods_papakarlo.framework in Frameworks */,
+				4E7FC62A990EFBCC2E806359 /* (null) in Frameworks */,
 				31D3632D6D0DFCC127603E44 /* Pods_papakarlo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1419,6 +1429,7 @@
 			isa = PBXGroup;
 			children = (
 				0232342D287879EF0048CF39 /* UpdateView.swift */,
+				02C33C542D30611C00E7955F /* UpdateViewState.swift */,
 			);
 			path = update;
 			sourceTree = "<group>";
@@ -1767,6 +1778,7 @@
 			isa = PBXGroup;
 			children = (
 				02B3E3472A65D27F00939099 /* GoogleService-Info.plist */,
+				F641783192467255CD0A1E5C /* Pods_papakarlo.framework */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -2944,6 +2956,7 @@
 				0219B7F32B8FB97C00305E2D /* UserAddressListView.swift in Sources */,
 				0219B7F42B8FB97C00305E2D /* ContentView.swift in Sources */,
 				0219B7F52B8FB97C00305E2D /* ChangeCityItem.swift in Sources */,
+				02C33C592D30611C00E7955F /* UpdateViewState.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3062,6 +3075,7 @@
 				025BF7E22CAB354D00DF0946 /* UserAddressListView.swift in Sources */,
 				025BF7E32CAB354D00DF0946 /* ContentView.swift in Sources */,
 				025BF7E42CAB354D00DF0946 /* ChangeCityItem.swift in Sources */,
+				02C33C5B2D30611C00E7955F /* UpdateViewState.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3180,6 +3194,7 @@
 				025F433F2CD0159400C854AF /* UserAddressListView.swift in Sources */,
 				025F43402CD0159400C854AF /* ContentView.swift in Sources */,
 				025F43412CD0159400C854AF /* ChangeCityItem.swift in Sources */,
+				02C33C5C2D30611C00E7955F /* UpdateViewState.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3298,6 +3313,7 @@
 				025F78602CD14C3400C87D99 /* UserAddressListView.swift in Sources */,
 				025F78612CD14C3400C87D99 /* ContentView.swift in Sources */,
 				025F78622CD14C3400C87D99 /* ChangeCityItem.swift in Sources */,
+				02C33C5D2D30611C00E7955F /* UpdateViewState.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3416,6 +3432,7 @@
 				026C1FBA2A2690B900838266 /* UserAddressListView.swift in Sources */,
 				026C1FBB2A2690B900838266 /* ContentView.swift in Sources */,
 				026C1FBD2A2690B900838266 /* ChangeCityItem.swift in Sources */,
+				02C33C572D30611C00E7955F /* UpdateViewState.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3534,6 +3551,7 @@
 				027CB07D2A346F7B00350EB2 /* UserAddressListView.swift in Sources */,
 				027CB07E2A346F7B00350EB2 /* ContentView.swift in Sources */,
 				027CB0802A346F7B00350EB2 /* ChangeCityItem.swift in Sources */,
+				02C33C582D30611C00E7955F /* UpdateViewState.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3652,6 +3670,7 @@
 				02891FD32BDAEA0D0043B466 /* UserAddressListView.swift in Sources */,
 				02891FD42BDAEA0D0043B466 /* ContentView.swift in Sources */,
 				02891FD52BDAEA0D0043B466 /* ChangeCityItem.swift in Sources */,
+				02C33C5A2D30611C00E7955F /* UpdateViewState.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3770,6 +3789,7 @@
 				02ADC39E29D9D0880062A141 /* UserAddressListView.swift in Sources */,
 				02ADC39F29D9D0880062A141 /* ContentView.swift in Sources */,
 				02ADC3A129D9D0880062A141 /* ChangeCityItem.swift in Sources */,
+				02C33C562D30611C00E7955F /* UpdateViewState.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3888,6 +3908,7 @@
 				0232349B287879EF0048CF39 /* UserAddressListView.swift in Sources */,
 				7555FF83242A565900829871 /* ContentView.swift in Sources */,
 				0232348D287879EF0048CF39 /* ChangeCityItem.swift in Sources */,
+				02C33C552D30611C00E7955F /* UpdateViewState.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

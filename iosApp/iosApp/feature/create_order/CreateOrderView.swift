@@ -644,7 +644,9 @@ struct CreateOrderSuccessView: View {
                                     action(
                                         CreateOrderActionChangeDeferredTime(
                                             time: Time(
-                                                hours: Int32(calendar.component(.hour, from: date)),
+                                                hours: Int32(
+                                                    calendar.component(.hour, from: date)
+                                                    ),
                                                 minutes: Int32(
                                                     calendar.component(.minute, from: date)
                                                 )
@@ -660,7 +662,7 @@ struct CreateOrderSuccessView: View {
                             .bodyLarge()
                     }
                     .toggleStyle(.automatic)
-                    .padding(.top, Diems.SMALL_PADDING)
+                    .padding(.top, Diems.MEDIUM_PADDING)
                     .padding(.horizontal, Diems.MEDIUM_PADDING)
                     
                     if(!faster){

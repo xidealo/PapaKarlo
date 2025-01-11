@@ -24,6 +24,7 @@ struct SplashView: View, SharedLifecycle {
     //Navigation
     @State var openSelectCity: Bool = false
     @State var openMainMenu: Bool = false
+    @State var openUpdateScreen: Bool = false
     // ---
     
     init(){
@@ -73,6 +74,18 @@ struct SplashView: View, SharedLifecycle {
                 }
             }
             
+            
+            if(openUpdateScreen){
+                NavigationView{
+                    NavigationLink(
+                        destination: UpdateView(),
+                        isActive: $openUpdateScreen
+                    ){
+                        LoadingView()
+                    }.isDetailLink(false)
+                }
+            }
+            
         }.onAppear(perform: {
             viewModel.onAction(action: SplashActionInit())
             eventsSubscribe()
@@ -95,7 +108,7 @@ struct SplashView: View, SharedLifecycle {
                 splashEvents.forEach { event in
                     switch(event){
                     case is SplashEventNavigateToUpdateEvent :
-                        print("Update screen")
+                        openUpdateScreen = true
                     case is SplashEventNavigateToMenuEvent :
                         openMainMenu = true
                     case is SplashEventNavigateToSelectCityEvent:
@@ -110,7 +123,6 @@ struct SplashView: View, SharedLifecycle {
                 }
             }
         })
-        
     }
     
     func unsubscribe() {
