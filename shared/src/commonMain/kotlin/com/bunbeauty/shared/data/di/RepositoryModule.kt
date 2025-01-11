@@ -23,6 +23,7 @@ import com.bunbeauty.shared.data.repository.SuggestionRepository
 import com.bunbeauty.shared.data.repository.UserAddressRepository
 import com.bunbeauty.shared.data.repository.UserRepository
 import com.bunbeauty.shared.data.repository.VersionRepository
+import com.bunbeauty.shared.data.repository.WorkInfoRepository
 import com.bunbeauty.shared.domain.repo.AdditionGroupRepo
 import com.bunbeauty.shared.domain.repo.AdditionRepo
 import com.bunbeauty.shared.domain.repo.AuthRepo
@@ -42,6 +43,7 @@ import com.bunbeauty.shared.domain.repo.SuggestionRepo
 import com.bunbeauty.shared.domain.repo.UserAddressRepo
 import com.bunbeauty.shared.domain.repo.UserRepo
 import com.bunbeauty.shared.domain.repo.VersionRepo
+import com.bunbeauty.shared.domain.repo.WorkInfoRepo
 import org.koin.dsl.module
 
 fun repositoryModule() = module {

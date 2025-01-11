@@ -43,7 +43,7 @@ class CreateOrderViewModel(
     private val saveSelectedUserAddress: SaveSelectedUserAddressUseCase,
     private val getSelectablePaymentMethodListUseCase: GetSelectablePaymentMethodListUseCase,
     private val savePaymentMethodUseCase: SavePaymentMethodUseCase,
-    private val getWorkInfoUseCase: GetWorkInfoUseCase,
+    private val getWorkInfoUseCase: GetWorkInfoUseCase
 ) : SharedStateViewModel<CreateOrder.DataState, CreateOrder.Action, CreateOrder.Event>(
     initDataState = CreateOrder.DataState(
         isDelivery = true,
@@ -348,7 +348,7 @@ class CreateOrderViewModel(
 
     private fun createClick(
         withoutChange: String,
-        changeFrom: String,
+        changeFrom: String
     ) {
         val state = mutableDataState.value
 
@@ -379,8 +379,8 @@ class CreateOrderViewModel(
             (state.cartTotal as? CreateOrder.CartTotal.Success)?.newFinalCostValue ?: 0
         val isChangeLessThenCost = (state.change ?: 0) < newFinalCost
         val isChangeIncorrect = state.paymentByCash &&
-                !state.withoutChangeChecked &&
-                isChangeLessThenCost
+            !state.withoutChangeChecked &&
+            isChangeLessThenCost
         setState {
             copy(isChangeErrorShown = isChangeIncorrect)
         }
@@ -555,24 +555,34 @@ class CreateOrderViewModel(
 
     private fun getWorkType(
         motivationData: MotivationData?,
-        workType: WorkInfo.WorkInfoType,
+        workType: WorkInfo.WorkInfoType
     ): CreateOrder.DataState.WorkType {
-        return if (motivationData is MotivationData.MinOrderCost) {
-            CreateOrder.DataState.WorkType.CLOSED
-        } else {
-            when (workType) {
-                WorkInfo.WorkInfoType.DELIVERY -> CreateOrder.DataState.WorkType.DELIVERY
-                WorkInfo.WorkInfoType.PICKUP -> CreateOrder.DataState.WorkType.PICKUP
-                WorkInfo.WorkInfoType.DELIVERY_AND_PICKUP -> CreateOrder.DataState.WorkType.DELIVERY_AND_PICKUP
-                WorkInfo.WorkInfoType.CLOSED -> CreateOrder.DataState.WorkType.CLOSED
+        return when (workType) {
+            WorkInfo.WorkInfoType.DELIVERY -> {
+                if (motivationData is MotivationData.MinOrderCost) {
+                    CreateOrder.DataState.WorkType.CLOSED_DELIVERY
+                } else {
+                    CreateOrder.DataState.WorkType.DELIVERY
+                }
             }
+
+            WorkInfo.WorkInfoType.PICKUP -> CreateOrder.DataState.WorkType.PICKUP
+            WorkInfo.WorkInfoType.DELIVERY_AND_PICKUP -> {
+                if (motivationData is MotivationData.MinOrderCost) {
+                    CreateOrder.DataState.WorkType.CLOSED
+                } else {
+                    CreateOrder.DataState.WorkType.DELIVERY_AND_PICKUP
+                }
+            }
+
+            WorkInfo.WorkInfoType.CLOSED -> CreateOrder.DataState.WorkType.CLOSED
         }
     }
 
     private fun getExtendedComment(
         state: CreateOrder.DataState,
         withoutChange: String,
-        changeFrom: String,
+        changeFrom: String
     ): String {
         return buildString {
             state.comment.takeIf { comment ->

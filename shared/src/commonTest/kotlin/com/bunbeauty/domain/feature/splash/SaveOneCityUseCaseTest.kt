@@ -3,7 +3,6 @@ package com.bunbeauty.domain.feature.splash
 import com.bunbeauty.getCity
 import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.domain.exeptions.NoCityException
-import com.bunbeauty.shared.domain.exeptions.NoTokenException
 import com.bunbeauty.shared.domain.feature.splash.SaveOneCityUseCase
 import com.bunbeauty.shared.domain.repo.CityRepo
 import dev.mokkery.answering.returns

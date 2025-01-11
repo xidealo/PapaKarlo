@@ -9,7 +9,7 @@ import com.bunbeauty.shared.presentation.base.BaseViewDataState
 sealed interface UpdateState {
     data class DataState(
         val link: Link?,
-        val state: State,
+        val state: State
     ) : BaseViewDataState {
         enum class State {
             LOADING,

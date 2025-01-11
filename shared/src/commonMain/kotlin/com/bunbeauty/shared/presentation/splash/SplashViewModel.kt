@@ -11,7 +11,7 @@ class SplashViewModel(
     private val checkUpdateUseCase: CheckUpdateUseCase,
     private val cityInteractor: ICityInteractor,
     private val getIsOneCityUseCase: CheckOneCityUseCase,
-    private val saveOneCityUseCase: SaveOneCityUseCase,
+    private val saveOneCityUseCase: SaveOneCityUseCase
 ) : SharedStateViewModel<Splash.DataState, Splash.Action, Splash.Event>(
     initDataState = Splash.DataState
 ) {
@@ -34,8 +34,8 @@ class SplashViewModel(
                 }
             },
             onError = {
-                //add error state
-            },
+                // add error state
+            }
         )
     }
 

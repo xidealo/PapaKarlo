@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.collectLatest
 class CafeListViewModel(
     private val cafeInteractor: ICafeInteractor,
     private val observeCafeWithOpenStateListUseCase: ObserveCafeWithOpenStateListUseCase,
-    private val observeCartUseCase: ObserveCartUseCase,
+    private val observeCartUseCase: ObserveCartUseCase
 ) : SharedStateViewModel<CafeList.DataState, CafeList.Action, CafeList.Event>(
     initDataState = CafeList.DataState(
         cafeList = listOf(),
@@ -65,8 +65,7 @@ class CafeListViewModel(
                 }
             },
             onError = {
-
-            },
+            }
         )
     }
 
@@ -89,8 +88,7 @@ class CafeListViewModel(
                     }
             },
             onError = {
-
-            },
+            }
         )
     }
 
@@ -107,5 +105,4 @@ class CafeListViewModel(
             isLast = isLast
         )
     }
-
 }
