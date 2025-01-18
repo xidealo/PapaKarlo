@@ -268,7 +268,7 @@ struct CreateOrderView: View {
                     withoutChangeChecked:   createOrderDataStateNN.withoutChangeChecked,
                     change: getChange(change: createOrderDataStateNN.change),
                     isChangeErrorShown: createOrderDataStateNN.isChangeErrorShown,
-                    isOrderCreationEnabled: createOrderDataStateNN.workType != CreateOrderDataState.WorkType.closed
+                    isOrderCreationEnabled: createOrderDataStateNN.isOrderCreationEnabled
                 )
             }
         }
