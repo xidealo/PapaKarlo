@@ -877,190 +877,49 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "973F47E4-A905-4DC5-A372-6A5C163CF7EF"
-            shouldBeEnabled = "Yes"
+            uuid = "1043C14C-2695-48D1-AA8E-1BC4143486D9"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "iosApp/feature/splash/SplashScreen.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "111"
-            endingLineNumber = "111"
+            startingLineNumber = "109"
+            endingLineNumber = "109"
             landmarkName = "eventsSubscribe()"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "973F47E4-A905-4DC5-A372-6A5C163CF7EF - faa07e868eb0d377"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Optional&lt;__C.NSArray&gt;) -&gt; () in legenda.SplashView.eventsSubscribe() -&gt; ()"
-                  moduleName = "legenda"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/marksavlovskij/Downloads/pepe/PapaKarlo/iosApp/iosApp/feature/splash/SplashScreen.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "111"
-                  endingLineNumber = "111"
-                  offsetFromSymbolStart = "988">
-               </Location>
-               <Location
-                  uuid = "973F47E4-A905-4DC5-A372-6A5C163CF7EF - 12f15a47eb125e2"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (__C.SharedSplashEvent) -&gt; () in closure #1 (Swift.Optional&lt;__C.NSArray&gt;) -&gt; () in legenda.SplashView.eventsSubscribe() -&gt; ()"
-                  moduleName = "legenda"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/marksavlovskij/Downloads/pepe/PapaKarlo/iosApp/iosApp/feature/splash/SplashScreen.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "111"
-                  endingLineNumber = "111"
-                  offsetFromSymbolStart = "112">
-               </Location>
-               <Location
-                  uuid = "973F47E4-A905-4DC5-A372-6A5C163CF7EF - 6aabeaa47afa7168"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Optional&lt;__C.NSArray&gt;) -&gt; () in papakarlo.SplashView.eventsSubscribe() -&gt; ()"
-                  moduleName = "papakarlo"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/marksavlovskij/Downloads/pepe/PapaKarlo/iosApp/iosApp/feature/splash/SplashScreen.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "112"
-                  endingLineNumber = "112"
-                  offsetFromSymbolStart = "244">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "FF951EEE-A451-4D03-9653-9F07F457484B"
-            shouldBeEnabled = "Yes"
+            uuid = "BA50B992-6D36-4677-BB4F-D159621F17A8"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "iosApp/feature/splash/SplashScreen.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "113"
-            endingLineNumber = "113"
+            startingLineNumber = "107"
+            endingLineNumber = "107"
             landmarkName = "eventsSubscribe()"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "FF951EEE-A451-4D03-9653-9F07F457484B - 42f6f12e0241384"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "legenda.SplashView.eventsSubscribe() -&gt; ()"
-                  moduleName = "legenda"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/marksavlovskij/Downloads/pepe/PapaKarlo/iosApp/iosApp/feature/splash/SplashScreen.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "113"
-                  endingLineNumber = "113"
-                  offsetFromSymbolStart = "292">
-               </Location>
-               <Location
-                  uuid = "FF951EEE-A451-4D03-9653-9F07F457484B - 12f15a47eb12620"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (__C.SharedSplashEvent) -&gt; () in closure #1 (Swift.Optional&lt;__C.NSArray&gt;) -&gt; () in legenda.SplashView.eventsSubscribe() -&gt; ()"
-                  moduleName = "legenda"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/marksavlovskij/Downloads/pepe/PapaKarlo/iosApp/iosApp/feature/splash/SplashScreen.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "113"
-                  endingLineNumber = "113"
-                  offsetFromSymbolStart = "172">
-               </Location>
-               <Location
-                  uuid = "FF951EEE-A451-4D03-9653-9F07F457484B - 6aabeaa47afa712e"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Optional&lt;__C.NSArray&gt;) -&gt; () in papakarlo.SplashView.eventsSubscribe() -&gt; ()"
-                  moduleName = "papakarlo"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/marksavlovskij/Downloads/pepe/PapaKarlo/iosApp/iosApp/feature/splash/SplashScreen.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "114"
-                  endingLineNumber = "114"
-                  offsetFromSymbolStart = "280">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "3EAACB61-A2C2-4727-944F-B745A172032E"
-            shouldBeEnabled = "Yes"
+            uuid = "DFD463DD-3031-4379-A42C-F6B07765B348"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "iosApp/feature/splash/SplashScreen.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "115"
-            endingLineNumber = "115"
+            startingLineNumber = "108"
+            endingLineNumber = "108"
             landmarkName = "eventsSubscribe()"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "3EAACB61-A2C2-4727-944F-B745A172032E - c37192926a6e370b"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "legenda.SplashView.unsubscribe() -&gt; ()"
-                  moduleName = "legenda"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/marksavlovskij/Downloads/pepe/PapaKarlo/iosApp/iosApp/feature/splash/SplashScreen.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "116"
-                  endingLineNumber = "116"
-                  offsetFromSymbolStart = "32">
-               </Location>
-               <Location
-                  uuid = "3EAACB61-A2C2-4727-944F-B745A172032E - 12f15a47eb12666"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (__C.SharedSplashEvent) -&gt; () in closure #1 (Swift.Optional&lt;__C.NSArray&gt;) -&gt; () in legenda.SplashView.eventsSubscribe() -&gt; ()"
-                  moduleName = "legenda"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/marksavlovskij/Downloads/pepe/PapaKarlo/iosApp/iosApp/feature/splash/SplashScreen.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "115"
-                  endingLineNumber = "115"
-                  offsetFromSymbolStart = "232">
-               </Location>
-               <Location
-                  uuid = "3EAACB61-A2C2-4727-944F-B745A172032E - 6aabeaa47afa71cd"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Optional&lt;__C.NSArray&gt;) -&gt; () in papakarlo.SplashView.eventsSubscribe() -&gt; ()"
-                  moduleName = "papakarlo"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/marksavlovskij/Downloads/pepe/PapaKarlo/iosApp/iosApp/feature/splash/SplashScreen.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "117"
-                  endingLineNumber = "117"
-                  offsetFromSymbolStart = "408">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

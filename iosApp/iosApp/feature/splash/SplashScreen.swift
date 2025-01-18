@@ -104,7 +104,7 @@ struct SplashView: View, SharedLifecycle {
         eventsListener = viewModel.events.watch(block: { _events in
             if let events = _events{
                 let splashEvents = events as? [SplashEvent] ?? []
-                
+                print("events \(splashEvents)")
                 splashEvents.forEach { event in
                     switch(event){
                     case is SplashEventNavigateToUpdateEvent :

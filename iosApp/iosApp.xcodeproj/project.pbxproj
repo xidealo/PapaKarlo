@@ -1211,7 +1211,7 @@
 		025F43822CD029B500C854AF /* legenda.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = legenda.plist; sourceTree = "<group>"; };
 		025F43832CD029B500C854AF /* legendaAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = legendaAssets.xcassets; sourceTree = "<group>"; };
 		025F438A2CD02BCA00C854AF /* usadbaAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = usadbaAssets.xcassets; sourceTree = "<group>"; };
-		025F438B2CD02BCA00C854AF /* usadba.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = usadba.plist; sourceTree = "<group>"; };
+		025F438B2CD02BCA00C854AF /* usadba.plist */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; path = usadba.plist; sourceTree = "<group>"; };
 		025F438C2CD02BCA00C854AF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		025F78722CD14C3400C87D99 /* emoji.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = emoji.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		025F78732CD14C3400C87D99 /* usadba copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "usadba copy-Info.plist"; path = "/Users/marksavlovskij/Downloads/pepe/PapaKarlo/iosApp/usadba copy-Info.plist"; sourceTree = "<absolute>"; };
