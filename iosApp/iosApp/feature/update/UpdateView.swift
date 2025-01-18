@@ -48,7 +48,6 @@ struct UpdateView: View, SharedLifecycleWithState {
                 
                 Button(
                     action: {
-                        print("Link \(link?.linkValue)")
                         viewModel.onAction(action: UpdateStateActionUpdateClick(linkValue: link?.linkValue ?? ""))
                     },
                     label: {

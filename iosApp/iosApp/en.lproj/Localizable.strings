@@ -113,3 +113,5 @@
 "title_delivery" = "Delivery";
 
 "warning_no_order_available" = "No order available";
+"warning_no_only_pickup" = "Only pickup";
+"warning_no_only_delivery" = "Only delivery";

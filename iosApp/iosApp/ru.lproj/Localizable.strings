@@ -114,3 +114,5 @@
 
 
 "warning_no_order_available" = "Заказы временно не принимаются";
+"warning_no_only_pickup" = "Доступен только самовывоз";
+"warning_no_only_delivery" = "Доступна только доставка";

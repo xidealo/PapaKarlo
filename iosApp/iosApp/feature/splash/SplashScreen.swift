@@ -10,7 +10,7 @@ import shared
 
 struct SplashView: View, SharedLifecycle {
     
-    @State var showOrderNotAvailable = false
+    @State var topMessage : LocalizedStringKey? = nil
     
     @State var viewModel: SplashViewModel = SplashViewModel(
         checkUpdateUseCase: iosComponent.provideCheckUpdateUseCase(),
@@ -34,8 +34,8 @@ struct SplashView: View, SharedLifecycle {
     var body: some View {
         VStack(spacing:0){
             if(openSelectCity){
-                if(showOrderNotAvailable){
-                    Text("warning_no_order_available")
+                if let topMessage = topMessage {
+                    Text(topMessage)
                         .bodyMedium()
                         .foregroundColor(AppColor.onStatus)
                         .frame(maxWidth: .infinity)
@@ -55,8 +55,8 @@ struct SplashView: View, SharedLifecycle {
             }
             
             if(openMainMenu){
-                if(showOrderNotAvailable){
-                    Text("warning_no_order_available")
+            if let topMessage = topMessage {
+                    Text(topMessage)
                         .bodyMedium()
                         .foregroundColor(AppColor.onStatus)
                         .frame(maxWidth: .infinity)
@@ -89,9 +89,24 @@ struct SplashView: View, SharedLifecycle {
         }.onAppear(perform: {
             viewModel.onAction(action: SplashActionInit())
             eventsSubscribe()
-            iosComponent.provideIsOrderAvailableUseCase().invoke { isAvailable, err in
-                if let isAvailable = isAvailable{
-                    showOrderNotAvailable = !(isAvailable as! Bool)
+            iosComponent.provideGetWorkInfoUseCase().invoke { workInfo, err in
+                
+                let workInfoType = workInfo?.workInfoType ?? WorkInfo.WorkInfoType.deliveryAndPickup
+                
+                switch(workInfoType){
+                case WorkInfo.WorkInfoType.deliveryAndPickup:
+                    print("deliveryAndPickup")
+                    topMessage = nil
+                case WorkInfo.WorkInfoType.delivery:
+                    topMessage = "warning_no_only_delivery"
+                case WorkInfo.WorkInfoType.pickup:
+                    topMessage = "warning_no_only_pickup"
+                case WorkInfo.WorkInfoType.closed:
+                    topMessage = "warning_no_order_available"
+
+                default:
+                    print("workInfoType \(workInfoType)")
+                    topMessage = nil
                 }
             }
         })
@@ -104,7 +119,6 @@ struct SplashView: View, SharedLifecycle {
         eventsListener = viewModel.events.watch(block: { _events in
             if let events = _events{
                 let splashEvents = events as? [SplashEvent] ?? []
-                print("events \(splashEvents)")
                 splashEvents.forEach { event in
                     switch(event){
                     case is SplashEventNavigateToUpdateEvent :
