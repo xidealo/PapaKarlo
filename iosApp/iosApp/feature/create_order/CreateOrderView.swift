@@ -277,6 +277,8 @@ struct CreateOrderView: View {
     func getWorkType(createOrderDataState:CreateOrderDataState) -> WorkType {
         switch(createOrderDataState.workType){
         case  CreateOrderDataState.WorkType.delivery :
+            WorkType.Delivery    
+        case  CreateOrderDataState.WorkType.closedDelivery :
             WorkType.Delivery
         case  CreateOrderDataState.WorkType.pickup :
             WorkType.Pickup
