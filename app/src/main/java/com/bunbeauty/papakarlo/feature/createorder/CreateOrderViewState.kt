@@ -48,8 +48,10 @@ data class CreateOrderViewState(
     sealed interface WorkType {
         @Immutable
         data object Pickup : WorkType
+
         @Immutable
         data object Delivery : WorkType
+
         @Immutable
         data class DeliveryAndPickup(val isDelivery: Boolean) : WorkType
     }
