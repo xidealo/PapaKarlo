@@ -24,7 +24,7 @@ struct ElementCard: View {
 }
 
 struct ElementCardWithLocolized: View {
-    let text:LocalizedStringKey
+    let text: LocalizedStringKey
     
     var body: some View {
         Text(text)

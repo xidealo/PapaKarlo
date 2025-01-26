@@ -52,7 +52,7 @@ struct CreateOrderView: View {
         saveSelectedUserAddress : iosComponent.provideSaveSelectedUserAddressUseCase(),
         getSelectablePaymentMethodListUseCase : iosComponent.provideGetSelectablePaymentMethodListUseCase(),
         savePaymentMethodUseCase : iosComponent.provideSavePaymentMethodUseCase(),
-        isOrderAvailableUseCase: iosComponent.provideIsOrderAvailableUseCase()
+        getWorkInfoUseCase: iosComponent.provideGetWorkInfoUseCase()
     )
     
     @State var createOrderViewState: CreateOrderViewState? = nil
@@ -115,7 +115,7 @@ struct CreateOrderView: View {
                 isActive: $goToSelectPaymentMethod
             ){
                 EmptyView()
-            }      
+            }
             NavigationLink(
                 destination: CreateAddressView(show: $showCreatedAddress),
                 isActive: $goToCreateAddress
@@ -132,7 +132,7 @@ struct CreateOrderView: View {
                         goToUserAddress: $goToUserAddress,
                         goToCafeAddress: $goToCafeAddress,
                         goToSelectPaymentMethod: $goToSelectPaymentMethod,
-                        goToCreateAddress: $goToCreateAddress, 
+                        goToCreateAddress: $goToCreateAddress,
                         changeError: $changeError,
                         isRootActive: $isRootActive,
                         selection: $selection,
@@ -202,14 +202,14 @@ struct CreateOrderView: View {
                 goToCafeAddress = createOrderDataStateNN.isCafeListShown
                 goToSelectPaymentMethod = createOrderDataStateNN.isPaymentMethodListShown
                 
-                if(createOrderDataStateNN.isChangeErrorShown){
+                if(createOrderDataStateNN.isChangeErrorShown) {
                     changeError = "error_enter_correct_amount"
                 }else{
                     changeError = nil
                 }
-                
+                print(createOrderDataStateNN)
                 createOrderViewState = CreateOrderViewState(
-                    isDelivery: createOrderDataStateNN.isDelivery,
+                    workType: getWorkType(createOrderDataState: createOrderDataStateNN),
                     deliveryAddress: createOrderDataStateNN.selectedUserAddress?.getAddress(),
                     pickupAddress: createOrderDataStateNN.selectedCafe?.address,
                     isAddressErrorShown: createOrderDataStateNN.isDelivery && createOrderDataStateNN.isAddressErrorShown,
@@ -274,6 +274,23 @@ struct CreateOrderView: View {
         }
     }
     
+    func getWorkType(createOrderDataState:CreateOrderDataState) -> WorkType {
+        switch(createOrderDataState.workType){
+        case  CreateOrderDataState.WorkType.delivery :
+            WorkType.Delivery    
+        case  CreateOrderDataState.WorkType.closedDelivery :
+            WorkType.Delivery
+        case  CreateOrderDataState.WorkType.pickup :
+            WorkType.Pickup
+        case  CreateOrderDataState.WorkType.deliveryAndPickup :
+            WorkType.DeliveryAndPickup(createOrderDataState.isDelivery)
+        case  CreateOrderDataState.WorkType.closed :
+            WorkType.DeliveryAndPickup(createOrderDataState.isDelivery)
+        default:
+            WorkType.DeliveryAndPickup(createOrderDataState.isDelivery)
+        }
+    }
+    
     func eventsSubscribe(){
         eventsListener = viewModel.events.watch(block: { _events in
             if let events = _events {
@@ -296,7 +313,7 @@ struct CreateOrderView: View {
                     case is CreateOrderEventShowUserAddressError:
                         showUserAddressError = true
                     case is CreateOrderEventShowPaymentMethodError:
-                        showPaymentMethodError = true   
+                        showPaymentMethodError = true
                     case is CreateOrderEventOrderNotAvailableErrorEvent:
                         showOrderNotAvailableError = true
                     default:
@@ -398,14 +415,13 @@ struct CreateOrderSuccessView: View {
     @State var addressLable = Strings.HINT_CREATION_ORDER_ADDRESS_DELIVERY
     // errors
     @Binding var showCreatedAddress: Bool
-
+    
     //navigations
     @Binding var goToUserAddress: Bool
     @Binding var goToCafeAddress: Bool
     @Binding var goToSelectPaymentMethod: Bool
     @Binding var goToCreateAddress: Bool
     
-    @State var isDelivery = true
     @State var comment = ""
     @State var changeTextField = ""
     @State var faster = true
@@ -424,21 +440,48 @@ struct CreateOrderSuccessView: View {
         ZStack (alignment: .bottom){
             ScrollView{
                 VStack(spacing:0){
-                    Switcher(
-                        leftTitle: Strings.MSG_CREATION_ORDER_DELIVERY,
-                        rightTitle: Strings.MSG_CREATION_ORDER_PICKUP,
-                        isLeftSelected: $isDelivery
-                    ){ isDelivery in
-                        if(isDelivery){
-                            action(CreateOrderActionChangeMethod(position: 0))
-                        }else{
-                            action(CreateOrderActionChangeMethod(position: 1))
+                    switch createOrderViewState.workType {
+                    case .Pickup:
+                        OneVariantSwitcher(title: LocalizedStringKey("title_pickup").stringValue()
+                        )
+                        .padding(.top, Diems.MEDIUM_PADDING)
+                        .padding(.horizontal, Diems.MEDIUM_PADDING)
+                    case .Delivery:
+                        OneVariantSwitcher(title: LocalizedStringKey("title_delivery").stringValue()
+                        )
+                        .padding(.top, Diems.MEDIUM_PADDING)
+                        .padding(.horizontal, Diems.MEDIUM_PADDING)
+                    case .DeliveryAndPickup(let isDelivery):
+                        Switcher(
+                            leftTitle: Strings.MSG_CREATION_ORDER_DELIVERY,
+                            rightTitle: Strings.MSG_CREATION_ORDER_PICKUP,
+                            isLeftSelected: isDelivery
+                        ){ isDelivery in
+                            if(isDelivery){
+                                action(CreateOrderActionChangeMethod(position: 0))
+                            }else{
+                                action(CreateOrderActionChangeMethod(position: 1))
+                            }
                         }
+                        .padding(.top, Diems.MEDIUM_PADDING)
+                        .padding(.horizontal, Diems.MEDIUM_PADDING)
+                        
                     }
-                    .padding(.top, Diems.MEDIUM_PADDING)
-                    .padding(.horizontal, Diems.MEDIUM_PADDING)
                     
-                    if(createOrderViewState.isDelivery){
+                  
+                    switch createOrderViewState.workType {
+                    case .Pickup:
+                        NavigationCardWithDivider(
+                            icon: nil,
+                            label: LocalizedStringKey("title_pickup_address").stringValue(),
+                            value: "\(createOrderViewState.pickupAddress ?? "")",
+                            action: {
+                                action(CreateOrderActionPickupAddressClick())
+                            }
+                        )
+                        .padding(.top, Diems.SMALL_PADDING)
+                        .padding(.horizontal, 16)
+                    case .Delivery:
                         if createOrderViewState.deliveryAddress == nil {
                             NavigationCardWithDivider(
                                 icon: nil,
@@ -450,7 +493,7 @@ struct CreateOrderSuccessView: View {
                             )
                             .padding(.top, Diems.SMALL_PADDING)
                             .padding(.horizontal, 16)
-
+                            
                         } else {
                             NavigationCardWithDivider(
                                 icon: nil,
@@ -462,19 +505,48 @@ struct CreateOrderSuccessView: View {
                             )
                             .padding(.top, Diems.SMALL_PADDING)
                             .padding(.horizontal, 16)
-
+                            
                         }
-                    } else {
-                        NavigationCardWithDivider(
-                            icon: nil,
-                            label: LocalizedStringKey("title_pickup_address").stringValue(),
-                            value: "\(createOrderViewState.pickupAddress ?? "")",
-                            action: {
-                                action(CreateOrderActionPickupAddressClick())
+                    case .DeliveryAndPickup(let isDelivery):
+                        if(isDelivery){
+                            if createOrderViewState.deliveryAddress == nil {
+                                NavigationCardWithDivider(
+                                    icon: nil,
+                                    label: addressLable,
+                                    value: nil,
+                                    action: {
+                                        goToCreateAddress = true
+                                    }
+                                )
+                                .padding(.top, Diems.SMALL_PADDING)
+                                .padding(.horizontal, 16)
+                                
+                            } else {
+                                NavigationCardWithDivider(
+                                    icon: nil,
+                                    label: LocalizedStringKey("title_delivery_address").stringValue(),
+                                    value: createOrderViewState.deliveryAddress ?? "",
+                                    action: {
+                                        action(CreateOrderActionDeliveryAddressClick())
+                                    }
+                                )
+                                .padding(.top, Diems.SMALL_PADDING)
+                                .padding(.horizontal, 16)
+                                
                             }
-                        )
-                        .padding(.top, Diems.SMALL_PADDING)
-                        .padding(.horizontal, 16)
+                        } else {
+                            NavigationCardWithDivider(
+                                icon: nil,
+                                label: LocalizedStringKey("title_pickup_address").stringValue(),
+                                value: "\(createOrderViewState.pickupAddress ?? "")",
+                                action: {
+                                    action(CreateOrderActionPickupAddressClick())
+                                }
+                            )
+                            .padding(.top, Diems.SMALL_PADDING)
+                            .padding(.horizontal, 16)
+                            
+                        }
                     }
                     
                     if(createOrderViewState.isAddressErrorShown){
@@ -505,7 +577,6 @@ struct CreateOrderSuccessView: View {
                             .foregroundColor(AppColor.error)
                             .padding(.top, 4)
                             .padding(.horizontal, 16)
-                            .padding(.leading, 16)
                     }
                     
                     if(createOrderViewState.showChange){
@@ -574,10 +645,12 @@ struct CreateOrderSuccessView: View {
                                     action(
                                         CreateOrderActionChangeDeferredTime(
                                             time: Time(
-                                                hours: Int32(calendar.component(.hour, from: date)),
+                                                hours: Int32(
+                                                    calendar.component(.hour, from: date)
+                                                    ),
                                                 minutes: Int32(
                                                     calendar.component(.minute, from: date)
-                                                    )
+                                                )
                                             )
                                         )
                                     )
@@ -590,57 +663,49 @@ struct CreateOrderSuccessView: View {
                             .bodyLarge()
                     }
                     .toggleStyle(.automatic)
-                    .padding(.top, Diems.SMALL_PADDING)
+                    .padding(.top, Diems.MEDIUM_PADDING)
                     .padding(.horizontal, Diems.MEDIUM_PADDING)
                     
                     if(!faster){
-                        if(createOrderViewState.isDelivery){
-                            DatePicker(
-                                selection: $deferredTime.onChange(
-                                    { date in
-                                        action(
-                                            CreateOrderActionChangeDeferredTime(
-                                                time: Time(
-                                                    hours: Int32(calendar.component(.hour, from: date)),
-                                                    minutes: Int32(calendar.component(.minute, from: date)
-                                                                  )
+                        DatePicker(
+                            selection: $deferredTime.onChange(
+                                { date in
+                                    action(
+                                        CreateOrderActionChangeDeferredTime(
+                                            time: Time(
+                                                hours: Int32(
+                                                    calendar.component(.hour, from: date)
+                                                ),
+                                                minutes: Int32(
+                                                    calendar.component(.minute, from: date)
                                                 )
                                             )
                                         )
-                                    }
-                                ),
-                                in: (Date.now + 60 * 60)...,
-                                displayedComponents: .hourAndMinute
-                            ){
-                                Text("Время доставки")
-                                    .bodyLarge()
-                            }
-                            .padding(.top, Diems.SMALL_PADDING)
-                            .padding(.horizontal, Diems.MEDIUM_PADDING)
-                        }else{
-                            DatePicker(
-                                selection: $deferredTime.onChange(
-                                    { date in
-                                        action(
-                                            CreateOrderActionChangeDeferredTime(
-                                                time: Time(
-                                                    hours: Int32(calendar.component(.hour, from: date)),
-                                                    minutes: Int32(calendar.component(.minute, from: date)
-                                                                  )
-                                                )
-                                            )
-                                        )
-                                    }
-                                ),
-                                in: (Date.now + 60 * 60)...,
-                                displayedComponents: .hourAndMinute
-                            ){
+                                    )
+                                }
+                            ),
+                            in: (Date.now + 60 * 60)...,
+                            displayedComponents: .hourAndMinute
+                        ){
+                            switch(createOrderViewState.workType){
+                            case .Pickup:
                                 Text("Время самовывоза")
                                     .bodyLarge()
+                            case .Delivery:
+                                Text("Время доставки")
+                                    .bodyLarge()
+                            case .DeliveryAndPickup(let isDelivery):
+                                if isDelivery {
+                                    Text("Время доставки")
+                                        .bodyLarge()
+                                }else{
+                                    Text("Время самовывоза")
+                                        .bodyLarge()
+                                }
                             }
-                            .padding(.top, Diems.SMALL_PADDING)
-                            .padding(.horizontal, Diems.MEDIUM_PADDING)
                         }
+                        .padding(.top, Diems.SMALL_PADDING)
+                        .padding(.horizontal, Diems.MEDIUM_PADDING)
                     }
                 }
             }

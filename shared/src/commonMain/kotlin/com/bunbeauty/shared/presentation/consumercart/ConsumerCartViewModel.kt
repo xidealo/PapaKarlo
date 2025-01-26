@@ -42,7 +42,7 @@ class ConsumerCartViewModel(
     private val getRecommendationsUseCase: GetRecommendationsUseCase,
     private val getMotivationUseCase: GetMotivationUseCase,
     private val analyticService: AnalyticService,
-    private val isOrderAvailableUseCase: IsOrderAvailableUseCase
+    private val isOrderAvailableUseCase: IsOrderAvailableUseCase,
 ) : SharedStateViewModel<ConsumerCart.DataState, ConsumerCart.Action, ConsumerCart.Event>(
     ConsumerCart.DataState(
         state = ConsumerCart.DataState.State.LOADING,
@@ -126,7 +126,7 @@ class ConsumerCartViewModel(
     private fun ConsumerCart.DataState.copyWith(
         consumerCart: ConsumerCartDomain?,
         motivation: Motivation?,
-        recommendationList: List<MenuProduct>
+        recommendationList: List<MenuProduct>,
     ): ConsumerCart.DataState {
         return if (consumerCart is ConsumerCartDomain.WithProducts) {
             copy(

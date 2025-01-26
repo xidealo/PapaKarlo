@@ -53,7 +53,7 @@ class Strings{
     
     //NEW VERSION
     static let ACTION_UPDATE_UPDATE = "Обновить"
-    static let MSG_UPDATE_GO_TO = "Пожалуйста, обновите приложение. Новая версия уже доступна в Play Маркет"
+    static let MSG_UPDATE_GO_TO = "Пожалуйста, обновите приложение. Новая версия уже доступна в App Store"
     
     
     //CART PRODUCT

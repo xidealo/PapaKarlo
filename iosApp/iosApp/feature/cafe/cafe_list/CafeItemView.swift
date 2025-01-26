@@ -32,12 +32,13 @@ struct CafeItemView: View {
                     .padding(.leading, 4)
             }
             .padding(.horizontal, Diems.MEDIUM_PADDING)
-            .padding(.bottom, 12)
             .padding(.top, 8)
             .frame(maxWidth: .infinity, alignment: .leading)
             
+            FoodDeliveryDivider()
+                .padding(.top, 12)
+                .padding(.horizontal, 16)
         }.background(AppColor.surface)
-            .cornerRadius(15)
     }
 }
 
