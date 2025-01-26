@@ -104,8 +104,6 @@ struct SuccessCafeListView: View {
                         destination: CafeOptionsView(phone: cafe.phone, address: cafe.address, latitude: cafe.latitude, longitude: cafe.longitude)
                     ){
                         CafeItemView(cafeItem: cafe)
-                            .padding(.bottom, Diems.SMALL_PADDING)
-                            .padding(.horizontal, Diems.MEDIUM_PADDING)
                     }
                 }
             }.padding(.top, Diems.MEDIUM_PADDING)

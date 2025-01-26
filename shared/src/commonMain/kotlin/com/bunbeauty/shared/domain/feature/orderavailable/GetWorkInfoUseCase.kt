@@ -4,7 +4,7 @@ import com.bunbeauty.shared.domain.model.order.WorkInfo
 import com.bunbeauty.shared.domain.repo.WorkInfoRepo
 
 class GetWorkInfoUseCase(
-    private val workInfoRepository: WorkInfoRepo
+    private val workInfoRepository: WorkInfoRepo,
 ) {
     suspend operator fun invoke(): WorkInfo? {
         return workInfoRepository.getWorkInfo()

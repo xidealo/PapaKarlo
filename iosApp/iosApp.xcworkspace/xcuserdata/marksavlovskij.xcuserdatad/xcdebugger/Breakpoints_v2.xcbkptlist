@@ -669,38 +669,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "2EC5C9E8-8794-46FF-A5E2-938D06B8F7FF"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "iosApp/custom_view/EditTextView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "46"
-            endingLineNumber = "46"
-            landmarkName = "body"
-            landmarkType = "24">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "A106001C-D40B-499E-B4FF-E7AFFB02D2F5"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "iosApp/custom_view/EditTextView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "32"
-            endingLineNumber = "32"
-            landmarkName = "body"
-            landmarkType = "24">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "EC892B82-0CFE-420E-8F99-7D86DECE4DB7"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -870,54 +838,6 @@
                   startingLineNumber = "61"
                   endingLineNumber = "61"
                   offsetFromSymbolStart = "1212">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "FD903B05-4488-444B-AF32-08B59733992B"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "iosApp/feature/consumer_cart/ConsumerCartView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "236"
-            endingLineNumber = "236"
-            landmarkName = "eventsSubscribe()"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "FD903B05-4488-444B-AF32-08B59733992B - b003001bf188bc13"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (__C.SharedConsumerCartEvent) -&gt; () in closure #1 (Swift.Optional&lt;__C.NSArray&gt;) -&gt; () in gustopub.ConsumerCartView.eventsSubscribe() -&gt; ()"
-                  moduleName = "gustopub"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/marksavlovskij/Downloads/pepe/PapaKarlo/iosApp/iosApp/feature/consumer_cart/ConsumerCartView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "234"
-                  endingLineNumber = "234"
-                  offsetFromSymbolStart = "576">
-               </Location>
-               <Location
-                  uuid = "FD903B05-4488-444B-AF32-08B59733992B - b003001bf188bc13"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (__C.SharedConsumerCartEvent) -&gt; () in closure #1 (Swift.Optional&lt;__C.NSArray&gt;) -&gt; () in gustopub.ConsumerCartView.eventsSubscribe() -&gt; ()"
-                  moduleName = "gustopub"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/marksavlovskij/Downloads/pepe/PapaKarlo/iosApp/iosApp/feature/consumer_cart/ConsumerCartView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "234"
-                  endingLineNumber = "234"
-                  offsetFromSymbolStart = "260">
                </Location>
             </Locations>
          </BreakpointContent>
