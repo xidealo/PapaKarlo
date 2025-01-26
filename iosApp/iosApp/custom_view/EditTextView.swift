@@ -12,14 +12,14 @@ struct EditTextView: View {
     
     let hint: String
     @Binding var text: String
-    let limit:Int
-    var keyBoadrType = UIKeyboardType.default //default
+    let limit: Int
+    var keyBoadrType = UIKeyboardType.default
         
-    @Binding var errorMessage:LocalizedStringKey?
+    @Binding var errorMessage: LocalizedStringKey?
     
     var textChanged: (String) -> Void
     
-    @State var isSelectedSSS:Bool = false
+    @State var isSelectedSSS: Bool = false
     
     var focusChangeListener: (Bool) -> Void = { _ in }
 
