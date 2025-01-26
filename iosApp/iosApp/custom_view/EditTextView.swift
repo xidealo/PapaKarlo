@@ -32,13 +32,12 @@ struct EditTextView: View {
                     self.isSelectedSSS = edit
                     focusChangeListener(edit)
                 })
+            .background(AppColor.surface)
             .font(Font.system(size: 16, weight: .regular, design: .default))
+            .foregroundColor(AppColor.onSurface)
             .padding(16)
             .lineLimit(5)
-            .background(
-                RoundedRectangle(cornerRadius: 5)
-                    .fill(AppColor.surface)
-            )
+            .cornerRadius(4)
             .overlay(
                 RoundedRectangle(cornerRadius: Diems.MEDIUM_RADIUS)
                     .stroke(getRoundedColor(), lineWidth: 2)
@@ -53,9 +52,8 @@ struct EditTextView: View {
                     .foregroundColor(AppColor.error)
                     .frame(maxWidth:.infinity, alignment: .leading)
                     .padding(.top, 4)
-                    .padding(.leading, 16)
             }
-        }.environment(\.colorScheme, .light)
+        }
     }
     
     func getRoundedColor() -> Color {

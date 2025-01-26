@@ -577,7 +577,6 @@ struct CreateOrderSuccessView: View {
                             .foregroundColor(AppColor.error)
                             .padding(.top, 4)
                             .padding(.horizontal, 16)
-                            .padding(.leading, 16)
                     }
                     
                     if(createOrderViewState.showChange){
