@@ -10,7 +10,7 @@ import shared
 
 struct CafeItemView: View {
 
-    var cafeItem: CafeItemUi
+    var cafeItem: CafeItem
 
     var body: some View {
         VStack(spacing:0){
@@ -32,12 +32,13 @@ struct CafeItemView: View {
                     .padding(.leading, 4)
             }
             .padding(.horizontal, Diems.MEDIUM_PADDING)
-            .padding(.bottom, 12)
             .padding(.top, 8)
             .frame(maxWidth: .infinity, alignment: .leading)
             
+            FoodDeliveryDivider()
+                .padding(.top, 12)
+                .padding(.horizontal, 16)
         }.background(AppColor.surface)
-            .cornerRadius(15)
     }
 }
 
@@ -86,14 +87,4 @@ private func getMinuteString(closeIn: Int) -> String {
         minuteStringId = "msg_cafe_minutes"
     }
     return NSLocalizedString(minuteStringId, comment: "")
-}
-
-struct CafeView_Previews: PreviewProvider {
-    static var previews: some View {
-        EmptyView()
-//        CafeItemView(
-//            cafeItem: CafeItem(id: "UUID", address: "Kimry chapaevo 22a", workingHours: "9:00 - 22:00", isOpenMessage: "Open", isOpenColor: Color.green, phone: "8999999999", latitude: 0, longitude: 0
-//            )
-//        )
-    }
 }

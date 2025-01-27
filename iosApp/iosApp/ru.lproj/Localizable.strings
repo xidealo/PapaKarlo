@@ -78,7 +78,7 @@
 "title_pickup_addresses" = "Адрес самовывоза";
 
 //SelectablePaymentMethod
-"selectable_payment_method" = "Спопсоб оплаты";
+"selectable_payment_method" = "Способ оплаты";
 
 "create_order_discount" = "Скидка";
 
@@ -109,6 +109,10 @@
 "error_enter_correct_amount" = "Укажите корректную сумму";
 "title_delivery_address" = "Адрес доставки";
 "title_pickup_address" = "Адрес самовывоза";
+"title_pickup" = "Самовывоз";
+"title_delivery" = "Доставка";
 
 
 "warning_no_order_available" = "Заказы временно не принимаются";
+"warning_no_only_pickup" = "Доступен только самовывоз";
+"warning_no_only_delivery" = "Доступна только доставка";

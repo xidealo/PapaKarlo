@@ -5,6 +5,7 @@ import com.bunbeauty.shared.domain.model.addition.AdditionGroup
 import com.bunbeauty.shared.domain.model.addition.CartProductAddition
 import com.bunbeauty.shared.domain.model.cart.CartProduct
 import com.bunbeauty.shared.domain.model.category.Category
+import com.bunbeauty.shared.domain.model.city.City
 import com.bunbeauty.shared.domain.model.product.MenuProduct
 
 fun getMenuProduct(
@@ -92,4 +93,16 @@ fun getAdditionGroup(
     priority = priority,
     additionList = additions,
     singleChoice = singleChoice
+)
+
+fun getCity(
+    uuid: String = "1",
+    name: String = "",
+    timeZone: String = "",
+    isVisible: Boolean = true,
+    singleChoice: Boolean = false
+) = City(
+    uuid = uuid,
+    name = name,
+    timeZone = timeZone
 )

@@ -1,13 +1,12 @@
 package com.bunbeauty.shared.domain.feature.orderavailable
 
-import com.bunbeauty.shared.domain.repo.OrderAvailableRepo
-
-private const val DEFAULT_IS_ORDER_AVAILABLE = true
+import com.bunbeauty.shared.domain.model.order.WorkInfo
+import com.bunbeauty.shared.domain.repo.WorkInfoRepo
 
 class IsOrderAvailableUseCase(
-    private val orderAvailableRepository: OrderAvailableRepo
+    private val workInfoRepository: WorkInfoRepo
 ) {
     suspend operator fun invoke(): Boolean {
-        return orderAvailableRepository.getOrderAvailable()?.available ?: DEFAULT_IS_ORDER_AVAILABLE
+        return workInfoRepository.getWorkInfo()?.workInfoType != WorkInfo.WorkInfoType.CLOSED
     }
 }

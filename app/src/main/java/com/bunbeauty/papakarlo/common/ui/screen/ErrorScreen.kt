@@ -37,7 +37,9 @@ fun ErrorScreen(
             modifier = Modifier
                 .size(120.dp)
                 .clip(CircleShape)
-                .background(FoodDeliveryTheme.colors.statusColors.negative),
+                .background(
+                    FoodDeliveryTheme.colors.statusColors.negative
+                ),
             contentAlignment = Alignment.Center
         ) {
             Icon(

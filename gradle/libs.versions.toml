@@ -1,0 +1,188 @@
+[versions]
+gradle = "8.7.3"
+kotlin = "2.0.20"
+googleServices = "4.4.2"
+crashlytics = "3.0.2"
+navigation = "2.9.0-alpha01"
+kotlinCoroutines = "1.9.0-RC"
+ktor = "2.3.3"
+kotlinxSerialization = "1.5.1"
+koin = "3.5.6"
+sqlDelight = "1.5.5"
+publisher = "3.11.0"
+appCompact = "1.7.0"
+coreKtx = "1.15.0"
+coil = "2.6.0"
+datetime = "0.9.0"
+desugar = "2.1.3"
+mokkery = "2.4.0"
+material = "1.12.0"
+composeBom = "2024.06.00"
+activityCompose = "1.9.3"
+dataStorePreferences = "1.1.1"
+activity = "1.9.3"
+fragment = "1.8.5"
+lifecycle = "2.8.7"
+viewBindingDelegate = "1.5.3"
+kotlinxDateTime = "0.4.0"
+leakcanary = "2.12"
+firebase = "33.5.1"
+kaspresso = "1.5.3"
+collectionsImmutable = "0.3.7"
+ktLint = "11.5.1"
+tripletPlay = "3.11.0"
+
+[libraries]
+appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appCompact" }
+core-ktx = { module = "androidx.core:core-ktx", version.ref = "coreKtx" }
+material = { module = "com.google.android.material:material", version.ref = "material" }
+navigation-fragment = { module = "androidx.navigation:navigation-fragment", version.ref = "navigation" }
+navigation-fragmentKtx = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigation" }
+navigation-runtime = { module = "androidx.navigation:navigation-runtime", version.ref = "navigation" }
+navigation-runtime-ktx = { module = "androidx.navigation:navigation-runtime-ktx", version.ref = "navigation" }
+navigation-ui = { module = "androidx.navigation:navigation-ui", version.ref = "navigation" }
+navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navigation" }
+navigation-testing = { module = "androidx.navigation:navigation-testing", version.ref = "navigation" }
+lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle" }
+lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
+lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle" }
+activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "activity" }
+fragment-ktx = { module = "androidx.fragment:fragment-ktx", version.ref = "fragment" }
+viewbindingpropertydelegate = { module = "com.github.kirich1409:viewbindingpropertydelegate", version.ref = "viewBindingDelegate" }
+koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
+koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
+koin-test = { module = "io.insert-koin:koin-test", version.ref = "koin" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinCoroutines" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinCoroutines" }
+coil = { module = "io.coil-kt:coil", version.ref = "coil" }
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
+material-dialogs-datetime = { module = "io.github.vanpra.compose-material-dialogs:datetime", version.ref = "datetime" }
+leakcanary-android = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakcanary" }
+kotlinx-collections-immutable = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "collectionsImmutable" }
+kaspresso = { module = "com.kaspersky.android-components:kaspresso", version.ref = "kaspresso" }
+kaspresso-allure-support = { module = "com.kaspersky.android-components:kaspresso-allure-support", version.ref = "kaspresso" }
+kaspresso-compose-support = { module = "com.kaspersky.android-components:kaspresso-compose-support", version.ref = "kaspresso" }
+desugar-jdk-libs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar" }
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase" }
+firebase-crashlytics-ktx = { module = "com.google.firebase:firebase-crashlytics-ktx" }
+firebase-analytics-ktx = { module = "com.google.firebase:firebase-analytics-ktx" }
+firebase-messaging-ktx = { module = "com.google.firebase:firebase-messaging-ktx" }
+compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
+foundation = { module = "androidx.compose.foundation:foundation" }
+foundation-layout = { module = "androidx.compose.foundation:foundation-layout" }
+ui = { module = "androidx.compose.ui:ui" }
+material3 = { module = "androidx.compose.material3:material3" }
+ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
+ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
+ui-viewbinding = { module = "androidx.compose.ui:ui-viewbinding" }
+
+sqlDelight-runtime = { module = "com.squareup.sqldelight:runtime", version.ref = "sqlDelight" }
+sqlDelight-coroutines-extensions = { module = "com.squareup.sqldelight:coroutines-extensions", version.ref = "sqlDelight" }
+sqlDelight-android = { module = "com.squareup.sqldelight:android-driver", version.ref = "sqlDelight" }
+sqlDelight-native = { module = "com.squareup.sqldelight:native-driver", version.ref = "sqlDelight" }
+
+datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "dataStorePreferences" }
+kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDateTime" }
+
+ktor-client-websockets = { module = "io.ktor:ktor-client-websockets", version.ref = "ktor" }
+ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-client-json = { module = "io.ktor:ktor-client-json", version.ref = "ktor" }
+ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
+ktor-client-serialization = { module = "io.ktor:ktor-client-serialization", version.ref = "ktor" }
+ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
+ktor-client-auth = { module = "io.ktor:ktor-client-auth", version.ref = "ktor" }
+
+ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
+ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
+
+activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" }
+lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycle" }
+
+#classpath
+gradle = { module = "com.android.tools.build:gradle", version.ref = "gradle" }
+kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+google-services = { module = "com.google.gms:google-services", version.ref = "googleServices" }
+kotlin-serialization = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlin" }
+firebase-crashlytics-gradle = { module = "com.google.firebase:firebase-crashlytics-gradle", version.ref = "crashlytics" }
+navigation-safe-args-gradle-plugin = { module = "androidx.navigation:navigation-safe-args-gradle-plugin", version.ref = "navigation" }
+sqlDelight-gradle-plugin = { module = "com.squareup.sqldelight:gradle-plugin", version.ref = "sqlDelight" }
+play-publisher = { module = "com.github.triplet.gradle:play-publisher", version.ref = "publisher" }
+
+[plugins]
+
+application = { id = "com.android.application", version.ref = "gradle" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
+navigation = { id = "androidx.navigation.safeargs", version.ref = "navigation" }
+google-service = { id = "com.google.gms.google-services", version.ref = "googleServices" }
+triplet-play = { id = "com.github.triplet.play", version.ref = "tripletPlay" }
+crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "crashlytics" }
+ktLint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktLint" }
+compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+
+multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+cocoa = { id = "org.jetbrains.kotlin.native.cocoapods", version.ref = "kotlin" }
+sqldelight = { id = "com.squareup.sqldelight", version.ref = "sqlDelight" }
+mokkery = { id = "dev.mokkery", version.ref = "mokkery" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+android-library = { id = "com.android.library", version.ref = "gradle" }
+
+[bundles]
+navigation = [
+    "navigation-fragment",
+    "navigation-fragmentKtx",
+    "navigation-runtime",
+    "navigation-runtime-ktx",
+    "navigation-ui",
+    "navigation-ui-ktx",
+]
+lifecycle = [
+    "lifecycle-viewmodel-compose",
+    "lifecycle-viewmodel-ktx",
+    "lifecycle-runtime-ktx",
+    "lifecycle-runtime-compose",
+]
+
+di = [
+    "koin-core",
+    "koin-android",
+]
+
+coil = [
+    "coil",
+    "coil-compose"
+]
+
+kaspresso = [
+    "kaspresso",
+    "kaspresso-allure-support",
+    "kaspresso-compose-support",
+]
+
+firebase = [
+    "firebase-bom",
+    "firebase-crashlytics-ktx",
+    "firebase-analytics-ktx",
+    "firebase-messaging-ktx",
+]
+
+compose = [
+    "foundation",
+    "foundation-layout",
+    "ui",
+    "material3",
+    "ui-tooling",
+    "ui-tooling-preview",
+    "ui-viewbinding",
+]
+
+ktor = [
+    "ktor-client-websockets",
+    "ktor-client-content-negotiation",
+    "ktor-client-json",
+    "ktor-serialization-kotlinx-json",
+    "ktor-client-serialization",
+    "ktor-client-logging",
+    "ktor-client-auth",
+]

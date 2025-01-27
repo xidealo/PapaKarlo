@@ -46,18 +46,23 @@ import com.bunbeauty.shared.domain.feature.city.ObserveSelectedCityUseCase
 import com.bunbeauty.shared.domain.feature.city.SaveSelectedCityUseCase
 import com.bunbeauty.shared.domain.feature.discount.GetDiscountUseCase
 import com.bunbeauty.shared.domain.feature.link.GetLinkListUseCase
+import com.bunbeauty.shared.domain.feature.link.GetLinkUseCase
 import com.bunbeauty.shared.domain.feature.menu.AddMenuProductUseCase
 import com.bunbeauty.shared.domain.feature.menu.di.menuModule
 import com.bunbeauty.shared.domain.feature.menuproduct.GetMenuProductUseCase
 import com.bunbeauty.shared.domain.feature.motivation.GetMotivationUseCase
 import com.bunbeauty.shared.domain.feature.notification.SubscribeToNotificationUseCase
 import com.bunbeauty.shared.domain.feature.order.*
+import com.bunbeauty.shared.domain.feature.orderavailable.GetWorkInfoUseCase
 import com.bunbeauty.shared.domain.feature.orderavailable.IsOrderAvailableUseCase
 import com.bunbeauty.shared.domain.feature.payment.GetPaymentMethodListUseCase
 import com.bunbeauty.shared.domain.feature.payment.GetSelectablePaymentMethodListUseCase
 import com.bunbeauty.shared.domain.feature.payment.SavePaymentMethodUseCase
 import com.bunbeauty.shared.domain.feature.settings.ObserveSettingsUseCase
 import com.bunbeauty.shared.domain.feature.settings.UpdateEmailUseCase
+import com.bunbeauty.shared.domain.feature.splash.CheckOneCityUseCase
+import com.bunbeauty.shared.domain.feature.splash.CheckUpdateUseCase
+import com.bunbeauty.shared.domain.feature.splash.SaveOneCityUseCase
 import com.bunbeauty.shared.domain.interactor.cafe.ICafeInteractor
 import com.bunbeauty.shared.domain.interactor.cart.GetCartTotalFlowUseCase
 import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
@@ -162,6 +167,7 @@ class IosComponent : KoinComponent {
     fun provideObserveCartUseCase(): ObserveCartUseCase = get()
     fun provideRemoveCartProductUseCase(): RemoveCartProductUseCase = get()
     fun provideGetLinkListUseCase(): GetLinkListUseCase = get()
+    fun provideGetLinkUseCase(): GetLinkUseCase = get()
     fun provideGetPaymentMethodListUseCase(): GetPaymentMethodListUseCase = get()
     fun provideSubscribeToNotificationUseCase(): SubscribeToNotificationUseCase = get()
     fun provideGetSelectablePaymentMethodListUseCase(): GetSelectablePaymentMethodListUseCase =
@@ -188,6 +194,10 @@ class IosComponent : KoinComponent {
     fun provideObserveCafeWithOpenStateListUseCase(): ObserveCafeWithOpenStateListUseCase = get()
     fun provideGetMotivationUseCaseUseCase(): GetMotivationUseCase = get()
     fun provideIsOrderAvailableUseCase(): IsOrderAvailableUseCase = get()
+    fun provideCheckUpdateUseCase(): CheckUpdateUseCase = get()
+    fun provideCheckOneCityUseCase(): CheckOneCityUseCase = get()
+    fun provideSaveOneCityUseCase(): SaveOneCityUseCase = get()
+    fun provideGetWorkInfoUseCase(): GetWorkInfoUseCase = get()
 
     // Mapper
     fun provideUserAddressMapper(): UserAddressMapper = get()

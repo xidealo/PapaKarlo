@@ -109,6 +109,9 @@
 "msg_without_change" = "Without change";
 "msg_change_from" = "Change from";
 "error_enter_correct_amount" = "Enter correct amount";
-
+"title_pickup" = "Pickup";
+"title_delivery" = "Delivery";
 
 "warning_no_order_available" = "No order available";
+"warning_no_only_pickup" = "Only pickup";
+"warning_no_only_delivery" = "Only delivery";

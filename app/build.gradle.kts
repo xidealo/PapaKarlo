@@ -1,9 +1,3 @@
-import Constants.DJAN_FLAVOR_NAME
-import Constants.GUSTO_PUB_FLAVOR_NAME
-import Constants.PAPA_KARLO_FLAVOR_NAME
-import Constants.TANDIR_HOUSE_FLAVOR_NAME
-import Constants.VKUS_KAVKAZA_FLAVOR_NAME
-import Constants.YULIAR_FLAVOR_NAME
 import com.android.build.gradle.internal.api.BaseVariantOutputImpl
 import com.github.triplet.gradle.androidpublisher.ReleaseStatus
 import com.github.triplet.gradle.play.PlayPublisherExtension
@@ -11,17 +5,15 @@ import java.io.FileInputStream
 import java.util.Properties
 
 plugins {
-    kotlin(Plugin.android)
-    id(Plugin.application)
-    id(Plugin.kotlinAndroid)
-    id(Plugin.kapt)
-    id(Plugin.navigation)
-    id(Plugin.googleService)
-    id(Plugin.kotlinParcelize)
-    id(Plugin.crashlytics)
-    id("org.jlleitschuh.gradle.ktlint") version "11.5.1"
-    id("org.jetbrains.kotlin.plugin.compose") version Versions.kotlin
-    id(Plugin.tripletPlay)
+    alias(libs.plugins.application)
+    alias(libs.plugins.compose)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.navigation)
+    alias(libs.plugins.google.service)
+    alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.crashlytics)
+    alias(libs.plugins.ktLint)
+    alias(libs.plugins.triplet.play)
 }
 
 android {
@@ -72,35 +64,12 @@ android {
 
     flavorDimensions.add("default")
     productFlavors {
-        create(PAPA_KARLO_FLAVOR_NAME) {
-            applicationId = PapaKarloApplication.applicationId
-            versionCode = CommonApplication.versionCode
-            versionName = CommonApplication.versionName
-        }
-        create(YULIAR_FLAVOR_NAME) {
-            applicationId = YuliarApplication.applicationId
-            versionCode = CommonApplication.versionCode
-            versionName = CommonApplication.versionName
-        }
-        create(DJAN_FLAVOR_NAME) {
-            applicationId = DjanApplication.applicationId
-            versionCode = CommonApplication.versionCode
-            versionName = CommonApplication.versionName
-        }
-        create(GUSTO_PUB_FLAVOR_NAME) {
-            applicationId = GustoPubApplication.applicationId
-            versionCode = CommonApplication.versionCode
-            versionName = CommonApplication.versionName
-        }
-        create(TANDIR_HOUSE_FLAVOR_NAME) {
-            applicationId = TandirHouseApplication.applicationId
-            versionCode = CommonApplication.versionCode
-            versionName = CommonApplication.versionName
-        }
-        create(VKUS_KAVKAZA_FLAVOR_NAME) {
-            applicationId = VkusKavkazaApplication.applicationId
-            versionCode = CommonApplication.versionCode
-            versionName = CommonApplication.versionName
+        FoodDeliveryFlavor.values().forEach { flavor ->
+            create(flavor.key) {
+                applicationId = flavor.applicationId
+                versionCode = CommonApplication.versionCode
+                versionName = CommonApplication.versionName
+            }
         }
     }
 
@@ -125,26 +94,15 @@ android {
         warningsAsErrors = true
         checkDependencies = true
         disable.add("VectorPath")
+        disable.add("GradleDependency")
+        disable.add("AndroidGradlePluginVersion")
     }
 
     playConfigs {
-        register(PAPA_KARLO_FLAVOR_NAME) {
-            commonPlayConfig(this, this@Build_gradle)
-        }
-        register(YULIAR_FLAVOR_NAME) {
-            commonPlayConfig(this, this@Build_gradle)
-        }
-        register(DJAN_FLAVOR_NAME) {
-            commonPlayConfig(this, this@Build_gradle)
-        }
-        register(GUSTO_PUB_FLAVOR_NAME) {
-            commonPlayConfig(this, this@Build_gradle)
-        }
-        register(TANDIR_HOUSE_FLAVOR_NAME) {
-            commonPlayConfig(this, this@Build_gradle)
-        }
-        register(VKUS_KAVKAZA_FLAVOR_NAME) {
-            commonPlayConfig(this, this@Build_gradle)
+        FoodDeliveryFlavor.values().forEach { flavor ->
+            register(flavor.key) {
+                commonPlayConfig(this, this@Build_gradle)
+            }
         }
     }
 }
@@ -171,86 +129,57 @@ dependencies {
     implementation(project(":analytic"))
     implementation(project(":core"))
 
-    implementation(AndroidX.appCompat)
-    implementation(AndroidX.coreKtx)
+    implementation(libs.appcompat)
+    implementation(libs.core.ktx)
+    implementation(libs.material)
 
-    implementation(Material.material)
+    implementation(libs.bundles.navigation)
+    androidTestImplementation(libs.navigation.testing)
 
-    implementation(platform(Compose.bom))
-    implementation(Compose.foundation)
-    implementation(Compose.foundationLayout)
-    implementation(Compose.ui)
-    implementation(Compose.material3)
-    implementation(Compose.uiTooling)
-    implementation(Compose.uiToolingPreview)
-    implementation(Compose.uiViewbinding)
-    implementation(Compose.activity)
-    implementation(Compose.lifecycle)
+    implementation(libs.bundles.lifecycle)
+    implementation(libs.activity.ktx)
+    implementation(libs.fragment.ktx)
 
-    implementation(Navigation.navigationFragment)
-    implementation(Navigation.navigationFragmentKtx)
-    implementation(Navigation.navigationRuntime)
-    implementation(Navigation.navigationRuntimeKtx)
-    implementation(Navigation.navigationUI)
-    implementation(Navigation.navigationUIKtx)
-    androidTestImplementation(Navigation.navigationTesting)
+    implementation(libs.viewbindingpropertydelegate)
+    implementation(libs.bundles.di)
+    testImplementation(libs.koin.test)
 
-    implementation(Lifecycle.extensions)
-    implementation(Lifecycle.viewmodel)
-    implementation(Lifecycle.activity)
-    implementation(Lifecycle.fragment)
-    implementation(Lifecycle.runtime)
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.kotlinx.coroutines.core)
 
-    implementation(ViewBindingDelegate.viewBindingDelegate)
+    implementation(libs.bundles.coil)
+    implementation(libs.material.dialogs.datetime)
+    implementation(libs.kotlinx.collections.immutable)
 
-    implementation(Koin.core)
-    implementation(Koin.android)
-    implementation(Koin.test)
+    debugImplementation(libs.leakcanary.android)
 
-    implementation(Serialization.json)
+    coreLibraryDesugaring(libs.desugar.jdk.libs)
 
-    implementation(Coroutine.core)
+    androidTestImplementation(libs.bundles.kaspresso)
 
-    implementation(platform(Firebase.bom))
-    implementation(Firebase.crashlyticsKtx)
-    implementation(Firebase.analyticsKtx)
-    implementation(Firebase.messaging)
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.bundles.firebase)
 
-    implementation(Coil.coil)
-    implementation(Coil.coilCompose)
+    implementation(platform(libs.compose.bom))
+    implementation(libs.bundles.compose)
 
-    implementation(MaterialDialogs.datetime)
-    coreLibraryDesugaring(AndroidTools.desugar)
-
-    debugImplementation(Leakcanary.android)
-
-    androidTestImplementation(Kaspresso.kaspresso)
-    androidTestImplementation(Kaspresso.kaspressoAllureSupport)
-    androidTestImplementation(Kaspresso.kaspressoComposeSupport)
-
-    implementation(CollectionsImmutable.collectionsImmutable)
+    implementation(libs.activity.compose)
 }
 
 tasks.register("assembleAll") {
     dependsOn(
-        PAPA_KARLO_FLAVOR_NAME.getAssembleBundleRelease(),
-        YULIAR_FLAVOR_NAME.getAssembleBundleRelease(),
-        DJAN_FLAVOR_NAME.getAssembleBundleRelease(),
-        GUSTO_PUB_FLAVOR_NAME.getAssembleBundleRelease(),
-        TANDIR_HOUSE_FLAVOR_NAME.getAssembleBundleRelease(),
-        VKUS_KAVKAZA_FLAVOR_NAME.getAssembleBundleRelease()
+        FoodDeliveryFlavor.values().map { flavor ->
+            flavor.assembleReleaseBundle
+        }
     )
 }
 
 tasks.register("publishAll") {
     mustRunAfter("assembleAll")
     dependsOn(
-        PAPA_KARLO_FLAVOR_NAME.getPublishReleaseBundle(),
-        YULIAR_FLAVOR_NAME.getPublishReleaseBundle(),
-        DJAN_FLAVOR_NAME.getPublishReleaseBundle(),
-        GUSTO_PUB_FLAVOR_NAME.getPublishReleaseBundle(),
-        TANDIR_HOUSE_FLAVOR_NAME.getPublishReleaseBundle(),
-        VKUS_KAVKAZA_FLAVOR_NAME.getPublishReleaseBundle()
+        FoodDeliveryFlavor.values().map { flavor ->
+            flavor.publishReleaseBundle
+        }
     )
 }
 

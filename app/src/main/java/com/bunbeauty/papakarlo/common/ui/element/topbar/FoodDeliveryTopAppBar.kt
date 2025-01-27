@@ -39,12 +39,14 @@ import com.bunbeauty.papakarlo.common.ui.icon24
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold
 import com.bunbeauty.papakarlo.common.ui.theme.medium
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 
 @Composable
 fun FoodDeliveryTopAppBar(
     title: String?,
     backActionClick: (() -> Unit)? = null,
-    actions: List<FoodDeliveryToolbarActions> = emptyList(),
+    actions: ImmutableList<FoodDeliveryToolbarActions> = persistentListOf(),
     isScrolled: Boolean = false,
     @DrawableRes drawableId: Int? = null,
     content: @Composable () -> Unit = {}
@@ -95,7 +97,7 @@ private fun Window.setBarColor(color: Int) {
 private fun FoodDeliveryTopAppBar(
     title: String?,
     backActionClick: (() -> Unit)? = null,
-    actions: List<FoodDeliveryToolbarActions> = emptyList()
+    actions: ImmutableList<FoodDeliveryToolbarActions> = persistentListOf()
 ) {
     TopAppBar(
         colors = FoodDeliveryTopAppBarDefaults.topAppBarColors(),
@@ -151,7 +153,6 @@ private fun Action(action: FoodDeliveryAction) {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun CardAction(action: FoodDeliveryCartAction) {
     FoodDeliveryCard(

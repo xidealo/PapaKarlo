@@ -1,0 +1,173 @@
+name: "Publish workflow"
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  setup:
+    name: "Upload secrets"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: "Decode google-services.json"
+        env:
+          GOOGLE_SERVICE_JSON: ${{ secrets.GOOGLE_SERVICE_JSON }}
+        run: echo "${GOOGLE_SERVICE_JSON}" > app/google-services.json
+      - name: "Upload google-services.json"
+        uses: actions/upload-artifact@v4
+        with:
+          name: google-services
+          path: app/google-services.json
+      - name: "Decode local.properties"
+        env:
+          RELEASE_STORE_FILE: ${{ secrets.RELEASE_STORE_FILE }}
+          RELEASE_STORE_PASSWORD: ${{ secrets.RELEASE_STORE_PASSWORD }}
+          RELEASE_KEY_ALIAS: ${{ secrets.RELEASE_KEY_ALIAS }}
+          RELEASE_KEY_PASSWORD: ${{ secrets.RELEASE_KEY_PASSWORD }}
+        run: |
+          echo -e "RELEASE_STORE_FILE=$RELEASE_STORE_FILE" > local.properties
+          echo -e "RELEASE_STORE_PASSWORD=$RELEASE_STORE_PASSWORD" >> local.properties
+          echo -e "RELEASE_KEY_ALIAS=$RELEASE_KEY_ALIAS" >> local.properties
+          echo -e "RELEASE_KEY_PASSWORD=$RELEASE_KEY_PASSWORD" >> local.properties
+      - name: "Upload local.properties"
+        uses: actions/upload-artifact@v4
+        with:
+          name: local-properties
+          path: local.properties
+      - name: "Decode keystore"
+        env:
+          KEY_STORE: ${{ secrets.KEY_STORE }}
+        run: echo "${KEY_STORE}" | base64 --decode > app/keystore
+      - name: "Upload keystore"
+        uses: actions/upload-artifact@v4
+        with:
+          name: keystore
+          path: app/keystore
+      - name: "Decode google-play-api-key.json"
+        env:
+          GOOGLE_PLAY_API_KEY: ${{ secrets.GOOGLE_PLAY_API_KEY }}
+        run: echo "${GOOGLE_PLAY_API_KEY}" | base64 --decode > app/google-play-api-key.json
+      - name: "Upload google-play-api-key.json"
+        uses: actions/upload-artifact@v4
+        with:
+          name: google-play-api-key
+          path: app/google-play-api-key.json
+
+  publish-to-google-play:
+    name: "Publish to Google Play"
+    runs-on: ubuntu-latest
+    needs: setup
+    strategy:
+      matrix:
+        flavor: [ "papakarlo", "yuliar", "djan", "gustopub", "tandirhouse", "vkuskavkaza", "legenda", "usadba", "emoji" ]
+    steps:
+      - uses: actions/checkout@v4
+      - name: "Set up JDK 17"
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      - name: "Download google-services.json"
+        uses: actions/download-artifact@v4
+        with:
+          name: google-services
+          path: ./app
+      - name: "Download local.properties"
+        uses: actions/download-artifact@v4
+        with:
+          name: local-properties
+          path: .
+      - name: "Download keystore"
+        uses: actions/download-artifact@v4
+        with:
+          name: keystore
+          path: ./app
+      - name: "Download google-play-api-key.json"
+        uses: actions/download-artifact@v4
+        with:
+          name: google-play-api-key
+          path: ./app
+      - name: "Set up Gradle"
+        uses: gradle/gradle-build-action@v3
+      - name: "Verify resources"
+        run: ls app/src/main/res/values/strings.xml
+      - name: "Clean project"
+        run: ./gradlew clean
+      - name: "Assemble ${{ matrix.flavor }}"
+        run: ./gradlew assemble${{ matrix.flavor }}Release
+      - name: "Publish ${{ matrix.flavor }}"
+        run: ./gradlew publish{{ matrix.flavor }}Release
+
+#  TODO fix ios publishing
+#  test_ios_deploy:
+#    runs-on: macos-latest
+#    steps:
+#      - uses: actions/checkout@v2
+#
+#      - name: Set up Ruby
+#        uses: ruby/setup-ruby@v1
+#        with:
+#          ruby-version: "3.3"
+#
+#      - name: Bundle install for iOS Gemfile
+#        timeout-minutes: 5
+#        run: cd ./iosApp && bundle install
+#
+#      - name: List installed Xcode versions
+#        run: ls /Applications | grep Xcode
+#
+#      - name: Decode env.default.json
+#        env:
+#          IOS_ENV: ${{ secrets.IOS_ENV }}
+#        run: echo "${IOS_ENV}" | base64 --decode > iosApp/.env.default
+#
+#      - name: Decode p8.json
+#        env:
+#          IOS_AUTHP8: ${{ secrets.IOS_AUTHP8 }}
+#        run: echo "${IOS_AUTHP8}" | base64 --decode > iosApp/AuthKey_C274Y8J9DV.p8
+#
+#      - name: Decode papkarlo.plist
+#        env:
+#          IOS_PAPAKARLO_GOOGLE_JSON: ${{ secrets.IOS_PAPAKARLO_GOOGLE_JSON }}
+#        run: |
+#          mkdir -p iosApp/papakarloRes
+#          echo "${IOS_PAPAKARLO_GOOGLE_JSON}" | base64 --decode > iosApp/papakarloRes/GoogleService-Info.plist
+#
+#      - name: set up JDK 17
+#        uses: actions/setup-java@v1
+#        with:
+#          java-version: 17
+#      - name: Set up Gradle
+#        uses: gradle/gradle-build-action@v2
+#
+#      - name: Create local properties
+#        env:
+#          RELEASE_STORE_FILE: ${{ secrets.RELEASE_STORE_FILE }}
+#          RELEASE_STORE_PASSWORD: ${{ secrets.RELEASE_STORE_PASSWORD }}
+#          RELEASE_KEY_ALIAS: ${{ secrets.RELEASE_KEY_ALIAS }}
+#          RELEASE_KEY_PASSWORD: ${{ secrets.RELEASE_KEY_PASSWORD }}
+#        run: |
+#          echo -e "RELEASE_STORE_FILE=${RELEASE_STORE_FILE}
+#          RELEASE_STORE_PASSWORD=${RELEASE_STORE_PASSWORD}
+#          RELEASE_KEY_ALIAS=${RELEASE_KEY_ALIAS}
+#          RELEASE_KEY_PASSWORD=${RELEASE_KEY_PASSWORD}" > local.properties
+#
+#      - name: Generate KMM iOS framework
+#        run: |
+#          ./gradlew :shared:generateDummyFramework
+#
+#      - name: Install CocoaPods dependencies
+#        run: |
+#            cd ./iosApp
+#            pod install
+#
+#      - name: Build and Deploy to TestFlight
+#        env:
+#          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+#          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+#          ASC_KEY_P8: ${{ secrets.IOS_AUTHP8 }}
+#        run: |
+#            cd ./iosApp
+#            bundle exec fastlane deployAll

@@ -75,7 +75,7 @@ Pods/
 Packages/
 Package.pins
 Package.resolved
-*.xcodeproj
+#*.xcodeproj
 
 .gradle
 /local.properties
@@ -83,3 +83,8 @@ Package.resolved
 */build
 /captures
 .cxx
+*.ipa
+*.zip
+*.p8
+.env.default
+GoogleService-Info.plist

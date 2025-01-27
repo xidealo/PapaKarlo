@@ -1,6 +1,6 @@
 package com.bunbeauty.papakarlo.common.ui.element.switcher
 
-import androidx.annotation.StringRes
+import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -13,35 +13,49 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.bunbeauty.papakarlo.R
+import com.bunbeauty.papakarlo.common.ui.element.simmer.Shimmer
 import com.bunbeauty.papakarlo.common.ui.element.switcher.FoodDeliverySwitcherDefaults.switcherShape
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.medium
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 
 @Composable
 fun FoodDeliverySwitcher(
-    @StringRes optionResIdList: List<Int>,
+    optionResIdList: ImmutableList<String>,
     modifier: Modifier = Modifier,
     position: Int = 0,
+    isLoading: Boolean = false,
     onPositionChanged: (Int) -> Unit
 ) {
-    FoodDeliverySwitcher(
-        modifier = modifier,
-        optionList = optionResIdList.map { optionIdRes ->
-            stringResource(optionIdRes)
-        },
-        position = position,
-        onPositionChanged = onPositionChanged
-    )
+    Crossfade(
+        targetState = isLoading,
+        label = "FoodDeliverySwitcher"
+    ) { loading ->
+        if (loading) {
+            Shimmer(
+                modifier = modifier
+                    .height(48.dp)
+                    .clip(FoodDeliverySwitcherDefaults.switcherButtonShape)
+            )
+        } else {
+            FoodDeliverySwitcher(
+                modifier = modifier,
+                optionList = optionResIdList,
+                position = position,
+                onPositionChanged = onPositionChanged
+            )
+        }
+    }
 }
 
 @Composable
 fun FoodDeliverySwitcher(
     modifier: Modifier = Modifier,
-    optionList: List<String> = emptyList(),
+    optionList: ImmutableList<String> = persistentListOf(),
     position: Int = 0,
     onPositionChanged: (Int) -> Unit
 ) {
@@ -97,12 +111,41 @@ private fun SwitcherButton(
 private fun SwitcherPreview() {
     FoodDeliveryTheme {
         FoodDeliverySwitcher(
-            optionResIdList = listOf(
-                R.string.action_create_order_delivery,
-                R.string.action_create_order_pickup
+            optionResIdList = persistentListOf(
+                "Доставка",
+                "Самовывоз"
             ),
             position = 1,
             onPositionChanged = {}
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun SwitcherWithOnePreview() {
+    FoodDeliveryTheme {
+        FoodDeliverySwitcher(
+            optionResIdList = persistentListOf(
+                "Доставка"
+            ),
+            position = 0,
+            onPositionChanged = {}
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun SwitcherLoadingPreview() {
+    FoodDeliveryTheme {
+        FoodDeliverySwitcher(
+            optionResIdList = persistentListOf(
+                "Доставка"
+            ),
+            position = 0,
+            onPositionChanged = {},
+            isLoading = true
         )
     }
 }

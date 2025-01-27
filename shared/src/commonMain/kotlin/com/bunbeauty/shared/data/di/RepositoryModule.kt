@@ -14,7 +14,7 @@ import com.bunbeauty.shared.data.repository.DeliveryRepository
 import com.bunbeauty.shared.data.repository.DiscountRepository
 import com.bunbeauty.shared.data.repository.LinkRepository
 import com.bunbeauty.shared.data.repository.MenuProductRepository
-import com.bunbeauty.shared.data.repository.OrderAvailableRepository
+import com.bunbeauty.shared.data.repository.WorkInfoRepository
 import com.bunbeauty.shared.data.repository.OrderRepository
 import com.bunbeauty.shared.data.repository.PaymentRepository
 import com.bunbeauty.shared.data.repository.RecommendationRepository
@@ -34,7 +34,7 @@ import com.bunbeauty.shared.domain.repo.DeliveryRepo
 import com.bunbeauty.shared.domain.repo.DiscountRepo
 import com.bunbeauty.shared.domain.repo.LinkRepo
 import com.bunbeauty.shared.domain.repo.MenuProductRepo
-import com.bunbeauty.shared.domain.repo.OrderAvailableRepo
+import com.bunbeauty.shared.domain.repo.WorkInfoRepo
 import com.bunbeauty.shared.domain.repo.OrderRepo
 import com.bunbeauty.shared.domain.repo.PaymentRepo
 import com.bunbeauty.shared.domain.repo.RecommendationRepo
@@ -189,8 +189,8 @@ fun repositoryModule() = module {
             networkConnector = get()
         )
     }
-    single<OrderAvailableRepo> {
-        OrderAvailableRepository(
+    single<WorkInfoRepo> {
+        WorkInfoRepository(
             networkConnector = get()
         )
     }

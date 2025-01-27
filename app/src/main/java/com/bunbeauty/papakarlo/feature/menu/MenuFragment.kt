@@ -119,7 +119,7 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
 
         FoodDeliveryScaffold(
             title = stringResource(R.string.title_menu),
-            topActions = listOf(
+            topActions = persistentListOf(
                 FoodDeliveryCartAction(topCartUi = viewState.topCartUi) {
                     findNavController().navigateSafe(globalConsumerCartFragment())
                 }

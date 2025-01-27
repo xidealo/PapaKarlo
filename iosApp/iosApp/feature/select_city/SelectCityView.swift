@@ -28,7 +28,10 @@ struct SelectCityView: View {
             if viewModel.selectCityViewState.isLoading{
                 LoadingView()
             }else{
-                SelectCitySuccessView(cityList: viewModel.selectCityViewState.cityList, viewModel: viewModel)
+                SelectCitySuccessView(
+                    cityList: viewModel.selectCityViewState.cityList, 
+                    viewModel: viewModel
+                )
             }
         }
         .background(AppColor.background)
@@ -56,7 +59,6 @@ struct SelectCitySuccessView : View {
             }
         }
         .padding(.top, Diems.MEDIUM_PADDING)
-        .preferredColorScheme(.light)
 
     }
 }

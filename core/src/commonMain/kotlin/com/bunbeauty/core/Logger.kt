@@ -1,5 +1,7 @@
 package com.bunbeauty.core
 
+import org.koin.core.qualifier.named
+
 object Logger {
 
     private const val COMMON_TAG = "commonTag"

@@ -44,7 +44,7 @@ class ConfirmFragment : BaseSingleStateComposeFragment<Confirm.ViewDataState, Co
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        requireContext()
         viewModel.onAction(Confirm.Action.Init(args.phoneNumber, args.successLoginDirection))
     }
 

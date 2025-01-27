@@ -2,6 +2,11 @@ package com.bunbeauty.papakarlo.feature.consumercart
 
 import android.os.Bundle
 import android.view.View
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.ContentTransform
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
 import androidx.compose.foundation.layout.Column
@@ -60,6 +65,9 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
+private const val ANIMATION_LABEL = "ConsumerCartFragment"
+private const val ANIMATION_DURATION_MILLIS = 200
+
 class ConsumerCartFragment :
     BaseComposeFragment<ConsumerCart.DataState, ConsumerCartViewState, ConsumerCart.Action, ConsumerCart.Event>() {
 
@@ -89,23 +97,41 @@ class ConsumerCartFragment :
 
             backgroundColor = FoodDeliveryTheme.colors.mainColors.surface
         ) {
-            when (viewState) {
-                ConsumerCartViewState.Loading -> LoadingScreen()
-
-                is ConsumerCartViewState.Success -> {
-                    ConsumerCartSuccessScreen(
-                        viewState = viewState,
-                        onAction = onAction
+            AnimatedContent(
+                targetState = viewState,
+                label = ANIMATION_LABEL,
+                contentKey = { state ->
+                    state::class.java
+                },
+                transitionSpec = {
+                    ContentTransform(
+                        targetContentEnter = fadeIn(
+                            animationSpec = tween(delayMillis = ANIMATION_DURATION_MILLIS)
+                        ),
+                        initialContentExit = fadeOut(
+                            animationSpec = tween(delayMillis = ANIMATION_DURATION_MILLIS)
+                        )
                     )
                 }
+            ) { viewState ->
+                when (viewState) {
+                    ConsumerCartViewState.Loading -> LoadingScreen()
 
-                ConsumerCartViewState.Error -> {
-                    ErrorScreen(
-                        mainTextId = R.string.error_consumer_cart_loading,
-                        onClick = {
-                            onAction(ConsumerCart.Action.OnErrorButtonClick)
-                        }
-                    )
+                    is ConsumerCartViewState.Success -> {
+                        ConsumerCartSuccessScreen(
+                            viewState = viewState,
+                            onAction = onAction
+                        )
+                    }
+
+                    ConsumerCartViewState.Error -> {
+                        ErrorScreen(
+                            mainTextId = R.string.error_consumer_cart_loading,
+                            onClick = {
+                                onAction(ConsumerCart.Action.OnErrorButtonClick)
+                            }
+                        )
+                    }
                 }
             }
         }

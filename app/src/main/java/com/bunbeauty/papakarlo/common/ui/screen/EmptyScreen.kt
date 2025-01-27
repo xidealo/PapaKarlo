@@ -48,7 +48,11 @@ internal fun EmptyScreen(
                 modifier = Modifier
                     .size(120.dp)
                     .clip(CircleShape)
-                    .background(FoodDeliveryTheme.colors.statusColors.info),
+                    .background(
+                        FoodDeliveryTheme.colors.mainColors.primary.copy(
+                            alpha = 0.6f
+                        )
+                    ),
                 contentAlignment = Alignment.Center
             ) {
                 Icon(

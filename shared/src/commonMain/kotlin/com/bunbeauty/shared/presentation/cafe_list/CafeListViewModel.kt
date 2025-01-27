@@ -1,79 +1,98 @@
 package com.bunbeauty.shared.presentation.cafe_list
 
+import com.bunbeauty.shared.Constants.RUBLE_CURRENCY
 import com.bunbeauty.shared.Constants.WORKING_HOURS_DIVIDER
-import com.bunbeauty.shared.domain.asCommonStateFlow
 import com.bunbeauty.shared.domain.feature.cafe.ObserveCafeWithOpenStateListUseCase
 import com.bunbeauty.shared.domain.feature.cart.ObserveCartUseCase
 import com.bunbeauty.shared.domain.interactor.cafe.ICafeInteractor
 import com.bunbeauty.shared.domain.model.cafe.CafeWithOpenState
-import com.bunbeauty.shared.presentation.base.SharedViewModel
-import kotlinx.coroutines.CoroutineExceptionHandler
+import com.bunbeauty.shared.extension.launchSafe
+import com.bunbeauty.shared.presentation.base.SharedStateViewModel
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 
 class CafeListViewModel(
     private val cafeInteractor: ICafeInteractor,
     private val observeCafeWithOpenStateListUseCase: ObserveCafeWithOpenStateListUseCase,
     private val observeCartUseCase: ObserveCartUseCase
-) : SharedViewModel() {
-
-    private val mutableCafeItemListState = MutableStateFlow(CafeListState())
-    val cafeListState = mutableCafeItemListState.asCommonStateFlow()
+) : SharedStateViewModel<CafeList.DataState, CafeList.Action, CafeList.Event>(
+    initDataState = CafeList.DataState(
+        cafeList = listOf(),
+        cartCostAndCount = null,
+        isLoading = true
+    )
+) {
 
     private var observeCafeListJob: Job? = null
+    private var observeCartJob: Job? = null
 
-    private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
-        mutableCafeItemListState.update { oldState ->
-            oldState.copy(
-                state = CafeListState.State.Error(throwable)
-            )
-        }
-    }
+    override fun reduce(action: CafeList.Action, dataState: CafeList.DataState) {
+        when (action) {
+            CafeList.Action.Init -> {
+                observeCart()
+                observeCafeList()
+            }
 
-    init {
-        observeCart()
-    }
+            is CafeList.Action.OnCafeClicked -> addEvent {
+                CafeList.Event.OpenCafeOptionsBottomSheet(uuid = action.cafeUuid)
+            }
 
-    private fun observeCart() {
-        sharedScope.launch(exceptionHandler) {
-            observeCartUseCase().collectLatest { cartTotalAndCount ->
-                mutableCafeItemListState.update { state ->
-                    state.copy(cartCostAndCount = cartTotalAndCount)
+            CafeList.Action.OnCartClicked -> {
+                addEvent {
+                    CafeList.Event.OpenConsumerCartProduct
                 }
+            }
+
+            CafeList.Action.OnRefreshClicked -> {
+                observeCafeList()
             }
         }
     }
 
-    fun observeCafeList() {
-        sharedScope.launch(exceptionHandler) {
-            observeCafeListJob?.cancel()
-            observeCafeListJob = observeCafeWithOpenStateListUseCase().onEach { cafeWithOpenStateList ->
-                mutableCafeItemListState.update { oldState ->
-                    oldState.copy(
-                        cafeList = cafeWithOpenStateList.map { cafeWithOpenState ->
-                            cafeWithOpenState.toCafeItem()
-                        },
-                        state = CafeListState.State.Success
+    private fun observeCart() {
+        observeCartJob?.cancel()
+        observeCartJob = sharedScope.launchSafe(
+            block = {
+                observeCartUseCase().collectLatest { cartTotalAndCount ->
+                    val cartTotalWithCurrency = cartTotalAndCount.copy(
+                        cost = "${cartTotalAndCount.cost} $RUBLE_CURRENCY"
                     )
+                    setState {
+                        copy(
+                            cartCostAndCount = cartTotalWithCurrency
+                        )
+                    }
                 }
-            }.launchIn(sharedScope)
-        }
+            },
+            onError = {
+            }
+        )
     }
 
-    fun onCafeCardClicked(uuid: String) {
-        mutableCafeItemListState.update { oldState ->
-            oldState + CafeListState.Event.OpenCafeOptionsBottomSheet(
-                uuid = uuid
-            )
-        }
+    private fun observeCafeList() {
+        observeCafeListJob?.cancel()
+        observeCafeListJob = sharedScope.launchSafe(
+            block = {
+                observeCafeWithOpenStateListUseCase()
+                    .collectLatest { cafeWithOpenStateList ->
+                        setState {
+                            copy(
+                                cafeList = cafeWithOpenStateList.mapIndexed { index, cafeWithOpenState ->
+                                    cafeWithOpenState.toCafeItem(
+                                        isLast = index == cafeWithOpenStateList.lastIndex
+                                    )
+                                },
+                                isLoading = false
+                            )
+                        }
+                    }
+            },
+            onError = {
+            }
+        )
     }
 
-    private fun CafeWithOpenState.toCafeItem(): CafeItem {
+    private fun CafeWithOpenState.toCafeItem(isLast: Boolean): CafeItem {
         val fromTime = cafeInteractor.getCafeTime(cafe.fromTime)
         val toTime = cafeInteractor.getCafeTime(cafe.toTime)
 
@@ -82,13 +101,8 @@ class CafeListViewModel(
             address = cafe.address,
             phone = cafe.phone,
             workingHours = "$fromTime$WORKING_HOURS_DIVIDER$toTime",
-            cafeOpenState = openState
+            cafeOpenState = openState,
+            isLast = isLast
         )
-    }
-
-    fun consumeEventList(eventList: List<CafeListState.Event>) {
-        mutableCafeItemListState.update { state ->
-            state.copy(eventList = state.eventList - eventList.toSet())
-        }
     }
 }

@@ -2,6 +2,7 @@ package com.bunbeauty.shared.data
 
 import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.domain.model.Delivery
+import com.bunbeauty.shared.domain.model.Discount
 import com.bunbeauty.shared.domain.model.Settings
 import com.bunbeauty.shared.domain.model.UserCityUuid
 import kotlinx.coroutines.flow.Flow
@@ -27,9 +28,16 @@ expect class DataStoreRepository : DataStoreRepo, KoinComponent {
     override suspend fun getSettings(): Settings?
     override suspend fun saveSettings(settings: Settings)
 
+    override val selectedPaymentMethodUuid: Flow<String?>
+    override suspend fun saveSelectedPaymentMethodUuid(selectedPaymentMethodUuid: String)
+
     override val selectedCityUuid: Flow<String?>
     override suspend fun getSelectedCityUuid(): String?
     override suspend fun saveSelectedCityUuid(cityUuid: String)
+
+    override val discount: Flow<Discount?>
+    override suspend fun getDiscount(): Discount?
+    override suspend fun saveDiscount(discount: Discount)
 
     override suspend fun clearUserData()
 

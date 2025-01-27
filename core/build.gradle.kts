@@ -1,9 +1,9 @@
-import Constants.DEPLOYMENT_TARGET
+import CommonApplication.deploymentTarget
 
 plugins {
-    kotlin("multiplatform")
-    kotlin("native.cocoapods")
-    id("com.android.library")
+    alias(libs.plugins.multiplatform)
+    alias(libs.plugins.cocoa)
+    alias(libs.plugins.android.library)
 }
 
 @OptIn(org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi::class)
@@ -19,7 +19,7 @@ kotlin {
         summary = "Core module with common features"
         homepage = "Link to the Shared Module homepage"
         version = "1.0"
-        ios.deploymentTarget = DEPLOYMENT_TARGET
+        ios.deploymentTarget = deploymentTarget
         podfile = project.file("../iosApp/Podfile")
 
         framework {
@@ -31,7 +31,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(Koin.core)
+                implementation(libs.koin.core)
             }
         }
         val commonTest by getting {

@@ -6,6 +6,7 @@ import com.bunbeauty.shared.Constants
 import com.bunbeauty.shared.presentation.product_details.AdditionItem
 import com.bunbeauty.shared.presentation.product_details.MenuProductAdditionItem
 import com.bunbeauty.shared.presentation.product_details.ProductDetailsState
+import kotlinx.collections.immutable.toPersistentList
 
 class ProductDetailsUiStateMapper(
     private val stringUtil: IStringUtil
@@ -56,7 +57,7 @@ class ProductDetailsUiStateMapper(
                         oldPrice = menuProduct.oldPrice?.let { oldPrice -> "$oldPrice ${menuProduct.currency}" },
                         newPrice = "${menuProduct.newPrice} ${menuProduct.currency}",
                         description = menuProduct.description,
-                        additionList = additionList,
+                        additionList = additionList.toPersistentList(),
                         priceWithAdditions = "${menuProduct.priceWithAdditions} ${menuProduct.currency}"
                     )
                 }

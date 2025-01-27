@@ -40,3 +40,15 @@ end
 target 'vkuskavkaza' do
   default_pods
 end
+
+target 'legenda' do
+  default_pods
+end
+
+target 'usadba' do
+  default_pods
+end
+
+target 'emoji' do
+  default_pods
+end

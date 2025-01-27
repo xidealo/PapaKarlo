@@ -8,10 +8,24 @@
 import SwiftUI
 import shared
 
-struct SplashView: View {
+struct SplashView: View, SharedLifecycle {
     
-    @ObservedObject private var viewModel = SplashViewModel()
-    @State var showOrderNotAvailable = false
+    @State var topMessage : LocalizedStringKey? = nil
+    
+    @State var viewModel: SplashViewModel = SplashViewModel(
+        checkUpdateUseCase: iosComponent.provideCheckUpdateUseCase(),
+        cityInteractor: iosComponent.provideCityInteractor(),
+        getIsOneCityUseCase: iosComponent.provideCheckOneCityUseCase(),
+        saveOneCityUseCase: iosComponent.provideSaveOneCityUseCase()
+    )
+    
+    @State var eventsListener: Closeable?
+    
+    //Navigation
+    @State var openSelectCity: Bool = false
+    @State var openMainMenu: Bool = false
+    @State var openUpdateScreen: Bool = false
+    // ---
     
     init(){
         UINavigationBar.setAnimationsEnabled(false)
@@ -19,44 +33,117 @@ struct SplashView: View {
     
     var body: some View {
         VStack(spacing:0){
-            if(showOrderNotAvailable){
-                Text("warning_no_order_available")
-                    .bodyMedium()
-                    .foregroundColor(AppColor.onStatus)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 4)
-                    .padding(.horizontal, 16)
-                    .background(AppColor.warning)
+            if(openSelectCity){
+                if let topMessage = topMessage {
+                    Text(topMessage)
+                        .bodyMedium()
+                        .foregroundColor(AppColor.onStatus)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 4)
+                        .padding(.horizontal, 16)
+                        .background(AppColor.warning)
+                }
+                
+                NavigationView{
+                    NavigationLink(
+                        destination: SelectCityView(),
+                        isActive: $openSelectCity
+                    ){
+                        LoadingView()
+                    }.isDetailLink(false)
+                }
             }
-    
-            switch viewModel.splashViewState.splashState {
-            case .isGoSelectCity:NavigationView{
-                NavigationLink(
-                    destination:SelectCityView(),
-                    isActive: .constant(true)
-                ){
-                    EmptyView()
-                }.isDetailLink(false)
-
+            
+            if(openMainMenu){
+            if let topMessage = topMessage {
+                    Text(topMessage)
+                        .bodyMedium()
+                        .foregroundColor(AppColor.onStatus)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 4)
+                        .padding(.horizontal, 16)
+                        .background(AppColor.warning)
+                }
+                NavigationView{
+                    NavigationLink(
+                        destination: ContainerView(selection: MainContainerState.menu),
+                        isActive: $openMainMenu
+                    ){
+                        LoadingView()
+                    }.isDetailLink(false)
+                }
             }
-            case .isGoMenu: NavigationView{
-                NavigationLink(
-                    destination:ContainerView(selection: MainContainerState.menu),
-                    isActive: .constant(true)
-                ){
-                    EmptyView()
-                }.isDetailLink(false)
+            
+            
+            if(openUpdateScreen){
+                NavigationView{
+                    NavigationLink(
+                        destination: UpdateView(),
+                        isActive: $openUpdateScreen
+                    ){
+                        LoadingView()
+                    }.isDetailLink(false)
+                }
             }
-            default : EmptyView()
-            }
+            
         }.onAppear(perform: {
-            iosComponent.provideIsOrderAvailableUseCase().invoke { isAvailable, err in
-                if let isAvailable = isAvailable{
-                    showOrderNotAvailable = !(isAvailable as! Bool)
+            viewModel.onAction(action: SplashActionInit())
+            eventsSubscribe()
+            iosComponent.provideGetWorkInfoUseCase().invoke { workInfo, err in
+                
+                let workInfoType = workInfo?.workInfoType ?? WorkInfo.WorkInfoType.deliveryAndPickup
+                
+                switch(workInfoType){
+                case WorkInfo.WorkInfoType.deliveryAndPickup:
+                    print("deliveryAndPickup")
+                    topMessage = nil
+                case WorkInfo.WorkInfoType.delivery:
+                    topMessage = "warning_no_only_delivery"
+                case WorkInfo.WorkInfoType.pickup:
+                    topMessage = "warning_no_only_pickup"
+                case WorkInfo.WorkInfoType.closed:
+                    topMessage = "warning_no_order_available"
+
+                default:
+                    print("workInfoType \(workInfoType)")
+                    topMessage = nil
+                }
+            }
+        })
+        .onDisappear(){
+            unsubscribe()
+        }
+    }
+    
+    func eventsSubscribe() {
+        eventsListener = viewModel.events.watch(block: { _events in
+            if let events = _events{
+                let splashEvents = events as? [SplashEvent] ?? []
+                splashEvents.forEach { event in
+                    switch(event){
+                    case is SplashEventNavigateToUpdateEvent :
+                        openUpdateScreen = true
+                    case is SplashEventNavigateToMenuEvent :
+                        openMainMenu = true
+                    case is SplashEventNavigateToSelectCityEvent:
+                        openSelectCity = true
+                    default:
+                        print("def")
+                    }
+                }
+                
+                if !splashEvents.isEmpty {
+                    viewModel.consumeEvents(events: splashEvents)
                 }
             }
         })
     }
+    
+    func unsubscribe() {
+        eventsListener?.close()
+        eventsListener = nil
+    }
+    
 }
 
 struct HiddenNavigationBar: ViewModifier {
@@ -65,7 +152,6 @@ struct HiddenNavigationBar: ViewModifier {
             .navigationBarHidden(true)
             .navigationBarBackButtonHidden(true)
             .navigationBarTitle("", displayMode: .inline)
-            .preferredColorScheme(.light)
     }
 }
 

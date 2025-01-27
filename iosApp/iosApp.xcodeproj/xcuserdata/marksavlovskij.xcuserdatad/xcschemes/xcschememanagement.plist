@@ -9,10 +9,20 @@
 			<key>orderHint</key>
 			<integer>2</integer>
 		</dict>
+		<key>emoji.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>34</integer>
+		</dict>
 		<key>gustoPub.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>3</integer>
+		</dict>
+		<key>legenda.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>31</integer>
 		</dict>
 		<key>papakarlo.xcscheme_^#shared#^_</key>
 		<dict>
@@ -24,10 +34,15 @@
 			<key>orderHint</key>
 			<integer>4</integer>
 		</dict>
+		<key>usadba.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>32</integer>
+		</dict>
 		<key>vkuskavkaza.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>31</integer>
+			<integer>5</integer>
 		</dict>
 		<key>yuliar.xcscheme_^#shared#^_</key>
 		<dict>
@@ -38,6 +53,21 @@
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>0219B78D2B8FB97C00305E2D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>025BF7752CAB354D00DF0946</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>025F42D22CD0159400C854AF</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>025F77F32CD14C3400C87D99</key>
 		<dict>
 			<key>primary</key>
 			<true/>

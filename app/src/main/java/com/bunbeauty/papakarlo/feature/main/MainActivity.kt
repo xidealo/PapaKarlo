@@ -27,6 +27,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidViewBinding
 import androidx.core.app.NotificationManagerCompat
@@ -110,7 +111,7 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
         ) { padding ->
             Column(modifier = Modifier.padding(padding)) {
                 ConnectionErrorMessage(visible = mainState.connectionLost)
-                OrderAvailableMessage(visible = mainState.showOrderNotAvailable)
+                StatusBarMessage(statusBarMessage = mainState.statusBarMessage)
 
                 Box(modifier = Modifier.weight(1f)) {
                     AndroidViewBinding(factory = ::fragmentContainerFactory)
@@ -143,9 +144,9 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
     }
 
     @Composable
-    private fun OrderAvailableMessage(visible: Boolean) {
+    private fun StatusBarMessage(statusBarMessage: MainState.StatusBarMessage) {
         AnimatedVisibility(
-            visible = visible,
+            visible = statusBarMessage.isVisible,
             enter = slideInVertically(tween(300)),
             exit = slideOutVertically(tween(300))
         ) {
@@ -156,11 +157,25 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
                     .padding(8.dp),
                 contentAlignment = Alignment.Center
             ) {
-                Text(
-                    text = resources.getString(R.string.warning_no_order_available),
-                    style = FoodDeliveryTheme.typography.bodyMedium,
-                    color = FoodDeliveryTheme.colors.statusColors.onStatus
-                )
+                statusBarMessage.workInfoType?.let {
+                    Text(
+                        text = when (statusBarMessage.workInfoType) {
+                            MainState.StatusBarMessage.WorkType.DELIVERY -> stringResource(
+                                R.string.warning_only_delivery
+                            )
+
+                            MainState.StatusBarMessage.WorkType.PICKUP -> stringResource(
+                                R.string.warning_only_pickup
+                            )
+
+                            MainState.StatusBarMessage.WorkType.CLOSED -> stringResource(
+                                R.string.warning_no_order_available
+                            )
+                        },
+                        style = FoodDeliveryTheme.typography.bodyMedium,
+                        color = FoodDeliveryTheme.colors.statusColors.onStatus
+                    )
+                }
             }
         }
     }

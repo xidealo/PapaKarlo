@@ -10,14 +10,14 @@ import Foundation
 
 class SplashViewState :NSObject {
     
-    let splashState:SplashState
+    let splashState: SplashState
     
     init(splashState:SplashState){
         self.splashState = splashState
     }
 }
 
-enum SplashState{
+enum SplashState {
     case checking
     case isGoSelectCity
     case isGoMenu
