@@ -98,7 +98,7 @@ jobs:
       - name: "Assemble ${{ matrix.flavor }}"
         run: ./gradlew assemble${{ matrix.flavor }}Release
       - name: "Publish ${{ matrix.flavor }}"
-        run: ./gradlew publish${{ matrix.flavor }}Release
+        run: ./gradlew publish${{ matrix.flavor }}ReleaseBundle
 
 #  TODO fix ios publishing
 #  test_ios_deploy:
