@@ -17,6 +17,7 @@ import com.bunbeauty.papakarlo.feature.motivation.toMotivationUi
 import com.bunbeauty.papakarlo.feature.paymentmethod.toPaymentMethodUI
 import com.bunbeauty.papakarlo.feature.paymentmethod.toSelectablePaymentMethodUI
 import com.bunbeauty.shared.presentation.createorder.CreateOrder
+import com.bunbeauty.shared.presentation.createorder.CreateOrder.DataState.AddressErrorState
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
@@ -39,7 +40,7 @@ fun CreateOrder.DataState.toViewState(): CreateOrderViewState {
         },
         deliveryAddress = selectedUserAddress?.toAddressString(),
         pickupAddress = selectedCafe?.address,
-        isAddressErrorShown = isDelivery && isAddressErrorShown,
+        isAddressErrorShown = isDelivery && (isAddressErrorShown == AddressErrorState.ERROR),
         comment = comment,
         deferredTimeStringId = if (isDelivery) {
             R.string.delivery_time

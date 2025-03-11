@@ -52,18 +52,13 @@ internal fun orderUseCaseModule() = module {
         )
     }
     factory {
-        GetWorkInfoUseCase(
-            workInfoRepository = get()
-        )
-    }
-    factory {
         IsOrderAvailableUseCase(
-            workInfoRepository = get()
+            cafeRepo = get()
         )
     }
     factory {
         SetClosedWorkInfoUseCase(
-            workInfoRepository = get()
+            cafeRepo = get()
         )
     }
 }

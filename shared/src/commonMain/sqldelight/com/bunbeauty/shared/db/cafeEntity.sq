@@ -8,13 +8,15 @@ CREATE TABLE cafeEntity (
     longitude REAL NOT NULL,
     address TEXT NOT NULL,
     cityUuid TEXT NOT NULL,
-    isVisible INTEGER AS Boolean NOT NULL
+    isVisible INTEGER AS Boolean NOT NULL,
+    workType TEXT NOT NULL,
+    workload TEXT NOT NULL
 );
 
 insertCafe:
 INSERT OR REPLACE
 INTO cafeEntity
-VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
 
 getCafeListByCityUuid:
 SELECT *

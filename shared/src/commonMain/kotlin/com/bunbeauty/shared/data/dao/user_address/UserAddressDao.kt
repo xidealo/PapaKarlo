@@ -35,7 +35,8 @@ class UserAddressDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IUserAddressD
                         normalDeliveryCost = normalDeliveryCost,
                         forLowDeliveryCost = forLowDeliveryCost,
                         lowDeliveryCost = lowDeliveryCost,
-                        userUuid = userUuid
+                        userUuid = userUuid,
+                        cafeUuid = cafeUuid
                     )
                 }
             }
@@ -52,7 +53,7 @@ class UserAddressDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IUserAddressD
 
     override suspend fun getUserAddressCountByUserAndCityUuid(
         userUuid: String,
-        cityUuid: String
+        cityUuid: String,
     ): Long {
         return userAddressEntityQueries.getUserAddressCountByUserUuidAndCityUuid(
             userUuid = userUuid,
@@ -62,7 +63,7 @@ class UserAddressDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IUserAddressD
 
     override fun observeSelectedUserAddressByUserAndCityUuid(
         userUuid: String,
-        cityUuid: String
+        cityUuid: String,
     ): Flow<UserAddressEntity?> {
         return userAddressEntityQueries.getSelectedUserAddressByUserAndCityUuid(
             userUuid = userUuid,
@@ -72,7 +73,7 @@ class UserAddressDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IUserAddressD
 
     override suspend fun getSelectedUserAddressByUserAndCityUuid(
         userUuid: String,
-        cityUuid: String
+        cityUuid: String,
     ): UserAddressEntity? {
         return userAddressEntityQueries.getSelectedUserAddressByUserAndCityUuid(
             userUuid = userUuid,
@@ -82,7 +83,7 @@ class UserAddressDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IUserAddressD
 
     override suspend fun getUserAddressListByUserAndCityUuid(
         userUuid: String,
-        cityUuid: String
+        cityUuid: String,
     ): List<UserAddressEntity> {
         return userAddressEntityQueries.getUserAddressListByUserUuidAndCityUuid(
             userUuid = userUuid,
@@ -92,7 +93,7 @@ class UserAddressDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IUserAddressD
 
     override suspend fun geFirstUserAddressByUserAndCityUuid(
         userUuid: String,
-        cityUuid: String
+        cityUuid: String,
     ): UserAddressEntity? {
         return userAddressEntityQueries.getFirstUserAddressByUserAndCityUuid(
             userUuid = userUuid,
@@ -102,7 +103,7 @@ class UserAddressDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IUserAddressD
 
     override fun observeFirstUserAddressByUserAndCityUuid(
         userUuid: String,
-        cityUuid: String
+        cityUuid: String,
     ): Flow<UserAddressEntity?> {
         return userAddressEntityQueries.getFirstUserAddressByUserAndCityUuid(
             userUuid = userUuid,
@@ -112,7 +113,7 @@ class UserAddressDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IUserAddressD
 
     override fun observeUserAddressListByUserAndCityUuid(
         userUuid: String,
-        cityUuid: String
+        cityUuid: String,
     ): Flow<List<UserAddressEntity>> {
         return userAddressEntityQueries.getUserAddressListByUserUuidAndCityUuid(
             userUuid = userUuid,

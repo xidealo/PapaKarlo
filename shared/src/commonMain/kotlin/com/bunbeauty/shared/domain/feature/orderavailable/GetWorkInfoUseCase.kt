@@ -1,12 +1,12 @@
 package com.bunbeauty.shared.domain.feature.orderavailable
 
-import com.bunbeauty.shared.domain.model.order.WorkInfo
-import com.bunbeauty.shared.domain.repo.WorkInfoRepo
+import com.bunbeauty.shared.domain.model.cafe.Cafe
+import com.bunbeauty.shared.domain.repo.CafeRepo
 
 class GetWorkInfoUseCase(
-    private val workInfoRepository: WorkInfoRepo,
+    private val cafeRepo: CafeRepo,
 ) {
-    suspend operator fun invoke(): WorkInfo? {
-        return workInfoRepository.getWorkInfo()
+    suspend operator fun invoke(): Cafe.WorkType? {
+        return cafeRepo.getCafeByUuid()?.workType
     }
 }

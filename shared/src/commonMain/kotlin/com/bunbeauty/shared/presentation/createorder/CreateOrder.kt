@@ -21,7 +21,7 @@ interface CreateOrder {
         val userAddressList: List<SelectableUserAddress> = emptyList(),
         val selectedUserAddress: UserAddress? = null,
         val isUserAddressListShown: Boolean = false,
-        val isAddressErrorShown: Boolean = false,
+        val isAddressErrorShown: AddressErrorState = AddressErrorState.INIT,
 
         val cafeList: List<SelectableCafe> = emptyList(),
         val isCafeListShown: Boolean = false,
@@ -54,7 +54,8 @@ interface CreateOrder {
 
         val isLoading: Boolean,
         val workType: WorkType,
-        val isLoadingSwitcher: Boolean = true
+        val isLoadingSwitcher: Boolean = true,
+        val cafeUuid: String?,
     ) : BaseDataState {
 
         val isOrderCreationEnabled =
@@ -69,6 +70,12 @@ interface CreateOrder {
         }
 
         val paymentByCash: Boolean = selectedPaymentMethod?.name == PaymentMethodName.CASH
+
+        enum class AddressErrorState {
+            INIT,
+            NO_ERROR,
+            ERROR
+        }
     }
 
     sealed interface DeferredTime {

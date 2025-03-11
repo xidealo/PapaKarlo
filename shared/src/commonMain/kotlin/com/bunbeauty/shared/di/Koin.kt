@@ -8,6 +8,7 @@ import com.bunbeauty.shared.data.di.databaseModule
 import com.bunbeauty.shared.data.di.networkModule
 import com.bunbeauty.shared.data.di.providerModule
 import com.bunbeauty.shared.data.di.repositoryModule
+import com.bunbeauty.shared.data.di.storageModule
 import com.bunbeauty.shared.data.mapper.user_address.UserAddressMapper
 import com.bunbeauty.shared.data.network.api.NetworkConnector
 import com.bunbeauty.shared.di.usecase.additionUseCaseModule
@@ -85,6 +86,7 @@ fun initKoin(appDeclaration: KoinAppDeclaration = {}) = startKoin {
         networkModule(),
         dataMapperModule(),
         repositoryModule(),
+        storageModule(),
         interactorModule(),
         utilModule(),
         platformModule(),
@@ -105,8 +107,8 @@ fun initKoin(appDeclaration: KoinAppDeclaration = {}) = startKoin {
 }
 
 /**
-* Function for init in IOS
-* */
+ * Function for init in IOS
+ * */
 fun initKoin() = startKoin {
     modules(
         databaseModule(),
@@ -115,6 +117,7 @@ fun initKoin() = startKoin {
         networkModule(),
         dataMapperModule(),
         repositoryModule(),
+        storageModule(),
         interactorModule(),
         utilModule(),
         domainMapperModule(),
@@ -190,6 +193,7 @@ class IosComponent : KoinComponent {
     fun provideEditCartProductUseCase(): EditCartProductUseCase = get()
     fun provideGetAdditionGroupsWithSelectedAdditionUseCase(): GetAdditionGroupsWithSelectedAdditionUseCase =
         get()
+
     fun provideGetPriceOfSelectedAdditionsUseCase(): GetPriceOfSelectedAdditionsUseCase = get()
     fun provideObserveCafeWithOpenStateListUseCase(): ObserveCafeWithOpenStateListUseCase = get()
     fun provideGetMotivationUseCaseUseCase(): GetMotivationUseCase = get()

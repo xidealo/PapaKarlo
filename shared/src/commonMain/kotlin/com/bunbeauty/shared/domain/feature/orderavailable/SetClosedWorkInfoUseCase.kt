@@ -1,16 +1,16 @@
 package com.bunbeauty.shared.domain.feature.orderavailable
 
-import com.bunbeauty.shared.domain.model.order.WorkInfo
-import com.bunbeauty.shared.domain.repo.WorkInfoRepo
+import com.bunbeauty.shared.domain.repo.CafeRepo
 
 class SetClosedWorkInfoUseCase(
-    private val workInfoRepository: WorkInfoRepo
+    private val cafeRepo: CafeRepo
 ) {
     operator fun invoke() {
-        workInfoRepository.update(
-            workInfo = WorkInfo(
-                workInfoType = WorkInfo.WorkInfoType.CLOSED
-            )
-        )
+        TODO("CLOSE CAFE")
+//        cafeRepo.update(
+//            workInfo = WorkInfo(
+//                workInfoType = WorkInfo.WorkInfoType.CLOSED
+//            )
+//        )
     }
 }

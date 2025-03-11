@@ -9,7 +9,7 @@ import com.bunbeauty.papakarlo.common.ui.element.bottombar.NavigationBarItem
 import com.bunbeauty.papakarlo.feature.main.network.INetworkUtil
 import com.bunbeauty.shared.domain.feature.orderavailable.GetWorkInfoUseCase
 import com.bunbeauty.shared.domain.feature.orderavailable.SetClosedWorkInfoUseCase
-import com.bunbeauty.shared.domain.model.order.WorkInfo
+import com.bunbeauty.shared.domain.model.cafe.Cafe
 import com.bunbeauty.shared.extension.launchSafe
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -23,7 +23,7 @@ private const val MAIN_VIEW_MODEL_TAG = "MainViewModel"
 class MainViewModel(
     private val networkUtil: INetworkUtil,
     private val getWorkInfoUseCase: GetWorkInfoUseCase,
-    private val setClosedWorkInfoUseCase: SetClosedWorkInfoUseCase
+    private val setClosedWorkInfoUseCase: SetClosedWorkInfoUseCase,
 ) : ViewModel() {
 
     private val mutableMainState: MutableStateFlow<MainState> = MutableStateFlow(MainState())
@@ -104,12 +104,12 @@ class MainViewModel(
                 mutableMainState.update { state ->
                     state.copy(
                         statusBarMessage = MainState.StatusBarMessage(
-                            isVisible = workInfo?.workInfoType != WorkInfo.WorkInfoType.DELIVERY_AND_PICKUP,
-                            workInfoType = when (workInfo?.workInfoType) {
-                                WorkInfo.WorkInfoType.DELIVERY -> MainState.StatusBarMessage.WorkType.DELIVERY
-                                WorkInfo.WorkInfoType.PICKUP -> MainState.StatusBarMessage.WorkType.PICKUP
-                                WorkInfo.WorkInfoType.CLOSED -> MainState.StatusBarMessage.WorkType.CLOSED
-                                WorkInfo.WorkInfoType.DELIVERY_AND_PICKUP -> null
+                            isVisible = workInfo != Cafe.WorkType.DELIVERY_AND_PICKUP,
+                            workInfoType = when (workInfo) {
+                                Cafe.WorkType.DELIVERY -> MainState.StatusBarMessage.WorkType.DELIVERY
+                                Cafe.WorkType.PICKUP -> MainState.StatusBarMessage.WorkType.PICKUP
+                                Cafe.WorkType.CLOSED -> MainState.StatusBarMessage.WorkType.CLOSED
+                                Cafe.WorkType.DELIVERY_AND_PICKUP -> null
                                 null -> null
                             }
                         )

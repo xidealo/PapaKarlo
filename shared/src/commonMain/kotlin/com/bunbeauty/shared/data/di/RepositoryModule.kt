@@ -10,11 +10,9 @@ import com.bunbeauty.shared.data.repository.CafeRepository
 import com.bunbeauty.shared.data.repository.CartProductAdditionRepository
 import com.bunbeauty.shared.data.repository.CartProductRepository
 import com.bunbeauty.shared.data.repository.CityRepository
-import com.bunbeauty.shared.data.repository.DeliveryRepository
 import com.bunbeauty.shared.data.repository.DiscountRepository
 import com.bunbeauty.shared.data.repository.LinkRepository
 import com.bunbeauty.shared.data.repository.MenuProductRepository
-import com.bunbeauty.shared.data.repository.WorkInfoRepository
 import com.bunbeauty.shared.data.repository.OrderRepository
 import com.bunbeauty.shared.data.repository.PaymentRepository
 import com.bunbeauty.shared.data.repository.RecommendationRepository
@@ -30,11 +28,9 @@ import com.bunbeauty.shared.domain.repo.CafeRepo
 import com.bunbeauty.shared.domain.repo.CartProductAdditionRepo
 import com.bunbeauty.shared.domain.repo.CartProductRepo
 import com.bunbeauty.shared.domain.repo.CityRepo
-import com.bunbeauty.shared.domain.repo.DeliveryRepo
 import com.bunbeauty.shared.domain.repo.DiscountRepo
 import com.bunbeauty.shared.domain.repo.LinkRepo
 import com.bunbeauty.shared.domain.repo.MenuProductRepo
-import com.bunbeauty.shared.domain.repo.WorkInfoRepo
 import com.bunbeauty.shared.domain.repo.OrderRepo
 import com.bunbeauty.shared.domain.repo.PaymentRepo
 import com.bunbeauty.shared.domain.repo.RecommendationRepo
@@ -97,14 +93,8 @@ fun repositoryModule() = module {
     single<CafeRepo> {
         CafeRepository(
             networkConnector = get(),
-            dataStoreRepo = get(),
+            cafeStorage = get(),
             cafeDao = get()
-        )
-    }
-    single<DeliveryRepo> {
-        DeliveryRepository(
-            networkConnector = get(),
-            dataStoreRepo = get()
         )
     }
     single<UserRepo> {
@@ -186,11 +176,6 @@ fun repositoryModule() = module {
     }
     single<SuggestionRepo> {
         SuggestionRepository(
-            networkConnector = get()
-        )
-    }
-    single<WorkInfoRepo> {
-        WorkInfoRepository(
             networkConnector = get()
         )
     }

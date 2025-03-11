@@ -4,6 +4,7 @@ import com.bunbeauty.core.Logger
 import com.bunbeauty.shared.Constants.PERCENT
 import com.bunbeauty.shared.Constants.RUBLE_CURRENCY
 import com.bunbeauty.shared.domain.exeptions.OrderNotAvailableException
+import com.bunbeauty.shared.domain.feature.address.GetCurrentUserAddressUseCase
 import com.bunbeauty.shared.domain.feature.cafe.GetSelectableCafeListUseCase
 import com.bunbeauty.shared.domain.feature.city.GetSelectedCityTimeZoneUseCase
 import com.bunbeauty.shared.domain.feature.motivation.GetMotivationUseCase
@@ -15,8 +16,8 @@ import com.bunbeauty.shared.domain.interactor.cafe.ICafeInteractor
 import com.bunbeauty.shared.domain.interactor.cart.GetCartTotalFlowUseCase
 import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
+import com.bunbeauty.shared.domain.model.cafe.Cafe
 import com.bunbeauty.shared.domain.model.date_time.Time
-import com.bunbeauty.shared.domain.model.order.WorkInfo
 import com.bunbeauty.shared.domain.use_case.address.GetSelectableUserAddressListUseCase
 import com.bunbeauty.shared.domain.use_case.address.SaveSelectedUserAddressUseCase
 import com.bunbeauty.shared.domain.use_case.deferred_time.GetMinTimeUseCase
@@ -34,6 +35,7 @@ class CreateOrderViewModel(
     private val cafeInteractor: ICafeInteractor,
     private val userInteractor: IUserInteractor,
     private val getSelectableUserAddressList: GetSelectableUserAddressListUseCase,
+    private val getCurrentUserAddressUseCase: GetCurrentUserAddressUseCase,
     private val getSelectableCafeList: GetSelectableCafeListUseCase,
     private val getCartTotalFlowUseCase: GetCartTotalFlowUseCase,
     private val getMotivationUseCase: GetMotivationUseCase,
@@ -43,13 +45,13 @@ class CreateOrderViewModel(
     private val saveSelectedUserAddress: SaveSelectedUserAddressUseCase,
     private val getSelectablePaymentMethodListUseCase: GetSelectablePaymentMethodListUseCase,
     private val savePaymentMethodUseCase: SavePaymentMethodUseCase,
-    private val getWorkInfoUseCase: GetWorkInfoUseCase
+    private val getWorkInfoUseCase: GetWorkInfoUseCase,
 ) : SharedStateViewModel<CreateOrder.DataState, CreateOrder.Action, CreateOrder.Event>(
     initDataState = CreateOrder.DataState(
         isDelivery = true,
         userAddressList = emptyList(),
         selectedUserAddress = null,
-        isAddressErrorShown = false,
+        isAddressErrorShown = CreateOrder.DataState.AddressErrorState.INIT,
         cafeList = emptyList(),
         selectedCafe = null,
         comment = "",
@@ -58,7 +60,8 @@ class CreateOrderViewModel(
         selectedPaymentMethod = null,
         cartTotal = CreateOrder.CartTotal.Loading,
         isLoading = true,
-        workType = CreateOrder.DataState.WorkType.DELIVERY_AND_PICKUP
+        workType = CreateOrder.DataState.WorkType.DELIVERY_AND_PICKUP,
+        cafeUuid = ""
     )
 ) {
 
@@ -348,13 +351,13 @@ class CreateOrderViewModel(
 
     private fun createClick(
         withoutChange: String,
-        changeFrom: String
+        changeFrom: String,
     ) {
         val state = mutableDataState.value
 
         val isDeliveryAddressNotSelected = state.isDelivery && (state.selectedUserAddress == null)
         setState {
-            copy(isAddressErrorShown = isDeliveryAddressNotSelected)
+            copy(isAddressErrorShown = CreateOrder.DataState.AddressErrorState.ERROR)
         }
 
         if (isDeliveryAddressNotSelected) {
@@ -379,8 +382,8 @@ class CreateOrderViewModel(
             (state.cartTotal as? CreateOrder.CartTotal.Success)?.newFinalCostValue ?: 0
         val isChangeLessThenCost = (state.change ?: 0) < newFinalCost
         val isChangeIncorrect = state.paymentByCash &&
-            !state.withoutChangeChecked &&
-            isChangeLessThenCost
+                !state.withoutChangeChecked &&
+                isChangeLessThenCost
         setState {
             copy(isChangeErrorShown = isChangeIncorrect)
         }
@@ -466,21 +469,29 @@ class CreateOrderViewModel(
     }
 
     private suspend fun updateSelectedUserAddress() {
-        val userAddressList = getSelectableUserAddressList()
-        setState {
-            copy(userAddressList = userAddressList)
+        val userAddress = getCurrentUserAddressUseCase()
+
+        val cafeUuid = userAddress?.uuid?.let { userAddressUuid ->
+            //getUserCafeUseCase(userAddressUuid = userAddressUuid)
         }
-        val selectableUserAddress =
-            userAddressList.find { selectableUserAddress -> selectableUserAddress.isSelected }
 
         setState {
-            copy(selectedUserAddress = selectableUserAddress?.address)
+            copy(
+                selectedUserAddress = userAddress,
+                //cafeUuid = cafeUuid?.uuid,
+                isAddressErrorShown = if (userAddress != null) {
+                    CreateOrder.DataState.AddressErrorState.NO_ERROR
+                } else {
+                    isAddressErrorShown
+                }
+            )
         }
-        if (selectableUserAddress != null) {
-            setState {
-                copy(isAddressErrorShown = false)
-            }
-        }
+
+        updateSelectedCafe()
+    }
+
+    fun updateInfoWithUserCafe(cafeUuid: String) {
+        //todo get work info (тип работы и тд)
     }
 
     private suspend fun updateSelectedCafe() {
@@ -489,8 +500,8 @@ class CreateOrderViewModel(
             copy(cafeList = cafeList)
         }
 
-        cafeList.find {
-            it.isSelected
+        cafeList.find { cafe ->
+            cafe.isSelected
         }?.let { selectedCafe ->
             setState {
                 copy(selectedCafe = selectedCafe.cafe)
@@ -503,14 +514,13 @@ class CreateOrderViewModel(
         getCartTotalJob = sharedScope.launchSafe(
             block = {
                 val workInfoType =
-                    getWorkInfoUseCase()?.workInfoType
-                        ?: WorkInfo.WorkInfoType.DELIVERY_AND_PICKUP
+                    getWorkInfoUseCase() ?: Cafe.WorkType.DELIVERY_AND_PICKUP
 
                 val isDelivery = when (workInfoType) {
-                    WorkInfo.WorkInfoType.DELIVERY -> true
-                    WorkInfo.WorkInfoType.PICKUP -> false
-                    WorkInfo.WorkInfoType.DELIVERY_AND_PICKUP -> mutableDataState.value.isDelivery
-                    WorkInfo.WorkInfoType.CLOSED -> mutableDataState.value.isDelivery
+                    Cafe.WorkType.DELIVERY -> true
+                    Cafe.WorkType.PICKUP -> false
+                    Cafe.WorkType.DELIVERY_AND_PICKUP -> mutableDataState.value.isDelivery
+                    Cafe.WorkType.CLOSED -> mutableDataState.value.isDelivery
                 }
 
                 getCartTotalFlowUseCase(isDelivery = isDelivery).collect { cartTotal ->
@@ -555,10 +565,10 @@ class CreateOrderViewModel(
 
     private fun getWorkType(
         motivationData: MotivationData?,
-        workType: WorkInfo.WorkInfoType
+        workType: Cafe.WorkType,
     ): CreateOrder.DataState.WorkType {
         return when (workType) {
-            WorkInfo.WorkInfoType.DELIVERY -> {
+            Cafe.WorkType.DELIVERY -> {
                 if (motivationData is MotivationData.MinOrderCost) {
                     CreateOrder.DataState.WorkType.CLOSED_DELIVERY
                 } else {
@@ -566,8 +576,8 @@ class CreateOrderViewModel(
                 }
             }
 
-            WorkInfo.WorkInfoType.PICKUP -> CreateOrder.DataState.WorkType.PICKUP
-            WorkInfo.WorkInfoType.DELIVERY_AND_PICKUP -> {
+            Cafe.WorkType.PICKUP -> CreateOrder.DataState.WorkType.PICKUP
+            Cafe.WorkType.DELIVERY_AND_PICKUP -> {
                 if (motivationData is MotivationData.MinOrderCost) {
                     CreateOrder.DataState.WorkType.CLOSED
                 } else {
@@ -575,14 +585,14 @@ class CreateOrderViewModel(
                 }
             }
 
-            WorkInfo.WorkInfoType.CLOSED -> CreateOrder.DataState.WorkType.CLOSED
+            Cafe.WorkType.CLOSED -> CreateOrder.DataState.WorkType.CLOSED
         }
     }
 
     private fun getExtendedComment(
         state: CreateOrder.DataState,
         withoutChange: String,
-        changeFrom: String
+        changeFrom: String,
     ): String {
         return buildString {
             state.comment.takeIf { comment ->
