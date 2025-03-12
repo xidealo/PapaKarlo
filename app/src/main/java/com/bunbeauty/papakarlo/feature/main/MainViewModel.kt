@@ -110,7 +110,6 @@ class MainViewModel(
                                 Cafe.WorkType.PICKUP -> MainState.StatusBarMessage.WorkType.PICKUP
                                 Cafe.WorkType.CLOSED -> MainState.StatusBarMessage.WorkType.CLOSED
                                 Cafe.WorkType.DELIVERY_AND_PICKUP -> null
-                                null -> null
                             }
                         )
                     )

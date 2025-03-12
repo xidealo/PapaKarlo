@@ -7,8 +7,8 @@ class IsOrderAvailableUseCase(
     private val cafeRepo: CafeRepo,
 ) {
     suspend operator fun invoke(): Boolean {
-        val cafe = cafeRepo.getCafeByUuid(cafeUuid)
+        val cafe = cafeRepo.getUserCafe()
 
-        return cafe?.workType != Cafe.WorkType.CLOSED
+        return cafe.workType != Cafe.WorkType.CLOSED
     }
 }

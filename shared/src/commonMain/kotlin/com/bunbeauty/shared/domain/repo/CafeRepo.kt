@@ -12,6 +12,7 @@ interface CafeRepo {
     )
 
     suspend fun getCafeByUuid(cafeUuid: String): Cafe?
+    suspend fun getUserCafe(): Cafe
     suspend fun getSelectedCafeByUserAndCityUuid(userUuid: String, cityUuid: String): Cafe?
     suspend fun getFirstCafeCityUuid(cityUuid: String): Cafe?
 

@@ -6,7 +6,7 @@ import com.bunbeauty.shared.domain.repo.CafeRepo
 class GetWorkInfoUseCase(
     private val cafeRepo: CafeRepo,
 ) {
-    suspend operator fun invoke(): Cafe.WorkType? {
-        return cafeRepo.getCafeByUuid()?.workType
+    suspend operator fun invoke(): Cafe.WorkType {
+        return cafeRepo.getUserCafe().workType
     }
 }

@@ -61,4 +61,9 @@ internal fun orderUseCaseModule() = module {
             cafeRepo = get()
         )
     }
+    factory {
+        GetWorkInfoUseCase(
+            cafeRepo = get()
+        )
+    }
 }

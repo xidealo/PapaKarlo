@@ -513,8 +513,7 @@ class CreateOrderViewModel(
         getCartTotalJob?.cancel()
         getCartTotalJob = sharedScope.launchSafe(
             block = {
-                val workInfoType =
-                    getWorkInfoUseCase() ?: Cafe.WorkType.DELIVERY_AND_PICKUP
+                val workInfoType = getWorkInfoUseCase()
 
                 val isDelivery = when (workInfoType) {
                     Cafe.WorkType.DELIVERY -> true

@@ -48,6 +48,10 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
         name = RECOMMENDATION_DATA_STORE
     )
 
+    private val Context.userCafeUuid: DataStore<Preferences> by preferencesDataStore(
+        name = RECOMMENDATION_DATA_STORE
+    )
+
     actual override val token: Flow<String?> = context.tokenDataStore.data.map { tokenDataStore ->
         tokenDataStore[TOKEN_KEY]
     }
@@ -207,6 +211,21 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
         }
     }
 
+    actual override val userCafeUuid: Flow<String?> =
+        context.userCafeUuid.data.map { userCafeDataStore ->
+            userCafeDataStore[USER_CAFE_UUID_KEY]
+        }
+
+    actual override suspend fun getUserCafeUuid(): String? {
+        return userCafeUuid.firstOrNull()
+    }
+
+    actual override suspend fun saveUserCafeUuid(userCafeUuid: String) {
+        context.recommendationDataStore.edit { recommendationDataStore ->
+            recommendationDataStore[USER_CAFE_UUID_KEY] = userCafeUuid
+        }
+    }
+
     actual override suspend fun clearUserData() {
         context.tokenDataStore.edit { tokenDataStore ->
             tokenDataStore.clear()
@@ -217,7 +236,11 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
         context.settingsDataStore.edit { settingsDataStore ->
             settingsDataStore.clear()
         }
+        context.userCafeUuid.edit { userCafeUuid ->
+            userCafeUuid.clear()
+        }
     }
+
 
     companion object {
         private const val TOKEN_DATA_STORE = "token data store"
@@ -258,5 +281,9 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
         private const val RECOMMENDATION_DATA_STORE = "recommendation"
         private const val RECOMMENDATION_MAX_VISIBLE = "recommendation max visible"
         private val RECOMMENDATION_MAX_VISIBLE_KEY = intPreferencesKey(RECOMMENDATION_MAX_VISIBLE)
+
+        private const val USER_CAFE_DATA_STORE = "userCafe"
+        private const val USER_CAFE_UUID = "user cafe uuid"
+        private val USER_CAFE_UUID_KEY = stringPreferencesKey(USER_CAFE_UUID)
     }
 }

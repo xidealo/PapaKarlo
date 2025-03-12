@@ -94,7 +94,8 @@ fun repositoryModule() = module {
         CafeRepository(
             networkConnector = get(),
             cafeStorage = get(),
-            cafeDao = get()
+            cafeDao = get(),
+            dataStoreRepo = get()
         )
     }
     single<UserRepo> {

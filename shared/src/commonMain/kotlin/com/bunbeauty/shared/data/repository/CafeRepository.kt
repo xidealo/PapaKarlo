@@ -1,5 +1,6 @@
 package com.bunbeauty.shared.data.repository
 
+import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.data.dao.cafe.ICafeDao
 import com.bunbeauty.shared.data.mapper.cafe.toCafe
 import com.bunbeauty.shared.data.mapper.cafe.toCafeEntity
@@ -13,6 +14,7 @@ class CafeRepository(
     private val networkConnector: NetworkConnector,
     private val cafeDao: ICafeDao,
     private val cafeStorage: CafeStorage,
+    private val dataStoreRepo: DataStoreRepo,
 ) : CacheListRepository<Cafe>(), CafeRepo {
 
     override val tag: String = "CAFE_TAG"
@@ -61,6 +63,26 @@ class CafeRepository(
 
     override suspend fun getCafeByUuid(cafeUuid: String): Cafe? {
         return cafeDao.getCafeByUuid(cafeUuid)?.toCafe()
+    }
+
+    override suspend fun getUserCafe(): Cafe {
+        return getCafeList(
+            selectedCityUuid = dataStoreRepo.getSelectedCityUuid().orEmpty()
+        ).find { cafe ->
+            cafe.uuid == dataStoreRepo.getUserCafeUuid()
+        } ?: Cafe(
+            uuid = "",
+            fromTime = 0,
+            toTime = 0,
+            phone = "",
+            address = "",
+            latitude = 0.0,
+            longitude = 0.0,
+            cityUuid = "",
+            isVisible = false,
+            workType = Cafe.WorkType.DELIVERY_AND_PICKUP,
+            workload = Cafe.Workload.LOW
+        )
     }
 
     override suspend fun getSelectedCafeByUserAndCityUuid(
