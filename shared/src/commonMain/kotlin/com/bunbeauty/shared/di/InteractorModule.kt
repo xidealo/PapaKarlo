@@ -16,7 +16,6 @@ internal fun interactorModule() = module {
     single<IUserInteractor> {
         UserInteractor(
             userRepo = get(),
-            dataStoreRepo = get(),
             orderRepo = get(),
             cafeRepo = get()
         )

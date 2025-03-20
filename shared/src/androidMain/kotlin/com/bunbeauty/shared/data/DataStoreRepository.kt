@@ -49,7 +49,7 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
     )
 
     private val Context.userCafeUuid: DataStore<Preferences> by preferencesDataStore(
-        name = RECOMMENDATION_DATA_STORE
+        name = USER_CAFE_DATA_STORE
     )
 
     actual override val token: Flow<String?> = context.tokenDataStore.data.map { tokenDataStore ->
@@ -221,7 +221,7 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
     }
 
     actual override suspend fun saveUserCafeUuid(userCafeUuid: String) {
-        context.recommendationDataStore.edit { recommendationDataStore ->
+        context.userCafeUuid.edit { recommendationDataStore ->
             recommendationDataStore[USER_CAFE_UUID_KEY] = userCafeUuid
         }
     }

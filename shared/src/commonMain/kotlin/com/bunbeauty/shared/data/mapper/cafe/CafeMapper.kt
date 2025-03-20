@@ -50,13 +50,6 @@ fun CafeServer.toCafe(): Cafe {
         cityUuid = cityUuid,
         isVisible = isVisible,
         workType = Cafe.WorkType.valueOf(workType),
-        workload = Cafe.Workload.valueOf(workType)
-    )
-}
-
-fun CafeEntity.toCafeAddress(): CafeAddress {
-    return CafeAddress(
-        address = address,
-        cafeUuid = uuid
+        workload = Cafe.Workload.valueOf(workload)
     )
 }

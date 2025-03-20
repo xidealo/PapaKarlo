@@ -4,6 +4,7 @@ import androidx.compose.runtime.Immutable
 import androidx.navigation.NavController
 import com.bunbeauty.papakarlo.common.ui.element.bottombar.NavigationBarItem
 
+@Immutable
 data class MainState(
     val connectionLost: Boolean = false,
     val statusBarMessage: StatusBarMessage = StatusBarMessage(

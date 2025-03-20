@@ -23,7 +23,7 @@ private const val MAIN_VIEW_MODEL_TAG = "MainViewModel"
 class MainViewModel(
     private val networkUtil: INetworkUtil,
     private val getWorkInfoUseCase: GetWorkInfoUseCase,
-    private val setClosedWorkInfoUseCase: SetClosedWorkInfoUseCase,
+    private val setClosedWorkInfoUseCase: SetClosedWorkInfoUseCase
 ) : ViewModel() {
 
     private val mutableMainState: MutableStateFlow<MainState> = MutableStateFlow(MainState())

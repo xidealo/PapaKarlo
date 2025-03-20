@@ -22,41 +22,47 @@ class UserRepository(
     private val userDao: IUserDao,
     private val userAddressDao: IUserAddressDao,
     private val orderDao: IOrderDao,
-    private val dataStoreRepo: DataStoreRepo
+    private val dataStoreRepo: DataStoreRepo,
 ) : DatabaseCacheRepository(), UserRepo {
 
     override val tag: String = "USER_TAG"
     var cachedUserUuid: String? = null
 
     override fun observeUserByUuid(userUuid: String): Flow<User?> {
-        return userDao.observeUserByUuid(userUuid).mapFlow(userMapper::toUser)
+        return userDao.observeUserByUuid(uuid = userUuid).mapFlow(userMapper::toUser)
     }
 
-    override suspend fun getProfileByUserUuidAndCityUuid(
-        userUuid: String,
-        cityUuid: String,
-        token: String
-    ): Profile.Authorized? {
-        val profile = getCacheOrData(
-            isCacheValid = {
-                cachedUserUuid == userUuid
-            },
-            onLocalRequest = {
-                getProfileLocally(userUuid, cityUuid)
-            },
-            onApiRequest = {
-                networkConnector.getProfile(token)
-            },
-            onSaveLocally = ::saveProfileLocally,
-            serverToDomainModel = profileMapper::toProfile
-        )
-        cachedUserUuid = profile?.userUuid
+    override suspend fun getProfile(): Profile.Authorized? {
+        val token = dataStoreRepo.getToken() ?: return null
 
-        return profile
+        return dataStoreRepo.getUserAndCityUuid().let { userCityUuid ->
+            val profile = getCacheOrData(
+                isCacheValid = {
+                    cachedUserUuid == userCityUuid.userUuid
+                },
+                onLocalRequest = {
+                    getProfileLocally(
+                        userUuid = userCityUuid.userUuid,
+                        cityUuid = userCityUuid.cityUuid
+                    )
+                },
+                onApiRequest = {
+                    networkConnector.getProfile(token = token)
+                },
+                onSaveLocally = ::saveProfileLocally,
+                serverToDomainModel = profileMapper::toProfile
+            )
+            cachedUserUuid = profile?.userUuid
+            profile
+        }
     }
 
     override suspend fun clearUserCache() {
         dataStoreRepo.clearUserData()
+    }
+
+    override suspend fun getToken(): String? {
+        return dataStoreRepo.getToken()
     }
 
     override suspend fun disableUser(token: String) {

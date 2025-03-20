@@ -87,7 +87,8 @@ fun repositoryModule() = module {
         UserAddressRepository(
             networkConnector = get(),
             userAddressDao = get(),
-            userAddressMapper = get()
+            userAddressMapper = get(),
+            dataStoreRepo = get()
         )
     }
     single<CafeRepo> {

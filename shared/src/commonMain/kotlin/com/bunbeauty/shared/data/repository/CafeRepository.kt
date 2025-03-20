@@ -21,10 +21,8 @@ class CafeRepository(
 
     override suspend fun getCafeList(selectedCityUuid: String): List<Cafe> {
         return getCacheOrListData(
-            isCacheValid = { cacheList ->
-                cacheList.all { cafe ->
-                    cafe.cityUuid == selectedCityUuid
-                }
+            isCacheValid = {
+                false
             },
             onApiRequest = {
                 networkConnector.getCafeListByCityUuid(selectedCityUuid)
@@ -70,19 +68,7 @@ class CafeRepository(
             selectedCityUuid = dataStoreRepo.getSelectedCityUuid().orEmpty()
         ).find { cafe ->
             cafe.uuid == dataStoreRepo.getUserCafeUuid()
-        } ?: Cafe(
-            uuid = "",
-            fromTime = 0,
-            toTime = 0,
-            phone = "",
-            address = "",
-            latitude = 0.0,
-            longitude = 0.0,
-            cityUuid = "",
-            isVisible = false,
-            workType = Cafe.WorkType.DELIVERY_AND_PICKUP,
-            workload = Cafe.Workload.LOW
-        )
+        } ?: notSelectedCafeByUserAddress
     }
 
     override suspend fun getSelectedCafeByUserAndCityUuid(
@@ -99,4 +85,19 @@ class CafeRepository(
     override fun clearCache() {
         cafeStorage.clear()
     }
+
+
+    private val notSelectedCafeByUserAddress = Cafe(
+        uuid = "",
+        fromTime = 0,
+        toTime = 0,
+        phone = "",
+        address = "",
+        latitude = 0.0,
+        longitude = 0.0,
+        cityUuid = "",
+        isVisible = false,
+        workType = Cafe.WorkType.DELIVERY_AND_PICKUP,
+        workload = Cafe.Workload.LOW
+    )
 }
