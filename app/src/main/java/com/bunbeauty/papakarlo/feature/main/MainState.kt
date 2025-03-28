@@ -9,23 +9,15 @@ data class MainState(
     val connectionLost: Boolean = false,
     val statusBarMessage: StatusBarMessage = StatusBarMessage(
         isVisible = false,
-        workInfoType = null
     ),
     val navigationBarOptions: NavigationBarOptions = NavigationBarOptions.Hidden,
-    val eventList: List<Event> = emptyList()
+    val eventList: List<Event> = emptyList(),
 ) {
 
     @Immutable
     data class StatusBarMessage(
         val isVisible: Boolean,
-        val workInfoType: WorkType?
-    ) {
-        enum class WorkType {
-            DELIVERY,
-            PICKUP,
-            CLOSED
-        }
-    }
+    )
 
     sealed interface Event {
         class ShowMessageEvent(val message: FoodDeliveryMessage) : Event
@@ -42,13 +34,13 @@ enum class FoodDeliveryMessageType {
 
 data class FoodDeliveryMessage(
     val type: FoodDeliveryMessageType,
-    val text: String
+    val text: String,
 )
 
 sealed interface NavigationBarOptions {
     data object Hidden : NavigationBarOptions
     data class Visible(
         val selectedItem: NavigationBarItem,
-        val navController: NavController
+        val navController: NavController,
     ) : NavigationBarOptions
 }

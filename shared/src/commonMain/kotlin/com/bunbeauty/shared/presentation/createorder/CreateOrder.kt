@@ -53,21 +53,9 @@ interface CreateOrder {
         val cartTotal: CartTotal,
 
         val isLoading: Boolean,
-        val workType: WorkType,
         val isLoadingSwitcher: Boolean = true,
         val cafeUuid: String?,
     ) : BaseDataState {
-
-        val isOrderCreationEnabled =
-            workType != WorkType.CLOSED && workType != WorkType.CLOSED_DELIVERY
-
-        enum class WorkType {
-            DELIVERY,
-            PICKUP,
-            DELIVERY_AND_PICKUP,
-            CLOSED,
-            CLOSED_DELIVERY
-        }
 
         val paymentByCash: Boolean = selectedPaymentMethod?.name == PaymentMethodName.CASH
 

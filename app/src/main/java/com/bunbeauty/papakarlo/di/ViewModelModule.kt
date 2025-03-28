@@ -34,8 +34,8 @@ fun viewModelModule() = module {
     viewModel {
         MainViewModel(
             networkUtil = get(),
-            getWorkInfoUseCase = get(),
-            setClosedWorkInfoUseCase = get()
+            setClosedWorkInfoUseCase = get(),
+            isOrderAvailableUseCase = get()
         )
     }
     viewModel {

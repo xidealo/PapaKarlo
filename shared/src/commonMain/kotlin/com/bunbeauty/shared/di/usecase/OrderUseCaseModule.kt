@@ -53,7 +53,7 @@ internal fun orderUseCaseModule() = module {
     }
     factory {
         IsOrderAvailableUseCase(
-            cafeRepo = get()
+            companyRepo = get()
         )
     }
     factory {

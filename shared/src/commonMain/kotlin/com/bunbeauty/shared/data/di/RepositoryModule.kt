@@ -10,6 +10,7 @@ import com.bunbeauty.shared.data.repository.CafeRepository
 import com.bunbeauty.shared.data.repository.CartProductAdditionRepository
 import com.bunbeauty.shared.data.repository.CartProductRepository
 import com.bunbeauty.shared.data.repository.CityRepository
+import com.bunbeauty.shared.data.repository.CompanyRepository
 import com.bunbeauty.shared.data.repository.DiscountRepository
 import com.bunbeauty.shared.data.repository.LinkRepository
 import com.bunbeauty.shared.data.repository.MenuProductRepository
@@ -28,6 +29,7 @@ import com.bunbeauty.shared.domain.repo.CafeRepo
 import com.bunbeauty.shared.domain.repo.CartProductAdditionRepo
 import com.bunbeauty.shared.domain.repo.CartProductRepo
 import com.bunbeauty.shared.domain.repo.CityRepo
+import com.bunbeauty.shared.domain.repo.CompanyRepo
 import com.bunbeauty.shared.domain.repo.DiscountRepo
 import com.bunbeauty.shared.domain.repo.LinkRepo
 import com.bunbeauty.shared.domain.repo.MenuProductRepo
@@ -115,6 +117,11 @@ fun repositoryModule() = module {
             networkConnector = get(),
             cityDao = get(),
             cityMapper = get()
+        )
+    }
+    single<CompanyRepo> {
+        CompanyRepository(
+            networkConnector = get(),
         )
     }
     single<VersionRepo> {

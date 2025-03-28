@@ -1,14 +1,11 @@
 package com.bunbeauty.shared.domain.feature.orderavailable
 
-import com.bunbeauty.shared.domain.model.cafe.Cafe
-import com.bunbeauty.shared.domain.repo.CafeRepo
+import com.bunbeauty.shared.domain.repo.CompanyRepo
 
 class IsOrderAvailableUseCase(
-    private val cafeRepo: CafeRepo,
+    private val companyRepo: CompanyRepo,
 ) {
     suspend operator fun invoke(): Boolean {
-        val cafe = cafeRepo.getUserCafe()
-
-        return cafe.workType != Cafe.WorkType.CLOSED
+        return companyRepo.getCompany().isOrderAvailable
     }
 }

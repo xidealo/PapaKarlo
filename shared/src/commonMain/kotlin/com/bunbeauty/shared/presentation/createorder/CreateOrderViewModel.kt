@@ -16,14 +16,12 @@ import com.bunbeauty.shared.domain.interactor.cafe.ICafeInteractor
 import com.bunbeauty.shared.domain.interactor.cart.GetCartTotalFlowUseCase
 import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
-import com.bunbeauty.shared.domain.model.cafe.Cafe
 import com.bunbeauty.shared.domain.model.date_time.Time
 import com.bunbeauty.shared.domain.use_case.address.GetSelectableUserAddressListUseCase
 import com.bunbeauty.shared.domain.use_case.address.SaveSelectedUserAddressUseCase
 import com.bunbeauty.shared.domain.use_case.deferred_time.GetMinTimeUseCase
 import com.bunbeauty.shared.extension.launchSafe
 import com.bunbeauty.shared.presentation.base.SharedStateViewModel
-import com.bunbeauty.shared.presentation.motivation.MotivationData
 import com.bunbeauty.shared.presentation.motivation.toMotivationData
 import kotlinx.coroutines.Job
 
@@ -60,7 +58,6 @@ class CreateOrderViewModel(
         selectedPaymentMethod = null,
         cartTotal = CreateOrder.CartTotal.Loading,
         isLoading = true,
-        workType = CreateOrder.DataState.WorkType.DELIVERY_AND_PICKUP,
         cafeUuid = ""
     )
 ) {
@@ -513,14 +510,7 @@ class CreateOrderViewModel(
         getCartTotalJob?.cancel()
         getCartTotalJob = sharedScope.launchSafe(
             block = {
-                val workInfoType = getWorkInfoUseCase()
-
-                val isDelivery = when (workInfoType) {
-                    Cafe.WorkType.DELIVERY -> true
-                    Cafe.WorkType.PICKUP -> false
-                    Cafe.WorkType.DELIVERY_AND_PICKUP -> mutableDataState.value.isDelivery
-                    Cafe.WorkType.CLOSED -> mutableDataState.value.isDelivery
-                }
+                val isDelivery = mutableDataState.value.isDelivery
 
                 getCartTotalFlowUseCase(isDelivery = isDelivery).collect { cartTotal ->
 
@@ -546,10 +536,6 @@ class CreateOrderViewModel(
                                 newFinalCost = "${cartTotal.newFinalCost} $RUBLE_CURRENCY",
                                 newFinalCostValue = cartTotal.newFinalCost
                             ),
-                            workType = getWorkType(
-                                motivationData = motivationData,
-                                workType = workInfoType
-                            ),
                             isDelivery = isDelivery,
                             isLoadingSwitcher = false
                         )
@@ -560,32 +546,6 @@ class CreateOrderViewModel(
                 Logger.logE(CREATION_ORDER_VIEW_MODEL_TAG, error.stackTraceToString())
             }
         )
-    }
-
-    private fun getWorkType(
-        motivationData: MotivationData?,
-        workType: Cafe.WorkType,
-    ): CreateOrder.DataState.WorkType {
-        return when (workType) {
-            Cafe.WorkType.DELIVERY -> {
-                if (motivationData is MotivationData.MinOrderCost) {
-                    CreateOrder.DataState.WorkType.CLOSED_DELIVERY
-                } else {
-                    CreateOrder.DataState.WorkType.DELIVERY
-                }
-            }
-
-            Cafe.WorkType.PICKUP -> CreateOrder.DataState.WorkType.PICKUP
-            Cafe.WorkType.DELIVERY_AND_PICKUP -> {
-                if (motivationData is MotivationData.MinOrderCost) {
-                    CreateOrder.DataState.WorkType.CLOSED
-                } else {
-                    CreateOrder.DataState.WorkType.DELIVERY_AND_PICKUP
-                }
-            }
-
-            Cafe.WorkType.CLOSED -> CreateOrder.DataState.WorkType.CLOSED
-        }
     }
 
     private fun getExtendedComment(

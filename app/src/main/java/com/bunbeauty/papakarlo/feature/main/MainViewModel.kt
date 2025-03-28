@@ -7,9 +7,8 @@ import com.bunbeauty.core.Logger
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.ui.element.bottombar.NavigationBarItem
 import com.bunbeauty.papakarlo.feature.main.network.INetworkUtil
-import com.bunbeauty.shared.domain.feature.orderavailable.GetWorkInfoUseCase
+import com.bunbeauty.shared.domain.feature.orderavailable.IsOrderAvailableUseCase
 import com.bunbeauty.shared.domain.feature.orderavailable.SetClosedWorkInfoUseCase
-import com.bunbeauty.shared.domain.model.cafe.Cafe
 import com.bunbeauty.shared.extension.launchSafe
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -22,8 +21,8 @@ private const val MAIN_VIEW_MODEL_TAG = "MainViewModel"
 
 class MainViewModel(
     private val networkUtil: INetworkUtil,
-    private val getWorkInfoUseCase: GetWorkInfoUseCase,
-    private val setClosedWorkInfoUseCase: SetClosedWorkInfoUseCase
+    private val isOrderAvailableUseCase: IsOrderAvailableUseCase,
+    private val setClosedWorkInfoUseCase: SetClosedWorkInfoUseCase,
 ) : ViewModel() {
 
     private val mutableMainState: MutableStateFlow<MainState> = MutableStateFlow(MainState())
@@ -100,17 +99,10 @@ class MainViewModel(
     private fun checkStatusBarMessage() {
         viewModelScope.launchSafe(
             block = {
-                val workInfo = getWorkInfoUseCase()
                 mutableMainState.update { state ->
                     state.copy(
                         statusBarMessage = MainState.StatusBarMessage(
-                            isVisible = workInfo != Cafe.WorkType.DELIVERY_AND_PICKUP,
-                            workInfoType = when (workInfo) {
-                                Cafe.WorkType.DELIVERY -> MainState.StatusBarMessage.WorkType.DELIVERY
-                                Cafe.WorkType.PICKUP -> MainState.StatusBarMessage.WorkType.PICKUP
-                                Cafe.WorkType.CLOSED -> MainState.StatusBarMessage.WorkType.CLOSED
-                                Cafe.WorkType.DELIVERY_AND_PICKUP -> null
-                            }
+                            isVisible = !isOrderAvailableUseCase()
                         )
                     )
                 }
@@ -127,7 +119,6 @@ class MainViewModel(
             state.copy(
                 statusBarMessage = MainState.StatusBarMessage(
                     isVisible = true,
-                    workInfoType = MainState.StatusBarMessage.WorkType.CLOSED
                 )
             )
         }

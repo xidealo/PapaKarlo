@@ -26,24 +26,31 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
     private val Context.tokenDataStore: DataStore<Preferences> by preferencesDataStore(
         name = TOKEN_DATA_STORE
     )
+
     private val Context.deliveryDataStore: DataStore<Preferences> by preferencesDataStore(
         name = DELIVERY_DATA_STORE
     )
+
     private val Context.settingsDataStore: DataStore<Preferences> by preferencesDataStore(
         name = SETTINGS_DATA_STORE
     )
+
     private val Context.userUuidDataStore: DataStore<Preferences> by preferencesDataStore(
         name = USER_UUID_DATA_STORE
     )
+
     private val Context.selectedCityDataStore: DataStore<Preferences> by preferencesDataStore(
         name = SELECTED_CITY_DATA_STORE
     )
+
     private val Context.selectedPaymentMethodDataStore: DataStore<Preferences> by preferencesDataStore(
         name = SELECTED_PAYMENT_METHOD_DATA_STORE
     )
+
     private val Context.discountDataStore: DataStore<Preferences> by preferencesDataStore(
         name = DISCOUNT_DATA_STORE
     )
+
     private val Context.recommendationDataStore: DataStore<Preferences> by preferencesDataStore(
         name = RECOMMENDATION_DATA_STORE
     )

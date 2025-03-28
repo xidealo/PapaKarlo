@@ -9,7 +9,6 @@ import kotlinx.collections.immutable.ImmutableList
 
 @Immutable
 data class CreateOrderViewState(
-    val workType: WorkType,
     val deliveryAddress: String?,
     val pickupAddress: String?,
     val isAddressErrorShown: Boolean,
@@ -33,16 +32,12 @@ data class CreateOrderViewState(
     val timePicker: TimePickerUI,
     val paymentMethodList: PaymentMethodListUI,
     val isOrderCreationEnabled: Boolean,
-    val switcherOptionList: ImmutableList<String>,
-    val isLoadingSwitcher: Boolean
+    val isLoadingSwitcher: Boolean,
+    val isDelivery: Boolean,
 ) : BaseViewState {
 
     val isFieldsEnabled: Boolean = !isLoading
-    val switcherPosition = when (workType) {
-        WorkType.Delivery -> 0
-        is WorkType.DeliveryAndPickup -> if (workType.isDelivery) 0 else 1
-        WorkType.Pickup -> 0
-    }
+    val switcherPosition = if (isDelivery) 0 else 1
 
     @Immutable
     sealed interface WorkType {
@@ -68,51 +63,51 @@ sealed interface CartTotalUI {
         val discount: String?,
         val deliveryCost: String?,
         val oldFinalCost: String?,
-        val newFinalCost: String
+        val newFinalCost: String,
     ) : CartTotalUI
 }
 
 @Immutable
 data class DeliveryAddressListUI(
     val isShown: Boolean,
-    val addressList: ImmutableList<SelectableAddressUI>
+    val addressList: ImmutableList<SelectableAddressUI>,
 )
 
 @Immutable
 data class PickupAddressListUI(
     val isShown: Boolean,
-    val addressList: ImmutableList<SelectableAddressUI>
+    val addressList: ImmutableList<SelectableAddressUI>,
 )
 
 @Immutable
 data class PaymentMethodListUI(
     val isShown: Boolean,
-    val paymentMethodList: ImmutableList<SelectablePaymentMethodUI>
+    val paymentMethodList: ImmutableList<SelectablePaymentMethodUI>,
 )
 
 @Immutable
 data class TimePickerUI(
     val isShown: Boolean,
     val minTime: TimeUI,
-    val initialTime: TimeUI
+    val initialTime: TimeUI,
 )
 
 @Immutable
 data class TimeUI(
     val hours: Int,
-    val minutes: Int
+    val minutes: Int,
 )
 
 @Immutable
 data class SelectableAddressUI(
     val uuid: String,
     val address: String,
-    val isSelected: Boolean
+    val isSelected: Boolean,
 )
 
 @Immutable
 data class SelectablePaymentMethodUI(
     val uuid: String,
     val name: String,
-    val isSelected: Boolean
+    val isSelected: Boolean,
 )

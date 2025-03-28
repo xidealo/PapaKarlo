@@ -21,8 +21,10 @@ class CafeRepository(
 
     override suspend fun getCafeList(selectedCityUuid: String): List<Cafe> {
         return getCacheOrListData(
-            isCacheValid = {
-                false
+            isCacheValid = { cacheList ->
+                cacheList.all { cafe ->
+                    cafe.cityUuid == selectedCityUuid
+                }
             },
             onApiRequest = {
                 networkConnector.getCafeListByCityUuid(selectedCityUuid)

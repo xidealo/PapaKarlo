@@ -25,19 +25,6 @@ import kotlinx.collections.immutable.toImmutableList
 @Composable
 fun CreateOrder.DataState.toViewState(): CreateOrderViewState {
     return CreateOrderViewState(
-        workType = when (workType) {
-            CreateOrder.DataState.WorkType.DELIVERY -> CreateOrderViewState.WorkType.Delivery
-            CreateOrder.DataState.WorkType.CLOSED_DELIVERY -> CreateOrderViewState.WorkType.Delivery
-
-            CreateOrder.DataState.WorkType.PICKUP -> CreateOrderViewState.WorkType.Pickup
-            CreateOrder.DataState.WorkType.DELIVERY_AND_PICKUP -> CreateOrderViewState.WorkType.DeliveryAndPickup(
-                isDelivery = isDelivery
-            )
-
-            CreateOrder.DataState.WorkType.CLOSED -> CreateOrderViewState.WorkType.DeliveryAndPickup(
-                isDelivery = isDelivery
-            )
-        },
         deliveryAddress = selectedUserAddress?.toAddressString(),
         pickupAddress = selectedCafe?.address,
         isAddressErrorShown = isDelivery && (isAddressErrorShown == AddressErrorState.ERROR),
@@ -90,37 +77,10 @@ fun CreateOrder.DataState.toViewState(): CreateOrderViewState {
                 selectablePaymentMethod.toSelectablePaymentMethodUI()
             }.toImmutableList()
         ),
-        isOrderCreationEnabled = isOrderCreationEnabled,
-        switcherOptionList = getSwitcherOptionList(workType),
-        isLoadingSwitcher = isLoadingSwitcher
+        isOrderCreationEnabled = true,
+        isLoadingSwitcher = isLoadingSwitcher,
+        isDelivery = isDelivery
     )
-}
-
-@Composable
-private fun getSwitcherOptionList(workType: CreateOrder.DataState.WorkType): ImmutableList<String> {
-    return when (workType) {
-        CreateOrder.DataState.WorkType.DELIVERY -> persistentListOf(
-            stringResource(R.string.action_create_order_delivery)
-        )
-
-        CreateOrder.DataState.WorkType.PICKUP -> persistentListOf(
-            stringResource(R.string.action_create_order_pickup)
-        )
-
-        CreateOrder.DataState.WorkType.DELIVERY_AND_PICKUP -> persistentListOf(
-            stringResource(R.string.action_create_order_delivery),
-            stringResource(R.string.action_create_order_pickup)
-        )
-
-        CreateOrder.DataState.WorkType.CLOSED -> persistentListOf(
-            stringResource(R.string.action_create_order_delivery),
-            stringResource(R.string.action_create_order_pickup)
-        )
-
-        CreateOrder.DataState.WorkType.CLOSED_DELIVERY -> persistentListOf(
-            stringResource(R.string.action_create_order_delivery)
-        )
-    }
 }
 
 private fun CreateOrder.CartTotal.toCartTotalUI(): CartTotalUI {

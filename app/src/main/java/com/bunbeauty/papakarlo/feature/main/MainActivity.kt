@@ -157,21 +157,9 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
                     .padding(8.dp),
                 contentAlignment = Alignment.Center
             ) {
-                statusBarMessage.workInfoType?.let {
+                if (statusBarMessage.isVisible) {
                     Text(
-                        text = when (statusBarMessage.workInfoType) {
-                            MainState.StatusBarMessage.WorkType.DELIVERY -> stringResource(
-                                R.string.warning_only_delivery
-                            )
-
-                            MainState.StatusBarMessage.WorkType.PICKUP -> stringResource(
-                                R.string.warning_only_pickup
-                            )
-
-                            MainState.StatusBarMessage.WorkType.CLOSED -> stringResource(
-                                R.string.warning_no_order_available
-                            )
-                        },
+                        text = stringResource(R.string.warning_no_order_available),
                         style = FoodDeliveryTheme.typography.bodyMedium,
                         color = FoodDeliveryTheme.colors.statusColors.onStatus
                     )
@@ -203,7 +191,7 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
 
     private fun handleEventList(
         eventList: List<MainState.Event>,
-        snackbarHostState: SnackbarHostState
+        snackbarHostState: SnackbarHostState,
     ) {
         eventList.forEach { event ->
             when (event) {
@@ -227,7 +215,7 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
     private fun fragmentContainerFactory(
         inflater: LayoutInflater,
         parent: ViewGroup,
-        attachToParent: Boolean
+        attachToParent: Boolean,
     ): FragmentContainerBinding =
         FragmentContainerBinding.inflate(inflater, parent, attachToParent).also {
             setupNavigationListener()
