@@ -54,7 +54,6 @@ import com.bunbeauty.shared.domain.feature.menuproduct.GetMenuProductUseCase
 import com.bunbeauty.shared.domain.feature.motivation.GetMotivationUseCase
 import com.bunbeauty.shared.domain.feature.notification.SubscribeToNotificationUseCase
 import com.bunbeauty.shared.domain.feature.order.*
-import com.bunbeauty.shared.domain.feature.orderavailable.GetWorkInfoUseCase
 import com.bunbeauty.shared.domain.feature.orderavailable.IsOrderAvailableUseCase
 import com.bunbeauty.shared.domain.feature.payment.GetPaymentMethodListUseCase
 import com.bunbeauty.shared.domain.feature.payment.GetSelectablePaymentMethodListUseCase
@@ -201,7 +200,6 @@ class IosComponent : KoinComponent {
     fun provideCheckUpdateUseCase(): CheckUpdateUseCase = get()
     fun provideCheckOneCityUseCase(): CheckOneCityUseCase = get()
     fun provideSaveOneCityUseCase(): SaveOneCityUseCase = get()
-    fun provideGetWorkInfoUseCase(): GetWorkInfoUseCase = get()
 
     // Mapper
     fun provideUserAddressMapper(): UserAddressMapper = get()

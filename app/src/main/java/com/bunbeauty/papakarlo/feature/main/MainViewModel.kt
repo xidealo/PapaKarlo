@@ -22,7 +22,7 @@ private const val MAIN_VIEW_MODEL_TAG = "MainViewModel"
 class MainViewModel(
     private val networkUtil: INetworkUtil,
     private val isOrderAvailableUseCase: IsOrderAvailableUseCase,
-    private val setClosedWorkInfoUseCase: SetClosedWorkInfoUseCase,
+    private val setClosedWorkInfoUseCase: SetClosedWorkInfoUseCase
 ) : ViewModel() {
 
     private val mutableMainState: MutableStateFlow<MainState> = MutableStateFlow(MainState())
@@ -118,7 +118,7 @@ class MainViewModel(
         mutableMainState.update { state ->
             state.copy(
                 statusBarMessage = MainState.StatusBarMessage(
-                    isVisible = true,
+                    isVisible = true
                 )
             )
         }

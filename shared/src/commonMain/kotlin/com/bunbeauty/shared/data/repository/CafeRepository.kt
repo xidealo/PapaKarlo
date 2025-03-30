@@ -9,43 +9,53 @@ import com.bunbeauty.shared.data.storage.CafeStorage
 import com.bunbeauty.shared.db.SelectedCafeUuidEntity
 import com.bunbeauty.shared.domain.model.cafe.Cafe
 import com.bunbeauty.shared.domain.repo.CafeRepo
+import com.bunbeauty.shared.extension.dataOrNull
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
+import kotlinx.coroutines.withContext
 
 class CafeRepository(
     private val networkConnector: NetworkConnector,
     private val cafeDao: ICafeDao,
     private val cafeStorage: CafeStorage,
     private val dataStoreRepo: DataStoreRepo,
-) : CacheListRepository<Cafe>(), CafeRepo {
+) : CafeRepo {
 
-    override val tag: String = "CAFE_TAG"
+    private var cafeListCache: List<Cafe>? = null
 
-    override suspend fun getCafeList(selectedCityUuid: String): List<Cafe> {
-        return getCacheOrListData(
-            isCacheValid = { cacheList ->
-                cacheList.all { cafe ->
-                    cafe.cityUuid == selectedCityUuid
-                }
-            },
-            onApiRequest = {
-                networkConnector.getCafeListByCityUuid(selectedCityUuid)
-            },
-            onLocalRequest = {
-                cafeDao.getCafeListByCityUuid(selectedCityUuid)
-                    .map { cafeEntity ->
-                        cafeEntity.toCafe()
+    override suspend fun getCafeList(
+        selectedCityUuid: String,
+    ): List<Cafe> {
+        val list = if (cafeListCache == null) {
+            val cafeList = networkConnector.getCafeListByCityUuid(cityUuid = selectedCityUuid)
+                .dataOrNull()
+                ?.results
+                .also { cafeServerList ->
+                    if (cafeServerList != null) {
+                        withContext(Dispatchers.IO) {
+                            cafeDao.insertCafeList(
+                                cafeServerList.map { cafeServer ->
+                                    cafeServer.toCafeEntity()
+                                }
+                            )
+                        }
                     }
-            },
-            onSaveLocally = { cafeServerList ->
-                cafeServerList.map { cafeServer ->
-                    cafeServer.toCafeEntity()
-                }.let { cafeEntityList ->
-                    cafeDao.insertCafeList(cafeEntityList)
                 }
-            },
-            serverToDomainModel = { cafeServer ->
-                cafeServer.toCafe()
-            }
-        )
+                ?.map { cafeServer ->
+                    cafeServer.toCafe()
+                } ?: cafeDao.getCafeListByCityUuid(cityUuid = selectedCityUuid)
+                .map { cafeEntity ->
+                    cafeEntity.toCafe()
+                }
+
+            cafeListCache = cafeList
+
+            cafeList
+        } else {
+            cafeListCache
+        }
+
+        return list ?: emptyList()
     }
 
     override suspend fun saveSelectedCafeUuid(
@@ -62,15 +72,11 @@ class CafeRepository(
     }
 
     override suspend fun getCafeByUuid(cafeUuid: String): Cafe? {
-        return cafeDao.getCafeByUuid(cafeUuid)?.toCafe()
-    }
-
-    override suspend fun getUserCafe(): Cafe {
         return getCafeList(
             selectedCityUuid = dataStoreRepo.getSelectedCityUuid().orEmpty()
         ).find { cafe ->
-            cafe.uuid == dataStoreRepo.getUserCafeUuid()
-        } ?: notSelectedCafeByUserAddress
+            cafe.uuid == cafeUuid
+        }
     }
 
     override suspend fun getSelectedCafeByUserAndCityUuid(
@@ -80,26 +86,8 @@ class CafeRepository(
         return cafeDao.getSelectedCafeByUserAndCityUuid(userUuid, cityUuid)?.toCafe()
     }
 
-    override suspend fun getFirstCafeCityUuid(cityUuid: String): Cafe? {
-        return cafeDao.getFirstCafeByCityUuid(cityUuid)?.toCafe()
-    }
-
     override fun clearCache() {
         cafeStorage.clear()
+        cafeListCache = null
     }
-
-
-    private val notSelectedCafeByUserAddress = Cafe(
-        uuid = "",
-        fromTime = 0,
-        toTime = 0,
-        phone = "",
-        address = "",
-        latitude = 0.0,
-        longitude = 0.0,
-        cityUuid = "",
-        isVisible = false,
-        workType = Cafe.WorkType.DELIVERY_AND_PICKUP,
-        workload = Cafe.Workload.LOW
-    )
 }

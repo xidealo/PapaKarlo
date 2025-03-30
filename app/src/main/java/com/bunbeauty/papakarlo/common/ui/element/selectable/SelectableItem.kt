@@ -24,12 +24,13 @@ fun SelectableItem(
     elevated: Boolean,
     onClick: (() -> Unit),
     modifier: Modifier = Modifier,
-    isSelected: Boolean = false
+    isSelected: Boolean = false,
+    enabled: Boolean
 ) {
     FoodDeliveryCard(
         modifier = modifier.fillMaxWidth(),
         onClick = onClick,
-        clickable = clickable,
+        clickable = clickable && enabled,
         elevated = elevated
     ) {
         Row(
@@ -42,7 +43,11 @@ fun SelectableItem(
                     .weight(1f),
                 text = title,
                 style = FoodDeliveryTheme.typography.bodyLarge,
-                color = FoodDeliveryTheme.colors.mainColors.onSurface
+                color = if (enabled) {
+                    FoodDeliveryTheme.colors.mainColors.onSurface
+                } else {
+                    FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
+                }
             )
             if (isSelected) {
                 Icon(
@@ -67,7 +72,8 @@ private fun AddressItemPreview() {
             title = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
             clickable = false,
             elevated = false,
-            onClick = {}
+            onClick = {},
+            enabled = true
         )
     }
 }
@@ -81,7 +87,23 @@ private fun AddressItemSelectedPreview() {
             clickable = false,
             elevated = false,
             isSelected = true,
-            onClick = {}
+            onClick = {},
+            enabled = true
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun AddressItemDisabledPreview() {
+    FoodDeliveryTheme {
+        SelectableItem(
+            title = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
+            clickable = false,
+            elevated = false,
+            isSelected = true,
+            onClick = {},
+            enabled = false
         )
     }
 }

@@ -40,11 +40,15 @@ import com.bunbeauty.papakarlo.common.BaseComposeFragment
 import com.bunbeauty.papakarlo.common.extension.navigateSafe
 import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.papakarlo.common.ui.element.button.LoadingButton
+import com.bunbeauty.papakarlo.common.ui.element.card.BannerCard
 import com.bunbeauty.papakarlo.common.ui.element.card.DiscountCard
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCardDefaults
+import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCardDefaults.negativeCardStatusColors
+import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCardDefaults.warningCardStatusColors
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCheckbox
 import com.bunbeauty.papakarlo.common.ui.element.card.NavigationCardWithDivider
+import com.bunbeauty.papakarlo.common.ui.element.card.WarningCard
 import com.bunbeauty.papakarlo.common.ui.element.simmer.Shimmer
 import com.bunbeauty.papakarlo.common.ui.element.surface.FoodDeliverySurface
 import com.bunbeauty.papakarlo.common.ui.element.switcher.FoodDeliverySwitcher
@@ -63,7 +67,6 @@ import com.bunbeauty.papakarlo.feature.createorder.ui.TimePickerDialog
 import com.bunbeauty.papakarlo.feature.main.IMessageHost
 import com.bunbeauty.papakarlo.feature.main.MainActivity
 import com.bunbeauty.papakarlo.feature.motivation.Motivation
-import com.bunbeauty.papakarlo.feature.motivation.MotivationUi
 import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentMethodUI
 import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentMethodValueUI
 import com.bunbeauty.shared.Constants.RUBLE_CURRENCY
@@ -80,7 +83,7 @@ class CreateOrderFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.onAction(CreateOrder.Action.Update)
+        viewModel.onAction(CreateOrder.Action.Init)
     }
 
     @Composable
@@ -122,45 +125,32 @@ class CreateOrderFragment :
                             onAction(CreateOrder.Action.ChangeMethod(position))
                         }
                     )
-                    AddressCard(
-                        viewState = viewState,
-                        focusManager = focusManager,
-                        onAction = onAction
-                    )
-                    DeferredTimeCard(
-                        viewState = viewState,
-                        focusManager = focusManager,
-                        onAction = onAction
-                    )
-                    PaymentMethodCard(
-                        viewState = viewState,
-                        focusManager = focusManager,
-                        onAction = onAction
-                    )
-                    ChangeBlock(
-                        viewState = viewState,
-                        onAction = onAction
-                    )
-                    CommentTextField(
-                        viewState = viewState,
-                        focusManager = focusManager,
-                        onAction = onAction
-                    )
+                    when (viewState.createOrderType) {
+                        is CreateOrderViewState.CreateOrderType.Delivery -> {
+                            DeliveryContent(
+                                viewState = viewState,
+                                createOrderType = viewState.createOrderType,
+                                focusManager = focusManager,
+                                onAction = onAction
+                            )
+                        }
+
+                        is CreateOrderViewState.CreateOrderType.Pickup -> {
+                            PickupContent(
+                                viewState = viewState,
+                                createOrderType = viewState.createOrderType,
+                                focusManager = focusManager,
+                                onAction = onAction
+                            )
+                        }
+                    }
                 }
+
                 BottomAmountBar(
                     viewState = viewState,
                     onAction = onAction
                 )
             }
-
-            DeliveryAddressListBottomSheet(
-                deliveryAddressList = viewState.deliveryAddressList,
-                onAction = onAction
-            )
-            PickupAddressListBottomSheet(
-                pickupAddressList = viewState.pickupAddressList,
-                onAction = onAction
-            )
             DeferredTimeBottomSheet(
                 isShown = viewState.isDeferredTimeShown,
                 title = stringResource(viewState.deferredTimeStringId),
@@ -237,47 +227,198 @@ class CreateOrderFragment :
     }
 
     @Composable
-    private fun AddressCard(
+    private fun DeliveryContent(
         viewState: CreateOrderViewState,
+        createOrderType: CreateOrderViewState.CreateOrderType.Delivery,
         focusManager: FocusManager,
-        onAction: (CreateOrder.Action) -> Unit,
-        modifier: Modifier = Modifier,
+        onAction: (CreateOrder.Action) -> Unit
     ) {
-        if (viewState.isDelivery) {
-            NavigationCardWithDivider(
-                modifier = modifier,
-                label = stringResource(R.string.delivery_address),
-                value = viewState.deliveryAddress,
-                clickable = viewState.isFieldsEnabled,
-                onClick = {
-                    if (viewState.deliveryAddress == null) {
-                        onAction(CreateOrder.Action.AddAddressClick)
-                    } else {
-                        onAction(CreateOrder.Action.DeliveryAddressClick)
+        Column {
+            DeliveryAddressCard(
+                viewState = viewState,
+                createOrderType = createOrderType,
+                onAction = onAction
+            )
+            DeliveryAddressListBottomSheet(
+                deliveryAddressList = createOrderType.deliveryAddressList,
+                onAction = onAction
+            )
+
+            if (createOrderType.isEnabled) {
+                if (viewState.isAddressErrorShown) {
+                    ErrorText(
+                        modifier = Modifier
+                            .padding(top = 4.dp)
+                            .padding(horizontal = 16.dp),
+                        messageStringId = R.string.error_select_delivery_address
+                    )
+                }
+                CommonContent(
+                    viewState = viewState,
+                    focusManager = focusManager,
+                    onAction = onAction
+                )
+                when (createOrderType.workload) {
+                    CreateOrderViewState.CreateOrderType.Delivery.Workload.LOW -> Unit
+                    CreateOrderViewState.CreateOrderType.Delivery.Workload.AVERAGE -> {
+                        WarningCard(
+                            title = stringResource(R.string.msg_create_order_average_traffic),
+                            icon = R.drawable.ic_warning,
+                            iconDescription = stringResource(R.string.description_ic_warning),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp)
+                                .padding(top = 16.dp),
+                            cardColors = warningCardStatusColors
+                        )
+                    }
+
+                    CreateOrderViewState.CreateOrderType.Delivery.Workload.HIGH -> {
+                        WarningCard(
+                            title = stringResource(R.string.msg_create_order_high_traffic),
+                            icon = R.drawable.ic_warning,
+                            iconDescription = stringResource(R.string.description_ic_warning),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp)
+                                .padding(top = 16.dp),
+                            cardColors = negativeCardStatusColors
+                        )
                     }
                 }
-            )
-        } else {
-            NavigationCardWithDivider(
-                modifier = modifier,
-                label = stringResource(id = R.string.pickup_address),
-                value = viewState.pickupAddress.orEmpty(),
-                clickable = viewState.isFieldsEnabled,
-                onClick = {
-                    focusManager.clearFocus()
-                    onAction(CreateOrder.Action.PickupAddressClick)
-                }
-            )
+            } else {
+                WarningCard(
+                    title = stringResource(R.string.warning_no_order_available),
+                    icon = R.drawable.ic_warning,
+                    iconDescription = stringResource(R.string.description_ic_warning),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp)
+                        .padding(top = 16.dp),
+                    cardColors = negativeCardStatusColors
+                )
+            }
         }
+    }
 
-        if (viewState.isAddressErrorShown) {
-            ErrorText(
-                modifier = Modifier
-                    .padding(top = 4.dp)
-                    .padding(horizontal = 16.dp),
-                messageStringId = R.string.error_select_delivery_address
+    @Composable
+    private fun DeliveryAddressCard(
+        viewState: CreateOrderViewState,
+        createOrderType: CreateOrderViewState.CreateOrderType.Delivery,
+        onAction: (CreateOrder.Action) -> Unit
+    ) {
+        NavigationCardWithDivider(
+            label = stringResource(R.string.delivery_address),
+            value = createOrderType.deliveryAddress,
+            clickable = viewState.isFieldsEnabled,
+            onClick = {
+                if (createOrderType.deliveryAddress == null) {
+                    onAction(CreateOrder.Action.AddAddressClick)
+                } else {
+                    onAction(CreateOrder.Action.DeliveryAddressClick)
+                }
+            }
+        )
+    }
+
+    @Composable
+    private fun PickupContent(
+        viewState: CreateOrderViewState,
+        createOrderType: CreateOrderViewState.CreateOrderType.Pickup,
+        focusManager: FocusManager,
+        onAction: (CreateOrder.Action) -> Unit
+    ) {
+        Column {
+            PickupAddressCard(
+                createOrderType = createOrderType,
+                viewState = viewState,
+                focusManager = focusManager,
+                onAction = onAction
             )
+            PickupAddressListBottomSheet(
+                pickupAddressList = createOrderType.pickupAddressList,
+                onAction = onAction
+            )
+            if (createOrderType.isEnabled) {
+                CommonContent(
+                    viewState = viewState,
+                    focusManager = focusManager,
+                    onAction = onAction
+                )
+            } else {
+                if (createOrderType.hasOpenedCafe) {
+                    BannerCard(
+                        title = stringResource(R.string.msg_create_order_chose_cafe),
+                        text = stringResource(R.string.warning_no_order_available),
+                        icon = R.drawable.ic_warning,
+                        iconDescription = stringResource(R.string.description_ic_warning),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp)
+                            .padding(top = 16.dp),
+                        cardColors = warningCardStatusColors
+                    )
+                } else {
+                    WarningCard(
+                        title = stringResource(R.string.warning_no_order_available),
+                        icon = R.drawable.ic_warning,
+                        iconDescription = stringResource(R.string.description_ic_warning),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp)
+                            .padding(top = 16.dp),
+                        cardColors = negativeCardStatusColors
+                    )
+                }
+            }
         }
+    }
+
+    @Composable
+    private fun PickupAddressCard(
+        createOrderType: CreateOrderViewState.CreateOrderType.Pickup,
+        viewState: CreateOrderViewState,
+        focusManager: FocusManager,
+        onAction: (CreateOrder.Action) -> Unit
+    ) {
+        NavigationCardWithDivider(
+            label = stringResource(id = R.string.pickup_address),
+            value = createOrderType.pickupAddress.orEmpty(),
+            clickable = viewState.isFieldsEnabled,
+            onClick = {
+                focusManager.clearFocus()
+                onAction(CreateOrder.Action.PickupAddressClick)
+            }
+        )
+    }
+
+    @Composable
+    private fun CommonContent(
+        viewState: CreateOrderViewState,
+        focusManager: FocusManager,
+        onAction: (CreateOrder.Action) -> Unit
+    ) {
+        if (viewState.isLoadingSwitcher) return
+
+        DeferredTimeCard(
+            viewState = viewState,
+            focusManager = focusManager,
+            onAction = onAction
+        )
+        PaymentMethodCard(
+            viewState = viewState,
+            focusManager = focusManager,
+            onAction = onAction
+        )
+        ChangeBlock(
+            viewState = viewState,
+            onAction = onAction
+        )
+        CommentTextField(
+            viewState = viewState,
+            focusManager = focusManager,
+            onAction = onAction
+        )
     }
 
     @Composable
@@ -285,7 +426,7 @@ class CreateOrderFragment :
         viewState: CreateOrderViewState,
         focusManager: FocusManager,
         onAction: (CreateOrder.Action) -> Unit,
-        modifier: Modifier = Modifier,
+        modifier: Modifier = Modifier
     ) {
         NavigationCardWithDivider(
             modifier = modifier,
@@ -304,7 +445,7 @@ class CreateOrderFragment :
         viewState: CreateOrderViewState,
         focusManager: FocusManager,
         onAction: (CreateOrder.Action) -> Unit,
-        modifier: Modifier = Modifier,
+        modifier: Modifier = Modifier
     ) {
         NavigationCardWithDivider(
             modifier = modifier,
@@ -331,7 +472,7 @@ class CreateOrderFragment :
     private fun ChangeBlock(
         viewState: CreateOrderViewState,
         onAction: (CreateOrder.Action) -> Unit,
-        modifier: Modifier = Modifier,
+        modifier: Modifier = Modifier
     ) {
         if (!viewState.showChange) {
             return
@@ -425,7 +566,7 @@ class CreateOrderFragment :
         viewState: CreateOrderViewState,
         focusManager: FocusManager,
         onAction: (CreateOrder.Action) -> Unit,
-        modifier: Modifier = Modifier,
+        modifier: Modifier = Modifier
     ) {
         FoodDeliveryTextField(
             modifier = modifier
@@ -459,7 +600,7 @@ class CreateOrderFragment :
     @Composable
     private fun ErrorText(
         modifier: Modifier = Modifier,
-        @StringRes messageStringId: Int,
+        @StringRes messageStringId: Int
     ) {
         Text(
             modifier = modifier,
@@ -472,7 +613,7 @@ class CreateOrderFragment :
     @Composable
     private fun BottomAmountBar(
         viewState: CreateOrderViewState,
-        onAction: (CreateOrder.Action) -> Unit,
+        onAction: (CreateOrder.Action) -> Unit
     ) {
         FoodDeliverySurface(modifier = Modifier.fillMaxWidth()) {
             Column(
@@ -491,7 +632,7 @@ class CreateOrderFragment :
 
                 LoadingButton(
                     textStringId = R.string.action_create_order_create_order,
-                    isLoading = viewState.isLoading,
+                    isLoading = viewState.isLoadingCreateOrder,
                     isEnabled = viewState.isOrderCreationEnabled,
                     onClick = {
                         onAction(
@@ -525,7 +666,7 @@ class CreateOrderFragment :
     @Composable
     private fun BottomAmountBarSuccessContent(
         cartTotal: CartTotalUI.Success,
-        modifier: Modifier = Modifier,
+        modifier: Modifier = Modifier
     ) {
         Column(
             modifier = modifier,
@@ -621,57 +762,57 @@ class CreateOrderFragment :
         }
     }
 
+    private val createOrderViewStatePreviewMock = CreateOrderViewState(
+        createOrderType = CreateOrderViewState.CreateOrderType.Delivery(
+            deliveryAddress = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
+            deliveryAddressList = DeliveryAddressListUI(
+                isShown = false,
+                addressList = persistentListOf()
+            ),
+            isEnabled = true,
+            workload = CreateOrderViewState.CreateOrderType.Delivery.Workload.LOW
+        ),
+        isAddressErrorShown = false,
+        comment = "Коммент",
+        deferredTime = "Как можно скорее",
+        deferredTimeStringId = R.string.delivery_time,
+        selectedPaymentMethod = PaymentMethodUI(
+            uuid = "",
+            name = "Наличка",
+            value = PaymentMethodValueUI(
+                value = "Наличка",
+                valueToCopy = "Наличка"
+            )
+        ),
+        isPaymentMethodErrorShown = false,
+        showChange = true,
+        withoutChange = "Без сдачи",
+        changeFrom = "Cдача с",
+        withoutChangeChecked = true,
+        change = "",
+        isChangeErrorShown = false,
+        cartTotal = CartTotalUI.Loading,
+        isLoadingCreateOrder = false,
+        isDeferredTimeShown = false,
+        timePicker = TimePickerUI(
+            isShown = false,
+            minTime = TimeUI(0, 0),
+            initialTime = TimeUI(0, 0)
+        ),
+        paymentMethodList = PaymentMethodListUI(
+            isShown = false,
+            paymentMethodList = persistentListOf()
+        ),
+        isOrderCreationEnabled = false,
+        isLoadingSwitcher = false
+    )
+
     @Preview(showSystemUi = true)
     @Composable
     private fun CartTotalLoadingPreview() {
         FoodDeliveryTheme {
             Screen(
-                viewState = CreateOrderViewState(
-                    deliveryAddress = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
-                    pickupAddress = null,
-                    isAddressErrorShown = false,
-                    comment = "Коммент",
-                    deferredTime = "Как можно скорее",
-                    deferredTimeStringId = R.string.delivery_time,
-                    selectedPaymentMethod = PaymentMethodUI(
-                        uuid = "",
-                        name = "Наличка",
-                        value = PaymentMethodValueUI(
-                            value = "Наличка",
-                            valueToCopy = "Наличка"
-                        )
-                    ),
-                    isPaymentMethodErrorShown = false,
-                    showChange = true,
-                    withoutChange = "Без сдачи",
-                    changeFrom = "Cдача с",
-                    withoutChangeChecked = true,
-                    change = "",
-                    isChangeErrorShown = false,
-                    cartTotal = CartTotalUI.Loading,
-                    isLoading = false,
-                    deliveryAddressList = DeliveryAddressListUI(
-                        isShown = false,
-                        addressList = persistentListOf()
-                    ),
-                    pickupAddressList = PickupAddressListUI(
-                        isShown = false,
-                        addressList = persistentListOf()
-                    ),
-                    isDeferredTimeShown = false,
-                    timePicker = TimePickerUI(
-                        isShown = false,
-                        minTime = TimeUI(0, 0),
-                        initialTime = TimeUI(0, 0)
-                    ),
-                    paymentMethodList = PaymentMethodListUI(
-                        isShown = false,
-                        paymentMethodList = persistentListOf()
-                    ),
-                    isOrderCreationEnabled = false,
-                    isLoadingSwitcher = false,
-                    isDelivery = true
-                ),
+                viewState = createOrderViewStatePreviewMock,
                 onAction = {}
             )
         }
@@ -682,56 +823,9 @@ class CreateOrderFragment :
     private fun SelectedDeliveryPreview() {
         FoodDeliveryTheme {
             Screen(
-                viewState = CreateOrderViewState(
-                    isDelivery = true,
-                    deliveryAddress = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
-                    pickupAddress = null,
-                    isAddressErrorShown = false,
-                    comment = "Коммент",
-                    deferredTime = "Как можно скорее",
-                    deferredTimeStringId = R.string.delivery_time,
-                    selectedPaymentMethod = PaymentMethodUI(
-                        uuid = "",
-                        name = "Наличка",
-                        value = PaymentMethodValueUI(
-                            value = "Наличка",
-                            valueToCopy = "Наличка"
-                        )
-                    ),
-                    isPaymentMethodErrorShown = false,
-                    showChange = true,
-                    change = "",
-                    withoutChangeChecked = false,
-                    withoutChange = "Без сдачи",
-                    changeFrom = "Cдача с",
-                    isChangeErrorShown = false,
-                    cartTotal = CartTotalUI.Success(
-                        motivation = MotivationUi.MinOrderCost("800 ₽"),
-                        discount = "10%",
-                        deliveryCost = "100 ₽",
-                        oldFinalCost = "700 ₽",
-                        newFinalCost = "650 ₽"
-                    ),
-                    isLoading = false,
-                    deliveryAddressList = DeliveryAddressListUI(
-                        isShown = false,
-                        addressList = persistentListOf()
-                    ),
-                    pickupAddressList = PickupAddressListUI(
-                        isShown = false,
-                        addressList = persistentListOf()
-                    ),
-                    isDeferredTimeShown = false,
-                    timePicker = TimePickerUI(
-                        isShown = false,
-                        minTime = TimeUI(0, 0),
-                        initialTime = TimeUI(0, 0)
-                    ),
-                    paymentMethodList = PaymentMethodListUI(
-                        isShown = false,
-                        paymentMethodList = persistentListOf()
-                    ),
+                viewState = createOrderViewStatePreviewMock.copy(
                     isOrderCreationEnabled = true,
+                    isLoadingCreateOrder = false,
                     isLoadingSwitcher = false
                 ),
                 onAction = {}
@@ -744,57 +838,26 @@ class CreateOrderFragment :
     private fun SelectedPickUpPreview() {
         FoodDeliveryTheme {
             Screen(
-                viewState = CreateOrderViewState(
-                    isDelivery = false,
-                    deliveryAddress = null,
-                    pickupAddress = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
-                    isAddressErrorShown = false,
-                    comment = "",
-                    deferredTime = "18:20",
-                    deferredTimeStringId = R.string.pickup_time,
-                    selectedPaymentMethod = PaymentMethodUI(
-                        uuid = "Коммент",
-                        name = "Наличка",
-                        value = PaymentMethodValueUI(
-                            value = "Наличка",
-                            valueToCopy = "Наличка"
-                        )
+                createOrderViewStatePreviewMock.copy(
+                    createOrderType = CreateOrderViewState.CreateOrderType.Pickup(
+                        pickupAddress = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
+                        pickupAddressList = PickupAddressListUI(
+                            isShown = false,
+                            addressList = persistentListOf()
+                        ),
+                        hasOpenedCafe = true,
+                        isEnabled = true
                     ),
-                    isPaymentMethodErrorShown = false,
-                    showChange = true,
-                    withoutChange = "Без сдачи",
-                    changeFrom = "Cдача с",
-                    withoutChangeChecked = false,
-                    change = "100",
-                    isChangeErrorShown = false,
+                    isOrderCreationEnabled = true,
+                    isLoadingCreateOrder = false,
+                    isLoadingSwitcher = false,
                     cartTotal = CartTotalUI.Success(
                         motivation = null,
                         discount = null,
                         deliveryCost = null,
                         oldFinalCost = null,
                         newFinalCost = "650 ₽"
-                    ),
-                    isLoading = false,
-                    deliveryAddressList = DeliveryAddressListUI(
-                        isShown = false,
-                        addressList = persistentListOf()
-                    ),
-                    pickupAddressList = PickupAddressListUI(
-                        isShown = false,
-                        addressList = persistentListOf()
-                    ),
-                    isDeferredTimeShown = false,
-                    timePicker = TimePickerUI(
-                        isShown = false,
-                        minTime = TimeUI(0, 0),
-                        initialTime = TimeUI(0, 0)
-                    ),
-                    paymentMethodList = PaymentMethodListUI(
-                        isShown = false,
-                        paymentMethodList = persistentListOf()
-                    ),
-                    isOrderCreationEnabled = true,
-                    isLoadingSwitcher = false
+                    )
                 ),
                 onAction = {}
             )
@@ -803,60 +866,29 @@ class CreateOrderFragment :
 
     @Preview(showSystemUi = true)
     @Composable
-    private fun LoadingPreview() {
+    private fun PickupCreateOrderNotEnabledPreview() {
         FoodDeliveryTheme {
             Screen(
-                viewState = CreateOrderViewState(
-                    isDelivery = true,
-                    deliveryAddress = null,
-                    pickupAddress = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
-                    isAddressErrorShown = false,
-                    comment = "Коммент",
-                    deferredTime = "18:20",
-                    deferredTimeStringId = R.string.pickup_time,
-                    selectedPaymentMethod = PaymentMethodUI(
-                        uuid = "",
-                        name = "Картой",
-                        value = PaymentMethodValueUI(
-                            value = "1111 1111 1111 1111",
-                            valueToCopy = ""
-                        )
+                createOrderViewStatePreviewMock.copy(
+                    createOrderType = CreateOrderViewState.CreateOrderType.Pickup(
+                        pickupAddress = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
+                        pickupAddressList = PickupAddressListUI(
+                            isShown = false,
+                            addressList = persistentListOf()
+                        ),
+                        hasOpenedCafe = true,
+                        isEnabled = false
                     ),
-                    isPaymentMethodErrorShown = false,
-                    showChange = false,
-                    withoutChange = "Без сдачи",
-                    changeFrom = "Cдача с",
-                    withoutChangeChecked = false,
-                    change = "100",
-                    isChangeErrorShown = false,
+                    isOrderCreationEnabled = false,
+                    isLoadingCreateOrder = false,
+                    isLoadingSwitcher = false,
                     cartTotal = CartTotalUI.Success(
                         motivation = null,
                         discount = null,
                         deliveryCost = null,
                         oldFinalCost = null,
                         newFinalCost = "650 ₽"
-                    ),
-                    isLoading = true,
-                    deliveryAddressList = DeliveryAddressListUI(
-                        isShown = false,
-                        addressList = persistentListOf()
-                    ),
-                    pickupAddressList = PickupAddressListUI(
-                        isShown = false,
-                        addressList = persistentListOf()
-                    ),
-                    isDeferredTimeShown = false,
-                    timePicker = TimePickerUI(
-                        isShown = false,
-                        minTime = TimeUI(0, 0),
-                        initialTime = TimeUI(0, 0)
-                    ),
-                    paymentMethodList = PaymentMethodListUI(
-                        isShown = false,
-                        paymentMethodList = persistentListOf()
-                    ),
-                    isOrderCreationEnabled = true,
-                    isLoadingSwitcher = true,
+                    )
                 ),
                 onAction = {}
             )
@@ -865,53 +897,51 @@ class CreateOrderFragment :
 
     @Preview(showSystemUi = true)
     @Composable
-    private fun ErrorsPreview() {
+    private fun DeliveryCreateOrderNotEnabledPreview() {
         FoodDeliveryTheme {
             Screen(
-                viewState = CreateOrderViewState(
-                    isDelivery = true,
-                    deliveryAddress = null,
-                    pickupAddress = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
-                    isAddressErrorShown = true,
-                    comment = "",
-                    deferredTime = "18:20",
-                    deferredTimeStringId = R.string.pickup_time,
-                    selectedPaymentMethod = null,
-                    isPaymentMethodErrorShown = true,
-                    showChange = true,
-                    change = "100",
-                    isChangeErrorShown = true,
-                    withoutChange = "Без сдачи",
-                    changeFrom = "Cдача с",
-                    withoutChangeChecked = false,
+                createOrderViewStatePreviewMock.copy(
+                    isOrderCreationEnabled = false,
+                    isLoadingCreateOrder = false,
+                    isLoadingSwitcher = false,
                     cartTotal = CartTotalUI.Success(
                         motivation = null,
                         discount = null,
                         deliveryCost = null,
                         oldFinalCost = null,
                         newFinalCost = "650 ₽"
+                    )
+                ),
+                onAction = {}
+            )
+        }
+    }
+
+    @Preview(showSystemUi = true)
+    @Composable
+    private fun DeliveryCreateOrderHighTrafficPreview() {
+        FoodDeliveryTheme {
+            Screen(
+                createOrderViewStatePreviewMock.copy(
+                    createOrderType = CreateOrderViewState.CreateOrderType.Delivery(
+                        deliveryAddress = null,
+                        deliveryAddressList = DeliveryAddressListUI(
+                            isShown = false,
+                            addressList = persistentListOf()
+                        ),
+                        isEnabled = true,
+                        workload = CreateOrderViewState.CreateOrderType.Delivery.Workload.HIGH
                     ),
-                    isLoading = false,
-                    deliveryAddressList = DeliveryAddressListUI(
-                        isShown = false,
-                        addressList = persistentListOf()
-                    ),
-                    pickupAddressList = PickupAddressListUI(
-                        isShown = false,
-                        addressList = persistentListOf()
-                    ),
-                    isDeferredTimeShown = false,
-                    timePicker = TimePickerUI(
-                        isShown = false,
-                        minTime = TimeUI(0, 0),
-                        initialTime = TimeUI(0, 0)
-                    ),
-                    paymentMethodList = PaymentMethodListUI(
-                        isShown = false,
-                        paymentMethodList = persistentListOf()
-                    ),
-                    isOrderCreationEnabled = true,
-                    isLoadingSwitcher = false
+                    isOrderCreationEnabled = false,
+                    isLoadingCreateOrder = false,
+                    isLoadingSwitcher = false,
+                    cartTotal = CartTotalUI.Success(
+                        motivation = null,
+                        discount = null,
+                        deliveryCost = null,
+                        oldFinalCost = null,
+                        newFinalCost = "650 ₽"
+                    )
                 ),
                 onAction = {}
             )

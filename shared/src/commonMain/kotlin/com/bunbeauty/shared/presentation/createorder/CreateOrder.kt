@@ -54,7 +54,10 @@ interface CreateOrder {
 
         val isLoading: Boolean,
         val isLoadingSwitcher: Boolean = true,
-        val cafeUuid: String?,
+        val isPickupEnabled: Boolean,
+        val isDeliveryEnabled: Boolean,
+        val hasOpenedCafe: Boolean,
+        val workload: Cafe.Workload,
     ) : BaseDataState {
 
         val paymentByCash: Boolean = selectedPaymentMethod?.name == PaymentMethodName.CASH
@@ -84,7 +87,7 @@ interface CreateOrder {
     }
 
     sealed interface Action : BaseAction {
-        data object Update : Action
+        data object Init : Action
         data object Back : Action
 
         data class ChangeMethod(val position: Int) : Action

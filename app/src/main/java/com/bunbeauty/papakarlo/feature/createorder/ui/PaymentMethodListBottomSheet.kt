@@ -58,7 +58,8 @@ private fun PaymentMethodListBottomSheetContent(
                             paymentMethodUuid = selectablePaymentMethod.uuid
                         )
                     )
-                }
+                },
+                enabled = true
             )
         }
     }

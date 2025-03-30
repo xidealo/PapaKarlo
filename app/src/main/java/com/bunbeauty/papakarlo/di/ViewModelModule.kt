@@ -66,8 +66,11 @@ fun viewModelModule() = module {
             saveSelectedUserAddress = get(),
             getSelectablePaymentMethodListUseCase = get(),
             savePaymentMethodUseCase = get(),
-            getWorkInfoUseCase = get(),
-            getCurrentUserAddressUseCase = get()
+            getCurrentUserAddressUseCase = get(),
+            isDeliveryEnabledFromCafeUseCase = get(),
+            isPickupEnabledFromCafeUseCase = get(),
+            hasOpenedCafeUseCase = get(),
+            getWorkloadCafeUseCase = get()
         )
     }
     viewModel {

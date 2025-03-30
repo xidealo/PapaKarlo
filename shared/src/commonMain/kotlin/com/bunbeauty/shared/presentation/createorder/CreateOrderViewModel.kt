@@ -6,16 +6,20 @@ import com.bunbeauty.shared.Constants.RUBLE_CURRENCY
 import com.bunbeauty.shared.domain.exeptions.OrderNotAvailableException
 import com.bunbeauty.shared.domain.feature.address.GetCurrentUserAddressUseCase
 import com.bunbeauty.shared.domain.feature.cafe.GetSelectableCafeListUseCase
+import com.bunbeauty.shared.domain.feature.cafe.GetWorkloadCafeUseCase
+import com.bunbeauty.shared.domain.feature.cafe.HasOpenedCafeUseCase
+import com.bunbeauty.shared.domain.feature.cafe.IsDeliveryEnabledFromCafeUseCase
+import com.bunbeauty.shared.domain.feature.cafe.IsPickupEnabledFromCafeUseCase
 import com.bunbeauty.shared.domain.feature.city.GetSelectedCityTimeZoneUseCase
 import com.bunbeauty.shared.domain.feature.motivation.GetMotivationUseCase
 import com.bunbeauty.shared.domain.feature.order.CreateOrderUseCase
-import com.bunbeauty.shared.domain.feature.orderavailable.GetWorkInfoUseCase
 import com.bunbeauty.shared.domain.feature.payment.GetSelectablePaymentMethodListUseCase
 import com.bunbeauty.shared.domain.feature.payment.SavePaymentMethodUseCase
 import com.bunbeauty.shared.domain.interactor.cafe.ICafeInteractor
 import com.bunbeauty.shared.domain.interactor.cart.GetCartTotalFlowUseCase
 import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
+import com.bunbeauty.shared.domain.model.cafe.Cafe
 import com.bunbeauty.shared.domain.model.date_time.Time
 import com.bunbeauty.shared.domain.use_case.address.GetSelectableUserAddressListUseCase
 import com.bunbeauty.shared.domain.use_case.address.SaveSelectedUserAddressUseCase
@@ -43,7 +47,10 @@ class CreateOrderViewModel(
     private val saveSelectedUserAddress: SaveSelectedUserAddressUseCase,
     private val getSelectablePaymentMethodListUseCase: GetSelectablePaymentMethodListUseCase,
     private val savePaymentMethodUseCase: SavePaymentMethodUseCase,
-    private val getWorkInfoUseCase: GetWorkInfoUseCase,
+    private val isDeliveryEnabledFromCafeUseCase: IsDeliveryEnabledFromCafeUseCase,
+    private val isPickupEnabledFromCafeUseCase: IsPickupEnabledFromCafeUseCase,
+    private val hasOpenedCafeUseCase: HasOpenedCafeUseCase,
+    private val getWorkloadCafeUseCase: GetWorkloadCafeUseCase,
 ) : SharedStateViewModel<CreateOrder.DataState, CreateOrder.Action, CreateOrder.Event>(
     initDataState = CreateOrder.DataState(
         isDelivery = true,
@@ -58,7 +65,10 @@ class CreateOrderViewModel(
         selectedPaymentMethod = null,
         cartTotal = CreateOrder.CartTotal.Loading,
         isLoading = true,
-        cafeUuid = ""
+        isDeliveryEnabled = true,
+        isPickupEnabled = true,
+        hasOpenedCafe = true,
+        workload = Cafe.Workload.LOW
     )
 ) {
 
@@ -66,8 +76,8 @@ class CreateOrderViewModel(
 
     override fun reduce(action: CreateOrder.Action, dataState: CreateOrder.DataState) {
         when (action) {
-            CreateOrder.Action.Update -> {
-                update()
+            CreateOrder.Action.Init -> {
+                loadData()
             }
 
             is CreateOrder.Action.ChangeMethod -> {
@@ -163,7 +173,7 @@ class CreateOrderViewModel(
         }
     }
 
-    private fun update() {
+    private fun loadData() {
         withLoading {
             updateUserAddresses()
         }
@@ -181,7 +191,9 @@ class CreateOrderViewModel(
     private fun changeMethod(position: Int) {
         (position == DELIVERY_POSITION).let { isDelivery ->
             setState {
-                copy(isDelivery = isDelivery)
+                copy(
+                    isDelivery = isDelivery,
+                )
             }
         }
         withLoading {
@@ -438,10 +450,6 @@ class CreateOrderViewModel(
     }
 
     private suspend fun updateCafeAddresses() {
-        val cafeList = getSelectableCafeList()
-        setState {
-            copy(cafeList = cafeList)
-        }
         updateSelectedCafe()
     }
 
@@ -468,27 +476,23 @@ class CreateOrderViewModel(
     private suspend fun updateSelectedUserAddress() {
         val userAddress = getCurrentUserAddressUseCase()
 
-        val cafeUuid = userAddress?.uuid?.let { userAddressUuid ->
-            //getUserCafeUseCase(userAddressUuid = userAddressUuid)
-        }
-
+        //TODO (add not init value when address empty)
         setState {
             copy(
                 selectedUserAddress = userAddress,
-                //cafeUuid = cafeUuid?.uuid,
+                isDeliveryEnabled = userAddress?.cafeUuid?.let { cafeUuid ->
+                    isDeliveryEnabledFromCafeUseCase(cafeUuid = cafeUuid)
+                } ?: false,
                 isAddressErrorShown = if (userAddress != null) {
                     CreateOrder.DataState.AddressErrorState.NO_ERROR
                 } else {
                     isAddressErrorShown
-                }
+                },
+                workload = userAddress?.cafeUuid?.let { cafeUuid ->
+                    getWorkloadCafeUseCase(cafeUuid = cafeUuid)
+                } ?: Cafe.Workload.LOW
             )
         }
-
-        updateSelectedCafe()
-    }
-
-    fun updateInfoWithUserCafe(cafeUuid: String) {
-        //todo get work info (тип работы и тд)
     }
 
     private suspend fun updateSelectedCafe() {
@@ -501,7 +505,15 @@ class CreateOrderViewModel(
             cafe.isSelected
         }?.let { selectedCafe ->
             setState {
-                copy(selectedCafe = selectedCafe.cafe)
+                copy(
+                    selectedCafe = selectedCafe.cafe,
+                    isPickupEnabled = isPickupEnabledFromCafeUseCase(selectedCafe.cafe.uuid),
+                    hasOpenedCafe = hasOpenedCafeUseCase(
+                        cafeList.map { selectableCafe ->
+                            selectableCafe.cafe
+                        }
+                    )
+                )
             }
         }
     }
@@ -537,7 +549,7 @@ class CreateOrderViewModel(
                                 newFinalCostValue = cartTotal.newFinalCost
                             ),
                             isDelivery = isDelivery,
-                            isLoadingSwitcher = false
+                            isLoadingSwitcher = false,
                         )
                     }
                 }
