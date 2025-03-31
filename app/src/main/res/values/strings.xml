@@ -28,15 +28,14 @@
     <string name="error_common_data_loading">Не удалось загрузить данные</string>
     <string name="error_something_went_wrong">Что-то пошло не так</string>
 
+    <string name="error_no_internet">Нет подключения к интернету</string>
+    <string name="warning_no_order_available">Заказы временно не принимаются</string>
+
     <!-- ADDRESS -->
     <string name="msg_address_house_short">д.&#160;</string>
     <string name="msg_address_flat_short">кв.&#160;</string>
     <string name="msg_address_entrance_short">&#160;подъезд</string>
     <string name="msg_address_floor_short">&#160;этаж</string>
-
-    <string name="error_no_internet">Нет подключения к интернету</string>
-    <string name="warning_no_order_available">Заказы временно не принимаются</string>
-
 
     <!-- SELECT CITY -->
     <string name="title_select_city">Выбор города</string>

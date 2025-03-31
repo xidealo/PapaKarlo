@@ -50,7 +50,7 @@ class CreateOrderViewModel(
     private val isDeliveryEnabledFromCafeUseCase: IsDeliveryEnabledFromCafeUseCase,
     private val isPickupEnabledFromCafeUseCase: IsPickupEnabledFromCafeUseCase,
     private val hasOpenedCafeUseCase: HasOpenedCafeUseCase,
-    private val getWorkloadCafeUseCase: GetWorkloadCafeUseCase
+    private val getWorkloadCafeUseCase: GetWorkloadCafeUseCase,
 ) : SharedStateViewModel<CreateOrder.DataState, CreateOrder.Action, CreateOrder.Event>(
     initDataState = CreateOrder.DataState(
         isDelivery = true,
@@ -65,7 +65,7 @@ class CreateOrderViewModel(
         selectedPaymentMethod = null,
         cartTotal = CreateOrder.CartTotal.Loading,
         isLoading = true,
-        isDeliveryEnabled = true,
+        deliveryState = CreateOrder.DataState.DeliveryState.ENABLED,
         isPickupEnabled = true,
         hasOpenedCafe = true,
         workload = Cafe.Workload.LOW
@@ -176,14 +176,11 @@ class CreateOrderViewModel(
     private fun loadData() {
         withLoading {
             updateUserAddresses()
-        }
-        withLoading {
+
             updateCafeAddresses()
-        }
-        withLoading {
+
             updatePaymentMethods()
-        }
-        withLoading {
+
             updateCartTotal()
         }
     }
@@ -360,7 +357,7 @@ class CreateOrderViewModel(
 
     private fun createClick(
         withoutChange: String,
-        changeFrom: String
+        changeFrom: String,
     ) {
         val state = mutableDataState.value
 
@@ -391,8 +388,8 @@ class CreateOrderViewModel(
             (state.cartTotal as? CreateOrder.CartTotal.Success)?.newFinalCostValue ?: 0
         val isChangeLessThenCost = (state.change ?: 0) < newFinalCost
         val isChangeIncorrect = state.paymentByCash &&
-            !state.withoutChangeChecked &&
-            isChangeLessThenCost
+                !state.withoutChangeChecked &&
+                isChangeLessThenCost
         setState {
             copy(isChangeErrorShown = isChangeIncorrect)
         }
@@ -442,10 +439,6 @@ class CreateOrderViewModel(
     }
 
     private suspend fun updateUserAddresses() {
-        val userAddressList = getSelectableUserAddressList()
-        setState {
-            copy(userAddressList = userAddressList)
-        }
         updateSelectedUserAddress()
     }
 
@@ -475,14 +468,20 @@ class CreateOrderViewModel(
 
     private suspend fun updateSelectedUserAddress() {
         val userAddress = getCurrentUserAddressUseCase()
+        val userAddressList = getSelectableUserAddressList()
 
         // TODO (add not init value when address empty)
         setState {
             copy(
+                userAddressList = userAddressList,
                 selectedUserAddress = userAddress,
-                isDeliveryEnabled = userAddress?.cafeUuid?.let { cafeUuid ->
-                    isDeliveryEnabledFromCafeUseCase(cafeUuid = cafeUuid)
-                } ?: false,
+                deliveryState = userAddress?.cafeUuid?.let { cafeUuid ->
+                    if (isDeliveryEnabledFromCafeUseCase(cafeUuid = cafeUuid)) {
+                        CreateOrder.DataState.DeliveryState.ENABLED
+                    } else {
+                        CreateOrder.DataState.DeliveryState.NOT_ENABLED
+                    }
+                } ?: CreateOrder.DataState.DeliveryState.NEED_ADDRESS,
                 isAddressErrorShown = if (userAddress != null) {
                     CreateOrder.DataState.AddressErrorState.NO_ERROR
                 } else {
@@ -490,7 +489,8 @@ class CreateOrderViewModel(
                 },
                 workload = userAddress?.cafeUuid?.let { cafeUuid ->
                     getWorkloadCafeUseCase(cafeUuid = cafeUuid)
-                } ?: Cafe.Workload.LOW
+                } ?: Cafe.Workload.LOW,
+                isLoadingSwitcher = false
             )
         }
     }
@@ -549,7 +549,6 @@ class CreateOrderViewModel(
                                 newFinalCostValue = cartTotal.newFinalCost
                             ),
                             isDelivery = isDelivery,
-                            isLoadingSwitcher = false
                         )
                     }
                 }
@@ -563,7 +562,7 @@ class CreateOrderViewModel(
     private fun getExtendedComment(
         state: CreateOrder.DataState,
         withoutChange: String,
-        changeFrom: String
+        changeFrom: String,
     ): String {
         return buildString {
             state.comment.takeIf { comment ->

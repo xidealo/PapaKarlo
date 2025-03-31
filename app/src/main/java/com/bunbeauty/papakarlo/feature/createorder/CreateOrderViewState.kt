@@ -50,13 +50,19 @@ data class CreateOrderViewState(
         data class Delivery(
             val deliveryAddress: String?,
             val deliveryAddressList: DeliveryAddressListUI,
-            val isEnabled: Boolean,
+            val state: State,
             val workload: Workload
         ) : CreateOrderType {
             enum class Workload {
                 LOW,
                 AVERAGE,
                 HIGH
+            }
+
+            enum class State {
+                NOT_ENABLED,
+                ENABLED,
+                NEED_ADDRESS
             }
         }
     }

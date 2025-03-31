@@ -125,6 +125,7 @@ class CreateOrderFragment :
                             onAction(CreateOrder.Action.ChangeMethod(position))
                         }
                     )
+
                     when (viewState.createOrderType) {
                         is CreateOrderViewState.CreateOrderType.Delivery -> {
                             DeliveryContent(
@@ -244,59 +245,76 @@ class CreateOrderFragment :
                 onAction = onAction
             )
 
-            if (createOrderType.isEnabled) {
-                if (viewState.isAddressErrorShown) {
-                    ErrorText(
+            when (createOrderType.state) {
+                CreateOrderViewState.CreateOrderType.Delivery.State.NOT_ENABLED -> {
+                    WarningCard(
+                        title = stringResource(R.string.warning_no_order_available),
+                        icon = R.drawable.ic_warning,
+                        iconDescription = stringResource(R.string.description_ic_warning),
                         modifier = Modifier
-                            .padding(top = 4.dp)
-                            .padding(horizontal = 16.dp),
-                        messageStringId = R.string.error_select_delivery_address
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp)
+                            .padding(top = 16.dp),
+                        cardColors = negativeCardStatusColors
                     )
                 }
-                CommonContent(
-                    viewState = viewState,
-                    focusManager = focusManager,
-                    onAction = onAction
-                )
-                when (createOrderType.workload) {
-                    CreateOrderViewState.CreateOrderType.Delivery.Workload.LOW -> Unit
-                    CreateOrderViewState.CreateOrderType.Delivery.Workload.AVERAGE -> {
-                        WarningCard(
-                            title = stringResource(R.string.msg_create_order_average_traffic),
-                            icon = R.drawable.ic_warning,
-                            iconDescription = stringResource(R.string.description_ic_warning),
+
+                CreateOrderViewState.CreateOrderType.Delivery.State.ENABLED -> {
+                    if (viewState.isAddressErrorShown) {
+                        ErrorText(
                             modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 16.dp)
-                                .padding(top = 16.dp),
-                            cardColors = warningCardStatusColors
+                                .padding(top = 4.dp)
+                                .padding(horizontal = 16.dp),
+                            messageStringId = R.string.error_select_delivery_address
                         )
                     }
+                    CommonContent(
+                        viewState = viewState,
+                        focusManager = focusManager,
+                        onAction = onAction
+                    )
+                    when (createOrderType.workload) {
+                        CreateOrderViewState.CreateOrderType.Delivery.Workload.LOW -> Unit
+                        CreateOrderViewState.CreateOrderType.Delivery.Workload.AVERAGE -> {
+                            WarningCard(
+                                title = stringResource(R.string.msg_create_order_average_traffic),
+                                icon = R.drawable.ic_warning,
+                                iconDescription = stringResource(R.string.description_ic_warning),
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = 16.dp)
+                                    .padding(top = 16.dp),
+                                cardColors = warningCardStatusColors
+                            )
+                        }
 
-                    CreateOrderViewState.CreateOrderType.Delivery.Workload.HIGH -> {
-                        WarningCard(
-                            title = stringResource(R.string.msg_create_order_high_traffic),
-                            icon = R.drawable.ic_warning,
-                            iconDescription = stringResource(R.string.description_ic_warning),
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 16.dp)
-                                .padding(top = 16.dp),
-                            cardColors = negativeCardStatusColors
-                        )
+                        CreateOrderViewState.CreateOrderType.Delivery.Workload.HIGH -> {
+                            WarningCard(
+                                title = stringResource(R.string.msg_create_order_high_traffic),
+                                icon = R.drawable.ic_warning,
+                                iconDescription = stringResource(R.string.description_ic_warning),
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = 16.dp)
+                                    .padding(top = 16.dp),
+                                cardColors = negativeCardStatusColors
+                            )
+                        }
                     }
                 }
-            } else {
-                WarningCard(
-                    title = stringResource(R.string.warning_no_order_available),
-                    icon = R.drawable.ic_warning,
-                    iconDescription = stringResource(R.string.description_ic_warning),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp)
-                        .padding(top = 16.dp),
-                    cardColors = negativeCardStatusColors
-                )
+
+                CreateOrderViewState.CreateOrderType.Delivery.State.NEED_ADDRESS -> {
+                    WarningCard(
+                        title = stringResource(R.string.error_user_address),
+                        icon = R.drawable.ic_warning,
+                        iconDescription = stringResource(R.string.description_ic_warning),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp)
+                            .padding(top = 16.dp),
+                        cardColors = warningCardStatusColors
+                    )
+                }
             }
         }
     }
@@ -769,7 +787,7 @@ class CreateOrderFragment :
                 isShown = false,
                 addressList = persistentListOf()
             ),
-            isEnabled = true,
+            state = CreateOrderViewState.CreateOrderType.Delivery.State.ENABLED,
             workload = CreateOrderViewState.CreateOrderType.Delivery.Workload.LOW
         ),
         isAddressErrorShown = false,
@@ -929,7 +947,38 @@ class CreateOrderFragment :
                             isShown = false,
                             addressList = persistentListOf()
                         ),
-                        isEnabled = true,
+                        state = CreateOrderViewState.CreateOrderType.Delivery.State.ENABLED,
+                        workload = CreateOrderViewState.CreateOrderType.Delivery.Workload.HIGH
+                    ),
+                    isOrderCreationEnabled = false,
+                    isLoadingCreateOrder = false,
+                    isLoadingSwitcher = false,
+                    cartTotal = CartTotalUI.Success(
+                        motivation = null,
+                        discount = null,
+                        deliveryCost = null,
+                        oldFinalCost = null,
+                        newFinalCost = "650 ₽"
+                    )
+                ),
+                onAction = {}
+            )
+        }
+    }
+
+    @Preview(showSystemUi = true)
+    @Composable
+    private fun DeliveryCreateOrderNeedAddressPreview() {
+        FoodDeliveryTheme {
+            Screen(
+                createOrderViewStatePreviewMock.copy(
+                    createOrderType = CreateOrderViewState.CreateOrderType.Delivery(
+                        deliveryAddress = null,
+                        deliveryAddressList = DeliveryAddressListUI(
+                            isShown = false,
+                            addressList = persistentListOf()
+                        ),
+                        state = CreateOrderViewState.CreateOrderType.Delivery.State.NEED_ADDRESS,
                         workload = CreateOrderViewState.CreateOrderType.Delivery.Workload.HIGH
                     ),
                     isOrderCreationEnabled = false,

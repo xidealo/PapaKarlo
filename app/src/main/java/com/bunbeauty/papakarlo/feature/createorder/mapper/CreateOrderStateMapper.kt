@@ -60,7 +60,7 @@ fun CreateOrder.DataState.toViewState(): CreateOrderViewState {
             }.toImmutableList()
         ),
         isOrderCreationEnabled = if (isDelivery) {
-            isDeliveryEnabled
+            deliveryState == CreateOrder.DataState.DeliveryState.ENABLED
         } else {
             isPickupEnabled
         },
@@ -102,7 +102,19 @@ private fun CreateOrder.DataState.getCreateOrderTypeDelivery() =
                 )
             }.toImmutableList()
         ),
-        isEnabled = isDeliveryEnabled,
+        state = when (deliveryState) {
+            CreateOrder.DataState.DeliveryState.NOT_ENABLED -> {
+                CreateOrderViewState.CreateOrderType.Delivery.State.NOT_ENABLED
+            }
+
+            CreateOrder.DataState.DeliveryState.ENABLED -> {
+                CreateOrderViewState.CreateOrderType.Delivery.State.ENABLED
+            }
+
+            CreateOrder.DataState.DeliveryState.NEED_ADDRESS -> {
+                CreateOrderViewState.CreateOrderType.Delivery.State.NEED_ADDRESS
+            }
+        },
         workload = when (workload) {
             Cafe.Workload.LOW -> CreateOrderViewState.CreateOrderType.Delivery.Workload.LOW
             Cafe.Workload.AVERAGE -> CreateOrderViewState.CreateOrderType.Delivery.Workload.AVERAGE
