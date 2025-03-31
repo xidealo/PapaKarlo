@@ -13,5 +13,5 @@ data class UserAddress(
     val forLowDeliveryCost: Int?,
     val lowDeliveryCost: Int?,
     val userUuid: String,
-    val cafeUuid: String,
+    val cafeUuid: String
 )

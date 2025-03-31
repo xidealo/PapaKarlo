@@ -121,7 +121,7 @@ fun repositoryModule() = module {
     }
     single<CompanyRepo> {
         CompanyRepository(
-            networkConnector = get(),
+            networkConnector = get()
         )
     }
     single<VersionRepo> {

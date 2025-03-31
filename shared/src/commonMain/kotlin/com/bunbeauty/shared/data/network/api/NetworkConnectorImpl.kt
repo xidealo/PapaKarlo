@@ -56,7 +56,7 @@ import org.koin.core.component.KoinComponent
 internal class NetworkConnectorImpl(
     private val client: HttpClient,
     private val socketService: SocketService,
-    private val companyUuidProvider: CompanyUuidProvider,
+    private val companyUuidProvider: CompanyUuidProvider
 ) : KoinComponent, NetworkConnector {
 
     // GET
@@ -120,7 +120,7 @@ internal class NetworkConnectorImpl(
     override suspend fun getSuggestions(
         token: String,
         query: String,
-        cityUuid: String,
+        cityUuid: String
     ): ApiResult<ListServer<SuggestionServer>> {
         return getData(
             path = "street/suggestions",
@@ -134,7 +134,7 @@ internal class NetworkConnectorImpl(
 
     override suspend fun getUserAddressListByCityUuid(
         token: String,
-        cityUuid: String,
+        cityUuid: String
     ): ApiResult<ListServer<AddressServer>> {
         return getData(
             path = "v2/address",
@@ -160,7 +160,7 @@ internal class NetworkConnectorImpl(
     override suspend fun getOrderList(
         token: String,
         count: Int?,
-        uuid: String?,
+        uuid: String?
     ): ApiResult<ListServer<OrderServer>> {
         return getData(
             path = "v2/client/order",
@@ -216,7 +216,7 @@ internal class NetworkConnectorImpl(
 
     override suspend fun postUserAddress(
         token: String,
-        userAddress: UserAddressPostServer,
+        userAddress: UserAddressPostServer
     ): ApiResult<AddressServer> {
         return postData(
             path = "v2/address",
@@ -245,7 +245,7 @@ internal class NetworkConnectorImpl(
 
     override suspend fun patchSettings(
         token: String,
-        patchUserServer: PatchUserServer,
+        patchUserServer: PatchUserServer
     ): ApiResult<SettingsServer> {
         return patchData(
             path = "client/settings",
@@ -265,7 +265,7 @@ internal class NetworkConnectorImpl(
 
     override suspend fun putCodeCheck(
         code: CodeServer,
-        uuid: String,
+        uuid: String
     ): ApiResult<AuthResponseServer> {
         return putData(
             path = "client/code_check",
@@ -293,7 +293,7 @@ internal class NetworkConnectorImpl(
     private suspend inline fun <reified R> getData(
         path: String,
         parameters: Map<String, Any> = mapOf(),
-        token: String? = null,
+        token: String? = null
     ): ApiResult<R> {
         return safeCall {
             client.get {
@@ -310,7 +310,7 @@ internal class NetworkConnectorImpl(
         path: String,
         parameters: Map<String, String> = mapOf(),
         body: Any,
-        token: String? = null,
+        token: String? = null
     ): ApiResult<R> {
         return safeCall {
             client.post {
@@ -328,7 +328,7 @@ internal class NetworkConnectorImpl(
         path: String,
         body: Any,
         parameters: Map<String, String> = mapOf(),
-        token: String? = null,
+        token: String? = null
     ): ApiResult<R> {
         return safeCall {
             client.patch {
@@ -346,7 +346,7 @@ internal class NetworkConnectorImpl(
         path: String,
         body: Any? = null,
         parameters: Map<String, String> = mapOf(),
-        token: String? = null,
+        token: String? = null
     ): ApiResult<R> {
         return safeCall {
             client.put {
@@ -361,7 +361,7 @@ internal class NetworkConnectorImpl(
     }
 
     private suspend inline fun <reified R> safeCall(
-        networkCall: () -> HttpResponse,
+        networkCall: () -> HttpResponse
     ): ApiResult<R> {
         return try {
             val call = networkCall()
@@ -379,7 +379,7 @@ internal class NetworkConnectorImpl(
         path: String,
         parameters: Map<String, Any> = mapOf(),
         body: Any? = null,
-        token: String? = null,
+        token: String? = null
     ) {
         if (body != null) {
             setBody(body)

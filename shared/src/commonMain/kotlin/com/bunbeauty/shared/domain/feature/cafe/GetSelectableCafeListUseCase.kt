@@ -8,12 +8,11 @@ import com.bunbeauty.shared.domain.model.cafe.Cafe
 import com.bunbeauty.shared.domain.model.cafe.SelectableCafe
 import com.bunbeauty.shared.domain.repo.CafeRepo
 
-//TODO (add test for canBePickup and sort by canBePickup)
 class GetSelectableCafeListUseCase(
     private val dataStoreRepo: DataStoreRepo,
     private val cafeRepo: CafeRepo,
     private val getCafeListUseCase: GetCafeListUseCase,
-    private val isPickupEnabledFromCafeUseCase: IsPickupEnabledFromCafeUseCase,
+    private val isPickupEnabledFromCafeUseCaseImpl: IsPickupEnabledFromCafeUseCase
 ) {
     suspend operator fun invoke(): List<SelectableCafe> {
         val cityUuid = dataStoreRepo.getSelectedCityUuid() ?: throw NoSelectedCityUuidException()
@@ -25,7 +24,7 @@ class GetSelectableCafeListUseCase(
             SelectableCafe(
                 cafe = cafe,
                 isSelected = cafe.uuid == selectedCafe?.uuid,
-                canBePickup = isPickupEnabledFromCafeUseCase(cafeUuid = cafe.uuid)
+                canBePickup = isPickupEnabledFromCafeUseCaseImpl(cafeUuid = cafe.uuid)
             )
         }.sortedByDescending { selectableCafe ->
             selectableCafe.canBePickup
@@ -34,14 +33,14 @@ class GetSelectableCafeListUseCase(
 
     private suspend fun getSelectedCafe(
         userUuid: String,
-        cityUuid: String,
+        cityUuid: String
     ): Cafe? {
         val cafeList = getCafeListUseCase().ifEmpty { throw EmptyCafeListException() }
         val selectedCafe = cafeRepo.getSelectedCafeByUserAndCityUuid(
             userUuid = userUuid,
             cityUuid = cityUuid
         ) ?: cafeList.firstOrNull { cafe ->
-            isPickupEnabledFromCafeUseCase(cafeUuid = cafe.uuid)
+            isPickupEnabledFromCafeUseCaseImpl(cafeUuid = cafe.uuid)
         } ?: cafeList.firstOrNull()
         return selectedCafe
     }

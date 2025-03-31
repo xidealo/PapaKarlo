@@ -5,7 +5,7 @@ import com.bunbeauty.shared.domain.model.company.Company
 import com.bunbeauty.shared.domain.repo.CompanyRepo
 
 class CompanyRepository(
-    private val networkConnector: NetworkConnector,
+    private val networkConnector: NetworkConnector
 ) : CompanyRepo {
     /**
      * Поле влияет на показ уведомления во всем приложении

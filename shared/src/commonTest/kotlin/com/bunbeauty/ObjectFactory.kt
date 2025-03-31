@@ -3,6 +3,7 @@ package com.bunbeauty
 import com.bunbeauty.shared.domain.model.addition.Addition
 import com.bunbeauty.shared.domain.model.addition.AdditionGroup
 import com.bunbeauty.shared.domain.model.addition.CartProductAddition
+import com.bunbeauty.shared.domain.model.cafe.Cafe
 import com.bunbeauty.shared.domain.model.cart.CartProduct
 import com.bunbeauty.shared.domain.model.category.Category
 import com.bunbeauty.shared.domain.model.city.City
@@ -15,7 +16,7 @@ fun getMenuProduct(
     categoryList: List<Category> = emptyList(),
     isRecommended: Boolean = false,
     visible: Boolean = true,
-    additionGroups: List<AdditionGroup> = emptyList()
+    additionGroups: List<AdditionGroup> = emptyList(),
 ) = MenuProduct(
     uuid = uuid,
     name = "Kapusta",
@@ -36,7 +37,7 @@ fun getCartProduct(
     uuid: String = "1",
     count: Int = 0,
     menuProduct: MenuProduct = getMenuProduct(),
-    cartProductAdditionList: List<CartProductAddition> = emptyList()
+    cartProductAdditionList: List<CartProductAddition> = emptyList(),
 ) = CartProduct(
     uuid = uuid,
     count = count,
@@ -67,7 +68,7 @@ fun getAddition(
     additionGroupUuid: String = "",
     isVisible: Boolean = true,
     price: Int? = 0,
-    isSelected: Boolean = false
+    isSelected: Boolean = false,
 ) = Addition(
     uuid = uuid,
     name = "",
@@ -85,7 +86,7 @@ fun getAdditionGroup(
     priority: Int = 0,
     additions: List<Addition> = emptyList(),
     isVisible: Boolean = true,
-    singleChoice: Boolean = false
+    singleChoice: Boolean = false,
 ) = AdditionGroup(
     uuid = uuid,
     name = "",
@@ -100,9 +101,24 @@ fun getCity(
     name: String = "",
     timeZone: String = "",
     isVisible: Boolean = true,
-    singleChoice: Boolean = false
+    singleChoice: Boolean = false,
 ) = City(
     uuid = uuid,
     name = name,
     timeZone = timeZone
+)
+
+
+fun getCafe(uuid: String, workType: Cafe.WorkType = Cafe.WorkType.DELIVERY_AND_PICKUP) = Cafe(
+    uuid = uuid,
+    fromTime = 0,
+    toTime = 0,
+    phone = "phone",
+    address = "address",
+    latitude = 0.0,
+    longitude = 0.0,
+    cityUuid = "cityUuid",
+    isVisible = true,
+    workType = workType,
+    workload = Cafe.Workload.LOW
 )

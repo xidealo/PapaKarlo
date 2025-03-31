@@ -5,13 +5,13 @@ import com.bunbeauty.shared.domain.model.cafe.Cafe
 interface CafeRepo {
 
     suspend fun getCafeList(
-        selectedCityUuid: String,
+        selectedCityUuid: String
     ): List<Cafe>
 
     suspend fun saveSelectedCafeUuid(
         userUuid: String,
         selectedCityUuid: String,
-        cafeUuid: String,
+        cafeUuid: String
     )
 
     suspend fun getCafeByUuid(cafeUuid: String): Cafe?

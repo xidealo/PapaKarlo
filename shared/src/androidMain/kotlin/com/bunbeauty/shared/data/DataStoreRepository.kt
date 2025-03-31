@@ -248,7 +248,6 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
         }
     }
 
-
     companion object {
         private const val TOKEN_DATA_STORE = "token data store"
         private const val TOKEN = "token"

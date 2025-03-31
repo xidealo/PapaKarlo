@@ -7,6 +7,7 @@ import com.bunbeauty.shared.domain.feature.cafe.GetWorkloadCafeUseCase
 import com.bunbeauty.shared.domain.feature.cafe.HasOpenedCafeUseCase
 import com.bunbeauty.shared.domain.feature.cafe.IsDeliveryEnabledFromCafeUseCase
 import com.bunbeauty.shared.domain.feature.cafe.IsPickupEnabledFromCafeUseCase
+import com.bunbeauty.shared.domain.feature.cafe.IsPickupEnabledFromCafeUseCaseImpl
 import com.bunbeauty.shared.domain.feature.cafe.ObserveCafeWithOpenStateListUseCase
 import org.koin.dsl.module
 
@@ -22,7 +23,7 @@ internal fun cafeModule() = module {
             cafeRepo = get(),
             dataStoreRepo = get(),
             getCafeListUseCase = get(),
-            isPickupEnabledFromCafeUseCase = get()
+            isPickupEnabledFromCafeUseCaseImpl = get()
         )
     }
     factory {
@@ -37,8 +38,8 @@ internal fun cafeModule() = module {
             cafeRepo = get()
         )
     }
-    factory {
-        IsPickupEnabledFromCafeUseCase(
+    factory<IsPickupEnabledFromCafeUseCase> {
+        IsPickupEnabledFromCafeUseCaseImpl(
             cafeRepo = get()
         )
     }

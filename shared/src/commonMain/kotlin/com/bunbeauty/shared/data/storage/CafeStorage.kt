@@ -16,5 +16,4 @@ class CafeStorage {
     fun clear() {
         userCafe = null
     }
-
 }

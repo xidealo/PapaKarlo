@@ -18,13 +18,13 @@ class CafeRepository(
     private val networkConnector: NetworkConnector,
     private val cafeDao: ICafeDao,
     private val cafeStorage: CafeStorage,
-    private val dataStoreRepo: DataStoreRepo,
+    private val dataStoreRepo: DataStoreRepo
 ) : CafeRepo {
 
     private var cafeListCache: List<Cafe>? = null
 
     override suspend fun getCafeList(
-        selectedCityUuid: String,
+        selectedCityUuid: String
     ): List<Cafe> {
         val list = if (cafeListCache == null) {
             val cafeList = networkConnector.getCafeListByCityUuid(cityUuid = selectedCityUuid)
@@ -61,7 +61,7 @@ class CafeRepository(
     override suspend fun saveSelectedCafeUuid(
         userUuid: String,
         selectedCityUuid: String,
-        cafeUuid: String,
+        cafeUuid: String
     ) {
         val selectedCafeUuidEntity = SelectedCafeUuidEntity(
             userUuid = userUuid,
@@ -81,7 +81,7 @@ class CafeRepository(
 
     override suspend fun getSelectedCafeByUserAndCityUuid(
         userUuid: String,
-        cityUuid: String,
+        cityUuid: String
     ): Cafe? {
         return cafeDao.getSelectedCafeByUserAndCityUuid(userUuid, cityUuid)?.toCafe()
     }

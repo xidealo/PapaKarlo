@@ -8,7 +8,7 @@ import com.bunbeauty.shared.domain.repo.UserRepo
 class UserInteractor(
     private val userRepo: UserRepo,
     private val orderRepo: OrderRepo,
-    private val cafeRepo: CafeRepo,
+    private val cafeRepo: CafeRepo
 ) : IUserInteractor {
 
     override suspend fun clearUserCache() {

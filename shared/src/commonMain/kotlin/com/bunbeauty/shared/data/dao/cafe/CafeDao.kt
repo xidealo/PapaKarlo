@@ -44,7 +44,7 @@ class CafeDao(foodDeliveryDatabase: FoodDeliveryDatabase) : ICafeDao {
 
     override suspend fun getSelectedCafeByUserAndCityUuid(
         userUuid: String,
-        cityUuid: String,
+        cityUuid: String
     ): CafeEntity? {
         return cityEntityQueries.getSelectedCafeByUserAndCityUuid(userUuid, cityUuid)
             .executeAsOneOrNull()
@@ -64,7 +64,7 @@ class CafeDao(foodDeliveryDatabase: FoodDeliveryDatabase) : ICafeDao {
 
     override fun observeSelectedCafeByUserAndCityUuid(
         userUuid: String,
-        cityUuid: String,
+        cityUuid: String
     ): Flow<CafeEntity?> {
         return cityEntityQueries.getSelectedCafeByUserAndCityUuid(userUuid, cityUuid).asFlow()
             .mapToOneOrNull()

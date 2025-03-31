@@ -101,7 +101,8 @@ class CreateAddressUseCaseTest {
             normalDeliveryCost = 100,
             forLowDeliveryCost = null,
             lowDeliveryCost = null,
-            userUuid = "userUuid"
+            userUuid = "userUuid",
+            cafeUuid = "cafeUuid"
         )
 
         everySuspend {
