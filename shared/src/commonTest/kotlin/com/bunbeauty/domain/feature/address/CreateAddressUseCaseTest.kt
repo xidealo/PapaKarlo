@@ -125,6 +125,12 @@ class CreateAddressUseCaseTest {
             )
         }.returns(userAddress)
 
+        everySuspend {
+            dataStoreRepo.saveUserCafeUuid(
+                userCafeUuid = "cafeUuid"
+            )
+        }.returns(Unit)
+
         val createdUserAddress = createAddressUseCase(
             street = Suggestion(
                 fiasId = "fiasId",

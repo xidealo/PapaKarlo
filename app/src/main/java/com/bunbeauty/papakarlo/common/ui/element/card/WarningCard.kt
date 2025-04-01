@@ -13,6 +13,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.R
+import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCardDefaults.infoCardShape
 import com.bunbeauty.papakarlo.common.ui.icon24
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 
@@ -22,15 +23,19 @@ fun WarningCard(
     @DrawableRes icon: Int,
     iconDescription: String,
     modifier: Modifier = Modifier,
-    cardColors: CardColors = FoodDeliveryCardDefaults.warningCardStatusColors
+    cardColors: CardColors = FoodDeliveryCardDefaults.warningCardStatusColors,
 ) {
     FoodDeliveryCard(
         modifier = modifier,
         colors = cardColors,
+        shape = infoCardShape,
         clickable = false
     ) {
         Row(
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier.padding(
+                vertical = 12.dp,
+                horizontal = 16.dp
+            ),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(

@@ -49,6 +49,9 @@ object FoodDeliveryCardDefaults {
     val cardShape: RoundedCornerShape
         @Composable get() = RoundedCornerShape(8.dp)
 
+    val infoCardShape: RoundedCornerShape
+        @Composable get() = RoundedCornerShape(16.dp)
+
     val smallCardShape: RoundedCornerShape
         @Composable get() = RoundedCornerShape(4.dp)
 
