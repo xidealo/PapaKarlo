@@ -26,7 +26,7 @@ fun BannerCard(
     @DrawableRes icon: Int,
     iconDescription: String,
     modifier: Modifier = Modifier,
-    cardColors: CardColors = FoodDeliveryCardDefaults.positiveCardStatusColors,
+    cardColors: CardColors = FoodDeliveryCardDefaults.positiveCardStatusColors
 ) {
     FoodDeliveryCard(
         modifier = modifier,

@@ -23,7 +23,7 @@ fun WarningCard(
     @DrawableRes icon: Int,
     iconDescription: String,
     modifier: Modifier = Modifier,
-    cardColors: CardColors = FoodDeliveryCardDefaults.warningCardStatusColors,
+    cardColors: CardColors = FoodDeliveryCardDefaults.warningCardStatusColors
 ) {
     FoodDeliveryCard(
         modifier = modifier,
