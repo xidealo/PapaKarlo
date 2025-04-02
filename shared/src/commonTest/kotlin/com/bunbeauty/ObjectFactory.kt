@@ -109,7 +109,11 @@ fun getCity(
 )
 
 
-fun getCafe(uuid: String, workType: Cafe.WorkType = Cafe.WorkType.DELIVERY_AND_PICKUP) = Cafe(
+fun getCafe(
+    uuid: String,
+    workType: Cafe.WorkType = Cafe.WorkType.DELIVERY_AND_PICKUP,
+    workload: Cafe.Workload = Cafe.Workload.LOW,
+) = Cafe(
     uuid = uuid,
     fromTime = 0,
     toTime = 0,
@@ -120,5 +124,5 @@ fun getCafe(uuid: String, workType: Cafe.WorkType = Cafe.WorkType.DELIVERY_AND_P
     cityUuid = "cityUuid",
     isVisible = true,
     workType = workType,
-    workload = Cafe.Workload.LOW
+    workload = workload
 )

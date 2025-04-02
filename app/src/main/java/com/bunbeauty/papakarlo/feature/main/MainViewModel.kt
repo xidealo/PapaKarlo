@@ -8,7 +8,6 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.ui.element.bottombar.NavigationBarItem
 import com.bunbeauty.papakarlo.feature.main.network.INetworkUtil
 import com.bunbeauty.shared.domain.feature.orderavailable.IsOrderAvailableUseCase
-import com.bunbeauty.shared.domain.feature.orderavailable.SetClosedWorkInfoUseCase
 import com.bunbeauty.shared.extension.launchSafe
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -21,8 +20,7 @@ private const val MAIN_VIEW_MODEL_TAG = "MainViewModel"
 
 class MainViewModel(
     private val networkUtil: INetworkUtil,
-    private val isOrderAvailableUseCase: IsOrderAvailableUseCase,
-    private val setClosedWorkInfoUseCase: SetClosedWorkInfoUseCase
+    private val isOrderAvailableUseCase: IsOrderAvailableUseCase
 ) : ViewModel() {
 
     private val mutableMainState: MutableStateFlow<MainState> = MutableStateFlow(MainState())
@@ -111,16 +109,5 @@ class MainViewModel(
                 Logger.logE(MAIN_VIEW_MODEL_TAG, error.stackTraceToString())
             }
         )
-    }
-
-    fun setOrderNotAvailable() {
-        setClosedWorkInfoUseCase()
-        mutableMainState.update { state ->
-            state.copy(
-                statusBarMessage = MainState.StatusBarMessage(
-                    isVisible = true
-                )
-            )
-        }
     }
 }

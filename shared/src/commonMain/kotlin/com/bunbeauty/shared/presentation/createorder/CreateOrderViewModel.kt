@@ -470,7 +470,6 @@ class CreateOrderViewModel(
         val userAddress = getCurrentUserAddressUseCase()
         val userAddressList = getSelectableUserAddressList()
 
-        // TODO (add not init value when address empty)
         setState {
             copy(
                 userAddressList = userAddressList,
@@ -597,6 +596,11 @@ class CreateOrderViewModel(
             onError = { throwable ->
                 when (throwable) {
                     is OrderNotAvailableException -> {
+                        setState {
+                            copy(
+                                deliveryState = CreateOrder.DataState.DeliveryState.NOT_ENABLED
+                            )
+                        }
                         addEvent {
                             CreateOrder.Event.OrderNotAvailableErrorEvent
                         }
