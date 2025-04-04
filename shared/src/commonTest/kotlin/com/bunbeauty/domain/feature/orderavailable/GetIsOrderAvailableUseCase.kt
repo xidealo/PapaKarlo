@@ -1,61 +1,50 @@
 package com.bunbeauty.domain.feature.orderavailable
 
 import com.bunbeauty.shared.domain.feature.orderavailable.IsOrderAvailableUseCase
-import com.bunbeauty.shared.domain.model.order.WorkInfo
-import com.bunbeauty.shared.domain.repo.WorkInfoRepo
+import com.bunbeauty.shared.domain.model.company.Company
+import com.bunbeauty.shared.domain.repo.CompanyRepo
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.mock
 import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
-import kotlin.test.assertFalse
-import kotlin.test.assertTrue
+import kotlin.test.assertEquals
 
 class GetIsOrderAvailableUseCaseTest {
 
-    private val workInfoRepository: WorkInfoRepo = mock()
+    private val companyRepo: CompanyRepo = mock()
 
     private var isOrderAvailableUseCase: IsOrderAvailableUseCase = IsOrderAvailableUseCase(
-        workInfoRepository = workInfoRepository
+        companyRepo = companyRepo
     )
 
     @Test
-    fun `invoke returns true when order is available`() = runTest {
-        // Given
-        val orderAvailable = workInfoMock.copy(workInfoType = WorkInfo.WorkInfoType.DELIVERY)
-        everySuspend { workInfoRepository.getWorkInfo() } returns orderAvailable
+    fun `invoke should return true when orders are available`() = runTest {
+        // Arrange
+        val company = Company(isOrderAvailable = true)
+        everySuspend { companyRepo.getCompany() } returns company
 
-        // When
-        val result = isOrderAvailableUseCase.invoke()
+        // Act
+        val result = isOrderAvailableUseCase()
 
-        // Then
-        assertTrue(result)
+        // Assert
+        assertEquals(true, result)
     }
 
     @Test
-    fun `invoke returns false when order is not available`() = runTest {
-        // Given
-        val orderAvailable = workInfoMock.copy(workInfoType = WorkInfo.WorkInfoType.CLOSED)
-        everySuspend { workInfoRepository.getWorkInfo() } returns orderAvailable
+    fun `invoke should return false when orders are not available`() = runTest {
+        // Arrange
+        val company = Company(isOrderAvailable = false)
+        everySuspend { companyRepo.getCompany() } returns company.copy(
+            isOrderAvailable = false
+        )
 
-        // When
-        val result = isOrderAvailableUseCase.invoke()
+        // Act
+        val result = isOrderAvailableUseCase()
 
-        // Then
-        assertFalse(result)
+        // Assert
+        assertEquals(false, result)
     }
 
-    @Test
-    fun `invoke returns default true when order is null`() = runTest {
-        // Given
-        everySuspend { workInfoRepository.getWorkInfo() } returns null
-
-        // When
-        val result = isOrderAvailableUseCase.invoke()
-
-        // Then
-        assertTrue(result)
-    }
-
-    val workInfoMock = WorkInfo(workInfoType = WorkInfo.WorkInfoType.DELIVERY_AND_PICKUP)
+    val companyMock = Company(isOrderAvailable = true)
 }

@@ -6,11 +6,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.SheetState
@@ -26,10 +24,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.core.view.ViewCompat
@@ -55,16 +55,19 @@ fun FoodDeliveryModalBottomSheet(
     containerColor: Color = FoodDeliveryTheme.colors.mainColors.surface,
     contentColor: Color = contentColorFor(containerColor),
     dragHandle: @Composable (() -> Unit)? = { FoodDeliveryBottomSheetDefaults.DragHandle() },
-    windowInsets: WindowInsets = BottomSheetDefaults.windowInsets,
     content: @Composable ColumnScope.() -> Unit
 ) {
+    val context = LocalContext.current
+
     var isVisible by remember {
         mutableStateOf(false)
     }
+
     val sheetState = remember {
         SheetState(
             skipPartiallyExpanded = true,
-            initialValue = SheetValue.Hidden
+            initialValue = SheetValue.Hidden,
+            density = Density(context = context)
         )
     }
 
@@ -85,7 +88,6 @@ fun FoodDeliveryModalBottomSheet(
             containerColor = containerColor,
             contentColor = contentColor,
             dragHandle = dragHandle,
-            windowInsets = windowInsets,
             modifier = modifier
         ) {
             Column(

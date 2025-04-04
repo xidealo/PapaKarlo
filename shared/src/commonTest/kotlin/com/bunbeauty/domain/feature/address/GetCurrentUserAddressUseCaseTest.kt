@@ -27,7 +27,8 @@ class GetCurrentUserAddressUseCaseTest {
         normalDeliveryCost = 2028,
         forLowDeliveryCost = null,
         lowDeliveryCost = null,
-        userUuid = "his"
+        userUuid = "his",
+        cafeUuid = "cafeUuid"
     )
 
     private val dataStoreRepo: DataStoreRepo = mock {

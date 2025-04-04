@@ -1,7 +1,6 @@
 package com.bunbeauty.papakarlo.feature.update
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.compose.foundation.background
@@ -24,6 +23,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseComposeFragment
 import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
@@ -75,7 +75,7 @@ class UpdateFragment :
     override fun handleEvent(event: UpdateState.Event) {
         when (event) {
             is UpdateState.Event.NavigateToUpdateEvent -> {
-                val uri = Uri.parse(event.linkValue)
+                val uri = event.linkValue.toUri()
                 val intent = Intent(Intent.ACTION_VIEW, uri)
                 startActivity(intent)
             }

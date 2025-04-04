@@ -31,5 +31,11 @@ data class CafeServer(
     val cityUuid: String,
 
     @SerialName("isVisible")
-    val isVisible: Boolean
+    val isVisible: Boolean,
+
+    @SerialName("workType")
+    val workType: String,
+
+    @SerialName("workload")
+    val workload: String
 )

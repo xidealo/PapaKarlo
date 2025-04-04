@@ -32,9 +32,13 @@ class CreateAddressUseCase(
             isVisible = true,
             cityUuid = cityUuid
         )
-        return userAddressRepo.saveUserAddress(
+        val savedAddress = userAddressRepo.saveUserAddress(
             token = token,
             createdUserAddress = createdUserAddress
         )
+
+        dataStoreRepo.saveUserCafeUuid(userCafeUuid = savedAddress?.cafeUuid.orEmpty())
+
+        return savedAddress
     }
 }

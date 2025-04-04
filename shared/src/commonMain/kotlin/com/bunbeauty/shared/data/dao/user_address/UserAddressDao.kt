@@ -35,7 +35,8 @@ class UserAddressDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IUserAddressD
                         normalDeliveryCost = normalDeliveryCost,
                         forLowDeliveryCost = forLowDeliveryCost,
                         lowDeliveryCost = lowDeliveryCost,
-                        userUuid = userUuid
+                        userUuid = userUuid,
+                        cafeUuid = cafeUuid
                     )
                 }
             }

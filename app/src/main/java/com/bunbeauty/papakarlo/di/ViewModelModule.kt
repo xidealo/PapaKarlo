@@ -34,8 +34,7 @@ fun viewModelModule() = module {
     viewModel {
         MainViewModel(
             networkUtil = get(),
-            getWorkInfoUseCase = get(),
-            setClosedWorkInfoUseCase = get()
+            isOrderAvailableUseCase = get()
         )
     }
     viewModel {
@@ -66,7 +65,11 @@ fun viewModelModule() = module {
             saveSelectedUserAddress = get(),
             getSelectablePaymentMethodListUseCase = get(),
             savePaymentMethodUseCase = get(),
-            getWorkInfoUseCase = get()
+            getCurrentUserAddressUseCase = get(),
+            isDeliveryEnabledFromCafeUseCase = get(),
+            isPickupEnabledFromCafeUseCase = get(),
+            hasOpenedCafeUseCase = get(),
+            getWorkloadCafeUseCase = get()
         )
     }
     viewModel {

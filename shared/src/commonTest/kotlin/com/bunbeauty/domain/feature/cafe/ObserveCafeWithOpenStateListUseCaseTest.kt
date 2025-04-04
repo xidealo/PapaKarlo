@@ -150,7 +150,9 @@ class ObserveCafeWithOpenStateListUseCaseTest {
             latitude = 0.0,
             longitude = 0.0,
             cityUuid = "cityUuid",
-            isVisible = true
+            isVisible = true,
+            workload = Cafe.Workload.LOW,
+            workType = Cafe.WorkType.DELIVERY_AND_PICKUP
         )
     }
 }

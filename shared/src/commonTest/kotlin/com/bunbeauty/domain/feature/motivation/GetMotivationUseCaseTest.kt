@@ -132,6 +132,7 @@ class GetMotivationUseCaseTest {
         normalDeliveryCost = 0,
         forLowDeliveryCost = null,
         lowDeliveryCost = null,
-        userUuid = ""
+        userUuid = "",
+        cafeUuid = "cafeUuid"
     )
 }

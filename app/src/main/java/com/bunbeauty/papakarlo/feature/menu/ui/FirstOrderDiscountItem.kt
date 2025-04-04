@@ -26,7 +26,7 @@ fun FirstOrderDiscountItem(
 ) {
     FoodDeliveryCard(
         modifier = modifier,
-        colors = FoodDeliveryCardDefaults.cardStatusColors,
+        colors = FoodDeliveryCardDefaults.positiveCardStatusColors,
         clickable = false
     ) {
         Column(modifier = Modifier.padding(16.dp)) {

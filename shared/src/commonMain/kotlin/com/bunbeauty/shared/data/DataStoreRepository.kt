@@ -47,4 +47,8 @@ expect class DataStoreRepository : DataStoreRepo, KoinComponent {
     override val recommendationMaxVisible: Flow<Int?>
     override suspend fun getRecommendationMaxVisible(): Int?
     override suspend fun saveRecommendationMaxVisible(recommendationMaxVisible: Int)
+
+    override val userCafeUuid: Flow<String?>
+    override suspend fun getUserCafeUuid(): String?
+    override suspend fun saveUserCafeUuid(userCafeUuid: String)
 }

@@ -11,6 +11,7 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
 import androidx.core.os.bundleOf
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -70,7 +71,7 @@ class CafeOptionsBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_compose) {
             label = cafeOptions.callToCafe,
             elevated = false
         ) {
-            val uri = Uri.parse(PHONE_LINK + cafeOptions.phone)
+            val uri = (PHONE_LINK + cafeOptions.phone).toUri()
             goByUri(uri, Intent.ACTION_DIAL)
         }
         NavigationIconCard(
@@ -81,7 +82,7 @@ class CafeOptionsBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_compose) {
             elevated = false
         ) {
             val uri =
-                Uri.parse(MAPS_LINK + cafeOptions.latitude + COORDINATES_DIVIDER + cafeOptions.longitude)
+                (MAPS_LINK + cafeOptions.latitude + COORDINATES_DIVIDER + cafeOptions.longitude).toUri()
             goByUri(uri, Intent.ACTION_VIEW)
         }
     }

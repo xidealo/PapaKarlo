@@ -23,7 +23,8 @@ class UserAddressMapper {
                 normalDeliveryCost = normalDeliveryCost,
                 forLowDeliveryCost = forLowDeliveryCost,
                 lowDeliveryCost = lowDeliveryCost,
-                userUuid = userUuid
+                userUuid = userUuid,
+                cafeUuid = cafeUuid
             )
         }
     }
@@ -42,7 +43,8 @@ class UserAddressMapper {
                 normalDeliveryCost = normalDeliveryCost,
                 forLowDeliveryCost = forLowDeliveryCost,
                 lowDeliveryCost = lowDeliveryCost,
-                userUuid = userUuid
+                userUuid = userUuid,
+                cafeUuid = cafeUuid
             )
         }
     }
@@ -62,7 +64,8 @@ class UserAddressMapper {
                 normalDeliveryCost = normalDeliveryCost,
                 forLowDeliveryCost = forLowDeliveryCost,
                 lowDeliveryCost = lowDeliveryCost,
-                userUuid = userUuid
+                userUuid = userUuid,
+                cafeUuid = cafeUuid
             )
         }
     }
