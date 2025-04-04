@@ -2,7 +2,6 @@ package com.bunbeauty.shared.data.mapper.cafe
 
 import com.bunbeauty.shared.data.network.model.CafeServer
 import com.bunbeauty.shared.db.CafeEntity
-import com.bunbeauty.shared.domain.model.address.CafeAddress
 import com.bunbeauty.shared.domain.model.cafe.Cafe
 
 fun CafeServer.toCafeEntity(): CafeEntity {
@@ -16,7 +15,9 @@ fun CafeServer.toCafeEntity(): CafeEntity {
         longitude = longitude,
         address = address,
         cityUuid = cityUuid,
-        isVisible = isVisible
+        isVisible = isVisible,
+        workType = workType,
+        workload = workload
     )
 }
 
@@ -30,7 +31,9 @@ fun CafeEntity.toCafe(): Cafe {
         longitude = longitude,
         address = address,
         cityUuid = cityUuid,
-        isVisible = isVisible
+        isVisible = isVisible,
+        workType = Cafe.WorkType.valueOf(workType),
+        workload = Cafe.Workload.valueOf(workload)
     )
 }
 
@@ -44,13 +47,8 @@ fun CafeServer.toCafe(): Cafe {
         longitude = longitude,
         address = address,
         cityUuid = cityUuid,
-        isVisible = isVisible
-    )
-}
-
-fun CafeEntity.toCafeAddress(): CafeAddress {
-    return CafeAddress(
-        address = address,
-        cafeUuid = uuid
+        isVisible = isVisible,
+        workType = Cafe.WorkType.valueOf(workType),
+        workload = Cafe.Workload.valueOf(workload)
     )
 }

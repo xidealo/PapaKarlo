@@ -8,13 +8,11 @@ interface UserRepo {
 
     fun observeUserByUuid(userUuid: String): Flow<User?>
 
-    suspend fun getProfileByUserUuidAndCityUuid(
-        userUuid: String,
-        cityUuid: String,
-        token: String
-    ): Profile.Authorized?
+    suspend fun getProfile(): Profile.Authorized?
 
     suspend fun clearUserCache()
+
+    suspend fun getToken(): String?
 
     suspend fun disableUser(token: String)
 }

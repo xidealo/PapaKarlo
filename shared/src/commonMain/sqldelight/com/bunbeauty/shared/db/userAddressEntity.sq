@@ -11,13 +11,14 @@ CREATE TABLE userAddressEntity (
     minOrderCost INTEGER AS Int,
     normalDeliveryCost INTEGER AS Int NOT NULL,
     forLowDeliveryCost INTEGER AS Int,
-    lowDeliveryCost INTEGER AS Int
+    lowDeliveryCost INTEGER AS Int,
+    cafeUuid TEXT NOT NULL
 );
 
 insertUserAddress:
 INSERT OR REPLACE
 INTO userAddressEntity
-VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
 
 getUserAddressListByUserUuidAndCityUuid:
 SELECT *

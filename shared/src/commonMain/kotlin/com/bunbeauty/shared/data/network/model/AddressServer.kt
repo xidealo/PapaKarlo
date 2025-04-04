@@ -43,5 +43,8 @@ data class AddressServer(
     val userUuid: String,
 
     @SerialName("cityUuid")
-    val cityUuid: String
+    val cityUuid: String,
+
+    @SerialName("cafeUuid")
+    val cafeUuid: String
 )

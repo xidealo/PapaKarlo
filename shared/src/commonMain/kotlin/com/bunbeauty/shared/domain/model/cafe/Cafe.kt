@@ -9,5 +9,20 @@ data class Cafe(
     val latitude: Double,
     val longitude: Double,
     val cityUuid: String,
-    val isVisible: Boolean
-)
+    val isVisible: Boolean,
+    val workType: WorkType,
+    val workload: Workload
+) {
+    enum class WorkType {
+        DELIVERY,
+        PICKUP,
+        DELIVERY_AND_PICKUP,
+        CLOSED
+    }
+
+    enum class Workload {
+        LOW,
+        AVERAGE,
+        HIGH
+    }
+}

@@ -1,5 +1,6 @@
 package com.bunbeauty.shared.data.repository
 
+import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.data.dao.user_address.IUserAddressDao
 import com.bunbeauty.shared.data.mapper.user_address.UserAddressMapper
 import com.bunbeauty.shared.data.network.api.NetworkConnector
@@ -15,7 +16,8 @@ import kotlinx.coroutines.flow.Flow
 open class UserAddressRepository(
     private val networkConnector: NetworkConnector,
     private val userAddressDao: IUserAddressDao,
-    private val userAddressMapper: UserAddressMapper
+    private val userAddressMapper: UserAddressMapper,
+    private val dataStoreRepo: DataStoreRepo
 ) : BaseRepository(), UserAddressRepo {
 
     override val tag: String = "USER_ADDRESS_TAG"
@@ -53,6 +55,7 @@ open class UserAddressRepository(
             cityUuid = cityUuid,
             userAddressUuid = addressUuid
         )
+
         userAddressDao.insertSelectedUserAddressUuid(selectedUserAddressUuid)
     }
 

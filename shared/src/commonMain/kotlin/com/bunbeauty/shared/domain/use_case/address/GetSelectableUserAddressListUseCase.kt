@@ -5,7 +5,6 @@ import com.bunbeauty.shared.domain.feature.address.GetCurrentUserAddressUseCase
 import com.bunbeauty.shared.domain.model.address.SelectableUserAddress
 import com.bunbeauty.shared.domain.repo.UserAddressRepo
 
-// TODO test
 class GetSelectableUserAddressListUseCase(
     private val dataStoreRepo: DataStoreRepo,
     private val userAddressRepo: UserAddressRepo,

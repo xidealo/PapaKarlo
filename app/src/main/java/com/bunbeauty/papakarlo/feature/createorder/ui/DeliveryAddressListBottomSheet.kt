@@ -55,7 +55,8 @@ private fun DeliveryAddressListBottomSheetContent(
                 isSelected = selectableAddress.isSelected,
                 onClick = {
                     onAction(CreateOrder.Action.ChangeDeliveryAddress(addressUuid = selectableAddress.uuid))
-                }
+                },
+                enabled = selectableAddress.isEnabled
             )
         }
         item(key = "AddAddress") {
@@ -77,12 +78,20 @@ private fun DeliveryAddressListBottomPreview() {
             SelectableAddressUI(
                 uuid = "1",
                 address = "улица Чапаева, д. 22А",
-                isSelected = false
+                isSelected = false,
+                isEnabled = true
             ),
             SelectableAddressUI(
                 uuid = "2",
                 address = "улица Чапаева, д. 22А кв. 55, 1 подъезд, 1 этаж",
-                isSelected = true
+                isSelected = true,
+                isEnabled = true
+            ),
+            SelectableAddressUI(
+                uuid = "3",
+                address = "улица Чапаева, д. 22А кв. 55, 1 подъезд, 2 этаж",
+                isSelected = true,
+                isEnabled = false
             )
         ),
         onAction = {}

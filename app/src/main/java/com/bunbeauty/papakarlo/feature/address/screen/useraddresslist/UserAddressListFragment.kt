@@ -133,7 +133,8 @@ class UserAddressListFragment : BaseFragmentWithSharedViewModel(R.layout.layout_
                         title = userAddressItem.address,
                         clickable = false,
                         elevated = true,
-                        onClick = {}
+                        onClick = {},
+                        enabled = true
                     )
                 }
             }

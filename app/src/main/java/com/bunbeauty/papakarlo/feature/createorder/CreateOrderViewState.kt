@@ -9,12 +9,11 @@ import kotlinx.collections.immutable.ImmutableList
 
 @Immutable
 data class CreateOrderViewState(
-    val workType: WorkType,
-    val deliveryAddress: String?,
-    val pickupAddress: String?,
+    val createOrderType: CreateOrderType,
     val isAddressErrorShown: Boolean,
     val deferredTime: String,
-    @StringRes val deferredTimeStringId: Int,
+    @StringRes
+    val deferredTimeStringId: Int,
     val selectedPaymentMethod: PaymentMethodUI?,
     val isPaymentMethodErrorShown: Boolean,
     val showChange: Boolean,
@@ -24,36 +23,48 @@ data class CreateOrderViewState(
     val change: String,
     val isChangeErrorShown: Boolean,
     val comment: String,
-    val cartTotal: CartTotalUI,
-    val isLoading: Boolean,
 
-    val deliveryAddressList: DeliveryAddressListUI,
-    val pickupAddressList: PickupAddressListUI,
+    val cartTotal: CartTotalUI,
+    val isLoadingCreateOrder: Boolean,
     val isDeferredTimeShown: Boolean,
     val timePicker: TimePickerUI,
     val paymentMethodList: PaymentMethodListUI,
     val isOrderCreationEnabled: Boolean,
-    val switcherOptionList: ImmutableList<String>,
     val isLoadingSwitcher: Boolean
 ) : BaseViewState {
 
-    val isFieldsEnabled: Boolean = !isLoading
-    val switcherPosition = when (workType) {
-        WorkType.Delivery -> 0
-        is WorkType.DeliveryAndPickup -> if (workType.isDelivery) 0 else 1
-        WorkType.Pickup -> 0
-    }
+    val isFieldsEnabled: Boolean = !isLoadingCreateOrder
+    val switcherPosition = if (createOrderType is CreateOrderType.Delivery) 0 else 1
 
     @Immutable
-    sealed interface WorkType {
+    sealed interface CreateOrderType {
         @Immutable
-        data object Pickup : WorkType
+        data class Pickup(
+            val pickupAddress: String?,
+            val pickupAddressList: PickupAddressListUI,
+            val hasOpenedCafe: Boolean,
+            val isEnabled: Boolean
+        ) : CreateOrderType
 
         @Immutable
-        data object Delivery : WorkType
+        data class Delivery(
+            val deliveryAddress: String?,
+            val deliveryAddressList: DeliveryAddressListUI,
+            val state: State,
+            val workload: Workload
+        ) : CreateOrderType {
+            enum class Workload {
+                LOW,
+                AVERAGE,
+                HIGH
+            }
 
-        @Immutable
-        data class DeliveryAndPickup(val isDelivery: Boolean) : WorkType
+            enum class State {
+                NOT_ENABLED,
+                ENABLED,
+                NEED_ADDRESS
+            }
+        }
     }
 }
 
@@ -107,7 +118,8 @@ data class TimeUI(
 data class SelectableAddressUI(
     val uuid: String,
     val address: String,
-    val isSelected: Boolean
+    val isSelected: Boolean,
+    val isEnabled: Boolean
 )
 
 @Immutable
