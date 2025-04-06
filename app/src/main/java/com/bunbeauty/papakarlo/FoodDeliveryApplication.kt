@@ -6,8 +6,6 @@ import android.app.NotificationManager
 import android.media.AudioAttributes
 import android.media.RingtoneManager
 import android.os.Build
-import coil.Coil
-import coil.ImageLoader
 import com.bunbeauty.papakarlo.di.appModule
 import com.bunbeauty.papakarlo.di.appUtilModule
 import com.bunbeauty.papakarlo.di.uiMapperModule
@@ -48,12 +46,6 @@ class FoodDeliveryApplication : Application(), KoinComponent {
                 viewModelModule()
             )
         }
-
-        Coil.setImageLoader(
-            ImageLoader.Builder(applicationContext)
-                .respectCacheHeaders(false)
-                .build()
-        )
 
         subscribeToNotification(companyUuid = companyUuidProvider.companyUuid)
         createNotificationChannel()

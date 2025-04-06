@@ -22,7 +22,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
@@ -30,11 +29,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseComposeFragment
 import com.bunbeauty.papakarlo.common.extension.navigateSafe
+import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryAsyncImage
 import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
@@ -302,15 +300,11 @@ class ProductDetailsFragment :
                     .padding(vertical = 8.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                AsyncImage(
+                FoodDeliveryAsyncImage(
                     modifier = Modifier
                         .size(40.dp)
                         .clip(FoodDeliveryCardDefaults.cardShape),
-                    model = ImageRequest.Builder(LocalContext.current)
-                        .data(menuProductAdditionItem.photoLink)
-                        .crossfade(true)
-                        .build(),
-                    placeholder = painterResource(R.drawable.placeholder_small),
+                    photoLink = menuProductAdditionItem.photoLink,
                     contentDescription = stringResource(R.string.description_product_addition),
                     contentScale = ContentScale.FillWidth
                 )
@@ -371,14 +365,11 @@ class ProductDetailsFragment :
         Column(
             modifier = modifier
         ) {
-            AsyncImage(
+            FoodDeliveryAsyncImage(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(FoodDeliveryCardDefaults.cardShape),
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(menuProductUi.photoLink)
-                    .crossfade(true)
-                    .build(),
+                photoLink = menuProductUi.photoLink,
                 placeholder = painterResource(R.drawable.placeholder_large),
                 contentDescription = stringResource(R.string.description_product),
                 contentScale = ContentScale.FillWidth
