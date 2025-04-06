@@ -22,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
@@ -369,6 +370,7 @@ class ProductDetailsFragment :
                     .fillMaxWidth()
                     .clip(FoodDeliveryCardDefaults.cardShape),
                 photoLink = menuProductUi.photoLink,
+                placeholder = painterResource(R.drawable.placeholder_large),
                 contentDescription = stringResource(R.string.description_product),
                 contentScale = ContentScale.FillWidth
             )
