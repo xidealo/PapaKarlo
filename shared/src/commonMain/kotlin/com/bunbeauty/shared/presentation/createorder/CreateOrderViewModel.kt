@@ -362,11 +362,11 @@ class CreateOrderViewModel(
         val state = mutableDataState.value
 
         val isDeliveryAddressNotSelected = state.isDelivery && (state.selectedUserAddress == null)
-        setState {
-            copy(isAddressErrorShown = CreateOrder.DataState.AddressErrorState.ERROR)
-        }
 
         if (isDeliveryAddressNotSelected) {
+            setState {
+                copy(isAddressErrorShown = CreateOrder.DataState.AddressErrorState.ERROR)
+            }
             addEvent {
                 CreateOrder.Event.ShowUserAddressError
             }
