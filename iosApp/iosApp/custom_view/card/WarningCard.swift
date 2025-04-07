@@ -18,20 +18,20 @@ struct WarningCard: View {
     var body: some View {
         ZStack{
             HStack(spacing:0){
-                Image(
-                    systemName: icon
-                )
-                .resizable()
-                .renderingMode(.template)
-                .frame(width: 24, height: 24)
+                IconImage(imageName: icon)
                 .foregroundColor(AppColor.onStatus)
                 
                 Text(title)
-                    .titleMedium(weight: .bold)
+                    .bodyLarge()
                     .padding(.leading, 8)
                     .foregroundColor(AppColor.onStatus)
-            }
-        }.background(cardColor)
-            .cornerRadius(16)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+
+            }.padding(.horizontal, 16)
+                .padding(.vertical, 12)
+        }
+        .frame(maxWidth: .infinity)
+        .background(cardColor)
+        .cornerRadius(16)
     }
 }

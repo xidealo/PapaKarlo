@@ -20,26 +20,27 @@ struct BannerCard: View {
         ZStack{
             VStack(spacing:0){
                 HStack(spacing:0){
-                    Image(
-                        systemName: icon
-                    )
-                    .resizable()
-                    .renderingMode(.template)
-                    .frame(width: 24, height: 24)
+                    IconImage(imageName: icon)
                     .foregroundColor(AppColor.onStatus)
                     
                     Text(title)
-                        .titleMedium(weight: .bold)
+                        .titleMedium(weight: .medium)
                         .padding(.leading, 8)
                         .foregroundColor(AppColor.onStatus)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                 }
                 
                 Text(text)
                     .bodyLarge()
                     .padding(.top, 8)
                     .foregroundColor(AppColor.onStatus)
-            }
-        }.background(cardColor)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+
+            }.padding(.horizontal, 16)
+                .padding(.vertical, 16)
+        }
+        .frame(maxWidth: .infinity)
+        .background(cardColor)
             .cornerRadius(16)
     }
 }

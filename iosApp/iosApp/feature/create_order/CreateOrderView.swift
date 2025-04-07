@@ -85,23 +85,6 @@ struct CreateOrderView: View {
                 EmptyView()
             }
             
-            //
-            //            NavigationLink(
-            //                destination: CafeAddressListView(
-            //                    isClickable: true,
-            //                    _title: "title_pickup_addresses",
-            //                    addressList: createOrderViewState?.pickupAddressList.addressList ?? [],
-            //                    _closedCallback: {
-            //                        viewModel.onAction(
-            //                            action: CreateOrderActionHidePickupAddressList()
-            //                        )
-            //                    }
-            //                ),
-            //                isActive: $goToCafeAddress
-            //            ){
-            //                EmptyView()
-            //            }
-            
             NavigationLink(
                 destination: SelectablePaymentListView(
                     paymentList: createOrderViewState?.paymentMethodList.paymentMethodList ?? [],
@@ -502,7 +485,8 @@ struct CreateOrderSuccessView: View {
                             pickup: pickup,
                             state: createOrderViewState,
                             action: action,
-                            changeError: $changeError
+                            changeError: $changeError, 
+                            goToCafeAddress: $goToCafeAddress
                         )
                     case .delivery(let delivery):
                         DeliveryContentView(
@@ -603,11 +587,11 @@ struct CreateOrderSuccessView: View {
                 switch(delivery.state){
                 case .notEnabled:
                     WarningCard(
-                        title: LocalizedStringKey("title_pickup_address").stringValue(),
+                        title: LocalizedStringKey("warning_no_order_available").stringValue(),
                         icon: "ic_warning",
                         cardColor: AppColor.negative
-                    )
-                    
+                    ).padding(.top, 16)
+                        .padding(.horizontal, 16)
                 case .enabled:
                     CommonContentView(
                         state: state,
@@ -615,12 +599,35 @@ struct CreateOrderSuccessView: View {
                         isDelivery: true,
                         changeError: $changeError
                     )
+                    
+                    switch (delivery.workload){
+                    case .low:
+                        EmptyView()
+                    case .average:
+                        WarningCard(
+                            title: LocalizedStringKey("msg_create_order_average_traffic").stringValue(),
+                            icon: "ic_warning",
+                            cardColor: AppColor.warning
+                        ).padding(.top, 16)
+                        .padding(.horizontal, 16)
+                    case .high:
+                        WarningCard(
+                            title: LocalizedStringKey("msg_create_order_high_traffic").stringValue(),
+                            icon: "ic_warning",
+                            cardColor: AppColor.negative
+                        )
+                        .padding(.top, 16)
+                        .padding(.horizontal, 16)
+                    }
+                    
                 case .needAddress:
                     WarningCard(
-                        title: LocalizedStringKey("title_pickup_address").stringValue(),
+                        title: LocalizedStringKey("error_user_address").stringValue(),
                         icon: "ic_warning",
                         cardColor: AppColor.warning
                     )
+                    .padding(.top, 16)
+                    .padding(.horizontal, 16)
                 }
             }
         }
@@ -631,9 +638,26 @@ struct CreateOrderSuccessView: View {
         let state: CreateOrderViewState
         let action: (CreateOrderAction) -> Void
         @Binding var changeError : LocalizedStringKey?
-        
+        @Binding var goToCafeAddress: Bool
+
         var body: some View {
             VStack(spacing:0){
+                NavigationLink(
+                    destination: CafeAddressListView(
+                        isClickable: true,
+                        _title: "title_pickup_addresses",
+                        addressList: pickup.pickupAddressList.addressList,
+                        _closedCallback: {
+                            action(
+                                CreateOrderActionHidePickupAddressList()
+                            )
+                        }
+                    ),
+                    isActive: $goToCafeAddress
+                ){
+                    EmptyView()
+                }
+                
                 NavigationCardWithDivider(
                     icon: nil,
                     label: LocalizedStringKey("title_pickup_address").stringValue(),
@@ -659,12 +683,16 @@ struct CreateOrderSuccessView: View {
                             icon: "ic_warning",
                             cardColor: AppColor.warning
                         )
+                        .padding(.top, 16)
+                        .padding(.horizontal, 16)
                     } else {
                         WarningCard(
                             title: LocalizedStringKey("warning_no_order_available").stringValue(),
                             icon: "ic_warning",
                             cardColor: AppColor.negative
                         )
+                            .padding(.top, 16)
+                            .padding(.horizontal, 16)
                     }
                 }
             }.padding(.top, Diems.SMALL_PADDING)
