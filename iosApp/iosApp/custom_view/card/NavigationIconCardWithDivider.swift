@@ -27,7 +27,8 @@ struct NavigationIconCardWithDivider<Content: View>: View {
                     if let notNullIcon = icon {
                         if(isSystem){
                             Image(
-                                systemName: notNullIcon)
+                                systemName: notNullIcon
+                            )
                             .resizable()
                             .renderingMode(.template)
                             .frame(width: 24, height: 24)

@@ -89,24 +89,11 @@ struct SplashView: View, SharedLifecycle {
         }.onAppear(perform: {
             viewModel.onAction(action: SplashActionInit())
             eventsSubscribe()
-            iosComponent.provideGetWorkInfoUseCase().invoke { workInfo, err in
-                
-                let workInfoType = workInfo?.workInfoType ?? WorkInfo.WorkInfoType.deliveryAndPickup
-                
-                switch(workInfoType){
-                case WorkInfo.WorkInfoType.deliveryAndPickup:
-                    print("deliveryAndPickup")
+            iosComponent.provideIsOrderAvailableUseCase().invoke { isOrderAvailable, err in
+                if(isOrderAvailable == true){
                     topMessage = nil
-                case WorkInfo.WorkInfoType.delivery:
-                    topMessage = "warning_no_only_delivery"
-                case WorkInfo.WorkInfoType.pickup:
-                    topMessage = "warning_no_only_pickup"
-                case WorkInfo.WorkInfoType.closed:
+                }else{
                     topMessage = "warning_no_order_available"
-
-                default:
-                    print("workInfoType \(workInfoType)")
-                    topMessage = nil
                 }
             }
         })

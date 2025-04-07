@@ -58,21 +58,6 @@ struct Switcher: View {
 }
 
 
-struct OneVariantSwitcher: View {
-    let title:String
-
-    var body: some View {
-        HStack(spacing : 0){
-            SelectedSwicher(title: title)
-        }
-        .padding(4)
-        .background(AppColor.stroke)
-        .cornerRadius(Diems.BUTTON_RADIUS)
-        .frame(maxWidth:.infinity)
-    }
-}
-
-
 struct SelectedSwicher: View {
     let title:String
 

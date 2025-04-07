@@ -112,6 +112,5 @@
 "title_pickup" = "Pickup";
 "title_delivery" = "Delivery";
 
+"msg_create_order_chose_cafe" = "Сhose another cafe"
 "warning_no_order_available" = "No order available";
-"warning_no_only_pickup" = "Only pickup";
-"warning_no_only_delivery" = "Only delivery";
