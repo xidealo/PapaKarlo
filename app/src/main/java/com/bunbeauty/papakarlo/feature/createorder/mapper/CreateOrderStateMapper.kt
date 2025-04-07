@@ -13,6 +13,7 @@ import com.bunbeauty.papakarlo.feature.createorder.SelectableAddressUI
 import com.bunbeauty.papakarlo.feature.createorder.TimePickerUI
 import com.bunbeauty.papakarlo.feature.deferredtime.toDeferredTimeString
 import com.bunbeauty.papakarlo.feature.deferredtime.toTimeUI
+import com.bunbeauty.papakarlo.feature.motivation.MotivationUi
 import com.bunbeauty.papakarlo.feature.motivation.toMotivationUi
 import com.bunbeauty.papakarlo.feature.paymentmethod.toPaymentMethodUI
 import com.bunbeauty.papakarlo.feature.paymentmethod.toSelectablePaymentMethodUI
@@ -23,6 +24,7 @@ import kotlinx.collections.immutable.toImmutableList
 
 @Composable
 fun CreateOrder.DataState.toViewState(): CreateOrderViewState {
+    val cartTotalUI = cartTotal.toCartTotalUI()
     return CreateOrderViewState(
         createOrderType = if (isDelivery) {
             getCreateOrderTypeDelivery()
@@ -45,7 +47,7 @@ fun CreateOrder.DataState.toViewState(): CreateOrderViewState {
         withoutChangeChecked = withoutChangeChecked,
         change = change?.toString().orEmpty(),
         isChangeErrorShown = isChangeErrorShown,
-        cartTotal = cartTotal.toCartTotalUI(),
+        cartTotal = cartTotalUI,
         isLoadingCreateOrder = isLoading,
         isDeferredTimeShown = isDeferredTimeShown,
         timePicker = TimePickerUI(
@@ -60,7 +62,8 @@ fun CreateOrder.DataState.toViewState(): CreateOrderViewState {
             }.toImmutableList()
         ),
         isOrderCreationEnabled = if (isDelivery) {
-            deliveryState == CreateOrder.DataState.DeliveryState.ENABLED
+            deliveryState == CreateOrder.DataState.DeliveryState.ENABLED &&
+                (cartTotalUI as? CartTotalUI.Success)?.motivation !is MotivationUi.MinOrderCost
         } else {
             isPickupEnabled
         },

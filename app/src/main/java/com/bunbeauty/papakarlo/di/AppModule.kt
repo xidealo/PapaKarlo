@@ -2,7 +2,7 @@ package com.bunbeauty.papakarlo.di
 
 import android.content.Context
 import android.net.ConnectivityManager
-import coil.imageLoader
+import coil3.imageLoader
 import com.bunbeauty.core.flavorQualifier
 import com.bunbeauty.core.isDebugQualifier
 import com.bunbeauty.papakarlo.BuildConfig
