@@ -108,7 +108,7 @@ private fun getAppColors(
             }
         }
 
-        FoodDeliveryCompany.ANTALYA_KABAB -> {
+        FoodDeliveryCompany.EST_POEST -> {
             if (isDarkTheme) {
                 AntalyaKebabDarkColors
             } else {

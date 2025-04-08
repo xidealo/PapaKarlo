@@ -30,8 +30,8 @@ enum class FoodDeliveryCompany(
         flavor = "vkuskavkaza",
         companyUuid = "90aa09b7-5407-435b-82eb-6d450660e405"
     ),
-    ANTALYA_KABAB(
-        flavor = "antalyakebab",
+    EST_POEST(
+        flavor = "estpoest",
         companyUuid = "a7a7dd46-bad2-4736-b923-86474f693664"
     ),
     LEGENDA(
