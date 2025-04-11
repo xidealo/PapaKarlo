@@ -9,30 +9,29 @@
 import Foundation
 import SwiftUI
 
-
 struct NavigationIconCardWithDivider<Content: View>: View {
-    
-    let icon : String?
-    
-    let label : String
-    let destination : Content
+    let icon: String?
+
+    let label: String
+    let destination: Content
     var isSystem = true
-    
+
     var body: some View {
         NavigationLink(
             destination: destination
-        ){
-            VStack(spacing:0){
-                HStack(spacing:0){
+        ) {
+            VStack(spacing: 0) {
+                HStack(spacing: 0) {
                     if let notNullIcon = icon {
-                        if(isSystem){
+                        if isSystem {
                             Image(
-                                systemName: notNullIcon)
+                                systemName: notNullIcon
+                            )
                             .resizable()
                             .renderingMode(.template)
                             .frame(width: 24, height: 24)
                             .foregroundColor(AppColor.onSurfaceVariant)
-                        }else{
+                        } else {
                             IconImage(
                                 width: 24,
                                 height: 24,
@@ -41,25 +40,25 @@ struct NavigationIconCardWithDivider<Content: View>: View {
                             .foregroundColor(AppColor.onSurfaceVariant)
                         }
                     }
-                    if(icon == nil){
+                    if icon == nil {
                         Text(label)
                             .bodyLarge()
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .foregroundColor(AppColor.onSurface)
-                    }else{
+                    } else {
                         Text(label)
                             .bodyLarge()
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .foregroundColor(AppColor.onSurface)
                             .padding(.leading, Diems.MEDIUM_PADDING)
                     }
-                    Image(systemName:"chevron.right")
+                    Image(systemName: "chevron.right")
                         .foregroundColor(AppColor.onSurfaceVariant)
-                    
-                }.frame(maxWidth:.infinity)
+
+                }.frame(maxWidth: .infinity)
                     .padding(16)
                     .background(AppColor.surface)
-                
+
                 FoodDeliveryDivider()
                     .padding(.horizontal, 16)
             }

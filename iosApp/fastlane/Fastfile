@@ -28,11 +28,13 @@ platform :ios do
      tandirhouse
      vkuskavkaza
      djan
+     emoji
+     usaba
   end  
 
   def build_and_upload(app_identifier, scheme)
-    increment_build_number(xcodeproj: "iosApp.xcodeproj")
-    build_app(workspace: "iosApp.xcworkspace", scheme: scheme)
+    # increment_build_number(xcodeproj: "iosApp.xcodeproj")
+    build_app(scheme: scheme)
     upload_to_testflight
   end
 

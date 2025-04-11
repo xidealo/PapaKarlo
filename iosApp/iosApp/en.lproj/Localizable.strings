@@ -111,7 +111,8 @@
 "error_enter_correct_amount" = "Enter correct amount";
 "title_pickup" = "Pickup";
 "title_delivery" = "Delivery";
-
+"error_user_address" = "Not selected user address";
+"msg_create_order_chose_cafe" = "Сhose another cafe";
 "warning_no_order_available" = "No order available";
-"warning_no_only_pickup" = "Only pickup";
-"warning_no_only_delivery" = "Only delivery";
+"msg_create_order_average_traffic" = "Waiting for order until 1.5 h.";
+"msg_create_order_high_traffic" = "Waiting for order until 2 h.";

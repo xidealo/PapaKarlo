@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ChangeCityItem: Identifiable {
-    var id:String
-    let city:String
-    let isSelected:Bool
+    var id: String
+    let city: String
+    let isSelected: Bool
 }

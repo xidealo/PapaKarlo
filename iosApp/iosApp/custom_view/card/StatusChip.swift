@@ -8,18 +8,16 @@
 import SwiftUI
 
 struct StatusChip: View {
-    
-    let status:String
-    
+    let status: String
+
     var body: some View {
         Text(status)
             .foregroundColor(AppColor.surface)
-            .frame(height:30)
+            .frame(height: 30)
             .padding(Diems.SMALL_PADDING)
-            .background(Color.blue)//select color
+            .background(Color.blue) // select color
             .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .heavy, design: .default))
             .cornerRadius(Diems.MEDIUM_RADIUS)
-        
     }
 }
 

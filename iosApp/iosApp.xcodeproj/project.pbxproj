@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0081CA2D5616B48B871CFF60 /* Pods_papakarlo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3B6F8E29E586B43CE1252D1 /* Pods_papakarlo.framework */; };
 		020FEEBF28D3AEF7002B3D69 /* CafeAddressListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020FEEBE28D3AEF7002B3D69 /* CafeAddressListView.swift */; };
 		020FEEC128D3AF14002B3D69 /* CafeAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020FEEC028D3AF14002B3D69 /* CafeAddressViewModel.swift */; };
 		021920C42B7417F5004EE254 /* CreateAddressViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021920C32B7417F5004EE254 /* CreateAddressViewState.swift */; };
@@ -613,6 +614,24 @@
 		026867A12C5661E1003E3EC3 /* FoodDeliveryDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0268679D2C5661E1003E3EC3 /* FoodDeliveryDivider.swift */; };
 		026867A22C5661E1003E3EC3 /* FoodDeliveryDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0268679D2C5661E1003E3EC3 /* FoodDeliveryDivider.swift */; };
 		026867A32C5661E1003E3EC3 /* FoodDeliveryDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0268679D2C5661E1003E3EC3 /* FoodDeliveryDivider.swift */; };
+		02688BEF2DA4574400D76CC1 /* BannerCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02688BEE2DA4574400D76CC1 /* BannerCard.swift */; };
+		02688BF02DA4574400D76CC1 /* BannerCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02688BEE2DA4574400D76CC1 /* BannerCard.swift */; };
+		02688BF12DA4574400D76CC1 /* BannerCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02688BEE2DA4574400D76CC1 /* BannerCard.swift */; };
+		02688BF22DA4574400D76CC1 /* BannerCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02688BEE2DA4574400D76CC1 /* BannerCard.swift */; };
+		02688BF32DA4574400D76CC1 /* BannerCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02688BEE2DA4574400D76CC1 /* BannerCard.swift */; };
+		02688BF42DA4574400D76CC1 /* BannerCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02688BEE2DA4574400D76CC1 /* BannerCard.swift */; };
+		02688BF52DA4574400D76CC1 /* BannerCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02688BEE2DA4574400D76CC1 /* BannerCard.swift */; };
+		02688BF62DA4574400D76CC1 /* BannerCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02688BEE2DA4574400D76CC1 /* BannerCard.swift */; };
+		02688BF72DA4574400D76CC1 /* BannerCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02688BEE2DA4574400D76CC1 /* BannerCard.swift */; };
+		02688BF92DA4623D00D76CC1 /* WarningCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02688BF82DA4623D00D76CC1 /* WarningCard.swift */; };
+		02688BFA2DA4623D00D76CC1 /* WarningCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02688BF82DA4623D00D76CC1 /* WarningCard.swift */; };
+		02688BFB2DA4623D00D76CC1 /* WarningCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02688BF82DA4623D00D76CC1 /* WarningCard.swift */; };
+		02688BFC2DA4623D00D76CC1 /* WarningCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02688BF82DA4623D00D76CC1 /* WarningCard.swift */; };
+		02688BFD2DA4623D00D76CC1 /* WarningCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02688BF82DA4623D00D76CC1 /* WarningCard.swift */; };
+		02688BFE2DA4623D00D76CC1 /* WarningCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02688BF82DA4623D00D76CC1 /* WarningCard.swift */; };
+		02688BFF2DA4623D00D76CC1 /* WarningCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02688BF82DA4623D00D76CC1 /* WarningCard.swift */; };
+		02688C002DA4623D00D76CC1 /* WarningCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02688BF82DA4623D00D76CC1 /* WarningCard.swift */; };
+		02688C012DA4623D00D76CC1 /* WarningCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02688BF82DA4623D00D76CC1 /* WarningCard.swift */; };
 		0269DB3E2C263DEA009D36AE /* PaymentMethodUi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0269DB3D2C263DEA009D36AE /* PaymentMethodUi.swift */; };
 		0269DB3F2C263DEA009D36AE /* PaymentMethodUi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0269DB3D2C263DEA009D36AE /* PaymentMethodUi.swift */; };
 		0269DB402C263DEA009D36AE /* PaymentMethodUi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0269DB3D2C263DEA009D36AE /* PaymentMethodUi.swift */; };
@@ -1225,6 +1244,8 @@
 		026829EC2CF67D970061F289 /* CafeListViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CafeListViewState.swift; sourceTree = "<group>"; };
 		026867962C565E38003E3EC3 /* NavigationIconCardWithDivider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationIconCardWithDivider.swift; sourceTree = "<group>"; };
 		0268679D2C5661E1003E3EC3 /* FoodDeliveryDivider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodDeliveryDivider.swift; sourceTree = "<group>"; };
+		02688BEE2DA4574400D76CC1 /* BannerCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerCard.swift; sourceTree = "<group>"; };
+		02688BF82DA4623D00D76CC1 /* WarningCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarningCard.swift; sourceTree = "<group>"; };
 		0269DB3D2C263DEA009D36AE /* PaymentMethodUi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodUi.swift; sourceTree = "<group>"; };
 		026C1FCB2A2690B900838266 /* djan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = djan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		026C1FCD2A2691B000838266 /* djan.plist */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc.preprocessed; fileEncoding = 4; path = djan.plist; sourceTree = "<group>"; };
@@ -1286,6 +1307,7 @@
 		B291B03806FEB0D5D29330C5 /* Pods-emoji.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-emoji.debug.xcconfig"; path = "Target Support Files/Pods-emoji/Pods-emoji.debug.xcconfig"; sourceTree = "<group>"; };
 		BE0F819C306ACDA06793BF95 /* Pods_djan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_djan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C00C2F3445BD1E895A3BFB61 /* Pods_tandirhouse.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_tandirhouse.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C3B6F8E29E586B43CE1252D1 /* Pods_papakarlo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_papakarlo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D179EB325EE69D6138F7DEFF /* Pods-papakarlo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-papakarlo.release.xcconfig"; path = "Target Support Files/Pods-papakarlo/Pods-papakarlo.release.xcconfig"; sourceTree = "<group>"; };
 		DE7ED303C9F8B8C4470E816D /* Pods-emoji.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-emoji.release.xcconfig"; path = "Target Support Files/Pods-emoji/Pods-emoji.release.xcconfig"; sourceTree = "<group>"; };
 		DFD3A531695478537F76EDCB /* Pods-papakarlo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-papakarlo.debug.xcconfig"; path = "Target Support Files/Pods-papakarlo/Pods-papakarlo.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1368,6 +1390,7 @@
 			files = (
 				4E7FC62A990EFBCC2E806359 /* (null) in Frameworks */,
 				31D3632D6D0DFCC127603E44 /* Pods_papakarlo.framework in Frameworks */,
+				0081CA2D5616B48B871CFF60 /* Pods_papakarlo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1684,6 +1707,8 @@
 				025775142ACCA01600DDBC94 /* DiscountCard.swift */,
 				026867962C565E38003E3EC3 /* NavigationIconCardWithDivider.swift */,
 				028D4ADB2C778C2F00594D61 /* NavigationCardWithDivider.swift */,
+				02688BEE2DA4574400D76CC1 /* BannerCard.swift */,
+				02688BF82DA4623D00D76CC1 /* WarningCard.swift */,
 			);
 			path = card;
 			sourceTree = "<group>";
@@ -1861,6 +1886,7 @@
 				4FDC0DADE9D1348DB5207D93 /* Pods_emoji.framework */,
 				510C373D12CD9C2B4B280987 /* Pods_legenda.framework */,
 				F89DFB6B8275B456A0CE858D /* Pods_usadba.framework */,
+				C3B6F8E29E586B43CE1252D1 /* Pods_papakarlo.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -2877,6 +2903,7 @@
 				0219B7AA2B8FB97C00305E2D /* ErrorView.swift in Sources */,
 				0219B7AB2B8FB97C00305E2D /* MenuViewState.swift in Sources */,
 				0219B7AD2B8FB97C00305E2D /* ChangeCityView.swift in Sources */,
+				02688BFD2DA4623D00D76CC1 /* WarningCard.swift in Sources */,
 				026867A22C5661E1003E3EC3 /* FoodDeliveryDivider.swift in Sources */,
 				0219B7AE2B8FB97C00305E2D /* SplashScreen.swift in Sources */,
 				0219B7AF2B8FB97C00305E2D /* CreateAddressViewState.swift in Sources */,
@@ -2941,6 +2968,7 @@
 				0219B7E42B8FB97C00305E2D /* OrderProductItem.swift in Sources */,
 				0219B7E52B8FB97C00305E2D /* IconImage.swift in Sources */,
 				0219B7E62B8FB97C00305E2D /* MyExtensions.swift in Sources */,
+				02688BF32DA4574400D76CC1 /* BannerCard.swift in Sources */,
 				0219B7E72B8FB97C00305E2D /* CafeAddressViewModel.swift in Sources */,
 				0219B7E82B8FB97C00305E2D /* AddressItemView.swift in Sources */,
 				0219B7E92B8FB97C00305E2D /* ToastView.swift in Sources */,
@@ -2996,6 +3024,7 @@
 				025BF7932CAB354D00DF0946 /* ErrorView.swift in Sources */,
 				025BF7942CAB354D00DF0946 /* MenuViewState.swift in Sources */,
 				025BF7962CAB354D00DF0946 /* ChangeCityView.swift in Sources */,
+				02688BFF2DA4623D00D76CC1 /* WarningCard.swift in Sources */,
 				025BF7972CAB354D00DF0946 /* FoodDeliveryDivider.swift in Sources */,
 				025BF7982CAB354D00DF0946 /* SplashScreen.swift in Sources */,
 				025BF7992CAB354D00DF0946 /* CreateAddressViewState.swift in Sources */,
@@ -3060,6 +3089,7 @@
 				025BF7D32CAB354D00DF0946 /* OrderProductItem.swift in Sources */,
 				025BF7D42CAB354D00DF0946 /* IconImage.swift in Sources */,
 				025BF7D52CAB354D00DF0946 /* MyExtensions.swift in Sources */,
+				02688BF52DA4574400D76CC1 /* BannerCard.swift in Sources */,
 				025BF7D62CAB354D00DF0946 /* CafeAddressViewModel.swift in Sources */,
 				025BF7D72CAB354D00DF0946 /* AddressItemView.swift in Sources */,
 				025BF7D82CAB354D00DF0946 /* ToastView.swift in Sources */,
@@ -3115,6 +3145,7 @@
 				025F42F02CD0159400C854AF /* ErrorView.swift in Sources */,
 				025F42F12CD0159400C854AF /* MenuViewState.swift in Sources */,
 				025F42F32CD0159400C854AF /* ChangeCityView.swift in Sources */,
+				02688C002DA4623D00D76CC1 /* WarningCard.swift in Sources */,
 				025F42F42CD0159400C854AF /* FoodDeliveryDivider.swift in Sources */,
 				025F42F52CD0159400C854AF /* SplashScreen.swift in Sources */,
 				025F42F62CD0159400C854AF /* CreateAddressViewState.swift in Sources */,
@@ -3179,6 +3210,7 @@
 				025F43302CD0159400C854AF /* OrderProductItem.swift in Sources */,
 				025F43312CD0159400C854AF /* IconImage.swift in Sources */,
 				025F43322CD0159400C854AF /* MyExtensions.swift in Sources */,
+				02688BF62DA4574400D76CC1 /* BannerCard.swift in Sources */,
 				025F43332CD0159400C854AF /* CafeAddressViewModel.swift in Sources */,
 				025F43342CD0159400C854AF /* AddressItemView.swift in Sources */,
 				025F43352CD0159400C854AF /* ToastView.swift in Sources */,
@@ -3234,6 +3266,7 @@
 				025F78112CD14C3400C87D99 /* ErrorView.swift in Sources */,
 				025F78122CD14C3400C87D99 /* MenuViewState.swift in Sources */,
 				025F78142CD14C3400C87D99 /* ChangeCityView.swift in Sources */,
+				02688C012DA4623D00D76CC1 /* WarningCard.swift in Sources */,
 				025F78152CD14C3400C87D99 /* FoodDeliveryDivider.swift in Sources */,
 				025F78162CD14C3400C87D99 /* SplashScreen.swift in Sources */,
 				025F78172CD14C3400C87D99 /* CreateAddressViewState.swift in Sources */,
@@ -3298,6 +3331,7 @@
 				025F78512CD14C3400C87D99 /* OrderProductItem.swift in Sources */,
 				025F78522CD14C3400C87D99 /* IconImage.swift in Sources */,
 				025F78532CD14C3400C87D99 /* MyExtensions.swift in Sources */,
+				02688BF72DA4574400D76CC1 /* BannerCard.swift in Sources */,
 				025F78542CD14C3400C87D99 /* CafeAddressViewModel.swift in Sources */,
 				025F78552CD14C3400C87D99 /* AddressItemView.swift in Sources */,
 				025F78562CD14C3400C87D99 /* ToastView.swift in Sources */,
@@ -3353,6 +3387,7 @@
 				026C1F6E2A2690B900838266 /* ErrorView.swift in Sources */,
 				026C1F6F2A2690B900838266 /* MenuViewState.swift in Sources */,
 				026C1F712A2690B900838266 /* ChangeCityView.swift in Sources */,
+				02688BFB2DA4623D00D76CC1 /* WarningCard.swift in Sources */,
 				026867A02C5661E1003E3EC3 /* FoodDeliveryDivider.swift in Sources */,
 				026C1F722A2690B900838266 /* SplashScreen.swift in Sources */,
 				021920C62B7417F5004EE254 /* CreateAddressViewState.swift in Sources */,
@@ -3417,6 +3452,7 @@
 				026C1FA92A2690B900838266 /* OrderProductItem.swift in Sources */,
 				026C1FAA2A2690B900838266 /* IconImage.swift in Sources */,
 				026C1FAB2A2690B900838266 /* MyExtensions.swift in Sources */,
+				02688BF12DA4574400D76CC1 /* BannerCard.swift in Sources */,
 				026C1FAC2A2690B900838266 /* CafeAddressViewModel.swift in Sources */,
 				026C1FAD2A2690B900838266 /* AddressItemView.swift in Sources */,
 				026C1FB02A2690B900838266 /* ToastView.swift in Sources */,
@@ -3472,6 +3508,7 @@
 				027CB0312A346F7B00350EB2 /* ErrorView.swift in Sources */,
 				027CB0322A346F7B00350EB2 /* MenuViewState.swift in Sources */,
 				027CB0342A346F7B00350EB2 /* ChangeCityView.swift in Sources */,
+				02688BFC2DA4623D00D76CC1 /* WarningCard.swift in Sources */,
 				026867A12C5661E1003E3EC3 /* FoodDeliveryDivider.swift in Sources */,
 				027CB0352A346F7B00350EB2 /* SplashScreen.swift in Sources */,
 				021920C72B7417F5004EE254 /* CreateAddressViewState.swift in Sources */,
@@ -3536,6 +3573,7 @@
 				027CB06C2A346F7B00350EB2 /* OrderProductItem.swift in Sources */,
 				027CB06D2A346F7B00350EB2 /* IconImage.swift in Sources */,
 				027CB06E2A346F7B00350EB2 /* MyExtensions.swift in Sources */,
+				02688BF22DA4574400D76CC1 /* BannerCard.swift in Sources */,
 				027CB06F2A346F7B00350EB2 /* CafeAddressViewModel.swift in Sources */,
 				027CB0702A346F7B00350EB2 /* AddressItemView.swift in Sources */,
 				027CB0732A346F7B00350EB2 /* ToastView.swift in Sources */,
@@ -3591,6 +3629,7 @@
 				02891F8A2BDAEA0D0043B466 /* ErrorView.swift in Sources */,
 				02891F8B2BDAEA0D0043B466 /* MenuViewState.swift in Sources */,
 				02891F8D2BDAEA0D0043B466 /* ChangeCityView.swift in Sources */,
+				02688BFE2DA4623D00D76CC1 /* WarningCard.swift in Sources */,
 				026867A32C5661E1003E3EC3 /* FoodDeliveryDivider.swift in Sources */,
 				02891F8E2BDAEA0D0043B466 /* SplashScreen.swift in Sources */,
 				02891F8F2BDAEA0D0043B466 /* CreateAddressViewState.swift in Sources */,
@@ -3655,6 +3694,7 @@
 				02891FC42BDAEA0D0043B466 /* OrderProductItem.swift in Sources */,
 				02891FC52BDAEA0D0043B466 /* IconImage.swift in Sources */,
 				02891FC62BDAEA0D0043B466 /* MyExtensions.swift in Sources */,
+				02688BF42DA4574400D76CC1 /* BannerCard.swift in Sources */,
 				02891FC72BDAEA0D0043B466 /* CafeAddressViewModel.swift in Sources */,
 				02891FC82BDAEA0D0043B466 /* AddressItemView.swift in Sources */,
 				02891FC92BDAEA0D0043B466 /* ToastView.swift in Sources */,
@@ -3710,6 +3750,7 @@
 				02ADC35229D9D0880062A141 /* ErrorView.swift in Sources */,
 				02ADC35329D9D0880062A141 /* MenuViewState.swift in Sources */,
 				02ADC35529D9D0880062A141 /* ChangeCityView.swift in Sources */,
+				02688BFA2DA4623D00D76CC1 /* WarningCard.swift in Sources */,
 				0268679F2C5661E1003E3EC3 /* FoodDeliveryDivider.swift in Sources */,
 				02ADC35629D9D0880062A141 /* SplashScreen.swift in Sources */,
 				021920C52B7417F5004EE254 /* CreateAddressViewState.swift in Sources */,
@@ -3774,6 +3815,7 @@
 				02ADC38D29D9D0880062A141 /* OrderProductItem.swift in Sources */,
 				02ADC38E29D9D0880062A141 /* IconImage.swift in Sources */,
 				02ADC38F29D9D0880062A141 /* MyExtensions.swift in Sources */,
+				02688BF02DA4574400D76CC1 /* BannerCard.swift in Sources */,
 				02ADC39029D9D0880062A141 /* CafeAddressViewModel.swift in Sources */,
 				02ADC39129D9D0880062A141 /* AddressItemView.swift in Sources */,
 				02ADC39429D9D0880062A141 /* ToastView.swift in Sources */,
@@ -3829,6 +3871,7 @@
 				0280BE2B29A0ED14007F7416 /* ErrorView.swift in Sources */,
 				023234A1287879EF0048CF39 /* MenuViewState.swift in Sources */,
 				0232348C287879EF0048CF39 /* ChangeCityView.swift in Sources */,
+				02688BF92DA4623D00D76CC1 /* WarningCard.swift in Sources */,
 				0268679E2C5661E1003E3EC3 /* FoodDeliveryDivider.swift in Sources */,
 				02323422287878520048CF39 /* SplashScreen.swift in Sources */,
 				021920C42B7417F5004EE254 /* CreateAddressViewState.swift in Sources */,
@@ -3893,6 +3936,7 @@
 				022BC67428CC9D0700F3ED27 /* OrderProductItem.swift in Sources */,
 				023761C328C3612600FD33BD /* IconImage.swift in Sources */,
 				021A009228E08AA200EFCC63 /* MyExtensions.swift in Sources */,
+				02688BEF2DA4574400D76CC1 /* BannerCard.swift in Sources */,
 				020FEEC128D3AF14002B3D69 /* CafeAddressViewModel.swift in Sources */,
 				0232349A287879EF0048CF39 /* AddressItemView.swift in Sources */,
 				023041D328D61C3700ACF30B /* ToastView.swift in Sources */,

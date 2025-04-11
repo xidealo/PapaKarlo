@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct ButtonText: View {
-    let text:String
+    let text: String
     var background = AppColor.primary
     var foregroundColor = AppColor.onPrimary
 

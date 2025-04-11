@@ -7,7 +7,9 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import platform.darwin.dispatch_async
 import platform.darwin.dispatch_get_main_queue
-import kotlin.native.internal.GC
+import kotlin.native.concurrent.ThreadLocal
+import kotlin.native.runtime.GC
+import kotlin.native.runtime.NativeRuntimeApi
 
 @ThreadLocal
 internal var createViewModelScope: () -> CoroutineScope = {
@@ -20,6 +22,7 @@ internal fun createUIDispatcher(): CoroutineDispatcher = UIDispatcher()
 actual open class SharedViewModel actual constructor() {
     protected actual val sharedScope: CoroutineScope = createViewModelScope()
 
+    @OptIn(NativeRuntimeApi::class)
     actual open fun onCleared() {
         sharedScope.cancel()
 

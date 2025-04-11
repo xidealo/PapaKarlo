@@ -9,11 +9,11 @@
 import SwiftUI
 
 struct IconImage: View {
-    var width:CGFloat = 24
-    var height:CGFloat = 24
+    var width: CGFloat = 24
+    var height: CGFloat = 24
 
-    let imageName:String
-    
+    let imageName: String
+
     var body: some View {
         Image(imageName)
             .resizable()

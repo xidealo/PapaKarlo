@@ -7,26 +7,24 @@
 //
 
 import Foundation
-import SwiftUI
 import shared
+import SwiftUI
 
 struct Motivation: View {
-    
     let motivation: MotivationUi
-    
+
     var body: some View {
-        HStack(spacing:0){
-            VStack(spacing:0){
-                HStack(spacing:0){
+        HStack(spacing: 0) {
+            VStack(spacing: 0) {
+                HStack(spacing: 0) {
                     getMotivationIcon(motivation: motivation)
                     getMotivationText(motivation: motivation)
                         .foregroundColor(AppColor.onSurface)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.leading, 8)
-                    
                 }
-                
-                if let progress = getMotivationProgress(motivation: motivation){
+
+                if let progress = getMotivationProgress(motivation: motivation) {
                     ProgressView(value: progress)
                         .tint(progress < 1 ? AppColor.warning : AppColor.positive)
                         .progressViewStyle(LinearProgressViewStyle())
@@ -38,46 +36,45 @@ struct Motivation: View {
                 .padding(.top, 16)
         }
     }
-    
-    
-    func getMotivationProgress(motivation: MotivationUi) -> Float?  {
-        switch(motivation){
-        case .MinOrderCost(_):
+
+    func getMotivationProgress(motivation: MotivationUi) -> Float? {
+        switch motivation {
+        case .MinOrderCost:
             return nil
-            
-        case .ForLowerDelivery(_, let progress, _):
+
+        case let .ForLowerDelivery(_, progress, _):
             return progress
-            
-        case .LowerDeliveryAchieved(_):
+
+        case .LowerDeliveryAchieved:
             return 1
         }
     }
-    
-    func getMotivationText(motivation: MotivationUi) -> some View  {
-        switch(motivation){
-        case .MinOrderCost(let cost):
-            return (
+
+    func getMotivationText(motivation: MotivationUi) -> some View {
+        switch motivation {
+        case let .MinOrderCost(cost):
+            return
                 Text("Минимальая сумма заказа: ").bodySmall() + Text(cost).bodySmall(weight: .bold)
-            )
-            
-        case .ForLowerDelivery(let increaseAmountBy, _, let isFree):
+
+        case let .ForLowerDelivery(increaseAmountBy, _, isFree):
             return isFree ? (Text("Еще ") + Text(increaseAmountBy).bold() + Text(" до бесплатной доставки")).bodySmall() : (Text("Еще ") + Text(increaseAmountBy).bold() + Text(" до уменьшения стоимости доставки")).bodySmall()
-        case .LowerDeliveryAchieved(let isFree):
+
+        case let .LowerDeliveryAchieved(isFree):
             return Text(isFree ? "Бесплатная доставка" : "Уменьшенная стоимость доставки").bodySmall()
         }
     }
-    
-    func getMotivationIcon(motivation: MotivationUi) -> some View  {
-        switch(motivation){
-        case .MinOrderCost(_):
+
+    func getMotivationIcon(motivation: MotivationUi) -> some View {
+        switch motivation {
+        case .MinOrderCost:
             return IconImage(imageName: "ic_warning")
                 .foregroundColor(AppColor.warning)
-            
-        case .ForLowerDelivery(_, _, _):
+
+        case .ForLowerDelivery:
             return IconImage(imageName: "ic_delivery")
                 .foregroundColor(AppColor.onSurfaceVariant)
-            
-        case .LowerDeliveryAchieved(_):
+
+        case .LowerDeliveryAchieved:
             return IconImage(imageName: "ic_delivery")
                 .foregroundColor(AppColor.onSurfaceVariant)
         }

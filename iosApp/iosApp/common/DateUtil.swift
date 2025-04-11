@@ -10,11 +10,10 @@ import Foundation
 import shared
 
 class DateUtil {
-    
     func getDateTimeString(dateTime: DateTime) -> String {
         var monthName = ""
-        
-        switch(dateTime.date.monthNumber){
+
+        switch dateTime.date.monthNumber {
         case 1: monthName = "января"
         case 2: monthName = "февраля"
         case 3: monthName = "марта"
@@ -27,23 +26,21 @@ class DateUtil {
         case 10: monthName = "октября"
         case 11: monthName = "ноября"
         case 12: monthName = "декабря"
-
-        default : monthName = ""
-            
+        default: monthName = ""
         }
-   
+
         return "\(dateTime.date.dayOfMonth) \(monthName) \(getTimeString(time: dateTime.time))"
     }
-    
+
     func getTimeString(time: Time) -> String {
-        return "\(addFirstZero(number: Int(time.hours))):\(addFirstZero(number : Int(time.minutes)))"
-       }
-    
+        return "\(addFirstZero(number: Int(time.hours))):\(addFirstZero(number: Int(time.minutes)))"
+    }
+
     func addFirstZero(number: Int) -> String {
-            if (number < 10) {
-                return "0\(number)"
-           } else {
-               return "\(number)"
-           }
-       }
+        if number < 10 {
+            return "0\(number)"
+        } else {
+            return "\(number)"
+        }
+    }
 }

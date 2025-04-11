@@ -8,24 +8,23 @@
 import SwiftUI
 
 struct ActionCardView: View {
-    
-    let icon:String?
-    
-    let label:String
-    let isSystemImageName:Bool
-    let isShowRightArrow:Bool
+    let icon: String?
+
+    let label: String
+    let isSystemImageName: Bool
+    let isShowRightArrow: Bool
     let action: () -> Void
-    var placeHolder:LocalizedStringKey? = nil
+    var placeHolder: LocalizedStringKey? = nil
 
     var body: some View {
-        Button(action: action){
-           CardView(
-            icon: icon,
-            label: label,
-            isSystemImageName: isSystemImageName,
-            isShowRightArrow: isShowRightArrow,
-            placeHolder: placeHolder
-           )
+        Button(action: action) {
+            CardView(
+                icon: icon,
+                label: label,
+                isSystemImageName: isSystemImageName,
+                isShowRightArrow: isShowRightArrow,
+                placeHolder: placeHolder
+            )
         }
     }
 }

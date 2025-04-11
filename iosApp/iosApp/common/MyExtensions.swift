@@ -1,5 +1,5 @@
 //
-//  StringExtensions.swift
+//  MyExtensions.swift
 //  iosApp
 //
 //  Created by Марк Шавловский on 25.09.2022.
@@ -15,36 +15,36 @@ extension String {
         guard let index = firstIndex(where: { !CharacterSet(charactersIn: String($0)).isSubset(of: characterSet) }) else {
             return self
         }
-        
+
         return String(self[index...])
     }
-    
+
     func trimingTrailingSpaces(using characterSet: CharacterSet = .whitespacesAndNewlines) -> String {
         guard let index = lastIndex(where: { !CharacterSet(charactersIn: String($0)).isSubset(of: characterSet) }) else {
             return self
         }
-        
+
         return String(self[...index])
     }
-    
+
     func getPaymentMethod() -> LocalizedStringKey {
-        switch(self){
+        switch self {
         case PaymentMethodName.cash.name: return "msg_payment_cash"
         case PaymentMethodName.card.name: return "msg_payment_card"
         case PaymentMethodName.cardNumber.name: return "msg_payment_card_number"
         case PaymentMethodName.phoneNumber.name: return "msg_payment_phone_number"
-        default : return ""
+        default: return ""
         }
     }
-    
+
     func load() -> UIImage {
         do {
             guard let url = URL(string: self) else {
                 return UIImage()
             }
-            let data:Data = try Data(contentsOf: url)
+            let data: Data = try Data(contentsOf: url)
             return UIImage(data: data) ?? UIImage()
-        }catch {
+        } catch {
             return UIImage()
         }
     }
@@ -52,106 +52,102 @@ extension String {
 
 extension UserAddress {
     func getAddress() -> String {
-        
-        var address = self.street
-        address += ", д. " + (self.house)
-        
-        if let flat = self.flat{
-            if(flat != ""){
+        var address = street
+        address += ", д. " + house
+
+        if let flat = flat {
+            if flat != "" {
                 address += ", кв. " + flat
             }
         }
-        
-        if let entrance = self.entrance{
-            if(self.entrance != ""){
+
+        if let entrance = entrance {
+            if self.entrance != "" {
                 address += ", подъезд " + entrance
             }
         }
-        
-        if let floor = self.floor{
-            if(self.floor != ""){
+
+        if let floor = floor {
+            if self.floor != "" {
                 address += ", этаж " + floor
             }
         }
-        
-        if let comment = self.comment{
-            if(self.comment != ""){
+
+        if let comment = comment {
+            if self.comment != "" {
                 address += ", \(comment)"
             }
         }
-        
+
         return address
     }
 }
 
 extension SelectableUserAddress {
     func getAddress() -> String {
-        
         var address = self.address.street
         address += ", д. " + (self.address.house)
-        
-        if(self.address.flat != nil && self.address.flat != ""){
+
+        if self.address.flat != nil && self.address.flat != "" {
             address += ", кв. " + (self.address.flat ?? "")
         }
-        
-        if(self.address.entrance != nil && self.address.entrance != ""){
+
+        if self.address.entrance != nil && self.address.entrance != "" {
             address += ", подъезд " + (self.address.entrance ?? "")
         }
-        
-        if(self.address.floor != nil && self.address.floor != ""){
+
+        if self.address.floor != nil && self.address.floor != "" {
             address += ", этаж. " + (self.address.floor ?? "")
         }
-        
-        if(self.address.comment != nil && self.address.comment != ""){
+
+        if self.address.comment != nil && self.address.comment != "" {
             address += ", \(self.address.comment ?? "")"
         }
-        
+
         return address
     }
 }
 
 extension OrderAddress {
     func getAddress() -> String {
-        
-        if(street == nil){
-            return self.description_ ?? ""
+        if street == nil {
+            return description_ ?? ""
         }
-        
-        var address = self.street ?? ""
-        address += ", д. " + (self.house ?? "")
-        
-        if(self.flat != nil && self.flat != ""){
-            address += ", кв. " + (self.flat ?? "")
+
+        var address = street ?? ""
+        address += ", д. " + (house ?? "")
+
+        if flat != nil && flat != "" {
+            address += ", кв. " + (flat ?? "")
         }
-        
-        if(self.entrance != nil && self.entrance != ""){
-            address += ", подъезд " + (self.entrance ?? "")
+
+        if entrance != nil && entrance != "" {
+            address += ", подъезд " + (entrance ?? "")
         }
-        
-        if(self.floor != nil && self.floor != ""){
-            address += ", этаж. " + (self.floor ?? "")
+
+        if floor != nil && floor != "" {
+            address += ", этаж. " + (floor ?? "")
         }
-        
-        if(self.comment != nil && self.comment != ""){
-            address += ", \(self.comment ?? "")"
+
+        if comment != nil && comment != "" {
+            address += ", \(comment ?? "")"
         }
-        
+
         return address
     }
 }
 
-extension PaymentMethodName{
+extension PaymentMethodName {
     func getPaymentMethod() -> LocalizedStringKey {
-        switch(self){
+        switch self {
         case PaymentMethodName.cash: return "msg_payment_cash"
         case PaymentMethodName.card: return "msg_payment_card"
         case PaymentMethodName.cardNumber: return "msg_payment_card_number"
         case PaymentMethodName.phoneNumber: return "msg_payment_phone_number"
-        default : return ""
+        default: return ""
         }
     }
 }
-
 
 extension Int32 {
     func withFirstZero() -> String {
@@ -167,19 +163,19 @@ extension LocalizedStringKey {
 
 extension String {
     static func localizedString(for key: String,
-                                locale: Locale = .current) -> String {
-        
+                                locale: Locale = .current) -> String
+    {
         let language = locale.languageCode
         let path = Bundle.main.path(forResource: language, ofType: "lproj")!
         let bundle = Bundle(path: path)!
         let localizedString = NSLocalizedString(key, bundle: bundle, comment: "")
-        
+
         return localizedString
     }
 }
 
 extension LocalizedStringKey {
     func stringValue(locale: Locale = .current) -> String {
-        return .localizedString(for: self.stringKey ?? "", locale: locale)
+        return .localizedString(for: stringKey ?? "", locale: locale)
     }
 }

@@ -178,6 +178,25 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
         )
     }
 
+    actual override val userCafeUuid: Flow<String?> = flow {
+        emit(
+            NSUserDefaults.standardUserDefaults.stringForKey(
+                USER_CAFE_UUID_KEY
+            )
+        )
+    }
+
+    actual override suspend fun getUserCafeUuid(): String? {
+        return userCafeUuid.firstOrNull()
+    }
+
+    actual override suspend fun saveUserCafeUuid(userCafeUuid: String) {
+        NSUserDefaults.standardUserDefaults.setObject(
+            userCafeUuid,
+            USER_CAFE_UUID_KEY
+        )
+    }
+
     actual override suspend fun clearUserData() {
         NSUserDefaults.standardUserDefaults.removeObjectForKey(TOKEN_KEY)
         NSUserDefaults.standardUserDefaults.removeObjectForKey(USER_UUID_KEY)
@@ -189,6 +208,7 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
         NSUserDefaults.standardUserDefaults.removeObjectForKey(SETTINGS_PHONE_NUMBER_KEY)
         NSUserDefaults.standardUserDefaults.removeObjectForKey(SETTINGS_EMAIL_KEY)
     }
+
 
     companion object {
         const val TOKEN_KEY = "TOKEN_KEY"
@@ -203,5 +223,6 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
         private const val SELECTED_PAYMENT_METHOD_UUID_KEY = "SELECTED_PAYMENT_METHOD_UUID_KEY"
         private const val FIRST_DISCOUNT_KEY = "FIRST_DISCOUNT_KEY"
         private const val RECOMMENDATION_MAX_VISIBLE_KEY = "RECOMMENDATION_MAX_VISIBLE_KEY"
+        private const val USER_CAFE_UUID_KEY = "USER_CAFE_UUID_KEY"
     }
 }

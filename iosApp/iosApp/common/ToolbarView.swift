@@ -5,19 +5,18 @@
 //  Created by Марк Шавловский on 05.04.2022.
 //
 
-import SwiftUI
 import shared
+import SwiftUI
 
 struct ToolbarView: View {
-    
     let title: LocalizedStringKey
-    
+
     var back: (() -> Void)? = nil
     @State private var showingAlert = false
-    
+
     var body: some View {
-        HStack(spacing:0){
-            if let backAction = back{
+        HStack(spacing: 0) {
+            if let backAction = back {
                 Button(action: {
                     backAction()
                 }) {

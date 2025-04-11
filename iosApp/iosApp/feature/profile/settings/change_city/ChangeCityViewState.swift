@@ -8,23 +8,20 @@
 
 import Foundation
 
-class ChangeCityViewState : NSObject,  NSCopying  {
-    
-    var cityList:[ChangeCityItem]
-    var changeCityState:ChangeCityState
-    
-    
-    init(cityList:[ChangeCityItem], changeCityState:ChangeCityState){
+class ChangeCityViewState: NSObject, NSCopying {
+    var cityList: [ChangeCityItem]
+    var changeCityState: ChangeCityState
+
+    init(cityList: [ChangeCityItem], changeCityState: ChangeCityState) {
         self.cityList = cityList
         self.changeCityState = changeCityState
     }
-    
-    func copy(with zone: NSZone? = nil) -> Any {
+
+    func copy(with _: NSZone? = nil) -> Any {
         let copy = ChangeCityViewState(
             cityList: cityList,
             changeCityState: changeCityState
         )
         return copy
     }
-    
 }

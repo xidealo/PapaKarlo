@@ -9,7 +9,7 @@
 import Foundation
 
 struct StreetItem: Identifiable {
-    let id : String
-    let name:String
+    let id: String
+    let name: String
     let postfix: String?
 }

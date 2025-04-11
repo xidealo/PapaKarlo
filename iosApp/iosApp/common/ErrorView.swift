@@ -9,17 +9,16 @@
 import SwiftUI
 
 struct ErrorView: View {
-    
-    @State var mainText:String
-    @State var extratext:String
-    
+    @State var mainText: String
+    @State var extratext: String
+
     var action: () -> Void
 
     var body: some View {
-        VStack(spacing:0){
+        VStack(spacing: 0) {
             Spacer()
 
-            DefaultImage(width: 120, height:120, imageName: "ErrorImage")
+            DefaultImage(width: 120, height: 120, imageName: "ErrorImage")
             BoldText(text: mainText)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, Diems.MEDIUM_PADDING)
@@ -31,7 +30,7 @@ struct ErrorView: View {
                 .padding(.top, Diems.SMALL_PADDING)
 
             Spacer()
-            
+
             Button {
                 action()
             } label: {
@@ -47,8 +46,6 @@ struct ErrorView: View {
 
 struct ErrorView_Previews: PreviewProvider {
     static var previews: some View {
-        ErrorView(mainText: "Pupa", extratext: "Lupa") {
-            
-        }
+        ErrorView(mainText: "Pupa", extratext: "Lupa") {}
     }
 }
