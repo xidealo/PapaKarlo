@@ -8,32 +8,31 @@
 
 import Foundation
 
-import SwiftUI
 import Combine
+import SwiftUI
 
 struct SearchEditTextView: View {
-    
     let hint: String
     @Binding var text: String
-    let limit:Int
-    
-    var list:[StreetItem]
-    
+    let limit: Int
+
+    var list: [StreetItem]
+
     @State var prevSimbol = ""
-    
-    @Binding var errorMessage:LocalizedStringKey?
-    
-    @Binding var isLoading:Bool
-    
+
+    @Binding var errorMessage: LocalizedStringKey?
+
+    @Binding var isLoading: Bool
+
     var textChanged: (String) -> Void
-    
+
     var selectSuggetion: (StreetItem) -> Void
-    
+
     var focusChangeListener: (Bool) -> Void
 
     var body: some View {
-        VStack (spacing:0) {
-            ZStack(alignment:.trailing){
+        VStack(spacing: 0) {
+            ZStack(alignment: .trailing) {
                 EditTextView(
                     hint: hint,
                     text: $text,
@@ -42,24 +41,24 @@ struct SearchEditTextView: View {
                     textChanged: textChanged,
                     focusChangeListener: focusChangeListener
                 )
-                
-                if isLoading{
+
+                if isLoading {
                     ProgressView()
                         .progressViewStyle(CircularProgressViewStyle(tint: AppColor.primary))
                         .scaleEffect(0.6)
                         .padding(.trailing, 2)
                 }
             }
-            
-            ForEach(list){ street in
+
+            ForEach(list) { street in
                 Button {
                     text = street.name
                     dropFocusFromTextField()
                     selectSuggetion(street)
                 } label: {
-                    HStack(spacing:0){
+                    HStack(spacing: 0) {
                         Text(
-                        "\(Text(street.name).foregroundColor(AppColor.onSurface))\(Text(street.postfix ?? "").foregroundColor(AppColor.onSurfaceVariant))"
+                            "\(Text(street.name).foregroundColor(AppColor.onSurface))\(Text(street.postfix ?? "").foregroundColor(AppColor.onSurfaceVariant))"
                         ).multilineTextAlignment(.leading)
                     }
                     .padding(Diems.SMALL_PADDING)
@@ -71,10 +70,8 @@ struct SearchEditTextView: View {
             }
         }
     }
-    
-    
-    func dropFocusFromTextField(){
-        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to:nil, from:nil, for:nil)
+
+    func dropFocusFromTextField() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
-    
 }

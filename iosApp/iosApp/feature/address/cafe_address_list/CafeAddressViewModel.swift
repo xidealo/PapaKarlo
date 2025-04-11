@@ -8,47 +8,44 @@
 
 import Foundation
 import shared
+
 class CafeAddressViewModel: ObservableObject {
-    
-    @Published var cafeAddressViewState: CafeAddressViewState = CafeAddressViewState(
+    @Published var cafeAddressViewState: CafeAddressViewState = .init(
         cafeAddressState: CafeAddressState.loading, addressItemList: []
     )
-    
-    init(isClickable:Bool, addressList: [SelectableAddressUI]){
-        loadData(isClickable: isClickable, addressList: addressList )
+
+    init(isClickable: Bool, addressList: [SelectableAddressUI]) {
+        loadData(isClickable: isClickable, addressList: addressList)
     }
-    
-    func loadData(isClickable:Bool, addressList: [SelectableAddressUI]) {
-        self.cafeAddressViewState = CafeAddressViewState(
+
+    func loadData(isClickable: Bool, addressList: [SelectableAddressUI]) {
+        cafeAddressViewState = CafeAddressViewState(
             cafeAddressState: CafeAddressState.success,
-            addressItemList: (
-                addressList
-            ).map(
-                { cafeAddress in
-                    AddressItem(
-                        id: cafeAddress.uuid,
-                        address: cafeAddress.address,
-                        isClickable: isClickable,
-                        isSelected: cafeAddress.isSelected,
-                        isEnabled: cafeAddress.isEnabled
-                    )
-                }
-            )
+            addressItemList:
+            addressList
+                .map(
+                    { cafeAddress in
+                        AddressItem(
+                            id: cafeAddress.uuid,
+                            address: cafeAddress.address,
+                            isClickable: isClickable,
+                            isSelected: cafeAddress.isSelected,
+                            isEnabled: cafeAddress.isEnabled
+                        )
+                    }
+                )
         )
-        
     }
-    
-    func selectAddress(uuid:String){
-        iosComponent.provideCafeInteractor().saveSelectedCafe(cafeUuid: uuid) { err in
+
+    func selectAddress(uuid: String) {
+        iosComponent.provideCafeInteractor().saveSelectedCafe(cafeUuid: uuid) { _ in
             (self.cafeAddressViewState.copy() as! CafeAddressViewState).apply { copiedState in
                 copiedState.cafeAddressState = CafeAddressState.goBack
                 self.cafeAddressViewState = copiedState
             }
         }
     }
-    
 }
-
 
 enum CafeAddressState {
     case loading, empty, success, goBack

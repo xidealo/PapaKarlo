@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct CategoryItemModel: Identifiable{
-    var key:String
-    var id:String
-    var name:String
-    var isSelected:Bool
+struct CategoryItemModel: Identifiable {
+    var key: String
+    var id: String
+    var name: String
+    var isSelected: Bool
 }

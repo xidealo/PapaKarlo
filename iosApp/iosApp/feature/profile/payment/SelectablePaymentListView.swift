@@ -11,14 +11,13 @@ import shared
 import SwiftUI
 
 struct SelectablePaymentListView: View {
-    
     var title: LocalizedStringKey = "selectable_payment_method"
     var paymentList: [SelectablePaymentMethodUI]
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     var closedCallback: (String?) -> Void
 
     var body: some View {
-        VStack(spacing:0){
+        VStack(spacing: 0) {
             ToolbarView(
                 title: title,
                 back: {
@@ -38,21 +37,21 @@ struct SelectablePaymentListView: View {
 struct SuccessSelectablePaymentListView: View {
     var paymentList: [SelectablePaymentMethodUI]
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
-    
+
     var closedCallback: (String?) -> Void
 
     var body: some View {
-        VStack(spacing:0){
+        VStack(spacing: 0) {
             ScrollView {
-                LazyVStack(spacing:0){
-                    ForEach(paymentList){ payment in
+                LazyVStack(spacing: 0) {
+                    ForEach(paymentList) { payment in
                         Button(action: {
                             closedCallback(payment.id)
                             self.mode.wrappedValue.dismiss()
                         }) {
                             SelectableElementCard(
                                 locolized: payment.name,
-                                isSelected: payment.isSelected, 
+                                isSelected: payment.isSelected,
                                 isEnabled: true
                             )
                             .padding(.horizontal, Diems.MEDIUM_PADDING)

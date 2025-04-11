@@ -1,5 +1,5 @@
 //
-//  CheckBox.swift
+//  FoodDeliveryCheckBox.swift
 //  iosApp
 //
 //  Created by Марк Шавловский on 05.07.2024.
@@ -10,14 +10,13 @@ import Foundation
 import SwiftUI
 
 struct FoodDeliveryCheckBox: View {
-    
     let isSelected: Bool
-    
+
     let action: () -> Void
-    
+
     var body: some View {
         Button(action: action) {
-            ZStack{
+            ZStack {
                 IconImage(
                     width: 24,
                     height: 24,
@@ -26,8 +25,8 @@ struct FoodDeliveryCheckBox: View {
                 .foregroundColor(
                     isSelected ? AppColor.primary : AppColor.onSurfaceVariant
                 )
-                
-                if(isSelected) {
+
+                if isSelected {
                     IconImage(width: 12, height: 10, imageName: "CheckIcon")
                         .foregroundColor(
                             AppColor.onPrimary

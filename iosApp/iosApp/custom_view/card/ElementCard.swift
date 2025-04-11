@@ -1,5 +1,5 @@
 //
-//  ElementText.swift
+//  ElementCard.swift
 //  PapaKarloSwift
 //
 //  Created by Марк Шавловский on 14.03.2022.
@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct ElementCard: View {
-    let text:String
-    
+    let text: String
+
     var body: some View {
         Text(text)
             .bodyLarge()
@@ -25,7 +25,7 @@ struct ElementCard: View {
 
 struct ElementCardWithLocolized: View {
     let text: LocalizedStringKey
-    
+
     var body: some View {
         Text(text)
             .bodyLarge()

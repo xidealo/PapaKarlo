@@ -102,6 +102,28 @@ jobs:
         if: ${{ matrix.linter == 'ktLint' }}
         run: ./gradlew --continue ktLint${{ matrix.flavor }}DebugCheck
 
+  swiftlint:
+    name: "SwiftLint"
+    runs-on: ubuntu-latest
+    needs: setup  # Зависит от шага setup (если нужны артефакты)
+    steps:
+      - uses: actions/checkout@v4
+
+      # Установка SwiftLint
+      - name: "Install SwiftLint"
+        run: |
+          brew install swiftlint
+
+      # Запуск SwiftLint (если есть iOS-код)
+      - name: "Run SwiftLint"
+        run: |
+          if [ -d "ios" ]; then  # Проверяем, есть ли папка ios
+            cd ios
+            swiftlint
+          else
+            echo "Нет iOS-проекта, пропускаем SwiftLint."
+          fi
+
   test:
     name: "Unit tests"
     runs-on: ubuntu-latest

@@ -10,25 +10,24 @@ import SwiftUI
 struct SelectableElementCard: View {
     var text: String? = nil
     var locolized: LocalizedStringKey? = nil
-    
-    let isSelected:Bool
-    let isEnabled:Bool
-    
+
+    let isSelected: Bool
+    let isEnabled: Bool
+
     var body: some View {
-        HStack(spacing: 0){
-            
-            if(text == nil){
+        HStack(spacing: 0) {
+            if text == nil {
                 Text(locolized ?? LocalizedStringKey(""))
                     .foregroundColor(isEnabled ? AppColor.onSurface : AppColor.onSurfaceVariant)
                     .multilineTextAlignment(.leading)
-            }else{
+            } else {
                 Text(text ?? "")
                     .foregroundColor(isEnabled ? AppColor.onSurface : AppColor.onSurfaceVariant)
                     .multilineTextAlignment(.leading)
             }
-   
+
             Spacer()
-            if(isSelected){
+            if isSelected {
                 IconImage(
                     width: 16,
                     height: 16,

@@ -1,5 +1,5 @@
 //
-//  OrderCreationUI.swift
+//  CreateOrderViewState.swift
 //  PapaKarloSwift
 //
 //  Created by Марк Шавловский on 27.03.2022.
@@ -22,7 +22,7 @@ struct CreateOrderViewState {
     let change: String
     let isChangeErrorShown: Bool
     let comment: String
-    
+
     let cartTotal: CartTotalUI
     let isLoadingCreateOrder: Bool
     let isDeferredTimeShown: Bool
@@ -30,11 +30,11 @@ struct CreateOrderViewState {
     let paymentMethodList: PaymentMethodListUI
     let isOrderCreationEnabled: Bool
     let isLoadingSwitcher: Bool
-    
+
     var isFieldsEnabled: Bool {
         return !isLoadingCreateOrder
     }
-    
+
     var switcherPosition: Int {
         if case .delivery = createOrderType {
             return 0
@@ -47,26 +47,26 @@ struct CreateOrderViewState {
 enum CreateOrderType {
     case pickup(Pickup)
     case delivery(Delivery)
-    
+
     struct Pickup {
         let pickupAddress: String?
         let pickupAddressList: PickupAddressListUI
         let hasOpenedCafe: Bool
         let isEnabled: Bool
     }
-    
+
     struct Delivery {
         let deliveryAddress: String?
         let deliveryAddressList: DeliveryAddressListUI
         let state: State
         let workload: Workload
-        
+
         enum Workload: String, Equatable {
             case low = "LOW"
             case average = "AVERAGE"
             case high = "HIGH"
         }
-        
+
         enum State: String, Equatable {
             case notEnabled = "NOT_ENABLED"
             case enabled = "ENABLED"
@@ -78,7 +78,7 @@ enum CreateOrderType {
 enum CartTotalUI {
     case loading
     case success(Success)
-    
+
     struct Success {
         let motivation: MotivationUi?
         let discount: String?

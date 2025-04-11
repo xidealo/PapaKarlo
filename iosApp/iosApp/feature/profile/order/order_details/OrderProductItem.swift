@@ -9,26 +9,25 @@
 import Foundation
 
 class OrderProductItem: NSObject, Identifiable {
-    
     var id: String
     var name: String
     var newPrice: String
     var newCost: String
     var photoLink: String
     var count: String
-    var additions:String
-    var isLast:Bool
-    
+    var additions: String
+    var isLast: Bool
+
     init(
-        id:String,
-        name:String,
-        newPrice:String,
-        newCost:String,
-        photoLink:String,
-        count:String,
-        additions:String,
-        isLast:Bool
-    ){
+        id: String,
+        name: String,
+        newPrice: String,
+        newCost: String,
+        photoLink: String,
+        count: String,
+        additions: String,
+        isLast: Bool
+    ) {
         self.id = id
         self.name = name
         self.newPrice = newPrice

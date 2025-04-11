@@ -1,39 +1,38 @@
 //
-//  ContentView.swift
+//  SplashScreen.swift
 //  PapaKarloSwift
 //
 //  Created by Марк Шавловский on 03.02.2022.
 //
 
-import SwiftUI
 import shared
+import SwiftUI
 
 struct SplashView: View, SharedLifecycle {
-    
-    @State var topMessage : LocalizedStringKey? = nil
-    
-    @State var viewModel: SplashViewModel = SplashViewModel(
+    @State var topMessage: LocalizedStringKey? = nil
+
+    @State var viewModel: SplashViewModel = .init(
         checkUpdateUseCase: iosComponent.provideCheckUpdateUseCase(),
         cityInteractor: iosComponent.provideCityInteractor(),
         getIsOneCityUseCase: iosComponent.provideCheckOneCityUseCase(),
         saveOneCityUseCase: iosComponent.provideSaveOneCityUseCase()
     )
-    
+
     @State var eventsListener: Closeable?
-    
-    //Navigation
+
+    // Navigation
     @State var openSelectCity: Bool = false
     @State var openMainMenu: Bool = false
     @State var openUpdateScreen: Bool = false
     // ---
-    
-    init(){
+
+    init() {
         UINavigationBar.setAnimationsEnabled(false)
     }
-    
+
     var body: some View {
-        VStack(spacing:0){
-            if(openSelectCity){
+        VStack(spacing: 0) {
+            if openSelectCity {
                 if let topMessage = topMessage {
                     Text(topMessage)
                         .bodyMedium()
@@ -43,19 +42,19 @@ struct SplashView: View, SharedLifecycle {
                         .padding(.horizontal, 16)
                         .background(AppColor.warning)
                 }
-                
-                NavigationView{
+
+                NavigationView {
                     NavigationLink(
                         destination: SelectCityView(),
                         isActive: $openSelectCity
-                    ){
+                    ) {
                         LoadingView()
                     }.isDetailLink(false)
                 }
             }
-            
-            if(openMainMenu){
-            if let topMessage = topMessage {
+
+            if openMainMenu {
+                if let topMessage = topMessage {
                     Text(topMessage)
                         .bodyMedium()
                         .foregroundColor(AppColor.onStatus)
@@ -64,53 +63,52 @@ struct SplashView: View, SharedLifecycle {
                         .padding(.horizontal, 16)
                         .background(AppColor.warning)
                 }
-                NavigationView{
+                NavigationView {
                     NavigationLink(
                         destination: ContainerView(selection: MainContainerState.menu),
                         isActive: $openMainMenu
-                    ){
+                    ) {
                         LoadingView()
                     }.isDetailLink(false)
                 }
             }
-            
-            
-            if(openUpdateScreen){
-                NavigationView{
+
+            if openUpdateScreen {
+                NavigationView {
                     NavigationLink(
                         destination: UpdateView(),
                         isActive: $openUpdateScreen
-                    ){
+                    ) {
                         LoadingView()
                     }.isDetailLink(false)
                 }
             }
-            
+
         }.onAppear(perform: {
             viewModel.onAction(action: SplashActionInit())
             eventsSubscribe()
-            iosComponent.provideIsOrderAvailableUseCase().invoke { isOrderAvailable, err in
-                if(isOrderAvailable == true){
+            iosComponent.provideIsOrderAvailableUseCase().invoke { isOrderAvailable, _ in
+                if isOrderAvailable == true {
                     topMessage = nil
-                }else{
+                } else {
                     topMessage = "warning_no_order_available"
                 }
             }
         })
-        .onDisappear(){
+        .onDisappear {
             unsubscribe()
         }
     }
-    
+
     func eventsSubscribe() {
         eventsListener = viewModel.events.watch(block: { _events in
-            if let events = _events{
+            if let events = _events {
                 let splashEvents = events as? [SplashEvent] ?? []
-                splashEvents.forEach { event in
-                    switch(event){
-                    case is SplashEventNavigateToUpdateEvent :
+                for event in splashEvents {
+                    switch event {
+                    case is SplashEventNavigateToUpdateEvent:
                         openUpdateScreen = true
-                    case is SplashEventNavigateToMenuEvent :
+                    case is SplashEventNavigateToMenuEvent:
                         openMainMenu = true
                     case is SplashEventNavigateToSelectCityEvent:
                         openSelectCity = true
@@ -118,19 +116,18 @@ struct SplashView: View, SharedLifecycle {
                         print("def")
                     }
                 }
-                
+
                 if !splashEvents.isEmpty {
                     viewModel.consumeEvents(events: splashEvents)
                 }
             }
         })
     }
-    
+
     func unsubscribe() {
         eventsListener?.close()
         eventsListener = nil
     }
-    
 }
 
 struct HiddenNavigationBar: ViewModifier {
@@ -144,17 +141,17 @@ struct HiddenNavigationBar: ViewModifier {
 
 extension View {
     func hiddenNavigationBarStyle() -> some View {
-        modifier( HiddenNavigationBar() )
+        modifier(HiddenNavigationBar())
     }
 }
 
 extension String {
-    func replace(string:String, replacement:String) -> String {
-        return self.replacingOccurrences(of: string, with: replacement, options: NSString.CompareOptions.literal, range: nil)
+    func replace(string: String, replacement: String) -> String {
+        return replacingOccurrences(of: string, with: replacement, options: NSString.CompareOptions.literal, range: nil)
     }
-    
+
     func removeWhitespace() -> String {
-        return self.replace(string: " ", replacement: "")
+        return replace(string: " ", replacement: "")
     }
 }
 
@@ -163,6 +160,7 @@ struct ContentView_Previews: PreviewProvider {
         SplashView()
     }
 }
+
 struct FlatLinkStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label

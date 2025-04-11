@@ -1,5 +1,5 @@
 //
-//  MenuProductUI.swift
+//  ProductDetailsViewState.swift
 //  PapaKarloSwift
 //
 //  Created by Марк Шавловский on 09.03.2022.
@@ -17,29 +17,29 @@ struct ProductDetailsViewState {
     var priceWithAdditions: String
     var description: String
     var additionList: [AdditionItem]
-    var screenState : ProductDetailsStateDataState.ScreenState
+    var screenState: ProductDetailsStateDataState.ScreenState
 }
 
 class AdditionItem: Identifiable {
-    let id:String
-    
-    init(id:String){
+    let id: String
+
+    init(id: String) {
         self.id = id
     }
 
-    class AdditionHeaderItem : AdditionItem {
-        let name:String
-        
+    class AdditionHeaderItem: AdditionItem {
+        let name: String
+
         init(id: String, name: String) {
             self.name = name
             super.init(id: id)
         }
     }
-    
-    class AdditionListItem : AdditionItem {
-        let product:MenuProductAdditionItem
+
+    class AdditionListItem: AdditionItem {
+        let product: MenuProductAdditionItem
         let isMultiple: Bool
-        
+
         init(id: String, product: MenuProductAdditionItem, isMultiple: Bool) {
             self.product = product
             self.isMultiple = isMultiple
@@ -57,4 +57,3 @@ struct MenuProductAdditionItem {
     var photoLink: String
     var groupId: String
 }
-

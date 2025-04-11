@@ -8,14 +8,13 @@
 import SwiftUI
 
 struct CategoryItemView: View {
-    
-    let categoryItemModel:CategoryItemModel
-    let action: (_ tagName:String) -> Void
-    
+    let categoryItemModel: CategoryItemModel
+    let action: (_ tagName: String) -> Void
+
     var body: some View {
-        HStack(spacing:0){
-            if(categoryItemModel.isSelected){
-                Button(action:{
+        HStack(spacing: 0) {
+            if categoryItemModel.isSelected {
+                Button(action: {
                     action(categoryItemModel.name)
                 }) {
                     Text(categoryItemModel.name)
@@ -30,7 +29,7 @@ struct CategoryItemView: View {
                         .cornerRadius(16)
                         .foregroundColor(AppColor.onPrimary)
                 }
-            }else{
+            } else {
                 Button(action: {
                     action(categoryItemModel.name)
                 }) {

@@ -6,23 +6,22 @@
 //  Copyright © 2022 orgName. All rights reserved.
 //
 
-import SwiftUI
 import shared
+import SwiftUI
 
 struct CafeAddressListView: View {
-    
-    @ObservedObject private var viewModel : CafeAddressViewModel
+    @ObservedObject private var viewModel: CafeAddressViewModel
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     var title: LocalizedStringKey = "titleCafeAddresses"
-    
+
     var closedCallback: () -> Void
-    
+
     init(
-        isClickable:Bool,
-        _title : LocalizedStringKey = "titleCafeAddresses",
+        isClickable _: Bool,
+        _title: LocalizedStringKey = "titleCafeAddresses",
         addressList: [SelectableAddressUI],
         _closedCallback: @escaping () -> Void
-    ){
+    ) {
         title = _title
         viewModel = CafeAddressViewModel(
             isClickable: true,
@@ -30,56 +29,55 @@ struct CafeAddressListView: View {
         )
         closedCallback = _closedCallback
     }
-    
+
     var body: some View {
-        VStack(spacing:0){
+        VStack(spacing: 0) {
             ToolbarView(
                 title: title,
                 back: {
                     back()
                 }
             )
-            switch(viewModel.cafeAddressViewState.cafeAddressState){
-                case CafeAddressState.loading : LoadingView()
-                default : SuccessCafeAddressListView(viewModel: viewModel)
+            switch viewModel.cafeAddressViewState.cafeAddressState {
+            case CafeAddressState.loading: LoadingView()
+            default: SuccessCafeAddressListView(viewModel: viewModel)
             }
         }.hiddenNavigationBarStyle()
             .background(AppColor.background)
             .onReceive(
                 viewModel.$cafeAddressViewState,
                 perform: { cafeAddressViewState in
-                    if(cafeAddressViewState.cafeAddressState == CafeAddressState.goBack){
+                    if cafeAddressViewState.cafeAddressState == CafeAddressState.goBack {
                         back()
                     }
                 }
             )
     }
-    
+
     func back() {
         closedCallback()
-        self.mode.wrappedValue.dismiss()
+        mode.wrappedValue.dismiss()
     }
 }
 
-
 struct SuccessCafeAddressListView: View {
     let viewModel: CafeAddressViewModel
-    
+
     var body: some View {
-        VStack(spacing:0){
+        VStack(spacing: 0) {
             ScrollView {
-                LazyVStack(spacing:0){
-                    ForEach(viewModel.cafeAddressViewState.addressItemList){ address in
-                        if(address.isClickable && address.isEnabled){
+                LazyVStack(spacing: 0) {
+                    ForEach(viewModel.cafeAddressViewState.addressItemList) { address in
+                        if address.isClickable && address.isEnabled {
                             Button(action: {
-                                //save selected
+                                // save selected
                                 viewModel.selectAddress(uuid: address.id)
                             }) {
                                 AddressItemView(addressItem: address)
                                     .padding(.horizontal, Diems.MEDIUM_PADDING)
                                     .padding(.top, Diems.SMALL_PADDING)
                             }
-                        }else{
+                        } else {
                             AddressItemView(addressItem: address)
                                 .padding(.horizontal, Diems.MEDIUM_PADDING)
                                 .padding(.top, Diems.SMALL_PADDING)

@@ -5,64 +5,58 @@
 //  Created by Марк Шавловский on 09.03.2022.
 //
 
-import SwiftUI
 import shared
+import SwiftUI
 
 struct CafeListView: View {
-    
     @State var cafeViewState = CafeListViewState(state: .loading)
-    
+
     var viewModel = CafeListViewModel(
         cafeInteractor: iosComponent.provideCafeInteractor(),
         observeCafeWithOpenStateListUseCase: iosComponent.provideObserveCafeWithOpenStateListUseCase(),
         observeCartUseCase: iosComponent.provideObserveCartUseCase()
     )
-    
+
     @State var listener: Closeable? = nil
     @State var eventsListener: Closeable? = nil
-    
+
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
-    
+
     var body: some View {
-        VStack(spacing:0){
-            
+        VStack(spacing: 0) {
             switch cafeViewState.state {
-            case .success(let cafeItemList, let costAndCount):
+            case let .success(cafeItemList, costAndCount):
                 SuccessCafeListView(
                     cafeList: cafeItemList
                 )
             case .loading: LoadingView()
             case .error: ErrorView(
-                mainText: "Что-то пошло не так",
-                extratext: ""
-            ){
-                
-            }
+                    mainText: "Что-то пошло не так",
+                    extratext: ""
+                ) {}
             }
         }
         .background(AppColor.surface)
         .hiddenNavigationBarStyle()
-        .onAppear(){
+        .onAppear {
             subscribe()
         }
-        .onDisappear(){
+        .onDisappear {
             listener?.close()
             listener = nil
         }
     }
-    
-    
-    func subscribe(){
+
+    func subscribe() {
         viewModel.onAction(action: CafeListActionInit())
         listener = viewModel.dataState.watch { cafeListStateVM in
-            if let cafeListStateVM =  cafeListStateVM {
-                
-                if(cafeListStateVM.throwable != nil){
+            if let cafeListStateVM = cafeListStateVM {
+                if cafeListStateVM.throwable != nil {
                     cafeViewState = CafeListViewState(state: CafeListCartState.error)
                     return
                 }
-                
-                if(cafeListStateVM.isLoading){
+
+                if cafeListStateVM.isLoading {
                     cafeViewState = CafeListViewState(state: CafeListCartState.loading)
                     return
                 }
@@ -80,29 +74,28 @@ struct CafeListView: View {
                                     longitude: 0.0
                                 )
                             }
-                ),
+                        ),
                         CartCostAndCount(
                             cost: cafeListStateVM.cartCostAndCount?.cost ?? "",
                             count: cafeListStateVM.cartCostAndCount?.count ?? ""
                         )
-                )
+                    )
                 )
             }
         }
     }
 }
 
-
 struct SuccessCafeListView: View {
-    let cafeList : [CafeItem]
-    
+    let cafeList: [CafeItem]
+
     var body: some View {
         ScrollView {
-            LazyVStack(spacing:0){
-                ForEach(cafeList){ cafe in
+            LazyVStack(spacing: 0) {
+                ForEach(cafeList) { cafe in
                     NavigationLink(
                         destination: CafeOptionsView(phone: cafe.phone, address: cafe.address, latitude: cafe.latitude, longitude: cafe.longitude)
-                    ){
+                    ) {
                         CafeItemView(cafeItem: cafe)
                     }
                 }
@@ -110,7 +103,6 @@ struct SuccessCafeListView: View {
         }
     }
 }
-
 
 struct CafeListView_Previews: PreviewProvider {
     static var previews: some View {

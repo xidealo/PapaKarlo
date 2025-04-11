@@ -10,26 +10,25 @@ import Foundation
 import SwiftUI
 
 struct BannerCard: View {
-    
     let title: String
     let text: String
     let icon: String
     let cardColor: Color
-    
+
     var body: some View {
-        ZStack{
-            VStack(spacing:0){
-                HStack(spacing:0){
+        ZStack {
+            VStack(spacing: 0) {
+                HStack(spacing: 0) {
                     IconImage(imageName: icon)
-                    .foregroundColor(AppColor.onStatus)
-                    
+                        .foregroundColor(AppColor.onStatus)
+
                     Text(title)
                         .titleMedium(weight: .medium)
                         .padding(.leading, 8)
                         .foregroundColor(AppColor.onStatus)
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
-                
+
                 Text(text)
                     .bodyLarge()
                     .padding(.top, 8)
@@ -41,8 +40,6 @@ struct BannerCard: View {
         }
         .frame(maxWidth: .infinity)
         .background(cardColor)
-            .cornerRadius(16)
+        .cornerRadius(16)
     }
 }
-
-

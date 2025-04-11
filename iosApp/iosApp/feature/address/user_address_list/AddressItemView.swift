@@ -8,9 +8,8 @@
 import SwiftUI
 
 struct AddressItemView: View {
-    
     let addressItem: AddressItem
-    
+
     var body: some View {
         SelectableElementCard(
             text: addressItem.address,

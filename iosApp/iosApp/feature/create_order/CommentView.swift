@@ -9,12 +9,12 @@
 import SwiftUI
 
 struct CommentView: View {
-    //TODO(Make 
-    
+    // TODO(Make
+
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
 
     var body: some View {
-        VStack{
+        VStack {
 //            EditTextView(
 //                hint: Strings.HINT_CREATE_COMMENT_COMMENT,
 //                text:$createOrderViewModel.creationOrderViewState.comment,
@@ -22,7 +22,7 @@ struct CommentView: View {
 //                hasError: .constant(false)
 //            )
             Spacer()
-            
+
             Button {
                 self.mode.wrappedValue.dismiss()
             } label: {

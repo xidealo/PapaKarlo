@@ -9,29 +9,28 @@
 import SwiftUI
 
 struct ActionTextCardView: View {
-    
-    let placeHolder:String
-    let text:String
+    let placeHolder: String
+    let text: String
     let action: () -> Void
-    
+
     var body: some View {
-        Button(action: action){
-            HStack(spacing:0){
-                VStack(spacing:0){
+        Button(action: action) {
+            HStack(spacing: 0) {
+                VStack(spacing: 0) {
                     Text(placeHolder)
                         .labelSmall(weight: .medium)
                         .foregroundColor(AppColor.onSurfaceVariant)
-                        .frame(maxWidth:.infinity, alignment: .leading)
-                    
+                        .frame(maxWidth: .infinity, alignment: .leading)
+
                     Text(text)
                         .bodyMedium()
-                        .frame(maxWidth:.infinity, alignment: .leading)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                         .foregroundColor(AppColor.onSurface)
                         .multilineTextAlignment(.leading)
                 }
-                .frame(maxWidth:.infinity, alignment: .leading)
-                
-                Image(systemName:"chevron.right")
+                .frame(maxWidth: .infinity, alignment: .leading)
+
+                Image(systemName: "chevron.right")
                     .foregroundColor(AppColor.onSurfaceVariant)
             }
             .padding(.horizontal, Diems.MEDIUM_PADDING)
@@ -42,32 +41,29 @@ struct ActionTextCardView: View {
     }
 }
 
-
-
 struct ActionLocalizedTextCardView: View {
-    
-    let placeHolder:LocalizedStringKey
-    let text:LocalizedStringKey
+    let placeHolder: LocalizedStringKey
+    let text: LocalizedStringKey
     let action: () -> Void
-    
+
     var body: some View {
-        Button(action: action){
-            HStack(spacing:0){
-                VStack(spacing:0){
+        Button(action: action) {
+            HStack(spacing: 0) {
+                VStack(spacing: 0) {
                     Text(placeHolder)
                         .labelSmall(weight: .medium)
                         .foregroundColor(AppColor.onSurfaceVariant)
-                        .frame(maxWidth:.infinity, alignment: .leading)
-                    
+                        .frame(maxWidth: .infinity, alignment: .leading)
+
                     Text(text)
                         .bodyMedium()
-                        .frame(maxWidth:.infinity, alignment: .leading)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                         .foregroundColor(AppColor.onSurface)
                         .multilineTextAlignment(.leading)
                 }
-                .frame(maxWidth:.infinity, alignment: .leading)
-                
-                Image(systemName:"chevron.right")
+                .frame(maxWidth: .infinity, alignment: .leading)
+
+                Image(systemName: "chevron.right")
                     .foregroundColor(AppColor.onSurfaceVariant)
             }
             .padding(.horizontal, Diems.MEDIUM_PADDING)

@@ -10,17 +10,16 @@ import Foundation
 import SwiftUI
 
 struct WarningCard: View {
-    
     let title: String
     let icon: String
     let cardColor: Color
-    
+
     var body: some View {
-        ZStack{
-            HStack(spacing:0){
+        ZStack {
+            HStack(spacing: 0) {
                 IconImage(imageName: icon)
-                .foregroundColor(AppColor.onStatus)
-                
+                    .foregroundColor(AppColor.onStatus)
+
                 Text(title)
                     .bodyLarge()
                     .padding(.leading, 8)

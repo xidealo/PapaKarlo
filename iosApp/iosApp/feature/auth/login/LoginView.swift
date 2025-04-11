@@ -5,52 +5,51 @@
 //  Created by Марк Шавловский on 18.03.2022.
 //
 
-import SwiftUI
 import Combine
 import shared
+import SwiftUI
 
 struct LoginView: View {
-
-    @Binding var rootIsActive:Bool
-    @Binding var isGoToCreateOrder:Bool
-    @State var goToConfirm:Bool = false
+    @Binding var rootIsActive: Bool
+    @Binding var isGoToCreateOrder: Bool
+    @State var goToConfirm: Bool = false
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
-    @State var showSomethigWrongError:Bool = false
-    @State var showTooManyRequestsError:Bool = false
+    @State var showSomethigWrongError: Bool = false
+    @State var showTooManyRequestsError: Bool = false
 
-    @State var viewModel: LoginViewModel = LoginViewModel(
+    @State var viewModel: LoginViewModel = .init(
         requestCode: iosComponent.provideRequestCodeUseCase(),
         formatPhoneNumber: iosComponent.provideFormatPhoneNumberUseCase(),
         getPhoneNumberCursorPosition: iosComponent.provideGetPhoneNumberCursorPositionUseCase(),
         checkPhoneNumber: iosComponent.provideCheckPhoneNumberUseCase()
     )
 
-    //State
+    // State
     @State var isLoading: Bool = false
     @State var hasPhoneError: Bool = false
     @State var phone = ""
     @State var phoneNumberCursorPosition = Int32(shared.Constants().PHONE_CODE.count)
-    @State var textFieldError : LocalizedStringKey? = nil
+    @State var textFieldError: LocalizedStringKey? = nil
     // ---
 
     @State var stateListener: Closeable? = nil
     @State var eventsListener: Closeable? = nil
-    
+
     var body: some View {
-        VStack(spacing:0){
+        VStack(spacing: 0) {
             NavigationLink(
-                destination:ConfirmView(
+                destination: ConfirmView(
                     phone: phone,
                     rootIsActive: self.$rootIsActive,
                     isGoToCreateOrder: $isGoToCreateOrder
                 ),
                 isActive: $goToConfirm
-            ){
+            ) {
                 EmptyView()
             }
-            if(isLoading){
+            if isLoading {
                 LoadingView()
-            }else{
+            } else {
                 LoginViewSuccessView(
                     phone: $phone,
                     textFieldError: $textFieldError,
@@ -58,19 +57,19 @@ struct LoginView: View {
                 )
             }
         }
-        .onAppear(){
+        .onAppear {
             viewModel.onAction(action: LoginActionInit())
             subscribe()
             eventsSubscribe()
         }
-        .onDisappear(){
+        .onDisappear {
             unsubscribe()
         }
         .overlay(
             overlayView: ToastView(
                 toast: Toast(title: "Что-то пошло не так"),
                 show: $showSomethigWrongError,
-                backgroundColor:AppColor.error,
+                backgroundColor: AppColor.error,
                 foregroundColor: AppColor.onError
             ),
             show: $showSomethigWrongError
@@ -79,43 +78,42 @@ struct LoginView: View {
             overlayView: ToastView(
                 toast: Toast(title: "Превышен лимит на отправку сообщений"),
                 show: $showTooManyRequestsError,
-                backgroundColor:AppColor.error,
+                backgroundColor: AppColor.error,
                 foregroundColor: AppColor.onError
             ),
             show: $showTooManyRequestsError
         )
     }
 
-    func subscribe(){
-        stateListener = viewModel.dataState.watch {  loginStateVM in
+    func subscribe() {
+        stateListener = viewModel.dataState.watch { loginStateVM in
             if let loginState = loginStateVM {
                 print(loginState)
                 phone = loginState.phoneNumber
                 hasPhoneError = loginState.hasPhoneError
-                
-                if(loginState.hasPhoneError){
-                  textFieldError =  LocalizedStringKey("Введите корректный номер телефона")
-                }else{
+
+                if loginState.hasPhoneError {
+                    textFieldError = LocalizedStringKey("Введите корректный номер телефона")
+                } else {
                     textFieldError = nil
                 }
-                
+
                 isLoading = loginState.isLoading
                 phoneNumberCursorPosition = loginState.phoneNumberCursorPosition
             }
-
         }
     }
 
-    func eventsSubscribe(){
+    func eventsSubscribe() {
         eventsListener = viewModel.events.watch(block: { _events in
-            if let events = _events{
+            if let events = _events {
                 let loginEvents = events as? [LoginEvent] ?? []
 
-                loginEvents.forEach { event in
+                for event in loginEvents {
                     print(event)
-                    switch(event){
-                    case is LoginEventNavigateBack : self.mode.wrappedValue.dismiss()
-                    case is LoginEventNavigateToConfirm : goToConfirm = true
+                    switch event {
+                    case is LoginEventNavigateBack: self.mode.wrappedValue.dismiss()
+                    case is LoginEventNavigateToConfirm: goToConfirm = true
                     case is LoginEventShowTooManyRequestsError: showTooManyRequestsError = true
                     case is LoginEventShowSomethingWentWrongError: showSomethigWrongError = true
                     default:
@@ -130,7 +128,7 @@ struct LoginView: View {
         })
     }
 
-    func unsubscribe(){
+    func unsubscribe() {
         stateListener?.close()
         stateListener = nil
         eventsListener?.close()
@@ -139,34 +137,34 @@ struct LoginView: View {
 }
 
 struct LoginViewSuccessView: View {
-    @Binding var phone:String
-    @State var isSelected:Bool = false
-    @Binding var textFieldError : LocalizedStringKey?
+    @Binding var phone: String
+    @State var isSelected: Bool = false
+    @Binding var textFieldError: LocalizedStringKey?
 
     let action: (LoginAction) -> Void
 
     var body: some View {
-        VStack(spacing:0){
+        VStack(spacing: 0) {
             ToolbarView(
-                title:"",
+                title: "",
                 back: {
                     action(LoginActionBackClick())
                 }
             )
-            
-            VStack(spacing:0){
+
+            VStack(spacing: 0) {
                 Spacer()
                 Image("LoginLogo")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(height: 156)
-                
+
                 Text("titleLoginEnterPhone")
                     .bodyLarge()
                     .multilineTextAlignment(.center)
                     .foregroundColor(AppColor.onSurface)
                     .padding(.top, Diems.MEDIUM_PADDING)
-                
+
                 EditTextView(
                     hint: Strings.HINT_LOGIN_PHONE,
                     text: $phone,
@@ -182,9 +180,9 @@ struct LoginViewSuccessView: View {
                     minCode()
                 }
                 .keyboardType(.phonePad)
-                
+
                 Spacer()
-                
+
                 Button {
                     action(LoginActionNextClick())
                 } label: {
@@ -195,7 +193,7 @@ struct LoginViewSuccessView: View {
         .background(AppColor.surface)
         .hiddenNavigationBarStyle()
     }
-    
+
     func minCode() {
         if phone.count < 2 {
             phone = String("+7")

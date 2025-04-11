@@ -9,11 +9,9 @@
 import Foundation
 import SwiftUI
 
-
 struct DiscountCard: View {
-    
-    let text:String
-    
+    let text: String
+
     var body: some View {
         Text(text)
             .foregroundColor(AppColor.onStatus)
@@ -23,5 +21,3 @@ struct DiscountCard: View {
             .cornerRadius(4)
     }
 }
-
-

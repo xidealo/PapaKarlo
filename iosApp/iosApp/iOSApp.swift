@@ -1,12 +1,12 @@
 //
-//  PapaKarloSwiftApp.swift
+//  iOSApp.swift
 //  PapaKarloSwift
 //
 //  Created by Марк Шавловский on 03.02.2022.
 //
 
-import SwiftUI
 import shared
+import SwiftUI
 
 let iosComponent = IosComponent()
 let dateUtil = DateUtil()
@@ -15,29 +15,28 @@ let dateUtil = DateUtil()
 struct PapaKarloSwiftApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
-    init(){
+    init() {
         KoinKt.doInitKoin()
     }
-    
+
     var body: some Scene {
         WindowGroup {
             SplashView()
         }
     }
-    
 }
 
-protocol HasApply { }
+protocol HasApply {}
 
 extension HasApply {
-    func applyAndReturn(closure:(Self) -> ()) -> Self {
+    func applyAndReturn(closure: (Self) -> Void) -> Self {
         closure(self)
         return self
     }
-    
-    func apply(closure:(Self) -> ()) {
+
+    func apply(closure: (Self) -> Void) {
         closure(self)
     }
 }
 
-extension NSObject: HasApply { }
+extension NSObject: HasApply {}

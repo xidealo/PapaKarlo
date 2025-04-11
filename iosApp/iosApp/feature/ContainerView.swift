@@ -8,20 +8,19 @@
 import SwiftUI
 
 struct ContainerView: View {
-    
     @State var selection: MainContainerState
     @State var title: LocalizedStringKey = "title_menu"
-    
+
     @StateObject private var viewModel = ToolbarViewModel()
-    
+
     @State var showOrderCreated: Bool = false
     @State var showCreatedAddress: Bool = false
 
     @State var goToCreateOrder = false
     @State var isShowLogo: Bool = true
-    
+
     var body: some View {
-        VStack(spacing:0){
+        VStack(spacing: 0) {
             ToolbarWithCartView(
                 title: title,
                 cost: viewModel.toolbarViewState.cost,
@@ -31,35 +30,35 @@ struct ContainerView: View {
                 selection: $selection,
                 showOrderCreated: $showOrderCreated
             )
-            switch(selection){
-                case .cafeList : CafeListView()
-                case .menu: MenuView(
+            switch selection {
+            case .cafeList: CafeListView()
+            case .menu: MenuView(
                     isRootActive: $showOrderCreated,
                     selection: $selection,
                     showOrderCreated: $showOrderCreated
                 )
-                case .profile : ProfileView(showOrderCreated: $showOrderCreated, showCreatedAddress: $showCreatedAddress)
+            case .profile: ProfileView(showOrderCreated: $showOrderCreated, showCreatedAddress: $showCreatedAddress)
             }
             BottomBarView(selection: $selection, title: $title)
         }
-        .onAppear(){
+        .onAppear {
             viewModel.subscribeOnFlow()
         }
-        .onDisappear(){
+        .onDisappear {
             viewModel.unsubFromFlows()
         }.onChange(of: selection) { newValue in
             isShowLogo = newValue == .menu
-            
-            switch(newValue){
-                case .cafeList: title = "title_restaurants"
-                case .menu: title = "title_menu"
-                case .profile: title = "title_profile"
+
+            switch newValue {
+            case .cafeList: title = "title_restaurants"
+            case .menu: title = "title_menu"
+            case .profile: title = "title_profile"
             }
         }
     }
 }
 
-enum MainContainerState{
+enum MainContainerState {
     case cafeList
     case menu
     case profile

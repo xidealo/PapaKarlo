@@ -12,7 +12,7 @@ struct ConsumerCartViewState {
     var state: ConsumerCartState
 }
 
-enum ConsumerCartState{
+enum ConsumerCartState {
     case loading
     case error
     case success([CartProductItemUi], [MenuProductItem], BottomPanelInfoUi?)
