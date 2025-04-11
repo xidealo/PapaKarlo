@@ -70,7 +70,7 @@ struct SuccessCafeAddressListView: View {
             ScrollView {
                 LazyVStack(spacing:0){
                     ForEach(viewModel.cafeAddressViewState.addressItemList){ address in
-                        if(address.isClickable){
+                        if(address.isClickable && address.isEnabled){
                             Button(action: {
                                 //save selected
                                 viewModel.selectAddress(uuid: address.id)

@@ -51,7 +51,8 @@ struct UserAddressListView: View {
                         id: userAddress.address.uuid,
                         address: userAddress.getAddress(),
                         isClickable: isClickable,
-                        isSelected: userAddress.isSelected
+                        isSelected: userAddress.isSelected,
+                        isEnabled: true
                     )
                 }),
                 show: show,

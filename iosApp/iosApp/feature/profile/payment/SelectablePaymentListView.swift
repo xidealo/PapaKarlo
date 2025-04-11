@@ -52,7 +52,8 @@ struct SuccessSelectablePaymentListView: View {
                         }) {
                             SelectableElementCard(
                                 locolized: payment.name,
-                                isSelected: payment.isSelected
+                                isSelected: payment.isSelected, 
+                                isEnabled: true
                             )
                             .padding(.horizontal, Diems.MEDIUM_PADDING)
                             .padding(.top, Diems.SMALL_PADDING)
