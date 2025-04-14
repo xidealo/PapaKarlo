@@ -739,6 +739,24 @@
 		026C1FCF2A2691BF00838266 /* djan.plist in Resources */ = {isa = PBXBuildFile; fileRef = 026C1FCD2A2691B000838266 /* djan.plist */; };
 		026C1FD02A2691C600838266 /* yuliar.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0251DCA229DE11990008DBA5 /* yuliar.plist */; };
 		026C1FD32A2691F300838266 /* djanAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 026C1FD12A2691E500838266 /* djanAssets.xcassets */; };
+		027839C22DAD360500707F4F /* SettingsViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027839C12DAD360500707F4F /* SettingsViewState.swift */; };
+		027839C32DAD360500707F4F /* SettingsViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027839C12DAD360500707F4F /* SettingsViewState.swift */; };
+		027839C42DAD360500707F4F /* SettingsViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027839C12DAD360500707F4F /* SettingsViewState.swift */; };
+		027839C52DAD360500707F4F /* SettingsViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027839C12DAD360500707F4F /* SettingsViewState.swift */; };
+		027839C62DAD360500707F4F /* SettingsViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027839C12DAD360500707F4F /* SettingsViewState.swift */; };
+		027839C72DAD360500707F4F /* SettingsViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027839C12DAD360500707F4F /* SettingsViewState.swift */; };
+		027839C82DAD360500707F4F /* SettingsViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027839C12DAD360500707F4F /* SettingsViewState.swift */; };
+		027839C92DAD360500707F4F /* SettingsViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027839C12DAD360500707F4F /* SettingsViewState.swift */; };
+		027839CA2DAD360500707F4F /* SettingsViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027839C12DAD360500707F4F /* SettingsViewState.swift */; };
+		027839CC2DAD45B500707F4F /* TextCardWithDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027839CB2DAD45B500707F4F /* TextCardWithDivider.swift */; };
+		027839CD2DAD45B500707F4F /* TextCardWithDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027839CB2DAD45B500707F4F /* TextCardWithDivider.swift */; };
+		027839CE2DAD45B500707F4F /* TextCardWithDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027839CB2DAD45B500707F4F /* TextCardWithDivider.swift */; };
+		027839CF2DAD45B500707F4F /* TextCardWithDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027839CB2DAD45B500707F4F /* TextCardWithDivider.swift */; };
+		027839D02DAD45B500707F4F /* TextCardWithDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027839CB2DAD45B500707F4F /* TextCardWithDivider.swift */; };
+		027839D12DAD45B500707F4F /* TextCardWithDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027839CB2DAD45B500707F4F /* TextCardWithDivider.swift */; };
+		027839D22DAD45B500707F4F /* TextCardWithDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027839CB2DAD45B500707F4F /* TextCardWithDivider.swift */; };
+		027839D32DAD45B500707F4F /* TextCardWithDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027839CB2DAD45B500707F4F /* TextCardWithDivider.swift */; };
+		027839D42DAD45B500707F4F /* TextCardWithDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027839CB2DAD45B500707F4F /* TextCardWithDivider.swift */; };
 		027CB0162A346F7B00350EB2 /* ButtonText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0253930929AB92A800C8B04B /* ButtonText.swift */; };
 		027CB0172A346F7B00350EB2 /* CategoryItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323465287879EF0048CF39 /* CategoryItemModel.swift */; };
 		027CB0182A346F7B00350EB2 /* NavigationTextCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023234B328787A180048CF39 /* NavigationTextCard.swift */; };
@@ -1250,6 +1268,8 @@
 		026C1FCB2A2690B900838266 /* djan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = djan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		026C1FCD2A2691B000838266 /* djan.plist */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc.preprocessed; fileEncoding = 4; path = djan.plist; sourceTree = "<group>"; };
 		026C1FD12A2691E500838266 /* djanAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = djanAssets.xcassets; sourceTree = "<group>"; };
+		027839C12DAD360500707F4F /* SettingsViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewState.swift; sourceTree = "<group>"; };
+		027839CB2DAD45B500707F4F /* TextCardWithDivider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextCardWithDivider.swift; sourceTree = "<group>"; };
 		027CB08F2A346F7B00350EB2 /* gustopub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = gustopub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		027CB0932A34713400350EB2 /* gustoPubAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = gustoPubAssets.xcassets; sourceTree = "<group>"; };
 		0280BE2A29A0ED14007F7416 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
@@ -1541,6 +1561,7 @@
 			children = (
 				02323445287879EF0048CF39 /* change_city */,
 				02323449287879EF0048CF39 /* SettingsView.swift */,
+				027839C12DAD360500707F4F /* SettingsViewState.swift */,
 			);
 			path = settings;
 			sourceTree = "<group>";
@@ -1709,6 +1730,7 @@
 				028D4ADB2C778C2F00594D61 /* NavigationCardWithDivider.swift */,
 				02688BEE2DA4574400D76CC1 /* BannerCard.swift */,
 				02688BF82DA4623D00D76CC1 /* WarningCard.swift */,
+				027839CB2DAD45B500707F4F /* TextCardWithDivider.swift */,
 			);
 			path = card;
 			sourceTree = "<group>";
@@ -2881,6 +2903,7 @@
 				0219B7972B8FB97C00305E2D /* CafeAddressListView.swift in Sources */,
 				0219B7982B8FB97C00305E2D /* CafeListView.swift in Sources */,
 				029FCF072BF7F68C00F0D51C /* ConsumerCartViewState.swift in Sources */,
+				027839D02DAD45B500707F4F /* TextCardWithDivider.swift in Sources */,
 				0219B7992B8FB97C00305E2D /* ToolbarWithCartView.swift in Sources */,
 				0219B79A2B8FB97C00305E2D /* AppTypography.swift in Sources */,
 				0219B79B2B8FB97C00305E2D /* SelectCityView.swift in Sources */,
@@ -2975,6 +2998,7 @@
 				0219B7EA2B8FB97C00305E2D /* TextCard.swift in Sources */,
 				0219B7EB2B8FB97C00305E2D /* OrderListView.swift in Sources */,
 				0219B7EC2B8FB97C00305E2D /* ToolbarViewState.swift in Sources */,
+				027839C62DAD360500707F4F /* SettingsViewState.swift in Sources */,
 				0219B7ED2B8FB97C00305E2D /* OrderItemView.swift in Sources */,
 				0219B7EE2B8FB97C00305E2D /* UpdateView.swift in Sources */,
 				0219B7EF2B8FB97C00305E2D /* LargeHeaderText.swift in Sources */,
@@ -3002,6 +3026,7 @@
 				025BF77F2CAB354D00DF0946 /* CafeAddressListView.swift in Sources */,
 				025BF7802CAB354D00DF0946 /* CafeListView.swift in Sources */,
 				025BF7812CAB354D00DF0946 /* ConsumerCartViewState.swift in Sources */,
+				027839D22DAD45B500707F4F /* TextCardWithDivider.swift in Sources */,
 				025BF7822CAB354D00DF0946 /* ToolbarWithCartView.swift in Sources */,
 				025BF7832CAB354D00DF0946 /* AppTypography.swift in Sources */,
 				025BF7842CAB354D00DF0946 /* SelectCityView.swift in Sources */,
@@ -3096,6 +3121,7 @@
 				025BF7D92CAB354D00DF0946 /* TextCard.swift in Sources */,
 				025BF7DA2CAB354D00DF0946 /* OrderListView.swift in Sources */,
 				025BF7DB2CAB354D00DF0946 /* ToolbarViewState.swift in Sources */,
+				027839C82DAD360500707F4F /* SettingsViewState.swift in Sources */,
 				025BF7DC2CAB354D00DF0946 /* OrderItemView.swift in Sources */,
 				025BF7DD2CAB354D00DF0946 /* UpdateView.swift in Sources */,
 				025BF7DE2CAB354D00DF0946 /* LargeHeaderText.swift in Sources */,
@@ -3123,6 +3149,7 @@
 				025F42DC2CD0159400C854AF /* CafeAddressListView.swift in Sources */,
 				025F42DD2CD0159400C854AF /* CafeListView.swift in Sources */,
 				025F42DE2CD0159400C854AF /* ConsumerCartViewState.swift in Sources */,
+				027839D32DAD45B500707F4F /* TextCardWithDivider.swift in Sources */,
 				025F42DF2CD0159400C854AF /* ToolbarWithCartView.swift in Sources */,
 				025F42E02CD0159400C854AF /* AppTypography.swift in Sources */,
 				025F42E12CD0159400C854AF /* SelectCityView.swift in Sources */,
@@ -3217,6 +3244,7 @@
 				025F43362CD0159400C854AF /* TextCard.swift in Sources */,
 				025F43372CD0159400C854AF /* OrderListView.swift in Sources */,
 				025F43382CD0159400C854AF /* ToolbarViewState.swift in Sources */,
+				027839C92DAD360500707F4F /* SettingsViewState.swift in Sources */,
 				025F43392CD0159400C854AF /* OrderItemView.swift in Sources */,
 				025F433A2CD0159400C854AF /* UpdateView.swift in Sources */,
 				025F433B2CD0159400C854AF /* LargeHeaderText.swift in Sources */,
@@ -3244,6 +3272,7 @@
 				025F77FD2CD14C3400C87D99 /* CafeAddressListView.swift in Sources */,
 				025F77FE2CD14C3400C87D99 /* CafeListView.swift in Sources */,
 				025F77FF2CD14C3400C87D99 /* ConsumerCartViewState.swift in Sources */,
+				027839D42DAD45B500707F4F /* TextCardWithDivider.swift in Sources */,
 				025F78002CD14C3400C87D99 /* ToolbarWithCartView.swift in Sources */,
 				025F78012CD14C3400C87D99 /* AppTypography.swift in Sources */,
 				025F78022CD14C3400C87D99 /* SelectCityView.swift in Sources */,
@@ -3338,6 +3367,7 @@
 				025F78572CD14C3400C87D99 /* TextCard.swift in Sources */,
 				025F78582CD14C3400C87D99 /* OrderListView.swift in Sources */,
 				025F78592CD14C3400C87D99 /* ToolbarViewState.swift in Sources */,
+				027839CA2DAD360500707F4F /* SettingsViewState.swift in Sources */,
 				025F785A2CD14C3400C87D99 /* OrderItemView.swift in Sources */,
 				025F785B2CD14C3400C87D99 /* UpdateView.swift in Sources */,
 				025F785C2CD14C3400C87D99 /* LargeHeaderText.swift in Sources */,
@@ -3365,6 +3395,7 @@
 				026C1F5B2A2690B900838266 /* CafeAddressListView.swift in Sources */,
 				026C1F5C2A2690B900838266 /* CafeListView.swift in Sources */,
 				029FCF052BF7F68C00F0D51C /* ConsumerCartViewState.swift in Sources */,
+				027839CE2DAD45B500707F4F /* TextCardWithDivider.swift in Sources */,
 				026C1F5D2A2690B900838266 /* ToolbarWithCartView.swift in Sources */,
 				026C1F5E2A2690B900838266 /* AppTypography.swift in Sources */,
 				026C1F5F2A2690B900838266 /* SelectCityView.swift in Sources */,
@@ -3459,6 +3490,7 @@
 				026C1FB12A2690B900838266 /* TextCard.swift in Sources */,
 				026C1FB22A2690B900838266 /* OrderListView.swift in Sources */,
 				026C1FB32A2690B900838266 /* ToolbarViewState.swift in Sources */,
+				027839C42DAD360500707F4F /* SettingsViewState.swift in Sources */,
 				026C1FB42A2690B900838266 /* OrderItemView.swift in Sources */,
 				026C1FB52A2690B900838266 /* UpdateView.swift in Sources */,
 				026C1FB62A2690B900838266 /* LargeHeaderText.swift in Sources */,
@@ -3486,6 +3518,7 @@
 				027CB01E2A346F7B00350EB2 /* CafeAddressListView.swift in Sources */,
 				027CB01F2A346F7B00350EB2 /* CafeListView.swift in Sources */,
 				029FCF062BF7F68C00F0D51C /* ConsumerCartViewState.swift in Sources */,
+				027839CF2DAD45B500707F4F /* TextCardWithDivider.swift in Sources */,
 				027CB0202A346F7B00350EB2 /* ToolbarWithCartView.swift in Sources */,
 				027CB0212A346F7B00350EB2 /* AppTypography.swift in Sources */,
 				027CB0222A346F7B00350EB2 /* SelectCityView.swift in Sources */,
@@ -3580,6 +3613,7 @@
 				027CB0742A346F7B00350EB2 /* TextCard.swift in Sources */,
 				027CB0752A346F7B00350EB2 /* OrderListView.swift in Sources */,
 				027CB0762A346F7B00350EB2 /* ToolbarViewState.swift in Sources */,
+				027839C52DAD360500707F4F /* SettingsViewState.swift in Sources */,
 				027CB0772A346F7B00350EB2 /* OrderItemView.swift in Sources */,
 				027CB0782A346F7B00350EB2 /* UpdateView.swift in Sources */,
 				027CB0792A346F7B00350EB2 /* LargeHeaderText.swift in Sources */,
@@ -3607,6 +3641,7 @@
 				02891F772BDAEA0D0043B466 /* CafeAddressListView.swift in Sources */,
 				02891F782BDAEA0D0043B466 /* CafeListView.swift in Sources */,
 				029FCF082BF7F68C00F0D51C /* ConsumerCartViewState.swift in Sources */,
+				027839D12DAD45B500707F4F /* TextCardWithDivider.swift in Sources */,
 				02891F792BDAEA0D0043B466 /* ToolbarWithCartView.swift in Sources */,
 				02891F7A2BDAEA0D0043B466 /* AppTypography.swift in Sources */,
 				02891F7B2BDAEA0D0043B466 /* SelectCityView.swift in Sources */,
@@ -3701,6 +3736,7 @@
 				02891FCA2BDAEA0D0043B466 /* TextCard.swift in Sources */,
 				02891FCB2BDAEA0D0043B466 /* OrderListView.swift in Sources */,
 				02891FCC2BDAEA0D0043B466 /* ToolbarViewState.swift in Sources */,
+				027839C72DAD360500707F4F /* SettingsViewState.swift in Sources */,
 				02891FCD2BDAEA0D0043B466 /* OrderItemView.swift in Sources */,
 				02891FCE2BDAEA0D0043B466 /* UpdateView.swift in Sources */,
 				02891FCF2BDAEA0D0043B466 /* LargeHeaderText.swift in Sources */,
@@ -3728,6 +3764,7 @@
 				02ADC33F29D9D0880062A141 /* CafeAddressListView.swift in Sources */,
 				02ADC34029D9D0880062A141 /* CafeListView.swift in Sources */,
 				029FCF042BF7F68C00F0D51C /* ConsumerCartViewState.swift in Sources */,
+				027839CD2DAD45B500707F4F /* TextCardWithDivider.swift in Sources */,
 				02ADC34129D9D0880062A141 /* ToolbarWithCartView.swift in Sources */,
 				0294FD7E29E35E8300568A10 /* AppTypography.swift in Sources */,
 				02ADC34229D9D0880062A141 /* SelectCityView.swift in Sources */,
@@ -3822,6 +3859,7 @@
 				02ADC39529D9D0880062A141 /* TextCard.swift in Sources */,
 				02ADC39629D9D0880062A141 /* OrderListView.swift in Sources */,
 				02ADC39729D9D0880062A141 /* ToolbarViewState.swift in Sources */,
+				027839C32DAD360500707F4F /* SettingsViewState.swift in Sources */,
 				02ADC39829D9D0880062A141 /* OrderItemView.swift in Sources */,
 				02ADC39929D9D0880062A141 /* UpdateView.swift in Sources */,
 				02ADC39A29D9D0880062A141 /* LargeHeaderText.swift in Sources */,
@@ -3849,6 +3887,7 @@
 				020FEEBF28D3AEF7002B3D69 /* CafeAddressListView.swift in Sources */,
 				02323497287879EF0048CF39 /* CafeListView.swift in Sources */,
 				029FCF032BF7F68C00F0D51C /* ConsumerCartViewState.swift in Sources */,
+				027839CC2DAD45B500707F4F /* TextCardWithDivider.swift in Sources */,
 				0220B1022953A6E000CD93B4 /* ToolbarWithCartView.swift in Sources */,
 				0294FD7D29E35E8300568A10 /* AppTypography.swift in Sources */,
 				0232347F287879EF0048CF39 /* SelectCityView.swift in Sources */,
@@ -3943,6 +3982,7 @@
 				023234D028787A180048CF39 /* TextCard.swift in Sources */,
 				02323487287879EF0048CF39 /* OrderListView.swift in Sources */,
 				023234AC287879EF0048CF39 /* ToolbarViewState.swift in Sources */,
+				027839C22DAD360500707F4F /* SettingsViewState.swift in Sources */,
 				02323488287879EF0048CF39 /* OrderItemView.swift in Sources */,
 				0232347C287879EF0048CF39 /* UpdateView.swift in Sources */,
 				023234D628787A180048CF39 /* LargeHeaderText.swift in Sources */,
