@@ -188,17 +188,22 @@ struct ProductDetailsView: View {
                     .padding(.bottom, 48)
                 }
             }
-
-            Button(action: {
-                viewModel.onAction(
-                    action: ProductDetailsStateActionAddProductToCartClick(
-                        productDetailsOpenedFrom: productDetailsOpenedFrom,
-                        cartProductUuid: cartProductUuid
+                        
+            FoodDeliveryExtendedFab(
+                text: Strings.ACTION_PRODUCT_DETAILS_ADD + productDetailsViewState.priceWithAdditions,
+                onClick: {
+                    viewModel.onAction(
+                        action: ProductDetailsStateActionAddProductToCartClick(
+                            productDetailsOpenedFrom: productDetailsOpenedFrom,
+                            cartProductUuid: cartProductUuid
+                        )
                     )
-                )
-            }) {
-                ButtonText(text: Strings.ACTION_PRODUCT_DETAILS_ADD + productDetailsViewState.priceWithAdditions)
-            }.padding(Diems.MEDIUM_PADDING)
+                },
+                icon: "ic_plus",
+                iconBadge: nil,
+                maxWidth: .infinity
+            )
+            .padding(Diems.MEDIUM_PADDING)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(AppColor.surface)

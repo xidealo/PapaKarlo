@@ -638,6 +638,15 @@
 		0269DB412C263DEA009D36AE /* PaymentMethodUi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0269DB3D2C263DEA009D36AE /* PaymentMethodUi.swift */; };
 		0269DB422C263DEA009D36AE /* PaymentMethodUi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0269DB3D2C263DEA009D36AE /* PaymentMethodUi.swift */; };
 		0269DB432C263DEA009D36AE /* PaymentMethodUi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0269DB3D2C263DEA009D36AE /* PaymentMethodUi.swift */; };
+		0269E1382DAE9B39006507C9 /* FoodDeliveryExtendedFab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0269E1372DAE9B39006507C9 /* FoodDeliveryExtendedFab.swift */; };
+		0269E1392DAE9B39006507C9 /* FoodDeliveryExtendedFab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0269E1372DAE9B39006507C9 /* FoodDeliveryExtendedFab.swift */; };
+		0269E13A2DAE9B39006507C9 /* FoodDeliveryExtendedFab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0269E1372DAE9B39006507C9 /* FoodDeliveryExtendedFab.swift */; };
+		0269E13B2DAE9B39006507C9 /* FoodDeliveryExtendedFab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0269E1372DAE9B39006507C9 /* FoodDeliveryExtendedFab.swift */; };
+		0269E13C2DAE9B39006507C9 /* FoodDeliveryExtendedFab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0269E1372DAE9B39006507C9 /* FoodDeliveryExtendedFab.swift */; };
+		0269E13D2DAE9B39006507C9 /* FoodDeliveryExtendedFab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0269E1372DAE9B39006507C9 /* FoodDeliveryExtendedFab.swift */; };
+		0269E13E2DAE9B39006507C9 /* FoodDeliveryExtendedFab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0269E1372DAE9B39006507C9 /* FoodDeliveryExtendedFab.swift */; };
+		0269E13F2DAE9B39006507C9 /* FoodDeliveryExtendedFab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0269E1372DAE9B39006507C9 /* FoodDeliveryExtendedFab.swift */; };
+		0269E1402DAE9B39006507C9 /* FoodDeliveryExtendedFab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0269E1372DAE9B39006507C9 /* FoodDeliveryExtendedFab.swift */; };
 		026C1F532A2690B900838266 /* ButtonText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0253930929AB92A800C8B04B /* ButtonText.swift */; };
 		026C1F542A2690B900838266 /* CategoryItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323465287879EF0048CF39 /* CategoryItemModel.swift */; };
 		026C1F552A2690B900838266 /* NavigationTextCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023234B328787A180048CF39 /* NavigationTextCard.swift */; };
@@ -1265,6 +1274,7 @@
 		02688BEE2DA4574400D76CC1 /* BannerCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerCard.swift; sourceTree = "<group>"; };
 		02688BF82DA4623D00D76CC1 /* WarningCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarningCard.swift; sourceTree = "<group>"; };
 		0269DB3D2C263DEA009D36AE /* PaymentMethodUi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodUi.swift; sourceTree = "<group>"; };
+		0269E1372DAE9B39006507C9 /* FoodDeliveryExtendedFab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodDeliveryExtendedFab.swift; sourceTree = "<group>"; };
 		026C1FCB2A2690B900838266 /* djan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = djan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		026C1FCD2A2691B000838266 /* djan.plist */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc.preprocessed; fileEncoding = 4; path = djan.plist; sourceTree = "<group>"; };
 		026C1FD12A2691E500838266 /* djanAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = djanAssets.xcassets; sourceTree = "<group>"; };
@@ -1731,6 +1741,7 @@
 				02688BEE2DA4574400D76CC1 /* BannerCard.swift */,
 				02688BF82DA4623D00D76CC1 /* WarningCard.swift */,
 				027839CB2DAD45B500707F4F /* TextCardWithDivider.swift */,
+				0269E1372DAE9B39006507C9 /* FoodDeliveryExtendedFab.swift */,
 			);
 			path = card;
 			sourceTree = "<group>";
@@ -2952,6 +2963,7 @@
 				0219B7C02B8FB97C00305E2D /* OrderStatusBar.swift in Sources */,
 				0219B7C12B8FB97C00305E2D /* EmptyWithIconView.swift in Sources */,
 				0219B7C22B8FB97C00305E2D /* FeedbackView.swift in Sources */,
+				0269E13C2DAE9B39006507C9 /* FoodDeliveryExtendedFab.swift in Sources */,
 				0219B7C32B8FB97C00305E2D /* DefaultImage.swift in Sources */,
 				02643D532D0F79D80026A78B /* SharedLifecycle.swift in Sources */,
 				0219B7C42B8FB97C00305E2D /* ConfirmView.swift in Sources */,
@@ -3075,6 +3087,7 @@
 				025BF7AD2CAB354D00DF0946 /* OrderStatusBar.swift in Sources */,
 				025BF7AE2CAB354D00DF0946 /* EmptyWithIconView.swift in Sources */,
 				025BF7AF2CAB354D00DF0946 /* FeedbackView.swift in Sources */,
+				0269E13E2DAE9B39006507C9 /* FoodDeliveryExtendedFab.swift in Sources */,
 				025BF7B02CAB354D00DF0946 /* DefaultImage.swift in Sources */,
 				02643D552D0F79D80026A78B /* SharedLifecycle.swift in Sources */,
 				025BF7B12CAB354D00DF0946 /* ConfirmView.swift in Sources */,
@@ -3198,6 +3211,7 @@
 				025F430A2CD0159400C854AF /* OrderStatusBar.swift in Sources */,
 				025F430B2CD0159400C854AF /* EmptyWithIconView.swift in Sources */,
 				025F430C2CD0159400C854AF /* FeedbackView.swift in Sources */,
+				0269E13F2DAE9B39006507C9 /* FoodDeliveryExtendedFab.swift in Sources */,
 				025F430D2CD0159400C854AF /* DefaultImage.swift in Sources */,
 				02643D562D0F79D80026A78B /* SharedLifecycle.swift in Sources */,
 				025F430E2CD0159400C854AF /* ConfirmView.swift in Sources */,
@@ -3321,6 +3335,7 @@
 				025F782B2CD14C3400C87D99 /* OrderStatusBar.swift in Sources */,
 				025F782C2CD14C3400C87D99 /* EmptyWithIconView.swift in Sources */,
 				025F782D2CD14C3400C87D99 /* FeedbackView.swift in Sources */,
+				0269E1402DAE9B39006507C9 /* FoodDeliveryExtendedFab.swift in Sources */,
 				025F782E2CD14C3400C87D99 /* DefaultImage.swift in Sources */,
 				02643D572D0F79D80026A78B /* SharedLifecycle.swift in Sources */,
 				025F782F2CD14C3400C87D99 /* ConfirmView.swift in Sources */,
@@ -3444,6 +3459,7 @@
 				026C1F862A2690B900838266 /* OrderStatusBar.swift in Sources */,
 				026C1F872A2690B900838266 /* EmptyWithIconView.swift in Sources */,
 				026C1F882A2690B900838266 /* FeedbackView.swift in Sources */,
+				0269E13A2DAE9B39006507C9 /* FoodDeliveryExtendedFab.swift in Sources */,
 				026C1F892A2690B900838266 /* DefaultImage.swift in Sources */,
 				02643D512D0F79D80026A78B /* SharedLifecycle.swift in Sources */,
 				026C1F8A2A2690B900838266 /* ConfirmView.swift in Sources */,
@@ -3567,6 +3583,7 @@
 				027CB0492A346F7B00350EB2 /* OrderStatusBar.swift in Sources */,
 				027CB04A2A346F7B00350EB2 /* EmptyWithIconView.swift in Sources */,
 				027CB04B2A346F7B00350EB2 /* FeedbackView.swift in Sources */,
+				0269E13B2DAE9B39006507C9 /* FoodDeliveryExtendedFab.swift in Sources */,
 				027CB04C2A346F7B00350EB2 /* DefaultImage.swift in Sources */,
 				02643D522D0F79D80026A78B /* SharedLifecycle.swift in Sources */,
 				027CB04D2A346F7B00350EB2 /* ConfirmView.swift in Sources */,
@@ -3690,6 +3707,7 @@
 				02891FA02BDAEA0D0043B466 /* OrderStatusBar.swift in Sources */,
 				02891FA12BDAEA0D0043B466 /* EmptyWithIconView.swift in Sources */,
 				02891FA22BDAEA0D0043B466 /* FeedbackView.swift in Sources */,
+				0269E13D2DAE9B39006507C9 /* FoodDeliveryExtendedFab.swift in Sources */,
 				02891FA32BDAEA0D0043B466 /* DefaultImage.swift in Sources */,
 				02643D542D0F79D80026A78B /* SharedLifecycle.swift in Sources */,
 				02891FA42BDAEA0D0043B466 /* ConfirmView.swift in Sources */,
@@ -3813,6 +3831,7 @@
 				02ADC36A29D9D0880062A141 /* OrderStatusBar.swift in Sources */,
 				0294FD7B29DF71B900568A10 /* EmptyWithIconView.swift in Sources */,
 				02ADC36B29D9D0880062A141 /* FeedbackView.swift in Sources */,
+				0269E1392DAE9B39006507C9 /* FoodDeliveryExtendedFab.swift in Sources */,
 				02ADC36C29D9D0880062A141 /* DefaultImage.swift in Sources */,
 				02643D502D0F79D80026A78B /* SharedLifecycle.swift in Sources */,
 				02ADC36D29D9D0880062A141 /* ConfirmView.swift in Sources */,
@@ -3936,6 +3955,7 @@
 				023234CC28787A180048CF39 /* OrderStatusBar.swift in Sources */,
 				0294FD7A29DF71B900568A10 /* EmptyWithIconView.swift in Sources */,
 				02323492287879EF0048CF39 /* FeedbackView.swift in Sources */,
+				0269E1382DAE9B39006507C9 /* FoodDeliveryExtendedFab.swift in Sources */,
 				023234D928787A180048CF39 /* DefaultImage.swift in Sources */,
 				02643D4F2D0F79D80026A78B /* SharedLifecycle.swift in Sources */,
 				02323481287879EF0048CF39 /* ConfirmView.swift in Sources */,
