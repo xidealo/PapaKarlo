@@ -8,11 +8,10 @@
 
 import Foundation
 
-class SplashViewState :NSObject {
-    
+class SplashViewState: NSObject {
     let splashState: SplashState
-    
-    init(splashState:SplashState){
+
+    init(splashState: SplashState) {
         self.splashState = splashState
     }
 }

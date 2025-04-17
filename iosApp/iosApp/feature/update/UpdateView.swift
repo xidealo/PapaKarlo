@@ -5,25 +5,24 @@
 //  Created by Марк Шавловский on 17.03.2022.
 //
 
-import SwiftUI
 import shared
+import SwiftUI
 
 struct UpdateView: View, SharedLifecycleWithState {
-    
-    @State var viewModel: UpdateViewModel = UpdateViewModel(
+    @State var viewModel: UpdateViewModel = .init(
         getLinkUseCase: iosComponent.provideGetLinkUseCase()
     )
-    
+
     @State var updateViewState = UpdateViewState(
         state: UpdateState.loading
     )
-    
+
     @State var listener: Closeable?
-    
+
     @State var eventsListener: Closeable?
-    
+
     var body: some View {
-        VStack(spacing : 0){
+        VStack(spacing: 0) {
             switch updateViewState.state {
             case .loading:
                 LoadingView()
@@ -35,17 +34,17 @@ struct UpdateView: View, SharedLifecycleWithState {
                         viewModel.onAction(action: UpdateStateActionInit(linkType: LinkType.appStore))
                     }
                 )
-            case .success(let link):
+            case let .success(link):
                 Spacer()
-                
+
                 DefaultImage(imageName: "NewVersion")
-                
+
                 Text(Strings.MSG_UPDATE_GO_TO)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 16)
-                
+
                 Spacer()
-                
+
                 Button(
                     action: {
                         viewModel.onAction(action: UpdateStateActionUpdateClick(linkValue: link?.linkValue ?? ""))
@@ -71,35 +70,35 @@ struct UpdateView: View, SharedLifecycleWithState {
             subscribe()
             eventsSubscribe()
         })
-        .onDisappear(){
+        .onDisappear {
             unsubscribe()
         }
     }
-    
+
     func subscribe() {
         viewModel.dataState.watch { updateVM in
-            if let updateStateVM =  updateVM {
+            if let updateStateVM = updateVM {
                 switch updateStateVM.state {
-                case UpdateStateDataState.State.loading : updateViewState = UpdateViewState(state: UpdateState.loading)
-                case UpdateStateDataState.State.error : updateViewState = UpdateViewState(state: UpdateState.error)
-                case UpdateStateDataState.State.success : updateViewState =  UpdateViewState(
-                    state: UpdateState.success(updateStateVM.link)
-                )
+                case UpdateStateDataState.State.loading: updateViewState = UpdateViewState(state: UpdateState.loading)
+                case UpdateStateDataState.State.error: updateViewState = UpdateViewState(state: UpdateState.error)
+                case UpdateStateDataState.State.success: updateViewState = UpdateViewState(
+                        state: UpdateState.success(updateStateVM.link)
+                    )
                 default:
-                    updateViewState =  UpdateViewState(state: UpdateState.error)
+                    updateViewState = UpdateViewState(state: UpdateState.error)
                 }
             }
         }
     }
-    
-    func eventsSubscribe(){
+
+    func eventsSubscribe() {
         eventsListener = viewModel.events.watch(block: { _events in
-            if let events = _events{
+            if let events = _events {
                 let updateEvents = events as? [UpdateStateEvent] ?? []
-                
-                updateEvents.forEach { event in
-                    switch(event) {
-                    case is UpdateStateEventNavigateToUpdateEvent :
+
+                for event in updateEvents {
+                    switch event {
+                    case is UpdateStateEventNavigateToUpdateEvent:
                         if let url = URL(string: (event as? UpdateStateEventNavigateToUpdateEvent)?.linkValue ?? "") {
                             if UIApplication.shared.canOpenURL(url) {
                                 UIApplication.shared.open(url, options: [:], completionHandler: nil)
@@ -111,14 +110,15 @@ struct UpdateView: View, SharedLifecycleWithState {
                         print("def")
                     }
                 }
-                
+
                 if !updateEvents.isEmpty {
                     viewModel.consumeEvents(events: updateEvents)
                 }
             }
         })
     }
-    func unsubscribe(){
+
+    func unsubscribe() {
         listener?.close()
         listener = nil
         eventsListener?.close()

@@ -8,19 +8,19 @@
 import SwiftUI
 
 struct TextCard: View {
-    let placeHolder:String
-    let text:String
+    let placeHolder: String
+    let text: String
 
     var body: some View {
-        VStack(spacing:0){
+        VStack(spacing: 0) {
             Text(placeHolder)
                 .labelSmall(weight: .medium)
                 .foregroundColor(AppColor.onSurfaceVariant)
-                .frame(maxWidth:.infinity, alignment: .leading)
-            
+                .frame(maxWidth: .infinity, alignment: .leading)
+
             Text(text)
                 .bodyMedium()
-                .frame(maxWidth:.infinity, alignment: .leading)
+                .frame(maxWidth: .infinity, alignment: .leading)
                 .foregroundColor(AppColor.onSurface)
                 .multilineTextAlignment(.leading)
         }.padding(.horizontal, Diems.MEDIUM_PADDING)

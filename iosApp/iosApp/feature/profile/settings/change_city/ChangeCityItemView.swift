@@ -11,7 +11,7 @@ struct ChangeCityItemView: View {
     var city: ChangeCityItem
 
     var body: some View {
-        SelectableElementCard(text: city.city, isSelected: city.isSelected)
+        SelectableElementCard(text: city.city, isSelected: city.isSelected, isEnabled: true)
     }
 }
 

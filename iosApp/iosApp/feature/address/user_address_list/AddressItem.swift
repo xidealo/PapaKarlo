@@ -7,9 +7,10 @@
 
 import SwiftUI
 
-struct AddressItem:Identifiable {
-    var id : String
-    var address:String
-    var isClickable:Bool
-    var isSelected:Bool
+struct AddressItem: Identifiable {
+    var id: String
+    var address: String
+    var isClickable: Bool
+    var isSelected: Bool
+    var isEnabled: Bool
 }

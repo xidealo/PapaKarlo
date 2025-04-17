@@ -34,13 +34,12 @@ import com.bunbeauty.papakarlo.common.BaseComposeFragment
 import com.bunbeauty.papakarlo.common.extension.navigateSafe
 import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryAsyncImage
 import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
-import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
+import com.bunbeauty.papakarlo.common.ui.element.button.FoodDeliveryExtendedFab
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCardDefaults
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCheckbox
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryItem
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryRadioButton
-import com.bunbeauty.papakarlo.common.ui.element.topbar.FoodDeliveryCartAction
 import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
@@ -143,39 +142,26 @@ class ProductDetailsFragment :
             backActionClick = {
                 onAction(ProductDetailsState.Action.BackClick)
             },
-            topActions = if (productDetailsViewState is ProductDetailsViewState.Success) {
-                persistentListOf(
-                    FoodDeliveryCartAction(topCartUi = productDetailsViewState.topCartUi) {
-                        val backQueue = findNavController().currentBackStack.value
-                        if ((backQueue.size > 1) &&
-                            (backQueue[backQueue.lastIndex - 1].destination.id == R.id.consumerCartFragment)
-                        ) {
-                            onAction(ProductDetailsState.Action.BackClick)
-                        } else {
-                            onAction(ProductDetailsState.Action.CartClick)
-                        }
-                    }
-                )
-            } else {
-                persistentListOf()
-            },
             actionButton = {
                 if (productDetailsViewState is ProductDetailsViewState.Success) {
-                    MainButton(
+                    FoodDeliveryExtendedFab(
                         modifier = Modifier
+                            .fillMaxWidth()
                             .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
                         text = stringResource(
                             id = R.string.action_product_details_want,
                             productDetailsViewState.menuProductUi.priceWithAdditions
-                        )
-                    ) {
-                        onAction(
-                            ProductDetailsState.Action.AddProductToCartClick(
-                                productDetailsOpenedFrom = args.productDetailsOpenedFrom,
-                                cartProductUuid = args.cartProductUuid
+                        ),
+                        onClick = {
+                            onAction(
+                                ProductDetailsState.Action.AddProductToCartClick(
+                                    productDetailsOpenedFrom = args.productDetailsOpenedFrom,
+                                    cartProductUuid = args.cartProductUuid
+                                )
                             )
-                        )
-                    }
+                        },
+                        icon = R.drawable.ic_plus_16
+                    )
                 }
             },
             backgroundColor = FoodDeliveryTheme.colors.mainColors.surface

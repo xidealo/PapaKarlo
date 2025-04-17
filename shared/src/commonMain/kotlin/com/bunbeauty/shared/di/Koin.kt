@@ -21,6 +21,7 @@ import com.bunbeauty.shared.di.usecase.userAddressUseCaseModule
 import com.bunbeauty.shared.domain.feature.addition.GetAdditionGroupsWithSelectedAdditionUseCase
 import com.bunbeauty.shared.domain.feature.addition.GetPriceOfSelectedAdditionsUseCase
 import com.bunbeauty.shared.domain.feature.address.CreateAddressUseCase
+import com.bunbeauty.shared.domain.feature.address.GetCurrentUserAddressUseCase
 import com.bunbeauty.shared.domain.feature.address.GetFilteredStreetListUseCase
 import com.bunbeauty.shared.domain.feature.address.GetSuggestionsUseCase
 import com.bunbeauty.shared.domain.feature.address.di.addressModule
@@ -32,6 +33,10 @@ import com.bunbeauty.shared.domain.feature.auth.RequestCodeUseCase
 import com.bunbeauty.shared.domain.feature.auth.ResendCodeUseCase
 import com.bunbeauty.shared.domain.feature.cafe.GetCafeListUseCase
 import com.bunbeauty.shared.domain.feature.cafe.GetSelectableCafeListUseCase
+import com.bunbeauty.shared.domain.feature.cafe.GetWorkloadCafeUseCase
+import com.bunbeauty.shared.domain.feature.cafe.HasOpenedCafeUseCase
+import com.bunbeauty.shared.domain.feature.cafe.IsDeliveryEnabledFromCafeUseCase
+import com.bunbeauty.shared.domain.feature.cafe.IsPickupEnabledFromCafeUseCase
 import com.bunbeauty.shared.domain.feature.cafe.ObserveCafeWithOpenStateListUseCase
 import com.bunbeauty.shared.domain.feature.cafe.di.cafeModule
 import com.bunbeauty.shared.domain.feature.cart.AddCartProductUseCase
@@ -200,6 +205,11 @@ class IosComponent : KoinComponent {
     fun provideCheckUpdateUseCase(): CheckUpdateUseCase = get()
     fun provideCheckOneCityUseCase(): CheckOneCityUseCase = get()
     fun provideSaveOneCityUseCase(): SaveOneCityUseCase = get()
+    fun provideGetCurrentUserAddressUseCase(): GetCurrentUserAddressUseCase = get()
+    fun provideIsPickupEnabledFromCafeUseCase(): IsPickupEnabledFromCafeUseCase = get()
+    fun provideHasOpenedCafeUseCase(): HasOpenedCafeUseCase = get()
+    fun provideGetWorkloadCafeUseCase(): GetWorkloadCafeUseCase = get()
+    fun provideIsDeliveryEnabledFromCafeUseCase(): IsDeliveryEnabledFromCafeUseCase = get()
 
     // Mapper
     fun provideUserAddressMapper(): UserAddressMapper = get()

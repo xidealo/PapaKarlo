@@ -5,24 +5,23 @@
 //  Created by Марк Шавловский on 17.03.2022.
 //
 
-import SwiftUI
 import shared
+import SwiftUI
 
 struct OrderStatusBar: View {
-    
-    var orderStatus:OrderStatus
-    var orderStatusName:String
+    var orderStatus: OrderStatus
+    var orderStatusName: String
     var currentStep = 0
-    
-    init(orderStatus:OrderStatus, orderStatusName:String){
+
+    init(orderStatus: OrderStatus, orderStatusName: String) {
         self.orderStatus = orderStatus
         self.orderStatusName = orderStatusName
         currentStep = getCurrentStep(orderStatus: orderStatus)
     }
-    
+
     var body: some View {
-        HStack(spacing:0){
-            ForEach(0...4, id: \.self){ i in
+        HStack(spacing: 0) {
+            ForEach(0 ... 4, id: \.self) { i in
                 Step(
                     index: i,
                     currentStep: getCurrentStep(orderStatus: orderStatus),
@@ -31,13 +30,13 @@ struct OrderStatusBar: View {
                 .padding(.horizontal, Diems.HALF_SMALL_PADDING)
             }.padding(.vertical, Diems.SMALL_PADDING)
         }
-        .frame(maxWidth:.infinity)
-            .background(AppColor.surface)
-            .cornerRadius(Diems.MEDIUM_RADIUS)
+        .frame(maxWidth: .infinity)
+        .background(AppColor.surface)
+        .cornerRadius(Diems.MEDIUM_RADIUS)
     }
-    
-    func getCurrentStep(orderStatus:OrderStatus) -> Int{
-        switch(orderStatus){
+
+    func getCurrentStep(orderStatus: OrderStatus) -> Int {
+        switch orderStatus {
         case OrderStatus.notAccepted: return 0
         case OrderStatus.accepted: return 1
         case OrderStatus.preparing: return 2
@@ -51,25 +50,24 @@ struct OrderStatusBar: View {
 }
 
 struct Step: View {
-    let index:Int
-    let currentStep : Int
-    let orderStatus : OrderStatus
-    
+    let index: Int
+    let currentStep: Int
+    let orderStatus: OrderStatus
+
     var body: some View {
-        if(index < currentStep){
+        if index < currentStep {
             DoneStep(orderStatus: orderStatus)
-        }else if(index == currentStep){
+        } else if index == currentStep {
             OrderChip(orderStatus: orderStatus)
-        }else{
+        } else {
             FutureStep()
         }
     }
 }
 
-
 struct DoneStep: View {
-    let orderStatus : OrderStatus
-    
+    let orderStatus: OrderStatus
+
     var body: some View {
         IconImage(width: 12, height: 10, imageName: "CheckIcon")
             .padding(Diems.SMALL_PADDING)

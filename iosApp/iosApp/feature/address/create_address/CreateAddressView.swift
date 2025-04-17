@@ -5,31 +5,30 @@
 //  Created by Марк Шавловский on 16.03.2022.
 //
 
-import SwiftUI
 import shared
+import SwiftUI
 
 struct CreateAddressView: View {
-    
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
-    
-    @State var showSuggetionLoadingError:Bool = false
-    @State var showCreateError:Bool = false
 
-    @Binding var show:Bool
-    
+    @State var showSuggetionLoadingError: Bool = false
+    @State var showCreateError: Bool = false
+
+    @Binding var show: Bool
+
     @FocusState private var isTextFieldFocused: Bool
-    
+
     @State var viewModel = CreateAddressViewModel(
         getSuggestionsUseCase: iosComponent.provideGetSuggestionsUseCase(),
         createAddressUseCase: iosComponent.provideCreateAddressUseCase(),
         saveSelectedUserAddressUseCase: iosComponent.provideSaveSelectedUserAddressUseCase()
     )
-    
-    //Listeners
+
+    // Listeners
     @State var listener: Closeable? = nil
     @State var eventsListener: Closeable? = nil
-    //-----
-    
+    // -----
+
     @State var createAddressViewState = CreateAddressViewState(
         street: "",
         streetError: nil,
@@ -43,20 +42,20 @@ struct CreateAddressView: View {
         comment: "",
         isCreateLoading: false
     )
-    
+
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    
+
     var body: some View {
-        VStack(spacing:0){
+        VStack(spacing: 0) {
             ToolbarView(
                 title: "titleCreationAddress",
                 back: {
                     viewModel.onAction(action: CreateAddressActionBackClick())
                 }
             )
-            ZStack (alignment: .bottom){
-                ScrollView{
-                    VStack(spacing:0){
+            ZStack(alignment: .bottom) {
+                ScrollView {
+                    VStack(spacing: 0) {
                         SearchEditTextView(
                             hint: Strings.HINT_CREATION_ADDRESS_STREET,
                             text: $createAddressViewState.street,
@@ -82,7 +81,7 @@ struct CreateAddressView: View {
                             }
                         )
                         .focused($isTextFieldFocused)
-                        
+
                         EditTextView(
                             hint: Strings.HINT_CREATION_ADDRESS_HOUSE,
                             text: $createAddressViewState.house,
@@ -94,7 +93,7 @@ struct CreateAddressView: View {
                         )
                         .focused($isTextFieldFocused)
                         .padding(.top, Diems.SMALL_PADDING)
-                        
+
                         EditTextView(
                             hint: Strings.HINT_CREATION_ADDRESS_FLAT,
                             text: $createAddressViewState.flat,
@@ -107,7 +106,7 @@ struct CreateAddressView: View {
                         .focused($isTextFieldFocused)
                         .padding(.top, Diems.SMALL_PADDING)
                         .keyboardType(.numberPad)
-                        
+
                         EditTextView(
                             hint: Strings.HINT_CREATION_ADDRESS_ENTRANCE,
                             text: $createAddressViewState.entrance,
@@ -120,7 +119,7 @@ struct CreateAddressView: View {
                         .focused($isTextFieldFocused)
                         .padding(.top, Diems.SMALL_PADDING)
                         .keyboardType(.numberPad)
-                        
+
                         EditTextView(
                             hint: Strings.HINT_CREATION_ADDRESS_FLOOR,
                             text: $createAddressViewState.floor,
@@ -133,7 +132,7 @@ struct CreateAddressView: View {
                         .focused($isTextFieldFocused)
                         .padding(.top, Diems.SMALL_PADDING)
                         .keyboardType(.numberPad)
-                        
+
                         EditTextView(
                             hint: Strings.HINT_CREATION_ADDRESS_COMMENT,
                             text: $createAddressViewState.comment,
@@ -150,19 +149,19 @@ struct CreateAddressView: View {
                     .background(AppColor.surface)
                     .cornerRadius(Diems.MEDIUM_RADIUS)
                     .padding(Diems.MEDIUM_PADDING)
-                    .padding(.bottom, isTextFieldFocused ? 60 :  0)
+                    .padding(.bottom, isTextFieldFocused ? 60 : 0)
                 }
-                
+
                 Button(
                     action: {
                         viewModel.onAction(action: CreateAddressActionSaveClick())
                     }
                 ) {
-                    if(createAddressViewState.isCreateLoading){
+                    if createAddressViewState.isCreateLoading {
                         ProgressView()
                             .progressViewStyle(CircularProgressViewStyle(tint: AppColor.primary))
                             .scaleEffect(1.2)
-                    }else{
+                    } else {
                         ButtonText(text: Strings.ACTION_CREATION_ADDRESS_ADD)
                     }
                 }
@@ -190,30 +189,30 @@ struct CreateAddressView: View {
         }
         .hiddenNavigationBarStyle()
         .background(AppColor.background)
-        .onAppear(){
+        .onAppear {
             subscribe()
             eventsSubscribe()
         }
-        .onDisappear(){
+        .onDisappear {
             unsubscribe()
         }
     }
-    
-    func subscribe(){
+
+    func subscribe() {
         viewModel.onAction(action: CreateAddressActionInit())
         viewModel.dataState.watch { createAddressVM in
-            if let createAddressDataState =  createAddressVM {
+            if let createAddressDataState = createAddressVM {
                 print(createAddressDataState)
                 createAddressViewState = CreateAddressViewState(
                     street: createAddressDataState.street,
                     streetError: getStreetError(createAddressDataState: createAddressDataState),
-                    streetSuggestionList: createAddressDataState.streetSuggestionList.map({ streetItem in
+                    streetSuggestionList: createAddressDataState.streetSuggestionList.map { streetItem in
                         StreetItem(
                             id: streetItem.id,
                             name: streetItem.value,
                             postfix: streetItem.postfix
                         )
-                    }),
+                    },
                     isSuggestionLoading: createAddressDataState.isSuggestionLoading,
                     house: createAddressDataState.house,
                     houseError: getHouseError(createAddressDataState: createAddressDataState),
@@ -226,45 +225,45 @@ struct CreateAddressView: View {
             }
         }
     }
-    
+
     func getStreetError(createAddressDataState: CreateAddressDataState) -> LocalizedStringKey? {
-        if(createAddressDataState.hasStreetError){
+        if createAddressDataState.hasStreetError {
             return LocalizedStringKey("error_create_address_street")
         }
         return nil
     }
-    
+
     func getHouseError(createAddressDataState: CreateAddressDataState) -> LocalizedStringKey? {
-        if(createAddressDataState.hasHouseError){
+        if createAddressDataState.hasHouseError {
             return LocalizedStringKey("error_create_address_house")
         }
         return nil
     }
-    
-    func eventsSubscribe(){
+
+    func eventsSubscribe() {
         eventsListener = viewModel.events.watch(block: { _events in
-            if let events = _events{
+            if let events = _events {
                 let createAddressStateEvents = events as? [CreateAddressEvent] ?? []
-                
-                createAddressStateEvents.forEach { event in
-                    switch(event){
-                    case is CreateAddressEventBack : self.mode.wrappedValue.dismiss()
-                    case is CreateAddressEventAddressCreatedSuccess : self.mode.wrappedValue.dismiss()
-                    case is CreateAddressEventSuggestionLoadingFailed : showSuggetionLoadingError = true
-                    case is CreateAddressEventAddressCreatedFailed : showCreateError = true
+
+                for event in createAddressStateEvents {
+                    switch event {
+                    case is CreateAddressEventBack: self.mode.wrappedValue.dismiss()
+                    case is CreateAddressEventAddressCreatedSuccess: self.mode.wrappedValue.dismiss()
+                    case is CreateAddressEventSuggestionLoadingFailed: showSuggetionLoadingError = true
+                    case is CreateAddressEventAddressCreatedFailed: showCreateError = true
                     default:
                         print("def")
                     }
                 }
-                
+
                 if !createAddressStateEvents.isEmpty {
                     viewModel.consumeEvents(events: createAddressStateEvents)
                 }
             }
         })
     }
-    
-    func unsubscribe(){
+
+    func unsubscribe() {
         listener?.close()
         listener = nil
         eventsListener?.close()

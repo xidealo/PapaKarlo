@@ -4,9 +4,9 @@
 //
 //  Created by Марк Шавловский on 09.03.2022.
 //
-import SwiftUI
 import Foundation
 import shared
+import SwiftUI
 
 struct CafeItem: Identifiable {
     let id: String
@@ -17,4 +17,3 @@ struct CafeItem: Identifiable {
     let latitude: Float
     let longitude: Float
 }
-

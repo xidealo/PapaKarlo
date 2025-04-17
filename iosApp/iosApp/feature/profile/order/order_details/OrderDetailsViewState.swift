@@ -10,19 +10,18 @@ import Foundation
 import shared
 import SwiftUI
 
-
 struct OrderDetailsViewState {
-    let orderUuid:String
-    let orderProductItemList:[OrderProductItem]
+    let orderUuid: String
+    let orderProductItemList: [OrderProductItem]
     let deliveryCost: String?
-    let newTotalCost:String
+    let newTotalCost: String
     let state: OrderDetailsDataState.ScreenState
     let code: String
     let orderInfo: OrderInfo?
-    let discount:String?
+    let discount: String?
 }
 
-struct OrderInfo{
+struct OrderInfo {
     let status: OrderStatus
     let statusName: String
     let dateTime: String
@@ -33,4 +32,3 @@ struct OrderInfo{
     let deferredTimeHint: String
     let paymentMethod: LocalizedStringKey?
 }
-

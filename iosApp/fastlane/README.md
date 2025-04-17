@@ -71,6 +71,30 @@ Push a new vkuskavkaza release build to the App Store
 
 Push a new djan release build to the App Store
 
+### ios usaba
+
+```sh
+[bundle exec] fastlane ios usaba
+```
+
+Push a new usadba release build to the App Store
+
+### ios legenda
+
+```sh
+[bundle exec] fastlane ios legenda
+```
+
+Push a new legenda release build to the App Store
+
+### ios emoji
+
+```sh
+[bundle exec] fastlane ios emoji
+```
+
+Push a new emoji release build to the App Store
+
 ----
 
 This README.md is auto-generated and will be re-generated every time [_fastlane_](https://fastlane.tools) is run.

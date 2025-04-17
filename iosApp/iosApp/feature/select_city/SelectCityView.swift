@@ -1,35 +1,34 @@
 //
-//  SelectCity.swift
+//  SelectCityView.swift
 //  PapaKarloSwift
 //
 //  Created by Марк Шавловский on 23.02.2022.
 //
 
-import SwiftUI
 import shared
+import SwiftUI
 
 struct SelectCityView: View {
-    
     @ObservedObject private var viewModel = SelectCityViewModel()
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
 
     var body: some View {
-        VStack(spacing:0){
+        VStack(spacing: 0) {
             NavigationLink(
                 destination: ContainerView(selection: MainContainerState.menu),
                 isActive: $viewModel.selectCityViewState.isGoToMenu
-            ){
+            ) {
                 EmptyView()
             }.isDetailLink(false)
-            
+
             ToolbarView(
-                title:  "titleSelectCity"
-                )
-            if viewModel.selectCityViewState.isLoading{
+                title: "titleSelectCity"
+            )
+            if viewModel.selectCityViewState.isLoading {
                 LoadingView()
-            }else{
+            } else {
                 SelectCitySuccessView(
-                    cityList: viewModel.selectCityViewState.cityList, 
+                    cityList: viewModel.selectCityViewState.cityList,
                     viewModel: viewModel
                 )
             }
@@ -39,15 +38,14 @@ struct SelectCityView: View {
     }
 }
 
-struct SelectCitySuccessView : View {
-    
+struct SelectCitySuccessView: View {
     let cityList: [CityItem]
-    let viewModel:SelectCityViewModel
-    
+    let viewModel: SelectCityViewModel
+
     var body: some View {
         ScrollView {
-            LazyVStack(spacing:0){
-                ForEach(cityList){ city in
+            LazyVStack(spacing: 0) {
+                ForEach(cityList) { city in
                     Button {
                         viewModel.saveSelectedCity(city: city.city)
                     } label: {
@@ -59,7 +57,6 @@ struct SelectCitySuccessView : View {
             }
         }
         .padding(.top, Diems.MEDIUM_PADDING)
-
     }
 }
 

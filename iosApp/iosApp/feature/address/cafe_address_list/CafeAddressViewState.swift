@@ -8,20 +8,19 @@
 
 import Foundation
 
-class CafeAddressViewState : NSObject, NSCopying {
-    
-    var cafeAddressState:CafeAddressState
-    var addressItemList:[AddressItem]
-    
+class CafeAddressViewState: NSObject, NSCopying {
+    var cafeAddressState: CafeAddressState
+    var addressItemList: [AddressItem]
+
     init(
-        cafeAddressState:CafeAddressState,
-        addressItemList:[AddressItem]
-    ){
+        cafeAddressState: CafeAddressState,
+        addressItemList: [AddressItem]
+    ) {
         self.cafeAddressState = cafeAddressState
         self.addressItemList = addressItemList
     }
-    
-    func copy(with zone: NSZone? = nil) -> Any {
+
+    func copy(with _: NSZone? = nil) -> Any {
         let copy = CafeAddressViewState(
             cafeAddressState: cafeAddressState,
             addressItemList: addressItemList
@@ -29,4 +28,3 @@ class CafeAddressViewState : NSObject, NSCopying {
         return copy
     }
 }
-
