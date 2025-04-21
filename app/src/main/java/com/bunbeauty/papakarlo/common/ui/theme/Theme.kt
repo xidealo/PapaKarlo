@@ -8,8 +8,8 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.remember
 import com.bunbeauty.papakarlo.BuildConfig
-import com.bunbeauty.papakarlo.common.ui.theme.color.AntalyaKebabDarkColors
-import com.bunbeauty.papakarlo.common.ui.theme.color.AntalyaKebabLightColors
+import com.bunbeauty.papakarlo.common.ui.theme.color.EstPoestDarkColors
+import com.bunbeauty.papakarlo.common.ui.theme.color.EstPoestLightColors
 import com.bunbeauty.papakarlo.common.ui.theme.color.AppColors
 import com.bunbeauty.papakarlo.common.ui.theme.color.DjanDarkColors
 import com.bunbeauty.papakarlo.common.ui.theme.color.DjanLightColors
@@ -110,9 +110,9 @@ private fun getAppColors(
 
         FoodDeliveryCompany.EST_POEST -> {
             if (isDarkTheme) {
-                AntalyaKebabDarkColors
+                EstPoestDarkColors
             } else {
-                AntalyaKebabLightColors
+                EstPoestLightColors
             }
         }
 

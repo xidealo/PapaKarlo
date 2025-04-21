@@ -1,13 +1,13 @@
 package com.bunbeauty.papakarlo.common.ui.theme.color
 
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.LightBlue
-import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Orange400
+import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Red300
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Red100
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Red50
 
-val AntalyaKebabLightColors = AppColors(
+val EstPoestLightColors = AppColors(
     mainColors = ColorDefaults.lightMainColors(
-        primary = Orange400,
+        primary = Red300,
         surfaceVariant = Red50,
         strokeVariant = Red100
     ),
@@ -17,9 +17,9 @@ val AntalyaKebabLightColors = AppColors(
     isLight = true
 )
 
-val AntalyaKebabDarkColors = AppColors(
+val EstPoestDarkColors = AppColors(
     mainColors = ColorDefaults.darkMainColors(
-        primary = Orange400
+        primary = Red300
     ),
     orderColors = ColorDefaults.orderColors(),
     statusColors = ColorDefaults.statusColors(),
