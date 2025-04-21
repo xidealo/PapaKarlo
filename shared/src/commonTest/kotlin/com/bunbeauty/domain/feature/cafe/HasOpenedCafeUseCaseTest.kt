@@ -87,5 +87,4 @@ class HasOpenedCafeUseCaseTest {
         // Assert
         assertEquals(true, result)
     }
-
 }

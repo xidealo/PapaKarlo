@@ -57,7 +57,7 @@ interface CreateOrder {
         val isPickupEnabled: Boolean,
         val deliveryState: DeliveryState,
         val hasOpenedCafe: Boolean,
-        val workload: Cafe.Workload,
+        val workload: Cafe.Workload
     ) : BaseDataState {
 
         val paymentByCash: Boolean = selectedPaymentMethod?.name == PaymentMethodName.CASH
@@ -88,7 +88,7 @@ interface CreateOrder {
             val deliveryCost: String?,
             val oldFinalCost: String?,
             val newFinalCost: String,
-            val newFinalCostValue: Int,
+            val newFinalCostValue: Int
         ) : CartTotal
     }
 
@@ -125,7 +125,7 @@ interface CreateOrder {
 
         data class CreateClick(
             val withoutChange: String,
-            val changeFrom: String,
+            val changeFrom: String
         ) : Action
     }
 

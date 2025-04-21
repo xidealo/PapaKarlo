@@ -8,7 +8,6 @@ import com.bunbeauty.shared.domain.exeptions.NoUserUuidException
 import com.bunbeauty.shared.domain.feature.cafe.GetCafeListUseCase
 import com.bunbeauty.shared.domain.feature.cafe.GetSelectableCafeListUseCase
 import com.bunbeauty.shared.domain.feature.cafe.IsPickupEnabledFromCafeUseCase
-import com.bunbeauty.shared.domain.model.cafe.Cafe
 import com.bunbeauty.shared.domain.model.cafe.SelectableCafe
 import com.bunbeauty.shared.domain.repo.CafeRepo
 import dev.mokkery.answering.returns

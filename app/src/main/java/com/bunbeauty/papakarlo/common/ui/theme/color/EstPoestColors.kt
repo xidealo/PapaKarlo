@@ -1,8 +1,8 @@
 package com.bunbeauty.papakarlo.common.ui.theme.color
 
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.LightBlue
-import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Red350
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Red100
+import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Red350
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Red50
 
 val EstPoestLightColors = AppColors(

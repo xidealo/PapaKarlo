@@ -97,5 +97,4 @@ class IsPickupEnabledFromCafeUseCaseTest {
         // Assert
         assertEquals(false, result)
     }
-
 }
