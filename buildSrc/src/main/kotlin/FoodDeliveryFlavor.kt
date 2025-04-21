@@ -26,9 +26,9 @@ enum class FoodDeliveryFlavor(
         key = "vkuskavkaza",
         applicationId = "com.bunbeauty.vkuskavkaza"
     ),
-    ANTALYA_KABAB(
-        key = "antalyakebab",
-        applicationId = "com.bunbeauty.antalyakebab"
+    EST_POEST(
+        key = "estpoest",
+        applicationId = "com.bunbeauty.estpoest"
     ),
     LEGENDA(
         key = "legenda",

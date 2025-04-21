@@ -5,7 +5,6 @@ import com.bunbeauty.shared.domain.model.city.City
 import com.bunbeauty.shared.presentation.base.BaseAction
 import com.bunbeauty.shared.presentation.base.BaseDataState
 import com.bunbeauty.shared.presentation.base.BaseEvent
-import com.bunbeauty.shared.presentation.base.BaseViewDataState
 
 interface SettingsState {
 
@@ -14,7 +13,7 @@ interface SettingsState {
         val selectedCity: City? = null,
         val cityList: List<City> = emptyList(),
         val state: State = State.LOADING,
-        val eventList: List<Event> = emptyList(),
+        val eventList: List<Event> = emptyList()
     ) : BaseDataState {
         enum class State {
             SUCCESS,

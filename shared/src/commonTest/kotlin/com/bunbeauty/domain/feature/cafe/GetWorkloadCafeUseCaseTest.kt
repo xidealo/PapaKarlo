@@ -18,7 +18,6 @@ class GetWorkloadCafeUseCaseTest {
         cafeRepo = cafeRepo
     )
 
-
     @Test
     fun `invoke should return HIGH workload when cafe has HIGH workload`() = runTest {
         // Arrange
@@ -79,5 +78,4 @@ class GetWorkloadCafeUseCaseTest {
         // Assert
         assertEquals(Cafe.Workload.LOW, result)
     }
-
 }

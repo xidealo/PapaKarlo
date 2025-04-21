@@ -16,7 +16,7 @@ fun getMenuProduct(
     categoryList: List<Category> = emptyList(),
     isRecommended: Boolean = false,
     visible: Boolean = true,
-    additionGroups: List<AdditionGroup> = emptyList(),
+    additionGroups: List<AdditionGroup> = emptyList()
 ) = MenuProduct(
     uuid = uuid,
     name = "Kapusta",
@@ -37,7 +37,7 @@ fun getCartProduct(
     uuid: String = "1",
     count: Int = 0,
     menuProduct: MenuProduct = getMenuProduct(),
-    cartProductAdditionList: List<CartProductAddition> = emptyList(),
+    cartProductAdditionList: List<CartProductAddition> = emptyList()
 ) = CartProduct(
     uuid = uuid,
     count = count,
@@ -68,7 +68,7 @@ fun getAddition(
     additionGroupUuid: String = "",
     isVisible: Boolean = true,
     price: Int? = 0,
-    isSelected: Boolean = false,
+    isSelected: Boolean = false
 ) = Addition(
     uuid = uuid,
     name = "",
@@ -86,7 +86,7 @@ fun getAdditionGroup(
     priority: Int = 0,
     additions: List<Addition> = emptyList(),
     isVisible: Boolean = true,
-    singleChoice: Boolean = false,
+    singleChoice: Boolean = false
 ) = AdditionGroup(
     uuid = uuid,
     name = "",
@@ -101,18 +101,17 @@ fun getCity(
     name: String = "",
     timeZone: String = "",
     isVisible: Boolean = true,
-    singleChoice: Boolean = false,
+    singleChoice: Boolean = false
 ) = City(
     uuid = uuid,
     name = name,
     timeZone = timeZone
 )
 
-
 fun getCafe(
     uuid: String,
     workType: Cafe.WorkType = Cafe.WorkType.DELIVERY_AND_PICKUP,
-    workload: Cafe.Workload = Cafe.Workload.LOW,
+    workload: Cafe.Workload = Cafe.Workload.LOW
 ) = Cafe(
     uuid = uuid,
     fromTime = 0,

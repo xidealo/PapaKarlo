@@ -209,7 +209,6 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
         NSUserDefaults.standardUserDefaults.removeObjectForKey(SETTINGS_EMAIL_KEY)
     }
 
-
     companion object {
         const val TOKEN_KEY = "TOKEN_KEY"
         const val SELECTED_CITY_UUID_KEY = "SELECTED_CITY_UUID_KEY"

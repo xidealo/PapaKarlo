@@ -2,7 +2,6 @@ package com.bunbeauty.shared.presentation.settings
 
 import com.bunbeauty.analytic.AnalyticService
 import com.bunbeauty.analytic.event.LogoutSettingsClickEvent
-import com.bunbeauty.shared.domain.asCommonStateFlow
 import com.bunbeauty.shared.domain.feature.city.GetCityListUseCase
 import com.bunbeauty.shared.domain.feature.city.ObserveSelectedCityUseCase
 import com.bunbeauty.shared.domain.feature.city.SaveSelectedCityUseCase
@@ -13,15 +12,11 @@ import com.bunbeauty.shared.domain.model.city.City
 import com.bunbeauty.shared.domain.use_case.DisableUserUseCase
 import com.bunbeauty.shared.extension.launchSafe
 import com.bunbeauty.shared.presentation.base.SharedStateViewModel
-import com.bunbeauty.shared.presentation.base.SharedViewModel
-import com.bunbeauty.shared.presentation.login.Login
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class SettingsViewModel(
@@ -32,7 +27,7 @@ class SettingsViewModel(
     private val saveSelectedCityUseCase: SaveSelectedCityUseCase,
     private val disableUserUseCase: DisableUserUseCase,
     private val userInteractor: IUserInteractor,
-    private val analyticService: AnalyticService,
+    private val analyticService: AnalyticService
 ) : SharedStateViewModel<SettingsState.DataState, SettingsState.Action, SettingsState.Event>(
     SettingsState.DataState()
 ) {
@@ -106,7 +101,7 @@ class SettingsViewModel(
 
     private fun onCityClicked(
         cityList: List<City>,
-        selectedCityUuid: String?,
+        selectedCityUuid: String?
     ) {
         addEvent {
             SettingsState.Event.ShowCityListEvent(

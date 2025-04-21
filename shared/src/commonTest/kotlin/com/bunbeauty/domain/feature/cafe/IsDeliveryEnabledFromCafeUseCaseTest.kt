@@ -96,5 +96,4 @@ class IsDeliveryEnabledFromCafeUseCaseTest {
         // Assert
         assertEquals(false, result)
     }
-
 }
