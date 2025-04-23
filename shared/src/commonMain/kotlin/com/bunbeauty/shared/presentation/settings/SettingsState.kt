@@ -32,7 +32,6 @@ interface SettingsState {
     }
 
     sealed interface Action : BaseAction {
-
         data object OnCityClicked : Action
         data object OnEmailClicked : Action
         data object OnLogoutClicked : Action
