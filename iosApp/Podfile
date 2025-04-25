@@ -52,3 +52,7 @@ end
 target 'emoji' do
   default_pods
 end
+
+target 'estpoest' do
+  default_pods
+end

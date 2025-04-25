@@ -30,6 +30,7 @@ platform :ios do
      djan
      emoji
      usaba
+     estpoest
   end  
 
   def build_and_upload(app_identifier, scheme)
@@ -81,5 +82,10 @@ platform :ios do
   desc "Push a new emoji release build to the App Store"
   lane :emoji do
     build_and_upload("com.bunbeauty.emoji", "emoji")
+  end
+
+  desc "Push a new estpoest release build to the App Store"
+  lane :estpoest do
+    build_and_upload("com.bunbeauty.estpoest", "estpoest")
   end
 end
