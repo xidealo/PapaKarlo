@@ -1,12 +1,12 @@
 package com.bunbeauty.papakarlo.feature.profile.screen.feedback
 
 import android.content.Intent
-import android.net.Uri
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
 import androidx.fragment.app.FragmentManager
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.delegates.argument
@@ -22,7 +22,7 @@ class FeedbackBottomSheet : ComposeBottomSheet<Any>() {
     private var feedbackArgument by argument<FeedbackArgument>()
 
     private fun goByLink(link: String) {
-        val uri = Uri.parse(link)
+        val uri = link.toUri()
         val intent = Intent(Intent.ACTION_VIEW, uri)
         startActivity(intent)
     }

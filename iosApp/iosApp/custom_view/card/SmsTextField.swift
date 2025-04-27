@@ -8,19 +8,16 @@
 import SwiftUI
 
 struct SmsTextField: View {
+    let count: Int
 
-    let count:Int
-    
     var body: some View {
-        HStack(spacing:0){
-            ForEach(0...count, id: \.self){_ in
+        HStack(spacing: 0) {
+            ForEach(0 ... count, id: \.self) { _ in
                 CodeView()
             }
         }
     }
 }
-
-
 
 struct SmsTextField_Previews: PreviewProvider {
     static var previews: some View {

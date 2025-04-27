@@ -7,13 +7,12 @@
 
 import SwiftUI
 
-class ToolbarViewState : NSObject {
-    let count:String
-    let cost:String
-    
-    init(count:String, cost: String){
+class ToolbarViewState: NSObject {
+    let count: String
+    let cost: String
+
+    init(count: String, cost: String) {
         self.count = count
         self.cost = cost
     }
-    
 }

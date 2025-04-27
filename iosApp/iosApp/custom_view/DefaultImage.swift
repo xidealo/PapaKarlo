@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct DefaultImage: View {
-    var width:CGFloat = 200
-    var height:CGFloat = 200
+    var width: CGFloat = 200
+    var height: CGFloat = 200
 
-    let imageName:String
+    let imageName: String
     var body: some View {
         Image(imageName)
             .resizable()

@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-struct CategorySectionItem:Identifiable {
-    let id:String
-    let name:String
-    let menuProdctItems:[MenuProductItem]
+struct CategorySectionItem: Identifiable {
+    let id: String
+    let name: String
+    let menuProdctItems: [MenuProductItem]
 }

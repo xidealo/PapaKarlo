@@ -8,6 +8,7 @@ import com.bunbeauty.shared.data.di.databaseModule
 import com.bunbeauty.shared.data.di.networkModule
 import com.bunbeauty.shared.data.di.providerModule
 import com.bunbeauty.shared.data.di.repositoryModule
+import com.bunbeauty.shared.data.di.storageModule
 import com.bunbeauty.shared.data.mapper.user_address.UserAddressMapper
 import com.bunbeauty.shared.data.network.api.NetworkConnector
 import com.bunbeauty.shared.di.usecase.additionUseCaseModule
@@ -20,6 +21,7 @@ import com.bunbeauty.shared.di.usecase.userAddressUseCaseModule
 import com.bunbeauty.shared.domain.feature.addition.GetAdditionGroupsWithSelectedAdditionUseCase
 import com.bunbeauty.shared.domain.feature.addition.GetPriceOfSelectedAdditionsUseCase
 import com.bunbeauty.shared.domain.feature.address.CreateAddressUseCase
+import com.bunbeauty.shared.domain.feature.address.GetCurrentUserAddressUseCase
 import com.bunbeauty.shared.domain.feature.address.GetFilteredStreetListUseCase
 import com.bunbeauty.shared.domain.feature.address.GetSuggestionsUseCase
 import com.bunbeauty.shared.domain.feature.address.di.addressModule
@@ -31,6 +33,10 @@ import com.bunbeauty.shared.domain.feature.auth.RequestCodeUseCase
 import com.bunbeauty.shared.domain.feature.auth.ResendCodeUseCase
 import com.bunbeauty.shared.domain.feature.cafe.GetCafeListUseCase
 import com.bunbeauty.shared.domain.feature.cafe.GetSelectableCafeListUseCase
+import com.bunbeauty.shared.domain.feature.cafe.GetWorkloadCafeUseCase
+import com.bunbeauty.shared.domain.feature.cafe.HasOpenedCafeUseCase
+import com.bunbeauty.shared.domain.feature.cafe.IsDeliveryEnabledFromCafeUseCase
+import com.bunbeauty.shared.domain.feature.cafe.IsPickupEnabledFromCafeUseCase
 import com.bunbeauty.shared.domain.feature.cafe.ObserveCafeWithOpenStateListUseCase
 import com.bunbeauty.shared.domain.feature.cafe.di.cafeModule
 import com.bunbeauty.shared.domain.feature.cart.AddCartProductUseCase
@@ -53,7 +59,6 @@ import com.bunbeauty.shared.domain.feature.menuproduct.GetMenuProductUseCase
 import com.bunbeauty.shared.domain.feature.motivation.GetMotivationUseCase
 import com.bunbeauty.shared.domain.feature.notification.SubscribeToNotificationUseCase
 import com.bunbeauty.shared.domain.feature.order.*
-import com.bunbeauty.shared.domain.feature.orderavailable.GetWorkInfoUseCase
 import com.bunbeauty.shared.domain.feature.orderavailable.IsOrderAvailableUseCase
 import com.bunbeauty.shared.domain.feature.payment.GetPaymentMethodListUseCase
 import com.bunbeauty.shared.domain.feature.payment.GetSelectablePaymentMethodListUseCase
@@ -85,6 +90,7 @@ fun initKoin(appDeclaration: KoinAppDeclaration = {}) = startKoin {
         networkModule(),
         dataMapperModule(),
         repositoryModule(),
+        storageModule(),
         interactorModule(),
         utilModule(),
         platformModule(),
@@ -105,8 +111,8 @@ fun initKoin(appDeclaration: KoinAppDeclaration = {}) = startKoin {
 }
 
 /**
-* Function for init in IOS
-* */
+ * Function for init in IOS
+ * */
 fun initKoin() = startKoin {
     modules(
         databaseModule(),
@@ -115,6 +121,7 @@ fun initKoin() = startKoin {
         networkModule(),
         dataMapperModule(),
         repositoryModule(),
+        storageModule(),
         interactorModule(),
         utilModule(),
         domainMapperModule(),
@@ -190,6 +197,7 @@ class IosComponent : KoinComponent {
     fun provideEditCartProductUseCase(): EditCartProductUseCase = get()
     fun provideGetAdditionGroupsWithSelectedAdditionUseCase(): GetAdditionGroupsWithSelectedAdditionUseCase =
         get()
+
     fun provideGetPriceOfSelectedAdditionsUseCase(): GetPriceOfSelectedAdditionsUseCase = get()
     fun provideObserveCafeWithOpenStateListUseCase(): ObserveCafeWithOpenStateListUseCase = get()
     fun provideGetMotivationUseCaseUseCase(): GetMotivationUseCase = get()
@@ -197,7 +205,11 @@ class IosComponent : KoinComponent {
     fun provideCheckUpdateUseCase(): CheckUpdateUseCase = get()
     fun provideCheckOneCityUseCase(): CheckOneCityUseCase = get()
     fun provideSaveOneCityUseCase(): SaveOneCityUseCase = get()
-    fun provideGetWorkInfoUseCase(): GetWorkInfoUseCase = get()
+    fun provideGetCurrentUserAddressUseCase(): GetCurrentUserAddressUseCase = get()
+    fun provideIsPickupEnabledFromCafeUseCase(): IsPickupEnabledFromCafeUseCase = get()
+    fun provideHasOpenedCafeUseCase(): HasOpenedCafeUseCase = get()
+    fun provideGetWorkloadCafeUseCase(): GetWorkloadCafeUseCase = get()
+    fun provideIsDeliveryEnabledFromCafeUseCase(): IsDeliveryEnabledFromCafeUseCase = get()
 
     // Mapper
     fun provideUserAddressMapper(): UserAddressMapper = get()

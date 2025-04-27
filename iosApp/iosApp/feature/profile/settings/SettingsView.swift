@@ -5,10 +5,10 @@
 //  Created by Марк Шавловский on 15.03.2022.
 //
 
-import SwiftUI
 import shared
+import SwiftUI
 
-struct SettingsView: View {
+struct SettingsView: View, SharedLifecycleWithState {
     
     var viewModel = SettingsViewModel(
         observeSettingsUseCase: iosComponent.provideObserveSettingsUseCase(),
@@ -20,24 +20,25 @@ struct SettingsView: View {
         userInteractor: iosComponent.provideIUserInteractor(),
         analyticService: iosComponent.provideAnalyticService()
     )
-    
-    @State var state = SettingsState(
-        settings: nil,
-        selectedCity: nil,
-        cityList: [],
-        state: SettingsState.State.loading,
-        eventList: []
+
+    @State var state = SettingsViewState(
+        phoneNumber: "",
+        selectedCityName: "",
+        state: SettingsViewState.State.loading
     )
-    
+
     @State private var showingDeleteAlert = false
     @State private var showingLogoutAlert = false
     
-    @State var listener: Closeable? = nil
+    @State var goToSelectCity: Bool = false
 
-    @Environment(\.presentationMode) var mode: Binding<PresentationMode>
+    @State var listener: Closeable?
+    @State var eventsListener: Closeable?
     
+    @Environment(\.presentationMode) var mode: Binding<PresentationMode>
+
     var body: some View {
-        VStack(spacing:0){
+        VStack(spacing: 0) {
             ToolbarView(
                 title: "titleSettings",
                 back: {
@@ -45,23 +46,33 @@ struct SettingsView: View {
                 }
             )
             
-            if(state.state == SettingsState.State.loading){
+            NavigationLink(
+                destination: ChangeCityView(),
+                isActive: $goToSelectCity
+            ) {
+                EmptyView()
+            }
+            .isDetailLink(false)
+            
+            if state.state == SettingsViewState.State.loading {
                 LoadingView()
-            }else{
-                VStack(spacing:0){
-                    TextCard(
+            } else {
+                VStack(spacing: 0) {
+                    TextCardWithDivider(
                         placeHolder: Strings.HINT_SETTINGS_PHONE,
-                        text: state.settings?.phoneNumber ?? ""
+                        text: state.phoneNumber
                     )
-                    //TODO(Add Email in next Version)
                     
-                    NavigationTextCard(
-                        placeHolder: Strings.HINT_SETTINGS_CITY,
-                        text: state.selectedCity?.name ?? "",
-                        destination:ChangeCityView()
+                    NavigationCardWithDivider(
+                        icon: nil,
+                        label: Strings.HINT_SETTINGS_CITY,
+                        value: state.selectedCityName,
+                        action: {
+                            viewModel.onAction(action: SettingsStateActionOnCityClicked())
+                        }
                     )
-                    .padding(.top, Diems.SMALL_PADDING)
-                                        
+                    .padding(.horizontal, 16)
+                    
                     Button(action: {
                         showingDeleteAlert = true
                     }) {
@@ -75,15 +86,13 @@ struct SettingsView: View {
                         Button("Да") {
                             viewModel.disableUser()
                         }
-                        Button("Нет", role: .cancel) { }
+                        Button("Нет", role: .cancel) {}
                     }
                     .padding(.top, 16)
-
                 }
-                .padding(Diems.MEDIUM_PADDING)
 
                 Spacer()
-                
+
                 Button(
                     action: {
                         showingLogoutAlert = true
@@ -95,35 +104,71 @@ struct SettingsView: View {
                         Button("Выйти") {
                             viewModel.logout()
                         }
-                        Button("Отмена", role: .cancel) { }
+                        Button("Отмена", role: .cancel) {}
                     }
             }
         }
-        .frame(maxWidth:.infinity, maxHeight: .infinity)
-        .background(AppColor.background)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(AppColor.surface)
         .hiddenNavigationBarStyle()
-        .onAppear(){
+        .onAppear {
             viewModel.loadData()
-            listener = viewModel.settingsState.watch { settingsStateVM in
-                if let notNullSettingsStateVM = settingsStateVM {
-                    state = notNullSettingsStateVM
-                    notNullSettingsStateVM.eventList.forEach { event in
-                        switch(event){
-                        case is SettingsStateEventBack : self.mode.wrappedValue.dismiss()
+            subscribe()
+        }
+        .onDisappear {
+            unsubscribe()
+        }
+    }
+    
+    func subscribe() {
+        listener = viewModel.dataState.watch { settingsStateVM in
+            if let notNullSettingsStateVM = settingsStateVM {
+                state = SettingsViewState(
+                    phoneNumber: notNullSettingsStateVM.settings?.phoneNumber ?? "",
+                    selectedCityName: notNullSettingsStateVM.selectedCity?.name ?? "",
+                    state: {
+                        switch notNullSettingsStateVM.state {
+                        case SettingsStateDataState.State.success:
+                            return SettingsViewState.State.success
+                        case SettingsStateDataState.State.error:
+                            return SettingsViewState.State.error
+                        case SettingsStateDataState.State.loading:
+                            return SettingsViewState.State.loading
                         default:
-                            print("def")
+                            return SettingsViewState.State.loading
                         }
+                    }()
+                )
+            }
+        }
+    }
+    func eventsSubscribe() {
+        
+        listener = viewModel.events.watch { _events in
+            if let events = _events {
+                let settingsEvents = events as? [SettingsStateEvent] ?? []
+                
+                for event in settingsEvents {
+                    switch event {
+                    case is SettingsStateEventBack: self.mode.wrappedValue.dismiss()
+                    case is SettingsStateEventShowCityListEvent: goToSelectCity = true
+                    default:
+                        print("def")
                     }
-                    if !notNullSettingsStateVM.eventList.isEmpty{
-                        viewModel.consumeEventList(eventList: settingsStateVM!.eventList)
-                    }
+                }
+                
+                if !settingsEvents.isEmpty {
+                    viewModel.consumeEvents(events: settingsEvents)
                 }
             }
         }
-        .onDisappear(){
-            listener?.close()
-            listener = nil
-        }
+    }
+    
+    func unsubscribe() {
+        listener?.close()
+        listener = nil
+        eventsListener?.close()
+        eventsListener = nil
     }
 }
 

@@ -5,38 +5,37 @@
 //  Created by Марк Шавловский on 23.02.2022.
 //
 
-import SwiftUI
 import shared
+import SwiftUI
 
 let DISCOUNT_ID = "discount_id"
 
 struct MenuView: View {
-    
     @StateObject private var viewModel = MenuViewModel()
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
-    
-    //for back after createOrder
+
+    // for back after createOrder
     @Binding var isRootActive: Bool
     @Binding var selection: MainContainerState
     @Binding var showOrderCreated: Bool
-    
+
     @State var created: Bool = false
     @State var edited: Bool = false
-    
+
     let columns = [
         GridItem(.flexible(), spacing: 8, alignment: .top),
-        GridItem(.flexible(), spacing: 8, alignment: .top)
+        GridItem(.flexible(), spacing: 8, alignment: .top),
     ]
-    
+
     var body: some View {
-        VStack(spacing:0){
+        VStack(spacing: 0) {
             if viewModel.menuViewState.isLoading {
                 LoadingView()
-            }else{
-                ScrollView(.horizontal, showsIndicators:false) {
-                    ScrollViewReader{ scrollReader in
-                        HStack(spacing:0){
-                            ForEach(Array(viewModel.menuViewState.categoryItemModels.enumerated()), id: \.offset){ index, categoryItemModel in
+            } else {
+                ScrollView(.horizontal, showsIndicators: false) {
+                    ScrollViewReader { scrollReader in
+                        HStack(spacing: 0) {
+                            ForEach(Array(viewModel.menuViewState.categoryItemModels.enumerated()), id: \.offset) { index, categoryItemModel in
                                 CategoryItemView(
                                     categoryItemModel: categoryItemModel,
                                     action: viewModel.seletTagWithScroll
@@ -48,7 +47,7 @@ struct MenuView: View {
                             }
                         }
                         .onChange(of: viewModel.menuViewState, perform: { menuState in
-                            withAnimation(.spring()){
+                            withAnimation(.spring()) {
                                 scrollReader.scrollTo(menuState.scrollToHorizontalPostion)
                             }
                         })
@@ -56,35 +55,36 @@ struct MenuView: View {
                 }
                 .padding(.vertical, Diems.SMALL_PADDING)
                 .background(AppColor.surface)
-                
+
                 ScrollView {
-                    ScrollViewReader{ scrollReader in
+                    ScrollViewReader { scrollReader in
                         if let discount = viewModel.menuViewState.discount {
                             DiscountView(discount: discount)
                                 .id(DISCOUNT_ID)
                         }
                         LazyVGrid(columns: columns, spacing: 8) {
-                            ForEach(viewModel.menuViewState.menuItems.indices){  i in
+                            ForEach(viewModel.menuViewState.menuItems.indices) { i in
                                 Section(
                                     header: LargeHeaderText(
-                                        text:viewModel.menuViewState.menuItems[i].categorySectionItem.name
+                                        text: viewModel.menuViewState.menuItems[i].categorySectionItem.name
                                     )
                                     .id(viewModel.menuViewState.menuItems[i].categorySectionItem.id)
                                     .padding(.top, 16)
-                                ){
-                                    ForEach(viewModel.menuViewState.menuItems[i].categorySectionItem.menuProdctItems){ menuProductItem in
+                                ) {
+                                    ForEach(viewModel.menuViewState.menuItems[i].categorySectionItem.menuProdctItems) { menuProductItem in
                                         MenuItemView(
                                             menuProductItem: menuProductItem,
-                                            productDetailsOpenedFrom : ProductDetailsOpenedFrom.menuProduct,
+                                            productDetailsOpenedFrom: ProductDetailsOpenedFrom.menuProduct,
                                             created: $created,
                                             edited: $edited,
                                             action: {
                                                 viewModel.addCartProductToCart(menuProductItem: menuProductItem)
-                                            })
-                                        .onAppear(){
+                                            }
+                                        )
+                                        .onAppear {
                                             viewModel.checkAppear(index: i)
                                         }
-                                        .onDisappear(){
+                                        .onDisappear {
                                             viewModel.checkDisappear(index: i)
                                         }
                                     }
@@ -94,7 +94,7 @@ struct MenuView: View {
                         .padding(.bottom, 8)
                         .padding(.horizontal, 16)
                         .onReceive(viewModel.$scrollToPostion, perform: { scrollToPostion in
-                            withAnimation(.spring()){
+                            withAnimation(.spring()) {
                                 scrollReader.scrollTo(scrollToPostion, anchor: .top)
                             }
                         })
@@ -115,10 +115,10 @@ struct MenuView: View {
             show: $created
         )
     }
-    
-    func DiscountView(discount:String) -> some View {
-        VStack(spacing:0){
-            HStack(spacing:0){
+
+    func DiscountView(discount: String) -> some View {
+        VStack(spacing: 0) {
+            HStack(spacing: 0) {
                 IconImage(
                     width: 24,
                     height: 24,

@@ -74,7 +74,9 @@ class GetCafeListUseCaseTest {
             latitude = 0.0,
             longitude = 0.0,
             cityUuid = "cityUuid",
-            isVisible = isVisible
+            isVisible = isVisible,
+            workType = Cafe.WorkType.DELIVERY_AND_PICKUP,
+            workload = Cafe.Workload.LOW
         )
     }
 }

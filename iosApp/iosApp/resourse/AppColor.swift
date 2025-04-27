@@ -9,7 +9,7 @@
 import Foundation
 import SwiftUI
 
-class AppColor{
+class AppColor {
     static let primary = Color("primary")
     static let disabled = Color("disabled")
     static let secondary = Color("secondary")

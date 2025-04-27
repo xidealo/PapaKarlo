@@ -61,7 +61,7 @@ jobs:
     needs: setup
     strategy:
       matrix:
-        flavor: [ "papakarlo", "yuliar", "djan", "gustopub", "tandirhouse", "vkuskavkaza", "legenda", "usadba", "emoji" ]
+        flavor: [ "papakarlo", "yuliar", "djan", "gustopub", "tandirhouse", "vkuskavkaza", "legenda", "usadba", "emoji", "estpoest" ]
     steps:
       - uses: actions/checkout@v4
       - name: "Set up JDK 17"

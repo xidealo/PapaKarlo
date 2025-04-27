@@ -21,7 +21,7 @@ interface CreateOrder {
         val userAddressList: List<SelectableUserAddress> = emptyList(),
         val selectedUserAddress: UserAddress? = null,
         val isUserAddressListShown: Boolean = false,
-        val isAddressErrorShown: Boolean = false,
+        val isAddressErrorShown: AddressErrorState = AddressErrorState.INIT,
 
         val cafeList: List<SelectableCafe> = emptyList(),
         val isCafeListShown: Boolean = false,
@@ -53,22 +53,26 @@ interface CreateOrder {
         val cartTotal: CartTotal,
 
         val isLoading: Boolean,
-        val workType: WorkType,
-        val isLoadingSwitcher: Boolean = true
+        val isLoadingSwitcher: Boolean = true,
+        val isPickupEnabled: Boolean,
+        val deliveryState: DeliveryState,
+        val hasOpenedCafe: Boolean,
+        val workload: Cafe.Workload
     ) : BaseDataState {
 
-        val isOrderCreationEnabled =
-            workType != WorkType.CLOSED && workType != WorkType.CLOSED_DELIVERY
+        val paymentByCash: Boolean = selectedPaymentMethod?.name == PaymentMethodName.CASH
 
-        enum class WorkType {
-            DELIVERY,
-            PICKUP,
-            DELIVERY_AND_PICKUP,
-            CLOSED,
-            CLOSED_DELIVERY
+        enum class AddressErrorState {
+            INIT,
+            NO_ERROR,
+            ERROR
         }
 
-        val paymentByCash: Boolean = selectedPaymentMethod?.name == PaymentMethodName.CASH
+        enum class DeliveryState {
+            NOT_ENABLED,
+            ENABLED,
+            NEED_ADDRESS
+        }
     }
 
     sealed interface DeferredTime {
@@ -84,12 +88,12 @@ interface CreateOrder {
             val deliveryCost: String?,
             val oldFinalCost: String?,
             val newFinalCost: String,
-            val newFinalCostValue: Int,
+            val newFinalCostValue: Int
         ) : CartTotal
     }
 
     sealed interface Action : BaseAction {
-        data object Update : Action
+        data object Init : Action
         data object Back : Action
 
         data class ChangeMethod(val position: Int) : Action
@@ -121,7 +125,7 @@ interface CreateOrder {
 
         data class CreateClick(
             val withoutChange: String,
-            val changeFrom: String,
+            val changeFrom: String
         ) : Action
     }
 

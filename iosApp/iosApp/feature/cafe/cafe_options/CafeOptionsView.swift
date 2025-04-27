@@ -8,48 +8,47 @@
 import SwiftUI
 
 struct CafeOptionsView: View {
-    let phone:String
-    let address:String
-    let latitude:Float
-    let longitude : Float
+    let phone: String
+    let address: String
+    let latitude: Float
+    let longitude: Float
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
 
     var body: some View {
-        VStack(spacing:0){
+        VStack(spacing: 0) {
             ToolbarView(
                 title: "\(address)",
                 back: {
                     self.mode.wrappedValue.dismiss()
                 }
             )
-            
-            VStack(spacing:0){
+
+            VStack(spacing: 0) {
                 ActionCardView(
                     icon: "PhoneIcon",
                     label: Strings.TITLE_CAFE_OPTIONS_CALL + ": " + phone,
                     isSystemImageName: false,
                     isShowRightArrow: true
-                ){
+                ) {
                     UIApplication.shared.open(URL(string: "tel://" + phone.removeWhitespace())!)
                 }
-                
+
                 ActionCardView(
                     icon: "CafePosition",
                     label: Strings.TITLE_CAFE_OPTIONS_POSITION + ": " + address,
                     isSystemImageName: false,
                     isShowRightArrow: true
-                ){
+                ) {
                     UIApplication.shared.open(URL(string: "http://maps.apple.com/maps?saddr=&daddr=\(latitude),\(longitude)")!)
                 }
                 .padding(.top, Diems.SMALL_PADDING)
             }.padding(Diems.MEDIUM_PADDING)
-          
+
             Spacer()
         }
-        .frame(maxWidth:.infinity, maxHeight: .infinity)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(AppColor.background)
         .hiddenNavigationBarStyle()
-
     }
 }
 

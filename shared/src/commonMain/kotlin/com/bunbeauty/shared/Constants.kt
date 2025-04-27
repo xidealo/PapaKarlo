@@ -37,6 +37,8 @@ object Constants {
     // API PARAMETER
 
     const val COMPANY_UUID_PARAMETER = "companyUuid"
+    const val CAFE_UUID_PARAMETER = "cafeUuid"
+    const val USER_ADDRESS_UUID_PARAMETER = "userAddressUuid"
     const val CITY_UUID_PARAMETER = "cityUuid"
     const val UUID_PARAMETER = "uuid"
     const val QUERY_PARAMETER = "query"

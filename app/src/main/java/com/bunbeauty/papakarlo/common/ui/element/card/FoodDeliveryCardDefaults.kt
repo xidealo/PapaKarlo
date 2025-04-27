@@ -31,13 +31,26 @@ object FoodDeliveryCardDefaults {
             disabledContainerColor = Color.Transparent
         )
 
-    val cardStatusColors: CardColors
+    val positiveCardStatusColors: CardColors
         @Composable get() = CardDefaults.cardColors(
             containerColor = FoodDeliveryTheme.colors.statusColors.positive
         )
 
+    val warningCardStatusColors: CardColors
+        @Composable get() = CardDefaults.cardColors(
+            containerColor = FoodDeliveryTheme.colors.statusColors.warning
+        )
+
+    val negativeCardStatusColors: CardColors
+        @Composable get() = CardDefaults.cardColors(
+            containerColor = FoodDeliveryTheme.colors.statusColors.negative
+        )
+
     val cardShape: RoundedCornerShape
         @Composable get() = RoundedCornerShape(8.dp)
+
+    val infoCardShape: RoundedCornerShape
+        @Composable get() = RoundedCornerShape(16.dp)
 
     val smallCardShape: RoundedCornerShape
         @Composable get() = RoundedCornerShape(4.dp)

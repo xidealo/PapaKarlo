@@ -6,12 +6,12 @@
 //  Copyright © 2022 orgName. All rights reserved.
 //
 
-import SwiftUI
 import shared
+import SwiftUI
 
 struct OrderChip: View {
-    let orderStatus:OrderStatus
-    
+    let orderStatus: OrderStatus
+
     var body: some View {
         Text(OrderChip.getStatusName(status: orderStatus))
             .labelSmall(weight: .medium)
@@ -21,30 +21,30 @@ struct OrderChip: View {
             .background(OrderChip.getColor(status: orderStatus))
             .cornerRadius(16)
     }
-    
-    static func getColor(status:OrderStatus) -> Color{
-        switch status{
-        case OrderStatus.notAccepted : return AppColor.notAccepted
-        case OrderStatus.accepted : return AppColor.accepted
-        case OrderStatus.preparing : return AppColor.preparing
-        case OrderStatus.sentOut : return AppColor.sentOut
-        case OrderStatus.done : return AppColor.done
-        case OrderStatus.delivered : return AppColor.delivered
-        case OrderStatus.canceled : return AppColor.canceled
-        default : return Color.blue
+
+    static func getColor(status: OrderStatus) -> Color {
+        switch status {
+        case OrderStatus.notAccepted: return AppColor.notAccepted
+        case OrderStatus.accepted: return AppColor.accepted
+        case OrderStatus.preparing: return AppColor.preparing
+        case OrderStatus.sentOut: return AppColor.sentOut
+        case OrderStatus.done: return AppColor.done
+        case OrderStatus.delivered: return AppColor.delivered
+        case OrderStatus.canceled: return AppColor.canceled
+        default: return Color.blue
         }
     }
-    
-    static func getStatusName(status:OrderStatus) -> String{
-        switch status{
-        case OrderStatus.notAccepted : return Strings.MSG_STATUS_NOT_ACCEPTED
-        case OrderStatus.accepted : return Strings.MSG_STATUS_ACCEPTED
-        case OrderStatus.preparing : return Strings.MSG_STATUS_PREPARING
-        case OrderStatus.sentOut : return Strings.MSG_STATUS_SENT_OUT
-        case OrderStatus.done : return Strings.MSG_STATUS_DONE
-        case OrderStatus.delivered : return Strings.MSG_STATUS_DELIVERED
-        case OrderStatus.canceled : return Strings.MSG_STATUS_CANCELED
-        default : return Strings.MSG_STATUS_NOT_ACCEPTED
+
+    static func getStatusName(status: OrderStatus) -> String {
+        switch status {
+        case OrderStatus.notAccepted: return Strings.MSG_STATUS_NOT_ACCEPTED
+        case OrderStatus.accepted: return Strings.MSG_STATUS_ACCEPTED
+        case OrderStatus.preparing: return Strings.MSG_STATUS_PREPARING
+        case OrderStatus.sentOut: return Strings.MSG_STATUS_SENT_OUT
+        case OrderStatus.done: return Strings.MSG_STATUS_DONE
+        case OrderStatus.delivered: return Strings.MSG_STATUS_DELIVERED
+        case OrderStatus.canceled: return Strings.MSG_STATUS_CANCELED
+        default: return Strings.MSG_STATUS_NOT_ACCEPTED
         }
     }
 }

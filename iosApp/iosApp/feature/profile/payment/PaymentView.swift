@@ -6,46 +6,46 @@
 //  Copyright © 2022 orgName. All rights reserved.
 //
 
-import SwiftUI
 import shared
+import SwiftUI
 
 struct PaymentView: View {
-    @State var showCardCopy:Bool = false
-    @State var showCopy:Bool = false
-    let placeHolder:String? = nil
+    @State var showCardCopy: Bool = false
+    @State var showCopy: Bool = false
+    let placeHolder: String? = nil
 
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
-    @State var paymentMethodList : [PaymentMethod]
-    
+    @State var paymentMethodList: [PaymentMethod]
+
     var body: some View {
-        VStack(spacing:0){
+        VStack(spacing: 0) {
             ToolbarView(
                 title: "titlePayment",
                 back: {
                     self.mode.wrappedValue.dismiss()
                 }
             )
-            
-            VStack(spacing:0){
+
+            VStack(spacing: 0) {
                 Text("available_payments")
                     .bodyMedium()
                     .multilineTextAlignment(.leading)
                     .foregroundColor(AppColor.onSurface)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.bottom, Diems.SMALL_PADDING)
-                
-                ForEach(paymentMethodList, id: \.self){ method in
-                    if(method.valueToShow == nil){
+
+                ForEach(paymentMethodList, id: \.self) { method in
+                    if method.valueToShow == nil {
                         ElementCardWithLocolized(text: method.name.getPaymentMethod())
                             .padding(.top, 8)
-                    }else{
+                    } else {
                         ActionCardView(
                             icon: "CopyIcon",
                             label: method.valueToShow ?? "",
                             isSystemImageName: false,
                             isShowRightArrow: false,
                             placeHolder: method.name.getPaymentMethod()
-                        ){
+                        ) {
                             self.showCopy = true
                             UIPasteboard.general.string = method.valueToCopy ?? ""
                         }
@@ -55,7 +55,7 @@ struct PaymentView: View {
             }.padding(Diems.MEDIUM_PADDING)
             Spacer()
         }
-        .frame(maxWidth:.infinity, maxHeight: .infinity)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(AppColor.background)
         .hiddenNavigationBarStyle()
         .overlay(
@@ -70,7 +70,7 @@ struct PaymentView: View {
             overlayView: ToastView(
                 toast: Toast(title: "Значение скопировано"),
                 show: $showCopy,
-                backgroundColor:AppColor.primary,
+                backgroundColor: AppColor.primary,
                 foregroundColor: AppColor.onPrimary
             ), show: $showCopy
         )
@@ -79,6 +79,6 @@ struct PaymentView: View {
 
 struct PaymentView_Previews: PreviewProvider {
     static var previews: some View {
-        PaymentView(paymentMethodList:[])
+        PaymentView(paymentMethodList: [])
     }
 }

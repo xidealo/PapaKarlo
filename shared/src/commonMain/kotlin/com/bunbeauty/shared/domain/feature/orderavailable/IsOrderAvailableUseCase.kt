@@ -1,12 +1,11 @@
 package com.bunbeauty.shared.domain.feature.orderavailable
 
-import com.bunbeauty.shared.domain.model.order.WorkInfo
-import com.bunbeauty.shared.domain.repo.WorkInfoRepo
+import com.bunbeauty.shared.domain.repo.CompanyRepo
 
 class IsOrderAvailableUseCase(
-    private val workInfoRepository: WorkInfoRepo
+    private val companyRepo: CompanyRepo
 ) {
     suspend operator fun invoke(): Boolean {
-        return workInfoRepository.getWorkInfo()?.workInfoType != WorkInfo.WorkInfoType.CLOSED
+        return companyRepo.getCompany().isOrderAvailable
     }
 }

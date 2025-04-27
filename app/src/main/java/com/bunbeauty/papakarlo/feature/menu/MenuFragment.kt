@@ -38,6 +38,7 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragmentWithSharedViewModel
 import com.bunbeauty.papakarlo.common.extension.navigateSafe
 import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
+import com.bunbeauty.papakarlo.common.ui.element.card.BannerCard
 import com.bunbeauty.papakarlo.common.ui.element.topbar.FoodDeliveryCartAction
 import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
@@ -50,7 +51,6 @@ import com.bunbeauty.papakarlo.feature.menu.mapper.toMenuViewState
 import com.bunbeauty.papakarlo.feature.menu.state.MenuItemUi
 import com.bunbeauty.papakarlo.feature.menu.state.MenuViewState
 import com.bunbeauty.papakarlo.feature.menu.ui.CategoryItem
-import com.bunbeauty.papakarlo.feature.menu.ui.FirstOrderDiscountItem
 import com.bunbeauty.papakarlo.feature.menu.ui.MenuProductItem
 import com.bunbeauty.papakarlo.feature.productdetails.ProductDetailsFragmentDirections.globalConsumerCartFragment
 import com.bunbeauty.papakarlo.feature.topcart.TopCartUi
@@ -267,8 +267,19 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
             ) { index, menuItem ->
                 when (menuItem) {
                     is MenuItemUi.Discount -> {
-                        FirstOrderDiscountItem(
-                            discount = menuItem.discount
+                        BannerCard(
+                            title = stringResource(
+                                id = R.string.title_menu_discount,
+                                menuItem.discount
+                            ),
+                            text = stringResource(
+                                id = R.string.msg_menu_discount,
+                                menuItem.discount
+                            ),
+                            icon = R.drawable.ic_discount,
+                            iconDescription = stringResource(
+                                R.string.description_ic_discount
+                            )
                         )
                     }
 

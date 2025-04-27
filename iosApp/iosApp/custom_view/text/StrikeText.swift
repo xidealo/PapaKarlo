@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct StrikeText: View {
-    let text:String
+    let text: String
     var body: some View {
         Text(text)
             .strikethrough()
@@ -17,9 +17,8 @@ struct StrikeText: View {
     }
 }
 
-
 struct StrikeText_Previews: PreviewProvider {
     static var previews: some View {
-        StrikeText(text:"220 R")
+        StrikeText(text: "220 R")
     }
 }

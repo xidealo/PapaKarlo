@@ -26,7 +26,9 @@ class CafeDao(foodDeliveryDatabase: FoodDeliveryDatabase) : ICafeDao {
                     longitude = cafeEntity.longitude,
                     address = cafeEntity.address,
                     cityUuid = cafeEntity.cityUuid,
-                    isVisible = cafeEntity.isVisible
+                    isVisible = cafeEntity.isVisible,
+                    workType = cafeEntity.workType,
+                    workload = cafeEntity.workload
                 )
             }
         }
@@ -40,7 +42,10 @@ class CafeDao(foodDeliveryDatabase: FoodDeliveryDatabase) : ICafeDao {
         )
     }
 
-    override suspend fun getSelectedCafeByUserAndCityUuid(userUuid: String, cityUuid: String): CafeEntity? {
+    override suspend fun getSelectedCafeByUserAndCityUuid(
+        userUuid: String,
+        cityUuid: String
+    ): CafeEntity? {
         return cityEntityQueries.getSelectedCafeByUserAndCityUuid(userUuid, cityUuid)
             .executeAsOneOrNull()
     }

@@ -1,27 +1,26 @@
 //
-//  CafeView.swift
+//  CafeItemView.swift
 //  PapaKarloSwift
 //
 //  Created by Марк Шавловский on 09.03.2022.
 //
 
-import SwiftUI
 import shared
+import SwiftUI
 
 struct CafeItemView: View {
-
     var cafeItem: CafeItem
 
     var body: some View {
-        VStack(spacing:0){
+        VStack(spacing: 0) {
             Text(cafeItem.address)
                 .bodyMedium()
                 .foregroundColor(AppColor.onSurface)
-                .padding(.horizontal,  Diems.MEDIUM_PADDING)
+                .padding(.horizontal, Diems.MEDIUM_PADDING)
                 .padding(.top, 12)
                 .frame(maxWidth: .infinity, alignment: .leading)
 
-            HStack(spacing:0){
+            HStack(spacing: 0) {
                 Text(cafeItem.workingHours)
                     .labelMedium(weight: .medium)
                     .foregroundColor(AppColor.onSurfaceVariant)
@@ -34,14 +33,13 @@ struct CafeItemView: View {
             .padding(.horizontal, Diems.MEDIUM_PADDING)
             .padding(.top, 8)
             .frame(maxWidth: .infinity, alignment: .leading)
-            
+
             FoodDeliveryDivider()
                 .padding(.top, 12)
                 .padding(.horizontal, 16)
         }.background(AppColor.surface)
     }
 }
-
 
 func getCafeStatusColor(cafeStatus: CafeOpenState) -> Color {
     switch cafeStatus {
@@ -60,7 +58,7 @@ func getCafeStatusText(cafeStatus: CafeOpenState) -> String {
     switch cafeStatus {
     case is CafeOpenState.Opened:
         return NSLocalizedString("msg_cafe_open", comment: "")
-    case is CafeOpenState.CloseSoon :
+    case is CafeOpenState.CloseSoon:
         let minutes = Int((cafeStatus as? CafeOpenState.CloseSoon)?.minutesUntil ?? 0)
         let minuteString = getMinuteString(
             closeIn: minutes
@@ -71,17 +69,16 @@ func getCafeStatusText(cafeStatus: CafeOpenState) -> String {
     default:
         return "CLose"
     }
-    
 }
 
 private func getMinuteString(closeIn: Int) -> String {
     let minuteStringId: String
     switch closeIn {
-    case 10...19:
+    case 10 ... 19:
         minuteStringId = "msg_cafe_minutes"
     case let x where x % 10 == 1:
         minuteStringId = "msg_cafe_minute"
-    case 2...4:
+    case 2 ... 4:
         minuteStringId = "msg_cafe_minutes_234"
     default:
         minuteStringId = "msg_cafe_minutes"

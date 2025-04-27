@@ -15,9 +15,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.runtime.toMutableStateList
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.input.key.Key
@@ -47,7 +45,7 @@ fun SmsEditText(
     }
 
     val focusRequesters = remember {
-        FocusRequester()
+        List(smsCodeLength) { FocusRequester() }
     }
 
     var isFilled: Boolean by remember {
@@ -65,19 +63,14 @@ fun SmsEditText(
         ) {
             repeat(smsCodeLength) { i ->
                 SmsDigitCell(
-                    modifier = if (i == 0) {
-                        Modifier
-                            .weight(1f)
-                            .focusRequester(focusRequesters)
-                    } else {
-                        Modifier
-                            .weight(1f)
-                    },
+                    modifier = Modifier
+                        .weight(1f)
+                        .focusRequester(focusRequesters[i]),
                     value = enteredNumbers[i],
                     onValueChanged = { changedValue ->
                         enteredNumbers[i] = changedValue
-                        if (changedValue != "") {
-                            focusManager.moveFocus(FocusDirection.Next)
+                        if (changedValue.isNotEmpty() && i < smsCodeLength - 1) {
+                            focusRequesters[i + 1].requestFocus()
                         }
                         if (enteredNumbers.none { enteredNumber -> enteredNumber.isBlank() } &&
                             !isFilled
@@ -92,7 +85,7 @@ fun SmsEditText(
                     onEmptyRemoved = {
                         if (i > 0) {
                             enteredNumbers[i - 1] = ""
-                            focusManager.moveFocus(FocusDirection.Previous)
+                            focusRequesters[i - 1].requestFocus()
                         }
                     }
                 )
@@ -100,11 +93,10 @@ fun SmsEditText(
         }
     }
     LaunchedEffect(Unit) {
-        focusRequesters.requestFocus()
+        focusRequesters[0].requestFocus()
     }
 }
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun SmsDigitCell(
     modifier: Modifier = Modifier,

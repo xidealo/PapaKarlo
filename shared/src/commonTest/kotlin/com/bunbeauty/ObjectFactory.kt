@@ -3,6 +3,7 @@ package com.bunbeauty
 import com.bunbeauty.shared.domain.model.addition.Addition
 import com.bunbeauty.shared.domain.model.addition.AdditionGroup
 import com.bunbeauty.shared.domain.model.addition.CartProductAddition
+import com.bunbeauty.shared.domain.model.cafe.Cafe
 import com.bunbeauty.shared.domain.model.cart.CartProduct
 import com.bunbeauty.shared.domain.model.category.Category
 import com.bunbeauty.shared.domain.model.city.City
@@ -105,4 +106,22 @@ fun getCity(
     uuid = uuid,
     name = name,
     timeZone = timeZone
+)
+
+fun getCafe(
+    uuid: String,
+    workType: Cafe.WorkType = Cafe.WorkType.DELIVERY_AND_PICKUP,
+    workload: Cafe.Workload = Cafe.Workload.LOW
+) = Cafe(
+    uuid = uuid,
+    fromTime = 0,
+    toTime = 0,
+    phone = "phone",
+    address = "address",
+    latitude = 0.0,
+    longitude = 0.0,
+    cityUuid = "cityUuid",
+    isVisible = true,
+    workType = workType,
+    workload = workload
 )

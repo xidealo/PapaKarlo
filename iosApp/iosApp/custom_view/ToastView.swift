@@ -8,18 +8,18 @@
 
 import SwiftUI
 
-struct Toast{
-    let title:String
+struct Toast {
+    let title: String
 }
 
 struct ToastView: View {
-    let toast:Toast
-    @Binding var show :Bool
+    let toast: Toast
+    @Binding var show: Bool
     let backgroundColor: Color
     let foregroundColor: Color
-    
+
     var body: some View {
-        VStack(spacing:0){
+        VStack(spacing: 0) {
             Spacer()
             Text(toast.title)
                 .labelLarge()
@@ -33,23 +33,24 @@ struct ToastView: View {
         }
         .frame(maxWidth: .infinity)
         .transition(AnyTransition.move(edge: .bottom).combined(with: .opacity))
-        .onAppear(){
+        .onAppear {
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                if(self.show){
+                if self.show {
                     self.show = false
                 }
             }
         }
     }
 }
-struct Overlay<T:View> :ViewModifier {
-    @Binding var show:Bool
-    let overlayView:T
-    
+
+struct Overlay<T: View>: ViewModifier {
+    @Binding var show: Bool
+    let overlayView: T
+
     func body(content: Content) -> some View {
-        ZStack{
+        ZStack {
             content
-            if(show){
+            if show {
                 overlayView
             }
         }
@@ -57,8 +58,8 @@ struct Overlay<T:View> :ViewModifier {
 }
 
 extension View {
-    func overlay<T:View>(overlayView:T, show: Binding<Bool>) -> some View{
-        self.modifier(Overlay(show: show, overlayView: overlayView))
+    func overlay<T: View>(overlayView: T, show: Binding<Bool>) -> some View {
+        modifier(Overlay(show: show, overlayView: overlayView))
     }
 }
 

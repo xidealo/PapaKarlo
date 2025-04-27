@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct BoldLocalizedStringKey: View {
-    let text:LocalizedStringKey
+    let text: LocalizedStringKey
     var body: some View {
         Text(text)
             .titleMedium(weight: .bold)
@@ -17,7 +17,7 @@ struct BoldLocalizedStringKey: View {
 }
 
 struct BoldText: View {
-    let text:String
+    let text: String
     var body: some View {
         Text(text)
             .titleMedium(weight: .bold)

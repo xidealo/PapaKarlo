@@ -4,11 +4,11 @@ import androidx.compose.runtime.Immutable
 import androidx.navigation.NavController
 import com.bunbeauty.papakarlo.common.ui.element.bottombar.NavigationBarItem
 
+@Immutable
 data class MainState(
     val connectionLost: Boolean = false,
     val statusBarMessage: StatusBarMessage = StatusBarMessage(
-        isVisible = false,
-        workInfoType = null
+        isVisible = false
     ),
     val navigationBarOptions: NavigationBarOptions = NavigationBarOptions.Hidden,
     val eventList: List<Event> = emptyList()
@@ -16,15 +16,8 @@ data class MainState(
 
     @Immutable
     data class StatusBarMessage(
-        val isVisible: Boolean,
-        val workInfoType: WorkType?
-    ) {
-        enum class WorkType {
-            DELIVERY,
-            PICKUP,
-            CLOSED
-        }
-    }
+        val isVisible: Boolean
+    )
 
     sealed interface Event {
         class ShowMessageEvent(val message: FoodDeliveryMessage) : Event

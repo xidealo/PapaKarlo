@@ -2,22 +2,21 @@ package com.bunbeauty.shared.presentation.settings
 
 import com.bunbeauty.analytic.AnalyticService
 import com.bunbeauty.analytic.event.LogoutSettingsClickEvent
-import com.bunbeauty.shared.domain.asCommonStateFlow
 import com.bunbeauty.shared.domain.feature.city.GetCityListUseCase
 import com.bunbeauty.shared.domain.feature.city.ObserveSelectedCityUseCase
 import com.bunbeauty.shared.domain.feature.city.SaveSelectedCityUseCase
 import com.bunbeauty.shared.domain.feature.settings.ObserveSettingsUseCase
 import com.bunbeauty.shared.domain.feature.settings.UpdateEmailUseCase
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
+import com.bunbeauty.shared.domain.model.city.City
 import com.bunbeauty.shared.domain.use_case.DisableUserUseCase
-import com.bunbeauty.shared.presentation.base.SharedViewModel
+import com.bunbeauty.shared.extension.launchSafe
+import com.bunbeauty.shared.presentation.base.SharedStateViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class SettingsViewModel(
@@ -29,53 +28,85 @@ class SettingsViewModel(
     private val disableUserUseCase: DisableUserUseCase,
     private val userInteractor: IUserInteractor,
     private val analyticService: AnalyticService
-) : SharedViewModel() {
+) : SharedStateViewModel<SettingsState.DataState, SettingsState.Action, SettingsState.Event>(
+    SettingsState.DataState()
+) {
 
-    private val mutableSettingsState = MutableStateFlow(SettingsState())
-    val settingsState = mutableSettingsState.asCommonStateFlow()
+    private var observeSettingsJob: Job? = null
 
-    var observeSettingsJob: Job? = null
+    override fun reduce(action: SettingsState.Action, dataState: SettingsState.DataState) {
+        when (action) {
+            SettingsState.Action.BackClick -> backClick()
+            SettingsState.Action.LoadData -> loadData()
+            SettingsState.Action.OnCityClicked -> onCityClicked(
+                cityList = dataState.cityList,
+                selectedCityUuid = dataState.selectedCity?.uuid
+            )
+
+            SettingsState.Action.OnEmailClicked -> onEmailClicked(
+                email = dataState.settings?.email
+            )
+
+            SettingsState.Action.OnLogoutClicked -> onLogoutClicked(
+                phoneNumber = dataState.settings?.phoneNumber.toString()
+            )
+        }
+    }
 
     fun loadData() {
         observeSettings()
         loadCityList()
     }
 
-    fun onEmailClicked() {
-        mutableSettingsState.update { settingsState ->
-            settingsState + SettingsState.Event.ShowEditEmailEvent(settingsState.settings?.email)
+    private fun backClick() {
+        addEvent {
+            SettingsState.Event.Back
         }
     }
 
-    fun onLogoutClicked() {
+    private fun onEmailClicked(email: String?) {
+        addEvent {
+            SettingsState.Event.ShowEditEmailEvent(email)
+        }
+    }
+
+    private fun onLogoutClicked(phoneNumber: String) {
         analyticService.sendEvent(
             event = LogoutSettingsClickEvent(
-                phone = settingsState.value.settings?.phoneNumber.toString()
+                phone = phoneNumber
             )
         )
-        mutableSettingsState.update { settingsState ->
-            settingsState + SettingsState.Event.ShowLogoutEvent
+        addEvent {
+            SettingsState.Event.ShowLogoutEvent
         }
     }
 
     fun onEmailChanged(email: String) {
-        sharedScope.launch {
-            val isSuccess = updateEmailUseCase(email)
-            mutableSettingsState.update { settingsState ->
-                settingsState + if (isSuccess) {
-                    SettingsState.Event.ShowEmailChangedSuccessfullyEvent
-                } else {
-                    SettingsState.Event.ShowEmailChangingFailedEvent
+        sharedScope.launchSafe(
+            block = {
+                val isSuccess = updateEmailUseCase(email)
+                addEvent {
+                    if (isSuccess) {
+                        SettingsState.Event.ShowEmailChangedSuccessfullyEvent
+                    } else {
+                        SettingsState.Event.ShowEmailChangingFailedEvent
+                    }
                 }
+            },
+            onError = { error ->
+                println(error)
             }
-        }
+        )
     }
 
-    fun onCityClicked() {
-        mutableSettingsState.update { settingsState ->
-            settingsState + SettingsState.Event.ShowCityListEvent(
-                cityList = settingsState.cityList,
-                selectedCityUuid = settingsState.selectedCity?.uuid
+    private fun onCityClicked(
+        cityList: List<City>,
+        selectedCityUuid: String?
+    ) {
+        addEvent {
+            SettingsState.Event.ShowCityListEvent(
+                cityList = cityList,
+                selectedCityUuid = selectedCityUuid
             )
         }
     }
@@ -86,20 +117,19 @@ class SettingsViewModel(
         }
     }
 
-    fun consumeEventList(eventList: List<SettingsState.Event>) {
-        mutableSettingsState.update { settingsState ->
-            settingsState - eventList
-        }
-    }
-
     fun logout() {
-        sharedScope.launch {
-            observeSettingsJob?.cancel()
-            userInteractor.clearUserCache()
-            mutableSettingsState.update { settingsState ->
-                settingsState + SettingsState.Event.Back
+        sharedScope.launchSafe(
+            block = {
+                observeSettingsJob?.cancel()
+                userInteractor.clearUserCache()
+                addEvent {
+                    SettingsState.Event.Back
+                }
+            },
+            onError = { error ->
+                println(error)
             }
-        }
+        )
     }
 
     fun disableUser() {
@@ -114,14 +144,14 @@ class SettingsViewModel(
         observeSettingsJob?.cancel()
         observeSettingsJob = observeSelectedCityUseCase().flatMapLatest { city ->
             observeSettingsUseCase().map { settings ->
-                mutableSettingsState.update { settingsState ->
+                setState {
                     val state = if (city == null || settings == null) {
-                        SettingsState.State.ERROR
+                        SettingsState.DataState.State.ERROR
                     } else {
-                        SettingsState.State.SUCCESS
+                        SettingsState.DataState.State.SUCCESS
                     }
 
-                    settingsState.copy(
+                    copy(
                         settings = settings,
                         selectedCity = city,
                         state = state
@@ -132,10 +162,15 @@ class SettingsViewModel(
     }
 
     private fun loadCityList() {
-        sharedScope.launch {
-            mutableSettingsState.update { settingsState ->
-                settingsState.copy(cityList = getCityListUseCase())
+        sharedScope.launchSafe(
+            block = {
+                setState {
+                    copy(cityList = getCityListUseCase())
+                }
+            },
+            onError = { error ->
+                println(error)
             }
-        }
+        )
     }
 }

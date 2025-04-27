@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct LargeHeaderText: View {
-    let text:String
-    
+    let text: String
+
     var body: some View {
         Text(text)
             .foregroundColor(AppColor.onSurface)

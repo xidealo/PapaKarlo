@@ -8,14 +8,13 @@
 import SwiftUI
 
 struct CountPicker: View {
-    
-    let count:String
+    let count: String
     let plusAction: () -> Void
     let minusAction: () -> Void
-    
+
     var body: some View {
-        HStack(spacing:0){
-            Group{
+        HStack(spacing: 0) {
+            Group {
                 Button(action: minusAction) {
                     Text("-")
                         .bodyLarge(weight: .bold)
@@ -26,7 +25,7 @@ struct CountPicker: View {
                     .id("count" + count)
                     .transition(.opacity)
 
-                Button(action:plusAction) {
+                Button(action: plusAction) {
                     Text("+")
                         .bodyLarge(weight: .bold)
                         .padding(.horizontal, 8)
@@ -42,16 +41,10 @@ struct CountPicker: View {
         )
         .cornerRadius(Diems.BUTTON_RADIUS)
     }
-    
 }
 
 struct CountPicker_Previews: PreviewProvider {
     static var previews: some View {
-        CountPicker(count: "4") {
-            
-        } minusAction: {
-            
-        }
-        
+        CountPicker(count: "4") {} minusAction: {}
     }
 }

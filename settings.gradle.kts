@@ -13,5 +13,3 @@ include(
 rootProject.name = "PapaKarlo"
 include(":analytic")
 include(":core")
-
-
