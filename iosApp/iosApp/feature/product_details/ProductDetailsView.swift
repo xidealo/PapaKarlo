@@ -185,7 +185,7 @@ struct ProductDetailsView: View {
                         }
                     }
                     .padding(Diems.MEDIUM_PADDING)
-                    .padding(.bottom, 48)
+                    .padding(.bottom, 64)
                 }
             }
                         

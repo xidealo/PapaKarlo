@@ -9,10 +9,10 @@ platform :ios do
 
   before_all do
       # Select the version of Xcode for this build only
-      xcodes(version: "15.0.1", select_for_current_build_only: true)
+      xcodes(version: "16.3", select_for_current_build_only: true)
 
       # Make sure that the correct version of Xcode is selected
-      ensure_xcode_version(version: "15.0.1")
+      ensure_xcode_version(version: "16.3")
       app_store_connect_api_key(
         key_id: ENV['APP_STORE_KEY_ID'],
         issuer_id: ENV['APP_STORE_ISSUER_ID'],
@@ -30,6 +30,7 @@ platform :ios do
      djan
      emoji
      usaba
+     estpoest
   end  
 
   def build_and_upload(app_identifier, scheme)
@@ -81,5 +82,10 @@ platform :ios do
   desc "Push a new emoji release build to the App Store"
   lane :emoji do
     build_and_upload("com.bunbeauty.emoji", "emoji")
+  end
+
+  desc "Push a new estpoest release build to the App Store"
+  lane :estpoest do
+    build_and_upload("com.bunbeauty.estpoest", "estpoest")
   end
 end
