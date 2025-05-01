@@ -6,7 +6,7 @@
 //
 
 import FirebaseCore
-//import FirebaseMessaging
+import FirebaseMessaging
 import Foundation
 import shared
 import SwiftUI
@@ -33,7 +33,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         application.registerForRemoteNotifications()
         FirebaseApp.configure()
 
-       // Messaging.messaging().delegate = self
+        Messaging.messaging().delegate = self
 
         // disable capcha on confirm
         // Auth.auth().settings?.isAppVerificationDisabledForTesting = true
@@ -101,8 +101,8 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     }
 }
 
-//extension AppDelegate: MessagingDelegate {
-  //  func messaging(_: Messaging, didReceiveRegistrationToken _: String?) {
+extension AppDelegate: MessagingDelegate {
+    func messaging(_: Messaging, didReceiveRegistrationToken _: String?) {
 //        print("token \(fcmToken)")
 //        let dataDict: [String: String] = ["token": fcmToken ?? ""]
 //         NotificationCenter.default.post(
@@ -111,8 +111,8 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 //           userInfo: dataDict
 //         )
 
-//        iosComponent.provideSubscribeToNotificationUseCase().invoke(
-//            companyUuid: iosComponent.provideCompanyUuidProvider().companyUuid
-//        )
-//    }
-//}
+        iosComponent.provideSubscribeToNotificationUseCase().invoke(
+            companyUuid: iosComponent.provideCompanyUuidProvider().companyUuid
+        )
+    }
+}
