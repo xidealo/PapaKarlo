@@ -9,7 +9,7 @@ actual class SubscribeToNotificationUseCase {
     @OptIn(ExperimentalForeignApi::class)
     actual operator fun invoke(companyUuid: String) {
         FIRMessaging
-            .messaging()
-            .subscribeToTopic("${Constants.NEWS_NOTIFICATION_PREFIX}$companyUuid")
+        .messaging()
+        .subscribeToTopic("${Constants.NEWS_NOTIFICATION_PREFIX}$companyUuid")
     }
 }

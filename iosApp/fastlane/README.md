@@ -95,6 +95,14 @@ Push a new legenda release build to the App Store
 
 Push a new emoji release build to the App Store
 
+### ios estpoest
+
+```sh
+[bundle exec] fastlane ios estpoest
+```
+
+Push a new estpoest release build to the App Store
+
 ----
 
 This README.md is auto-generated and will be re-generated every time [_fastlane_](https://fastlane.tools) is run.

@@ -1,18 +1,14 @@
 source "https://cdn.cocoapods.org"
+
 use_frameworks!
 use_modular_headers!
 
-platform :ios, '12.0'
+platform :ios, '15.5'
 install! 'cocoapods'
 
 def default_pods
-  pod 'Firebase'
-  pod 'Firebase/Analytics'
-  pod 'Firebase/Crashlytics'
-  pod 'FirebaseCore'
-  pod 'FirebaseMessaging'
-  pod 'FirebaseCoreDiagnostics'
-  pod 'GoogleUtilities'
+  pod 'Firebase','11.12.0'
+  pod 'FirebaseCrashlytics','11.12.0'
   pod 'Kingfisher'
   pod 'shared', :path => '../shared'
 end
@@ -50,5 +46,9 @@ target 'usadba' do
 end
 
 target 'emoji' do
+  default_pods
+end
+
+target 'estpoest' do
   default_pods
 end

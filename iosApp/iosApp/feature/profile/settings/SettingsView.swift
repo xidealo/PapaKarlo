@@ -114,6 +114,7 @@ struct SettingsView: View, SharedLifecycleWithState {
         .onAppear {
             viewModel.loadData()
             subscribe()
+            eventsSubscribe()
         }
         .onDisappear {
             unsubscribe()
@@ -142,8 +143,8 @@ struct SettingsView: View, SharedLifecycleWithState {
             }
         }
     }
+    
     func eventsSubscribe() {
-        
         listener = viewModel.events.watch { _events in
             if let events = _events {
                 let settingsEvents = events as? [SettingsStateEvent] ?? []
