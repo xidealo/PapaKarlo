@@ -135,7 +135,8 @@ fun viewModelModule() = module {
             formatPhoneNumber = get(),
             checkCode = get(),
             resendCode = get(),
-            analyticService = get()
+            analyticService = get(),
+            updateNotificationUseCase = get()
         )
     }
     viewModel {

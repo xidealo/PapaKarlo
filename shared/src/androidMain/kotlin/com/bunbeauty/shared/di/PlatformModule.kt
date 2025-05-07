@@ -9,6 +9,7 @@ import com.bunbeauty.shared.data.DataStoreRepository
 import com.bunbeauty.shared.data.DatabaseDriverFactory
 import com.bunbeauty.shared.data.UuidGenerator
 import com.bunbeauty.shared.db.FoodDeliveryDatabase
+import com.bunbeauty.shared.domain.feature.notification.UpdateNotificationUseCase
 import org.koin.dsl.module
 
 actual fun platformModule() = module {
@@ -32,5 +33,10 @@ actual fun platformModule() = module {
         } else {
             pInfo.versionCode.toLong()
         }
+    }
+    factory {
+        UpdateNotificationUseCase(
+            userRepository = get()
+        )
     }
 }
