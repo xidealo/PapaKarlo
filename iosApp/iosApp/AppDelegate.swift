@@ -35,9 +35,6 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
         Messaging.messaging().delegate = self
 
-        // disable capcha on confirm
-        // Auth.auth().settings?.isAppVerificationDisabledForTesting = true
-
         return true
     }
 
@@ -45,15 +42,6 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         return restrictRotation
     }
 
-//    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-//        // Pass device token to auth.
-//        let firebaseAuth = Auth.auth()
-//
-//        //At development time we use .sandbox
-//        firebaseAuth.setAPNSToken(deviceToken, type: AuthAPNSTokenType.sandbox)
-//
-//        //At time of production it will be set to .prod
-//    }
 
     func application(_: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler _: @escaping (UIBackgroundFetchResult) -> Void) {
         // Print message ID.
@@ -103,14 +91,14 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 
 extension AppDelegate: MessagingDelegate {
     func messaging(_: Messaging, didReceiveRegistrationToken _: String?) {
-//        print("token \(fcmToken)")
-//        let dataDict: [String: String] = ["token": fcmToken ?? ""]
-//         NotificationCenter.default.post(
-//           name: Notification.Name("FCMToken"),
-//           object: nil,
-//           userInfo: dataDict
-//         )
-
+        iosComponent.provideUpdateNotificationUseCase().invoke{ error in
+            if error != nil{
+                print("Token was not updated")
+            }else{
+                print("Token was updated")
+            }
+        }
+        
         iosComponent.provideSubscribeToNotificationUseCase().invoke(
             companyUuid: iosComponent.provideCompanyUuidProvider().companyUuid
         )

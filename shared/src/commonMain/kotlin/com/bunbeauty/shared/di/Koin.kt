@@ -58,6 +58,7 @@ import com.bunbeauty.shared.domain.feature.menu.di.menuModule
 import com.bunbeauty.shared.domain.feature.menuproduct.GetMenuProductUseCase
 import com.bunbeauty.shared.domain.feature.motivation.GetMotivationUseCase
 import com.bunbeauty.shared.domain.feature.notification.SubscribeToNotificationUseCase
+import com.bunbeauty.shared.domain.feature.notification.UpdateNotificationUseCase
 import com.bunbeauty.shared.domain.feature.order.*
 import com.bunbeauty.shared.domain.feature.orderavailable.IsOrderAvailableUseCase
 import com.bunbeauty.shared.domain.feature.payment.GetPaymentMethodListUseCase
@@ -210,6 +211,7 @@ class IosComponent : KoinComponent {
     fun provideHasOpenedCafeUseCase(): HasOpenedCafeUseCase = get()
     fun provideGetWorkloadCafeUseCase(): GetWorkloadCafeUseCase = get()
     fun provideIsDeliveryEnabledFromCafeUseCase(): IsDeliveryEnabledFromCafeUseCase = get()
+    fun provideUpdateNotificationUseCase(): UpdateNotificationUseCase = get()
 
     // Mapper
     fun provideUserAddressMapper(): UserAddressMapper = get()
