@@ -15,4 +15,7 @@ interface UserRepo {
     suspend fun getToken(): String?
 
     suspend fun disableUser(token: String)
+
+    fun updateNotificationToken(notificationToken: String)
+    suspend fun updateNotificationTokenSuspend(notificationToken: String)
 }

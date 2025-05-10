@@ -2,6 +2,7 @@ package com.bunbeauty.shared.presentation.confirm
 
 import com.bunbeauty.analytic.AnalyticService
 import com.bunbeauty.analytic.event.ConfirmErrorShowEvent
+import com.bunbeauty.shared.data.network.model.UpdateNotificationTokenRequest
 import com.bunbeauty.shared.domain.exeptions.AuthSessionTimeoutException
 import com.bunbeauty.shared.domain.exeptions.InvalidCodeException
 import com.bunbeauty.shared.domain.exeptions.NoAttemptsException
@@ -9,6 +10,7 @@ import com.bunbeauty.shared.domain.exeptions.TooManyRequestsException
 import com.bunbeauty.shared.domain.feature.auth.CheckCodeUseCase
 import com.bunbeauty.shared.domain.feature.auth.FormatPhoneNumberUseCase
 import com.bunbeauty.shared.domain.feature.auth.ResendCodeUseCase
+import com.bunbeauty.shared.domain.feature.notification.UpdateNotificationUseCase
 import com.bunbeauty.shared.domain.model.SuccessLoginDirection
 import com.bunbeauty.shared.extension.launchSafe
 import com.bunbeauty.shared.presentation.base.SharedStateViewModel
@@ -23,7 +25,8 @@ class ConfirmViewModel(
     private val formatPhoneNumber: FormatPhoneNumberUseCase,
     private val checkCode: CheckCodeUseCase,
     private val resendCode: ResendCodeUseCase,
-    private val analyticService: AnalyticService
+    private val updateNotificationUseCase: UpdateNotificationUseCase,
+    private val analyticService: AnalyticService,
 ) : SharedStateViewModel<Confirm.ViewDataState, Confirm.Action, Confirm.Event>(
     initDataState = Confirm.ViewDataState(
         phoneNumber = "",
@@ -77,6 +80,7 @@ class ConfirmViewModel(
         sharedScope.launchSafe(
             block = {
                 checkCode(code)
+                updateNotificationUseCase()
                 finishConfirmation()
             },
             onError = { throwable ->

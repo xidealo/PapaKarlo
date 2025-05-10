@@ -1,5 +1,6 @@
 package com.bunbeauty.shared.data.repository
 
+import com.bunbeauty.core.Logger
 import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.data.dao.order.IOrderDao
 import com.bunbeauty.shared.data.dao.user.IUserDao
@@ -7,13 +8,22 @@ import com.bunbeauty.shared.data.dao.user_address.IUserAddressDao
 import com.bunbeauty.shared.data.mapper.profile.IProfileMapper
 import com.bunbeauty.shared.data.mapper.user.IUserMapper
 import com.bunbeauty.shared.data.network.api.NetworkConnector
+import com.bunbeauty.shared.data.network.model.UpdateNotificationTokenRequest
 import com.bunbeauty.shared.data.network.model.profile.get.ProfileServer
 import com.bunbeauty.shared.data.network.model.profile.patch.PatchUserServer
+import com.bunbeauty.shared.domain.exeptions.NoTokenException
 import com.bunbeauty.shared.domain.mapFlow
 import com.bunbeauty.shared.domain.model.profile.Profile
 import com.bunbeauty.shared.domain.model.profile.User
 import com.bunbeauty.shared.domain.repo.UserRepo
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
+import kotlin.coroutines.CoroutineContext
 
 class UserRepository(
     private val networkConnector: NetworkConnector,
@@ -22,8 +32,15 @@ class UserRepository(
     private val userDao: IUserDao,
     private val userAddressDao: IUserAddressDao,
     private val orderDao: IOrderDao,
-    private val dataStoreRepo: DataStoreRepo
-) : DatabaseCacheRepository(), UserRepo {
+    private val dataStoreRepo: DataStoreRepo,
+) : DatabaseCacheRepository(), UserRepo, CoroutineScope {
+
+    val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
+        Logger.logE("UserRepository", throwable.printStackTrace())
+    }
+
+    override val coroutineContext: CoroutineContext
+        get() = SupervisorJob() + Dispatchers.IO + coroutineExceptionHandler
 
     override val tag: String = "USER_TAG"
     var cachedUserUuid: String? = null
@@ -67,6 +84,30 @@ class UserRepository(
 
     override suspend fun disableUser(token: String) {
         networkConnector.patchSettings(token, PatchUserServer(isActive = false))
+    }
+
+    override fun updateNotificationToken(notificationToken: String) {
+        launch {
+            dataStoreRepo.getToken()?.let { token ->
+                networkConnector.putNotificationToken(
+                    updateNotificationTokenRequest = UpdateNotificationTokenRequest(
+                        token = notificationToken
+                    ),
+                    token = token
+                )
+            }
+        }
+    }
+
+    override suspend fun updateNotificationTokenSuspend(notificationToken: String) {
+        dataStoreRepo.getToken()?.let { token ->
+            networkConnector.putNotificationToken(
+                updateNotificationTokenRequest = UpdateNotificationTokenRequest(
+                    token = notificationToken
+                ),
+                token = token
+            )
+        }
     }
 
     private suspend fun saveProfileLocally(profile: ProfileServer?) {

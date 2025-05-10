@@ -18,6 +18,7 @@ struct ConfirmView: View {
         formatPhoneNumber: iosComponent.provideFormatPhoneNumberUseCase(),
         checkCode: iosComponent.provideCheckCodeUseCase(),
         resendCode: iosComponent.provideResendCodeUseCase(),
+        updateNotificationUseCase: iosComponent.provideUpdateNotificationUseCase(),
         analyticService: iosComponent.provideAnalyticService()
     )
 

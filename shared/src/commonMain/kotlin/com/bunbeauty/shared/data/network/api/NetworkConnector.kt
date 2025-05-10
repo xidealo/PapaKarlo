@@ -17,6 +17,7 @@ import com.bunbeauty.shared.data.network.model.RecommendationDataServer
 import com.bunbeauty.shared.data.network.model.SettingsServer
 import com.bunbeauty.shared.data.network.model.StreetServer
 import com.bunbeauty.shared.data.network.model.SuggestionServer
+import com.bunbeauty.shared.data.network.model.UpdateNotificationTokenRequest
 import com.bunbeauty.shared.data.network.model.UserAddressPostServer
 import com.bunbeauty.shared.data.network.model.login.AuthResponseServer
 import com.bunbeauty.shared.data.network.model.login.AuthSessionServer
@@ -44,12 +45,12 @@ interface NetworkConnector {
     suspend fun getSuggestions(
         token: String,
         query: String,
-        cityUuid: String
+        cityUuid: String,
     ): ApiResult<ListServer<SuggestionServer>>
 
     suspend fun getUserAddressListByCityUuid(
         token: String,
-        cityUuid: String
+        cityUuid: String,
     ): ApiResult<ListServer<AddressServer>>
 
     suspend fun getPayment(token: String): ApiResult<PaymentServer>
@@ -57,7 +58,7 @@ interface NetworkConnector {
     suspend fun getOrderList(
         token: String,
         count: Int? = null,
-        uuid: String? = null
+        uuid: String? = null,
     ): ApiResult<ListServer<OrderServer>>
 
     suspend fun getSettings(token: String): ApiResult<SettingsServer>
@@ -69,15 +70,20 @@ interface NetworkConnector {
     suspend fun postLogin(loginPostServer: LoginPostServer): ApiResult<AuthResponseServer>
     suspend fun postUserAddress(
         token: String,
-        userAddress: UserAddressPostServer
+        userAddress: UserAddressPostServer,
     ): ApiResult<AddressServer>
+
+    suspend fun putNotificationToken(
+        updateNotificationTokenRequest: UpdateNotificationTokenRequest,
+        token: String,
+    ): ApiResult<Unit>
 
     suspend fun postOrder(token: String, order: OrderPostServer): ApiResult<OrderServer>
     suspend fun postCodeRequest(codeRequest: CodeRequestServer): ApiResult<AuthSessionServer>
 
     suspend fun patchSettings(
         token: String,
-        patchUserServer: PatchUserServer
+        patchUserServer: PatchUserServer,
     ): ApiResult<SettingsServer>
 
     suspend fun putCodeResend(uuid: String): ApiResult<Unit>
