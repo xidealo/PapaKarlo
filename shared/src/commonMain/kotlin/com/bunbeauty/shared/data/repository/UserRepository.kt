@@ -100,12 +100,14 @@ class UserRepository(
     }
 
     override suspend fun updateNotificationTokenSuspend(notificationToken: String) {
-        networkConnector.putNotificationToken(
-            updateNotificationTokenRequest = UpdateNotificationTokenRequest(
-                token = notificationToken
-            ),
-            token = dataStoreRepo.getToken() ?: throw NoTokenException()
-        )
+        dataStoreRepo.getToken()?.let { token ->
+            networkConnector.putNotificationToken(
+                updateNotificationTokenRequest = UpdateNotificationTokenRequest(
+                    token = notificationToken
+                ),
+                token = token
+            )
+        }
     }
 
     private suspend fun saveProfileLocally(profile: ProfileServer?) {

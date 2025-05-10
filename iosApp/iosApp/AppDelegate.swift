@@ -87,6 +87,12 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         // Print full message.
         print(userInfo)
     }
+    
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        print("Registered for Apple Remote Notifications")
+        Messaging.messaging().setAPNSToken(deviceToken, type: .unknown)
+    }
+    
 }
 
 extension AppDelegate: MessagingDelegate {
@@ -99,6 +105,7 @@ extension AppDelegate: MessagingDelegate {
             }
         }
         
+    
         iosComponent.provideSubscribeToNotificationUseCase().invoke(
             companyUuid: iosComponent.provideCompanyUuidProvider().companyUuid
         )
