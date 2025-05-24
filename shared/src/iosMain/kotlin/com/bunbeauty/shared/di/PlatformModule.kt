@@ -9,6 +9,7 @@ import com.bunbeauty.shared.data.DataStoreRepository
 import com.bunbeauty.shared.data.DatabaseDriverFactory
 import com.bunbeauty.shared.data.UuidGenerator
 import com.bunbeauty.shared.db.FoodDeliveryDatabase
+import com.bunbeauty.shared.domain.feature.notification.UpdateNotificationUseCase
 import org.koin.dsl.module
 import kotlin.experimental.ExperimentalNativeApi
 
@@ -22,6 +23,11 @@ actual fun platformModule() = module {
     }
     single {
         UuidGenerator()
+    }
+    factory {
+        UpdateNotificationUseCase(
+            userRepository = get()
+        )
     }
     single(flavorQualifier) { targetName }
     single(isDebugQualifier) { Platform.isDebugBinary }
