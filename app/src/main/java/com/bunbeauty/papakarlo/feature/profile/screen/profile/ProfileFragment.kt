@@ -76,7 +76,6 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
     private val linkUiStateMapper: LinkUiStateMapper by inject()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        overrideBackPressedCallback()
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.update()
@@ -122,6 +121,9 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
                     findNavController().navigateSafe(ProductDetailsFragmentDirections.globalConsumerCartFragment())
                 }
             ),
+            backActionClick = {
+                findNavController().popBackStack()
+            },
             backgroundColor = FoodDeliveryTheme.colors.mainColors.surface,
             actionButton = {
                 if (profileUi.state == ProfileState.State.UNAUTHORIZED) {
@@ -216,6 +218,12 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
                         ProfileFragmentDirections.toLoginFragment(
                             SuccessLoginDirection.BACK_TO_PROFILE
                         )
+                    )
+                }
+
+                ProfileState.Event.ShowCafeList -> {
+                    findNavController().navigateSafe(
+                        ProfileFragmentDirections.actionProfileFragmentToCafeListFragment()
                     )
                 }
             }
@@ -337,6 +345,13 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
     @Composable
     private fun ProfileInfoCards(modifier: Modifier = Modifier) {
         Column(modifier = modifier) {
+            NavigationIconCardWithDivider(
+                modifier = Modifier.fillMaxWidth(),
+                iconId = R.drawable.ic_cafes,
+                iconDescriptionStringId = R.string.title_bottom_navigation_menu_cafe_list,
+                labelStringId = R.string.title_bottom_navigation_menu_cafe_list,
+                onClick = viewModel::onCafeListClicked
+            )
             NavigationIconCardWithDivider(
                 modifier = Modifier.fillMaxWidth(),
                 iconId = R.drawable.ic_payment,

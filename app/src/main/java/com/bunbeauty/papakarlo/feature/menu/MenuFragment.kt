@@ -18,6 +18,7 @@ import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.FabPosition
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -38,8 +39,9 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragmentWithSharedViewModel
 import com.bunbeauty.papakarlo.common.extension.navigateSafe
 import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
+import com.bunbeauty.papakarlo.common.ui.element.button.FoodDeliveryExtendedFab
 import com.bunbeauty.papakarlo.common.ui.element.card.BannerCard
-import com.bunbeauty.papakarlo.common.ui.element.topbar.FoodDeliveryCartAction
+import com.bunbeauty.papakarlo.common.ui.element.topbar.FoodDeliveryAction
 import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
@@ -120,8 +122,8 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
         FoodDeliveryScaffold(
             title = stringResource(R.string.title_menu),
             topActions = persistentListOf(
-                FoodDeliveryCartAction(topCartUi = viewState.topCartUi) {
-                    findNavController().navigateSafe(globalConsumerCartFragment())
+                FoodDeliveryAction(iconId = R.drawable.ic_profile) {
+                    findNavController().navigateSafe(R.id.action_menuFragment_to_profileFragment)
                 }
             ),
             scrollableState = menuLazyGridState,
@@ -135,7 +137,22 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
                         menuLazyGridState = menuLazyGridState
                     )
                 }
-            }
+            },
+            actionButton = {
+                Crossfade(targetState = viewState.state) { state ->
+                    if (state is MenuDataState.State.Success) {
+                        FoodDeliveryExtendedFab(
+                            text = viewState.topCartUi.cost,
+                            onClick = {
+                                findNavController().navigateSafe(globalConsumerCartFragment())
+                            },
+                            icon = R.drawable.ic_cart_24,
+                            iconBadge = viewState.topCartUi.count
+                        )
+                    }
+                }
+            },
+            floatingActionButtonPosition = FabPosition.End
         ) {
             Crossfade(
                 targetState = viewState.state,
@@ -246,7 +263,7 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
     ) {
         LazyVerticalGrid(
             modifier = Modifier.fillMaxSize(),
-            contentPadding = PaddingValues(FoodDeliveryTheme.dimensions.mediumSpace),
+            contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 96.dp),
             columns = GridCells.Fixed(2),
             horizontalArrangement = spacedBy(8.dp),
             state = menuLazyListState,
