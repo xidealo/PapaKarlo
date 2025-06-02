@@ -28,6 +28,9 @@ import com.bunbeauty.shared.domain.model.order.OrderStatus
 
 private val stepShape = RoundedCornerShape(12.dp)
 
+const val FIRST_POSITION = 0
+const val LAST_POSITION = 4
+
 @Composable
 fun OrderStatusBar(
     modifier: Modifier = Modifier,
@@ -113,14 +116,14 @@ fun OrderStatusBar(
 @Composable
 private fun getRoundedShape(i: Int): RoundedCornerShape? {
     return when (i) {
-        0 -> RoundedCornerShape(
+        FIRST_POSITION -> RoundedCornerShape(
             topStart = 12.dp,
             topEnd = 0.dp,
             bottomEnd = 0.dp,
             bottomStart = 12.dp
         )
 
-        4 -> RoundedCornerShape(
+        LAST_POSITION -> RoundedCornerShape(
             topStart = 0.dp,
             topEnd = 12.dp,
             bottomEnd = 12.dp,
