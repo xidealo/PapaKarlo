@@ -35,6 +35,7 @@ fun FoodDeliveryScaffold(
     @DrawableRes drawableId: Int? = null,
     actionButton: @Composable () -> Unit = {},
     appBarContent: @Composable () -> Unit = {},
+    floatingActionButtonPosition: FabPosition = FabPosition.Center,
     content: (@Composable () -> Unit)
 ) {
     val appBarState = rememberTopAppBarState()
@@ -55,7 +56,7 @@ fun FoodDeliveryScaffold(
         },
         containerColor = backgroundColor,
         floatingActionButton = actionButton,
-        floatingActionButtonPosition = FabPosition.Center,
+        floatingActionButtonPosition = floatingActionButtonPosition,
         contentWindowInsets = WindowInsets(0, 0, 0, 0)
     ) { padding ->
         Box(

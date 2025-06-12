@@ -5,7 +5,7 @@ import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.coroutines.tasks.await
 
 actual class UpdateNotificationUseCase(
-    private val userRepository: UserRepo,
+    private val userRepository: UserRepo
 ) {
     actual suspend operator fun invoke() {
         userRepository.updateNotificationTokenSuspend(notificationToken = getNotificationToken())

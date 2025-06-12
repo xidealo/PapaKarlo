@@ -6,7 +6,7 @@ import kotlinx.cinterop.ExperimentalForeignApi
 import kotlin.coroutines.suspendCoroutine
 
 actual class UpdateNotificationUseCase(
-    private val userRepository: UserRepo,
+    private val userRepository: UserRepo
 ) {
     actual suspend operator fun invoke() {
         userRepository.updateNotificationTokenSuspend(notificationToken = getNotificationToken())

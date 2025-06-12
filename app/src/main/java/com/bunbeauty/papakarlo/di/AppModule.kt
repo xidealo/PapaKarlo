@@ -11,7 +11,7 @@ import org.koin.dsl.module
 
 fun appModule() = module {
     single { androidContext().resources }
-    single { androidContext().imageLoader }
+    single { androidContext().imageLoader.newBuilder() }
     single { androidContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager }
     single(flavorQualifier) { BuildConfig.FLAVOR }
     single(isDebugQualifier) { BuildConfig.DEBUG }

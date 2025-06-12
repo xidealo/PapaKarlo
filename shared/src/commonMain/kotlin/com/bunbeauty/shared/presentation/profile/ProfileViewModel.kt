@@ -125,6 +125,12 @@ class ProfileViewModel(
         }
     }
 
+    fun onCafeListClicked() {
+        mutableProfileState.update { profileState ->
+            profileState + ProfileState.Event.ShowCafeList
+        }
+    }
+
     fun onFeedbackClicked() {
         mutableProfileState.update { profileState ->
             profileState + ProfileState.Event.ShowFeedback(profileState.linkList)

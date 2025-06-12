@@ -20,14 +20,12 @@ import com.bunbeauty.papakarlo.common.BaseComposeFragment
 import com.bunbeauty.papakarlo.common.extension.navigateSafe
 import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryItem
-import com.bunbeauty.papakarlo.common.ui.element.topbar.FoodDeliveryCartAction
 import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.feature.cafe.ui.CafeItem
 import com.bunbeauty.papakarlo.feature.cafe.ui.CafeItemAndroid
 import com.bunbeauty.papakarlo.feature.productdetails.ProductDetailsFragmentDirections
-import com.bunbeauty.papakarlo.feature.topcart.TopCartUi
 import com.bunbeauty.shared.domain.model.cafe.CafeOpenState
 import com.bunbeauty.shared.presentation.cafe_list.CafeList
 import com.bunbeauty.shared.presentation.cafe_list.CafeListViewModel
@@ -56,7 +54,6 @@ class CafeListFragment :
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        overrideBackPressedCallback()
         super.onViewCreated(view, savedInstanceState)
         viewModel.onAction(CafeList.Action.Init)
     }
@@ -68,17 +65,8 @@ class CafeListFragment :
     ) {
         FoodDeliveryScaffold(
             title = stringResource(R.string.title_cafe_list),
-            topActions = if (cafeListViewState is CafeListViewState.Success) {
-                persistentListOf(
-                    FoodDeliveryCartAction(
-                        topCartUi = cafeListViewState.topCartUi,
-                        onClick = {
-                            onAction(CafeList.Action.OnCartClicked)
-                        }
-                    )
-                )
-            } else {
-                persistentListOf()
+            backActionClick = {
+                onAction(CafeList.Action.BackClicked)
             },
             backgroundColor = FoodDeliveryTheme.colors.mainColors.surface
         ) {
@@ -147,6 +135,8 @@ class CafeListFragment :
             CafeList.Event.OpenConsumerCartProduct -> findNavController().navigateSafe(
                 ProductDetailsFragmentDirections.globalConsumerCartFragment()
             )
+
+            CafeList.Event.Back -> findNavController().popBackStack()
         }
     }
 
@@ -184,10 +174,6 @@ class CafeListFragment :
                             cafeOpenState = CafeOpenState.Closed,
                             isLast = true
                         )
-                    ),
-                    topCartUi = TopCartUi(
-                        cost = "100",
-                        count = "2"
                     )
                 ),
                 onAction = {}

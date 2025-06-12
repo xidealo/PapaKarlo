@@ -2,7 +2,6 @@ package com.bunbeauty.shared.presentation.confirm
 
 import com.bunbeauty.analytic.AnalyticService
 import com.bunbeauty.analytic.event.ConfirmErrorShowEvent
-import com.bunbeauty.shared.data.network.model.UpdateNotificationTokenRequest
 import com.bunbeauty.shared.domain.exeptions.AuthSessionTimeoutException
 import com.bunbeauty.shared.domain.exeptions.InvalidCodeException
 import com.bunbeauty.shared.domain.exeptions.NoAttemptsException
@@ -26,7 +25,7 @@ class ConfirmViewModel(
     private val checkCode: CheckCodeUseCase,
     private val resendCode: ResendCodeUseCase,
     private val updateNotificationUseCase: UpdateNotificationUseCase,
-    private val analyticService: AnalyticService,
+    private val analyticService: AnalyticService
 ) : SharedStateViewModel<Confirm.ViewDataState, Confirm.Action, Confirm.Event>(
     initDataState = Confirm.ViewDataState(
         phoneNumber = "",

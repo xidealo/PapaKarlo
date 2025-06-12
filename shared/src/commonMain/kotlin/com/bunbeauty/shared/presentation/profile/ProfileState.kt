@@ -23,13 +23,14 @@ data class ProfileState(
 
     sealed interface Event {
         class OpenOrderDetails(val orderUuid: String, val orderCode: String) : Event
-        object OpenSettings : Event
-        object OpenAddressList : Event
-        object OpenOrderList : Event
+        data object OpenSettings : Event
+        data object OpenAddressList : Event
+        data object OpenOrderList : Event
+        data object ShowCafeList : Event
         class ShowPayment(val paymentMethodList: List<PaymentMethod>) : Event
         class ShowFeedback(val linkList: List<Link>) : Event
-        object ShowAboutApp : Event
-        object OpenLogin : Event
+        data object ShowAboutApp : Event
+        data object OpenLogin : Event
     }
 
     operator fun plus(event: Event) = copy(eventList = eventList + event)
