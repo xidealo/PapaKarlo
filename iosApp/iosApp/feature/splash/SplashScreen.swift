@@ -19,7 +19,7 @@ struct SplashView: View, SharedLifecycle {
     )
 
     @State var eventsListener: Closeable?
-
+        
     // Navigation
     @State var openSelectCity: Bool = false
     @State var openMainMenu: Bool = false
@@ -65,7 +65,7 @@ struct SplashView: View, SharedLifecycle {
                 }
                 NavigationView {
                     NavigationLink(
-                        destination: ContainerView(selection: MainContainerState.menu),
+                        destination: MenuView(),
                         isActive: $openMainMenu
                     ) {
                         LoadingView()

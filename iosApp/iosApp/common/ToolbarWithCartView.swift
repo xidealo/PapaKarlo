@@ -20,7 +20,6 @@ struct ToolbarWithCartView: View {
     var back: (() -> Void)? = nil
 
     @Binding var isRootActive: Bool
-    @Binding var selection: MainContainerState
     @Binding var showOrderCreated: Bool
 
     var body: some View {
@@ -31,7 +30,6 @@ struct ToolbarWithCartView: View {
                 NavigationLink(
                     destination: ConsumerCartView(
                         isRootActive: self.$isRootActive,
-                        selection: self.$selection,
                         showOrderCreated: $showOrderCreated
                     ),
                     isActive: $isRootActive

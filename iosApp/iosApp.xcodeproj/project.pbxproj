@@ -19,7 +19,6 @@
 		0219B7922B8FB97C00305E2D /* NavigationTextCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023234B328787A180048CF39 /* NavigationTextCard.swift */; };
 		0219B7932B8FB97C00305E2D /* CafeOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323457287879EF0048CF39 /* CafeOptionsView.swift */; };
 		0219B7942B8FB97C00305E2D /* ConsumerCartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0232342B287879EF0048CF39 /* ConsumerCartView.swift */; };
-		0219B7952B8FB97C00305E2D /* BottomBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022AA66C28BE9DD2005B9F20 /* BottomBarView.swift */; };
 		0219B7962B8FB97C00305E2D /* AppColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0294FD7F29E751CC00568A10 /* AppColor.swift */; };
 		0219B7972B8FB97C00305E2D /* CafeAddressListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020FEEBE28D3AEF7002B3D69 /* CafeAddressListView.swift */; };
 		0219B7982B8FB97C00305E2D /* CafeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323454287879EF0048CF39 /* CafeListView.swift */; };
@@ -46,7 +45,6 @@
 		0219B7AE2B8FB97C00305E2D /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323421287878520048CF39 /* SplashScreen.swift */; };
 		0219B7AF2B8FB97C00305E2D /* CreateAddressViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021920C32B7417F5004EE254 /* CreateAddressViewState.swift */; };
 		0219B7B02B8FB97C00305E2D /* CityItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323430287879EF0048CF39 /* CityItemView.swift */; };
-		0219B7B12B8FB97C00305E2D /* ContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0232346D287879EF0048CF39 /* ContainerView.swift */; };
 		0219B7B22B8FB97C00305E2D /* CreateOrderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323475287879EF0048CF39 /* CreateOrderView.swift */; };
 		0219B7B32B8FB97C00305E2D /* NavigationCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023234B428787A180048CF39 /* NavigationCardView.swift */; };
 		0219B7B42B8FB97C00305E2D /* MenuProductItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323466287879EF0048CF39 /* MenuProductItem.swift */; };
@@ -125,7 +123,6 @@
 		0220B1022953A6E000CD93B4 /* ToolbarWithCartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0220B1012953A6E000CD93B4 /* ToolbarWithCartView.swift */; };
 		022A868528D79D5F00DBE5EC /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022A868428D79D5F00DBE5EC /* CardView.swift */; };
 		022A929A288D460500EB5885 /* SearchEditText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022A9299288D460500EB5885 /* SearchEditText.swift */; };
-		022AA66D28BE9DD2005B9F20 /* BottomBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022AA66C28BE9DD2005B9F20 /* BottomBarView.swift */; };
 		022BC66E28CC895800F3ED27 /* DateUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022BC66D28CC895800F3ED27 /* DateUtil.swift */; };
 		022BC67228CC8A6700F3ED27 /* OrderChip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022BC67128CC8A6700F3ED27 /* OrderChip.swift */; };
 		022BC67428CC9D0700F3ED27 /* OrderProductItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022BC67328CC9D0700F3ED27 /* OrderProductItem.swift */; };
@@ -169,7 +166,6 @@
 		023234A5287879EF0048CF39 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323468287879EF0048CF39 /* MenuView.swift */; };
 		023234A7287879EF0048CF39 /* ProductDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0232346B287879EF0048CF39 /* ProductDetailsView.swift */; };
 		023234A8287879EF0048CF39 /* ProductDetailsViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0232346C287879EF0048CF39 /* ProductDetailsViewState.swift */; };
-		023234A9287879EF0048CF39 /* ContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0232346D287879EF0048CF39 /* ContainerView.swift */; };
 		023234AB287879EF0048CF39 /* ToolbarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323472287879EF0048CF39 /* ToolbarViewModel.swift */; };
 		023234AC287879EF0048CF39 /* ToolbarViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323473287879EF0048CF39 /* ToolbarViewState.swift */; };
 		023234AD287879EF0048CF39 /* CreateOrderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323475287879EF0048CF39 /* CreateOrderView.swift */; };
@@ -227,7 +223,6 @@
 		025BF77A2CAB354D00DF0946 /* NavigationTextCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023234B328787A180048CF39 /* NavigationTextCard.swift */; };
 		025BF77B2CAB354D00DF0946 /* CafeOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323457287879EF0048CF39 /* CafeOptionsView.swift */; };
 		025BF77C2CAB354D00DF0946 /* ConsumerCartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0232342B287879EF0048CF39 /* ConsumerCartView.swift */; };
-		025BF77D2CAB354D00DF0946 /* BottomBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022AA66C28BE9DD2005B9F20 /* BottomBarView.swift */; };
 		025BF77E2CAB354D00DF0946 /* AppColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0294FD7F29E751CC00568A10 /* AppColor.swift */; };
 		025BF77F2CAB354D00DF0946 /* CafeAddressListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020FEEBE28D3AEF7002B3D69 /* CafeAddressListView.swift */; };
 		025BF7802CAB354D00DF0946 /* CafeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323454287879EF0048CF39 /* CafeListView.swift */; };
@@ -256,7 +251,6 @@
 		025BF7982CAB354D00DF0946 /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323421287878520048CF39 /* SplashScreen.swift */; };
 		025BF7992CAB354D00DF0946 /* CreateAddressViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021920C32B7417F5004EE254 /* CreateAddressViewState.swift */; };
 		025BF79A2CAB354D00DF0946 /* CityItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323430287879EF0048CF39 /* CityItemView.swift */; };
-		025BF79B2CAB354D00DF0946 /* ContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0232346D287879EF0048CF39 /* ContainerView.swift */; };
 		025BF79C2CAB354D00DF0946 /* Motivation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0296C3CA2C29E79E00538FCE /* Motivation.swift */; };
 		025BF79D2CAB354D00DF0946 /* CreateOrderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323475287879EF0048CF39 /* CreateOrderView.swift */; };
 		025BF79E2CAB354D00DF0946 /* PaymentMethodUi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0269DB3D2C263DEA009D36AE /* PaymentMethodUi.swift */; };
@@ -345,7 +339,6 @@
 		025F42D72CD0159400C854AF /* NavigationTextCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023234B328787A180048CF39 /* NavigationTextCard.swift */; };
 		025F42D82CD0159400C854AF /* CafeOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323457287879EF0048CF39 /* CafeOptionsView.swift */; };
 		025F42D92CD0159400C854AF /* ConsumerCartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0232342B287879EF0048CF39 /* ConsumerCartView.swift */; };
-		025F42DA2CD0159400C854AF /* BottomBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022AA66C28BE9DD2005B9F20 /* BottomBarView.swift */; };
 		025F42DB2CD0159400C854AF /* AppColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0294FD7F29E751CC00568A10 /* AppColor.swift */; };
 		025F42DC2CD0159400C854AF /* CafeAddressListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020FEEBE28D3AEF7002B3D69 /* CafeAddressListView.swift */; };
 		025F42DD2CD0159400C854AF /* CafeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323454287879EF0048CF39 /* CafeListView.swift */; };
@@ -374,7 +367,6 @@
 		025F42F52CD0159400C854AF /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323421287878520048CF39 /* SplashScreen.swift */; };
 		025F42F62CD0159400C854AF /* CreateAddressViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021920C32B7417F5004EE254 /* CreateAddressViewState.swift */; };
 		025F42F72CD0159400C854AF /* CityItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323430287879EF0048CF39 /* CityItemView.swift */; };
-		025F42F82CD0159400C854AF /* ContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0232346D287879EF0048CF39 /* ContainerView.swift */; };
 		025F42F92CD0159400C854AF /* Motivation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0296C3CA2C29E79E00538FCE /* Motivation.swift */; };
 		025F42FA2CD0159400C854AF /* CreateOrderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323475287879EF0048CF39 /* CreateOrderView.swift */; };
 		025F42FB2CD0159400C854AF /* PaymentMethodUi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0269DB3D2C263DEA009D36AE /* PaymentMethodUi.swift */; };
@@ -463,7 +455,6 @@
 		025F77F82CD14C3400C87D99 /* NavigationTextCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023234B328787A180048CF39 /* NavigationTextCard.swift */; };
 		025F77F92CD14C3400C87D99 /* CafeOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323457287879EF0048CF39 /* CafeOptionsView.swift */; };
 		025F77FA2CD14C3400C87D99 /* ConsumerCartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0232342B287879EF0048CF39 /* ConsumerCartView.swift */; };
-		025F77FB2CD14C3400C87D99 /* BottomBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022AA66C28BE9DD2005B9F20 /* BottomBarView.swift */; };
 		025F77FC2CD14C3400C87D99 /* AppColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0294FD7F29E751CC00568A10 /* AppColor.swift */; };
 		025F77FD2CD14C3400C87D99 /* CafeAddressListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020FEEBE28D3AEF7002B3D69 /* CafeAddressListView.swift */; };
 		025F77FE2CD14C3400C87D99 /* CafeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323454287879EF0048CF39 /* CafeListView.swift */; };
@@ -492,7 +483,6 @@
 		025F78162CD14C3400C87D99 /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323421287878520048CF39 /* SplashScreen.swift */; };
 		025F78172CD14C3400C87D99 /* CreateAddressViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021920C32B7417F5004EE254 /* CreateAddressViewState.swift */; };
 		025F78182CD14C3400C87D99 /* CityItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323430287879EF0048CF39 /* CityItemView.swift */; };
-		025F78192CD14C3400C87D99 /* ContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0232346D287879EF0048CF39 /* ContainerView.swift */; };
 		025F781A2CD14C3400C87D99 /* Motivation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0296C3CA2C29E79E00538FCE /* Motivation.swift */; };
 		025F781B2CD14C3400C87D99 /* CreateOrderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323475287879EF0048CF39 /* CreateOrderView.swift */; };
 		025F781C2CD14C3400C87D99 /* PaymentMethodUi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0269DB3D2C263DEA009D36AE /* PaymentMethodUi.swift */; };
@@ -652,7 +642,6 @@
 		026BF26A2DB7F4B700BBD91E /* NavigationTextCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023234B328787A180048CF39 /* NavigationTextCard.swift */; };
 		026BF26B2DB7F4B700BBD91E /* CafeOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323457287879EF0048CF39 /* CafeOptionsView.swift */; };
 		026BF26C2DB7F4B700BBD91E /* ConsumerCartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0232342B287879EF0048CF39 /* ConsumerCartView.swift */; };
-		026BF26D2DB7F4B700BBD91E /* BottomBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022AA66C28BE9DD2005B9F20 /* BottomBarView.swift */; };
 		026BF26E2DB7F4B700BBD91E /* AppColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0294FD7F29E751CC00568A10 /* AppColor.swift */; };
 		026BF26F2DB7F4B700BBD91E /* CafeAddressListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020FEEBE28D3AEF7002B3D69 /* CafeAddressListView.swift */; };
 		026BF2702DB7F4B700BBD91E /* CafeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323454287879EF0048CF39 /* CafeListView.swift */; };
@@ -685,7 +674,6 @@
 		026BF28B2DB7F4B700BBD91E /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323421287878520048CF39 /* SplashScreen.swift */; };
 		026BF28C2DB7F4B700BBD91E /* CreateAddressViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021920C32B7417F5004EE254 /* CreateAddressViewState.swift */; };
 		026BF28D2DB7F4B700BBD91E /* CityItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323430287879EF0048CF39 /* CityItemView.swift */; };
-		026BF28E2DB7F4B700BBD91E /* ContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0232346D287879EF0048CF39 /* ContainerView.swift */; };
 		026BF28F2DB7F4B700BBD91E /* Motivation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0296C3CA2C29E79E00538FCE /* Motivation.swift */; };
 		026BF2902DB7F4B700BBD91E /* CreateOrderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323475287879EF0048CF39 /* CreateOrderView.swift */; };
 		026BF2912DB7F4B700BBD91E /* PaymentMethodUi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0269DB3D2C263DEA009D36AE /* PaymentMethodUi.swift */; };
@@ -777,7 +765,6 @@
 		026C1F552A2690B900838266 /* NavigationTextCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023234B328787A180048CF39 /* NavigationTextCard.swift */; };
 		026C1F562A2690B900838266 /* CafeOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323457287879EF0048CF39 /* CafeOptionsView.swift */; };
 		026C1F582A2690B900838266 /* ConsumerCartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0232342B287879EF0048CF39 /* ConsumerCartView.swift */; };
-		026C1F592A2690B900838266 /* BottomBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022AA66C28BE9DD2005B9F20 /* BottomBarView.swift */; };
 		026C1F5A2A2690B900838266 /* AppColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0294FD7F29E751CC00568A10 /* AppColor.swift */; };
 		026C1F5B2A2690B900838266 /* CafeAddressListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020FEEBE28D3AEF7002B3D69 /* CafeAddressListView.swift */; };
 		026C1F5C2A2690B900838266 /* CafeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323454287879EF0048CF39 /* CafeListView.swift */; };
@@ -801,7 +788,6 @@
 		026C1F712A2690B900838266 /* ChangeCityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323447287879EF0048CF39 /* ChangeCityView.swift */; };
 		026C1F722A2690B900838266 /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323421287878520048CF39 /* SplashScreen.swift */; };
 		026C1F742A2690B900838266 /* CityItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323430287879EF0048CF39 /* CityItemView.swift */; };
-		026C1F752A2690B900838266 /* ContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0232346D287879EF0048CF39 /* ContainerView.swift */; };
 		026C1F762A2690B900838266 /* CreateOrderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323475287879EF0048CF39 /* CreateOrderView.swift */; };
 		026C1F772A2690B900838266 /* NavigationCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023234B428787A180048CF39 /* NavigationCardView.swift */; };
 		026C1F792A2690B900838266 /* MenuProductItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323466287879EF0048CF39 /* MenuProductItem.swift */; };
@@ -896,7 +882,6 @@
 		027CB0182A346F7B00350EB2 /* NavigationTextCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023234B328787A180048CF39 /* NavigationTextCard.swift */; };
 		027CB0192A346F7B00350EB2 /* CafeOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323457287879EF0048CF39 /* CafeOptionsView.swift */; };
 		027CB01B2A346F7B00350EB2 /* ConsumerCartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0232342B287879EF0048CF39 /* ConsumerCartView.swift */; };
-		027CB01C2A346F7B00350EB2 /* BottomBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022AA66C28BE9DD2005B9F20 /* BottomBarView.swift */; };
 		027CB01D2A346F7B00350EB2 /* AppColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0294FD7F29E751CC00568A10 /* AppColor.swift */; };
 		027CB01E2A346F7B00350EB2 /* CafeAddressListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020FEEBE28D3AEF7002B3D69 /* CafeAddressListView.swift */; };
 		027CB01F2A346F7B00350EB2 /* CafeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323454287879EF0048CF39 /* CafeListView.swift */; };
@@ -920,7 +905,6 @@
 		027CB0342A346F7B00350EB2 /* ChangeCityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323447287879EF0048CF39 /* ChangeCityView.swift */; };
 		027CB0352A346F7B00350EB2 /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323421287878520048CF39 /* SplashScreen.swift */; };
 		027CB0372A346F7B00350EB2 /* CityItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323430287879EF0048CF39 /* CityItemView.swift */; };
-		027CB0382A346F7B00350EB2 /* ContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0232346D287879EF0048CF39 /* ContainerView.swift */; };
 		027CB0392A346F7B00350EB2 /* CreateOrderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323475287879EF0048CF39 /* CreateOrderView.swift */; };
 		027CB03A2A346F7B00350EB2 /* NavigationCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023234B428787A180048CF39 /* NavigationCardView.swift */; };
 		027CB03C2A346F7B00350EB2 /* MenuProductItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323466287879EF0048CF39 /* MenuProductItem.swift */; };
@@ -998,7 +982,6 @@
 		02891F722BDAEA0D0043B466 /* NavigationTextCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023234B328787A180048CF39 /* NavigationTextCard.swift */; };
 		02891F732BDAEA0D0043B466 /* CafeOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323457287879EF0048CF39 /* CafeOptionsView.swift */; };
 		02891F742BDAEA0D0043B466 /* ConsumerCartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0232342B287879EF0048CF39 /* ConsumerCartView.swift */; };
-		02891F752BDAEA0D0043B466 /* BottomBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022AA66C28BE9DD2005B9F20 /* BottomBarView.swift */; };
 		02891F762BDAEA0D0043B466 /* AppColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0294FD7F29E751CC00568A10 /* AppColor.swift */; };
 		02891F772BDAEA0D0043B466 /* CafeAddressListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020FEEBE28D3AEF7002B3D69 /* CafeAddressListView.swift */; };
 		02891F782BDAEA0D0043B466 /* CafeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323454287879EF0048CF39 /* CafeListView.swift */; };
@@ -1025,7 +1008,6 @@
 		02891F8E2BDAEA0D0043B466 /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323421287878520048CF39 /* SplashScreen.swift */; };
 		02891F8F2BDAEA0D0043B466 /* CreateAddressViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021920C32B7417F5004EE254 /* CreateAddressViewState.swift */; };
 		02891F902BDAEA0D0043B466 /* CityItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323430287879EF0048CF39 /* CityItemView.swift */; };
-		02891F912BDAEA0D0043B466 /* ContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0232346D287879EF0048CF39 /* ContainerView.swift */; };
 		02891F922BDAEA0D0043B466 /* CreateOrderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323475287879EF0048CF39 /* CreateOrderView.swift */; };
 		02891F932BDAEA0D0043B466 /* NavigationCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023234B428787A180048CF39 /* NavigationCardView.swift */; };
 		02891F942BDAEA0D0043B466 /* MenuProductItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323466287879EF0048CF39 /* MenuProductItem.swift */; };
@@ -1146,7 +1128,6 @@
 		02ADC33A29D9D0880062A141 /* NavigationTextCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023234B328787A180048CF39 /* NavigationTextCard.swift */; };
 		02ADC33B29D9D0880062A141 /* CafeOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323457287879EF0048CF39 /* CafeOptionsView.swift */; };
 		02ADC33D29D9D0880062A141 /* ConsumerCartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0232342B287879EF0048CF39 /* ConsumerCartView.swift */; };
-		02ADC33E29D9D0880062A141 /* BottomBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022AA66C28BE9DD2005B9F20 /* BottomBarView.swift */; };
 		02ADC33F29D9D0880062A141 /* CafeAddressListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020FEEBE28D3AEF7002B3D69 /* CafeAddressListView.swift */; };
 		02ADC34029D9D0880062A141 /* CafeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323454287879EF0048CF39 /* CafeListView.swift */; };
 		02ADC34129D9D0880062A141 /* ToolbarWithCartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0220B1012953A6E000CD93B4 /* ToolbarWithCartView.swift */; };
@@ -1168,7 +1149,6 @@
 		02ADC35529D9D0880062A141 /* ChangeCityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323447287879EF0048CF39 /* ChangeCityView.swift */; };
 		02ADC35629D9D0880062A141 /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323421287878520048CF39 /* SplashScreen.swift */; };
 		02ADC35829D9D0880062A141 /* CityItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323430287879EF0048CF39 /* CityItemView.swift */; };
-		02ADC35929D9D0880062A141 /* ContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0232346D287879EF0048CF39 /* ContainerView.swift */; };
 		02ADC35A29D9D0880062A141 /* CreateOrderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323475287879EF0048CF39 /* CreateOrderView.swift */; };
 		02ADC35B29D9D0880062A141 /* NavigationCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023234B428787A180048CF39 /* NavigationCardView.swift */; };
 		02ADC35D29D9D0880062A141 /* MenuProductItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323466287879EF0048CF39 /* MenuProductItem.swift */; };
@@ -1269,17 +1249,17 @@
 		1B2890650B7D8C6309E178C1 /* Pods_usadba.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64CB69F2C086D432C94A41AE /* Pods_usadba.framework */; };
 		2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp.swift */; };
 		266301895B5C00569AB849E2 /* Pods_papakarlo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED787CFFDA700D6B3F7441FD /* Pods_papakarlo.framework */; };
-		27B27E3F857CE2AF4CAF7755 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		27B27E3F857CE2AF4CAF7755 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		40F8CD203B1B74C608425C20 /* Pods_legenda.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44EFB0D6C47CB1C412E6147A /* Pods_legenda.framework */; };
 		4499D47CD119E33E59493A78 /* Pods_estpoest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8750C5B05EB6BDC124B6C1A9 /* Pods_estpoest.framework */; };
-		4A0B25C2EBE3215D0FC6C121 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		4E7FC62A990EFBCC2E806359 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		4A0B25C2EBE3215D0FC6C121 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		4E7FC62A990EFBCC2E806359 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		631CBC599AEFC9C22878D973 /* Pods_tandirhouse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A95B0BC15E4ECB39EC1D686 /* Pods_tandirhouse.framework */; };
 		7555FF83242A565900829871 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* ContentView.swift */; };
 		AA948690AA980921A1BB064B /* Pods_gustopub.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 887C9AE1E65E56405D8715FC /* Pods_gustopub.framework */; };
 		CB4F7FFBACC3358427B7F28F /* Pods_emoji.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C67BA2EA9F070E4A515A937 /* Pods_emoji.framework */; };
 		D2B2C9D4143E4D68813E7BCA /* Pods_djan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F16CA71F7A1C57D286A0E36 /* Pods_djan.framework */; };
-		EFA9E2E0F12AB7A3BA2D93B1 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		EFA9E2E0F12AB7A3BA2D93B1 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		F6F3956E5844208EDFA03DA0 /* Pods_yuliar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9C10411EF2D7D08F04B8829 /* Pods_yuliar.framework */; };
 /* End PBXBuildFile section */
 
@@ -1299,7 +1279,6 @@
 		0220B1012953A6E000CD93B4 /* ToolbarWithCartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarWithCartView.swift; sourceTree = "<group>"; };
 		022A868428D79D5F00DBE5EC /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		022A9299288D460500EB5885 /* SearchEditText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchEditText.swift; sourceTree = "<group>"; };
-		022AA66C28BE9DD2005B9F20 /* BottomBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomBarView.swift; sourceTree = "<group>"; };
 		022BC66D28CC895800F3ED27 /* DateUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateUtil.swift; sourceTree = "<group>"; };
 		022BC67128CC8A6700F3ED27 /* OrderChip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderChip.swift; sourceTree = "<group>"; };
 		022BC67328CC9D0700F3ED27 /* OrderProductItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderProductItem.swift; sourceTree = "<group>"; };
@@ -1343,7 +1322,6 @@
 		02323468287879EF0048CF39 /* MenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		0232346B287879EF0048CF39 /* ProductDetailsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductDetailsView.swift; sourceTree = "<group>"; };
 		0232346C287879EF0048CF39 /* ProductDetailsViewState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductDetailsViewState.swift; sourceTree = "<group>"; };
-		0232346D287879EF0048CF39 /* ContainerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerView.swift; sourceTree = "<group>"; };
 		02323472287879EF0048CF39 /* ToolbarViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolbarViewModel.swift; sourceTree = "<group>"; };
 		02323473287879EF0048CF39 /* ToolbarViewState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolbarViewState.swift; sourceTree = "<group>"; };
 		02323475287879EF0048CF39 /* CreateOrderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateOrderView.swift; sourceTree = "<group>"; };
@@ -1494,7 +1472,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EFA9E2E0F12AB7A3BA2D93B1 /* BuildFile in Frameworks */,
+				EFA9E2E0F12AB7A3BA2D93B1 /* (null) in Frameworks */,
 				631CBC599AEFC9C22878D973 /* Pods_tandirhouse.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1519,7 +1497,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				27B27E3F857CE2AF4CAF7755 /* BuildFile in Frameworks */,
+				27B27E3F857CE2AF4CAF7755 /* (null) in Frameworks */,
 				CB4F7FFBACC3358427B7F28F /* Pods_emoji.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1536,7 +1514,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4A0B25C2EBE3215D0FC6C121 /* BuildFile in Frameworks */,
+				4A0B25C2EBE3215D0FC6C121 /* (null) in Frameworks */,
 				D2B2C9D4143E4D68813E7BCA /* Pods_djan.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1569,7 +1547,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4E7FC62A990EFBCC2E806359 /* BuildFile in Frameworks */,
+				4E7FC62A990EFBCC2E806359 /* (null) in Frameworks */,
 				266301895B5C00569AB849E2 /* Pods_papakarlo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1611,7 +1589,6 @@
 				02323458287879EF0048CF39 /* address */,
 				0232345F287879EF0048CF39 /* menu */,
 				02323469287879EF0048CF39 /* product_details */,
-				0232346D287879EF0048CF39 /* ContainerView.swift */,
 				02323471287879EF0048CF39 /* base */,
 				02323474287879EF0048CF39 /* create_order */,
 			);
@@ -1857,7 +1834,6 @@
 				023234C028787A180048CF39 /* text */,
 				023234C528787A180048CF39 /* DefaultImage.swift */,
 				022A9299288D460500EB5885 /* SearchEditText.swift */,
-				022AA66C28BE9DD2005B9F20 /* BottomBarView.swift */,
 				023761C228C3612600FD33BD /* IconImage.swift */,
 				022BC67128CC8A6700F3ED27 /* OrderChip.swift */,
 				023041D228D61C3700ACF30B /* ToastView.swift */,
@@ -2807,9 +2783,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-emoji/Pods-emoji-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-emoji/Pods-emoji-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2824,9 +2804,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-usadba/Pods-usadba-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-usadba/Pods-usadba-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2863,9 +2847,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-estpoest/Pods-estpoest-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-estpoest/Pods-estpoest-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2924,9 +2912,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-vkuskavkaza/Pods-vkuskavkaza-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-vkuskavkaza/Pods-vkuskavkaza-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2941,9 +2933,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-yuliar/Pods-yuliar-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-yuliar/Pods-yuliar-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2958,9 +2954,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-djan/Pods-djan-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-djan/Pods-djan-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2975,9 +2975,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-tandirhouse/Pods-tandirhouse-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-tandirhouse/Pods-tandirhouse-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3014,9 +3018,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-legenda/Pods-legenda-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-legenda/Pods-legenda-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3141,9 +3149,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-papakarlo/Pods-papakarlo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-papakarlo/Pods-papakarlo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3158,9 +3170,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-gustopub/Pods-gustopub-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-gustopub/Pods-gustopub-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3179,7 +3195,6 @@
 				0219B7922B8FB97C00305E2D /* NavigationTextCard.swift in Sources */,
 				0219B7932B8FB97C00305E2D /* CafeOptionsView.swift in Sources */,
 				0219B7942B8FB97C00305E2D /* ConsumerCartView.swift in Sources */,
-				0219B7952B8FB97C00305E2D /* BottomBarView.swift in Sources */,
 				0219B7962B8FB97C00305E2D /* AppColor.swift in Sources */,
 				0219B7972B8FB97C00305E2D /* CafeAddressListView.swift in Sources */,
 				0219B7982B8FB97C00305E2D /* CafeListView.swift in Sources */,
@@ -3212,7 +3227,6 @@
 				0219B7AE2B8FB97C00305E2D /* SplashScreen.swift in Sources */,
 				0219B7AF2B8FB97C00305E2D /* CreateAddressViewState.swift in Sources */,
 				0219B7B02B8FB97C00305E2D /* CityItemView.swift in Sources */,
-				0219B7B12B8FB97C00305E2D /* ContainerView.swift in Sources */,
 				0296C3CF2C29E79E00538FCE /* Motivation.swift in Sources */,
 				0219B7B22B8FB97C00305E2D /* CreateOrderView.swift in Sources */,
 				0269DB422C263DEA009D36AE /* PaymentMethodUi.swift in Sources */,
@@ -3303,7 +3317,6 @@
 				025BF77A2CAB354D00DF0946 /* NavigationTextCard.swift in Sources */,
 				025BF77B2CAB354D00DF0946 /* CafeOptionsView.swift in Sources */,
 				025BF77C2CAB354D00DF0946 /* ConsumerCartView.swift in Sources */,
-				025BF77D2CAB354D00DF0946 /* BottomBarView.swift in Sources */,
 				025BF77E2CAB354D00DF0946 /* AppColor.swift in Sources */,
 				025BF77F2CAB354D00DF0946 /* CafeAddressListView.swift in Sources */,
 				025BF7802CAB354D00DF0946 /* CafeListView.swift in Sources */,
@@ -3336,7 +3349,6 @@
 				025BF7982CAB354D00DF0946 /* SplashScreen.swift in Sources */,
 				025BF7992CAB354D00DF0946 /* CreateAddressViewState.swift in Sources */,
 				025BF79A2CAB354D00DF0946 /* CityItemView.swift in Sources */,
-				025BF79B2CAB354D00DF0946 /* ContainerView.swift in Sources */,
 				025BF79C2CAB354D00DF0946 /* Motivation.swift in Sources */,
 				025BF79D2CAB354D00DF0946 /* CreateOrderView.swift in Sources */,
 				025BF79E2CAB354D00DF0946 /* PaymentMethodUi.swift in Sources */,
@@ -3427,7 +3439,6 @@
 				025F42D72CD0159400C854AF /* NavigationTextCard.swift in Sources */,
 				025F42D82CD0159400C854AF /* CafeOptionsView.swift in Sources */,
 				025F42D92CD0159400C854AF /* ConsumerCartView.swift in Sources */,
-				025F42DA2CD0159400C854AF /* BottomBarView.swift in Sources */,
 				025F42DB2CD0159400C854AF /* AppColor.swift in Sources */,
 				025F42DC2CD0159400C854AF /* CafeAddressListView.swift in Sources */,
 				025F42DD2CD0159400C854AF /* CafeListView.swift in Sources */,
@@ -3460,7 +3471,6 @@
 				025F42F52CD0159400C854AF /* SplashScreen.swift in Sources */,
 				025F42F62CD0159400C854AF /* CreateAddressViewState.swift in Sources */,
 				025F42F72CD0159400C854AF /* CityItemView.swift in Sources */,
-				025F42F82CD0159400C854AF /* ContainerView.swift in Sources */,
 				025F42F92CD0159400C854AF /* Motivation.swift in Sources */,
 				025F42FA2CD0159400C854AF /* CreateOrderView.swift in Sources */,
 				025F42FB2CD0159400C854AF /* PaymentMethodUi.swift in Sources */,
@@ -3551,7 +3561,6 @@
 				025F77F82CD14C3400C87D99 /* NavigationTextCard.swift in Sources */,
 				025F77F92CD14C3400C87D99 /* CafeOptionsView.swift in Sources */,
 				025F77FA2CD14C3400C87D99 /* ConsumerCartView.swift in Sources */,
-				025F77FB2CD14C3400C87D99 /* BottomBarView.swift in Sources */,
 				025F77FC2CD14C3400C87D99 /* AppColor.swift in Sources */,
 				025F77FD2CD14C3400C87D99 /* CafeAddressListView.swift in Sources */,
 				025F77FE2CD14C3400C87D99 /* CafeListView.swift in Sources */,
@@ -3584,7 +3593,6 @@
 				025F78162CD14C3400C87D99 /* SplashScreen.swift in Sources */,
 				025F78172CD14C3400C87D99 /* CreateAddressViewState.swift in Sources */,
 				025F78182CD14C3400C87D99 /* CityItemView.swift in Sources */,
-				025F78192CD14C3400C87D99 /* ContainerView.swift in Sources */,
 				025F781A2CD14C3400C87D99 /* Motivation.swift in Sources */,
 				025F781B2CD14C3400C87D99 /* CreateOrderView.swift in Sources */,
 				025F781C2CD14C3400C87D99 /* PaymentMethodUi.swift in Sources */,
@@ -3675,7 +3683,6 @@
 				026BF26A2DB7F4B700BBD91E /* NavigationTextCard.swift in Sources */,
 				026BF26B2DB7F4B700BBD91E /* CafeOptionsView.swift in Sources */,
 				026BF26C2DB7F4B700BBD91E /* ConsumerCartView.swift in Sources */,
-				026BF26D2DB7F4B700BBD91E /* BottomBarView.swift in Sources */,
 				026BF26E2DB7F4B700BBD91E /* AppColor.swift in Sources */,
 				026BF26F2DB7F4B700BBD91E /* CafeAddressListView.swift in Sources */,
 				026BF2702DB7F4B700BBD91E /* CafeListView.swift in Sources */,
@@ -3708,7 +3715,6 @@
 				026BF28B2DB7F4B700BBD91E /* SplashScreen.swift in Sources */,
 				026BF28C2DB7F4B700BBD91E /* CreateAddressViewState.swift in Sources */,
 				026BF28D2DB7F4B700BBD91E /* CityItemView.swift in Sources */,
-				026BF28E2DB7F4B700BBD91E /* ContainerView.swift in Sources */,
 				026BF28F2DB7F4B700BBD91E /* Motivation.swift in Sources */,
 				026BF2902DB7F4B700BBD91E /* CreateOrderView.swift in Sources */,
 				026BF2912DB7F4B700BBD91E /* PaymentMethodUi.swift in Sources */,
@@ -3799,7 +3805,6 @@
 				026C1F552A2690B900838266 /* NavigationTextCard.swift in Sources */,
 				026C1F562A2690B900838266 /* CafeOptionsView.swift in Sources */,
 				026C1F582A2690B900838266 /* ConsumerCartView.swift in Sources */,
-				026C1F592A2690B900838266 /* BottomBarView.swift in Sources */,
 				026C1F5A2A2690B900838266 /* AppColor.swift in Sources */,
 				026C1F5B2A2690B900838266 /* CafeAddressListView.swift in Sources */,
 				026C1F5C2A2690B900838266 /* CafeListView.swift in Sources */,
@@ -3832,7 +3837,6 @@
 				026C1F722A2690B900838266 /* SplashScreen.swift in Sources */,
 				021920C62B7417F5004EE254 /* CreateAddressViewState.swift in Sources */,
 				026C1F742A2690B900838266 /* CityItemView.swift in Sources */,
-				026C1F752A2690B900838266 /* ContainerView.swift in Sources */,
 				0296C3CD2C29E79E00538FCE /* Motivation.swift in Sources */,
 				026C1F762A2690B900838266 /* CreateOrderView.swift in Sources */,
 				0269DB402C263DEA009D36AE /* PaymentMethodUi.swift in Sources */,
@@ -3923,7 +3927,6 @@
 				027CB0182A346F7B00350EB2 /* NavigationTextCard.swift in Sources */,
 				027CB0192A346F7B00350EB2 /* CafeOptionsView.swift in Sources */,
 				027CB01B2A346F7B00350EB2 /* ConsumerCartView.swift in Sources */,
-				027CB01C2A346F7B00350EB2 /* BottomBarView.swift in Sources */,
 				027CB01D2A346F7B00350EB2 /* AppColor.swift in Sources */,
 				027CB01E2A346F7B00350EB2 /* CafeAddressListView.swift in Sources */,
 				027CB01F2A346F7B00350EB2 /* CafeListView.swift in Sources */,
@@ -3956,7 +3959,6 @@
 				027CB0352A346F7B00350EB2 /* SplashScreen.swift in Sources */,
 				021920C72B7417F5004EE254 /* CreateAddressViewState.swift in Sources */,
 				027CB0372A346F7B00350EB2 /* CityItemView.swift in Sources */,
-				027CB0382A346F7B00350EB2 /* ContainerView.swift in Sources */,
 				0296C3CE2C29E79E00538FCE /* Motivation.swift in Sources */,
 				027CB0392A346F7B00350EB2 /* CreateOrderView.swift in Sources */,
 				0269DB412C263DEA009D36AE /* PaymentMethodUi.swift in Sources */,
@@ -4047,7 +4049,6 @@
 				02891F722BDAEA0D0043B466 /* NavigationTextCard.swift in Sources */,
 				02891F732BDAEA0D0043B466 /* CafeOptionsView.swift in Sources */,
 				02891F742BDAEA0D0043B466 /* ConsumerCartView.swift in Sources */,
-				02891F752BDAEA0D0043B466 /* BottomBarView.swift in Sources */,
 				02891F762BDAEA0D0043B466 /* AppColor.swift in Sources */,
 				02891F772BDAEA0D0043B466 /* CafeAddressListView.swift in Sources */,
 				02891F782BDAEA0D0043B466 /* CafeListView.swift in Sources */,
@@ -4080,7 +4081,6 @@
 				02891F8E2BDAEA0D0043B466 /* SplashScreen.swift in Sources */,
 				02891F8F2BDAEA0D0043B466 /* CreateAddressViewState.swift in Sources */,
 				02891F902BDAEA0D0043B466 /* CityItemView.swift in Sources */,
-				02891F912BDAEA0D0043B466 /* ContainerView.swift in Sources */,
 				0296C3D02C29E79E00538FCE /* Motivation.swift in Sources */,
 				02891F922BDAEA0D0043B466 /* CreateOrderView.swift in Sources */,
 				0269DB432C263DEA009D36AE /* PaymentMethodUi.swift in Sources */,
@@ -4171,7 +4171,6 @@
 				02ADC33A29D9D0880062A141 /* NavigationTextCard.swift in Sources */,
 				02ADC33B29D9D0880062A141 /* CafeOptionsView.swift in Sources */,
 				02ADC33D29D9D0880062A141 /* ConsumerCartView.swift in Sources */,
-				02ADC33E29D9D0880062A141 /* BottomBarView.swift in Sources */,
 				0294FD8129E751CC00568A10 /* AppColor.swift in Sources */,
 				02ADC33F29D9D0880062A141 /* CafeAddressListView.swift in Sources */,
 				02ADC34029D9D0880062A141 /* CafeListView.swift in Sources */,
@@ -4204,7 +4203,6 @@
 				02ADC35629D9D0880062A141 /* SplashScreen.swift in Sources */,
 				021920C52B7417F5004EE254 /* CreateAddressViewState.swift in Sources */,
 				02ADC35829D9D0880062A141 /* CityItemView.swift in Sources */,
-				02ADC35929D9D0880062A141 /* ContainerView.swift in Sources */,
 				0296C3CC2C29E79E00538FCE /* Motivation.swift in Sources */,
 				02ADC35A29D9D0880062A141 /* CreateOrderView.swift in Sources */,
 				0269DB3F2C263DEA009D36AE /* PaymentMethodUi.swift in Sources */,
@@ -4295,7 +4293,6 @@
 				023234C828787A180048CF39 /* NavigationTextCard.swift in Sources */,
 				02323499287879EF0048CF39 /* CafeOptionsView.swift in Sources */,
 				0232347B287879EF0048CF39 /* ConsumerCartView.swift in Sources */,
-				022AA66D28BE9DD2005B9F20 /* BottomBarView.swift in Sources */,
 				0294FD8029E751CC00568A10 /* AppColor.swift in Sources */,
 				020FEEBF28D3AEF7002B3D69 /* CafeAddressListView.swift in Sources */,
 				02323497287879EF0048CF39 /* CafeListView.swift in Sources */,
@@ -4328,7 +4325,6 @@
 				02323422287878520048CF39 /* SplashScreen.swift in Sources */,
 				021920C42B7417F5004EE254 /* CreateAddressViewState.swift in Sources */,
 				0232347E287879EF0048CF39 /* CityItemView.swift in Sources */,
-				023234A9287879EF0048CF39 /* ContainerView.swift in Sources */,
 				0296C3CB2C29E79E00538FCE /* Motivation.swift in Sources */,
 				023234AD287879EF0048CF39 /* CreateOrderView.swift in Sources */,
 				0269DB3E2C263DEA009D36AE /* PaymentMethodUi.swift in Sources */,

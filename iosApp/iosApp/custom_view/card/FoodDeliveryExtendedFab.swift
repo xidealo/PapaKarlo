@@ -38,6 +38,7 @@ struct FoodDeliveryExtendedFab: View {
                 Text(text)
                     .labelLarge()
                     .foregroundColor(AppColor.onPrimary)
+                    .padding(.leading, iconBadge == nil ? 0 : 8)
             }
             .padding(.horizontal, 16)
             .padding(.vertical, 12)

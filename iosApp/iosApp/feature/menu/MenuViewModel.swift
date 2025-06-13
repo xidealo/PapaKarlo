@@ -14,8 +14,12 @@ class MenuViewModel: ObservableObject {
         categoryItemModels: [],
         isLoading: true,
         scrollToHorizontalPostion: "",
-        discount: nil
+        discount: nil,
+        cartCount: "",
+        cartCost: ""
     )
+    
+    var closable: Closeable? = nil
 
     @Published var scrollToPostion = "no pos"
 
@@ -49,6 +53,20 @@ class MenuViewModel: ObservableObject {
         }
     }
 
+    func subscribe() {
+        closable = iosComponent.provideObserveCartUseCase().invoke().watch { cartCostAndCount in
+            self.menuViewState = MenuViewState(
+                menuItems: self.menuViewState.menuItems,
+                categoryItemModels: self.menuViewState.categoryItemModels,
+                isLoading: self.menuViewState.isLoading,
+                scrollToHorizontalPostion: self.menuViewState.scrollToHorizontalPostion,
+                discount: self.menuViewState.discount,
+                cartCount: cartCostAndCount?.count ?? "",
+                cartCost: (cartCostAndCount?.cost ?? "") + " " + Constants().RUBLE_CURRENCY
+            )
+        }
+    }
+    
     private func getMenuItems(menuSectionList: [MenuSection]) -> [MenuItem] {
         return menuSectionList.map { menuSection in
             MenuItem(categorySectionItem: CategorySectionItem(
@@ -183,5 +201,10 @@ class MenuViewModel: ObservableObject {
         if lastAppearIndex > lastDisappearIndex {
             selectTagWithHorizontalScroll(selectIndex: index + 1)
         }
+    }
+    
+    func unsubFromFlows() {
+        closable?.close()
+        closable = nil
     }
 }

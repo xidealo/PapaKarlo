@@ -37,6 +37,13 @@ struct ProfileView: View {
 
     var body: some View {
         VStack(spacing: 0) {
+            ToolbarView(
+                title: "title_profile",
+                back: {
+                    self.mode.wrappedValue.dismiss()
+                }
+            )
+            
             switch profileState.state {
             case ProfileState.State.loading: LoadingProfileView()
             case ProfileState.State.authorized: SuccessProfileView(
@@ -104,6 +111,13 @@ struct EmptyProfileView: View {
 
     var body: some View {
         VStack(spacing: 0) {
+            NavigationIconCardWithDivider(
+                icon: "CafesIcon",
+                label: "Рестораны",
+                destination: CafeListView(),
+                isSystem: false
+            )
+            
             NavigationIconCardWithDivider(
                 icon: "ic_payment",
                 label: "Оплата",
@@ -195,6 +209,13 @@ struct SuccessProfileView: View {
                 isSystem: false
             )
 
+            NavigationIconCardWithDivider(
+                icon: "CafesIcon",
+                label: "Рестораны",
+                destination: CafeListView(),
+                isSystem: false
+            )
+            
             NavigationIconCardWithDivider(
                 icon: "ic_payment",
                 label: Strings.TITLE_PROFILE_PAYMENT,

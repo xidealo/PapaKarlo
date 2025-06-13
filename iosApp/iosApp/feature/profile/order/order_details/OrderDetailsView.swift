@@ -53,12 +53,11 @@ struct OrderDetailsView: View {
                     LazyVStack(spacing: 0) {
                         OrderStatusBar(
                             orderStatus: orderDetailsViewState.orderInfo?.status ?? OrderStatus.notAccepted,
-                            orderStatusName: orderDetailsViewState.orderInfo?.status.name ?? ""
                         )
+                        .padding(.horizontal, 16)
 
                         if let orderInfo = orderDetailsViewState.orderInfo {
                             OrderDetailsTextView(orderDetails: orderInfo)
-                                .padding(.top, 8)
                                 .padding(.bottom, Diems.SMALL_PADDING)
                         }
 

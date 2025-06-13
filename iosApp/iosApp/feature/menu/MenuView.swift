@@ -13,25 +13,56 @@ let DISCOUNT_ID = "discount_id"
 struct MenuView: View {
     @StateObject private var viewModel = MenuViewModel()
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
-
+    
     // for back after createOrder
-    @Binding var isRootActive: Bool
-    @Binding var selection: MainContainerState
-    @Binding var showOrderCreated: Bool
-
+    @State var isRootActive: Bool = false
+    @State var showOrderCreated: Bool = false
+    
+    //navigation
+    @State var openProfileScreen: Bool = false
+    @State var openCartScreen: Bool = false
+    
     @State var created: Bool = false
     @State var edited: Bool = false
-
+    
     let columns = [
         GridItem(.flexible(), spacing: 8, alignment: .top),
         GridItem(.flexible(), spacing: 8, alignment: .top),
     ]
-
+    
     var body: some View {
         VStack(spacing: 0) {
             if viewModel.menuViewState.isLoading {
                 LoadingView()
             } else {
+                
+                NavigationLink(
+                    destination: ProfileView(
+                        showOrderCreated: $isRootActive,
+                        showCreatedAddress: $showOrderCreated
+                    ),
+                    isActive: $openProfileScreen
+                ) {
+                    EmptyView()
+                }.isDetailLink(false)
+                  
+                NavigationLink(
+                    destination: ConsumerCartView(
+                        isRootActive: $isRootActive,
+                        showOrderCreated: $showOrderCreated
+                    ),
+                    isActive: $openCartScreen
+                ) {
+                    EmptyView()
+                }.isDetailLink(false)
+                
+                ToolbarView(
+                    title: "title_menu",
+                    foodDeliveryAction: FoodDeliveryAction(iconSystemName: "ProfileIcon", onClick: {
+                        openProfileScreen = true
+                    })
+                )
+                
                 ScrollView(.horizontal, showsIndicators: false) {
                     ScrollViewReader { scrollReader in
                         HStack(spacing: 0) {
@@ -55,50 +86,63 @@ struct MenuView: View {
                 }
                 .padding(.vertical, Diems.SMALL_PADDING)
                 .background(AppColor.surface)
-
-                ScrollView {
-                    ScrollViewReader { scrollReader in
-                        if let discount = viewModel.menuViewState.discount {
-                            DiscountView(discount: discount)
-                                .id(DISCOUNT_ID)
-                        }
-                        LazyVGrid(columns: columns, spacing: 8) {
-                            ForEach(viewModel.menuViewState.menuItems.indices) { i in
-                                Section(
-                                    header: LargeHeaderText(
-                                        text: viewModel.menuViewState.menuItems[i].categorySectionItem.name
-                                    )
-                                    .id(viewModel.menuViewState.menuItems[i].categorySectionItem.id)
-                                    .padding(.top, 16)
-                                ) {
-                                    ForEach(viewModel.menuViewState.menuItems[i].categorySectionItem.menuProdctItems) { menuProductItem in
-                                        MenuItemView(
-                                            menuProductItem: menuProductItem,
-                                            productDetailsOpenedFrom: ProductDetailsOpenedFrom.menuProduct,
-                                            created: $created,
-                                            edited: $edited,
-                                            action: {
-                                                viewModel.addCartProductToCart(menuProductItem: menuProductItem)
-                                            }
+                
+                ZStack(alignment: .bottomTrailing) {
+                    ScrollView {
+                        ScrollViewReader { scrollReader in
+                            if let discount = viewModel.menuViewState.discount {
+                                DiscountView(discount: discount)
+                                    .id(DISCOUNT_ID)
+                            }
+                            LazyVGrid(columns: columns, spacing: 8) {
+                                ForEach(viewModel.menuViewState.menuItems.indices) { i in
+                                    Section(
+                                        header: LargeHeaderText(
+                                            text: viewModel.menuViewState.menuItems[i].categorySectionItem.name
                                         )
-                                        .onAppear {
-                                            viewModel.checkAppear(index: i)
-                                        }
-                                        .onDisappear {
-                                            viewModel.checkDisappear(index: i)
+                                        .id(viewModel.menuViewState.menuItems[i].categorySectionItem.id)
+                                        .padding(.top, 16)
+                                    ) {
+                                        ForEach(viewModel.menuViewState.menuItems[i].categorySectionItem.menuProdctItems) { menuProductItem in
+                                            MenuItemView(
+                                                menuProductItem: menuProductItem,
+                                                productDetailsOpenedFrom: ProductDetailsOpenedFrom.menuProduct,
+                                                created: $created,
+                                                edited: $edited,
+                                                action: {
+                                                    viewModel.addCartProductToCart(menuProductItem: menuProductItem)
+                                                }
+                                            )
+                                            .onAppear {
+                                                viewModel.checkAppear(index: i)
+                                            }
+                                            .onDisappear {
+                                                viewModel.checkDisappear(index: i)
+                                            }
                                         }
                                     }
                                 }
                             }
+                            .padding(.bottom, 64)
+                            .padding(.horizontal, 16)
+                            .onReceive(viewModel.$scrollToPostion, perform: { scrollToPostion in
+                                withAnimation(.spring()) {
+                                    scrollReader.scrollTo(scrollToPostion, anchor: .top)
+                                }
+                            })
+                            
                         }
-                        .padding(.bottom, 8)
-                        .padding(.horizontal, 16)
-                        .onReceive(viewModel.$scrollToPostion, perform: { scrollToPostion in
-                            withAnimation(.spring()) {
-                                scrollReader.scrollTo(scrollToPostion, anchor: .top)
-                            }
-                        })
                     }
+                    
+                    FoodDeliveryExtendedFab(
+                        text: viewModel.menuViewState.cartCost,
+                        onClick: {
+                            openCartScreen = true
+                        },
+                        icon: "CartIcon",
+                        iconBadge: viewModel.menuViewState.cartCount,
+                    ).padding(.trailing, 16)
+
                 }
             }
         }
@@ -114,8 +158,14 @@ struct MenuView: View {
             ),
             show: $created
         )
+        .onAppear() {
+            viewModel.subscribe()
+        }
+        .onDisappear {
+            viewModel.unsubFromFlows()
+        }
     }
-
+    
     func DiscountView(discount: String) -> some View {
         VStack(spacing: 0) {
             HStack(spacing: 0) {

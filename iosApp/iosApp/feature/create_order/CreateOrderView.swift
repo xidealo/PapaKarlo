@@ -25,7 +25,6 @@ struct CreateOrderView: View {
     
     // for back after createOrder
     @Binding var isRootActive: Bool
-    @Binding var selection: MainContainerState
     @Binding var showOrderCreated: Bool
     
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
@@ -123,7 +122,6 @@ struct CreateOrderView: View {
                         goToCreateAddress: $goToCreateAddress,
                         changeError: $changeError,
                         isRootActive: $isRootActive,
-                        selection: $selection,
                         showOrderCreated: $showOrderCreated,
                         createOrderViewState: createOrderViewStateNN,
                         action: viewModel.onAction
@@ -328,7 +326,6 @@ struct CreateOrderView: View {
                         showCommonError = true
                     case is CreateOrderEventOrderCreatedEvent:
                         isRootActive = false
-                        selection = MainContainerState.profile
                         showOrderCreated = true
                     case is CreateOrderEventShowUserAddressError:
                         showUserAddressError = true
@@ -443,7 +440,6 @@ struct CreateOrderSuccessView: View {
     @Binding var changeError: LocalizedStringKey?
     
     @Binding var isRootActive: Bool
-    @Binding var selection: MainContainerState
     @Binding var showOrderCreated: Bool
     
     let createOrderViewState: CreateOrderViewState
