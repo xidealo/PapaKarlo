@@ -21,7 +21,6 @@ class ProfileViewModel(
     private val getLastOrderUseCase: GetLastOrderUseCase,
     private val observeLastOrderUseCase: ObserveLastOrderUseCase,
     private val stopObserveOrdersUseCase: StopObserveOrdersUseCase,
-    private val observeCartUseCase: ObserveCartUseCase,
     private val getPaymentMethodListUseCase: GetPaymentMethodListUseCase,
     private val getLinkListUseCase: GetLinkListUseCase
 ) : SharedViewModel() {
@@ -36,10 +35,6 @@ class ProfileViewModel(
         mutableProfileState.update { oldState ->
             oldState.copy(state = ProfileState.State.ERROR)
         }
-    }
-
-    init {
-        observeCart()
     }
 
     fun update() {
@@ -70,16 +65,6 @@ class ProfileViewModel(
             lastOrderFlow.collectLatest { lightOrder ->
                 mutableProfileState.update { profileState ->
                     profileState.copy(lastOrder = lightOrder)
-                }
-            }
-        }
-    }
-
-    private fun observeCart() {
-        sharedScope.launch(exceptionHandler) {
-            observeCartUseCase().collectLatest { cartTotalAndCount ->
-                mutableProfileState.update { state ->
-                    state.copy(cartCostAndCount = cartTotalAndCount)
                 }
             }
         }

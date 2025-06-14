@@ -116,7 +116,6 @@ fun viewModelModule() = module {
             observeLastOrderUseCase = get(),
             stopObserveOrdersUseCase = get(),
             getLastOrderUseCase = get(),
-            observeCartUseCase = get(),
             getPaymentMethodListUseCase = get(),
             getLinkListUseCase = get()
         )
