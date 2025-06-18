@@ -75,8 +75,7 @@ fun viewModelModule() = module {
     viewModel {
         CafeListViewModel(
             cafeInteractor = get(),
-            observeCafeWithOpenStateListUseCase = get(),
-            observeCartUseCase = get()
+            observeCafeWithOpenStateListUseCase = get()
         )
     }
     viewModel {
@@ -117,7 +116,6 @@ fun viewModelModule() = module {
             observeLastOrderUseCase = get(),
             stopObserveOrdersUseCase = get(),
             getLastOrderUseCase = get(),
-            observeCartUseCase = get(),
             getPaymentMethodListUseCase = get(),
             getLinkListUseCase = get()
         )

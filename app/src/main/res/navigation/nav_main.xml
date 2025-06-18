@@ -88,6 +88,9 @@
         <action
             android:id="@+id/to_productFragment"
             app:destination="@id/productFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
     </fragment>
 
     <fragment
@@ -150,6 +153,9 @@
                 android:name="successLoginDirection"
                 app:argType="com.bunbeauty.shared.domain.model.SuccessLoginDirection" />
         </action>
+        <action
+            android:id="@+id/action_profileFragment_to_cafeListFragment"
+            app:destination="@id/cafeListFragment" />
     </fragment>
 
     <fragment
@@ -245,7 +251,7 @@
         <action
             android:id="@+id/to_profileFragment"
             app:destination="@id/profileFragment"
-            app:popUpTo="@id/splashFragment"
+            app:popUpTo="@id/menuFragment"
             app:popUpToInclusive="false" />
         <action
             android:id="@+id/to_createAddressFragment"

@@ -4,8 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.bunbeauty.core.Logger
-import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.common.ui.element.bottombar.NavigationBarItem
 import com.bunbeauty.papakarlo.feature.main.network.INetworkUtil
 import com.bunbeauty.shared.domain.feature.orderavailable.IsOrderAvailableUseCase
 import com.bunbeauty.shared.extension.launchSafe
@@ -32,24 +30,7 @@ class MainViewModel(
     }
 
     fun onNavDestinationUpdated(destinationId: Int, navController: NavController) {
-        val navigationBarOptions = when (destinationId) {
-            R.id.cafeListFragment -> NavigationBarOptions.Visible(
-                selectedItem = NavigationBarItem.CAFE_LIST,
-                navController = navController
-            )
-
-            R.id.menuFragment -> NavigationBarOptions.Visible(
-                selectedItem = NavigationBarItem.MENU,
-                navController = navController
-            )
-
-            R.id.profileFragment -> NavigationBarOptions.Visible(
-                selectedItem = NavigationBarItem.PROFILE,
-                navController = navController
-            )
-
-            else -> NavigationBarOptions.Hidden
-        }
+        val navigationBarOptions = NavigationBarOptions.Hidden
         mutableMainState.update { state ->
             state.copy(navigationBarOptions = navigationBarOptions)
         }

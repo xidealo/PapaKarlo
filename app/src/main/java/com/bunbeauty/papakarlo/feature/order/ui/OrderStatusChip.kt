@@ -24,6 +24,7 @@ import com.bunbeauty.papakarlo.common.ui.theme.medium
 import com.bunbeauty.shared.domain.model.order.OrderStatus
 
 private val orderStatusShape = RoundedCornerShape(12.dp)
+private val zeroStatusShape = RoundedCornerShape(0.dp)
 
 @Composable
 fun OrderStatusChip(
@@ -48,12 +49,13 @@ fun OrderStatusChip(
 
 @Composable
 fun EmptyOrderStatusChip(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    roundedCornerShape: RoundedCornerShape? = null
 ) {
     Box(
         modifier = modifier
             .fillMaxHeight()
-            .clip(orderStatusShape)
+            .clip(shape = roundedCornerShape ?: zeroStatusShape)
             .background(FoodDeliveryTheme.colors.mainColors.disabled)
     )
 }
@@ -61,12 +63,13 @@ fun EmptyOrderStatusChip(
 @Composable
 fun PassedOrderStatusChip(
     modifier: Modifier = Modifier,
-    orderStatus: OrderStatus
+    orderStatus: OrderStatus,
+    roundedCornerShape: RoundedCornerShape? = null
 ) {
     Box(
         modifier = modifier
             .fillMaxHeight()
-            .clip(orderStatusShape)
+            .clip(shape = roundedCornerShape ?: zeroStatusShape)
             .background(getOrderColor(orderStatus))
     ) {
         Icon(

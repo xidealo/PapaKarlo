@@ -292,7 +292,9 @@ class ProductDetailsFragment :
                         .clip(FoodDeliveryCardDefaults.cardShape),
                     photoLink = menuProductAdditionItem.photoLink,
                     contentDescription = stringResource(R.string.description_product_addition),
-                    contentScale = ContentScale.FillWidth
+                    contentScale = ContentScale.FillWidth,
+                    error = null,
+                    placeholder = null
                 )
 
                 Text(

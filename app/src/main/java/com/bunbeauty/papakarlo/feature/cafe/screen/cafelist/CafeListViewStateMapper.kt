@@ -4,13 +4,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.feature.cafe.ui.CafeItemAndroid
-import com.bunbeauty.papakarlo.feature.topcart.TopCartUi
 import com.bunbeauty.shared.domain.model.cafe.CafeOpenState
 import com.bunbeauty.shared.presentation.cafe_list.CafeList
 import kotlinx.collections.immutable.toPersistentList
-
-private const val EMPTY_COST = ""
-private const val EMPTY_COUNT = ""
 
 @Composable
 fun CafeList.DataState.toViewState(): CafeListViewState {
@@ -19,10 +15,6 @@ fun CafeList.DataState.toViewState(): CafeListViewState {
         throwable != null -> CafeListViewState.Error(throwable = throwable)
         isLoading -> CafeListViewState.Loading
         else -> CafeListViewState.Success(
-            topCartUi = TopCartUi(
-                cost = cartCostAndCount?.cost ?: EMPTY_COST,
-                count = cartCostAndCount?.count ?: EMPTY_COUNT
-            ),
             cafeList = cafeList.map { cafeItem ->
                 CafeItemAndroid(
                     uuid = cafeItem.uuid,
