@@ -1,7 +1,6 @@
 package com.bunbeauty.shared.presentation.profile
 
 import com.bunbeauty.shared.domain.asCommonStateFlow
-import com.bunbeauty.shared.domain.feature.cart.ObserveCartUseCase
 import com.bunbeauty.shared.domain.feature.link.GetLinkListUseCase
 import com.bunbeauty.shared.domain.feature.order.GetLastOrderUseCase
 import com.bunbeauty.shared.domain.feature.order.ObserveLastOrderUseCase
