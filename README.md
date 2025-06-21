@@ -25,3 +25,24 @@ Download on the [App Store](https://apps.apple.com/ru/app/%D0%BF%D0%B0%D0%BF%D0%
 - [SwiftUI](https://developer.apple.com/xcode/swiftui/): UI (iOS)
 
 ![Frame 10](https://github.com/user-attachments/assets/e38eda17-7996-45b9-937b-576ae92cd7f9)
+
+
+
+## Tech info
+
+### Git flow
+1. Create new branch feature/"name" <br/>
+2. Create MR to develop, check pipelines, send to code review <br/>
+3. Merge into **develop** <br/>
+
+### Release
+
+1. Increase version by rules: <br/>
+    fix n.m.**update** <br/>
+    new release n.**update**.0 <br/>
+    when minor version 9 next update major version **update**.0.0 <br/>
+2. Create MR to **master** and write title release/**version**, check pipelines <br/>
+3. Merge into **master** and check actions.
+4. **Android**  CD will send to Google Play by himself  <br/>
+5. **Ios** TODO 
+
