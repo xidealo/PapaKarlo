@@ -71,7 +71,8 @@ fun OrderStatusBar(
                         start = 8.dp
                     ),
                     text = orderStatusName,
-                    style = FoodDeliveryTheme.typography.bodyMedium
+                    style = FoodDeliveryTheme.typography.bodyMedium,
+                    color = FoodDeliveryTheme.colors.mainColors.onSurface
                 )
             }
 
