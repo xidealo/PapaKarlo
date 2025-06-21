@@ -43,6 +43,6 @@ Download on the [App Store](https://apps.apple.com/ru/app/%D0%BF%D0%B0%D0%BF%D0%
 2. Create MR to **master** and write title release/**version**, check pipelines <br/>
 3. Merge into **master**
 4. Check actions (CI\CD Publish workflow).
-5. **Android**  CD will send to Google Play by himself <br/>
+5. **Android** CD will send it to Google Play <br/>
 6. **Ios** TODO 
 
