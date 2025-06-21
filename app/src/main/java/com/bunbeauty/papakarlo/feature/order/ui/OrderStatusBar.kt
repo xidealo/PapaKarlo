@@ -148,38 +148,6 @@ private fun getIcon(status: OrderStatus): Int {
     }
 }
 
-@Composable
-private fun DoneStep(
-    modifier: Modifier = Modifier,
-    orderStatus: OrderStatus
-) {
-    Box(
-        modifier = modifier
-            .fillMaxHeight()
-            .clip(stepShape)
-            .background(getOrderColor(orderStatus))
-    ) {
-        Icon(
-            modifier = Modifier
-                .icon16()
-                .align(Alignment.Center),
-            painter = painterResource(R.drawable.ic_check),
-            contentDescription = stringResource(R.string.description_order_details_done),
-            tint = FoodDeliveryTheme.colors.orderColors.onOrder
-        )
-    }
-}
-
-@Composable
-private fun FutureStep(modifier: Modifier = Modifier) {
-    Box(
-        modifier = modifier
-            .fillMaxHeight()
-            .clip(stepShape)
-            .background(FoodDeliveryTheme.colors.mainColors.disabled)
-    )
-}
-
 @Preview
 @Composable
 private fun StatusBarNotAcceptedPreview() {
