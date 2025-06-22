@@ -70,8 +70,6 @@ class ProfileFragment :
     override val viewModel: ProfileViewModel by viewModel()
 
 
-
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.onAction(ProfileState.Action.Init)
@@ -97,7 +95,7 @@ class ProfileFragment :
 
     @Composable
     private fun ProfileScreen(
-        profileState: ProfileViewState,
+        state: ProfileViewState,
         onAction: (ProfileState.Action) -> Unit
     ) {
         FoodDeliveryScaffold(
@@ -107,7 +105,8 @@ class ProfileFragment :
             },
             backgroundColor = FoodDeliveryTheme.colors.mainColors.surface,
             actionButton = {
-                if (profileUi.state == ProfileState.State.UNAUTHORIZED) {
+                when (state.state) {
+                    ProfileViewState.State.Unauthorized ->
                     MainButton(
                         modifier = Modifier
                             .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
@@ -115,6 +114,10 @@ class ProfileFragment :
                     ) {
                         viewModel.onLoginClicked()
                     }
+
+                    ProfileViewState.State.Error -> TODO()
+                    ProfileViewState.State.Loading -> TODO()
+                    ProfileViewState.State.Success -> TODO()
                 }
             }
         ) {
