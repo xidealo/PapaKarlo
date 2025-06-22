@@ -27,7 +27,6 @@ fun uiMapperModule() = module {
     }
     factory {
         ProfileUiStateMapper(
-            stringUtil = get(),
             orderItemMapper = get()
         )
     }

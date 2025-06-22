@@ -251,7 +251,7 @@
         <action
             android:id="@+id/to_profileFragment"
             app:destination="@id/profileFragment"
-            app:popUpTo="@id/splashFragment"
+            app:popUpTo="@id/menuFragment"
             app:popUpToInclusive="false" />
         <action
             android:id="@+id/to_createAddressFragment"

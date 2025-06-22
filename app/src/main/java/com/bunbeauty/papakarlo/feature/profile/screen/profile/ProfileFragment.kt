@@ -43,7 +43,6 @@ import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.papakarlo.common.ui.element.card.NavigationIconCardWithDivider
-import com.bunbeauty.papakarlo.common.ui.element.topbar.FoodDeliveryCartAction
 import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
@@ -52,17 +51,14 @@ import com.bunbeauty.papakarlo.databinding.LayoutComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.order.model.OrderItem
 import com.bunbeauty.papakarlo.feature.order.ui.OrderStatusChip
-import com.bunbeauty.papakarlo.feature.productdetails.ProductDetailsFragmentDirections
 import com.bunbeauty.papakarlo.feature.profile.screen.feedback.FeedbackBottomSheet
 import com.bunbeauty.papakarlo.feature.profile.screen.feedback.model.FeedbackArgument
 import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentBottomSheet
 import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentMethodsArgument
-import com.bunbeauty.papakarlo.feature.topcart.TopCartUi
 import com.bunbeauty.shared.domain.model.SuccessLoginDirection
 import com.bunbeauty.shared.domain.model.order.OrderStatus
 import com.bunbeauty.shared.presentation.profile.ProfileState
 import com.bunbeauty.shared.presentation.profile.ProfileViewModel
-import kotlinx.collections.immutable.persistentListOf
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -114,13 +110,6 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
     ) {
         FoodDeliveryScaffold(
             title = stringResource(R.string.title_profile),
-            topActions = persistentListOf(
-                FoodDeliveryCartAction(
-                    topCartUi = profileUi.topCartUi
-                ) {
-                    findNavController().navigateSafe(ProductDetailsFragmentDirections.globalConsumerCartFragment())
-                }
-            ),
             backActionClick = {
                 findNavController().popBackStack()
             },
@@ -435,11 +424,7 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
                         code = "А-12",
                         dateTime = "10-10-10 20:20"
                     ),
-                    state = ProfileState.State.AUTHORIZED,
-                    topCartUi = TopCartUi(
-                        cost = "100",
-                        count = "2"
-                    )
+                    state = ProfileState.State.AUTHORIZED
                 ),
                 onLastOrderClicked = { _, _ -> },
                 onSettingsClicked = {},
@@ -456,11 +441,7 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
             ProfileScreen(
                 ProfileUi(
                     orderItem = null,
-                    state = ProfileState.State.AUTHORIZED,
-                    topCartUi = TopCartUi(
-                        cost = "100",
-                        count = "2"
-                    )
+                    state = ProfileState.State.AUTHORIZED
                 ),
                 onLastOrderClicked = { _, _ -> },
                 onSettingsClicked = {},
@@ -477,11 +458,7 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
             ProfileScreen(
                 ProfileUi(
                     orderItem = null,
-                    state = ProfileState.State.UNAUTHORIZED,
-                    topCartUi = TopCartUi(
-                        cost = "100",
-                        count = "2"
-                    )
+                    state = ProfileState.State.UNAUTHORIZED
                 ),
                 onLastOrderClicked = { _, _ -> },
                 onSettingsClicked = {},
@@ -498,11 +475,7 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
             ProfileScreen(
                 ProfileUi(
                     orderItem = null,
-                    state = ProfileState.State.LOADING,
-                    topCartUi = TopCartUi(
-                        cost = "100",
-                        count = "2"
-                    )
+                    state = ProfileState.State.LOADING
                 ),
                 onLastOrderClicked = { _, _ -> },
                 onSettingsClicked = {},
@@ -519,11 +492,7 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
             ProfileScreen(
                 ProfileUi(
                     orderItem = null,
-                    state = ProfileState.State.ERROR,
-                    topCartUi = TopCartUi(
-                        cost = "100",
-                        count = "2"
-                    )
+                    state = ProfileState.State.ERROR
                 ),
                 onLastOrderClicked = { _, _ -> },
                 onSettingsClicked = {},

@@ -1,6 +1,5 @@
 package com.bunbeauty.shared.presentation.profile
 
-import com.bunbeauty.shared.domain.model.cart.CartCostAndCount
 import com.bunbeauty.shared.domain.model.link.Link
 import com.bunbeauty.shared.domain.model.order.LightOrder
 import com.bunbeauty.shared.domain.model.payment_method.PaymentMethod
@@ -8,7 +7,6 @@ import com.bunbeauty.shared.domain.model.payment_method.PaymentMethod
 data class ProfileState(
     val lastOrder: LightOrder? = null,
     val state: State = State.LOADING,
-    val cartCostAndCount: CartCostAndCount? = null,
     val paymentMethodList: List<PaymentMethod> = emptyList(),
     val linkList: List<Link> = emptyList(),
     val eventList: List<Event> = emptyList()

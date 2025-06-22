@@ -51,7 +51,7 @@ fun FoodDeliveryExtendedFab(
                         Badge(
                             modifier = Modifier.align(Alignment.TopEnd),
                             containerColor = FoodDeliveryTheme.colors.mainColors.onPrimary,
-                            contentColor = FoodDeliveryTheme.colors.mainColors.onSurface
+                            contentColor = FoodDeliveryTheme.colors.mainColors.primary
                         ) {
                             Text(
                                 style = FoodDeliveryTheme.typography.labelSmall.medium,
