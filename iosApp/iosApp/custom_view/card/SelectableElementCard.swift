@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct SelectableElementCard: View {
-    var text: String? = nil
-    var locolized: LocalizedStringKey? = nil
+    var text: String?
+    var locolized: LocalizedStringKey?
 
     let isSelected: Bool
     let isEnabled: Bool

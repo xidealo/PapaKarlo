@@ -11,10 +11,10 @@ import SwiftUI
 struct ToolbarView: View {
     let title: LocalizedStringKey
 
-    var back: (() -> Void)? = nil
+    var back: (() -> Void)?
     @State private var showingAlert = false
-    var foodDeliveryAction: FoodDeliveryAction? = nil
-    
+    var foodDeliveryAction: FoodDeliveryAction?
+
     var body: some View {
         HStack(spacing: 0) {
             if let backAction = back {
@@ -33,7 +33,7 @@ struct ToolbarView: View {
                 .padding(.vertical, Diems.MEDIUM_PADDING)
                 .padding(.leading, back == nil ? 16 : 8)
             Spacer()
-            
+
             if let foodDeliveryAction = foodDeliveryAction {
                 Button(action: {
                     foodDeliveryAction.onClick()
@@ -43,7 +43,7 @@ struct ToolbarView: View {
                 }.padding(.vertical, Diems.SMALL_PADDING)
                     .padding(.trailing, 16)
             }
-            
+
         }.background(AppColor.surface)
     }
 }
@@ -51,7 +51,7 @@ struct ToolbarView: View {
 struct FoodDeliveryAction {
     let icon: String
     let onClick: () -> Void
-    
+
     init(iconSystemName: String, onClick: @escaping () -> Void) {
         self.icon = iconSystemName
         self.onClick = onClick

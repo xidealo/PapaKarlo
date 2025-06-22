@@ -9,7 +9,7 @@ import shared
 import SwiftUI
 
 struct SplashView: View, SharedLifecycle {
-    @State var topMessage: LocalizedStringKey? = nil
+    @State var topMessage: LocalizedStringKey?
 
     @State var viewModel: SplashViewModel = .init(
         checkUpdateUseCase: iosComponent.provideCheckUpdateUseCase(),
@@ -19,7 +19,7 @@ struct SplashView: View, SharedLifecycle {
     )
 
     @State var eventsListener: Closeable?
-        
+
     // Navigation
     @State var openSelectCity: Bool = false
     @State var openMainMenu: Bool = false

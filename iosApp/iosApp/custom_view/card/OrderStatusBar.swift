@@ -18,21 +18,21 @@ struct OrderStatusBar: View {
     }
 
     var body: some View {
-        VStack(spacing: 0){
-            HStack(spacing: 0){
+        VStack(spacing: 0) {
+            HStack(spacing: 0) {
                 IconImage(
                     width: 24,
                     height: 24,
                     imageName: getOrderIcon(orderStatus: orderStatus)
                 ).foregroundColor(AppColor.onSurfaceVariant)
-                
+
                 Text(OrderChip.getStatusName(status: orderStatus))
                     .bodyMedium()
                     .padding(.leading, 8)
 
                 Spacer()
             }
-            
+
             HStack(spacing: Diems.HALF_SMALL_PADDING) {
                 ForEach(0 ... 4, id: \.self) { i in
                     Step(
@@ -89,9 +89,9 @@ struct Step: View {
 
 struct DoneStep: View {
     let orderStatus: OrderStatus
-    
+
     var body: some View {
-        ZStack{
+        ZStack {
             IconImage(width: 12, height: 16, imageName: "CheckIcon")
                 .foregroundColor(AppColor.onOrder)
         }.frame(maxWidth: .infinity)
@@ -107,7 +107,7 @@ struct FutureStep: View {
             .background(AppColor.onSurfaceVariant)
             .foregroundColor(AppColor.onSurfaceVariant)
             .cornerRadius(16)
-        
+
     }
 }
 

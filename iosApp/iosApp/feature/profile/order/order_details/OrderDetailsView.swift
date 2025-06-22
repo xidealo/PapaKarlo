@@ -29,8 +29,8 @@ struct OrderDetailsView: View {
     )
 
     // Listeners
-    @State var listener: Closeable? = nil
-    @State var eventsListener: Closeable? = nil
+    @State var listener: Closeable?
+    @State var eventsListener: Closeable?
     // -----
 
     @State var orderUuid: String

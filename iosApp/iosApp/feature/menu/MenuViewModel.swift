@@ -18,8 +18,8 @@ class MenuViewModel: ObservableObject {
         cartCount: "",
         cartCost: ""
     )
-    
-    var closable: Closeable? = nil
+
+    var closable: Closeable?
 
     @Published var scrollToPostion = "no pos"
 
@@ -66,7 +66,7 @@ class MenuViewModel: ObservableObject {
             )
         }
     }
-    
+
     private func getMenuItems(menuSectionList: [MenuSection]) -> [MenuItem] {
         return menuSectionList.map { menuSection in
             MenuItem(categorySectionItem: CategorySectionItem(
@@ -202,7 +202,7 @@ class MenuViewModel: ObservableObject {
             selectTagWithHorizontalScroll(selectIndex: index + 1)
         }
     }
-    
+
     func unsubFromFlows() {
         closable?.close()
         closable = nil

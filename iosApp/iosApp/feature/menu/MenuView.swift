@@ -13,28 +13,28 @@ let DISCOUNT_ID = "discount_id"
 struct MenuView: View {
     @StateObject private var viewModel = MenuViewModel()
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
-    
+
     // for back after createOrder
     @State var isRootActive: Bool = false
     @State var showOrderCreated: Bool = false
-    
-    //navigation
+
+    // navigation
     @State var openProfileScreen: Bool = false
-    
+
     @State var created: Bool = false
     @State var edited: Bool = false
-    
+
     let columns = [
         GridItem(.flexible(), spacing: 8, alignment: .top),
-        GridItem(.flexible(), spacing: 8, alignment: .top),
+        GridItem(.flexible(), spacing: 8, alignment: .top)
     ]
-    
+
     var body: some View {
         VStack(spacing: 0) {
             if viewModel.menuViewState.isLoading {
                 LoadingView()
             } else {
-                
+
                 NavigationLink(
                     destination: ProfileView(
                         showOrderCreated: $showOrderCreated,
@@ -43,7 +43,7 @@ struct MenuView: View {
                 ) {
                     EmptyView()
                 }.isDetailLink(false)
-                
+
                 NavigationLink(
                     destination: ConsumerCartView(
                         isRootActive: $isRootActive,
@@ -54,14 +54,14 @@ struct MenuView: View {
                 ) {
                     EmptyView()
                 }.isDetailLink(false)
-                
+
                 ToolbarView(
                     title: "title_menu",
                     foodDeliveryAction: FoodDeliveryAction(iconSystemName: "ProfileIcon", onClick: {
                         openProfileScreen = true
                     })
                 )
-                
+
                 ScrollView(.horizontal, showsIndicators: false) {
                     ScrollViewReader { scrollReader in
                         HStack(spacing: 0) {
@@ -85,7 +85,7 @@ struct MenuView: View {
                 }
                 .padding(.vertical, Diems.SMALL_PADDING)
                 .background(AppColor.surface)
-                
+
                 ZStack(alignment: .bottomTrailing) {
                     ScrollView {
                         ScrollViewReader { scrollReader in
@@ -129,10 +129,10 @@ struct MenuView: View {
                                     scrollReader.scrollTo(scrollToPostion, anchor: .top)
                                 }
                             })
-                            
+
                         }
                     }
-                    
+
                     FoodDeliveryExtendedFab(
                         text: viewModel.menuViewState.cartCost,
                         onClick: {
@@ -157,14 +157,14 @@ struct MenuView: View {
             ),
             show: $created
         )
-        .onAppear() {
+        .onAppear {
             viewModel.subscribe()
         }
         .onDisappear {
             viewModel.unsubFromFlows()
         }
     }
-    
+
     func DiscountView(discount: String) -> some View {
         VStack(spacing: 0) {
             HStack(spacing: 0) {

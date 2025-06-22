@@ -17,26 +17,26 @@ struct CreateOrderView: View {
     @State var showCommonError: Bool = false
     @State var showPaymentMethodError: Bool = false
     // ----------------
-    
+
     @State var goToUserAddress: Bool = false
     @State var goToCafeAddress: Bool = false
     @State var goToSelectPaymentMethod: Bool = false
     @State var goToCreateAddress: Bool = false
-    
+
     // for back after createOrder
     @Binding var isRootActive: Bool
     @Binding var openProfileScreen: Bool
     @Binding var showOrderCreated: Bool
-    
+
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
-    
+
     @State var addressList: [SelectableCafeAddressItem] = []
     @State var paymentList: [SelectablePaymentMethod] = []
     @State var changeError: LocalizedStringKey?
-    
-    @State var listener: Closeable? = nil
-    @State var eventsListener: Closeable? = nil
-    
+
+    @State var listener: Closeable?
+    @State var eventsListener: Closeable?
+
     @State var viewModel = CreateOrderViewModel(
         cartProductInteractor: iosComponent.provideCartProductInteractor(),
         cafeInteractor: iosComponent.provideCafeInteractor(),
@@ -57,9 +57,9 @@ struct CreateOrderView: View {
         hasOpenedCafeUseCase: iosComponent.provideHasOpenedCafeUseCase(),
         getWorkloadCafeUseCase: iosComponent.provideGetWorkloadCafeUseCase()
     )
-    
-    @State var createOrderViewState: CreateOrderViewState? = nil
-    
+
+    @State var createOrderViewState: CreateOrderViewState?
+
     var body: some View {
         VStack(spacing: 0) {
             ToolbarView(
@@ -68,7 +68,7 @@ struct CreateOrderView: View {
                     self.mode.wrappedValue.dismiss()
                 }
             )
-            
+
             NavigationLink(
                 destination: UserAddressListView(
                     title: "title_delivery_addresses",
@@ -83,7 +83,7 @@ struct CreateOrderView: View {
             ) {
                 EmptyView()
             }
-            
+
             NavigationLink(
                 destination: SelectablePaymentListView(
                     paymentList: createOrderViewState?.paymentMethodList.paymentMethodList ?? [],
@@ -94,7 +94,7 @@ struct CreateOrderView: View {
                             )
                             return
                         }
-                        
+
                         viewModel.onAction(
                             action: CreateOrderActionHidePaymentMethodList()
                         )
@@ -110,7 +110,7 @@ struct CreateOrderView: View {
             ) {
                 EmptyView()
             }
-            
+
             if createOrderViewState?.isLoadingSwitcher == true {
                 LoadingView()
             } else {
@@ -179,7 +179,7 @@ struct CreateOrderView: View {
             show: $showOrderNotAvailableError
         )
     }
-    
+
     func subscribe() {
         viewModel.onAction(action: CreateOrderActionInit())
         listener = viewModel.dataState.watch { createOrderDataState in
@@ -187,7 +187,7 @@ struct CreateOrderView: View {
                 goToUserAddress = createOrderDataStateNN.isUserAddressListShown
                 goToCafeAddress = createOrderDataStateNN.isCafeListShown
                 goToSelectPaymentMethod = createOrderDataStateNN.isPaymentMethodListShown
-                
+
                 if createOrderDataStateNN.isChangeErrorShown {
                     changeError = "error_enter_correct_amount"
                 } else {
@@ -239,7 +239,7 @@ struct CreateOrderView: View {
             }
         }
     }
-    
+
     func getCreateOrderType(createOrderDataState: CreateOrderDataState) -> CreateOrderType {
         if createOrderDataState.isDelivery {
             getCreateOrderTypeDelivery(dataState: createOrderDataState)
@@ -247,7 +247,7 @@ struct CreateOrderView: View {
             getCreateOrderTypePickup(dataState: createOrderDataState)
         }
     }
-    
+
     private func getCreateOrderTypeDelivery(dataState: CreateOrderDataState) -> CreateOrderType {
         let delivery = CreateOrderType.Delivery(
             deliveryAddress: dataState.selectedUserAddress?.getAddress(),
@@ -289,7 +289,7 @@ struct CreateOrderView: View {
         )
         return .delivery(delivery)
     }
-    
+
     private func getCreateOrderTypePickup(dataState: CreateOrderDataState) -> CreateOrderType {
         let pickup = CreateOrderType.Pickup(
             pickupAddress: dataState.selectedCafe?.address,
@@ -309,15 +309,15 @@ struct CreateOrderView: View {
         )
         return .pickup(pickup)
     }
-    
+
     func eventsSubscribe() {
         eventsListener = viewModel.events.watch(block: { _events in
             if let events = _events {
                 let createOrderEvents = events as? [CreateOrderEvent] ?? []
-                
+
                 for event in createOrderEvents {
                     print(event)
-                    
+
                     switch event {
                     case is CreateOrderEventOpenCreateAddressEvent:
                         print("CreateOrderEventOpenCreateAddressEvent but open from navview")
@@ -346,14 +346,14 @@ struct CreateOrderView: View {
         }
         )
     }
-    
+
     func unsubscribe() {
         listener?.close()
         listener = nil
         eventsListener?.close()
         eventsListener = nil
     }
-    
+
     func getDeferredTimeStringId(isDelivery: Bool) -> LocalizedStringKey {
         if isDelivery {
             return "title_create_order_time_delivery"
@@ -361,7 +361,7 @@ struct CreateOrderView: View {
             return "title_create_order_time_pickup"
         }
     }
-    
+
     func getDeferredTimeString(deferredTime: CreateOrderDeferredTime) -> String {
         switch deferredTime {
         case _ as CreateOrderDeferredTimeAsap:
@@ -372,7 +372,7 @@ struct CreateOrderView: View {
             return ""
         }
     }
-    
+
     func getPaymentValue(valueToShow: String?, valueToCopy: String?) -> PaymentMethodValueUI? {
         if let valueToShowNN = valueToShow {
             if let valueToCopyNN = valueToCopy {
@@ -382,10 +382,10 @@ struct CreateOrderView: View {
                 )
             }
         }
-        
+
         return nil
     }
-    
+
     func getCartTotalUI(cartTotal: CreateOrderCartTotal) -> CartTotalUI {
         switch cartTotal {
         case _ as CreateOrderCartTotalLoading:
@@ -404,7 +404,7 @@ struct CreateOrderView: View {
             return CartTotalUI.loading
         }
     }
-    
+
     func getPaymentMethodUI(paymentMethod: PaymentMethod?) -> PaymentMethodUI? {
         if let paymentMethodNN = paymentMethod {
             return PaymentMethodUI(
@@ -418,12 +418,12 @@ struct CreateOrderView: View {
         }
         return nil
     }
-    
+
     func getChange(change: KotlinInt?) -> String {
         if let change = change {
             return "\(change)"
         }
-        
+
         return ""
     }
 }
@@ -432,21 +432,21 @@ struct CreateOrderSuccessView: View {
     @State var addressLable = Strings.HINT_CREATION_ORDER_ADDRESS_DELIVERY
     // errors
     @Binding var showCreatedAddress: Bool
-    
+
     // navigations
     @Binding var goToUserAddress: Bool
     @Binding var goToCafeAddress: Bool
     @Binding var goToSelectPaymentMethod: Bool
     @Binding var goToCreateAddress: Bool
-    
+
     @Binding var changeError: LocalizedStringKey?
-    
+
     @Binding var isRootActive: Bool
     @Binding var showOrderCreated: Bool
-    
+
     let createOrderViewState: CreateOrderViewState
     let action: (CreateOrderAction) -> Void
-    
+
     var body: some View {
         ZStack(alignment: .bottom) {
             ScrollView {
@@ -470,7 +470,7 @@ struct CreateOrderSuccessView: View {
                     }
                     .padding(.top, Diems.MEDIUM_PADDING)
                     .padding(.horizontal, Diems.MEDIUM_PADDING)
-                    
+
                     switch createOrderViewState.createOrderType {
                     case let .pickup(pickup):
                         PickupContentView(
@@ -508,7 +508,7 @@ struct CreateOrderSuccessView: View {
                         newFinalCost: success.newFinalCost
                     )
                 }
-                
+
                 Button(
                     action: {
                         action(
@@ -518,8 +518,8 @@ struct CreateOrderSuccessView: View {
                             )
                         )
                     }, label: {
-                        if(createOrderViewState.isLoadingCreateOrder){
-                            ZStack{
+                        if createOrderViewState.isLoadingCreateOrder {
+                            ZStack {
                                 ProgressView()
                                     .progressViewStyle(
                                         CircularProgressViewStyle(tint: AppColor.primary)
@@ -530,7 +530,7 @@ struct CreateOrderSuccessView: View {
                             .frame(maxWidth: .infinity, maxHeight: 40, alignment: .center)
                             .background(AppColor.disabled)
                             .cornerRadius(Diems.BUTTON_RADIUS)
-                        }else{
+                        } else {
                             ButtonText(
                                 text: Strings.ACTION_CART_PRODUCT_CREATE_ORDER,
                                 background: createOrderViewState.isOrderCreationEnabled ? AppColor.primary : AppColor.disabled,
@@ -545,15 +545,15 @@ struct CreateOrderSuccessView: View {
             }
         }.background(AppColor.surface)
     }
-    
+
     struct DeliveryContentView: View {
         let delivery: CreateOrderType.Delivery
         let state: CreateOrderViewState
         let action: (CreateOrderAction) -> Void
         @Binding var changeError: LocalizedStringKey?
-        
+
         @Binding var goToCreateAddress: Bool
-        
+
         var body: some View {
             VStack(spacing: 0) {
                 if delivery.deliveryAddress == nil {
@@ -579,7 +579,7 @@ struct CreateOrderSuccessView: View {
                     .padding(.top, Diems.SMALL_PADDING)
                     .padding(.horizontal, 16)
                 }
-                
+
                 if state.isAddressErrorShown {
                     Text("error_select_delivery_address")
                         .bodySmall()
@@ -589,7 +589,7 @@ struct CreateOrderSuccessView: View {
                         .padding(.horizontal, 16)
                         .padding(.leading, 16)
                 }
-                
+
                 switch delivery.state {
                 case .notEnabled:
                     WarningCard(
@@ -598,7 +598,7 @@ struct CreateOrderSuccessView: View {
                         cardColor: AppColor.negative
                     ).padding(.top, 16)
                         .padding(.horizontal, 16)
-                    
+
                 case .enabled:
                     CommonContentView(
                         state: state,
@@ -606,7 +606,7 @@ struct CreateOrderSuccessView: View {
                         isDelivery: true,
                         changeError: $changeError
                     )
-                    
+
                     switch delivery.workload {
                     case .low:
                         EmptyView()
@@ -626,7 +626,7 @@ struct CreateOrderSuccessView: View {
                         .padding(.top, 16)
                         .padding(.horizontal, 16)
                     }
-                    
+
                 case .needAddress:
                     WarningCard(
                         title: LocalizedStringKey("error_user_address").stringValue(),
@@ -639,14 +639,14 @@ struct CreateOrderSuccessView: View {
             }
         }
     }
-    
+
     struct PickupContentView: View {
         let pickup: CreateOrderType.Pickup
         let state: CreateOrderViewState
         let action: (CreateOrderAction) -> Void
         @Binding var changeError: LocalizedStringKey?
         @Binding var goToCafeAddress: Bool
-        
+
         var body: some View {
             VStack(spacing: 0) {
                 NavigationLink(
@@ -664,7 +664,7 @@ struct CreateOrderSuccessView: View {
                 ) {
                     EmptyView()
                 }
-                
+
                 NavigationCardWithDivider(
                     icon: nil,
                     label: LocalizedStringKey("title_pickup_address").stringValue(),
@@ -674,7 +674,7 @@ struct CreateOrderSuccessView: View {
                     }
                 )
                 .padding(.horizontal, 16)
-                
+
                 if pickup.isEnabled {
                     CommonContentView(
                         state: state,
@@ -705,19 +705,19 @@ struct CreateOrderSuccessView: View {
             }.padding(.top, Diems.SMALL_PADDING)
         }
     }
-    
+
     struct CommonContentView: View {
         let state: CreateOrderViewState
         let action: (CreateOrderAction) -> Void
         let isDelivery: Bool
         @Binding var changeError: LocalizedStringKey?
-        
+
         @State var changeTextField = ""
         @State var comment = ""
         @State var faster = true
         @State var deferredTime: Foundation.Date = .init()
         let calendar = Calendar.current
-        
+
         var body: some View {
             VStack(spacing: 0) {
                 NavigationCardWithDivider(
@@ -730,7 +730,7 @@ struct CreateOrderSuccessView: View {
                 )
                 .padding(.top, Diems.SMALL_PADDING)
                 .padding(.horizontal, 16)
-                
+
                 if state.isPaymentMethodErrorShown {
                     Text("error_select_payment_method")
                         .bodySmall()
@@ -739,7 +739,7 @@ struct CreateOrderSuccessView: View {
                         .padding(.top, 4)
                         .padding(.horizontal, 16)
                 }
-                
+
                 if state.showChange {
                     HStack(spacing: 0) {
                         Button(action: {
@@ -755,11 +755,11 @@ struct CreateOrderSuccessView: View {
                                     )
                                 }
                             )
-                            
+
                             Text("msg_without_change")
                                 .foregroundColor(AppColor.onSurface)
                                 .bodyMedium()
-                            
+
                             Spacer()
                         }
                         .frame(maxWidth: .infinity)
@@ -767,7 +767,7 @@ struct CreateOrderSuccessView: View {
                         .padding(.horizontal, 16)
                     }
                     .padding(.top, 8)
-                    
+
                     if !state.withoutChangeChecked {
                         EditTextView(
                             hint: "С какой суммы подготовить сдачу?*",
@@ -794,7 +794,7 @@ struct CreateOrderSuccessView: View {
                 )
                 .padding(.top, state.showChange ? 8 : 16)
                 .padding(.horizontal, 16)
-                
+
                 Toggle(
                     isOn: $faster.onChange(
                         { faster in
@@ -824,7 +824,7 @@ struct CreateOrderSuccessView: View {
                 .toggleStyle(.automatic)
                 .padding(.top, Diems.MEDIUM_PADDING)
                 .padding(.horizontal, Diems.MEDIUM_PADDING)
-                
+
                 if !faster {
                     DatePicker(
                         selection: $deferredTime.onChange(
@@ -860,33 +860,33 @@ struct CreateOrderSuccessView: View {
             }
         }
     }
-    
+
     struct BottomAmountBarSuccessView: View {
         let motivation: MotivationUi?
         let discount: String?
         let deliveryCost: String?
         let oldFinalCost: String?
         let newFinalCost: String
-        
+
         var body: some View {
             VStack(spacing: 0) {
                 if let motivation = motivation {
                     Motivation(motivation: motivation)
                 }
-                
+
                 if let discount = discount {
                     HStack(spacing: 0) {
                         Text("create_order_discount")
                             .bodyMedium()
                             .foregroundColor(AppColor.onSurface)
-                        
+
                         Spacer()
-                        
+
                         DiscountCard(text: discount)
                     }.padding(.top, 8)
                         .padding(.horizontal, 16)
                 }
-                
+
                 if let deliveryCost = deliveryCost {
                     HStack(spacing: 0) {
                         Text(Strings.MSG_CREATION_ORDER_DELIVERY)
@@ -900,13 +900,13 @@ struct CreateOrderSuccessView: View {
                     .padding(.top, Diems.SMALL_PADDING)
                     .padding(.horizontal, Diems.MEDIUM_PADDING)
                 }
-                
+
                 HStack(spacing: 0) {
                     Text(Strings.MSG_CREATION_ORDER_FINAL_AMOUNT)
                         .bodyMedium(weight: .bold)
                         .foregroundColor(AppColor.onSurface)
                     Spacer()
-                    
+
                     if let oldFinalCost = oldFinalCost {
                         Text(oldFinalCost)
                             .strikethrough()
@@ -914,7 +914,7 @@ struct CreateOrderSuccessView: View {
                             .foregroundColor(AppColor.onSurfaceVariant)
                             .padding(.trailing, 4)
                     }
-                    
+
                     Text(newFinalCost)
                         .bodyMedium(weight: .bold)
                         .foregroundColor(AppColor.onSurface)

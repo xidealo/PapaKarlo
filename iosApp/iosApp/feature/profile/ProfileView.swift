@@ -28,11 +28,11 @@ struct ProfileView: View {
     )
 
     @State var showCreatedAddress: Bool = false
-    
+
     @Binding var showOrderCreated: Bool
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     @State var isActive: Bool = false
-    @State var listener: Closeable? = nil
+    @State var listener: Closeable?
 
     @Environment(\.scenePhase) var scenePhase
 
@@ -44,7 +44,7 @@ struct ProfileView: View {
                     self.mode.wrappedValue.dismiss()
                 }
             )
-            
+
             switch profileState.state {
             case ProfileState.State.loading: LoadingProfileView()
             case ProfileState.State.authorized: SuccessProfileView(
@@ -118,7 +118,7 @@ struct EmptyProfileView: View {
                 destination: CafeListView(),
                 isSystem: false
             )
-            
+
             NavigationIconCardWithDivider(
                 icon: "ic_payment",
                 label: "Оплата",
@@ -216,7 +216,7 @@ struct SuccessProfileView: View {
                 destination: CafeListView(),
                 isSystem: false
             )
-            
+
             NavigationIconCardWithDivider(
                 icon: "ic_payment",
                 label: Strings.TITLE_PROFILE_PAYMENT,

@@ -15,7 +15,7 @@ class MenuViewState: NSObject, NSCopying {
     var discount: String?
     var cartCount: String
     var cartCost: String
-    
+
     init(
         menuItems: [MenuItem],
         categoryItemModels: [CategoryItemModel],

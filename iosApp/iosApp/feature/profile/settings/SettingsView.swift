@@ -9,7 +9,7 @@ import shared
 import SwiftUI
 
 struct SettingsView: View, SharedLifecycleWithState {
-    
+
     var viewModel = SettingsViewModel(
         observeSettingsUseCase: iosComponent.provideObserveSettingsUseCase(),
         observeSelectedCityUseCase: iosComponent.provideObserveSelectedCityUseCase(),
@@ -29,12 +29,12 @@ struct SettingsView: View, SharedLifecycleWithState {
 
     @State private var showingDeleteAlert = false
     @State private var showingLogoutAlert = false
-    
+
     @State var goToSelectCity: Bool = false
 
     @State var listener: Closeable?
     @State var eventsListener: Closeable?
-    
+
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
 
     var body: some View {
@@ -45,7 +45,7 @@ struct SettingsView: View, SharedLifecycleWithState {
                     self.mode.wrappedValue.dismiss()
                 }
             )
-            
+
             NavigationLink(
                 destination: ChangeCityView(),
                 isActive: $goToSelectCity
@@ -53,7 +53,7 @@ struct SettingsView: View, SharedLifecycleWithState {
                 EmptyView()
             }
             .isDetailLink(false)
-            
+
             if state.state == SettingsViewState.State.loading {
                 LoadingView()
             } else {
@@ -62,7 +62,7 @@ struct SettingsView: View, SharedLifecycleWithState {
                         placeHolder: Strings.HINT_SETTINGS_PHONE,
                         text: state.phoneNumber
                     )
-                    
+
                     NavigationCardWithDivider(
                         icon: nil,
                         label: Strings.HINT_SETTINGS_CITY,
@@ -72,7 +72,7 @@ struct SettingsView: View, SharedLifecycleWithState {
                         }
                     )
                     .padding(.horizontal, 16)
-                    
+
                     Button(action: {
                         showingDeleteAlert = true
                     }) {
@@ -120,7 +120,7 @@ struct SettingsView: View, SharedLifecycleWithState {
             unsubscribe()
         }
     }
-    
+
     func subscribe() {
         listener = viewModel.dataState.watch { settingsStateVM in
             if let notNullSettingsStateVM = settingsStateVM {
@@ -143,12 +143,12 @@ struct SettingsView: View, SharedLifecycleWithState {
             }
         }
     }
-    
+
     func eventsSubscribe() {
         listener = viewModel.events.watch { _events in
             if let events = _events {
                 let settingsEvents = events as? [SettingsStateEvent] ?? []
-                
+
                 for event in settingsEvents {
                     switch event {
                     case is SettingsStateEventBack: self.mode.wrappedValue.dismiss()
@@ -157,14 +157,14 @@ struct SettingsView: View, SharedLifecycleWithState {
                         print("def")
                     }
                 }
-                
+
                 if !settingsEvents.isEmpty {
                     viewModel.consumeEvents(events: settingsEvents)
                 }
             }
         }
     }
-    
+
     func unsubscribe() {
         listener?.close()
         listener = nil

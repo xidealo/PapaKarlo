@@ -16,21 +16,21 @@ struct CafeListView: View {
         observeCafeWithOpenStateListUseCase: iosComponent.provideObserveCafeWithOpenStateListUseCase(),
     )
 
-    @State var listener: Closeable? = nil
-    @State var eventsListener: Closeable? = nil
+    @State var listener: Closeable?
+    @State var eventsListener: Closeable?
 
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
 
     var body: some View {
         VStack(spacing: 0) {
-            
+
             ToolbarView(
                 title: "title_restaurants",
                 back: {
                     self.mode.wrappedValue.dismiss()
                 }
             )
-            
+
             switch cafeViewState.state {
             case let .success(cafeItemList):
                 SuccessCafeListView(

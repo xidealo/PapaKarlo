@@ -26,8 +26,8 @@ struct ConsumerCartView: View {
         state: ConsumerCartState.loading
     )
 
-    @State var listener: Closeable? = nil
-    @State var eventsListener: Closeable? = nil
+    @State var listener: Closeable?
+    @State var eventsListener: Closeable?
 
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
 
@@ -285,7 +285,7 @@ struct ConsumerCartSuccessScreen: View {
 
     let columns = [
         GridItem(.flexible(), spacing: 8, alignment: .top),
-        GridItem(.flexible(), spacing: 8, alignment: .top),
+        GridItem(.flexible(), spacing: 8, alignment: .top)
     ]
 
     var body: some View {
