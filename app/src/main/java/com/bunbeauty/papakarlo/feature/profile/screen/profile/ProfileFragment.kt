@@ -36,7 +36,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.common.BaseFragmentWithSharedViewModel
+import com.bunbeauty.papakarlo.common.BaseComposeFragment
 import com.bunbeauty.papakarlo.common.extension.navigateSafe
 import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryHorizontalDivider
 import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
@@ -49,6 +49,7 @@ import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold
 import com.bunbeauty.papakarlo.databinding.LayoutComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
+import com.bunbeauty.papakarlo.feature.cafe.screen.cafelist.CafeListViewState
 import com.bunbeauty.papakarlo.feature.order.model.OrderItem
 import com.bunbeauty.papakarlo.feature.order.ui.OrderStatusChip
 import com.bunbeauty.papakarlo.feature.profile.screen.feedback.FeedbackBottomSheet
@@ -57,56 +58,47 @@ import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentBottomSheet
 import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentMethodsArgument
 import com.bunbeauty.shared.domain.model.SuccessLoginDirection
 import com.bunbeauty.shared.domain.model.order.OrderStatus
+import com.bunbeauty.shared.presentation.cafe_list.CafeList
 import com.bunbeauty.shared.presentation.profile.ProfileState
 import com.bunbeauty.shared.presentation.profile.ProfileViewModel
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
+class ProfileFragment :
+    BaseComposeFragment<ProfileState.DataState, ProfileViewState, ProfileState.Action, ProfileState.Event>() {
 
-    override val viewBinding by viewBinding(LayoutComposeBinding::bind)
-    private val viewModel: ProfileViewModel by viewModel()
+    override val viewModel: ProfileViewModel by viewModel()
 
-    private val profileUiStateMapper: ProfileUiStateMapper by inject()
-    private val paymentMethodUiStateMapper: PaymentMethodUiStateMapper by inject()
-    private val linkUiStateMapper: LinkUiStateMapper by inject()
+
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        viewModel.update()
-        viewBinding.root.setContentWithTheme {
-            val profileState by viewModel.profileState.collectAsStateWithLifecycle()
-            ProfileScreen(
-                profileUi = profileUiStateMapper.map(profileState),
-                onLastOrderClicked = viewModel::onLastOrderClicked,
-                onSettingsClicked = viewModel::onSettingsClicked,
-                onYourAddressesClicked = viewModel::onYourAddressesClicked,
-                onOrderHistoryClicked = viewModel::onOrderHistoryClicked
-            )
-            LaunchedEffect(profileState.eventList) {
-                handleEventList(profileState.eventList)
-            }
-        }
+        viewModel.onAction(ProfileState.Action.Init)
     }
 
-    override fun onStart() {
-        super.onStart()
-        viewModel.observeLastOrder()
-    }
 
-    override fun onStop() {
-        viewModel.stopLastOrderObservation()
-        super.onStop()
+    @Composable
+    override fun ProfileState.DataState.mapState(): ProfileViewState {
+        TODO("Not yet implemented")
     }
 
     @Composable
+    override fun Screen(
+        viewState: ProfileViewState,
+        onAction: (ProfileState.Action) -> Unit
+    ) {
+        ProfileScreen(
+            profileState = viewState,
+            onAction = onAction
+        )
+    }
+
+
+    @Composable
     private fun ProfileScreen(
-        profileUi: ProfileUi,
-        onLastOrderClicked: (String, String) -> Unit,
-        onSettingsClicked: () -> Unit,
-        onYourAddressesClicked: () -> Unit,
-        onOrderHistoryClicked: () -> Unit
+        profileState: ProfileViewState,
+        onAction: (ProfileState.Action) -> Unit
     ) {
         FoodDeliveryScaffold(
             title = stringResource(R.string.title_profile),
@@ -150,83 +142,77 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
         }
     }
 
-    private fun handleEventList(eventList: List<ProfileState.Event>) {
-        eventList.forEach { event ->
-            when (event) {
-                is ProfileState.Event.OpenOrderDetails -> {
-                    findNavController().navigateSafe(
-                        ProfileFragmentDirections.toOrderDetailsFragment(
-                            event.orderUuid,
-                            event.orderCode
+    override fun handleEvent(event: ProfileState.Event) {
+        when (event) {
+            ProfileState.Event.OpenAddressList -> {
+                findNavController().navigateSafe(
+                    ProfileFragmentDirections.toNavAddress(
+                        false
+                    )
+                )
+            }
+
+            ProfileState.Event.OpenLogin -> {
+                findNavController().navigateSafe(
+                    ProfileFragmentDirections.toLoginFragment(
+                        SuccessLoginDirection.BACK_TO_PROFILE
+                    )
+                )
+            }
+
+            is ProfileState.Event.OpenOrderDetails -> {
+                findNavController().navigateSafe(
+                    ProfileFragmentDirections.toOrderDetailsFragment(
+                        event.orderUuid,
+                        event.orderCode
+                    )
+                )
+            }
+
+            ProfileState.Event.OpenOrderList -> {
+                findNavController().navigateSafe(ProfileFragmentDirections.toOrdersFragment())
+            }
+
+            ProfileState.Event.OpenSettings -> {
+                findNavController().navigateSafe(ProfileFragmentDirections.toSettingsFragment())
+            }
+
+            ProfileState.Event.ShowAboutApp -> {
+                findNavController().navigateSafe(ProfileFragmentDirections.toAboutAppBottomSheet())
+            }
+
+            ProfileState.Event.ShowCafeList -> {
+                findNavController().navigateSafe(
+                    ProfileFragmentDirections.actionProfileFragmentToCafeListFragment()
+                )
+            }
+
+            is ProfileState.Event.ShowFeedback -> {
+                FeedbackBottomSheet.show(
+                    fragmentManager = parentFragmentManager,
+                    feedbackArgument = FeedbackArgument(
+                        linkList = linkUiStateMapper.map(event.linkList)
+                    )
+                )
+            }
+
+            is ProfileState.Event.ShowPayment -> {
+                PaymentBottomSheet.show(
+                    fragmentManager = parentFragmentManager,
+                    paymentMethodsArgument = PaymentMethodsArgument(
+                        paymentMethodList = paymentMethodUiStateMapper.map(
+                            event.paymentMethodList
                         )
                     )
-                }
-
-                ProfileState.Event.OpenSettings -> {
-                    findNavController().navigateSafe(ProfileFragmentDirections.toSettingsFragment())
-                }
-
-                ProfileState.Event.OpenAddressList -> {
-                    findNavController().navigateSafe(
-                        ProfileFragmentDirections.toNavAddress(
-                            false
-                        )
-                    )
-                }
-
-                ProfileState.Event.OpenOrderList -> {
-                    findNavController().navigateSafe(ProfileFragmentDirections.toOrdersFragment())
-                }
-
-                is ProfileState.Event.ShowPayment -> {
-                    PaymentBottomSheet.show(
-                        fragmentManager = parentFragmentManager,
-                        paymentMethodsArgument = PaymentMethodsArgument(
-                            paymentMethodList = paymentMethodUiStateMapper.map(
-                                event.paymentMethodList
-                            )
-                        )
-                    )
-                }
-
-                is ProfileState.Event.ShowFeedback -> {
-                    FeedbackBottomSheet.show(
-                        fragmentManager = parentFragmentManager,
-                        feedbackArgument = FeedbackArgument(
-                            linkList = linkUiStateMapper.map(event.linkList)
-                        )
-                    )
-                }
-
-                ProfileState.Event.ShowAboutApp -> {
-                    findNavController().navigateSafe(ProfileFragmentDirections.toAboutAppBottomSheet())
-                }
-
-                ProfileState.Event.OpenLogin -> {
-                    findNavController().navigateSafe(
-                        ProfileFragmentDirections.toLoginFragment(
-                            SuccessLoginDirection.BACK_TO_PROFILE
-                        )
-                    )
-                }
-
-                ProfileState.Event.ShowCafeList -> {
-                    findNavController().navigateSafe(
-                        ProfileFragmentDirections.actionProfileFragmentToCafeListFragment()
-                    )
-                }
+                )
             }
         }
-        viewModel.consumeEventList(eventList)
     }
+
 
     @Composable
     private fun AuthorizedProfileScreen(
         profile: ProfileUi,
-        onLastOrderClicked: (String, String) -> Unit,
-        onSettingsClick: () -> Unit,
-        onYourAddressesClicked: () -> Unit,
-        onOrderHistoryClicked: () -> Unit
     ) {
         Column(
             modifier = Modifier

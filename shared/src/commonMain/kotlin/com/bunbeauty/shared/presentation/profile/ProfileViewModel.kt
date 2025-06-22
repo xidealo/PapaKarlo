@@ -7,6 +7,8 @@ import com.bunbeauty.shared.domain.feature.order.ObserveLastOrderUseCase
 import com.bunbeauty.shared.domain.feature.order.StopObserveOrdersUseCase
 import com.bunbeauty.shared.domain.feature.payment.GetPaymentMethodListUseCase
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
+import com.bunbeauty.shared.domain.model.profile.Profile
+import com.bunbeauty.shared.presentation.base.SharedStateViewModel
 import com.bunbeauty.shared.presentation.base.SharedViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Job
@@ -21,20 +23,30 @@ class ProfileViewModel(
     private val observeLastOrderUseCase: ObserveLastOrderUseCase,
     private val stopObserveOrdersUseCase: StopObserveOrdersUseCase,
     private val getPaymentMethodListUseCase: GetPaymentMethodListUseCase,
-    private val getLinkListUseCase: GetLinkListUseCase
-) : SharedViewModel() {
+    private val getLinkListUseCase: GetLinkListUseCase, initDataState: ProfileState.DataState
+) : SharedStateViewModel<ProfileState.DataState, ProfileState.Action, ProfileState.Event>(
+    initDataState = ProfileState.DataState(
 
-    private val mutableProfileState = MutableStateFlow(ProfileState())
-    val profileState = mutableProfileState.asCommonStateFlow()
-
+    )
+) {
     var observeLastOrderJob: Job? = null
-    private var orderObservationUuid: String? = null
 
-    private val exceptionHandler = CoroutineExceptionHandler { _, _ ->
-        mutableProfileState.update { oldState ->
-            oldState.copy(state = ProfileState.State.ERROR)
+    override fun reduce(
+        action: ProfileState.Action,
+        dataState: ProfileState.DataState
+    ) {
+        when(action){
+            ProfileState.Action.BackClicked -> TODO()
+            ProfileState.Action.Init -> TODO()
+            ProfileState.Action.OnRefreshClicked -> TODO()
+            ProfileState.Action.onLastOrderClicked -> TODO()
+            ProfileState.Action.onOrderHistoryClicked -> TODO()
+            ProfileState.Action.onSettingsClick -> TODO()
+            ProfileState.Action.onYourAddressesClicked -> TODO()
         }
     }
+
+
 
     fun update() {
         mutableProfileState.update { profileState ->
@@ -138,4 +150,5 @@ class ProfileViewModel(
             profileState - eventList
         }
     }
+
 }
