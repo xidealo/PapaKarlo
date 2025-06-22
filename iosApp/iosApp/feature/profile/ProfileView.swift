@@ -12,7 +12,6 @@ struct ProfileView: View {
     @State var profileState = ProfileState(
         lastOrder: nil,
         state: ProfileState.State.loading,
-        cartCostAndCount: nil,
         paymentMethodList: [],
         linkList: [],
         eventList: []
@@ -22,7 +21,6 @@ struct ProfileView: View {
         userInteractor: iosComponent.provideIUserInteractor(),
         getLastOrderUseCase: iosComponent.provideGetLastOrderUseCase(), observeLastOrderUseCase: iosComponent.provideObserveLastOrderUseCase(),
         stopObserveOrdersUseCase: iosComponent.provideStopObserveOrdersUseCase(),
-        observeCartUseCase: iosComponent.provideObserveCartUseCase(),
         getPaymentMethodListUseCase: iosComponent.provideGetPaymentMethodListUseCase(),
         getLinkListUseCase: iosComponent.provideGetLinkListUseCase()
     )
