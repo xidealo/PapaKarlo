@@ -25,6 +25,7 @@ struct CreateOrderView: View {
     
     // for back after createOrder
     @Binding var isRootActive: Bool
+    @Binding var openProfileScreen: Bool
     @Binding var showOrderCreated: Bool
     
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
@@ -327,6 +328,7 @@ struct CreateOrderView: View {
                     case is CreateOrderEventOrderCreatedEvent:
                         isRootActive = false
                         showOrderCreated = true
+                        openProfileScreen = true
                     case is CreateOrderEventShowUserAddressError:
                         showUserAddressError = true
                     case is CreateOrderEventShowPaymentMethodError:

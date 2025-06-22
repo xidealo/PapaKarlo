@@ -20,7 +20,6 @@ struct MenuView: View {
     
     //navigation
     @State var openProfileScreen: Bool = false
-    @State var openCartScreen: Bool = false
     
     @State var created: Bool = false
     @State var edited: Bool = false
@@ -38,20 +37,20 @@ struct MenuView: View {
                 
                 NavigationLink(
                     destination: ProfileView(
-                        showOrderCreated: $isRootActive,
-                        showCreatedAddress: $showOrderCreated
+                        showOrderCreated: $showOrderCreated,
                     ),
                     isActive: $openProfileScreen
                 ) {
                     EmptyView()
                 }.isDetailLink(false)
-                  
+                
                 NavigationLink(
                     destination: ConsumerCartView(
                         isRootActive: $isRootActive,
+                        openProfileScreen: $openProfileScreen,
                         showOrderCreated: $showOrderCreated
                     ),
-                    isActive: $openCartScreen
+                    isActive: $isRootActive
                 ) {
                     EmptyView()
                 }.isDetailLink(false)
@@ -137,7 +136,7 @@ struct MenuView: View {
                     FoodDeliveryExtendedFab(
                         text: viewModel.menuViewState.cartCost,
                         onClick: {
-                            openCartScreen = true
+                            isRootActive = true
                         },
                         icon: "CartIcon",
                         iconBadge: viewModel.menuViewState.cartCount,

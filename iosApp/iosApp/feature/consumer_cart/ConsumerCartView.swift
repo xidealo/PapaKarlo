@@ -39,6 +39,7 @@ struct ConsumerCartView: View {
 
     // for back after createOrder
     @Binding var isRootActive: Bool
+    @Binding var openProfileScreen: Bool
     @Binding var showOrderCreated: Bool
     // --
 
@@ -74,6 +75,7 @@ struct ConsumerCartView: View {
             NavigationLink(
                 destination: CreateOrderView(
                     isRootActive: $isRootActive,
+                    openProfileScreen: $openProfileScreen,
                     showOrderCreated: $showOrderCreated
                 ),
                 isActive: $openCreateOrder

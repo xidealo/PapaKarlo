@@ -93,7 +93,7 @@ struct DoneStep: View {
     var body: some View {
         ZStack{
             IconImage(width: 12, height: 16, imageName: "CheckIcon")
-                .foregroundColor(AppColor.surface)
+                .foregroundColor(AppColor.onOrder)
         }.frame(maxWidth: .infinity)
             .background(OrderChip.getColor(status: orderStatus))
             .cornerRadius(16)

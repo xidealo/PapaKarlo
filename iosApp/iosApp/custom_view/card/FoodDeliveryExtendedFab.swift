@@ -26,7 +26,7 @@ struct FoodDeliveryExtendedFab: View {
                         if let badgeText = iconBadge {
                             Text(badgeText)
                                 .labelSmall(weight: .medium)
-                                .foregroundColor(AppColor.onSurface)
+                                .foregroundColor(AppColor.primary)
                                 .padding(4)
                                 .background(AppColor.onPrimary)
                                 .clipShape(Circle())

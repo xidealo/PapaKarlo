@@ -22,7 +22,6 @@
 		0219B7962B8FB97C00305E2D /* AppColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0294FD7F29E751CC00568A10 /* AppColor.swift */; };
 		0219B7972B8FB97C00305E2D /* CafeAddressListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020FEEBE28D3AEF7002B3D69 /* CafeAddressListView.swift */; };
 		0219B7982B8FB97C00305E2D /* CafeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323454287879EF0048CF39 /* CafeListView.swift */; };
-		0219B7992B8FB97C00305E2D /* ToolbarWithCartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0220B1012953A6E000CD93B4 /* ToolbarWithCartView.swift */; };
 		0219B79A2B8FB97C00305E2D /* AppTypography.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0294FD7C29E35E8300568A10 /* AppTypography.swift */; };
 		0219B79B2B8FB97C00305E2D /* SelectCityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323431287879EF0048CF39 /* SelectCityView.swift */; };
 		0219B79C2B8FB97C00305E2D /* DiscountCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025775142ACCA01600DDBC94 /* DiscountCard.swift */; };
@@ -120,7 +119,6 @@
 		021A009028E082DE00EFCC63 /* CafeAddressViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021A008F28E082DE00EFCC63 /* CafeAddressViewState.swift */; };
 		021A009228E08AA200EFCC63 /* MyExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021A009128E08AA200EFCC63 /* MyExtensions.swift */; };
 		021E0A9428D4AAB900CB6A15 /* PaymentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021E0A9328D4AAB900CB6A15 /* PaymentView.swift */; };
-		0220B1022953A6E000CD93B4 /* ToolbarWithCartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0220B1012953A6E000CD93B4 /* ToolbarWithCartView.swift */; };
 		022A868528D79D5F00DBE5EC /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022A868428D79D5F00DBE5EC /* CardView.swift */; };
 		022A929A288D460500EB5885 /* SearchEditText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022A9299288D460500EB5885 /* SearchEditText.swift */; };
 		022BC66E28CC895800F3ED27 /* DateUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022BC66D28CC895800F3ED27 /* DateUtil.swift */; };
@@ -227,7 +225,6 @@
 		025BF77F2CAB354D00DF0946 /* CafeAddressListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020FEEBE28D3AEF7002B3D69 /* CafeAddressListView.swift */; };
 		025BF7802CAB354D00DF0946 /* CafeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323454287879EF0048CF39 /* CafeListView.swift */; };
 		025BF7812CAB354D00DF0946 /* ConsumerCartViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029FCF022BF7F68C00F0D51C /* ConsumerCartViewState.swift */; };
-		025BF7822CAB354D00DF0946 /* ToolbarWithCartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0220B1012953A6E000CD93B4 /* ToolbarWithCartView.swift */; };
 		025BF7832CAB354D00DF0946 /* AppTypography.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0294FD7C29E35E8300568A10 /* AppTypography.swift */; };
 		025BF7842CAB354D00DF0946 /* SelectCityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323431287879EF0048CF39 /* SelectCityView.swift */; };
 		025BF7852CAB354D00DF0946 /* DiscountCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025775142ACCA01600DDBC94 /* DiscountCard.swift */; };
@@ -343,7 +340,6 @@
 		025F42DC2CD0159400C854AF /* CafeAddressListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020FEEBE28D3AEF7002B3D69 /* CafeAddressListView.swift */; };
 		025F42DD2CD0159400C854AF /* CafeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323454287879EF0048CF39 /* CafeListView.swift */; };
 		025F42DE2CD0159400C854AF /* ConsumerCartViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029FCF022BF7F68C00F0D51C /* ConsumerCartViewState.swift */; };
-		025F42DF2CD0159400C854AF /* ToolbarWithCartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0220B1012953A6E000CD93B4 /* ToolbarWithCartView.swift */; };
 		025F42E02CD0159400C854AF /* AppTypography.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0294FD7C29E35E8300568A10 /* AppTypography.swift */; };
 		025F42E12CD0159400C854AF /* SelectCityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323431287879EF0048CF39 /* SelectCityView.swift */; };
 		025F42E22CD0159400C854AF /* DiscountCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025775142ACCA01600DDBC94 /* DiscountCard.swift */; };
@@ -459,7 +455,6 @@
 		025F77FD2CD14C3400C87D99 /* CafeAddressListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020FEEBE28D3AEF7002B3D69 /* CafeAddressListView.swift */; };
 		025F77FE2CD14C3400C87D99 /* CafeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323454287879EF0048CF39 /* CafeListView.swift */; };
 		025F77FF2CD14C3400C87D99 /* ConsumerCartViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029FCF022BF7F68C00F0D51C /* ConsumerCartViewState.swift */; };
-		025F78002CD14C3400C87D99 /* ToolbarWithCartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0220B1012953A6E000CD93B4 /* ToolbarWithCartView.swift */; };
 		025F78012CD14C3400C87D99 /* AppTypography.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0294FD7C29E35E8300568A10 /* AppTypography.swift */; };
 		025F78022CD14C3400C87D99 /* SelectCityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323431287879EF0048CF39 /* SelectCityView.swift */; };
 		025F78032CD14C3400C87D99 /* DiscountCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025775142ACCA01600DDBC94 /* DiscountCard.swift */; };
@@ -647,7 +642,6 @@
 		026BF2702DB7F4B700BBD91E /* CafeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323454287879EF0048CF39 /* CafeListView.swift */; };
 		026BF2712DB7F4B700BBD91E /* ConsumerCartViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029FCF022BF7F68C00F0D51C /* ConsumerCartViewState.swift */; };
 		026BF2722DB7F4B700BBD91E /* TextCardWithDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027839CB2DAD45B500707F4F /* TextCardWithDivider.swift */; };
-		026BF2732DB7F4B700BBD91E /* ToolbarWithCartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0220B1012953A6E000CD93B4 /* ToolbarWithCartView.swift */; };
 		026BF2742DB7F4B700BBD91E /* AppTypography.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0294FD7C29E35E8300568A10 /* AppTypography.swift */; };
 		026BF2752DB7F4B700BBD91E /* SelectCityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323431287879EF0048CF39 /* SelectCityView.swift */; };
 		026BF2762DB7F4B700BBD91E /* DiscountCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025775142ACCA01600DDBC94 /* DiscountCard.swift */; };
@@ -768,7 +762,6 @@
 		026C1F5A2A2690B900838266 /* AppColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0294FD7F29E751CC00568A10 /* AppColor.swift */; };
 		026C1F5B2A2690B900838266 /* CafeAddressListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020FEEBE28D3AEF7002B3D69 /* CafeAddressListView.swift */; };
 		026C1F5C2A2690B900838266 /* CafeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323454287879EF0048CF39 /* CafeListView.swift */; };
-		026C1F5D2A2690B900838266 /* ToolbarWithCartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0220B1012953A6E000CD93B4 /* ToolbarWithCartView.swift */; };
 		026C1F5E2A2690B900838266 /* AppTypography.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0294FD7C29E35E8300568A10 /* AppTypography.swift */; };
 		026C1F5F2A2690B900838266 /* SelectCityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323431287879EF0048CF39 /* SelectCityView.swift */; };
 		026C1F602A2690B900838266 /* CommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023E247428BFE49200F19676 /* CommentView.swift */; };
@@ -885,7 +878,6 @@
 		027CB01D2A346F7B00350EB2 /* AppColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0294FD7F29E751CC00568A10 /* AppColor.swift */; };
 		027CB01E2A346F7B00350EB2 /* CafeAddressListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020FEEBE28D3AEF7002B3D69 /* CafeAddressListView.swift */; };
 		027CB01F2A346F7B00350EB2 /* CafeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323454287879EF0048CF39 /* CafeListView.swift */; };
-		027CB0202A346F7B00350EB2 /* ToolbarWithCartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0220B1012953A6E000CD93B4 /* ToolbarWithCartView.swift */; };
 		027CB0212A346F7B00350EB2 /* AppTypography.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0294FD7C29E35E8300568A10 /* AppTypography.swift */; };
 		027CB0222A346F7B00350EB2 /* SelectCityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323431287879EF0048CF39 /* SelectCityView.swift */; };
 		027CB0232A346F7B00350EB2 /* CommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023E247428BFE49200F19676 /* CommentView.swift */; };
@@ -985,7 +977,6 @@
 		02891F762BDAEA0D0043B466 /* AppColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0294FD7F29E751CC00568A10 /* AppColor.swift */; };
 		02891F772BDAEA0D0043B466 /* CafeAddressListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020FEEBE28D3AEF7002B3D69 /* CafeAddressListView.swift */; };
 		02891F782BDAEA0D0043B466 /* CafeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323454287879EF0048CF39 /* CafeListView.swift */; };
-		02891F792BDAEA0D0043B466 /* ToolbarWithCartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0220B1012953A6E000CD93B4 /* ToolbarWithCartView.swift */; };
 		02891F7A2BDAEA0D0043B466 /* AppTypography.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0294FD7C29E35E8300568A10 /* AppTypography.swift */; };
 		02891F7B2BDAEA0D0043B466 /* SelectCityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323431287879EF0048CF39 /* SelectCityView.swift */; };
 		02891F7C2BDAEA0D0043B466 /* DiscountCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025775142ACCA01600DDBC94 /* DiscountCard.swift */; };
@@ -1130,7 +1121,6 @@
 		02ADC33D29D9D0880062A141 /* ConsumerCartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0232342B287879EF0048CF39 /* ConsumerCartView.swift */; };
 		02ADC33F29D9D0880062A141 /* CafeAddressListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020FEEBE28D3AEF7002B3D69 /* CafeAddressListView.swift */; };
 		02ADC34029D9D0880062A141 /* CafeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323454287879EF0048CF39 /* CafeListView.swift */; };
-		02ADC34129D9D0880062A141 /* ToolbarWithCartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0220B1012953A6E000CD93B4 /* ToolbarWithCartView.swift */; };
 		02ADC34229D9D0880062A141 /* SelectCityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323431287879EF0048CF39 /* SelectCityView.swift */; };
 		02ADC34329D9D0880062A141 /* CommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023E247428BFE49200F19676 /* CommentView.swift */; };
 		02ADC34529D9D0880062A141 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323468287879EF0048CF39 /* MenuView.swift */; };
@@ -1276,7 +1266,6 @@
 		021A008F28E082DE00EFCC63 /* CafeAddressViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CafeAddressViewState.swift; sourceTree = "<group>"; };
 		021A009128E08AA200EFCC63 /* MyExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyExtensions.swift; sourceTree = "<group>"; };
 		021E0A9328D4AAB900CB6A15 /* PaymentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentView.swift; sourceTree = "<group>"; };
-		0220B1012953A6E000CD93B4 /* ToolbarWithCartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarWithCartView.swift; sourceTree = "<group>"; };
 		022A868428D79D5F00DBE5EC /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		022A9299288D460500EB5885 /* SearchEditText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchEditText.swift; sourceTree = "<group>"; };
 		022BC66D28CC895800F3ED27 /* DateUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateUtil.swift; sourceTree = "<group>"; };
@@ -1887,7 +1876,6 @@
 			isa = PBXGroup;
 			children = (
 				023234BE28787A180048CF39 /* ToolbarView.swift */,
-				0220B1012953A6E000CD93B4 /* ToolbarWithCartView.swift */,
 				023234DB28787A280048CF39 /* LoadingView.swift */,
 				022BC66D28CC895800F3ED27 /* DateUtil.swift */,
 				021A009128E08AA200EFCC63 /* MyExtensions.swift */,
@@ -3200,7 +3188,6 @@
 				0219B7982B8FB97C00305E2D /* CafeListView.swift in Sources */,
 				029FCF072BF7F68C00F0D51C /* ConsumerCartViewState.swift in Sources */,
 				027839D02DAD45B500707F4F /* TextCardWithDivider.swift in Sources */,
-				0219B7992B8FB97C00305E2D /* ToolbarWithCartView.swift in Sources */,
 				0219B79A2B8FB97C00305E2D /* AppTypography.swift in Sources */,
 				0219B79B2B8FB97C00305E2D /* SelectCityView.swift in Sources */,
 				0219B79C2B8FB97C00305E2D /* DiscountCard.swift in Sources */,
@@ -3322,7 +3309,6 @@
 				025BF7802CAB354D00DF0946 /* CafeListView.swift in Sources */,
 				025BF7812CAB354D00DF0946 /* ConsumerCartViewState.swift in Sources */,
 				027839D22DAD45B500707F4F /* TextCardWithDivider.swift in Sources */,
-				025BF7822CAB354D00DF0946 /* ToolbarWithCartView.swift in Sources */,
 				025BF7832CAB354D00DF0946 /* AppTypography.swift in Sources */,
 				025BF7842CAB354D00DF0946 /* SelectCityView.swift in Sources */,
 				025BF7852CAB354D00DF0946 /* DiscountCard.swift in Sources */,
@@ -3444,7 +3430,6 @@
 				025F42DD2CD0159400C854AF /* CafeListView.swift in Sources */,
 				025F42DE2CD0159400C854AF /* ConsumerCartViewState.swift in Sources */,
 				027839D32DAD45B500707F4F /* TextCardWithDivider.swift in Sources */,
-				025F42DF2CD0159400C854AF /* ToolbarWithCartView.swift in Sources */,
 				025F42E02CD0159400C854AF /* AppTypography.swift in Sources */,
 				025F42E12CD0159400C854AF /* SelectCityView.swift in Sources */,
 				025F42E22CD0159400C854AF /* DiscountCard.swift in Sources */,
@@ -3566,7 +3551,6 @@
 				025F77FE2CD14C3400C87D99 /* CafeListView.swift in Sources */,
 				025F77FF2CD14C3400C87D99 /* ConsumerCartViewState.swift in Sources */,
 				027839D42DAD45B500707F4F /* TextCardWithDivider.swift in Sources */,
-				025F78002CD14C3400C87D99 /* ToolbarWithCartView.swift in Sources */,
 				025F78012CD14C3400C87D99 /* AppTypography.swift in Sources */,
 				025F78022CD14C3400C87D99 /* SelectCityView.swift in Sources */,
 				025F78032CD14C3400C87D99 /* DiscountCard.swift in Sources */,
@@ -3688,7 +3672,6 @@
 				026BF2702DB7F4B700BBD91E /* CafeListView.swift in Sources */,
 				026BF2712DB7F4B700BBD91E /* ConsumerCartViewState.swift in Sources */,
 				026BF2722DB7F4B700BBD91E /* TextCardWithDivider.swift in Sources */,
-				026BF2732DB7F4B700BBD91E /* ToolbarWithCartView.swift in Sources */,
 				026BF2742DB7F4B700BBD91E /* AppTypography.swift in Sources */,
 				026BF2752DB7F4B700BBD91E /* SelectCityView.swift in Sources */,
 				026BF2762DB7F4B700BBD91E /* DiscountCard.swift in Sources */,
@@ -3810,7 +3793,6 @@
 				026C1F5C2A2690B900838266 /* CafeListView.swift in Sources */,
 				029FCF052BF7F68C00F0D51C /* ConsumerCartViewState.swift in Sources */,
 				027839CE2DAD45B500707F4F /* TextCardWithDivider.swift in Sources */,
-				026C1F5D2A2690B900838266 /* ToolbarWithCartView.swift in Sources */,
 				026C1F5E2A2690B900838266 /* AppTypography.swift in Sources */,
 				026C1F5F2A2690B900838266 /* SelectCityView.swift in Sources */,
 				025775172ACCA01600DDBC94 /* DiscountCard.swift in Sources */,
@@ -3932,7 +3914,6 @@
 				027CB01F2A346F7B00350EB2 /* CafeListView.swift in Sources */,
 				029FCF062BF7F68C00F0D51C /* ConsumerCartViewState.swift in Sources */,
 				027839CF2DAD45B500707F4F /* TextCardWithDivider.swift in Sources */,
-				027CB0202A346F7B00350EB2 /* ToolbarWithCartView.swift in Sources */,
 				027CB0212A346F7B00350EB2 /* AppTypography.swift in Sources */,
 				027CB0222A346F7B00350EB2 /* SelectCityView.swift in Sources */,
 				025775182ACCA01600DDBC94 /* DiscountCard.swift in Sources */,
@@ -4054,7 +4035,6 @@
 				02891F782BDAEA0D0043B466 /* CafeListView.swift in Sources */,
 				029FCF082BF7F68C00F0D51C /* ConsumerCartViewState.swift in Sources */,
 				027839D12DAD45B500707F4F /* TextCardWithDivider.swift in Sources */,
-				02891F792BDAEA0D0043B466 /* ToolbarWithCartView.swift in Sources */,
 				02891F7A2BDAEA0D0043B466 /* AppTypography.swift in Sources */,
 				02891F7B2BDAEA0D0043B466 /* SelectCityView.swift in Sources */,
 				02891F7C2BDAEA0D0043B466 /* DiscountCard.swift in Sources */,
@@ -4176,7 +4156,6 @@
 				02ADC34029D9D0880062A141 /* CafeListView.swift in Sources */,
 				029FCF042BF7F68C00F0D51C /* ConsumerCartViewState.swift in Sources */,
 				027839CD2DAD45B500707F4F /* TextCardWithDivider.swift in Sources */,
-				02ADC34129D9D0880062A141 /* ToolbarWithCartView.swift in Sources */,
 				0294FD7E29E35E8300568A10 /* AppTypography.swift in Sources */,
 				02ADC34229D9D0880062A141 /* SelectCityView.swift in Sources */,
 				025775162ACCA01600DDBC94 /* DiscountCard.swift in Sources */,
@@ -4298,7 +4277,6 @@
 				02323497287879EF0048CF39 /* CafeListView.swift in Sources */,
 				029FCF032BF7F68C00F0D51C /* ConsumerCartViewState.swift in Sources */,
 				027839CC2DAD45B500707F4F /* TextCardWithDivider.swift in Sources */,
-				0220B1022953A6E000CD93B4 /* ToolbarWithCartView.swift in Sources */,
 				0294FD7D29E35E8300568A10 /* AppTypography.swift in Sources */,
 				0232347F287879EF0048CF39 /* SelectCityView.swift in Sources */,
 				025775152ACCA01600DDBC94 /* DiscountCard.swift in Sources */,
