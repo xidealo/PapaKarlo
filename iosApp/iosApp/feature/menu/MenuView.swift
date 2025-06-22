@@ -59,7 +59,8 @@ struct MenuView: View {
                     title: "title_menu",
                     foodDeliveryAction: FoodDeliveryAction(iconSystemName: "ProfileIcon", onClick: {
                         openProfileScreen = true
-                    })
+                    }),
+                    isShowLogo: true
                 )
 
                 ScrollView(.horizontal, showsIndicators: false) {
@@ -153,7 +154,8 @@ struct MenuView: View {
                 toast: Toast(title: "Добавлено"),
                 show: $created,
                 backgroundColor: AppColor.primary,
-                foregroundColor: AppColor.onPrimary
+                foregroundColor: AppColor.onPrimary,
+                paddingBottom: 40
             ),
             show: $created
         )
