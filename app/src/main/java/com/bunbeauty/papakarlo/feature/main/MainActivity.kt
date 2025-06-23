@@ -72,14 +72,15 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
             }
             MainScreen(
                 mainState = mainState,
-                snackbarHostState = snackbarHostState
+                snackbarHostState = snackbarHostState,
+                isFabVisible = TODO()
             )
         }
 
         checkNotificationPermission()
     }
 
-    override fun showInfoMessage(text: String) {
+    override fun showInfoMessage(text: String, isFabVisible: Boolean) {
         viewModel.showInfoMessage(text)
     }
 
@@ -96,10 +97,13 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
     }
 
     @Composable
-    private fun MainScreen(mainState: MainState, snackbarHostState: SnackbarHostState) {
+    private fun MainScreen(mainState: MainState, snackbarHostState: SnackbarHostState, isFabVisible: Boolean) {
         Scaffold(
             snackbarHost = {
-                FoodDeliverySnackbarHost(snackbarHostState)
+                FoodDeliverySnackbarHost(
+                    snackbarHostState = snackbarHostState,
+                    isFabVisible = isFabVisible
+                )
             },
             bottomBar = {
                 FoodDeliveryNavigationBar(options = mainState.navigationBarOptions)
@@ -165,7 +169,11 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
     }
 
     @Composable
-    private fun FoodDeliverySnackbarHost(snackbarHostState: SnackbarHostState) {
+    private fun FoodDeliverySnackbarHost(
+        snackbarHostState: SnackbarHostState,
+        isFabVisible: Boolean
+    ) {
+        val bottomPadding = if (isFabVisible) 68.dp else 12.dp
         SnackbarHost(hostState = snackbarHostState) { snackbarData ->
             (snackbarData.visuals as? FoodDeliverySnackbarVisuals)?.let { visuals ->
                 val containerColor = when (visuals.foodDeliveryMessage.type) {
@@ -177,6 +185,7 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
                     FoodDeliveryMessageType.ERROR -> FoodDeliveryTheme.colors.mainColors.onError
                 }
                 Snackbar(
+                    modifier = Modifier.padding(bottom = bottomPadding),
                     snackbarData = snackbarData,
                     containerColor = containerColor,
                     contentColor = contentColor
