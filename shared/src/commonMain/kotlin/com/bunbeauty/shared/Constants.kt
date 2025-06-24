@@ -87,4 +87,11 @@ object Constants {
 
     const val MAPS_LINK = "https://maps.google.com/maps?daddr="
     const val PHONE_LINK = "tel:"
+
+
+
+    // OTHER
+
+    const val FAB_SNACKBAR_BOTTOM_PADDING = 68
+
 }

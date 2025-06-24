@@ -47,6 +47,7 @@ import com.bunbeauty.papakarlo.common.ui.theme.bold
 import com.bunbeauty.papakarlo.feature.main.IMessageHost
 import com.bunbeauty.papakarlo.feature.productdetails.ProductDetailsFragmentDirections.globalConsumerCartFragment
 import com.bunbeauty.papakarlo.feature.topcart.TopCartUi
+import com.bunbeauty.shared.Constants.FAB_SNACKBAR_BOTTOM_PADDING
 import com.bunbeauty.shared.presentation.product_details.AdditionItem
 import com.bunbeauty.shared.presentation.product_details.MenuProductAdditionItem
 import com.bunbeauty.shared.presentation.product_details.ProductDetailsState
@@ -57,7 +58,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 private const val ANIMATION_LABEL = "ProductDetailsFragment"
 private const val ANIMATION_DURATION_MILLIS = 200
-private const val SNACKBAR_BOTTOM_PADDING = 68
 
 class ProductDetailsFragment :
     BaseComposeFragment<ProductDetailsState.DataState, ProductDetailsViewState, ProductDetailsState.Action, ProductDetailsState.Event>() {
@@ -108,7 +108,7 @@ class ProductDetailsFragment :
                     text = resources.getString(
                         R.string.msg_menu_product_added
                     ),
-                    paddingBottom = SNACKBAR_BOTTOM_PADDING
+                    paddingBottom = FAB_SNACKBAR_BOTTOM_PADDING
                 )
                 findNavController().popBackStack()
             }
