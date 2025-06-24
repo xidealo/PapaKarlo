@@ -57,6 +57,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 private const val ANIMATION_LABEL = "ProductDetailsFragment"
 private const val ANIMATION_DURATION_MILLIS = 200
+private const val SNACKBAR_BOTTOM_PADDING = 68
 
 class ProductDetailsFragment :
     BaseComposeFragment<ProductDetailsState.DataState, ProductDetailsViewState, ProductDetailsState.Action, ProductDetailsState.Event>() {
@@ -107,7 +108,7 @@ class ProductDetailsFragment :
                     text = resources.getString(
                         R.string.msg_menu_product_added
                     ),
-                    paddingBottom = 68
+                    paddingBottom = SNACKBAR_BOTTOM_PADDING
                 )
                 findNavController().popBackStack()
             }
