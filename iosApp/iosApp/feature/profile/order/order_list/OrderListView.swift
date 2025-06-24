@@ -22,7 +22,7 @@ struct OrderListView: View {
 
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
 
-    @State var listener: Closeable? = nil
+    @State var listener: Closeable?
 
     @Environment(\.scenePhase) var scenePhase
 

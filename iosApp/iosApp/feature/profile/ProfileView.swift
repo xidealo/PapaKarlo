@@ -12,7 +12,6 @@ struct ProfileView: View {
     @State var profileState = ProfileState(
         lastOrder: nil,
         state: ProfileState.State.loading,
-        cartCostAndCount: nil,
         paymentMethodList: [],
         linkList: [],
         eventList: []
@@ -22,21 +21,28 @@ struct ProfileView: View {
         userInteractor: iosComponent.provideIUserInteractor(),
         getLastOrderUseCase: iosComponent.provideGetLastOrderUseCase(), observeLastOrderUseCase: iosComponent.provideObserveLastOrderUseCase(),
         stopObserveOrdersUseCase: iosComponent.provideStopObserveOrdersUseCase(),
-        observeCartUseCase: iosComponent.provideObserveCartUseCase(),
         getPaymentMethodListUseCase: iosComponent.provideGetPaymentMethodListUseCase(),
         getLinkListUseCase: iosComponent.provideGetLinkListUseCase()
     )
 
+    @State var showCreatedAddress: Bool = false
+
     @Binding var showOrderCreated: Bool
-    @Binding var showCreatedAddress: Bool
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     @State var isActive: Bool = false
-    @State var listener: Closeable? = nil
+    @State var listener: Closeable?
 
     @Environment(\.scenePhase) var scenePhase
 
     var body: some View {
         VStack(spacing: 0) {
+            ToolbarView(
+                title: "title_profile",
+                back: {
+                    self.mode.wrappedValue.dismiss()
+                }
+            )
+
             switch profileState.state {
             case ProfileState.State.loading: LoadingProfileView()
             case ProfileState.State.authorized: SuccessProfileView(
@@ -104,6 +110,13 @@ struct EmptyProfileView: View {
 
     var body: some View {
         VStack(spacing: 0) {
+            NavigationIconCardWithDivider(
+                icon: "CafesIcon",
+                label: "Рестораны",
+                destination: CafeListView(),
+                isSystem: false
+            )
+
             NavigationIconCardWithDivider(
                 icon: "ic_payment",
                 label: "Оплата",
@@ -192,6 +205,13 @@ struct SuccessProfileView: View {
                 icon: "ic_history",
                 label: Strings.TITLE_PROFILE_MY_ORDERS,
                 destination: OrderListView(),
+                isSystem: false
+            )
+
+            NavigationIconCardWithDivider(
+                icon: "CafesIcon",
+                label: "Рестораны",
+                destination: CafeListView(),
                 isSystem: false
             )
 

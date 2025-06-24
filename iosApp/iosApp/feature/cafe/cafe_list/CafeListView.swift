@@ -14,18 +14,25 @@ struct CafeListView: View {
     var viewModel = CafeListViewModel(
         cafeInteractor: iosComponent.provideCafeInteractor(),
         observeCafeWithOpenStateListUseCase: iosComponent.provideObserveCafeWithOpenStateListUseCase(),
-        observeCartUseCase: iosComponent.provideObserveCartUseCase()
     )
 
-    @State var listener: Closeable? = nil
-    @State var eventsListener: Closeable? = nil
+    @State var listener: Closeable?
+    @State var eventsListener: Closeable?
 
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
 
     var body: some View {
         VStack(spacing: 0) {
+
+            ToolbarView(
+                title: "title_restaurants",
+                back: {
+                    self.mode.wrappedValue.dismiss()
+                }
+            )
+
             switch cafeViewState.state {
-            case let .success(cafeItemList, costAndCount):
+            case let .success(cafeItemList):
                 SuccessCafeListView(
                     cafeList: cafeItemList
                 )
@@ -74,10 +81,6 @@ struct CafeListView: View {
                                     longitude: 0.0
                                 )
                             }
-                        ),
-                        CartCostAndCount(
-                            cost: cafeListStateVM.cartCostAndCount?.cost ?? "",
-                            count: cafeListStateVM.cartCostAndCount?.count ?? ""
                         )
                     )
                 )

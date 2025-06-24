@@ -29,11 +29,11 @@ struct LoginView: View {
     @State var hasPhoneError: Bool = false
     @State var phone = ""
     @State var phoneNumberCursorPosition = Int32(shared.Constants().PHONE_CODE.count)
-    @State var textFieldError: LocalizedStringKey? = nil
+    @State var textFieldError: LocalizedStringKey?
     // ---
 
-    @State var stateListener: Closeable? = nil
-    @State var eventsListener: Closeable? = nil
+    @State var stateListener: Closeable?
+    @State var eventsListener: Closeable?
 
     var body: some View {
         VStack(spacing: 0) {

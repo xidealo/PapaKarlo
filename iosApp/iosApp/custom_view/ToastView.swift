@@ -17,7 +17,9 @@ struct ToastView: View {
     @Binding var show: Bool
     let backgroundColor: Color
     let foregroundColor: Color
-
+    
+    var paddingBottom: CGFloat = 0
+    
     var body: some View {
         VStack(spacing: 0) {
             Spacer()
@@ -30,6 +32,7 @@ struct ToastView: View {
                 .background(backgroundColor)
                 .cornerRadius(Diems.MEDIUM_RADIUS)
                 .padding(16)
+                .padding(.bottom, paddingBottom)
         }
         .frame(maxWidth: .infinity)
         .transition(AnyTransition.move(edge: .bottom).combined(with: .opacity))
@@ -69,7 +72,8 @@ struct ToastView_Previews: PreviewProvider {
             toast: Toast(title: "Message"),
             show: .constant(true),
             backgroundColor: Color.blue,
-            foregroundColor: Color.white
+            foregroundColor: Color.white,
+            paddingBottom: 40
         )
     }
 }
