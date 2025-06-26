@@ -93,7 +93,7 @@ private fun CreateOrder.DataState.getCreateOrderTypePickup() =
 @Composable
 private fun CreateOrder.DataState.getCreateOrderTypeDelivery() =
     CreateOrderViewState.CreateOrderType.Delivery(
-        deliveryAddress = selectedUserAddress?.toAddressString(),
+        deliveryAddress = selectedUserAddressWithCity?.toAddressString(),
         deliveryAddressList = DeliveryAddressListUI(
             isShown = isUserAddressListShown,
             addressList = userAddressList.map { selectableUserAddress ->

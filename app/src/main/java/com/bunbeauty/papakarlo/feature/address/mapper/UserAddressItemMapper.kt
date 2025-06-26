@@ -7,6 +7,7 @@ import com.bunbeauty.papakarlo.feature.address.model.UserAddressItem
 import com.bunbeauty.shared.Constants.ADDRESS_DIVIDER
 import com.bunbeauty.shared.domain.model.address.SelectableUserAddress
 import com.bunbeauty.shared.domain.model.address.UserAddress
+import com.bunbeauty.shared.domain.model.address.UserAddressWithCity
 
 @Composable
 fun SelectableUserAddress.toUserAddressItem(): UserAddressItem {
@@ -29,6 +30,20 @@ fun UserAddress.toAddressString(): String {
         listOf(entrance, entranceShort).toStringOrEmpty(ADDRESS_DIVIDER) +
         listOf(floor, floorShort).toStringOrEmpty(ADDRESS_DIVIDER) +
         listOf(comment).toStringOrEmpty(ADDRESS_DIVIDER)
+}
+
+@Composable
+fun UserAddressWithCity.toAddressString(): String {
+    val houseShort = stringResource(R.string.msg_address_house_short)
+    val flatShort = stringResource(R.string.msg_address_flat_short)
+    val entranceShort = stringResource(R.string.msg_address_entrance_short)
+    val floorShort = stringResource(R.string.msg_address_floor_short)
+    return city + ADDRESS_DIVIDER + userAddress?.street +
+        listOf(houseShort, userAddress?.house).toStringOrEmpty(ADDRESS_DIVIDER) +
+        listOf(flatShort, userAddress?.flat).toStringOrEmpty(ADDRESS_DIVIDER) +
+        listOf(userAddress?.entrance, entranceShort).toStringOrEmpty(ADDRESS_DIVIDER) +
+        listOf(userAddress?.floor, floorShort).toStringOrEmpty(ADDRESS_DIVIDER) +
+        listOf(userAddress?.comment).toStringOrEmpty(ADDRESS_DIVIDER)
 }
 
 private fun List<Any?>.toStringOrEmpty(divider: String): String {
