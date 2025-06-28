@@ -2,7 +2,6 @@ package com.bunbeauty.shared.domain.feature.address
 
 import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.domain.feature.city.GetSelectedCityUseCase
-import com.bunbeauty.shared.domain.feature.city.GetSelectedCityUseCaseImpl
 import com.bunbeauty.shared.domain.model.address.UserAddressWithCity
 import com.bunbeauty.shared.domain.repo.UserAddressRepo
 
@@ -19,6 +18,19 @@ class GetCurrentUserAddressWithCityUseCaseImpl(
     override suspend operator fun invoke(): UserAddressWithCity? {
         val userUuid = dataStoreRepo.getUserUuid() ?: return null
         val cityUuid = dataStoreRepo.getSelectedCityUuid() ?: return null
+
+
+        val userAddress = userAddressRepo.getSelectedAddressByUserAndCityUuid(
+            userUuid = userUuid,
+            cityUuid = cityUuid
+        ) ?: userAddressRepo.getFirstUserAddressByUserAndCityUuid(
+            userUuid = userUuid,
+            cityUuid = cityUuid
+        )
+
+        if (userAddress == null) {
+            return null
+        }
 
         return UserAddressWithCity(
             userAddress = userAddressRepo.getSelectedAddressByUserAndCityUuid(
