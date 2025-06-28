@@ -25,11 +25,11 @@ fun UserAddress.toAddressString(): String {
     val entranceShort = stringResource(R.string.msg_address_entrance_short)
     val floorShort = stringResource(R.string.msg_address_floor_short)
     return street +
-            listOf(houseShort, house).toStringOrEmpty(ADDRESS_DIVIDER) +
-            listOf(flatShort, flat).toStringOrEmpty(ADDRESS_DIVIDER) +
-            listOf(entrance, entranceShort).toStringOrEmpty(ADDRESS_DIVIDER) +
-            listOf(floor, floorShort).toStringOrEmpty(ADDRESS_DIVIDER) +
-            listOf(comment).toStringOrEmpty(ADDRESS_DIVIDER)
+        listOf(houseShort, house).toStringOrEmpty(ADDRESS_DIVIDER) +
+        listOf(flatShort, flat).toStringOrEmpty(ADDRESS_DIVIDER) +
+        listOf(entrance, entranceShort).toStringOrEmpty(ADDRESS_DIVIDER) +
+        listOf(floor, floorShort).toStringOrEmpty(ADDRESS_DIVIDER) +
+        listOf(comment).toStringOrEmpty(ADDRESS_DIVIDER)
 }
 
 @Composable
