@@ -1,7 +1,7 @@
 package com.bunbeauty.shared.presentation.createorder
 
 import com.bunbeauty.shared.domain.model.address.SelectableUserAddress
-import com.bunbeauty.shared.domain.model.address.UserAddress
+import com.bunbeauty.shared.domain.model.address.UserAddressWithCity
 import com.bunbeauty.shared.domain.model.cafe.Cafe
 import com.bunbeauty.shared.domain.model.cafe.SelectableCafe
 import com.bunbeauty.shared.domain.model.date_time.Time
@@ -19,7 +19,7 @@ interface CreateOrder {
         val isDelivery: Boolean = true,
 
         val userAddressList: List<SelectableUserAddress> = emptyList(),
-        val selectedUserAddress: UserAddress? = null,
+        val selectedUserAddressWithCity: UserAddressWithCity? = null,
         val isUserAddressListShown: Boolean = false,
         val isAddressErrorShown: AddressErrorState = AddressErrorState.INIT,
 
@@ -57,7 +57,7 @@ interface CreateOrder {
         val isPickupEnabled: Boolean,
         val deliveryState: DeliveryState,
         val hasOpenedCafe: Boolean,
-        val workload: Cafe.Workload
+        val workload: Cafe.Workload,
     ) : BaseDataState {
 
         val paymentByCash: Boolean = selectedPaymentMethod?.name == PaymentMethodName.CASH
@@ -88,7 +88,7 @@ interface CreateOrder {
             val deliveryCost: String?,
             val oldFinalCost: String?,
             val newFinalCost: String,
-            val newFinalCostValue: Int
+            val newFinalCostValue: Int,
         ) : CartTotal
     }
 
@@ -125,7 +125,7 @@ interface CreateOrder {
 
         data class CreateClick(
             val withoutChange: String,
-            val changeFrom: String
+            val changeFrom: String,
         ) : Action
     }
 
