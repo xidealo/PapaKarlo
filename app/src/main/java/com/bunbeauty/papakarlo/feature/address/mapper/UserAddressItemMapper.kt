@@ -7,6 +7,7 @@ import com.bunbeauty.papakarlo.feature.address.model.UserAddressItem
 import com.bunbeauty.shared.Constants.ADDRESS_DIVIDER
 import com.bunbeauty.shared.domain.model.address.SelectableUserAddress
 import com.bunbeauty.shared.domain.model.address.UserAddress
+import com.bunbeauty.shared.domain.model.address.UserAddressWithCity
 
 @Composable
 fun SelectableUserAddress.toUserAddressItem(): UserAddressItem {
@@ -29,6 +30,11 @@ fun UserAddress.toAddressString(): String {
         listOf(entrance, entranceShort).toStringOrEmpty(ADDRESS_DIVIDER) +
         listOf(floor, floorShort).toStringOrEmpty(ADDRESS_DIVIDER) +
         listOf(comment).toStringOrEmpty(ADDRESS_DIVIDER)
+}
+
+@Composable
+fun UserAddressWithCity.toAddressString(): String {
+    return city + ADDRESS_DIVIDER + userAddress?.toAddressString()
 }
 
 private fun List<Any?>.toStringOrEmpty(divider: String): String {

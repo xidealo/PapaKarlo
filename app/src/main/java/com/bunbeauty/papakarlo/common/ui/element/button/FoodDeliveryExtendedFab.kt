@@ -24,7 +24,7 @@ fun FoodDeliveryExtendedFab(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     @DrawableRes icon: Int? = null,
-    iconBadge: String? = null,
+    iconBadge: String? = null
 ) {
     ExtendedFloatingActionButton(
         modifier = modifier,

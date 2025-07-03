@@ -1,6 +1,5 @@
 package com.bunbeauty.shared.presentation.profile
 
-import com.bunbeauty.shared.domain.model.cart.CartCostAndCount
 import com.bunbeauty.shared.domain.model.link.Link
 import com.bunbeauty.shared.domain.model.order.LightOrder
 import com.bunbeauty.shared.domain.model.payment_method.PaymentMethod

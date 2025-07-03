@@ -1,6 +1,7 @@
 package com.bunbeauty.shared.domain.feature.notification
 
 import cocoapods.FirebaseMessaging.FIRMessaging
+import com.bunbeauty.core.Logger
 import com.bunbeauty.shared.domain.repo.UserRepo
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlin.coroutines.suspendCoroutine
@@ -9,7 +10,12 @@ actual class UpdateNotificationUseCase(
     private val userRepository: UserRepo
 ) {
     actual suspend operator fun invoke() {
-        userRepository.updateNotificationTokenSuspend(notificationToken = getNotificationToken())
+        try {
+            userRepository.updateNotificationTokenSuspend(notificationToken = getNotificationToken())
+        }
+        catch (exception: Exception){
+            Logger.logE("UpdateNotificationUseCase", exception.printStackTrace())
+        }
     }
 
     @OptIn(ExperimentalForeignApi::class)

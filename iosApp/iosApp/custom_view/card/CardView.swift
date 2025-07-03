@@ -15,7 +15,7 @@ struct CardView: View {
     let isSystemImageName: Bool
     let isShowRightArrow: Bool
 
-    var placeHolder: LocalizedStringKey? = nil
+    var placeHolder: LocalizedStringKey?
 
     var body: some View {
         HStack(spacing: 0) {

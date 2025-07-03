@@ -47,6 +47,7 @@ import com.bunbeauty.papakarlo.common.ui.theme.bold
 import com.bunbeauty.papakarlo.feature.main.IMessageHost
 import com.bunbeauty.papakarlo.feature.productdetails.ProductDetailsFragmentDirections.globalConsumerCartFragment
 import com.bunbeauty.papakarlo.feature.topcart.TopCartUi
+import com.bunbeauty.shared.Constants.FAB_SNACKBAR_BOTTOM_PADDING
 import com.bunbeauty.shared.presentation.product_details.AdditionItem
 import com.bunbeauty.shared.presentation.product_details.MenuProductAdditionItem
 import com.bunbeauty.shared.presentation.product_details.ProductDetailsState
@@ -106,7 +107,8 @@ class ProductDetailsFragment :
                 (activity as? IMessageHost)?.showInfoMessage(
                     text = resources.getString(
                         R.string.msg_menu_product_added
-                    )
+                    ),
+                    paddingBottom = FAB_SNACKBAR_BOTTOM_PADDING
                 )
                 findNavController().popBackStack()
             }

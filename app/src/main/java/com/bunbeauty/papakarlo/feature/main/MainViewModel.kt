@@ -36,17 +36,19 @@ class MainViewModel(
         }
     }
 
-    fun showInfoMessage(text: String) {
+    fun showInfoMessage(text: String, paddingBottom: Int) {
         showMessage(
             text = text,
-            type = FoodDeliveryMessageType.INFO
+            type = FoodDeliveryMessageType.INFO,
+            paddingBottom = paddingBottom
         )
     }
 
     fun showErrorMessage(text: String) {
         showMessage(
             text = text,
-            type = FoodDeliveryMessageType.ERROR
+            type = FoodDeliveryMessageType.ERROR,
+            paddingBottom = 0
         )
     }
 
@@ -56,9 +58,11 @@ class MainViewModel(
         }
     }
 
-    private fun showMessage(text: String, type: FoodDeliveryMessageType) {
+    private fun showMessage(text: String, type: FoodDeliveryMessageType, paddingBottom: Int) {
         mutableMainState.update { state ->
-            state + MainState.Event.ShowMessageEvent(
+            state.copy(
+                paddingBottomSnackbar = paddingBottom
+            ) + MainState.Event.ShowMessageEvent(
                 message = FoodDeliveryMessage(
                     type = type,
                     text = text

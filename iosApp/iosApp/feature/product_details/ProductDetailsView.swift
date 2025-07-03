@@ -45,8 +45,8 @@ struct ProductDetailsView: View {
     // -----
 
     // Listeners
-    @State var listener: Closeable? = nil
-    @State var eventsListener: Closeable? = nil
+    @State var listener: Closeable?
+    @State var eventsListener: Closeable?
     // -----
 
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
@@ -188,7 +188,7 @@ struct ProductDetailsView: View {
                     .padding(.bottom, 64)
                 }
             }
-                        
+
             FoodDeliveryExtendedFab(
                 text: Strings.ACTION_PRODUCT_DETAILS_ADD + productDetailsViewState.priceWithAdditions,
                 onClick: {

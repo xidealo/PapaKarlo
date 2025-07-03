@@ -16,5 +16,5 @@ struct CafeListViewState {
 enum CafeListCartState {
     case loading
     case error
-    case success([CafeItem], CartCostAndCount)
+    case success([CafeItem])
 }
