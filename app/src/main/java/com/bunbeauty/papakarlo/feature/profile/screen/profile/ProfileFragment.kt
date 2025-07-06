@@ -49,7 +49,13 @@ import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentBottomSheet
 import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentMethodsArgument
 import com.bunbeauty.papakarlo.util.string.IStringUtil
 import com.bunbeauty.shared.domain.model.SuccessLoginDirection
+import com.bunbeauty.shared.domain.model.date_time.Date
+import com.bunbeauty.shared.domain.model.date_time.DateTime
+import com.bunbeauty.shared.domain.model.date_time.Time
+import com.bunbeauty.shared.domain.model.order.LightOrder
 import com.bunbeauty.shared.domain.model.order.OrderStatus
+import com.bunbeauty.shared.domain.model.payment_method.PaymentMethod
+import com.bunbeauty.shared.domain.model.payment_method.PaymentMethodName
 import com.bunbeauty.shared.presentation.profile.ProfileState
 import com.bunbeauty.shared.presentation.profile.ProfileViewModel
 import org.koin.android.ext.android.inject
@@ -429,7 +435,9 @@ class ProfileFragment :
                 OrderStatusChip(
                     orderStatus = state.lastOrder?.status ?: OrderStatus.ACCEPTED,
                     // statusName = state.lastOrder?.code ?: ""  map(orderItemMapper::toItem)
-                    statusName = stringUtil.getOrderStatusName(state.lastOrder?.status ?: OrderStatus.ACCEPTED)
+                    statusName = stringUtil.getOrderStatusName(
+                        state.lastOrder?.status ?: OrderStatus.ACCEPTED
+                    )
                 )
                 Text(
                     modifier = Modifier
@@ -450,11 +458,23 @@ class ProfileFragment :
         FoodDeliveryTheme {
             ProfileScreen(
                 state = ProfileViewState(
-                    state = TODO(),
-                    lastOrder = TODO(),
-                    paymentMethodList = TODO(),
-                    linkList = TODO(),
-                    isUnauthorized = TODO()
+                    state = ProfileViewState.State.Authorized,
+                    lastOrder = LightOrder(
+                        uuid = "uuid",
+                        status = OrderStatus.DONE,
+                        code = "code",
+                        dateTime = DateTime(
+                            date = Date(
+                                dayOfMonth = 5474,
+                                monthNumber = 7337,
+                                year = 1992
+                            ),
+                            time = Time(hours = 3796, minutes = 8009)
+                        )
+                    ),
+                    paymentMethodList = listOf(),
+                    linkList = listOf(),
+                    isUnauthorized = false
                 ),
                 onAction = {}
             )
@@ -468,10 +488,10 @@ class ProfileFragment :
             ProfileScreen(
                 state = ProfileViewState(
                     state = ProfileViewState.State.Authorized,
-                    lastOrder = TODO(),
-                    paymentMethodList = TODO(),
-                    linkList = TODO(),
-                    isUnauthorized = TODO()
+                    lastOrder = null,
+                    paymentMethodList = listOf(),
+                    linkList = listOf(),
+                    isUnauthorized = false
                 ),
                 onAction = {}
             )
@@ -484,11 +504,11 @@ class ProfileFragment :
         FoodDeliveryTheme {
             ProfileScreen(
                 state = ProfileViewState(
-                    state = TODO(),
-                    lastOrder = TODO(),
-                    paymentMethodList = TODO(),
-                    linkList = TODO(),
-                    isUnauthorized = TODO()
+                    state = ProfileViewState.State.Unauthorized,
+                    lastOrder = null,
+                    paymentMethodList = listOf(),
+                    linkList = listOf(),
+                    isUnauthorized = true
                 ),
                 onAction = {}
             )
@@ -501,11 +521,11 @@ class ProfileFragment :
         FoodDeliveryTheme {
             ProfileScreen(
                 state = ProfileViewState(
-                    state = TODO(),
-                    lastOrder = TODO(),
-                    paymentMethodList = TODO(),
-                    linkList = TODO(),
-                    isUnauthorized = TODO()
+                    state = ProfileViewState.State.Loading,
+                    lastOrder = null,
+                    paymentMethodList = listOf(),
+                    linkList = listOf(),
+                    isUnauthorized = false
                 ),
                 onAction = {}
             )
@@ -518,11 +538,11 @@ class ProfileFragment :
         FoodDeliveryTheme {
             ProfileScreen(
                 state = ProfileViewState(
-                    state = TODO(),
-                    lastOrder = TODO(),
-                    paymentMethodList = TODO(),
-                    linkList = TODO(),
-                    isUnauthorized = TODO()
+                    state = ProfileViewState.State.Error,
+                    lastOrder = null,
+                    paymentMethodList = listOf(),
+                    linkList = listOf(),
+                    isUnauthorized = false
                 ),
                 onAction = {}
             )
