@@ -4,7 +4,7 @@ import com.bunbeauty.shared.domain.exeptions.UnknownCompanyException
 
 enum class FoodDeliveryCompany(
     val flavor: String,
-    val companyUuid: String
+    val companyUuid: String,
 ) {
     PAPA_KARLO(
         flavor = "papakarlo",
@@ -45,6 +45,14 @@ enum class FoodDeliveryCompany(
     EMOJI(
         flavor = "emoji",
         companyUuid = "0b7b2388-0992-48cc-812e-79bb44ff58ba"
+    ),
+    LIMONAD(
+        flavor = "limonad",
+        companyUuid = "405bca15-13f5-4f1b-9215-663d230e9bdf"
+    ),
+    TAVERNA(
+        flavor = "taverna",
+        companyUuid = "02046f6d-40f2-4b24-bbea-a742079fc66e"
     );
 
     companion object {
