@@ -42,7 +42,7 @@ struct CreateOrderView: View {
         cafeInteractor: iosComponent.provideCafeInteractor(),
         userInteractor: iosComponent.provideIUserInteractor(),
         getSelectableUserAddressList: iosComponent.provideGetSelectableUserAddressListUseCase(),
-        getCurrentUserAddressUseCase: iosComponent.provideGetCurrentUserAddressUseCase(),
+        getCurrentUserAddressWithCityUseCase: iosComponent.provideGetCurrentUserAddressWithCityUseCase(),
         getSelectableCafeList: iosComponent.provideGetSelectableCafeListUseCase(),
         getCartTotalFlowUseCase: iosComponent.provideGetCartTotalUseCase(),
         getMotivationUseCase: iosComponent.provideGetMotivationUseCaseUseCase(),
@@ -250,7 +250,7 @@ struct CreateOrderView: View {
 
     private func getCreateOrderTypeDelivery(dataState: CreateOrderDataState) -> CreateOrderType {
         let delivery = CreateOrderType.Delivery(
-            deliveryAddress: dataState.selectedUserAddress?.getAddress(),
+            deliveryAddress:getDelivryAddress(dataState: dataState),
             deliveryAddressList: DeliveryAddressListUI(
                 isShown: dataState.isUserAddressListShown,
                 addressList: dataState.userAddressList.map { selectableUserAddress in
@@ -288,6 +288,15 @@ struct CreateOrderView: View {
             }()
         )
         return .delivery(delivery)
+    }
+    
+    private func getDelivryAddress(dataState: CreateOrderDataState) -> String? {
+        
+        if (dataState.selectedUserAddressWithCity == nil){
+            return nil
+        }
+        
+        return (dataState.selectedUserAddressWithCity?.city ?? "") + Constants().ADDRESS_DIVIDER + (dataState.selectedUserAddressWithCity?.userAddress?.getAddress() ?? "")
     }
 
     private func getCreateOrderTypePickup(dataState: CreateOrderDataState) -> CreateOrderType {
