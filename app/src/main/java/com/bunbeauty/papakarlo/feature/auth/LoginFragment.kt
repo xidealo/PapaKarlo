@@ -1,5 +1,6 @@
 package com.bunbeauty.papakarlo.feature.auth
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.compose.foundation.Image
@@ -58,6 +59,7 @@ class LoginFragment : BaseSingleStateComposeFragment<Login.ViewDataState, Login.
         viewModel.onAction(Login.Action.Init)
     }
 
+    @SuppressLint("UnusedBoxWithConstraintsScope")
     @Composable
     override fun Screen(viewState: Login.ViewDataState, onAction: (Login.Action) -> Unit) {
         FoodDeliveryScaffold(
