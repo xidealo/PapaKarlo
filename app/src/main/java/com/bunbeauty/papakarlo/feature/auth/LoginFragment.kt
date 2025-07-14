@@ -1,6 +1,5 @@
 package com.bunbeauty.papakarlo.feature.auth
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.compose.foundation.Image
@@ -88,7 +87,8 @@ class LoginFragment : BaseSingleStateComposeFragment<Login.ViewDataState, Login.
                 verticalArrangement = Arrangement.Center
             ) {
                 BoxWithConstraints {
-                    if (maxHeight > logoBoxHeightLimit) {
+                    val constraints = this
+                    if (constraints.maxHeight > logoBoxHeightLimit) {
                         Image(
                             modifier = Modifier.height(156.dp),
                             painter = painterResource(R.drawable.logo_medium),
