@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Snackbar
@@ -29,6 +30,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidViewBinding
@@ -63,7 +65,7 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
     override fun onCreate(savedInstanceState: Bundle?) {
         WindowCompat.setDecorFitsSystemWindows(window, false)
         WindowInsetsControllerCompat(window, window.decorView).apply {
-            isAppearanceLightStatusBars = true
+            isAppearanceLightStatusBars = false
             isAppearanceLightNavigationBars = false
         }
         setTheme(R.style.AppTheme)
@@ -107,6 +109,7 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
     @Composable
     private fun MainScreen(mainState: MainState, snackbarHostState: SnackbarHostState) {
         Scaffold(
+            modifier = Modifier.navigationBarsPadding(),
             snackbarHost = {
                 FoodDeliverySnackbarHost(
                     snackbarHostState = snackbarHostState,
@@ -119,6 +122,7 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
         ) { padding ->
             Column(
                 modifier = Modifier
+                    .background(FoodDeliveryTheme.colors.mainColors.background)
                     .padding(padding)
                     .imePadding()
             ) {

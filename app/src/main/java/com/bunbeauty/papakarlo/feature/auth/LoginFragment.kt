@@ -59,7 +59,7 @@ class LoginFragment : BaseSingleStateComposeFragment<Login.ViewDataState, Login.
         viewModel.onAction(Login.Action.Init)
     }
 
-    @SuppressLint("UnusedBoxWithConstraintsScope")
+
     @Composable
     override fun Screen(viewState: Login.ViewDataState, onAction: (Login.Action) -> Unit) {
         FoodDeliveryScaffold(
