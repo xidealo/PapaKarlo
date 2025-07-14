@@ -32,6 +32,7 @@ object FoodDeliveryColors {
     val Red350 = Color(0xFFEB4D46)
     val Red400 = Color(0xFFD22628)
     val Red500 = Color(0xFFB1021D)
+    val Red600 = Color(0xFF8A1130)
 
     val Brown500 = Color(0xFF8F463F)
 
