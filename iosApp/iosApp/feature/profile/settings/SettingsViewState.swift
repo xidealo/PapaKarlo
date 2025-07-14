@@ -8,13 +8,12 @@
 
 import Foundation
 
-
 struct SettingsViewState {
     let phoneNumber: String
     let selectedCityName: String
     let state: State
-    
-    enum State{
+
+    enum State {
         case success
         case loading
         case error

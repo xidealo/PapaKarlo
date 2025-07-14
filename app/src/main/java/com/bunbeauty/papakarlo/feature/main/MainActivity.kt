@@ -88,8 +88,8 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
         checkNotificationPermission()
     }
 
-    override fun showInfoMessage(text: String) {
-        viewModel.showInfoMessage(text)
+    override fun showInfoMessage(text: String, paddingBottom: Int) {
+        viewModel.showInfoMessage(text = text, paddingBottom = paddingBottom)
     }
 
     override fun showErrorMessage(text: String) {
@@ -108,7 +108,10 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
     private fun MainScreen(mainState: MainState, snackbarHostState: SnackbarHostState) {
         Scaffold(
             snackbarHost = {
-                FoodDeliverySnackbarHost(snackbarHostState)
+                FoodDeliverySnackbarHost(
+                    snackbarHostState = snackbarHostState,
+                    paddingBottom = mainState.paddingBottomSnackbar
+                )
             },
             bottomBar = {
                 FoodDeliveryNavigationBar(options = mainState.navigationBarOptions)
@@ -182,8 +185,14 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
     }
 
     @Composable
-    private fun FoodDeliverySnackbarHost(snackbarHostState: SnackbarHostState) {
-        SnackbarHost(hostState = snackbarHostState) { snackbarData ->
+    private fun FoodDeliverySnackbarHost(
+        snackbarHostState: SnackbarHostState,
+        paddingBottom: Int
+    ) {
+        SnackbarHost(
+            hostState = snackbarHostState,
+            modifier = Modifier.padding(bottom = paddingBottom.dp)
+        ) { snackbarData ->
             (snackbarData.visuals as? FoodDeliverySnackbarVisuals)?.let { visuals ->
                 val containerColor = when (visuals.foodDeliveryMessage.type) {
                     FoodDeliveryMessageType.INFO -> FoodDeliveryTheme.colors.mainColors.primary
@@ -212,7 +221,9 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
                     lifecycleScope.launch {
                         val snackbarJob = launch {
                             snackbarHostState.showSnackbar(
-                                visuals = FoodDeliverySnackbarVisuals(event.message)
+                                visuals = FoodDeliverySnackbarVisuals(
+                                    event.message
+                                )
                             )
                         }
                         delay(2_000)

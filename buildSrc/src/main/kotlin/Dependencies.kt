@@ -6,9 +6,9 @@ object Namespace {
 object CommonApplication {
     private const val versionMajor = 2
     private const val versionMinor = 7
-    private const val versionPatch = 0
+    private const val versionPatch = 1
 
-    const val versionCode = 270
+    const val versionCode = 271
     const val versionName = "$versionMajor.$versionMinor.$versionPatch"
 
     const val deploymentTarget = "12.0"
@@ -16,6 +16,6 @@ object CommonApplication {
 
 object AndroidSdk {
     const val min = 24
-    const val compile = 35
+    const val compile = 36
     const val target = compile
 }

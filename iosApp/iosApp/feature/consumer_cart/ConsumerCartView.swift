@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-
 import shared
 
 struct ConsumerCartView: View {
@@ -26,8 +25,8 @@ struct ConsumerCartView: View {
         state: ConsumerCartState.loading
     )
 
-    @State var listener: Closeable? = nil
-    @State var eventsListener: Closeable? = nil
+    @State var listener: Closeable?
+    @State var eventsListener: Closeable?
 
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
 
@@ -39,7 +38,7 @@ struct ConsumerCartView: View {
 
     // for back after createOrder
     @Binding var isRootActive: Bool
-    @Binding var selection: MainContainerState
+    @Binding var openProfileScreen: Bool
     @Binding var showOrderCreated: Bool
     // --
 
@@ -75,7 +74,7 @@ struct ConsumerCartView: View {
             NavigationLink(
                 destination: CreateOrderView(
                     isRootActive: $isRootActive,
-                    selection: $selection,
+                    openProfileScreen: $openProfileScreen,
                     showOrderCreated: $showOrderCreated
                 ),
                 isActive: $openCreateOrder
@@ -106,7 +105,6 @@ struct ConsumerCartView: View {
                     recommendationProductList: consumerCartProducts,
                     bottomPanelInfoUi: bottomPanelInfo,
                     isRootActive: $isRootActive,
-                    selection: $selection,
                     showOrderCreated: $showOrderCreated,
                     created: $created,
                     edited: $edited,
@@ -276,7 +274,6 @@ struct ConsumerCartSuccessScreen: View {
 
     // for back after createOrder
     @Binding var isRootActive: Bool
-    @Binding var selection: MainContainerState
     @Binding var showOrderCreated: Bool
 
     // for add or edit product
@@ -287,7 +284,7 @@ struct ConsumerCartSuccessScreen: View {
 
     let columns = [
         GridItem(.flexible(), spacing: 8, alignment: .top),
-        GridItem(.flexible(), spacing: 8, alignment: .top),
+        GridItem(.flexible(), spacing: 8, alignment: .top)
     ]
 
     var body: some View {
@@ -295,7 +292,9 @@ struct ConsumerCartSuccessScreen: View {
             ZStack(alignment: .bottom) {
                 ScrollView {
                     if cartProductItemUiList.isEmpty {
-                        ConsumerCartEmptyScreen(isRootActive: $isRootActive, selection: $selection)
+                        ConsumerCartEmptyScreen(
+                            isRootActive: $isRootActive,
+                            )
                     } else {
                         LazyVStack(spacing: 0) {
                             ForEach(cartProductItemUiList) { cartProductItemIos in
@@ -448,7 +447,6 @@ struct ConsumerCartSuccessScreen: View {
         @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
 
         @Binding var isRootActive: Bool
-        @Binding var selection: MainContainerState
 
         var body: some View {
             EmptyWithIconView(

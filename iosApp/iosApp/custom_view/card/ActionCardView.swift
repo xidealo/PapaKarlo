@@ -14,7 +14,7 @@ struct ActionCardView: View {
     let isSystemImageName: Bool
     let isShowRightArrow: Bool
     let action: () -> Void
-    var placeHolder: LocalizedStringKey? = nil
+    var placeHolder: LocalizedStringKey?
 
     var body: some View {
         Button(action: action) {

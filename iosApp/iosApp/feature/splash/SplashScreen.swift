@@ -9,7 +9,7 @@ import shared
 import SwiftUI
 
 struct SplashView: View, SharedLifecycle {
-    @State var topMessage: LocalizedStringKey? = nil
+    @State var topMessage: LocalizedStringKey?
 
     @State var viewModel: SplashViewModel = .init(
         checkUpdateUseCase: iosComponent.provideCheckUpdateUseCase(),
@@ -65,7 +65,7 @@ struct SplashView: View, SharedLifecycle {
                 }
                 NavigationView {
                     NavigationLink(
-                        destination: ContainerView(selection: MainContainerState.menu),
+                        destination: MenuView(),
                         isActive: $openMainMenu
                     ) {
                         LoadingView()

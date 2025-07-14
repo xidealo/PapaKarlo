@@ -9,10 +9,10 @@
 import SwiftUI
 
 struct TextCardWithDivider: View {
-    
+
     let placeHolder: String
     let text: String
-    
+
     var body: some View {
         VStack(spacing: 0) {
             Text(placeHolder)
@@ -25,7 +25,7 @@ struct TextCardWithDivider: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .foregroundColor(AppColor.onSurface)
                 .multilineTextAlignment(.leading)
-            
+
             FoodDeliveryDivider()
                 .padding(.top, 8)
         }.padding(.horizontal, Diems.MEDIUM_PADDING)

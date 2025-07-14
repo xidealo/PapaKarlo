@@ -11,10 +11,10 @@ import SwiftUI
 struct FoodDeliveryExtendedFab: View {
     let text: String
     let onClick: () -> Void
-    var icon: String? = nil
-    var iconBadge: String? = nil
-    var maxWidth: CGFloat? = nil
-    
+    var icon: String?
+    var iconBadge: String?
+    var maxWidth: CGFloat?
+
     var body: some View {
         Button(action: onClick) {
             HStack(spacing: 8) {
@@ -22,11 +22,11 @@ struct FoodDeliveryExtendedFab: View {
                     ZStack(alignment: .topTrailing) {
                         IconImage(imageName: icon)
                             .foregroundColor(AppColor.onPrimary)
-                        
+
                         if let badgeText = iconBadge {
                             Text(badgeText)
                                 .labelSmall(weight: .medium)
-                                .foregroundColor(AppColor.onSurface)
+                                .foregroundColor(AppColor.primary)
                                 .padding(4)
                                 .background(AppColor.onPrimary)
                                 .clipShape(Circle())
@@ -34,10 +34,11 @@ struct FoodDeliveryExtendedFab: View {
                         }
                     }
                 }
-                
+
                 Text(text)
                     .labelLarge()
                     .foregroundColor(AppColor.onPrimary)
+                    .padding(.leading, iconBadge == nil ? 0 : 8)
             }
             .padding(.horizontal, 16)
             .padding(.vertical, 12)

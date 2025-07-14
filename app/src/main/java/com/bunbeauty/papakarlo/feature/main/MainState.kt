@@ -11,6 +11,7 @@ data class MainState(
         isVisible = false
     ),
     val navigationBarOptions: NavigationBarOptions = NavigationBarOptions.Hidden,
+    val paddingBottomSnackbar: Int = 0,
     val eventList: List<Event> = emptyList()
 ) {
 

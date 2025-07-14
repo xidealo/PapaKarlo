@@ -17,7 +17,7 @@ open class UserAddressRepository(
     private val networkConnector: NetworkConnector,
     private val userAddressDao: IUserAddressDao,
     private val userAddressMapper: UserAddressMapper,
-    private val dataStoreRepo: DataStoreRepo
+    private val dataStoreRepo: DataStoreRepo,
 ) : BaseRepository(), UserAddressRepo {
 
     override val tag: String = "USER_ADDRESS_TAG"
@@ -26,7 +26,7 @@ open class UserAddressRepository(
 
     override suspend fun saveUserAddress(
         token: String,
-        createdUserAddress: CreatedUserAddress
+        createdUserAddress: CreatedUserAddress,
     ): UserAddress? {
         val userAddressPostServer = userAddressMapper.toUserAddressPostServer(createdUserAddress)
         return networkConnector.postUserAddress(token, userAddressPostServer)
@@ -48,7 +48,7 @@ open class UserAddressRepository(
     override suspend fun saveSelectedUserAddress(
         addressUuid: String,
         userUuid: String,
-        cityUuid: String
+        cityUuid: String,
     ) {
         val selectedUserAddressUuid = SelectedUserAddressUuidEntity(
             userUuid = userUuid,
@@ -61,7 +61,7 @@ open class UserAddressRepository(
 
     override suspend fun getSelectedAddressByUserAndCityUuid(
         userUuid: String,
-        cityUuid: String
+        cityUuid: String,
     ): UserAddress? {
         return userAddressDao.getSelectedUserAddressByUserAndCityUuid(userUuid, cityUuid)
             ?.let { userAddressEntity ->
@@ -71,18 +71,26 @@ open class UserAddressRepository(
 
     override suspend fun getFirstUserAddressByUserAndCityUuid(
         userUuid: String,
-        cityUuid: String
+        cityUuid: String,
     ): UserAddress? {
-        return userAddressDao.geFirstUserAddressByUserAndCityUuid(userUuid, cityUuid)
-            ?.let { userAddressEntity ->
-                userAddressMapper.toUserAddress(userAddressEntity)
-            }
+        return userAddressDao.geFirstUserAddressByUserAndCityUuid(
+            userUuid = userUuid,
+            cityUuid = cityUuid
+        )?.let { userAddressEntity ->
+            userAddressMapper.toUserAddress(userAddressEntity)
+        } ?: dataStoreRepo.getToken()?.let { token ->
+            getUserAddressListByUserAndCityUuid(
+                userUuid = userUuid,
+                cityUuid = cityUuid,
+                token = token
+            ).firstOrNull()
+        }
     }
 
     override suspend fun getUserAddressListByUserAndCityUuid(
         userUuid: String,
         cityUuid: String,
-        token: String
+        token: String,
     ): List<UserAddress> {
         val cache = userAddressCache
         return if (cache != null &&
@@ -115,7 +123,7 @@ open class UserAddressRepository(
 
     override fun observeSelectedUserAddressByUserAndCityUuid(
         userUuid: String,
-        cityUuid: String
+        cityUuid: String,
     ): Flow<UserAddress?> {
         return userAddressDao.observeSelectedUserAddressByUserAndCityUuid(
             userUuid = userUuid,
@@ -125,7 +133,7 @@ open class UserAddressRepository(
 
     override fun observeFirstUserAddressByUserAndCityUuid(
         userUuid: String,
-        cityUuid: String
+        cityUuid: String,
     ): Flow<UserAddress?> {
         return userAddressDao.observeFirstUserAddressByUserAndCityUuid(
             userUuid = userUuid,
@@ -135,7 +143,7 @@ open class UserAddressRepository(
 
     override fun observeUserAddressListByUserUuidAndCityUuid(
         userUuid: String,
-        cityUuid: String
+        cityUuid: String,
     ): Flow<List<UserAddress>> {
         return userAddressDao.observeUserAddressListByUserAndCityUuid(
             userUuid = userUuid,
