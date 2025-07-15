@@ -5,12 +5,13 @@ import com.bunbeauty.shared.domain.model.link.Link
 import com.bunbeauty.shared.domain.model.order.LightOrder
 import com.bunbeauty.shared.domain.model.payment_method.PaymentMethod
 import com.bunbeauty.shared.presentation.base.BaseViewState
+import kotlinx.collections.immutable.ImmutableList
 
 @Immutable
 data class ProfileViewState(
     val lastOrder: LightOrder? = null,
     val state: State,
-    val paymentMethodList: List<PaymentMethod>,
+    val paymentMethodList: ImmutableList<PaymentMethod>,
     val linkList: List<Link>,
     val isUnauthorized: Boolean
 ) : BaseViewState {

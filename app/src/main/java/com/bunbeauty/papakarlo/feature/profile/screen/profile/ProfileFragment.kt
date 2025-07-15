@@ -422,7 +422,7 @@ class ProfileFragment :
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = state.lastOrder?.code ?: "",
+                    text = state.lastOrder?.code.orEmpty(),
                     modifier = Modifier
                         .requiredWidthIn(min = FoodDeliveryTheme.dimensions.codeWidth)
                         .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
@@ -432,7 +432,6 @@ class ProfileFragment :
 
                 OrderStatusChip(
                     orderStatus = state.lastOrder?.status ?: OrderStatus.ACCEPTED,
-                    // statusName = state.lastOrder?.code ?: ""  map(orderItemMapper::toItem)
                     statusName = stringUtil.getOrderStatusName(
                         state.lastOrder?.status ?: OrderStatus.ACCEPTED
                     )
@@ -441,7 +440,7 @@ class ProfileFragment :
                     modifier = Modifier
                         .weight(1f)
                         .wrapContentWidth(Alignment.End),
-                    text = stringUtil.getDateTimeString(state.lastOrder!!.dateTime),
+                    text = state.lastOrder?.dateTime?.let { stringUtil.getDateTimeString(it) } ?: "—",
                     style = FoodDeliveryTheme.typography.bodySmall,
                     color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
                     textAlign = TextAlign.End

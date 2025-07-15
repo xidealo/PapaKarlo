@@ -8,6 +8,7 @@ import com.bunbeauty.shared.domain.model.link.Link
 import com.bunbeauty.shared.domain.model.payment_method.PaymentMethod
 import com.bunbeauty.shared.extension.launchSafe
 import com.bunbeauty.shared.presentation.base.SharedStateViewModel
+import kotlinx.collections.immutable.persistentListOf
 
 
 class ProfileViewModel(
@@ -19,7 +20,7 @@ class ProfileViewModel(
     initDataState = ProfileState.DataState(
         lastOrder = null,
         state = ProfileState.DataState.State.LOADING,
-        paymentMethodList = listOf(),
+        paymentMethodList = persistentListOf(),
         linkList = listOf(),
         isUnauthorized = true
     )
@@ -69,7 +70,7 @@ class ProfileViewModel(
                             ProfileState.DataState.State.UNAUTHORIZED
                         },
                         isUnauthorized = userInteractor.isUserAuthorize(),
-                        paymentMethodList = paymentMethodList,
+                        paymentMethodList = TODO(),
                         linkList = linkList,
                     )
                 }
