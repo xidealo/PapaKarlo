@@ -35,7 +35,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidViewBinding
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.FloatingWindow
@@ -63,10 +62,6 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         WindowCompat.setDecorFitsSystemWindows(window, false)
-        WindowInsetsControllerCompat(window, window.decorView).apply {
-            isAppearanceLightStatusBars = false
-            isAppearanceLightNavigationBars = false
-        }
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
 
@@ -106,7 +101,10 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
     }
 
     @Composable
-    private fun MainScreen(mainState: MainState, snackbarHostState: SnackbarHostState) {
+    private fun MainScreen(
+        mainState: MainState,
+        snackbarHostState: SnackbarHostState
+    ) {
         Scaffold(
             modifier = Modifier.navigationBarsPadding(),
             snackbarHost = {
@@ -121,7 +119,7 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
         ) { padding ->
             Column(
                 modifier = Modifier
-                    .background(FoodDeliveryTheme.colors.mainColors.background)
+                    .background(FoodDeliveryTheme.colors.mainColors.surfaceVariant)
                     .padding(padding)
                     .imePadding()
             ) {
@@ -131,7 +129,6 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .imePadding()
                 ) {
                     AndroidViewBinding(factory = ::fragmentContainerFactory)
                 }

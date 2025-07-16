@@ -24,12 +24,14 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.core.view.WindowInsetsControllerCompat
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryHorizontalDivider
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
@@ -63,7 +65,8 @@ fun FoodDeliveryTopAppBar(
 
     val window = (LocalView.current.context as? Activity)?.window
     LaunchedEffect(barColor) {
-        window?.setBarColor(barColor.toArgb())
+        val isLight = barColor.luminance() > 0.5f
+        window?.setBarColor(barColor.toArgb(), isLight)
     }
 
     Column(modifier = Modifier.background(barColor)) {
@@ -87,9 +90,14 @@ fun FoodDeliveryTopAppBar(
     }
 }
 
-private fun Window.setBarColor(color: Int) {
+
+fun Window.setBarColor(color: Int, isLightIcons: Boolean) {
     addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-    statusBarColor = color
+    navigationBarColor = color
+
+    val insetsController = WindowInsetsControllerCompat(this, decorView)
+    insetsController.isAppearanceLightStatusBars = isLightIcons
+    insetsController.isAppearanceLightNavigationBars = isLightIcons
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
