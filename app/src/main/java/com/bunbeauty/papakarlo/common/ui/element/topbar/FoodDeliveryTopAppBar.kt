@@ -1,7 +1,9 @@
 package com.bunbeauty.papakarlo.common.ui.element.topbar
 
 import android.app.Activity
+import android.os.Build
 import android.view.Window
+import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.annotation.DrawableRes
 import androidx.compose.animation.animateColorAsState
@@ -65,8 +67,7 @@ fun FoodDeliveryTopAppBar(
 
     val window = (LocalView.current.context as? Activity)?.window
     LaunchedEffect(barColor) {
-        val isLight = barColor.luminance() > 0.5f
-        window?.setBarColor(barColor.toArgb(), isLight)
+        window?.setBarColor(barColor.toArgb())
     }
 
     Column(modifier = Modifier.background(barColor)) {
@@ -91,13 +92,22 @@ fun FoodDeliveryTopAppBar(
 }
 
 
-fun Window.setBarColor(color: Int, isLightIcons: Boolean) {
-    addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-    navigationBarColor = color
+fun Window.setBarColor(color: Int) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM) { // Android 15+
+        decorView.setOnApplyWindowInsetsListener { view, insets ->
+            val statusBarInsets = insets.getInsets(WindowInsets.Type.statusBars())
+            view.setBackgroundColor(color)
 
-    val insetsController = WindowInsetsControllerCompat(this, decorView)
-    insetsController.isAppearanceLightStatusBars = isLightIcons
-    insetsController.isAppearanceLightNavigationBars = isLightIcons
+            // Adjust padding to avoid overlap
+            view.setPadding(0, statusBarInsets.top, 0, 0)
+            insets
+        }
+    } else {
+        // For Android 14 and below
+        navigationBarColor = color
+    }
+
+    addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
