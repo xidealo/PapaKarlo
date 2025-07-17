@@ -115,7 +115,6 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
         backgroundColor: Color
     ) {
         Scaffold(
-            modifier = Modifier.navigationBarsPadding(),
             snackbarHost = {
                 FoodDeliverySnackbarHost(
                     snackbarHostState = snackbarHostState,
