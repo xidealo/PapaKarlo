@@ -1,6 +1,7 @@
 package com.bunbeauty.papakarlo.feature.main
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -20,6 +21,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarHost
@@ -108,6 +110,7 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
         }
     }
 
+    @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     @Composable
     private fun MainScreen(
         mainState: MainState,
@@ -124,11 +127,12 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
             bottomBar = {
                 FoodDeliveryNavigationBar(options = mainState.navigationBarOptions)
             }
-        ) { padding ->
+        ) {
             Column(
                 modifier = Modifier
                     .background(backgroundColor)
-                    .padding(padding)
+                    .statusBarsPadding()
+                    .navigationBarsPadding()
                     .imePadding()
             ) {
                 ConnectionErrorMessage(visible = mainState.connectionLost)
