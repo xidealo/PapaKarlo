@@ -20,7 +20,6 @@ import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.shared.domain.model.order.OrderStatus
 
-
 const val FIRST_POSITION = 0
 const val LAST_POSITION = 4
 

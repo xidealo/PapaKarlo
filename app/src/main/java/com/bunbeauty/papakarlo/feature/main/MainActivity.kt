@@ -31,11 +31,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidViewBinding
 import androidx.core.app.NotificationManagerCompat
-import androidx.core.view.WindowCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.FloatingWindow
@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        WindowCompat.setDecorFitsSystemWindows(window, false)
+        enableEdgeToEdge()
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
 
@@ -76,9 +76,12 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
                     snackbarHostState = snackbarHostState
                 )
             }
+
             MainScreen(
                 mainState = mainState,
-                snackbarHostState = snackbarHostState
+                snackbarHostState = snackbarHostState,
+                backgroundColor = mainState.statusBarColor
+                    ?: FoodDeliveryTheme.colors.mainColors.surface
             )
         }
 
@@ -93,6 +96,10 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
         viewModel.showErrorMessage(text)
     }
 
+    fun setStatusBarColor(color: Color) {
+        viewModel.setStatusColor(color = color)
+    }
+
     private fun checkNotificationPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (!NotificationManagerCompat.from(this).areNotificationsEnabled()) {
@@ -104,7 +111,8 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
     @Composable
     private fun MainScreen(
         mainState: MainState,
-        snackbarHostState: SnackbarHostState
+        snackbarHostState: SnackbarHostState,
+        backgroundColor: Color
     ) {
         Scaffold(
             modifier = Modifier.navigationBarsPadding(),
@@ -120,7 +128,7 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
         ) { padding ->
             Column(
                 modifier = Modifier
-                    .background(FoodDeliveryTheme.colors.mainColors.surfaceVariant)
+                    .background(backgroundColor)
                     .padding(padding)
                     .imePadding()
             ) {

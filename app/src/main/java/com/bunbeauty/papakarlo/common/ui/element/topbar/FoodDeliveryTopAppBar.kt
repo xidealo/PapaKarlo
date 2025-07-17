@@ -1,10 +1,6 @@
 package com.bunbeauty.papakarlo.common.ui.element.topbar
 
-import android.app.Activity
-import android.os.Build
-import android.view.Window
-import android.view.WindowInsets
-import android.view.WindowManager
+import androidx.activity.compose.LocalActivity
 import androidx.annotation.DrawableRes
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
@@ -26,14 +22,10 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.luminance
-import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.core.view.WindowInsetsControllerCompat
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryHorizontalDivider
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
@@ -43,6 +35,7 @@ import com.bunbeauty.papakarlo.common.ui.icon24
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold
 import com.bunbeauty.papakarlo.common.ui.theme.medium
+import com.bunbeauty.papakarlo.feature.main.MainActivity
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
@@ -55,6 +48,8 @@ fun FoodDeliveryTopAppBar(
     @DrawableRes drawableId: Int? = null,
     content: @Composable () -> Unit = {}
 ) {
+    val localActivity = LocalActivity.current
+
     val barColor by animateColorAsState(
         targetValue = if (isScrolled) {
             FoodDeliveryTheme.colors.mainColors.surfaceVariant
@@ -65,9 +60,8 @@ fun FoodDeliveryTopAppBar(
         label = "barColor"
     )
 
-    val window = (LocalView.current.context as? Activity)?.window
     LaunchedEffect(barColor) {
-        window?.setBarColor(barColor.toArgb())
+        (localActivity as? MainActivity)?.setStatusBarColor(barColor)
     }
 
     Column(modifier = Modifier.background(barColor)) {
@@ -91,25 +85,6 @@ fun FoodDeliveryTopAppBar(
     }
 }
 
-
-fun Window.setBarColor(color: Int) {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM) { // Android 15+
-        decorView.setOnApplyWindowInsetsListener { view, insets ->
-            val statusBarInsets = insets.getInsets(WindowInsets.Type.statusBars())
-            view.setBackgroundColor(color)
-
-            // Adjust padding to avoid overlap
-            view.setPadding(0, statusBarInsets.top, 0, 0)
-            insets
-        }
-    } else {
-        // For Android 14 and below
-        navigationBarColor = color
-    }
-
-    addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-}
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun FoodDeliveryTopAppBar(
@@ -121,7 +96,7 @@ private fun FoodDeliveryTopAppBar(
         colors = FoodDeliveryTopAppBarDefaults.topAppBarColors(),
         title = {
             Text(
-                text = title ?: "",
+                text = title.orEmpty(),
                 maxLines = 1,
                 style = FoodDeliveryTheme.typography.titleMedium.bold,
                 overflow = TextOverflow.Ellipsis
