@@ -1,5 +1,6 @@
 package com.bunbeauty.papakarlo.feature.main
 
+import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
@@ -55,6 +56,12 @@ class MainViewModel(
     fun consumeEventList(eventList: List<MainState.Event>) {
         mutableMainState.update { state ->
             state - eventList
+        }
+    }
+
+    fun setStatusColor(color: Color) {
+        mutableMainState.update { state ->
+            state.copy(statusBarColor = color)
         }
     }
 

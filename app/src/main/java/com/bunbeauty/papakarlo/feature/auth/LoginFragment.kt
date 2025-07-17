@@ -86,7 +86,8 @@ class LoginFragment : BaseSingleStateComposeFragment<Login.ViewDataState, Login.
                 verticalArrangement = Arrangement.Center
             ) {
                 BoxWithConstraints {
-                    if (maxHeight > logoBoxHeightLimit) {
+                    val constraints = this
+                    if (constraints.maxHeight > logoBoxHeightLimit) {
                         Image(
                             modifier = Modifier.height(156.dp),
                             painter = painterResource(R.drawable.logo_medium),

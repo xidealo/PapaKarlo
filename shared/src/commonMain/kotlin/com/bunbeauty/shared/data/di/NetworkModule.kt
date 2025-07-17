@@ -76,10 +76,11 @@ fun networkModule() = module {
                     protocol = URLProtocol.HTTPS
                 }
             }
+
             install(HttpTimeout) {
-                requestTimeoutMillis = 15000
-                connectTimeoutMillis = 15000
-                socketTimeoutMillis = 15000
+                requestTimeoutMillis = 30000
+                connectTimeoutMillis = 30000
+                socketTimeoutMillis = 30000
             }
         }
     }

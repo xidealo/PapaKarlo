@@ -5,6 +5,7 @@ import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedVisibility
@@ -14,7 +15,10 @@ import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Snackbar
@@ -27,6 +31,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidViewBinding
@@ -57,6 +62,7 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
 
@@ -70,9 +76,12 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
                     snackbarHostState = snackbarHostState
                 )
             }
+
             MainScreen(
                 mainState = mainState,
-                snackbarHostState = snackbarHostState
+                snackbarHostState = snackbarHostState,
+                backgroundColor = mainState.statusBarColor
+                    ?: FoodDeliveryTheme.colors.mainColors.surface
             )
         }
 
@@ -87,6 +96,10 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
         viewModel.showErrorMessage(text)
     }
 
+    fun setStatusBarColor(color: Color) {
+        viewModel.setStatusColor(color = color)
+    }
+
     private fun checkNotificationPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (!NotificationManagerCompat.from(this).areNotificationsEnabled()) {
@@ -96,7 +109,11 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
     }
 
     @Composable
-    private fun MainScreen(mainState: MainState, snackbarHostState: SnackbarHostState) {
+    private fun MainScreen(
+        mainState: MainState,
+        snackbarHostState: SnackbarHostState,
+        backgroundColor: Color
+    ) {
         Scaffold(
             snackbarHost = {
                 FoodDeliverySnackbarHost(
@@ -108,11 +125,19 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
                 FoodDeliveryNavigationBar(options = mainState.navigationBarOptions)
             }
         ) { padding ->
-            Column(modifier = Modifier.padding(padding)) {
+            Column(
+                modifier = Modifier
+                    .background(backgroundColor)
+                    .padding(padding)
+                    .imePadding()
+            ) {
                 ConnectionErrorMessage(visible = mainState.connectionLost)
                 StatusBarMessage(statusBarMessage = mainState.statusBarMessage)
 
-                Box(modifier = Modifier.weight(1f)) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                ) {
                     AndroidViewBinding(factory = ::fragmentContainerFactory)
                 }
             }

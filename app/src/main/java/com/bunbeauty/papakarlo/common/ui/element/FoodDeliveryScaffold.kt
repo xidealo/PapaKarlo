@@ -4,7 +4,6 @@ import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.ScrollableState
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -43,7 +42,8 @@ fun FoodDeliveryScaffold(
     val scrollBehavior = remember { behavior }
 
     Scaffold(
-        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        modifier = Modifier
+            .nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             FoodDeliveryTopAppBar(
                 title = title,
@@ -56,8 +56,7 @@ fun FoodDeliveryScaffold(
         },
         containerColor = backgroundColor,
         floatingActionButton = actionButton,
-        floatingActionButtonPosition = floatingActionButtonPosition,
-        contentWindowInsets = WindowInsets(0, 0, 0, 0)
+        floatingActionButtonPosition = floatingActionButtonPosition
     ) { padding ->
         Box(
             modifier = Modifier
