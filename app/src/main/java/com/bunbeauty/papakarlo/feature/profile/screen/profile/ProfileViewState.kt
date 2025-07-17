@@ -12,8 +12,7 @@ data class ProfileViewState(
     val lastOrder: LightOrder? = null,
     val state: State,
     val paymentMethodList: ImmutableList<PaymentMethod>,
-    val linkList: List<Link>,
-    val isUnauthorized: Boolean
+    val linkList: List<Link>
 ) : BaseViewState {
     @Immutable
     sealed interface State {

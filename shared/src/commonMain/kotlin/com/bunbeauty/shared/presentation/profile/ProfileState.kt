@@ -14,7 +14,6 @@ interface ProfileState {
         val state: State,
         val paymentMethodList: ImmutableList<PaymentMethod>,
         val linkList: List<Link>,
-        val isUnauthorized: Boolean
     ) : BaseDataState {
         enum class State {
             AUTHORIZED,

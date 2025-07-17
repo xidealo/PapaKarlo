@@ -56,6 +56,7 @@ import com.bunbeauty.shared.domain.model.order.LightOrder
 import com.bunbeauty.shared.domain.model.order.OrderStatus
 import com.bunbeauty.shared.presentation.profile.ProfileState
 import com.bunbeauty.shared.presentation.profile.ProfileViewModel
+import kotlinx.collections.immutable.persistentListOf
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -84,8 +85,7 @@ class ProfileFragment :
                 ProfileState.DataState.State.LOADING -> ProfileViewState.State.Loading
             },
             paymentMethodList = paymentMethodList,
-            linkList = linkList,
-            isUnauthorized = isUnauthorized
+            linkList = linkList
         )
     }
 
@@ -112,7 +112,7 @@ class ProfileFragment :
             },
             backgroundColor = FoodDeliveryTheme.colors.mainColors.surface,
             actionButton = {
-                if (!state.isUnauthorized) {
+                if (state.state == ProfileViewState.State.Unauthorized) {
                     LoginButton(
                         onAction
                     )
@@ -469,9 +469,8 @@ class ProfileFragment :
                             time = Time(hours = 3796, minutes = 8009)
                         )
                     ),
-                    paymentMethodList = listOf(),
-                    linkList = listOf(),
-                    isUnauthorized = false
+                    paymentMethodList = persistentListOf(),
+                    linkList = listOf()
                 ),
                 onAction = {}
             )
@@ -486,9 +485,8 @@ class ProfileFragment :
                 state = ProfileViewState(
                     state = ProfileViewState.State.Authorized,
                     lastOrder = null,
-                    paymentMethodList = listOf(),
-                    linkList = listOf(),
-                    isUnauthorized = false
+                    paymentMethodList = persistentListOf(),
+                    linkList = listOf()
                 ),
                 onAction = {}
             )
@@ -503,9 +501,8 @@ class ProfileFragment :
                 state = ProfileViewState(
                     state = ProfileViewState.State.Unauthorized,
                     lastOrder = null,
-                    paymentMethodList = listOf(),
-                    linkList = listOf(),
-                    isUnauthorized = true
+                    paymentMethodList = persistentListOf(),
+                    linkList = listOf()
                 ),
                 onAction = {}
             )
@@ -520,9 +517,8 @@ class ProfileFragment :
                 state = ProfileViewState(
                     state = ProfileViewState.State.Loading,
                     lastOrder = null,
-                    paymentMethodList = listOf(),
-                    linkList = listOf(),
-                    isUnauthorized = false
+                    paymentMethodList = persistentListOf(),
+                    linkList = listOf()
                 ),
                 onAction = {}
             )
@@ -537,9 +533,8 @@ class ProfileFragment :
                 state = ProfileViewState(
                     state = ProfileViewState.State.Error,
                     lastOrder = null,
-                    paymentMethodList = listOf(),
-                    linkList = listOf(),
-                    isUnauthorized = false
+                    paymentMethodList = persistentListOf(),
+                    linkList = listOf()
                 ),
                 onAction = {}
             )
