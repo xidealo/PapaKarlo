@@ -50,7 +50,7 @@ class CreateOrderViewModel(
     private val isDeliveryEnabledFromCafeUseCase: IsDeliveryEnabledFromCafeUseCase,
     private val isPickupEnabledFromCafeUseCase: IsPickupEnabledFromCafeUseCase,
     private val hasOpenedCafeUseCase: HasOpenedCafeUseCase,
-    private val getWorkloadCafeUseCase: GetWorkloadCafeUseCase,
+    private val getWorkloadCafeUseCase: GetWorkloadCafeUseCase
 ) : SharedStateViewModel<CreateOrder.DataState, CreateOrder.Action, CreateOrder.Event>(
     initDataState = CreateOrder.DataState(
         isDelivery = true,
@@ -357,7 +357,7 @@ class CreateOrderViewModel(
 
     private fun createClick(
         withoutChange: String,
-        changeFrom: String,
+        changeFrom: String
     ) {
         val state = mutableDataState.value
 
@@ -389,8 +389,8 @@ class CreateOrderViewModel(
             (state.cartTotal as? CreateOrder.CartTotal.Success)?.newFinalCostValue ?: 0
         val isChangeLessThenCost = (state.change ?: 0) < newFinalCost
         val isChangeIncorrect = state.paymentByCash &&
-                !state.withoutChangeChecked &&
-                isChangeLessThenCost
+            !state.withoutChangeChecked &&
+            isChangeLessThenCost
         setState {
             copy(isChangeErrorShown = isChangeIncorrect)
         }
@@ -419,7 +419,7 @@ class CreateOrderViewModel(
                         is CreateOrder.DeferredTime.Later -> state.deferredTime.time
                     },
                     timeZone = getSelectedCityTimeZone(),
-                    paymentMethod = state.selectedPaymentMethod?.name?.name
+                    paymentMethod = state.selectedPaymentMethod.name.name
                 )
                 if (orderCode == null) {
                     addEvent {
@@ -562,7 +562,7 @@ class CreateOrderViewModel(
     private fun getExtendedComment(
         state: CreateOrder.DataState,
         withoutChange: String,
-        changeFrom: String,
+        changeFrom: String
     ): String {
         return buildString {
             state.comment.takeIf { comment ->

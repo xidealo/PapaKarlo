@@ -87,9 +87,8 @@ class OrderRepository(
         token: String,
         userUuid: String
     ): LightOrder? {
-        return networkConnector.getOrderList(
-            token = token,
-            count = 1
+        return networkConnector.getLastOrder(
+            token = token
         ).getNullableResult(
             onError = {
                 orderDao.getOrderListByUserUuid(
@@ -98,12 +97,10 @@ class OrderRepository(
                 ).firstOrNull()
                     ?.let(orderMapper::toLightOrder)
             },
-            onSuccess = { orderServerList ->
-                val lastOrderServer = orderServerList.results.firstOrNull()
-                val lightOrder = lastOrderServer?.let { orderServer ->
-                    saveOrderLocally(orderServer)
-                    orderMapper.toLightOrder(orderServer)
-                }
+            onSuccess = { lastOrderServer ->
+                saveOrderLocally(lastOrderServer)
+
+                val lightOrder = orderMapper.toLightOrder(lastOrderServer)
 
                 cacheLastLightOrder = CacheLastLightOrder(
                     lastOrder = lightOrder,
@@ -145,14 +142,10 @@ class OrderRepository(
         return networkConnector.postOrder(
             token = token,
             order = orderPostServer
-        ).getNullableResult { orderServer ->
-            saveOrderLocally(orderServer)
-            cacheLastLightOrder =
-                CacheLastLightOrder(
-                    lastOrder = orderMapper.toLightOrder(orderServer),
-                    isValid = true
-                )
-            orderMapper.toOrderCode(orderServer)
+        ).getNullableResult { orderCodeServer ->
+            OrderCode(
+                orderCodeServer.code
+            )
         }
     }
 

@@ -24,6 +24,8 @@ import com.bunbeauty.papakarlo.common.ui.theme.color.PapaKarloDarkColors
 import com.bunbeauty.papakarlo.common.ui.theme.color.PapaKarloLightColors
 import com.bunbeauty.papakarlo.common.ui.theme.color.TandirHouseDarkColors
 import com.bunbeauty.papakarlo.common.ui.theme.color.TandirHouseLightColors
+import com.bunbeauty.papakarlo.common.ui.theme.color.TavernaColors
+import com.bunbeauty.papakarlo.common.ui.theme.color.TavernaDarkColors
 import com.bunbeauty.papakarlo.common.ui.theme.color.UsadbaDarkColors
 import com.bunbeauty.papakarlo.common.ui.theme.color.UsadbaLightColors
 import com.bunbeauty.papakarlo.common.ui.theme.color.VkusKavkazaDarkColors
@@ -138,6 +140,18 @@ private fun getAppColors(
             } else {
                 EmojiLightColors
             }
+        }
+
+        FoodDeliveryCompany.LIMONAD -> if (isDarkTheme) {
+            EmojiDarkColors
+        } else {
+            EmojiLightColors
+        }
+
+        FoodDeliveryCompany.TAVERNA -> if (isDarkTheme) {
+            TavernaDarkColors
+        } else {
+            TavernaColors
         }
     }
 }
