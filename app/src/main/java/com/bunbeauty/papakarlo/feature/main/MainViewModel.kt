@@ -30,13 +30,6 @@ class MainViewModel(
         checkStatusBarMessage()
     }
 
-    fun onNavDestinationUpdated(destinationId: Int, navController: NavController) {
-        val navigationBarOptions = NavigationBarOptions.Hidden
-        mutableMainState.update { state ->
-            state.copy(navigationBarOptions = navigationBarOptions)
-        }
-    }
-
     fun showInfoMessage(text: String, paddingBottom: Int) {
         showMessage(
             text = text,

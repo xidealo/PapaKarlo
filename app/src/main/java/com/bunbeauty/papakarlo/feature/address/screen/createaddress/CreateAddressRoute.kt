@@ -1,5 +1,6 @@
 package com.bunbeauty.papakarlo.feature.address.screen.createaddress
 
+import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -21,9 +23,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.fragment.findNavController
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.common.BaseComposeFragment
 import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.papakarlo.common.ui.element.button.LoadingButton
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
@@ -35,74 +36,99 @@ import com.bunbeauty.papakarlo.feature.main.IMessageHost
 import com.bunbeauty.shared.presentation.create_address.CreateAddress
 import com.bunbeauty.shared.presentation.create_address.CreateAddressViewModel
 import kotlinx.collections.immutable.persistentListOf
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.compose.koinViewModel
 
-class CreateAddressFragment :
-    BaseComposeFragment<CreateAddress.DataState, CreateAddressViewState, CreateAddress.Action, CreateAddress.Event>() {
+@Composable
+fun CreateAddress.DataState.mapState(): CreateAddressViewState {
+    return mapCreateAddressState()
+}
 
-    override val viewModel: CreateAddressViewModel by viewModel()
+@Composable
+fun CreateAddressRoute(
+    viewModel: CreateAddressViewModel = koinViewModel(),
+    back: () -> Unit,
+) {
 
-    @Composable
-    override fun CreateAddress.DataState.mapState(): CreateAddressViewState {
-        return mapCreateAddressState()
+    val viewState by viewModel.dataState.collectAsStateWithLifecycle()
+
+    val onAction = remember {
+        { action: CreateAddress.Action ->
+            viewModel.onAction(action)
+        }
     }
 
-    @Composable
-    override fun Screen(viewState: CreateAddressViewState, onAction: (CreateAddress.Action) -> Unit) {
-        FoodDeliveryScaffold(
-            title = stringResource(R.string.title_create_address),
-            backActionClick = {
-                onAction(CreateAddress.Action.BackClick)
-            },
-            actionButton = {
-                LoadingButton(
-                    modifier = Modifier.padding(horizontal = 16.dp),
-                    textStringId = R.string.action_create_address_save,
-                    isLoading = viewState.isCreateLoading,
-                    onClick = {
-                        onAction(CreateAddress.Action.SaveClick)
-                    }
-                )
+    val effects by viewModel.events.collectAsStateWithLifecycle()
+    val consumeEffects = remember {
+        {
+            viewModel.consumeEvents(effects)
+        }
+    }
+
+    CreateAddressEffect(
+        effects = effects,
+        back = back,
+        consumeEffects = consumeEffects
+    )
+
+    CreateAddressScreen(viewState = viewState.mapState(), onAction = onAction)
+}
+
+@Composable
+fun CreateAddressEffect(
+    effects: List<CreateAddress.Event>,
+    back: () -> Unit,
+    consumeEffects: () -> Unit,
+) {
+    val activity = LocalActivity.current
+    LaunchedEffect(effects) {
+        effects.forEach { effect ->
+            when (effect) {
+                CreateAddress.Event.SuggestionLoadingFailed -> {
+                    (activity as? IMessageHost)?.showErrorMessage(
+                        activity.resources.getString(R.string.error_create_address_loading)
+                    )
+                }
+
+                CreateAddress.Event.AddressCreatedSuccess -> {
+                    (activity as? IMessageHost)?.showInfoMessage(
+                        activity.resources.getString(R.string.msg_create_address_created)
+                    )
+                    back()
+                }
+
+                CreateAddress.Event.AddressCreatedFailed -> {
+                    (activity as? IMessageHost)?.showErrorMessage(
+                        activity.resources.getString(R.string.error_create_address_fail)
+                    )
+                }
+
+                CreateAddress.Event.Back -> back()
             }
-        ) {
-            CreateAddressSuccessScreen(
-                viewState = viewState,
-                onAction = onAction
+        }
+        consumeEffects()
+    }
+}
+
+@Composable
+private fun CreateAddressScreen(
+    viewState: CreateAddressViewState,
+    onAction: (CreateAddress.Action) -> Unit,
+) {
+    FoodDeliveryScaffold(
+        title = stringResource(R.string.title_create_address),
+        backActionClick = {
+            onAction(CreateAddress.Action.BackClick)
+        },
+        actionButton = {
+            LoadingButton(
+                modifier = Modifier.padding(horizontal = 16.dp),
+                textStringId = R.string.action_create_address_save,
+                isLoading = viewState.isCreateLoading,
+                onClick = {
+                    onAction(CreateAddress.Action.SaveClick)
+                }
             )
         }
-    }
-
-    override fun handleEvent(event: CreateAddress.Event) {
-        when (event) {
-            CreateAddress.Event.SuggestionLoadingFailed -> {
-                (activity as? IMessageHost)?.showErrorMessage(
-                    resources.getString(R.string.error_create_address_loading)
-                )
-            }
-
-            CreateAddress.Event.AddressCreatedSuccess -> {
-                (activity as? IMessageHost)?.showInfoMessage(
-                    resources.getString(R.string.msg_create_address_created)
-                )
-                findNavController().popBackStack()
-            }
-
-            CreateAddress.Event.AddressCreatedFailed -> {
-                (activity as? IMessageHost)?.showErrorMessage(
-                    resources.getString(R.string.error_create_address_fail)
-                )
-            }
-
-            CreateAddress.Event.Back -> {
-                findNavController().popBackStack()
-            }
-        }
-    }
-
-    @Composable
-    private fun CreateAddressSuccessScreen(
-        viewState: CreateAddressViewState,
-        onAction: (CreateAddress.Action) -> Unit
     ) {
         Column(
             modifier = Modifier
@@ -208,27 +234,27 @@ class CreateAddressFragment :
             Spacer(modifier = Modifier.height(FoodDeliveryTheme.dimensions.scrollScreenBottomSpace))
         }
     }
+}
 
-    @Preview(showSystemUi = true)
-    @Composable
-    private fun CreateAddressScreenPreview() {
-        FoodDeliveryTheme {
-            Screen(
-                viewState = CreateAddressViewState(
-                    street = "Street",
-                    streetErrorStringId = null,
-                    streetSuggestionList = persistentListOf(),
-                    isSuggestionLoading = true,
-                    house = "1",
-                    houseErrorStringId = null,
-                    flat = "",
-                    entrance = "",
-                    floor = "",
-                    comment = "",
-                    isCreateLoading = false
-                ),
-                onAction = {}
-            )
-        }
+@Preview(showSystemUi = true)
+@Composable
+private fun CreateAddressScreenPreview() {
+    FoodDeliveryTheme {
+        CreateAddressScreen (
+            viewState = CreateAddressViewState(
+                street = "Street",
+                streetErrorStringId = null,
+                streetSuggestionList = persistentListOf(),
+                isSuggestionLoading = true,
+                house = "1",
+                houseErrorStringId = null,
+                flat = "",
+                entrance = "",
+                floor = "",
+                comment = "",
+                isCreateLoading = false
+            ),
+            onAction = {}
+        )
     }
 }

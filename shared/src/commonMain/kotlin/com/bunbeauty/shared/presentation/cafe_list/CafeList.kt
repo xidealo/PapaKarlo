@@ -17,12 +17,10 @@ interface CafeList {
         data object BackClicked : Action
         data class OnCafeClicked(val cafeUuid: String) : Action
         data object OnRefreshClicked : Action
-        data object OnCartClicked : Action
     }
 
     sealed interface Event : BaseEvent {
         data class OpenCafeOptionsBottomSheet(val uuid: String) : Event
-        data object OpenConsumerCartProduct : Event
         data object Back : Event
     }
 }

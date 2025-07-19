@@ -15,7 +15,7 @@ data class OrderListState(
     }
 
     sealed interface Event
-    class OpenOrderDetailsEvent(val orderUuid: String, val orderCode: String) : Event
+    class OpenOrderDetailsEvent(val orderUuid: String) : Event
 
     operator fun plus(event: Event) = copy(eventList = eventList + event)
     operator fun minus(events: List<Event>) = copy(eventList = eventList - events.toSet())

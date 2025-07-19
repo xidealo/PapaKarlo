@@ -6,8 +6,7 @@ import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import com.bunbeauty.papakarlo.common.viewmodel.BaseViewModel
-import com.bunbeauty.papakarlo.extensions.startedLaunch
-import kotlinx.coroutines.flow.Flow
+
 
 @Deprecated("Use BaseFragmentWithSharedViewModel")
 abstract class BaseFragment(@LayoutRes layoutId: Int) : Fragment(layoutId) {
@@ -39,9 +38,5 @@ abstract class BaseFragment(@LayoutRes layoutId: Int) : Fragment(layoutId) {
 
     protected fun overrideBackPressedCallback() {
         isBackPressedOverridden = true
-    }
-
-    protected inline fun <T> Flow<T>.startedLaunch(crossinline block: suspend (T) -> Unit) {
-        startedLaunch(viewLifecycleOwner, block)
     }
 }

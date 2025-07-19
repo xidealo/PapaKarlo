@@ -61,10 +61,6 @@ class ProductDetailsViewModel(
                 ProductDetailsState.Event.NavigateBack
             }
 
-            ProductDetailsState.Action.CartClick -> addEvent {
-                ProductDetailsState.Event.NavigateToConsumerCart
-            }
-
             is ProductDetailsState.Action.AdditionClick -> selectAddition(
                 uuid = action.uuid,
                 groupUuid = action.groupUuid

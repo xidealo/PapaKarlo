@@ -4,8 +4,6 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.ViewGroup
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -36,19 +34,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.viewinterop.AndroidViewBinding
 import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.FloatingWindow
-import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.rememberNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.common.ui.element.bottombar.FoodDeliveryNavigationBar
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.databinding.FragmentContainerBinding
 import com.bunbeauty.papakarlo.databinding.LayoutComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
+import com.bunbeauty.papakarlo.navigation.foodDeliveryNavGraphBuilder
+import com.bunbeauty.papakarlo.navigation.splash.SplashScreenDestination
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -115,7 +112,7 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
     private fun MainScreen(
         mainState: MainState,
         snackbarHostState: SnackbarHostState,
-        backgroundColor: Color
+        backgroundColor: Color,
     ) {
         Scaffold(
             snackbarHost = {
@@ -124,9 +121,6 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
                     paddingBottom = mainState.paddingBottomSnackbar
                 )
             },
-            bottomBar = {
-                FoodDeliveryNavigationBar(options = mainState.navigationBarOptions)
-            }
         ) {
             Column(
                 modifier = Modifier
@@ -137,12 +131,20 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
             ) {
                 ConnectionErrorMessage(visible = mainState.connectionLost)
                 StatusBarMessage(statusBarMessage = mainState.statusBarMessage)
+                val navController = rememberNavController()
 
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
                 ) {
-                    AndroidViewBinding(factory = ::fragmentContainerFactory)
+                    NavHost(
+                        navController = navController,
+                        startDestination = SplashScreenDestination
+                    ) {
+                        foodDeliveryNavGraphBuilder(
+                            navController = navController
+                        )
+                    }
                 }
             }
         }
@@ -199,7 +201,7 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
     @Composable
     private fun FoodDeliverySnackbarHost(
         snackbarHostState: SnackbarHostState,
-        paddingBottom: Int
+        paddingBottom: Int,
     ) {
         SnackbarHost(
             hostState = snackbarHostState,
@@ -225,7 +227,7 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
 
     private fun handleEventList(
         eventList: List<MainState.Event>,
-        snackbarHostState: SnackbarHostState
+        snackbarHostState: SnackbarHostState,
     ) {
         eventList.forEach { event ->
             when (event) {
@@ -246,25 +248,5 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
         }
 
         viewModel.consumeEventList(eventList)
-    }
-
-    private fun fragmentContainerFactory(
-        inflater: LayoutInflater,
-        parent: ViewGroup,
-        attachToParent: Boolean
-    ): FragmentContainerBinding =
-        FragmentContainerBinding.inflate(inflater, parent, attachToParent).also {
-            setupNavigationListener()
-        }
-
-    private fun setupNavigationListener() {
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.containerFcv) as NavHostFragment
-        val navController = navHostFragment.navController
-        navController.addOnDestinationChangedListener { controller, destination, _ ->
-            if (destination !is FloatingWindow) {
-                viewModel.onNavDestinationUpdated(destination.id, controller)
-            }
-        }
     }
 }

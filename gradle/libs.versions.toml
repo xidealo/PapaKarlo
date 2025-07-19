@@ -19,10 +19,11 @@ mokkery = "2.7.2"
 material = "1.12.0"
 composeBom = "2025.03.01"
 activityCompose = "1.10.1"
+navigationCompose = "2.9.2"
 dataStorePreferences = "1.1.4"
 activity = "1.10.1"
 fragment = "1.8.6"
-lifecycle = "2.8.7"
+lifecycle = "2.9.2"
 viewBindingDelegate = "1.5.3"
 kotlinxDateTime = "0.4.0"
 leakcanary = "2.12"
@@ -52,6 +53,7 @@ viewbindingpropertydelegate = { module = "com.github.kirich1409:viewbindingprope
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 koin-test = { module = "io.insert-koin:koin-test", version.ref = "koin" }
+koin-compose = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koin" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinCoroutines" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinCoroutines" }
@@ -76,6 +78,7 @@ material3 = { module = "androidx.compose.material3:material3" }
 ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
 ui-viewbinding = { module = "androidx.compose.ui:ui-viewbinding" }
+androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
 
 sqlDelight-runtime = { module = "com.squareup.sqldelight:runtime", version.ref = "sqlDelight" }
 sqlDelight-coroutines-extensions = { module = "com.squareup.sqldelight:coroutines-extensions", version.ref = "sqlDelight" }
@@ -136,6 +139,7 @@ navigation = [
     "navigation-runtime-ktx",
     "navigation-ui",
     "navigation-ui-ktx",
+    "androidx-navigation-compose",
 ]
 lifecycle = [
     "lifecycle-viewmodel-compose",
@@ -147,6 +151,7 @@ lifecycle = [
 di = [
     "koin-core",
     "koin-android",
+    "koin-compose"
 ]
 
 coil = [

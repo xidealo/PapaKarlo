@@ -12,9 +12,9 @@ interface Splash {
         data object Init : Action
     }
 
-    sealed interface Event : BaseEvent {
-        data object NavigateToUpdateEvent : Event
-        data object NavigateToMenuEvent : Event
-        data object NavigateToSelectCityEvent : Event
+    sealed interface Effect : BaseEvent {
+        data object NavigateToUpdateEffect : Effect
+        data object NavigateToMenuEffect : Effect
+        data object NavigateToSelectCityEffect : Effect
     }
 }

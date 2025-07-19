@@ -16,9 +16,4 @@
             app:destination="@id/createAddressFragment" />
     </fragment>
 
-    <fragment
-        android:id="@+id/createAddressFragment"
-        android:name="com.bunbeauty.papakarlo.feature.address.screen.createaddress.CreateAddressFragment"
-        android:label="@string/title_create_address" />
-
 </navigation>

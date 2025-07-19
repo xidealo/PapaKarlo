@@ -31,12 +31,6 @@ class CafeListViewModel(
                 CafeList.Event.OpenCafeOptionsBottomSheet(uuid = action.cafeUuid)
             }
 
-            CafeList.Action.OnCartClicked -> {
-                addEvent {
-                    CafeList.Event.OpenConsumerCartProduct
-                }
-            }
-
             CafeList.Action.OnRefreshClicked -> observeCafeList()
 
             CafeList.Action.BackClicked -> backClick()

@@ -2,22 +2,9 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_main"
-    app:startDestination="@id/splashFragment">
+    app:startDestination="@id/createOrderFragment">
 
     <!-- MAIN -->
-
-    <action
-        android:id="@+id/global_to_cafeListFragment"
-        app:destination="@id/cafeListFragment"
-        app:popUpTo="@id/nav_main"
-        app:popUpToInclusive="false" />
-
-    <action
-        android:id="@+id/global_to_menuFragment"
-        app:destination="@id/menuFragment"
-        app:popUpTo="@id/nav_main"
-        app:popUpToInclusive="false" />
-
     <action
         android:id="@+id/global_to_profileFragment"
         app:destination="@id/profileFragment"
@@ -28,48 +15,9 @@
         android:id="@+id/global_consumerCartFragment"
         app:destination="@id/consumerCartFragment" />
 
-    <fragment
-        android:id="@+id/splashFragment"
-        android:name="com.bunbeauty.papakarlo.feature.splash.SplashFragment"
-        android:label="SplashFragment" >
-        <action
-            android:id="@+id/to_updateFragment"
-            app:destination="@id/updateFragment" />
-        <action
-            android:id="@+id/to_selectCityFragment"
-            app:destination="@id/selectCityFragment" />
-        <action
-            android:id="@+id/to_menuFragment"
-            app:destination="@id/menuFragment" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/updateFragment"
-        android:name="com.bunbeauty.papakarlo.feature.update.UpdateFragment"
-        android:label="@string/title_update_new_app_version" />
-
-    <fragment
-        android:id="@+id/selectCityFragment"
-        android:name="com.bunbeauty.papakarlo.feature.city.screen.selectcity.SelectCityFragment"
-        android:label="@string/title_select_city" >
-        <action
-            android:id="@+id/to_menuFragment"
-            app:destination="@id/menuFragment"
-            app:popUpTo="@id/selectCityFragment"
-            app:popUpToInclusive="true" />
-    </fragment>
-
     <!-- CAFE LIST -->
 
-    <fragment
-        android:id="@+id/cafeListFragment"
-        android:name="com.bunbeauty.papakarlo.feature.cafe.screen.cafelist.CafeListFragment"
-        android:label="@string/title_cafe_list">
-        <action
-            android:id="@+id/to_cafeOptionsBottomSheet"
-            app:destination="@id/cafeOptionsBottomSheet" />
-    </fragment>
-
+    <!--Не нужно создавать навигацию (часть экрана)-->
     <dialog
         android:id="@+id/cafeOptionsBottomSheet"
         android:name="com.bunbeauty.papakarlo.feature.cafe.screen.cafeoptions.CafeOptionsBottomSheet"
@@ -78,42 +26,6 @@
             android:name="cafeUuid"
             app:argType="string" />
     </dialog>
-
-    <!-- MENU -->
-
-    <fragment
-        android:id="@+id/menuFragment"
-        android:name="com.bunbeauty.papakarlo.feature.menu.MenuFragment"
-        android:label="@string/title_menu">
-        <action
-            android:id="@+id/to_productFragment"
-            app:destination="@id/productFragment" />
-        <action
-            android:id="@+id/action_menuFragment_to_profileFragment"
-            app:destination="@id/profileFragment" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/productFragment"
-        android:name="com.bunbeauty.papakarlo.feature.productdetails.ProductDetailsFragment"
-        android:label="{menuProductName}">
-        <argument
-            android:name="menuProductUuid"
-            app:argType="string" />
-        <argument
-            android:name="menuProductName"
-            app:argType="string" />
-        <argument
-            android:name="productDetailsOpenedFrom"
-            app:argType="com.bunbeauty.shared.presentation.product_details.ProductDetailsOpenedFrom" />
-        <argument
-            android:name="additionUuidList"
-            app:argType="string[]" />
-        <argument
-            android:name="cartProductUuid"
-            app:argType="string"
-            app:nullable="true" />
-    </fragment>
 
     <!-- PROFILE -->
 
@@ -158,47 +70,15 @@
             app:destination="@id/cafeListFragment" />
     </fragment>
 
-    <fragment
-        android:id="@+id/orderDetailsFragment"
-        android:name="com.bunbeauty.papakarlo.feature.order.screen.orderdetails.OrderDetailsFragment"
-        android:label="{orderCode}">
-        <argument
-            android:name="orderUuid"
-            app:argType="string" />
-        <argument
-            android:name="orderCode"
-            app:argType="string" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/settingsFragment"
-        android:name="com.bunbeauty.papakarlo.feature.profile.screen.settings.SettingsFragment"
-        android:label="@string/title_settings">
-        <action
-            android:id="@+id/to_logoutBottomSheet"
-            app:destination="@id/logoutBottomSheet" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/createAddressFragment"
-        android:name="com.bunbeauty.papakarlo.feature.address.screen.createaddress.CreateAddressFragment"
-        android:label="@string/title_create_address" />
-
     <include app:graph="@navigation/nav_address" />
 
-    <fragment
-        android:id="@+id/orderListFragment"
-        android:name="com.bunbeauty.papakarlo.feature.order.screen.orderlist.OrderListFragment"
-        android:label="@string/title_my_orders" >
-        <action
-            android:id="@+id/to_orderDetailsFragment"
-            app:destination="@id/orderDetailsFragment" />
-    </fragment>
+    <!--Не нужно создавать навигацию (часть экрана)-->
 
     <dialog
         android:id="@+id/feedbackBottomSheet"
         android:name="com.bunbeauty.papakarlo.feature.profile.screen.feedback.FeedbackBottomSheet"
         android:label="FeedbackBottomSheet" />
+    <!--Не нужно создавать навигацию (часть экрана)-->
 
     <dialog
         android:id="@+id/aboutAppBottomSheet"
@@ -206,6 +86,7 @@
         android:label="AboutAppBottomSheet" />
 
     <include app:graph="@navigation/nav_login" />
+    <!--Не нужно создавать навигацию (часть экрана)-->
 
     <dialog
         android:id="@+id/logoutBottomSheet"
@@ -237,11 +118,6 @@
         <action
             android:id="@+id/to_productFragment"
             app:destination="@id/productFragment" />
-        <action
-            android:id="@+id/to_menuFragment"
-            app:destination="@id/menuFragment"
-            app:popUpTo="@id/splashFragment"
-            app:popUpToInclusive="false" />
     </fragment>
 
     <fragment
