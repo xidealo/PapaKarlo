@@ -25,7 +25,10 @@ internal val emptyNavOptions = navOptions { }
 fun NavGraphBuilder.foodDeliveryNavGraphBuilder(
     navController: NavController,
 ) {
-    cafeListScreenRoute(back = {})
+    cafeListScreenRoute(
+        back = navController::navigateUp
+    )
+
     splashScreenRoute()
     updateScreenRoute()
     menuScreenRoute(
@@ -34,23 +37,33 @@ fun NavGraphBuilder.foodDeliveryNavGraphBuilder(
         goToConsumerCart = {},
     )
     productDetailsScreenRoute(
-        back = {}
+        back = navController::navigateUp
     )
-    orderDetailsScreenRoute(back = {})
-    settingsScreenRoute(back = {})
-    createAddressScreenRoute(back = {})
+    orderDetailsScreenRoute(back = navController::navigateUp)
+    settingsScreenRoute(back = navController::navigateUp)
+    createAddressScreenRoute(back = navController::navigateUp)
     orderListScreenRoute(
-        back = {},
+        back = navController::navigateUp,
         goToOrderDetails = {},
     )
 
-    confirmScreenRoute()
+    consumerCartScreenRoute(
+        back = navController::navigateUp,
+        goToMenuFragment = {},
+        goToCreateOrderFragment = {},
+        goToLoginFragment = {},
+        goToProductFragment = {
+                uuid, name, productDetailsOpenedFrom, additionUuidList,
+                cartProductUuid,
+            ->
 
-    consumerCartScreenRoute()
-    createOrderScreenRoute()
-    loginScreenRoute()
-    profileScreenRoute()
+        },
+    )
     selectCityScreenRoute()
-    userAddressListScreenRoute()
 
+    confirmScreenRoute()
+    loginScreenRoute()
+    createOrderScreenRoute()
+    userAddressListScreenRoute()
+    profileScreenRoute()
 }
