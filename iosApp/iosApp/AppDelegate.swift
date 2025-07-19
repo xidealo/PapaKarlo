@@ -42,7 +42,6 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         return restrictRotation
     }
 
-
     func application(_: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler _: @escaping (UIBackgroundFetchResult) -> Void) {
         // Print message ID.
         if let messageID = userInfo[gcmMessageIDKey] {
@@ -58,8 +57,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     // Receive displayed notifications for iOS 10 devices.
     func userNotificationCenter(_: UNUserNotificationCenter,
                                 willPresent notification: UNNotification) async
-        -> UNNotificationPresentationOptions
-    {
+        -> UNNotificationPresentationOptions {
         let userInfo = notification.request.content.userInfo
 
         // With swizzling disabled you must let Messaging know about the message, for Analytics
@@ -75,8 +73,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     }
 
     func userNotificationCenter(_: UNUserNotificationCenter,
-                                didReceive response: UNNotificationResponse) async
-    {
+                                didReceive response: UNNotificationResponse) async {
         let userInfo = response.notification.request.content.userInfo
 
         // ...
@@ -87,25 +84,24 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         // Print full message.
         print(userInfo)
     }
-    
+
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         print("Registered for Apple Remote Notifications")
         Messaging.messaging().setAPNSToken(deviceToken, type: .unknown)
     }
-    
+
 }
 
 extension AppDelegate: MessagingDelegate {
     func messaging(_: Messaging, didReceiveRegistrationToken _: String?) {
-        iosComponent.provideUpdateNotificationUseCase().invoke{ error in
-            if error != nil{
+        iosComponent.provideUpdateNotificationUseCase().invoke { error in
+            if error != nil {
                 print("Token was not updated")
-            }else{
+            } else {
                 print("Token was updated")
             }
         }
-        
-    
+
         iosComponent.provideSubscribeToNotificationUseCase().invoke(
             companyUuid: iosComponent.provideCompanyUuidProvider().companyUuid
         )

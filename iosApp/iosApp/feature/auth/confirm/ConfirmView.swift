@@ -40,8 +40,8 @@ struct ConfirmView: View {
 
     @State var showLoginError: Bool = false
 
-    @State var stateListener: Closeable? = nil
-    @State var eventsListener: Closeable? = nil
+    @State var stateListener: Closeable?
+    @State var eventsListener: Closeable?
 
     init(phone: String, rootIsActive: Binding<Bool>, isGoToCreateOrder: Binding<Bool>) {
         _rootIsActive = rootIsActive

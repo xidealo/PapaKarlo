@@ -11,7 +11,7 @@ import shared
 class ToolbarViewModel: ObservableObject {
     @Published var toolbarViewState: ToolbarViewState = .init(count: "", cost: "")
 
-    var closable: Closeable? = nil
+    var closable: Closeable?
 
     func subscribeOnFlow() {
         closable = iosComponent.provideObserveCartUseCase().invoke().watch { cartCostAndCount in

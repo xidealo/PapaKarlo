@@ -10,29 +10,41 @@ import SwiftUI
 
 struct OrderStatusBar: View {
     var orderStatus: OrderStatus
-    var orderStatusName: String
     var currentStep = 0
 
-    init(orderStatus: OrderStatus, orderStatusName: String) {
+    init(orderStatus: OrderStatus) {
         self.orderStatus = orderStatus
-        self.orderStatusName = orderStatusName
         currentStep = getCurrentStep(orderStatus: orderStatus)
     }
 
     var body: some View {
-        HStack(spacing: 0) {
-            ForEach(0 ... 4, id: \.self) { i in
-                Step(
-                    index: i,
-                    currentStep: getCurrentStep(orderStatus: orderStatus),
-                    orderStatus: orderStatus
-                )
-                .padding(.horizontal, Diems.HALF_SMALL_PADDING)
+        VStack(spacing: 0) {
+            HStack(spacing: 0) {
+                IconImage(
+                    width: 24,
+                    height: 24,
+                    imageName: getOrderIcon(orderStatus: orderStatus)
+                ).foregroundColor(AppColor.onSurfaceVariant)
+
+                Text(OrderChip.getStatusName(status: orderStatus))
+                    .bodyMedium()
+                    .padding(.leading, 8)
+
+                Spacer()
+            }
+
+            HStack(spacing: Diems.HALF_SMALL_PADDING) {
+                ForEach(0 ... 4, id: \.self) { i in
+                    Step(
+                        index: i,
+                        currentStep: getCurrentStep(orderStatus: orderStatus),
+                        orderStatus: orderStatus
+                    )
+                }
             }.padding(.vertical, Diems.SMALL_PADDING)
         }
         .frame(maxWidth: .infinity)
         .background(AppColor.surface)
-        .cornerRadius(Diems.MEDIUM_RADIUS)
     }
 
     func getCurrentStep(orderStatus: OrderStatus) -> Int {
@@ -47,6 +59,18 @@ struct OrderStatusBar: View {
         default: return 0
         }
     }
+    func getOrderIcon(orderStatus: OrderStatus) -> String {
+        switch orderStatus {
+        case OrderStatus.notAccepted: return "NotAcceptedIcon"
+        case OrderStatus.accepted: return "AcceptedIcon"
+        case OrderStatus.preparing: return "PrepairingIcon"
+        case OrderStatus.sentOut: return "DeliveringIcon"
+        case OrderStatus.done: return "DoneIcon"
+        case OrderStatus.delivered: return "DeliveredIcon"
+        case OrderStatus.canceled: return "CanceledIcon"
+        default: return "NotAcceptedIcon"
+        }
+    }
 }
 
 struct Step: View {
@@ -55,10 +79,8 @@ struct Step: View {
     let orderStatus: OrderStatus
 
     var body: some View {
-        if index < currentStep {
+        if index <= currentStep {
             DoneStep(orderStatus: orderStatus)
-        } else if index == currentStep {
-            OrderChip(orderStatus: orderStatus)
         } else {
             FutureStep()
         }
@@ -69,28 +91,28 @@ struct DoneStep: View {
     let orderStatus: OrderStatus
 
     var body: some View {
-        IconImage(width: 12, height: 10, imageName: "CheckIcon")
-            .padding(Diems.SMALL_PADDING)
-            .padding(.horizontal, 16)
+        ZStack {
+            IconImage(width: 12, height: 16, imageName: "CheckIcon")
+                .foregroundColor(AppColor.onOrder)
+        }.frame(maxWidth: .infinity)
             .background(OrderChip.getColor(status: orderStatus))
-            .foregroundColor(AppColor.surface)
             .cornerRadius(16)
     }
 }
 
 struct FutureStep: View {
     var body: some View {
-        IconImage(width: 12, height: 10, imageName: "CheckIcon")
-            .padding(Diems.SMALL_PADDING)
-            .padding(.horizontal, 8)
+        Spacer()
+            .frame(maxHeight: 16)
             .background(AppColor.onSurfaceVariant)
             .foregroundColor(AppColor.onSurfaceVariant)
             .cornerRadius(16)
+
     }
 }
 
 struct OrderStatusBar_Previews: PreviewProvider {
     static var previews: some View {
-        OrderStatusBar(orderStatus: OrderStatus.accepted, orderStatusName: "Принят")
+        OrderStatusBar(orderStatus: OrderStatus.accepted)
     }
 }

@@ -28,7 +28,7 @@ struct UserAddressListView: View {
 
     @State var isClickable: Bool
 
-    @State var listener: Closeable? = nil
+    @State var listener: Closeable?
 
     var closedCallback: () -> Void
 
@@ -87,7 +87,7 @@ struct SuccessAddressListView: View {
     @State var show: Bool
     let viewModel: UserAddressListViewModel
     @State var userAddressListState: UserAddressListState
-    @State var listener: Closeable? = nil
+    @State var listener: Closeable?
 
     var closedCallback: () -> Void
 

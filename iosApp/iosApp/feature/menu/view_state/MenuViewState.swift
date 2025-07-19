@@ -13,19 +13,25 @@ class MenuViewState: NSObject, NSCopying {
     var isLoading: Bool
     var scrollToHorizontalPostion: String
     var discount: String?
+    var cartCount: String
+    var cartCost: String
 
     init(
         menuItems: [MenuItem],
         categoryItemModels: [CategoryItemModel],
         isLoading: Bool,
         scrollToHorizontalPostion: String,
-        discount: String?
+        discount: String?,
+        cartCount: String,
+        cartCost: String,
     ) {
         self.menuItems = menuItems
         self.categoryItemModels = categoryItemModels
         self.isLoading = isLoading
         self.scrollToHorizontalPostion = scrollToHorizontalPostion
         self.discount = discount
+        self.cartCount = cartCount
+        self.cartCost = cartCost
     }
 
     func copy(with _: NSZone? = nil) -> Any {
@@ -34,7 +40,9 @@ class MenuViewState: NSObject, NSCopying {
             categoryItemModels: categoryItemModels,
             isLoading: isLoading,
             scrollToHorizontalPostion: scrollToHorizontalPostion,
-            discount: discount
+            discount: discount,
+            cartCount: cartCount,
+            cartCost: cartCost
         )
         return copy
     }

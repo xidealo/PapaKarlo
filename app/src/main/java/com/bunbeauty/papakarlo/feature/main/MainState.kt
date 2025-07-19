@@ -1,6 +1,7 @@
 package com.bunbeauty.papakarlo.feature.main
 
 import androidx.compose.runtime.Immutable
+import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavController
 import com.bunbeauty.papakarlo.common.ui.element.bottombar.NavigationBarItem
 
@@ -11,6 +12,8 @@ data class MainState(
         isVisible = false
     ),
     val navigationBarOptions: NavigationBarOptions = NavigationBarOptions.Hidden,
+    val paddingBottomSnackbar: Int = 0,
+    val statusBarColor: Color? = null,
     val eventList: List<Event> = emptyList()
 ) {
 

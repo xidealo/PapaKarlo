@@ -1,11 +1,8 @@
 package com.bunbeauty.papakarlo.feature.order.ui
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -15,18 +12,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
-import com.bunbeauty.papakarlo.common.ui.icon16
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.shared.domain.model.order.OrderStatus
-
-private val stepShape = RoundedCornerShape(12.dp)
 
 const val FIRST_POSITION = 0
 const val LAST_POSITION = 4
@@ -71,7 +63,8 @@ fun OrderStatusBar(
                         start = 8.dp
                     ),
                     text = orderStatusName,
-                    style = FoodDeliveryTheme.typography.bodyMedium
+                    style = FoodDeliveryTheme.typography.bodyMedium,
+                    color = FoodDeliveryTheme.colors.mainColors.onSurface
                 )
             }
 
@@ -145,38 +138,6 @@ private fun getIcon(status: OrderStatus): Int {
         OrderStatus.DELIVERED -> R.drawable.ic_delivered
         OrderStatus.CANCELED -> R.drawable.ic_canceled
     }
-}
-
-@Composable
-private fun DoneStep(
-    modifier: Modifier = Modifier,
-    orderStatus: OrderStatus
-) {
-    Box(
-        modifier = modifier
-            .fillMaxHeight()
-            .clip(stepShape)
-            .background(getOrderColor(orderStatus))
-    ) {
-        Icon(
-            modifier = Modifier
-                .icon16()
-                .align(Alignment.Center),
-            painter = painterResource(R.drawable.ic_check),
-            contentDescription = stringResource(R.string.description_order_details_done),
-            tint = FoodDeliveryTheme.colors.orderColors.onOrder
-        )
-    }
-}
-
-@Composable
-private fun FutureStep(modifier: Modifier = Modifier) {
-    Box(
-        modifier = modifier
-            .fillMaxHeight()
-            .clip(stepShape)
-            .background(FoodDeliveryTheme.colors.mainColors.disabled)
-    )
 }
 
 @Preview

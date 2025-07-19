@@ -1,10 +1,12 @@
 package com.bunbeauty.papakarlo.feature.main
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedVisibility
@@ -14,8 +16,12 @@ import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarHost
@@ -27,6 +33,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidViewBinding
@@ -57,6 +64,7 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
 
@@ -70,21 +78,28 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
                     snackbarHostState = snackbarHostState
                 )
             }
+
             MainScreen(
                 mainState = mainState,
-                snackbarHostState = snackbarHostState
+                snackbarHostState = snackbarHostState,
+                backgroundColor = mainState.statusBarColor
+                    ?: FoodDeliveryTheme.colors.mainColors.surface
             )
         }
 
         checkNotificationPermission()
     }
 
-    override fun showInfoMessage(text: String) {
-        viewModel.showInfoMessage(text)
+    override fun showInfoMessage(text: String, paddingBottom: Int) {
+        viewModel.showInfoMessage(text = text, paddingBottom = paddingBottom)
     }
 
     override fun showErrorMessage(text: String) {
         viewModel.showErrorMessage(text)
+    }
+
+    fun setStatusBarColor(color: Color) {
+        viewModel.setStatusColor(color = color)
     }
 
     private fun checkNotificationPermission() {
@@ -95,21 +110,38 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
         }
     }
 
+    @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     @Composable
-    private fun MainScreen(mainState: MainState, snackbarHostState: SnackbarHostState) {
+    private fun MainScreen(
+        mainState: MainState,
+        snackbarHostState: SnackbarHostState,
+        backgroundColor: Color
+    ) {
         Scaffold(
             snackbarHost = {
-                FoodDeliverySnackbarHost(snackbarHostState)
+                FoodDeliverySnackbarHost(
+                    snackbarHostState = snackbarHostState,
+                    paddingBottom = mainState.paddingBottomSnackbar
+                )
             },
             bottomBar = {
                 FoodDeliveryNavigationBar(options = mainState.navigationBarOptions)
             }
-        ) { padding ->
-            Column(modifier = Modifier.padding(padding)) {
+        ) {
+            Column(
+                modifier = Modifier
+                    .background(backgroundColor)
+                    .statusBarsPadding()
+                    .navigationBarsPadding()
+                    .imePadding()
+            ) {
                 ConnectionErrorMessage(visible = mainState.connectionLost)
                 StatusBarMessage(statusBarMessage = mainState.statusBarMessage)
 
-                Box(modifier = Modifier.weight(1f)) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                ) {
                     AndroidViewBinding(factory = ::fragmentContainerFactory)
                 }
             }
@@ -165,8 +197,14 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
     }
 
     @Composable
-    private fun FoodDeliverySnackbarHost(snackbarHostState: SnackbarHostState) {
-        SnackbarHost(hostState = snackbarHostState) { snackbarData ->
+    private fun FoodDeliverySnackbarHost(
+        snackbarHostState: SnackbarHostState,
+        paddingBottom: Int
+    ) {
+        SnackbarHost(
+            hostState = snackbarHostState,
+            modifier = Modifier.padding(bottom = paddingBottom.dp)
+        ) { snackbarData ->
             (snackbarData.visuals as? FoodDeliverySnackbarVisuals)?.let { visuals ->
                 val containerColor = when (visuals.foodDeliveryMessage.type) {
                     FoodDeliveryMessageType.INFO -> FoodDeliveryTheme.colors.mainColors.primary
@@ -195,7 +233,9 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
                     lifecycleScope.launch {
                         val snackbarJob = launch {
                             snackbarHostState.showSnackbar(
-                                visuals = FoodDeliverySnackbarVisuals(event.message)
+                                visuals = FoodDeliverySnackbarVisuals(
+                                    event.message
+                                )
                             )
                         }
                         delay(2_000)

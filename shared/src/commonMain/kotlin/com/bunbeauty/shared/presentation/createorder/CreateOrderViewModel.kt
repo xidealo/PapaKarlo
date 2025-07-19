@@ -4,7 +4,7 @@ import com.bunbeauty.core.Logger
 import com.bunbeauty.shared.Constants.PERCENT
 import com.bunbeauty.shared.Constants.RUBLE_CURRENCY
 import com.bunbeauty.shared.domain.exeptions.OrderNotAvailableException
-import com.bunbeauty.shared.domain.feature.address.GetCurrentUserAddressUseCase
+import com.bunbeauty.shared.domain.feature.address.GetCurrentUserAddressWithCityUseCase
 import com.bunbeauty.shared.domain.feature.cafe.GetSelectableCafeListUseCase
 import com.bunbeauty.shared.domain.feature.cafe.GetWorkloadCafeUseCase
 import com.bunbeauty.shared.domain.feature.cafe.HasOpenedCafeUseCase
@@ -37,7 +37,7 @@ class CreateOrderViewModel(
     private val cafeInteractor: ICafeInteractor,
     private val userInteractor: IUserInteractor,
     private val getSelectableUserAddressList: GetSelectableUserAddressListUseCase,
-    private val getCurrentUserAddressUseCase: GetCurrentUserAddressUseCase,
+    private val getCurrentUserAddressWithCityUseCase: GetCurrentUserAddressWithCityUseCase,
     private val getSelectableCafeList: GetSelectableCafeListUseCase,
     private val getCartTotalFlowUseCase: GetCartTotalFlowUseCase,
     private val getMotivationUseCase: GetMotivationUseCase,
@@ -50,12 +50,12 @@ class CreateOrderViewModel(
     private val isDeliveryEnabledFromCafeUseCase: IsDeliveryEnabledFromCafeUseCase,
     private val isPickupEnabledFromCafeUseCase: IsPickupEnabledFromCafeUseCase,
     private val hasOpenedCafeUseCase: HasOpenedCafeUseCase,
-    private val getWorkloadCafeUseCase: GetWorkloadCafeUseCase
+    private val getWorkloadCafeUseCase: GetWorkloadCafeUseCase,
 ) : SharedStateViewModel<CreateOrder.DataState, CreateOrder.Action, CreateOrder.Event>(
     initDataState = CreateOrder.DataState(
         isDelivery = true,
         userAddressList = emptyList(),
-        selectedUserAddress = null,
+        selectedUserAddressWithCity = null,
         isAddressErrorShown = CreateOrder.DataState.AddressErrorState.INIT,
         cafeList = emptyList(),
         selectedCafe = null,
@@ -357,11 +357,12 @@ class CreateOrderViewModel(
 
     private fun createClick(
         withoutChange: String,
-        changeFrom: String
+        changeFrom: String,
     ) {
         val state = mutableDataState.value
 
-        val isDeliveryAddressNotSelected = state.isDelivery && (state.selectedUserAddress == null)
+        val isDeliveryAddressNotSelected =
+            state.isDelivery && (state.selectedUserAddressWithCity?.userAddress == null)
 
         if (isDeliveryAddressNotSelected) {
             setState {
@@ -388,8 +389,8 @@ class CreateOrderViewModel(
             (state.cartTotal as? CreateOrder.CartTotal.Success)?.newFinalCostValue ?: 0
         val isChangeLessThenCost = (state.change ?: 0) < newFinalCost
         val isChangeIncorrect = state.paymentByCash &&
-            !state.withoutChangeChecked &&
-            isChangeLessThenCost
+                !state.withoutChangeChecked &&
+                isChangeLessThenCost
         setState {
             copy(isChangeErrorShown = isChangeIncorrect)
         }
@@ -404,7 +405,7 @@ class CreateOrderViewModel(
             if (userInteractor.isUserAuthorize()) {
                 val orderCode = createOrder(
                     isDelivery = state.isDelivery,
-                    selectedUserAddress = state.selectedUserAddress,
+                    selectedUserAddress = state.selectedUserAddressWithCity?.userAddress,
                     selectedCafe = state.selectedCafe,
                     orderComment = getExtendedComment(
                         state = state,
@@ -467,26 +468,26 @@ class CreateOrderViewModel(
     }
 
     private suspend fun updateSelectedUserAddress() {
-        val userAddress = getCurrentUserAddressUseCase()
+        val userAddressWithCity = getCurrentUserAddressWithCityUseCase()
         val userAddressList = getSelectableUserAddressList()
 
         setState {
             copy(
                 userAddressList = userAddressList,
-                selectedUserAddress = userAddress,
-                deliveryState = userAddress?.cafeUuid?.let { cafeUuid ->
+                selectedUserAddressWithCity = userAddressWithCity,
+                deliveryState = userAddressWithCity?.userAddress?.cafeUuid?.let { cafeUuid ->
                     if (isDeliveryEnabledFromCafeUseCase(cafeUuid = cafeUuid)) {
                         CreateOrder.DataState.DeliveryState.ENABLED
                     } else {
                         CreateOrder.DataState.DeliveryState.NOT_ENABLED
                     }
                 } ?: CreateOrder.DataState.DeliveryState.NEED_ADDRESS,
-                isAddressErrorShown = if (userAddress != null) {
+                isAddressErrorShown = if (userAddressWithCity != null) {
                     CreateOrder.DataState.AddressErrorState.NO_ERROR
                 } else {
                     isAddressErrorShown
                 },
-                workload = userAddress?.cafeUuid?.let { cafeUuid ->
+                workload = userAddressWithCity?.userAddress?.cafeUuid?.let { cafeUuid ->
                     getWorkloadCafeUseCase(cafeUuid = cafeUuid)
                 } ?: Cafe.Workload.LOW,
                 isLoadingSwitcher = false
@@ -561,7 +562,7 @@ class CreateOrderViewModel(
     private fun getExtendedComment(
         state: CreateOrder.DataState,
         withoutChange: String,
-        changeFrom: String
+        changeFrom: String,
     ): String {
         return buildString {
             state.comment.takeIf { comment ->

@@ -22,6 +22,7 @@ import com.bunbeauty.shared.domain.feature.addition.GetAdditionGroupsWithSelecte
 import com.bunbeauty.shared.domain.feature.addition.GetPriceOfSelectedAdditionsUseCase
 import com.bunbeauty.shared.domain.feature.address.CreateAddressUseCase
 import com.bunbeauty.shared.domain.feature.address.GetCurrentUserAddressUseCase
+import com.bunbeauty.shared.domain.feature.address.GetCurrentUserAddressWithCityUseCase
 import com.bunbeauty.shared.domain.feature.address.GetFilteredStreetListUseCase
 import com.bunbeauty.shared.domain.feature.address.GetSuggestionsUseCase
 import com.bunbeauty.shared.domain.feature.address.di.addressModule
@@ -212,6 +213,7 @@ class IosComponent : KoinComponent {
     fun provideGetWorkloadCafeUseCase(): GetWorkloadCafeUseCase = get()
     fun provideIsDeliveryEnabledFromCafeUseCase(): IsDeliveryEnabledFromCafeUseCase = get()
     fun provideUpdateNotificationUseCase(): UpdateNotificationUseCase = get()
+    fun provideGetCurrentUserAddressWithCityUseCase(): GetCurrentUserAddressWithCityUseCase = get()
 
     // Mapper
     fun provideUserAddressMapper(): UserAddressMapper = get()
