@@ -1,10 +1,13 @@
 package com.bunbeauty.papakarlo.navigation.login
 
+import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import com.bunbeauty.papakarlo.feature.auth.LoginRoute
 import com.bunbeauty.papakarlo.feature.splash.SplashRoute
+import com.bunbeauty.papakarlo.navigation.consumercart.ConsumerCartScreenDestination
 import com.bunbeauty.papakarlo.navigation.orderdetails.OrderDetailsScreenDestination
 import com.bunbeauty.shared.domain.model.SuccessLoginDirection
 import kotlinx.serialization.Serializable
@@ -13,6 +16,16 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class LoginScreenDestination(
     val successLoginDirection: SuccessLoginDirection,
+)
+
+fun NavController.navigateToLoginScreen(
+    navOptions: NavOptions,
+    successLoginDirection: SuccessLoginDirection,
+) = navigate(
+    route = LoginScreenDestination(
+        successLoginDirection = successLoginDirection
+    ),
+    navOptions = navOptions
 )
 
 fun NavGraphBuilder.loginScreenRoute(

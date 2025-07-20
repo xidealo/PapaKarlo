@@ -81,7 +81,6 @@ fun ProfileRoute(
     goToOrderDetailsFragment: (String) -> Unit,
     goToOrdersFragment: () -> Unit,
     goToSettingsFragment: () -> Unit,
-    goToAboutAppBottomSheet: () -> Unit,
     goToCafeListFragment: () -> Unit,
 ) {
 
@@ -116,7 +115,6 @@ fun ProfileRoute(
         goToOrderDetailsFragment = goToOrderDetailsFragment,
         goToOrdersFragment = goToOrdersFragment,
         goToSettingsFragment = goToSettingsFragment,
-        goToAboutAppBottomSheet = goToAboutAppBottomSheet,
         goToCafeListFragment = goToCafeListFragment,
         consumeEffects = consumeEffects
     )
@@ -176,7 +174,6 @@ fun ProfileEffect(
     goToOrderDetailsFragment: (String) -> Unit,
     goToOrdersFragment: () -> Unit,
     goToSettingsFragment: () -> Unit,
-    goToAboutAppBottomSheet: () -> Unit,
     goToCafeListFragment: () -> Unit,
     consumeEffects: () -> Unit,
 ) {
@@ -204,7 +201,8 @@ fun ProfileEffect(
                 }
 
                 ProfileState.Event.ShowAboutApp -> {
-                    goToAboutAppBottomSheet()
+                    //TODO BOTTOM SHEET
+                    //goToAboutAppBottomSheet()
                 }
 
                 ProfileState.Event.ShowCafeList -> {
