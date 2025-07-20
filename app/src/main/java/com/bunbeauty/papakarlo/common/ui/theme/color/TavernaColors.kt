@@ -4,7 +4,9 @@ import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Gold100
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.LightBlue
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Orange50
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Red400
+import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Red500
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Red600
+import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Yellow500
 
 val TavernaColors = AppColors(
     mainColors = ColorDefaults.lightMainColors(
