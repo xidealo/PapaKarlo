@@ -5,7 +5,6 @@ import com.bunbeauty.papakarlo.feature.order.screen.orderdetails.OrderProductIte
 import com.bunbeauty.papakarlo.feature.productdetails.ProductDetailsUiStateMapper
 import com.bunbeauty.papakarlo.feature.profile.screen.profile.LinkUiStateMapper
 import com.bunbeauty.papakarlo.feature.profile.screen.profile.PaymentMethodUiStateMapper
-import com.bunbeauty.papakarlo.feature.profile.screen.profile.ProfileUiStateMapper
 import com.bunbeauty.papakarlo.mapper.OrderItemMapper
 import org.koin.dsl.module
 
@@ -23,11 +22,6 @@ fun uiMapperModule() = module {
     factory {
         ProductDetailsUiStateMapper(
             stringUtil = get()
-        )
-    }
-    factory {
-        ProfileUiStateMapper(
-            orderItemMapper = get()
         )
     }
     factory {
