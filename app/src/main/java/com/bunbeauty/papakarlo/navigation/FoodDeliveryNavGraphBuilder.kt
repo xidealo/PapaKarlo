@@ -10,10 +10,12 @@ import com.bunbeauty.papakarlo.navigation.createaddress.createAddressScreenRoute
 import com.bunbeauty.papakarlo.navigation.createorder.createOrderScreenRoute
 import com.bunbeauty.papakarlo.navigation.login.loginScreenRoute
 import com.bunbeauty.papakarlo.navigation.menu.menuScreenRoute
+import com.bunbeauty.papakarlo.navigation.menu.navigateToMenuScreen
 import com.bunbeauty.papakarlo.navigation.orderdetails.orderDetailsScreenRoute
 import com.bunbeauty.papakarlo.navigation.orderlist.orderListScreenRoute
 import com.bunbeauty.papakarlo.navigation.productdetails.productDetailsScreenRoute
 import com.bunbeauty.papakarlo.navigation.profile.profileScreenRoute
+import com.bunbeauty.papakarlo.navigation.selectcity.navigateToSelectCityScreen
 import com.bunbeauty.papakarlo.navigation.selectcity.selectCityScreenRoute
 import com.bunbeauty.papakarlo.navigation.settings.settingsScreenRoute
 import com.bunbeauty.papakarlo.navigation.splash.splashScreenRoute
@@ -29,7 +31,17 @@ fun NavGraphBuilder.foodDeliveryNavGraphBuilder(
         back = navController::navigateUp
     )
 
-    splashScreenRoute()
+    splashScreenRoute(
+        goToUpdateFragment = {
+
+        },
+        goToSelectCityFragment = {
+            navController.navigateToSelectCityScreen(emptyNavOptions)
+        },
+        goToMenuFragment = {
+            navController.navigateToMenuScreen(emptyNavOptions)
+        },
+    )
     updateScreenRoute()
     menuScreenRoute(
         goToProductDetailsFragment = { uuid, name, productDetailsOpenedFrom -> },
@@ -59,7 +71,11 @@ fun NavGraphBuilder.foodDeliveryNavGraphBuilder(
 
         },
     )
-    selectCityScreenRoute()
+    selectCityScreenRoute(
+        goToMenuFragment = {
+            navController.navigateToMenuScreen(emptyNavOptions)
+        }
+    )
     createOrderScreenRoute(
         back = navController::navigateUp,
         goToProfile = {},
@@ -84,13 +100,13 @@ fun NavGraphBuilder.foodDeliveryNavGraphBuilder(
 
     profileScreenRoute(
         back = navController::navigateUp,
-        goToUserAddress ={},
-        goToLogin ={},
-        goToOrderDetailsFragment ={},
-        goToOrdersFragment ={},
-        goToSettingsFragment ={},
-        goToAboutAppBottomSheet ={},
-        goToCafeListFragment ={},
+        goToUserAddress = {},
+        goToLogin = {},
+        goToOrderDetailsFragment = {},
+        goToOrdersFragment = {},
+        goToSettingsFragment = {},
+        goToAboutAppBottomSheet = {},
+        goToCafeListFragment = {},
     )
 }
 

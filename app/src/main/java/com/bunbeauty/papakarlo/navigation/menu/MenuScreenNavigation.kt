@@ -1,6 +1,8 @@
 package com.bunbeauty.papakarlo.navigation.menu
 
+import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.bunbeauty.papakarlo.feature.menu.MenuRoute
 import com.bunbeauty.papakarlo.feature.splash.SplashRoute
@@ -10,6 +12,11 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data object MenuScreenDestination
+
+fun NavController.navigateToMenuScreen(
+    navOptions: NavOptions,
+) = navigate(route = MenuScreenDestination, navOptions)
+
 
 fun NavGraphBuilder.menuScreenRoute(
     goToProductDetailsFragment: (

@@ -9,12 +9,16 @@ import kotlinx.serialization.Serializable
 @Serializable
 data object SplashScreenDestination
 
-fun NavGraphBuilder.splashScreenRoute() {
+fun NavGraphBuilder.splashScreenRoute(
+    goToUpdateFragment: () -> Unit,
+    goToSelectCityFragment: () -> Unit,
+    goToMenuFragment: () -> Unit,
+) {
     composable<SplashScreenDestination> {
         SplashRoute(
-            goToUpdateFragment = {},
-            goToSelectCityFragment = {},
-            goToMenuFragment = {},
+            goToUpdateFragment = goToUpdateFragment,
+            goToSelectCityFragment = goToSelectCityFragment,
+            goToMenuFragment = goToMenuFragment,
         )
     }
 }
