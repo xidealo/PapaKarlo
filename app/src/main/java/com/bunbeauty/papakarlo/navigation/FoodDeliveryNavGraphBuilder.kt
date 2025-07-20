@@ -60,10 +60,27 @@ fun NavGraphBuilder.foodDeliveryNavGraphBuilder(
         },
     )
     selectCityScreenRoute()
+    createOrderScreenRoute(
+        back = navController::navigateUp,
+        goToProfile = {},
+        goToCreateAddress = {},
+    )
+    userAddressListScreenRoute(
+        back = navController::navigateUp,
+        goToCreateAddress = {}
+    )
+    loginScreenRoute(
+        back = navController::navigateUp,
+        goToConfirm = { phoneNumber, successLoginDirection ->
 
-    confirmScreenRoute()
-    loginScreenRoute()
-    createOrderScreenRoute()
-    userAddressListScreenRoute()
+        }
+    )
+
+    confirmScreenRoute(
+        back = navController::navigateUp,
+        goBackToProfileFragment = {},
+        goToCreateOrderFragment = {},
+    )
+
     profileScreenRoute()
 }

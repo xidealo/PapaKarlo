@@ -66,8 +66,6 @@
             app:destination="@id/cafeListFragment" />
     </fragment>
 
-    <include app:graph="@navigation/nav_address" />
-
     <!--Не нужно создавать навигацию (часть экрана)-->
 
     <dialog
@@ -81,7 +79,6 @@
         android:name="com.bunbeauty.papakarlo.feature.profile.screen.aboutapp.AboutAppBottomSheet"
         android:label="AboutAppBottomSheet" />
 
-    <include app:graph="@navigation/nav_login" />
     <!--Не нужно создавать навигацию (часть экрана)-->
 
     <dialog
@@ -94,26 +91,5 @@
             app:popUpTo="@id/profileFragment"
             app:popUpToInclusive="true" />
     </dialog>
-
-    <fragment
-        android:id="@+id/createOrderFragment"
-        android:name="com.bunbeauty.papakarlo.feature.createorder.CreateOrderFragment"
-        android:label="@string/title_create_order">
-        <action
-            android:id="@+id/to_profileFragment"
-            app:destination="@id/profileFragment"
-            app:popUpTo="@id/menuFragment"
-            app:popUpToInclusive="false" />
-        <action
-            android:id="@+id/to_createAddressFragment"
-            app:destination="@id/createAddressFragment" />
-        <action
-            android:id="@+id/to_nav_address"
-            app:destination="@id/nav_address">
-            <argument
-                android:name="isClickable"
-                app:argType="boolean" />
-        </action>
-    </fragment>
 
 </navigation>
