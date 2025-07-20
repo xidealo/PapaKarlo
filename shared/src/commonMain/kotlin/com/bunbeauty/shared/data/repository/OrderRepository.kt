@@ -14,6 +14,7 @@ import com.bunbeauty.shared.domain.model.order.CreatedOrder
 import com.bunbeauty.shared.domain.model.order.LightOrder
 import com.bunbeauty.shared.domain.model.order.Order
 import com.bunbeauty.shared.domain.model.order.OrderCode
+import com.bunbeauty.shared.domain.model.order.OrderStatus
 import com.bunbeauty.shared.domain.repo.OrderRepo
 import com.bunbeauty.shared.extension.getNullableResult
 import kotlinx.coroutines.flow.Flow
@@ -144,6 +145,11 @@ class OrderRepository(
     private suspend fun observeOrderUpdatesServer(token: String): Pair<String?, Flow<OrderUpdateServer>> {
         val (uuid, orderUpdatesFlow) = networkConnector.startOrderUpdatesObservation(token)
         return uuid to orderUpdatesFlow.onEach { orderUpdateServer ->
+            if (orderUpdateServer.uuid == cacheLastOrder?.uuid) {
+                cacheLastOrder = cacheLastOrder?.copy(
+                    status = OrderStatus.valueOf(orderUpdateServer.status)
+                )
+            }
             orderDao.updateOrderStatusByUuid(
                 uuid = orderUpdateServer.uuid,
                 status = orderUpdateServer.status

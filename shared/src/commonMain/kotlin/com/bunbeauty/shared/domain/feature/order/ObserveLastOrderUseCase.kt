@@ -19,7 +19,7 @@ class ObserveLastOrderUseCase(
         val token = dataStoreRepo.getToken() ?: return null to flow {}
         val userUuid = dataStoreRepo.getUserUuid() ?: return null to flow {}
         val lastOrder =
-            orderRepo.getLastOrderByUserUuidLocalFirst(token = token, userUuid = userUuid)
+            orderRepo.getLastOrderByUserUuidNetworkFirst(token = token, userUuid = userUuid)
 
         return if (lastOrder == null) {
             null to flow { emit(null) }
