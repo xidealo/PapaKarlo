@@ -12,13 +12,12 @@ interface GetCurrentUserAddressWithCityUseCase {
 class GetCurrentUserAddressWithCityUseCaseImpl(
     private val dataStoreRepo: DataStoreRepo,
     private val userAddressRepo: UserAddressRepo,
-    private val getSelectedCityUseCase: GetSelectedCityUseCase,
+    private val getSelectedCityUseCase: GetSelectedCityUseCase
 ) : GetCurrentUserAddressWithCityUseCase {
 
     override suspend operator fun invoke(): UserAddressWithCity? {
         val userUuid = dataStoreRepo.getUserUuid() ?: return null
         val cityUuid = dataStoreRepo.getSelectedCityUuid() ?: return null
-
 
         val userAddress = userAddressRepo.getSelectedAddressByUserAndCityUuid(
             userUuid = userUuid,

@@ -31,6 +31,7 @@ import com.bunbeauty.shared.data.network.model.login.AuthSessionServer
 import com.bunbeauty.shared.data.network.model.login.CodeRequestServer
 import com.bunbeauty.shared.data.network.model.login.CodeServer
 import com.bunbeauty.shared.data.network.model.login.LoginPostServer
+import com.bunbeauty.shared.data.network.model.order.get.OrderCodeServer
 import com.bunbeauty.shared.data.network.model.order.get.OrderServer
 import com.bunbeauty.shared.data.network.model.order.get.OrderUpdateServer
 import com.bunbeauty.shared.data.network.model.order.post.OrderPostServer
@@ -177,6 +178,15 @@ internal class NetworkConnectorImpl(
         )
     }
 
+    override suspend fun getLastOrder(
+        token: String
+    ): ApiResult<OrderServer> {
+        return getData(
+            path = "client/last_order",
+            token = token
+        )
+    }
+
     override suspend fun getSettings(token: String): ApiResult<SettingsServer> {
         return getData(
             path = "client/settings",
@@ -237,9 +247,12 @@ internal class NetworkConnectorImpl(
         )
     }
 
-    override suspend fun postOrder(token: String, order: OrderPostServer): ApiResult<OrderServer> {
+    override suspend fun postOrder(
+        token: String,
+        order: OrderPostServer
+    ): ApiResult<OrderCodeServer> {
         return postData(
-            path = "v3/order",
+            path = "v4/order",
             body = order,
             token = token
         )

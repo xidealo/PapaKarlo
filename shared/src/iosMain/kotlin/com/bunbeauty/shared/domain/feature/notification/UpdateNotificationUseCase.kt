@@ -12,8 +12,7 @@ actual class UpdateNotificationUseCase(
     actual suspend operator fun invoke() {
         try {
             userRepository.updateNotificationTokenSuspend(notificationToken = getNotificationToken())
-        }
-        catch (exception: Exception){
+        } catch (exception: Exception) {
             Logger.logE("UpdateNotificationUseCase", exception.printStackTrace())
         }
     }

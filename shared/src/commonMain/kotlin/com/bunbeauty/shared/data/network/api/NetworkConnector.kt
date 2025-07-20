@@ -24,6 +24,7 @@ import com.bunbeauty.shared.data.network.model.login.AuthSessionServer
 import com.bunbeauty.shared.data.network.model.login.CodeRequestServer
 import com.bunbeauty.shared.data.network.model.login.CodeServer
 import com.bunbeauty.shared.data.network.model.login.LoginPostServer
+import com.bunbeauty.shared.data.network.model.order.get.OrderCodeServer
 import com.bunbeauty.shared.data.network.model.order.get.OrderServer
 import com.bunbeauty.shared.data.network.model.order.get.OrderUpdateServer
 import com.bunbeauty.shared.data.network.model.order.post.OrderPostServer
@@ -61,6 +62,10 @@ interface NetworkConnector {
         uuid: String? = null
     ): ApiResult<ListServer<OrderServer>>
 
+    suspend fun getLastOrder(
+        token: String
+    ): ApiResult<OrderServer>
+
     suspend fun getSettings(token: String): ApiResult<SettingsServer>
     suspend fun getPaymentMethodList(): ApiResult<ListServer<PaymentMethodServer>>
     suspend fun getLinkList(): ApiResult<ListServer<LinkServer>>
@@ -78,7 +83,7 @@ interface NetworkConnector {
         token: String
     ): ApiResult<Unit>
 
-    suspend fun postOrder(token: String, order: OrderPostServer): ApiResult<OrderServer>
+    suspend fun postOrder(token: String, order: OrderPostServer): ApiResult<OrderCodeServer>
     suspend fun postCodeRequest(codeRequest: CodeRequestServer): ApiResult<AuthSessionServer>
 
     suspend fun patchSettings(

@@ -1,16 +1,19 @@
 package com.bunbeauty.shared.presentation.profile
 
-import com.bunbeauty.shared.domain.asCommonStateFlow
+import com.bunbeauty.core.Logger
 import com.bunbeauty.shared.domain.feature.link.GetLinkListUseCase
 import com.bunbeauty.shared.domain.feature.order.GetLastOrderUseCase
 import com.bunbeauty.shared.domain.feature.order.ObserveLastOrderUseCase
 import com.bunbeauty.shared.domain.feature.order.StopObserveOrdersUseCase
 import com.bunbeauty.shared.domain.feature.payment.GetPaymentMethodListUseCase
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
-import com.bunbeauty.shared.presentation.base.SharedViewModel
-import kotlinx.coroutines.CoroutineExceptionHandler
+import com.bunbeauty.shared.domain.model.link.Link
+import com.bunbeauty.shared.domain.model.payment_method.PaymentMethod
+import com.bunbeauty.shared.extension.launchSafe
+import com.bunbeauty.shared.presentation.base.SharedStateViewModel
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -18,55 +21,99 @@ import kotlinx.coroutines.launch
 class ProfileViewModel(
     private val userInteractor: IUserInteractor,
     private val getLastOrderUseCase: GetLastOrderUseCase,
+    private val getPaymentMethodListUseCase: GetPaymentMethodListUseCase,
+    private val getLinkListUseCase: GetLinkListUseCase,
     private val observeLastOrderUseCase: ObserveLastOrderUseCase,
     private val stopObserveOrdersUseCase: StopObserveOrdersUseCase,
-    private val getPaymentMethodListUseCase: GetPaymentMethodListUseCase,
-    private val getLinkListUseCase: GetLinkListUseCase
-) : SharedViewModel() {
+) : SharedStateViewModel<ProfileState.DataState, ProfileState.Action, ProfileState.Event>(
+    initDataState = ProfileState.DataState(
+        lastOrder = null,
+        state = ProfileState.DataState.State.LOADING,
+        paymentMethodList = persistentListOf(),
+        linkList = listOf()
+    )
+) {
 
-    private val mutableProfileState = MutableStateFlow(ProfileState())
-    val profileState = mutableProfileState.asCommonStateFlow()
-
-    var observeLastOrderJob: Job? = null
+    private var observeLastOrderJob: Job? = null
     private var orderObservationUuid: String? = null
 
-    private val exceptionHandler = CoroutineExceptionHandler { _, _ ->
-        mutableProfileState.update { oldState ->
-            oldState.copy(state = ProfileState.State.ERROR)
+    override fun reduce(
+        action: ProfileState.Action,
+        dataState: ProfileState.DataState,
+    ) {
+        when (action) {
+            ProfileState.Action.BackClicked -> onBackClicked()
+            ProfileState.Action.Init -> loadData()
+            ProfileState.Action.OnRefreshClicked -> loadData()
+            is ProfileState.Action.OnLastOrderClicked -> onLastOrderClicked(
+                uuid = action.uuid,
+                code = action.code
+            )
+
+            ProfileState.Action.OnOrderHistoryClicked -> onOrderHistoryClicked()
+            ProfileState.Action.OnSettingsClick -> onSettingsClicked()
+            ProfileState.Action.OnYourAddressesClicked -> onYourAddressesClicked()
+            ProfileState.Action.OnLoginClicked -> onLoginClicked()
+            ProfileState.Action.OnAboutAppClicked -> onAboutAppClicked()
+            ProfileState.Action.OnCafeListClicked -> onCafeListClicked()
+            is ProfileState.Action.OnFeedbackClicked -> onFeedbackClicked(
+                action.linkList
+            )
+
+            is ProfileState.Action.OnPaymentClicked -> onPaymentClicked(
+                paymentMethodList = action.paymentMethodList
+            )
+
+            ProfileState.Action.StartObserveOrder -> observeLastOrder()
+
+            ProfileState.Action.StopObserveOrder -> stopLastOrderObservation()
         }
     }
 
-    fun update() {
-        mutableProfileState.update { profileState ->
-            profileState.copy(state = ProfileState.State.LOADING)
-        }
-        sharedScope.launch(exceptionHandler) {
-            mutableProfileState.update { profileState ->
-                val newProfileState = profileState.copy(
-                    lastOrder = getLastOrderUseCase(),
-                    paymentMethodList = getPaymentMethodListUseCase(),
-                    linkList = getLinkListUseCase()
-                )
-
-                if (userInteractor.isUserAuthorize()) {
-                    newProfileState.copy(state = ProfileState.State.AUTHORIZED)
-                } else {
-                    newProfileState.copy(state = ProfileState.State.UNAUTHORIZED)
+    private fun loadData() {
+        sharedScope.launchSafe(
+            block = {
+                val lastOrder = getLastOrderUseCase()
+                val linkList = getLinkListUseCase()
+                val paymentMethodList = getPaymentMethodListUseCase()
+                setState {
+                    copy(
+                        lastOrder = lastOrder,
+                        state = if (userInteractor.isUserAuthorize()) {
+                            ProfileState.DataState.State.AUTHORIZED
+                        } else {
+                            ProfileState.DataState.State.UNAUTHORIZED
+                        },
+                        paymentMethodList = paymentMethodList.toImmutableList(),
+                        linkList = linkList,
+                    )
+                }
+            },
+            onError = {
+                setState {
+                    copy(
+                        state = ProfileState.DataState.State.ERROR
+                    )
                 }
             }
-        }
+        )
     }
 
-    fun observeLastOrder() {
-        observeLastOrderJob = sharedScope.launch(exceptionHandler) {
-            val (uuid, lastOrderFlow) = observeLastOrderUseCase()
-            orderObservationUuid = uuid
-            lastOrderFlow.collectLatest { lightOrder ->
-                mutableProfileState.update { profileState ->
-                    profileState.copy(lastOrder = lightOrder)
+    private fun observeLastOrder() {
+        observeLastOrderJob = sharedScope.launchSafe(
+            block = {
+                val (uuid, lastOrderFlow) = observeLastOrderUseCase()
+                orderObservationUuid = uuid
+                lastOrderFlow.collectLatest { lightOrder ->
+                    setState {
+                        copy(lastOrder = lightOrder)
+                    }
                 }
+            },
+            onError = { error ->
+                Logger.logE("Profile", error.stackTraceToString())
             }
-        }
+        )
     }
 
     fun stopLastOrderObservation() {
@@ -79,63 +126,68 @@ class ProfileViewModel(
         orderObservationUuid = null
     }
 
-    fun onLastOrderClicked(uuid: String, code: String) {
-        mutableProfileState.update { profileState ->
-            profileState + ProfileState.Event.OpenOrderDetails(uuid, code)
+    private fun onBackClicked() {
+        addEvent {
+            ProfileState.Event.GoBackEvent
         }
     }
 
+    fun onLastOrderClicked(uuid: String, code: String) {
+        addEvent {
+            ProfileState.Event.OpenOrderDetails(uuid, code)
+        }
+    }
+
+
     fun onSettingsClicked() {
-        mutableProfileState.update { profileState ->
-            profileState + ProfileState.Event.OpenSettings
+        addEvent {
+            ProfileState.Event.OpenSettings
         }
     }
 
     fun onYourAddressesClicked() {
-        mutableProfileState.update { profileState ->
-            profileState + ProfileState.Event.OpenAddressList
+        addEvent {
+            ProfileState.Event.OpenAddressList
         }
     }
 
     fun onOrderHistoryClicked() {
-        mutableProfileState.update { profileState ->
-            profileState + ProfileState.Event.OpenOrderList
+        addEvent {
+            ProfileState.Event.OpenOrderList
         }
     }
 
-    fun onPaymentClicked() {
-        mutableProfileState.update { profileState ->
-            profileState + ProfileState.Event.ShowPayment(profileState.paymentMethodList)
+    fun onPaymentClicked(paymentMethodList: List<PaymentMethod>) {
+        addEvent {
+            ProfileState.Event.ShowPayment(
+                paymentMethodList = paymentMethodList
+            )
         }
     }
 
     fun onCafeListClicked() {
-        mutableProfileState.update { profileState ->
-            profileState + ProfileState.Event.ShowCafeList
+        addEvent {
+            ProfileState.Event.ShowCafeList
         }
     }
 
-    fun onFeedbackClicked() {
-        mutableProfileState.update { profileState ->
-            profileState + ProfileState.Event.ShowFeedback(profileState.linkList)
+    fun onFeedbackClicked(linkList: List<Link>) {
+        addEvent {
+            ProfileState.Event.ShowFeedback(
+                linkList = linkList
+            )
         }
     }
 
     fun onAboutAppClicked() {
-        mutableProfileState.update { profileState ->
-            profileState + ProfileState.Event.ShowAboutApp
+        addEvent {
+            ProfileState.Event.ShowAboutApp
         }
     }
 
     fun onLoginClicked() {
-        mutableProfileState.update { profileState ->
-            profileState + ProfileState.Event.OpenLogin
-        }
-    }
-
-    fun consumeEventList(eventList: List<ProfileState.Event>) {
-        mutableProfileState.update { profileState ->
-            profileState - eventList
+        addEvent {
+            ProfileState.Event.OpenLogin
         }
     }
 }
