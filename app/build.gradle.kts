@@ -14,6 +14,7 @@ plugins {
     alias(libs.plugins.crashlytics)
     alias(libs.plugins.ktLint)
     alias(libs.plugins.triplet.play)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
