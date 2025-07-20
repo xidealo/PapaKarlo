@@ -115,7 +115,9 @@ fun viewModelModule() = module {
             userInteractor = get(),
             getLastOrderUseCase = get(),
             getPaymentMethodListUseCase = get(),
-            getLinkListUseCase = get()
+            getLinkListUseCase = get(),
+            observeLastOrderUseCase = get(),
+            stopObserveOrdersUseCase = get()
         )
     }
     viewModel {

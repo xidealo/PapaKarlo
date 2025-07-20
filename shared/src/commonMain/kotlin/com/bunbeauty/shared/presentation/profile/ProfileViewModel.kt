@@ -1,7 +1,10 @@
 package com.bunbeauty.shared.presentation.profile
 
+import com.bunbeauty.core.Logger
 import com.bunbeauty.shared.domain.feature.link.GetLinkListUseCase
 import com.bunbeauty.shared.domain.feature.order.GetLastOrderUseCase
+import com.bunbeauty.shared.domain.feature.order.ObserveLastOrderUseCase
+import com.bunbeauty.shared.domain.feature.order.StopObserveOrdersUseCase
 import com.bunbeauty.shared.domain.feature.payment.GetPaymentMethodListUseCase
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
 import com.bunbeauty.shared.domain.model.link.Link
@@ -10,13 +13,18 @@ import com.bunbeauty.shared.extension.launchSafe
 import com.bunbeauty.shared.presentation.base.SharedStateViewModel
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
-
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 class ProfileViewModel(
     private val userInteractor: IUserInteractor,
     private val getLastOrderUseCase: GetLastOrderUseCase,
     private val getPaymentMethodListUseCase: GetPaymentMethodListUseCase,
-    private val getLinkListUseCase: GetLinkListUseCase
+    private val getLinkListUseCase: GetLinkListUseCase,
+    private val observeLastOrderUseCase: ObserveLastOrderUseCase,
+    private val stopObserveOrdersUseCase: StopObserveOrdersUseCase,
 ) : SharedStateViewModel<ProfileState.DataState, ProfileState.Action, ProfileState.Event>(
     initDataState = ProfileState.DataState(
         lastOrder = null,
@@ -26,32 +34,39 @@ class ProfileViewModel(
     )
 ) {
 
+    private var observeLastOrderJob: Job? = null
+    private var orderObservationUuid: String? = null
+
     override fun reduce(
         action: ProfileState.Action,
-        dataState: ProfileState.DataState
+        dataState: ProfileState.DataState,
     ) {
         when (action) {
             ProfileState.Action.BackClicked -> onBackClicked()
             ProfileState.Action.Init -> loadData()
             ProfileState.Action.OnRefreshClicked -> loadData()
-            is ProfileState.Action.onLastOrderClicked -> onLastOrderClicked(
+            is ProfileState.Action.OnLastOrderClicked -> onLastOrderClicked(
                 uuid = action.uuid,
                 code = action.code
             )
 
-            ProfileState.Action.onOrderHistoryClicked -> onOrderHistoryClicked()
-            ProfileState.Action.onSettingsClick -> onSettingsClicked()
-            ProfileState.Action.onYourAddressesClicked -> onYourAddressesClicked()
-            ProfileState.Action.onLoginClicked -> onLoginClicked()
-            ProfileState.Action.onAboutAppClicked -> onAboutAppClicked()
-            ProfileState.Action.onCafeListClicked -> onCafeListClicked()
-            is ProfileState.Action.onFeedbackClicked -> onFeedbackClicked(
+            ProfileState.Action.OnOrderHistoryClicked -> onOrderHistoryClicked()
+            ProfileState.Action.OnSettingsClick -> onSettingsClicked()
+            ProfileState.Action.OnYourAddressesClicked -> onYourAddressesClicked()
+            ProfileState.Action.OnLoginClicked -> onLoginClicked()
+            ProfileState.Action.OnAboutAppClicked -> onAboutAppClicked()
+            ProfileState.Action.OnCafeListClicked -> onCafeListClicked()
+            is ProfileState.Action.OnFeedbackClicked -> onFeedbackClicked(
                 action.linkList
             )
 
-            is ProfileState.Action.onPaymentClicked -> onPaymentClicked(
+            is ProfileState.Action.OnPaymentClicked -> onPaymentClicked(
                 paymentMethodList = action.paymentMethodList
             )
+
+            ProfileState.Action.StartObserveOrder -> observeLastOrder()
+
+            ProfileState.Action.StopObserveOrder -> stopLastOrderObservation()
         }
     }
 
@@ -84,12 +99,38 @@ class ProfileViewModel(
         )
     }
 
+    private fun observeLastOrder() {
+        observeLastOrderJob = sharedScope.launchSafe(
+            block = {
+                val (uuid, lastOrderFlow) = observeLastOrderUseCase()
+                orderObservationUuid = uuid
+                lastOrderFlow.collectLatest { lightOrder ->
+                    setState {
+                        copy(lastOrder = lightOrder)
+                    }
+                }
+            },
+            onError = { error ->
+                Logger.logE("Profile", error.stackTraceToString())
+            }
+        )
+    }
+
+    fun stopLastOrderObservation() {
+        observeLastOrderJob?.cancel()
+        orderObservationUuid?.let { uuid ->
+            sharedScope.launch {
+                stopObserveOrdersUseCase(uuid)
+            }
+        }
+        orderObservationUuid = null
+    }
+
     private fun onBackClicked() {
         addEvent {
             ProfileState.Event.GoBackEvent
         }
     }
-
 
     fun onLastOrderClicked(uuid: String, code: String) {
         addEvent {

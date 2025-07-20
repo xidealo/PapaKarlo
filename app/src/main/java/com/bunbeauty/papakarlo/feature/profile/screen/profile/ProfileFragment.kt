@@ -74,6 +74,16 @@ class ProfileFragment :
         viewModel.onAction(ProfileState.Action.Init)
     }
 
+    override fun onStart() {
+        super.onStart()
+        viewModel.onAction(ProfileState.Action.StartObserveOrder)
+    }
+
+    override fun onStop() {
+        viewModel.onAction(ProfileState.Action.StopObserveOrder)
+        super.onStop()
+    }
+
     @Composable
     override fun ProfileState.DataState.mapState(): ProfileViewState {
         return ProfileViewState(
@@ -222,7 +232,7 @@ class ProfileFragment :
             modifier = Modifier
                 .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
             textStringId = R.string.action_profile_login,
-            onClick = { onAction(ProfileState.Action.onLoginClicked) }
+            onClick = { onAction(ProfileState.Action.OnLoginClicked) }
         )
     }
 
@@ -240,7 +250,7 @@ class ProfileFragment :
                 OrderProfile(
                     onClick = {
                         onAction(
-                            ProfileState.Action.onLastOrderClicked(
+                            ProfileState.Action.OnLastOrderClicked(
                                 uuid = state.lastOrder.uuid,
                                 code = state.lastOrder.code
                             )
@@ -261,7 +271,7 @@ class ProfileFragment :
                 iconDescriptionStringId = R.string.description_ic_settings,
                 labelStringId = R.string.action_profile_settings,
 
-                onClick = { onAction(ProfileState.Action.onSettingsClick) }
+                onClick = { onAction(ProfileState.Action.OnSettingsClick) }
             )
             NavigationIconCardWithDivider(
                 modifier = Modifier
@@ -269,7 +279,7 @@ class ProfileFragment :
                 iconId = R.drawable.ic_address,
                 iconDescriptionStringId = R.string.description_ic_my_addresses,
                 labelStringId = R.string.action_profile_my_addresses,
-                onClick = { onAction(ProfileState.Action.onYourAddressesClicked) }
+                onClick = { onAction(ProfileState.Action.OnYourAddressesClicked) }
             )
             NavigationIconCardWithDivider(
                 modifier = Modifier
@@ -277,7 +287,7 @@ class ProfileFragment :
                 iconId = R.drawable.ic_history,
                 iconDescriptionStringId = R.string.description_ic_my_orders,
                 labelStringId = R.string.action_profile_my_orders,
-                onClick = { onAction(ProfileState.Action.onOrderHistoryClicked) }
+                onClick = { onAction(ProfileState.Action.OnOrderHistoryClicked) }
             )
             ProfileInfoCards(
                 modifier = Modifier,
@@ -362,7 +372,7 @@ class ProfileFragment :
                 iconId = R.drawable.ic_cafes,
                 iconDescriptionStringId = R.string.title_bottom_navigation_menu_cafe_list,
                 labelStringId = R.string.title_bottom_navigation_menu_cafe_list,
-                onClick = { onAction(ProfileState.Action.onCafeListClicked) }
+                onClick = { onAction(ProfileState.Action.OnCafeListClicked) }
             )
             NavigationIconCardWithDivider(
                 modifier = Modifier.fillMaxWidth(),
@@ -371,7 +381,7 @@ class ProfileFragment :
                 labelStringId = R.string.action_profile_payment,
                 onClick = {
                     onAction(
-                        ProfileState.Action.onPaymentClicked(
+                        ProfileState.Action.OnPaymentClicked(
                             paymentMethodList = state.paymentMethodList
                         )
                     )
@@ -385,7 +395,7 @@ class ProfileFragment :
                 labelStringId = R.string.title_feedback,
                 onClick = {
                     onAction(
-                        ProfileState.Action.onFeedbackClicked(
+                        ProfileState.Action.OnFeedbackClicked(
                             linkList = state.linkList
                         )
                     )
@@ -397,7 +407,7 @@ class ProfileFragment :
                 iconId = R.drawable.ic_info,
                 iconDescriptionStringId = R.string.description_ic_about,
                 labelStringId = R.string.title_about_app,
-                onClick = { onAction(ProfileState.Action.onAboutAppClicked) }
+                onClick = { onAction(ProfileState.Action.OnAboutAppClicked) }
             )
         }
     }
@@ -440,7 +450,8 @@ class ProfileFragment :
                     modifier = Modifier
                         .weight(1f)
                         .wrapContentWidth(Alignment.End),
-                    text = state.lastOrder?.dateTime?.let { stringUtil.getDateTimeString(it) } ?: "—",
+                    text = state.lastOrder?.dateTime?.let { stringUtil.getDateTimeString(it) }
+                        ?: "—",
                     style = FoodDeliveryTheme.typography.bodySmall,
                     color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
                     textAlign = TextAlign.End

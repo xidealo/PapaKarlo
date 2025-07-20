@@ -12,13 +12,14 @@ import kotlinx.coroutines.flow.merge
 class ObserveLastOrderUseCase(
     private val dataStoreRepo: DataStoreRepo,
     private val orderRepo: OrderRepo,
-    private val lightOrderMapper: LightOrderMapper
+    private val lightOrderMapper: LightOrderMapper,
 ) {
 
     suspend operator fun invoke(): Pair<String?, Flow<LightOrder?>> {
         val token = dataStoreRepo.getToken() ?: return null to flow {}
         val userUuid = dataStoreRepo.getUserUuid() ?: return null to flow {}
-        val lastOrder = orderRepo.getLastOrderByUserUuidNetworkFirst(token = token, userUuid = userUuid)
+        val lastOrder =
+            orderRepo.getLastOrderByUserUuidLocalFirst(token = token, userUuid = userUuid)
 
         return if (lastOrder == null) {
             null to flow { emit(null) }
