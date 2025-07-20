@@ -19,10 +19,15 @@
 			<key>orderHint</key>
 			<integer>8</integer>
 		</dict>
+		<key>estpoest copy.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>50</integer>
+		</dict>
 		<key>estpoest.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>49</integer>
+			<integer>9</integer>
 		</dict>
 		<key>gustoPub.xcscheme_^#shared#^_</key>
 		<dict>
@@ -93,6 +98,11 @@
 			<true/>
 		</dict>
 		<key>027CB0132A346F7B00350EB2</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>027E62382E25504E00648562</key>
 		<dict>
 			<key>primary</key>
 			<true/>
