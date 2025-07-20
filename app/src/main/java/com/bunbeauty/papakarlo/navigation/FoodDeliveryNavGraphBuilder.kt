@@ -82,5 +82,57 @@ fun NavGraphBuilder.foodDeliveryNavGraphBuilder(
         goToCreateOrderFragment = {},
     )
 
-    profileScreenRoute()
+    profileScreenRoute(
+        back = navController::navigateUp,
+        goToUserAddress ={},
+        goToLogin ={},
+        goToOrderDetailsFragment ={},
+        goToOrdersFragment ={},
+        goToSettingsFragment ={},
+        goToAboutAppBottomSheet ={},
+        goToCafeListFragment ={},
+    )
 }
+
+
+/*
+*
+* TODO сделать ботом щиты
+*  <dialog
+        android:id="@+id/cafeOptionsBottomSheet"
+        android:name="com.bunbeauty.papakarlo.feature.cafe.screen.cafeoptions.CafeOptionsBottomSheet"
+        android:label="CafeOptionsBottomSheet">
+        <argument
+            android:name="cafeUuid"
+            app:argType="string" />
+    </dialog>
+
+    <!--Не нужно создавать навигацию (часть экрана)-->
+
+    <dialog
+        android:id="@+id/feedbackBottomSheet"
+        android:name="com.bunbeauty.papakarlo.feature.profile.screen.feedback.FeedbackBottomSheet"
+        android:label="FeedbackBottomSheet" />
+    <!--Не нужно создавать навигацию (часть экрана)-->
+
+    <dialog
+        android:id="@+id/aboutAppBottomSheet"
+        android:name="com.bunbeauty.papakarlo.feature.profile.screen.aboutapp.AboutAppBottomSheet"
+        android:label="AboutAppBottomSheet" />
+
+    <!--Не нужно создавать навигацию (часть экрана)-->
+
+    <dialog
+        android:id="@+id/logoutBottomSheet"
+        android:name="com.bunbeauty.papakarlo.feature.profile.screen.logout.LogoutBottomSheet"
+        android:label="LogoutBottomSheet">
+        <action
+            android:id="@+id/back_to_profileFragment"
+            app:destination="@id/profileFragment"
+            app:popUpTo="@id/profileFragment"
+            app:popUpToInclusive="true" />
+    </dialog>
+*
+*
+*
+* */

@@ -1,5 +1,6 @@
 package com.bunbeauty.papakarlo.util.string
 
+import androidx.compose.runtime.Composable
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.util.resources.IResourcesProvider
 import com.bunbeauty.shared.Constants.ADDRESS_DIVIDER

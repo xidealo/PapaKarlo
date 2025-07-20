@@ -39,7 +39,7 @@ interface ProfileState {
     }
 
     sealed interface Event : BaseEvent {
-        class OpenOrderDetails(val orderUuid: String, val orderCode: String) : Event
+        class OpenOrderDetails(val orderUuid: String) : Event
         data object OpenSettings : Event
         data object OpenAddressList : Event
         data object OpenOrderList : Event

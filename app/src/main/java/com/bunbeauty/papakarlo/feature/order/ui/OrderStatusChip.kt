@@ -27,10 +27,23 @@ private val orderStatusShape = RoundedCornerShape(12.dp)
 private val zeroStatusShape = RoundedCornerShape(0.dp)
 
 @Composable
+fun OrderStatus.getOrderStatusName(): String {
+    return when (this) {
+        OrderStatus.NOT_ACCEPTED -> stringResource(R.string.msg_status_not_accepted)
+        OrderStatus.ACCEPTED -> stringResource(R.string.msg_status_accepted)
+        OrderStatus.PREPARING -> stringResource(R.string.msg_status_preparing)
+        OrderStatus.SENT_OUT -> stringResource(R.string.msg_status_sent_out)
+        OrderStatus.DELIVERED -> stringResource(R.string.msg_status_delivered)
+        OrderStatus.DONE -> stringResource(R.string.msg_status_done)
+        OrderStatus.CANCELED -> stringResource(R.string.msg_status_canceled)
+    }
+}
+
+@Composable
 fun OrderStatusChip(
     modifier: Modifier = Modifier,
     orderStatus: OrderStatus,
-    statusName: String
+    statusName: String,
 ) {
     Box(
         modifier = modifier
@@ -50,7 +63,7 @@ fun OrderStatusChip(
 @Composable
 fun EmptyOrderStatusChip(
     modifier: Modifier = Modifier,
-    roundedCornerShape: RoundedCornerShape? = null
+    roundedCornerShape: RoundedCornerShape? = null,
 ) {
     Box(
         modifier = modifier
@@ -64,7 +77,7 @@ fun EmptyOrderStatusChip(
 fun PassedOrderStatusChip(
     modifier: Modifier = Modifier,
     orderStatus: OrderStatus,
-    roundedCornerShape: RoundedCornerShape? = null
+    roundedCornerShape: RoundedCornerShape? = null,
 ) {
     Box(
         modifier = modifier

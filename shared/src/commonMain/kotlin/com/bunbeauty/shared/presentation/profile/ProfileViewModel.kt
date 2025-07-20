@@ -36,7 +36,6 @@ class ProfileViewModel(
             ProfileState.Action.OnRefreshClicked -> loadData()
             is ProfileState.Action.onLastOrderClicked -> onLastOrderClicked(
                 uuid = action.uuid,
-                code = action.code
             )
 
             ProfileState.Action.onOrderHistoryClicked -> onOrderHistoryClicked()
@@ -91,9 +90,9 @@ class ProfileViewModel(
     }
 
 
-    fun onLastOrderClicked(uuid: String, code: String) {
+    fun onLastOrderClicked(uuid: String) {
         addEvent {
-            ProfileState.Event.OpenOrderDetails(uuid, code)
+            ProfileState.Event.OpenOrderDetails(uuid)
         }
     }
 
