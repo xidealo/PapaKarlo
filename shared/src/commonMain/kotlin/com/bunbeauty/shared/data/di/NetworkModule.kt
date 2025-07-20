@@ -78,9 +78,9 @@ fun networkModule() = module {
             }
 
             install(HttpTimeout) {
-                requestTimeoutMillis = 30000
-                connectTimeoutMillis = 30000
-                socketTimeoutMillis = 30000
+                requestTimeoutMillis = 35000
+                connectTimeoutMillis = 35000
+                socketTimeoutMillis = 35000
             }
         }
     }

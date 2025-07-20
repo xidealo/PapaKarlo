@@ -10,7 +10,7 @@ interface GetCurrentUserAddressUseCase {
 
 class GetCurrentUserAddressUseCaseImpl(
     private val dataStoreRepo: DataStoreRepo,
-    private val userAddressRepo: UserAddressRepo,
+    private val userAddressRepo: UserAddressRepo
 ) : GetCurrentUserAddressUseCase {
 
     override suspend operator fun invoke(): UserAddress? {

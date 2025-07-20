@@ -41,6 +41,14 @@ enum class FoodDeliveryFlavor(
     EMOJI(
         key = "emoji",
         applicationId = "com.bunbeauty.emoji"
+    ),
+    LIMONAD(
+        key = "limonad",
+        applicationId = "com.bunbeauty.limonad"
+    ),
+    TAVERNA(
+        key = "taverna",
+        applicationId = "com.bunbeauty.taverna"
     );
 
     val assembleReleaseBundle: String
