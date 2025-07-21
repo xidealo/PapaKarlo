@@ -112,7 +112,7 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
     private fun MainScreen(
         mainState: MainState,
         snackbarHostState: SnackbarHostState,
-        backgroundColor: Color,
+        backgroundColor: Color
     ) {
         Scaffold(
             snackbarHost = {
@@ -120,7 +120,7 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
                     snackbarHostState = snackbarHostState,
                     paddingBottom = mainState.paddingBottomSnackbar
                 )
-            },
+            }
         ) {
             Column(
                 modifier = Modifier
@@ -201,7 +201,7 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
     @Composable
     private fun FoodDeliverySnackbarHost(
         snackbarHostState: SnackbarHostState,
-        paddingBottom: Int,
+        paddingBottom: Int
     ) {
         SnackbarHost(
             hostState = snackbarHostState,
@@ -227,7 +227,7 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
 
     private fun handleEventList(
         eventList: List<MainState.Event>,
-        snackbarHostState: SnackbarHostState,
+        snackbarHostState: SnackbarHostState
     ) {
         eventList.forEach { event ->
             when (event) {

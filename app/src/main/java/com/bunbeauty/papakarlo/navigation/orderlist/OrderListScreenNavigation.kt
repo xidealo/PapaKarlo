@@ -5,28 +5,26 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.bunbeauty.papakarlo.feature.order.screen.orderlist.OrderListRoute
-import com.bunbeauty.papakarlo.feature.splash.SplashRoute
-import com.bunbeauty.papakarlo.navigation.orderdetails.OrderDetailsScreenDestination
 import kotlinx.serialization.Serializable
-
 
 @Serializable
 data object OrderListScreenDestination
 
 fun NavController.navigateToOrderListScreen(
-    navOptions: NavOptions,
+    navOptions: NavOptions
 ) = navigate(
-    route = OrderListScreenDestination, navOptions
+    route = OrderListScreenDestination,
+    navOptions
 )
 
 fun NavGraphBuilder.orderListScreenRoute(
     back: () -> Unit,
-    goToOrderDetails: (String) -> Unit,
+    goToOrderDetails: (String) -> Unit
 ) {
     composable<OrderListScreenDestination> {
         OrderListRoute(
             back = back,
-            goToOrderDetails = goToOrderDetails,
+            goToOrderDetails = goToOrderDetails
         )
     }
 }

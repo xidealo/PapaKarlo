@@ -5,8 +5,6 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.bunbeauty.papakarlo.feature.profile.screen.profile.ProfileRoute
-import com.bunbeauty.papakarlo.feature.splash.SplashRoute
-import com.bunbeauty.papakarlo.navigation.selectcity.SelectCityScreenDestination
 import com.bunbeauty.shared.domain.model.SuccessLoginDirection
 import kotlinx.serialization.Serializable
 
@@ -14,7 +12,7 @@ import kotlinx.serialization.Serializable
 data object ProfileScreenDestination
 
 fun NavController.navigateToProfileScreen(
-    navOptions: NavOptions,
+    navOptions: NavOptions
 ) = navigate(route = ProfileScreenDestination, navOptions)
 
 fun NavGraphBuilder.profileScreenRoute(
@@ -24,7 +22,7 @@ fun NavGraphBuilder.profileScreenRoute(
     goToOrderDetailsFragment: (String) -> Unit,
     goToOrdersFragment: () -> Unit,
     goToSettingsFragment: () -> Unit,
-    goToCafeListFragment: () -> Unit,
+    goToCafeListFragment: () -> Unit
 ) {
     composable<ProfileScreenDestination> {
         ProfileRoute(
@@ -34,7 +32,7 @@ fun NavGraphBuilder.profileScreenRoute(
             goToOrderDetailsFragment = goToOrderDetailsFragment,
             goToOrdersFragment = goToOrdersFragment,
             goToSettingsFragment = goToSettingsFragment,
-            goToCafeListFragment = goToCafeListFragment,
+            goToCafeListFragment = goToCafeListFragment
         )
     }
 }

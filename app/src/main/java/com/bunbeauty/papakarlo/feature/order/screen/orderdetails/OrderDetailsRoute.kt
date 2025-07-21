@@ -48,7 +48,7 @@ import org.koin.compose.koinInject
 fun OrderDetailsRoute(
     viewModel: OrderDetailsViewModel = koinViewModel(),
     orderUuid: String,
-    back: () -> Unit,
+    back: () -> Unit
 ) {
     val orderDetailsUiStateMapper = koinInject<OrderDetailsUiStateMapper>()
 
@@ -81,14 +81,13 @@ fun OrderDetailsRoute(
     )
 
     OrderDetailsScreen(viewState = orderDetailsUiStateMapper.map(viewState), onAction = onAction)
-
 }
 
 @Composable
 fun OrderDetailsEffect(
     effects: List<OrderDetails.Event>,
     back: () -> Unit,
-    consumeEffects: () -> Unit,
+    consumeEffects: () -> Unit
 ) {
     LaunchedEffect(effects) {
         effects.forEach { effect ->
@@ -103,7 +102,7 @@ fun OrderDetailsEffect(
 @Composable
 private fun OrderDetailsScreen(
     viewState: OrderDetailsViewState,
-    onAction: (OrderDetails.Action) -> Unit,
+    onAction: (OrderDetails.Action) -> Unit
 ) {
     FoodDeliveryScaffold(
         title = viewState.code,
@@ -185,7 +184,7 @@ private fun OrderDetailsSuccessScreen(state: OrderDetailsViewState) {
 private fun OrderInfoTextColumn(
     modifier: Modifier = Modifier,
     hint: String,
-    info: String,
+    info: String
 ) {
     Column(modifier = modifier) {
         Text(
@@ -204,7 +203,7 @@ private fun OrderInfoTextColumn(
 @Composable
 private fun OrderInfoCard(
     modifier: Modifier = Modifier,
-    orderInfo: OrderDetailsViewState.OrderInfo,
+    orderInfo: OrderDetailsViewState.OrderInfo
 ) {
     FoodDeliveryCard(
         modifier = modifier,
@@ -438,13 +437,13 @@ private fun getOrderInfo(): OrderDetailsViewState.OrderInfo {
         dateTime = "19.03.2023",
         deferredTime = "10:30",
         address =
-            "" +
-                    "ул. Лука" +
-                    "2" +
-                    "10" +
-                    "1" +
-                    "3" +
-                    "тест",
+        "" +
+            "ул. Лука" +
+            "2" +
+            "10" +
+            "1" +
+            "3" +
+            "тест",
         comment = "давай кушать",
         pickupMethod = "доставка",
         statusName = "Готовится",

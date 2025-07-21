@@ -5,28 +5,25 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.bunbeauty.papakarlo.feature.createorder.CreateOrderRoute
-import com.bunbeauty.papakarlo.feature.splash.SplashRoute
-import com.bunbeauty.papakarlo.navigation.consumercart.ConsumerCartScreenDestination
 import kotlinx.serialization.Serializable
-
 
 @Serializable
 data object CreateOrderScreenDestination
 
 fun NavController.navigateToCreateOrderScreen(
-    navOptions: NavOptions,
+    navOptions: NavOptions
 ) = navigate(route = CreateOrderScreenDestination, navOptions)
 
 fun NavGraphBuilder.createOrderScreenRoute(
     back: () -> Unit,
     goToProfile: () -> Unit,
-    goToCreateAddress: () -> Unit,
+    goToCreateAddress: () -> Unit
 ) {
     composable<CreateOrderScreenDestination> {
         CreateOrderRoute(
             back = back,
             goToProfile = goToProfile,
-            goToCreateAddress = goToCreateAddress,
+            goToCreateAddress = goToCreateAddress
         )
     }
 }

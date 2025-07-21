@@ -66,9 +66,8 @@ fun ProductDetailsRoute(
     menuProductName: String,
     productDetailsOpenedFrom: ProductDetailsOpenedFrom,
     additionUuidList: List<String>,
-    cartProductUuid: String?,
+    cartProductUuid: String?
 ) {
-
     LaunchedEffect(Unit) {
         viewModel.onAction(
             ProductDetailsState.Action.Init(
@@ -106,7 +105,7 @@ fun ProductDetailsRoute(
         productDetailsViewState = viewState.map(),
         onAction = onAction,
         productDetailsOpenedFrom = productDetailsOpenedFrom,
-        cartProductUuid = cartProductUuid,
+        cartProductUuid = cartProductUuid
     )
 }
 
@@ -114,7 +113,7 @@ fun ProductDetailsRoute(
 fun ProductDetailsEffect(
     effects: List<ProductDetailsState.Event>,
     back: () -> Unit,
-    consumeEffects: () -> Unit,
+    consumeEffects: () -> Unit
 ) {
     val activity = LocalActivity.current
     LaunchedEffect(effects) {
@@ -150,7 +149,6 @@ fun ProductDetailsEffect(
         }
         consumeEffects()
     }
-
 }
 
 @SuppressLint("RestrictedApi")
@@ -162,7 +160,7 @@ private fun ProductDetailsScreen(
     productDetailsOpenedFrom: ProductDetailsOpenedFrom,
     cartProductUuid: String?,
     productDetailsViewState: ProductDetailsViewState,
-    onAction: (ProductDetailsState.Action) -> Unit,
+    onAction: (ProductDetailsState.Action) -> Unit
 ) {
     FoodDeliveryScaffold(
         title = menuProductName,
@@ -240,7 +238,7 @@ private fun ProductDetailsScreen(
 @Composable
 private fun ProductDetailsSuccessScreen(
     menuProductUi: ProductDetailsViewState.Success.MenuProductUi,
-    onAction: (ProductDetailsState.Action) -> Unit,
+    onAction: (ProductDetailsState.Action) -> Unit
 ) {
     LazyColumn(
         modifier = Modifier
@@ -294,7 +292,7 @@ private fun ProductDetailsSuccessScreen(
 private fun AdditionItem(
     menuProductAdditionItem: MenuProductAdditionItem,
     isMultiple: Boolean,
-    onAction: (ProductDetailsState.Action) -> Unit,
+    onAction: (ProductDetailsState.Action) -> Unit
 ) {
     FoodDeliveryCard(
         onClick = {
@@ -375,7 +373,7 @@ private fun AdditionItem(
 @Composable
 private fun ProductCard(
     modifier: Modifier = Modifier,
-    menuProductUi: ProductDetailsViewState.Success.MenuProductUi,
+    menuProductUi: ProductDetailsViewState.Success.MenuProductUi
 ) {
     Column(
         modifier = modifier
@@ -460,7 +458,7 @@ private fun ProductDetailsSuccessScreenPreview() {
                     oldPrice = "320 ₽",
                     newPrice = "280 ₽",
                     description = "Сочная котлетка, сыр Чедр, маринованный огурчик, помидор, " +
-                            "красный лук, салат, фирменный соус, булочка с кунжутом",
+                        "красный лук, салат, фирменный соус, булочка с кунжутом",
                     additionList = persistentListOf(
                         AdditionItem.AdditionHeaderItem(
                             key = "key1",
@@ -531,7 +529,7 @@ private fun ProductDetailsSuccessScreenPreview() {
             additionUuidList = persistentListOf(),
             onAction = {},
             productDetailsOpenedFrom = ProductDetailsOpenedFrom.CART_PRODUCT,
-            cartProductUuid = "",
+            cartProductUuid = ""
         )
     }
 }

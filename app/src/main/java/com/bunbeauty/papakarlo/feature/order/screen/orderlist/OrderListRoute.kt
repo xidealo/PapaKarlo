@@ -35,7 +35,7 @@ import org.koin.compose.koinInject
 fun OrderListRoute(
     viewModel: OrderListViewModel = koinViewModel(),
     back: () -> Unit,
-    goToOrderDetails: (String) -> Unit,
+    goToOrderDetails: (String) -> Unit
 ) {
     val orderItemMapper = koinInject<OrderItemMapper>()
 
@@ -62,19 +62,18 @@ fun OrderListRoute(
     OrderListScreen(
         viewState = OrderListUi(
             orderList = viewState.orderList.map(orderItemMapper::toItem),
-            state = viewState.state,
+            state = viewState.state
         ),
         back = back,
         onOrderClicked = viewModel::onOrderClicked
     )
 }
 
-
 @Composable
 private fun OrderListScreen(
     viewState: OrderListUi,
     back: () -> Unit,
-    onOrderClicked: (String) -> Unit,
+    onOrderClicked: (String) -> Unit
 ) {
     FoodDeliveryScaffold(
         title = stringResource(id = R.string.title_my_orders),
@@ -107,7 +106,7 @@ private fun OrderListScreen(
 @Composable
 private fun OrderListScreenSuccess(
     orderItemList: List<OrderItem>,
-    onOrderClicked: (String) -> Unit,
+    onOrderClicked: (String) -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -135,9 +134,8 @@ private fun OrderListScreenSuccess(
 private fun OrderListEffect(
     effectList: List<OrderListState.Event>,
     goToOrderDetails: (String) -> Unit,
-    consumeEffects: () -> Unit,
+    consumeEffects: () -> Unit
 ) {
-
     LaunchedEffect(effectList) {
         effectList.forEach { event ->
             when (event) {
@@ -148,7 +146,6 @@ private fun OrderListEffect(
         }
         consumeEffects()
     }
-
 }
 
 @Preview(showSystemUi = true)
@@ -211,11 +208,9 @@ private fun OrderListScreenSuccessPreview() {
                 state = OrderListState.State.SUCCESS
             ),
             back = {
-
             },
             onOrderClicked = {
-
-            },
+            }
         )
     }
 }
@@ -227,11 +222,9 @@ private fun OrderListScreenEmptyPreview() {
         OrderListScreen(
             OrderListUi(state = OrderListState.State.EMPTY),
             back = {
-
             },
             onOrderClicked = {
-
-            },
+            }
         )
     }
 }
@@ -243,11 +236,9 @@ private fun OrderListScreenLoadingPreview() {
         OrderListScreen(
             OrderListUi(state = OrderListState.State.LOADING),
             back = {
-
             },
             onOrderClicked = {
-
-            },
+            }
         )
     }
 }

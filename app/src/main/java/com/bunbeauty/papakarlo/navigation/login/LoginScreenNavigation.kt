@@ -6,21 +6,17 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import com.bunbeauty.papakarlo.feature.auth.LoginRoute
-import com.bunbeauty.papakarlo.feature.splash.SplashRoute
-import com.bunbeauty.papakarlo.navigation.consumercart.ConsumerCartScreenDestination
-import com.bunbeauty.papakarlo.navigation.orderdetails.OrderDetailsScreenDestination
 import com.bunbeauty.shared.domain.model.SuccessLoginDirection
 import kotlinx.serialization.Serializable
 
-
 @Serializable
 data class LoginScreenDestination(
-    val successLoginDirection: SuccessLoginDirection,
+    val successLoginDirection: SuccessLoginDirection
 )
 
 fun NavController.navigateToLoginScreen(
     navOptions: NavOptions,
-    successLoginDirection: SuccessLoginDirection,
+    successLoginDirection: SuccessLoginDirection
 ) = navigate(
     route = LoginScreenDestination(
         successLoginDirection = successLoginDirection
@@ -30,7 +26,7 @@ fun NavController.navigateToLoginScreen(
 
 fun NavGraphBuilder.loginScreenRoute(
     back: () -> Unit,
-    goToConfirm: (phoneNumber: String, successLoginDirection: SuccessLoginDirection) -> Unit,
+    goToConfirm: (phoneNumber: String, successLoginDirection: SuccessLoginDirection) -> Unit
 ) {
     composable<LoginScreenDestination> { backStackEntry ->
         val args = backStackEntry.toRoute<LoginScreenDestination>()
@@ -38,7 +34,7 @@ fun NavGraphBuilder.loginScreenRoute(
         LoginRoute(
             successLoginDirection = args.successLoginDirection,
             back = back,
-            goToConfirm = goToConfirm,
+            goToConfirm = goToConfirm
         )
     }
 }

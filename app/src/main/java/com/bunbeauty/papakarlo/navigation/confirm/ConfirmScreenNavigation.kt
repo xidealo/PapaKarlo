@@ -6,25 +6,23 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import com.bunbeauty.papakarlo.feature.auth.ConfirmRoute
-import com.bunbeauty.papakarlo.navigation.login.LoginScreenDestination
 import com.bunbeauty.shared.domain.model.SuccessLoginDirection
 import kotlinx.serialization.Serializable
-
 
 @Serializable
 data class ConfirmScreenDestination(
     val phoneNumber: String,
-    val successLoginDirection: SuccessLoginDirection,
+    val successLoginDirection: SuccessLoginDirection
 )
 
 fun NavController.navigateToConfirmScreen(
     navOptions: NavOptions,
     phoneNumber: String,
-    successLoginDirection: SuccessLoginDirection,
+    successLoginDirection: SuccessLoginDirection
 ) = navigate(
     route = ConfirmScreenDestination(
         phoneNumber = phoneNumber,
-        successLoginDirection = successLoginDirection,
+        successLoginDirection = successLoginDirection
     ),
     navOptions = navOptions
 )
@@ -32,7 +30,7 @@ fun NavController.navigateToConfirmScreen(
 fun NavGraphBuilder.confirmScreenRoute(
     back: () -> Unit,
     goBackToProfileFragment: () -> Unit,
-    goToCreateOrderFragment: () -> Unit,
+    goToCreateOrderFragment: () -> Unit
 ) {
     composable<ConfirmScreenDestination> { backStackEntry ->
         val args = backStackEntry.toRoute<ConfirmScreenDestination>()
@@ -42,7 +40,7 @@ fun NavGraphBuilder.confirmScreenRoute(
             successLoginDirection = args.successLoginDirection,
             back = back,
             goBackToProfileFragment = goBackToProfileFragment,
-            goToCreateOrderFragment = goToCreateOrderFragment,
+            goToCreateOrderFragment = goToCreateOrderFragment
         )
     }
 }

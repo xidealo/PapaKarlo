@@ -49,7 +49,7 @@ fun LoginRoute(
     viewModel: LoginViewModel = koinViewModel(),
     successLoginDirection: SuccessLoginDirection,
     back: () -> Unit,
-    goToConfirm: (phoneNumber: String, successLoginDirection: SuccessLoginDirection) -> Unit,
+    goToConfirm: (phoneNumber: String, successLoginDirection: SuccessLoginDirection) -> Unit
 ) {
     LaunchedEffect(Unit) {
         viewModel.onAction(Login.Action.Init)
@@ -61,7 +61,6 @@ fun LoginRoute(
             viewModel.onAction(event)
         }
     }
-
 
     val effects by viewModel.events.collectAsStateWithLifecycle()
     val consumeEffects = remember {
@@ -167,9 +166,8 @@ private fun LoginEffect(
     successLoginDirection: SuccessLoginDirection,
     back: () -> Unit,
     goToConfirm: (phoneNumber: String, successLoginDirection: SuccessLoginDirection) -> Unit,
-    consumeEffects: () -> Unit,
+    consumeEffects: () -> Unit
 ) {
-
     val activity = LocalActivity.current
     LaunchedEffect(effects) {
         effects.forEach { effect ->

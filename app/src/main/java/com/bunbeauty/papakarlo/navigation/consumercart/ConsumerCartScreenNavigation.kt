@@ -5,17 +5,15 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.bunbeauty.papakarlo.feature.consumercart.ConsumerCartRoute
-import com.bunbeauty.papakarlo.navigation.profile.ProfileScreenDestination
 import com.bunbeauty.shared.domain.model.SuccessLoginDirection
 import com.bunbeauty.shared.presentation.product_details.ProductDetailsOpenedFrom
 import kotlinx.serialization.Serializable
-
 
 @Serializable
 data object ConsumerCartScreenDestination
 
 fun NavController.navigateConsumerCartScreen(
-    navOptions: NavOptions,
+    navOptions: NavOptions
 ) = navigate(route = ConsumerCartScreenDestination, navOptions)
 
 fun NavGraphBuilder.consumerCartScreenRoute(
@@ -28,8 +26,8 @@ fun NavGraphBuilder.consumerCartScreenRoute(
         name: String,
         productDetailsOpenedFrom: ProductDetailsOpenedFrom,
         additionUuidList: List<String>,
-        cartProductUuid: String?,
-    ) -> Unit,
+        cartProductUuid: String?
+    ) -> Unit
 ) {
     composable<ConsumerCartScreenDestination> {
         ConsumerCartRoute(
@@ -37,7 +35,7 @@ fun NavGraphBuilder.consumerCartScreenRoute(
             goToMenuFragment = goToMenuFragment,
             goToCreateOrderFragment = goToCreateOrderFragment,
             goToLoginFragment = goToLoginFragment,
-            goToProductFragment = goToProductFragment,
+            goToProductFragment = goToProductFragment
         )
     }
 }

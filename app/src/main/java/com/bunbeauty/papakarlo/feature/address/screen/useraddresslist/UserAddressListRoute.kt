@@ -36,9 +36,8 @@ import org.koin.androidx.compose.koinViewModel
 fun UserAddressListRoute(
     viewModel: UserAddressListViewModel = koinViewModel(),
     back: () -> Unit,
-    goToCreateAddress: () -> Unit,
+    goToCreateAddress: () -> Unit
 ) {
-
     LaunchedEffect(Unit) {
         viewModel.update()
     }
@@ -67,7 +66,7 @@ fun UserAddressListRoute(
         ),
         back = back,
         onCreateAddressClicked = viewModel::onCreateAddressClicked,
-        update = viewModel::update,
+        update = viewModel::update
     )
 }
 
@@ -76,7 +75,7 @@ private fun UserAddressListScreen(
     viewState: UserAddressListUi,
     back: () -> Unit,
     onCreateAddressClicked: () -> Unit,
-    update: () -> Unit,
+    update: () -> Unit
 ) {
     FoodDeliveryScaffold(
         title = stringResource(R.string.title_my_addresses),
@@ -154,11 +153,10 @@ fun UserAddressEffect(
     effects: List<UserAddressListState.Event>,
     back: () -> Unit,
     goToCreateAddress: () -> Unit,
-    consumeEffects: () -> Unit,
+    consumeEffects: () -> Unit
 ) {
     val activity = LocalActivity.current
     LaunchedEffect(effects) {
-
         effects.forEach { effect ->
             when (effect) {
                 UserAddressListState.Event.OpenCreateAddressEvent -> goToCreateAddress()

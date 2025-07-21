@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import com.bunbeauty.papakarlo.common.viewmodel.BaseViewModel
 
-
 @Deprecated("Use BaseFragmentWithSharedViewModel")
 abstract class BaseFragment(@LayoutRes layoutId: Int) : Fragment(layoutId) {
 

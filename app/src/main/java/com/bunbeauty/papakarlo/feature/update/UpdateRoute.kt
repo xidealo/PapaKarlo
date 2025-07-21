@@ -36,14 +36,13 @@ import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold
 import com.bunbeauty.shared.domain.model.link.Link
 import com.bunbeauty.shared.domain.model.link.LinkType
-import com.bunbeauty.shared.presentation.splash.Splash
 import com.bunbeauty.shared.presentation.update.UpdateState
 import com.bunbeauty.shared.presentation.update.UpdateViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun UpdateRoute(
-    viewModel: UpdateViewModel = koinViewModel(),
+    viewModel: UpdateViewModel = koinViewModel()
 ) {
     LaunchedEffect(Unit) {
         viewModel.onAction(
@@ -89,7 +88,7 @@ fun UpdateState.DataState.mapState(): UpdateViewState {
 @Composable
 fun UpdateEffect(
     effects: List<UpdateState.Event>,
-    consumeEffects: () -> Unit,
+    consumeEffects: () -> Unit
 ) {
     val localActivity = LocalActivity.current
     LaunchedEffect(effects) {
@@ -101,7 +100,6 @@ fun UpdateEffect(
                     localActivity?.startActivity(intent)
                 }
             }
-
         }
         consumeEffects()
     }
@@ -110,7 +108,7 @@ fun UpdateEffect(
 @Composable
 private fun UpdateScreen(
     viewState: UpdateViewState,
-    onAction: (UpdateState.Action) -> Unit,
+    onAction: (UpdateState.Action) -> Unit
 ) {
     FoodDeliveryScaffold(
         title = stringResource(R.string.title_update_new_app_version)
@@ -139,7 +137,7 @@ private fun UpdateScreen(
 @Composable
 private fun UpdateScreenSuccess(
     viewState: UpdateViewState.State.Success,
-    onAction: (UpdateState.Action) -> Unit,
+    onAction: (UpdateState.Action) -> Unit
 ) {
     Column(
         modifier = Modifier

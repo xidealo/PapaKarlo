@@ -3,6 +3,7 @@ package com.bunbeauty.papakarlo.feature.cafe.screen.cafelist
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.bunbeauty.papakarlo.R
+import com.bunbeauty.papakarlo.feature.cafe.model.CafeOptions
 import com.bunbeauty.papakarlo.feature.cafe.ui.CafeItemAndroid
 import com.bunbeauty.shared.domain.model.cafe.CafeOpenState
 import com.bunbeauty.shared.presentation.cafe_list.CafeList
@@ -25,7 +26,20 @@ fun CafeList.DataState.toViewState(): CafeListViewState {
                     cafeOpenState = cafeItem.cafeOpenState,
                     isLast = cafeItem.isLast
                 )
-            }.toPersistentList()
+            }.toPersistentList(),
+            cafeOptionUI = CafeListViewState.CafeOptionUI(
+                isShown = selectedCafe != null,
+                cafeOptions = selectedCafe?.let { cafe ->
+                    CafeOptions(
+                        title = cafe.address,
+                        showOnMap = stringResource(R.string.action_cafe_options_show_map) + cafe.address,
+                        callToCafe = stringResource(R.string.action_cafe_options_call) + cafe.phone,
+                        phone = cafe.phone,
+                        latitude = cafe.latitude,
+                        longitude = cafe.longitude
+                    )
+                }
+            )
         )
     }
 }

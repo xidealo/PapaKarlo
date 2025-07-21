@@ -2,7 +2,6 @@ package com.bunbeauty.papakarlo.feature.splash
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -25,9 +24,8 @@ fun SplashRoute(
     viewModel: SplashViewModel = koinViewModel(),
     goToUpdateFragment: () -> Unit,
     goToSelectCityFragment: () -> Unit,
-    goToMenuFragment: () -> Unit,
+    goToMenuFragment: () -> Unit
 ) {
-
     LaunchedEffect(Unit) {
         viewModel.onAction(Splash.Action.Init)
     }
@@ -38,7 +36,6 @@ fun SplashRoute(
             viewModel.onAction(event)
         }
     }
-
 
     val effects by viewModel.events.collectAsStateWithLifecycle()
     val consumeEffects = remember {
@@ -60,7 +57,7 @@ fun SplashRoute(
 @Composable
 private fun SplashScreen(
     viewState: Splash.DataState,
-    onAction: (Splash.Action) -> Unit,
+    onAction: (Splash.Action) -> Unit
 ) {
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -79,16 +76,14 @@ private fun SplashEffect(
     goToUpdateFragment: () -> Unit,
     goToSelectCityFragment: () -> Unit,
     goToMenuFragment: () -> Unit,
-    consumeEffects: () -> Unit,
+    consumeEffects: () -> Unit
 ) {
     LaunchedEffect(effects) {
         effects.forEach { effect ->
             when (effect) {
                 Splash.Effect.NavigateToMenuEffect -> goToMenuFragment()
 
-
                 Splash.Effect.NavigateToSelectCityEffect -> goToSelectCityFragment()
-
 
                 Splash.Effect.NavigateToUpdateEffect -> goToUpdateFragment()
             }

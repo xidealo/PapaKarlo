@@ -56,7 +56,6 @@ import com.bunbeauty.papakarlo.common.ui.element.textfield.FoodDeliveryTextField
 import com.bunbeauty.papakarlo.common.ui.element.textfield.FoodDeliveryTextFieldDefaults
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold
-import com.bunbeauty.papakarlo.feature.createorder.CreateOrderScreen
 import com.bunbeauty.papakarlo.feature.createorder.mapper.toViewState
 import com.bunbeauty.papakarlo.feature.createorder.ui.DeferredTimeBottomSheet
 import com.bunbeauty.papakarlo.feature.createorder.ui.DeliveryAddressListBottomSheet
@@ -73,7 +72,6 @@ import com.bunbeauty.shared.presentation.createorder.CreateOrderViewModel
 import kotlinx.collections.immutable.persistentListOf
 import org.koin.androidx.compose.koinViewModel
 
-
 @Composable
 fun CreateOrder.DataState.mapState(): CreateOrderViewState {
     return toViewState()
@@ -84,9 +82,8 @@ fun CreateOrderRoute(
     viewModel: CreateOrderViewModel = koinViewModel(),
     back: () -> Unit,
     goToProfile: () -> Unit,
-    goToCreateAddress: () -> Unit,
+    goToCreateAddress: () -> Unit
 ) {
-
     LaunchedEffect(Unit) {
         viewModel.onAction(CreateOrder.Action.Init)
     }
@@ -97,7 +94,6 @@ fun CreateOrderRoute(
             viewModel.onAction(event)
         }
     }
-
 
     val effects by viewModel.events.collectAsStateWithLifecycle()
     val consumeEffects = remember {
@@ -116,10 +112,10 @@ fun CreateOrderRoute(
     CreateOrderScreen(viewState = viewState.mapState(), onAction = onAction)
 }
 
-
 @Composable
 private fun CreateOrderScreen(
-    viewState: CreateOrderViewState, onAction: (CreateOrder.Action) -> Unit,
+    viewState: CreateOrderViewState,
+    onAction: (CreateOrder.Action) -> Unit
 ) {
     FoodDeliveryScaffold(
         title = stringResource(id = R.string.title_create_order),
@@ -202,7 +198,7 @@ fun CreateOrderEffect(
     back: () -> Unit,
     goToProfile: () -> Unit,
     goToCreateAddress: () -> Unit,
-    consumeEffects: () -> Unit,
+    consumeEffects: () -> Unit
 ) {
     val activity = LocalActivity.current
     LaunchedEffect(effects) {
@@ -268,7 +264,7 @@ private fun DeliveryContent(
     viewState: CreateOrderViewState,
     createOrderType: CreateOrderViewState.CreateOrderType.Delivery,
     focusManager: FocusManager,
-    onAction: (CreateOrder.Action) -> Unit,
+    onAction: (CreateOrder.Action) -> Unit
 ) {
     Column {
         DeliveryAddressCard(
@@ -359,7 +355,7 @@ private fun DeliveryContent(
 private fun DeliveryAddressCard(
     viewState: CreateOrderViewState,
     createOrderType: CreateOrderViewState.CreateOrderType.Delivery,
-    onAction: (CreateOrder.Action) -> Unit,
+    onAction: (CreateOrder.Action) -> Unit
 ) {
     NavigationCardWithDivider(
         label = stringResource(R.string.delivery_address),
@@ -380,7 +376,7 @@ private fun PickupContent(
     viewState: CreateOrderViewState,
     createOrderType: CreateOrderViewState.CreateOrderType.Pickup,
     focusManager: FocusManager,
-    onAction: (CreateOrder.Action) -> Unit,
+    onAction: (CreateOrder.Action) -> Unit
 ) {
     Column {
         PickupAddressCard(
@@ -433,7 +429,7 @@ private fun PickupAddressCard(
     createOrderType: CreateOrderViewState.CreateOrderType.Pickup,
     viewState: CreateOrderViewState,
     focusManager: FocusManager,
-    onAction: (CreateOrder.Action) -> Unit,
+    onAction: (CreateOrder.Action) -> Unit
 ) {
     NavigationCardWithDivider(
         label = stringResource(id = R.string.pickup_address),
@@ -450,7 +446,7 @@ private fun PickupAddressCard(
 private fun CommonContent(
     viewState: CreateOrderViewState,
     focusManager: FocusManager,
-    onAction: (CreateOrder.Action) -> Unit,
+    onAction: (CreateOrder.Action) -> Unit
 ) {
     if (viewState.isLoadingSwitcher) return
 
@@ -480,7 +476,7 @@ private fun DeferredTimeCard(
     viewState: CreateOrderViewState,
     focusManager: FocusManager,
     onAction: (CreateOrder.Action) -> Unit,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     NavigationCardWithDivider(
         modifier = modifier,
@@ -499,7 +495,7 @@ private fun PaymentMethodCard(
     viewState: CreateOrderViewState,
     focusManager: FocusManager,
     onAction: (CreateOrder.Action) -> Unit,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     NavigationCardWithDivider(
         modifier = modifier,
@@ -526,7 +522,7 @@ private fun PaymentMethodCard(
 private fun ChangeBlock(
     viewState: CreateOrderViewState,
     onAction: (CreateOrder.Action) -> Unit,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     if (!viewState.showChange) {
         return
@@ -620,7 +616,7 @@ private fun CommentTextField(
     viewState: CreateOrderViewState,
     focusManager: FocusManager,
     onAction: (CreateOrder.Action) -> Unit,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     FoodDeliveryTextField(
         modifier = modifier
@@ -654,7 +650,7 @@ private fun CommentTextField(
 @Composable
 private fun ErrorText(
     modifier: Modifier = Modifier,
-    @StringRes messageStringId: Int,
+    @StringRes messageStringId: Int
 ) {
     Text(
         modifier = modifier,
@@ -667,7 +663,7 @@ private fun ErrorText(
 @Composable
 private fun BottomAmountBar(
     viewState: CreateOrderViewState,
-    onAction: (CreateOrder.Action) -> Unit,
+    onAction: (CreateOrder.Action) -> Unit
 ) {
     FoodDeliverySurface(modifier = Modifier.fillMaxWidth()) {
         Column(
@@ -720,7 +716,7 @@ private fun BottomAmountBarLoadingContent() {
 @Composable
 private fun BottomAmountBarSuccessContent(
     cartTotal: CartTotalUI.Success,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     Column(
         modifier = modifier,

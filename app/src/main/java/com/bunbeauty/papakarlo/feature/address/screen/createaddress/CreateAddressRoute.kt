@@ -46,9 +46,8 @@ fun CreateAddress.DataState.mapState(): CreateAddressViewState {
 @Composable
 fun CreateAddressRoute(
     viewModel: CreateAddressViewModel = koinViewModel(),
-    back: () -> Unit,
+    back: () -> Unit
 ) {
-
     val viewState by viewModel.dataState.collectAsStateWithLifecycle()
 
     val onAction = remember {
@@ -77,7 +76,7 @@ fun CreateAddressRoute(
 fun CreateAddressEffect(
     effects: List<CreateAddress.Event>,
     back: () -> Unit,
-    consumeEffects: () -> Unit,
+    consumeEffects: () -> Unit
 ) {
     val activity = LocalActivity.current
     LaunchedEffect(effects) {
@@ -112,7 +111,7 @@ fun CreateAddressEffect(
 @Composable
 private fun CreateAddressScreen(
     viewState: CreateAddressViewState,
-    onAction: (CreateAddress.Action) -> Unit,
+    onAction: (CreateAddress.Action) -> Unit
 ) {
     FoodDeliveryScaffold(
         title = stringResource(R.string.title_create_address),
@@ -240,7 +239,7 @@ private fun CreateAddressScreen(
 @Composable
 private fun CreateAddressScreenPreview() {
     FoodDeliveryTheme {
-        CreateAddressScreen (
+        CreateAddressScreen(
             viewState = CreateAddressViewState(
                 street = "Street",
                 streetErrorStringId = null,

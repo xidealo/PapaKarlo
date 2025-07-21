@@ -28,7 +28,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun SelectCityRoute(
     viewModel: SelectCityViewModel = koinViewModel(),
-    goToMenuFragment: () -> Unit,
+    goToMenuFragment: () -> Unit
 ) {
     LaunchedEffect(Unit) {
         viewModel.getCityList()
@@ -58,7 +58,7 @@ fun SelectCityRoute(
 @Composable
 private fun SelectCityScreen(
     cityListState: SelectCityUIState.CityListState,
-    onCitySelected: (City) -> Unit,
+    onCitySelected: (City) -> Unit
 ) {
     FoodDeliveryScaffold(title = stringResource(R.string.title_select_city)) {
         when (cityListState) {
@@ -75,7 +75,7 @@ private fun SelectCityScreen(
 
             SelectCityUIState.CityListState.Error -> {
                 ErrorScreen(R.string.error_select_city_loading) {
-                    //viewModel.getCityList()
+                    // viewModel.getCityList()
                 }
             }
         }
@@ -85,7 +85,7 @@ private fun SelectCityScreen(
 @Composable
 private fun SelectCitySuccessScreen(
     cityList: ImmutableList<City>,
-    onCitySelected: (City) -> Unit,
+    onCitySelected: (City) -> Unit
 ) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
@@ -107,7 +107,7 @@ private fun SelectCitySuccessScreen(
 private fun SelectCityEffect(
     goToMenuFragment: () -> Unit,
     consumeEventList: () -> Unit,
-    eventList: List<SelectCityEvent>,
+    eventList: List<SelectCityEvent>
 ) {
     eventList.forEach { event ->
         when (event) {
@@ -131,7 +131,6 @@ private fun SelectCitySuccessScreenPreview() {
                 cityList = listOf(city, city, city)
             ),
             onCitySelected = {
-
             }
         )
     }
@@ -145,7 +144,6 @@ private fun SelectCityLoadingScreenPreview() {
             SelectCityUIState.CityListState.Loading,
 
             onCitySelected = {
-
             }
         )
     }
@@ -158,7 +156,6 @@ private fun SelectCityErrorScreenPreview() {
         SelectCityScreen(
             SelectCityUIState.CityListState.Error,
             onCitySelected = {
-
             }
         )
     }

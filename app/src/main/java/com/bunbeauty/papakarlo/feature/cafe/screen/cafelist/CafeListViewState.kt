@@ -1,6 +1,7 @@
 package com.bunbeauty.papakarlo.feature.cafe.screen.cafelist
 
 import androidx.compose.runtime.Immutable
+import com.bunbeauty.papakarlo.feature.cafe.model.CafeOptions
 import com.bunbeauty.papakarlo.feature.cafe.ui.CafeItemAndroid
 import com.bunbeauty.shared.presentation.base.BaseViewState
 import kotlinx.collections.immutable.ImmutableList
@@ -12,7 +13,8 @@ sealed class CafeListViewState(
 
     @Immutable
     data class Success(
-        val cafeList: ImmutableList<CafeItemAndroid>
+        val cafeList: ImmutableList<CafeItemAndroid>,
+        val cafeOptionUI: CafeOptionUI
     ) : CafeListViewState(state = State.SUCCESS)
 
     @Immutable
@@ -20,6 +22,12 @@ sealed class CafeListViewState(
 
     @Immutable
     data class Error(val throwable: Throwable) : CafeListViewState(state = State.ERROR)
+
+    @Immutable
+    data class CafeOptionUI(
+        val isShown: Boolean,
+        val cafeOptions: CafeOptions? = null
+    )
 
     enum class State {
         LOADING,

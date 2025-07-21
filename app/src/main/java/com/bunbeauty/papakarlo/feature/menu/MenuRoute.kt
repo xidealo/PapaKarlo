@@ -62,13 +62,13 @@ fun MenuRoute(
     goToProductDetailsFragment: (
         uuid: String,
         name: String,
-        productDetailsOpenedFrom: ProductDetailsOpenedFrom,
+        productDetailsOpenedFrom: ProductDetailsOpenedFrom
     ) -> Unit,
     goToProfile: () -> Unit,
-    goToConsumerCart: () -> Unit,
+    goToConsumerCart: () -> Unit
 ) {
-    //TODO
-    //overrideBackPressedCallback()
+    // TODO
+    // overrideBackPressedCallback()
 
     LaunchedEffect(Unit) {
         viewModel.getMenu()
@@ -99,7 +99,7 @@ fun MenuRoute(
         getMenuListPosition = viewModel::getMenuListPosition,
         onStopAutoScroll = viewModel::onStopAutoScroll,
         onAddProductClicked = viewModel::onAddProductClicked,
-        onMenuItemClicked = viewModel::onMenuItemClicked,
+        onMenuItemClicked = viewModel::onMenuItemClicked
     )
 }
 
@@ -109,9 +109,9 @@ private fun MenuEffect(
     goToProductDetailsFragment: (
         uuid: String,
         name: String,
-        productDetailsOpenedFrom: ProductDetailsOpenedFrom,
+        productDetailsOpenedFrom: ProductDetailsOpenedFrom
     ) -> Unit,
-    consumeEffects: () -> Unit,
+    consumeEffects: () -> Unit
 ) {
     val activity = LocalActivity.current
     effects.forEach { effect ->
@@ -120,7 +120,7 @@ private fun MenuEffect(
                 goToProductDetailsFragment(
                     effect.uuid,
                     effect.name,
-                    ProductDetailsOpenedFrom.MENU_PRODUCT,
+                    ProductDetailsOpenedFrom.MENU_PRODUCT
                 )
             }
 
@@ -146,7 +146,7 @@ private fun MenuScreen(
     getMenuListPosition: (categoryItem: CategoryItem) -> Int,
     onStopAutoScroll: () -> Unit,
     onAddProductClicked: (menuProductUuid: String) -> Unit,
-    onMenuItemClicked: (menuProductUuid: String) -> Unit,
+    onMenuItemClicked: (menuProductUuid: String) -> Unit
 ) {
     val menuLazyGridState = rememberLazyGridState()
 
@@ -167,7 +167,7 @@ private fun MenuScreen(
                     onCategoryClicked = onCategoryClicked,
                     onStartAutoScroll = onStartAutoScroll,
                     getMenuListPosition = getMenuListPosition,
-                    onStopAutoScroll = onStopAutoScroll,
+                    onStopAutoScroll = onStopAutoScroll
                 )
             }
         },
@@ -196,7 +196,7 @@ private fun MenuScreen(
                         menuLazyGridState = menuLazyGridState,
                         onMenuPositionChanged = onMenuPositionChanged,
                         onAddProductClicked = onAddProductClicked,
-                        onMenuItemClicked = onMenuItemClicked,
+                        onMenuItemClicked = onMenuItemClicked
                     )
                 }
 
@@ -221,7 +221,7 @@ private fun MenuSuccessScreen(
     menuLazyGridState: LazyGridState,
     onMenuPositionChanged: (Int) -> Unit,
     onAddProductClicked: (menuProductUuid: String) -> Unit,
-    onMenuItemClicked: (menuProductUuid: String) -> Unit,
+    onMenuItemClicked: (menuProductUuid: String) -> Unit
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
         val menuPosition by remember {
@@ -236,7 +236,7 @@ private fun MenuSuccessScreen(
             menu = menu,
             menuLazyListState = menuLazyGridState,
             onAddProductClicked = onAddProductClicked,
-            onMenuItemClicked = onMenuItemClicked,
+            onMenuItemClicked = onMenuItemClicked
         )
     }
 }
@@ -249,7 +249,7 @@ private fun CategoryRow(
     onCategoryClicked: (categoryItem: CategoryItem) -> Unit,
     onStartAutoScroll: () -> Unit,
     getMenuListPosition: (categoryItem: CategoryItem) -> Int,
-    onStopAutoScroll: () -> Unit,
+    onStopAutoScroll: () -> Unit
 ) {
     val coroutineScope = rememberCoroutineScope()
     val categoryLazyListState = rememberLazyListState()
@@ -302,7 +302,7 @@ private fun MenuColumn(
     menu: MenuViewState,
     menuLazyListState: LazyGridState,
     onAddProductClicked: (menuProductUuid: String) -> Unit,
-    onMenuItemClicked: (menuProductUuid: String) -> Unit,
+    onMenuItemClicked: (menuProductUuid: String) -> Unit
 ) {
     LazyVerticalGrid(
         modifier = Modifier.fillMaxSize(),
@@ -318,8 +318,8 @@ private fun MenuColumn(
             span = { _, menuItemModel ->
                 when (menuItemModel) {
                     is MenuItemUi.Discount,
-                    is MenuItemUi.CategoryHeader,
-                        -> GridItemSpan(maxLineSpan)
+                    is MenuItemUi.CategoryHeader
+                    -> GridItemSpan(maxLineSpan)
 
                     else -> GridItemSpan(1)
                 }
@@ -427,7 +427,7 @@ private fun MenuScreenSuccessPreview() {
             getMenuListPosition = { 0 },
             onStopAutoScroll = {},
             onAddProductClicked = {},
-            onMenuItemClicked = {},
+            onMenuItemClicked = {}
         )
     }
 }
@@ -457,7 +457,7 @@ private fun MenuScreenLoadingPreview() {
             getMenuListPosition = { 0 },
             onStopAutoScroll = {},
             onAddProductClicked = {},
-            onMenuItemClicked = {},
+            onMenuItemClicked = {}
         )
     }
 }
@@ -487,7 +487,7 @@ private fun MenuScreenErrorPreview() {
             getMenuListPosition = { 0 },
             onStopAutoScroll = {},
             onAddProductClicked = {},
-            onMenuItemClicked = {},
+            onMenuItemClicked = {}
         )
     }
 }

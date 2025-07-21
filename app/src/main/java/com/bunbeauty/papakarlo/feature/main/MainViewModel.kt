@@ -3,7 +3,6 @@ package com.bunbeauty.papakarlo.feature.main
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavController
 import com.bunbeauty.core.Logger
 import com.bunbeauty.papakarlo.feature.main.network.INetworkUtil
 import com.bunbeauty.shared.domain.feature.orderavailable.IsOrderAvailableUseCase

@@ -43,7 +43,7 @@ fun OrderStatus.getOrderStatusName(): String {
 fun OrderStatusChip(
     modifier: Modifier = Modifier,
     orderStatus: OrderStatus,
-    statusName: String,
+    statusName: String
 ) {
     Box(
         modifier = modifier
@@ -63,7 +63,7 @@ fun OrderStatusChip(
 @Composable
 fun EmptyOrderStatusChip(
     modifier: Modifier = Modifier,
-    roundedCornerShape: RoundedCornerShape? = null,
+    roundedCornerShape: RoundedCornerShape? = null
 ) {
     Box(
         modifier = modifier
@@ -77,7 +77,7 @@ fun EmptyOrderStatusChip(
 fun PassedOrderStatusChip(
     modifier: Modifier = Modifier,
     orderStatus: OrderStatus,
-    roundedCornerShape: RoundedCornerShape? = null,
+    roundedCornerShape: RoundedCornerShape? = null
 ) {
     Box(
         modifier = modifier

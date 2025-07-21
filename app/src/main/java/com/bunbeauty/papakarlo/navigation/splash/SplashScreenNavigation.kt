@@ -7,24 +7,23 @@ import androidx.navigation.compose.composable
 import com.bunbeauty.papakarlo.feature.splash.SplashRoute
 import kotlinx.serialization.Serializable
 
-
 @Serializable
 data object SplashScreenDestination
 
 fun NavController.navigateToSplashScreen(
-    navOptions: NavOptions,
+    navOptions: NavOptions
 ) = navigate(route = SplashScreenDestination, navOptions)
 
 fun NavGraphBuilder.splashScreenRoute(
     goToUpdateFragment: () -> Unit,
     goToSelectCityFragment: () -> Unit,
-    goToMenuFragment: () -> Unit,
+    goToMenuFragment: () -> Unit
 ) {
     composable<SplashScreenDestination> {
         SplashRoute(
             goToUpdateFragment = goToUpdateFragment,
             goToSelectCityFragment = goToSelectCityFragment,
-            goToMenuFragment = goToMenuFragment,
+            goToMenuFragment = goToMenuFragment
         )
     }
 }

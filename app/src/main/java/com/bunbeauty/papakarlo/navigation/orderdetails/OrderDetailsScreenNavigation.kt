@@ -6,27 +6,26 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import com.bunbeauty.papakarlo.feature.order.screen.orderdetails.OrderDetailsRoute
-import com.bunbeauty.papakarlo.navigation.createaddress.CreateAddressScreenDestination
 import kotlinx.serialization.Serializable
 import kotlin.String
 
-
 @Serializable
 data class OrderDetailsScreenDestination(
-    val orderUuid: String,
+    val orderUuid: String
 )
 
 fun NavController.navigateToOrderDetailsScreen(
     navOptions: NavOptions,
-    orderUuid: String,
+    orderUuid: String
 ) = navigate(
     route = OrderDetailsScreenDestination(
-        orderUuid = orderUuid,
-    ), navOptions
+        orderUuid = orderUuid
+    ),
+    navOptions
 )
 
 fun NavGraphBuilder.orderDetailsScreenRoute(
-    back: () -> Unit,
+    back: () -> Unit
 ) {
     composable<OrderDetailsScreenDestination> { backStackEntry ->
         val args = backStackEntry.toRoute<OrderDetailsScreenDestination>()

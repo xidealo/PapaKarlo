@@ -39,7 +39,7 @@ fun ConfirmRoute(
     successLoginDirection: SuccessLoginDirection,
     back: () -> Unit,
     goBackToProfileFragment: () -> Unit,
-    goToCreateOrderFragment: () -> Unit,
+    goToCreateOrderFragment: () -> Unit
 ) {
     LaunchedEffect(Unit) {
         viewModel.onAction(Confirm.Action.Init(phoneNumber, successLoginDirection))
@@ -112,7 +112,7 @@ fun ConfirmEffect(
     back: () -> Unit,
     goBackToProfileFragment: () -> Unit,
     goToCreateOrderFragment: () -> Unit,
-    consumeEffects: () -> Unit,
+    consumeEffects: () -> Unit
 ) {
     val activity = LocalActivity.current
     LaunchedEffect(effects) {

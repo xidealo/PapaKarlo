@@ -30,9 +30,8 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun SettingsRoute(
     viewModel: SettingsViewModel = koinViewModel(),
-    back: () -> Unit,
+    back: () -> Unit
 ) {
-
     LaunchedEffect(Unit) {
         viewModel.loadData()
     }
@@ -59,7 +58,6 @@ fun SettingsRoute(
     )
 
     SettingsScreen(viewState = viewState.mapState(), onAction = onAction)
-
 }
 
 @Composable
@@ -87,7 +85,7 @@ fun SettingsState.DataState.mapState(): SettingsViewState {
 fun SettingsEffect(
     effects: List<SettingsState.Event>,
     back: () -> Unit,
-    consumeEffects: () -> Unit,
+    consumeEffects: () -> Unit
 ) {
     val activity = LocalActivity.current
     effects.forEach { effect ->
@@ -146,7 +144,6 @@ fun SettingsEffect(
         }
     }
     consumeEffects()
-
 }
 
 @Composable
@@ -190,7 +187,7 @@ fun SettingsScreen(viewState: SettingsViewState, onAction: (SettingsState.Action
 @Composable
 fun SettingsScreenSuccess(
     settingsState: SettingsViewState,
-    onAction: (SettingsState.Action) -> Unit,
+    onAction: (SettingsState.Action) -> Unit
 ) {
     Column(
         modifier = Modifier

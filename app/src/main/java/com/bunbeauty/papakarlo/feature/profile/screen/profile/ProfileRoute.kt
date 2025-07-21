@@ -81,9 +81,8 @@ fun ProfileRoute(
     goToOrderDetailsFragment: (String) -> Unit,
     goToOrdersFragment: () -> Unit,
     goToSettingsFragment: () -> Unit,
-    goToCafeListFragment: () -> Unit,
+    goToCafeListFragment: () -> Unit
 ) {
-
     val linkUiStateMapper = koinInject<LinkUiStateMapper>()
     val paymentMethodUiStateMapper = koinInject<PaymentMethodUiStateMapper>()
     val stringUtil = koinInject<IStringUtil>()
@@ -120,14 +119,14 @@ fun ProfileRoute(
     )
     ProfileScreen(
         viewState = viewState.mapState(),
-        onAction = onAction,
+        onAction = onAction
     )
 }
 
 @Composable
 private fun ProfileScreen(
     viewState: ProfileViewState,
-    onAction: (ProfileState.Action) -> Unit,
+    onAction: (ProfileState.Action) -> Unit
 ) {
     FoodDeliveryScaffold(
         title = stringResource(R.string.title_profile),
@@ -154,7 +153,7 @@ private fun ProfileScreen(
 
             ProfileViewState.State.Authorized -> AuthorizedProfileScreen(
                 state = viewState,
-                onAction = onAction,
+                onAction = onAction
             )
 
             ProfileViewState.State.Unauthorized -> UnauthorizedProfileScreen(
@@ -175,7 +174,7 @@ fun ProfileEffect(
     goToOrdersFragment: () -> Unit,
     goToSettingsFragment: () -> Unit,
     goToCafeListFragment: () -> Unit,
-    consumeEffects: () -> Unit,
+    consumeEffects: () -> Unit
 ) {
     LaunchedEffect(effects) {
         effects.forEach { effect ->
@@ -201,8 +200,8 @@ fun ProfileEffect(
                 }
 
                 ProfileState.Event.ShowAboutApp -> {
-                    //TODO BOTTOM SHEET
-                    //goToAboutAppBottomSheet()
+                    // TODO BOTTOM SHEET
+                    // goToAboutAppBottomSheet()
                 }
 
                 ProfileState.Event.ShowCafeList -> {
@@ -210,7 +209,7 @@ fun ProfileEffect(
                 }
 
                 is ProfileState.Event.ShowFeedback -> {
-                    //TODO BOTTOM SHEET
+                    // TODO BOTTOM SHEET
 //                    FeedbackBottomSheet.show(
 //                        fragmentManager = parentFragmentManager,
 //                        feedbackArgument = FeedbackArgument(
@@ -220,7 +219,7 @@ fun ProfileEffect(
                 }
 
                 is ProfileState.Event.ShowPayment -> {
-                    //TODO BOTTOM SHEET
+                    // TODO BOTTOM SHEET
 
 //                    PaymentBottomSheet.show(
 //                        fragmentManager = parentFragmentManager,
@@ -241,7 +240,7 @@ fun ProfileEffect(
 
 @Composable
 private fun LoginButton(
-    onAction: (ProfileState.Action) -> Unit,
+    onAction: (ProfileState.Action) -> Unit
 ) {
     MainButton(
         modifier = Modifier
@@ -254,7 +253,7 @@ private fun LoginButton(
 @Composable
 private fun AuthorizedProfileScreen(
     state: ProfileViewState,
-    onAction: (ProfileState.Action) -> Unit,
+    onAction: (ProfileState.Action) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -272,7 +271,7 @@ private fun AuthorizedProfileScreen(
                     )
                 },
                 modifier = Modifier.padding(bottom = 16.dp),
-                state = state,
+                state = state
             )
 
             FoodDeliveryHorizontalDivider(
@@ -314,7 +313,7 @@ private fun AuthorizedProfileScreen(
 @Composable
 private fun UnauthorizedProfileScreen(
     onAction: (ProfileState.Action) -> Unit,
-    state: ProfileViewState,
+    state: ProfileViewState
 ) {
     Column(
         modifier = Modifier
@@ -378,7 +377,7 @@ private fun UnauthorizedProfileScreen(
 private fun ProfileInfoCards(
     state: ProfileViewState,
     modifier: Modifier = Modifier,
-    onAction: (ProfileState.Action) -> Unit,
+    onAction: (ProfileState.Action) -> Unit
 ) {
     Column(modifier = modifier) {
         NavigationIconCardWithDivider(
@@ -430,7 +429,7 @@ private fun ProfileInfoCards(
 private fun OrderProfile(
     modifier: Modifier = Modifier,
     state: ProfileViewState,
-    onClick: () -> Unit,
+    onClick: () -> Unit
 ) {
     FoodDeliveryCard(
         modifier = modifier,

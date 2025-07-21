@@ -75,8 +75,8 @@ fun ConsumerCartRoute(
         name: String,
         productDetailsOpenedFrom: ProductDetailsOpenedFrom,
         additionUuidList: List<String>,
-        cartProductUuid: String?,
-    ) -> Unit,
+        cartProductUuid: String?
+    ) -> Unit
 ) {
     LaunchedEffect(Unit) {
         viewModel.onAction(ConsumerCart.Action.Init)
@@ -102,7 +102,7 @@ fun ConsumerCartRoute(
         goToMenuFragment = goToMenuFragment,
         goToCreateOrderFragment = goToCreateOrderFragment,
         goToLoginFragment = goToLoginFragment,
-        goToProductFragment = goToProductFragment,
+        goToProductFragment = goToProductFragment
     )
     ConsumerCartScreen(viewState = viewState.toConsumerCartViewState(), onAction = onAction)
 }
@@ -110,7 +110,7 @@ fun ConsumerCartRoute(
 @Composable
 fun ConsumerCartScreen(
     viewState: ConsumerCartViewState,
-    onAction: (ConsumerCart.Action) -> Unit,
+    onAction: (ConsumerCart.Action) -> Unit
 ) {
     FoodDeliveryScaffold(
         title = stringResource(id = R.string.title_cart),
@@ -172,8 +172,8 @@ fun ConsumerCartEffect(
         name: String,
         productDetailsOpenedFrom: ProductDetailsOpenedFrom,
         additionUuidList: List<String>,
-        cartProductUuid: String?,
-    ) -> Unit,
+        cartProductUuid: String?
+    ) -> Unit
 ) {
     val activity = LocalActivity.current
     LaunchedEffect(effects) {
@@ -207,13 +207,12 @@ fun ConsumerCartEffect(
         }
         consumerEffects()
     }
-
 }
 
 @Composable
 private fun ConsumerCartSuccessScreen(
     viewState: ConsumerCartViewState.Success,
-    onAction: (ConsumerCart.Action) -> Unit,
+    onAction: (ConsumerCart.Action) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -291,7 +290,7 @@ private fun ConsumerCartSuccessScreen(
 private fun BottomPanel(
     bottomPanelInfo: ConsumerCartViewState.BottomPanelInfoUi?,
     onAction: (ConsumerCart.Action) -> Unit,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     FoodDeliverySurface(modifier = modifier) {
         Column(
@@ -357,7 +356,7 @@ private fun BottomPanel(
 
 private fun LazyGridScope.recommendationItems(
     recommendationList: ImmutableList<MenuItemUi.Product>,
-    onAction: (ConsumerCart.Action) -> Unit,
+    onAction: (ConsumerCart.Action) -> Unit
 ) {
     if (recommendationList.isNotEmpty()) {
         item(
@@ -456,7 +455,7 @@ private fun ConsumerCartSuccessScreenPreview() {
                     getRecommendation("7")
                 )
             ),
-            onAction = {},
+            onAction = {}
         )
     }
 }
