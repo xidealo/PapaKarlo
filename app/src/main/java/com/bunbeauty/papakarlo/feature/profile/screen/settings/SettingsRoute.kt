@@ -23,6 +23,7 @@ import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.feature.main.IMessageHost
+import com.bunbeauty.papakarlo.feature.profile.screen.logout.LogoutBottomSheetScreen
 import com.bunbeauty.shared.presentation.settings.SettingsState
 import com.bunbeauty.shared.presentation.settings.SettingsViewModel
 import org.koin.androidx.compose.koinViewModel
@@ -77,7 +78,10 @@ fun SettingsState.DataState.mapState(): SettingsViewState {
             SettingsState.DataState.State.LOADING -> {
                 SettingsViewState.State.Loading
             }
-        }
+        },
+        logoutUI = SettingsViewState.LogoutUI(
+            isShown = isShowLogoutBottomSheet
+        )
     )
 }
 
@@ -90,16 +94,8 @@ fun SettingsEffect(
     val activity = LocalActivity.current
     effects.forEach { effect ->
         when (effect) {
-            is SettingsState.Event.ShowEditEmailEvent -> {
-                TODO()
-//                lifecycleScope.launch {
-//                    EmailBottomSheet.show(childFragmentManager, event.email)?.let { email ->
-//                        viewModel.onEmailChanged(email)
-//                    }
-//                }
-            }
-
             is SettingsState.Event.ShowCityListEvent -> {
+                // TODO BOTTOM SHEET
 //                lifecycleScope.launch {
 //                    CityListBottomSheet.show(
 //                        fragmentManager = childFragmentManager,
@@ -131,16 +127,6 @@ fun SettingsEffect(
             }
 
             SettingsState.Event.Back -> back()
-
-            SettingsState.Event.ShowLogoutEvent -> {
-//                lifecycleScope.launch {
-//                    LogoutBottomSheet.show(childFragmentManager)?.let { isLogout ->
-//                        if (isLogout) {
-//                            viewModel.logout()
-//                        }
-//                    }
-//                }
-            }
         }
     }
     consumeEffects()
@@ -169,6 +155,10 @@ fun SettingsScreen(viewState: SettingsViewState, onAction: (SettingsState.Action
             SettingsViewState.State.Success -> {
                 SettingsScreenSuccess(
                     settingsState = viewState,
+                    onAction = onAction
+                )
+                LogoutBottomSheetScreen(
+                    logoutUI = viewState.logoutUI,
                     onAction = onAction
                 )
             }
@@ -217,7 +207,8 @@ private fun SettingsScreenWithEmailPreview() {
             SettingsViewState(
                 phoneNumber = "+7 999 000-00-00",
                 selectedCityName = "Москва",
-                state = SettingsViewState.State.Success
+                state = SettingsViewState.State.Success,
+                logoutUI = SettingsViewState.LogoutUI(false)
             ),
             onAction = {}
         )
@@ -232,7 +223,8 @@ private fun SettingsScreenWithoutEmailPreview() {
             SettingsViewState(
                 phoneNumber = "+7 999 000-00-00",
                 selectedCityName = "Москва",
-                state = SettingsViewState.State.Success
+                state = SettingsViewState.State.Success,
+                logoutUI = SettingsViewState.LogoutUI(false)
             ),
             onAction = {}
         )
@@ -247,7 +239,8 @@ private fun SettingsScreenLoadingPreview() {
             SettingsViewState(
                 phoneNumber = "+7 999 000-00-00",
                 selectedCityName = "Москва",
-                state = SettingsViewState.State.Loading
+                state = SettingsViewState.State.Loading,
+                logoutUI = SettingsViewState.LogoutUI(false)
             ),
             onAction = {}
         )
@@ -262,7 +255,8 @@ private fun SettingsScreenErrorPreview() {
             SettingsViewState(
                 phoneNumber = "+7 999 000-00-00",
                 selectedCityName = "Москва",
-                state = SettingsViewState.State.Error
+                state = SettingsViewState.State.Error,
+                logoutUI = SettingsViewState.LogoutUI(false)
             ),
             onAction = {}
         )

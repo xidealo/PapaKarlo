@@ -85,6 +85,7 @@ private fun CafeListScreen(
             )
 
             CafeListViewState.Loading -> LoadingScreen()
+
             is CafeListViewState.Success -> {
                 CafeListSuccessScreen(
                     viewState.cafeList,

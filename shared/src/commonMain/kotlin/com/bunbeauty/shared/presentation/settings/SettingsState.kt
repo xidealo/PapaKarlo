@@ -13,7 +13,8 @@ interface SettingsState {
         val selectedCity: City? = null,
         val cityList: List<City> = emptyList(),
         val state: State = State.LOADING,
-        val eventList: List<Event> = emptyList()
+        val eventList: List<Event> = emptyList(),
+        val isShowLogoutBottomSheet: Boolean = false,
     ) : BaseDataState {
         enum class State {
             SUCCESS,
@@ -23,8 +24,6 @@ interface SettingsState {
     }
 
     sealed interface Event : BaseEvent {
-        class ShowEditEmailEvent(val email: String?) : Event
-        data object ShowLogoutEvent : Event
         class ShowCityListEvent(val cityList: List<City>, val selectedCityUuid: String?) : Event
         data object ShowEmailChangedSuccessfullyEvent : Event
         data object ShowEmailChangingFailedEvent : Event
@@ -33,9 +32,10 @@ interface SettingsState {
 
     sealed interface Action : BaseAction {
         data object OnCityClicked : Action
-        data object OnEmailClicked : Action
         data object OnLogoutClicked : Action
+        data object OnLogoutConfirmClicked : Action
         data object LoadData : Action
         data object BackClick : Action
+        data object CloseLogoutBottomSheet : Action
     }
 }
