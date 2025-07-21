@@ -205,7 +205,9 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
     ) {
         SnackbarHost(
             hostState = snackbarHostState,
-            modifier = Modifier.padding(bottom = paddingBottom.dp)
+            modifier = Modifier
+                .padding(bottom = paddingBottom.dp)
+                .imePadding()
         ) { snackbarData ->
             (snackbarData.visuals as? FoodDeliverySnackbarVisuals)?.let { visuals ->
                 val containerColor = when (visuals.foodDeliveryMessage.type) {

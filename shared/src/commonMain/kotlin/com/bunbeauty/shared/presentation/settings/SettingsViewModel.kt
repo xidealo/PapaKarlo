@@ -38,10 +38,7 @@ class SettingsViewModel(
         when (action) {
             SettingsState.Action.BackClick -> backClick()
             SettingsState.Action.LoadData -> loadData()
-            SettingsState.Action.OnCityClicked -> onCityClicked(
-                cityList = dataState.cityList,
-                selectedCityUuid = dataState.selectedCity?.uuid
-            )
+            SettingsState.Action.OnCityClicked -> onCityClicked()
 
             SettingsState.Action.OnLogoutClicked -> onLogoutClicked(
                 phoneNumber = dataState.settings?.phoneNumber.toString()
@@ -50,6 +47,8 @@ class SettingsViewModel(
             SettingsState.Action.OnLogoutConfirmClicked -> logout()
 
             SettingsState.Action.CloseLogoutBottomSheet -> onCloseLogoutClicked()
+            is SettingsState.Action.OnCitySelected -> onCitySelected(action.cityUuid)
+            SettingsState.Action.CloseCityListBottomSheet -> onCloseCityListBottomSheetClicked()
         }
     }
 
@@ -86,14 +85,18 @@ class SettingsViewModel(
         }
     }
 
-    private fun onCityClicked(
-        cityList: List<City>,
-        selectedCityUuid: String?,
-    ) {
-        addEvent {
-            SettingsState.Event.ShowCityListEvent(
-                cityList = cityList,
-                selectedCityUuid = selectedCityUuid
+    private fun onCloseCityListBottomSheetClicked() {
+        setState {
+            copy(
+                isShowCityListBottomSheet = false
+            )
+        }
+    }
+
+    private fun onCityClicked() {
+        setState {
+            copy(
+                isShowCityListBottomSheet = true
             )
         }
     }
@@ -101,6 +104,7 @@ class SettingsViewModel(
     fun onCitySelected(cityUuid: String) {
         sharedScope.launch {
             saveSelectedCityUseCase(cityUuid)
+            onCloseCityListBottomSheetClicked()
         }
     }
 

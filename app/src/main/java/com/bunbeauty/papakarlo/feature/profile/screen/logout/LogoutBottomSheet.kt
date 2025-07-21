@@ -14,7 +14,7 @@ import com.bunbeauty.shared.presentation.settings.SettingsState
 
 @Composable
 fun LogoutBottomSheetScreen(
-    logoutUI: SettingsViewState.LogoutUI,
+    logoutUI: SettingsViewState.LogoutBottomSheetUI,
     onAction: (SettingsState.Action) -> Unit
 ) {
     FoodDeliveryModalBottomSheet(

@@ -1,76 +1,50 @@
 package com.bunbeauty.papakarlo.feature.city.screen.changecity
 
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.fragment.app.FragmentManager
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.common.delegates.argument
-import com.bunbeauty.papakarlo.common.delegates.nullableArgument
-import com.bunbeauty.papakarlo.common.ui.ComposeBottomSheet
-import com.bunbeauty.papakarlo.common.ui.screen.bottomsheet.FoodDeliveryLazyBottomSheet
+import com.bunbeauty.papakarlo.common.ui.screen.bottomsheet.FoodDeliveryModalBottomSheet
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.feature.city.screen.CityUI
 import com.bunbeauty.papakarlo.feature.city.ui.CityItem
-import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
+import com.bunbeauty.papakarlo.feature.profile.screen.settings.SettingsViewState
+import com.bunbeauty.shared.presentation.settings.SettingsState
 
-class CityListBottomSheet : ComposeBottomSheet<CityUI>() {
-
-    private var cityList by argument<List<CityUI>>()
-    private var selectedCityUuid by nullableArgument<String>()
-
-    @Composable
-    override fun Content() {
+@Composable
+fun CityListBottomSheetScreen(
+    cityListBottomSheetUI: SettingsViewState.CityListBottomSheetUI,
+    onAction: (SettingsState.Action) -> Unit
+) {
+    FoodDeliveryModalBottomSheet(
+        onDismissRequest = {
+            onAction(SettingsState.Action.CloseLogoutBottomSheet)
+        },
+        isShown = cityListBottomSheetUI.isShown,
+        title = stringResource(R.string.common_city)
+    ) {
         CityListScreen(
-            cityList = cityList,
-            scrolledToTop = ::toggleDraggable,
+            cityList = cityListBottomSheetUI.cityListUI,
             onAddressClicked = { city ->
-                callback?.onResult(city)
-                dismiss()
-            },
-            selectedCityUuid = selectedCityUuid
-        )
-    }
-
-    companion object {
-        private const val TAG = "CityListBottomSheet"
-
-        suspend fun show(
-            fragmentManager: FragmentManager,
-            cityList: List<CityUI>,
-            selectedCityUuid: String?
-        ) = suspendCoroutine { continuation ->
-            CityListBottomSheet().apply {
-                this.cityList = cityList
-                this.selectedCityUuid = selectedCityUuid
-                callback = object : Callback<CityUI> {
-                    override fun onResult(result: CityUI?) {
-                        continuation.resume(result)
-                    }
-                }
-                show(fragmentManager, TAG)
+                onAction(SettingsState.Action.OnCitySelected(cityUuid = city.uuid))
             }
-        }
+        )
     }
 }
 
 @Composable
 private fun CityListScreen(
     cityList: List<CityUI>,
-    selectedCityUuid: String?,
-    scrolledToTop: (Boolean) -> Unit,
     onAddressClicked: (CityUI) -> Unit
 ) {
-    FoodDeliveryLazyBottomSheet(
-        titleStringId = R.string.common_city,
-        scrolledToTop = scrolledToTop
-    ) {
+    LazyColumn {
         items(cityList) { city ->
             CityItem(
                 cityName = city.name,
                 elevated = false,
-                isSelected = city.uuid == selectedCityUuid,
+                isSelected = city.isSelected,
                 onClick = {
                     onAddressClicked(city)
                 }
@@ -87,16 +61,16 @@ private fun CityListScreenPreview() {
             cityList = listOf(
                 CityUI(
                     uuid = "1",
-                    name = "City 1"
+                    name = "City 1",
+                    isSelected = true
                 ),
                 CityUI(
                     uuid = "2",
-                    name = "City 2"
+                    name = "City 2",
+                    isSelected = false
                 )
             ),
-            scrolledToTop = {},
-            onAddressClicked = {},
-            selectedCityUuid = "1"
+            onAddressClicked = {}
         )
     }
 }
