@@ -11,7 +11,6 @@ import com.bunbeauty.shared.presentation.base.SharedStateViewModel
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 
-
 class ProfileViewModel(
     private val userInteractor: IUserInteractor,
     private val getLastOrderUseCase: GetLastOrderUseCase,
@@ -22,7 +21,8 @@ class ProfileViewModel(
         lastOrder = null,
         state = ProfileState.DataState.State.LOADING,
         paymentMethodList = persistentListOf(),
-        linkList = listOf()
+        linkList = listOf(),
+        isShowAboutAppBottomSheet = false
     )
 ) {
 
@@ -44,6 +44,7 @@ class ProfileViewModel(
             ProfileState.Action.onLoginClicked -> onLoginClicked()
             ProfileState.Action.onAboutAppClicked -> onAboutAppClicked()
             ProfileState.Action.onCafeListClicked -> onCafeListClicked()
+            ProfileState.Action.CloseAboutAppBottomSheet -> onCloseAboutBottomSheet()
             is ProfileState.Action.onFeedbackClicked -> onFeedbackClicked(
                 action.linkList
             )
@@ -51,6 +52,7 @@ class ProfileViewModel(
             is ProfileState.Action.onPaymentClicked -> onPaymentClicked(
                 paymentMethodList = action.paymentMethodList
             )
+
         }
     }
 
@@ -129,6 +131,14 @@ class ProfileViewModel(
         }
     }
 
+    fun onCloseAboutBottomSheet() {
+        setState {
+            copy(
+                isShowAboutAppBottomSheet = false
+            )
+        }
+    }
+
     fun onFeedbackClicked(linkList: List<Link>) {
         addEvent {
             ProfileState.Event.ShowFeedback(
@@ -138,8 +148,10 @@ class ProfileViewModel(
     }
 
     fun onAboutAppClicked() {
-        addEvent {
-            ProfileState.Event.ShowAboutApp
+        setState {
+            copy(
+                isShowAboutAppBottomSheet = true
+            )
         }
     }
 

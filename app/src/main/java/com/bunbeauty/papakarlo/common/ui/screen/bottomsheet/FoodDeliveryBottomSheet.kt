@@ -34,38 +34,6 @@ import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold
 
 @Composable
-fun FoodDeliveryLazyBottomSheet(
-    @StringRes titleStringId: Int,
-    scrolledToTop: ((Boolean) -> Unit),
-    contentSpace: Dp = 8.dp,
-    bottomContent: @Composable ColumnScope.() -> Unit = {},
-    content: LazyListScope.() -> Unit
-) {
-    val lazyListState = rememberLazyListState()
-    val itemPosition by remember {
-        derivedStateOf {
-            lazyListState.firstVisibleItemIndex
-        }
-    }
-    LaunchedEffect(Unit) {
-        snapshotFlow { itemPosition }.collect { itemPosition ->
-            scrolledToTop(itemPosition == 0)
-        }
-    }
-    FoodDeliveryBottomSheet(
-        title = stringResource(id = titleStringId)
-    ) {
-        LazyColumn(
-            modifier = Modifier.weight(1f, false),
-            state = lazyListState,
-            verticalArrangement = spacedBy(contentSpace),
-            content = content
-        )
-        bottomContent()
-    }
-}
-
-@Composable
 fun FoodDeliveryBottomSheet(
     @StringRes titleStringId: Int,
     content: @Composable ColumnScope.() -> Unit

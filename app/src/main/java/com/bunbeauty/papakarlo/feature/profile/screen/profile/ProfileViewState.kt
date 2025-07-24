@@ -12,8 +12,15 @@ data class ProfileViewState(
     val lastOrder: LightOrder? = null,
     val state: State,
     val paymentMethodList: ImmutableList<PaymentMethod>,
-    val linkList: List<Link>
+    val linkList: List<Link>,
+    val aboutBottomSheetUI: AboutBottomSheetUI
 ) : BaseViewState {
+
+    @Immutable
+    data class AboutBottomSheetUI(
+        val isShown: Boolean
+    )
+
     @Immutable
     sealed interface State {
         data object Loading : State

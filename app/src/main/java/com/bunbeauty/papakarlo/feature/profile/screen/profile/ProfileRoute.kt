@@ -43,6 +43,7 @@ import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold
 import com.bunbeauty.papakarlo.feature.order.ui.OrderStatusChip
 import com.bunbeauty.papakarlo.feature.order.ui.getOrderStatusName
+import com.bunbeauty.papakarlo.feature.profile.screen.aboutapp.AboutAppBottomSheet
 import com.bunbeauty.papakarlo.util.string.IStringUtil
 import com.bunbeauty.papakarlo.util.string.getDateTimeString
 import com.bunbeauty.shared.domain.model.SuccessLoginDirection
@@ -68,7 +69,8 @@ fun ProfileState.DataState.mapState(): ProfileViewState {
             ProfileState.DataState.State.LOADING -> ProfileViewState.State.Loading
         },
         paymentMethodList = paymentMethodList,
-        linkList = linkList
+        linkList = linkList,
+        aboutBottomSheetUI = ProfileViewState.AboutBottomSheetUI(isShown = isShowAboutAppBottomSheet)
     )
 }
 
@@ -139,7 +141,6 @@ private fun ProfileScreen(
                 LoginButton(onAction)
             }
         }
-
     ) {
         when (viewState.state) {
             ProfileViewState.State.Error -> ErrorScreen(
@@ -161,6 +162,7 @@ private fun ProfileScreen(
                 state = viewState
             )
         }
+        AboutAppBottomSheet(aboutBottomSheetUI = viewState.aboutBottomSheetUI, onAction = onAction)
     }
 }
 
@@ -197,11 +199,6 @@ fun ProfileEffect(
 
                 ProfileState.Event.OpenSettings -> {
                     goToSettingsFragment()
-                }
-
-                ProfileState.Event.ShowAboutApp -> {
-                    // TODO BOTTOM SHEET
-                    // goToAboutAppBottomSheet()
                 }
 
                 ProfileState.Event.ShowCafeList -> {
@@ -491,7 +488,8 @@ private fun AuthorizedProfileScreenWithLastOrderPreview() {
                     )
                 ),
                 paymentMethodList = persistentListOf(),
-                linkList = listOf()
+                linkList = listOf(),
+                aboutBottomSheetUI = ProfileViewState.AboutBottomSheetUI(isShown = false)
             ),
             onAction = {}
         )
@@ -507,7 +505,8 @@ private fun AuthorizedProfileScreenWithoutLastOrderPreview() {
                 state = ProfileViewState.State.Authorized,
                 lastOrder = null,
                 paymentMethodList = persistentListOf(),
-                linkList = listOf()
+                linkList = listOf(),
+                aboutBottomSheetUI = ProfileViewState.AboutBottomSheetUI(isShown = false)
             ),
             onAction = {}
         )
@@ -523,7 +522,8 @@ private fun UnauthorizedProfileScreenPreview() {
                 state = ProfileViewState.State.Unauthorized,
                 lastOrder = null,
                 paymentMethodList = persistentListOf(),
-                linkList = listOf()
+                linkList = listOf(),
+                aboutBottomSheetUI = ProfileViewState.AboutBottomSheetUI(isShown = false)
             ),
             onAction = {}
         )
@@ -539,7 +539,8 @@ private fun LoadingProfileScreenPreview() {
                 state = ProfileViewState.State.Loading,
                 lastOrder = null,
                 paymentMethodList = persistentListOf(),
-                linkList = listOf()
+                linkList = listOf(),
+                aboutBottomSheetUI = ProfileViewState.AboutBottomSheetUI(isShown = false)
             ),
             onAction = {}
         )
@@ -555,7 +556,8 @@ private fun ErrorProfileScreenPreview() {
                 state = ProfileViewState.State.Error,
                 lastOrder = null,
                 paymentMethodList = persistentListOf(),
-                linkList = listOf()
+                linkList = listOf(),
+                aboutBottomSheetUI = ProfileViewState.AboutBottomSheetUI(isShown = false)
             ),
             onAction = {}
         )
