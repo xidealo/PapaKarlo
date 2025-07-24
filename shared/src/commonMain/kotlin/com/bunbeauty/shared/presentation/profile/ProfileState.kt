@@ -28,16 +28,19 @@ interface ProfileState {
         data object Init : Action
         data object BackClicked : Action
         data object OnRefreshClicked : Action
-        data object onYourAddressesClicked : Action
-        data object onOrderHistoryClicked : Action
-        data object onSettingsClick : Action
-        data class onLastOrderClicked(val uuid: String, val code: String) : Action
-        data object onLoginClicked : Action
-        data object onCafeListClicked : Action
-        data class onPaymentClicked(val paymentMethodList: List<PaymentMethod>) : Action
-        data class onFeedbackClicked(val linkList: List<Link>) : Action
-        data object onAboutAppClicked : Action
+        data object OnYourAddressesClicked : Action
+        data object OnOrderHistoryClicked : Action
+        data object OnSettingsClick : Action
+        data class OnLastOrderClicked(val uuid: String, val code: String) : Action
+        data object OnLoginClicked : Action
+        data object OnCafeListClicked : Action
+        data class OnPaymentClicked(val paymentMethodList: List<PaymentMethod>) : Action
+        data class OnFeedbackClicked(val linkList: List<Link>) : Action
+        data object OnAboutAppClicked : Action
+        data object StartObserveOrder : Action
+        data object StopObserveOrder : Action
         data object CloseAboutAppBottomSheet : Action
+
     }
 
     sealed interface Event : BaseEvent {
