@@ -198,17 +198,3 @@ fun NavGraphBuilder.foodDeliveryNavGraphBuilder(
         }
     )
 }
-
-/*
-* TODO сделать ботом щиты
-*
-    <!--Не нужно создавать навигацию (часть экрана)-->
-
-    <dialog
-        android:id="@+id/aboutAppBottomSheet"
-        android:name="com.bunbeauty.papakarlo.feature.profile.screen.aboutapp.AboutAppBottomSheet"
-        android:label="AboutAppBottomSheet" />
-
-    <!--Не нужно создавать навигацию (часть экрана)-->
-
-* */

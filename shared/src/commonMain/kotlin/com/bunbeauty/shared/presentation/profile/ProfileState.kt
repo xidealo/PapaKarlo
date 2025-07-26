@@ -14,7 +14,8 @@ interface ProfileState {
         val state: State,
         val paymentMethodList: ImmutableList<PaymentMethod>,
         val linkList: List<Link>,
-        val isShowAboutAppBottomSheet: Boolean
+        val isShowAboutAppBottomSheet: Boolean,
+        val isShowFeedbackBottomSheet: Boolean,
     ) : BaseDataState {
         enum class State {
             AUTHORIZED,
@@ -35,11 +36,12 @@ interface ProfileState {
         data object OnLoginClicked : Action
         data object OnCafeListClicked : Action
         data class OnPaymentClicked(val paymentMethodList: List<PaymentMethod>) : Action
-        data class OnFeedbackClicked(val linkList: List<Link>) : Action
+        data object OnFeedbackClicked : Action
         data object OnAboutAppClicked : Action
         data object StartObserveOrder : Action
         data object StopObserveOrder : Action
         data object CloseAboutAppBottomSheet : Action
+        data object CloseFeedbackBottomSheet : Action
 
     }
 
@@ -50,7 +52,6 @@ interface ProfileState {
         data object OpenOrderList : Event
         data object ShowCafeList : Event
         class ShowPayment(val paymentMethodList: List<PaymentMethod>) : Event
-        class ShowFeedback(val linkList: List<Link>) : Event
         data object OpenLogin : Event
         data object GoBackEvent : Event
     }

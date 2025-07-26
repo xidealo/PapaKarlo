@@ -1,72 +1,67 @@
 package com.bunbeauty.papakarlo.feature.profile.screen.feedback
 
+import android.content.Context
 import android.content.Intent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
-import androidx.fragment.app.FragmentManager
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.common.delegates.argument
-import com.bunbeauty.papakarlo.common.ui.ComposeBottomSheet
 import com.bunbeauty.papakarlo.common.ui.element.card.NavigationIconCard
-import com.bunbeauty.papakarlo.common.ui.screen.bottomsheet.FoodDeliveryBottomSheet
+import com.bunbeauty.papakarlo.common.ui.screen.bottomsheet.FoodDeliveryModalBottomSheet
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.feature.profile.screen.feedback.model.FeedbackArgument
 import com.bunbeauty.papakarlo.feature.profile.screen.feedback.model.LinkUI
+import com.bunbeauty.papakarlo.feature.profile.screen.profile.ProfileViewState
+import com.bunbeauty.shared.presentation.profile.ProfileState
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 
-class FeedbackBottomSheet : ComposeBottomSheet<Any>() {
 
-    private var feedbackArgument by argument<FeedbackArgument>()
+private fun goByLink(link: String, context: Context?) {
+    val uri = link.toUri()
+    val intent = Intent(Intent.ACTION_VIEW, uri)
+    context?.startActivity(intent)
+}
 
-    private fun goByLink(link: String) {
-        val uri = link.toUri()
-        val intent = Intent(Intent.ACTION_VIEW, uri)
-        startActivity(intent)
-    }
-
-    @Composable
-    override fun Content() {
+@Composable
+fun FeedBackBottomSheetScreen(
+    feedBackBottomSheetUI: ProfileViewState.FeedBackBottomSheetUI,
+    onAction: (ProfileState.Action) -> Unit,
+) {
+    FoodDeliveryModalBottomSheet(
+        onDismissRequest = {
+            onAction(ProfileState.Action.CloseFeedbackBottomSheet)
+        },
+        isShown = feedBackBottomSheetUI.isShown,
+        title = stringResource(R.string.title_feedback)
+    ) {
         FeedbackScreen(
-            linkList = feedbackArgument.linkList,
-            onItemClick = ::goByLink
+            linkList = feedBackBottomSheetUI.linkList,
         )
-    }
-
-    companion object {
-        private const val TAG = "FeedbackBottomSheet"
-
-        fun show(
-            fragmentManager: FragmentManager,
-            feedbackArgument: FeedbackArgument
-        ) = FeedbackBottomSheet().apply {
-            this.feedbackArgument = feedbackArgument
-            show(fragmentManager, TAG)
-        }
     }
 }
 
 @Composable
 private fun FeedbackScreen(
-    linkList: List<LinkUI>,
-    onItemClick: (String) -> Unit
+    linkList: ImmutableList<LinkUI>,
 ) {
-    FoodDeliveryBottomSheet(titleStringId = R.string.title_feedback) {
-        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            linkList.forEach { link ->
-                NavigationIconCard(
-                    iconId = link.iconId,
-                    iconDescriptionStringId = link.labelId,
-                    labelStringId = link.labelId,
-                    label = link.value,
-                    elevated = false,
-                    onClick = {
-                        onItemClick(link.value)
-                    }
-                )
-            }
+    val context = LocalContext.current
+    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        linkList.forEach { link ->
+            NavigationIconCard(
+                iconId = link.iconId,
+                iconDescriptionStringId = link.labelId,
+                labelStringId = link.labelId,
+                label = link.value,
+                elevated = false,
+                onClick = {
+                    goByLink(link = link.value, context = context)
+                }
+            )
         }
     }
 }
@@ -76,7 +71,7 @@ private fun FeedbackScreen(
 private fun FeedbackScreenPreview() {
     FoodDeliveryTheme {
         FeedbackScreen(
-            linkList = listOf(
+            linkList = persistentListOf(
                 LinkUI(
                     uuid = "",
                     labelId = R.string.action_feedback_vk,
@@ -102,7 +97,6 @@ private fun FeedbackScreenPreview() {
                     value = "https://unknown.link.com/path"
                 )
             ),
-            onItemClick = {}
         )
     }
 }

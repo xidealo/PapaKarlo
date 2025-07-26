@@ -15,8 +15,8 @@ import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+
 class ProfileViewModel(
     private val userInteractor: IUserInteractor,
     private val getLastOrderUseCase: GetLastOrderUseCase,
@@ -30,7 +30,8 @@ class ProfileViewModel(
         state = ProfileState.DataState.State.LOADING,
         paymentMethodList = persistentListOf(),
         linkList = listOf(),
-        isShowAboutAppBottomSheet = false
+        isShowAboutAppBottomSheet = false,
+        isShowFeedbackBottomSheet = false
     )
 ) {
 
@@ -55,10 +56,8 @@ class ProfileViewModel(
             ProfileState.Action.OnLoginClicked -> onLoginClicked()
             ProfileState.Action.OnAboutAppClicked -> onAboutAppClicked()
             ProfileState.Action.OnCafeListClicked -> onCafeListClicked()
-            ProfileState.Action.CloseAboutAppBottomSheet -> onCloseAboutBottomSheet()
-            is ProfileState.Action.OnFeedbackClicked -> onFeedbackClicked(
-                action.linkList
-            )
+            ProfileState.Action.CloseAboutAppBottomSheet -> onCloseAboutAppBottomSheet()
+            ProfileState.Action.OnFeedbackClicked -> onFeedbackClicked()
 
             is ProfileState.Action.OnPaymentClicked -> onPaymentClicked(
                 paymentMethodList = action.paymentMethodList
@@ -67,6 +66,7 @@ class ProfileViewModel(
             ProfileState.Action.StartObserveOrder -> observeLastOrder()
 
             ProfileState.Action.StopObserveOrder -> stopLastOrderObservation()
+            ProfileState.Action.CloseFeedbackBottomSheet -> onCloseFeedbackBottomSheet()
         }
     }
 
@@ -171,7 +171,7 @@ class ProfileViewModel(
         }
     }
 
-    fun onCloseAboutBottomSheet() {
+    fun onCloseAboutAppBottomSheet() {
         setState {
             copy(
                 isShowAboutAppBottomSheet = false
@@ -179,10 +179,18 @@ class ProfileViewModel(
         }
     }
 
-    fun onFeedbackClicked(linkList: List<Link>) {
-        addEvent {
-            ProfileState.Event.ShowFeedback(
-                linkList = linkList
+    fun onCloseFeedbackBottomSheet() {
+        setState {
+            copy(
+                isShowFeedbackBottomSheet = false
+            )
+        }
+    }
+
+    fun onFeedbackClicked() {
+        setState {
+            copy(
+                isShowFeedbackBottomSheet = true
             )
         }
     }
