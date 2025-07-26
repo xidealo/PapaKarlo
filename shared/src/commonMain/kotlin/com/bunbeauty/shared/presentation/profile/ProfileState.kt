@@ -12,7 +12,6 @@ interface ProfileState {
     data class DataState(
         val lastOrder: LightOrder? = null,
         val state: State,
-        val paymentMethodList: ImmutableList<PaymentMethod>,
         val linkList: List<Link>,
         val isShowAboutAppBottomSheet: Boolean,
         val isShowFeedbackBottomSheet: Boolean,
@@ -35,7 +34,6 @@ interface ProfileState {
         data class OnLastOrderClicked(val uuid: String, val code: String) : Action
         data object OnLoginClicked : Action
         data object OnCafeListClicked : Action
-        data class OnPaymentClicked(val paymentMethodList: List<PaymentMethod>) : Action
         data object OnFeedbackClicked : Action
         data object OnAboutAppClicked : Action
         data object StartObserveOrder : Action
@@ -51,7 +49,6 @@ interface ProfileState {
         data object OpenAddressList : Event
         data object OpenOrderList : Event
         data object ShowCafeList : Event
-        class ShowPayment(val paymentMethodList: List<PaymentMethod>) : Event
         data object OpenLogin : Event
         data object GoBackEvent : Event
     }

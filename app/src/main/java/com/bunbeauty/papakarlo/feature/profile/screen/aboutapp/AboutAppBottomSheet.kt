@@ -9,15 +9,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.BuildConfig
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.common.ui.ComposeBottomSheet
 import com.bunbeauty.papakarlo.common.ui.element.card.StartIconCard
-import com.bunbeauty.papakarlo.common.ui.screen.bottomsheet.FoodDeliveryBottomSheet
 import com.bunbeauty.papakarlo.common.ui.screen.bottomsheet.FoodDeliveryModalBottomSheet
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.feature.profile.screen.profile.ProfileViewState
-import com.bunbeauty.papakarlo.feature.profile.screen.settings.SettingsViewState
 import com.bunbeauty.shared.presentation.profile.ProfileState
-import com.bunbeauty.shared.presentation.settings.SettingsState
 
 @Composable
 fun AboutAppBottomSheet(
@@ -34,9 +30,10 @@ fun AboutAppBottomSheet(
         AboutAppScreen()
     }
 }
+
 @Composable
 private fun AboutAppScreen() {
-    Column{
+    Column {
         StartIconCard(
             label = stringResource(R.string.msg_about_app_developer),
             iconId = R.drawable.ic_bb,

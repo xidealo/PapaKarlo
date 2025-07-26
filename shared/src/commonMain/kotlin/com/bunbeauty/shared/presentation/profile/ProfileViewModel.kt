@@ -20,7 +20,6 @@ import kotlinx.coroutines.launch
 class ProfileViewModel(
     private val userInteractor: IUserInteractor,
     private val getLastOrderUseCase: GetLastOrderUseCase,
-    private val getPaymentMethodListUseCase: GetPaymentMethodListUseCase,
     private val getLinkListUseCase: GetLinkListUseCase,
     private val observeLastOrderUseCase: ObserveLastOrderUseCase,
     private val stopObserveOrdersUseCase: StopObserveOrdersUseCase,
@@ -28,7 +27,6 @@ class ProfileViewModel(
     initDataState = ProfileState.DataState(
         lastOrder = null,
         state = ProfileState.DataState.State.LOADING,
-        paymentMethodList = persistentListOf(),
         linkList = listOf(),
         isShowAboutAppBottomSheet = false,
         isShowFeedbackBottomSheet = false
@@ -58,11 +56,6 @@ class ProfileViewModel(
             ProfileState.Action.OnCafeListClicked -> onCafeListClicked()
             ProfileState.Action.CloseAboutAppBottomSheet -> onCloseAboutAppBottomSheet()
             ProfileState.Action.OnFeedbackClicked -> onFeedbackClicked()
-
-            is ProfileState.Action.OnPaymentClicked -> onPaymentClicked(
-                paymentMethodList = action.paymentMethodList
-            )
-
             ProfileState.Action.StartObserveOrder -> observeLastOrder()
 
             ProfileState.Action.StopObserveOrder -> stopLastOrderObservation()
@@ -75,7 +68,6 @@ class ProfileViewModel(
             block = {
                 val lastOrder = getLastOrderUseCase()
                 val linkList = getLinkListUseCase()
-                val paymentMethodList = getPaymentMethodListUseCase()
                 setState {
                     copy(
                         lastOrder = lastOrder,
@@ -84,7 +76,6 @@ class ProfileViewModel(
                         } else {
                             ProfileState.DataState.State.UNAUTHORIZED
                         },
-                        paymentMethodList = paymentMethodList.toImmutableList(),
                         linkList = linkList,
                     )
                 }
@@ -154,14 +145,6 @@ class ProfileViewModel(
     fun onOrderHistoryClicked() {
         addEvent {
             ProfileState.Event.OpenOrderList
-        }
-    }
-
-    fun onPaymentClicked(paymentMethodList: List<PaymentMethod>) {
-        addEvent {
-            ProfileState.Event.ShowPayment(
-                paymentMethodList = paymentMethodList
-            )
         }
     }
 

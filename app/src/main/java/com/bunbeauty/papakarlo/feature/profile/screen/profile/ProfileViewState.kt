@@ -2,9 +2,7 @@ package com.bunbeauty.papakarlo.feature.profile.screen.profile
 
 import androidx.compose.runtime.Immutable
 import com.bunbeauty.papakarlo.feature.profile.screen.feedback.model.LinkUI
-import com.bunbeauty.shared.domain.model.link.Link
 import com.bunbeauty.shared.domain.model.order.LightOrder
-import com.bunbeauty.shared.domain.model.payment_method.PaymentMethod
 import com.bunbeauty.shared.presentation.base.BaseViewState
 import kotlinx.collections.immutable.ImmutableList
 
@@ -12,20 +10,19 @@ import kotlinx.collections.immutable.ImmutableList
 data class ProfileViewState(
     val lastOrder: LightOrder? = null,
     val state: State,
-    val paymentMethodList: ImmutableList<PaymentMethod>,
     val aboutBottomSheetUI: AboutBottomSheetUI,
-    val feedBackBottomSheetUI: FeedBackBottomSheetUI,
+    val feedBackBottomSheetUI: FeedBackBottomSheetUI
 ) : BaseViewState {
 
     @Immutable
     data class AboutBottomSheetUI(
-        val isShown: Boolean,
+        val isShown: Boolean
     )
 
     @Immutable
     data class FeedBackBottomSheetUI(
         val isShown: Boolean,
-        val linkList: ImmutableList<LinkUI>,
+        val linkList: ImmutableList<LinkUI>
     )
 
     @Immutable

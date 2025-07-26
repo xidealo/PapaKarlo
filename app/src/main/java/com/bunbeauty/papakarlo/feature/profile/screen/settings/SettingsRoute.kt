@@ -28,6 +28,8 @@ import com.bunbeauty.papakarlo.feature.main.IMessageHost
 import com.bunbeauty.papakarlo.feature.profile.screen.logout.LogoutBottomSheetScreen
 import com.bunbeauty.shared.presentation.settings.SettingsState
 import com.bunbeauty.shared.presentation.settings.SettingsViewModel
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -92,7 +94,7 @@ fun SettingsState.DataState.mapState(): SettingsViewState {
                     name = city.name,
                     isSelected = city.uuid == selectedCity?.uuid
                 )
-            }
+            }.toPersistentList()
         )
     )
 }
@@ -202,7 +204,7 @@ val previewSettingsViewState = SettingsViewState(
     logoutUI = SettingsViewState.LogoutBottomSheetUI(false),
     cityListBottomSheetUI = SettingsViewState.CityListBottomSheetUI(
         isShown = false,
-        cityListUI = emptyList()
+        cityListUI = persistentListOf()
     )
 )
 
@@ -218,7 +220,7 @@ private fun SettingsScreenWithEmailPreview() {
                 logoutUI = SettingsViewState.LogoutBottomSheetUI(false),
                 cityListBottomSheetUI = SettingsViewState.CityListBottomSheetUI(
                     isShown = false,
-                    cityListUI = emptyList()
+                    cityListUI = persistentListOf()
                 )
             ),
             onAction = {}
@@ -238,7 +240,7 @@ private fun SettingsScreenWithoutEmailPreview() {
                 logoutUI = SettingsViewState.LogoutBottomSheetUI(isShown = false),
                 cityListBottomSheetUI = SettingsViewState.CityListBottomSheetUI(
                     isShown = false,
-                    cityListUI = emptyList()
+                    cityListUI = persistentListOf()
                 )
             ),
             onAction = {}
@@ -258,7 +260,7 @@ private fun SettingsScreenLoadingPreview() {
                 logoutUI = SettingsViewState.LogoutBottomSheetUI(isShown = false),
                 cityListBottomSheetUI = SettingsViewState.CityListBottomSheetUI(
                     isShown = false,
-                    cityListUI = emptyList()
+                    cityListUI = persistentListOf()
                 )
             ),
             onAction = {}
@@ -278,7 +280,7 @@ private fun SettingsScreenErrorPreview() {
                 logoutUI = SettingsViewState.LogoutBottomSheetUI(isShown = false),
                 cityListBottomSheetUI = SettingsViewState.CityListBottomSheetUI(
                     isShown = false,
-                    cityListUI = emptyList()
+                    cityListUI = persistentListOf()
                 )
             ),
             onAction = {}

@@ -3,6 +3,7 @@ package com.bunbeauty.papakarlo.feature.profile.screen.settings
 import androidx.compose.runtime.Immutable
 import com.bunbeauty.papakarlo.feature.city.screen.CityUI
 import com.bunbeauty.shared.presentation.base.BaseViewState
+import kotlinx.collections.immutable.ImmutableList
 
 data class SettingsViewState(
     val phoneNumber: String,
@@ -20,7 +21,7 @@ data class SettingsViewState(
     @Immutable
     data class CityListBottomSheetUI(
         val isShown: Boolean,
-        val cityListUI: List<CityUI>
+        val cityListUI: ImmutableList<CityUI>
     )
 
     enum class State {

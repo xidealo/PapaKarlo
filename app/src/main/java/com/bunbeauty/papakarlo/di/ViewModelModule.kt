@@ -106,7 +106,6 @@ fun viewModelModule() = module {
         ProfileViewModel(
             userInteractor = get(),
             getLastOrderUseCase = get(),
-            getPaymentMethodListUseCase = get(),
             getLinkListUseCase = get(),
             observeLastOrderUseCase = get(),
             stopObserveOrdersUseCase = get()

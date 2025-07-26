@@ -20,7 +20,6 @@ import com.bunbeauty.shared.presentation.profile.ProfileState
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
-
 private fun goByLink(link: String, context: Context?) {
     val uri = link.toUri()
     val intent = Intent(Intent.ACTION_VIEW, uri)
@@ -30,7 +29,7 @@ private fun goByLink(link: String, context: Context?) {
 @Composable
 fun FeedBackBottomSheetScreen(
     feedBackBottomSheetUI: ProfileViewState.FeedBackBottomSheetUI,
-    onAction: (ProfileState.Action) -> Unit,
+    onAction: (ProfileState.Action) -> Unit
 ) {
     FoodDeliveryModalBottomSheet(
         onDismissRequest = {
@@ -40,14 +39,14 @@ fun FeedBackBottomSheetScreen(
         title = stringResource(R.string.title_feedback)
     ) {
         FeedbackScreen(
-            linkList = feedBackBottomSheetUI.linkList,
+            linkList = feedBackBottomSheetUI.linkList
         )
     }
 }
 
 @Composable
 private fun FeedbackScreen(
-    linkList: ImmutableList<LinkUI>,
+    linkList: ImmutableList<LinkUI>
 ) {
     val context = LocalContext.current
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -96,7 +95,7 @@ private fun FeedbackScreenPreview() {
                     iconId = R.drawable.ic_link,
                     value = "https://unknown.link.com/path"
                 )
-            ),
+            )
         )
     }
 }

@@ -45,7 +45,6 @@ import com.bunbeauty.papakarlo.feature.order.ui.OrderStatusChip
 import com.bunbeauty.papakarlo.feature.order.ui.getOrderStatusName
 import com.bunbeauty.papakarlo.feature.profile.screen.aboutapp.AboutAppBottomSheet
 import com.bunbeauty.papakarlo.feature.profile.screen.feedback.FeedBackBottomSheetScreen
-import com.bunbeauty.papakarlo.util.string.IStringUtil
 import com.bunbeauty.papakarlo.util.string.getDateTimeString
 import com.bunbeauty.shared.domain.model.SuccessLoginDirection
 import com.bunbeauty.shared.domain.model.date_time.Date
@@ -58,7 +57,6 @@ import com.bunbeauty.shared.presentation.profile.ProfileViewModel
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
 import org.koin.androidx.compose.koinViewModel
-import org.koin.compose.koinInject
 
 @Composable
 fun ProfileState.DataState.mapState(): ProfileViewState {
@@ -70,7 +68,6 @@ fun ProfileState.DataState.mapState(): ProfileViewState {
             ProfileState.DataState.State.ERROR -> ProfileViewState.State.Error
             ProfileState.DataState.State.LOADING -> ProfileViewState.State.Loading
         },
-        paymentMethodList = paymentMethodList,
         aboutBottomSheetUI = ProfileViewState.AboutBottomSheetUI(isShown = isShowAboutAppBottomSheet),
         feedBackBottomSheetUI = ProfileViewState.FeedBackBottomSheetUI(
             isShown = isShowFeedbackBottomSheet,
@@ -90,11 +87,8 @@ fun ProfileRoute(
     goToOrderDetailsFragment: (String) -> Unit,
     goToOrdersFragment: () -> Unit,
     goToSettingsFragment: () -> Unit,
-    goToCafeListFragment: () -> Unit,
+    goToCafeListFragment: () -> Unit
 ) {
-    val paymentMethodUiStateMapper = koinInject<PaymentMethodUiStateMapper>()
-    val stringUtil = koinInject<IStringUtil>()
-
     LaunchedEffect(Unit) {
         viewModel.onAction(ProfileState.Action.Init)
     }
@@ -134,7 +128,7 @@ fun ProfileRoute(
 @Composable
 private fun ProfileScreen(
     viewState: ProfileViewState,
-    onAction: (ProfileState.Action) -> Unit,
+    onAction: (ProfileState.Action) -> Unit
 ) {
     FoodDeliveryScaffold(
         title = stringResource(R.string.title_profile),
@@ -186,7 +180,7 @@ fun ProfileEffect(
     goToOrdersFragment: () -> Unit,
     goToSettingsFragment: () -> Unit,
     goToCafeListFragment: () -> Unit,
-    consumeEffects: () -> Unit,
+    consumeEffects: () -> Unit
 ) {
     LaunchedEffect(effects) {
         effects.forEach { effect ->
@@ -215,19 +209,6 @@ fun ProfileEffect(
                     goToCafeListFragment()
                 }
 
-                is ProfileState.Event.ShowPayment -> {
-                    // TODO BOTTOM SHEET
-
-//                    PaymentBottomSheet.show(
-//                        fragmentManager = parentFragmentManager,
-//                        paymentMethodsArgument = PaymentMethodsArgument(
-//                            paymentMethodList = paymentMethodUiStateMapper.map(
-//                                event.paymentMethodList
-//                            )
-//                        )
-//                    )
-                }
-
                 ProfileState.Event.GoBackEvent -> back()
             }
         }
@@ -237,7 +218,7 @@ fun ProfileEffect(
 
 @Composable
 private fun LoginButton(
-    onAction: (ProfileState.Action) -> Unit,
+    onAction: (ProfileState.Action) -> Unit
 ) {
     MainButton(
         modifier = Modifier
@@ -250,7 +231,7 @@ private fun LoginButton(
 @Composable
 private fun AuthorizedProfileScreen(
     state: ProfileViewState,
-    onAction: (ProfileState.Action) -> Unit,
+    onAction: (ProfileState.Action) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -310,7 +291,7 @@ private fun AuthorizedProfileScreen(
 @Composable
 private fun UnauthorizedProfileScreen(
     onAction: (ProfileState.Action) -> Unit,
-    state: ProfileViewState,
+    state: ProfileViewState
 ) {
     Column(
         modifier = Modifier
@@ -374,7 +355,7 @@ private fun UnauthorizedProfileScreen(
 private fun ProfileInfoCards(
     state: ProfileViewState,
     modifier: Modifier = Modifier,
-    onAction: (ProfileState.Action) -> Unit,
+    onAction: (ProfileState.Action) -> Unit
 ) {
     Column(modifier = modifier) {
         NavigationIconCardWithDivider(
@@ -383,19 +364,6 @@ private fun ProfileInfoCards(
             iconDescriptionStringId = R.string.title_bottom_navigation_menu_cafe_list,
             labelStringId = R.string.title_bottom_navigation_menu_cafe_list,
             onClick = { onAction(ProfileState.Action.OnCafeListClicked) }
-        )
-        NavigationIconCardWithDivider(
-            modifier = Modifier.fillMaxWidth(),
-            iconId = R.drawable.ic_payment,
-            iconDescriptionStringId = R.string.description_ic_payment,
-            labelStringId = R.string.action_profile_payment,
-            onClick = {
-                onAction(
-                    ProfileState.Action.OnPaymentClicked(
-                        paymentMethodList = state.paymentMethodList
-                    )
-                )
-            }
         )
         NavigationIconCardWithDivider(
             modifier = Modifier
@@ -424,7 +392,7 @@ private fun ProfileInfoCards(
 private fun OrderProfile(
     modifier: Modifier = Modifier,
     state: ProfileViewState,
-    onClick: () -> Unit,
+    onClick: () -> Unit
 ) {
     FoodDeliveryCard(
         modifier = modifier,
@@ -468,7 +436,6 @@ private fun OrderProfile(
 val profileViewStateMock = ProfileViewState(
     state = ProfileViewState.State.Loading,
     lastOrder = null,
-    paymentMethodList = persistentListOf(),
     aboutBottomSheetUI = ProfileViewState.AboutBottomSheetUI(isShown = false),
     feedBackBottomSheetUI = ProfileViewState.FeedBackBottomSheetUI(
         isShown = false,
@@ -495,7 +462,7 @@ private fun AuthorizedProfileScreenWithLastOrderPreview() {
                         ),
                         time = Time(hours = 3796, minutes = 8009)
                     )
-                ),
+                )
             ),
             onAction = {}
         )
@@ -509,7 +476,7 @@ private fun AuthorizedProfileScreenWithoutLastOrderPreview() {
         ProfileScreen(
             viewState = profileViewStateMock.copy(
                 state = ProfileViewState.State.Authorized,
-                lastOrder = null,
+                lastOrder = null
             ),
             onAction = {}
         )
@@ -523,7 +490,7 @@ private fun UnauthorizedProfileScreenPreview() {
         ProfileScreen(
             viewState = profileViewStateMock.copy(
                 state = ProfileViewState.State.Unauthorized,
-                lastOrder = null,
+                lastOrder = null
             ),
             onAction = {}
         )
@@ -537,7 +504,7 @@ private fun LoadingProfileScreenPreview() {
         ProfileScreen(
             viewState = profileViewStateMock.copy(
                 state = ProfileViewState.State.Loading,
-                lastOrder = null,
+                lastOrder = null
             ),
             onAction = {}
         )
@@ -551,7 +518,7 @@ private fun ErrorProfileScreenPreview() {
         ProfileScreen(
             viewState = profileViewStateMock.copy(
                 state = ProfileViewState.State.Error,
-                lastOrder = null,
+                lastOrder = null
             ),
             onAction = {}
         )
