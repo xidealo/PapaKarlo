@@ -4,6 +4,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
+import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -39,11 +40,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
-import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.databinding.LayoutComposeBinding
-import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.navigation.foodDeliveryNavGraphBuilder
 import com.bunbeauty.papakarlo.navigation.splash.SplashScreenDestination
 import kotlinx.coroutines.delay
@@ -54,8 +52,6 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
 
     val viewModel: MainViewModel by viewModel()
 
-    private val viewBinding: LayoutComposeBinding by viewBinding(LayoutComposeBinding::bind)
-
     private val requestPermissionLauncher by lazy {
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { }
     }
@@ -65,7 +61,7 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
 
-        viewBinding.root.setContentWithTheme {
+        setContent {
             val mainState by viewModel.mainState.collectAsStateWithLifecycle()
             val snackbarHostState = remember { SnackbarHostState() }
 
