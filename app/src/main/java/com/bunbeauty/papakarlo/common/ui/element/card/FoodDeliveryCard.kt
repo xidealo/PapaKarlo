@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.LocalMinimumInteractiveComponentEnforcement
 import androidx.compose.material3.LocalMinimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -24,7 +23,7 @@ fun FoodDeliveryCard(
     colors: CardColors = FoodDeliveryCardDefaults.cardColors,
     shape: Shape = FoodDeliveryCardDefaults.cardShape,
     border: BorderStroke? = null,
-    content: @Composable ColumnScope.() -> Unit,
+    content: @Composable ColumnScope.() -> Unit
 ) {
     CompositionLocalProvider(
         LocalMinimumInteractiveComponentSize provides 0.dp
