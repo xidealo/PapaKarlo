@@ -15,6 +15,7 @@ import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logging
+import io.ktor.client.plugins.sse.SSE
 import io.ktor.client.plugins.websocket.WebSockets
 import io.ktor.client.request.header
 import io.ktor.http.ContentType
@@ -58,6 +59,10 @@ fun networkModule() = module {
             }
 
             install(WebSockets)
+            install(SSE) {
+                showCommentEvents()
+                showRetryEvents()
+            }
 
             install(Logging) {
                 logger = object : KtorLogger {

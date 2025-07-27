@@ -139,7 +139,6 @@ dependencies {
 
     implementation(libs.bundles.lifecycle)
     implementation(libs.activity.ktx)
-    implementation(libs.fragment.ktx)
 
     implementation(libs.viewbindingpropertydelegate)
     implementation(libs.bundles.di)

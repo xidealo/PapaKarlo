@@ -303,7 +303,7 @@ internal class NetworkConnectorImpl(
 
     override suspend fun startOrderUpdatesObservation(token: String): Pair<String?, Flow<OrderUpdateServer>> {
         return socketService.observeSocketMessages(
-            path = "client/order/v2/subscribe",
+            path = "client/order/v3/subscribe",
             serializer = OrderUpdateServer.serializer(),
             token = token
         )
