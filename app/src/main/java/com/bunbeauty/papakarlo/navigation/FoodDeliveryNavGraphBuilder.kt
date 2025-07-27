@@ -16,6 +16,7 @@ import com.bunbeauty.papakarlo.navigation.createorder.createOrderScreenRoute
 import com.bunbeauty.papakarlo.navigation.createorder.navigateToCreateOrderScreen
 import com.bunbeauty.papakarlo.navigation.login.loginScreenRoute
 import com.bunbeauty.papakarlo.navigation.login.navigateToLoginScreen
+import com.bunbeauty.papakarlo.navigation.menu.MenuScreenDestination
 import com.bunbeauty.papakarlo.navigation.menu.menuScreenRoute
 import com.bunbeauty.papakarlo.navigation.menu.navigateToMenuScreen
 import com.bunbeauty.papakarlo.navigation.orderdetails.navigateToOrderDetailsScreen
@@ -40,7 +41,7 @@ import com.bunbeauty.papakarlo.navigation.useraddresslist.userAddressListScreenR
 internal val emptyNavOptions = navOptions { }
 
 fun NavGraphBuilder.foodDeliveryNavGraphBuilder(
-    navController: NavController
+    navController: NavController,
 ) {
     cafeListScreenRoute(
         back = navController::navigateUp
@@ -108,7 +109,7 @@ fun NavGraphBuilder.foodDeliveryNavGraphBuilder(
         },
         goToProductFragment = {
                 uuid, name, productDetailsOpenedFrom, additionUuidList,
-                cartProductUuid
+                cartProductUuid,
             ->
             navController.navigateToProductDetailsScreen(
                 uuid = uuid,
@@ -128,7 +129,13 @@ fun NavGraphBuilder.foodDeliveryNavGraphBuilder(
     createOrderScreenRoute(
         back = navController::navigateUp,
         goToProfile = {
-            navController.navigateToProfileScreen(emptyNavOptions)
+            navController.navigateToProfileScreen(
+                navOptions = navOptions {
+                    popUpTo(MenuScreenDestination) {
+                        inclusive = false
+                    }
+                }
+            )
         },
         goToCreateAddress = {
             navController.navigateToCreateAddressScreenDestination(emptyNavOptions)
