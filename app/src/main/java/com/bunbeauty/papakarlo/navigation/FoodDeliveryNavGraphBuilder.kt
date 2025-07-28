@@ -32,6 +32,7 @@ import com.bunbeauty.papakarlo.navigation.selectcity.navigateToSelectCityScreen
 import com.bunbeauty.papakarlo.navigation.selectcity.selectCityScreenRoute
 import com.bunbeauty.papakarlo.navigation.settings.navigateToSettingsScreen
 import com.bunbeauty.papakarlo.navigation.settings.settingsScreenRoute
+import com.bunbeauty.papakarlo.navigation.splash.SplashScreenDestination
 import com.bunbeauty.papakarlo.navigation.splash.splashScreenRoute
 import com.bunbeauty.papakarlo.navigation.update.navigateToUpdateScreen
 import com.bunbeauty.papakarlo.navigation.update.updateScreenRoute
@@ -55,7 +56,13 @@ fun NavGraphBuilder.foodDeliveryNavGraphBuilder(
             navController.navigateToSelectCityScreen(emptyNavOptions)
         },
         goToMenuFragment = {
-            navController.navigateToMenuScreen(emptyNavOptions)
+            navController.navigateToMenuScreen(
+                navOptions = navOptions {
+                    popUpTo(SplashScreenDestination) {
+                        inclusive = true
+                    }
+                }
+            )
         }
     )
 
@@ -123,7 +130,11 @@ fun NavGraphBuilder.foodDeliveryNavGraphBuilder(
     )
     selectCityScreenRoute(
         goToMenuFragment = {
-            navController.navigateToMenuScreen(emptyNavOptions)
+            navController.navigateToMenuScreen(navOptions = navOptions {
+                popUpTo(SplashScreenDestination) {
+                    inclusive = true
+                }
+            })
         }
     )
     createOrderScreenRoute(

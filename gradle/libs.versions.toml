@@ -1,28 +1,28 @@
 [versions]
-gradle = "8.9.0"
+gradle = "8.9.3"
 kotlin = "2.2.0"
 googleServices = "4.4.3"
-crashlytics = "3.0.3"
+crashlytics = "3.0.5"
 kotlinCoroutines = "1.9.0-RC"
 ktor = "3.2.2"
 kotlinxSerialization = "1.9.0"
 koin = "4.1.0"
 sqlDelight = "1.5.5"
-publisher = "3.11.0"
+publisher = "3.12.1"
 appCompact = "1.7.1"
 coreKtx = "1.16.0"
 coil = "3.3.0"
 datetime = "0.9.0"
 desugar = "2.1.5"
 mokkery = "2.9.0"
-composeBom = "2025.03.01"
+composeBom = "2025.07.00"
 activityCompose = "1.10.1"
 navigationCompose = "2.9.2"
 dataStorePreferences = "1.1.7"
 lifecycle = "2.9.2"
 kotlinxDateTime = "0.7.1"
 leakcanary = "2.14"
-firebase = "33.12.0"
+firebase = "34.0.0"
 kaspresso = "1.5.3"
 collectionsImmutable = "0.4.0"
 ktLint = "11.5.1"
@@ -51,9 +51,9 @@ kaspresso-allure-support = { module = "com.kaspersky.android-components:kaspress
 kaspresso-compose-support = { module = "com.kaspersky.android-components:kaspresso-compose-support", version.ref = "kaspresso" }
 desugar-jdk-libs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase" }
-firebase-crashlytics-ktx = { module = "com.google.firebase:firebase-crashlytics-ktx" }
-firebase-analytics-ktx = { module = "com.google.firebase:firebase-analytics-ktx" }
-firebase-messaging-ktx = { module = "com.google.firebase:firebase-messaging-ktx" }
+firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
+firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
+firebase-messaging = { module = "com.google.firebase:firebase-messaging" }
 compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
 foundation = { module = "androidx.compose.foundation:foundation" }
 foundation-layout = { module = "androidx.compose.foundation:foundation-layout" }
@@ -143,9 +143,9 @@ kaspresso = [
 
 firebase = [
     "firebase-bom",
-    "firebase-crashlytics-ktx",
-    "firebase-analytics-ktx",
-    "firebase-messaging-ktx",
+    "firebase-crashlytics",
+    "firebase-analytics",
+    "firebase-messaging",
 ]
 
 compose = [

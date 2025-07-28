@@ -39,7 +39,7 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 implementation(project.dependencies.platform(libs.firebase.bom))
-                implementation(libs.firebase.analytics.ktx)
+                implementation(libs.firebase.analytics)
             }
         }
     }
