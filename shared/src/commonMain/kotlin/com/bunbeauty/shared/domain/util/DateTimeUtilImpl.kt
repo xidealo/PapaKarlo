@@ -4,7 +4,6 @@ import com.bunbeauty.shared.domain.model.date_time.Date
 import com.bunbeauty.shared.domain.model.date_time.DateTime
 import com.bunbeauty.shared.domain.model.date_time.MinuteSecond
 import com.bunbeauty.shared.domain.model.date_time.Time
-import kotlinx.datetime.Clock
 import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDateTime
@@ -12,7 +11,10 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.plus
 import kotlinx.datetime.toInstant
 import kotlinx.datetime.toLocalDateTime
+import kotlin.time.Clock
+import kotlin.time.ExperimentalTime
 
+@OptIn(ExperimentalTime::class)
 class DateTimeUtilImpl : DateTimeUtil {
 
     private val currentMillis: Long
@@ -47,6 +49,7 @@ class DateTimeUtilImpl : DateTimeUtil {
         return getLocalDateTime(currentMillis, timeZone).dateTime
     }
 
+    @OptIn(ExperimentalTime::class)
     fun getDateTimeIn(currentMillis: Long, hour: Int, minute: Int, timeZone: String): DateTime {
         return getInstant(currentMillis).plus(hour, DateTimeUnit.HOUR)
             .plus(minute, DateTimeUnit.MINUTE)

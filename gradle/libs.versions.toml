@@ -1,55 +1,39 @@
 [versions]
-gradle = "8.9.0"
-kotlin = "2.1.21-RC"
-googleServices = "4.4.2"
-crashlytics = "3.0.3"
-navigation = "2.9.0-alpha01"
+gradle = "8.9.3"
+kotlin = "2.2.0"
+googleServices = "4.4.3"
+crashlytics = "3.0.5"
 kotlinCoroutines = "1.9.0-RC"
 ktor = "3.2.2"
-kotlinxSerialization = "1.6.3"
-koin = "3.5.6"
+kotlinxSerialization = "1.9.0"
+koin = "4.1.0"
 sqlDelight = "1.5.5"
-publisher = "3.11.0"
-appCompact = "1.7.0"
-coreKtx = "1.15.0"
-coil = "3.1.0"
+publisher = "3.12.1"
+appCompact = "1.7.1"
+coreKtx = "1.16.0"
+coil = "3.3.0"
 datetime = "0.9.0"
 desugar = "2.1.5"
-mokkery = "2.7.2"
-material = "1.12.0"
-composeBom = "2025.03.01"
+mokkery = "2.9.0"
+composeBom = "2025.07.00"
 activityCompose = "1.10.1"
 navigationCompose = "2.9.2"
-dataStorePreferences = "1.1.4"
-activity = "1.10.1"
-fragment = "1.8.6"
+dataStorePreferences = "1.1.7"
 lifecycle = "2.9.2"
-viewBindingDelegate = "1.5.3"
-kotlinxDateTime = "0.4.0"
-leakcanary = "2.12"
-firebase = "33.12.0"
+kotlinxDateTime = "0.7.1"
+leakcanary = "2.14"
+firebase = "34.0.0"
 kaspresso = "1.5.3"
-collectionsImmutable = "0.3.8"
+collectionsImmutable = "0.4.0"
 ktLint = "11.5.1"
 tripletPlay = "3.11.0"
 
 [libraries]
 appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appCompact" }
 core-ktx = { module = "androidx.core:core-ktx", version.ref = "coreKtx" }
-material = { module = "com.google.android.material:material", version.ref = "material" }
-navigation-fragment = { module = "androidx.navigation:navigation-fragment", version.ref = "navigation" }
-navigation-fragmentKtx = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigation" }
-navigation-runtime = { module = "androidx.navigation:navigation-runtime", version.ref = "navigation" }
-navigation-runtime-ktx = { module = "androidx.navigation:navigation-runtime-ktx", version.ref = "navigation" }
-navigation-ui = { module = "androidx.navigation:navigation-ui", version.ref = "navigation" }
-navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navigation" }
-navigation-testing = { module = "androidx.navigation:navigation-testing", version.ref = "navigation" }
 lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle" }
 lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
 lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle" }
-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "activity" }
-fragment-ktx = { module = "androidx.fragment:fragment-ktx", version.ref = "fragment" }
-viewbindingpropertydelegate = { module = "com.github.kirich1409:viewbindingpropertydelegate", version.ref = "viewBindingDelegate" }
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 koin-test = { module = "io.insert-koin:koin-test", version.ref = "koin" }
@@ -67,9 +51,9 @@ kaspresso-allure-support = { module = "com.kaspersky.android-components:kaspress
 kaspresso-compose-support = { module = "com.kaspersky.android-components:kaspresso-compose-support", version.ref = "kaspresso" }
 desugar-jdk-libs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase" }
-firebase-crashlytics-ktx = { module = "com.google.firebase:firebase-crashlytics-ktx" }
-firebase-analytics-ktx = { module = "com.google.firebase:firebase-analytics-ktx" }
-firebase-messaging-ktx = { module = "com.google.firebase:firebase-messaging-ktx" }
+firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
+firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
+firebase-messaging = { module = "com.google.firebase:firebase-messaging" }
 compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
 foundation = { module = "androidx.compose.foundation:foundation" }
 foundation-layout = { module = "androidx.compose.foundation:foundation-layout" }
@@ -109,7 +93,6 @@ kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", v
 google-services = { module = "com.google.gms:google-services", version.ref = "googleServices" }
 kotlin-serialization = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlin" }
 firebase-crashlytics-gradle = { module = "com.google.firebase:firebase-crashlytics-gradle", version.ref = "crashlytics" }
-navigation-safe-args-gradle-plugin = { module = "androidx.navigation:navigation-safe-args-gradle-plugin", version.ref = "navigation" }
 sqlDelight-gradle-plugin = { module = "com.squareup.sqldelight:gradle-plugin", version.ref = "sqlDelight" }
 play-publisher = { module = "com.github.triplet.gradle:play-publisher", version.ref = "publisher" }
 
@@ -118,7 +101,6 @@ play-publisher = { module = "com.github.triplet.gradle:play-publisher", version.
 application = { id = "com.android.application", version.ref = "gradle" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
-navigation = { id = "androidx.navigation.safeargs", version.ref = "navigation" }
 google-service = { id = "com.google.gms.google-services", version.ref = "googleServices" }
 triplet-play = { id = "com.github.triplet.play", version.ref = "tripletPlay" }
 crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "crashlytics" }
@@ -134,12 +116,6 @@ android-library = { id = "com.android.library", version.ref = "gradle" }
 
 [bundles]
 navigation = [
-    "navigation-fragment",
-    "navigation-fragmentKtx",
-    "navigation-runtime",
-    "navigation-runtime-ktx",
-    "navigation-ui",
-    "navigation-ui-ktx",
     "androidx-navigation-compose",
 ]
 lifecycle = [
@@ -168,9 +144,9 @@ kaspresso = [
 
 firebase = [
     "firebase-bom",
-    "firebase-crashlytics-ktx",
-    "firebase-analytics-ktx",
-    "firebase-messaging-ktx",
+    "firebase-crashlytics",
+    "firebase-analytics",
+    "firebase-messaging",
 ]
 
 compose = [

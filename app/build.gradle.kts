@@ -8,7 +8,6 @@ plugins {
     alias(libs.plugins.application)
     alias(libs.plugins.compose)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.navigation)
     alias(libs.plugins.google.service)
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.crashlytics)
@@ -108,12 +107,6 @@ android {
     }
 }
 
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-    kotlinOptions.freeCompilerArgs = listOf(
-        "-Xopt-in=io.ktor.util.KtorExperimentalAPI"
-    )
-}
-
 fun getProperty(key: String): String {
     val propertiesFile = rootProject.file("./local.properties")
     val properties = Properties()
@@ -132,15 +125,11 @@ dependencies {
 
     implementation(libs.appcompat)
     implementation(libs.core.ktx)
-    implementation(libs.material)
 
     implementation(libs.bundles.navigation)
-    androidTestImplementation(libs.navigation.testing)
 
     implementation(libs.bundles.lifecycle)
-    implementation(libs.activity.ktx)
 
-    implementation(libs.viewbindingpropertydelegate)
     implementation(libs.bundles.di)
     testImplementation(libs.koin.test)
 
