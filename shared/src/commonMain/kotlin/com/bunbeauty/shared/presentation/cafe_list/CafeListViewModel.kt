@@ -6,16 +6,18 @@ import com.bunbeauty.shared.domain.interactor.cafe.ICafeInteractor
 import com.bunbeauty.shared.domain.model.cafe.CafeWithOpenState
 import com.bunbeauty.shared.extension.launchSafe
 import com.bunbeauty.shared.presentation.base.SharedStateViewModel
+import com.bunbeauty.shared.presentation.cafe_list.CafeList.Action.OnCloseCafeOptionBottomSheetClicked
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 
 class CafeListViewModel(
     private val cafeInteractor: ICafeInteractor,
-    private val observeCafeWithOpenStateListUseCase: ObserveCafeWithOpenStateListUseCase
+    private val observeCafeWithOpenStateListUseCase: ObserveCafeWithOpenStateListUseCase,
 ) : SharedStateViewModel<CafeList.DataState, CafeList.Action, CafeList.Event>(
     initDataState = CafeList.DataState(
         cafeList = listOf(),
-        isLoading = true
+        isLoading = true,
+        isShownCafeOptionBottomSheet = false
     )
 ) {
 
@@ -23,19 +25,31 @@ class CafeListViewModel(
 
     override fun reduce(action: CafeList.Action, dataState: CafeList.DataState) {
         when (action) {
-            CafeList.Action.Init -> {
-                observeCafeList()
+            CafeList.Action.Init -> observeCafeList()
+
+            is CafeList.Action.OnCafeClicked -> {
+                sharedScope.launchSafe(
+                    block = {
+                        setState {
+                            copy(
+                                isShownCafeOptionBottomSheet = true,
+                                selectedCafe = cafeInteractor.getCafeByUuid(
+                                    cafeUuid = action.cafeUuid
+                                )
+                            )
+                        }
+                    },
+                    onError = { error ->
+                        setState {
+                            copy(
+                                throwable = error
+                            )
+                        }
+                    }
+                )
             }
 
-            is CafeList.Action.OnCafeClicked -> addEvent {
-                CafeList.Event.OpenCafeOptionsBottomSheet(uuid = action.cafeUuid)
-            }
-
-            CafeList.Action.OnCartClicked -> {
-                addEvent {
-                    CafeList.Event.OpenConsumerCartProduct
-                }
-            }
+            OnCloseCafeOptionBottomSheetClicked -> closeBottomSheet()
 
             CafeList.Action.OnRefreshClicked -> observeCafeList()
 
@@ -70,6 +84,15 @@ class CafeListViewModel(
                 }
             }
         )
+    }
+
+    private fun closeBottomSheet() {
+        setState {
+            copy(
+                isShownCafeOptionBottomSheet = false,
+                selectedCafe = null
+            )
+        }
     }
 
     private fun backClick() {

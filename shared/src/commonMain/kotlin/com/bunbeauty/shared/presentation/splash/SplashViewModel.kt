@@ -12,7 +12,7 @@ class SplashViewModel(
     private val cityInteractor: ICityInteractor,
     private val getIsOneCityUseCase: CheckOneCityUseCase,
     private val saveOneCityUseCase: SaveOneCityUseCase
-) : SharedStateViewModel<Splash.DataState, Splash.Action, Splash.Event>(
+) : SharedStateViewModel<Splash.DataState, Splash.Action, Splash.Effect>(
     initDataState = Splash.DataState
 ) {
 
@@ -29,7 +29,7 @@ class SplashViewModel(
                     checkIsCitySelected()
                 } else {
                     addEvent {
-                        Splash.Event.NavigateToUpdateEvent
+                        Splash.Effect.NavigateToUpdateEffect
                     }
                 }
             },
@@ -42,7 +42,7 @@ class SplashViewModel(
     private suspend fun checkIsCitySelected() {
         if (cityInteractor.checkIsCitySelected()) {
             addEvent {
-                Splash.Event.NavigateToMenuEvent
+                Splash.Effect.NavigateToMenuEffect
             }
         } else {
             checkOneCity()
@@ -53,11 +53,11 @@ class SplashViewModel(
         if (getIsOneCityUseCase()) {
             saveOneCityUseCase()
             addEvent {
-                Splash.Event.NavigateToMenuEvent
+                Splash.Effect.NavigateToMenuEffect
             }
         } else {
             addEvent {
-                Splash.Event.NavigateToSelectCityEvent
+                Splash.Effect.NavigateToSelectCityEffect
             }
         }
     }

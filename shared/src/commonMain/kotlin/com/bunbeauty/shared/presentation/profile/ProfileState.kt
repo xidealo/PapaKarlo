@@ -12,8 +12,9 @@ interface ProfileState {
     data class DataState(
         val lastOrder: LightOrder? = null,
         val state: State,
-        val paymentMethodList: ImmutableList<PaymentMethod>,
         val linkList: List<Link>,
+        val isShowAboutAppBottomSheet: Boolean,
+        val isShowFeedbackBottomSheet: Boolean,
     ) : BaseDataState {
         enum class State {
             AUTHORIZED,
@@ -33,22 +34,21 @@ interface ProfileState {
         data class OnLastOrderClicked(val uuid: String, val code: String) : Action
         data object OnLoginClicked : Action
         data object OnCafeListClicked : Action
-        data class OnPaymentClicked(val paymentMethodList: List<PaymentMethod>) : Action
-        data class OnFeedbackClicked(val linkList: List<Link>) : Action
+        data object OnFeedbackClicked : Action
         data object OnAboutAppClicked : Action
         data object StartObserveOrder : Action
         data object StopObserveOrder : Action
+        data object CloseAboutAppBottomSheet : Action
+        data object CloseFeedbackBottomSheet : Action
+
     }
 
     sealed interface Event : BaseEvent {
-        class OpenOrderDetails(val orderUuid: String, val orderCode: String) : Event
+        class OpenOrderDetails(val orderUuid: String) : Event
         data object OpenSettings : Event
         data object OpenAddressList : Event
         data object OpenOrderList : Event
         data object ShowCafeList : Event
-        class ShowPayment(val paymentMethodList: List<PaymentMethod>) : Event
-        class ShowFeedback(val linkList: List<Link>) : Event
-        data object ShowAboutApp : Event
         data object OpenLogin : Event
         data object GoBackEvent : Event
     }

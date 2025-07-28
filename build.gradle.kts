@@ -4,7 +4,6 @@ plugins {
     alias(libs.plugins.compose) apply false
     alias(libs.plugins.kotlin.android) apply false
     alias(libs.plugins.triplet.play) apply false
-    alias(libs.plugins.navigation) apply false
     alias(libs.plugins.google.service) apply false
     alias(libs.plugins.kotlin.parcelize) apply false
     alias(libs.plugins.crashlytics) apply false
@@ -34,7 +33,6 @@ buildscript {
         classpath(libs.google.services)
         classpath(libs.kotlin.serialization)
         classpath(libs.firebase.crashlytics.gradle)
-        classpath(libs.navigation.safe.args.gradle.plugin)
         classpath(libs.sqlDelight.gradle.plugin)
         classpath(libs.play.publisher)
     }

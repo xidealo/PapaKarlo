@@ -1,6 +1,5 @@
 package com.bunbeauty.papakarlo.di
 
-import com.bunbeauty.papakarlo.feature.cafe.screen.cafeoptions.CafeOptionsViewModel
 import com.bunbeauty.papakarlo.feature.city.screen.selectcity.SelectCityViewModel
 import com.bunbeauty.papakarlo.feature.main.MainViewModel
 import com.bunbeauty.shared.presentation.cafe_list.CafeListViewModel
@@ -97,13 +96,6 @@ fun viewModelModule() = module {
             saveSelectedUserAddressUseCase = get()
         )
     }
-    viewModel { parameters ->
-        CafeOptionsViewModel(
-            cafeInteractor = get(),
-            resourcesProvider = get(),
-            savedStateHandle = parameters.get()
-        )
-    }
     viewModel {
         OrderDetailsViewModel(
             observeOrderUseCase = get(),
@@ -114,7 +106,6 @@ fun viewModelModule() = module {
         ProfileViewModel(
             userInteractor = get(),
             getLastOrderUseCase = get(),
-            getPaymentMethodListUseCase = get(),
             getLinkListUseCase = get(),
             observeLastOrderUseCase = get(),
             stopObserveOrdersUseCase = get()

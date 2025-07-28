@@ -27,7 +27,7 @@ class SettingsViewModel(
     private val saveSelectedCityUseCase: SaveSelectedCityUseCase,
     private val disableUserUseCase: DisableUserUseCase,
     private val userInteractor: IUserInteractor,
-    private val analyticService: AnalyticService
+    private val analyticService: AnalyticService,
 ) : SharedStateViewModel<SettingsState.DataState, SettingsState.Action, SettingsState.Event>(
     SettingsState.DataState()
 ) {
@@ -38,18 +38,17 @@ class SettingsViewModel(
         when (action) {
             SettingsState.Action.BackClick -> backClick()
             SettingsState.Action.LoadData -> loadData()
-            SettingsState.Action.OnCityClicked -> onCityClicked(
-                cityList = dataState.cityList,
-                selectedCityUuid = dataState.selectedCity?.uuid
-            )
-
-            SettingsState.Action.OnEmailClicked -> onEmailClicked(
-                email = dataState.settings?.email
-            )
+            SettingsState.Action.OnCityClicked -> onCityClicked()
 
             SettingsState.Action.OnLogoutClicked -> onLogoutClicked(
                 phoneNumber = dataState.settings?.phoneNumber.toString()
             )
+
+            SettingsState.Action.OnLogoutConfirmClicked -> logout()
+
+            SettingsState.Action.CloseLogoutBottomSheet -> onCloseLogoutClicked()
+            is SettingsState.Action.OnCitySelected -> onCitySelected(action.cityUuid)
+            SettingsState.Action.CloseCityListBottomSheet -> onCloseCityListBottomSheetClicked()
         }
     }
 
@@ -64,49 +63,40 @@ class SettingsViewModel(
         }
     }
 
-    private fun onEmailClicked(email: String?) {
-        addEvent {
-            SettingsState.Event.ShowEditEmailEvent(email)
-        }
-    }
-
     private fun onLogoutClicked(phoneNumber: String) {
         analyticService.sendEvent(
             event = LogoutSettingsClickEvent(
                 phone = phoneNumber
             )
         )
-        addEvent {
-            SettingsState.Event.ShowLogoutEvent
+
+        setState {
+            copy(
+                isShowLogoutBottomSheet = true
+            )
         }
     }
 
-    fun onEmailChanged(email: String) {
-        sharedScope.launchSafe(
-            block = {
-                val isSuccess = updateEmailUseCase(email)
-                addEvent {
-                    if (isSuccess) {
-                        SettingsState.Event.ShowEmailChangedSuccessfullyEvent
-                    } else {
-                        SettingsState.Event.ShowEmailChangingFailedEvent
-                    }
-                }
-            },
-            onError = { error ->
-                println(error)
-            }
-        )
+    private fun onCloseLogoutClicked() {
+        setState {
+            copy(
+                isShowLogoutBottomSheet = false
+            )
+        }
     }
 
-    private fun onCityClicked(
-        cityList: List<City>,
-        selectedCityUuid: String?
-    ) {
-        addEvent {
-            SettingsState.Event.ShowCityListEvent(
-                cityList = cityList,
-                selectedCityUuid = selectedCityUuid
+    private fun onCloseCityListBottomSheetClicked() {
+        setState {
+            copy(
+                isShowCityListBottomSheet = false
+            )
+        }
+    }
+
+    private fun onCityClicked() {
+        setState {
+            copy(
+                isShowCityListBottomSheet = true
             )
         }
     }
@@ -114,12 +104,18 @@ class SettingsViewModel(
     fun onCitySelected(cityUuid: String) {
         sharedScope.launch {
             saveSelectedCityUseCase(cityUuid)
+            onCloseCityListBottomSheetClicked()
         }
     }
 
     fun logout() {
         sharedScope.launchSafe(
             block = {
+                setState {
+                    copy(
+                        isShowLogoutBottomSheet = false,
+                    )
+                }
                 observeSettingsJob?.cancel()
                 userInteractor.clearUserCache()
                 addEvent {

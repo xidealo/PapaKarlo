@@ -6,14 +6,11 @@ import com.bunbeauty.papakarlo.util.resources.IResourcesProvider
 import com.bunbeauty.papakarlo.util.resources.ResourcesProvider
 import com.bunbeauty.papakarlo.util.string.IStringUtil
 import com.bunbeauty.papakarlo.util.string.StringUtil
-import com.bunbeauty.papakarlo.util.textvalidator.ITextValidator
-import com.bunbeauty.papakarlo.util.textvalidator.TextValidator
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
 fun appUtilModule() = module {
     single<IResourcesProvider> { ResourcesProvider(androidContext()) }
-    single<ITextValidator> { TextValidator() }
 
     single<INetworkUtil> {
         NetworkUtil(
