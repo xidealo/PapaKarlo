@@ -96,6 +96,7 @@ android {
         disable.add("VectorPath")
         disable.add("GradleDependency")
         disable.add("AndroidGradlePluginVersion")
+        disable.add("MissingKeepAnnotation")
     }
 
     playConfigs {

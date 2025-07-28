@@ -361,8 +361,8 @@ private fun ProfileInfoCards(
         NavigationIconCardWithDivider(
             modifier = Modifier.fillMaxWidth(),
             iconId = R.drawable.ic_cafes,
-            iconDescriptionStringId = R.string.title_bottom_navigation_menu_cafe_list,
-            labelStringId = R.string.title_bottom_navigation_menu_cafe_list,
+            iconDescriptionStringId = R.string.title_profile_cafe_list,
+            labelStringId = R.string.title_profile_cafe_list,
             onClick = { onAction(ProfileState.Action.OnCafeListClicked) }
         )
         NavigationIconCardWithDivider(

@@ -42,7 +42,7 @@ import com.bunbeauty.papakarlo.navigation.useraddresslist.userAddressListScreenR
 internal val emptyNavOptions = navOptions { }
 
 fun NavGraphBuilder.foodDeliveryNavGraphBuilder(
-    navController: NavController,
+    navController: NavController
 ) {
     cafeListScreenRoute(
         back = navController::navigateUp
@@ -116,7 +116,7 @@ fun NavGraphBuilder.foodDeliveryNavGraphBuilder(
         },
         goToProductFragment = {
                 uuid, name, productDetailsOpenedFrom, additionUuidList,
-                cartProductUuid,
+                cartProductUuid
             ->
             navController.navigateToProductDetailsScreen(
                 uuid = uuid,
@@ -130,11 +130,13 @@ fun NavGraphBuilder.foodDeliveryNavGraphBuilder(
     )
     selectCityScreenRoute(
         goToMenuFragment = {
-            navController.navigateToMenuScreen(navOptions = navOptions {
-                popUpTo(SplashScreenDestination) {
-                    inclusive = true
+            navController.navigateToMenuScreen(
+                navOptions = navOptions {
+                    popUpTo(SplashScreenDestination) {
+                        inclusive = true
+                    }
                 }
-            })
+            )
         }
     )
     createOrderScreenRoute(
