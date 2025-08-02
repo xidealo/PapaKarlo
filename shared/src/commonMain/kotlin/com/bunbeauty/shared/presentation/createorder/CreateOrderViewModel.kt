@@ -14,6 +14,7 @@ import com.bunbeauty.shared.domain.feature.city.GetSelectedCityTimeZoneUseCase
 import com.bunbeauty.shared.domain.feature.motivation.GetMotivationUseCase
 import com.bunbeauty.shared.domain.feature.order.CreateOrderUseCase
 import com.bunbeauty.shared.domain.feature.payment.GetSelectablePaymentMethodListUseCase
+import com.bunbeauty.shared.domain.feature.payment.GetSelectedPaymentMethodUseCase
 import com.bunbeauty.shared.domain.feature.payment.SavePaymentMethodUseCase
 import com.bunbeauty.shared.domain.interactor.cafe.ICafeInteractor
 import com.bunbeauty.shared.domain.interactor.cart.GetCartTotalFlowUseCase
@@ -28,6 +29,7 @@ import com.bunbeauty.shared.extension.launchSafe
 import com.bunbeauty.shared.presentation.base.SharedStateViewModel
 import com.bunbeauty.shared.presentation.motivation.toMotivationData
 import kotlinx.coroutines.Job
+import kotlin.String
 
 private const val DELIVERY_POSITION = 0
 private const val CREATION_ORDER_VIEW_MODEL_TAG = "CreateOrderViewModel"
@@ -50,7 +52,8 @@ class CreateOrderViewModel(
     private val isDeliveryEnabledFromCafeUseCase: IsDeliveryEnabledFromCafeUseCase,
     private val isPickupEnabledFromCafeUseCase: IsPickupEnabledFromCafeUseCase,
     private val hasOpenedCafeUseCase: HasOpenedCafeUseCase,
-    private val getWorkloadCafeUseCase: GetWorkloadCafeUseCase
+    private val getWorkloadCafeUseCase: GetWorkloadCafeUseCase,
+    private val getSelectedPaymentMethodUseCase: GetSelectedPaymentMethodUseCase,
 ) : SharedStateViewModel<CreateOrder.DataState, CreateOrder.Action, CreateOrder.Event>(
     initDataState = CreateOrder.DataState(
         isDelivery = true,
@@ -68,7 +71,9 @@ class CreateOrderViewModel(
         deliveryState = CreateOrder.DataState.DeliveryState.ENABLED,
         isPickupEnabled = true,
         hasOpenedCafe = true,
-        workload = Cafe.Workload.LOW
+        workload = Cafe.Workload.LOW,
+        additionalUtensils = false,
+        additionalUtensilsCount = "",
     )
 ) {
 
@@ -170,6 +175,10 @@ class CreateOrderViewModel(
             CreateOrder.Action.Back -> addEvent {
                 CreateOrder.Event.Back
             }
+
+            is CreateOrder.Action.ChangeAdditionalUtensils -> changeAdditionalUtensilsCount(
+                additionalUtensilsCount = action.additionalUtensilsCount
+            )
         }
     }
 
@@ -177,7 +186,7 @@ class CreateOrderViewModel(
         withLoading {
             updateUserAddresses()
 
-            updateCafeAddresses()
+            updateCafeList()
 
             updatePaymentMethods()
 
@@ -244,7 +253,7 @@ class CreateOrderViewModel(
         }
         withLoading {
             cafeInteractor.saveSelectedCafe(cafeUuid)
-            updateSelectedCafe()
+            updateCafeList()
         }
     }
 
@@ -357,7 +366,7 @@ class CreateOrderViewModel(
 
     private fun createClick(
         withoutChange: String,
-        changeFrom: String
+        changeFrom: String,
     ) {
         val state = mutableDataState.value
 
@@ -389,8 +398,8 @@ class CreateOrderViewModel(
             (state.cartTotal as? CreateOrder.CartTotal.Success)?.newFinalCostValue ?: 0
         val isChangeLessThenCost = (state.change ?: 0) < newFinalCost
         val isChangeIncorrect = state.paymentByCash &&
-            !state.withoutChangeChecked &&
-            isChangeLessThenCost
+                !state.withoutChangeChecked &&
+                isChangeLessThenCost
         setState {
             copy(isChangeErrorShown = isChangeIncorrect)
         }
@@ -443,21 +452,16 @@ class CreateOrderViewModel(
         updateSelectedUserAddress()
     }
 
-    private suspend fun updateCafeAddresses() {
-        updateSelectedCafe()
-    }
-
     private suspend fun updatePaymentMethods() {
         val paymentMethodList = getSelectablePaymentMethodListUseCase()
-        val selectedPaymentMethod = paymentMethodList.find { paymentMethod ->
-            paymentMethod.isSelected
-        }?.paymentMethod
+
+        val selectedPaymentMethod =
+            getSelectedPaymentMethodUseCase(selectablePaymentMethodList = paymentMethodList)
+
         setState {
             copy(
                 paymentMethodList = paymentMethodList,
-                selectedPaymentMethod = paymentMethodList.find { paymentMethod ->
-                    paymentMethod.isSelected
-                }?.paymentMethod
+                selectedPaymentMethod = selectedPaymentMethod
             )
         }
         if (selectedPaymentMethod != null) {
@@ -495,7 +499,7 @@ class CreateOrderViewModel(
         }
     }
 
-    private suspend fun updateSelectedCafe() {
+    private suspend fun updateCafeList() {
         val cafeList = getSelectableCafeList()
         setState {
             copy(cafeList = cafeList)
@@ -507,12 +511,15 @@ class CreateOrderViewModel(
             setState {
                 copy(
                     selectedCafe = selectedCafe.cafe,
-                    isPickupEnabled = isPickupEnabledFromCafeUseCase(selectedCafe.cafe.uuid),
+                    isPickupEnabled = isPickupEnabledFromCafeUseCase(
+                        cafeUuid = selectedCafe.cafe.uuid
+                    ),
                     hasOpenedCafe = hasOpenedCafeUseCase(
-                        cafeList.map { selectableCafe ->
+                        cafeList = cafeList.map { selectableCafe ->
                             selectableCafe.cafe
                         }
-                    )
+                    ),
+                    additionalUtensils = selectedCafe.cafe.additionalUtensils
                 )
             }
         }
@@ -562,7 +569,7 @@ class CreateOrderViewModel(
     private fun getExtendedComment(
         state: CreateOrder.DataState,
         withoutChange: String,
-        changeFrom: String
+        changeFrom: String,
     ): String {
         return buildString {
             state.comment.takeIf { comment ->
@@ -580,6 +587,16 @@ class CreateOrderViewModel(
                 append(")")
             }
         }.trim()
+    }
+
+    fun changeAdditionalUtensilsCount(
+        additionalUtensilsCount: String,
+    ) {
+        setState {
+            copy(
+                additionalUtensilsCount = additionalUtensilsCount
+            )
+        }
     }
 
     private inline fun withLoading(crossinline block: suspend () -> Unit) {

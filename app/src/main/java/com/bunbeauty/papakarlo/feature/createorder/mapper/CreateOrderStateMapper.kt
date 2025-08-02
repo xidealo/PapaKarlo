@@ -63,11 +63,13 @@ fun CreateOrder.DataState.toViewState(): CreateOrderViewState {
         ),
         isOrderCreationEnabled = if (isDelivery) {
             deliveryState == CreateOrder.DataState.DeliveryState.ENABLED &&
-                (cartTotalUI as? CartTotalUI.Success)?.motivation !is MotivationUi.MinOrderCost
+                    (cartTotalUI as? CartTotalUI.Success)?.motivation !is MotivationUi.MinOrderCost
         } else {
             isPickupEnabled
         },
-        isLoadingSwitcher = isLoadingSwitcher
+        isLoadingSwitcher = isLoadingSwitcher,
+        additionalUtensils = additionalUtensils,
+        additionalUtensilsCount = additionalUtensilsCount
     )
 }
 
@@ -122,7 +124,7 @@ private fun CreateOrder.DataState.getCreateOrderTypeDelivery() =
             Cafe.Workload.LOW -> CreateOrderViewState.CreateOrderType.Delivery.Workload.LOW
             Cafe.Workload.AVERAGE -> CreateOrderViewState.CreateOrderType.Delivery.Workload.AVERAGE
             Cafe.Workload.HIGH -> CreateOrderViewState.CreateOrderType.Delivery.Workload.HIGH
-        }
+        },
     )
 
 private fun CreateOrder.CartTotal.toCartTotalUI(): CartTotalUI {

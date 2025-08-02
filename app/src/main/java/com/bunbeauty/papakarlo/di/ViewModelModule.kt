@@ -68,7 +68,8 @@ fun viewModelModule() = module {
             isDeliveryEnabledFromCafeUseCase = get(),
             isPickupEnabledFromCafeUseCase = get(),
             hasOpenedCafeUseCase = get(),
-            getWorkloadCafeUseCase = get()
+            getWorkloadCafeUseCase = get(),
+            getSelectedPaymentMethodUseCase = get()
         )
     }
     viewModel {

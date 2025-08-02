@@ -67,9 +67,6 @@ fun MenuRoute(
     goToProfile: () -> Unit,
     goToConsumerCart: () -> Unit
 ) {
-    // TODO
-    // overrideBackPressedCallback()
-
     LaunchedEffect(Unit) {
         viewModel.getMenu()
     }

@@ -93,6 +93,7 @@
     <string name="pickup_address">Адрес самовывоза</string>
     <string name="hint_create_order_comment">Комментарий</string>
     <string name="comment">Комментарий</string>
+    <string name="additional_utensils_count">Количество приборов*</string>
     <string name="msg_without_change">Без сдачи</string>
     <string name="hint_change">С какой суммы подготовить сдачу?*</string>
     <string name="msg_change_from">Сдача с</string>
