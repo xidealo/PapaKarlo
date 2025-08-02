@@ -5,10 +5,11 @@ import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.LightBlu
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Orange50
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Red400
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Red600
+import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Yellow400
 
 val LimonadColors = AppColors(
     mainColors = ColorDefaults.lightMainColors(
-        primary = Red600,
+        primary = Yellow400,
         surfaceVariant = Orange50,
         strokeVariant = Gold100
     ),
@@ -20,7 +21,7 @@ val LimonadColors = AppColors(
 
 val LimonadDarkColors = AppColors(
     mainColors = ColorDefaults.darkMainColors(
-        primary = Red400
+        primary = Yellow400
     ),
     orderColors = ColorDefaults.orderColors(),
     statusColors = ColorDefaults.statusColors(),
