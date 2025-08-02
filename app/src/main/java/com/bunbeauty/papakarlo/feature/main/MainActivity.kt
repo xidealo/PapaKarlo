@@ -71,13 +71,14 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
                     snackbarHostState = snackbarHostState
                 )
             }
-
-            MainScreen(
-                mainState = mainState,
-                snackbarHostState = snackbarHostState,
-                backgroundColor = mainState.statusBarColor
-                    ?: FoodDeliveryTheme.colors.mainColors.surface
-            )
+            FoodDeliveryTheme{
+                MainScreen(
+                    mainState = mainState,
+                    snackbarHostState = snackbarHostState,
+                    backgroundColor = mainState.statusBarColor
+                        ?: FoodDeliveryTheme.colors.mainColors.surface
+                )
+            }
         }
 
         checkNotificationPermission()
