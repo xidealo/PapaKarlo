@@ -45,7 +45,7 @@ struct SettingsView: View, SharedLifecycleWithState {
                     self.mode.wrappedValue.dismiss()
                 }
             )
-
+            //TODO add navigate to change city
             NavigationLink(
                 destination: ChangeCityView(),
                 isActive: $goToSelectCity
@@ -152,7 +152,6 @@ struct SettingsView: View, SharedLifecycleWithState {
                 for event in settingsEvents {
                     switch event {
                     case is SettingsStateEventBack: self.mode.wrappedValue.dismiss()
-                    case is SettingsStateEventShowCityListEvent: goToSelectCity = true
                     default:
                         print("def")
                     }

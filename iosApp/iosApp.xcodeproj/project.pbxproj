@@ -1080,14 +1080,11 @@
 		027E62AB2E25504E00648562 /* ChangeCityItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323448287879EF0048CF39 /* ChangeCityItem.swift */; };
 		027E62AC2E25504E00648562 /* UpdateViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C33C542D30611C00E7955F /* UpdateViewState.swift */; };
 		027E62AE2E25504E00648562 /* Version.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 025D1AFD2C7B5BF600677822 /* Version.xcconfig */; };
-		027E62AF2E25504E00648562 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 026BF2F82DB8070700BBD91E /* GoogleService-Info.plist */; };
 		027E62B02E25504E00648562 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */; };
 		027E62B12E25504E00648562 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 029677F72DBE569300996CF6 /* PrivacyInfo.xcprivacy */; };
-		027E62B22E25504E00648562 /* estpoestAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 026BF2F12DB7FFEB00BBD91E /* estpoestAssets.xcassets */; };
 		027E62B32E25504E00648562 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 02A99D5729CBA0BE004D2F7B /* Localizable.strings */; };
 		027E62B42E25504E00648562 /* CommonColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 023B6B052CDAB33C0051D6E1 /* CommonColors.xcassets */; };
 		027E62B52E25504E00648562 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557BA273AAA24004C7B11 /* Assets.xcassets */; };
-		027E62B62E25504E00648562 /* estpoest.plist in Resources */ = {isa = PBXBuildFile; fileRef = 026BF2F02DB7FFEB00BBD91E /* estpoest.plist */; };
 		027E62C82E2550A200648562 /* tavernaAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 027E62C22E2550A200648562 /* tavernaAssets.xcassets */; };
 		027E62C92E2550A200648562 /* taverna.plist in Resources */ = {isa = PBXBuildFile; fileRef = 027E62C12E2550A200648562 /* taverna.plist */; };
 		027E62CD2E2552F700648562 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 027E62CC2E2552F700648562 /* GoogleService-Info.plist */; };
@@ -1365,18 +1362,19 @@
 		1B2890650B7D8C6309E178C1 /* Pods_usadba.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64CB69F2C086D432C94A41AE /* Pods_usadba.framework */; };
 		2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp.swift */; };
 		266301895B5C00569AB849E2 /* Pods_papakarlo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED787CFFDA700D6B3F7441FD /* Pods_papakarlo.framework */; };
-		27B27E3F857CE2AF4CAF7755 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		27B27E3F857CE2AF4CAF7755 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		40F8CD203B1B74C608425C20 /* Pods_legenda.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44EFB0D6C47CB1C412E6147A /* Pods_legenda.framework */; };
 		4499D47CD119E33E59493A78 /* Pods_estpoest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8750C5B05EB6BDC124B6C1A9 /* Pods_estpoest.framework */; };
-		4A0B25C2EBE3215D0FC6C121 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
-		4E7FC62A990EFBCC2E806359 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		4A0B25C2EBE3215D0FC6C121 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		4E7FC62A990EFBCC2E806359 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		631CBC599AEFC9C22878D973 /* Pods_tandirhouse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A95B0BC15E4ECB39EC1D686 /* Pods_tandirhouse.framework */; };
 		7555FF83242A565900829871 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* ContentView.swift */; };
 		7A2C3462E5A9936B219657EB /* Pods_estpoest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8750C5B05EB6BDC124B6C1A9 /* Pods_estpoest.framework */; };
 		AA948690AA980921A1BB064B /* Pods_gustopub.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 887C9AE1E65E56405D8715FC /* Pods_gustopub.framework */; };
+		C927C79DE52353C2CEDE0C36 /* Pods_taverna.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A85EEF264D45EDCECCFB0AC2 /* Pods_taverna.framework */; };
 		CB4F7FFBACC3358427B7F28F /* Pods_emoji.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C67BA2EA9F070E4A515A937 /* Pods_emoji.framework */; };
 		D2B2C9D4143E4D68813E7BCA /* Pods_djan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F16CA71F7A1C57D286A0E36 /* Pods_djan.framework */; };
-		EFA9E2E0F12AB7A3BA2D93B1 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		EFA9E2E0F12AB7A3BA2D93B1 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		F6F3956E5844208EDFA03DA0 /* Pods_yuliar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9C10411EF2D7D08F04B8829 /* Pods_yuliar.framework */; };
 /* End PBXBuildFile section */
 
@@ -1556,6 +1554,7 @@
 		058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		0C67BA2EA9F070E4A515A937 /* Pods_emoji.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_emoji.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2152FB032600AC8F00CF470E /* iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSApp.swift; sourceTree = "<group>"; };
+		443C76E5741E04A829A8347D /* Pods-taverna.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-taverna.debug.xcconfig"; path = "Target Support Files/Pods-taverna/Pods-taverna.debug.xcconfig"; sourceTree = "<group>"; };
 		44EFB0D6C47CB1C412E6147A /* Pods_legenda.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_legenda.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		489E409EBEBDF7E6BF7226FE /* Pods-djan.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-djan.release.xcconfig"; path = "Target Support Files/Pods-djan/Pods-djan.release.xcconfig"; sourceTree = "<group>"; };
 		593B49170A1371F67F4512CE /* Pods-yuliar.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-yuliar.debug.xcconfig"; path = "Target Support Files/Pods-yuliar/Pods-yuliar.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1578,7 +1577,9 @@
 		995FDF2C47AA75DEB0AF3748 /* Pods-vkuskavkaza.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-vkuskavkaza.debug.xcconfig"; path = "Target Support Files/Pods-vkuskavkaza/Pods-vkuskavkaza.debug.xcconfig"; sourceTree = "<group>"; };
 		9F16CA71F7A1C57D286A0E36 /* Pods_djan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_djan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4F374E300689A868C53F1F1 /* Pods-emoji.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-emoji.release.xcconfig"; path = "Target Support Files/Pods-emoji/Pods-emoji.release.xcconfig"; sourceTree = "<group>"; };
+		A85EEF264D45EDCECCFB0AC2 /* Pods_taverna.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_taverna.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD685DC99B68FD89495E8E8B /* Pods-yuliar.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-yuliar.release.xcconfig"; path = "Target Support Files/Pods-yuliar/Pods-yuliar.release.xcconfig"; sourceTree = "<group>"; };
+		AEDAC5FBA5CFEA3772421BD5 /* Pods-taverna.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-taverna.release.xcconfig"; path = "Target Support Files/Pods-taverna/Pods-taverna.release.xcconfig"; sourceTree = "<group>"; };
 		BBEEAE62D2C2DB51503FD7E4 /* Pods-usadba.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-usadba.debug.xcconfig"; path = "Target Support Files/Pods-usadba/Pods-usadba.debug.xcconfig"; sourceTree = "<group>"; };
 		CD93CCF3300C802B84A927C6 /* Pods-gustopub.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-gustopub.debug.xcconfig"; path = "Target Support Files/Pods-gustopub/Pods-gustopub.debug.xcconfig"; sourceTree = "<group>"; };
 		E3A4259DB6C3AB4D444D246E /* Pods-tandirhouse.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tandirhouse.debug.xcconfig"; path = "Target Support Files/Pods-tandirhouse/Pods-tandirhouse.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1593,7 +1594,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EFA9E2E0F12AB7A3BA2D93B1 /* BuildFile in Frameworks */,
+				EFA9E2E0F12AB7A3BA2D93B1 /* (null) in Frameworks */,
 				631CBC599AEFC9C22878D973 /* Pods_tandirhouse.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1618,7 +1619,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				27B27E3F857CE2AF4CAF7755 /* BuildFile in Frameworks */,
+				27B27E3F857CE2AF4CAF7755 /* (null) in Frameworks */,
 				CB4F7FFBACC3358427B7F28F /* Pods_emoji.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1636,7 +1637,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4A0B25C2EBE3215D0FC6C121 /* BuildFile in Frameworks */,
+				4A0B25C2EBE3215D0FC6C121 /* (null) in Frameworks */,
 				D2B2C9D4143E4D68813E7BCA /* Pods_djan.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1653,6 +1654,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C927C79DE52353C2CEDE0C36 /* Pods_taverna.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1676,7 +1678,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4E7FC62A990EFBCC2E806359 /* BuildFile in Frameworks */,
+				4E7FC62A990EFBCC2E806359 /* (null) in Frameworks */,
 				266301895B5C00569AB849E2 /* Pods_papakarlo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2204,6 +2206,8 @@
 				AD685DC99B68FD89495E8E8B /* Pods-yuliar.release.xcconfig */,
 				6E02392CD6FE04F71B484242 /* Pods-estpoest.debug.xcconfig */,
 				792D2B258DB59DC5BCC93B65 /* Pods-estpoest.release.xcconfig */,
+				443C76E5741E04A829A8347D /* Pods-taverna.debug.xcconfig */,
+				AEDAC5FBA5CFEA3772421BD5 /* Pods-taverna.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -2290,6 +2294,7 @@
 				64CB69F2C086D432C94A41AE /* Pods_usadba.framework */,
 				82D390E07A4CF79E374BF150 /* Pods_vkuskavkaza.framework */,
 				F9C10411EF2D7D08F04B8829 /* Pods_yuliar.framework */,
+				A85EEF264D45EDCECCFB0AC2 /* Pods_taverna.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -2441,10 +2446,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 027E62BB2E25504E00648562 /* Build configuration list for PBXNativeTarget "taverna" */;
 			buildPhases = (
+				22BF03DDD54B381DDAB4D9D4 /* [CP] Check Pods Manifest.lock */,
 				027E623A2E25504E00648562 /* Sources */,
 				027E62AD2E25504E00648562 /* Resources */,
 				027E62B72E25504E00648562 /* Frameworks */,
 				027E62B92E25504E00648562 /* ShellScript */,
+				BF0AFE24C0AC36C3A4F9C53D /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2677,15 +2684,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				027E62AE2E25504E00648562 /* Version.xcconfig in Resources */,
-				027E62AF2E25504E00648562 /* GoogleService-Info.plist in Resources */,
 				027E62B02E25504E00648562 /* Preview Assets.xcassets in Resources */,
 				027E62B12E25504E00648562 /* PrivacyInfo.xcprivacy in Resources */,
-				027E62B22E25504E00648562 /* estpoestAssets.xcassets in Resources */,
 				027E62CD2E2552F700648562 /* GoogleService-Info.plist in Resources */,
 				027E62B32E25504E00648562 /* Localizable.strings in Resources */,
 				027E62B42E25504E00648562 /* CommonColors.xcassets in Resources */,
 				027E62B52E25504E00648562 /* Assets.xcassets in Resources */,
-				027E62B62E25504E00648562 /* estpoest.plist in Resources */,
 				027E62C82E2550A200648562 /* tavernaAssets.xcassets in Resources */,
 				027E62C92E2550A200648562 /* taverna.plist in Resources */,
 			);
@@ -2981,9 +2985,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-emoji/Pods-emoji-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-emoji/Pods-emoji-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2998,13 +3006,39 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-usadba/Pods-usadba-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-usadba/Pods-usadba-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
+			outputPaths = (
+			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-usadba/Pods-usadba-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		22BF03DDD54B381DDAB4D9D4 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-taverna-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		2B383CC4E15448A5F2E0408A /* [CP] Check Pods Manifest.lock */ = {
@@ -3037,9 +3071,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-estpoest/Pods-estpoest-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-estpoest/Pods-estpoest-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3098,9 +3136,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-vkuskavkaza/Pods-vkuskavkaza-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-vkuskavkaza/Pods-vkuskavkaza-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3115,9 +3157,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-yuliar/Pods-yuliar-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-yuliar/Pods-yuliar-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3132,9 +3178,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-djan/Pods-djan-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-djan/Pods-djan-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3149,9 +3199,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-tandirhouse/Pods-tandirhouse-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-tandirhouse/Pods-tandirhouse-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3188,9 +3242,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-legenda/Pods-legenda-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-legenda/Pods-legenda-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3217,6 +3275,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BF0AFE24C0AC36C3A4F9C53D /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-taverna/Pods-taverna-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-taverna/Pods-taverna-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-taverna/Pods-taverna-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		C70DE6DB116BC22315BB3940 /* [CP] Check Pods Manifest.lock */ = {
@@ -3315,9 +3394,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-papakarlo/Pods-papakarlo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-papakarlo/Pods-papakarlo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3332,9 +3415,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-gustopub/Pods-gustopub-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-gustopub/Pods-gustopub-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -5854,6 +5941,7 @@
 		};
 		027E62BC2E25504E00648562 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 443C76E5741E04A829A8347D /* Pods-taverna.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = papakarlo.entitlements;
@@ -5862,7 +5950,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
 				DEVELOPMENT_TEAM = 77HLJ933B9;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = iosApp/estpoestRes/taverna.plist;
+				INFOPLIST_FILE = iosApp/tavernaRes/taverna.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.food-and-drink";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -5934,6 +6022,7 @@
 		};
 		027E62BD2E25504E00648562 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AEDAC5FBA5CFEA3772421BD5 /* Pods-taverna.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = papakarlo.entitlements;
@@ -5942,7 +6031,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
 				DEVELOPMENT_TEAM = 77HLJ933B9;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = iosApp/estpoestRes/taverna.plist;
+				INFOPLIST_FILE = iosApp/tavernaRes/taverna.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.food-and-drink";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (

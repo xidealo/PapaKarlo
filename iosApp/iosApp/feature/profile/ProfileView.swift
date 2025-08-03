@@ -12,14 +12,14 @@ struct ProfileView: View {
     @State var profileState = ProfileStateDataState(
         lastOrder: nil,
         state: ProfileStateDataState.State.loading,
-        paymentMethodList: [],
-        linkList: []
+        linkList: [],
+        isShowAboutAppBottomSheet: false,
+        isShowFeedbackBottomSheet: false
     )
 
     var viewModel = ProfileViewModel(
         userInteractor: iosComponent.provideIUserInteractor(),
         getLastOrderUseCase: iosComponent.provideGetLastOrderUseCase(),
-        getPaymentMethodListUseCase: iosComponent.provideGetPaymentMethodListUseCase(),
         getLinkListUseCase: iosComponent.provideGetLinkListUseCase(),
         observeLastOrderUseCase: iosComponent.provideObserveLastOrderUseCase(),
         stopObserveOrdersUseCase: iosComponent.provideStopObserveOrdersUseCase()
@@ -52,7 +52,6 @@ struct ProfileView: View {
                 )
             case ProfileStateDataState.State.unauthorized: EmptyProfileView(
                     isActive: $isActive,
-                    paymentMethodList: profileState.paymentMethodList,
                     linkList: profileState.linkList
                 )
             default: EmptyView()
@@ -106,7 +105,6 @@ struct ProfileView: View {
 
 struct EmptyProfileView: View {
     @Binding var isActive: Bool
-    var paymentMethodList: [PaymentMethod]
     var linkList: [shared.Link]
 
     var body: some View {
@@ -117,14 +115,6 @@ struct EmptyProfileView: View {
                 destination: CafeListView(),
                 isSystem: false
             )
-
-            NavigationIconCardWithDivider(
-                icon: "ic_payment",
-                label: "Оплата",
-                destination: PaymentView(paymentMethodList: paymentMethodList),
-                isSystem: false
-            )
-
             NavigationIconCardWithDivider(
                 icon: "ic_star",
                 label: Strings.TITLE_PROFILE_FEEDBACK,
@@ -213,13 +203,6 @@ struct SuccessProfileView: View {
                 icon: "CafesIcon",
                 label: "Рестораны",
                 destination: CafeListView(),
-                isSystem: false
-            )
-
-            NavigationIconCardWithDivider(
-                icon: "ic_payment",
-                label: Strings.TITLE_PROFILE_PAYMENT,
-                destination: PaymentView(paymentMethodList: profileViewState.paymentMethodList),
                 isSystem: false
             )
 

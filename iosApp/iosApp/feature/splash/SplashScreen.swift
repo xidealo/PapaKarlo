@@ -103,14 +103,14 @@ struct SplashView: View, SharedLifecycle {
     func eventsSubscribe() {
         eventsListener = viewModel.events.watch(block: { _events in
             if let events = _events {
-                let splashEvents = events as? [SplashEvent] ?? []
+                let splashEvents = events as? [SplashEffect] ?? []
                 for event in splashEvents {
                     switch event {
-                    case is SplashEventNavigateToUpdateEvent:
+                    case is SplashEffectNavigateToUpdateEffect:
                         openUpdateScreen = true
-                    case is SplashEventNavigateToMenuEvent:
+                    case is SplashEffectNavigateToMenuEffect:
                         openMainMenu = true
-                    case is SplashEventNavigateToSelectCityEvent:
+                    case is SplashEffectNavigateToSelectCityEffect:
                         openSelectCity = true
                     default:
                         print("def")
