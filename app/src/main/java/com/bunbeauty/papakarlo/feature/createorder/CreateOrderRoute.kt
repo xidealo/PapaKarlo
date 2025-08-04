@@ -246,6 +246,12 @@ fun CreateOrderEffect(
                     )
                 }
 
+                CreateOrder.Event.ShowAdditionalUtensilsError -> {
+                    (activity as? IMessageHost)?.showErrorMessage(
+                        activity.resources.getString(R.string.error_additional_utensils)
+                    )
+                }
+
                 CreateOrder.Event.OrderNotAvailableErrorEvent -> {
                     (activity as? IMessageHost)?.showErrorMessage(
                         activity.resources.getString(R.string.warning_no_order_available)
@@ -460,15 +466,22 @@ private fun CommonContent(
         focusManager = focusManager,
         onAction = onAction
     )
-    ChangeBlock(
-        viewState = viewState,
-        onAction = onAction
-    )
-    CommentTextField(
-        viewState = viewState,
-        focusManager = focusManager,
-        onAction = onAction
-    )
+    Column(modifier = Modifier.padding(top = 16.dp)) {
+        ChangeBlock(
+            viewState = viewState,
+            onAction = onAction
+        )
+        AdditionalUtensilsTextField(
+            viewState = viewState,
+            focusManager = focusManager,
+            onAction = onAction
+        )
+        CommentTextField(
+            viewState = viewState,
+            focusManager = focusManager,
+            onAction = onAction
+        )
+    }
 }
 
 @Composable
@@ -577,7 +590,7 @@ private fun ChangeBlock(
         val focusManager = LocalFocusManager.current
         FoodDeliveryTextField(
             modifier = Modifier
-                .padding(top = 16.dp)
+                .padding(bottom = 8.dp)
                 .padding(horizontal = 16.dp)
                 .fillMaxWidth(),
             value = viewState.change,
@@ -612,6 +625,42 @@ private fun ChangeBlock(
 }
 
 @Composable
+private fun AdditionalUtensilsTextField(
+    viewState: CreateOrderViewState,
+    focusManager: FocusManager,
+    onAction: (CreateOrder.Action) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    if (!viewState.additionalUtensils) return
+
+    FoodDeliveryTextField(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(bottom = 8.dp)
+            .padding(horizontal = 16.dp),
+        value = viewState.additionalUtensilsCount,
+        labelStringId = R.string.additional_utensils_count,
+        keyboardOptions = FoodDeliveryTextFieldDefaults.keyboardOptions(
+            keyboardType = KeyboardType.Number,
+            imeAction = ImeAction.Done
+        ),
+        onValueChange = { value ->
+            onAction(CreateOrder.Action.ChangeAdditionalUtensils(additionalUtensilsCount = value))
+        },
+        keyboardActions = FoodDeliveryTextFieldDefaults.keyboardActions(
+            onDone = {
+                focusManager.clearFocus()
+            }
+        ),
+        errorMessageStringId = R.string.error_additional_utensils.takeIf {
+            viewState.isAdditionalUtensilsErrorShown
+        },
+        maxSymbols = 10,
+        maxLines = 1
+    )
+}
+
+@Composable
 private fun CommentTextField(
     viewState: CreateOrderViewState,
     focusManager: FocusManager,
@@ -621,13 +670,6 @@ private fun CommentTextField(
     FoodDeliveryTextField(
         modifier = modifier
             .fillMaxWidth()
-            .padding(
-                top = if (viewState.withoutChangeChecked) {
-                    16.dp
-                } else {
-                    8.dp
-                }
-            )
             .padding(horizontal = 16.dp),
         value = viewState.comment,
         labelStringId = R.string.comment,
@@ -688,7 +730,8 @@ private fun BottomAmountBar(
                     onAction(
                         CreateOrder.Action.CreateClick(
                             withoutChange = viewState.withoutChange,
-                            changeFrom = viewState.changeFrom
+                            changeFrom = viewState.changeFrom,
+                            additionalUtensils = viewState.additionalUtensilsName
                         )
                     )
                 }
@@ -854,7 +897,11 @@ private val createOrderViewStatePreviewMock = CreateOrderViewState(
         paymentMethodList = persistentListOf()
     ),
     isOrderCreationEnabled = false,
-    isLoadingSwitcher = false
+    isLoadingSwitcher = false,
+    additionalUtensils = false,
+    additionalUtensilsCount = "",
+    additionalUtensilsName = "Количество приборов",
+    isAdditionalUtensilsErrorShown = false
 )
 
 @Preview(showSystemUi = true)

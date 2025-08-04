@@ -17,7 +17,7 @@ import com.bunbeauty.shared.presentation.settings.SettingsViewModel
 import com.bunbeauty.shared.presentation.splash.SplashViewModel
 import com.bunbeauty.shared.presentation.update.UpdateViewModel
 import com.bunbeauty.shared.presentation.user_address_list.UserAddressListViewModel
-import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
 fun viewModelModule() = module {
@@ -68,7 +68,9 @@ fun viewModelModule() = module {
             isDeliveryEnabledFromCafeUseCase = get(),
             isPickupEnabledFromCafeUseCase = get(),
             hasOpenedCafeUseCase = get(),
-            getWorkloadCafeUseCase = get()
+            getWorkloadCafeUseCase = get(),
+            getSelectedPaymentMethodUseCase = get(),
+            getExtendedCommentUseCase = get()
         )
     }
     viewModel {

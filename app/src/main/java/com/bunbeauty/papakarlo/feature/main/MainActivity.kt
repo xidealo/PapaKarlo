@@ -71,7 +71,7 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
                     snackbarHostState = snackbarHostState
                 )
             }
-            FoodDeliveryTheme{
+            FoodDeliveryTheme {
                 MainScreen(
                     mainState = mainState,
                     snackbarHostState = snackbarHostState,

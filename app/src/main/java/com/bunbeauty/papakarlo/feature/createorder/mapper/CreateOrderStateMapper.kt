@@ -47,6 +47,7 @@ fun CreateOrder.DataState.toViewState(): CreateOrderViewState {
         withoutChangeChecked = withoutChangeChecked,
         change = change?.toString().orEmpty(),
         isChangeErrorShown = isChangeErrorShown,
+        isAdditionalUtensilsErrorShown = isAdditionalUtensilsErrorShown,
         cartTotal = cartTotalUI,
         isLoadingCreateOrder = isLoading,
         isDeferredTimeShown = isDeferredTimeShown,
@@ -67,7 +68,10 @@ fun CreateOrder.DataState.toViewState(): CreateOrderViewState {
         } else {
             isPickupEnabled
         },
-        isLoadingSwitcher = isLoadingSwitcher
+        isLoadingSwitcher = isLoadingSwitcher,
+        additionalUtensils = additionalUtensils,
+        additionalUtensilsCount = additionalUtensilsCount,
+        additionalUtensilsName = stringResource(R.string.msg_additional_utensils_count)
     )
 }
 

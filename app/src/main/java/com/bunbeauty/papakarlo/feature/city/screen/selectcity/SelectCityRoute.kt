@@ -25,6 +25,7 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toPersistentList
 import org.koin.androidx.compose.koinViewModel
 
+// TODO need refactoring
 @Composable
 fun SelectCityRoute(
     viewModel: SelectCityViewModel = koinViewModel(),

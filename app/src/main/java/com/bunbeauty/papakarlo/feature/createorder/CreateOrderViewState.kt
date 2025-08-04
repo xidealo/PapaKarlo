@@ -12,8 +12,7 @@ data class CreateOrderViewState(
     val createOrderType: CreateOrderType,
     val isAddressErrorShown: Boolean,
     val deferredTime: String,
-    @StringRes
-    val deferredTimeStringId: Int,
+    @StringRes val deferredTimeStringId: Int,
     val selectedPaymentMethod: PaymentMethodUI?,
     val isPaymentMethodErrorShown: Boolean,
     val showChange: Boolean,
@@ -30,7 +29,11 @@ data class CreateOrderViewState(
     val timePicker: TimePickerUI,
     val paymentMethodList: PaymentMethodListUI,
     val isOrderCreationEnabled: Boolean,
-    val isLoadingSwitcher: Boolean
+    val isLoadingSwitcher: Boolean,
+    val additionalUtensils: Boolean,
+    val additionalUtensilsName: String,
+    val additionalUtensilsCount: String,
+    val isAdditionalUtensilsErrorShown: Boolean
 ) : BaseViewState {
 
     val isFieldsEnabled: Boolean = !isLoadingCreateOrder
