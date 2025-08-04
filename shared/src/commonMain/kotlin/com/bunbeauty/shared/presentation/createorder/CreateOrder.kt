@@ -47,6 +47,7 @@ interface CreateOrder {
         val withoutChangeChecked: Boolean = false,
         val change: Int? = null,
         val isChangeErrorShown: Boolean = false,
+        val isAdditionalUtensilsErrorShown: Boolean = false,
 
         val comment: String = "",
 
@@ -129,6 +130,7 @@ interface CreateOrder {
         data class CreateClick(
             val withoutChange: String,
             val changeFrom: String,
+            val additionalUtensils: String,
         ) : Action
     }
 
@@ -142,6 +144,7 @@ interface CreateOrder {
         data object ShowUserAddressError : Event
         data object ShowPaymentMethodError : Event
         data object ShowChangeError : Event
+        data object ShowAdditionalUtensilsError : Event
         data object Back : Event
     }
 }

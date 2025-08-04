@@ -123,5 +123,6 @@ fun getCafe(
     cityUuid = "cityUuid",
     isVisible = true,
     workType = workType,
-    workload = workload
+    workload = workload,
+    additionalUtensils = false
 )

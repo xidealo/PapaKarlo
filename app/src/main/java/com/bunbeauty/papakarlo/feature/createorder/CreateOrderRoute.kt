@@ -82,7 +82,7 @@ fun CreateOrderRoute(
     viewModel: CreateOrderViewModel = koinViewModel(),
     back: () -> Unit,
     goToProfile: () -> Unit,
-    goToCreateAddress: () -> Unit,
+    goToCreateAddress: () -> Unit
 ) {
     LaunchedEffect(Unit) {
         viewModel.onAction(CreateOrder.Action.Init)
@@ -115,7 +115,7 @@ fun CreateOrderRoute(
 @Composable
 private fun CreateOrderScreen(
     viewState: CreateOrderViewState,
-    onAction: (CreateOrder.Action) -> Unit,
+    onAction: (CreateOrder.Action) -> Unit
 ) {
     FoodDeliveryScaffold(
         title = stringResource(id = R.string.title_create_order),
@@ -198,7 +198,7 @@ fun CreateOrderEffect(
     back: () -> Unit,
     goToProfile: () -> Unit,
     goToCreateAddress: () -> Unit,
-    consumeEffects: () -> Unit,
+    consumeEffects: () -> Unit
 ) {
     val activity = LocalActivity.current
     LaunchedEffect(effects) {
@@ -246,6 +246,12 @@ fun CreateOrderEffect(
                     )
                 }
 
+                CreateOrder.Event.ShowAdditionalUtensilsError -> {
+                    (activity as? IMessageHost)?.showErrorMessage(
+                        activity.resources.getString(R.string.error_additional_utensils)
+                    )
+                }
+
                 CreateOrder.Event.OrderNotAvailableErrorEvent -> {
                     (activity as? IMessageHost)?.showErrorMessage(
                         activity.resources.getString(R.string.warning_no_order_available)
@@ -264,7 +270,7 @@ private fun DeliveryContent(
     viewState: CreateOrderViewState,
     createOrderType: CreateOrderViewState.CreateOrderType.Delivery,
     focusManager: FocusManager,
-    onAction: (CreateOrder.Action) -> Unit,
+    onAction: (CreateOrder.Action) -> Unit
 ) {
     Column {
         DeliveryAddressCard(
@@ -355,7 +361,7 @@ private fun DeliveryContent(
 private fun DeliveryAddressCard(
     viewState: CreateOrderViewState,
     createOrderType: CreateOrderViewState.CreateOrderType.Delivery,
-    onAction: (CreateOrder.Action) -> Unit,
+    onAction: (CreateOrder.Action) -> Unit
 ) {
     NavigationCardWithDivider(
         label = stringResource(R.string.delivery_address),
@@ -376,7 +382,7 @@ private fun PickupContent(
     viewState: CreateOrderViewState,
     createOrderType: CreateOrderViewState.CreateOrderType.Pickup,
     focusManager: FocusManager,
-    onAction: (CreateOrder.Action) -> Unit,
+    onAction: (CreateOrder.Action) -> Unit
 ) {
     Column {
         PickupAddressCard(
@@ -429,7 +435,7 @@ private fun PickupAddressCard(
     createOrderType: CreateOrderViewState.CreateOrderType.Pickup,
     viewState: CreateOrderViewState,
     focusManager: FocusManager,
-    onAction: (CreateOrder.Action) -> Unit,
+    onAction: (CreateOrder.Action) -> Unit
 ) {
     NavigationCardWithDivider(
         label = stringResource(id = R.string.pickup_address),
@@ -446,7 +452,7 @@ private fun PickupAddressCard(
 private fun CommonContent(
     viewState: CreateOrderViewState,
     focusManager: FocusManager,
-    onAction: (CreateOrder.Action) -> Unit,
+    onAction: (CreateOrder.Action) -> Unit
 ) {
     if (viewState.isLoadingSwitcher) return
 
@@ -476,7 +482,6 @@ private fun CommonContent(
             onAction = onAction
         )
     }
-
 }
 
 @Composable
@@ -484,7 +489,7 @@ private fun DeferredTimeCard(
     viewState: CreateOrderViewState,
     focusManager: FocusManager,
     onAction: (CreateOrder.Action) -> Unit,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     NavigationCardWithDivider(
         modifier = modifier,
@@ -503,7 +508,7 @@ private fun PaymentMethodCard(
     viewState: CreateOrderViewState,
     focusManager: FocusManager,
     onAction: (CreateOrder.Action) -> Unit,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     NavigationCardWithDivider(
         modifier = modifier,
@@ -530,7 +535,7 @@ private fun PaymentMethodCard(
 private fun ChangeBlock(
     viewState: CreateOrderViewState,
     onAction: (CreateOrder.Action) -> Unit,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     if (!viewState.showChange) {
         return
@@ -624,8 +629,10 @@ private fun AdditionalUtensilsTextField(
     viewState: CreateOrderViewState,
     focusManager: FocusManager,
     onAction: (CreateOrder.Action) -> Unit,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
+    if (!viewState.additionalUtensils) return
+
     FoodDeliveryTextField(
         modifier = modifier
             .fillMaxWidth()
@@ -645,6 +652,9 @@ private fun AdditionalUtensilsTextField(
                 focusManager.clearFocus()
             }
         ),
+        errorMessageStringId = R.string.error_additional_utensils.takeIf {
+            viewState.isAdditionalUtensilsErrorShown
+        },
         maxSymbols = 10,
         maxLines = 1
     )
@@ -655,7 +665,7 @@ private fun CommentTextField(
     viewState: CreateOrderViewState,
     focusManager: FocusManager,
     onAction: (CreateOrder.Action) -> Unit,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     FoodDeliveryTextField(
         modifier = modifier
@@ -682,7 +692,7 @@ private fun CommentTextField(
 @Composable
 private fun ErrorText(
     modifier: Modifier = Modifier,
-    @StringRes messageStringId: Int,
+    @StringRes messageStringId: Int
 ) {
     Text(
         modifier = modifier,
@@ -695,7 +705,7 @@ private fun ErrorText(
 @Composable
 private fun BottomAmountBar(
     viewState: CreateOrderViewState,
-    onAction: (CreateOrder.Action) -> Unit,
+    onAction: (CreateOrder.Action) -> Unit
 ) {
     FoodDeliverySurface(modifier = Modifier.fillMaxWidth()) {
         Column(
@@ -720,7 +730,8 @@ private fun BottomAmountBar(
                     onAction(
                         CreateOrder.Action.CreateClick(
                             withoutChange = viewState.withoutChange,
-                            changeFrom = viewState.changeFrom
+                            changeFrom = viewState.changeFrom,
+                            additionalUtensils = viewState.additionalUtensilsName
                         )
                     )
                 }
@@ -748,7 +759,7 @@ private fun BottomAmountBarLoadingContent() {
 @Composable
 private fun BottomAmountBarSuccessContent(
     cartTotal: CartTotalUI.Success,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     Column(
         modifier = modifier,
@@ -888,7 +899,9 @@ private val createOrderViewStatePreviewMock = CreateOrderViewState(
     isOrderCreationEnabled = false,
     isLoadingSwitcher = false,
     additionalUtensils = false,
-    additionalUtensilsCount = ""
+    additionalUtensilsCount = "",
+    additionalUtensilsName = "Количество приборов",
+    isAdditionalUtensilsErrorShown = false
 )
 
 @Preview(showSystemUi = true)

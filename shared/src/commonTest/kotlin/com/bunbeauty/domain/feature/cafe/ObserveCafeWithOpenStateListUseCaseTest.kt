@@ -152,7 +152,8 @@ class ObserveCafeWithOpenStateListUseCaseTest {
             cityUuid = "cityUuid",
             isVisible = true,
             workload = Cafe.Workload.LOW,
-            workType = Cafe.WorkType.DELIVERY_AND_PICKUP
+            workType = Cafe.WorkType.DELIVERY_AND_PICKUP,
+            additionalUtensils = false
         )
     }
 }

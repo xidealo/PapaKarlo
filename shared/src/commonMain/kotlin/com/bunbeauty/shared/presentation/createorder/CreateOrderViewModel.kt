@@ -13,6 +13,8 @@ import com.bunbeauty.shared.domain.feature.cafe.IsPickupEnabledFromCafeUseCase
 import com.bunbeauty.shared.domain.feature.city.GetSelectedCityTimeZoneUseCase
 import com.bunbeauty.shared.domain.feature.motivation.GetMotivationUseCase
 import com.bunbeauty.shared.domain.feature.order.CreateOrderUseCase
+import com.bunbeauty.shared.domain.feature.order.ExtendedComment
+import com.bunbeauty.shared.domain.feature.order.GetExtendedCommentUseCase
 import com.bunbeauty.shared.domain.feature.payment.GetSelectablePaymentMethodListUseCase
 import com.bunbeauty.shared.domain.feature.payment.GetSelectedPaymentMethodUseCase
 import com.bunbeauty.shared.domain.feature.payment.SavePaymentMethodUseCase
@@ -54,6 +56,7 @@ class CreateOrderViewModel(
     private val hasOpenedCafeUseCase: HasOpenedCafeUseCase,
     private val getWorkloadCafeUseCase: GetWorkloadCafeUseCase,
     private val getSelectedPaymentMethodUseCase: GetSelectedPaymentMethodUseCase,
+    private val getExtendedCommentUseCase: GetExtendedCommentUseCase,
 ) : SharedStateViewModel<CreateOrder.DataState, CreateOrder.Action, CreateOrder.Event>(
     initDataState = CreateOrder.DataState(
         isDelivery = true,
@@ -168,7 +171,8 @@ class CreateOrderViewModel(
             is CreateOrder.Action.CreateClick -> {
                 createClick(
                     withoutChange = action.withoutChange,
-                    changeFrom = action.changeFrom
+                    changeFrom = action.changeFrom,
+                    additionalUtensils = action.additionalUtensils
                 )
             }
 
@@ -367,6 +371,7 @@ class CreateOrderViewModel(
     private fun createClick(
         withoutChange: String,
         changeFrom: String,
+        additionalUtensils: String,
     ) {
         val state = mutableDataState.value
 
@@ -410,16 +415,42 @@ class CreateOrderViewModel(
             return
         }
 
+        val isAdditionalUtensilsIncorrect = state.additionalUtensils
+                && state.additionalUtensilsCount.isEmpty()
+
+        setState {
+            copy(isAdditionalUtensilsErrorShown = isAdditionalUtensilsIncorrect)
+        }
+
+        if (isAdditionalUtensilsIncorrect) {
+            addEvent {
+                CreateOrder.Event.ShowAdditionalUtensilsError
+            }
+            return
+        }
+
         withLoading {
             if (userInteractor.isUserAuthorize()) {
                 val orderCode = createOrder(
                     isDelivery = state.isDelivery,
                     selectedUserAddress = state.selectedUserAddressWithCity?.userAddress,
                     selectedCafe = state.selectedCafe,
-                    orderComment = getExtendedComment(
-                        state = state,
-                        withoutChange = withoutChange,
-                        changeFrom = changeFrom
+                    orderComment = getExtendedCommentUseCase(
+                        ExtendedComment(
+                            comment = state.comment,
+                            change = ExtendedComment.Change(
+                                paymentByCash = state.paymentByCash,
+                                withoutChangeChecked = state.withoutChangeChecked,
+                                withoutChange = withoutChange,
+                                changeFrom = changeFrom,
+                                change = state.change?.toString().orEmpty(),
+                            ),
+                            additionalUtensils = ExtendedComment.AdditionalUtensils(
+                                isAdditionalUtensils = state.additionalUtensils,
+                                count = state.additionalUtensilsCount,
+                                name = additionalUtensils,
+                            )
+                        )
                     ).takeIf { comment ->
                         comment.isNotBlank()
                     },
@@ -564,29 +595,6 @@ class CreateOrderViewModel(
                 Logger.logE(CREATION_ORDER_VIEW_MODEL_TAG, error.stackTraceToString())
             }
         )
-    }
-
-    private fun getExtendedComment(
-        state: CreateOrder.DataState,
-        withoutChange: String,
-        changeFrom: String,
-    ): String {
-        return buildString {
-            state.comment.takeIf { comment ->
-                comment.isNotBlank()
-            }?.let { comment ->
-                append("$comment ")
-            }
-            if (state.paymentByCash) {
-                append("(")
-                if (state.withoutChangeChecked) {
-                    append(withoutChange)
-                } else {
-                    append("$changeFrom ${state.change} $RUBLE_CURRENCY")
-                }
-                append(")")
-            }
-        }.trim()
     }
 
     fun changeAdditionalUtensilsCount(

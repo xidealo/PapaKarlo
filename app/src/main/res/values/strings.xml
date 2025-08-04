@@ -94,6 +94,7 @@
     <string name="hint_create_order_comment">Комментарий</string>
     <string name="comment">Комментарий</string>
     <string name="additional_utensils_count">Количество приборов*</string>
+    <string name="msg_additional_utensils_count">Количество приборов: </string>
     <string name="msg_without_change">Без сдачи</string>
     <string name="hint_change">С какой суммы подготовить сдачу?*</string>
     <string name="msg_change_from">Сдача с</string>
@@ -104,6 +105,7 @@
     <string name="error_payment_method">Способ оплаты не выбран</string>
     <string name="error_select_payment_method">Выберите cпособ оплаты</string>
     <string name="error_change">Укажите с какой суммы подготовить сдачу</string>
+    <string name="error_additional_utensils">Укажите количество приборов</string>
     <string name="error_enter_correct_amount">Укажите корректную сумму</string>
     <string name="msg_order_code">Код заказа %s</string>
     <string name="msg_create_order_amount_to_pay">Сумма к оплате</string>
