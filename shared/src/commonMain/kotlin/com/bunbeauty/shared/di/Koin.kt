@@ -64,6 +64,7 @@ import com.bunbeauty.shared.domain.feature.order.*
 import com.bunbeauty.shared.domain.feature.orderavailable.IsOrderAvailableUseCase
 import com.bunbeauty.shared.domain.feature.payment.GetPaymentMethodListUseCase
 import com.bunbeauty.shared.domain.feature.payment.GetSelectablePaymentMethodListUseCase
+import com.bunbeauty.shared.domain.feature.payment.GetSelectedPaymentMethodUseCase
 import com.bunbeauty.shared.domain.feature.payment.SavePaymentMethodUseCase
 import com.bunbeauty.shared.domain.feature.settings.ObserveSettingsUseCase
 import com.bunbeauty.shared.domain.feature.settings.UpdateEmailUseCase
@@ -214,6 +215,8 @@ class IosComponent : KoinComponent {
     fun provideIsDeliveryEnabledFromCafeUseCase(): IsDeliveryEnabledFromCafeUseCase = get()
     fun provideUpdateNotificationUseCase(): UpdateNotificationUseCase = get()
     fun provideGetCurrentUserAddressWithCityUseCase(): GetCurrentUserAddressWithCityUseCase = get()
+    fun provideGetExtendedCommentUseCase(): GetExtendedCommentUseCase = get()
+    fun provideGetSelectedPaymentMethodUseCase(): GetSelectedPaymentMethodUseCase = get()
 
     // Mapper
     fun provideUserAddressMapper(): UserAddressMapper = get()
