@@ -16,11 +16,11 @@ import com.bunbeauty.shared.presentation.settings.SettingsState
 @Composable
 fun CityListBottomSheetScreen(
     cityListBottomSheetUI: SettingsViewState.CityListBottomSheetUI,
-    onAction: (SettingsState.Action) -> Unit
+    onAction: (SettingsState.Action) -> Unit,
 ) {
     FoodDeliveryModalBottomSheet(
         onDismissRequest = {
-            onAction(SettingsState.Action.CloseLogoutBottomSheet)
+            onAction(SettingsState.Action.CloseCityListBottomSheet)
         },
         isShown = cityListBottomSheetUI.isShown,
         title = stringResource(R.string.common_city)
@@ -37,7 +37,7 @@ fun CityListBottomSheetScreen(
 @Composable
 private fun CityListScreen(
     cityList: List<CityUI>,
-    onAddressClicked: (CityUI) -> Unit
+    onAddressClicked: (CityUI) -> Unit,
 ) {
     LazyColumn {
         items(cityList) { city ->
