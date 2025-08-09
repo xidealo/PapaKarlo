@@ -45,9 +45,13 @@ struct SettingsView: View, SharedLifecycleWithState {
                     self.mode.wrappedValue.dismiss()
                 }
             )
-            //TODO add navigate to change city
+            
             NavigationLink(
-                destination: ChangeCityView(),
+                destination: ChangeCityView(
+                    selectedCallback: {
+                        viewModel.onAction(action: SettingsStateActionCloseLogoutBottomSheet())
+                    }
+                ),
                 isActive: $goToSelectCity
             ) {
                 EmptyView()
@@ -124,6 +128,8 @@ struct SettingsView: View, SharedLifecycleWithState {
     func subscribe() {
         listener = viewModel.dataState.watch { settingsStateVM in
             if let notNullSettingsStateVM = settingsStateVM {
+                goToSelectCity = notNullSettingsStateVM.isShowCityListBottomSheet
+                
                 state = SettingsViewState(
                     phoneNumber: notNullSettingsStateVM.settings?.phoneNumber ?? "",
                     selectedCityName: notNullSettingsStateVM.selectedCity?.name ?? "",

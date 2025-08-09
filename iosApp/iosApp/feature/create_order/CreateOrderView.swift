@@ -799,7 +799,8 @@ struct CreateOrderSuccessView: View {
                                 Spacer()
                             }
                             .frame(maxWidth: .infinity)
-                            .padding(.vertical, 8)
+                            .padding(.top, 8)
+                            .padding(.bottom, 16)
                             .padding(.horizontal, 16)
                         }
 
@@ -814,11 +815,11 @@ struct CreateOrderSuccessView: View {
                                     action(CreateOrderActionChangeChange(change: changeTextField))
                                 }
                             )
-                            .padding(.top, 16)
                             .padding(.bottom, 8)
                             .padding(.horizontal, 16)
                         }
                     }
+                    
                     if state.additionalUtensils {
                         EditTextView(
                             hint: "Количество приборов*",
