@@ -106,7 +106,9 @@
 "error_payment_method" = "Способ оплаты не выбран";
 "msg_without_change" = "Без сдачи";
 "msg_change_from" = "Сдача с";
+"msg_additional_utensils" = "Количество приборов: ";
 "error_enter_correct_amount" = "Укажите корректную сумму";
+"error_additional_utensils" = "Укажите количество приборов";
 "title_delivery_address" = "Адрес доставки";
 "title_pickup_address" = "Адрес самовывоза";
 "title_pickup" = "Самовывоз";
