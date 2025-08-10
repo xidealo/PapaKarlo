@@ -1,17 +1,12 @@
 package com.bunbeauty.shared.presentation.order_list
 
 import com.bunbeauty.core.Logger
-import com.bunbeauty.shared.domain.asCommonStateFlow
 import com.bunbeauty.shared.domain.feature.order.ObserveOrderListUseCase
 import com.bunbeauty.shared.domain.feature.order.StopObserveOrdersUseCase
 import com.bunbeauty.shared.extension.launchSafe
 import com.bunbeauty.shared.presentation.base.SharedStateViewModel
-import com.bunbeauty.shared.presentation.base.SharedViewModel
-import com.bunbeauty.shared.presentation.profile.ProfileState
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class OrderListViewModel(
