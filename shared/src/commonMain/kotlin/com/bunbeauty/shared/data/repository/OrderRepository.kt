@@ -60,7 +60,7 @@ class OrderRepository(
     }
 
     override suspend fun getOrderListByUserUuid(token: String, userUuid: String): List<LightOrder> {
-        return networkConnector.getOrderList(
+        return networkConnector.getLightOrderList(
             token = token,
             count = ORDER_LIMIT
         ).getNullableResult(
@@ -71,7 +71,7 @@ class OrderRepository(
                 ).map(orderMapper::toLightOrder)
             },
             onSuccess = { orderServerList ->
-                saveOrderListLocally(orderServerList.results)
+                //saveOrderListLocally(orderServerList.results)
                 orderServerList.results.map { orderServer ->
                     orderMapper.toLightOrder(orderServer)
                 }
@@ -116,15 +116,13 @@ class OrderRepository(
     }
 
     override suspend fun getOrderByUuid(token: String, orderUuid: String): Order? {
-        return networkConnector.getOrderList(token = token, uuid = orderUuid).getNullableResult(
+        return networkConnector.getOrderByUuid(token = token, uuid = orderUuid).getNullableResult(
             onError = {
                 orderDao.getOrderWithProductListByUuid(orderUuid).let(orderMapper::toOrder)
             },
-            onSuccess = { orderServerList ->
-                orderServerList.results.firstOrNull()?.let { orderServer ->
-                    saveOrderLocally(orderServer)
-                    orderMapper.toOrder(orderServer)
-                }
+            onSuccess = { orderServer ->
+                saveOrderLocally(orderServer)
+                orderMapper.toOrder(orderServer)
             }
         )
     }

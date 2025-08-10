@@ -25,6 +25,7 @@ import com.bunbeauty.shared.data.network.model.login.CodeRequestServer
 import com.bunbeauty.shared.data.network.model.login.CodeServer
 import com.bunbeauty.shared.data.network.model.login.LoginPostServer
 import com.bunbeauty.shared.data.network.model.order.get.OrderCodeServer
+import com.bunbeauty.shared.data.network.model.order.get.LightOrderServer
 import com.bunbeauty.shared.data.network.model.order.get.OrderServer
 import com.bunbeauty.shared.data.network.model.order.get.OrderUpdateServer
 import com.bunbeauty.shared.data.network.model.order.post.OrderPostServer
@@ -46,24 +47,28 @@ interface NetworkConnector {
     suspend fun getSuggestions(
         token: String,
         query: String,
-        cityUuid: String
+        cityUuid: String,
     ): ApiResult<ListServer<SuggestionServer>>
 
     suspend fun getUserAddressListByCityUuid(
         token: String,
-        cityUuid: String
+        cityUuid: String,
     ): ApiResult<ListServer<AddressServer>>
 
     suspend fun getPayment(token: String): ApiResult<PaymentServer>
     suspend fun getProfile(token: String): ApiResult<ProfileServer>
-    suspend fun getOrderList(
+    suspend fun getLightOrderList(
         token: String,
         count: Int? = null,
-        uuid: String? = null
-    ): ApiResult<ListServer<OrderServer>>
+    ): ApiResult<ListServer<LightOrderServer>>
+
+    suspend fun getOrderByUuid(
+        token: String,
+        uuid: String,
+    ): ApiResult<OrderServer>
 
     suspend fun getLastOrder(
-        token: String
+        token: String,
     ): ApiResult<OrderServer>
 
     suspend fun getSettings(token: String): ApiResult<SettingsServer>
@@ -75,12 +80,12 @@ interface NetworkConnector {
     suspend fun postLogin(loginPostServer: LoginPostServer): ApiResult<AuthResponseServer>
     suspend fun postUserAddress(
         token: String,
-        userAddress: UserAddressPostServer
+        userAddress: UserAddressPostServer,
     ): ApiResult<AddressServer>
 
     suspend fun putNotificationToken(
         updateNotificationTokenRequest: UpdateNotificationTokenRequest,
-        token: String
+        token: String,
     ): ApiResult<Unit>
 
     suspend fun postOrder(token: String, order: OrderPostServer): ApiResult<OrderCodeServer>
@@ -88,7 +93,7 @@ interface NetworkConnector {
 
     suspend fun patchSettings(
         token: String,
-        patchUserServer: PatchUserServer
+        patchUserServer: PatchUserServer,
     ): ApiResult<SettingsServer>
 
     suspend fun putCodeResend(uuid: String): ApiResult<Unit>

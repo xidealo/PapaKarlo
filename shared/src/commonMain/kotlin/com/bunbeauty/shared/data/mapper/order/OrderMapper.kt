@@ -1,6 +1,7 @@
 package com.bunbeauty.shared.data.mapper.order
 
 import com.bunbeauty.shared.data.mapper.order_product.IOrderProductMapper
+import com.bunbeauty.shared.data.network.model.order.get.LightOrderServer
 import com.bunbeauty.shared.data.network.model.order.get.OrderServer
 import com.bunbeauty.shared.data.network.model.order.post.OrderAddressPostServer
 import com.bunbeauty.shared.data.network.model.order.post.OrderPostServer
@@ -17,7 +18,7 @@ import com.bunbeauty.shared.domain.util.DateTimeUtil
 
 class OrderMapper(
     private val orderProductMapper: IOrderProductMapper,
-    private val dateTimeUtil: DateTimeUtil
+    private val dateTimeUtil: DateTimeUtil,
 ) : IOrderMapper {
     override fun toLightOrder(orderEntity: OrderEntity): LightOrder {
         return LightOrder(
@@ -34,6 +35,18 @@ class OrderMapper(
             status = OrderStatus.valueOf(orderServer.status),
             code = orderServer.code,
             dateTime = dateTimeUtil.toDateTime(orderServer.time, orderServer.timeZone)
+        )
+    }
+
+    override fun toLightOrder(lightOrderServer: LightOrderServer): LightOrder {
+        return LightOrder(
+            uuid = lightOrderServer.uuid,
+            code = lightOrderServer.code,
+            status = OrderStatus.valueOf(lightOrderServer.status),
+            dateTime = dateTimeUtil.toDateTime(
+                millis = lightOrderServer.time,
+                timeZone = lightOrderServer.timeZone
+            )
         )
     }
 
@@ -73,7 +86,9 @@ class OrderMapper(
                 ),
                 comment = firstOrderWithProductEntity.comment,
                 deliveryCost = firstOrderWithProductEntity.deliveryCost,
-                orderProductList = orderProductMapper.toOrderProduct(groupedOrderWithProductEntityList),
+                orderProductList = orderProductMapper.toOrderProduct(
+                    groupedOrderWithProductEntityList
+                ),
                 paymentMethod = PaymentMethodName.values()
                     .firstOrNull { it.name == firstOrderWithProductEntity.paymentMethod },
                 oldTotalCost = firstOrderWithProductEntity.oldTotalCost,

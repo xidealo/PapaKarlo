@@ -1,5 +1,6 @@
 package com.bunbeauty.shared.data.mapper.order
 
+import com.bunbeauty.shared.data.network.model.order.get.LightOrderServer
 import com.bunbeauty.shared.data.network.model.order.get.OrderServer
 import com.bunbeauty.shared.data.network.model.order.post.OrderPostServer
 import com.bunbeauty.shared.db.OrderEntity
@@ -13,6 +14,7 @@ interface IOrderMapper {
 
     fun toLightOrder(orderEntity: OrderEntity): LightOrder
     fun toLightOrder(orderServer: OrderServer): LightOrder
+    fun toLightOrder(lightOrderServer: LightOrderServer): LightOrder
     fun toOrderCode(orderServer: OrderServer): OrderCode
     fun toOrder(orderWithProductEntityList: List<OrderWithProductEntity>): Order?
     fun toOrder(orderServer: OrderServer): Order
