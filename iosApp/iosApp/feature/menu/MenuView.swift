@@ -95,7 +95,10 @@ struct MenuView: View {
                                     .id(DISCOUNT_ID)
                             }
                             LazyVGrid(columns: columns, spacing: 8) {
-                                ForEach(viewModel.menuViewState.menuItems.indices) { i in
+                                ForEach(
+                                    viewModel.menuViewState.menuItems.indices,
+                                    id: \.self
+                                ) { i in
                                     Section(
                                         header: LargeHeaderText(
                                             text: viewModel.menuViewState.menuItems[i].categorySectionItem.name

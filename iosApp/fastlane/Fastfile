@@ -31,7 +31,8 @@ platform :ios do
      emoji
      usaba
      estpoest
-  end  
+     taverna
+  end
 
   def build_and_upload(app_identifier, scheme)
     # increment_build_number(xcodeproj: "iosApp.xcodeproj")
@@ -87,5 +88,10 @@ platform :ios do
   desc "Push a new estpoest release build to the App Store"
   lane :estpoest do
     build_and_upload("com.bunbeauty.estpoest", "estpoest")
+  end
+
+  desc "Push a new taverna release build to the App Store"
+  lane :taverna do
+    build_and_upload("com.bunbeauty.taverna", "taverna")
   end
 end
