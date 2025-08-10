@@ -224,6 +224,7 @@
     <string name="title_my_orders">Мои заказы</string>
     <string name="title_order_list_empty">Список заказов пуст</string>
     <string name="msg_order_list_empty">Здесь будут отображаться ваши заказы</string>
+    <string name="error_order_list_loading">Не удалось загрузить список заказов</string>
 
     <!-- PAYMENT -->
     <string name="msg_payment_cash">Наличные</string>

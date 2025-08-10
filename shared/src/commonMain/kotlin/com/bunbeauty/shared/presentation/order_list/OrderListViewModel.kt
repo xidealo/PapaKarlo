@@ -1,9 +1,13 @@
 package com.bunbeauty.shared.presentation.order_list
 
+import com.bunbeauty.core.Logger
 import com.bunbeauty.shared.domain.asCommonStateFlow
 import com.bunbeauty.shared.domain.feature.order.ObserveOrderListUseCase
 import com.bunbeauty.shared.domain.feature.order.StopObserveOrdersUseCase
+import com.bunbeauty.shared.extension.launchSafe
+import com.bunbeauty.shared.presentation.base.SharedStateViewModel
 import com.bunbeauty.shared.presentation.base.SharedViewModel
+import com.bunbeauty.shared.presentation.profile.ProfileState
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -13,44 +17,93 @@ import kotlinx.coroutines.launch
 class OrderListViewModel(
     private val observeOrderListUseCase: ObserveOrderListUseCase,
     private val stopObserveOrdersUseCase: StopObserveOrdersUseCase
-) : SharedViewModel() {
+) : SharedStateViewModel<OrderListState.DataState,
+        OrderListState.Action, OrderListState.Event>(
+    initDataState = OrderListState.DataState(
 
-    private val mutableOrderListState = MutableStateFlow(OrderListState())
-    val orderListState = mutableOrderListState.asCommonStateFlow()
+    )
+) {
 
     private var orderObservationUuid: String? = null
     private var observeOrdersJob: Job? = null
 
+    override fun reduce(
+        action: OrderListState.Action,
+        dataState: OrderListState.DataState
+    ) {
+        when (action) {
+            OrderListState.Action.BackClicked -> onBackClicked()
+            OrderListState.Action.Init -> loadData()
+            OrderListState.Action.OnRefreshClicked -> loadData()
+            is OrderListState.Action.onOrderClicked -> onOrderClicked(
+                uuid = action.uuid
+            )
+        }
+    }
+
+    private fun onBackClicked() {
+        addEvent {
+            OrderListState.Event.GoBackEvent
+        }
+    }
+
     fun onOrderClicked(uuid: String) {
-        mutableOrderListState.update { state ->
-            state + OrderListState.OpenOrderDetailsEvent(uuid)
+        addEvent {
+            OrderListState.Event.OpenOrderDetailsEvent(uuid)
         }
     }
 
-    fun consumeEventList(eventList: List<OrderListState.Event>) {
-        mutableOrderListState.update { state ->
-            state - eventList
-        }
-    }
 
-    fun observeOrders() {
-        observeOrdersJob = sharedScope.launch {
-            val (uuid, orderListFlow) = observeOrderListUseCase()
-            orderObservationUuid = uuid
-            orderListFlow.collectLatest { orderList ->
-                mutableOrderListState.update { state ->
-                    state.copy(
-                        orderList = orderList,
-                        state = if (orderList.isEmpty()) {
-                            OrderListState.State.EMPTY
-                        } else {
-                            OrderListState.State.SUCCESS
-                        }
+    private fun loadData() {
+        sharedScope.launchSafe(
+            block = {
+                val (uuid, orderListFlow) = observeOrderListUseCase()
+                orderObservationUuid = uuid
+                orderListFlow.collectLatest { orderList ->
+                    setState {
+                        copy(
+                            orderList = orderList
+                        )
+                    }
+                }
+            },
+            onError = {
+                setState {
+                    copy(
+                        state = OrderListState.DataState.State.ERROR
                     )
                 }
             }
-        }
+        )
     }
+
+
+    fun observeOrders() {
+        observeOrdersJob = sharedScope.launchSafe(
+            block = {
+                val (uuid, orderListFlow) = observeOrderListUseCase()
+                orderObservationUuid = uuid
+                orderListFlow.collectLatest { orderList ->
+                    setState {
+                        copy(
+                            orderList = orderList,
+                            state = if (orderList.isEmpty()) {
+                                OrderListState.DataState.State.EMPTY
+                            } else {
+                                OrderListState.DataState.State.SUCCESS
+                            }
+                        )
+                    }
+                }
+
+            },
+            onError =
+                { error ->
+                    Logger.logE("OrderList", error.stackTraceToString())
+                }
+        )
+    }
+
 
     fun stopObserveOrders() {
         observeOrdersJob?.cancel()
@@ -61,4 +114,6 @@ class OrderListViewModel(
         }
         orderObservationUuid = null
     }
+
+
 }

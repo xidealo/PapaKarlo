@@ -20,6 +20,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.papakarlo.common.ui.screen.EmptyScreen
+import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.feature.order.model.OrderItem
@@ -31,14 +32,38 @@ import com.bunbeauty.shared.presentation.order_list.OrderListViewModel
 import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.koinInject
 
-// TODO need refactoring
+@Composable
+fun OrderListState.DataState.mapState(): OrderListViewState {
+    val orderItemMapper = koinInject<OrderItemMapper>()
+    return OrderListViewState(
+        state = when (state) {
+            OrderListState.DataState.State.SUCCESS -> OrderListViewState.State.Success
+            OrderListState.DataState.State.LOADING -> OrderListViewState.State.Loading
+            OrderListState.DataState.State.ERROR -> OrderListViewState.State.Error
+            OrderListState.DataState.State.EMPTY -> OrderListViewState.State.Empty
+        },
+        orderList = orderList?.map(orderItemMapper::toItem)
+
+    )
+}
+
 @Composable
 fun OrderListRoute(
     viewModel: OrderListViewModel = koinViewModel(),
     back: () -> Unit,
     goToOrderDetails: (String) -> Unit
 ) {
-    val orderItemMapper = koinInject<OrderItemMapper>()
+    val viewState by viewModel.dataState.collectAsStateWithLifecycle()
+
+    val onAction = remember {
+        { event: OrderListState.Action ->
+            viewModel.onAction(event)
+        }
+    }
+
+    LaunchedEffect(Unit) {
+        viewModel.onAction(OrderListState.Action.Init)
+    }
 
     LifecycleStartEffect(Unit) {
         viewModel.observeOrders()
@@ -46,60 +71,62 @@ fun OrderListRoute(
             viewModel.stopObserveOrders()
         }
     }
-    val viewState by viewModel.orderListState.collectAsStateWithLifecycle()
+
+    val effects by viewModel.events.collectAsStateWithLifecycle()
 
     val consumeEffects = remember {
         {
-            viewModel.consumeEventList(viewState.eventList)
+            viewModel.consumeEvents(effects)
         }
     }
 
     OrderListEffect(
-        effectList = viewState.eventList,
+        effectList = effects,
         goToOrderDetails = goToOrderDetails,
-        consumeEffects = consumeEffects
+        consumeEffects = consumeEffects,
+        back = back
     )
 
     OrderListScreen(
-        viewState = OrderListUi(
-            orderList = viewState.orderList.map(orderItemMapper::toItem),
-            state = viewState.state
-        ),
-        back = back,
-        onOrderClicked = viewModel::onOrderClicked
+        onAction = onAction,
+        viewState = viewState.mapState()
     )
 }
 
 @Composable
 private fun OrderListScreen(
-    viewState: OrderListUi,
-    back: () -> Unit,
-    onOrderClicked: (String) -> Unit
+    onAction: (OrderListState.Action) -> Unit,
+    viewState: OrderListViewState
 ) {
     FoodDeliveryScaffold(
         title = stringResource(id = R.string.title_my_orders),
-        backActionClick = back
+        backActionClick = { onAction(OrderListState.Action.BackClicked) }
     ) {
         when (viewState.state) {
-            OrderListState.State.SUCCESS -> {
+            OrderListViewState.State.Success -> {
                 OrderListScreenSuccess(
-                    orderItemList = viewState.orderList,
-                    onOrderClicked = onOrderClicked
+                    orderItemList = viewState.orderList ?: emptyList(),
+                    onAction = onAction
                 )
             }
 
-            OrderListState.State.EMPTY -> {
-                EmptyScreen(
-                    imageId = R.drawable.ic_history,
-                    imageDescriptionId = R.string.description_cafe_addresses_empty,
-                    mainTextId = R.string.title_order_list_empty,
-                    extraTextId = R.string.msg_order_list_empty
-                )
-            }
-
-            OrderListState.State.LOADING -> {
+            OrderListViewState.State.Loading -> {
                 LoadingScreen()
             }
+
+            OrderListViewState.State.Error -> ErrorScreen(
+                mainTextId = R.string.error_order_list_loading,
+                onClick = {
+                    onAction(OrderListState.Action.OnRefreshClicked)
+                }
+            )
+
+            OrderListViewState.State.Empty -> EmptyScreen(
+                imageId = R.drawable.ic_history,
+                imageDescriptionId = R.string.description_cafe_addresses_empty,
+                mainTextId = R.string.title_order_list_empty,
+                extraTextId = R.string.msg_order_list_empty
+            )
         }
     }
 }
@@ -107,7 +134,7 @@ private fun OrderListScreen(
 @Composable
 private fun OrderListScreenSuccess(
     orderItemList: List<OrderItem>,
-    onOrderClicked: (String) -> Unit
+    onAction: (OrderListState.Action) -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -123,7 +150,7 @@ private fun OrderListScreenSuccess(
                 OrderItem(
                     orderItem = orderItem,
                     onClick = {
-                        onOrderClicked(orderItem.uuid)
+                        onAction(OrderListState.Action.onOrderClicked(orderItem.uuid))
                     }
                 )
             }
@@ -135,26 +162,35 @@ private fun OrderListScreenSuccess(
 private fun OrderListEffect(
     effectList: List<OrderListState.Event>,
     goToOrderDetails: (String) -> Unit,
-    consumeEffects: () -> Unit
+    consumeEffects: () -> Unit,
+    back: () -> Unit
 ) {
     LaunchedEffect(effectList) {
         effectList.forEach { event ->
             when (event) {
-                is OrderListState.OpenOrderDetailsEvent -> {
+                is OrderListState.Event.OpenOrderDetailsEvent -> {
                     goToOrderDetails(event.orderUuid)
                 }
+
+                OrderListState.Event.GoBackEvent -> back()
             }
+            consumeEffects()
         }
-        consumeEffects()
     }
 }
+
+val orderListViewStateMock = OrderListViewState(
+    state = OrderListViewState.State.Loading,
+    orderList = null
+)
 
 @Preview(showSystemUi = true)
 @Composable
 private fun OrderListScreenSuccessPreview() {
     FoodDeliveryTheme {
         OrderListScreen(
-            OrderListUi(
+            viewState = orderListViewStateMock.copy(
+                state = OrderListViewState.State.Success,
                 orderList = listOf(
                     OrderItem(
                         uuid = "",
@@ -205,27 +241,22 @@ private fun OrderListScreenSuccessPreview() {
                         dateTime = "18.03.2023 11:53",
                         statusName = OrderStatus.CANCELED.name
                     )
-                ),
-                state = OrderListState.State.SUCCESS
+                )
             ),
-            back = {
-            },
-            onOrderClicked = {
-            }
+            onAction = {}
         )
     }
 }
 
 @Preview(showSystemUi = true)
 @Composable
-private fun OrderListScreenEmptyPreview() {
+private fun OrderListScreenErrorPreview() {
     FoodDeliveryTheme {
         OrderListScreen(
-            OrderListUi(state = OrderListState.State.EMPTY),
-            back = {
-            },
-            onOrderClicked = {
-            }
+            onAction = { },
+            viewState = orderListViewStateMock.copy(
+                state = OrderListViewState.State.Error
+            )
         )
     }
 }
@@ -235,11 +266,10 @@ private fun OrderListScreenEmptyPreview() {
 private fun OrderListScreenLoadingPreview() {
     FoodDeliveryTheme {
         OrderListScreen(
-            OrderListUi(state = OrderListState.State.LOADING),
-            back = {
-            },
-            onOrderClicked = {
-            }
+            onAction = { },
+            viewState = orderListViewStateMock.copy(
+                state = OrderListViewState.State.Loading
+            )
         )
     }
 }
