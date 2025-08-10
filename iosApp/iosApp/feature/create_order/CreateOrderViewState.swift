@@ -30,12 +30,12 @@ struct CreateOrderViewState {
     let paymentMethodList: PaymentMethodListUI
     let isOrderCreationEnabled: Bool
     let isLoadingSwitcher: Bool
-    
+
     let additionalUtensils: Bool
     let additionalUtensilsName: LocalizedStringKey
     let additionalUtensilsCount: String
     let isAdditionalUtensilsErrorShown: Bool
-    
+
     var isFieldsEnabled: Bool {
         return !isLoadingCreateOrder
     }

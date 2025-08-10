@@ -45,7 +45,7 @@ struct SettingsView: View, SharedLifecycleWithState {
                     self.mode.wrappedValue.dismiss()
                 }
             )
-            
+
             NavigationLink(
                 destination: ChangeCityView(
                     selectedCallback: {
@@ -129,7 +129,7 @@ struct SettingsView: View, SharedLifecycleWithState {
         listener = viewModel.dataState.watch { settingsStateVM in
             if let notNullSettingsStateVM = settingsStateVM {
                 goToSelectCity = notNullSettingsStateVM.isShowCityListBottomSheet
-                
+
                 state = SettingsViewState(
                     phoneNumber: notNullSettingsStateVM.settings?.phoneNumber ?? "",
                     selectedCityName: notNullSettingsStateVM.selectedCity?.name ?? "",

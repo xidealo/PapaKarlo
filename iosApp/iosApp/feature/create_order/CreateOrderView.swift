@@ -57,7 +57,7 @@ struct CreateOrderView: View {
         isPickupEnabledFromCafeUseCase: iosComponent.provideIsPickupEnabledFromCafeUseCase(),
         hasOpenedCafeUseCase: iosComponent.provideHasOpenedCafeUseCase(),
         getWorkloadCafeUseCase: iosComponent.provideGetWorkloadCafeUseCase(),
-        getSelectedPaymentMethodUseCase:iosComponent.provideGetSelectedPaymentMethodUseCase(),
+        getSelectedPaymentMethodUseCase: iosComponent.provideGetSelectedPaymentMethodUseCase(),
         getExtendedCommentUseCase: iosComponent.provideGetExtendedCommentUseCase()
     )
 
@@ -197,13 +197,13 @@ struct CreateOrderView: View {
                 } else {
                     changeError = nil
                 }
-                
+
                 if createOrderDataStateNN.isAdditionalUtensilsErrorShown {
                     additionalUtensilsError = "error_additional_utensils"
-                }else{
+                } else {
                     additionalUtensilsError = nil
                 }
-                
+
                 print(createOrderDataStateNN)
                 createOrderViewState = CreateOrderViewState(
                     createOrderType: getCreateOrderType(createOrderDataState: createOrderDataStateNN),
@@ -266,7 +266,7 @@ struct CreateOrderView: View {
 
     private func getCreateOrderTypeDelivery(dataState: CreateOrderDataState) -> CreateOrderType {
         let delivery = CreateOrderType.Delivery(
-            deliveryAddress:getDelivryAddress(dataState: dataState),
+            deliveryAddress: getDelivryAddress(dataState: dataState),
             deliveryAddressList: DeliveryAddressListUI(
                 isShown: dataState.isUserAddressListShown,
                 addressList: dataState.userAddressList.map { selectableUserAddress in
@@ -305,13 +305,13 @@ struct CreateOrderView: View {
         )
         return .delivery(delivery)
     }
-    
+
     private func getDelivryAddress(dataState: CreateOrderDataState) -> String? {
-        
-        if (dataState.selectedUserAddressWithCity == nil){
+
+        if dataState.selectedUserAddressWithCity == nil {
             return nil
         }
-        
+
         return (dataState.selectedUserAddressWithCity?.city ?? "") + Constants().ADDRESS_DIVIDER + (dataState.selectedUserAddressWithCity?.userAddress?.getAddress() ?? "")
     }
 
@@ -774,8 +774,8 @@ struct CreateOrderSuccessView: View {
                         .padding(.top, 4)
                         .padding(.horizontal, 16)
                 }
-                
-                VStack(spacing: 0){
+
+                VStack(spacing: 0) {
                     if state.showChange {
                         HStack(spacing: 0) {
                             Button(action: {
@@ -819,7 +819,7 @@ struct CreateOrderSuccessView: View {
                             .padding(.horizontal, 16)
                         }
                     }
-                    
+
                     if state.additionalUtensils {
                         EditTextView(
                             hint: "Количество приборов*",
