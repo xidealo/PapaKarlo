@@ -33,6 +33,7 @@ struct CreateOrderView: View {
     @State var addressList: [SelectableCafeAddressItem] = []
     @State var paymentList: [SelectablePaymentMethod] = []
     @State var changeError: LocalizedStringKey?
+    @State var additionalUtensilsError: LocalizedStringKey?
 
     @State var listener: Closeable?
     @State var eventsListener: Closeable?
@@ -55,7 +56,9 @@ struct CreateOrderView: View {
         isDeliveryEnabledFromCafeUseCase: iosComponent.provideIsDeliveryEnabledFromCafeUseCase(),
         isPickupEnabledFromCafeUseCase: iosComponent.provideIsPickupEnabledFromCafeUseCase(),
         hasOpenedCafeUseCase: iosComponent.provideHasOpenedCafeUseCase(),
-        getWorkloadCafeUseCase: iosComponent.provideGetWorkloadCafeUseCase()
+        getWorkloadCafeUseCase: iosComponent.provideGetWorkloadCafeUseCase(),
+        getSelectedPaymentMethodUseCase: iosComponent.provideGetSelectedPaymentMethodUseCase(),
+        getExtendedCommentUseCase: iosComponent.provideGetExtendedCommentUseCase()
     )
 
     @State var createOrderViewState: CreateOrderViewState?
@@ -122,6 +125,7 @@ struct CreateOrderView: View {
                         goToSelectPaymentMethod: $goToSelectPaymentMethod,
                         goToCreateAddress: $goToCreateAddress,
                         changeError: $changeError,
+                        additionalUtensilsError: $additionalUtensilsError,
                         isRootActive: $isRootActive,
                         showOrderCreated: $showOrderCreated,
                         createOrderViewState: createOrderViewStateNN,
@@ -193,6 +197,13 @@ struct CreateOrderView: View {
                 } else {
                     changeError = nil
                 }
+
+                if createOrderDataStateNN.isAdditionalUtensilsErrorShown {
+                    additionalUtensilsError = "error_additional_utensils"
+                } else {
+                    additionalUtensilsError = nil
+                }
+
                 print(createOrderDataStateNN)
                 createOrderViewState = CreateOrderViewState(
                     createOrderType: getCreateOrderType(createOrderDataState: createOrderDataStateNN),
@@ -234,7 +245,12 @@ struct CreateOrderView: View {
                     ),
                     isOrderCreationEnabled: createOrderDataStateNN.isDelivery ?
                     (createOrderDataStateNN.deliveryState == .enabled) : createOrderDataStateNN.isPickupEnabled,
-                    isLoadingSwitcher: createOrderDataStateNN.isLoadingSwitcher
+                    isLoadingSwitcher: createOrderDataStateNN.isLoadingSwitcher,
+                    additionalUtensils: createOrderDataStateNN.additionalUtensils,
+                    additionalUtensilsName: "msg_additional_utensils",
+                    additionalUtensilsCount: createOrderDataStateNN.additionalUtensilsCount,
+                    isAdditionalUtensilsErrorShown: createOrderDataStateNN.isAdditionalUtensilsErrorShown,
+
                 )
             }
         }
@@ -250,7 +266,7 @@ struct CreateOrderView: View {
 
     private func getCreateOrderTypeDelivery(dataState: CreateOrderDataState) -> CreateOrderType {
         let delivery = CreateOrderType.Delivery(
-            deliveryAddress:getDelivryAddress(dataState: dataState),
+            deliveryAddress: getDelivryAddress(dataState: dataState),
             deliveryAddressList: DeliveryAddressListUI(
                 isShown: dataState.isUserAddressListShown,
                 addressList: dataState.userAddressList.map { selectableUserAddress in
@@ -289,13 +305,13 @@ struct CreateOrderView: View {
         )
         return .delivery(delivery)
     }
-    
+
     private func getDelivryAddress(dataState: CreateOrderDataState) -> String? {
-        
-        if (dataState.selectedUserAddressWithCity == nil){
+
+        if dataState.selectedUserAddressWithCity == nil {
             return nil
         }
-        
+
         return (dataState.selectedUserAddressWithCity?.city ?? "") + Constants().ADDRESS_DIVIDER + (dataState.selectedUserAddressWithCity?.userAddress?.getAddress() ?? "")
     }
 
@@ -449,6 +465,7 @@ struct CreateOrderSuccessView: View {
     @Binding var goToCreateAddress: Bool
 
     @Binding var changeError: LocalizedStringKey?
+    @Binding var additionalUtensilsError: LocalizedStringKey?
 
     @Binding var isRootActive: Bool
     @Binding var showOrderCreated: Bool
@@ -487,6 +504,7 @@ struct CreateOrderSuccessView: View {
                             state: createOrderViewState,
                             action: action,
                             changeError: $changeError,
+                            additionalUtensilsError: $additionalUtensilsError,
                             goToCafeAddress: $goToCafeAddress
                         )
                     case let .delivery(delivery):
@@ -495,6 +513,7 @@ struct CreateOrderSuccessView: View {
                             state: createOrderViewState,
                             action: action,
                             changeError: $changeError,
+                            additionalUtensilsError: $additionalUtensilsError,
                             goToCreateAddress: $goToCreateAddress
                         )
                     }
@@ -523,7 +542,8 @@ struct CreateOrderSuccessView: View {
                         action(
                             CreateOrderActionCreateClick(
                                 withoutChange: createOrderViewState.withoutChange.stringValue(),
-                                changeFrom: createOrderViewState.changeFrom.stringValue()
+                                changeFrom: createOrderViewState.changeFrom.stringValue(),
+                                additionalUtensils: createOrderViewState.additionalUtensilsName.stringValue()
                             )
                         )
                     }, label: {
@@ -560,6 +580,7 @@ struct CreateOrderSuccessView: View {
         let state: CreateOrderViewState
         let action: (CreateOrderAction) -> Void
         @Binding var changeError: LocalizedStringKey?
+        @Binding var additionalUtensilsError: LocalizedStringKey?
 
         @Binding var goToCreateAddress: Bool
 
@@ -613,7 +634,8 @@ struct CreateOrderSuccessView: View {
                         state: state,
                         action: action,
                         isDelivery: true,
-                        changeError: $changeError
+                        changeError: $changeError,
+                        additionalUtensilsError: $additionalUtensilsError
                     )
 
                     switch delivery.workload {
@@ -654,6 +676,7 @@ struct CreateOrderSuccessView: View {
         let state: CreateOrderViewState
         let action: (CreateOrderAction) -> Void
         @Binding var changeError: LocalizedStringKey?
+        @Binding var additionalUtensilsError: LocalizedStringKey?
         @Binding var goToCafeAddress: Bool
 
         var body: some View {
@@ -689,7 +712,8 @@ struct CreateOrderSuccessView: View {
                         state: state,
                         action: action,
                         isDelivery: false,
-                        changeError: $changeError
+                        changeError: $changeError,
+                        additionalUtensilsError: $additionalUtensilsError
                     )
                 } else {
                     if pickup.hasOpenedCafe {
@@ -720,9 +744,11 @@ struct CreateOrderSuccessView: View {
         let action: (CreateOrderAction) -> Void
         let isDelivery: Bool
         @Binding var changeError: LocalizedStringKey?
+        @Binding var additionalUtensilsError: LocalizedStringKey?
 
         @State var changeTextField = ""
         @State var comment = ""
+        @State var additionalUtensilsCountField = ""
         @State var faster = true
         @State var deferredTime: Foundation.Date = .init()
         let calendar = Calendar.current
@@ -749,60 +775,80 @@ struct CreateOrderSuccessView: View {
                         .padding(.horizontal, 16)
                 }
 
-                if state.showChange {
-                    HStack(spacing: 0) {
-                        Button(action: {
-                            action(
-                                CreateOrderActionChangeWithoutChangeChecked()
-                            )
-                        }) {
-                            FoodDeliveryCheckBox(
-                                isSelected: state.withoutChangeChecked,
-                                action: {
-                                    action(
-                                        CreateOrderActionChangeWithoutChangeChecked()
-                                    )
+                VStack(spacing: 0) {
+                    if state.showChange {
+                        HStack(spacing: 0) {
+                            Button(action: {
+                                action(
+                                    CreateOrderActionChangeWithoutChangeChecked()
+                                )
+                            }) {
+                                FoodDeliveryCheckBox(
+                                    isSelected: state.withoutChangeChecked,
+                                    action: {
+                                        action(
+                                            CreateOrderActionChangeWithoutChangeChecked()
+                                        )
+                                    }
+                                )
+
+                                Text("msg_without_change")
+                                    .foregroundColor(AppColor.onSurface)
+                                    .bodyMedium()
+
+                                Spacer()
+                            }
+                            .frame(maxWidth: .infinity)
+                            .padding(.top, 8)
+                            .padding(.bottom, 16)
+                            .padding(.horizontal, 16)
+                        }
+
+                        if !state.withoutChangeChecked {
+                            EditTextView(
+                                hint: "С какой суммы подготовить сдачу?*",
+                                text: $changeTextField,
+                                limit: 10,
+                                keyBoadrType: UIKeyboardType.numberPad,
+                                errorMessage: $changeError,
+                                textChanged: { _ in
+                                    action(CreateOrderActionChangeChange(change: changeTextField))
                                 }
                             )
-
-                            Text("msg_without_change")
-                                .foregroundColor(AppColor.onSurface)
-                                .bodyMedium()
-
-                            Spacer()
+                            .padding(.bottom, 8)
+                            .padding(.horizontal, 16)
                         }
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 8)
-                        .padding(.horizontal, 16)
                     }
-                    .padding(.top, 8)
 
-                    if !state.withoutChangeChecked {
+                    if state.additionalUtensils {
                         EditTextView(
-                            hint: "С какой суммы подготовить сдачу?*",
-                            text: $changeTextField,
+                            hint: "Количество приборов*",
+                            text: $additionalUtensilsCountField,
                             limit: 10,
                             keyBoadrType: UIKeyboardType.numberPad,
-                            errorMessage: $changeError,
+                            errorMessage: $additionalUtensilsError,
                             textChanged: { _ in
-                                action(CreateOrderActionChangeChange(change: changeTextField))
+                                action(
+                                    CreateOrderActionChangeAdditionalUtensils(
+                                        additionalUtensilsCount: additionalUtensilsCountField
+                                    )
+                                )
                             }
                         )
-                        .padding(.top, 16)
+                        .padding(.bottom, 8)
                         .padding(.horizontal, 16)
                     }
-                }
-                EditTextView(
-                    hint: Strings.HINT_CREATE_COMMENT_COMMENT,
-                    text: $comment,
-                    limit: 255,
-                    errorMessage: .constant(nil),
-                    textChanged: { comment in
-                        action(CreateOrderActionChangeComment(comment: comment))
-                    }
-                )
-                .padding(.top, state.showChange ? 8 : 16)
-                .padding(.horizontal, 16)
+                    EditTextView(
+                        hint: Strings.HINT_CREATE_COMMENT_COMMENT,
+                        text: $comment,
+                        limit: 255,
+                        errorMessage: .constant(nil),
+                        textChanged: { comment in
+                            action(CreateOrderActionChangeComment(comment: comment))
+                        }
+                    )
+                    .padding(.horizontal, 16)
+                }.padding(.top, 16)
 
                 Toggle(
                     isOn: $faster.onChange(

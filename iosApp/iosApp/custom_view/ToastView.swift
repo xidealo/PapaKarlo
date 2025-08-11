@@ -17,9 +17,9 @@ struct ToastView: View {
     @Binding var show: Bool
     let backgroundColor: Color
     let foregroundColor: Color
-    
+
     var paddingBottom: CGFloat = 0
-    
+
     var body: some View {
         VStack(spacing: 0) {
             Spacer()

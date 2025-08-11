@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ChangeCityView: View {
     @ObservedObject private var viewModel = ChangeCityViewModel()
+    let selectedCallback: () -> Void
 
     @Environment(\.presentationMode) var presentationMode
 
@@ -43,16 +44,11 @@ struct ChangeCityView: View {
         }
         .onReceive(viewModel.$changeCityViewState, perform: { state in
             if state.changeCityState == ChangeCityState.back {
+                selectedCallback()
                 self.presentationMode.wrappedValue.dismiss()
             }
         })
         .background(AppColor.background)
         .hiddenNavigationBarStyle()
-    }
-}
-
-struct ChangeCityView_Previews: PreviewProvider {
-    static var previews: some View {
-        ChangeCityView()
     }
 }

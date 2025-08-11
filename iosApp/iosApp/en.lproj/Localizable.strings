@@ -108,7 +108,9 @@
 "error_payment_method" = "Payment method was not select";
 "msg_without_change" = "Without change";
 "msg_change_from" = "Change from";
+"msg_additional_utensils" = "Additional utensils: ";
 "error_enter_correct_amount" = "Enter correct amount";
+"error_additional_utensils" = "Enter correct additional utensils";
 "title_pickup" = "Pickup";
 "title_delivery" = "Delivery";
 "error_user_address" = "Not selected user address";
