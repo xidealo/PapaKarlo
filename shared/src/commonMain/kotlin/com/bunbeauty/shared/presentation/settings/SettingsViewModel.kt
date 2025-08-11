@@ -8,7 +8,6 @@ import com.bunbeauty.shared.domain.feature.city.SaveSelectedCityUseCase
 import com.bunbeauty.shared.domain.feature.settings.ObserveSettingsUseCase
 import com.bunbeauty.shared.domain.feature.settings.UpdateEmailUseCase
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
-import com.bunbeauty.shared.domain.model.city.City
 import com.bunbeauty.shared.domain.use_case.DisableUserUseCase
 import com.bunbeauty.shared.extension.launchSafe
 import com.bunbeauty.shared.presentation.base.SharedStateViewModel
@@ -27,7 +26,7 @@ class SettingsViewModel(
     private val saveSelectedCityUseCase: SaveSelectedCityUseCase,
     private val disableUserUseCase: DisableUserUseCase,
     private val userInteractor: IUserInteractor,
-    private val analyticService: AnalyticService,
+    private val analyticService: AnalyticService
 ) : SharedStateViewModel<SettingsState.DataState, SettingsState.Action, SettingsState.Event>(
     SettingsState.DataState()
 ) {
@@ -113,7 +112,7 @@ class SettingsViewModel(
             block = {
                 setState {
                     copy(
-                        isShowLogoutBottomSheet = false,
+                        isShowLogoutBottomSheet = false
                     )
                 }
                 observeSettingsJob?.cancel()

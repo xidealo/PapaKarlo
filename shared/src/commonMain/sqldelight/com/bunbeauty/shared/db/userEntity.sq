@@ -18,3 +18,6 @@ updateUserEmailByUuid:
 UPDATE userEntity
 SET email = :email
 WHERE uuid = :uuid;
+
+deleteAll:
+DELETE FROM userAddressEntity;

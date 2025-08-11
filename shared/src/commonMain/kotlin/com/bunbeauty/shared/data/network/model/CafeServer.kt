@@ -40,5 +40,5 @@ data class CafeServer(
     val workload: String,
 
     @SerialName("additionalUtensils")
-    val additionalUtensils: Boolean,
+    val additionalUtensils: Boolean
 )

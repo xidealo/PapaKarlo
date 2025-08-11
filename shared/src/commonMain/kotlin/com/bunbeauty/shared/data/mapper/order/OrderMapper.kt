@@ -1,9 +1,11 @@
 package com.bunbeauty.shared.data.mapper.order
 
 import com.bunbeauty.shared.data.mapper.order_product.IOrderProductMapper
+import com.bunbeauty.shared.data.network.model.order.get.LightOrderServer
 import com.bunbeauty.shared.data.network.model.order.get.OrderServer
 import com.bunbeauty.shared.data.network.model.order.post.OrderAddressPostServer
 import com.bunbeauty.shared.data.network.model.order.post.OrderPostServer
+import com.bunbeauty.shared.db.LightOrderEntity
 import com.bunbeauty.shared.db.OrderEntity
 import com.bunbeauty.shared.db.OrderWithProductEntity
 import com.bunbeauty.shared.domain.model.order.CreatedOrder
@@ -34,6 +36,40 @@ class OrderMapper(
             status = OrderStatus.valueOf(orderServer.status),
             code = orderServer.code,
             dateTime = dateTimeUtil.toDateTime(orderServer.time, orderServer.timeZone)
+        )
+    }
+
+    override fun toLightOrder(lightOrderServer: LightOrderServer): LightOrder {
+        return LightOrder(
+            uuid = lightOrderServer.uuid,
+            code = lightOrderServer.code,
+            status = OrderStatus.valueOf(lightOrderServer.status),
+            dateTime = dateTimeUtil.toDateTime(
+                millis = lightOrderServer.time,
+                timeZone = lightOrderServer.timeZone
+            )
+        )
+    }
+
+    override fun toLightOrder(lightOrderEntity: LightOrderEntity): LightOrder {
+        return LightOrder(
+            uuid = lightOrderEntity.uuid,
+            code = lightOrderEntity.code,
+            status = OrderStatus.valueOf(lightOrderEntity.status),
+            dateTime = dateTimeUtil.toDateTime(
+                millis = lightOrderEntity.time,
+                timeZone = lightOrderEntity.timeZone
+            )
+        )
+    }
+
+    override fun toLightOrderEntity(lightOrderServer: LightOrderServer): LightOrderEntity {
+        return LightOrderEntity(
+            uuid = lightOrderServer.uuid,
+            code = lightOrderServer.code,
+            status = lightOrderServer.status,
+            time = lightOrderServer.time,
+            timeZone = lightOrderServer.timeZone
         )
     }
 
@@ -73,7 +109,9 @@ class OrderMapper(
                 ),
                 comment = firstOrderWithProductEntity.comment,
                 deliveryCost = firstOrderWithProductEntity.deliveryCost,
-                orderProductList = orderProductMapper.toOrderProduct(groupedOrderWithProductEntityList),
+                orderProductList = orderProductMapper.toOrderProduct(
+                    groupedOrderWithProductEntityList
+                ),
                 paymentMethod = PaymentMethodName.values()
                     .firstOrNull { it.name == firstOrderWithProductEntity.paymentMethod },
                 oldTotalCost = firstOrderWithProductEntity.oldTotalCost,

@@ -12,7 +12,7 @@ data class Cafe(
     val isVisible: Boolean,
     val workType: WorkType,
     val workload: Workload,
-    val additionalUtensils: Boolean,
+    val additionalUtensils: Boolean
 ) {
     enum class WorkType {
         DELIVERY,

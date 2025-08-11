@@ -31,6 +31,7 @@ import com.bunbeauty.shared.data.network.model.login.AuthSessionServer
 import com.bunbeauty.shared.data.network.model.login.CodeRequestServer
 import com.bunbeauty.shared.data.network.model.login.CodeServer
 import com.bunbeauty.shared.data.network.model.login.LoginPostServer
+import com.bunbeauty.shared.data.network.model.order.get.LightOrderServer
 import com.bunbeauty.shared.data.network.model.order.get.OrderCodeServer
 import com.bunbeauty.shared.data.network.model.order.get.OrderServer
 import com.bunbeauty.shared.data.network.model.order.get.OrderUpdateServer
@@ -159,20 +160,26 @@ internal class NetworkConnectorImpl(
         )
     }
 
-    override suspend fun getOrderList(
+    override suspend fun getLightOrderList(
         token: String,
-        count: Int?,
-        uuid: String?
-    ): ApiResult<ListServer<OrderServer>> {
+        count: Int?
+    ): ApiResult<ListServer<LightOrderServer>> {
         return getData(
-            path = "v2/client/order",
+            path = "/client/order/light/list",
             parameters = buildMap {
                 if (count != null) {
                     put("count", count)
                 }
-                if (uuid != null) {
-                    put("uuid", uuid)
-                }
+            },
+            token = token
+        )
+    }
+
+    override suspend fun getOrderByUuid(token: String, uuid: String): ApiResult<OrderServer> {
+        return getData(
+            path = "/client/order",
+            parameters = buildMap {
+                put("uuid", uuid)
             },
             token = token
         )

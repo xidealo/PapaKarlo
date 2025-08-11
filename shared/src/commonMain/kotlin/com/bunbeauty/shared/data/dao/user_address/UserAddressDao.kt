@@ -120,4 +120,9 @@ class UserAddressDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IUserAddressD
             cityUuid = cityUuid
         ).asFlow().mapToList()
     }
+
+    override suspend fun deleteAll() {
+        selectedUserAddressUuidEntityQueries.deleteAll()
+        userAddressEntityQueries.deleteAll()
+    }
 }

@@ -150,4 +150,8 @@ open class UserAddressRepository(
             cityUuid = cityUuid
         ).mapListFlow(userAddressMapper::toUserAddress)
     }
+
+    override suspend fun clearCache() {
+        userAddressDao.deleteAll()
+    }
 }

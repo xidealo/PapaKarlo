@@ -32,4 +32,8 @@ class UserDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IUserDao {
             email = email
         )
     }
+
+    override suspend fun delete() {
+        userEntityQueries
+    }
 }

@@ -10,4 +10,8 @@ class OrderProductDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IOrderProduc
     override suspend fun insert(orderProductEntity: OrderProductEntity) {
         orderProductEntityQueries.insert(orderProductEntity)
     }
+
+    override suspend fun deleteAll() {
+        orderProductEntityQueries.deleteAll()
+    }
 }
