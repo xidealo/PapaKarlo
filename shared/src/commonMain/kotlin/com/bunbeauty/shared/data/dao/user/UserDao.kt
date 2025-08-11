@@ -33,7 +33,7 @@ class UserDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IUserDao {
         )
     }
 
-    override suspend fun delete() {
-        userEntityQueries
+    override suspend fun deleteAll() {
+        userEntityQueries.deleteAll()
     }
 }

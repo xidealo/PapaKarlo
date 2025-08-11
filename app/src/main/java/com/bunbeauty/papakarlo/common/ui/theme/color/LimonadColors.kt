@@ -1,5 +1,6 @@
 package com.bunbeauty.papakarlo.common.ui.theme.color
 
+import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Black700
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Gold100
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.LightBlue
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Orange50
@@ -19,7 +20,8 @@ val LimonadColors = AppColors(
 
 val LimonadDarkColors = AppColors(
     mainColors = ColorDefaults.darkMainColors(
-        primary = Yellow400
+        primary = Yellow400,
+        surface = Black700
     ),
     orderColors = ColorDefaults.orderColors(),
     statusColors = ColorDefaults.statusColors(),

@@ -19,6 +19,7 @@ object FoodDeliveryColors {
     val Black100 = Color(0xFF353549)
     val Black200 = Color(0xFF25252F)
     val Black300 = Color(0xFF18181E)
+    val Black700 = Color(0xFF0E0E0E)
 
     val Grey1 = Color(0xFFDDDDDD)
     val Grey2 = Color(0xFFAAAAAA)

@@ -13,5 +13,5 @@ interface IUserDao {
 
     suspend fun updateUserEmailByUuid(uuid: String, email: String)
 
-    suspend fun delete()
+    suspend fun deleteAll()
 }
