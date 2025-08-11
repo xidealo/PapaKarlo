@@ -75,6 +75,7 @@ class UserRepository(
 
     override suspend fun clearUserCache() {
         dataStoreRepo.clearUserData()
+        userDao.delete()
     }
 
     override suspend fun getToken(): String? {

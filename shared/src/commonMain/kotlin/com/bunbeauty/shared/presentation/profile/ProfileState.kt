@@ -2,11 +2,9 @@ package com.bunbeauty.shared.presentation.profile
 
 import com.bunbeauty.shared.domain.model.link.Link
 import com.bunbeauty.shared.domain.model.order.LightOrder
-import com.bunbeauty.shared.domain.model.payment_method.PaymentMethod
 import com.bunbeauty.shared.presentation.base.BaseAction
 import com.bunbeauty.shared.presentation.base.BaseDataState
 import com.bunbeauty.shared.presentation.base.BaseEvent
-import kotlinx.collections.immutable.ImmutableList
 
 interface ProfileState {
     data class DataState(
@@ -14,7 +12,7 @@ interface ProfileState {
         val state: State,
         val linkList: List<Link>,
         val isShowAboutAppBottomSheet: Boolean,
-        val isShowFeedbackBottomSheet: Boolean,
+        val isShowFeedbackBottomSheet: Boolean
     ) : BaseDataState {
         enum class State {
             AUTHORIZED,
@@ -40,7 +38,6 @@ interface ProfileState {
         data object StopObserveOrder : Action
         data object CloseAboutAppBottomSheet : Action
         data object CloseFeedbackBottomSheet : Action
-
     }
 
     sealed interface Event : BaseEvent {
@@ -53,4 +50,3 @@ interface ProfileState {
         data object GoBackEvent : Event
     }
 }
-

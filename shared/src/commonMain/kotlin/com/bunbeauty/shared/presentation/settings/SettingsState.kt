@@ -15,7 +15,7 @@ interface SettingsState {
         val state: State = State.LOADING,
         val eventList: List<Event> = emptyList(),
         val isShowLogoutBottomSheet: Boolean = false,
-        val isShowCityListBottomSheet: Boolean = false,
+        val isShowCityListBottomSheet: Boolean = false
     ) : BaseDataState {
         enum class State {
             SUCCESS,

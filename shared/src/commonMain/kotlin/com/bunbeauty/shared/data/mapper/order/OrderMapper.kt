@@ -5,6 +5,7 @@ import com.bunbeauty.shared.data.network.model.order.get.LightOrderServer
 import com.bunbeauty.shared.data.network.model.order.get.OrderServer
 import com.bunbeauty.shared.data.network.model.order.post.OrderAddressPostServer
 import com.bunbeauty.shared.data.network.model.order.post.OrderPostServer
+import com.bunbeauty.shared.db.LightOrderEntity
 import com.bunbeauty.shared.db.OrderEntity
 import com.bunbeauty.shared.db.OrderWithProductEntity
 import com.bunbeauty.shared.domain.model.order.CreatedOrder
@@ -18,7 +19,7 @@ import com.bunbeauty.shared.domain.util.DateTimeUtil
 
 class OrderMapper(
     private val orderProductMapper: IOrderProductMapper,
-    private val dateTimeUtil: DateTimeUtil,
+    private val dateTimeUtil: DateTimeUtil
 ) : IOrderMapper {
     override fun toLightOrder(orderEntity: OrderEntity): LightOrder {
         return LightOrder(
@@ -47,6 +48,28 @@ class OrderMapper(
                 millis = lightOrderServer.time,
                 timeZone = lightOrderServer.timeZone
             )
+        )
+    }
+
+    override fun toLightOrder(lightOrderEntity: LightOrderEntity): LightOrder {
+        return LightOrder(
+            uuid = lightOrderEntity.uuid,
+            code = lightOrderEntity.code,
+            status = OrderStatus.valueOf(lightOrderEntity.status),
+            dateTime = dateTimeUtil.toDateTime(
+                millis = lightOrderEntity.time,
+                timeZone = lightOrderEntity.timeZone
+            )
+        )
+    }
+
+    override fun toLightOrderEntity(lightOrderServer: LightOrderServer): LightOrderEntity {
+        return LightOrderEntity(
+            uuid = lightOrderServer.uuid,
+            code = lightOrderServer.code,
+            status = lightOrderServer.status,
+            time = lightOrderServer.time,
+            timeZone = lightOrderServer.timeZone
         )
     }
 

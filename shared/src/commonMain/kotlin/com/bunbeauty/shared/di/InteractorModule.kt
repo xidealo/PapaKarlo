@@ -17,7 +17,8 @@ internal fun interactorModule() = module {
         UserInteractor(
             userRepo = get(),
             orderRepo = get(),
-            cafeRepo = get()
+            cafeRepo = get(),
+            userAddressRepo = get()
         )
     }
     single<ICityInteractor> {

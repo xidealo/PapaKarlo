@@ -14,6 +14,8 @@ import com.bunbeauty.shared.data.dao.category.CategoryDao
 import com.bunbeauty.shared.data.dao.category.ICategoryDao
 import com.bunbeauty.shared.data.dao.city.CityDao
 import com.bunbeauty.shared.data.dao.city.ICityDao
+import com.bunbeauty.shared.data.dao.lightorder.LightOrderDao
+import com.bunbeauty.shared.data.dao.lightorder.LightOrderDaoImpl
 import com.bunbeauty.shared.data.dao.link.ILinkDao
 import com.bunbeauty.shared.data.dao.link.LinkDao
 import com.bunbeauty.shared.data.dao.menu_product.IMenuProductDao
@@ -82,5 +84,8 @@ fun databaseModule() = module {
     }
     single<IAdditionGroupDao> {
         AdditionGroupDao(foodDeliveryDatabase = get())
+    }
+    single<LightOrderDao> {
+        LightOrderDaoImpl(foodDeliveryDatabase = get())
     }
 }

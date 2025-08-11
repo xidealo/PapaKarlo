@@ -16,7 +16,7 @@ interface OrderRepo {
 
     suspend fun stopOrderUpdatesObservation(uuid: String)
 
-    suspend fun getOrderListByUserUuid(token: String, userUuid: String): List<LightOrder>
+    suspend fun getOrderList(token: String): List<LightOrder>
 
     // last order
     suspend fun getLastOrderByUserUuidNetworkFirst(token: String, userUuid: String): LightOrder?

@@ -5,27 +5,27 @@ import com.bunbeauty.shared.Constants.RUBLE_CURRENCY
 data class ExtendedComment(
     val comment: String,
     val change: Change,
-    val additionalUtensils: AdditionalUtensils,
+    val additionalUtensils: AdditionalUtensils
 ) {
     data class Change(
         val paymentByCash: Boolean,
         val withoutChangeChecked: Boolean,
         val withoutChange: String,
         val changeFrom: String,
-        val change: String,
+        val change: String
     )
 
     data class AdditionalUtensils(
         val isAdditionalUtensils: Boolean,
         val count: String,
-        val name: String,
+        val name: String
     )
 }
 
 class GetExtendedCommentUseCase {
 
     operator fun invoke(
-        extendedComment: ExtendedComment,
+        extendedComment: ExtendedComment
     ): String {
         return buildString {
             extendedComment.comment.takeIf { comment ->

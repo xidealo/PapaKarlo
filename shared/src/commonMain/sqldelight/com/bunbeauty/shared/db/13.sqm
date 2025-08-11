@@ -1,0 +1,7 @@
+CREATE TABLE lightOrderEntity (
+    uuid TEXT NOT NULL PRIMARY KEY,
+    status TEXT NOT NULL,
+    time INTEGER NOT NULL,
+    timeZone TEXT NOT NULL,
+    code TEXT NOT NULL
+);
