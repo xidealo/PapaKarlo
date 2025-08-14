@@ -22,15 +22,18 @@ class GetSelectedPaymentMethodUseCaseTest {
             SelectablePaymentMethod(
                 paymentMethod = getPaymentMethod(
                     name = PaymentMethodName.CASH
-                ), false
+                ),
+                false
             ),
             SelectablePaymentMethod(
-                expectedMethod, true
+                expectedMethod,
+                true
             ),
             SelectablePaymentMethod(
                 getPaymentMethod(
                     name = PaymentMethodName.CARD_NUMBER
-                ), false
+                ),
+                false
             )
         )
 

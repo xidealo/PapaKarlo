@@ -5,14 +5,9 @@ import com.bunbeauty.shared.domain.feature.link.GetLinkListUseCase
 import com.bunbeauty.shared.domain.feature.order.GetLastOrderUseCase
 import com.bunbeauty.shared.domain.feature.order.ObserveLastOrderUseCase
 import com.bunbeauty.shared.domain.feature.order.StopObserveOrdersUseCase
-import com.bunbeauty.shared.domain.feature.payment.GetPaymentMethodListUseCase
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
-import com.bunbeauty.shared.domain.model.link.Link
-import com.bunbeauty.shared.domain.model.payment_method.PaymentMethod
 import com.bunbeauty.shared.extension.launchSafe
 import com.bunbeauty.shared.presentation.base.SharedStateViewModel
-import kotlinx.collections.immutable.persistentListOf
-import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -22,7 +17,7 @@ class ProfileViewModel(
     private val getLastOrderUseCase: GetLastOrderUseCase,
     private val getLinkListUseCase: GetLinkListUseCase,
     private val observeLastOrderUseCase: ObserveLastOrderUseCase,
-    private val stopObserveOrdersUseCase: StopObserveOrdersUseCase,
+    private val stopObserveOrdersUseCase: StopObserveOrdersUseCase
 ) : SharedStateViewModel<ProfileState.DataState, ProfileState.Action, ProfileState.Event>(
     initDataState = ProfileState.DataState(
         lastOrder = null,
@@ -38,14 +33,14 @@ class ProfileViewModel(
 
     override fun reduce(
         action: ProfileState.Action,
-        dataState: ProfileState.DataState,
+        dataState: ProfileState.DataState
     ) {
         when (action) {
             ProfileState.Action.BackClicked -> onBackClicked()
             ProfileState.Action.Init -> loadData()
             ProfileState.Action.OnRefreshClicked -> loadData()
             is ProfileState.Action.OnLastOrderClicked -> onLastOrderClicked(
-                uuid = action.uuid,
+                uuid = action.uuid
             )
 
             ProfileState.Action.OnOrderHistoryClicked -> onOrderHistoryClicked()
@@ -76,7 +71,7 @@ class ProfileViewModel(
                         } else {
                             ProfileState.DataState.State.UNAUTHORIZED
                         },
-                        linkList = linkList,
+                        linkList = linkList
                     )
                 }
             },
@@ -128,7 +123,6 @@ class ProfileViewModel(
             ProfileState.Event.OpenOrderDetails(uuid)
         }
     }
-
 
     fun onSettingsClicked() {
         addEvent {

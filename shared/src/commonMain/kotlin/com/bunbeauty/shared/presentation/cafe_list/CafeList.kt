@@ -12,7 +12,7 @@ interface CafeList {
         val isLoading: Boolean,
         val isShownCafeOptionBottomSheet: Boolean,
         val throwable: Throwable? = null,
-        val selectedCafe: Cafe? = null,
+        val selectedCafe: Cafe? = null
     ) : BaseDataState
 
     sealed interface Action : BaseAction {

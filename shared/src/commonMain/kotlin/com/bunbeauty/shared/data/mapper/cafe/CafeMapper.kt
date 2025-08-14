@@ -52,6 +52,6 @@ fun CafeServer.toCafe(): Cafe {
         isVisible = isVisible,
         workType = Cafe.WorkType.valueOf(workType),
         workload = Cafe.Workload.valueOf(workload),
-        additionalUtensils = additionalUtensils,
+        additionalUtensils = additionalUtensils
     )
 }

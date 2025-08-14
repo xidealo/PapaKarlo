@@ -71,7 +71,8 @@ fun repositoryModule() = module {
             networkConnector = get(),
             orderMapper = get(),
             orderAdditionDao = get(),
-            orderProductDao = get()
+            orderProductDao = get(),
+            lightOrderDao = get()
         )
     }
     single<MenuProductRepo> {

@@ -46,7 +46,7 @@ class GetExtendedCommentUseCaseTest {
                 withoutChangeChecked = false,
                 withoutChange = "Without change",
                 changeFrom = "Сдача с",
-                change = "500",
+                change = "500"
             ),
             additionalUtensils = ExtendedComment.AdditionalUtensils(
                 isAdditionalUtensils = false,
@@ -72,7 +72,7 @@ class GetExtendedCommentUseCaseTest {
                 withoutChangeChecked = true,
                 withoutChange = "Без сдачи",
                 changeFrom = "",
-                change = "",
+                change = ""
             ),
             additionalUtensils = ExtendedComment.AdditionalUtensils(
                 isAdditionalUtensils = false,
@@ -98,7 +98,7 @@ class GetExtendedCommentUseCaseTest {
                 withoutChangeChecked = false,
                 withoutChange = "",
                 changeFrom = "",
-                change = "",
+                change = ""
             ),
             additionalUtensils = ExtendedComment.AdditionalUtensils(
                 isAdditionalUtensils = true,
@@ -124,7 +124,7 @@ class GetExtendedCommentUseCaseTest {
                 withoutChangeChecked = false,
                 withoutChange = "Без сдачи",
                 changeFrom = "Сдача с",
-                change = "1000",
+                change = "1000"
             ),
             additionalUtensils = ExtendedComment.AdditionalUtensils(
                 isAdditionalUtensils = true,
@@ -150,7 +150,7 @@ class GetExtendedCommentUseCaseTest {
                 withoutChangeChecked = false,
                 withoutChange = "",
                 changeFrom = "Сдача с",
-                change = "200",
+                change = "200"
             ),
             additionalUtensils = ExtendedComment.AdditionalUtensils(
                 isAdditionalUtensils = true,
@@ -176,7 +176,7 @@ class GetExtendedCommentUseCaseTest {
                 withoutChangeChecked = false,
                 withoutChange = "",
                 changeFrom = "",
-                change = "",
+                change = ""
             ),
             additionalUtensils = ExtendedComment.AdditionalUtensils(
                 isAdditionalUtensils = false,

@@ -56,7 +56,7 @@ class CreateOrderViewModel(
     private val hasOpenedCafeUseCase: HasOpenedCafeUseCase,
     private val getWorkloadCafeUseCase: GetWorkloadCafeUseCase,
     private val getSelectedPaymentMethodUseCase: GetSelectedPaymentMethodUseCase,
-    private val getExtendedCommentUseCase: GetExtendedCommentUseCase,
+    private val getExtendedCommentUseCase: GetExtendedCommentUseCase
 ) : SharedStateViewModel<CreateOrder.DataState, CreateOrder.Action, CreateOrder.Event>(
     initDataState = CreateOrder.DataState(
         isDelivery = true,
@@ -76,7 +76,7 @@ class CreateOrderViewModel(
         hasOpenedCafe = true,
         workload = Cafe.Workload.LOW,
         additionalUtensils = false,
-        additionalUtensilsCount = "",
+        additionalUtensilsCount = ""
     )
 ) {
 
@@ -371,7 +371,7 @@ class CreateOrderViewModel(
     private fun createClick(
         withoutChange: String,
         changeFrom: String,
-        additionalUtensils: String,
+        additionalUtensils: String
     ) {
         val state = mutableDataState.value
 
@@ -403,8 +403,8 @@ class CreateOrderViewModel(
             (state.cartTotal as? CreateOrder.CartTotal.Success)?.newFinalCostValue ?: 0
         val isChangeLessThenCost = (state.change ?: 0) < newFinalCost
         val isChangeIncorrect = state.paymentByCash &&
-                !state.withoutChangeChecked &&
-                isChangeLessThenCost
+            !state.withoutChangeChecked &&
+            isChangeLessThenCost
         setState {
             copy(isChangeErrorShown = isChangeIncorrect)
         }
@@ -415,8 +415,8 @@ class CreateOrderViewModel(
             return
         }
 
-        val isAdditionalUtensilsIncorrect = state.additionalUtensils
-                && state.additionalUtensilsCount.isEmpty()
+        val isAdditionalUtensilsIncorrect = state.additionalUtensils &&
+            state.additionalUtensilsCount.isEmpty()
 
         setState {
             copy(isAdditionalUtensilsErrorShown = isAdditionalUtensilsIncorrect)
@@ -443,12 +443,12 @@ class CreateOrderViewModel(
                                 withoutChangeChecked = state.withoutChangeChecked,
                                 withoutChange = withoutChange,
                                 changeFrom = changeFrom,
-                                change = state.change?.toString().orEmpty(),
+                                change = state.change?.toString().orEmpty()
                             ),
                             additionalUtensils = ExtendedComment.AdditionalUtensils(
                                 isAdditionalUtensils = state.additionalUtensils,
                                 count = state.additionalUtensilsCount,
-                                name = additionalUtensils,
+                                name = additionalUtensils
                             )
                         )
                     ).takeIf { comment ->
@@ -598,7 +598,7 @@ class CreateOrderViewModel(
     }
 
     fun changeAdditionalUtensilsCount(
-        additionalUtensilsCount: String,
+        additionalUtensilsCount: String
     ) {
         setState {
             copy(

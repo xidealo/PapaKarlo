@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.collectLatest
 
 class CafeListViewModel(
     private val cafeInteractor: ICafeInteractor,
-    private val observeCafeWithOpenStateListUseCase: ObserveCafeWithOpenStateListUseCase,
+    private val observeCafeWithOpenStateListUseCase: ObserveCafeWithOpenStateListUseCase
 ) : SharedStateViewModel<CafeList.DataState, CafeList.Action, CafeList.Event>(
     initDataState = CafeList.DataState(
         cafeList = listOf(),

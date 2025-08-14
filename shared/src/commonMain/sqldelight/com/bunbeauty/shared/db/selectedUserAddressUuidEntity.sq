@@ -12,3 +12,6 @@ insertSelectedUserAddressUuid:
 INSERT OR REPLACE
 INTO selectedUserAddressUuidEntity
 VALUES (?, ?, ?);
+
+deleteAll:
+DELETE FROM selectedUserAddressUuidEntity;

@@ -39,4 +39,6 @@ interface UserAddressRepo {
         userUuid: String,
         cityUuid: String
     ): Flow<List<UserAddress>>
+
+    suspend fun clearCache()
 }

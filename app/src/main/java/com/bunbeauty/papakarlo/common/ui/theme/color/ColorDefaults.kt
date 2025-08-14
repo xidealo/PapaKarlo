@@ -24,7 +24,7 @@ object ColorDefaults {
     fun lightMainColors(
         primary: Color,
         surfaceVariant: Color,
-        strokeVariant: Color
+        strokeVariant: Color,
     ): MainColors {
         return MainColors(
             primary = primary,
@@ -46,13 +46,16 @@ object ColorDefaults {
         )
     }
 
-    fun darkMainColors(primary: Color): MainColors {
+    fun darkMainColors(
+        primary: Color,
+        surface: Color = Black200,
+    ): MainColors {
         return MainColors(
             primary = primary,
             disabled = Black100,
             secondary = Black200,
             background = Black300,
-            surface = Black200,
+            surface = surface,
             surfaceVariant = Black100,
             error = Red500,
             onPrimary = White,
