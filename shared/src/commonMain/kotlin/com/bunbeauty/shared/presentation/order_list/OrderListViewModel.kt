@@ -29,9 +29,12 @@ class OrderListViewModel(
         when (action) {
             OrderListState.Action.BackClicked -> onBackClicked()
             OrderListState.Action.OnRefreshClicked -> observeOrders()
-            is OrderListState.Action.onOrderClicked -> onOrderClicked(
+            is OrderListState.Action.OnOrderClicked -> onOrderClicked(
                 uuid = action.uuid
             )
+
+            OrderListState.Action.StartObserveOrder -> observeOrders()
+            OrderListState.Action.StopObserveOrder -> stopObserveOrders()
         }
     }
 
@@ -41,14 +44,14 @@ class OrderListViewModel(
         }
     }
 
-    fun onOrderClicked(uuid: String) {
+    private fun onOrderClicked(uuid: String) {
         addEvent {
             OrderListState.Event.OpenOrderDetailsEvent(uuid)
         }
     }
 
 
-    fun observeOrders() {
+    private fun observeOrders() {
         observeOrdersJob = sharedScope.launchSafe(
             block = {
                 val (uuid, orderListFlow) = observeOrderListUseCase()
@@ -75,7 +78,7 @@ class OrderListViewModel(
     }
 
 
-    fun stopObserveOrders() {
+     private fun stopObserveOrders() {
         observeOrdersJob?.cancel()
         orderObservationUuid?.let { uuid ->
             sharedScope.launch {

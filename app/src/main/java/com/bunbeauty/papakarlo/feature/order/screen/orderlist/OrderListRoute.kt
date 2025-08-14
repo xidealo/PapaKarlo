@@ -62,9 +62,9 @@ fun OrderListRoute(
     }
 
     LifecycleStartEffect(Unit) {
-        viewModel.observeOrders()
+        viewModel.onAction(OrderListState.Action.StartObserveOrder)
         onStopOrDispose {
-            viewModel.stopObserveOrders()
+            viewModel.onAction(OrderListState.Action.StopObserveOrder)
         }
     }
 
@@ -146,7 +146,7 @@ private fun OrderListScreenSuccess(
                 OrderItem(
                     orderItem = orderItem,
                     onClick = {
-                        onAction(OrderListState.Action.onOrderClicked(orderItem.uuid))
+                        onAction(OrderListState.Action.OnOrderClicked(orderItem.uuid))
                     }
                 )
             }

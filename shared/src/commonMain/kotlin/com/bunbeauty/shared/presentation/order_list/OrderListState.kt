@@ -22,7 +22,9 @@ interface OrderListState {
     sealed interface Action: BaseAction {
         data object BackClicked : Action
         data object OnRefreshClicked : Action
-        data class onOrderClicked(val uuid: String) : Action
+        data class OnOrderClicked(val uuid: String) : Action
+        data object StartObserveOrder : Action
+        data object StopObserveOrder : Action
     }
 
     sealed interface Event: BaseEvent {
