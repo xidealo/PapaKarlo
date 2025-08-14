@@ -21,6 +21,7 @@ interface SelectCityDataState {
     sealed interface Action : BaseAction {
         data object OnRefreshClicked : Action
         data class OnCitySelected(val city: City) : Action
+        data object OnObserveCity : Action
     }
 
     sealed interface Event : BaseEvent {

@@ -26,7 +26,7 @@ import com.bunbeauty.shared.presentation.selectcity.SelectCityViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun SelectCityDataState.DataState.mapState(): SelectCityViewState {
+private fun SelectCityDataState.DataState.mapState(): SelectCityViewState {
     return SelectCityViewState(
         state = when (state) {
             SelectCityDataState.DataState.State.LOADING -> SelectCityViewState.State.Loading
@@ -44,7 +44,7 @@ fun SelectCityRoute(
     goToMenuFragment: () -> Unit
 ) {
     LaunchedEffect(Unit) {
-        viewModel.getCityList()
+        viewModel.onAction(SelectCityDataState.Action.OnObserveCity)
     }
     val onAction = remember {
         { event: SelectCityDataState.Action ->

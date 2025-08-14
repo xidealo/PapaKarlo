@@ -21,10 +21,11 @@ class SelectCityViewModel(
         when (action) {
             is SelectCityDataState.Action.OnCitySelected -> onCitySelected(city = action.city)
             SelectCityDataState.Action.OnRefreshClicked -> getCityList()
+            SelectCityDataState.Action.OnObserveCity -> getCityList()
         }
     }
 
-    fun getCityList() {
+    private fun getCityList() {
         setState { copy(state = SelectCityDataState.DataState.State.LOADING) }
         sharedScope.launchSafe(
             block = {
@@ -46,7 +47,7 @@ class SelectCityViewModel(
 
 
 
-    fun onCitySelected(city: City) {
+    private fun onCitySelected(city: City) {
         sharedScope.launchSafe(
             block = {
                 cityInteractor.saveSelectedCity(city)
