@@ -140,11 +140,6 @@ private fun SelectCityEffect(
 @Preview(showSystemUi = true)
 @Composable
 private fun SelectCitySuccessScreenPreview() {
-    val city = City(
-        uuid = "",
-        name = "Москва",
-        timeZone = ""
-    )
     FoodDeliveryTheme {
         SelectCityScreen(
             viewState = SelectCityViewState(
@@ -153,6 +148,11 @@ private fun SelectCitySuccessScreenPreview() {
                     City(
                         uuid = "123",
                         name = "Кимры",
+                        timeZone = ""
+                    ),
+                    City(
+                        uuid = "123",
+                        name = "Москва",
                         timeZone = ""
                     )
                 )
