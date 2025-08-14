@@ -28,8 +28,7 @@ class OrderListViewModel(
     ) {
         when (action) {
             OrderListState.Action.BackClicked -> onBackClicked()
-            OrderListState.Action.Init -> loadData()
-            OrderListState.Action.OnRefreshClicked -> loadData()
+            OrderListState.Action.OnRefreshClicked -> observeOrders()
             is OrderListState.Action.onOrderClicked -> onOrderClicked(
                 uuid = action.uuid
             )
@@ -46,30 +45,6 @@ class OrderListViewModel(
         addEvent {
             OrderListState.Event.OpenOrderDetailsEvent(uuid)
         }
-    }
-
-
-    private fun loadData() {
-        sharedScope.launchSafe(
-            block = {
-                val (uuid, orderListFlow) = observeOrderListUseCase()
-                orderObservationUuid = uuid
-                orderListFlow.collectLatest { orderList ->
-                    setState {
-                        copy(
-                            orderList = orderList
-                        )
-                    }
-                }
-            },
-            onError = {
-                setState {
-                    copy(
-                        state = OrderListState.DataState.State.ERROR
-                    )
-                }
-            }
-        )
     }
 
 

@@ -8,7 +8,7 @@ import com.bunbeauty.shared.presentation.base.BaseEvent
 
 interface OrderListState {
     data class DataState(
-        val orderList: List<LightOrder>? = null,
+        val orderList: List<LightOrder> = emptyList(),
         val state: State = State.LOADING
     ) : BaseDataState {
 
@@ -20,7 +20,6 @@ interface OrderListState {
         }
     }
     sealed interface Action: BaseAction {
-        data object Init : Action
         data object BackClicked : Action
         data object OnRefreshClicked : Action
         data class onOrderClicked(val uuid: String) : Action

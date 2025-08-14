@@ -7,7 +7,7 @@ import com.bunbeauty.shared.presentation.base.BaseViewState
 @Immutable
 data class OrderListViewState(
     val state: State,
-    val orderList: List<OrderItem>? = null
+    val orderList: List<OrderItem> = emptyList()
 ) : BaseViewState {
     @Immutable
     sealed interface State {

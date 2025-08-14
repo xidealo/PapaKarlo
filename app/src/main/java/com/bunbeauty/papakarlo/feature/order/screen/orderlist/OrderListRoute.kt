@@ -42,7 +42,7 @@ fun OrderListState.DataState.mapState(): OrderListViewState {
             OrderListState.DataState.State.ERROR -> OrderListViewState.State.Error
             OrderListState.DataState.State.EMPTY -> OrderListViewState.State.Empty
         },
-        orderList = orderList?.map(orderItemMapper::toItem)
+        orderList = orderList.map(orderItemMapper::toItem)
 
     )
 }
@@ -59,10 +59,6 @@ fun OrderListRoute(
         { event: OrderListState.Action ->
             viewModel.onAction(event)
         }
-    }
-
-    LaunchedEffect(Unit) {
-        viewModel.onAction(OrderListState.Action.Init)
     }
 
     LifecycleStartEffect(Unit) {
@@ -105,7 +101,7 @@ private fun OrderListScreen(
         when (viewState.state) {
             OrderListViewState.State.Success -> {
                 OrderListScreenSuccess(
-                    orderItemList = viewState.orderList ?: emptyList(),
+                    orderItemList = viewState.orderList,
                     onAction = onAction
                 )
             }
@@ -181,7 +177,7 @@ private fun OrderListEffect(
 
 val orderListViewStateMock = OrderListViewState(
     state = OrderListViewState.State.Loading,
-    orderList = null
+    orderList = emptyList()
 )
 
 @Preview(showSystemUi = true)
