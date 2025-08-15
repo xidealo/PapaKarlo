@@ -130,7 +130,7 @@ private fun SelectCityEffect(
     LaunchedEffect(effects) {
         effects.forEach { event ->
             when (event) {
-                SelectCityDataState.Event.NavigateToMenu -> goToMenuFragment
+                SelectCityDataState.Event.NavigateToMenu -> goToMenuFragment()
             }
             consumeEventList()
         }
