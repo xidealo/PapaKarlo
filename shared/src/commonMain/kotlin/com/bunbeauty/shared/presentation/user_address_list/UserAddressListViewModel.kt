@@ -1,49 +1,71 @@
 package com.bunbeauty.shared.presentation.user_address_list
 
-import com.bunbeauty.shared.domain.asCommonStateFlow
 import com.bunbeauty.shared.domain.use_case.address.GetSelectableUserAddressListUseCase
 import com.bunbeauty.shared.domain.use_case.address.SaveSelectedUserAddressUseCase
-import com.bunbeauty.shared.presentation.base.SharedViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.update
+import com.bunbeauty.shared.extension.launchSafe
+import com.bunbeauty.shared.presentation.base.SharedStateViewModel
 import kotlinx.coroutines.launch
 
 class UserAddressListViewModel(
     private val getSelectableUserAddressListUseCase: GetSelectableUserAddressListUseCase,
     private val saveSelectedUserAddressUseCase: SaveSelectedUserAddressUseCase
-) : SharedViewModel() {
-
-    private val mutableAddressListState = MutableStateFlow(UserAddressListState())
-    val addressListState = mutableAddressListState.asCommonStateFlow()
-
-    fun update() {
-        mutableAddressListState.update { state ->
-            state.copy(state = UserAddressListState.State.LOADING)
+) : SharedStateViewModel<UserAddressListDataState.DataState, UserAddressListDataState.Action, UserAddressListDataState.Event>(
+    initDataState = UserAddressListDataState.DataState(
+        userAddressList = emptyList(),
+        state = UserAddressListDataState.DataState.State.LOADING
+    )
+) {
+    override fun reduce(
+        action: UserAddressListDataState.Action,
+        dataState: UserAddressListDataState.DataState
+    ) {
+        when (action) {
+            UserAddressListDataState.Action.BackClicked -> onBackClicked()
+            UserAddressListDataState.Action.OnClickedCreateAddress -> onCreateAddressClicked()
+            UserAddressListDataState.Action.Init -> update()
+            UserAddressListDataState.Action.OnRefreshClicked -> update()
         }
-        sharedScope.launch {
-            val addressList = getSelectableUserAddressListUseCase()
-            mutableAddressListState.update { state ->
-                state.copy(
-                    userAddressList = addressList,
-                    state = if (addressList.isEmpty()) {
-                        UserAddressListState.State.EMPTY
-                    } else {
-                        UserAddressListState.State.SUCCESS
-                    }
-                )
+    }
+
+
+    private fun update() {
+        setState {
+            copy(
+                state = UserAddressListDataState.DataState.State.LOADING
+            )
+        }
+        sharedScope.launchSafe(
+            block = {
+                val addressList = getSelectableUserAddressListUseCase()
+                setState {
+                    copy(
+                        userAddressList = addressList,
+                        state = if (addressList.isEmpty()) {
+                            UserAddressListDataState.DataState.State.EMPTY
+                        } else {
+                            UserAddressListDataState.DataState.State.SUCCESS
+                        }
+                    )
+                }
+            },
+            onError = {
+                setState {
+                    copy(
+                        state = UserAddressListDataState.DataState.State.ERROR
+                    )
+                }
             }
-        }
+        )
     }
 
-    fun onCreateAddressClicked() {
-        mutableAddressListState.update { state ->
-            state + UserAddressListState.Event.OpenCreateAddressEvent
+    private fun onCreateAddressClicked() {
+        addEvent {
+            UserAddressListDataState.Event.OpenCreateAddressEvent
         }
     }
-
-    fun consumeEventList(eventList: List<UserAddressListState.Event>) {
-        mutableAddressListState.update { state ->
-            state - eventList
+    private fun onBackClicked() {
+        addEvent {
+            UserAddressListDataState.Event.GoBackEvent
         }
     }
 
@@ -51,13 +73,15 @@ class UserAddressListViewModel(
     fun onUserAddressChanged(userAddressUuid: String) {
         sharedScope.launch {
             saveSelectedUserAddressUseCase(userAddressUuid)
-            mutableAddressListState.update { state ->
-                state + UserAddressListState.Event.GoBack
+           addEvent {
+               UserAddressListDataState.Event.GoBackEvent
+           }
+            setState {
+                copy(
+                    state = UserAddressListDataState.DataState.State.LOADING
+                )
             }
-            mutableAddressListState.update { state ->
-                state.copy(state = UserAddressListState.State.LOADING)
-            }
-            println("EVENTS ${addressListState.value.eventList}")
+            println("EVENTS ${events.value}")
         }
     }
 }
