@@ -115,7 +115,8 @@ fun getCity(
 fun getCafe(
     uuid: String,
     workType: Cafe.WorkType = Cafe.WorkType.DELIVERY_AND_PICKUP,
-    workload: Cafe.Workload = Cafe.Workload.LOW
+    workload: Cafe.Workload = Cafe.Workload.LOW,
+    additionalUtensils: Boolean = false
 ) = Cafe(
     uuid = uuid,
     fromTime = 0,
@@ -128,7 +129,7 @@ fun getCafe(
     isVisible = true,
     workType = workType,
     workload = workload,
-    additionalUtensils = false
+    additionalUtensils = additionalUtensils
 )
 
 fun getSelectablePaymentMethod(

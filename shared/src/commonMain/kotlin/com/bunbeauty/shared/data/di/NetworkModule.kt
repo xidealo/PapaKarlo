@@ -1,6 +1,7 @@
 package com.bunbeauty.shared.data.di
 
 import com.bunbeauty.core.Logger
+import com.bunbeauty.core.Logger.NETWORK_RESPONSE_TAG
 import com.bunbeauty.core.Logger.NETWORK_TAG
 import com.bunbeauty.shared.domain.exeptions.AuthSessionTimeoutException
 import com.bunbeauty.shared.domain.exeptions.InvalidCodeException
@@ -11,7 +12,6 @@ import com.bunbeauty.shared.httpClientEngine
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.DefaultRequest
 import io.ktor.client.plugins.HttpResponseValidator
-import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logging
@@ -76,11 +76,13 @@ fun networkModule() = module {
                     protocol = URLProtocol.HTTPS
                 }
             }
-
-            install(HttpTimeout) {
-                requestTimeoutMillis = 35000
-                connectTimeoutMillis = 35000
-                socketTimeoutMillis = 35000
+            HttpResponseValidator {
+                validateResponse { response ->
+                    Logger.logD(
+                        NETWORK_RESPONSE_TAG,
+                        "Response time: ${response.responseTime}"
+                    )
+                }
             }
         }
     }

@@ -43,6 +43,7 @@ import com.bunbeauty.shared.domain.exeptions.FoodDeliveryNetworkException
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.ClientRequestException
+import io.ktor.client.plugins.timeout
 import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.get
 import io.ktor.client.request.header
@@ -67,7 +68,8 @@ internal class NetworkConnectorImpl(
     override suspend fun getForceUpdateVersion(): ApiResult<ForceUpdateVersionServer> {
         return getData(
             path = "force_update_version",
-            parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuidProvider.companyUuid)
+            parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuidProvider.companyUuid),
+            timeout = 5000
         )
     }
 
@@ -325,14 +327,16 @@ internal class NetworkConnectorImpl(
     private suspend inline fun <reified R> getData(
         path: String,
         parameters: Map<String, Any> = mapOf(),
-        token: String? = null
+        token: String? = null,
+        timeout: Long = 25000
     ): ApiResult<R> {
         return safeCall {
             client.get {
                 buildRequest(
                     path = path,
                     parameters = parameters,
-                    token = token
+                    token = token,
+                    timeout = timeout
                 )
             }
         }
@@ -342,7 +346,8 @@ internal class NetworkConnectorImpl(
         path: String,
         parameters: Map<String, String> = mapOf(),
         body: Any,
-        token: String? = null
+        token: String? = null,
+        timeout: Long = 25000
     ): ApiResult<R> {
         return safeCall {
             client.post {
@@ -350,7 +355,8 @@ internal class NetworkConnectorImpl(
                     path = path,
                     parameters = parameters,
                     body = body,
-                    token = token
+                    token = token,
+                    timeout = timeout
                 )
             }
         }
@@ -360,7 +366,8 @@ internal class NetworkConnectorImpl(
         path: String,
         body: Any,
         parameters: Map<String, String> = mapOf(),
-        token: String? = null
+        token: String? = null,
+        timeout: Long = 25000
     ): ApiResult<R> {
         return safeCall {
             client.patch {
@@ -368,7 +375,8 @@ internal class NetworkConnectorImpl(
                     path = path,
                     parameters = parameters,
                     body = body,
-                    token = token
+                    token = token,
+                    timeout = timeout
                 )
             }
         }
@@ -378,7 +386,8 @@ internal class NetworkConnectorImpl(
         path: String,
         body: Any? = null,
         parameters: Map<String, String> = mapOf(),
-        token: String? = null
+        token: String? = null,
+        timeout: Long = 25000
     ): ApiResult<R> {
         return safeCall {
             client.put {
@@ -386,7 +395,8 @@ internal class NetworkConnectorImpl(
                     path = path,
                     parameters = parameters,
                     body = body,
-                    token = token
+                    token = token,
+                    timeout = timeout
                 )
             }
         }
@@ -411,7 +421,8 @@ internal class NetworkConnectorImpl(
         path: String,
         parameters: Map<String, Any> = mapOf(),
         body: Any? = null,
-        token: String? = null
+        token: String? = null,
+        timeout: Long
     ) {
         if (body != null) {
             setBody(body)
@@ -424,6 +435,11 @@ internal class NetworkConnectorImpl(
         }
         if (token != null) {
             header(AUTHORIZATION_HEADER, "Bearer $token")
+        }
+        timeout {
+            requestTimeoutMillis = timeout
+            connectTimeoutMillis = timeout
+            socketTimeoutMillis = timeout
         }
     }
 }
