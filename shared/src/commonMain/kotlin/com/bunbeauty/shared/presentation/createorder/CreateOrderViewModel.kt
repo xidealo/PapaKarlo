@@ -5,6 +5,7 @@ import com.bunbeauty.shared.Constants.PERCENT
 import com.bunbeauty.shared.Constants.RUBLE_CURRENCY
 import com.bunbeauty.shared.domain.exeptions.OrderNotAvailableException
 import com.bunbeauty.shared.domain.feature.address.GetCurrentUserAddressWithCityUseCase
+import com.bunbeauty.shared.domain.feature.cafe.GetAdditionalUtensilsUseCase
 import com.bunbeauty.shared.domain.feature.cafe.GetSelectableCafeListUseCase
 import com.bunbeauty.shared.domain.feature.cafe.GetWorkloadCafeUseCase
 import com.bunbeauty.shared.domain.feature.cafe.HasOpenedCafeUseCase
@@ -56,7 +57,8 @@ class CreateOrderViewModel(
     private val hasOpenedCafeUseCase: HasOpenedCafeUseCase,
     private val getWorkloadCafeUseCase: GetWorkloadCafeUseCase,
     private val getSelectedPaymentMethodUseCase: GetSelectedPaymentMethodUseCase,
-    private val getExtendedCommentUseCase: GetExtendedCommentUseCase
+    private val getExtendedCommentUseCase: GetExtendedCommentUseCase,
+    private val getAdditionalUtensilsUseCase: GetAdditionalUtensilsUseCase
 ) : SharedStateViewModel<CreateOrder.DataState, CreateOrder.Action, CreateOrder.Event>(
     initDataState = CreateOrder.DataState(
         isDelivery = true,
@@ -85,7 +87,7 @@ class CreateOrderViewModel(
     override fun reduce(action: CreateOrder.Action, dataState: CreateOrder.DataState) {
         when (action) {
             CreateOrder.Action.Init -> {
-                loadData()
+                loadData(isDelivery = dataState.isDelivery)
             }
 
             is CreateOrder.Action.ChangeMethod -> {
@@ -105,7 +107,10 @@ class CreateOrderViewModel(
             }
 
             is CreateOrder.Action.ChangeDeliveryAddress -> {
-                changeUserAddress(userAddressUuid = action.addressUuid)
+                changeUserAddress(
+                    userAddressUuid = action.addressUuid,
+                    isDelivery = dataState.isDelivery
+                )
             }
 
             CreateOrder.Action.PickupAddressClick -> {
@@ -117,7 +122,10 @@ class CreateOrderViewModel(
             }
 
             is CreateOrder.Action.ChangePickupAddress -> {
-                changeCafeAddress(cafeUuid = action.addressUuid)
+                changeCafeAddress(
+                    cafeUuid = action.addressUuid,
+                    isDelivery = dataState.isDelivery
+                )
             }
 
             CreateOrder.Action.DeferredTimeClick -> {
@@ -186,7 +194,7 @@ class CreateOrderViewModel(
         }
     }
 
-    private fun loadData() {
+    private fun loadData(isDelivery: Boolean) {
         withLoading {
             updateUserAddresses()
 
@@ -195,20 +203,45 @@ class CreateOrderViewModel(
             updatePaymentMethods()
 
             updateCartTotal()
+
+            updateAdditionalUtensils(isDelivery = isDelivery)
         }
     }
 
     private fun changeMethod(position: Int) {
-        (position == DELIVERY_POSITION).let { isDelivery ->
-            setState {
-                copy(
-                    isDelivery = isDelivery
-                )
-            }
+        val isDelivery = position == DELIVERY_POSITION
+        setState {
+            copy(
+                isDelivery = isDelivery
+            )
         }
+
+        updateAdditionalUtensils(isDelivery = isDelivery)
+
         withLoading {
             updateCartTotal()
         }
+    }
+
+    private fun updateAdditionalUtensils(isDelivery: Boolean) {
+        sharedScope.launchSafe(
+            block = {
+                setState {
+                    copy(
+                        additionalUtensils = getAdditionalUtensilsUseCase(
+                            cafeUuid = if (isDelivery) {
+                                selectedUserAddressWithCity?.userAddress?.cafeUuid.orEmpty()
+                            } else {
+                                selectedCafe?.uuid.orEmpty()
+                            }
+                        )
+                    )
+                }
+            },
+            onError = {
+                // stub
+            }
+        )
     }
 
     private fun userAddressClick() {
@@ -229,13 +262,14 @@ class CreateOrderViewModel(
         }
     }
 
-    private fun changeUserAddress(userAddressUuid: String) {
+    private fun changeUserAddress(userAddressUuid: String, isDelivery: Boolean) {
         setState {
             copy(isUserAddressListShown = false)
         }
         withLoading {
             saveSelectedUserAddress(userAddressUuid)
             updateSelectedUserAddress()
+            updateAdditionalUtensils(isDelivery = isDelivery)
         }
     }
 
@@ -251,13 +285,14 @@ class CreateOrderViewModel(
         }
     }
 
-    private fun changeCafeAddress(cafeUuid: String) {
+    private fun changeCafeAddress(cafeUuid: String, isDelivery: Boolean) {
         setState {
             copy(isCafeListShown = false)
         }
         withLoading {
             cafeInteractor.saveSelectedCafe(cafeUuid)
             updateCafeList()
+            updateAdditionalUtensils(isDelivery = isDelivery)
         }
     }
 
@@ -549,8 +584,7 @@ class CreateOrderViewModel(
                         cafeList = cafeList.map { selectableCafe ->
                             selectableCafe.cafe
                         }
-                    ),
-                    additionalUtensils = selectedCafe.cafe.additionalUtensils
+                    )
                 )
             }
         }

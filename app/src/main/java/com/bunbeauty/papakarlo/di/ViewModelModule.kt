@@ -70,7 +70,8 @@ fun viewModelModule() = module {
             hasOpenedCafeUseCase = get(),
             getWorkloadCafeUseCase = get(),
             getSelectedPaymentMethodUseCase = get(),
-            getExtendedCommentUseCase = get()
+            getExtendedCommentUseCase = get(),
+            getAdditionalUtensilsUseCase = get()
         )
     }
     viewModel {

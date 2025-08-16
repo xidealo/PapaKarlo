@@ -42,10 +42,6 @@ class FoodDeliveryApplication : Application(), KoinComponent, CoroutineScope {
         setTheme(R.style.AppTheme)
         super.onCreate()
 
-        FirebaseCrashlytics.getInstance().isCrashlyticsCollectionEnabled = !BuildConfig.DEBUG
-        FirebaseAnalytics.getInstance(applicationContext)
-            .setAnalyticsCollectionEnabled(!BuildConfig.DEBUG)
-
         initKoin {
             androidLogger(if (BuildConfig.DEBUG) Level.ERROR else Level.NONE)
             androidContext(this@FoodDeliveryApplication)
@@ -57,6 +53,9 @@ class FoodDeliveryApplication : Application(), KoinComponent, CoroutineScope {
             )
         }
 
+        FirebaseCrashlytics.getInstance().isCrashlyticsCollectionEnabled = !BuildConfig.DEBUG
+        FirebaseAnalytics.getInstance(applicationContext)
+            .setAnalyticsCollectionEnabled(!BuildConfig.DEBUG)
         subscribeToNotification(companyUuid = companyUuidProvider.companyUuid)
         createNotificationChannel()
         updateNotificationToken()
