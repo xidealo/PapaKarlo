@@ -25,15 +25,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Density
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold
 import kotlinx.coroutines.delay
@@ -80,7 +75,6 @@ fun FoodDeliveryModalBottomSheet(
     }
 
     if (isVisible) {
-        val systemBottomBarHeight = getSystemBottomBarHeight()
         ModalBottomSheet(
             onDismissRequest = onDismissRequest,
             sheetState = sheetState,
@@ -94,7 +88,7 @@ fun FoodDeliveryModalBottomSheet(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(paddingValues = contentPadding)
-                    .padding(bottom = systemBottomBarHeight)
+                //    .padding(bottom = systemBottomBarHeight)
             ) {
                 title?.let {
                     Title(
@@ -104,24 +98,6 @@ fun FoodDeliveryModalBottomSheet(
                 }
                 content()
             }
-        }
-    }
-}
-
-@Composable
-private fun getSystemBottomBarHeight(): Dp {
-    val view = LocalView.current
-    val density = LocalDensity.current
-
-    return remember {
-        val insets = ViewCompat.getRootWindowInsets(view)
-        if (insets != null) {
-            val bottomInset = insets.getInsets(WindowInsetsCompat.Type.systemBars()).bottom
-            with(density) {
-                bottomInset.toDp().value.dp
-            }
-        } else {
-            0.dp
         }
     }
 }
