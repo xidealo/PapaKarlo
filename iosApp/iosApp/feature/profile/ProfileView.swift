@@ -9,20 +9,20 @@ import shared
 import SwiftUI
 
 struct ProfileView: View {
-    @State var profileState = ProfileState(
+    @State var profileState = ProfileStateDataState(
         lastOrder: nil,
-        state: ProfileState.State.loading,
-        paymentMethodList: [],
+        state: ProfileStateDataState.State.loading,
         linkList: [],
-        eventList: []
+        isShowAboutAppBottomSheet: false,
+        isShowFeedbackBottomSheet: false
     )
 
     var viewModel = ProfileViewModel(
         userInteractor: iosComponent.provideIUserInteractor(),
-        getLastOrderUseCase: iosComponent.provideGetLastOrderUseCase(), observeLastOrderUseCase: iosComponent.provideObserveLastOrderUseCase(),
-        stopObserveOrdersUseCase: iosComponent.provideStopObserveOrdersUseCase(),
-        getPaymentMethodListUseCase: iosComponent.provideGetPaymentMethodListUseCase(),
-        getLinkListUseCase: iosComponent.provideGetLinkListUseCase()
+        getLastOrderUseCase: iosComponent.provideGetLastOrderUseCase(),
+        getLinkListUseCase: iosComponent.provideGetLinkListUseCase(),
+        observeLastOrderUseCase: iosComponent.provideObserveLastOrderUseCase(),
+        stopObserveOrdersUseCase: iosComponent.provideStopObserveOrdersUseCase()
     )
 
     @State var showCreatedAddress: Bool = false
@@ -44,15 +44,14 @@ struct ProfileView: View {
             )
 
             switch profileState.state {
-            case ProfileState.State.loading: LoadingProfileView()
-            case ProfileState.State.authorized: SuccessProfileView(
+            case ProfileStateDataState.State.loading: LoadingProfileView()
+            case ProfileStateDataState.State.authorized: SuccessProfileView(
                     profileViewState: profileState,
                     showOrderCreated: $showOrderCreated,
                     showCreatedAddress: $showCreatedAddress
                 )
-            case ProfileState.State.unauthorized: EmptyProfileView(
+            case ProfileStateDataState.State.unauthorized: EmptyProfileView(
                     isActive: $isActive,
-                    paymentMethodList: profileState.paymentMethodList,
                     linkList: profileState.linkList
                 )
             default: EmptyView()
@@ -87,9 +86,10 @@ struct ProfileView: View {
     }
 
     func subscribe() {
-        viewModel.update()
-        viewModel.observeLastOrder()
-        listener = viewModel.profileState.watch { profileStateVM in
+        viewModel.onAction(action: ProfileStateActionInit())
+        viewModel.onAction(action: ProfileStateActionStartObserveOrder())
+
+        listener = viewModel.dataState.watch { profileStateVM in
             if let notNullprofileStateVM = profileStateVM {
                 profileState = notNullprofileStateVM
             }
@@ -105,7 +105,6 @@ struct ProfileView: View {
 
 struct EmptyProfileView: View {
     @Binding var isActive: Bool
-    var paymentMethodList: [PaymentMethod]
     var linkList: [shared.Link]
 
     var body: some View {
@@ -116,14 +115,6 @@ struct EmptyProfileView: View {
                 destination: CafeListView(),
                 isSystem: false
             )
-
-            NavigationIconCardWithDivider(
-                icon: "ic_payment",
-                label: "Оплата",
-                destination: PaymentView(paymentMethodList: paymentMethodList),
-                isSystem: false
-            )
-
             NavigationIconCardWithDivider(
                 icon: "ic_star",
                 label: Strings.TITLE_PROFILE_FEEDBACK,
@@ -169,7 +160,7 @@ struct LoadingProfileView: View {
 }
 
 struct SuccessProfileView: View {
-    let profileViewState: ProfileState
+    let profileViewState: ProfileStateDataState
     @Binding var showOrderCreated: Bool
     @Binding var showCreatedAddress: Bool
 
@@ -212,13 +203,6 @@ struct SuccessProfileView: View {
                 icon: "CafesIcon",
                 label: "Рестораны",
                 destination: CafeListView(),
-                isSystem: false
-            )
-
-            NavigationIconCardWithDivider(
-                icon: "ic_payment",
-                label: Strings.TITLE_PROFILE_PAYMENT,
-                destination: PaymentView(paymentMethodList: profileViewState.paymentMethodList),
                 isSystem: false
             )
 

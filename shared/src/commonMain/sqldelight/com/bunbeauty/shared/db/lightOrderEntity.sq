@@ -1,0 +1,26 @@
+CREATE TABLE IF NOT EXISTS lightOrderEntity (
+    uuid TEXT NOT NULL PRIMARY KEY,
+    status TEXT NOT NULL,
+    time INTEGER NOT NULL,
+    timeZone TEXT NOT NULL,
+    code TEXT NOT NULL
+);
+
+isnsertOrder:
+INSERT OR REPLACE
+INTO lightOrderEntity
+VALUES ?;
+
+getLightOrderList:
+SELECT *
+FROM lightOrderEntity
+ORDER BY time DESC
+LIMIT :count;
+
+updateOrderStatusByUuid:
+UPDATE lightOrderEntity
+SET status = :status
+WHERE uuid = :uuid;
+
+deleteAll:
+DELETE FROM lightOrderEntity;

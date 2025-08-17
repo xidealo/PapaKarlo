@@ -22,6 +22,7 @@ object Logger {
     const val WEB_SOCKET_TAG = "webSocketTag"
     const val NOTIFICATION_TAG = "notificationTag"
     const val NETWORK_TAG = "networkTag"
+    const val NETWORK_RESPONSE_TAG = "networkResponseTag"
     const val COMMON_EXCEPTION_TAG = "commonExceptionTag"
     const val ANALYTIC_TAG = "analyticTag"
 

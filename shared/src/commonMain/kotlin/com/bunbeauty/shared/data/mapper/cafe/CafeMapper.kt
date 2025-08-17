@@ -17,7 +17,8 @@ fun CafeServer.toCafeEntity(): CafeEntity {
         cityUuid = cityUuid,
         isVisible = isVisible,
         workType = workType,
-        workload = workload
+        workload = workload,
+        additionalUtensils = additionalUtensils
     )
 }
 
@@ -33,7 +34,8 @@ fun CafeEntity.toCafe(): Cafe {
         cityUuid = cityUuid,
         isVisible = isVisible,
         workType = Cafe.WorkType.valueOf(workType),
-        workload = Cafe.Workload.valueOf(workload)
+        workload = Cafe.Workload.valueOf(workload),
+        additionalUtensils = additionalUtensils
     )
 }
 
@@ -49,6 +51,7 @@ fun CafeServer.toCafe(): Cafe {
         cityUuid = cityUuid,
         isVisible = isVisible,
         workType = Cafe.WorkType.valueOf(workType),
-        workload = Cafe.Workload.valueOf(workload)
+        workload = Cafe.Workload.valueOf(workload),
+        additionalUtensils = additionalUtensils
     )
 }

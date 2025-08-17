@@ -19,11 +19,6 @@
 			<key>orderHint</key>
 			<integer>8</integer>
 		</dict>
-		<key>estpoest copy.xcscheme_^#shared#^_</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>50</integer>
-		</dict>
 		<key>estpoest.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
@@ -48,6 +43,11 @@
 		<dict>
 			<key>orderHint</key>
 			<integer>4</integer>
+		</dict>
+		<key>taverna.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>50</integer>
 		</dict>
 		<key>usadba.xcscheme_^#shared#^_</key>
 		<dict>

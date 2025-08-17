@@ -1,5 +1,6 @@
 package com.bunbeauty.papakarlo.feature.profile.screen.aboutapp
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -8,22 +9,31 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.BuildConfig
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.common.ui.ComposeBottomSheet
 import com.bunbeauty.papakarlo.common.ui.element.card.StartIconCard
-import com.bunbeauty.papakarlo.common.ui.screen.bottomsheet.FoodDeliveryBottomSheet
+import com.bunbeauty.papakarlo.common.ui.screen.bottomsheet.FoodDeliveryModalBottomSheet
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
+import com.bunbeauty.papakarlo.feature.profile.screen.profile.ProfileViewState
+import com.bunbeauty.shared.presentation.profile.ProfileState
 
-class AboutAppBottomSheet : ComposeBottomSheet<Any>() {
-
-    @Composable
-    override fun Content() {
+@Composable
+fun AboutAppBottomSheet(
+    aboutBottomSheetUI: ProfileViewState.AboutBottomSheetUI,
+    onAction: (ProfileState.Action) -> Unit
+) {
+    FoodDeliveryModalBottomSheet(
+        onDismissRequest = {
+            onAction(ProfileState.Action.CloseAboutAppBottomSheet)
+        },
+        isShown = aboutBottomSheetUI.isShown,
+        title = stringResource(R.string.title_about_app)
+    ) {
         AboutAppScreen()
     }
 }
 
 @Composable
 private fun AboutAppScreen() {
-    FoodDeliveryBottomSheet(titleStringId = R.string.title_about_app) {
+    Column {
         StartIconCard(
             label = stringResource(R.string.msg_about_app_developer),
             iconId = R.drawable.ic_bb,

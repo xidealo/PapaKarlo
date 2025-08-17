@@ -5,32 +5,26 @@ import com.bunbeauty.shared.domain.feature.link.GetLinkListUseCase
 import com.bunbeauty.shared.domain.feature.order.GetLastOrderUseCase
 import com.bunbeauty.shared.domain.feature.order.ObserveLastOrderUseCase
 import com.bunbeauty.shared.domain.feature.order.StopObserveOrdersUseCase
-import com.bunbeauty.shared.domain.feature.payment.GetPaymentMethodListUseCase
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
-import com.bunbeauty.shared.domain.model.link.Link
-import com.bunbeauty.shared.domain.model.payment_method.PaymentMethod
 import com.bunbeauty.shared.extension.launchSafe
 import com.bunbeauty.shared.presentation.base.SharedStateViewModel
-import kotlinx.collections.immutable.persistentListOf
-import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class ProfileViewModel(
     private val userInteractor: IUserInteractor,
     private val getLastOrderUseCase: GetLastOrderUseCase,
-    private val getPaymentMethodListUseCase: GetPaymentMethodListUseCase,
     private val getLinkListUseCase: GetLinkListUseCase,
     private val observeLastOrderUseCase: ObserveLastOrderUseCase,
-    private val stopObserveOrdersUseCase: StopObserveOrdersUseCase,
+    private val stopObserveOrdersUseCase: StopObserveOrdersUseCase
 ) : SharedStateViewModel<ProfileState.DataState, ProfileState.Action, ProfileState.Event>(
     initDataState = ProfileState.DataState(
         lastOrder = null,
         state = ProfileState.DataState.State.LOADING,
-        paymentMethodList = persistentListOf(),
-        linkList = listOf()
+        linkList = listOf(),
+        isShowAboutAppBottomSheet = false,
+        isShowFeedbackBottomSheet = false
     )
 ) {
 
@@ -39,15 +33,14 @@ class ProfileViewModel(
 
     override fun reduce(
         action: ProfileState.Action,
-        dataState: ProfileState.DataState,
+        dataState: ProfileState.DataState
     ) {
         when (action) {
             ProfileState.Action.BackClicked -> onBackClicked()
             ProfileState.Action.Init -> loadData()
             ProfileState.Action.OnRefreshClicked -> loadData()
             is ProfileState.Action.OnLastOrderClicked -> onLastOrderClicked(
-                uuid = action.uuid,
-                code = action.code
+                uuid = action.uuid
             )
 
             ProfileState.Action.OnOrderHistoryClicked -> onOrderHistoryClicked()
@@ -56,17 +49,12 @@ class ProfileViewModel(
             ProfileState.Action.OnLoginClicked -> onLoginClicked()
             ProfileState.Action.OnAboutAppClicked -> onAboutAppClicked()
             ProfileState.Action.OnCafeListClicked -> onCafeListClicked()
-            is ProfileState.Action.OnFeedbackClicked -> onFeedbackClicked(
-                action.linkList
-            )
-
-            is ProfileState.Action.OnPaymentClicked -> onPaymentClicked(
-                paymentMethodList = action.paymentMethodList
-            )
-
+            ProfileState.Action.CloseAboutAppBottomSheet -> onCloseAboutAppBottomSheet()
+            ProfileState.Action.OnFeedbackClicked -> onFeedbackClicked()
             ProfileState.Action.StartObserveOrder -> observeLastOrder()
 
             ProfileState.Action.StopObserveOrder -> stopLastOrderObservation()
+            ProfileState.Action.CloseFeedbackBottomSheet -> onCloseFeedbackBottomSheet()
         }
     }
 
@@ -75,7 +63,6 @@ class ProfileViewModel(
             block = {
                 val lastOrder = getLastOrderUseCase()
                 val linkList = getLinkListUseCase()
-                val paymentMethodList = getPaymentMethodListUseCase()
                 setState {
                     copy(
                         lastOrder = lastOrder,
@@ -84,8 +71,7 @@ class ProfileViewModel(
                         } else {
                             ProfileState.DataState.State.UNAUTHORIZED
                         },
-                        paymentMethodList = paymentMethodList.toImmutableList(),
-                        linkList = linkList,
+                        linkList = linkList
                     )
                 }
             },
@@ -132,12 +118,11 @@ class ProfileViewModel(
         }
     }
 
-    fun onLastOrderClicked(uuid: String, code: String) {
+    fun onLastOrderClicked(uuid: String) {
         addEvent {
-            ProfileState.Event.OpenOrderDetails(uuid, code)
+            ProfileState.Event.OpenOrderDetails(uuid)
         }
     }
-
 
     fun onSettingsClicked() {
         addEvent {
@@ -157,31 +142,41 @@ class ProfileViewModel(
         }
     }
 
-    fun onPaymentClicked(paymentMethodList: List<PaymentMethod>) {
-        addEvent {
-            ProfileState.Event.ShowPayment(
-                paymentMethodList = paymentMethodList
-            )
-        }
-    }
-
     fun onCafeListClicked() {
         addEvent {
             ProfileState.Event.ShowCafeList
         }
     }
 
-    fun onFeedbackClicked(linkList: List<Link>) {
-        addEvent {
-            ProfileState.Event.ShowFeedback(
-                linkList = linkList
+    fun onCloseAboutAppBottomSheet() {
+        setState {
+            copy(
+                isShowAboutAppBottomSheet = false
+            )
+        }
+    }
+
+    fun onCloseFeedbackBottomSheet() {
+        setState {
+            copy(
+                isShowFeedbackBottomSheet = false
+            )
+        }
+    }
+
+    fun onFeedbackClicked() {
+        setState {
+            copy(
+                isShowFeedbackBottomSheet = true
             )
         }
     }
 
     fun onAboutAppClicked() {
-        addEvent {
-            ProfileState.Event.ShowAboutApp
+        setState {
+            copy(
+                isShowAboutAppBottomSheet = true
+            )
         }
     }
 

@@ -11,7 +11,8 @@ data class Cafe(
     val cityUuid: String,
     val isVisible: Boolean,
     val workType: WorkType,
-    val workload: Workload
+    val workload: Workload,
+    val additionalUtensils: Boolean
 ) {
     enum class WorkType {
         DELIVERY,

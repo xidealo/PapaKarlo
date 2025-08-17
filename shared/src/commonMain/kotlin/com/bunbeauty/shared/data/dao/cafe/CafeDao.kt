@@ -28,7 +28,8 @@ class CafeDao(foodDeliveryDatabase: FoodDeliveryDatabase) : ICafeDao {
                     cityUuid = cafeEntity.cityUuid,
                     isVisible = cafeEntity.isVisible,
                     workType = cafeEntity.workType,
-                    workload = cafeEntity.workload
+                    workload = cafeEntity.workload,
+                    additionalUtensils = cafeEntity.additionalUtensils
                 )
             }
         }

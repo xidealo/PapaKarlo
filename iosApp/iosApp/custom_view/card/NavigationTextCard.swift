@@ -40,9 +40,3 @@ struct NavigationTextCard<Content: View>: View {
         }
     }
 }
-
-struct NavigationTextCard_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationTextCard(placeHolder: "placeholder", text: "SKADASLDAL< :LDfd;lfsd;l,f", destination: ChangeCityView())
-    }
-}

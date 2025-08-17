@@ -8,8 +8,7 @@ plugins {
 
 @OptIn(org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi::class)
 kotlin {
-    targetHierarchy.default()
-
+    applyDefaultHierarchyTemplate()
     androidTarget()
     iosX64()
     iosArm64()
@@ -40,7 +39,7 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 implementation(project.dependencies.platform(libs.firebase.bom))
-                implementation(libs.firebase.analytics.ktx)
+                implementation(libs.firebase.analytics)
             }
         }
     }

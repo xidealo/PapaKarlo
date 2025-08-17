@@ -1,5 +1,6 @@
 package com.bunbeauty.shared.domain.feature.cafe.di
 
+import com.bunbeauty.shared.domain.feature.cafe.GetAdditionalUtensilsUseCase
 import com.bunbeauty.shared.domain.feature.cafe.GetCafeListUseCase
 import com.bunbeauty.shared.domain.feature.cafe.GetCafeListUseCaseImpl
 import com.bunbeauty.shared.domain.feature.cafe.GetSelectableCafeListUseCase
@@ -50,6 +51,11 @@ internal fun cafeModule() = module {
     }
     factory {
         GetWorkloadCafeUseCase(
+            cafeRepo = get()
+        )
+    }
+    factory {
+        GetAdditionalUtensilsUseCase(
             cafeRepo = get()
         )
     }

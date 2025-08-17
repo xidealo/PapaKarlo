@@ -42,7 +42,6 @@ interface ProductDetailsState {
             Action
 
         data object BackClick : Action
-        data object CartClick : Action
         data class AdditionClick(val uuid: String, val groupUuid: String) : Action
         data class AddProductToCartClick(
             val productDetailsOpenedFrom: ProductDetailsOpenedFrom,
@@ -52,7 +51,6 @@ interface ProductDetailsState {
 
     sealed interface Event : BaseEvent {
         data object NavigateBack : Event
-        data object NavigateToConsumerCart : Event
         data object AddedProduct : Event
         data object EditedProduct : Event
         data object ShowAddProductError : Event

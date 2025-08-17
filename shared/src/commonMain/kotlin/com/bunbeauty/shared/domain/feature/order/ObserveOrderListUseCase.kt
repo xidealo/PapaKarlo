@@ -17,7 +17,7 @@ class ObserveOrderListUseCase(
     suspend operator fun invoke(): Pair<String?, Flow<List<LightOrder>>> {
         val token = dataStoreRepo.getToken() ?: return null to flow {}
         val userUuid = dataStoreRepo.getUserUuid() ?: return null to flow {}
-        val orderList = orderRepo.getOrderListByUserUuid(token = token, userUuid = userUuid)
+        val orderList = orderRepo.getOrderList(token = token)
 
         val (uuid, orderListUpdatesFlow) = orderRepo.observeOrderListUpdates(token, userUuid)
         return uuid to merge(

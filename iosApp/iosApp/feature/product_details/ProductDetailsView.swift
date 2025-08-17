@@ -293,7 +293,6 @@ struct ProductDetailsView: View {
                 for event in productDetailsStateEvents {
                     switch event {
                     case is ProductDetailsStateEventNavigateBack: self.mode.wrappedValue.dismiss()
-                    case is ProductDetailsStateEventNavigateToConsumerCart: print("ProductDetailsStateEventNavigateToConsumerCart")
                     case is ProductDetailsStateEventAddedProduct:
                         created = true
                         self.mode.wrappedValue.dismiss()

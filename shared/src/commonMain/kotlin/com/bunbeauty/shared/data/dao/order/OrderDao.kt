@@ -33,4 +33,8 @@ class OrderDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IOrderDao {
             status = status
         )
     }
+
+    override suspend fun deleteAll() {
+        orderEntityQueries.deleteAll()
+    }
 }

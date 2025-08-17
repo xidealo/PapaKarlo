@@ -68,7 +68,7 @@ kotlin {
                 implementation(libs.lifecycle.viewmodel.ktx)
 
                 implementation(project.dependencies.platform(libs.firebase.bom))
-                implementation(libs.firebase.messaging.ktx)
+                implementation(libs.firebase.messaging)
                 implementation(libs.sqlDelight.android)
             }
         }

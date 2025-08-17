@@ -19,6 +19,8 @@ import com.bunbeauty.papakarlo.common.ui.theme.color.GustoPubDarkColors
 import com.bunbeauty.papakarlo.common.ui.theme.color.GustoPubLightColors
 import com.bunbeauty.papakarlo.common.ui.theme.color.LegendaDarkColors
 import com.bunbeauty.papakarlo.common.ui.theme.color.LegendaLightColors
+import com.bunbeauty.papakarlo.common.ui.theme.color.LimonadColors
+import com.bunbeauty.papakarlo.common.ui.theme.color.LimonadDarkColors
 import com.bunbeauty.papakarlo.common.ui.theme.color.LocalAppColors
 import com.bunbeauty.papakarlo.common.ui.theme.color.PapaKarloDarkColors
 import com.bunbeauty.papakarlo.common.ui.theme.color.PapaKarloLightColors
@@ -38,7 +40,7 @@ import com.bunbeauty.shared.FoodDeliveryCompany
 @Composable
 fun FoodDeliveryTheme(
     isDarkTheme: Boolean = isSystemInDarkTheme(),
-    content: @Composable () -> Unit,
+    content: @Composable () -> Unit
 ) {
     val colors = getAppColors(isDarkTheme = isDarkTheme)
     val rememberedColors = remember {
@@ -58,7 +60,7 @@ fun FoodDeliveryTheme(
 
 private fun getAppColors(
     flavor: String = BuildConfig.FLAVOR,
-    isDarkTheme: Boolean,
+    isDarkTheme: Boolean
 ): AppColors {
     val company = FoodDeliveryCompany.getByFlavor(flavor)
     return when (company) {
@@ -143,9 +145,9 @@ private fun getAppColors(
         }
 
         FoodDeliveryCompany.LIMONAD -> if (isDarkTheme) {
-            EmojiDarkColors
+            LimonadDarkColors
         } else {
-            EmojiLightColors
+            LimonadColors
         }
 
         FoodDeliveryCompany.TAVERNA -> if (isDarkTheme) {

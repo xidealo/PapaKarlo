@@ -22,3 +22,6 @@ insert:
 INSERT OR REPLACE
 INTO orderProductEntity
 VALUES ?;
+
+deleteAll:
+DELETE FROM orderProductEntity;

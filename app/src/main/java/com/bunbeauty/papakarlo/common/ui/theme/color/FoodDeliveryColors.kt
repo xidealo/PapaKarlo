@@ -4,6 +4,7 @@ import androidx.compose.ui.graphics.Color
 
 object FoodDeliveryColors {
     val Yellow500 = Color(0xFFFFC12D)
+    val Yellow400 = Color(0xFFEFB01F)
 
     val Orange50 = Color(0xFFFCF5ED)
     val Orange100 = Color(0xFFFDE0BE)
@@ -18,6 +19,7 @@ object FoodDeliveryColors {
     val Black100 = Color(0xFF353549)
     val Black200 = Color(0xFF25252F)
     val Black300 = Color(0xFF18181E)
+    val Black700 = Color(0xFF0E0E0E)
 
     val Grey1 = Color(0xFFDDDDDD)
     val Grey2 = Color(0xFFAAAAAA)

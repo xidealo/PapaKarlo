@@ -12,4 +12,6 @@ interface IUserDao {
     fun observeUserByUuid(uuid: String): Flow<UserEntity?>
 
     suspend fun updateUserEmailByUuid(uuid: String, email: String)
+
+    suspend fun deleteAll()
 }

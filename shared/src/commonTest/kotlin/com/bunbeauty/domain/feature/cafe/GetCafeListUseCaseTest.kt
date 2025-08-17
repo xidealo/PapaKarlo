@@ -76,7 +76,8 @@ class GetCafeListUseCaseTest {
             cityUuid = "cityUuid",
             isVisible = isVisible,
             workType = Cafe.WorkType.DELIVERY_AND_PICKUP,
-            workload = Cafe.Workload.LOW
+            workload = Cafe.Workload.LOW,
+            additionalUtensils = false
         )
     }
 }

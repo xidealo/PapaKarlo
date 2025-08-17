@@ -4,8 +4,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.ViewGroup
+import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -36,19 +35,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.viewinterop.AndroidViewBinding
 import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.FloatingWindow
-import androidx.navigation.fragment.NavHostFragment
-import by.kirich1409.viewbindingdelegate.viewBinding
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.rememberNavController
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.common.ui.element.bottombar.FoodDeliveryNavigationBar
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.databinding.FragmentContainerBinding
-import com.bunbeauty.papakarlo.databinding.LayoutComposeBinding
-import com.bunbeauty.papakarlo.extensions.setContentWithTheme
+import com.bunbeauty.papakarlo.navigation.foodDeliveryNavGraphBuilder
+import com.bunbeauty.papakarlo.navigation.splash.SplashScreenDestination
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -56,8 +51,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
 
     val viewModel: MainViewModel by viewModel()
-
-    private val viewBinding: LayoutComposeBinding by viewBinding(LayoutComposeBinding::bind)
 
     private val requestPermissionLauncher by lazy {
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { }
@@ -68,7 +61,7 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
 
-        viewBinding.root.setContentWithTheme {
+        setContent {
             val mainState by viewModel.mainState.collectAsStateWithLifecycle()
             val snackbarHostState = remember { SnackbarHostState() }
 
@@ -78,13 +71,14 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
                     snackbarHostState = snackbarHostState
                 )
             }
-
-            MainScreen(
-                mainState = mainState,
-                snackbarHostState = snackbarHostState,
-                backgroundColor = mainState.statusBarColor
-                    ?: FoodDeliveryTheme.colors.mainColors.surface
-            )
+            FoodDeliveryTheme {
+                MainScreen(
+                    mainState = mainState,
+                    snackbarHostState = snackbarHostState,
+                    backgroundColor = mainState.statusBarColor
+                        ?: FoodDeliveryTheme.colors.mainColors.surface
+                )
+            }
         }
 
         checkNotificationPermission()
@@ -123,9 +117,6 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
                     snackbarHostState = snackbarHostState,
                     paddingBottom = mainState.paddingBottomSnackbar
                 )
-            },
-            bottomBar = {
-                FoodDeliveryNavigationBar(options = mainState.navigationBarOptions)
             }
         ) {
             Column(
@@ -137,12 +128,20 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
             ) {
                 ConnectionErrorMessage(visible = mainState.connectionLost)
                 StatusBarMessage(statusBarMessage = mainState.statusBarMessage)
+                val navController = rememberNavController()
 
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
                 ) {
-                    AndroidViewBinding(factory = ::fragmentContainerFactory)
+                    NavHost(
+                        navController = navController,
+                        startDestination = SplashScreenDestination
+                    ) {
+                        foodDeliveryNavGraphBuilder(
+                            navController = navController
+                        )
+                    }
                 }
             }
         }
@@ -203,7 +202,9 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
     ) {
         SnackbarHost(
             hostState = snackbarHostState,
-            modifier = Modifier.padding(bottom = paddingBottom.dp)
+            modifier = Modifier
+                .padding(bottom = paddingBottom.dp)
+                .imePadding()
         ) { snackbarData ->
             (snackbarData.visuals as? FoodDeliverySnackbarVisuals)?.let { visuals ->
                 val containerColor = when (visuals.foodDeliveryMessage.type) {
@@ -246,25 +247,5 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
         }
 
         viewModel.consumeEventList(eventList)
-    }
-
-    private fun fragmentContainerFactory(
-        inflater: LayoutInflater,
-        parent: ViewGroup,
-        attachToParent: Boolean
-    ): FragmentContainerBinding =
-        FragmentContainerBinding.inflate(inflater, parent, attachToParent).also {
-            setupNavigationListener()
-        }
-
-    private fun setupNavigationListener() {
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.containerFcv) as NavHostFragment
-        val navController = navHostFragment.navController
-        navController.addOnDestinationChangedListener { controller, destination, _ ->
-            if (destination !is FloatingWindow) {
-                viewModel.onNavDestinationUpdated(destination.id, controller)
-            }
-        }
     }
 }

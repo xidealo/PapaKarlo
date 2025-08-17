@@ -44,3 +44,6 @@ getUserAddressCountByUserUuidAndCityUuid:
 SELECT COUNT(*)
 FROM userAddressEntity
 WHERE userUuid = :userUuid AND cityUuid = :cityUuid;
+
+deleteAll:
+DELETE FROM userAddressEntity;

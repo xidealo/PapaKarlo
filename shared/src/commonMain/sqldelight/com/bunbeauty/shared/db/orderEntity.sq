@@ -74,3 +74,6 @@ updateOrderStatusByUuid:
 UPDATE orderEntity
 SET status = :status
 WHERE uuid = :uuid;
+
+deleteAll:
+DELETE FROM orderEntity;

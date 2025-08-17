@@ -19,7 +19,10 @@ interface IStringUtil {
     fun getCostString(cost: String): String
     fun getCountString(count: Int): String
     fun getCountString(count: String): String
+
+    @Deprecated("Use getOrderStatusName from OrderStatusChip")
     fun getOrderStatusName(orderStatus: OrderStatus): String
+
     fun getPickupMethodString(isDelivery: Boolean): String
     fun getDeferredString(isDelivery: Boolean): String
 }

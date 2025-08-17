@@ -21,9 +21,9 @@ class OrderListViewModel(
     private var orderObservationUuid: String? = null
     private var observeOrdersJob: Job? = null
 
-    fun onOrderClicked(uuid: String, code: String) {
+    fun onOrderClicked(uuid: String) {
         mutableOrderListState.update { state ->
-            state + OrderListState.OpenOrderDetailsEvent(uuid, code)
+            state + OrderListState.OpenOrderDetailsEvent(uuid)
         }
     }
 

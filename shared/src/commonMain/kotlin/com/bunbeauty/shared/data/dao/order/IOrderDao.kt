@@ -12,4 +12,5 @@ interface IOrderDao {
     suspend fun getOrderWithProductListByUuid(uuid: String): List<OrderWithProductEntity>
 
     suspend fun updateOrderStatusByUuid(uuid: String, status: String)
+    suspend fun deleteAll()
 }

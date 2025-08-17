@@ -7,7 +7,11 @@ import com.bunbeauty.shared.domain.model.cafe.Cafe
 import com.bunbeauty.shared.domain.model.cart.CartProduct
 import com.bunbeauty.shared.domain.model.category.Category
 import com.bunbeauty.shared.domain.model.city.City
+import com.bunbeauty.shared.domain.model.payment_method.PaymentMethod
+import com.bunbeauty.shared.domain.model.payment_method.PaymentMethodName
+import com.bunbeauty.shared.domain.model.payment_method.SelectablePaymentMethod
 import com.bunbeauty.shared.domain.model.product.MenuProduct
+import kotlin.String
 
 fun getMenuProduct(
     uuid: String = "1",
@@ -111,7 +115,8 @@ fun getCity(
 fun getCafe(
     uuid: String,
     workType: Cafe.WorkType = Cafe.WorkType.DELIVERY_AND_PICKUP,
-    workload: Cafe.Workload = Cafe.Workload.LOW
+    workload: Cafe.Workload = Cafe.Workload.LOW,
+    additionalUtensils: Boolean = false
 ) = Cafe(
     uuid = uuid,
     fromTime = 0,
@@ -123,5 +128,26 @@ fun getCafe(
     cityUuid = "cityUuid",
     isVisible = true,
     workType = workType,
-    workload = workload
+    workload = workload,
+    additionalUtensils = additionalUtensils
+)
+
+fun getSelectablePaymentMethod(
+    paymentMethod: PaymentMethod,
+    isSelected: Boolean
+) = SelectablePaymentMethod(
+    paymentMethod = paymentMethod,
+    isSelected = isSelected
+)
+
+fun getPaymentMethod(
+    uuid: String = "",
+    name: PaymentMethodName = PaymentMethodName.CASH,
+    valueToShow: String? = null,
+    valueToCopy: String? = null
+) = PaymentMethod(
+    uuid = uuid,
+    name = name,
+    valueToShow = valueToShow,
+    valueToCopy = valueToCopy
 )

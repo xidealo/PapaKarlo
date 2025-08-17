@@ -52,3 +52,7 @@ end
 target 'estpoest' do
   default_pods
 end
+
+target 'taverna' do
+  default_pods
+end
