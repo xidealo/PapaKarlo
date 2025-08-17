@@ -88,7 +88,6 @@ fun FoodDeliveryModalBottomSheet(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(paddingValues = contentPadding)
-                //    .padding(bottom = systemBottomBarHeight)
             ) {
                 title?.let {
                     Title(
