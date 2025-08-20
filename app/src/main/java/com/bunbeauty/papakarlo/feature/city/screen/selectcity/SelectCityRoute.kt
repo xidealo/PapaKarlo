@@ -37,14 +37,13 @@ private fun SelectCityDataState.DataState.mapState(): SelectCityViewState {
     )
 }
 
-// TODO need refactoring
 @Composable
 fun SelectCityRoute(
     viewModel: SelectCityViewModel = koinViewModel(),
     goToMenuFragment: () -> Unit
 ) {
     LaunchedEffect(Unit) {
-        viewModel.onAction(SelectCityDataState.Action.OnObserveCity)
+        viewModel.onAction(SelectCityDataState.Action.GetCityList)
     }
     val onAction = remember {
         { event: SelectCityDataState.Action ->

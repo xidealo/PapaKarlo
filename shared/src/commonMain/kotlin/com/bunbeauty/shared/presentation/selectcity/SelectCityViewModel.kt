@@ -21,7 +21,7 @@ class SelectCityViewModel(
         when (action) {
             is SelectCityDataState.Action.OnCitySelected -> onCitySelected(city = action.city)
             SelectCityDataState.Action.OnRefreshClicked -> getCityList()
-            SelectCityDataState.Action.OnObserveCity -> getCityList()
+            SelectCityDataState.Action.GetCityList -> getCityList()
         }
     }
 
