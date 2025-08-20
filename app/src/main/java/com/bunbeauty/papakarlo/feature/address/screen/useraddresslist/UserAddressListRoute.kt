@@ -47,7 +47,6 @@ private fun UserAddressListDataState.DataState.mapState(): UserAddressListViewSt
     )
 }
 
-// TODO need refactoring
 @Composable
 fun UserAddressListRoute(
     viewModel: UserAddressListViewModel = koinViewModel(),
