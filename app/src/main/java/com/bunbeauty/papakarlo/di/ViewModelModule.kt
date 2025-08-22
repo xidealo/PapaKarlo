@@ -1,6 +1,5 @@
 package com.bunbeauty.papakarlo.di
 
-import com.bunbeauty.papakarlo.feature.city.screen.selectcity.SelectCityViewModel
 import com.bunbeauty.papakarlo.feature.main.MainViewModel
 import com.bunbeauty.shared.presentation.cafe_list.CafeListViewModel
 import com.bunbeauty.shared.presentation.confirm.ConfirmViewModel
@@ -13,6 +12,7 @@ import com.bunbeauty.shared.presentation.order_details.OrderDetailsViewModel
 import com.bunbeauty.shared.presentation.order_list.OrderListViewModel
 import com.bunbeauty.shared.presentation.product_details.ProductDetailsViewModel
 import com.bunbeauty.shared.presentation.profile.ProfileViewModel
+import com.bunbeauty.shared.presentation.selectcity.SelectCityViewModel
 import com.bunbeauty.shared.presentation.settings.SettingsViewModel
 import com.bunbeauty.shared.presentation.splash.SplashViewModel
 import com.bunbeauty.shared.presentation.update.UpdateViewModel
