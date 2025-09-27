@@ -9,6 +9,7 @@ object FoodDeliveryColors {
     val Orange50 = Color(0xFFFCF5ED)
     val Orange100 = Color(0xFFFDE0BE)
     val Orange300 = Color(0xFFFF8243)
+    val Orange350 = Color(0xFFFF5800)
     val Orange400 = Color(0xFFC75430)
 
     val Gold100 = Color(0xFFFFE6A9)
@@ -41,6 +42,8 @@ object FoodDeliveryColors {
     val Green50 = Color(0xFFEBFFFB)
     val Green100 = Color(0xFF92D8C8)
     val Green500 = Color(0xFF23806B)
+
+
 
     val Purple = Color(0xFF815FB1)
     val Blue = Color(0xFF5C82E0)

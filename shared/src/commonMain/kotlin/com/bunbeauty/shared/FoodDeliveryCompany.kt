@@ -53,6 +53,10 @@ enum class FoodDeliveryCompany(
     TAVERNA(
         flavor = "taverna",
         companyUuid = "02046f6d-40f2-4b24-bbea-a742079fc66e"
+    ),
+    VOLJANE(
+        flavor = "voljane",
+        companyUuid = "8488fc11-f7d4-41a9-b22a-9e8d32fef392"
     );
 
     companion object {
