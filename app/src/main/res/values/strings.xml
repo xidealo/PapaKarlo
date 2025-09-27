@@ -157,6 +157,8 @@
     <string name="title_my_addresses_empty">Список адресов пуст</string>
     <string name="msg_my_addresses_empty">Здесь будут отображаться ваши адреса</string>
     <string name="description_cafe_addresses_empty">Пустой список адресов</string>
+    <string name="error_addresses_list_loading">Не удалось загрузить список адресов</string>
+
 
     <!-- ORDER STATUS-->
     <string name="msg_status_not_accepted">Обрабатывается</string>
@@ -224,6 +226,7 @@
     <string name="title_my_orders">Мои заказы</string>
     <string name="title_order_list_empty">Список заказов пуст</string>
     <string name="msg_order_list_empty">Здесь будут отображаться ваши заказы</string>
+    <string name="error_order_list_loading">Не удалось загрузить список заказов</string>
 
     <!-- PAYMENT -->
     <string name="msg_payment_cash">Наличные</string>

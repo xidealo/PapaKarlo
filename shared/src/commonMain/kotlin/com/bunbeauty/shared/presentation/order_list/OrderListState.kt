@@ -1,22 +1,34 @@
 package com.bunbeauty.shared.presentation.order_list
 
 import com.bunbeauty.shared.domain.model.order.LightOrder
+import com.bunbeauty.shared.presentation.base.BaseAction
+import com.bunbeauty.shared.presentation.base.BaseDataState
+import com.bunbeauty.shared.presentation.base.BaseEvent
 
-data class OrderListState(
-    val orderList: List<LightOrder> = emptyList(),
-    val eventList: List<Event> = emptyList(),
-    val state: State = State.LOADING
-) {
 
-    enum class State {
-        SUCCESS,
-        EMPTY,
-        LOADING
+interface OrderListState {
+    data class DataState(
+        val orderList: List<LightOrder> = emptyList(),
+        val state: State = State.LOADING
+    ) : BaseDataState {
+
+        enum class State {
+            SUCCESS,
+            LOADING,
+            ERROR,
+            EMPTY
+        }
+    }
+    sealed interface Action: BaseAction {
+        data object BackClicked : Action
+        data object OnRefreshClicked : Action
+        data class OnOrderClicked(val uuid: String) : Action
+        data object StartObserveOrder : Action
+        data object StopObserveOrder : Action
     }
 
-    sealed interface Event
-    class OpenOrderDetailsEvent(val orderUuid: String) : Event
-
-    operator fun plus(event: Event) = copy(eventList = eventList + event)
-    operator fun minus(events: List<Event>) = copy(eventList = eventList - events.toSet())
+    sealed interface Event: BaseEvent {
+        data object GoBackEvent : Event
+        data class OpenOrderDetailsEvent(val orderUuid: String) : Event
+    }
 }

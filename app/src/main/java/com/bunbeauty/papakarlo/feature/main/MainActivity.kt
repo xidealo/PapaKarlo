@@ -9,6 +9,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
@@ -136,7 +138,9 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
                 ) {
                     NavHost(
                         navController = navController,
-                        startDestination = SplashScreenDestination
+                        startDestination = SplashScreenDestination,
+                        popEnterTransition = { EnterTransition.None },
+                        popExitTransition = { ExitTransition.None }
                     ) {
                         foodDeliveryNavGraphBuilder(
                             navController = navController
