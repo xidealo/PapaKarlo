@@ -15,6 +15,7 @@ import androidx.compose.material3.SheetState
 import androidx.compose.material3.SheetValue
 import androidx.compose.material3.Text
 import androidx.compose.material3.contentColorFor
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -50,7 +51,7 @@ fun FoodDeliveryModalBottomSheet(
     containerColor: Color = FoodDeliveryTheme.colors.mainColors.surface,
     contentColor: Color = contentColorFor(containerColor),
     dragHandle: @Composable (() -> Unit)? = { FoodDeliveryBottomSheetDefaults.DragHandle() },
-    content: @Composable ColumnScope.() -> Unit
+    content: @Composable ColumnScope.() -> Unit,
 ) {
     val context = LocalContext.current
 
@@ -58,13 +59,7 @@ fun FoodDeliveryModalBottomSheet(
         mutableStateOf(false)
     }
 
-    val sheetState = remember {
-        SheetState(
-            skipPartiallyExpanded = true,
-            initialValue = SheetValue.Hidden,
-            density = Density(context = context)
-        )
-    }
+    val sheetState = rememberModalBottomSheetState()
 
     LaunchedEffect(isShown) {
         if (!isShown) {
@@ -104,7 +99,7 @@ fun FoodDeliveryModalBottomSheet(
 @Composable
 private fun Title(
     modifier: Modifier = Modifier,
-    title: String
+    title: String,
 ) {
     Text(
         modifier = modifier.fillMaxWidth(),
