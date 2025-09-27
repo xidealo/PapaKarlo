@@ -32,6 +32,7 @@ import com.bunbeauty.shared.domain.feature.auth.FormatPhoneNumberUseCase
 import com.bunbeauty.shared.domain.feature.auth.GetPhoneNumberCursorPositionUseCase
 import com.bunbeauty.shared.domain.feature.auth.RequestCodeUseCase
 import com.bunbeauty.shared.domain.feature.auth.ResendCodeUseCase
+import com.bunbeauty.shared.domain.feature.cafe.GetAdditionalUtensilsUseCase
 import com.bunbeauty.shared.domain.feature.cafe.GetCafeListUseCase
 import com.bunbeauty.shared.domain.feature.cafe.GetSelectableCafeListUseCase
 import com.bunbeauty.shared.domain.feature.cafe.GetWorkloadCafeUseCase
@@ -217,6 +218,7 @@ class IosComponent : KoinComponent {
     fun provideGetCurrentUserAddressWithCityUseCase(): GetCurrentUserAddressWithCityUseCase = get()
     fun provideGetExtendedCommentUseCase(): GetExtendedCommentUseCase = get()
     fun provideGetSelectedPaymentMethodUseCase(): GetSelectedPaymentMethodUseCase = get()
+    fun provideGetAdditionalUtensilsUseCase(): GetAdditionalUtensilsUseCase = get()
 
     // Mapper
     fun provideUserAddressMapper(): UserAddressMapper = get()
