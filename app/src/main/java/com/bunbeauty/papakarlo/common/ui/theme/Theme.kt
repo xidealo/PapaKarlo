@@ -42,7 +42,7 @@ import com.bunbeauty.shared.FoodDeliveryCompany
 @Composable
 fun FoodDeliveryTheme(
     isDarkTheme: Boolean = isSystemInDarkTheme(),
-    content: @Composable () -> Unit,
+    content: @Composable () -> Unit
 ) {
     val colors = getAppColors(isDarkTheme = isDarkTheme)
     val rememberedColors = remember {
@@ -62,7 +62,7 @@ fun FoodDeliveryTheme(
 
 private fun getAppColors(
     flavor: String = BuildConfig.FLAVOR,
-    isDarkTheme: Boolean,
+    isDarkTheme: Boolean
 ): AppColors {
     val company = FoodDeliveryCompany.getByFlavor(flavor)
     return when (company) {

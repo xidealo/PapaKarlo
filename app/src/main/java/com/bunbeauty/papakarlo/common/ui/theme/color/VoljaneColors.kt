@@ -4,8 +4,6 @@ import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Gold100
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.LightBlue
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Orange350
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Orange50
-import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Red400
-import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Red600
 
 val VoljaneColors = AppColors(
     mainColors = ColorDefaults.lightMainColors(

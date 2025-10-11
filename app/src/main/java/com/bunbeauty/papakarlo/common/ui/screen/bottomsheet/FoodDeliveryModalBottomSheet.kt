@@ -11,8 +11,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.SheetState
-import androidx.compose.material3.SheetValue
 import androidx.compose.material3.Text
 import androidx.compose.material3.contentColorFor
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -28,7 +26,6 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold
@@ -51,7 +48,7 @@ fun FoodDeliveryModalBottomSheet(
     containerColor: Color = FoodDeliveryTheme.colors.mainColors.surface,
     contentColor: Color = contentColorFor(containerColor),
     dragHandle: @Composable (() -> Unit)? = { FoodDeliveryBottomSheetDefaults.DragHandle() },
-    content: @Composable ColumnScope.() -> Unit,
+    content: @Composable ColumnScope.() -> Unit
 ) {
     val context = LocalContext.current
 
@@ -99,7 +96,7 @@ fun FoodDeliveryModalBottomSheet(
 @Composable
 private fun Title(
     modifier: Modifier = Modifier,
-    title: String,
+    title: String
 ) {
     Text(
         modifier = modifier.fillMaxWidth(),
