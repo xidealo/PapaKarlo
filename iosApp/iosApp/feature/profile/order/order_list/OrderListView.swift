@@ -9,12 +9,11 @@ import shared
 import SwiftUI
 
 struct OrderListView: View {
-    @State var orderListState = OrderListState(
+    @State var orderListState = OrderListStateDataState(
         orderList: [],
-        eventList: [],
-        state: OrderListState.State.loading
+        state: OrderListStateDataState.State.loading
     )
-
+    
     var viewModel = OrderListViewModel(
         observeOrderListUseCase: iosComponent.provideObserveOrderListUseCase(),
         stopObserveOrdersUseCase: iosComponent.provideStopObserveOrdersUseCase()
@@ -35,9 +34,9 @@ struct OrderListView: View {
                 }
             )
             switch orderListState.state {
-            case OrderListState.State.loading: LoadingView()
-            case OrderListState.State.empty: EmptyOrderListView()
-            case OrderListState.State.success: SuccessOrderListView(
+            case OrderListStateDataState.State.loading: LoadingView()
+            case OrderListStateDataState.State.empty: EmptyOrderListView()
+            case OrderListStateDataState.State.success: SuccessOrderListView(
                     orderList: orderListState.orderList.map { lightOrder in
                         OrderItem(
                             id: lightOrder.uuid,
@@ -71,10 +70,9 @@ struct OrderListView: View {
     }
 
     func subscribe() {
-        viewModel.observeOrders()
+        viewModel.onAction(action: OrderListStateActionStartObserveOrder())
 
-        listener = viewModel.orderListState.watch { orderListVM in
-
+        listener = viewModel.dataState.watch { orderListVM in
             if let notNullorderListVM = orderListVM {
                 orderListState = notNullorderListVM
             }
@@ -82,7 +80,7 @@ struct OrderListView: View {
     }
 
     func unsubscribe() {
-        viewModel.stopObserveOrders()
+        viewModel.onAction(action: OrderListStateActionStopObserveOrder(), )
         listener?.close()
         listener = nil
     }

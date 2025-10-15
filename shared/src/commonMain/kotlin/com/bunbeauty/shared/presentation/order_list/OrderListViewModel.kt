@@ -12,11 +12,8 @@ import kotlinx.coroutines.launch
 class OrderListViewModel(
     private val observeOrderListUseCase: ObserveOrderListUseCase,
     private val stopObserveOrdersUseCase: StopObserveOrdersUseCase
-) : SharedStateViewModel<OrderListState.DataState,
-        OrderListState.Action, OrderListState.Event>(
-    initDataState = OrderListState.DataState(
-
-    )
+) : SharedStateViewModel<OrderListState.DataState, OrderListState.Action, OrderListState.Event>(
+    initDataState = OrderListState.DataState()
 ) {
 
     private var orderObservationUuid: String? = null
@@ -78,7 +75,7 @@ class OrderListViewModel(
     }
 
 
-     private fun stopObserveOrders() {
+    private fun stopObserveOrders() {
         observeOrdersJob?.cancel()
         orderObservationUuid?.let { uuid ->
             sharedScope.launch {
