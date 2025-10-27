@@ -15,30 +15,31 @@ fun TextCard(
     modifier: Modifier = Modifier,
     hint: String,
     label: String,
-    elevated: Boolean = true
+    elevated: Boolean = true,
 ) {
     FoodDeliveryCard(
         modifier = modifier,
         elevated = elevated,
-        clickable = false
+        clickable = false,
     ) {
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(
-                    horizontal = FoodDeliveryTheme.dimensions.mediumSpace,
-                    vertical = FoodDeliveryTheme.dimensions.smallSpace
-                )
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        horizontal = FoodDeliveryTheme.dimensions.mediumSpace,
+                        vertical = FoodDeliveryTheme.dimensions.smallSpace,
+                    ),
         ) {
             Text(
                 text = hint,
                 style = FoodDeliveryTheme.typography.labelSmall.medium,
-                color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
+                color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
             )
             Text(
                 text = label,
                 style = FoodDeliveryTheme.typography.bodyMedium,
-                color = FoodDeliveryTheme.colors.mainColors.onSurface
+                color = FoodDeliveryTheme.colors.mainColors.onSurface,
             )
         }
     }
@@ -50,7 +51,7 @@ private fun TextCardPreview() {
     FoodDeliveryTheme {
         TextCard(
             hint = "Номер телефона",
-            label = "+7 999 000-00-00"
+            label = "+7 999 000-00-00",
         )
     }
 }

@@ -13,7 +13,7 @@ fun OverflowingText(
     text: String,
     style: TextStyle,
     color: Color,
-    maxLines: Int = 1
+    maxLines: Int = 1,
 ) {
     Text(
         modifier = modifier,
@@ -21,6 +21,6 @@ fun OverflowingText(
         style = style,
         color = color,
         maxLines = maxLines,
-        overflow = TextOverflow.Ellipsis
+        overflow = TextOverflow.Ellipsis,
     )
 }

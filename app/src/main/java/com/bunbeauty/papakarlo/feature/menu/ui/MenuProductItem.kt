@@ -25,53 +25,55 @@ fun MenuProductItem(
     modifier: Modifier = Modifier,
     menuProductItem: MenuItemUi.Product,
     onAddProductClick: (String) -> Unit,
-    onProductClick: (String) -> Unit
+    onProductClick: (String) -> Unit,
 ) {
     FoodDeliveryCard(
         modifier = modifier,
         onClick = {
             onProductClick(menuProductItem.uuid)
-        }
+        },
     ) {
         Column {
             FoodDeliveryAsyncImage(
                 modifier = Modifier.fillMaxWidth(),
                 photoLink = menuProductItem.photoLink,
                 contentDescription = stringResource(R.string.description_product),
-                contentScale = ContentScale.FillWidth
+                contentScale = ContentScale.FillWidth,
             )
             Column(modifier = Modifier.padding(FoodDeliveryTheme.dimensions.smallSpace)) {
                 OverflowingText(
                     text = menuProductItem.name,
                     style = FoodDeliveryTheme.typography.titleSmall.bold,
-                    color = FoodDeliveryTheme.colors.mainColors.onSurface
+                    color = FoodDeliveryTheme.colors.mainColors.onSurface,
                 )
                 Row(modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.verySmallSpace)) {
                     menuProductItem.oldPrice?.let { oldPrice ->
                         Text(
-                            modifier = Modifier
-                                .padding(end = FoodDeliveryTheme.dimensions.verySmallSpace),
+                            modifier =
+                                Modifier
+                                    .padding(end = FoodDeliveryTheme.dimensions.verySmallSpace),
                             text = oldPrice,
                             style = FoodDeliveryTheme.typography.bodySmall,
                             textDecoration = TextDecoration.LineThrough,
-                            color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
+                            color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
                         )
                     }
                     Text(
                         text = menuProductItem.newPrice,
                         style = FoodDeliveryTheme.typography.bodySmall.bold,
-                        color = FoodDeliveryTheme.colors.mainColors.onSurface
+                        color = FoodDeliveryTheme.colors.mainColors.onSurface,
                     )
                 }
                 SmallButton(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = FoodDeliveryTheme.dimensions.smallSpace),
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(top = FoodDeliveryTheme.dimensions.smallSpace),
                     textStringId = R.string.action_product_want,
                     elevated = false,
                     onClick = {
                         onAddProductClick(menuProductItem.uuid)
-                    }
+                    },
                 )
             }
         }
@@ -83,16 +85,17 @@ fun MenuProductItem(
 private fun MenuProductItemPreview() {
     FoodDeliveryTheme {
         MenuProductItem(
-            menuProductItem = MenuItemUi.Product(
-                uuid = "",
-                key = "",
-                photoLink = "",
-                name = "Бэргер",
-                newPrice = "99 ₽",
-                oldPrice = "100 ₽"
-            ),
+            menuProductItem =
+                MenuItemUi.Product(
+                    uuid = "",
+                    key = "",
+                    photoLink = "",
+                    name = "Бэргер",
+                    newPrice = "99 ₽",
+                    oldPrice = "100 ₽",
+                ),
             onAddProductClick = {},
-            onProductClick = {}
+            onProductClick = {},
         )
     }
 }

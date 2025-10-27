@@ -56,7 +56,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
             signingConfig = signingConfigs.getByName("release")
         }
@@ -160,7 +160,7 @@ tasks.register("assembleAll") {
     dependsOn(
         FoodDeliveryFlavor.values().map { flavor ->
             flavor.assembleReleaseBundle
-        }
+        },
     )
 }
 
@@ -169,13 +169,13 @@ tasks.register("publishAll") {
     dependsOn(
         FoodDeliveryFlavor.values().map { flavor ->
             flavor.publishReleaseBundle
-        }
+        },
     )
 }
 
 fun commonPlayConfig(
     playPublisherExtension: PlayPublisherExtension,
-    buildGradle: Build_gradle
+    buildGradle: Build_gradle,
 ) {
     with(playPublisherExtension) {
         track.set("production")

@@ -26,20 +26,21 @@ import com.bunbeauty.shared.presentation.cafe_list.CafeList
 @Composable
 fun CafeOptionsBottomSheet(
     cafeOptionUI: CafeListViewState.CafeOptionUI,
-    onAction: (CafeList.Action) -> Unit
+    onAction: (CafeList.Action) -> Unit,
 ) {
     FoodDeliveryModalBottomSheet(
         onDismissRequest = {
             onAction(CafeList.Action.OnCloseCafeOptionBottomSheetClicked)
         },
         isShown = cafeOptionUI.isShown,
-        title = cafeOptionUI.cafeOptions?.title.orEmpty()
+        title = cafeOptionUI.cafeOptions?.title.orEmpty(),
     ) {
         if (cafeOptionUI.cafeOptions == null) {
             CircularProgressBar(
-                modifier = Modifier
-                    .padding(16.dp)
-                    .align(CenterHorizontally)
+                modifier =
+                    Modifier
+                        .padding(16.dp)
+                        .align(CenterHorizontally),
             )
         } else {
             CafeOptionsSuccessScreen(cafeOptionUI.cafeOptions)
@@ -54,7 +55,7 @@ private fun CafeOptionsSuccessScreen(cafeOptions: CafeOptions) {
         iconId = R.drawable.ic_call,
         iconDescriptionStringId = R.string.description_cafe_options_call,
         label = cafeOptions.callToCafe,
-        elevated = false
+        elevated = false,
     ) {
         val uri = (PHONE_LINK + cafeOptions.phone).toUri()
         goByUri(uri = uri, action = Intent.ACTION_DIAL, activity = activity)
@@ -64,7 +65,7 @@ private fun CafeOptionsSuccessScreen(cafeOptions: CafeOptions) {
         iconId = R.drawable.ic_address,
         iconDescriptionStringId = R.string.description_cafe_options_map,
         label = cafeOptions.showOnMap,
-        elevated = false
+        elevated = false,
     ) {
         val uri =
             (MAPS_LINK + cafeOptions.latitude + COORDINATES_DIVIDER + cafeOptions.longitude).toUri()
@@ -72,7 +73,11 @@ private fun CafeOptionsSuccessScreen(cafeOptions: CafeOptions) {
     }
 }
 
-private fun goByUri(uri: Uri, action: String, activity: Activity?) {
+private fun goByUri(
+    uri: Uri,
+    action: String,
+    activity: Activity?,
+) {
     val intent = Intent(action, uri)
     activity?.startActivity(intent)
 }
@@ -83,17 +88,18 @@ private fun CafeOptionsSuccessScreenPreview() {
     FoodDeliveryTheme {
         CafeOptionsBottomSheet(
             CafeListViewState.CafeOptionUI(
-                cafeOptions = CafeOptions(
-                    title = "улица Чапаева, д 22А",
-                    showOnMap = "На карте: улица Чапаева, д 22А",
-                    callToCafe = "Позвонить: +7 (900) 900-90-90",
-                    phone = "",
-                    latitude = 0.0,
-                    longitude = 0.0
-                ),
-                isShown = true
+                cafeOptions =
+                    CafeOptions(
+                        title = "улица Чапаева, д 22А",
+                        showOnMap = "На карте: улица Чапаева, д 22А",
+                        callToCafe = "Позвонить: +7 (900) 900-90-90",
+                        phone = "",
+                        latitude = 0.0,
+                        longitude = 0.0,
+                    ),
+                isShown = true,
             ),
-            onAction = {}
+            onAction = {},
         )
     }
 }

@@ -10,13 +10,12 @@ import com.bunbeauty.shared.domain.model.address.UserAddress
 import com.bunbeauty.shared.domain.model.address.UserAddressWithCity
 
 @Composable
-fun SelectableUserAddress.toUserAddressItem(): UserAddressItem {
-    return UserAddressItem(
+fun SelectableUserAddress.toUserAddressItem(): UserAddressItem =
+    UserAddressItem(
         uuid = address.uuid,
         address = address.toAddressString(),
-        isSelected = isSelected
+        isSelected = isSelected,
     )
-}
 
 @Composable
 fun UserAddress.toAddressString(): String {
@@ -33,14 +32,13 @@ fun UserAddress.toAddressString(): String {
 }
 
 @Composable
-fun UserAddressWithCity.toAddressString(): String {
-    return city + ADDRESS_DIVIDER + userAddress?.toAddressString()
-}
+fun UserAddressWithCity.toAddressString(): String = city + ADDRESS_DIVIDER + userAddress?.toAddressString()
 
 private fun List<Any?>.toStringOrEmpty(divider: String): String {
-    val isAnyNullOrEmpty = any { part ->
-        part == null || part.toString().isEmpty()
-    }
+    val isAnyNullOrEmpty =
+        any { part ->
+            part == null || part.toString().isEmpty()
+        }
     return if (isAnyNullOrEmpty) {
         ""
     } else {

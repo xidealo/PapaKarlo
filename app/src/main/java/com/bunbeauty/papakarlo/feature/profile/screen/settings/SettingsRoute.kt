@@ -35,7 +35,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun SettingsRoute(
     viewModel: SettingsViewModel = koinViewModel(),
-    back: () -> Unit
+    back: () -> Unit,
 ) {
     LaunchedEffect(Unit) {
         viewModel.loadData()
@@ -43,80 +43,86 @@ fun SettingsRoute(
 
     val viewState by viewModel.dataState.collectAsStateWithLifecycle()
 
-    val onAction = remember {
-        { action: SettingsState.Action ->
-            viewModel.onAction(action)
+    val onAction =
+        remember {
+            { action: SettingsState.Action ->
+                viewModel.onAction(action)
+            }
         }
-    }
 
     val effects by viewModel.events.collectAsStateWithLifecycle()
-    val consumeEffects = remember {
-        {
-            viewModel.consumeEvents(effects)
+    val consumeEffects =
+        remember {
+            {
+                viewModel.consumeEvents(effects)
+            }
         }
-    }
 
     SettingsEffect(
         effects = effects,
         back = back,
-        consumeEffects = consumeEffects
+        consumeEffects = consumeEffects,
     )
 
     SettingsScreen(viewState = viewState.mapState(), onAction = onAction)
 }
 
 @Composable
-fun SettingsState.DataState.mapState(): SettingsViewState {
-    return SettingsViewState(
+fun SettingsState.DataState.mapState(): SettingsViewState =
+    SettingsViewState(
         phoneNumber = settings?.phoneNumber.orEmpty(),
         selectedCityName = selectedCity?.name.orEmpty(),
-        state = when (state) {
-            SettingsState.DataState.State.SUCCESS -> {
-                SettingsViewState.State.Success
-            }
+        state =
+            when (state) {
+                SettingsState.DataState.State.SUCCESS -> {
+                    SettingsViewState.State.Success
+                }
 
-            SettingsState.DataState.State.ERROR -> {
-                SettingsViewState.State.Error
-            }
+                SettingsState.DataState.State.ERROR -> {
+                    SettingsViewState.State.Error
+                }
 
-            SettingsState.DataState.State.LOADING -> {
-                SettingsViewState.State.Loading
-            }
-        },
-        logoutUI = SettingsViewState.LogoutBottomSheetUI(
-            isShown = isShowLogoutBottomSheet
-        ),
-        cityListBottomSheetUI = SettingsViewState.CityListBottomSheetUI(
-            isShown = isShowCityListBottomSheet,
-            cityListUI = cityList.map { city ->
-                CityUI(
-                    uuid = city.uuid,
-                    name = city.name,
-                    isSelected = city.uuid == selectedCity?.uuid
-                )
-            }.toPersistentList()
-        )
+                SettingsState.DataState.State.LOADING -> {
+                    SettingsViewState.State.Loading
+                }
+            },
+        logoutUI =
+            SettingsViewState.LogoutBottomSheetUI(
+                isShown = isShowLogoutBottomSheet,
+            ),
+        cityListBottomSheetUI =
+            SettingsViewState.CityListBottomSheetUI(
+                isShown = isShowCityListBottomSheet,
+                cityListUI =
+                    cityList
+                        .map { city ->
+                            CityUI(
+                                uuid = city.uuid,
+                                name = city.name,
+                                isSelected = city.uuid == selectedCity?.uuid,
+                            )
+                        }.toPersistentList(),
+            ),
     )
-}
 
 @Composable
 fun SettingsEffect(
     effects: List<SettingsState.Event>,
     back: () -> Unit,
-    consumeEffects: () -> Unit
+    consumeEffects: () -> Unit,
 ) {
     val activity = LocalActivity.current
     effects.forEach { effect ->
         when (effect) {
             SettingsState.Event.ShowEmailChangedSuccessfullyEvent -> {
                 (activity as? IMessageHost)?.showInfoMessage(
-                    activity.resources.getString(R.string.msg_settings_email_updated)
+                    activity.resources.getString(R.string.msg_settings_email_updated),
                 )
             }
 
             SettingsState.Event.ShowEmailChangingFailedEvent -> {
                 (activity as? IMessageHost)?.showErrorMessage(
-                    activity.resources.getString(R.string.error_something_went_wrong)
+                    activity.resources.getString(R.string.error_something_went_wrong),
                 )
             }
 
@@ -127,7 +133,10 @@ fun SettingsEffect(
 }
 
 @Composable
-fun SettingsScreen(viewState: SettingsViewState, onAction: (SettingsState.Action) -> Unit) {
+fun SettingsScreen(
+    viewState: SettingsViewState,
+    onAction: (SettingsState.Action) -> Unit,
+) {
     FoodDeliveryScaffold(
         title = stringResource(R.string.title_settings),
         backActionClick = {
@@ -135,37 +144,39 @@ fun SettingsScreen(viewState: SettingsViewState, onAction: (SettingsState.Action
         },
         actionButton = {
             MainButton(
-                modifier = Modifier
-                    .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
+                modifier =
+                    Modifier
+                        .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
                 text = stringResource(id = R.string.action_logout),
                 onClick = {
                     onAction(SettingsState.Action.OnLogoutClicked)
-                }
+                },
             )
         },
-        backgroundColor = FoodDeliveryTheme.colors.mainColors.surface
+        backgroundColor = FoodDeliveryTheme.colors.mainColors.surface,
     ) {
         when (viewState.state) {
             SettingsViewState.State.Success -> {
                 SettingsScreenSuccess(
                     settingsState = viewState,
-                    onAction = onAction
+                    onAction = onAction,
                 )
                 LogoutBottomSheetScreen(
                     logoutUI = viewState.logoutUI,
-                    onAction = onAction
+                    onAction = onAction,
                 )
                 CityListBottomSheetScreen(
                     cityListBottomSheetUI = viewState.cityListBottomSheetUI,
-                    onAction = onAction
+                    onAction = onAction,
                 )
             }
 
-            SettingsViewState.State.Error -> ErrorScreen(
-                mainTextId = R.string.error_common_data_loading
-            ) {
-                onAction(SettingsState.Action.LoadData)
-            }
+            SettingsViewState.State.Error ->
+                ErrorScreen(
+                    mainTextId = R.string.error_common_data_loading,
+                ) {
+                    onAction(SettingsState.Action.LoadData)
+                }
 
             SettingsViewState.State.Loading -> LoadingScreen()
         }
@@ -175,16 +186,17 @@ fun SettingsScreen(viewState: SettingsViewState, onAction: (SettingsState.Action
 @Composable
 fun SettingsScreenSuccess(
     settingsState: SettingsViewState,
-    onAction: (SettingsState.Action) -> Unit
+    onAction: (SettingsState.Action) -> Unit,
 ) {
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState()),
     ) {
         TextCardWithDivider(
             label = stringResource(R.string.hint_settings_phone),
-            value = settingsState.phoneNumber
+            value = settingsState.phoneNumber,
         )
 
         NavigationCardWithDivider(
@@ -192,21 +204,23 @@ fun SettingsScreenSuccess(
                 onAction(SettingsState.Action.OnCityClicked)
             },
             label = stringResource(R.string.common_city),
-            value = settingsState.selectedCityName
+            value = settingsState.selectedCityName,
         )
     }
 }
 
-val previewSettingsViewState = SettingsViewState(
-    phoneNumber = "+7 999 000-00-00",
-    selectedCityName = "Москва",
-    state = SettingsViewState.State.Success,
-    logoutUI = SettingsViewState.LogoutBottomSheetUI(false),
-    cityListBottomSheetUI = SettingsViewState.CityListBottomSheetUI(
-        isShown = false,
-        cityListUI = persistentListOf()
+val previewSettingsViewState =
+    SettingsViewState(
+        phoneNumber = "+7 999 000-00-00",
+        selectedCityName = "Москва",
+        state = SettingsViewState.State.Success,
+        logoutUI = SettingsViewState.LogoutBottomSheetUI(false),
+        cityListBottomSheetUI =
+            SettingsViewState.CityListBottomSheetUI(
+                isShown = false,
+                cityListUI = persistentListOf(),
+            ),
     )
-)
 
 @Preview(showSystemUi = true)
 @Composable
@@ -218,12 +232,13 @@ private fun SettingsScreenWithEmailPreview() {
                 selectedCityName = "Москва",
                 state = SettingsViewState.State.Success,
                 logoutUI = SettingsViewState.LogoutBottomSheetUI(false),
-                cityListBottomSheetUI = SettingsViewState.CityListBottomSheetUI(
-                    isShown = false,
-                    cityListUI = persistentListOf()
-                )
+                cityListBottomSheetUI =
+                    SettingsViewState.CityListBottomSheetUI(
+                        isShown = false,
+                        cityListUI = persistentListOf(),
+                    ),
             ),
-            onAction = {}
+            onAction = {},
         )
     }
 }
@@ -238,12 +253,13 @@ private fun SettingsScreenWithoutEmailPreview() {
                 selectedCityName = "Москва",
                 state = SettingsViewState.State.Success,
                 logoutUI = SettingsViewState.LogoutBottomSheetUI(isShown = false),
-                cityListBottomSheetUI = SettingsViewState.CityListBottomSheetUI(
-                    isShown = false,
-                    cityListUI = persistentListOf()
-                )
+                cityListBottomSheetUI =
+                    SettingsViewState.CityListBottomSheetUI(
+                        isShown = false,
+                        cityListUI = persistentListOf(),
+                    ),
             ),
-            onAction = {}
+            onAction = {},
         )
     }
 }
@@ -258,12 +274,13 @@ private fun SettingsScreenLoadingPreview() {
                 selectedCityName = "Москва",
                 state = SettingsViewState.State.Loading,
                 logoutUI = SettingsViewState.LogoutBottomSheetUI(isShown = false),
-                cityListBottomSheetUI = SettingsViewState.CityListBottomSheetUI(
-                    isShown = false,
-                    cityListUI = persistentListOf()
-                )
+                cityListBottomSheetUI =
+                    SettingsViewState.CityListBottomSheetUI(
+                        isShown = false,
+                        cityListUI = persistentListOf(),
+                    ),
             ),
-            onAction = {}
+            onAction = {},
         )
     }
 }
@@ -278,12 +295,13 @@ private fun SettingsScreenErrorPreview() {
                 selectedCityName = "Москва",
                 state = SettingsViewState.State.Error,
                 logoutUI = SettingsViewState.LogoutBottomSheetUI(isShown = false),
-                cityListBottomSheetUI = SettingsViewState.CityListBottomSheetUI(
-                    isShown = false,
-                    cityListUI = persistentListOf()
-                )
+                cityListBottomSheetUI =
+                    SettingsViewState.CityListBottomSheetUI(
+                        isShown = false,
+                        cityListUI = persistentListOf(),
+                    ),
             ),
-            onAction = {}
+            onAction = {},
         )
     }
 }

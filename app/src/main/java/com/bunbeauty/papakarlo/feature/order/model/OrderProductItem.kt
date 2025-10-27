@@ -8,5 +8,5 @@ class OrderProductItem(
     val newCost: String,
     val oldCost: String?,
     val photoLink: String,
-    val count: String
+    val count: String,
 )

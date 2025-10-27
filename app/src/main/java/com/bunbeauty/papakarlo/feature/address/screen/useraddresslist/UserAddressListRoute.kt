@@ -33,25 +33,26 @@ import com.bunbeauty.shared.presentation.user_address_list.UserAddressListViewMo
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-private fun UserAddressListDataState.DataState.mapState(): UserAddressListViewState {
-    return UserAddressListViewState(
-        userAddressItems = userAddressList.map { userAddressList ->
-            userAddressList.toUserAddressItem()
-        },
-        state = when (state) {
-            UserAddressListDataState.DataState.State.SUCCESS -> UserAddressListViewState.State.Success
-            UserAddressListDataState.DataState.State.ERROR -> UserAddressListViewState.State.Error
-            UserAddressListDataState.DataState.State.EMPTY -> UserAddressListViewState.State.Empty
-            UserAddressListDataState.DataState.State.LOADING -> UserAddressListViewState.State.Loading
-        }
+private fun UserAddressListDataState.DataState.mapState(): UserAddressListViewState =
+    UserAddressListViewState(
+        userAddressItems =
+            userAddressList.map { userAddressList ->
+                userAddressList.toUserAddressItem()
+            },
+        state =
+            when (state) {
+                UserAddressListDataState.DataState.State.SUCCESS -> UserAddressListViewState.State.Success
+                UserAddressListDataState.DataState.State.ERROR -> UserAddressListViewState.State.Error
+                UserAddressListDataState.DataState.State.EMPTY -> UserAddressListViewState.State.Empty
+                UserAddressListDataState.DataState.State.LOADING -> UserAddressListViewState.State.Loading
+            },
     )
-}
 
 @Composable
 fun UserAddressListRoute(
     viewModel: UserAddressListViewModel = koinViewModel(),
     back: () -> Unit,
-    goToCreateAddress: () -> Unit
+    goToCreateAddress: () -> Unit,
 ) {
     LaunchedEffect(Unit) {
         viewModel.onAction(UserAddressListDataState.Action.Init)
@@ -60,35 +61,37 @@ fun UserAddressListRoute(
     val viewState by viewModel.dataState.collectAsStateWithLifecycle()
 
     val effects by viewModel.events.collectAsStateWithLifecycle()
-    val consumeEffects = remember {
-        {
-            viewModel.consumeEvents(effects)
+    val consumeEffects =
+        remember {
+            {
+                viewModel.consumeEvents(effects)
+            }
         }
-    }
 
-    val onAction = remember {
-        { event: UserAddressListDataState.Action ->
-            viewModel.onAction(event)
+    val onAction =
+        remember {
+            { event: UserAddressListDataState.Action ->
+                viewModel.onAction(event)
+            }
         }
-    }
 
     UserAddressEffect(
         effects = effects,
         back = back,
         goToCreateAddress = goToCreateAddress,
-        consumeEffects = consumeEffects
+        consumeEffects = consumeEffects,
     )
 
     UserAddressListScreen(
         viewState = viewState.mapState(),
-        onAction = onAction
+        onAction = onAction,
     )
 }
 
 @Composable
 private fun UserAddressListScreen(
     viewState: UserAddressListViewState,
-    onAction: (UserAddressListDataState.Action) -> Unit
+    onAction: (UserAddressListDataState.Action) -> Unit,
 ) {
     FoodDeliveryScaffold(
         title = stringResource(R.string.title_my_addresses),
@@ -96,17 +99,18 @@ private fun UserAddressListScreen(
         actionButton = {
             if (viewState.state != UserAddressListViewState.State.Loading) {
                 MainButton(
-                    modifier = Modifier
-                        .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
+                    modifier =
+                        Modifier
+                            .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
                     textStringId = R.string.action_add_addresses,
-                    onClick = { onAction(UserAddressListDataState.Action.OnClickedCreateAddress) }
+                    onClick = { onAction(UserAddressListDataState.Action.OnClickedCreateAddress) },
                 )
             }
-        }
+        },
     ) {
         Crossfade(
             targetState = viewState.state,
-            label = "UserAddressListScreen"
+            label = "UserAddressListScreen",
         ) { state ->
             when (viewState.state) {
                 UserAddressListViewState.State.Error ->
@@ -114,7 +118,7 @@ private fun UserAddressListScreen(
                         mainTextId = R.string.error_addresses_list_loading,
                         onClick = {
                             onAction(UserAddressListDataState.Action.OnRefreshClicked)
-                        }
+                        },
                     )
                 UserAddressListViewState.State.Loading ->
                     LoadingScreen()
@@ -129,7 +133,7 @@ private fun UserAddressListScreen(
                         mainTextId = R.string.title_my_addresses_empty,
                         extraTextId = R.string.msg_my_addresses_empty,
                         buttonTextId = R.string.action_add_addresses,
-                        onClick = { onAction(UserAddressListDataState.Action.Init) }
+                        onClick = { onAction(UserAddressListDataState.Action.Init) },
                     )
             }
         }
@@ -139,18 +143,20 @@ private fun UserAddressListScreen(
 @Composable
 private fun UserAddressListSuccessScreen(userAddressItems: List<UserAddressItem>) {
     Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(FoodDeliveryTheme.colors.mainColors.background)
-            .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace)
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .background(FoodDeliveryTheme.colors.mainColors.background)
+                .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
     ) {
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
-            contentPadding = PaddingValues(
-                top = FoodDeliveryTheme.dimensions.mediumSpace,
-                bottom = FoodDeliveryTheme.dimensions.scrollScreenBottomSpace
-            ),
-            verticalArrangement = spacedBy(8.dp)
+            contentPadding =
+                PaddingValues(
+                    top = FoodDeliveryTheme.dimensions.mediumSpace,
+                    bottom = FoodDeliveryTheme.dimensions.scrollScreenBottomSpace,
+                ),
+            verticalArrangement = spacedBy(8.dp),
         ) {
             itemsIndexed(userAddressItems) { i, userAddressItem ->
                 SelectableItem(
@@ -158,7 +164,7 @@ private fun UserAddressListSuccessScreen(userAddressItems: List<UserAddressItem>
                     clickable = false,
                     elevated = true,
                     onClick = {},
-                    enabled = true
+                    enabled = true,
                 )
             }
         }
@@ -170,7 +176,7 @@ fun UserAddressEffect(
     effects: List<UserAddressListDataState.Event>,
     back: () -> Unit,
     goToCreateAddress: () -> Unit,
-    consumeEffects: () -> Unit
+    consumeEffects: () -> Unit,
 ) {
     LaunchedEffect(effects) {
         effects.forEach { effect ->
@@ -187,22 +193,24 @@ fun UserAddressEffect(
 @Composable
 private fun UserAddressListSuccessScreenPreview() {
     FoodDeliveryTheme {
-        val addressItemModel = UserAddressItem(
-            uuid = "1",
-            address = "addddd",
-            isSelected = false
-        )
+        val addressItemModel =
+            UserAddressItem(
+                uuid = "1",
+                address = "addddd",
+                isSelected = false,
+            )
         UserAddressListScreen(
             UserAddressListViewState(
-                userAddressItems = listOf(
-                    addressItemModel,
-                    addressItemModel,
-                    addressItemModel,
-                    addressItemModel
-                ),
-                state = UserAddressListViewState.State.Success
+                userAddressItems =
+                    listOf(
+                        addressItemModel,
+                        addressItemModel,
+                        addressItemModel,
+                        addressItemModel,
+                    ),
+                state = UserAddressListViewState.State.Success,
             ),
-            onAction = { }
+            onAction = { },
         )
     }
 }
@@ -212,11 +220,11 @@ private fun UserAddressListSuccessScreenPreview() {
 private fun UserAddressListEmptyScreenPreview() {
     FoodDeliveryTheme {
         UserAddressListScreen(
-            viewState = UserAddressListViewState(
-                state = UserAddressListViewState.State.Empty
-
-            ),
-            onAction = {}
+            viewState =
+                UserAddressListViewState(
+                    state = UserAddressListViewState.State.Empty,
+                ),
+            onAction = {},
         )
     }
 }
@@ -226,10 +234,11 @@ private fun UserAddressListEmptyScreenPreview() {
 private fun UserAddressListLoadingScreenPreview() {
     FoodDeliveryTheme {
         UserAddressListScreen(
-            viewState = UserAddressListViewState(
-                state = UserAddressListViewState.State.Loading
-            ),
-            onAction = {}
+            viewState =
+                UserAddressListViewState(
+                    state = UserAddressListViewState.State.Loading,
+                ),
+            onAction = {},
         )
     }
 }

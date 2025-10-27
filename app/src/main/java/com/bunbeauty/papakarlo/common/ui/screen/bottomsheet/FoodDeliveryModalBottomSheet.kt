@@ -38,17 +38,18 @@ fun FoodDeliveryModalBottomSheet(
     isShown: Boolean,
     modifier: Modifier = Modifier,
     title: String? = null,
-    contentPadding: PaddingValues = PaddingValues(
-        top = 8.dp,
-        start = 16.dp,
-        end = 16.dp,
-        bottom = 16.dp
-    ),
+    contentPadding: PaddingValues =
+        PaddingValues(
+            top = 8.dp,
+            start = 16.dp,
+            end = 16.dp,
+            bottom = 16.dp,
+        ),
     shape: Shape = FoodDeliveryBottomSheetDefaults.bottomSheetShape,
     containerColor: Color = FoodDeliveryTheme.colors.mainColors.surface,
     contentColor: Color = contentColorFor(containerColor),
     dragHandle: @Composable (() -> Unit)? = { FoodDeliveryBottomSheetDefaults.DragHandle() },
-    content: @Composable ColumnScope.() -> Unit
+    content: @Composable ColumnScope.() -> Unit,
 ) {
     val context = LocalContext.current
 
@@ -74,17 +75,18 @@ fun FoodDeliveryModalBottomSheet(
             containerColor = containerColor,
             contentColor = contentColor,
             dragHandle = dragHandle,
-            modifier = modifier
+            modifier = modifier,
         ) {
             Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(paddingValues = contentPadding)
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(paddingValues = contentPadding),
             ) {
                 title?.let {
                     Title(
                         modifier = Modifier.padding(vertical = 16.dp),
-                        title = title
+                        title = title,
                     )
                 }
                 content()
@@ -96,14 +98,14 @@ fun FoodDeliveryModalBottomSheet(
 @Composable
 private fun Title(
     modifier: Modifier = Modifier,
-    title: String
+    title: String,
 ) {
     Text(
         modifier = modifier.fillMaxWidth(),
         text = title,
         style = FoodDeliveryTheme.typography.titleMedium.bold,
         color = FoodDeliveryTheme.colors.mainColors.onSurface,
-        textAlign = TextAlign.Center
+        textAlign = TextAlign.Center,
     )
 }
 
@@ -120,18 +122,19 @@ private fun FoodDeliveryModalBottomSheetPreview() {
     FoodDeliveryTheme {
         FoodDeliveryModalBottomSheet(
             onDismissRequest = {},
-            isShown = isShownState
+            isShown = isShownState,
         ) {
             Column(
                 modifier = Modifier.padding(16.dp),
-                verticalArrangement = Arrangement.Absolute.spacedBy(8.dp)
+                verticalArrangement = Arrangement.Absolute.spacedBy(8.dp),
             ) {
                 repeat(4) {
                     Spacer(
-                        modifier = Modifier
-                            .height(40.dp)
-                            .fillMaxWidth()
-                            .background(FoodDeliveryTheme.colors.mainColors.surface)
+                        modifier =
+                            Modifier
+                                .height(40.dp)
+                                .fillMaxWidth()
+                                .background(FoodDeliveryTheme.colors.mainColors.surface),
                     )
                 }
             }

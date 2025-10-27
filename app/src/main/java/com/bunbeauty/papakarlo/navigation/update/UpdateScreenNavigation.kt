@@ -10,9 +10,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data object UpdateScreenDestination
 
-fun NavController.navigateToUpdateScreen(
-    navOptions: NavOptions
-) = navigate(route = UpdateScreenDestination, navOptions)
+fun NavController.navigateToUpdateScreen(navOptions: NavOptions) = navigate(route = UpdateScreenDestination, navOptions)
 
 fun NavGraphBuilder.updateScreenRoute() {
     composable<UpdateScreenDestination> {

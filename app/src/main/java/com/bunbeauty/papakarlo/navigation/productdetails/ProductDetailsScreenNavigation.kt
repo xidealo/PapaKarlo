@@ -15,7 +15,7 @@ data class ProductDetailsScreenDestination(
     val name: String,
     val productDetailsOpenedFrom: ProductDetailsOpenedFrom,
     val additionUuidList: List<String>,
-    val cartProductUuid: String?
+    val cartProductUuid: String?,
 )
 
 fun NavController.navigateToProductDetailsScreen(
@@ -24,21 +24,20 @@ fun NavController.navigateToProductDetailsScreen(
     name: String,
     productDetailsOpenedFrom: ProductDetailsOpenedFrom,
     additionUuidList: List<String>,
-    cartProductUuid: String?
+    cartProductUuid: String?,
 ) = navigate(
-    route = ProductDetailsScreenDestination(
-        uuid = uuid,
-        name = name,
-        productDetailsOpenedFrom = productDetailsOpenedFrom,
-        additionUuidList = additionUuidList,
-        cartProductUuid = cartProductUuid
-    ),
-    navOptions = navOptions
+    route =
+        ProductDetailsScreenDestination(
+            uuid = uuid,
+            name = name,
+            productDetailsOpenedFrom = productDetailsOpenedFrom,
+            additionUuidList = additionUuidList,
+            cartProductUuid = cartProductUuid,
+        ),
+    navOptions = navOptions,
 )
 
-fun NavGraphBuilder.productDetailsScreenRoute(
-    back: () -> Unit
-) {
+fun NavGraphBuilder.productDetailsScreenRoute(back: () -> Unit) {
     composable<ProductDetailsScreenDestination> { backStackEntry ->
         val args = backStackEntry.toRoute<ProductDetailsScreenDestination>()
         ProductDetailsRoute(
@@ -47,7 +46,7 @@ fun NavGraphBuilder.productDetailsScreenRoute(
             menuProductName = args.name,
             productDetailsOpenedFrom = args.productDetailsOpenedFrom,
             cartProductUuid = args.cartProductUuid,
-            additionUuidList = args.additionUuidList
+            additionUuidList = args.additionUuidList,
         )
     }
 }

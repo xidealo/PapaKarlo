@@ -23,10 +23,10 @@ fun FoodDeliveryCard(
     colors: CardColors = FoodDeliveryCardDefaults.cardColors,
     shape: Shape = FoodDeliveryCardDefaults.cardShape,
     border: BorderStroke? = null,
-    content: @Composable ColumnScope.() -> Unit
+    content: @Composable ColumnScope.() -> Unit,
 ) {
     CompositionLocalProvider(
-        LocalMinimumInteractiveComponentSize provides 0.dp
+        LocalMinimumInteractiveComponentSize provides 0.dp,
     ) {
         if (clickable) {
             Card(
@@ -36,7 +36,7 @@ fun FoodDeliveryCard(
                 elevation = getCardElevation(elevated),
                 onClick = onClick,
                 border = border,
-                content = content
+                content = content,
             )
         } else {
             Card(
@@ -45,7 +45,7 @@ fun FoodDeliveryCard(
                 colors = colors,
                 elevation = getCardElevation(elevated),
                 border = border,
-                content = content
+                content = content,
             )
         }
     }

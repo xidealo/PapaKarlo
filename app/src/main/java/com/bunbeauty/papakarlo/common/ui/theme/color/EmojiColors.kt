@@ -5,24 +5,28 @@ import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.LightBlu
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Orange50
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Yellow500
 
-val EmojiLightColors = AppColors(
-    mainColors = ColorDefaults.lightMainColors(
-        primary = Yellow500,
-        surfaceVariant = Orange50,
-        strokeVariant = Gold100
-    ),
-    orderColors = ColorDefaults.orderColors(),
-    statusColors = ColorDefaults.statusColors(),
-    bunBeautyBrandColor = LightBlue,
-    isLight = true
-)
+val EmojiLightColors =
+    AppColors(
+        mainColors =
+            ColorDefaults.lightMainColors(
+                primary = Yellow500,
+                surfaceVariant = Orange50,
+                strokeVariant = Gold100,
+            ),
+        orderColors = ColorDefaults.orderColors(),
+        statusColors = ColorDefaults.statusColors(),
+        bunBeautyBrandColor = LightBlue,
+        isLight = true,
+    )
 
-val EmojiDarkColors = AppColors(
-    mainColors = ColorDefaults.darkMainColors(
-        primary = Yellow500
-    ),
-    orderColors = ColorDefaults.orderColors(),
-    statusColors = ColorDefaults.statusColors(),
-    bunBeautyBrandColor = LightBlue,
-    isLight = false
-)
+val EmojiDarkColors =
+    AppColors(
+        mainColors =
+            ColorDefaults.darkMainColors(
+                primary = Yellow500,
+            ),
+        orderColors = ColorDefaults.orderColors(),
+        statusColors = ColorDefaults.statusColors(),
+        bunBeautyBrandColor = LightBlue,
+        isLight = false,
+    )

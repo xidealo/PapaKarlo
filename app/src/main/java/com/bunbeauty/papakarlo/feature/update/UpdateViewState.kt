@@ -6,14 +6,16 @@ import com.bunbeauty.shared.presentation.base.BaseViewState
 
 @Immutable
 data class UpdateViewState(
-    val state: State
+    val state: State,
 ) : BaseViewState {
     @Immutable
     sealed interface State {
         data object Loading : State
+
         data object Error : State
+
         data class Success(
-            val link: Link?
+            val link: Link?,
         ) : State
     }
 }

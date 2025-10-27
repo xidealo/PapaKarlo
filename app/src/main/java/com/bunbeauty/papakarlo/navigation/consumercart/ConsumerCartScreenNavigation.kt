@@ -12,9 +12,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data object ConsumerCartScreenDestination
 
-fun NavController.navigateConsumerCartScreen(
-    navOptions: NavOptions
-) = navigate(route = ConsumerCartScreenDestination, navOptions)
+fun NavController.navigateConsumerCartScreen(navOptions: NavOptions) = navigate(route = ConsumerCartScreenDestination, navOptions)
 
 fun NavGraphBuilder.consumerCartScreenRoute(
     back: () -> Unit,
@@ -26,8 +24,8 @@ fun NavGraphBuilder.consumerCartScreenRoute(
         name: String,
         productDetailsOpenedFrom: ProductDetailsOpenedFrom,
         additionUuidList: List<String>,
-        cartProductUuid: String?
-    ) -> Unit
+        cartProductUuid: String?,
+    ) -> Unit,
 ) {
     composable<ConsumerCartScreenDestination> {
         ConsumerCartRoute(
@@ -35,7 +33,7 @@ fun NavGraphBuilder.consumerCartScreenRoute(
             goToMenuFragment = goToMenuFragment,
             goToCreateOrderFragment = goToCreateOrderFragment,
             goToLoginFragment = goToLoginFragment,
-            goToProductFragment = goToProductFragment
+            goToProductFragment = goToProductFragment,
         )
     }
 }

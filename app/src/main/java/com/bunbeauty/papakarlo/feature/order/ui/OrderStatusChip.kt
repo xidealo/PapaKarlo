@@ -27,8 +27,8 @@ private val orderStatusShape = RoundedCornerShape(12.dp)
 private val zeroStatusShape = RoundedCornerShape(0.dp)
 
 @Composable
-fun OrderStatus.getOrderStatusName(): String {
-    return when (this) {
+fun OrderStatus.getOrderStatusName(): String =
+    when (this) {
         OrderStatus.NOT_ACCEPTED -> stringResource(R.string.msg_status_not_accepted)
         OrderStatus.ACCEPTED -> stringResource(R.string.msg_status_accepted)
         OrderStatus.PREPARING -> stringResource(R.string.msg_status_preparing)
@@ -37,25 +37,25 @@ fun OrderStatus.getOrderStatusName(): String {
         OrderStatus.DONE -> stringResource(R.string.msg_status_done)
         OrderStatus.CANCELED -> stringResource(R.string.msg_status_canceled)
     }
-}
 
 @Composable
 fun OrderStatusChip(
     modifier: Modifier = Modifier,
     orderStatus: OrderStatus,
-    statusName: String
+    statusName: String,
 ) {
     Box(
-        modifier = modifier
-            .clip(orderStatusShape)
-            .background(getOrderColor(orderStatus))
+        modifier =
+            modifier
+                .clip(orderStatusShape)
+                .background(getOrderColor(orderStatus)),
     ) {
         Text(
             text = statusName,
             modifier = Modifier.padding(vertical = 4.dp, horizontal = 8.dp),
             style = FoodDeliveryTheme.typography.labelSmall.medium,
             color = FoodDeliveryTheme.colors.orderColors.onOrder,
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
         )
     }
 }
@@ -63,13 +63,14 @@ fun OrderStatusChip(
 @Composable
 fun EmptyOrderStatusChip(
     modifier: Modifier = Modifier,
-    roundedCornerShape: RoundedCornerShape? = null
+    roundedCornerShape: RoundedCornerShape? = null,
 ) {
     Box(
-        modifier = modifier
-            .fillMaxHeight()
-            .clip(shape = roundedCornerShape ?: zeroStatusShape)
-            .background(FoodDeliveryTheme.colors.mainColors.disabled)
+        modifier =
+            modifier
+                .fillMaxHeight()
+                .clip(shape = roundedCornerShape ?: zeroStatusShape)
+                .background(FoodDeliveryTheme.colors.mainColors.disabled),
     )
 }
 
@@ -77,21 +78,23 @@ fun EmptyOrderStatusChip(
 fun PassedOrderStatusChip(
     modifier: Modifier = Modifier,
     orderStatus: OrderStatus,
-    roundedCornerShape: RoundedCornerShape? = null
+    roundedCornerShape: RoundedCornerShape? = null,
 ) {
     Box(
-        modifier = modifier
-            .fillMaxHeight()
-            .clip(shape = roundedCornerShape ?: zeroStatusShape)
-            .background(getOrderColor(orderStatus))
+        modifier =
+            modifier
+                .fillMaxHeight()
+                .clip(shape = roundedCornerShape ?: zeroStatusShape)
+                .background(getOrderColor(orderStatus)),
     ) {
         Icon(
-            modifier = Modifier
-                .icon16()
-                .align(Alignment.Center),
+            modifier =
+                Modifier
+                    .icon16()
+                    .align(Alignment.Center),
             painter = painterResource(R.drawable.ic_check),
             contentDescription = stringResource(R.string.description_order_details_done),
-            tint = FoodDeliveryTheme.colors.orderColors.onOrder
+            tint = FoodDeliveryTheme.colors.orderColors.onOrder,
         )
     }
 }
@@ -102,7 +105,7 @@ private fun StatusChipPreview() {
     FoodDeliveryTheme {
         OrderStatusChip(
             orderStatus = OrderStatus.ACCEPTED,
-            statusName = "Принят"
+            statusName = "Принят",
         )
     }
 }
@@ -112,7 +115,7 @@ private fun StatusChipPreview() {
 private fun EmptyOrderStatusChipPreview() {
     FoodDeliveryTheme {
         EmptyOrderStatusChip(
-            modifier = Modifier.width(100.dp)
+            modifier = Modifier.width(100.dp),
         )
     }
 }
@@ -123,7 +126,7 @@ private fun PassedOrderStatusChipPreview() {
     FoodDeliveryTheme {
         PassedOrderStatusChip(
             modifier = Modifier.width(100.dp),
-            orderStatus = OrderStatus.ACCEPTED
+            orderStatus = OrderStatus.ACCEPTED,
         )
     }
 }

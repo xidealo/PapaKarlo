@@ -11,33 +11,32 @@ import com.bunbeauty.shared.domain.model.payment_method.PaymentMethodName
 import com.bunbeauty.shared.domain.model.payment_method.SelectablePaymentMethod
 
 @Composable
-fun SelectablePaymentMethod.toSelectablePaymentMethodUI(): SelectablePaymentMethodUI {
-    return SelectablePaymentMethodUI(
+fun SelectablePaymentMethod.toSelectablePaymentMethodUI(): SelectablePaymentMethodUI =
+    SelectablePaymentMethodUI(
         uuid = paymentMethod.uuid,
         name = paymentMethod.name.toPaymentMethodString(),
-        isSelected = isSelected
+        isSelected = isSelected,
     )
-}
 
 @Composable
-fun PaymentMethod.toPaymentMethodUI(): PaymentMethodUI {
-    return PaymentMethodUI(
+fun PaymentMethod.toPaymentMethodUI(): PaymentMethodUI =
+    PaymentMethodUI(
         uuid = uuid,
         name = name.toPaymentMethodString(),
-        value = valueToShow?.let { value ->
-            valueToCopy?.let { valueToCopy ->
-                PaymentMethodValueUI(
-                    value = value,
-                    valueToCopy = valueToCopy
-                )
-            }
-        }
+        value =
+            valueToShow?.let { value ->
+                valueToCopy?.let { valueToCopy ->
+                    PaymentMethodValueUI(
+                        value = value,
+                        valueToCopy = valueToCopy,
+                    )
+                }
+            },
     )
-}
 
 @Composable
-private fun PaymentMethodName.toPaymentMethodString(): String {
-    return when (this) {
+private fun PaymentMethodName.toPaymentMethodString(): String =
+    when (this) {
         PaymentMethodName.CASH -> R.string.msg_payment_cash
         PaymentMethodName.CARD -> R.string.msg_payment_card
         PaymentMethodName.CARD_NUMBER -> R.string.msg_payment_card_number
@@ -45,4 +44,3 @@ private fun PaymentMethodName.toPaymentMethodString(): String {
     }.let { nameResId ->
         stringResource(nameResId)
     }
-}

@@ -26,29 +26,29 @@ fun BannerCard(
     @DrawableRes icon: Int,
     iconDescription: String,
     modifier: Modifier = Modifier,
-    cardColors: CardColors = FoodDeliveryCardDefaults.positiveCardStatusColors
+    cardColors: CardColors = FoodDeliveryCardDefaults.positiveCardStatusColors,
 ) {
     FoodDeliveryCard(
         modifier = modifier,
         colors = cardColors,
         shape = infoCardShape,
-        clickable = false
+        clickable = false,
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Row(
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 Icon(
                     modifier = Modifier.icon24(),
                     painter = painterResource(icon),
                     tint = FoodDeliveryTheme.colors.statusColors.onStatus,
-                    contentDescription = iconDescription
+                    contentDescription = iconDescription,
                 )
                 Text(
                     modifier = Modifier.padding(start = 8.dp),
                     text = title,
                     style = FoodDeliveryTheme.typography.titleMedium.bold,
-                    color = FoodDeliveryTheme.colors.statusColors.onStatus
+                    color = FoodDeliveryTheme.colors.statusColors.onStatus,
                 )
             }
 
@@ -56,7 +56,7 @@ fun BannerCard(
                 modifier = Modifier.padding(top = 8.dp),
                 text = text,
                 style = FoodDeliveryTheme.typography.bodyLarge,
-                color = FoodDeliveryTheme.colors.statusColors.onStatus
+                color = FoodDeliveryTheme.colors.statusColors.onStatus,
             )
         }
     }
@@ -70,7 +70,7 @@ fun BannerCardPreview() {
             title = "Скидка 10%",
             text = "Успей сделать первый заказ со скидкой 10%",
             icon = R.drawable.ic_discount,
-            iconDescription = "Скидка"
+            iconDescription = "Скидка",
         )
     }
 }

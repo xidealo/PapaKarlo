@@ -11,27 +11,26 @@ import kotlin.String
 
 @Serializable
 data class OrderDetailsScreenDestination(
-    val orderUuid: String
+    val orderUuid: String,
 )
 
 fun NavController.navigateToOrderDetailsScreen(
     navOptions: NavOptions,
-    orderUuid: String
+    orderUuid: String,
 ) = navigate(
-    route = OrderDetailsScreenDestination(
-        orderUuid = orderUuid
-    ),
-    navOptions
+    route =
+        OrderDetailsScreenDestination(
+            orderUuid = orderUuid,
+        ),
+    navOptions,
 )
 
-fun NavGraphBuilder.orderDetailsScreenRoute(
-    back: () -> Unit
-) {
+fun NavGraphBuilder.orderDetailsScreenRoute(back: () -> Unit) {
     composable<OrderDetailsScreenDestination> { backStackEntry ->
         val args = backStackEntry.toRoute<OrderDetailsScreenDestination>()
         OrderDetailsRoute(
             orderUuid = args.orderUuid,
-            back = back
+            back = back,
         )
     }
 }

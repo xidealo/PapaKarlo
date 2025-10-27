@@ -20,23 +20,24 @@ fun SmallButton(
     @StringRes textStringId: Int,
     elevated: Boolean = true,
     onClick: () -> Unit,
-    isEnabled: Boolean = true
+    isEnabled: Boolean = true,
 ) {
     OutlinedButton(
         modifier = modifier,
         onClick = onClick,
         colors = FoodDeliveryButtonDefaults.mainOutlineButtonColors,
-        border = BorderStroke(
-            width = 2.dp,
-            color = FoodDeliveryTheme.colors.mainColors.primary
-        ),
+        border =
+            BorderStroke(
+                width = 2.dp,
+                color = FoodDeliveryTheme.colors.mainColors.primary,
+            ),
         shape = FoodDeliveryButtonDefaults.buttonShape,
         elevation = FoodDeliveryButtonDefaults.getButtonElevation(elevated),
-        enabled = isEnabled
+        enabled = isEnabled,
     ) {
         Text(
             text = stringResource(textStringId),
-            style = FoodDeliveryTheme.typography.labelLarge.medium
+            style = FoodDeliveryTheme.typography.labelLarge.medium,
         )
     }
 }
@@ -48,7 +49,7 @@ private fun SmallButtonPreview() {
         SmallButton(
             modifier = Modifier.wrapContentSize(),
             textStringId = R.string.action_create_order_create_order,
-            onClick = { }
+            onClick = { },
         )
     }
 }

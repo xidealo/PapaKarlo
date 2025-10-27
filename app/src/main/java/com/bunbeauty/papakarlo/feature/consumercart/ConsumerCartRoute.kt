@@ -75,25 +75,27 @@ fun ConsumerCartRoute(
         name: String,
         productDetailsOpenedFrom: ProductDetailsOpenedFrom,
         additionUuidList: List<String>,
-        cartProductUuid: String?
-    ) -> Unit
+        cartProductUuid: String?,
+    ) -> Unit,
 ) {
     LaunchedEffect(Unit) {
         viewModel.onAction(ConsumerCart.Action.Init)
     }
 
     val viewState by viewModel.dataState.collectAsStateWithLifecycle()
-    val onAction = remember {
-        { event: ConsumerCart.Action ->
-            viewModel.onAction(event)
+    val onAction =
+        remember {
+            { event: ConsumerCart.Action ->
+                viewModel.onAction(event)
+            }
         }
-    }
     val effects by viewModel.events.collectAsStateWithLifecycle()
-    val consumeEffects = remember {
-        {
-            viewModel.consumeEvents(effects)
+    val consumeEffects =
+        remember {
+            {
+                viewModel.consumeEvents(effects)
+            }
         }
-    }
 
     ConsumerCartEffect(
         effects = effects,
@@ -102,7 +104,7 @@ fun ConsumerCartRoute(
         goToMenuFragment = goToMenuFragment,
         goToCreateOrderFragment = goToCreateOrderFragment,
         goToLoginFragment = goToLoginFragment,
-        goToProductFragment = goToProductFragment
+        goToProductFragment = goToProductFragment,
     )
     ConsumerCartScreen(viewState = viewState.toConsumerCartViewState(), onAction = onAction)
 }
@@ -110,14 +112,14 @@ fun ConsumerCartRoute(
 @Composable
 fun ConsumerCartScreen(
     viewState: ConsumerCartViewState,
-    onAction: (ConsumerCart.Action) -> Unit
+    onAction: (ConsumerCart.Action) -> Unit,
 ) {
     FoodDeliveryScaffold(
         title = stringResource(id = R.string.title_cart),
         backActionClick = {
             onAction(ConsumerCart.Action.BackClick)
         },
-        backgroundColor = FoodDeliveryTheme.colors.mainColors.surface
+        backgroundColor = FoodDeliveryTheme.colors.mainColors.surface,
     ) {
         AnimatedContent(
             targetState = viewState,
@@ -127,14 +129,16 @@ fun ConsumerCartScreen(
             },
             transitionSpec = {
                 ContentTransform(
-                    targetContentEnter = fadeIn(
-                        animationSpec = tween(delayMillis = ANIMATION_DURATION_MILLIS)
-                    ),
-                    initialContentExit = fadeOut(
-                        animationSpec = tween(delayMillis = ANIMATION_DURATION_MILLIS)
-                    )
+                    targetContentEnter =
+                        fadeIn(
+                            animationSpec = tween(delayMillis = ANIMATION_DURATION_MILLIS),
+                        ),
+                    initialContentExit =
+                        fadeOut(
+                            animationSpec = tween(delayMillis = ANIMATION_DURATION_MILLIS),
+                        ),
                 )
-            }
+            },
         ) { viewState ->
             when (viewState) {
                 ConsumerCartViewState.Loading -> LoadingScreen()
@@ -142,7 +146,7 @@ fun ConsumerCartScreen(
                 is ConsumerCartViewState.Success -> {
                     ConsumerCartSuccessScreen(
                         viewState = viewState,
-                        onAction = onAction
+                        onAction = onAction,
                     )
                 }
 
@@ -151,7 +155,7 @@ fun ConsumerCartScreen(
                         mainTextId = R.string.error_consumer_cart_loading,
                         onClick = {
                             onAction(ConsumerCart.Action.OnErrorButtonClick)
-                        }
+                        },
                     )
                 }
             }
@@ -172,8 +176,8 @@ fun ConsumerCartEffect(
         name: String,
         productDetailsOpenedFrom: ProductDetailsOpenedFrom,
         additionUuidList: List<String>,
-        cartProductUuid: String?
-    ) -> Unit
+        cartProductUuid: String?,
+    ) -> Unit,
 ) {
     val activity = LocalActivity.current
     LaunchedEffect(effects) {
@@ -191,18 +195,20 @@ fun ConsumerCartEffect(
                         effect.name,
                         effect.productDetailsOpenedFrom,
                         effect.additionUuidList,
-                        effect.cartProductUuid
+                        effect.cartProductUuid,
                     )
                 }
 
                 ConsumerCart.Event.NavigateBack -> back()
-                ConsumerCart.Event.ShowAddProductError -> (activity as? IMessageHost)?.showErrorMessage(
-                    activity.resources.getString(R.string.error_consumer_cart_add_product)
-                )
+                ConsumerCart.Event.ShowAddProductError ->
+                    (activity as? IMessageHost)?.showErrorMessage(
+                        activity.resources.getString(R.string.error_consumer_cart_add_product),
+                    )
 
-                ConsumerCart.Event.ShowRemoveProductError -> (activity as? IMessageHost)?.showErrorMessage(
-                    activity.resources.getString(R.string.error_consumer_cart_remove_product)
-                )
+                ConsumerCart.Event.ShowRemoveProductError ->
+                    (activity as? IMessageHost)?.showErrorMessage(
+                        activity.resources.getString(R.string.error_consumer_cart_remove_product),
+                    )
             }
         }
         consumerEffects()
@@ -212,24 +218,26 @@ fun ConsumerCartEffect(
 @Composable
 private fun ConsumerCartSuccessScreen(
     viewState: ConsumerCartViewState.Success,
-    onAction: (ConsumerCart.Action) -> Unit
+    onAction: (ConsumerCart.Action) -> Unit,
 ) {
     Column(
-        modifier = Modifier
-            .fillMaxSize()
+        modifier =
+            Modifier
+                .fillMaxSize(),
     ) {
         LazyVerticalGrid(
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .weight(1f),
             contentPadding = PaddingValues(vertical = 16.dp),
             columns = GridCells.Fixed(2),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             items(
                 items = viewState.cartProductList,
                 key = { cartProductItem -> cartProductItem.key },
-                span = { _ -> GridItemSpan(maxLineSpan) }
+                span = { _ -> GridItemSpan(maxLineSpan) },
             ) { cartProductItem ->
                 FoodDeliveryItem(needDivider = !cartProductItem.isLast) {
                     CartProductItem(
@@ -237,24 +245,24 @@ private fun ConsumerCartSuccessScreen(
                         onCountIncreased = {
                             onAction(
                                 ConsumerCart.Action.AddProductToCartClick(
-                                    cartProductUuid = cartProductItem.uuid
-                                )
+                                    cartProductUuid = cartProductItem.uuid,
+                                ),
                             )
                         },
                         onCountDecreased = {
                             onAction(
                                 ConsumerCart.Action.RemoveProductFromCartClick(
-                                    cartProductUuid = cartProductItem.uuid
-                                )
+                                    cartProductUuid = cartProductItem.uuid,
+                                ),
                             )
                         },
                         onClick = {
                             onAction(
                                 ConsumerCart.Action.OnCartProductClick(
-                                    cartProductUuid = cartProductItem.uuid
-                                )
+                                    cartProductUuid = cartProductItem.uuid,
+                                ),
                             )
-                        }
+                        },
                     )
                 }
             }
@@ -262,26 +270,26 @@ private fun ConsumerCartSuccessScreen(
             if (viewState.cartProductList.isEmpty()) {
                 item(
                     span = { GridItemSpan(maxLineSpan) },
-                    key = "Empty screen"
+                    key = "Empty screen",
                 ) {
                     EmptyScreen(
                         imageId = R.drawable.ic_cart_24,
                         imageDescriptionId = R.string.description_consumer_cart_empty,
                         mainTextId = R.string.title_consumer_cart_empty,
-                        extraTextId = R.string.msg_consumer_cart_empty
+                        extraTextId = R.string.msg_consumer_cart_empty,
                     )
                 }
             }
 
             recommendationItems(
                 recommendationList = viewState.recommendationList,
-                onAction = onAction
+                onAction = onAction,
             )
         }
 
         BottomPanel(
             bottomPanelInfo = viewState.bottomPanelInfo,
-            onAction = onAction
+            onAction = onAction,
         )
     }
 }
@@ -290,19 +298,19 @@ private fun ConsumerCartSuccessScreen(
 private fun BottomPanel(
     bottomPanelInfo: ConsumerCartViewState.BottomPanelInfoUi?,
     onAction: (ConsumerCart.Action) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     FoodDeliverySurface(modifier = modifier) {
         Column(
             modifier = Modifier.padding(16.dp),
-            verticalArrangement = spacedBy(8.dp)
+            verticalArrangement = spacedBy(8.dp),
         ) {
             if (bottomPanelInfo == null) {
                 MainButton(
                     textStringId = R.string.action_consumer_cart_menu,
                     onClick = {
                         onAction(ConsumerCart.Action.OnMenuClick)
-                    }
+                    },
                 )
             } else {
                 Motivation(bottomPanelInfo.motivation)
@@ -311,7 +319,7 @@ private fun BottomPanel(
                         Text(
                             text = stringResource(R.string.title_consumer_cart_discount),
                             style = FoodDeliveryTheme.typography.bodyMedium,
-                            color = FoodDeliveryTheme.colors.mainColors.onSurface
+                            color = FoodDeliveryTheme.colors.mainColors.onSurface,
                         )
                         Spacer(modifier = Modifier.weight(1f))
 
@@ -322,23 +330,24 @@ private fun BottomPanel(
                     Text(
                         text = stringResource(R.string.title_consumer_cart_total),
                         style = FoodDeliveryTheme.typography.bodyMedium.bold,
-                        color = FoodDeliveryTheme.colors.mainColors.onSurface
+                        color = FoodDeliveryTheme.colors.mainColors.onSurface,
                     )
                     Spacer(modifier = Modifier.weight(1f))
                     bottomPanelInfo.oldTotalCost?.let { oldTotalCost ->
                         Text(
-                            modifier = Modifier
-                                .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
+                            modifier =
+                                Modifier
+                                    .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
                             text = oldTotalCost,
                             style = FoodDeliveryTheme.typography.bodyMedium.bold,
                             color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
-                            textDecoration = TextDecoration.LineThrough
+                            textDecoration = TextDecoration.LineThrough,
                         )
                     }
                     Text(
                         text = bottomPanelInfo.newTotalCost,
                         style = FoodDeliveryTheme.typography.bodyMedium.bold,
-                        color = FoodDeliveryTheme.colors.mainColors.onSurface
+                        color = FoodDeliveryTheme.colors.mainColors.onSurface,
                     )
                 }
                 MainButton(
@@ -347,7 +356,7 @@ private fun BottomPanel(
                     onClick = {
                         onAction(ConsumerCart.Action.OnCreateOrderClick)
                     },
-                    enabled = bottomPanelInfo.orderAvailable
+                    enabled = bottomPanelInfo.orderAvailable,
                 )
             }
         }
@@ -356,60 +365,65 @@ private fun BottomPanel(
 
 private fun LazyGridScope.recommendationItems(
     recommendationList: ImmutableList<MenuItemUi.Product>,
-    onAction: (ConsumerCart.Action) -> Unit
+    onAction: (ConsumerCart.Action) -> Unit,
 ) {
     if (recommendationList.isNotEmpty()) {
         item(
             span = { GridItemSpan(maxLineSpan) },
-            key = "Recommendations"
+            key = "Recommendations",
         ) {
             Text(
-                modifier = Modifier
-                    .padding(top = 8.dp)
-                    .padding(horizontal = 16.dp),
-                text = stringResource(
-                    R.string.msg_consumer_cart_recommendations
-                ),
+                modifier =
+                    Modifier
+                        .padding(top = 8.dp)
+                        .padding(horizontal = 16.dp),
+                text =
+                    stringResource(
+                        R.string.msg_consumer_cart_recommendations,
+                    ),
                 style = FoodDeliveryTheme.typography.titleMedium.medium,
-                color = FoodDeliveryTheme.colors.mainColors.onSurface
+                color = FoodDeliveryTheme.colors.mainColors.onSurface,
             )
         }
     }
     itemsIndexed(
         items = recommendationList,
         key = { _, recommendation -> recommendation.key },
-        span = { _, _ -> GridItemSpan(1) }
+        span = { _, _ -> GridItemSpan(1) },
     ) { index, recommendation ->
         MenuProductItem(
-            modifier = Modifier
-                .padding(
-                    top = 8.dp,
-                    start = if (index % 2 == 0) {
-                        16.dp
-                    } else {
-                        0.dp
-                    },
-                    end = if (index % 2 == 1) {
-                        16.dp
-                    } else {
-                        0.dp
-                    }
-                ),
+            modifier =
+                Modifier
+                    .padding(
+                        top = 8.dp,
+                        start =
+                            if (index % 2 == 0) {
+                                16.dp
+                            } else {
+                                0.dp
+                            },
+                        end =
+                            if (index % 2 == 1) {
+                                16.dp
+                            } else {
+                                0.dp
+                            },
+                    ),
             menuProductItem = recommendation,
             onAddProductClick = { menuProductUuid ->
                 onAction(
                     ConsumerCart.Action.AddRecommendationProductToCartClick(
-                        menuProductUuid = menuProductUuid
-                    )
+                        menuProductUuid = menuProductUuid,
+                    ),
                 )
             },
             onProductClick = { menuProductUuid ->
                 onAction(
                     ConsumerCart.Action.RecommendationClick(
-                        menuProductUuid = menuProductUuid
-                    )
+                        menuProductUuid = menuProductUuid,
+                    ),
                 )
-            }
+            },
         )
     }
 }
@@ -417,45 +431,51 @@ private fun LazyGridScope.recommendationItems(
 @Preview(showSystemUi = true)
 @Composable
 private fun ConsumerCartSuccessScreenPreview() {
-    fun getCartProductItemModel(uuid: String) = ConsumerCartViewState.CartProductItemUi(
-        key = uuid,
-        uuid = uuid,
-        name = "Бэргер",
-        newCost = "300 ₽",
-        oldCost = "330 ₽",
-        photoLink = "",
-        count = 3,
-        additions = null,
-        isLast = false
-    )
+    fun getCartProductItemModel(uuid: String) =
+        ConsumerCartViewState.CartProductItemUi(
+            key = uuid,
+            uuid = uuid,
+            name = "Бэргер",
+            newCost = "300 ₽",
+            oldCost = "330 ₽",
+            photoLink = "",
+            count = 3,
+            additions = null,
+            isLast = false,
+        )
 
     FoodDeliveryTheme {
         ConsumerCartScreen(
-            viewState = ConsumerCartViewState.Success(
-                cartProductList = persistentListOf(
-                    getCartProductItemModel("1"),
-                    getCartProductItemModel("2"),
-                    getCartProductItemModel("3"),
-                    getCartProductItemModel("4"),
-                    getCartProductItemModel("5")
+            viewState =
+                ConsumerCartViewState.Success(
+                    cartProductList =
+                        persistentListOf(
+                            getCartProductItemModel("1"),
+                            getCartProductItemModel("2"),
+                            getCartProductItemModel("3"),
+                            getCartProductItemModel("4"),
+                            getCartProductItemModel("5"),
+                        ),
+                    bottomPanelInfo =
+                        ConsumerCartViewState.BottomPanelInfoUi(
+                            motivation =
+                                MotivationUi.ForLowerDelivery(
+                                    increaseAmountBy = "550 ₽",
+                                    progress = 0.5f,
+                                    isFree = true,
+                                ),
+                            discount = "10%",
+                            oldTotalCost = "1650 ₽",
+                            newTotalCost = "1500 ₽",
+                            orderAvailable = true,
+                        ),
+                    recommendationList =
+                        persistentListOf(
+                            getRecommendation("6"),
+                            getRecommendation("7"),
+                        ),
                 ),
-                bottomPanelInfo = ConsumerCartViewState.BottomPanelInfoUi(
-                    motivation = MotivationUi.ForLowerDelivery(
-                        increaseAmountBy = "550 ₽",
-                        progress = 0.5f,
-                        isFree = true
-                    ),
-                    discount = "10%",
-                    oldTotalCost = "1650 ₽",
-                    newTotalCost = "1500 ₽",
-                    orderAvailable = true
-                ),
-                recommendationList = persistentListOf(
-                    getRecommendation("6"),
-                    getRecommendation("7")
-                )
-            ),
-            onAction = {}
+            onAction = {},
         )
     }
 }
@@ -465,15 +485,17 @@ private fun ConsumerCartSuccessScreenPreview() {
 private fun ConsumerCartEmptyScreenPreview() {
     FoodDeliveryTheme {
         ConsumerCartScreen(
-            viewState = ConsumerCartViewState.Success(
-                cartProductList = persistentListOf(),
-                bottomPanelInfo = null,
-                recommendationList = persistentListOf(
-                    getRecommendation("1"),
-                    getRecommendation("2")
-                )
-            ),
-            onAction = {}
+            viewState =
+                ConsumerCartViewState.Success(
+                    cartProductList = persistentListOf(),
+                    bottomPanelInfo = null,
+                    recommendationList =
+                        persistentListOf(
+                            getRecommendation("1"),
+                            getRecommendation("2"),
+                        ),
+                ),
+            onAction = {},
         )
     }
 }
@@ -484,7 +506,7 @@ private fun ConsumerCartLoadingScreenPreview() {
     FoodDeliveryTheme {
         ConsumerCartScreen(
             viewState = ConsumerCartViewState.Loading,
-            onAction = {}
+            onAction = {},
         )
     }
 }
@@ -495,16 +517,17 @@ private fun ConsumerCartErrorScreenPreview() {
     FoodDeliveryTheme {
         ConsumerCartScreen(
             viewState = ConsumerCartViewState.Error,
-            onAction = {}
+            onAction = {},
         )
     }
 }
 
-private fun getRecommendation(uuid: String) = MenuItemUi.Product(
-    uuid = uuid,
-    key = uuid,
-    photoLink = "",
-    name = "Бэргер",
-    newPrice = "99 ₽",
-    oldPrice = "100 ₽"
-)
+private fun getRecommendation(uuid: String) =
+    MenuItemUi.Product(
+        uuid = uuid,
+        key = uuid,
+        photoLink = "",
+        name = "Бэргер",
+        newPrice = "99 ₽",
+        oldPrice = "100 ₽",
+    )

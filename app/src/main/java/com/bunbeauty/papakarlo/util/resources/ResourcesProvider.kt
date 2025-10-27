@@ -6,30 +6,17 @@ import android.graphics.drawable.Drawable
 import androidx.core.content.ContextCompat
 
 class ResourcesProvider(
-    private val context: Context
+    private val context: Context,
 ) : IResourcesProvider {
+    override fun getString(stringId: Int): String = context.resources.getString(stringId)
 
-    override fun getString(stringId: Int): String {
-        return context.resources.getString(stringId)
-    }
+    override fun getDrawable(drawableId: Int): Drawable? = ContextCompat.getDrawable(context, drawableId)
 
-    override fun getDrawable(drawableId: Int): Drawable? {
-        return ContextCompat.getDrawable(context, drawableId)
-    }
+    override fun getColorById(colorId: Int): Int = ContextCompat.getColor(context, colorId)
 
-    override fun getColorById(colorId: Int): Int {
-        return ContextCompat.getColor(context, colorId)
-    }
+    override fun getColorStateListById(colorId: Int): ColorStateList = ColorStateList.valueOf(getColorById(colorId))
 
-    override fun getColorStateListById(colorId: Int): ColorStateList {
-        return ColorStateList.valueOf(getColorById(colorId))
-    }
+    override fun getColorStateListByColor(color: Int): ColorStateList = ColorStateList.valueOf(color)
 
-    override fun getColorStateListByColor(color: Int): ColorStateList {
-        return ColorStateList.valueOf(color)
-    }
-
-    override fun getDimensionPixelOffset(dimensionId: Int): Int {
-        return context.resources.getDimensionPixelOffset(dimensionId)
-    }
+    override fun getDimensionPixelOffset(dimensionId: Int): Int = context.resources.getDimensionPixelOffset(dimensionId)
 }

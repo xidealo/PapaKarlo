@@ -18,9 +18,8 @@ private const val MAIN_VIEW_MODEL_TAG = "MainViewModel"
 
 class MainViewModel(
     private val networkUtil: INetworkUtil,
-    private val isOrderAvailableUseCase: IsOrderAvailableUseCase
+    private val isOrderAvailableUseCase: IsOrderAvailableUseCase,
 ) : ViewModel() {
-
     private val mutableMainState: MutableStateFlow<MainState> = MutableStateFlow(MainState())
     val mainState: StateFlow<MainState> = mutableMainState.asStateFlow()
 
@@ -29,11 +28,14 @@ class MainViewModel(
         checkStatusBarMessage()
     }
 
-    fun showInfoMessage(text: String, paddingBottom: Int) {
+    fun showInfoMessage(
+        text: String,
+        paddingBottom: Int,
+    ) {
         showMessage(
             text = text,
             type = FoodDeliveryMessageType.INFO,
-            paddingBottom = paddingBottom
+            paddingBottom = paddingBottom,
         )
     }
 
@@ -41,7 +43,7 @@ class MainViewModel(
         showMessage(
             text = text,
             type = FoodDeliveryMessageType.ERROR,
-            paddingBottom = 0
+            paddingBottom = 0,
         )
     }
 
@@ -57,25 +59,33 @@ class MainViewModel(
         }
     }
 
-    private fun showMessage(text: String, type: FoodDeliveryMessageType, paddingBottom: Int) {
+    private fun showMessage(
+        text: String,
+        type: FoodDeliveryMessageType,
+        paddingBottom: Int,
+    ) {
         mutableMainState.update { state ->
             state.copy(
-                paddingBottomSnackbar = paddingBottom
-            ) + MainState.Event.ShowMessageEvent(
-                message = FoodDeliveryMessage(
-                    type = type,
-                    text = text
+                paddingBottomSnackbar = paddingBottom,
+            ) +
+                MainState.Event.ShowMessageEvent(
+                    message =
+                        FoodDeliveryMessage(
+                            type = type,
+                            text = text,
+                        ),
                 )
-            )
         }
     }
 
     private fun observeNetworkConnection() {
-        networkUtil.observeIsOnline().onEach { isOnline ->
-            mutableMainState.update { state ->
-                state.copy(connectionLost = !isOnline)
-            }
-        }.launchIn(viewModelScope)
+        networkUtil
+            .observeIsOnline()
+            .onEach { isOnline ->
+                mutableMainState.update { state ->
+                    state.copy(connectionLost = !isOnline)
+                }
+            }.launchIn(viewModelScope)
     }
 
     private fun checkStatusBarMessage() {
@@ -83,15 +93,16 @@ class MainViewModel(
             block = {
                 mutableMainState.update { state ->
                     state.copy(
-                        statusBarMessage = MainState.StatusBarMessage(
-                            isVisible = !isOrderAvailableUseCase()
-                        )
+                        statusBarMessage =
+                            MainState.StatusBarMessage(
+                                isVisible = !isOrderAvailableUseCase(),
+                            ),
                     )
                 }
             },
             onError = { error ->
                 Logger.logE(MAIN_VIEW_MODEL_TAG, error.stackTraceToString())
-            }
+            },
         )
     }
 }

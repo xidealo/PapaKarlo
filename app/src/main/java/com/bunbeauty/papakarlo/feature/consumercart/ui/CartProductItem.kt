@@ -32,86 +32,96 @@ fun CartProductItem(
     cartProductItem: ConsumerCartViewState.CartProductItemUi,
     onCountIncreased: () -> Unit,
     onCountDecreased: () -> Unit,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     FoodDeliveryCard(
         modifier = modifier.fillMaxWidth(),
         onClick = onClick,
         shape = RectangleShape,
-        elevated = false
+        elevated = false,
     ) {
         Row(
-            modifier = Modifier
-                .padding(horizontal = 16.dp)
-                .padding(vertical = 8.dp)
+            modifier =
+                Modifier
+                    .padding(horizontal = 16.dp)
+                    .padding(vertical = 8.dp),
         ) {
             FoodDeliveryAsyncImage(
-                modifier = Modifier
-                    .heightIn(max = FoodDeliveryTheme.dimensions.productImageSmallHeight)
-                    .width(FoodDeliveryTheme.dimensions.productImageSmallWidth)
-                    .clip(RoundedCornerShape(8.dp)),
+                modifier =
+                    Modifier
+                        .heightIn(max = FoodDeliveryTheme.dimensions.productImageSmallHeight)
+                        .width(FoodDeliveryTheme.dimensions.productImageSmallWidth)
+                        .clip(RoundedCornerShape(8.dp)),
                 photoLink = cartProductItem.photoLink,
                 contentDescription = stringResource(R.string.description_product),
-                contentScale = ContentScale.FillHeight
+                contentScale = ContentScale.FillHeight,
             )
             Column(
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(start = FoodDeliveryTheme.dimensions.smallSpace)
+                modifier =
+                    Modifier
+                        .weight(1f)
+                        .padding(start = FoodDeliveryTheme.dimensions.smallSpace),
             ) {
                 OverflowingText(
                     text = cartProductItem.name,
                     style = FoodDeliveryTheme.typography.titleSmall.bold,
                     color = FoodDeliveryTheme.colors.mainColors.onSurface,
-                    maxLines = 2
+                    maxLines = 2,
                 )
                 Row(
-                    modifier = Modifier
-                        .padding(top = 4.dp)
+                    modifier =
+                        Modifier
+                            .padding(top = 4.dp),
                 ) {
                     Column(
-                        modifier = Modifier
-                            .weight(1f)
+                        modifier =
+                            Modifier
+                                .weight(1f),
                     ) {
                         cartProductItem.additions?.let { additions ->
                             Text(
-                                modifier = Modifier
-                                    .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
+                                modifier =
+                                    Modifier
+                                        .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
                                 text = additions,
                                 style = FoodDeliveryTheme.typography.bodySmall,
-                                color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
+                                color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
                             )
                         }
                         Row(
-                            modifier = Modifier
-                                .padding(top = 4.dp)
+                            modifier =
+                                Modifier
+                                    .padding(top = 4.dp),
                         ) {
                             cartProductItem.oldCost?.let { oldCost ->
                                 Text(
-                                    modifier = Modifier
-                                        .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
+                                    modifier =
+                                        Modifier
+                                            .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
                                     text = oldCost,
                                     style = FoodDeliveryTheme.typography.bodySmall,
                                     textDecoration = TextDecoration.LineThrough,
-                                    color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
+                                    color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
                                 )
                             }
                             Text(
-                                modifier = Modifier
-                                    .weight(1f),
+                                modifier =
+                                    Modifier
+                                        .weight(1f),
                                 text = cartProductItem.newCost,
                                 style = FoodDeliveryTheme.typography.bodySmall.bold,
-                                color = FoodDeliveryTheme.colors.mainColors.onSurface
+                                color = FoodDeliveryTheme.colors.mainColors.onSurface,
                             )
                         }
                     }
 
                     CountPicker(
-                        modifier = Modifier
-                            .align(CenterVertically),
+                        modifier =
+                            Modifier
+                                .align(CenterVertically),
                         count = cartProductItem.count,
                         onCountIncreased = onCountIncreased,
-                        onCountDecreased = onCountDecreased
+                        onCountDecreased = onCountDecreased,
                     )
                 }
             }
@@ -124,20 +134,21 @@ fun CartProductItem(
 private fun CartProductItemPreview() {
     FoodDeliveryTheme {
         CartProductItem(
-            cartProductItem = ConsumerCartViewState.CartProductItemUi(
-                key = "",
-                uuid = "",
-                name = "Бургер MINI с говядиной и плавленым сыром",
-                newCost = "99 ₽",
-                oldCost = "100 ₽",
-                photoLink = "",
-                count = 5,
-                additions = "Обычная булка • Добавка 1 • Добавка 2",
-                isLast = false
-            ),
+            cartProductItem =
+                ConsumerCartViewState.CartProductItemUi(
+                    key = "",
+                    uuid = "",
+                    name = "Бургер MINI с говядиной и плавленым сыром",
+                    newCost = "99 ₽",
+                    oldCost = "100 ₽",
+                    photoLink = "",
+                    count = 5,
+                    additions = "Обычная булка • Добавка 1 • Добавка 2",
+                    isLast = false,
+                ),
             onCountIncreased = {},
             onCountDecreased = {},
-            onClick = {}
+            onClick = {},
         )
     }
 }
@@ -147,20 +158,21 @@ private fun CartProductItemPreview() {
 private fun CartProductItemWithoutOldCostPreview() {
     FoodDeliveryTheme {
         CartProductItem(
-            cartProductItem = ConsumerCartViewState.CartProductItemUi(
-                key = "",
-                uuid = "",
-                name = "Бургер MINI",
-                newCost = "99 ₽",
-                oldCost = null,
-                photoLink = "",
-                count = 5,
-                additions = "",
-                isLast = false
-            ),
+            cartProductItem =
+                ConsumerCartViewState.CartProductItemUi(
+                    key = "",
+                    uuid = "",
+                    name = "Бургер MINI",
+                    newCost = "99 ₽",
+                    oldCost = null,
+                    photoLink = "",
+                    count = 5,
+                    additions = "",
+                    isLast = false,
+                ),
             onCountIncreased = {},
             onCountDecreased = {},
-            onClick = {}
+            onClick = {},
         )
     }
 }

@@ -26,55 +26,57 @@ import com.bunbeauty.shared.presentation.selectcity.SelectCityViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-private fun SelectCityDataState.DataState.mapState(): SelectCityViewState {
-    return SelectCityViewState(
-        state = when (state) {
-            SelectCityDataState.DataState.State.LOADING -> SelectCityViewState.State.Loading
-            SelectCityDataState.DataState.State.SUCCESS -> SelectCityViewState.State.Success
-            SelectCityDataState.DataState.State.ERROR -> SelectCityViewState.State.Error
-        },
-        cityList = cityList
+private fun SelectCityDataState.DataState.mapState(): SelectCityViewState =
+    SelectCityViewState(
+        state =
+            when (state) {
+                SelectCityDataState.DataState.State.LOADING -> SelectCityViewState.State.Loading
+                SelectCityDataState.DataState.State.SUCCESS -> SelectCityViewState.State.Success
+                SelectCityDataState.DataState.State.ERROR -> SelectCityViewState.State.Error
+            },
+        cityList = cityList,
     )
-}
 
 @Composable
 fun SelectCityRoute(
     viewModel: SelectCityViewModel = koinViewModel(),
-    goToMenuFragment: () -> Unit
+    goToMenuFragment: () -> Unit,
 ) {
     LaunchedEffect(Unit) {
         viewModel.onAction(SelectCityDataState.Action.GetCityList)
     }
-    val onAction = remember {
-        { event: SelectCityDataState.Action ->
-            viewModel.onAction(event)
+    val onAction =
+        remember {
+            { event: SelectCityDataState.Action ->
+                viewModel.onAction(event)
+            }
         }
-    }
 
     val viewState by viewModel.dataState.collectAsStateWithLifecycle()
 
     val effects by viewModel.events.collectAsStateWithLifecycle()
-    val consumeEffects = remember {
-        {
-            viewModel.consumeEvents(effects)
+    val consumeEffects =
+        remember {
+            {
+                viewModel.consumeEvents(effects)
+            }
         }
-    }
 
     SelectCityEffect(
         consumeEventList = consumeEffects,
         goToMenuFragment = goToMenuFragment,
-        effects = effects
+        effects = effects,
     )
     SelectCityScreen(
         viewState = viewState.mapState(),
-        onAction = onAction
+        onAction = onAction,
     )
 }
 
 @Composable
 private fun SelectCityScreen(
     viewState: SelectCityViewState,
-    onAction: (SelectCityDataState.Action) -> Unit
+    onAction: (SelectCityDataState.Action) -> Unit,
 ) {
     FoodDeliveryScaffold(title = stringResource(R.string.title_select_city)) {
         when (viewState.state) {
@@ -85,14 +87,14 @@ private fun SelectCityScreen(
             is SelectCityViewState.State.Success -> {
                 SelectCitySuccessScreen(
                     viewState = viewState,
-                    onAction = onAction
+                    onAction = onAction,
                 )
             }
 
             SelectCityViewState.State.Error -> {
                 ErrorScreen(
                     mainTextId = R.string.error_select_city_loading,
-                    onClick = { onAction(SelectCityDataState.Action.OnRefreshClicked) }
+                    onClick = { onAction(SelectCityDataState.Action.OnRefreshClicked) },
                 )
             }
         }
@@ -102,19 +104,19 @@ private fun SelectCityScreen(
 @Composable
 private fun SelectCitySuccessScreen(
     viewState: SelectCityViewState,
-    onAction: (SelectCityDataState.Action) -> Unit
+    onAction: (SelectCityDataState.Action) -> Unit,
 ) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = spacedBy(8.dp),
-        contentPadding = PaddingValues(FoodDeliveryTheme.dimensions.mediumSpace)
+        contentPadding = PaddingValues(FoodDeliveryTheme.dimensions.mediumSpace),
     ) {
         items(viewState.cityList) { city ->
             CityItem(
                 cityName = city.name,
                 onClick = {
                     onAction(SelectCityDataState.Action.OnCitySelected(city))
-                }
+                },
             )
         }
     }
@@ -124,7 +126,7 @@ private fun SelectCitySuccessScreen(
 private fun SelectCityEffect(
     effects: List<SelectCityDataState.Event>,
     goToMenuFragment: () -> Unit,
-    consumeEventList: () -> Unit
+    consumeEventList: () -> Unit,
 ) {
     LaunchedEffect(effects) {
         effects.forEach { event ->
@@ -141,22 +143,24 @@ private fun SelectCityEffect(
 private fun SelectCitySuccessScreenPreview() {
     FoodDeliveryTheme {
         SelectCityScreen(
-            viewState = SelectCityViewState(
-                state = SelectCityViewState.State.Success,
-                cityList = listOf(
-                    City(
-                        uuid = "123",
-                        name = "Кимры",
-                        timeZone = ""
-                    ),
-                    City(
-                        uuid = "123",
-                        name = "Москва",
-                        timeZone = ""
-                    )
-                )
-            ),
-            onAction = { }
+            viewState =
+                SelectCityViewState(
+                    state = SelectCityViewState.State.Success,
+                    cityList =
+                        listOf(
+                            City(
+                                uuid = "123",
+                                name = "Кимры",
+                                timeZone = "",
+                            ),
+                            City(
+                                uuid = "123",
+                                name = "Москва",
+                                timeZone = "",
+                            ),
+                        ),
+                ),
+            onAction = { },
         )
     }
 }
@@ -166,22 +170,24 @@ private fun SelectCitySuccessScreenPreview() {
 private fun SelectCityLoadingScreenPreview() {
     FoodDeliveryTheme {
         SelectCityScreen(
-            viewState = SelectCityViewState(
-                state = SelectCityViewState.State.Loading,
-                cityList = listOf(
-                    City(
-                        uuid = "123",
-                        name = "Кимры",
-                        timeZone = ""
-                    ),
-                    City(
-                        uuid = "123",
-                        name = "Москва",
-                        timeZone = ""
-                    )
-                )
-            ),
-            onAction = { }
+            viewState =
+                SelectCityViewState(
+                    state = SelectCityViewState.State.Loading,
+                    cityList =
+                        listOf(
+                            City(
+                                uuid = "123",
+                                name = "Кимры",
+                                timeZone = "",
+                            ),
+                            City(
+                                uuid = "123",
+                                name = "Москва",
+                                timeZone = "",
+                            ),
+                        ),
+                ),
+            onAction = { },
         )
     }
 }
@@ -191,17 +197,19 @@ private fun SelectCityLoadingScreenPreview() {
 private fun SelectCityErrorScreenPreview() {
     FoodDeliveryTheme {
         SelectCityScreen(
-            viewState = SelectCityViewState(
-                state = SelectCityViewState.State.Error,
-                cityList = listOf(
-                    City(
-                        uuid = "123",
-                        name = "Кимры",
-                        timeZone = ""
-                    )
-                )
-            ),
-            onAction = { }
+            viewState =
+                SelectCityViewState(
+                    state = SelectCityViewState.State.Error,
+                    cityList =
+                        listOf(
+                            City(
+                                uuid = "123",
+                                name = "Кимры",
+                                timeZone = "",
+                            ),
+                        ),
+                ),
+            onAction = { },
         )
     }
 }

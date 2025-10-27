@@ -18,17 +18,19 @@ fun FoodDeliveryAsyncImage(
     contentScale: ContentScale,
     modifier: Modifier = Modifier,
     error: Painter? = painterResource(R.drawable.placeholder_small),
-    placeholder: Painter? = painterResource(R.drawable.placeholder_small)
+    placeholder: Painter? = painterResource(R.drawable.placeholder_small),
 ) {
     AsyncImage(
         modifier = modifier,
-        model = ImageRequest.Builder(LocalContext.current)
-            .data(photoLink)
-            .crossfade(enable = true)
-            .build(),
+        model =
+            ImageRequest
+                .Builder(LocalContext.current)
+                .data(photoLink)
+                .crossfade(enable = true)
+                .build(),
         placeholder = placeholder,
         error = error,
         contentDescription = contentDescription,
-        contentScale = contentScale
+        contentScale = contentScale,
     )
 }

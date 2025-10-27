@@ -9,5 +9,5 @@ class OrderProductUiItem(
     val photoLink: String,
     val count: String,
     val additions: String?,
-    val isLast: Boolean
+    val isLast: Boolean,
 )

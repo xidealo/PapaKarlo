@@ -12,11 +12,11 @@ import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 fun FoodDeliveryHorizontalDivider(
     modifier: Modifier = Modifier,
     thickness: Dp = 1.dp,
-    color: Color = FoodDeliveryTheme.colors.mainColors.stroke
+    color: Color = FoodDeliveryTheme.colors.mainColors.stroke,
 ) {
     HorizontalDivider(
         modifier = modifier,
         thickness = thickness,
-        color = color
+        color = color,
     )
 }

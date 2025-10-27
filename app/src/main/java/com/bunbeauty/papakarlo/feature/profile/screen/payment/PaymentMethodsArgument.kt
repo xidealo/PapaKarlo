@@ -5,5 +5,5 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 class PaymentMethodsArgument(
-    val paymentMethodList: List<PaymentMethodUI>
+    val paymentMethodList: List<PaymentMethodUI>,
 ) : Parcelable

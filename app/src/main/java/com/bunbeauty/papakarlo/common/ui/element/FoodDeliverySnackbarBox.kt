@@ -33,16 +33,15 @@ fun rememberFoodDeliverySnackbarState(defaultText: String = ""): FoodDeliverySna
     return remember {
         FoodDeliverySnackbarState(
             coroutineScope = coroutineScope,
-            defaultText = defaultText
+            defaultText = defaultText,
         )
     }
 }
 
 class FoodDeliverySnackbarState(
     private val coroutineScope: CoroutineScope,
-    defaultText: String
+    defaultText: String,
 ) {
-
     var job: Job? = null
 
     var isVisible: Boolean by mutableStateOf(false)
@@ -53,12 +52,13 @@ class FoodDeliverySnackbarState(
 
     fun show(newText: String) {
         job?.cancel()
-        job = coroutineScope.launch {
-            text = newText
-            isVisible = true
-            delay(2_000)
-            isVisible = false
-        }
+        job =
+            coroutineScope.launch {
+                text = newText
+                isVisible = true
+                delay(2_000)
+                isVisible = false
+            }
     }
 
     fun show() {
@@ -71,7 +71,7 @@ fun FoodDeliverySnackbarBox(
     snackbarState: FoodDeliverySnackbarState,
     backgroundColor: Color = FoodDeliveryTheme.colors.mainColors.primary,
     textColor: Color = FoodDeliveryTheme.colors.mainColors.onPrimary,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     Box {
         content()
@@ -79,20 +79,21 @@ fun FoodDeliverySnackbarBox(
             modifier = Modifier.align(Alignment.BottomCenter),
             visible = snackbarState.isVisible,
             enter = fadeIn(animationSpec = tween(300)),
-            exit = fadeOut(animationSpec = tween(300))
+            exit = fadeOut(animationSpec = tween(300)),
         ) {
             Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)
-                    .clip(RoundedCornerShape(4.dp))
-                    .background(backgroundColor)
-                    .padding(horizontal = 16.dp, vertical = 12.dp)
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                        .clip(RoundedCornerShape(4.dp))
+                        .background(backgroundColor)
+                        .padding(horizontal = 16.dp, vertical = 12.dp),
             ) {
                 Text(
                     text = snackbarState.text,
                     style = FoodDeliveryTheme.typography.bodyMedium,
-                    color = textColor
+                    color = textColor,
                 )
             }
         }

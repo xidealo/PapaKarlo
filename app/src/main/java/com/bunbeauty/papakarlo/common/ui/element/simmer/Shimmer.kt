@@ -19,42 +19,48 @@ import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 
 @Composable
-fun Shimmer(
-    modifier: Modifier
-) {
+fun Shimmer(modifier: Modifier) {
     val durationMillis = 2_000
     val widthOfShadowBrush = 200
     val angleOfAxisY = 45f
     val transition = rememberInfiniteTransition(label = "shimmer")
-    val translateAnimation = transition.animateFloat(
-        initialValue = 0f,
-        targetValue = 200f,
-        animationSpec = infiniteRepeatable(
-            animation = tween(durationMillis = durationMillis),
-            repeatMode = RepeatMode.Restart
-        ),
-        label = "shimmer"
-    )
+    val translateAnimation =
+        transition.animateFloat(
+            initialValue = 0f,
+            targetValue = 200f,
+            animationSpec =
+                infiniteRepeatable(
+                    animation = tween(durationMillis = durationMillis),
+                    repeatMode = RepeatMode.Restart,
+                ),
+            label = "shimmer",
+        )
 
-    val shimmerColors = listOf(
-        FoodDeliveryTheme.colors.mainColors.onSurfaceVariant.copy(alpha = 0.6f),
-        FoodDeliveryTheme.colors.mainColors.onSurfaceVariant.copy(alpha = 0.3f),
-        FoodDeliveryTheme.colors.mainColors.onSurfaceVariant.copy(alpha = 0.6f)
-    )
+    val shimmerColors =
+        listOf(
+            FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
+                .copy(alpha = 0.6f),
+            FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
+                .copy(alpha = 0.3f),
+            FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
+                .copy(alpha = 0.6f),
+        )
 
-    val brush = Brush.linearGradient(
-        colors = shimmerColors,
-        start = Offset(x = translateAnimation.value - widthOfShadowBrush, y = 0.0f),
-        end = Offset(x = translateAnimation.value, y = angleOfAxisY),
-        tileMode = TileMode.Mirror
-    )
+    val brush =
+        Brush.linearGradient(
+            colors = shimmerColors,
+            start = Offset(x = translateAnimation.value - widthOfShadowBrush, y = 0.0f),
+            end = Offset(x = translateAnimation.value, y = angleOfAxisY),
+            tileMode = TileMode.Mirror,
+        )
 
     Spacer(
-        modifier = modifier
-            .drawWithContent {
-                drawContent()
-                drawRect(brush = brush)
-            }
+        modifier =
+            modifier
+                .drawWithContent {
+                    drawContent()
+                    drawRect(brush = brush)
+                },
     )
 }
 
@@ -63,9 +69,10 @@ fun Shimmer(
 private fun ShimmerPreview() {
     FoodDeliveryTheme {
         Shimmer(
-            modifier = Modifier
-                .width(300.dp)
-                .height(64.dp)
+            modifier =
+                Modifier
+                    .width(300.dp)
+                    .height(64.dp),
         )
     }
 }

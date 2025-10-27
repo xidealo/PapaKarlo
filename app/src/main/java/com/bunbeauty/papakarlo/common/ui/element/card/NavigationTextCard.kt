@@ -23,41 +23,43 @@ fun NavigationTextCard(
     @StringRes hintStringId: Int,
     label: String?,
     clickable: Boolean = true,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     FoodDeliveryCard(
         modifier = modifier,
         clickable = clickable,
-        onClick = onClick
+        onClick = onClick,
     ) {
         Row(
-            modifier = Modifier.padding(
-                horizontal = FoodDeliveryTheme.dimensions.mediumSpace,
-                vertical = FoodDeliveryTheme.dimensions.smallSpace
-            ),
-            verticalAlignment = Alignment.CenterVertically
+            modifier =
+                Modifier.padding(
+                    horizontal = FoodDeliveryTheme.dimensions.mediumSpace,
+                    vertical = FoodDeliveryTheme.dimensions.smallSpace,
+                ),
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             Column(
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(end = FoodDeliveryTheme.dimensions.smallSpace)
+                modifier =
+                    Modifier
+                        .weight(1f)
+                        .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
             ) {
                 Text(
                     text = stringResource(hintStringId),
                     style = FoodDeliveryTheme.typography.labelSmall.medium,
-                    color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
+                    color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
                 )
                 Text(
                     text = label ?: "",
                     style = FoodDeliveryTheme.typography.bodyMedium,
-                    color = FoodDeliveryTheme.colors.mainColors.onSurface
+                    color = FoodDeliveryTheme.colors.mainColors.onSurface,
                 )
             }
             Icon(
                 modifier = Modifier.icon16(),
                 painter = painterResource(R.drawable.ic_right_arrow),
                 tint = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
-                contentDescription = stringResource(R.string.description_ic_next)
+                contentDescription = stringResource(R.string.description_ic_next),
             )
         }
     }
@@ -71,7 +73,7 @@ private fun TextNavigationCardPreview() {
             modifier = Modifier.padding(FoodDeliveryTheme.dimensions.mediumSpace),
             hintStringId = R.string.hint_settings_phone,
             label = "+7 999 000-00-00",
-            onClick = {}
+            onClick = {},
         )
     }
 }

@@ -20,13 +20,12 @@ import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.White
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Yellow
 
 object ColorDefaults {
-
     fun lightMainColors(
         primary: Color,
         surfaceVariant: Color,
-        strokeVariant: Color
-    ): MainColors {
-        return MainColors(
+        strokeVariant: Color,
+    ): MainColors =
+        MainColors(
             primary = primary,
             disabled = Grey1,
             secondary = White,
@@ -42,15 +41,14 @@ object ColorDefaults {
             onSurfaceVariant = Grey2,
             onError = White,
             stroke = Cream,
-            strokeVariant = strokeVariant
+            strokeVariant = strokeVariant,
         )
-    }
 
     fun darkMainColors(
         primary: Color,
-        surface: Color = Black200
-    ): MainColors {
-        return MainColors(
+        surface: Color = Black200,
+    ): MainColors =
+        MainColors(
             primary = primary,
             disabled = Black100,
             secondary = Black200,
@@ -66,12 +64,11 @@ object ColorDefaults {
             onSurfaceVariant = Grey2,
             onError = White,
             stroke = Black50,
-            strokeVariant = Black50
+            strokeVariant = Black50,
         )
-    }
 
-    fun orderColors(): OrderColors {
-        return OrderColors(
+    fun orderColors(): OrderColors =
+        OrderColors(
             notAccepted = Purple,
             accepted = Blue,
             preparing = Red200,
@@ -79,16 +76,14 @@ object ColorDefaults {
             done = LightGreen,
             delivered = Green,
             canceled = DarkGrey,
-            onOrder = White
+            onOrder = White,
         )
-    }
 
-    fun statusColors(): StatusColors {
-        return StatusColors(
+    fun statusColors(): StatusColors =
+        StatusColors(
             positive = Green,
             warning = Yellow,
             negative = Red200,
-            onStatus = White
+            onStatus = White,
         )
-    }
 }

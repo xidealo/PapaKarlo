@@ -6,11 +6,9 @@ import androidx.compose.ui.Modifier
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 
 @Composable
-fun CircularProgressBar(
-    modifier: Modifier = Modifier
-) {
+fun CircularProgressBar(modifier: Modifier = Modifier) {
     CircularProgressIndicator(
         modifier = modifier,
-        color = FoodDeliveryTheme.colors.mainColors.primary
+        color = FoodDeliveryTheme.colors.mainColors.primary,
     )
 }

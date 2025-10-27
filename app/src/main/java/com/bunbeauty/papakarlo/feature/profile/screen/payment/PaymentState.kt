@@ -4,5 +4,5 @@ import com.bunbeauty.shared.domain.model.Payment
 
 data class PaymentState(
     val paymentInfo: String,
-    val payment: Payment? = null
+    val payment: Payment? = null,
 )

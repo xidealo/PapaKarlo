@@ -7,5 +7,5 @@ import kotlinx.parcelize.Parcelize
 class UserAddressItem(
     val uuid: String,
     val address: String,
-    val isSelected: Boolean
+    val isSelected: Boolean,
 ) : Parcelable

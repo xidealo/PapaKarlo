@@ -15,21 +15,21 @@ import com.bunbeauty.shared.presentation.settings.SettingsState
 @Composable
 fun LogoutBottomSheetScreen(
     logoutUI: SettingsViewState.LogoutBottomSheetUI,
-    onAction: (SettingsState.Action) -> Unit
+    onAction: (SettingsState.Action) -> Unit,
 ) {
     FoodDeliveryModalBottomSheet(
         onDismissRequest = {
             onAction(SettingsState.Action.CloseLogoutBottomSheet)
         },
         isShown = logoutUI.isShown,
-        title = stringResource(R.string.title_logout)
+        title = stringResource(R.string.title_logout),
     ) {
         MainButton(
             textStringId = R.string.action_logout,
             elevated = false,
             onClick = {
                 onAction(SettingsState.Action.OnLogoutConfirmClicked)
-            }
+            },
         )
         SecondaryButton(
             modifier = Modifier.padding(top = 4.dp),
@@ -37,7 +37,7 @@ fun LogoutBottomSheetScreen(
             elevated = false,
             onClick = {
                 onAction(SettingsState.Action.CloseLogoutBottomSheet)
-            }
+            },
         )
     }
 }

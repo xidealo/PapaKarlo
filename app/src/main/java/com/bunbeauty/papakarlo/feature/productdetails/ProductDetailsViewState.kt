@@ -11,7 +11,7 @@ sealed interface ProductDetailsViewState : BaseViewState {
     @Immutable
     data class Success(
         val topCartUi: TopCartUi,
-        val menuProductUi: MenuProductUi
+        val menuProductUi: MenuProductUi,
     ) : ProductDetailsViewState {
         @Immutable
         data class MenuProductUi(
@@ -22,10 +22,11 @@ sealed interface ProductDetailsViewState : BaseViewState {
             val newPrice: String,
             val priceWithAdditions: String,
             val description: String,
-            val additionList: ImmutableList<AdditionItem>
+            val additionList: ImmutableList<AdditionItem>,
         )
     }
 
     data object Loading : ProductDetailsViewState
+
     data object Error : ProductDetailsViewState
 }

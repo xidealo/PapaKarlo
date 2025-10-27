@@ -19,18 +19,18 @@ import kotlinx.collections.immutable.persistentListOf
 @Composable
 fun PaymentMethodListBottomSheet(
     paymentMethodList: PaymentMethodListUI,
-    onAction: (CreateOrder.Action) -> Unit
+    onAction: (CreateOrder.Action) -> Unit,
 ) {
     FoodDeliveryModalBottomSheet(
         onDismissRequest = {
             onAction(CreateOrder.Action.HidePaymentMethodList)
         },
         isShown = paymentMethodList.isShown,
-        title = stringResource(R.string.payment_method)
+        title = stringResource(R.string.payment_method),
     ) {
         PaymentMethodListBottomSheetContent(
             paymentMethodList = paymentMethodList.paymentMethodList,
-            onAction = onAction
+            onAction = onAction,
         )
     }
 }
@@ -38,14 +38,14 @@ fun PaymentMethodListBottomSheet(
 @Composable
 private fun PaymentMethodListBottomSheetContent(
     paymentMethodList: ImmutableList<SelectablePaymentMethodUI>,
-    onAction: (CreateOrder.Action) -> Unit
+    onAction: (CreateOrder.Action) -> Unit,
 ) {
     LazyColumn(verticalArrangement = Arrangement.Absolute.spacedBy(8.dp)) {
         items(
             items = paymentMethodList,
             key = { selectableAddress ->
                 "PaymentMethod ${selectableAddress.uuid}"
-            }
+            },
         ) { selectablePaymentMethod ->
             SelectableItem(
                 title = selectablePaymentMethod.name,
@@ -55,11 +55,11 @@ private fun PaymentMethodListBottomSheetContent(
                 onClick = {
                     onAction(
                         CreateOrder.Action.ChangePaymentMethod(
-                            paymentMethodUuid = selectablePaymentMethod.uuid
-                        )
+                            paymentMethodUuid = selectablePaymentMethod.uuid,
+                        ),
                     )
                 },
-                enabled = true
+                enabled = true,
             )
         }
     }
@@ -69,18 +69,19 @@ private fun PaymentMethodListBottomSheetContent(
 @Composable
 private fun PaymentMethodListBottomSheetPreview() {
     PaymentMethodListBottomSheetContent(
-        paymentMethodList = persistentListOf(
-            SelectablePaymentMethodUI(
-                uuid = "1",
-                name = "Налика",
-                isSelected = false
+        paymentMethodList =
+            persistentListOf(
+                SelectablePaymentMethodUI(
+                    uuid = "1",
+                    name = "Налика",
+                    isSelected = false,
+                ),
+                SelectablePaymentMethodUI(
+                    uuid = "2",
+                    name = "Картой курьеру",
+                    isSelected = true,
+                ),
             ),
-            SelectablePaymentMethodUI(
-                uuid = "2",
-                name = "Картой курьеру",
-                isSelected = true
-            )
-        ),
-        onAction = {}
+        onAction = {},
     )
 }

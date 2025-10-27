@@ -12,26 +12,27 @@ import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 
 object FoodDeliveryBottomSheetDefaults {
-
     val bottomSheetShape: RoundedCornerShape
-        @Composable get() = RoundedCornerShape(
-            topStart = FoodDeliveryTheme.dimensions.bottomSheetRadius,
-            topEnd = FoodDeliveryTheme.dimensions.bottomSheetRadius,
-            bottomEnd = 0.dp,
-            bottomStart = 0.dp
-        )
+        @Composable get() =
+            RoundedCornerShape(
+                topStart = FoodDeliveryTheme.dimensions.bottomSheetRadius,
+                topEnd = FoodDeliveryTheme.dimensions.bottomSheetRadius,
+                bottomEnd = 0.dp,
+                bottomStart = 0.dp,
+            )
 
     @Composable
     fun DragHandle() {
         Spacer(
-            modifier = Modifier
-                .padding(vertical = 8.dp)
-                .width(36.dp)
-                .height(4.dp)
-                .background(
-                    color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
-                    shape = RoundedCornerShape(size = 2.5.dp)
-                )
+            modifier =
+                Modifier
+                    .padding(vertical = 8.dp)
+                    .width(36.dp)
+                    .height(4.dp)
+                    .background(
+                        color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
+                        shape = RoundedCornerShape(size = 2.5.dp),
+                    ),
         )
     }
 }

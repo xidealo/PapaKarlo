@@ -29,56 +29,60 @@ import com.bunbeauty.papakarlo.common.ui.theme.bold
 fun ErrorScreen(
     @StringRes mainTextId: Int,
     @StringRes extraTextId: Int? = null,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Spacer(modifier = Modifier.weight(1f))
         Box(
-            modifier = Modifier
-                .size(120.dp)
-                .clip(CircleShape)
-                .background(
-                    FoodDeliveryTheme.colors.statusColors.negative
-                ),
-            contentAlignment = Alignment.Center
+            modifier =
+                Modifier
+                    .size(120.dp)
+                    .clip(CircleShape)
+                    .background(
+                        FoodDeliveryTheme.colors.statusColors.negative,
+                    ),
+            contentAlignment = Alignment.Center,
         ) {
             Icon(
                 modifier = Modifier.size(64.dp),
                 painter = painterResource(R.drawable.ic_error),
                 tint = FoodDeliveryTheme.colors.statusColors.onStatus,
-                contentDescription = null
+                contentDescription = null,
             )
         }
         Text(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 32.dp)
-                .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(top = 32.dp)
+                    .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
             text = stringResource(id = mainTextId),
             style = FoodDeliveryTheme.typography.titleMedium.bold,
             color = FoodDeliveryTheme.colors.mainColors.onSurface,
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
         )
         extraTextId?.let {
             Text(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = FoodDeliveryTheme.dimensions.smallSpace)
-                    .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(top = FoodDeliveryTheme.dimensions.smallSpace)
+                        .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
                 text = stringResource(id = extraTextId),
                 style = FoodDeliveryTheme.typography.bodyLarge,
                 color = FoodDeliveryTheme.colors.mainColors.onSurface,
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
             )
         }
         Spacer(modifier = Modifier.weight(1f))
 
         MainButton(
-            modifier = Modifier
-                .padding(bottom = FoodDeliveryTheme.dimensions.mediumSpace)
-                .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
+            modifier =
+                Modifier
+                    .padding(bottom = FoodDeliveryTheme.dimensions.mediumSpace)
+                    .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
             onClick = onClick,
-            textStringId = R.string.action_retry
+            textStringId = R.string.action_retry,
         )
     }
 }
@@ -90,7 +94,7 @@ private fun ErrorScreenPreview() {
         ErrorScreen(
             mainTextId = R.string.common_error,
             extraTextId = R.string.internet_error,
-            onClick = {}
+            onClick = {},
         )
     }
 }

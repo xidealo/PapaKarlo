@@ -10,16 +10,12 @@ import kotlinx.serialization.Serializable
 @Serializable
 data object SelectCityScreenDestination
 
-fun NavController.navigateToSelectCityScreen(
-    navOptions: NavOptions
-) = navigate(route = SelectCityScreenDestination, navOptions)
+fun NavController.navigateToSelectCityScreen(navOptions: NavOptions) = navigate(route = SelectCityScreenDestination, navOptions)
 
-fun NavGraphBuilder.selectCityScreenRoute(
-    goToMenuFragment: () -> Unit
-) {
+fun NavGraphBuilder.selectCityScreenRoute(goToMenuFragment: () -> Unit) {
     composable<SelectCityScreenDestination> {
         SelectCityRoute(
-            goToMenuFragment = goToMenuFragment
+            goToMenuFragment = goToMenuFragment,
         )
     }
 }

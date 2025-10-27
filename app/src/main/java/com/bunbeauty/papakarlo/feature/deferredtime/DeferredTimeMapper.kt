@@ -8,8 +8,8 @@ import com.bunbeauty.shared.domain.model.date_time.Time
 import com.bunbeauty.shared.presentation.createorder.CreateOrder
 
 @Composable
-fun CreateOrder.DeferredTime.toDeferredTimeString(): String {
-    return when (this) {
+fun CreateOrder.DeferredTime.toDeferredTimeString(): String =
+    when (this) {
         is CreateOrder.DeferredTime.Asap -> {
             stringResource(R.string.asap)
         }
@@ -18,19 +18,16 @@ fun CreateOrder.DeferredTime.toDeferredTimeString(): String {
             "${time.hours.withFirstZero()}:${time.minutes.withFirstZero()}"
         }
     }
-}
 
-fun Time.toTimeUI(): TimeUI {
-    return TimeUI(
+fun Time.toTimeUI(): TimeUI =
+    TimeUI(
         hours = hours,
-        minutes = minutes
+        minutes = minutes,
     )
-}
 
-private fun Int.withFirstZero(): String {
-    return if (this < 10) {
+private fun Int.withFirstZero(): String =
+    if (this < 10) {
         "0$this"
     } else {
         this.toString()
     }
-}

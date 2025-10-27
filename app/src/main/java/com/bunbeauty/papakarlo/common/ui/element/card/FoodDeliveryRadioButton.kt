@@ -8,11 +8,11 @@ import androidx.compose.runtime.Composable
 fun FoodDeliveryRadioButton(
     selected: Boolean,
     colors: RadioButtonColors = FoodDeliveryRadioButtonDefaults.radioButtonColors,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     RadioButton(
         selected = selected,
         onClick = onClick,
-        colors = colors
+        colors = colors,
     )
 }

@@ -31,78 +31,86 @@ import com.bunbeauty.papakarlo.common.ui.theme.bold
 @Composable
 fun Motivation(
     motivation: MotivationUi?,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     motivation ?: return
 
     Column(
         modifier = modifier,
-        verticalArrangement = Arrangement.Absolute.spacedBy(4.dp)
+        verticalArrangement = Arrangement.Absolute.spacedBy(4.dp),
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Absolute.spacedBy(8.dp)
+            horizontalArrangement = Arrangement.Absolute.spacedBy(8.dp),
         ) {
-            val iconId = when (motivation) {
-                is MotivationUi.MinOrderCost -> R.drawable.ic_warning
-                is MotivationUi.ForLowerDelivery,
-                is MotivationUi.LowerDeliveryAchieved -> R.drawable.ic_delivery
-            }
-            val iconTint = when (motivation) {
-                is MotivationUi.MinOrderCost -> {
-                    FoodDeliveryTheme.colors.statusColors.warning
+            val iconId =
+                when (motivation) {
+                    is MotivationUi.MinOrderCost -> R.drawable.ic_warning
+                    is MotivationUi.ForLowerDelivery,
+                    is MotivationUi.LowerDeliveryAchieved,
+                    -> R.drawable.ic_delivery
                 }
+            val iconTint =
+                when (motivation) {
+                    is MotivationUi.MinOrderCost -> {
+                        FoodDeliveryTheme.colors.statusColors.warning
+                    }
 
-                is MotivationUi.ForLowerDelivery,
-                is MotivationUi.LowerDeliveryAchieved -> {
-                    FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
+                    is MotivationUi.ForLowerDelivery,
+                    is MotivationUi.LowerDeliveryAchieved,
+                    -> {
+                        FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
+                    }
                 }
-            }
             Icon(
                 modifier = Modifier.icon24(),
                 painter = painterResource(iconId),
                 tint = iconTint,
-                contentDescription = null
+                contentDescription = null,
             )
 
-            val motivationText = when (motivation) {
-                is MotivationUi.MinOrderCost -> {
-                    buildAnnotatedStringWithBold(
-                        text = stringResource(R.string.msg_consumer_cart_min_order, motivation.cost),
-                        subtextToSelect = motivation.cost
-                    )
-                }
+            val motivationText =
+                when (motivation) {
+                    is MotivationUi.MinOrderCost -> {
+                        buildAnnotatedStringWithBold(
+                            text = stringResource(R.string.msg_consumer_cart_min_order, motivation.cost),
+                            subtextToSelect = motivation.cost,
+                        )
+                    }
 
-                is MotivationUi.ForLowerDelivery -> {
-                    val textId = if (motivation.isFree) {
-                        R.string.msg_consumer_cart_for_free_delivery
-                    } else {
-                        R.string.msg_consumer_cart_for_lower_delivery
+                    is MotivationUi.ForLowerDelivery -> {
+                        val textId =
+                            if (motivation.isFree) {
+                                R.string.msg_consumer_cart_for_free_delivery
+                            } else {
+                                R.string.msg_consumer_cart_for_lower_delivery
+                            }
+                        buildAnnotatedStringWithBold(
+                            text = stringResource(textId, motivation.increaseAmountBy),
+                            subtextToSelect = motivation.increaseAmountBy,
+                        )
                     }
-                    buildAnnotatedStringWithBold(
-                        text = stringResource(textId, motivation.increaseAmountBy),
-                        subtextToSelect = motivation.increaseAmountBy
-                    )
-                }
 
-                is MotivationUi.LowerDeliveryAchieved -> {
-                    val textId = if (motivation.isFree) {
-                        R.string.msg_consumer_cart_free_delivery
-                    } else {
-                        R.string.msg_consumer_cart_lower_delivery
-                    }
-                    buildAnnotatedString {
-                        append(stringResource(textId))
+                    is MotivationUi.LowerDeliveryAchieved -> {
+                        val textId =
+                            if (motivation.isFree) {
+                                R.string.msg_consumer_cart_free_delivery
+                            } else {
+                                R.string.msg_consumer_cart_lower_delivery
+                            }
+                        buildAnnotatedString {
+                            append(stringResource(textId))
+                        }
                     }
                 }
-            }
             Text(
-                modifier = Modifier
-                    .animateContentSize(tween(500))
-                    .weight(1f),
+                modifier =
+                    Modifier
+                        .animateContentSize(tween(500))
+                        .weight(1f),
                 text = motivationText,
                 style = FoodDeliveryTheme.typography.bodyMedium,
-                color = FoodDeliveryTheme.colors.mainColors.onSurface
+                color = FoodDeliveryTheme.colors.mainColors.onSurface,
             )
         }
 
@@ -114,25 +122,27 @@ fun Motivation(
             val animatedProgress by animateFloatAsState(
                 targetValue = progress,
                 animationSpec = tween(500),
-                label = "progress"
+                label = "progress",
             )
             val animatedColor by animateColorAsState(
-                targetValue = lerp(
-                    FoodDeliveryTheme.colors.statusColors.warning,
-                    FoodDeliveryTheme.colors.statusColors.positive,
-                    progress
-                ),
+                targetValue =
+                    lerp(
+                        FoodDeliveryTheme.colors.statusColors.warning,
+                        FoodDeliveryTheme.colors.statusColors.positive,
+                        progress,
+                    ),
                 animationSpec = tween(500),
-                label = "color"
+                label = "color",
             )
             LinearProgressIndicator(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(8.dp),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .height(8.dp),
                 progress = animatedProgress,
                 color = animatedColor,
                 trackColor = FoodDeliveryTheme.colors.mainColors.disabled,
-                strokeCap = StrokeCap.Round
+                strokeCap = StrokeCap.Round,
             )
         }
     }
@@ -141,16 +151,17 @@ fun Motivation(
 @Composable
 private fun buildAnnotatedStringWithBold(
     text: String,
-    subtextToSelect: String
-): AnnotatedString {
-    return buildAnnotatedString {
+    subtextToSelect: String,
+): AnnotatedString =
+    buildAnnotatedString {
         val startIndex = text.indexOf(subtextToSelect)
         val endIndex = startIndex + subtextToSelect.length
         append(text)
         addStyle(
-            style = FoodDeliveryTheme.typography.bodyMedium.bold.toSpanStyle(),
+            style =
+                FoodDeliveryTheme.typography.bodyMedium.bold
+                    .toSpanStyle(),
             start = startIndex,
-            end = endIndex
+            end = endIndex,
         )
     }
-}

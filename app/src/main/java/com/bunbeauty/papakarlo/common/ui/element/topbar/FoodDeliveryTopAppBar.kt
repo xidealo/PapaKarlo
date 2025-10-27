@@ -46,18 +46,19 @@ fun FoodDeliveryTopAppBar(
     actions: ImmutableList<FoodDeliveryToolbarActions> = persistentListOf(),
     isScrolled: Boolean = false,
     @DrawableRes drawableId: Int? = null,
-    content: @Composable () -> Unit = {}
+    content: @Composable () -> Unit = {},
 ) {
     val localActivity = LocalActivity.current
 
     val barColor by animateColorAsState(
-        targetValue = if (isScrolled) {
-            FoodDeliveryTheme.colors.mainColors.surfaceVariant
-        } else {
-            FoodDeliveryTheme.colors.mainColors.surface
-        },
+        targetValue =
+            if (isScrolled) {
+                FoodDeliveryTheme.colors.mainColors.surfaceVariant
+            } else {
+                FoodDeliveryTheme.colors.mainColors.surface
+            },
         animationSpec = tween(500),
-        label = "barColor"
+        label = "barColor",
     )
 
     LaunchedEffect(barColor) {
@@ -69,11 +70,11 @@ fun FoodDeliveryTopAppBar(
             FoodDeliveryTopAppBar(
                 title = title,
                 backActionClick = backActionClick,
-                actions = actions
+                actions = actions,
             )
             LogoImage(
                 modifier = Modifier.align(Alignment.Center),
-                drawableId = drawableId
+                drawableId = drawableId,
             )
         }
 
@@ -90,7 +91,7 @@ fun FoodDeliveryTopAppBar(
 private fun FoodDeliveryTopAppBar(
     title: String?,
     backActionClick: (() -> Unit)? = null,
-    actions: ImmutableList<FoodDeliveryToolbarActions> = persistentListOf()
+    actions: ImmutableList<FoodDeliveryToolbarActions> = persistentListOf(),
 ) {
     TopAppBar(
         colors = FoodDeliveryTopAppBarDefaults.topAppBarColors(),
@@ -99,19 +100,19 @@ private fun FoodDeliveryTopAppBar(
                 text = title.orEmpty(),
                 maxLines = 1,
                 style = FoodDeliveryTheme.typography.titleMedium.bold,
-                overflow = TextOverflow.Ellipsis
+                overflow = TextOverflow.Ellipsis,
             )
         },
         navigationIcon = {
             backActionClick?.let {
                 IconButton(
-                    onClick = backActionClick
+                    onClick = backActionClick,
                 ) {
                     Icon(
                         modifier = Modifier.icon16(),
                         painter = painterResource(id = R.drawable.ic_arrow_back),
                         tint = FoodDeliveryTheme.colors.mainColors.onSurface,
-                        contentDescription = null
+                        contentDescription = null,
                     )
                 }
             }
@@ -128,20 +129,20 @@ private fun FoodDeliveryTopAppBar(
                     }
                 }
             }
-        }
+        },
     )
 }
 
 @Composable
 private fun Action(action: FoodDeliveryAction) {
     IconButton(
-        onClick = action.onClick
+        onClick = action.onClick,
     ) {
         Icon(
             modifier = Modifier.icon24(),
             painter = painterResource(id = action.iconId),
             tint = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
-            contentDescription = null
+            contentDescription = null,
         )
     }
 }
@@ -151,34 +152,35 @@ private fun CardAction(action: FoodDeliveryCartAction) {
     FoodDeliveryCard(
         elevated = false,
         colors = FoodDeliveryCardDefaults.transparentCardColors,
-        onClick = action.onClick
+        onClick = action.onClick,
     ) {
         Row(
             modifier = Modifier.padding(4.dp),
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
                 style = FoodDeliveryTheme.typography.bodyMedium,
                 color = FoodDeliveryTheme.colors.mainColors.onSurface,
-                text = action.topCartUi.cost
+                text = action.topCartUi.cost,
             )
             Box {
                 Icon(
-                    modifier = Modifier
-                        .padding(4.dp)
-                        .icon24(),
+                    modifier =
+                        Modifier
+                            .padding(4.dp)
+                            .icon24(),
                     painter = painterResource(id = R.drawable.ic_cart_24),
                     tint = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
-                    contentDescription = null
+                    contentDescription = null,
                 )
                 Badge(
                     modifier = Modifier.align(Alignment.TopEnd),
                     containerColor = FoodDeliveryTheme.colors.mainColors.primary,
-                    contentColor = FoodDeliveryTheme.colors.mainColors.onPrimary
+                    contentColor = FoodDeliveryTheme.colors.mainColors.onPrimary,
                 ) {
                     Text(
                         style = FoodDeliveryTheme.typography.labelSmall.medium,
-                        text = action.topCartUi.count
+                        text = action.topCartUi.count,
                     )
                 }
             }
@@ -189,14 +191,15 @@ private fun CardAction(action: FoodDeliveryCartAction) {
 @Composable
 private fun LogoImage(
     @DrawableRes drawableId: Int?,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     drawableId?.let {
         Image(
-            modifier = modifier
-                .height(40.dp),
+            modifier =
+                modifier
+                    .height(40.dp),
             painter = painterResource(drawableId),
-            contentDescription = stringResource(R.string.description_company_logo)
+            contentDescription = stringResource(R.string.description_company_logo),
         )
     }
 }

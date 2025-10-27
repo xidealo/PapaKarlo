@@ -7,10 +7,10 @@ sealed interface FoodDeliveryToolbarActions
 
 class FoodDeliveryAction(
     @DrawableRes val iconId: Int,
-    val onClick: () -> Unit
+    val onClick: () -> Unit,
 ) : FoodDeliveryToolbarActions
 
 class FoodDeliveryCartAction(
     val topCartUi: TopCartUi,
-    val onClick: () -> Unit
+    val onClick: () -> Unit,
 ) : FoodDeliveryToolbarActions

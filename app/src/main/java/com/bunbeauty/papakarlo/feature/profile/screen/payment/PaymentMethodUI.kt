@@ -7,11 +7,11 @@ import kotlinx.parcelize.Parcelize
 data class PaymentMethodUI(
     val uuid: String,
     val name: String,
-    val value: PaymentMethodValueUI?
+    val value: PaymentMethodValueUI?,
 ) : Parcelable
 
 @Parcelize
 data class PaymentMethodValueUI(
     val value: String,
-    val valueToCopy: String
+    val valueToCopy: String,
 ) : Parcelable

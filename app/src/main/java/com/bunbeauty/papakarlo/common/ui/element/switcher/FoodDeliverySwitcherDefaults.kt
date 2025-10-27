@@ -7,14 +7,14 @@ import androidx.compose.runtime.Composable
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 
 object FoodDeliverySwitcherDefaults {
-
     val switcherButtonColor: CardColors
-        @Composable get() = CardDefaults.cardColors(
-            containerColor = FoodDeliveryTheme.colors.mainColors.stroke,
-            contentColor = FoodDeliveryTheme.colors.mainColors.onSecondary,
-            disabledContainerColor = FoodDeliveryTheme.colors.mainColors.secondary,
-            disabledContentColor = FoodDeliveryTheme.colors.mainColors.primary
-        )
+        @Composable get() =
+            CardDefaults.cardColors(
+                containerColor = FoodDeliveryTheme.colors.mainColors.stroke,
+                contentColor = FoodDeliveryTheme.colors.mainColors.onSecondary,
+                disabledContainerColor = FoodDeliveryTheme.colors.mainColors.secondary,
+                disabledContentColor = FoodDeliveryTheme.colors.mainColors.primary,
+            )
 
     val switcherShape: RoundedCornerShape
         @Composable get() = RoundedCornerShape(FoodDeliveryTheme.dimensions.switcherRadius)

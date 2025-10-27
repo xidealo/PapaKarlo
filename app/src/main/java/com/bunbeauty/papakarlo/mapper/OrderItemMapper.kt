@@ -5,16 +5,14 @@ import com.bunbeauty.papakarlo.util.string.IStringUtil
 import com.bunbeauty.shared.domain.model.order.LightOrder
 
 class OrderItemMapper(
-    private val stringUtil: IStringUtil
+    private val stringUtil: IStringUtil,
 ) {
-
-    fun toItem(order: LightOrder): OrderItem {
-        return OrderItem(
+    fun toItem(order: LightOrder): OrderItem =
+        OrderItem(
             uuid = order.uuid,
             status = order.status,
             statusName = stringUtil.getOrderStatusName(order.status),
             code = order.code,
-            dateTime = stringUtil.getDateTimeString(order.dateTime)
+            dateTime = stringUtil.getDateTimeString(order.dateTime),
         )
-    }
 }

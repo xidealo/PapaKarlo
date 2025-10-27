@@ -25,31 +25,32 @@ fun StartIconCard(
     elevated: Boolean = true,
     iconTint: Color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
     onClick: (() -> Unit) = {},
-    clickable: Boolean = true
+    clickable: Boolean = true,
 ) {
     FoodDeliveryCard(
         modifier = modifier,
         clickable = clickable,
         elevated = elevated,
-        onClick = onClick
+        onClick = onClick,
     ) {
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 12.dp),
-            verticalAlignment = Alignment.CenterVertically
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 12.dp),
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             Icon(
                 modifier = Modifier.icon24(),
                 painter = painterResource(iconId),
                 tint = iconTint,
-                contentDescription = label
+                contentDescription = label,
             )
             OverflowingText(
                 modifier = Modifier.padding(start = 16.dp),
                 text = label,
                 style = FoodDeliveryTheme.typography.bodyLarge,
-                color = FoodDeliveryTheme.colors.mainColors.onSurface
+                color = FoodDeliveryTheme.colors.mainColors.onSurface,
             )
         }
     }
@@ -61,7 +62,7 @@ private fun IconCardPreview() {
     FoodDeliveryTheme {
         StartIconCard(
             label = "Ооооооооооооооочень длинная информация",
-            iconId = R.drawable.ic_info
+            iconId = R.drawable.ic_info,
         )
     }
 }
@@ -73,7 +74,7 @@ private fun OriginalColorIconCardPreview() {
         StartIconCard(
             label = "Информация",
             iconId = R.drawable.ic_bb,
-            iconTint = FoodDeliveryTheme.colors.bunBeautyBrandColor
+            iconTint = FoodDeliveryTheme.colors.bunBeautyBrandColor,
         )
     }
 }

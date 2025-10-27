@@ -35,56 +35,60 @@ fun FoodDeliveryTextFieldWithMenu(
     onValueChange: (value: String) -> Unit,
     @StringRes errorMessageStringId: Int? = null,
     suggestionsList: ImmutableList<SuggestionUi> = persistentListOf(),
-    isLoading: Boolean = false
+    isLoading: Boolean = false,
 ) {
     Column {
         ExposedDropdownMenuBox(
             modifier = modifier,
             expanded = expanded,
-            onExpandedChange = onExpandedChange
+            onExpandedChange = onExpandedChange,
         ) {
             FoodDeliveryBaseTextField(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .menuAnchor(),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .menuAnchor(),
                 value = value,
                 labelStringId = labelStringId,
                 onValueChange = onValueChange,
                 isError = errorMessageStringId != null,
-                isLoading = isLoading
+                isLoading = isLoading,
             )
 
             if (suggestionsList.isNotEmpty()) {
                 DropdownMenu(
-                    modifier = Modifier
-                        .background(FoodDeliveryTheme.colors.mainColors.surface)
-                        .exposedDropdownSize(),
+                    modifier =
+                        Modifier
+                            .background(FoodDeliveryTheme.colors.mainColors.surface)
+                            .exposedDropdownSize(),
                     expanded = expanded,
-                    properties = PopupProperties(
-                        focusable = false,
-                        dismissOnClickOutside = true,
-                        dismissOnBackPress = true
-                    ),
-                    onDismissRequest = {}
+                    properties =
+                        PopupProperties(
+                            focusable = false,
+                            dismissOnClickOutside = true,
+                            dismissOnBackPress = true,
+                        ),
+                    onDismissRequest = {},
                 ) {
                     suggestionsList.forEach { suggestion ->
                         DropdownMenuItem(
                             text = {
-                                val text = buildAnnotatedString {
-                                    append(suggestion.value)
-                                    withStyle(SpanStyle(FoodDeliveryTheme.colors.mainColors.onSurfaceVariant)) {
-                                        append(suggestion.postfix)
+                                val text =
+                                    buildAnnotatedString {
+                                        append(suggestion.value)
+                                        withStyle(SpanStyle(FoodDeliveryTheme.colors.mainColors.onSurfaceVariant)) {
+                                            append(suggestion.postfix)
+                                        }
                                     }
-                                }
                                 Text(
                                     text = text,
                                     color = FoodDeliveryTheme.colors.mainColors.onSurface,
-                                    style = FoodDeliveryTheme.typography.bodyMedium
+                                    style = FoodDeliveryTheme.typography.bodyMedium,
                                 )
                             },
                             onClick = {
                                 onSuggestionClick(suggestion)
-                            }
+                            },
                         )
                     }
                 }
@@ -92,12 +96,13 @@ fun FoodDeliveryTextFieldWithMenu(
         }
         errorMessageStringId?.let { stringId ->
             Text(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 16.dp, top = 4.dp),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(start = 16.dp, top = 4.dp),
                 text = stringResource(stringId),
                 style = FoodDeliveryTheme.typography.bodySmall,
-                color = FoodDeliveryTheme.colors.mainColors.error
+                color = FoodDeliveryTheme.colors.mainColors.error,
             )
         }
     }
