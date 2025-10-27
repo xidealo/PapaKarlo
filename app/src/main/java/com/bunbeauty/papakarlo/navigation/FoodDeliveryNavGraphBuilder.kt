@@ -41,11 +41,9 @@ import com.bunbeauty.papakarlo.navigation.useraddresslist.userAddressListScreenR
 
 internal val emptyNavOptions = navOptions { }
 
-fun NavGraphBuilder.foodDeliveryNavGraphBuilder(
-    navController: NavController
-) {
+fun NavGraphBuilder.foodDeliveryNavGraphBuilder(navController: NavController) {
     cafeListScreenRoute(
-        back = navController::navigateUp
+        back = navController::navigateUp,
     )
 
     splashScreenRoute(
@@ -57,13 +55,14 @@ fun NavGraphBuilder.foodDeliveryNavGraphBuilder(
         },
         goToMenuFragment = {
             navController.navigateToMenuScreen(
-                navOptions = navOptions {
-                    popUpTo(SplashScreenDestination) {
-                        inclusive = true
-                    }
-                }
+                navOptions =
+                    navOptions {
+                        popUpTo(SplashScreenDestination) {
+                            inclusive = true
+                        }
+                    },
             )
-        }
+        },
     )
 
     updateScreenRoute()
@@ -76,7 +75,7 @@ fun NavGraphBuilder.foodDeliveryNavGraphBuilder(
                 productDetailsOpenedFrom = productDetailsOpenedFrom,
                 additionUuidList = emptyList(),
                 cartProductUuid = null,
-                navOptions = emptyNavOptions
+                navOptions = emptyNavOptions,
             )
         },
         goToProfile = {
@@ -84,10 +83,10 @@ fun NavGraphBuilder.foodDeliveryNavGraphBuilder(
         },
         goToConsumerCart = {
             navController.navigateConsumerCartScreen(emptyNavOptions)
-        }
+        },
     )
     productDetailsScreenRoute(
-        back = navController::navigateUp
+        back = navController::navigateUp,
     )
     orderDetailsScreenRoute(back = navController::navigateUp)
     settingsScreenRoute(back = navController::navigateUp)
@@ -97,9 +96,9 @@ fun NavGraphBuilder.foodDeliveryNavGraphBuilder(
         goToOrderDetails = { orderUuid ->
             navController.navigateToOrderDetailsScreen(
                 navOptions = emptyNavOptions,
-                orderUuid = orderUuid
+                orderUuid = orderUuid,
             )
-        }
+        },
     )
 
     consumerCartScreenRoute(
@@ -111,12 +110,15 @@ fun NavGraphBuilder.foodDeliveryNavGraphBuilder(
         goToLoginFragment = { successLoginDirection ->
             navController.navigateToLoginScreen(
                 navOptions = emptyNavOptions,
-                successLoginDirection = successLoginDirection
+                successLoginDirection = successLoginDirection,
             )
         },
         goToProductFragment = {
-                uuid, name, productDetailsOpenedFrom, additionUuidList,
-                cartProductUuid
+            uuid,
+            name,
+            productDetailsOpenedFrom,
+            additionUuidList,
+            cartProductUuid,
             ->
             navController.navigateToProductDetailsScreen(
                 uuid = uuid,
@@ -124,41 +126,43 @@ fun NavGraphBuilder.foodDeliveryNavGraphBuilder(
                 productDetailsOpenedFrom = productDetailsOpenedFrom,
                 additionUuidList = additionUuidList,
                 cartProductUuid = cartProductUuid,
-                navOptions = emptyNavOptions
+                navOptions = emptyNavOptions,
             )
-        }
+        },
     )
     selectCityScreenRoute(
         goToMenuFragment = {
             navController.navigateToMenuScreen(
-                navOptions = navOptions {
-                    popUpTo(SplashScreenDestination) {
-                        inclusive = true
-                    }
-                }
+                navOptions =
+                    navOptions {
+                        popUpTo(SplashScreenDestination) {
+                            inclusive = true
+                        }
+                    },
             )
-        }
+        },
     )
     createOrderScreenRoute(
         back = navController::navigateUp,
         goToProfile = {
             navController.navigateToProfileScreen(
-                navOptions = navOptions {
-                    popUpTo(MenuScreenDestination) {
-                        inclusive = false
-                    }
-                }
+                navOptions =
+                    navOptions {
+                        popUpTo(MenuScreenDestination) {
+                            inclusive = false
+                        }
+                    },
             )
         },
         goToCreateAddress = {
             navController.navigateToCreateAddressScreenDestination(emptyNavOptions)
-        }
+        },
     )
     userAddressListScreenRoute(
         back = navController::navigateUp,
         goToCreateAddress = {
             navController.navigateToCreateAddressScreenDestination(emptyNavOptions)
-        }
+        },
     )
     loginScreenRoute(
         back = navController::navigateUp,
@@ -166,31 +170,33 @@ fun NavGraphBuilder.foodDeliveryNavGraphBuilder(
             navController.navigateToConfirmScreen(
                 phoneNumber = phoneNumber,
                 successLoginDirection = successLoginDirection,
-                navOptions = emptyNavOptions
+                navOptions = emptyNavOptions,
             )
-        }
+        },
     )
     confirmScreenRoute(
         back = navController::navigateUp,
         goBackToProfileFragment = {
             navController.navigateToProfileScreen(
-                navOptions = navOptions {
-                    popUpTo<ProfileScreenDestination> {
-                        inclusive = true
-                        saveState = false
-                    }
-                }
+                navOptions =
+                    navOptions {
+                        popUpTo<ProfileScreenDestination> {
+                            inclusive = true
+                            saveState = false
+                        }
+                    },
             )
         },
         goToCreateOrderFragment = {
             navController.navigateToCreateOrderScreen(
-                navOptions = navOptions {
-                    popUpTo(ConsumerCartScreenDestination) {
-                        inclusive = false
-                    }
-                }
+                navOptions =
+                    navOptions {
+                        popUpTo(ConsumerCartScreenDestination) {
+                            inclusive = false
+                        }
+                    },
             )
-        }
+        },
     )
 
     profileScreenRoute(
@@ -204,7 +210,7 @@ fun NavGraphBuilder.foodDeliveryNavGraphBuilder(
         goToOrderDetailsFragment = { orderUuid ->
             navController.navigateToOrderDetailsScreen(
                 navOptions = emptyNavOptions,
-                orderUuid = orderUuid
+                orderUuid = orderUuid,
             )
         },
         goToOrdersFragment = {
@@ -215,6 +221,6 @@ fun NavGraphBuilder.foodDeliveryNavGraphBuilder(
         },
         goToCafeListFragment = {
             navController.navigateToCafeListScreen(emptyNavOptions)
-        }
+        },
     )
 }

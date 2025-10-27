@@ -6,25 +6,29 @@ import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.LightBlu
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Orange50
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Yellow400
 
-val LimonadColors = AppColors(
-    mainColors = ColorDefaults.lightMainColors(
-        primary = Yellow400,
-        surfaceVariant = Orange50,
-        strokeVariant = Gold100
-    ),
-    orderColors = ColorDefaults.orderColors(),
-    statusColors = ColorDefaults.statusColors(),
-    bunBeautyBrandColor = LightBlue,
-    isLight = true
-)
+val LimonadColors =
+    AppColors(
+        mainColors =
+            ColorDefaults.lightMainColors(
+                primary = Yellow400,
+                surfaceVariant = Orange50,
+                strokeVariant = Gold100,
+            ),
+        orderColors = ColorDefaults.orderColors(),
+        statusColors = ColorDefaults.statusColors(),
+        bunBeautyBrandColor = LightBlue,
+        isLight = true,
+    )
 
-val LimonadDarkColors = AppColors(
-    mainColors = ColorDefaults.darkMainColors(
-        primary = Yellow400,
-        surface = Black700
-    ),
-    orderColors = ColorDefaults.orderColors(),
-    statusColors = ColorDefaults.statusColors(),
-    bunBeautyBrandColor = LightBlue,
-    isLight = false
-)
+val LimonadDarkColors =
+    AppColors(
+        mainColors =
+            ColorDefaults.darkMainColors(
+                primary = Yellow400,
+                surface = Black700,
+            ),
+        orderColors = ColorDefaults.orderColors(),
+        statusColors = ColorDefaults.statusColors(),
+        bunBeautyBrandColor = LightBlue,
+        isLight = false,
+    )

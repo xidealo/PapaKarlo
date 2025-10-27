@@ -6,27 +6,28 @@ import com.bunbeauty.papakarlo.feature.profile.screen.profile.PaymentMethodUiSta
 import com.bunbeauty.papakarlo.mapper.OrderItemMapper
 import org.koin.dsl.module
 
-fun uiMapperModule() = module {
-    factory {
-        OrderItemMapper(
-            stringUtil = get()
-        )
+fun uiMapperModule() =
+    module {
+        factory {
+            OrderItemMapper(
+                stringUtil = get(),
+            )
+        }
+        factory {
+            OrderProductItemMapper(
+                stringUtil = get(),
+            )
+        }
+        factory {
+            OrderDetailsUiStateMapper(
+                stringUtil = get(),
+                orderProductItemMapper = get(),
+                paymentMethodUiStateMapper = get(),
+            )
+        }
+        factory {
+            PaymentMethodUiStateMapper(
+                resources = get(),
+            )
+        }
     }
-    factory {
-        OrderProductItemMapper(
-            stringUtil = get()
-        )
-    }
-    factory {
-        OrderDetailsUiStateMapper(
-            stringUtil = get(),
-            orderProductItemMapper = get(),
-            paymentMethodUiStateMapper = get()
-        )
-    }
-    factory {
-        PaymentMethodUiStateMapper(
-            resources = get()
-        )
-    }
-}

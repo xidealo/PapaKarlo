@@ -29,24 +29,25 @@ fun FoodDeliverySwitcher(
     modifier: Modifier = Modifier,
     position: Int = 0,
     isLoading: Boolean = false,
-    onPositionChanged: (Int) -> Unit
+    onPositionChanged: (Int) -> Unit,
 ) {
     Crossfade(
         targetState = isLoading,
-        label = "FoodDeliverySwitcher"
+        label = "FoodDeliverySwitcher",
     ) { loading ->
         if (loading) {
             Shimmer(
-                modifier = modifier
-                    .height(48.dp)
-                    .clip(FoodDeliverySwitcherDefaults.switcherButtonShape)
+                modifier =
+                    modifier
+                        .height(48.dp)
+                        .clip(FoodDeliverySwitcherDefaults.switcherButtonShape),
             )
         } else {
             FoodDeliverySwitcher(
                 modifier = modifier,
                 optionList = optionResIdList,
                 position = position,
-                onPositionChanged = onPositionChanged
+                onPositionChanged = onPositionChanged,
             )
         }
     }
@@ -57,26 +58,27 @@ fun FoodDeliverySwitcher(
     modifier: Modifier = Modifier,
     optionList: ImmutableList<String> = persistentListOf(),
     position: Int = 0,
-    onPositionChanged: (Int) -> Unit
+    onPositionChanged: (Int) -> Unit,
 ) {
     Row(
-        modifier = modifier
-            .background(
-                color = FoodDeliveryTheme.colors.mainColors.stroke,
-                shape = switcherShape
-            )
-            .padding(4.dp),
-        horizontalArrangement = Arrangement.spacedBy(4.dp)
+        modifier =
+            modifier
+                .background(
+                    color = FoodDeliveryTheme.colors.mainColors.stroke,
+                    shape = switcherShape,
+                ).padding(4.dp),
+        horizontalArrangement = Arrangement.spacedBy(4.dp),
     ) {
         optionList.onEachIndexed { i, text ->
             SwitcherButton(
-                modifier = Modifier
-                    .weight(1f),
+                modifier =
+                    Modifier
+                        .weight(1f),
                 text = text,
                 enabled = position != i,
                 onClick = {
                     onPositionChanged(i)
-                }
+                },
             )
         }
     }
@@ -87,20 +89,20 @@ private fun SwitcherButton(
     modifier: Modifier = Modifier,
     text: String,
     enabled: Boolean,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     Card(
         modifier = modifier.height(40.dp),
         onClick = onClick,
         enabled = enabled,
         shape = FoodDeliverySwitcherDefaults.switcherButtonShape,
-        colors = FoodDeliverySwitcherDefaults.switcherButtonColor
+        colors = FoodDeliverySwitcherDefaults.switcherButtonColor,
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
             Text(
                 modifier = Modifier.align(Alignment.Center),
                 text = text,
-                style = FoodDeliveryTheme.typography.labelLarge.medium
+                style = FoodDeliveryTheme.typography.labelLarge.medium,
             )
         }
     }
@@ -111,12 +113,13 @@ private fun SwitcherButton(
 private fun SwitcherPreview() {
     FoodDeliveryTheme {
         FoodDeliverySwitcher(
-            optionResIdList = persistentListOf(
-                "Доставка",
-                "Самовывоз"
-            ),
+            optionResIdList =
+                persistentListOf(
+                    "Доставка",
+                    "Самовывоз",
+                ),
             position = 1,
-            onPositionChanged = {}
+            onPositionChanged = {},
         )
     }
 }
@@ -126,11 +129,12 @@ private fun SwitcherPreview() {
 private fun SwitcherWithOnePreview() {
     FoodDeliveryTheme {
         FoodDeliverySwitcher(
-            optionResIdList = persistentListOf(
-                "Доставка"
-            ),
+            optionResIdList =
+                persistentListOf(
+                    "Доставка",
+                ),
             position = 0,
-            onPositionChanged = {}
+            onPositionChanged = {},
         )
     }
 }
@@ -140,12 +144,13 @@ private fun SwitcherWithOnePreview() {
 private fun SwitcherLoadingPreview() {
     FoodDeliveryTheme {
         FoodDeliverySwitcher(
-            optionResIdList = persistentListOf(
-                "Доставка"
-            ),
+            optionResIdList =
+                persistentListOf(
+                    "Доставка",
+                ),
             position = 0,
             onPositionChanged = {},
-            isLoading = true
+            isLoading = true,
         )
     }
 }

@@ -35,15 +35,16 @@ fun FoodDeliveryScaffold(
     actionButton: @Composable () -> Unit = {},
     appBarContent: @Composable () -> Unit = {},
     floatingActionButtonPosition: FabPosition = FabPosition.Center,
-    content: (@Composable () -> Unit)
+    content: (@Composable () -> Unit),
 ) {
     val appBarState = rememberTopAppBarState()
     val behavior = TopAppBarDefaults.pinnedScrollBehavior(appBarState)
     val scrollBehavior = remember { behavior }
 
     Scaffold(
-        modifier = Modifier
-            .nestedScroll(scrollBehavior.nestedScrollConnection),
+        modifier =
+            Modifier
+                .nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             FoodDeliveryTopAppBar(
                 title = title,
@@ -51,18 +52,19 @@ fun FoodDeliveryScaffold(
                 isScrolled = scrollableState?.canScrollBackward ?: scrollBehavior.isScrolled,
                 actions = topActions,
                 drawableId = drawableId,
-                content = appBarContent
+                content = appBarContent,
             )
         },
         containerColor = backgroundColor,
         floatingActionButton = actionButton,
-        floatingActionButtonPosition = floatingActionButtonPosition
+        floatingActionButtonPosition = floatingActionButtonPosition,
     ) { padding ->
         Box(
-            modifier = Modifier
-                .padding(padding)
-                .fillMaxSize()
-                .background(backgroundColor)
+            modifier =
+                Modifier
+                    .padding(padding)
+                    .fillMaxSize()
+                    .background(backgroundColor),
         ) {
             content()
         }

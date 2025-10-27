@@ -31,7 +31,7 @@ import java.time.LocalTime
 @Composable
 fun TimePickerDialog(
     timePicker: TimePickerUI,
-    onAction: (CreateOrder.Action) -> Unit
+    onAction: (CreateOrder.Action) -> Unit,
 ) {
     val dialogState = rememberMaterialDialogState()
     LaunchedEffect(timePicker.isShown) {
@@ -46,8 +46,8 @@ fun TimePickerDialog(
         mutableStateOf(
             LocalTime.of(
                 timePicker.initialTime.hours,
-                timePicker.initialTime.minutes
-            )
+                timePicker.initialTime.minutes,
+            ),
         )
     }
 
@@ -56,45 +56,50 @@ fun TimePickerDialog(
         backgroundColor = FoodDeliveryTheme.colors.mainColors.surface,
         onCloseRequest = {
             onAction(CreateOrder.Action.HideTimePicker)
-        }
+        },
     ) {
-        val minTime = LocalTime.of(
-            timePicker.minTime.hours,
-            timePicker.minTime.minutes
-        )
+        val minTime =
+            LocalTime.of(
+                timePicker.minTime.hours,
+                timePicker.minTime.minutes,
+            )
         timepicker(
-            colors = TimePickerDefaults.colors(
-                activeBackgroundColor = FoodDeliveryTheme.colors.mainColors.primary.copy(0.2f),
-                inactiveBackgroundColor = FoodDeliveryTheme.colors.mainColors.disabled,
-                activeTextColor = FoodDeliveryTheme.colors.mainColors.primary,
-                inactiveTextColor = FoodDeliveryTheme.colors.mainColors.onSurface,
-                selectorColor = FoodDeliveryTheme.colors.mainColors.primary,
-                selectorTextColor = FoodDeliveryTheme.colors.mainColors.onPrimary,
-                headerTextColor = FoodDeliveryTheme.colors.mainColors.surface,
-                borderColor = FoodDeliveryTheme.colors.mainColors.onSurface
-            ),
+            colors =
+                TimePickerDefaults.colors(
+                    activeBackgroundColor =
+                        FoodDeliveryTheme.colors.mainColors.primary
+                            .copy(0.2f),
+                    inactiveBackgroundColor = FoodDeliveryTheme.colors.mainColors.disabled,
+                    activeTextColor = FoodDeliveryTheme.colors.mainColors.primary,
+                    inactiveTextColor = FoodDeliveryTheme.colors.mainColors.onSurface,
+                    selectorColor = FoodDeliveryTheme.colors.mainColors.primary,
+                    selectorTextColor = FoodDeliveryTheme.colors.mainColors.onPrimary,
+                    headerTextColor = FoodDeliveryTheme.colors.mainColors.surface,
+                    borderColor = FoodDeliveryTheme.colors.mainColors.onSurface,
+                ),
             is24HourClock = true,
-            initialTime = LocalTime.of(
-                timePicker.initialTime.hours,
-                timePicker.initialTime.minutes
-            ),
+            initialTime =
+                LocalTime.of(
+                    timePicker.initialTime.hours,
+                    timePicker.initialTime.minutes,
+                ),
             timeRange = minTime..LocalTime.MAX,
             waitForPositiveButton = false,
             onTimeChange = { newTime ->
                 time = newTime
-            }
+            },
         )
         Row(modifier = Modifier.padding(bottom = 24.dp, end = 24.dp)) {
             Spacer(modifier = Modifier.weight(1f))
             TextButton(
                 onClick = {
                     onAction(CreateOrder.Action.HideTimePicker)
-                }
+                },
             ) {
                 Text(
                     text = stringResource(R.string.common_cancel),
                     style = FoodDeliveryTheme.typography.labelLarge.medium,
-                    color = FoodDeliveryTheme.colors.mainColors.onSecondary
+                    color = FoodDeliveryTheme.colors.mainColors.onSecondary,
                 )
             }
             TextButton(
@@ -104,16 +109,16 @@ fun TimePickerDialog(
                         CreateOrder.Action.ChangeDeferredTime(
                             Time(
                                 hours = time.hour,
-                                minutes = time.minute
-                            )
-                        )
+                                minutes = time.minute,
+                            ),
+                        ),
                     )
-                }
+                },
             ) {
                 Text(
                     text = stringResource(R.string.common_ok),
                     style = FoodDeliveryTheme.typography.labelLarge.medium,
-                    color = FoodDeliveryTheme.colors.mainColors.primary
+                    color = FoodDeliveryTheme.colors.mainColors.primary,
                 )
             }
         }
@@ -124,11 +129,12 @@ fun TimePickerDialog(
 @Composable
 private fun TimePickerDialogPreview() {
     TimePickerDialog(
-        timePicker = TimePickerUI(
-            isShown = true,
-            minTime = TimeUI(1, 30),
-            initialTime = TimeUI(2, 30)
-        ),
-        onAction = {}
+        timePicker =
+            TimePickerUI(
+                isShown = true,
+                minTime = TimeUI(1, 30),
+                initialTime = TimeUI(2, 30),
+            ),
+        onAction = {},
     )
 }

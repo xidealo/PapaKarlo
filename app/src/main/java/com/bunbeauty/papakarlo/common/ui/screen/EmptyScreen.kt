@@ -33,60 +33,64 @@ internal fun EmptyScreen(
     @StringRes mainTextId: Int,
     @StringRes extraTextId: Int,
     @StringRes buttonTextId: Int? = null,
-    onClick: (() -> Unit)? = null
+    onClick: (() -> Unit)? = null,
 ) {
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(FoodDeliveryTheme.dimensions.mediumSpace)
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .padding(FoodDeliveryTheme.dimensions.mediumSpace),
     ) {
         Spacer(modifier = Modifier.weight(1f))
         Column(
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Box(
-                modifier = Modifier
-                    .size(120.dp)
-                    .clip(CircleShape)
-                    .background(
-                        FoodDeliveryTheme.colors.mainColors.primary.copy(
-                            alpha = 0.6f
-                        )
-                    ),
-                contentAlignment = Alignment.Center
+                modifier =
+                    Modifier
+                        .size(120.dp)
+                        .clip(CircleShape)
+                        .background(
+                            FoodDeliveryTheme.colors.mainColors.primary.copy(
+                                alpha = 0.6f,
+                            ),
+                        ),
+                contentAlignment = Alignment.Center,
             ) {
                 Icon(
                     modifier = Modifier.size(64.dp),
                     painter = painterResource(imageId),
                     tint = FoodDeliveryTheme.colors.statusColors.onStatus,
-                    contentDescription = stringResource(imageDescriptionId)
+                    contentDescription = stringResource(imageDescriptionId),
                 )
             }
             Text(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 32.dp)
-                    .padding(horizontal = 16.dp),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(top = 32.dp)
+                        .padding(horizontal = 16.dp),
                 text = stringResource(id = mainTextId),
                 style = FoodDeliveryTheme.typography.titleMedium.bold,
                 color = FoodDeliveryTheme.colors.mainColors.onSurface,
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
             )
             Text(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = FoodDeliveryTheme.dimensions.smallSpace)
-                    .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(top = FoodDeliveryTheme.dimensions.smallSpace)
+                        .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
                 text = stringResource(id = extraTextId),
                 style = FoodDeliveryTheme.typography.bodyLarge,
                 color = FoodDeliveryTheme.colors.mainColors.onSurface,
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
             )
         }
         Spacer(modifier = Modifier.weight(1f))
         buttonTextId?.let {
             MainButton(
-                textStringId = buttonTextId
+                textStringId = buttonTextId,
             ) {
                 onClick?.invoke()
             }
@@ -102,6 +106,6 @@ private fun EmptyScreenPreview() {
         imageDescriptionId = R.string.description_consumer_cart_empty,
         mainTextId = R.string.title_consumer_cart_empty,
         extraTextId = R.string.msg_consumer_cart_empty,
-        buttonTextId = R.string.action_consumer_cart_menu
+        buttonTextId = R.string.action_consumer_cart_menu,
     )
 }

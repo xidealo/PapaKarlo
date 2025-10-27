@@ -19,34 +19,37 @@ import com.bunbeauty.shared.presentation.menu.model.CategoryItem
 fun CategoryItem(
     modifier: Modifier = Modifier,
     categoryItem: CategoryItem,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
-    val color = if (categoryItem.isSelected) {
-        FoodDeliveryTheme.colors.mainColors.primary
-    } else {
-        FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
-    }
+    val color =
+        if (categoryItem.isSelected) {
+            FoodDeliveryTheme.colors.mainColors.primary
+        } else {
+            FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
+        }
     FoodDeliveryCard(
         modifier = modifier,
         elevated = false,
         onClick = onClick,
         colors = FoodDeliveryCardDefaults.transparentCardColors,
         shape = RoundedCornerShape(16.dp),
-        border = BorderStroke(
-            width = 2.dp,
-            color = color
-        )
+        border =
+            BorderStroke(
+                width = 2.dp,
+                color = color,
+            ),
     ) {
         Text(
-            modifier = Modifier
-                .padding(
-                    horizontal = 12.dp,
-                    vertical = 6.dp
-                ),
+            modifier =
+                Modifier
+                    .padding(
+                        horizontal = 12.dp,
+                        vertical = 6.dp,
+                    ),
             text = categoryItem.name,
             style = FoodDeliveryTheme.typography.labelLarge.medium,
             color = color,
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
         )
     }
 }
@@ -56,13 +59,14 @@ fun CategoryItem(
 private fun CategoryItemSelectedPreview() {
     FoodDeliveryTheme {
         CategoryItem(
-            categoryItem = CategoryItem(
-                key = "",
-                uuid = "",
-                name = "Бургеры",
-                isSelected = true
-            ),
-            onClick = {}
+            categoryItem =
+                CategoryItem(
+                    key = "",
+                    uuid = "",
+                    name = "Бургеры",
+                    isSelected = true,
+                ),
+            onClick = {},
         )
     }
 }
@@ -72,13 +76,14 @@ private fun CategoryItemSelectedPreview() {
 private fun CategoryItemNotSelectedPreview() {
     FoodDeliveryTheme {
         CategoryItem(
-            categoryItem = CategoryItem(
-                key = "",
-                uuid = "",
-                name = "Бургеры",
-                isSelected = false
-            ),
-            onClick = {}
+            categoryItem =
+                CategoryItem(
+                    key = "",
+                    uuid = "",
+                    name = "Бургеры",
+                    isSelected = false,
+                ),
+            onClick = {},
         )
     }
 }

@@ -26,18 +26,20 @@ import kotlinx.collections.immutable.toImmutableList
 fun CreateOrder.DataState.toViewState(): CreateOrderViewState {
     val cartTotalUI = cartTotal.toCartTotalUI()
     return CreateOrderViewState(
-        createOrderType = if (isDelivery) {
-            getCreateOrderTypeDelivery()
-        } else {
-            getCreateOrderTypePickup()
-        },
+        createOrderType =
+            if (isDelivery) {
+                getCreateOrderTypeDelivery()
+            } else {
+                getCreateOrderTypePickup()
+            },
         isAddressErrorShown = isDelivery && (isAddressErrorShown == AddressErrorState.ERROR),
         comment = comment,
-        deferredTimeStringId = if (isDelivery) {
-            R.string.delivery_time
-        } else {
-            R.string.pickup_time
-        },
+        deferredTimeStringId =
+            if (isDelivery) {
+                R.string.delivery_time
+            } else {
+                R.string.pickup_time
+            },
         deferredTime = deferredTime.toDeferredTimeString(),
         selectedPaymentMethod = selectedPaymentMethod?.toPaymentMethodUI(),
         isPaymentMethodErrorShown = isPaymentMethodErrorShown,
@@ -51,27 +53,32 @@ fun CreateOrder.DataState.toViewState(): CreateOrderViewState {
         cartTotal = cartTotalUI,
         isLoadingCreateOrder = isLoading,
         isDeferredTimeShown = isDeferredTimeShown,
-        timePicker = TimePickerUI(
-            isShown = isTimePickerShown,
-            minTime = minDeferredTime.toTimeUI(),
-            initialTime = initialDeferredTime.toTimeUI()
-        ),
-        paymentMethodList = PaymentMethodListUI(
-            isShown = isPaymentMethodListShown,
-            paymentMethodList = paymentMethodList.map { selectablePaymentMethod ->
-                selectablePaymentMethod.toSelectablePaymentMethodUI()
-            }.toImmutableList()
-        ),
-        isOrderCreationEnabled = if (isDelivery) {
-            deliveryState == CreateOrder.DataState.DeliveryState.ENABLED &&
-                (cartTotalUI as? CartTotalUI.Success)?.motivation !is MotivationUi.MinOrderCost
-        } else {
-            isPickupEnabled
-        },
+        timePicker =
+            TimePickerUI(
+                isShown = isTimePickerShown,
+                minTime = minDeferredTime.toTimeUI(),
+                initialTime = initialDeferredTime.toTimeUI(),
+            ),
+        paymentMethodList =
+            PaymentMethodListUI(
+                isShown = isPaymentMethodListShown,
+                paymentMethodList =
+                    paymentMethodList
+                        .map { selectablePaymentMethod ->
+                            selectablePaymentMethod.toSelectablePaymentMethodUI()
+                        }.toImmutableList(),
+            ),
+        isOrderCreationEnabled =
+            if (isDelivery) {
+                deliveryState == CreateOrder.DataState.DeliveryState.ENABLED &&
+                    (cartTotalUI as? CartTotalUI.Success)?.motivation !is MotivationUi.MinOrderCost
+            } else {
+                isPickupEnabled
+            },
         isLoadingSwitcher = isLoadingSwitcher,
         additionalUtensils = additionalUtensils,
         additionalUtensilsCount = additionalUtensilsCount,
-        additionalUtensilsName = stringResource(R.string.msg_additional_utensils_count)
+        additionalUtensilsName = stringResource(R.string.msg_additional_utensils_count),
     )
 }
 
@@ -79,58 +86,66 @@ fun CreateOrder.DataState.toViewState(): CreateOrderViewState {
 private fun CreateOrder.DataState.getCreateOrderTypePickup() =
     CreateOrderViewState.CreateOrderType.Pickup(
         pickupAddress = selectedCafe?.address,
-        pickupAddressList = PickupAddressListUI(
-            isShown = isCafeListShown,
-            addressList = cafeList.map { selectableCafe ->
-                SelectableAddressUI(
-                    uuid = selectableCafe.cafe.uuid,
-                    address = selectableCafe.cafe.address,
-                    isSelected = selectableCafe.isSelected,
-                    isEnabled = selectableCafe.canBePickup
-                )
-            }.toImmutableList()
-        ),
+        pickupAddressList =
+            PickupAddressListUI(
+                isShown = isCafeListShown,
+                addressList =
+                    cafeList
+                        .map { selectableCafe ->
+                            SelectableAddressUI(
+                                uuid = selectableCafe.cafe.uuid,
+                                address = selectableCafe.cafe.address,
+                                isSelected = selectableCafe.isSelected,
+                                isEnabled = selectableCafe.canBePickup,
+                            )
+                        }.toImmutableList(),
+            ),
         hasOpenedCafe = hasOpenedCafe,
-        isEnabled = isPickupEnabled
+        isEnabled = isPickupEnabled,
     )
 
 @Composable
 private fun CreateOrder.DataState.getCreateOrderTypeDelivery() =
     CreateOrderViewState.CreateOrderType.Delivery(
         deliveryAddress = selectedUserAddressWithCity?.toAddressString(),
-        deliveryAddressList = DeliveryAddressListUI(
-            isShown = isUserAddressListShown,
-            addressList = userAddressList.map { selectableUserAddress ->
-                SelectableAddressUI(
-                    uuid = selectableUserAddress.address.uuid,
-                    address = selectableUserAddress.address.toAddressString(),
-                    isSelected = selectableUserAddress.isSelected,
-                    isEnabled = true
-                )
-            }.toImmutableList()
-        ),
-        state = when (deliveryState) {
-            CreateOrder.DataState.DeliveryState.NOT_ENABLED -> {
-                CreateOrderViewState.CreateOrderType.Delivery.State.NOT_ENABLED
-            }
+        deliveryAddressList =
+            DeliveryAddressListUI(
+                isShown = isUserAddressListShown,
+                addressList =
+                    userAddressList
+                        .map { selectableUserAddress ->
+                            SelectableAddressUI(
+                                uuid = selectableUserAddress.address.uuid,
+                                address = selectableUserAddress.address.toAddressString(),
+                                isSelected = selectableUserAddress.isSelected,
+                                isEnabled = true,
+                            )
+                        }.toImmutableList(),
+            ),
+        state =
+            when (deliveryState) {
+                CreateOrder.DataState.DeliveryState.NOT_ENABLED -> {
+                    CreateOrderViewState.CreateOrderType.Delivery.State.NOT_ENABLED
+                }
 
-            CreateOrder.DataState.DeliveryState.ENABLED -> {
-                CreateOrderViewState.CreateOrderType.Delivery.State.ENABLED
-            }
+                CreateOrder.DataState.DeliveryState.ENABLED -> {
+                    CreateOrderViewState.CreateOrderType.Delivery.State.ENABLED
+                }
 
-            CreateOrder.DataState.DeliveryState.NEED_ADDRESS -> {
-                CreateOrderViewState.CreateOrderType.Delivery.State.NEED_ADDRESS
-            }
-        },
-        workload = when (workload) {
-            Cafe.Workload.LOW -> CreateOrderViewState.CreateOrderType.Delivery.Workload.LOW
-            Cafe.Workload.AVERAGE -> CreateOrderViewState.CreateOrderType.Delivery.Workload.AVERAGE
-            Cafe.Workload.HIGH -> CreateOrderViewState.CreateOrderType.Delivery.Workload.HIGH
-        }
+                CreateOrder.DataState.DeliveryState.NEED_ADDRESS -> {
+                    CreateOrderViewState.CreateOrderType.Delivery.State.NEED_ADDRESS
+                }
+            },
+        workload =
+            when (workload) {
+                Cafe.Workload.LOW -> CreateOrderViewState.CreateOrderType.Delivery.Workload.LOW
+                Cafe.Workload.AVERAGE -> CreateOrderViewState.CreateOrderType.Delivery.Workload.AVERAGE
+                Cafe.Workload.HIGH -> CreateOrderViewState.CreateOrderType.Delivery.Workload.HIGH
+            },
     )
 
-private fun CreateOrder.CartTotal.toCartTotalUI(): CartTotalUI {
-    return when (this) {
+private fun CreateOrder.CartTotal.toCartTotalUI(): CartTotalUI =
+    when (this) {
         CreateOrder.CartTotal.Loading -> CartTotalUI.Loading
         is CreateOrder.CartTotal.Success -> {
             CartTotalUI.Success(
@@ -138,8 +153,7 @@ private fun CreateOrder.CartTotal.toCartTotalUI(): CartTotalUI {
                 discount = discount,
                 deliveryCost = deliveryCost,
                 oldFinalCost = oldFinalCost,
-                newFinalCost = newFinalCost
+                newFinalCost = newFinalCost,
             )
         }
     }
-}

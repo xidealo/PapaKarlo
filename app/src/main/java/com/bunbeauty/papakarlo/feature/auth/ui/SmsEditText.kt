@@ -38,15 +38,17 @@ import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 fun SmsEditText(
     modifier: Modifier = Modifier,
     smsCodeLength: Int = 6,
-    onFilled: (smsCode: String) -> Unit
+    onFilled: (smsCode: String) -> Unit,
 ) {
-    val enteredNumbers: SnapshotStateList<String> = remember {
-        (0 until smsCodeLength).map { "" }.toMutableStateList()
-    }
+    val enteredNumbers: SnapshotStateList<String> =
+        remember {
+            (0 until smsCodeLength).map { "" }.toMutableStateList()
+        }
 
-    val focusRequesters = remember {
-        List(smsCodeLength) { FocusRequester() }
-    }
+    val focusRequesters =
+        remember {
+            List(smsCodeLength) { FocusRequester() }
+        }
 
     var isFilled: Boolean by remember {
         mutableStateOf(false)
@@ -56,16 +58,17 @@ fun SmsEditText(
 
     Row(
         modifier = modifier,
-        horizontalArrangement = spacedBy(8.dp)
+        horizontalArrangement = spacedBy(8.dp),
     ) {
         CompositionLocalProvider(
-            LocalTextSelectionColors provides FoodDeliveryTextFieldDefaults.smsCodeTextSelectionColors
+            LocalTextSelectionColors provides FoodDeliveryTextFieldDefaults.smsCodeTextSelectionColors,
         ) {
             repeat(smsCodeLength) { i ->
                 SmsDigitCell(
-                    modifier = Modifier
-                        .weight(1f)
-                        .focusRequester(focusRequesters[i]),
+                    modifier =
+                        Modifier
+                            .weight(1f)
+                            .focusRequester(focusRequesters[i]),
                     value = enteredNumbers[i],
                     onValueChanged = { changedValue ->
                         enteredNumbers[i] = changedValue
@@ -87,7 +90,7 @@ fun SmsEditText(
                             enteredNumbers[i - 1] = ""
                             focusRequesters[i - 1].requestFocus()
                         }
-                    }
+                    },
                 )
             }
         }
@@ -103,27 +106,30 @@ fun SmsDigitCell(
     value: String,
     onValueChanged: (String) -> Unit,
     onFilledRemoved: () -> Unit,
-    onEmptyRemoved: () -> Unit
+    onEmptyRemoved: () -> Unit,
 ) {
     val composeCoroutineScope = rememberCoroutineScope()
 
     TextField(
-        modifier = modifier
-            .onKeyEvent { event ->
-                if (event.type == KeyEventType.KeyUp) {
-                    if (event.key == Key.Backspace) {
-                        if (value == "") {
-                            onEmptyRemoved()
-                        } else {
-                            onFilledRemoved()
+        modifier =
+            modifier
+                .onKeyEvent { event ->
+                    if (event.type == KeyEventType.KeyUp) {
+                        if (event.key == Key.Backspace) {
+                            if (value == "") {
+                                onEmptyRemoved()
+                            } else {
+                                onFilledRemoved()
+                            }
                         }
                     }
-                }
-                true
-            },
+                    true
+                },
         colors = FoodDeliveryTextFieldDefaults.smsCodeTextFieldColors,
-        textStyle = FoodDeliveryTheme.typography
-            .bodyLarge.copy(textAlign = TextAlign.Center),
+        textStyle =
+            FoodDeliveryTheme.typography
+                .bodyLarge
+                .copy(textAlign = TextAlign.Center),
         singleLine = true,
         value = TextFieldValue(value),
         onValueChange = { textFieldValue ->
@@ -135,10 +141,11 @@ fun SmsDigitCell(
                 }
             }
         },
-        keyboardOptions = KeyboardOptions(
-            keyboardType = KeyboardType.Number,
-            imeAction = ImeAction.None
-        )
+        keyboardOptions =
+            KeyboardOptions(
+                keyboardType = KeyboardType.Number,
+                imeAction = ImeAction.None,
+            ),
     )
 }
 

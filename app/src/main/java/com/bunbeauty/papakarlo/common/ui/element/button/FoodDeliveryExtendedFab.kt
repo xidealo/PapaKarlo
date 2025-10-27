@@ -24,7 +24,7 @@ fun FoodDeliveryExtendedFab(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     @DrawableRes icon: Int? = null,
-    iconBadge: String? = null
+    iconBadge: String? = null,
 ) {
     ExtendedFloatingActionButton(
         modifier = modifier,
@@ -33,36 +33,37 @@ fun FoodDeliveryExtendedFab(
             Text(
                 text = text,
                 style = FoodDeliveryTheme.typography.labelLarge,
-                color = FoodDeliveryTheme.colors.mainColors.onPrimary
+                color = FoodDeliveryTheme.colors.mainColors.onPrimary,
             )
         },
         icon = {
             icon?.let {
                 Box {
                     Icon(
-                        modifier = Modifier
-                            .padding(4.dp)
-                            .icon24(),
+                        modifier =
+                            Modifier
+                                .padding(4.dp)
+                                .icon24(),
                         painter = painterResource(id = icon),
                         tint = FoodDeliveryTheme.colors.mainColors.onPrimary,
-                        contentDescription = null
+                        contentDescription = null,
                     )
                     iconBadge?.let {
                         Badge(
                             modifier = Modifier.align(Alignment.TopEnd),
                             containerColor = FoodDeliveryTheme.colors.mainColors.onPrimary,
-                            contentColor = FoodDeliveryTheme.colors.mainColors.primary
+                            contentColor = FoodDeliveryTheme.colors.mainColors.primary,
                         ) {
                             Text(
                                 style = FoodDeliveryTheme.typography.labelSmall.medium,
-                                text = iconBadge
+                                text = iconBadge,
                             )
                         }
                     }
                 }
             }
         },
-        onClick = onClick
+        onClick = onClick,
     )
 }
 
@@ -73,7 +74,7 @@ private fun FoodDeliveryExtendedFabPreview() {
         FoodDeliveryExtendedFab(
             text = "SomeText",
             icon = R.drawable.ic_cart_24,
-            onClick = {}
+            onClick = {},
         )
     }
 }
@@ -86,7 +87,7 @@ private fun FoodDeliveryExtendedFabWithBadgePreview() {
             text = "SomeText",
             icon = R.drawable.ic_cart_24,
             iconBadge = "2",
-            onClick = {}
+            onClick = {},
         )
     }
 }

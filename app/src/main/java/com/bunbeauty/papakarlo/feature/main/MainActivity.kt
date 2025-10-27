@@ -50,8 +50,9 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
-
+class MainActivity :
+    AppCompatActivity(R.layout.layout_compose),
+    IMessageHost {
     val viewModel: MainViewModel by viewModel()
 
     private val requestPermissionLauncher by lazy {
@@ -70,15 +71,16 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
             LaunchedEffect(mainState.eventList) {
                 handleEventList(
                     eventList = mainState.eventList,
-                    snackbarHostState = snackbarHostState
+                    snackbarHostState = snackbarHostState,
                 )
             }
             FoodDeliveryTheme {
                 MainScreen(
                     mainState = mainState,
                     snackbarHostState = snackbarHostState,
-                    backgroundColor = mainState.statusBarColor
-                        ?: FoodDeliveryTheme.colors.mainColors.surface
+                    backgroundColor =
+                        mainState.statusBarColor
+                            ?: FoodDeliveryTheme.colors.mainColors.surface,
                 )
             }
         }
@@ -86,7 +88,10 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
         checkNotificationPermission()
     }
 
-    override fun showInfoMessage(text: String, paddingBottom: Int) {
+    override fun showInfoMessage(
+        text: String,
+        paddingBottom: Int,
+    ) {
         viewModel.showInfoMessage(text = text, paddingBottom = paddingBottom)
     }
 
@@ -111,39 +116,41 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
     private fun MainScreen(
         mainState: MainState,
         snackbarHostState: SnackbarHostState,
-        backgroundColor: Color
+        backgroundColor: Color,
     ) {
         Scaffold(
             snackbarHost = {
                 FoodDeliverySnackbarHost(
                     snackbarHostState = snackbarHostState,
-                    paddingBottom = mainState.paddingBottomSnackbar
+                    paddingBottom = mainState.paddingBottomSnackbar,
                 )
-            }
+            },
         ) {
             Column(
-                modifier = Modifier
-                    .background(backgroundColor)
-                    .statusBarsPadding()
-                    .navigationBarsPadding()
-                    .imePadding()
+                modifier =
+                    Modifier
+                        .background(backgroundColor)
+                        .statusBarsPadding()
+                        .navigationBarsPadding()
+                        .imePadding(),
             ) {
                 ConnectionErrorMessage(visible = mainState.connectionLost)
                 StatusBarMessage(statusBarMessage = mainState.statusBarMessage)
                 val navController = rememberNavController()
 
                 Box(
-                    modifier = Modifier
-                        .fillMaxSize()
+                    modifier =
+                        Modifier
+                            .fillMaxSize(),
                 ) {
                     NavHost(
                         navController = navController,
                         startDestination = SplashScreenDestination,
                         popEnterTransition = { EnterTransition.None },
-                        popExitTransition = { ExitTransition.None }
+                        popExitTransition = { ExitTransition.None },
                     ) {
                         foodDeliveryNavGraphBuilder(
-                            navController = navController
+                            navController = navController,
                         )
                     }
                 }
@@ -156,19 +163,20 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
         AnimatedVisibility(
             visible = visible,
             enter = slideInVertically(tween(300)),
-            exit = slideOutVertically(tween(300))
+            exit = slideOutVertically(tween(300)),
         ) {
             Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(FoodDeliveryTheme.colors.mainColors.error)
-                    .padding(8.dp),
-                contentAlignment = Alignment.Center
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .background(FoodDeliveryTheme.colors.mainColors.error)
+                        .padding(8.dp),
+                contentAlignment = Alignment.Center,
             ) {
                 Text(
                     text = resources.getString(R.string.error_no_internet),
                     style = FoodDeliveryTheme.typography.bodyMedium,
-                    color = FoodDeliveryTheme.colors.mainColors.onError
+                    color = FoodDeliveryTheme.colors.mainColors.onError,
                 )
             }
         }
@@ -179,20 +187,21 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
         AnimatedVisibility(
             visible = statusBarMessage.isVisible,
             enter = slideInVertically(tween(300)),
-            exit = slideOutVertically(tween(300))
+            exit = slideOutVertically(tween(300)),
         ) {
             Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(FoodDeliveryTheme.colors.statusColors.warning)
-                    .padding(8.dp),
-                contentAlignment = Alignment.Center
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .background(FoodDeliveryTheme.colors.statusColors.warning)
+                        .padding(8.dp),
+                contentAlignment = Alignment.Center,
             ) {
                 if (statusBarMessage.isVisible) {
                     Text(
                         text = stringResource(R.string.warning_no_order_available),
                         style = FoodDeliveryTheme.typography.bodyMedium,
-                        color = FoodDeliveryTheme.colors.statusColors.onStatus
+                        color = FoodDeliveryTheme.colors.statusColors.onStatus,
                     )
                 }
             }
@@ -202,27 +211,30 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
     @Composable
     private fun FoodDeliverySnackbarHost(
         snackbarHostState: SnackbarHostState,
-        paddingBottom: Int
+        paddingBottom: Int,
     ) {
         SnackbarHost(
             hostState = snackbarHostState,
-            modifier = Modifier
-                .padding(bottom = paddingBottom.dp)
-                .imePadding()
+            modifier =
+                Modifier
+                    .padding(bottom = paddingBottom.dp)
+                    .imePadding(),
         ) { snackbarData ->
             (snackbarData.visuals as? FoodDeliverySnackbarVisuals)?.let { visuals ->
-                val containerColor = when (visuals.foodDeliveryMessage.type) {
-                    FoodDeliveryMessageType.INFO -> FoodDeliveryTheme.colors.mainColors.primary
-                    FoodDeliveryMessageType.ERROR -> FoodDeliveryTheme.colors.mainColors.error
-                }
-                val contentColor = when (visuals.foodDeliveryMessage.type) {
-                    FoodDeliveryMessageType.INFO -> FoodDeliveryTheme.colors.mainColors.onPrimary
-                    FoodDeliveryMessageType.ERROR -> FoodDeliveryTheme.colors.mainColors.onError
-                }
+                val containerColor =
+                    when (visuals.foodDeliveryMessage.type) {
+                        FoodDeliveryMessageType.INFO -> FoodDeliveryTheme.colors.mainColors.primary
+                        FoodDeliveryMessageType.ERROR -> FoodDeliveryTheme.colors.mainColors.error
+                    }
+                val contentColor =
+                    when (visuals.foodDeliveryMessage.type) {
+                        FoodDeliveryMessageType.INFO -> FoodDeliveryTheme.colors.mainColors.onPrimary
+                        FoodDeliveryMessageType.ERROR -> FoodDeliveryTheme.colors.mainColors.onError
+                    }
                 Snackbar(
                     snackbarData = snackbarData,
                     containerColor = containerColor,
-                    contentColor = contentColor
+                    contentColor = contentColor,
                 )
             }
         }
@@ -230,19 +242,21 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
 
     private fun handleEventList(
         eventList: List<MainState.Event>,
-        snackbarHostState: SnackbarHostState
+        snackbarHostState: SnackbarHostState,
     ) {
         eventList.forEach { event ->
             when (event) {
                 is MainState.Event.ShowMessageEvent -> {
                     lifecycleScope.launch {
-                        val snackbarJob = launch {
-                            snackbarHostState.showSnackbar(
-                                visuals = FoodDeliverySnackbarVisuals(
-                                    event.message
+                        val snackbarJob =
+                            launch {
+                                snackbarHostState.showSnackbar(
+                                    visuals =
+                                        FoodDeliverySnackbarVisuals(
+                                            event.message,
+                                        ),
                                 )
-                            )
-                        }
+                            }
                         delay(2_000)
                         snackbarJob.cancel()
                     }

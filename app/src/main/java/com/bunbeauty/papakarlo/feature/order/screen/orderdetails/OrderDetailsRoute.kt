@@ -48,7 +48,7 @@ import org.koin.compose.koinInject
 fun OrderDetailsRoute(
     viewModel: OrderDetailsViewModel = koinViewModel(),
     orderUuid: String,
-    back: () -> Unit
+    back: () -> Unit,
 ) {
     val orderDetailsUiStateMapper = koinInject<OrderDetailsUiStateMapper>()
 
@@ -61,23 +61,25 @@ fun OrderDetailsRoute(
 
     val viewState by viewModel.dataState.collectAsStateWithLifecycle()
 
-    val onAction = remember {
-        { action: OrderDetails.Action ->
-            viewModel.onAction(action)
+    val onAction =
+        remember {
+            { action: OrderDetails.Action ->
+                viewModel.onAction(action)
+            }
         }
-    }
 
     val effects by viewModel.events.collectAsStateWithLifecycle()
-    val consumeEffects = remember {
-        {
-            viewModel.consumeEvents(effects)
+    val consumeEffects =
+        remember {
+            {
+                viewModel.consumeEvents(effects)
+            }
         }
-    }
 
     OrderDetailsEffect(
         effects = effects,
         back = back,
-        consumeEffects = consumeEffects
+        consumeEffects = consumeEffects,
     )
 
     OrderDetailsScreen(viewState = orderDetailsUiStateMapper.map(viewState), onAction = onAction)
@@ -87,7 +89,7 @@ fun OrderDetailsRoute(
 fun OrderDetailsEffect(
     effects: List<OrderDetails.Event>,
     back: () -> Unit,
-    consumeEffects: () -> Unit
+    consumeEffects: () -> Unit,
 ) {
     LaunchedEffect(effects) {
         effects.forEach { effect ->
@@ -102,28 +104,30 @@ fun OrderDetailsEffect(
 @Composable
 private fun OrderDetailsScreen(
     viewState: OrderDetailsViewState,
-    onAction: (OrderDetails.Action) -> Unit
+    onAction: (OrderDetails.Action) -> Unit,
 ) {
     FoodDeliveryScaffold(
         title = viewState.code,
         backActionClick = {
             onAction(OrderDetails.Action.Back)
         },
-        backgroundColor = FoodDeliveryTheme.colors.mainColors.surface
+        backgroundColor = FoodDeliveryTheme.colors.mainColors.surface,
     ) {
         Crossfade(
             targetState = viewState.state,
-            label = "ConsumerCart"
+            label = "ConsumerCart",
         ) { screenState ->
             when (screenState) {
                 OrderDetails.DataState.ScreenState.LOADING -> LoadingScreen()
-                OrderDetails.DataState.ScreenState.SUCCESS -> OrderDetailsSuccessScreen(
-                    viewState
-                )
+                OrderDetails.DataState.ScreenState.SUCCESS ->
+                    OrderDetailsSuccessScreen(
+                        viewState,
+                    )
 
-                OrderDetails.DataState.ScreenState.ERROR -> ErrorScreen(R.string.error_order_details_discount) {
-                    onAction(OrderDetails.Action.Reload(viewState.orderUuid))
-                }
+                OrderDetails.DataState.ScreenState.ERROR ->
+                    ErrorScreen(R.string.error_order_details_discount) {
+                        onAction(OrderDetails.Action.Reload(viewState.orderUuid))
+                    }
             }
         }
     }
@@ -133,20 +137,21 @@ private fun OrderDetailsScreen(
 private fun OrderDetailsSuccessScreen(state: OrderDetailsViewState) {
     Column(modifier = Modifier.fillMaxSize()) {
         Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f)
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .weight(1f),
         ) {
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),
                 contentPadding = PaddingValues(bottom = FoodDeliveryTheme.dimensions.screenContentSpace),
-                verticalArrangement = spacedBy(8.dp)
+                verticalArrangement = spacedBy(8.dp),
             ) {
                 item(key = "OrderStatusBar") {
                     state.orderInfo?.let { orderInfo ->
                         OrderStatusBar(
                             orderStatus = orderInfo.status,
-                            orderStatusName = orderInfo.statusName
+                            orderStatusName = orderInfo.statusName,
                         )
                     }
                 }
@@ -154,9 +159,10 @@ private fun OrderDetailsSuccessScreen(state: OrderDetailsViewState) {
                 item(key = "OrderInfoCard") {
                     state.orderInfo?.let { orderInfo ->
                         OrderInfoCard(
-                            modifier = Modifier
-                                .fillMaxWidth(),
-                            orderInfo = orderInfo
+                            modifier =
+                                Modifier
+                                    .fillMaxWidth(),
+                            orderInfo = orderInfo,
                         )
                     }
                 }
@@ -165,12 +171,12 @@ private fun OrderDetailsSuccessScreen(state: OrderDetailsViewState) {
                     items = state.orderProductItemList,
                     key = { orderProductItem ->
                         orderProductItem.key
-                    }
+                    },
                 ) { orderProductItem ->
                     FoodDeliveryItem(needDivider = !orderProductItem.isLast) {
                         OrderProductItem(
                             modifier = Modifier.padding(horizontal = 16.dp),
-                            orderProductItem = orderProductItem
+                            orderProductItem = orderProductItem,
                         )
                     }
                 }
@@ -184,18 +190,18 @@ private fun OrderDetailsSuccessScreen(state: OrderDetailsViewState) {
 private fun OrderInfoTextColumn(
     modifier: Modifier = Modifier,
     hint: String,
-    info: String
+    info: String,
 ) {
     Column(modifier = modifier) {
         Text(
             text = hint,
             style = FoodDeliveryTheme.typography.labelSmall.medium,
-            color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
+            color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
         )
         Text(
             text = info,
             style = FoodDeliveryTheme.typography.bodyMedium,
-            color = FoodDeliveryTheme.colors.mainColors.onSurface
+            color = FoodDeliveryTheme.colors.mainColors.onSurface,
         )
     }
 }
@@ -203,71 +209,79 @@ private fun OrderInfoTextColumn(
 @Composable
 private fun OrderInfoCard(
     modifier: Modifier = Modifier,
-    orderInfo: OrderDetailsViewState.OrderInfo
+    orderInfo: OrderDetailsViewState.OrderInfo,
 ) {
     FoodDeliveryCard(
         modifier = modifier,
         clickable = false,
-        elevated = false
+        elevated = false,
     ) {
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp)
-                .padding(bottom = 8.dp)
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp)
+                    .padding(bottom = 8.dp),
         ) {
             Row(
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             ) {
                 OrderInfoTextColumn(
-                    modifier = Modifier
-                        .weight(1f),
+                    modifier =
+                        Modifier
+                            .weight(1f),
                     hint = stringResource(R.string.msg_order_details_date_time),
-                    info = orderInfo.dateTime
+                    info = orderInfo.dateTime,
                 )
                 orderInfo.deferredTime?.let { deferredTime ->
                     OrderInfoTextColumn(
-                        modifier = Modifier
-                            .padding(start = 16.dp)
-                            .weight(1f),
+                        modifier =
+                            Modifier
+                                .padding(start = 16.dp)
+                                .weight(1f),
                         hint = orderInfo.deferredTimeHint,
-                        info = deferredTime
+                        info = deferredTime,
                     )
                 }
             }
             Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 8.dp)
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(top = 8.dp),
             ) {
                 OrderInfoTextColumn(
-                    modifier = Modifier
-                        .weight(1f),
+                    modifier =
+                        Modifier
+                            .weight(1f),
                     hint = stringResource(R.string.msg_order_details_pickup_method),
-                    info = orderInfo.pickupMethod
+                    info = orderInfo.pickupMethod,
                 )
                 orderInfo.paymentMethod?.let { paymentMethod ->
                     OrderInfoTextColumn(
-                        modifier = Modifier
-                            .padding(start = 16.dp)
-                            .weight(1f),
+                        modifier =
+                            Modifier
+                                .padding(start = 16.dp)
+                                .weight(1f),
                         hint = stringResource(R.string.msg_order_details_payment_method),
-                        info = paymentMethod
+                        info = paymentMethod,
                     )
                 }
             }
             OrderInfoTextColumn(
-                modifier = Modifier
-                    .padding(top = 8.dp),
+                modifier =
+                    Modifier
+                        .padding(top = 8.dp),
                 hint = stringResource(R.string.msg_order_details_address),
-                info = orderInfo.address
+                info = orderInfo.address,
             )
             orderInfo.comment?.let { comment ->
                 OrderInfoTextColumn(
-                    modifier = Modifier
-                        .padding(top = 8.dp),
+                    modifier =
+                        Modifier
+                            .padding(top = 8.dp),
                     hint = stringResource(R.string.msg_order_details_comment),
-                    info = comment
+                    info = comment,
                 )
             }
         }
@@ -278,17 +292,18 @@ private fun OrderInfoCard(
 private fun BottomAmountBar(orderDetailsViewState: OrderDetailsViewState) {
     FoodDeliverySurface(modifier = Modifier.fillMaxWidth()) {
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(FoodDeliveryTheme.colors.mainColors.surface)
-                .padding(FoodDeliveryTheme.dimensions.mediumSpace)
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .background(FoodDeliveryTheme.colors.mainColors.surface)
+                    .padding(FoodDeliveryTheme.dimensions.mediumSpace),
         ) {
             orderDetailsViewState.discount?.let { discount ->
                 Row(modifier = Modifier.padding(bottom = 8.dp)) {
                     Text(
                         text = stringResource(R.string.msg_order_details_discount),
                         style = FoodDeliveryTheme.typography.bodyMedium,
-                        color = FoodDeliveryTheme.colors.mainColors.onSurface
+                        color = FoodDeliveryTheme.colors.mainColors.onSurface,
                     )
                     Spacer(modifier = Modifier.weight(1f))
 
@@ -301,7 +316,7 @@ private fun BottomAmountBar(orderDetailsViewState: OrderDetailsViewState) {
                     Text(
                         text = stringResource(R.string.msg_order_details_delivery_cost),
                         style = FoodDeliveryTheme.typography.bodyMedium,
-                        color = FoodDeliveryTheme.colors.mainColors.onSurface
+                        color = FoodDeliveryTheme.colors.mainColors.onSurface,
                     )
                     Spacer(modifier = Modifier.weight(1f))
                     Text(
@@ -309,7 +324,7 @@ private fun BottomAmountBar(orderDetailsViewState: OrderDetailsViewState) {
                         text = deliveryCost,
                         style = FoodDeliveryTheme.typography.bodyMedium,
                         color = FoodDeliveryTheme.colors.mainColors.onSurface,
-                        textAlign = TextAlign.End
+                        textAlign = TextAlign.End,
                     )
                 }
             }
@@ -317,14 +332,14 @@ private fun BottomAmountBar(orderDetailsViewState: OrderDetailsViewState) {
                 Text(
                     text = stringResource(R.string.msg_order_details_order_cost),
                     style = FoodDeliveryTheme.typography.bodyMedium.bold,
-                    color = FoodDeliveryTheme.colors.mainColors.onSurface
+                    color = FoodDeliveryTheme.colors.mainColors.onSurface,
                 )
                 Text(
                     modifier = Modifier.weight(1f),
                     text = orderDetailsViewState.newTotalCost,
                     style = FoodDeliveryTheme.typography.bodyMedium.bold,
                     color = FoodDeliveryTheme.colors.mainColors.onSurface,
-                    textAlign = TextAlign.End
+                    textAlign = TextAlign.End,
                 )
             }
         }
@@ -344,10 +359,11 @@ private fun OrderInfoCardPreview() {
 private fun OrderInfoCardWithoutDeferredTimeAndCommentPreview() {
     FoodDeliveryTheme {
         OrderInfoCard(
-            orderInfo = getOrderInfo().copy(
-                deferredTime = null,
-                comment = null
-            )
+            orderInfo =
+                getOrderInfo().copy(
+                    deferredTime = null,
+                    comment = null,
+                ),
         )
     }
 }
@@ -365,7 +381,7 @@ private fun BottomAmountBarPreview() {
 private fun BottomAmountBarWithoutDeliveryPreview() {
     FoodDeliveryTheme {
         BottomAmountBar(
-            orderDetailsViewState = getOrderDetails().copy(deliveryCost = null)
+            orderDetailsViewState = getOrderDetails().copy(deliveryCost = null),
         )
     }
 }
@@ -376,7 +392,7 @@ private fun OrderDetailsSuccessScreenPreview() {
     FoodDeliveryTheme {
         OrderDetailsScreen(
             viewState = getOrderDetails(),
-            onAction = {}
+            onAction = {},
         )
     }
 }
@@ -386,68 +402,68 @@ private fun OrderDetailsSuccessScreenPreview() {
 private fun OrderDetailsLoadingScreenPreview() {
     FoodDeliveryTheme {
         OrderDetailsScreen(
-            viewState = getOrderDetails().copy(
-                state = OrderDetails.DataState.ScreenState.LOADING
-            ),
+            viewState =
+                getOrderDetails().copy(
+                    state = OrderDetails.DataState.ScreenState.LOADING,
+                ),
             onAction = {
-            }
+            },
         )
     }
 }
 
-private fun getOrderDetails(): OrderDetailsViewState {
-    return OrderDetailsViewState(
-        orderProductItemList = listOf(
-            OrderProductUiItem(
-                uuid = "",
-                name = "Product 1",
-                newPrice = "100 ₽",
-                newCost = "200 ₽",
-                photoLink = "",
-                count = "× 2",
-                key = "k1",
-                additions = null,
-                isLast = false
+private fun getOrderDetails(): OrderDetailsViewState =
+    OrderDetailsViewState(
+        orderProductItemList =
+            listOf(
+                OrderProductUiItem(
+                    uuid = "",
+                    name = "Product 1",
+                    newPrice = "100 ₽",
+                    newCost = "200 ₽",
+                    photoLink = "",
+                    count = "× 2",
+                    key = "k1",
+                    additions = null,
+                    isLast = false,
+                ),
+                OrderProductUiItem(
+                    uuid = "",
+                    name = "Product 2",
+                    newPrice = "150 ₽",
+                    newCost = "150 ₽",
+                    photoLink = "",
+                    count = "× 1",
+                    key = "k2",
+                    additions = "Необычный лаваш • Добавка 1 • Добавка 2",
+                    isLast = true,
+                ),
             ),
-            OrderProductUiItem(
-                uuid = "",
-                name = "Product 2",
-                newPrice = "150 ₽",
-                newCost = "150 ₽",
-                photoLink = "",
-                count = "× 1",
-                key = "k2",
-                additions = "Необычный лаваш • Добавка 1 • Добавка 2",
-                isLast = true
-            )
-        ),
         orderInfo = getOrderInfo(),
         deliveryCost = "100 ₽",
         newTotalCost = "550 ₽",
         state = OrderDetails.DataState.ScreenState.SUCCESS,
         code = "A-40",
         discount = "10%",
-        orderUuid = "sdas"
+        orderUuid = "sdas",
     )
-}
 
-private fun getOrderInfo(): OrderDetailsViewState.OrderInfo {
-    return OrderDetailsViewState.OrderInfo(
+private fun getOrderInfo(): OrderDetailsViewState.OrderInfo =
+    OrderDetailsViewState.OrderInfo(
         status = OrderStatus.PREPARING,
         dateTime = "19.03.2023",
         deferredTime = "10:30",
         address =
-        "" +
-            "ул. Лука" +
-            "2" +
-            "10" +
-            "1" +
-            "3" +
-            "тест",
+            "" +
+                "ул. Лука" +
+                "2" +
+                "10" +
+                "1" +
+                "3" +
+                "тест",
         comment = "давай кушать",
         pickupMethod = "доставка",
         statusName = "Готовится",
         deferredTimeHint = "Время самовывоза",
-        paymentMethod = "Наличными"
+        paymentMethod = "Наличными",
     )
-}

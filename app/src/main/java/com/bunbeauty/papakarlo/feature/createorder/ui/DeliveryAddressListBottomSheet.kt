@@ -20,18 +20,18 @@ import kotlinx.collections.immutable.persistentListOf
 @Composable
 fun DeliveryAddressListBottomSheet(
     deliveryAddressList: DeliveryAddressListUI,
-    onAction: (CreateOrder.Action) -> Unit
+    onAction: (CreateOrder.Action) -> Unit,
 ) {
     FoodDeliveryModalBottomSheet(
         onDismissRequest = {
             onAction(CreateOrder.Action.HideDeliveryAddressList)
         },
         isShown = deliveryAddressList.isShown,
-        title = stringResource(R.string.delivery_address)
+        title = stringResource(R.string.delivery_address),
     ) {
         DeliveryAddressListBottomSheetContent(
             addressList = deliveryAddressList.addressList,
-            onAction = onAction
+            onAction = onAction,
         )
     }
 }
@@ -39,14 +39,14 @@ fun DeliveryAddressListBottomSheet(
 @Composable
 private fun DeliveryAddressListBottomSheetContent(
     addressList: ImmutableList<SelectableAddressUI>,
-    onAction: (CreateOrder.Action) -> Unit
+    onAction: (CreateOrder.Action) -> Unit,
 ) {
     LazyColumn(verticalArrangement = Arrangement.Absolute.spacedBy(8.dp)) {
         items(
             items = addressList,
             key = { selectableAddress ->
                 "DeliveryAddress ${selectableAddress.uuid}"
-            }
+            },
         ) { selectableAddress ->
             SelectableItem(
                 title = selectableAddress.address,
@@ -56,7 +56,7 @@ private fun DeliveryAddressListBottomSheetContent(
                 onClick = {
                     onAction(CreateOrder.Action.ChangeDeliveryAddress(addressUuid = selectableAddress.uuid))
                 },
-                enabled = selectableAddress.isEnabled
+                enabled = selectableAddress.isEnabled,
             )
         }
         item(key = "AddAddress") {
@@ -64,7 +64,7 @@ private fun DeliveryAddressListBottomSheetContent(
                 textStringId = R.string.action_add_addresses,
                 onClick = {
                     onAction(CreateOrder.Action.AddAddressClick)
-                }
+                },
             )
         }
     }
@@ -74,26 +74,27 @@ private fun DeliveryAddressListBottomSheetContent(
 @Composable
 private fun DeliveryAddressListBottomPreview() {
     DeliveryAddressListBottomSheetContent(
-        addressList = persistentListOf(
-            SelectableAddressUI(
-                uuid = "1",
-                address = "улица Чапаева, д. 22А",
-                isSelected = false,
-                isEnabled = true
+        addressList =
+            persistentListOf(
+                SelectableAddressUI(
+                    uuid = "1",
+                    address = "улица Чапаева, д. 22А",
+                    isSelected = false,
+                    isEnabled = true,
+                ),
+                SelectableAddressUI(
+                    uuid = "2",
+                    address = "улица Чапаева, д. 22А кв. 55, 1 подъезд, 1 этаж",
+                    isSelected = true,
+                    isEnabled = true,
+                ),
+                SelectableAddressUI(
+                    uuid = "3",
+                    address = "улица Чапаева, д. 22А кв. 55, 1 подъезд, 2 этаж",
+                    isSelected = true,
+                    isEnabled = false,
+                ),
             ),
-            SelectableAddressUI(
-                uuid = "2",
-                address = "улица Чапаева, д. 22А кв. 55, 1 подъезд, 1 этаж",
-                isSelected = true,
-                isEnabled = true
-            ),
-            SelectableAddressUI(
-                uuid = "3",
-                address = "улица Чапаева, д. 22А кв. 55, 1 подъезд, 2 этаж",
-                isSelected = true,
-                isEnabled = false
-            )
-        ),
-        onAction = {}
+        onAction = {},
     )
 }

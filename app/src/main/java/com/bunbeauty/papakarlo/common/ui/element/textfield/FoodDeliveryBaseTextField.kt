@@ -35,7 +35,7 @@ fun FoodDeliveryBaseTextField(
     maxLines: Int = 1,
     isError: Boolean = false,
     isLoading: Boolean = false,
-    trailingIcon: (@Composable () -> Unit)? = null
+    trailingIcon: (@Composable () -> Unit)? = null,
 ) {
     OutlinedTextField(
         modifier = modifier,
@@ -48,7 +48,7 @@ fun FoodDeliveryBaseTextField(
             Text(
                 text = stringResource(labelStringId),
                 maxLines = 1,
-                overflow = TextOverflow.Ellipsis
+                overflow = TextOverflow.Ellipsis,
             )
         },
         trailingIcon = {
@@ -58,7 +58,7 @@ fun FoodDeliveryBaseTextField(
                     textValue = value,
                     onClick = {
                         onValueChange("")
-                    }
+                    },
                 )
             } else {
                 trailingIcon()
@@ -69,7 +69,7 @@ fun FoodDeliveryBaseTextField(
         keyboardActions = keyboardActions,
         singleLine = maxLines == 1,
         maxLines = maxLines,
-        colors = FoodDeliveryTextFieldDefaults.textFieldColors
+        colors = FoodDeliveryTextFieldDefaults.textFieldColors,
     )
 }
 
@@ -85,10 +85,10 @@ fun FoodDeliveryBaseTextField(
     maxLines: Int = 1,
     isError: Boolean = false,
     isLoading: Boolean = false,
-    trailingIcon: (@Composable () -> Unit)? = null
+    trailingIcon: (@Composable () -> Unit)? = null,
 ) {
     CompositionLocalProvider(
-        LocalTextSelectionColors provides FoodDeliveryTextFieldDefaults.textSelectionColors
+        LocalTextSelectionColors provides FoodDeliveryTextFieldDefaults.textSelectionColors,
     ) {
         OutlinedTextField(
             modifier = modifier.fillMaxWidth(),
@@ -96,8 +96,8 @@ fun FoodDeliveryBaseTextField(
             onValueChange = { changedValue ->
                 onValueChange(
                     changedValue.copy(
-                        text = changedValue.text.take(maxSymbols)
-                    )
+                        text = changedValue.text.take(maxSymbols),
+                    ),
                 )
             },
             textStyle = FoodDeliveryTheme.typography.bodyLarge,
@@ -105,7 +105,7 @@ fun FoodDeliveryBaseTextField(
                 Text(
                     text = stringResource(labelStringId),
                     maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
+                    overflow = TextOverflow.Ellipsis,
                 )
             },
             trailingIcon = {
@@ -115,7 +115,7 @@ fun FoodDeliveryBaseTextField(
                         textValue = value.text,
                         onClick = {
                             onValueChange(TextFieldValue(""))
-                        }
+                        },
                     )
                 } else {
                     trailingIcon()
@@ -126,7 +126,7 @@ fun FoodDeliveryBaseTextField(
             keyboardActions = keyboardActions,
             singleLine = maxLines == 1,
             maxLines = maxLines,
-            colors = FoodDeliveryTextFieldDefaults.textFieldColors
+            colors = FoodDeliveryTextFieldDefaults.textFieldColors,
         )
     }
 }
@@ -136,7 +136,7 @@ private fun TrailingIcon(
     isLoading: Boolean,
     textValue: String,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     when {
         isLoading -> {
@@ -145,12 +145,13 @@ private fun TrailingIcon(
 
         textValue.isNotEmpty() -> {
             Icon(
-                modifier = modifier
-                    .size(16.dp)
-                    .clickable(onClick = onClick),
+                modifier =
+                    modifier
+                        .size(16.dp)
+                        .clickable(onClick = onClick),
                 painter = painterResource(R.drawable.ic_clear),
                 tint = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
-                contentDescription = null
+                contentDescription = null,
             )
         }
     }
@@ -163,7 +164,7 @@ private fun FoodDeliveryTextBaseFieldPreview() {
         FoodDeliveryBaseTextField(
             value = "Нужно больше еды \n ...",
             labelStringId = R.string.hint_create_order_comment,
-            onValueChange = {}
+            onValueChange = {},
         )
     }
 }
@@ -176,7 +177,7 @@ private fun FoodDeliveryTextBaseFieldWithLoadingPreview() {
             value = "Нужно больше еды \n ...",
             labelStringId = R.string.hint_create_order_comment,
             onValueChange = {},
-            isLoading = true
+            isLoading = true,
         )
     }
 }
@@ -189,7 +190,7 @@ private fun FoodDeliveryTextBaseFieldWithErrorPreview() {
             value = "Нужно больше еды \n ...",
             labelStringId = R.string.hint_create_order_comment,
             onValueChange = {},
-            isError = true
+            isError = true,
         )
     }
 }
@@ -206,9 +207,9 @@ private fun FoodDeliveryTextBaseFieldWithTrailingIconPreview() {
                 Icon(
                     modifier = Modifier.size(24.dp),
                     painter = painterResource(R.drawable.ic_address),
-                    contentDescription = null
+                    contentDescription = null,
                 )
-            }
+            },
         )
     }
 }

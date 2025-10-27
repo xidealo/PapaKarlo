@@ -11,14 +11,15 @@ import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryHorizontalDivider
 @Composable
 fun FoodDeliveryItem(
     needDivider: Boolean,
-    content: @Composable ColumnScope.() -> Unit
+    content: @Composable ColumnScope.() -> Unit,
 ) {
     Column {
         content()
         if (needDivider) {
             FoodDeliveryHorizontalDivider(
-                modifier = Modifier
-                    .padding(horizontal = 16.dp)
+                modifier =
+                    Modifier
+                        .padding(horizontal = 16.dp),
             )
         }
     }

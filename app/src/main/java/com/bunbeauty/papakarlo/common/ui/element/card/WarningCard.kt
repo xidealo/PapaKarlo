@@ -23,32 +23,33 @@ fun WarningCard(
     @DrawableRes icon: Int,
     iconDescription: String,
     modifier: Modifier = Modifier,
-    cardColors: CardColors = FoodDeliveryCardDefaults.warningCardStatusColors
+    cardColors: CardColors = FoodDeliveryCardDefaults.warningCardStatusColors,
 ) {
     FoodDeliveryCard(
         modifier = modifier,
         colors = cardColors,
         shape = infoCardShape,
-        clickable = false
+        clickable = false,
     ) {
         Row(
-            modifier = Modifier.padding(
-                vertical = 12.dp,
-                horizontal = 16.dp
-            ),
-            verticalAlignment = Alignment.CenterVertically
+            modifier =
+                Modifier.padding(
+                    vertical = 12.dp,
+                    horizontal = 16.dp,
+                ),
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             Icon(
                 modifier = Modifier.icon24(),
                 painter = painterResource(icon),
                 tint = FoodDeliveryTheme.colors.statusColors.onStatus,
-                contentDescription = iconDescription
+                contentDescription = iconDescription,
             )
             Text(
                 modifier = Modifier.padding(start = 8.dp),
                 text = title,
                 style = FoodDeliveryTheme.typography.bodyMedium,
-                color = FoodDeliveryTheme.colors.statusColors.onStatus
+                color = FoodDeliveryTheme.colors.statusColors.onStatus,
             )
         }
     }
@@ -61,7 +62,7 @@ fun WarningCardPreview() {
         WarningCard(
             title = "Скидка 10%",
             icon = R.drawable.ic_discount,
-            iconDescription = "Иконка"
+            iconDescription = "Иконка",
         )
     }
 }

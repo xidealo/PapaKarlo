@@ -25,39 +25,43 @@ fun SelectableItem(
     onClick: (() -> Unit),
     modifier: Modifier = Modifier,
     isSelected: Boolean = false,
-    enabled: Boolean
+    enabled: Boolean,
 ) {
     FoodDeliveryCard(
         modifier = modifier.fillMaxWidth(),
         onClick = onClick,
         clickable = clickable && enabled,
-        elevated = elevated
+        elevated = elevated,
     ) {
         Row(
-            modifier = Modifier
-                .padding(horizontal = 16.dp)
-                .padding(vertical = 12.dp)
+            modifier =
+                Modifier
+                    .padding(horizontal = 16.dp)
+                    .padding(vertical = 12.dp),
         ) {
             Text(
-                modifier = Modifier
-                    .weight(1f),
+                modifier =
+                    Modifier
+                        .weight(1f),
                 text = title,
                 style = FoodDeliveryTheme.typography.bodyLarge,
-                color = if (enabled) {
-                    FoodDeliveryTheme.colors.mainColors.onSurface
-                } else {
-                    FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
-                }
+                color =
+                    if (enabled) {
+                        FoodDeliveryTheme.colors.mainColors.onSurface
+                    } else {
+                        FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
+                    },
             )
             if (isSelected) {
                 Icon(
-                    modifier = Modifier
-                        .padding(start = FoodDeliveryTheme.dimensions.smallSpace)
-                        .icon16()
-                        .align(CenterVertically),
+                    modifier =
+                        Modifier
+                            .padding(start = FoodDeliveryTheme.dimensions.smallSpace)
+                            .icon16()
+                            .align(CenterVertically),
                     painter = painterResource(R.drawable.ic_check),
                     tint = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
-                    contentDescription = stringResource(R.string.description_ic_checked)
+                    contentDescription = stringResource(R.string.description_ic_checked),
                 )
             }
         }
@@ -73,7 +77,7 @@ private fun AddressItemPreview() {
             clickable = false,
             elevated = false,
             onClick = {},
-            enabled = true
+            enabled = true,
         )
     }
 }
@@ -88,7 +92,7 @@ private fun AddressItemSelectedPreview() {
             elevated = false,
             isSelected = true,
             onClick = {},
-            enabled = true
+            enabled = true,
         )
     }
 }
@@ -103,7 +107,7 @@ private fun AddressItemDisabledPreview() {
             elevated = false,
             isSelected = true,
             onClick = {},
-            enabled = false
+            enabled = false,
         )
     }
 }

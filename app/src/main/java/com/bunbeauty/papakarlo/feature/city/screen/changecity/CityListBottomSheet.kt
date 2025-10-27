@@ -16,20 +16,20 @@ import com.bunbeauty.shared.presentation.settings.SettingsState
 @Composable
 fun CityListBottomSheetScreen(
     cityListBottomSheetUI: SettingsViewState.CityListBottomSheetUI,
-    onAction: (SettingsState.Action) -> Unit
+    onAction: (SettingsState.Action) -> Unit,
 ) {
     FoodDeliveryModalBottomSheet(
         onDismissRequest = {
             onAction(SettingsState.Action.CloseCityListBottomSheet)
         },
         isShown = cityListBottomSheetUI.isShown,
-        title = stringResource(R.string.common_city)
+        title = stringResource(R.string.common_city),
     ) {
         CityListScreen(
             cityList = cityListBottomSheetUI.cityListUI,
             onAddressClicked = { city ->
                 onAction(SettingsState.Action.OnCitySelected(cityUuid = city.uuid))
-            }
+            },
         )
     }
 }
@@ -37,7 +37,7 @@ fun CityListBottomSheetScreen(
 @Composable
 private fun CityListScreen(
     cityList: List<CityUI>,
-    onAddressClicked: (CityUI) -> Unit
+    onAddressClicked: (CityUI) -> Unit,
 ) {
     LazyColumn {
         items(cityList) { city ->
@@ -47,7 +47,7 @@ private fun CityListScreen(
                 isSelected = city.isSelected,
                 onClick = {
                     onAddressClicked(city)
-                }
+                },
             )
         }
     }
@@ -58,19 +58,20 @@ private fun CityListScreen(
 private fun CityListScreenPreview() {
     FoodDeliveryTheme {
         CityListScreen(
-            cityList = listOf(
-                CityUI(
-                    uuid = "1",
-                    name = "City 1",
-                    isSelected = true
+            cityList =
+                listOf(
+                    CityUI(
+                        uuid = "1",
+                        name = "City 1",
+                        isSelected = true,
+                    ),
+                    CityUI(
+                        uuid = "2",
+                        name = "City 2",
+                        isSelected = false,
+                    ),
                 ),
-                CityUI(
-                    uuid = "2",
-                    name = "City 2",
-                    isSelected = false
-                )
-            ),
-            onAddressClicked = {}
+            onAddressClicked = {},
         )
     }
 }

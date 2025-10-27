@@ -10,18 +10,16 @@ import kotlinx.serialization.Serializable
 @Serializable
 data object UserAddressListScreenDestination
 
-fun NavController.navigateToUserAddressListScreen(
-    navOptions: NavOptions
-) = navigate(route = UserAddressListScreenDestination, navOptions)
+fun NavController.navigateToUserAddressListScreen(navOptions: NavOptions) = navigate(route = UserAddressListScreenDestination, navOptions)
 
 fun NavGraphBuilder.userAddressListScreenRoute(
     back: () -> Unit,
-    goToCreateAddress: () -> Unit
+    goToCreateAddress: () -> Unit,
 ) {
     composable<UserAddressListScreenDestination> {
         UserAddressListRoute(
             back = back,
-            goToCreateAddress = goToCreateAddress
+            goToCreateAddress = goToCreateAddress,
         )
     }
 }

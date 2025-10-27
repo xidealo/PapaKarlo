@@ -20,7 +20,10 @@ import com.bunbeauty.shared.presentation.profile.ProfileState
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
-private fun goByLink(link: String, context: Context?) {
+private fun goByLink(
+    link: String,
+    context: Context?,
+) {
     val uri = link.toUri()
     val intent = Intent(Intent.ACTION_VIEW, uri)
     context?.startActivity(intent)
@@ -29,25 +32,23 @@ private fun goByLink(link: String, context: Context?) {
 @Composable
 fun FeedBackBottomSheetScreen(
     feedBackBottomSheetUI: ProfileViewState.FeedBackBottomSheetUI,
-    onAction: (ProfileState.Action) -> Unit
+    onAction: (ProfileState.Action) -> Unit,
 ) {
     FoodDeliveryModalBottomSheet(
         onDismissRequest = {
             onAction(ProfileState.Action.CloseFeedbackBottomSheet)
         },
         isShown = feedBackBottomSheetUI.isShown,
-        title = stringResource(R.string.title_feedback)
+        title = stringResource(R.string.title_feedback),
     ) {
         FeedbackScreen(
-            linkList = feedBackBottomSheetUI.linkList
+            linkList = feedBackBottomSheetUI.linkList,
         )
     }
 }
 
 @Composable
-private fun FeedbackScreen(
-    linkList: ImmutableList<LinkUI>
-) {
+private fun FeedbackScreen(linkList: ImmutableList<LinkUI>) {
     val context = LocalContext.current
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
         linkList.forEach { link ->
@@ -59,7 +60,7 @@ private fun FeedbackScreen(
                 elevated = false,
                 onClick = {
                     goByLink(link = link.value, context = context)
-                }
+                },
             )
         }
     }
@@ -70,32 +71,33 @@ private fun FeedbackScreen(
 private fun FeedbackScreenPreview() {
     FoodDeliveryTheme {
         FeedbackScreen(
-            linkList = persistentListOf(
-                LinkUI(
-                    uuid = "",
-                    labelId = R.string.action_feedback_vk,
-                    iconId = R.drawable.ic_vk,
-                    value = "https://vk.com/link"
+            linkList =
+                persistentListOf(
+                    LinkUI(
+                        uuid = "",
+                        labelId = R.string.action_feedback_vk,
+                        iconId = R.drawable.ic_vk,
+                        value = "https://vk.com/link",
+                    ),
+                    LinkUI(
+                        uuid = "",
+                        labelId = R.string.action_feedback_instagram,
+                        iconId = R.drawable.ic_instagram,
+                        value = "https://instagram.com/link",
+                    ),
+                    LinkUI(
+                        uuid = "",
+                        labelId = R.string.action_feedback_play_market,
+                        iconId = R.drawable.ic_google_play,
+                        value = "https://googleplay.com/link",
+                    ),
+                    LinkUI(
+                        uuid = "",
+                        labelId = null,
+                        iconId = R.drawable.ic_link,
+                        value = "https://unknown.link.com/path",
+                    ),
                 ),
-                LinkUI(
-                    uuid = "",
-                    labelId = R.string.action_feedback_instagram,
-                    iconId = R.drawable.ic_instagram,
-                    value = "https://instagram.com/link"
-                ),
-                LinkUI(
-                    uuid = "",
-                    labelId = R.string.action_feedback_play_market,
-                    iconId = R.drawable.ic_google_play,
-                    value = "https://googleplay.com/link"
-                ),
-                LinkUI(
-                    uuid = "",
-                    labelId = null,
-                    iconId = R.drawable.ic_link,
-                    value = "https://unknown.link.com/path"
-                )
-            )
         )
     }
 }

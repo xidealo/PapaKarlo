@@ -7,5 +7,5 @@ data class OrderItem(
     val status: OrderStatus,
     val statusName: String,
     val code: String,
-    val dateTime: String
+    val dateTime: String,
 )

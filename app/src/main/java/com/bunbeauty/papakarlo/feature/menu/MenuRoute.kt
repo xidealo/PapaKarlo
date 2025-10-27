@@ -62,10 +62,10 @@ fun MenuRoute(
     goToProductDetailsFragment: (
         uuid: String,
         name: String,
-        productDetailsOpenedFrom: ProductDetailsOpenedFrom
+        productDetailsOpenedFrom: ProductDetailsOpenedFrom,
     ) -> Unit,
     goToProfile: () -> Unit,
-    goToConsumerCart: () -> Unit
+    goToConsumerCart: () -> Unit,
 ) {
     LaunchedEffect(Unit) {
         viewModel.getMenu()
@@ -73,16 +73,17 @@ fun MenuRoute(
 
     val viewState by viewModel.menuState.collectAsStateWithLifecycle()
 
-    val consumeEffects = remember {
-        {
-            viewModel.consumeEventList(viewState.eventList)
+    val consumeEffects =
+        remember {
+            {
+                viewModel.consumeEventList(viewState.eventList)
+            }
         }
-    }
 
     MenuEffect(
         effects = viewState.eventList,
         goToProductDetailsFragment = goToProductDetailsFragment,
-        consumeEffects = consumeEffects
+        consumeEffects = consumeEffects,
     )
 
     MenuScreen(
@@ -96,7 +97,7 @@ fun MenuRoute(
         getMenuListPosition = viewModel::getMenuListPosition,
         onStopAutoScroll = viewModel::onStopAutoScroll,
         onAddProductClicked = viewModel::onAddProductClicked,
-        onMenuItemClicked = viewModel::onMenuItemClicked
+        onMenuItemClicked = viewModel::onMenuItemClicked,
     )
 }
 
@@ -106,9 +107,9 @@ private fun MenuEffect(
     goToProductDetailsFragment: (
         uuid: String,
         name: String,
-        productDetailsOpenedFrom: ProductDetailsOpenedFrom
+        productDetailsOpenedFrom: ProductDetailsOpenedFrom,
     ) -> Unit,
-    consumeEffects: () -> Unit
+    consumeEffects: () -> Unit,
 ) {
     val activity = LocalActivity.current
     effects.forEach { effect ->
@@ -117,13 +118,13 @@ private fun MenuEffect(
                 goToProductDetailsFragment(
                     effect.uuid,
                     effect.name,
-                    ProductDetailsOpenedFrom.MENU_PRODUCT
+                    ProductDetailsOpenedFrom.MENU_PRODUCT,
                 )
             }
 
             MenuDataState.Event.ShowAddProductError -> {
                 (activity as? IMessageHost)?.showErrorMessage(
-                    activity.resources.getString(R.string.error_consumer_cart_add_product)
+                    activity.resources.getString(R.string.error_consumer_cart_add_product),
                 )
             }
         }
@@ -143,15 +144,16 @@ private fun MenuScreen(
     getMenuListPosition: (categoryItem: CategoryItem) -> Int,
     onStopAutoScroll: () -> Unit,
     onAddProductClicked: (menuProductUuid: String) -> Unit,
-    onMenuItemClicked: (menuProductUuid: String) -> Unit
+    onMenuItemClicked: (menuProductUuid: String) -> Unit,
 ) {
     val menuLazyGridState = rememberLazyGridState()
 
     FoodDeliveryScaffold(
         title = stringResource(R.string.title_menu),
-        topActions = persistentListOf(
-            FoodDeliveryAction(iconId = R.drawable.ic_profile, onClick = goToProfile)
-        ),
+        topActions =
+            persistentListOf(
+                FoodDeliveryAction(iconId = R.drawable.ic_profile, onClick = goToProfile),
+            ),
         scrollableState = menuLazyGridState,
         backgroundColor = FoodDeliveryTheme.colors.mainColors.surface,
         drawableId = R.drawable.logo_small,
@@ -164,7 +166,7 @@ private fun MenuScreen(
                     onCategoryClicked = onCategoryClicked,
                     onStartAutoScroll = onStartAutoScroll,
                     getMenuListPosition = getMenuListPosition,
-                    onStopAutoScroll = onStopAutoScroll
+                    onStopAutoScroll = onStopAutoScroll,
                 )
             }
         },
@@ -175,16 +177,16 @@ private fun MenuScreen(
                         text = viewState.topCartUi.cost,
                         onClick = goToConsumerCart,
                         icon = R.drawable.ic_cart_24,
-                        iconBadge = viewState.topCartUi.count
+                        iconBadge = viewState.topCartUi.count,
                     )
                 }
             }
         },
-        floatingActionButtonPosition = FabPosition.End
+        floatingActionButtonPosition = FabPosition.End,
     ) {
         Crossfade(
             targetState = viewState.state,
-            label = "MenuScreen"
+            label = "MenuScreen",
         ) { state ->
             when (state) {
                 is MenuDataState.State.Success -> {
@@ -193,14 +195,14 @@ private fun MenuScreen(
                         menuLazyGridState = menuLazyGridState,
                         onMenuPositionChanged = onMenuPositionChanged,
                         onAddProductClicked = onAddProductClicked,
-                        onMenuItemClicked = onMenuItemClicked
+                        onMenuItemClicked = onMenuItemClicked,
                     )
                 }
 
                 is MenuDataState.State.Error -> {
                     ErrorScreen(
                         mainTextId = R.string.error_menu_loading,
-                        onClick = errorAction
+                        onClick = errorAction,
                     )
                 }
 
@@ -218,7 +220,7 @@ private fun MenuSuccessScreen(
     menuLazyGridState: LazyGridState,
     onMenuPositionChanged: (Int) -> Unit,
     onAddProductClicked: (menuProductUuid: String) -> Unit,
-    onMenuItemClicked: (menuProductUuid: String) -> Unit
+    onMenuItemClicked: (menuProductUuid: String) -> Unit,
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
         val menuPosition by remember {
@@ -233,7 +235,7 @@ private fun MenuSuccessScreen(
             menu = menu,
             menuLazyListState = menuLazyGridState,
             onAddProductClicked = onAddProductClicked,
-            onMenuItemClicked = onMenuItemClicked
+            onMenuItemClicked = onMenuItemClicked,
         )
     }
 }
@@ -246,22 +248,23 @@ private fun CategoryRow(
     onCategoryClicked: (categoryItem: CategoryItem) -> Unit,
     onStartAutoScroll: () -> Unit,
     getMenuListPosition: (categoryItem: CategoryItem) -> Int,
-    onStopAutoScroll: () -> Unit
+    onStopAutoScroll: () -> Unit,
 ) {
     val coroutineScope = rememberCoroutineScope()
     val categoryLazyListState = rememberLazyListState()
     LazyRow(
         modifier = modifier,
-        contentPadding = PaddingValues(
-            horizontal = FoodDeliveryTheme.dimensions.mediumSpace,
-            vertical = FoodDeliveryTheme.dimensions.smallSpace
-        ),
+        contentPadding =
+            PaddingValues(
+                horizontal = FoodDeliveryTheme.dimensions.mediumSpace,
+                vertical = FoodDeliveryTheme.dimensions.smallSpace,
+            ),
         state = categoryLazyListState,
-        horizontalArrangement = spacedBy(8.dp)
+        horizontalArrangement = spacedBy(8.dp),
     ) {
         itemsIndexed(
             categoryItemList,
-            key = { _, categoryItemModel -> categoryItemModel.key }
+            key = { _, categoryItemModel -> categoryItemModel.key },
         ) { i, categoryItemModel ->
             CategoryItem(
                 categoryItem = categoryItemModel,
@@ -273,23 +276,24 @@ private fun CategoryRow(
                     coroutineScope.launch {
                         onStartAutoScroll()
                         menuLazyGridState.animateScrollToItem(
-                            getMenuListPosition(categoryItemModel)
+                            getMenuListPosition(categoryItemModel),
                         )
                         onStopAutoScroll()
                     }
-                }
+                },
             )
         }
     }
     SideEffect {
         coroutineScope.launch {
-            categoryItemList.indexOfFirst { categoryItemModel ->
-                categoryItemModel.isSelected
-            }.let { index ->
-                if (index >= 0) {
-                    categoryLazyListState.animateScrollToItem(index)
+            categoryItemList
+                .indexOfFirst { categoryItemModel ->
+                    categoryItemModel.isSelected
+                }.let { index ->
+                    if (index >= 0) {
+                        categoryLazyListState.animateScrollToItem(index)
+                    }
                 }
-            }
         }
     }
 }
@@ -299,7 +303,7 @@ private fun MenuColumn(
     menu: MenuViewState,
     menuLazyListState: LazyGridState,
     onAddProductClicked: (menuProductUuid: String) -> Unit,
-    onMenuItemClicked: (menuProductUuid: String) -> Unit
+    onMenuItemClicked: (menuProductUuid: String) -> Unit,
 ) {
     LazyVerticalGrid(
         modifier = Modifier.fillMaxSize(),
@@ -307,7 +311,7 @@ private fun MenuColumn(
         columns = GridCells.Fixed(2),
         horizontalArrangement = spacedBy(8.dp),
         state = menuLazyListState,
-        userScrollEnabled = menu.userScrollEnabled
+        userScrollEnabled = menu.userScrollEnabled,
     ) {
         itemsIndexed(
             items = menu.menuItemList,
@@ -315,43 +319,48 @@ private fun MenuColumn(
             span = { _, menuItemModel ->
                 when (menuItemModel) {
                     is MenuItemUi.Discount,
-                    is MenuItemUi.CategoryHeader
+                    is MenuItemUi.CategoryHeader,
                     -> GridItemSpan(maxLineSpan)
 
                     else -> GridItemSpan(1)
                 }
-            }
+            },
         ) { index, menuItem ->
             when (menuItem) {
                 is MenuItemUi.Discount -> {
                     BannerCard(
-                        title = stringResource(
-                            id = R.string.title_menu_discount,
-                            menuItem.discount
-                        ),
-                        text = stringResource(
-                            id = R.string.msg_menu_discount,
-                            menuItem.discount
-                        ),
+                        title =
+                            stringResource(
+                                id = R.string.title_menu_discount,
+                                menuItem.discount,
+                            ),
+                        text =
+                            stringResource(
+                                id = R.string.msg_menu_discount,
+                                menuItem.discount,
+                            ),
                         icon = R.drawable.ic_discount,
-                        iconDescription = stringResource(
-                            R.string.description_ic_discount
-                        )
+                        iconDescription =
+                            stringResource(
+                                R.string.description_ic_discount,
+                            ),
                     )
                 }
 
                 is MenuItemUi.CategoryHeader -> {
                     Text(
-                        modifier = Modifier.padding(
-                            top = if (index == 0) {
-                                0.dp
-                            } else {
-                                16.dp
-                            }
-                        ),
+                        modifier =
+                            Modifier.padding(
+                                top =
+                                    if (index == 0) {
+                                        0.dp
+                                    } else {
+                                        16.dp
+                                    },
+                            ),
                         text = menuItem.name,
                         style = FoodDeliveryTheme.typography.titleMedium.bold,
-                        color = FoodDeliveryTheme.colors.mainColors.onSurface
+                        color = FoodDeliveryTheme.colors.mainColors.onSurface,
                     )
                 }
 
@@ -360,7 +369,7 @@ private fun MenuColumn(
                         modifier = Modifier.padding(top = 8.dp),
                         menuProductItem = menuItem,
                         onAddProductClick = onAddProductClicked,
-                        onProductClick = onMenuItemClicked
+                        onProductClick = onMenuItemClicked,
                     )
                 }
             }
@@ -371,50 +380,57 @@ private fun MenuColumn(
 @Preview(showSystemUi = true)
 @Composable
 private fun MenuScreenSuccessPreview() {
-    fun getCategoryItem(key: String) = CategoryItem(
-        key = key,
-        uuid = "",
-        name = "Бургеры",
-        isSelected = false
-    )
+    fun getCategoryItem(key: String) =
+        CategoryItem(
+            key = key,
+            uuid = "",
+            name = "Бургеры",
+            isSelected = false,
+        )
 
-    fun getMenuCategoryHeaderItem(key: String) = MenuItemUi.CategoryHeader(
-        key = key,
-        name = "Бургеры"
-    )
+    fun getMenuCategoryHeaderItem(key: String) =
+        MenuItemUi.CategoryHeader(
+            key = key,
+            name = "Бургеры",
+        )
 
-    fun getMenuProductItem(key: String) = MenuItemUi.Product(
-        uuid = "",
-        key = key,
-        photoLink = "",
-        name = "Бэргер",
-        newPrice = "99",
-        oldPrice = "100"
-    )
+    fun getMenuProductItem(key: String) =
+        MenuItemUi.Product(
+            uuid = "",
+            key = key,
+            photoLink = "",
+            name = "Бэргер",
+            newPrice = "99",
+            oldPrice = "100",
+        )
 
     FoodDeliveryTheme {
         MenuScreen(
-            viewState = MenuViewState(
-                categoryItemList = persistentListOf(
-                    getCategoryItem("1"),
-                    getCategoryItem("2"),
-                    getCategoryItem("3")
+            viewState =
+                MenuViewState(
+                    categoryItemList =
+                        persistentListOf(
+                            getCategoryItem("1"),
+                            getCategoryItem("2"),
+                            getCategoryItem("3"),
+                        ),
+                    menuItemList =
+                        persistentListOf(
+                            getMenuCategoryHeaderItem("4"),
+                            getMenuProductItem("5"),
+                            getMenuProductItem("6"),
+                            getMenuCategoryHeaderItem("7"),
+                            getMenuProductItem("8"),
+                        ),
+                    state = MenuDataState.State.Success,
+                    userScrollEnabled = true,
+                    topCartUi =
+                        TopCartUi(
+                            cost = "100",
+                            count = "2",
+                        ),
+                    eventList = persistentListOf(),
                 ),
-                menuItemList = persistentListOf(
-                    getMenuCategoryHeaderItem("4"),
-                    getMenuProductItem("5"),
-                    getMenuProductItem("6"),
-                    getMenuCategoryHeaderItem("7"),
-                    getMenuProductItem("8")
-                ),
-                state = MenuDataState.State.Success,
-                userScrollEnabled = true,
-                topCartUi = TopCartUi(
-                    cost = "100",
-                    count = "2"
-                ),
-                eventList = persistentListOf()
-            ),
             onMenuPositionChanged = {},
             errorAction = {},
             goToProfile = {},
@@ -424,7 +440,7 @@ private fun MenuScreenSuccessPreview() {
             getMenuListPosition = { 0 },
             onStopAutoScroll = {},
             onAddProductClicked = {},
-            onMenuItemClicked = {}
+            onMenuItemClicked = {},
         )
     }
 }
@@ -434,17 +450,19 @@ private fun MenuScreenSuccessPreview() {
 private fun MenuScreenLoadingPreview() {
     FoodDeliveryTheme {
         MenuScreen(
-            viewState = MenuViewState(
-                categoryItemList = persistentListOf(),
-                topCartUi = TopCartUi(
-                    cost = "100",
-                    count = "2"
+            viewState =
+                MenuViewState(
+                    categoryItemList = persistentListOf(),
+                    topCartUi =
+                        TopCartUi(
+                            cost = "100",
+                            count = "2",
+                        ),
+                    menuItemList = persistentListOf(),
+                    state = MenuDataState.State.Loading,
+                    userScrollEnabled = true,
+                    eventList = persistentListOf(),
                 ),
-                menuItemList = persistentListOf(),
-                state = MenuDataState.State.Loading,
-                userScrollEnabled = true,
-                eventList = persistentListOf()
-            ),
             onMenuPositionChanged = {},
             errorAction = {},
             goToProfile = {},
@@ -454,7 +472,7 @@ private fun MenuScreenLoadingPreview() {
             getMenuListPosition = { 0 },
             onStopAutoScroll = {},
             onAddProductClicked = {},
-            onMenuItemClicked = {}
+            onMenuItemClicked = {},
         )
     }
 }
@@ -464,17 +482,19 @@ private fun MenuScreenLoadingPreview() {
 private fun MenuScreenErrorPreview() {
     FoodDeliveryTheme {
         MenuScreen(
-            viewState = MenuViewState(
-                categoryItemList = persistentListOf(),
-                topCartUi = TopCartUi(
-                    cost = "100",
-                    count = "2"
+            viewState =
+                MenuViewState(
+                    categoryItemList = persistentListOf(),
+                    topCartUi =
+                        TopCartUi(
+                            cost = "100",
+                            count = "2",
+                        ),
+                    menuItemList = persistentListOf(),
+                    state = MenuDataState.State.Error(Throwable()),
+                    userScrollEnabled = true,
+                    eventList = persistentListOf(),
                 ),
-                menuItemList = persistentListOf(),
-                state = MenuDataState.State.Error(Throwable()),
-                userScrollEnabled = true,
-                eventList = persistentListOf()
-            ),
             onMenuPositionChanged = {},
             errorAction = {},
             goToProfile = {},
@@ -484,7 +504,7 @@ private fun MenuScreenErrorPreview() {
             getMenuListPosition = { 0 },
             onStopAutoScroll = {},
             onAddProductClicked = {},
-            onMenuItemClicked = {}
+            onMenuItemClicked = {},
         )
     }
 }

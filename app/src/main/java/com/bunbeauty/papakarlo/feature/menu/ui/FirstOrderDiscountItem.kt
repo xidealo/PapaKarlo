@@ -22,28 +22,28 @@ import com.bunbeauty.papakarlo.common.ui.theme.bold
 @Composable
 fun FirstOrderDiscountItem(
     modifier: Modifier = Modifier,
-    discount: String
+    discount: String,
 ) {
     FoodDeliveryCard(
         modifier = modifier,
         colors = FoodDeliveryCardDefaults.positiveCardStatusColors,
-        clickable = false
+        clickable = false,
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Row(
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 Icon(
                     modifier = Modifier.icon24(),
                     painter = painterResource(R.drawable.ic_discount),
                     tint = FoodDeliveryTheme.colors.statusColors.onStatus,
-                    contentDescription = stringResource(R.string.description_ic_discount)
+                    contentDescription = stringResource(R.string.description_ic_discount),
                 )
                 Text(
                     modifier = Modifier.padding(start = 8.dp),
                     text = stringResource(id = R.string.title_menu_discount, discount),
                     style = FoodDeliveryTheme.typography.titleMedium.bold,
-                    color = FoodDeliveryTheme.colors.statusColors.onStatus
+                    color = FoodDeliveryTheme.colors.statusColors.onStatus,
                 )
             }
 
@@ -51,7 +51,7 @@ fun FirstOrderDiscountItem(
                 modifier = Modifier.padding(top = 8.dp),
                 text = stringResource(id = R.string.msg_menu_discount, discount),
                 style = FoodDeliveryTheme.typography.bodyLarge,
-                color = FoodDeliveryTheme.colors.statusColors.onStatus
+                color = FoodDeliveryTheme.colors.statusColors.onStatus,
             )
         }
     }

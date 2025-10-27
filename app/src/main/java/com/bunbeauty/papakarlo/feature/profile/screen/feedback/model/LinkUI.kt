@@ -10,5 +10,5 @@ data class LinkUI(
     val uuid: String,
     @StringRes val labelId: Int?,
     @DrawableRes val iconId: Int,
-    val value: String
+    val value: String,
 ) : Parcelable

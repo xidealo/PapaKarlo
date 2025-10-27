@@ -23,36 +23,40 @@ fun CityItem(
     cityName: String,
     elevated: Boolean = true,
     isSelected: Boolean = false,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     FoodDeliveryCard(
-        modifier = modifier
-            .fillMaxWidth(),
+        modifier =
+            modifier
+                .fillMaxWidth(),
         onClick = onClick,
-        elevated = elevated
+        elevated = elevated,
     ) {
         Row(
-            modifier = Modifier
-                .padding(horizontal = 16.dp)
-                .padding(vertical = 12.dp)
+            modifier =
+                Modifier
+                    .padding(horizontal = 16.dp)
+                    .padding(vertical = 12.dp),
         ) {
             Text(
-                modifier = Modifier
-                    .weight(1f),
+                modifier =
+                    Modifier
+                        .weight(1f),
                 text = cityName,
                 style = FoodDeliveryTheme.typography.bodyLarge,
-                color = FoodDeliveryTheme.colors.mainColors.onSurface
+                color = FoodDeliveryTheme.colors.mainColors.onSurface,
             )
 
             if (isSelected) {
                 Icon(
-                    modifier = Modifier
-                        .padding(start = FoodDeliveryTheme.dimensions.smallSpace)
-                        .icon16()
-                        .align(Alignment.CenterVertically),
+                    modifier =
+                        Modifier
+                            .padding(start = FoodDeliveryTheme.dimensions.smallSpace)
+                            .icon16()
+                            .align(Alignment.CenterVertically),
                     painter = painterResource(R.drawable.ic_check),
                     tint = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
-                    contentDescription = stringResource(R.string.description_ic_checked)
+                    contentDescription = stringResource(R.string.description_ic_checked),
                 )
             }
         }
@@ -65,7 +69,7 @@ private fun CityItemPreview() {
     FoodDeliveryTheme {
         CityItem(
             cityName = "Москва",
-            onClick = {}
+            onClick = {},
         )
     }
 }
@@ -77,7 +81,7 @@ private fun SelectedCityItemPreview() {
         CityItem(
             cityName = "Москва",
             isSelected = true,
-            onClick = {}
+            onClick = {},
         )
     }
 }

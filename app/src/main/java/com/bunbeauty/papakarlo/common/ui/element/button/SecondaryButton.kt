@@ -18,7 +18,7 @@ fun SecondaryButton(
     @StringRes textStringId: Int,
     elevated: Boolean = true,
     enabled: Boolean = true,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     Button(
         modifier = modifier.fillMaxWidth(),
@@ -26,11 +26,11 @@ fun SecondaryButton(
         colors = FoodDeliveryButtonDefaults.secondaryButtonColors,
         shape = FoodDeliveryButtonDefaults.buttonShape,
         elevation = FoodDeliveryButtonDefaults.getButtonElevation(elevated),
-        enabled = enabled
+        enabled = enabled,
     ) {
         Text(
             text = stringResource(id = textStringId),
-            style = FoodDeliveryTheme.typography.labelLarge.medium
+            style = FoodDeliveryTheme.typography.labelLarge.medium,
         )
     }
 }
@@ -41,7 +41,7 @@ private fun SecondaryButtonPreview() {
     FoodDeliveryTheme {
         SecondaryButton(
             textStringId = R.string.action_logout,
-            onClick = {}
+            onClick = {},
         )
     }
 }

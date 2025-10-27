@@ -22,36 +22,39 @@ import com.bunbeauty.shared.domain.model.order.OrderStatus
 fun OrderItem(
     modifier: Modifier = Modifier,
     orderItem: OrderItem,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     FoodDeliveryCard(
         modifier = modifier,
-        onClick = onClick
+        onClick = onClick,
     ) {
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp)
-                .padding(vertical = 12.dp),
-            verticalAlignment = Alignment.CenterVertically
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp)
+                    .padding(vertical = 12.dp),
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
                 text = orderItem.code,
-                modifier = Modifier
-                    .requiredWidthIn(min = FoodDeliveryTheme.dimensions.codeWidth)
-                    .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
+                modifier =
+                    Modifier
+                        .requiredWidthIn(min = FoodDeliveryTheme.dimensions.codeWidth)
+                        .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
                 style = FoodDeliveryTheme.typography.titleMedium.bold,
-                color = FoodDeliveryTheme.colors.mainColors.onSurface
+                color = FoodDeliveryTheme.colors.mainColors.onSurface,
             )
             OrderStatusChip(orderStatus = orderItem.status, statusName = orderItem.statusName)
             Text(
-                modifier = Modifier
-                    .weight(1f)
-                    .wrapContentWidth(Alignment.End),
+                modifier =
+                    Modifier
+                        .weight(1f)
+                        .wrapContentWidth(Alignment.End),
                 text = orderItem.dateTime,
                 style = FoodDeliveryTheme.typography.bodySmall,
                 color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
-                textAlign = TextAlign.End
+                textAlign = TextAlign.End,
             )
         }
     }
@@ -62,14 +65,15 @@ fun OrderItem(
 private fun OrderItemPreview() {
     FoodDeliveryTheme {
         OrderItem(
-            orderItem = OrderItem(
-                uuid = "",
-                status = OrderStatus.NOT_ACCEPTED,
-                statusName = "Обрабатывается",
-                code = "Щ-99",
-                dateTime = "9 февраля 22:00"
-            ),
-            onClick = {}
+            orderItem =
+                OrderItem(
+                    uuid = "",
+                    status = OrderStatus.NOT_ACCEPTED,
+                    statusName = "Обрабатывается",
+                    code = "Щ-99",
+                    dateTime = "9 февраля 22:00",
+                ),
+            onClick = {},
         )
     }
 }
@@ -79,14 +83,15 @@ private fun OrderItemPreview() {
 private fun OrderItemLageFontPreview() {
     FoodDeliveryTheme {
         OrderItem(
-            orderItem = OrderItem(
-                uuid = "",
-                status = OrderStatus.NOT_ACCEPTED,
-                statusName = "Обрабатывается",
-                code = "Щ-99",
-                dateTime = "9 февраля 22:00"
-            ),
-            onClick = {}
+            orderItem =
+                OrderItem(
+                    uuid = "",
+                    status = OrderStatus.NOT_ACCEPTED,
+                    statusName = "Обрабатывается",
+                    code = "Щ-99",
+                    dateTime = "9 февраля 22:00",
+                ),
+            onClick = {},
         )
     }
 }

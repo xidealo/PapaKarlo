@@ -24,32 +24,34 @@ fun SplashRoute(
     viewModel: SplashViewModel = koinViewModel(),
     goToUpdateFragment: () -> Unit,
     goToSelectCityFragment: () -> Unit,
-    goToMenuFragment: () -> Unit
+    goToMenuFragment: () -> Unit,
 ) {
     LaunchedEffect(Unit) {
         viewModel.onAction(Splash.Action.Init)
     }
 
     val viewState by viewModel.dataState.collectAsStateWithLifecycle()
-    val onAction = remember {
-        { event: Splash.Action ->
-            viewModel.onAction(event)
+    val onAction =
+        remember {
+            { event: Splash.Action ->
+                viewModel.onAction(event)
+            }
         }
-    }
 
     val effects by viewModel.events.collectAsStateWithLifecycle()
-    val consumeEffects = remember {
-        {
-            viewModel.consumeEvents(effects)
+    val consumeEffects =
+        remember {
+            {
+                viewModel.consumeEvents(effects)
+            }
         }
-    }
 
     SplashEffect(
         effects = effects,
         goToUpdateFragment = goToUpdateFragment,
         goToSelectCityFragment = goToSelectCityFragment,
         goToMenuFragment = goToMenuFragment,
-        consumeEffects = consumeEffects
+        consumeEffects = consumeEffects,
     )
     SplashScreen(viewState = viewState, onAction = onAction)
 }
@@ -57,15 +59,15 @@ fun SplashRoute(
 @Composable
 private fun SplashScreen(
     viewState: Splash.DataState,
-    onAction: (Splash.Action) -> Unit
+    onAction: (Splash.Action) -> Unit,
 ) {
     Box(
         modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
+        contentAlignment = Alignment.Center,
     ) {
         Image(
             painter = painterResource(R.drawable.logo_medium),
-            contentDescription = stringResource(R.string.description_company_logo)
+            contentDescription = stringResource(R.string.description_company_logo),
         )
     }
 }
@@ -76,7 +78,7 @@ private fun SplashEffect(
     goToUpdateFragment: () -> Unit,
     goToSelectCityFragment: () -> Unit,
     goToMenuFragment: () -> Unit,
-    consumeEffects: () -> Unit
+    consumeEffects: () -> Unit,
 ) {
     LaunchedEffect(effects) {
         effects.forEach { effect ->
@@ -98,7 +100,7 @@ fun SplashPreview() {
     FoodDeliveryTheme {
         SplashScreen(
             viewState = Splash.DataState,
-            onAction = {}
+            onAction = {},
         )
     }
 }

@@ -38,45 +38,47 @@ fun CountPicker(
     modifier: Modifier = Modifier,
     count: Int,
     onCountIncreased: () -> Unit,
-    onCountDecreased: () -> Unit
+    onCountDecreased: () -> Unit,
 ) {
     Row(
-        modifier = modifier
-            .clip(FoodDeliveryButtonDefaults.buttonShape)
-            .border(
-                border = BorderStroke(2.dp, FoodDeliveryTheme.colors.mainColors.primary),
-                shape = FoodDeliveryButtonDefaults.buttonShape
-            )
-            .background(FoodDeliveryTheme.colors.mainColors.surface)
-            .padding(2.dp),
-        verticalAlignment = Alignment.CenterVertically
+        modifier =
+            modifier
+                .clip(FoodDeliveryButtonDefaults.buttonShape)
+                .border(
+                    border = BorderStroke(2.dp, FoodDeliveryTheme.colors.mainColors.primary),
+                    shape = FoodDeliveryButtonDefaults.buttonShape,
+                ).background(FoodDeliveryTheme.colors.mainColors.surface)
+                .padding(2.dp),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         CountPickerButton(
             iconId = R.drawable.ic_minus_16,
             descriptionStringId = R.string.description_consumer_cart_decrease,
-            onClick = onCountDecreased
+            onClick = onCountDecreased,
         )
 
         AnimatedContent(
-            modifier = Modifier
-                .height(IntrinsicSize.Min),
+            modifier =
+                Modifier
+                    .height(IntrinsicSize.Min),
             targetState = count,
             transitionSpec = {
                 slideInAndSlideOutVerticallyWithFadeAnimation
             },
-            label = "CountPickerCount"
+            label = "CountPickerCount",
         ) { countExpanded ->
             Box(
                 contentAlignment = Alignment.Center,
-                modifier = Modifier.fillMaxHeight()
+                modifier = Modifier.fillMaxHeight(),
             ) {
                 Text(
-                    modifier = Modifier
-                        .padding(horizontal = 4.dp),
+                    modifier =
+                        Modifier
+                            .padding(horizontal = 4.dp),
                     text = countExpanded.toString(),
                     style = FoodDeliveryTheme.typography.bodySmall.bold,
                     color = FoodDeliveryTheme.colors.mainColors.primary,
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Center,
                 )
             }
         }
@@ -84,7 +86,7 @@ fun CountPicker(
         CountPickerButton(
             iconId = R.drawable.ic_plus_16,
             descriptionStringId = R.string.description_consumer_cart_increase,
-            onClick = onCountIncreased
+            onClick = onCountIncreased,
         )
     }
 }
@@ -93,18 +95,18 @@ fun CountPicker(
 fun CountPickerButton(
     @DrawableRes iconId: Int,
     @StringRes descriptionStringId: Int,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     IconButton(
         modifier = Modifier.size(36.dp),
         onClick = onClick,
-        colors = FoodDeliveryButtonDefaults.iconButtonColors
+        colors = FoodDeliveryButtonDefaults.iconButtonColors,
     ) {
         Icon(
             modifier = Modifier.size(12.dp),
             painter = painterResource(iconId),
             tint = FoodDeliveryTheme.colors.mainColors.primary,
-            contentDescription = stringResource(descriptionStringId)
+            contentDescription = stringResource(descriptionStringId),
         )
     }
 }
@@ -116,7 +118,7 @@ private fun CountPickerOneDigitPreview() {
         CountPicker(
             count = 5,
             onCountIncreased = {},
-            onCountDecreased = {}
+            onCountDecreased = {},
         )
     }
 }
@@ -128,7 +130,7 @@ private fun CountPickerTwoDigitsPreview() {
         CountPicker(
             count = 99,
             onCountIncreased = {},
-            onCountDecreased = {}
+            onCountDecreased = {},
         )
     }
 }

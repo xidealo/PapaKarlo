@@ -8,21 +8,30 @@ import com.bunbeauty.shared.domain.model.order.OrderAddress
 import com.bunbeauty.shared.domain.model.order.OrderStatus
 
 interface IStringUtil {
-
     fun getUserAddressString(userAddress: UserAddress?): String?
+
     fun getUserAddressString(selectableUserAddress: SelectableUserAddress?): String?
+
     fun getOrderAddressString(orderAddress: OrderAddress): String
+
     fun getDateTimeString(dateTime: DateTime): String
+
     fun getTimeString(time: Time?): String
+
     fun getCostString(cost: Int?): String?
+
     fun getCostString(cost: Int): String
+
     fun getCostString(cost: String): String
+
     fun getCountString(count: Int): String
+
     fun getCountString(count: String): String
 
     @Deprecated("Use getOrderStatusName from OrderStatusChip")
     fun getOrderStatusName(orderStatus: OrderStatus): String
 
     fun getPickupMethodString(isDelivery: Boolean): String
+
     fun getDeferredString(isDelivery: Boolean): String
 }

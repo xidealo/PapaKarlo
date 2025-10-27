@@ -28,14 +28,12 @@ import kotlinx.collections.immutable.persistentListOf
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun CafeList.DataState.mapState(): CafeListViewState {
-    return toViewState()
-}
+fun CafeList.DataState.mapState(): CafeListViewState = toViewState()
 
 @Composable
 fun CafeListRoute(
     viewModel: CafeListViewModel = koinViewModel(),
-    back: () -> Unit
+    back: () -> Unit,
 ) {
     LaunchedEffect(Unit) {
         viewModel.onAction(CafeList.Action.Init)
@@ -43,23 +41,25 @@ fun CafeListRoute(
 
     val viewState by viewModel.dataState.collectAsStateWithLifecycle()
 
-    val onAction = remember {
-        { action: CafeList.Action ->
-            viewModel.onAction(action)
+    val onAction =
+        remember {
+            { action: CafeList.Action ->
+                viewModel.onAction(action)
+            }
         }
-    }
 
     val effects by viewModel.events.collectAsStateWithLifecycle()
-    val consumeEffects = remember {
-        {
-            viewModel.consumeEvents(effects)
+    val consumeEffects =
+        remember {
+            {
+                viewModel.consumeEvents(effects)
+            }
         }
-    }
 
     CafeListEffect(
         effects = effects,
         back = back,
-        consumeEffects = consumeEffects
+        consumeEffects = consumeEffects,
     )
     CafeListScreen(viewState = viewState.mapState(), onAction = onAction)
 }
@@ -67,33 +67,34 @@ fun CafeListRoute(
 @Composable
 private fun CafeListScreen(
     viewState: CafeListViewState,
-    onAction: (CafeList.Action) -> Unit
+    onAction: (CafeList.Action) -> Unit,
 ) {
     FoodDeliveryScaffold(
         title = stringResource(R.string.title_cafe_list),
         backActionClick = {
             onAction(CafeList.Action.BackClicked)
         },
-        backgroundColor = FoodDeliveryTheme.colors.mainColors.surface
+        backgroundColor = FoodDeliveryTheme.colors.mainColors.surface,
     ) {
         when (val state = viewState) {
-            is CafeListViewState.Error -> ErrorScreen(
-                mainTextId = R.string.error_cafe_list_loading,
-                onClick = {
-                    onAction(CafeList.Action.OnRefreshClicked)
-                }
-            )
+            is CafeListViewState.Error ->
+                ErrorScreen(
+                    mainTextId = R.string.error_cafe_list_loading,
+                    onClick = {
+                        onAction(CafeList.Action.OnRefreshClicked)
+                    },
+                )
 
             CafeListViewState.Loading -> LoadingScreen()
 
             is CafeListViewState.Success -> {
                 CafeListSuccessScreen(
                     viewState.cafeList,
-                    onAction = onAction
+                    onAction = onAction,
                 )
                 CafeOptionsBottomSheet(
                     cafeOptionUI = state.cafeOptionUI,
-                    onAction = onAction
+                    onAction = onAction,
                 )
             }
         }
@@ -103,10 +104,10 @@ private fun CafeListScreen(
 @Composable
 private fun CafeListSuccessScreen(
     cafeItemList: List<CafeItemAndroid>,
-    onAction: (CafeList.Action) -> Unit
+    onAction: (CafeList.Action) -> Unit,
 ) {
     LazyColumn(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
     ) {
         itemsIndexed(cafeItemList) { i, cafeItem ->
             FoodDeliveryItem(needDivider = !cafeItem.isLast) {
@@ -114,7 +115,7 @@ private fun CafeListSuccessScreen(
                     cafeItem = cafeItem,
                     onClick = {
                         onAction(CafeList.Action.OnCafeClicked(cafeUuid = cafeItem.uuid))
-                    }
+                    },
                 )
             }
         }
@@ -125,7 +126,7 @@ private fun CafeListSuccessScreen(
 fun CafeListEffect(
     effects: List<CafeList.Event>,
     back: () -> Unit,
-    consumeEffects: () -> Unit
+    consumeEffects: () -> Unit,
 ) {
     LaunchedEffect(effects) {
         effects.forEach { effect ->
@@ -142,42 +143,45 @@ fun CafeListEffect(
 private fun CafeListSuccessScreenPreview() {
     FoodDeliveryTheme {
         CafeListScreen(
-            viewState = CafeListViewState.Success(
-                cafeList = persistentListOf(
-                    CafeItemAndroid(
-                        uuid = "",
-                        address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж",
-                        workingHours = "9:00 - 22:00",
-                        cafeStatusText = "Open",
-                        phone = "00000000",
-                        cafeOpenState = CafeOpenState.Opened,
-                        isLast = false
-                    ),
-                    CafeItemAndroid(
-                        uuid = "",
-                        address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж",
-                        workingHours = "9:00 - 22:00",
-                        cafeStatusText = "Close soon",
-                        phone = "00000000",
-                        cafeOpenState = CafeOpenState.CloseSoon(30),
-                        isLast = false
-                    ),
-                    CafeItemAndroid(
-                        uuid = "",
-                        address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж",
-                        workingHours = "9:00 - 22:00",
-                        cafeStatusText = "Closed",
-                        phone = "00000000",
-                        cafeOpenState = CafeOpenState.Closed,
-                        isLast = true
-                    )
+            viewState =
+                CafeListViewState.Success(
+                    cafeList =
+                        persistentListOf(
+                            CafeItemAndroid(
+                                uuid = "",
+                                address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж",
+                                workingHours = "9:00 - 22:00",
+                                cafeStatusText = "Open",
+                                phone = "00000000",
+                                cafeOpenState = CafeOpenState.Opened,
+                                isLast = false,
+                            ),
+                            CafeItemAndroid(
+                                uuid = "",
+                                address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж",
+                                workingHours = "9:00 - 22:00",
+                                cafeStatusText = "Close soon",
+                                phone = "00000000",
+                                cafeOpenState = CafeOpenState.CloseSoon(30),
+                                isLast = false,
+                            ),
+                            CafeItemAndroid(
+                                uuid = "",
+                                address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж",
+                                workingHours = "9:00 - 22:00",
+                                cafeStatusText = "Closed",
+                                phone = "00000000",
+                                cafeOpenState = CafeOpenState.Closed,
+                                isLast = true,
+                            ),
+                        ),
+                    cafeOptionUI =
+                        CafeListViewState.CafeOptionUI(
+                            isShown = false,
+                            cafeOptions = null,
+                        ),
                 ),
-                cafeOptionUI = CafeListViewState.CafeOptionUI(
-                    isShown = false,
-                    cafeOptions = null
-                )
-            ),
-            onAction = {}
+            onAction = {},
         )
     }
 }
@@ -187,49 +191,53 @@ private fun CafeListSuccessScreenPreview() {
 private fun CafeListSuccessWithBottomSheetScreenPreview() {
     FoodDeliveryTheme {
         CafeListScreen(
-            viewState = CafeListViewState.Success(
-                cafeList = persistentListOf(
-                    CafeItemAndroid(
-                        uuid = "",
-                        address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж",
-                        workingHours = "9:00 - 22:00",
-                        cafeStatusText = "Open",
-                        phone = "00000000",
-                        cafeOpenState = CafeOpenState.Opened,
-                        isLast = false
-                    ),
-                    CafeItemAndroid(
-                        uuid = "",
-                        address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж",
-                        workingHours = "9:00 - 22:00",
-                        cafeStatusText = "Close soon",
-                        phone = "00000000",
-                        cafeOpenState = CafeOpenState.CloseSoon(30),
-                        isLast = false
-                    ),
-                    CafeItemAndroid(
-                        uuid = "",
-                        address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж",
-                        workingHours = "9:00 - 22:00",
-                        cafeStatusText = "Closed",
-                        phone = "00000000",
-                        cafeOpenState = CafeOpenState.Closed,
-                        isLast = true
-                    )
+            viewState =
+                CafeListViewState.Success(
+                    cafeList =
+                        persistentListOf(
+                            CafeItemAndroid(
+                                uuid = "",
+                                address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж",
+                                workingHours = "9:00 - 22:00",
+                                cafeStatusText = "Open",
+                                phone = "00000000",
+                                cafeOpenState = CafeOpenState.Opened,
+                                isLast = false,
+                            ),
+                            CafeItemAndroid(
+                                uuid = "",
+                                address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж",
+                                workingHours = "9:00 - 22:00",
+                                cafeStatusText = "Close soon",
+                                phone = "00000000",
+                                cafeOpenState = CafeOpenState.CloseSoon(30),
+                                isLast = false,
+                            ),
+                            CafeItemAndroid(
+                                uuid = "",
+                                address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж",
+                                workingHours = "9:00 - 22:00",
+                                cafeStatusText = "Closed",
+                                phone = "00000000",
+                                cafeOpenState = CafeOpenState.Closed,
+                                isLast = true,
+                            ),
+                        ),
+                    cafeOptionUI =
+                        CafeListViewState.CafeOptionUI(
+                            isShown = true,
+                            cafeOptions =
+                                CafeOptions(
+                                    title = "улица Чапаева, д 22А",
+                                    showOnMap = "На карте: улица Чапаева, д 22А",
+                                    callToCafe = "Позвонить: +7 (900) 900-90-90",
+                                    phone = "",
+                                    latitude = 0.0,
+                                    longitude = 0.0,
+                                ),
+                        ),
                 ),
-                cafeOptionUI = CafeListViewState.CafeOptionUI(
-                    isShown = true,
-                    cafeOptions = CafeOptions(
-                        title = "улица Чапаева, д 22А",
-                        showOnMap = "На карте: улица Чапаева, д 22А",
-                        callToCafe = "Позвонить: +7 (900) 900-90-90",
-                        phone = "",
-                        latitude = 0.0,
-                        longitude = 0.0
-                    )
-                )
-            ),
-            onAction = {}
+            onAction = {},
         )
     }
 }
@@ -240,7 +248,7 @@ private fun CafeListLoadingScreenPreview() {
     FoodDeliveryTheme {
         CafeListScreen(
             viewState = CafeListViewState.Loading,
-            onAction = {}
+            onAction = {},
         )
     }
 }
@@ -251,7 +259,7 @@ private fun CafeListErrorScreenPreview() {
     FoodDeliveryTheme {
         CafeListScreen(
             viewState = CafeListViewState.Error(Throwable()),
-            onAction = {}
+            onAction = {},
         )
     }
 }

@@ -39,34 +39,34 @@ import kotlinx.collections.immutable.persistentListOf
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun CreateAddress.DataState.mapState(): CreateAddressViewState {
-    return mapCreateAddressState()
-}
+fun CreateAddress.DataState.mapState(): CreateAddressViewState = mapCreateAddressState()
 
 @Composable
 fun CreateAddressRoute(
     viewModel: CreateAddressViewModel = koinViewModel(),
-    back: () -> Unit
+    back: () -> Unit,
 ) {
     val viewState by viewModel.dataState.collectAsStateWithLifecycle()
 
-    val onAction = remember {
-        { action: CreateAddress.Action ->
-            viewModel.onAction(action)
+    val onAction =
+        remember {
+            { action: CreateAddress.Action ->
+                viewModel.onAction(action)
+            }
         }
-    }
 
     val effects by viewModel.events.collectAsStateWithLifecycle()
-    val consumeEffects = remember {
-        {
-            viewModel.consumeEvents(effects)
+    val consumeEffects =
+        remember {
+            {
+                viewModel.consumeEvents(effects)
+            }
         }
-    }
 
     CreateAddressEffect(
         effects = effects,
         back = back,
-        consumeEffects = consumeEffects
+        consumeEffects = consumeEffects,
     )
 
     CreateAddressScreen(viewState = viewState.mapState(), onAction = onAction)
@@ -76,7 +76,7 @@ fun CreateAddressRoute(
 fun CreateAddressEffect(
     effects: List<CreateAddress.Event>,
     back: () -> Unit,
-    consumeEffects: () -> Unit
+    consumeEffects: () -> Unit,
 ) {
     val activity = LocalActivity.current
     LaunchedEffect(effects) {
@@ -84,20 +84,20 @@ fun CreateAddressEffect(
             when (effect) {
                 CreateAddress.Event.SuggestionLoadingFailed -> {
                     (activity as? IMessageHost)?.showErrorMessage(
-                        activity.resources.getString(R.string.error_create_address_loading)
+                        activity.resources.getString(R.string.error_create_address_loading),
                     )
                 }
 
                 CreateAddress.Event.AddressCreatedSuccess -> {
                     (activity as? IMessageHost)?.showInfoMessage(
-                        activity.resources.getString(R.string.msg_create_address_created)
+                        activity.resources.getString(R.string.msg_create_address_created),
                     )
                     back()
                 }
 
                 CreateAddress.Event.AddressCreatedFailed -> {
                     (activity as? IMessageHost)?.showErrorMessage(
-                        activity.resources.getString(R.string.error_create_address_fail)
+                        activity.resources.getString(R.string.error_create_address_fail),
                     )
                 }
 
@@ -111,7 +111,7 @@ fun CreateAddressEffect(
 @Composable
 private fun CreateAddressScreen(
     viewState: CreateAddressViewState,
-    onAction: (CreateAddress.Action) -> Unit
+    onAction: (CreateAddress.Action) -> Unit,
 ) {
     FoodDeliveryScaffold(
         title = stringResource(R.string.title_create_address),
@@ -125,36 +125,39 @@ private fun CreateAddressScreen(
                 isLoading = viewState.isCreateLoading,
                 onClick = {
                     onAction(CreateAddress.Action.SaveClick)
-                }
+                },
             )
-        }
+        },
     ) {
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-                .padding(horizontal = 16.dp)
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState())
+                    .padding(horizontal = 16.dp),
         ) {
             FoodDeliveryCard(
                 modifier = Modifier.padding(top = 16.dp),
-                clickable = false
+                clickable = false,
             ) {
                 Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp)
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp),
                 ) {
                     val focusManager = LocalFocusManager.current
                     var expanded by remember(viewState.suggestionListNotEmpty) {
                         mutableStateOf(viewState.suggestionListNotEmpty)
                     }
                     FoodDeliveryTextFieldWithMenu(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .onFocusChanged { focusState ->
-                                onAction(CreateAddress.Action.StreetFocusChange(isFocused = focusState.isFocused))
-                                expanded = focusState.isFocused && viewState.suggestionListNotEmpty
-                            },
+                        modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .onFocusChanged { focusState ->
+                                    onAction(CreateAddress.Action.StreetFocusChange(isFocused = focusState.isFocused))
+                                    expanded = focusState.isFocused && viewState.suggestionListNotEmpty
+                                },
                         expanded = expanded,
                         onExpandedChange = { value ->
                             expanded = value
@@ -170,7 +173,7 @@ private fun CreateAddressScreen(
                         },
                         errorMessageStringId = viewState.streetErrorStringId,
                         suggestionsList = viewState.streetSuggestionList,
-                        isLoading = viewState.isSuggestionLoading
+                        isLoading = viewState.isSuggestionLoading,
                     )
 
                     FoodDeliveryTextField(
@@ -181,7 +184,7 @@ private fun CreateAddressScreen(
                             onAction(CreateAddress.Action.HouseTextChange(house = value))
                         },
                         maxSymbols = 5,
-                        errorMessageStringId = viewState.houseErrorStringId
+                        errorMessageStringId = viewState.houseErrorStringId,
                     )
 
                     FoodDeliveryTextField(
@@ -191,7 +194,7 @@ private fun CreateAddressScreen(
                         onValueChange = { value ->
                             onAction(CreateAddress.Action.FlatTextChange(flat = value))
                         },
-                        maxSymbols = 5
+                        maxSymbols = 5,
                     )
 
                     FoodDeliveryTextField(
@@ -201,7 +204,7 @@ private fun CreateAddressScreen(
                         onValueChange = { value ->
                             onAction(CreateAddress.Action.EntranceTextChange(entrance = value))
                         },
-                        maxSymbols = 5
+                        maxSymbols = 5,
                     )
 
                     FoodDeliveryTextField(
@@ -211,21 +214,22 @@ private fun CreateAddressScreen(
                         onValueChange = { value ->
                             onAction(CreateAddress.Action.FloorTextChange(floor = value))
                         },
-                        maxSymbols = 5
+                        maxSymbols = 5,
                     )
 
                     FoodDeliveryTextField(
                         modifier = Modifier.fillMaxWidth(),
                         value = viewState.comment,
                         labelStringId = R.string.hint_create_address_comment,
-                        keyboardOptions = FoodDeliveryTextFieldDefaults.keyboardOptions(
-                            imeAction = ImeAction.Done
-                        ),
+                        keyboardOptions =
+                            FoodDeliveryTextFieldDefaults.keyboardOptions(
+                                imeAction = ImeAction.Done,
+                            ),
                         maxLines = 5,
                         onValueChange = { value ->
                             onAction(CreateAddress.Action.CommentTextChange(comment = value))
                         },
-                        maxSymbols = 100
+                        maxSymbols = 100,
                     )
                 }
             }
@@ -240,20 +244,21 @@ private fun CreateAddressScreen(
 private fun CreateAddressScreenPreview() {
     FoodDeliveryTheme {
         CreateAddressScreen(
-            viewState = CreateAddressViewState(
-                street = "Street",
-                streetErrorStringId = null,
-                streetSuggestionList = persistentListOf(),
-                isSuggestionLoading = true,
-                house = "1",
-                houseErrorStringId = null,
-                flat = "",
-                entrance = "",
-                floor = "",
-                comment = "",
-                isCreateLoading = false
-            ),
-            onAction = {}
+            viewState =
+                CreateAddressViewState(
+                    street = "Street",
+                    streetErrorStringId = null,
+                    streetSuggestionList = persistentListOf(),
+                    isSuggestionLoading = true,
+                    house = "1",
+                    houseErrorStringId = null,
+                    flat = "",
+                    entrance = "",
+                    floor = "",
+                    comment = "",
+                    isCreateLoading = false,
+                ),
+            onAction = {},
         )
     }
 }

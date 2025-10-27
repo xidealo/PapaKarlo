@@ -7,23 +7,25 @@ import kotlinx.collections.immutable.toPersistentList
 val mapCreateAddressState: CreateAddress.DataState.() -> CreateAddressViewState = {
     CreateAddressViewState(
         street = street,
-        streetErrorStringId = if (hasStreetError) {
-            R.string.error_create_address_street
-        } else {
-            null
-        },
+        streetErrorStringId =
+            if (hasStreetError) {
+                R.string.error_create_address_street
+            } else {
+                null
+            },
         streetSuggestionList = streetSuggestionList.toPersistentList(),
         isSuggestionLoading = isSuggestionLoading,
         house = house,
-        houseErrorStringId = if (hasHouseError) {
-            R.string.error_create_address_house
-        } else {
-            null
-        },
+        houseErrorStringId =
+            if (hasHouseError) {
+                R.string.error_create_address_house
+            } else {
+                null
+            },
         flat = flat,
         entrance = entrance,
         floor = floor,
         comment = comment,
-        isCreateLoading = isCreateLoading
+        isCreateLoading = isCreateLoading,
     )
 }

@@ -27,44 +27,48 @@ fun NavigationIconCard(
     @StringRes labelStringId: Int? = null,
     label: String = "",
     elevated: Boolean = true,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     FoodDeliveryCard(
         modifier = modifier,
         onClick = onClick,
-        elevated = elevated
+        elevated = elevated,
     ) {
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp)
-                .padding(vertical = 12.dp),
-            verticalAlignment = Alignment.CenterVertically
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp)
+                    .padding(vertical = 12.dp),
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             Icon(
                 modifier = Modifier.icon24(),
                 painter = painterResource(iconId),
                 tint = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
-                contentDescription = iconDescriptionStringId?.let { stringId ->
-                    stringResource(stringId)
-                }
+                contentDescription =
+                    iconDescriptionStringId?.let { stringId ->
+                        stringResource(stringId)
+                    },
             )
-            val labelText = labelStringId?.let { id ->
-                stringResource(id)
-            } ?: label
+            val labelText =
+                labelStringId?.let { id ->
+                    stringResource(id)
+                } ?: label
             OverflowingText(
-                modifier = Modifier
-                    .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace)
-                    .weight(1f),
+                modifier =
+                    Modifier
+                        .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace)
+                        .weight(1f),
                 text = labelText,
                 style = FoodDeliveryTheme.typography.bodyLarge,
-                color = FoodDeliveryTheme.colors.mainColors.onSurface
+                color = FoodDeliveryTheme.colors.mainColors.onSurface,
             )
             Icon(
                 modifier = Modifier.icon16(),
                 painter = painterResource(R.drawable.ic_right_arrow),
                 tint = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
-                contentDescription = stringResource(R.string.description_ic_next)
+                contentDescription = stringResource(R.string.description_ic_next),
             )
         }
     }
@@ -77,7 +81,7 @@ private fun NavigationIconCardPreview() {
         NavigationIconCard(
             iconId = R.drawable.ic_info,
             iconDescriptionStringId = R.string.description_ic_about,
-            label = "Текст"
+            label = "Текст",
         ) {}
     }
 }

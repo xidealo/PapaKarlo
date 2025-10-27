@@ -15,38 +15,43 @@ fun CafeList.DataState.toViewState(): CafeListViewState {
     return when {
         throwable != null -> CafeListViewState.Error(throwable = throwable)
         isLoading -> CafeListViewState.Loading
-        else -> CafeListViewState.Success(
-            cafeList = cafeList.map { cafeItem ->
-                CafeItemAndroid(
-                    uuid = cafeItem.uuid,
-                    address = cafeItem.address,
-                    phone = cafeItem.phone,
-                    workingHours = cafeItem.workingHours,
-                    cafeStatusText = getCafeStatusText(cafeItem.cafeOpenState),
-                    cafeOpenState = cafeItem.cafeOpenState,
-                    isLast = cafeItem.isLast
-                )
-            }.toPersistentList(),
-            cafeOptionUI = CafeListViewState.CafeOptionUI(
-                isShown = selectedCafe != null,
-                cafeOptions = selectedCafe?.let { cafe ->
-                    CafeOptions(
-                        title = cafe.address,
-                        showOnMap = stringResource(R.string.action_cafe_options_show_map) + cafe.address,
-                        callToCafe = stringResource(R.string.action_cafe_options_call) + cafe.phone,
-                        phone = cafe.phone,
-                        latitude = cafe.latitude,
-                        longitude = cafe.longitude
-                    )
-                }
+        else ->
+            CafeListViewState.Success(
+                cafeList =
+                    cafeList
+                        .map { cafeItem ->
+                            CafeItemAndroid(
+                                uuid = cafeItem.uuid,
+                                address = cafeItem.address,
+                                phone = cafeItem.phone,
+                                workingHours = cafeItem.workingHours,
+                                cafeStatusText = getCafeStatusText(cafeItem.cafeOpenState),
+                                cafeOpenState = cafeItem.cafeOpenState,
+                                isLast = cafeItem.isLast,
+                            )
+                        }.toPersistentList(),
+                cafeOptionUI =
+                    CafeListViewState.CafeOptionUI(
+                        isShown = selectedCafe != null,
+                        cafeOptions =
+                            selectedCafe?.let { cafe ->
+                                CafeOptions(
+                                    title = cafe.address,
+                                    showOnMap = stringResource(R.string.action_cafe_options_show_map) + cafe.address,
+                                    callToCafe = stringResource(R.string.action_cafe_options_call) + cafe.phone,
+                                    phone = cafe.phone,
+                                    latitude = cafe.latitude,
+                                    longitude = cafe.longitude,
+                                )
+                            },
+                    ),
             )
-        )
     }
 }
 
 @Composable
-private fun getCafeStatusText(cafeOpenState: CafeOpenState): String {
-    return when (cafeOpenState) {
+private fun getCafeStatusText(cafeOpenState: CafeOpenState): String =
+    when (cafeOpenState) {
         is CafeOpenState.Opened -> stringResource(R.string.msg_cafe_open)
         is CafeOpenState.CloseSoon -> {
             stringResource(R.string.msg_cafe_close_soon) +
@@ -56,15 +61,15 @@ private fun getCafeStatusText(cafeOpenState: CafeOpenState): String {
 
         is CafeOpenState.Closed -> stringResource(R.string.msg_cafe_closed)
     }
-}
 
 @Composable
 private fun getMinuteString(closeIn: Int): String {
-    val minuteStringId = when {
-        (closeIn / 10 == 1) -> R.string.msg_cafe_minutes
-        (closeIn % 10 == 1) -> R.string.msg_cafe_minute
-        (closeIn % 10 in 2..4) -> R.string.msg_cafe_minutes_234
-        else -> R.string.msg_cafe_minutes
-    }
+    val minuteStringId =
+        when {
+            (closeIn / 10 == 1) -> R.string.msg_cafe_minutes
+            (closeIn % 10 == 1) -> R.string.msg_cafe_minute
+            (closeIn % 10 in 2..4) -> R.string.msg_cafe_minutes_234
+            else -> R.string.msg_cafe_minutes
+        }
     return stringResource(minuteStringId)
 }

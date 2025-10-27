@@ -66,36 +66,38 @@ fun ProductDetailsRoute(
     menuProductName: String,
     productDetailsOpenedFrom: ProductDetailsOpenedFrom,
     additionUuidList: List<String>,
-    cartProductUuid: String?
+    cartProductUuid: String?,
 ) {
     LaunchedEffect(Unit) {
         viewModel.onAction(
             ProductDetailsState.Action.Init(
                 menuProductUuid = menuProductUuid,
-                selectedAdditionUuidList = additionUuidList
-            )
+                selectedAdditionUuidList = additionUuidList,
+            ),
         )
     }
 
     val viewState by viewModel.dataState.collectAsStateWithLifecycle()
 
-    val onAction = remember {
-        { action: ProductDetailsState.Action ->
-            viewModel.onAction(action)
+    val onAction =
+        remember {
+            { action: ProductDetailsState.Action ->
+                viewModel.onAction(action)
+            }
         }
-    }
 
     val effects by viewModel.events.collectAsStateWithLifecycle()
-    val consumeEffects = remember {
-        {
-            viewModel.consumeEvents(effects)
+    val consumeEffects =
+        remember {
+            {
+                viewModel.consumeEvents(effects)
+            }
         }
-    }
 
     ProductDetailsEffect(
         effects = effects,
         back = back,
-        consumeEffects = consumeEffects
+        consumeEffects = consumeEffects,
     )
 
     ProductDetailsScreen(
@@ -105,7 +107,7 @@ fun ProductDetailsRoute(
         productDetailsViewState = viewState.map(),
         onAction = onAction,
         productDetailsOpenedFrom = productDetailsOpenedFrom,
-        cartProductUuid = cartProductUuid
+        cartProductUuid = cartProductUuid,
     )
 }
 
@@ -113,7 +115,7 @@ fun ProductDetailsRoute(
 fun ProductDetailsEffect(
     effects: List<ProductDetailsState.Event>,
     back: () -> Unit,
-    consumeEffects: () -> Unit
+    consumeEffects: () -> Unit,
 ) {
     val activity = LocalActivity.current
     LaunchedEffect(effects) {
@@ -124,24 +126,25 @@ fun ProductDetailsEffect(
                 ProductDetailsState.Event.EditedProduct -> {
                     (activity as? IMessageHost)?.showInfoMessage(
                         activity.resources.getString(
-                            R.string.msg_menu_product_edited
-                        )
+                            R.string.msg_menu_product_edited,
+                        ),
                     )
                     back()
                 }
 
                 ProductDetailsState.Event.ShowAddProductError -> {
                     (activity as? IMessageHost)?.showErrorMessage(
-                        activity.resources.getString(R.string.error_consumer_cart_add_product)
+                        activity.resources.getString(R.string.error_consumer_cart_add_product),
                     )
                 }
 
                 ProductDetailsState.Event.AddedProduct -> {
                     (activity as? IMessageHost)?.showInfoMessage(
-                        text = activity.resources.getString(
-                            R.string.msg_menu_product_added
-                        ),
-                        paddingBottom = FAB_SNACKBAR_BOTTOM_PADDING
+                        text =
+                            activity.resources.getString(
+                                R.string.msg_menu_product_added,
+                            ),
+                        paddingBottom = FAB_SNACKBAR_BOTTOM_PADDING,
                     )
                     back()
                 }
@@ -160,7 +163,7 @@ private fun ProductDetailsScreen(
     productDetailsOpenedFrom: ProductDetailsOpenedFrom,
     cartProductUuid: String?,
     productDetailsViewState: ProductDetailsViewState,
-    onAction: (ProductDetailsState.Action) -> Unit
+    onAction: (ProductDetailsState.Action) -> Unit,
 ) {
     FoodDeliveryScaffold(
         title = menuProductName,
@@ -170,26 +173,28 @@ private fun ProductDetailsScreen(
         actionButton = {
             if (productDetailsViewState is ProductDetailsViewState.Success) {
                 FoodDeliveryExtendedFab(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
-                    text = stringResource(
-                        id = R.string.action_product_details_want,
-                        productDetailsViewState.menuProductUi.priceWithAdditions
-                    ),
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
+                    text =
+                        stringResource(
+                            id = R.string.action_product_details_want,
+                            productDetailsViewState.menuProductUi.priceWithAdditions,
+                        ),
                     onClick = {
                         onAction(
                             ProductDetailsState.Action.AddProductToCartClick(
                                 productDetailsOpenedFrom = productDetailsOpenedFrom,
-                                cartProductUuid = cartProductUuid
-                            )
+                                cartProductUuid = cartProductUuid,
+                            ),
                         )
                     },
-                    icon = R.drawable.ic_plus_16
+                    icon = R.drawable.ic_plus_16,
                 )
             }
         },
-        backgroundColor = FoodDeliveryTheme.colors.mainColors.surface
+        backgroundColor = FoodDeliveryTheme.colors.mainColors.surface,
     ) {
         AnimatedContent(
             targetState = productDetailsViewState,
@@ -199,20 +204,22 @@ private fun ProductDetailsScreen(
             },
             transitionSpec = {
                 ContentTransform(
-                    targetContentEnter = fadeIn(
-                        animationSpec = tween(delayMillis = ANIMATION_DURATION_MILLIS)
-                    ),
-                    initialContentExit = fadeOut(
-                        animationSpec = tween(delayMillis = ANIMATION_DURATION_MILLIS)
-                    )
+                    targetContentEnter =
+                        fadeIn(
+                            animationSpec = tween(delayMillis = ANIMATION_DURATION_MILLIS),
+                        ),
+                    initialContentExit =
+                        fadeOut(
+                            animationSpec = tween(delayMillis = ANIMATION_DURATION_MILLIS),
+                        ),
                 )
-            }
+            },
         ) { productDetailsViewState ->
             when (productDetailsViewState) {
                 is ProductDetailsViewState.Success -> {
                     ProductDetailsSuccessScreen(
                         productDetailsViewState.menuProductUi,
-                        onAction = onAction
+                        onAction = onAction,
                     )
                 }
 
@@ -225,8 +232,8 @@ private fun ProductDetailsScreen(
                         onAction(
                             ProductDetailsState.Action.Init(
                                 menuProductUuid = menuProductUuid,
-                                selectedAdditionUuidList = additionUuidList
-                            )
+                                selectedAdditionUuidList = additionUuidList,
+                            ),
                         )
                     }
                 }
@@ -238,36 +245,39 @@ private fun ProductDetailsScreen(
 @Composable
 private fun ProductDetailsSuccessScreen(
     menuProductUi: ProductDetailsViewState.Success.MenuProductUi,
-    onAction: (ProductDetailsState.Action) -> Unit
+    onAction: (ProductDetailsState.Action) -> Unit,
 ) {
     LazyColumn(
-        modifier = Modifier
-            .fillMaxWidth()
+        modifier =
+            Modifier
+                .fillMaxWidth(),
     ) {
         item {
             ProductCard(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-                    .padding(top = 16.dp),
-                menuProductUi = menuProductUi
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp)
+                        .padding(top = 16.dp),
+                menuProductUi = menuProductUi,
             )
         }
         items(
             menuProductUi.additionList,
             key = { menuProductAdditionItem ->
                 menuProductAdditionItem.key
-            }
+            },
         ) { menuProductAdditionItem ->
             when (menuProductAdditionItem) {
                 is AdditionItem.AdditionHeaderItem -> {
                     Text(
-                        modifier = Modifier
-                            .padding(horizontal = 16.dp)
-                            .padding(top = 24.dp),
+                        modifier =
+                            Modifier
+                                .padding(horizontal = 16.dp)
+                                .padding(top = 24.dp),
                         text = menuProductAdditionItem.name,
                         style = FoodDeliveryTheme.typography.titleMedium.bold,
-                        color = FoodDeliveryTheme.colors.mainColors.onSurface
+                        color = FoodDeliveryTheme.colors.mainColors.onSurface,
                     )
                 }
 
@@ -276,7 +286,7 @@ private fun ProductDetailsSuccessScreen(
                         AdditionItem(
                             menuProductAdditionItem = menuProductAdditionItem.product,
                             isMultiple = menuProductAdditionItem.isMultiple,
-                            onAction = onAction
+                            onAction = onAction,
                         )
                     }
                 }
@@ -292,52 +302,56 @@ private fun ProductDetailsSuccessScreen(
 private fun AdditionItem(
     menuProductAdditionItem: MenuProductAdditionItem,
     isMultiple: Boolean,
-    onAction: (ProductDetailsState.Action) -> Unit
+    onAction: (ProductDetailsState.Action) -> Unit,
 ) {
     FoodDeliveryCard(
         onClick = {
             onAction(
                 ProductDetailsState.Action.AdditionClick(
                     uuid = menuProductAdditionItem.uuid,
-                    groupUuid = menuProductAdditionItem.groupId
-                )
+                    groupUuid = menuProductAdditionItem.groupId,
+                ),
             )
         },
-        elevated = false
+        elevated = false,
     ) {
         Row(
-            modifier = Modifier
-                .padding(horizontal = 16.dp)
-                .padding(vertical = 8.dp),
-            verticalAlignment = Alignment.CenterVertically
+            modifier =
+                Modifier
+                    .padding(horizontal = 16.dp)
+                    .padding(vertical = 8.dp),
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             FoodDeliveryAsyncImage(
-                modifier = Modifier
-                    .size(40.dp)
-                    .clip(FoodDeliveryCardDefaults.cardShape),
+                modifier =
+                    Modifier
+                        .size(40.dp)
+                        .clip(FoodDeliveryCardDefaults.cardShape),
                 photoLink = menuProductAdditionItem.photoLink,
                 contentDescription = stringResource(R.string.description_product_addition),
                 contentScale = ContentScale.FillWidth,
                 error = null,
-                placeholder = null
+                placeholder = null,
             )
 
             Text(
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(start = 8.dp),
+                modifier =
+                    Modifier
+                        .weight(1f)
+                        .padding(start = 8.dp),
                 text = menuProductAdditionItem.name,
                 style = FoodDeliveryTheme.typography.bodyLarge,
-                color = FoodDeliveryTheme.colors.mainColors.onSurface
+                color = FoodDeliveryTheme.colors.mainColors.onSurface,
             )
 
             menuProductAdditionItem.price?.let { price ->
                 Text(
-                    modifier = Modifier
-                        .padding(end = 8.dp),
+                    modifier =
+                        Modifier
+                            .padding(end = 8.dp),
                     text = price,
                     style = FoodDeliveryTheme.typography.bodyLarge,
-                    color = FoodDeliveryTheme.colors.mainColors.onSurface
+                    color = FoodDeliveryTheme.colors.mainColors.onSurface,
                 )
             }
 
@@ -348,10 +362,10 @@ private fun AdditionItem(
                         onAction(
                             ProductDetailsState.Action.AdditionClick(
                                 uuid = menuProductAdditionItem.uuid,
-                                groupUuid = menuProductAdditionItem.groupId
-                            )
+                                groupUuid = menuProductAdditionItem.groupId,
+                            ),
                         )
-                    }
+                    },
                 )
             } else {
                 FoodDeliveryRadioButton(
@@ -360,10 +374,10 @@ private fun AdditionItem(
                         onAction(
                             ProductDetailsState.Action.AdditionClick(
                                 uuid = menuProductAdditionItem.uuid,
-                                groupUuid = menuProductAdditionItem.groupId
-                            )
+                                groupUuid = menuProductAdditionItem.groupId,
+                            ),
                         )
-                    }
+                    },
                 )
             }
         }
@@ -373,67 +387,73 @@ private fun AdditionItem(
 @Composable
 private fun ProductCard(
     modifier: Modifier = Modifier,
-    menuProductUi: ProductDetailsViewState.Success.MenuProductUi
+    menuProductUi: ProductDetailsViewState.Success.MenuProductUi,
 ) {
     Column(
-        modifier = modifier
+        modifier = modifier,
     ) {
         FoodDeliveryAsyncImage(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clip(FoodDeliveryCardDefaults.cardShape),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .clip(FoodDeliveryCardDefaults.cardShape),
             photoLink = menuProductUi.photoLink,
             placeholder = painterResource(R.drawable.placeholder_large),
             contentDescription = stringResource(R.string.description_product),
-            contentScale = ContentScale.FillWidth
+            contentScale = ContentScale.FillWidth,
         )
         Column(
-            modifier = Modifier
-                .padding(top = FoodDeliveryTheme.dimensions.mediumSpace)
+            modifier =
+                Modifier
+                    .padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
         ) {
             Row {
                 Text(
-                    modifier = Modifier
-                        .weight(1f)
-                        .alignByBaseline()
-                        .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
+                    modifier =
+                        Modifier
+                            .weight(1f)
+                            .alignByBaseline()
+                            .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
                     text = menuProductUi.name,
                     style = FoodDeliveryTheme.typography.titleMedium.bold,
-                    color = FoodDeliveryTheme.colors.mainColors.onSurface
+                    color = FoodDeliveryTheme.colors.mainColors.onSurface,
                 )
                 Text(
                     modifier = Modifier.alignByBaseline(),
                     text = menuProductUi.size,
                     style = FoodDeliveryTheme.typography.bodySmall,
-                    color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
+                    color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
                 )
             }
             Row(
-                modifier = Modifier
-                    .padding(top = FoodDeliveryTheme.dimensions.smallSpace)
+                modifier =
+                    Modifier
+                        .padding(top = FoodDeliveryTheme.dimensions.smallSpace),
             ) {
                 menuProductUi.oldPrice?.let {
                     Text(
-                        modifier = Modifier
-                            .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
+                        modifier =
+                            Modifier
+                                .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
                         text = menuProductUi.oldPrice,
                         style = FoodDeliveryTheme.typography.bodyLarge,
                         color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
-                        textDecoration = TextDecoration.LineThrough
+                        textDecoration = TextDecoration.LineThrough,
                     )
                 }
                 Text(
                     text = menuProductUi.newPrice,
                     style = FoodDeliveryTheme.typography.bodyLarge.bold,
-                    color = FoodDeliveryTheme.colors.mainColors.onSurface
+                    color = FoodDeliveryTheme.colors.mainColors.onSurface,
                 )
             }
             Text(
-                modifier = Modifier
-                    .padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
+                modifier =
+                    Modifier
+                        .padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
                 text = menuProductUi.description,
                 style = FoodDeliveryTheme.typography.bodyLarge,
-                color = FoodDeliveryTheme.colors.mainColors.onSurface
+                color = FoodDeliveryTheme.colors.mainColors.onSurface,
             )
         }
     }
@@ -446,90 +466,99 @@ private fun ProductDetailsSuccessScreenPreview() {
         ProductDetailsScreen(
             menuProductName = "Бэргер куриный Макс с экстра сырным соусом",
             menuProductUuid = "",
-            productDetailsViewState = ProductDetailsViewState.Success(
-                topCartUi = TopCartUi(
-                    cost = "100",
-                    count = "2"
+            productDetailsViewState =
+                ProductDetailsViewState.Success(
+                    topCartUi =
+                        TopCartUi(
+                            cost = "100",
+                            count = "2",
+                        ),
+                    menuProductUi =
+                        ProductDetailsViewState.Success.MenuProductUi(
+                            photoLink = "",
+                            name = "Бэргер куриный Макс с экстра сырным соусом",
+                            size = "300 г",
+                            oldPrice = "320 ₽",
+                            newPrice = "280 ₽",
+                            description =
+                                "Сочная котлетка, сыр Чедр, маринованный огурчик, помидор, " +
+                                    "красный лук, салат, фирменный соус, булочка с кунжутом",
+                            additionList =
+                                persistentListOf(
+                                    AdditionItem.AdditionHeaderItem(
+                                        key = "key1",
+                                        uuid = "uuid1",
+                                        name = "Булочка",
+                                    ),
+                                    AdditionItem.AdditionListItem(
+                                        key = "key2",
+                                        product =
+                                            MenuProductAdditionItem(
+                                                uuid = "uuid2",
+                                                isSelected = true,
+                                                name = "БулОЧКА Валентина",
+                                                price = "+200",
+                                                photoLink = "",
+                                                isLast = false,
+                                                groupId = "",
+                                            ),
+                                        isMultiple = false,
+                                    ),
+                                    AdditionItem.AdditionListItem(
+                                        key = "key3",
+                                        product =
+                                            MenuProductAdditionItem(
+                                                uuid = "uuid3",
+                                                isSelected = false,
+                                                name = "БулОЧКА Марка",
+                                                price = "300",
+                                                photoLink = "",
+                                                isLast = true,
+                                                groupId = "",
+                                            ),
+                                        isMultiple = false,
+                                    ),
+                                    AdditionItem.AdditionHeaderItem(
+                                        key = "key4",
+                                        uuid = "uuid4",
+                                        name = "Добавить по вкусу",
+                                    ),
+                                    AdditionItem.AdditionListItem(
+                                        key = "key5",
+                                        product =
+                                            MenuProductAdditionItem(
+                                                uuid = "uuid5",
+                                                isSelected = true,
+                                                name = "Монкейэс",
+                                                price = "13",
+                                                photoLink = "",
+                                                isLast = false,
+                                                groupId = "",
+                                            ),
+                                        isMultiple = true,
+                                    ),
+                                    AdditionItem.AdditionListItem(
+                                        key = "key6",
+                                        product =
+                                            MenuProductAdditionItem(
+                                                uuid = "uuid6",
+                                                isSelected = false,
+                                                name = "Лида в лаваше",
+                                                price = "2",
+                                                photoLink = "",
+                                                isLast = true,
+                                                groupId = "",
+                                            ),
+                                        isMultiple = true,
+                                    ),
+                                ),
+                            priceWithAdditions = "300 ₽",
+                        ),
                 ),
-                menuProductUi = ProductDetailsViewState.Success.MenuProductUi(
-                    photoLink = "",
-                    name = "Бэргер куриный Макс с экстра сырным соусом",
-                    size = "300 г",
-                    oldPrice = "320 ₽",
-                    newPrice = "280 ₽",
-                    description = "Сочная котлетка, сыр Чедр, маринованный огурчик, помидор, " +
-                        "красный лук, салат, фирменный соус, булочка с кунжутом",
-                    additionList = persistentListOf(
-                        AdditionItem.AdditionHeaderItem(
-                            key = "key1",
-                            uuid = "uuid1",
-                            name = "Булочка"
-                        ),
-                        AdditionItem.AdditionListItem(
-                            key = "key2",
-                            product = MenuProductAdditionItem(
-                                uuid = "uuid2",
-                                isSelected = true,
-                                name = "БулОЧКА Валентина",
-                                price = "+200",
-                                photoLink = "",
-                                isLast = false,
-                                groupId = ""
-                            ),
-                            isMultiple = false
-                        ),
-                        AdditionItem.AdditionListItem(
-                            key = "key3",
-                            product = MenuProductAdditionItem(
-                                uuid = "uuid3",
-                                isSelected = false,
-                                name = "БулОЧКА Марка",
-                                price = "300",
-                                photoLink = "",
-                                isLast = true,
-                                groupId = ""
-                            ),
-                            isMultiple = false
-                        ),
-                        AdditionItem.AdditionHeaderItem(
-                            key = "key4",
-                            uuid = "uuid4",
-                            name = "Добавить по вкусу"
-                        ),
-                        AdditionItem.AdditionListItem(
-                            key = "key5",
-                            product = MenuProductAdditionItem(
-                                uuid = "uuid5",
-                                isSelected = true,
-                                name = "Монкейэс",
-                                price = "13",
-                                photoLink = "",
-                                isLast = false,
-                                groupId = ""
-                            ),
-                            isMultiple = true
-                        ),
-                        AdditionItem.AdditionListItem(
-                            key = "key6",
-                            product = MenuProductAdditionItem(
-                                uuid = "uuid6",
-                                isSelected = false,
-                                name = "Лида в лаваше",
-                                price = "2",
-                                photoLink = "",
-                                isLast = true,
-                                groupId = ""
-                            ),
-                            isMultiple = true
-                        )
-                    ),
-                    priceWithAdditions = "300 ₽"
-                )
-            ),
             additionUuidList = persistentListOf(),
             onAction = {},
             productDetailsOpenedFrom = ProductDetailsOpenedFrom.CART_PRODUCT,
-            cartProductUuid = ""
+            cartProductUuid = "",
         )
     }
 }
@@ -545,7 +574,7 @@ private fun ProductDetailsLoadingScreenPreview() {
             cartProductUuid = "",
             productDetailsViewState = ProductDetailsViewState.Loading,
             additionUuidList = persistentListOf(),
-            onAction = {}
+            onAction = {},
         )
     }
 }

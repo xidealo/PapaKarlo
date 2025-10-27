@@ -11,9 +11,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data object ProfileScreenDestination
 
-fun NavController.navigateToProfileScreen(
-    navOptions: NavOptions
-) = navigate(route = ProfileScreenDestination, navOptions)
+fun NavController.navigateToProfileScreen(navOptions: NavOptions) = navigate(route = ProfileScreenDestination, navOptions)
 
 fun NavGraphBuilder.profileScreenRoute(
     back: () -> Unit,
@@ -22,7 +20,7 @@ fun NavGraphBuilder.profileScreenRoute(
     goToOrderDetailsFragment: (String) -> Unit,
     goToOrdersFragment: () -> Unit,
     goToSettingsFragment: () -> Unit,
-    goToCafeListFragment: () -> Unit
+    goToCafeListFragment: () -> Unit,
 ) {
     composable<ProfileScreenDestination> {
         ProfileRoute(
@@ -32,7 +30,7 @@ fun NavGraphBuilder.profileScreenRoute(
             goToOrderDetailsFragment = goToOrderDetailsFragment,
             goToOrdersFragment = goToOrdersFragment,
             goToSettingsFragment = goToSettingsFragment,
-            goToCafeListFragment = goToCafeListFragment
+            goToCafeListFragment = goToCafeListFragment,
         )
     }
 }

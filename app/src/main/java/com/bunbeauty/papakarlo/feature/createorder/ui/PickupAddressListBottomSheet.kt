@@ -19,18 +19,18 @@ import kotlinx.collections.immutable.persistentListOf
 @Composable
 fun PickupAddressListBottomSheet(
     pickupAddressList: PickupAddressListUI,
-    onAction: (CreateOrder.Action) -> Unit
+    onAction: (CreateOrder.Action) -> Unit,
 ) {
     FoodDeliveryModalBottomSheet(
         onDismissRequest = {
             onAction(CreateOrder.Action.HidePickupAddressList)
         },
         isShown = pickupAddressList.isShown,
-        title = stringResource(R.string.pickup_address)
+        title = stringResource(R.string.pickup_address),
     ) {
         PickupAddressListBottomSheetContent(
             addressList = pickupAddressList.addressList,
-            onAction = onAction
+            onAction = onAction,
         )
     }
 }
@@ -38,14 +38,14 @@ fun PickupAddressListBottomSheet(
 @Composable
 private fun PickupAddressListBottomSheetContent(
     addressList: ImmutableList<SelectableAddressUI>,
-    onAction: (CreateOrder.Action) -> Unit
+    onAction: (CreateOrder.Action) -> Unit,
 ) {
     LazyColumn(verticalArrangement = Arrangement.Absolute.spacedBy(8.dp)) {
         items(
             items = addressList,
             key = { selectableAddress ->
                 "PickupAddress ${selectableAddress.uuid}"
-            }
+            },
         ) { selectableAddress ->
             SelectableItem(
                 title = selectableAddress.address,
@@ -55,11 +55,11 @@ private fun PickupAddressListBottomSheetContent(
                 onClick = {
                     onAction(
                         CreateOrder.Action.ChangePickupAddress(
-                            addressUuid = selectableAddress.uuid
-                        )
+                            addressUuid = selectableAddress.uuid,
+                        ),
                     )
                 },
-                enabled = selectableAddress.isEnabled
+                enabled = selectableAddress.isEnabled,
             )
         }
     }
@@ -69,26 +69,27 @@ private fun PickupAddressListBottomSheetContent(
 @Composable
 fun PickupAddressListBottomSheet() {
     PickupAddressListBottomSheetContent(
-        addressList = persistentListOf(
-            SelectableAddressUI(
-                uuid = "1",
-                address = "улица Чапаева, д. 22А",
-                isSelected = false,
-                isEnabled = true
+        addressList =
+            persistentListOf(
+                SelectableAddressUI(
+                    uuid = "1",
+                    address = "улица Чапаева, д. 22А",
+                    isSelected = false,
+                    isEnabled = true,
+                ),
+                SelectableAddressUI(
+                    uuid = "2",
+                    address = "улица Чапаева, д. 22А кв. 55, 1 подъезд, 1 этаж",
+                    isSelected = true,
+                    isEnabled = true,
+                ),
+                SelectableAddressUI(
+                    uuid = "3",
+                    address = "улица Чапаева, д. 22А кв. 55, 1 подъезд, 2 этаж",
+                    isSelected = true,
+                    isEnabled = false,
+                ),
             ),
-            SelectableAddressUI(
-                uuid = "2",
-                address = "улица Чапаева, д. 22А кв. 55, 1 подъезд, 1 этаж",
-                isSelected = true,
-                isEnabled = true
-            ),
-            SelectableAddressUI(
-                uuid = "3",
-                address = "улица Чапаева, д. 22А кв. 55, 1 подъезд, 2 этаж",
-                isSelected = true,
-                isEnabled = false
-            )
-        ),
-        onAction = {}
+        onAction = {},
     )
 }

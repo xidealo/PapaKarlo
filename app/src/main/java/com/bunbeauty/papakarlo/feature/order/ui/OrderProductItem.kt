@@ -29,66 +29,70 @@ import com.bunbeauty.papakarlo.feature.order.screen.orderdetails.OrderProductUiI
 @Composable
 fun OrderProductItem(
     modifier: Modifier = Modifier,
-    orderProductItem: OrderProductUiItem
+    orderProductItem: OrderProductUiItem,
 ) {
     FoodDeliveryCard(
         modifier = modifier.fillMaxWidth(),
         clickable = false,
-        elevated = false
+        elevated = false,
     ) {
         Row(modifier = Modifier.padding(vertical = 8.dp)) {
             FoodDeliveryAsyncImage(
-                modifier = Modifier
-                    .heightIn(max = FoodDeliveryTheme.dimensions.productImageSmallHeight)
-                    .width(FoodDeliveryTheme.dimensions.productImageSmallWidth)
-                    .clip(RoundedCornerShape(8.dp)),
+                modifier =
+                    Modifier
+                        .heightIn(max = FoodDeliveryTheme.dimensions.productImageSmallHeight)
+                        .width(FoodDeliveryTheme.dimensions.productImageSmallWidth)
+                        .clip(RoundedCornerShape(8.dp)),
                 photoLink = orderProductItem.photoLink,
                 error = null,
                 contentDescription = stringResource(R.string.description_product),
-                contentScale = ContentScale.FillHeight
+                contentScale = ContentScale.FillHeight,
             )
             Column(
-                modifier = Modifier.padding(
-                    start = FoodDeliveryTheme.dimensions.smallSpace
-                ),
-                verticalArrangement = spacedBy(4.dp)
+                modifier =
+                    Modifier.padding(
+                        start = FoodDeliveryTheme.dimensions.smallSpace,
+                    ),
+                verticalArrangement = spacedBy(4.dp),
             ) {
                 OverflowingText(
                     text = orderProductItem.name,
                     style = FoodDeliveryTheme.typography.titleSmall.bold,
                     color = FoodDeliveryTheme.colors.mainColors.onSurface,
-                    maxLines = 2
+                    maxLines = 2,
                 )
 
                 orderProductItem.additions?.let { additions ->
                     Text(
                         text = additions,
                         style = FoodDeliveryTheme.typography.bodySmall,
-                        color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
+                        color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
                     )
                 }
 
                 Row(verticalAlignment = Alignment.Bottom) {
                     Text(
-                        modifier = Modifier
-                            .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
+                        modifier =
+                            Modifier
+                                .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
                         text = orderProductItem.newPrice,
                         style = FoodDeliveryTheme.typography.bodySmall,
-                        color = FoodDeliveryTheme.colors.mainColors.onSurface
+                        color = FoodDeliveryTheme.colors.mainColors.onSurface,
                     )
                     Text(
-                        modifier = Modifier
-                            .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
+                        modifier =
+                            Modifier
+                                .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
                         text = orderProductItem.count,
                         style = FoodDeliveryTheme.typography.bodySmall,
-                        color = FoodDeliveryTheme.colors.mainColors.onSurface
+                        color = FoodDeliveryTheme.colors.mainColors.onSurface,
                     )
                     Text(
                         modifier = Modifier.weight(1f),
                         text = orderProductItem.newCost,
                         style = FoodDeliveryTheme.typography.bodySmall.bold,
                         color = FoodDeliveryTheme.colors.mainColors.onSurface,
-                        textAlign = TextAlign.End
+                        textAlign = TextAlign.End,
                     )
                 }
             }
@@ -101,17 +105,18 @@ fun OrderProductItem(
 private fun OrderProductItemPreview() {
     FoodDeliveryTheme {
         OrderProductItem(
-            orderProductItem = OrderProductUiItem(
-                uuid = "",
-                name = "Бэргер с вкусной свинкой ням ням ням ням",
-                newPrice = "50 ₽",
-                newCost = "100 ₽",
-                photoLink = "",
-                count = "× 2",
-                key = "uuid",
-                additions = "Необычный лаваш • Добавка 1 • Добавка 2 • Добавка 3",
-                isLast = true
-            )
+            orderProductItem =
+                OrderProductUiItem(
+                    uuid = "",
+                    name = "Бэргер с вкусной свинкой ням ням ням ням",
+                    newPrice = "50 ₽",
+                    newCost = "100 ₽",
+                    photoLink = "",
+                    count = "× 2",
+                    key = "uuid",
+                    additions = "Необычный лаваш • Добавка 1 • Добавка 2 • Добавка 3",
+                    isLast = true,
+                ),
         )
     }
 }
@@ -121,17 +126,18 @@ private fun OrderProductItemPreview() {
 private fun OrderProductItemWithoutOldPricePreview() {
     FoodDeliveryTheme {
         OrderProductItem(
-            orderProductItem = OrderProductUiItem(
-                uuid = "",
-                name = "Бэргер с вкусной свинкой ням ням ням ням",
-                newPrice = "50 ₽",
-                newCost = "100 ₽",
-                photoLink = "",
-                count = "× 2",
-                key = "uuid",
-                additions = "Необычный лаваш • Добавка 1 • Добавка 2",
-                isLast = true
-            )
+            orderProductItem =
+                OrderProductUiItem(
+                    uuid = "",
+                    name = "Бэргер с вкусной свинкой ням ням ням ням",
+                    newPrice = "50 ₽",
+                    newCost = "100 ₽",
+                    photoLink = "",
+                    count = "× 2",
+                    key = "uuid",
+                    additions = "Необычный лаваш • Добавка 1 • Добавка 2",
+                    isLast = true,
+                ),
         )
     }
 }

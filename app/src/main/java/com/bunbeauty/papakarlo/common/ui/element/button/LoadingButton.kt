@@ -24,33 +24,35 @@ fun LoadingButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     isEnabled: Boolean = true,
-    hasShadow: Boolean = true
+    hasShadow: Boolean = true,
 ) {
     Button(
         modifier = modifier.fillMaxWidth(),
         onClick = onClick,
-        colors = FoodDeliveryButtonDefaults.mainButtonColors(
-            enabled = isEnabled && !isLoading
-        ),
+        colors =
+            FoodDeliveryButtonDefaults.mainButtonColors(
+                enabled = isEnabled && !isLoading,
+            ),
         shape = FoodDeliveryButtonDefaults.buttonShape,
         elevation = getButtonElevation(hasShadow),
-        enabled = isEnabled && !isLoading
+        enabled = isEnabled && !isLoading,
     ) {
         if (isLoading) {
             CircularProgressIndicator(
                 modifier = Modifier.size(24.dp),
-                color = FoodDeliveryTheme.colors.mainColors.onDisabled
+                color = FoodDeliveryTheme.colors.mainColors.onDisabled,
             )
         } else {
             Text(
                 text = stringResource(textStringId),
                 style = FoodDeliveryTheme.typography.labelLarge.medium,
-                color = if (isEnabled) {
-                    FoodDeliveryTheme.colors.mainColors.onPrimary
-                } else {
-                    FoodDeliveryTheme.colors.mainColors.onDisabled
-                },
-                textAlign = TextAlign.Center
+                color =
+                    if (isEnabled) {
+                        FoodDeliveryTheme.colors.mainColors.onPrimary
+                    } else {
+                        FoodDeliveryTheme.colors.mainColors.onDisabled
+                    },
+                textAlign = TextAlign.Center,
             )
         }
     }
@@ -63,7 +65,7 @@ private fun LoadingButtonPreview() {
         LoadingButton(
             textStringId = R.string.action_create_order_create_order,
             isLoading = false,
-            onClick = {}
+            onClick = {},
         )
     }
 }
@@ -75,7 +77,7 @@ private fun LoadingButtonLoadingPreview() {
         LoadingButton(
             textStringId = R.string.action_create_order_create_order,
             isLoading = true,
-            onClick = {}
+            onClick = {},
         )
     }
 }
@@ -88,7 +90,7 @@ private fun LoadingButtonDisabledPreview() {
             textStringId = R.string.action_create_order_create_order,
             isLoading = false,
             isEnabled = false,
-            onClick = {}
+            onClick = {},
         )
     }
 }

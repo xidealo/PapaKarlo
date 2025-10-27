@@ -60,24 +60,27 @@ import kotlinx.collections.immutable.toPersistentList
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun ProfileState.DataState.mapState(): ProfileViewState {
-    return ProfileViewState(
+fun ProfileState.DataState.mapState(): ProfileViewState =
+    ProfileViewState(
         lastOrder = lastOrder,
-        state = when (state) {
-            ProfileState.DataState.State.AUTHORIZED -> ProfileViewState.State.Authorized
-            ProfileState.DataState.State.UNAUTHORIZED -> ProfileViewState.State.Unauthorized
-            ProfileState.DataState.State.ERROR -> ProfileViewState.State.Error
-            ProfileState.DataState.State.LOADING -> ProfileViewState.State.Loading
-        },
+        state =
+            when (state) {
+                ProfileState.DataState.State.AUTHORIZED -> ProfileViewState.State.Authorized
+                ProfileState.DataState.State.UNAUTHORIZED -> ProfileViewState.State.Unauthorized
+                ProfileState.DataState.State.ERROR -> ProfileViewState.State.Error
+                ProfileState.DataState.State.LOADING -> ProfileViewState.State.Loading
+            },
         aboutBottomSheetUI = ProfileViewState.AboutBottomSheetUI(isShown = isShowAboutAppBottomSheet),
-        feedBackBottomSheetUI = ProfileViewState.FeedBackBottomSheetUI(
-            isShown = isShowFeedbackBottomSheet,
-            linkList = linkList.map { link ->
-                link.toUI()
-            }.toPersistentList()
-        )
+        feedBackBottomSheetUI =
+            ProfileViewState.FeedBackBottomSheetUI(
+                isShown = isShowFeedbackBottomSheet,
+                linkList =
+                    linkList
+                        .map { link ->
+                            link.toUI()
+                        }.toPersistentList(),
+            ),
     )
-}
 
 @Composable
 fun ProfileRoute(
@@ -88,7 +91,7 @@ fun ProfileRoute(
     goToOrderDetailsFragment: (String) -> Unit,
     goToOrdersFragment: () -> Unit,
     goToSettingsFragment: () -> Unit,
-    goToCafeListFragment: () -> Unit
+    goToCafeListFragment: () -> Unit,
 ) {
     LaunchedEffect(Unit) {
         viewModel.onAction(ProfileState.Action.Init)
@@ -103,18 +106,20 @@ fun ProfileRoute(
 
     val viewState by viewModel.dataState.collectAsStateWithLifecycle()
 
-    val onAction = remember {
-        { event: ProfileState.Action ->
-            viewModel.onAction(event)
+    val onAction =
+        remember {
+            { event: ProfileState.Action ->
+                viewModel.onAction(event)
+            }
         }
-    }
 
     val effects by viewModel.events.collectAsStateWithLifecycle()
-    val consumeEffects = remember {
-        {
-            viewModel.consumeEvents(effects)
+    val consumeEffects =
+        remember {
+            {
+                viewModel.consumeEvents(effects)
+            }
         }
-    }
 
     ProfileEffect(
         effects = effects,
@@ -125,18 +130,18 @@ fun ProfileRoute(
         goToOrdersFragment = goToOrdersFragment,
         goToSettingsFragment = goToSettingsFragment,
         goToCafeListFragment = goToCafeListFragment,
-        consumeEffects = consumeEffects
+        consumeEffects = consumeEffects,
     )
     ProfileScreen(
         viewState = viewState.mapState(),
-        onAction = onAction
+        onAction = onAction,
     )
 }
 
 @Composable
 private fun ProfileScreen(
     viewState: ProfileViewState,
-    onAction: (ProfileState.Action) -> Unit
+    onAction: (ProfileState.Action) -> Unit,
 ) {
     FoodDeliveryScaffold(
         title = stringResource(R.string.title_profile),
@@ -148,32 +153,35 @@ private fun ProfileScreen(
             if (viewState.state == ProfileViewState.State.Unauthorized) {
                 LoginButton(onAction)
             }
-        }
+        },
     ) {
         when (viewState.state) {
-            ProfileViewState.State.Error -> ErrorScreen(
-                mainTextId = R.string.error_cafe_list_loading,
-                onClick = {
-                    onAction(ProfileState.Action.OnRefreshClicked)
-                }
-            )
+            ProfileViewState.State.Error ->
+                ErrorScreen(
+                    mainTextId = R.string.error_cafe_list_loading,
+                    onClick = {
+                        onAction(ProfileState.Action.OnRefreshClicked)
+                    },
+                )
 
             ProfileViewState.State.Loading -> LoadingScreen()
 
-            ProfileViewState.State.Authorized -> AuthorizedProfileScreen(
-                state = viewState,
-                onAction = onAction
-            )
+            ProfileViewState.State.Authorized ->
+                AuthorizedProfileScreen(
+                    state = viewState,
+                    onAction = onAction,
+                )
 
-            ProfileViewState.State.Unauthorized -> UnauthorizedProfileScreen(
-                onAction = onAction,
-                state = viewState
-            )
+            ProfileViewState.State.Unauthorized ->
+                UnauthorizedProfileScreen(
+                    onAction = onAction,
+                    state = viewState,
+                )
         }
         AboutAppBottomSheet(aboutBottomSheetUI = viewState.aboutBottomSheetUI, onAction = onAction)
         FeedBackBottomSheetScreen(
             feedBackBottomSheetUI = viewState.feedBackBottomSheetUI,
-            onAction = onAction
+            onAction = onAction,
         )
     }
 }
@@ -188,7 +196,7 @@ fun ProfileEffect(
     goToOrdersFragment: () -> Unit,
     goToSettingsFragment: () -> Unit,
     goToCafeListFragment: () -> Unit,
-    consumeEffects: () -> Unit
+    consumeEffects: () -> Unit,
 ) {
     LaunchedEffect(effects) {
         effects.forEach { effect ->
@@ -225,26 +233,26 @@ fun ProfileEffect(
 }
 
 @Composable
-private fun LoginButton(
-    onAction: (ProfileState.Action) -> Unit
-) {
+private fun LoginButton(onAction: (ProfileState.Action) -> Unit) {
     MainButton(
-        modifier = Modifier
-            .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
+        modifier =
+            Modifier
+                .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
         textStringId = R.string.action_profile_login,
-        onClick = { onAction(ProfileState.Action.OnLoginClicked) }
+        onClick = { onAction(ProfileState.Action.OnLoginClicked) },
     )
 }
 
 @Composable
 private fun AuthorizedProfileScreen(
     state: ProfileViewState,
-    onAction: (ProfileState.Action) -> Unit
+    onAction: (ProfileState.Action) -> Unit,
 ) {
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState()),
     ) {
         state.lastOrder?.let { lastOrder ->
             OrderProfile(
@@ -252,17 +260,18 @@ private fun AuthorizedProfileScreen(
                     onAction(
                         ProfileState.Action.OnLastOrderClicked(
                             uuid = state.lastOrder.uuid,
-                            code = state.lastOrder.code
-                        )
+                            code = state.lastOrder.code,
+                        ),
                     )
                 },
                 modifier = Modifier.padding(bottom = 16.dp),
-                state = state
+                state = state,
             )
 
             FoodDeliveryHorizontalDivider(
-                modifier = Modifier
-                    .padding(horizontal = 16.dp)
+                modifier =
+                    Modifier
+                        .padding(horizontal = 16.dp),
             )
         }
         NavigationIconCardWithDivider(
@@ -270,28 +279,30 @@ private fun AuthorizedProfileScreen(
             iconId = R.drawable.ic_settings,
             iconDescriptionStringId = R.string.description_ic_settings,
             labelStringId = R.string.action_profile_settings,
-            onClick = { onAction(ProfileState.Action.OnSettingsClick) }
+            onClick = { onAction(ProfileState.Action.OnSettingsClick) },
         )
         NavigationIconCardWithDivider(
-            modifier = Modifier
-                .fillMaxWidth(),
+            modifier =
+                Modifier
+                    .fillMaxWidth(),
             iconId = R.drawable.ic_address,
             iconDescriptionStringId = R.string.description_ic_my_addresses,
             labelStringId = R.string.action_profile_my_addresses,
-            onClick = { onAction(ProfileState.Action.OnYourAddressesClicked) }
+            onClick = { onAction(ProfileState.Action.OnYourAddressesClicked) },
         )
         NavigationIconCardWithDivider(
-            modifier = Modifier
-                .fillMaxWidth(),
+            modifier =
+                Modifier
+                    .fillMaxWidth(),
             iconId = R.drawable.ic_history,
             iconDescriptionStringId = R.string.description_ic_my_orders,
             labelStringId = R.string.action_profile_my_orders,
-            onClick = { onAction(ProfileState.Action.OnOrderHistoryClicked) }
+            onClick = { onAction(ProfileState.Action.OnOrderHistoryClicked) },
         )
         ProfileInfoCards(
             modifier = Modifier,
             onAction = onAction,
-            state = state
+            state = state,
         )
     }
 }
@@ -299,58 +310,62 @@ private fun AuthorizedProfileScreen(
 @Composable
 private fun UnauthorizedProfileScreen(
     onAction: (ProfileState.Action) -> Unit,
-    state: ProfileViewState
+    state: ProfileViewState,
 ) {
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState()),
     ) {
         ProfileInfoCards(
             modifier = Modifier,
             onAction = onAction,
-            state = state
+            state = state,
         )
         Spacer(modifier = Modifier.weight(1f))
         Column(
             modifier = Modifier.padding(top = 16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Box(
-                modifier = Modifier
-                    .size(120.dp)
-                    .clip(CircleShape)
-                    .background(
-                        FoodDeliveryTheme.colors.mainColors.primary.copy(
-                            alpha = 0.6f
-                        )
-                    ),
-                contentAlignment = Alignment.Center
+                modifier =
+                    Modifier
+                        .size(120.dp)
+                        .clip(CircleShape)
+                        .background(
+                            FoodDeliveryTheme.colors.mainColors.primary.copy(
+                                alpha = 0.6f,
+                            ),
+                        ),
+                contentAlignment = Alignment.Center,
             ) {
                 Icon(
                     modifier = Modifier.size(64.dp),
                     painter = painterResource(R.drawable.ic_profile),
                     tint = FoodDeliveryTheme.colors.statusColors.onStatus,
-                    contentDescription = stringResource(R.string.description_empty_profile)
+                    contentDescription = stringResource(R.string.description_empty_profile),
                 )
             }
             Text(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 32.dp),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(top = 32.dp),
                 text = stringResource(R.string.title_profile_no_profile),
                 style = FoodDeliveryTheme.typography.titleMedium.bold,
                 color = FoodDeliveryTheme.colors.mainColors.onBackground,
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
             )
             Text(
-                modifier = Modifier
-                    .padding(top = 8.dp)
-                    .padding(horizontal = 16.dp),
+                modifier =
+                    Modifier
+                        .padding(top = 8.dp)
+                        .padding(horizontal = 16.dp),
                 text = stringResource(R.string.msg_profile_no_profile),
                 style = FoodDeliveryTheme.typography.bodyLarge,
                 color = FoodDeliveryTheme.colors.mainColors.onBackground,
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
             )
         }
         Spacer(modifier = Modifier.weight(1f))
@@ -363,7 +378,7 @@ private fun UnauthorizedProfileScreen(
 private fun ProfileInfoCards(
     state: ProfileViewState,
     modifier: Modifier = Modifier,
-    onAction: (ProfileState.Action) -> Unit
+    onAction: (ProfileState.Action) -> Unit,
 ) {
     Column(modifier = modifier) {
         NavigationIconCardWithDivider(
@@ -371,27 +386,29 @@ private fun ProfileInfoCards(
             iconId = R.drawable.ic_cafes,
             iconDescriptionStringId = R.string.title_profile_cafe_list,
             labelStringId = R.string.title_profile_cafe_list,
-            onClick = { onAction(ProfileState.Action.OnCafeListClicked) }
+            onClick = { onAction(ProfileState.Action.OnCafeListClicked) },
         )
         NavigationIconCardWithDivider(
-            modifier = Modifier
-                .fillMaxWidth(),
+            modifier =
+                Modifier
+                    .fillMaxWidth(),
             iconId = R.drawable.ic_star,
             iconDescriptionStringId = R.string.description_ic_feedback,
             labelStringId = R.string.title_feedback,
             onClick = {
                 onAction(
-                    ProfileState.Action.OnFeedbackClicked
+                    ProfileState.Action.OnFeedbackClicked,
                 )
-            }
+            },
         )
         NavigationIconCardWithDivider(
-            modifier = Modifier
-                .fillMaxWidth(),
+            modifier =
+                Modifier
+                    .fillMaxWidth(),
             iconId = R.drawable.ic_info,
             iconDescriptionStringId = R.string.description_ic_about,
             labelStringId = R.string.title_about_app,
-            onClick = { onAction(ProfileState.Action.OnAboutAppClicked) }
+            onClick = { onAction(ProfileState.Action.OnAboutAppClicked) },
         )
     }
 }
@@ -400,79 +417,88 @@ private fun ProfileInfoCards(
 private fun OrderProfile(
     modifier: Modifier = Modifier,
     state: ProfileViewState,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     FoodDeliveryCard(
         modifier = modifier,
         onClick = onClick,
         elevated = false,
-        shape = RoundedCornerShape(0.dp)
+        shape = RoundedCornerShape(0.dp),
     ) {
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp)
-                .padding(vertical = 16.dp),
-            verticalAlignment = Alignment.CenterVertically
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp)
+                    .padding(vertical = 16.dp),
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
                 text = state.lastOrder?.code.orEmpty(),
-                modifier = Modifier
-                    .requiredWidthIn(min = FoodDeliveryTheme.dimensions.codeWidth)
-                    .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
+                modifier =
+                    Modifier
+                        .requiredWidthIn(min = FoodDeliveryTheme.dimensions.codeWidth)
+                        .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
                 style = FoodDeliveryTheme.typography.titleMedium.bold,
-                color = FoodDeliveryTheme.colors.mainColors.onSurface
+                color = FoodDeliveryTheme.colors.mainColors.onSurface,
             )
 
             OrderStatusChip(
                 orderStatus = state.lastOrder?.status ?: OrderStatus.ACCEPTED,
-                statusName = (state.lastOrder?.status ?: OrderStatus.ACCEPTED).getOrderStatusName()
+                statusName = (state.lastOrder?.status ?: OrderStatus.ACCEPTED).getOrderStatusName(),
             )
             Text(
-                modifier = Modifier
-                    .weight(1f)
-                    .wrapContentWidth(Alignment.End),
+                modifier =
+                    Modifier
+                        .weight(1f)
+                        .wrapContentWidth(Alignment.End),
                 text = state.lastOrder?.dateTime?.getDateTimeString() ?: "—",
                 style = FoodDeliveryTheme.typography.bodySmall,
                 color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
-                textAlign = TextAlign.End
+                textAlign = TextAlign.End,
             )
         }
     }
 }
 
-val profileViewStateMock = ProfileViewState(
-    state = ProfileViewState.State.Loading,
-    lastOrder = null,
-    aboutBottomSheetUI = ProfileViewState.AboutBottomSheetUI(isShown = false),
-    feedBackBottomSheetUI = ProfileViewState.FeedBackBottomSheetUI(
-        isShown = false,
-        linkList = persistentListOf()
+val profileViewStateMock =
+    ProfileViewState(
+        state = ProfileViewState.State.Loading,
+        lastOrder = null,
+        aboutBottomSheetUI = ProfileViewState.AboutBottomSheetUI(isShown = false),
+        feedBackBottomSheetUI =
+            ProfileViewState.FeedBackBottomSheetUI(
+                isShown = false,
+                linkList = persistentListOf(),
+            ),
     )
-)
 
 @Preview(showSystemUi = true)
 @Composable
 private fun AuthorizedProfileScreenWithLastOrderPreview() {
     FoodDeliveryTheme {
         ProfileScreen(
-            viewState = profileViewStateMock.copy(
-                state = ProfileViewState.State.Authorized,
-                lastOrder = LightOrder(
-                    uuid = "uuid",
-                    status = OrderStatus.DONE,
-                    code = "code",
-                    dateTime = DateTime(
-                        date = Date(
-                            dayOfMonth = 5474,
-                            monthNumber = 7337,
-                            year = 1992
+            viewState =
+                profileViewStateMock.copy(
+                    state = ProfileViewState.State.Authorized,
+                    lastOrder =
+                        LightOrder(
+                            uuid = "uuid",
+                            status = OrderStatus.DONE,
+                            code = "code",
+                            dateTime =
+                                DateTime(
+                                    date =
+                                        Date(
+                                            dayOfMonth = 5474,
+                                            monthNumber = 7337,
+                                            year = 1992,
+                                        ),
+                                    time = Time(hours = 3796, minutes = 8009),
+                                ),
                         ),
-                        time = Time(hours = 3796, minutes = 8009)
-                    )
-                )
-            ),
-            onAction = {}
+                ),
+            onAction = {},
         )
     }
 }
@@ -482,11 +508,12 @@ private fun AuthorizedProfileScreenWithLastOrderPreview() {
 private fun AuthorizedProfileScreenWithoutLastOrderPreview() {
     FoodDeliveryTheme {
         ProfileScreen(
-            viewState = profileViewStateMock.copy(
-                state = ProfileViewState.State.Authorized,
-                lastOrder = null
-            ),
-            onAction = {}
+            viewState =
+                profileViewStateMock.copy(
+                    state = ProfileViewState.State.Authorized,
+                    lastOrder = null,
+                ),
+            onAction = {},
         )
     }
 }
@@ -496,11 +523,12 @@ private fun AuthorizedProfileScreenWithoutLastOrderPreview() {
 private fun UnauthorizedProfileScreenPreview() {
     FoodDeliveryTheme {
         ProfileScreen(
-            viewState = profileViewStateMock.copy(
-                state = ProfileViewState.State.Unauthorized,
-                lastOrder = null
-            ),
-            onAction = {}
+            viewState =
+                profileViewStateMock.copy(
+                    state = ProfileViewState.State.Unauthorized,
+                    lastOrder = null,
+                ),
+            onAction = {},
         )
     }
 }
@@ -510,11 +538,12 @@ private fun UnauthorizedProfileScreenPreview() {
 private fun LoadingProfileScreenPreview() {
     FoodDeliveryTheme {
         ProfileScreen(
-            viewState = profileViewStateMock.copy(
-                state = ProfileViewState.State.Loading,
-                lastOrder = null
-            ),
-            onAction = {}
+            viewState =
+                profileViewStateMock.copy(
+                    state = ProfileViewState.State.Loading,
+                    lastOrder = null,
+                ),
+            onAction = {},
         )
     }
 }
@@ -524,11 +553,12 @@ private fun LoadingProfileScreenPreview() {
 private fun ErrorProfileScreenPreview() {
     FoodDeliveryTheme {
         ProfileScreen(
-            viewState = profileViewStateMock.copy(
-                state = ProfileViewState.State.Error,
-                lastOrder = null
-            ),
-            onAction = {}
+            viewState =
+                profileViewStateMock.copy(
+                    state = ProfileViewState.State.Error,
+                    lastOrder = null,
+                ),
+            onAction = {},
         )
     }
 }

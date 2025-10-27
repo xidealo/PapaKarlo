@@ -42,27 +42,28 @@ import com.bunbeauty.shared.FoodDeliveryCompany
 @Composable
 fun FoodDeliveryTheme(
     isDarkTheme: Boolean = isSystemInDarkTheme(),
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     val colors = getAppColors(isDarkTheme = isDarkTheme)
-    val rememberedColors = remember {
-        colors.copy()
-    }.apply {
-        update(colors)
-    }
+    val rememberedColors =
+        remember {
+            colors.copy()
+        }.apply {
+            update(colors)
+        }
 
     CompositionLocalProvider(
         LocalOverscrollConfiguration provides null,
         LocalAppColors provides rememberedColors,
         LocalAppDimensions provides AppDimensions(),
         LocalAppTypography provides AppTypography(),
-        content = content
+        content = content,
     )
 }
 
 private fun getAppColors(
     flavor: String = BuildConfig.FLAVOR,
-    isDarkTheme: Boolean
+    isDarkTheme: Boolean,
 ): AppColors {
     val company = FoodDeliveryCompany.getByFlavor(flavor)
     return when (company) {
@@ -146,23 +147,26 @@ private fun getAppColors(
             }
         }
 
-        FoodDeliveryCompany.LIMONAD -> if (isDarkTheme) {
-            LimonadDarkColors
-        } else {
-            LimonadColors
-        }
+        FoodDeliveryCompany.LIMONAD ->
+            if (isDarkTheme) {
+                LimonadDarkColors
+            } else {
+                LimonadColors
+            }
 
-        FoodDeliveryCompany.TAVERNA -> if (isDarkTheme) {
-            TavernaDarkColors
-        } else {
-            TavernaColors
-        }
+        FoodDeliveryCompany.TAVERNA ->
+            if (isDarkTheme) {
+                TavernaDarkColors
+            } else {
+                TavernaColors
+            }
 
-        FoodDeliveryCompany.VOLJANE -> if (isDarkTheme) {
-            VoljaneDarkColors
-        } else {
-            VoljaneColors
-        }
+        FoodDeliveryCompany.VOLJANE ->
+            if (isDarkTheme) {
+                VoljaneDarkColors
+            } else {
+                VoljaneColors
+            }
     }
 }
 

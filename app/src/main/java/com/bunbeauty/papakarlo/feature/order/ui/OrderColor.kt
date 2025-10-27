@@ -6,8 +6,8 @@ import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.shared.domain.model.order.OrderStatus
 
 @Composable
-fun getOrderColor(orderStatus: OrderStatus): Color {
-    return when (orderStatus) {
+fun getOrderColor(orderStatus: OrderStatus): Color =
+    when (orderStatus) {
         OrderStatus.NOT_ACCEPTED -> FoodDeliveryTheme.colors.orderColors.notAccepted
         OrderStatus.ACCEPTED -> FoodDeliveryTheme.colors.orderColors.accepted
         OrderStatus.PREPARING -> FoodDeliveryTheme.colors.orderColors.preparing
@@ -16,4 +16,3 @@ fun getOrderColor(orderStatus: OrderStatus): Color {
         OrderStatus.DELIVERED -> FoodDeliveryTheme.colors.orderColors.delivered
         OrderStatus.CANCELED -> FoodDeliveryTheme.colors.orderColors.canceled
     }
-}

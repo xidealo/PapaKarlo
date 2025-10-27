@@ -2,8 +2,8 @@ package com.bunbeauty.papakarlo.feature.motivation
 
 import com.bunbeauty.shared.presentation.motivation.MotivationData
 
-fun MotivationData.toMotivationUi(): MotivationUi {
-    return when (this) {
+fun MotivationData.toMotivationUi(): MotivationUi =
+    when (this) {
         is MotivationData.MinOrderCost -> {
             MotivationUi.MinOrderCost(cost = cost)
         }
@@ -12,7 +12,7 @@ fun MotivationData.toMotivationUi(): MotivationUi {
             MotivationUi.ForLowerDelivery(
                 increaseAmountBy = increaseAmountBy,
                 progress = progress,
-                isFree = isFree
+                isFree = isFree,
             )
         }
 
@@ -20,4 +20,3 @@ fun MotivationData.toMotivationUi(): MotivationUi {
             MotivationUi.LowerDeliveryAchieved(isFree = isFree)
         }
     }
-}

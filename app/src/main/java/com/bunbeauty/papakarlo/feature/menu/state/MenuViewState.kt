@@ -14,7 +14,7 @@ data class MenuViewState(
     val menuItemList: ImmutableList<MenuItemUi>,
     val state: MenuDataState.State,
     val userScrollEnabled: Boolean,
-    val eventList: ImmutableList<MenuDataState.Event>
+    val eventList: ImmutableList<MenuDataState.Event>,
 )
 
 @Immutable
@@ -24,7 +24,7 @@ sealed interface MenuItemUi {
     @Immutable
     data class CategoryHeader(
         override val key: String,
-        val name: String
+        val name: String,
     ) : MenuItemUi
 
     @Immutable
@@ -34,12 +34,12 @@ sealed interface MenuItemUi {
         val photoLink: String,
         val name: String,
         val oldPrice: String?,
-        val newPrice: String
+        val newPrice: String,
     ) : MenuItemUi
 
     @Immutable
     data class Discount(
         override val key: String,
-        val discount: String
+        val discount: String,
     ) : MenuItemUi
 }

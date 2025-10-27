@@ -7,8 +7,9 @@ import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 
 object FoodDeliveryRadioButtonDefaults {
     val radioButtonColors: RadioButtonColors
-        @Composable get() = RadioButtonDefaults.colors(
-            selectedColor = FoodDeliveryTheme.colors.mainColors.primary,
-            unselectedColor = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
-        )
+        @Composable get() =
+            RadioButtonDefaults.colors(
+                selectedColor = FoodDeliveryTheme.colors.mainColors.primary,
+                unselectedColor = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
+            )
 }

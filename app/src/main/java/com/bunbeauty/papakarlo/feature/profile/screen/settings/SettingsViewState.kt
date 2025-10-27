@@ -10,23 +10,22 @@ data class SettingsViewState(
     val selectedCityName: String,
     val state: State,
     val logoutUI: LogoutBottomSheetUI,
-    val cityListBottomSheetUI: CityListBottomSheetUI
+    val cityListBottomSheetUI: CityListBottomSheetUI,
 ) : BaseViewState {
-
     @Immutable
     data class LogoutBottomSheetUI(
-        val isShown: Boolean
+        val isShown: Boolean,
     )
 
     @Immutable
     data class CityListBottomSheetUI(
         val isShown: Boolean,
-        val cityListUI: ImmutableList<CityUI>
+        val cityListUI: ImmutableList<CityUI>,
     )
 
     enum class State {
         Success,
         Loading,
-        Error
+        Error,
     }
 }

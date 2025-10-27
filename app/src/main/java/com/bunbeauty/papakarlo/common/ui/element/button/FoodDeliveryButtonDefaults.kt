@@ -14,7 +14,6 @@ import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 
 object FoodDeliveryButtonDefaults {
-
     private val buttonElevation: ButtonElevation
         @Composable get() = ButtonDefaults.buttonElevation(2.dp)
 
@@ -24,62 +23,68 @@ object FoodDeliveryButtonDefaults {
     @Composable
     fun mainButtonColors(enabled: Boolean = true): ButtonColors {
         val containerColor by animateColorAsState(
-            targetValue = if (enabled) {
-                FoodDeliveryTheme.colors.mainColors.primary
-            } else {
-                FoodDeliveryTheme.colors.mainColors.disabled
-            },
+            targetValue =
+                if (enabled) {
+                    FoodDeliveryTheme.colors.mainColors.primary
+                } else {
+                    FoodDeliveryTheme.colors.mainColors.disabled
+                },
             animationSpec = tween(),
-            label = "containerColor"
+            label = "containerColor",
         )
         val contentColor by animateColorAsState(
-            targetValue = if (enabled) {
-                FoodDeliveryTheme.colors.mainColors.onPrimary
-            } else {
-                FoodDeliveryTheme.colors.mainColors.onDisabled
-            },
+            targetValue =
+                if (enabled) {
+                    FoodDeliveryTheme.colors.mainColors.onPrimary
+                } else {
+                    FoodDeliveryTheme.colors.mainColors.onDisabled
+                },
             animationSpec = tween(),
-            label = "contentColor"
+            label = "contentColor",
         )
 
         return ButtonDefaults.buttonColors(
             containerColor = containerColor,
             contentColor = contentColor,
             disabledContainerColor = containerColor,
-            disabledContentColor = contentColor
+            disabledContentColor = contentColor,
         )
     }
 
     val secondaryButtonColors: ButtonColors
-        @Composable get() = ButtonDefaults.buttonColors(
-            containerColor = FoodDeliveryTheme.colors.mainColors.secondary,
-            contentColor = FoodDeliveryTheme.colors.mainColors.onSecondary,
-            disabledContainerColor = FoodDeliveryTheme.colors.mainColors.disabled,
-            disabledContentColor = FoodDeliveryTheme.colors.mainColors.onDisabled
-        )
+        @Composable get() =
+            ButtonDefaults.buttonColors(
+                containerColor = FoodDeliveryTheme.colors.mainColors.secondary,
+                contentColor = FoodDeliveryTheme.colors.mainColors.onSecondary,
+                disabledContainerColor = FoodDeliveryTheme.colors.mainColors.disabled,
+                disabledContentColor = FoodDeliveryTheme.colors.mainColors.onDisabled,
+            )
 
     val mainOutlineButtonColors: ButtonColors
-        @Composable get() = ButtonDefaults.outlinedButtonColors(
-            disabledContainerColor = FoodDeliveryTheme.colors.mainColors.disabled,
-            disabledContentColor = FoodDeliveryTheme.colors.mainColors.onDisabled,
-            contentColor = FoodDeliveryTheme.colors.mainColors.primary
-        )
+        @Composable get() =
+            ButtonDefaults.outlinedButtonColors(
+                disabledContainerColor = FoodDeliveryTheme.colors.mainColors.disabled,
+                disabledContentColor = FoodDeliveryTheme.colors.mainColors.onDisabled,
+                contentColor = FoodDeliveryTheme.colors.mainColors.primary,
+            )
 
     val iconButtonColors: IconButtonColors
-        @Composable get() = IconButtonDefaults.iconButtonColors(
-            containerColor = FoodDeliveryTheme.colors.mainColors.surface,
-            contentColor = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
-            disabledContainerColor = FoodDeliveryTheme.colors.mainColors.disabled,
-            disabledContentColor = FoodDeliveryTheme.colors.mainColors.onDisabled
-        )
+        @Composable get() =
+            IconButtonDefaults.iconButtonColors(
+                containerColor = FoodDeliveryTheme.colors.mainColors.surface,
+                contentColor = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
+                disabledContainerColor = FoodDeliveryTheme.colors.mainColors.disabled,
+                disabledContentColor = FoodDeliveryTheme.colors.mainColors.onDisabled,
+            )
 
     val buttonShape: RoundedCornerShape
         @Composable get() = RoundedCornerShape(FoodDeliveryTheme.dimensions.buttonRadius)
 
     @Composable
-    fun getButtonElevation(elevated: Boolean): ButtonElevation = if (elevated) {
-        buttonElevation
-    } else {
-        zeroButtonElevation
-    }
+    fun getButtonElevation(elevated: Boolean): ButtonElevation =
+        if (elevated) {
+            buttonElevation
+        } else {
+            zeroButtonElevation
+        }
 }

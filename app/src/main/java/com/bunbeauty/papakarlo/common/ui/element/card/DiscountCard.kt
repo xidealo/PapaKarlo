@@ -14,13 +14,13 @@ fun DiscountCard(discount: String) {
         colors = FoodDeliveryCardDefaults.positiveCardStatusColors,
         shape = FoodDeliveryCardDefaults.smallCardShape,
         elevated = false,
-        clickable = false
+        clickable = false,
     ) {
         Text(
             modifier = Modifier.padding(horizontal = 4.dp),
             text = discount,
             style = FoodDeliveryTheme.typography.bodyMedium,
-            color = FoodDeliveryTheme.colors.statusColors.onStatus
+            color = FoodDeliveryTheme.colors.statusColors.onStatus,
         )
     }
 }

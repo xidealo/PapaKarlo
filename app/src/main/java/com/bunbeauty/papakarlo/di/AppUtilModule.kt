@@ -9,17 +9,18 @@ import com.bunbeauty.papakarlo.util.string.StringUtil
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
-fun appUtilModule() = module {
-    single<IResourcesProvider> { ResourcesProvider(androidContext()) }
+fun appUtilModule() =
+    module {
+        single<IResourcesProvider> { ResourcesProvider(androidContext()) }
 
-    single<INetworkUtil> {
-        NetworkUtil(
-            connectivityManager = get()
-        )
+        single<INetworkUtil> {
+            NetworkUtil(
+                connectivityManager = get(),
+            )
+        }
+        single<IStringUtil> {
+            StringUtil(
+                resourcesProvider = get(),
+            )
+        }
     }
-    single<IStringUtil> {
-        StringUtil(
-            resourcesProvider = get()
-        )
-    }
-}

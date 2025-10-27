@@ -7,7 +7,6 @@ import androidx.compose.ui.graphics.Color
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 
 object FoodDeliveryTopAppBarDefaults {
-
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun topAppBarColors(
@@ -15,12 +14,12 @@ object FoodDeliveryTopAppBarDefaults {
         scrolledContainerColor: Color = Color.Transparent,
         navigationIconContentColor: Color = FoodDeliveryTheme.colors.mainColors.onSurface,
         titleContentColor: Color = FoodDeliveryTheme.colors.mainColors.onSurface,
-        actionIconContentColor: Color = FoodDeliveryTheme.colors.mainColors.onSurface
+        actionIconContentColor: Color = FoodDeliveryTheme.colors.mainColors.onSurface,
     ) = TopAppBarDefaults.topAppBarColors(
         containerColor = containerColor,
         scrolledContainerColor = scrolledContainerColor,
         navigationIconContentColor = navigationIconContentColor,
         titleContentColor = titleContentColor,
-        actionIconContentColor = actionIconContentColor
+        actionIconContentColor = actionIconContentColor,
     )
 }

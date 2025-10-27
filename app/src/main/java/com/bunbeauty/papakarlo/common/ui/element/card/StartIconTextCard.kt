@@ -28,38 +28,39 @@ fun StartIconTextCard(
     elevated: Boolean = true,
     iconTint: Color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
     iconDescription: String? = null,
-    onClick: (() -> Unit) = {}
+    onClick: (() -> Unit) = {},
 ) {
     FoodDeliveryCard(
         modifier = modifier,
         elevated = elevated,
-        onClick = onClick
+        onClick = onClick,
     ) {
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(
-                    horizontal = FoodDeliveryTheme.dimensions.mediumSpace,
-                    vertical = FoodDeliveryTheme.dimensions.smallSpace
-                ),
-            verticalAlignment = Alignment.CenterVertically
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        horizontal = FoodDeliveryTheme.dimensions.mediumSpace,
+                        vertical = FoodDeliveryTheme.dimensions.smallSpace,
+                    ),
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             Icon(
                 modifier = Modifier.icon24(),
                 painter = painterResource(iconId),
                 tint = iconTint,
-                contentDescription = iconDescription
+                contentDescription = iconDescription,
             )
             Column(modifier = Modifier.padding(start = 16.dp)) {
                 Text(
                     text = hint,
                     style = FoodDeliveryTheme.typography.labelSmall.medium,
-                    color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
+                    color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
                 )
                 Text(
                     text = label,
                     style = FoodDeliveryTheme.typography.bodyMedium,
-                    color = FoodDeliveryTheme.colors.mainColors.onSurface
+                    color = FoodDeliveryTheme.colors.mainColors.onSurface,
                 )
             }
         }
@@ -73,7 +74,7 @@ private fun StartIconTextCardPreview() {
         StartIconTextCard(
             hint = "Информация",
             label = "Важная информация",
-            iconId = R.drawable.ic_info
+            iconId = R.drawable.ic_info,
         )
     }
 }
@@ -85,7 +86,7 @@ private fun StartIconTextCardLongContentPreview() {
         StartIconTextCard(
             hint = "Длиииииииииииииииииииииииииииииииииииииииииииииииинный текст",
             label = "Длиииииииииииииииииииииииииииииииииииииииииииииииинный текст",
-            iconId = R.drawable.ic_info
+            iconId = R.drawable.ic_info,
         )
     }
 }

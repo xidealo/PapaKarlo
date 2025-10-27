@@ -10,16 +10,12 @@ import kotlinx.serialization.Serializable
 @Serializable
 data object SettingsScreenDestination
 
-fun NavController.navigateToSettingsScreen(
-    navOptions: NavOptions
-) = navigate(route = SettingsScreenDestination, navOptions)
+fun NavController.navigateToSettingsScreen(navOptions: NavOptions) = navigate(route = SettingsScreenDestination, navOptions)
 
-fun NavGraphBuilder.settingsScreenRoute(
-    back: () -> Unit
-) {
+fun NavGraphBuilder.settingsScreenRoute(back: () -> Unit) {
     composable<SettingsScreenDestination> {
         SettingsRoute(
-            back = back
+            back = back,
         )
     }
 }

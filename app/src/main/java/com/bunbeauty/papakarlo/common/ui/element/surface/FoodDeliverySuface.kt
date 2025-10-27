@@ -12,12 +12,12 @@ fun FoodDeliverySurface(
     modifier: Modifier = Modifier,
     color: Color = FoodDeliveryTheme.colors.mainColors.surface,
     elevated: Boolean = true,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     Surface(
         modifier = modifier.zIndex(1f),
         color = color,
         shadowElevation = FoodDeliverySurfaceDefaults.getSurfaceElevation(elevated),
-        content = content
+        content = content,
     )
 }

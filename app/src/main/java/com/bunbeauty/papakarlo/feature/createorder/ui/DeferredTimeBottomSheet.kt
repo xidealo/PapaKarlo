@@ -18,29 +18,27 @@ import com.bunbeauty.shared.presentation.createorder.CreateOrder
 fun DeferredTimeBottomSheet(
     isShown: Boolean,
     title: String,
-    onAction: (CreateOrder.Action) -> Unit
+    onAction: (CreateOrder.Action) -> Unit,
 ) {
     FoodDeliveryModalBottomSheet(
         onDismissRequest = {
             onAction(CreateOrder.Action.HideDeferredTime)
         },
         isShown = isShown,
-        title = title
+        title = title,
     ) {
         DeferredTimeBottomSheetContent(onAction = onAction)
     }
 }
 
 @Composable
-private fun ColumnScope.DeferredTimeBottomSheetContent(
-    onAction: (CreateOrder.Action) -> Unit
-) {
+private fun ColumnScope.DeferredTimeBottomSheetContent(onAction: (CreateOrder.Action) -> Unit) {
     SimpleCard(
         text = stringResource(R.string.action_deferred_time_asap),
         elevated = false,
         onClick = {
             onAction(CreateOrder.Action.AsapClick)
-        }
+        },
     )
     NavigationCard(
         modifier = Modifier.padding(top = 8.dp),
@@ -48,7 +46,7 @@ private fun ColumnScope.DeferredTimeBottomSheetContent(
         label = stringResource(R.string.action_deferred_time_select_time),
         onClick = {
             onAction(CreateOrder.Action.PickTimeClick)
-        }
+        },
     )
 }
 

@@ -19,7 +19,7 @@ fun MainButton(
     text: String? = null,
     elevated: Boolean = true,
     enabled: Boolean = true,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     Button(
         modifier = modifier.fillMaxWidth(),
@@ -27,14 +27,15 @@ fun MainButton(
         colors = FoodDeliveryButtonDefaults.mainButtonColors(enabled = enabled),
         shape = FoodDeliveryButtonDefaults.buttonShape,
         elevation = FoodDeliveryButtonDefaults.getButtonElevation(elevated),
-        enabled = enabled
+        enabled = enabled,
     ) {
-        val buttonText = text ?: textStringId?.let {
-            stringResource(it)
-        } ?: ""
+        val buttonText =
+            text ?: textStringId?.let {
+                stringResource(it)
+            } ?: ""
         Text(
             text = buttonText,
-            style = FoodDeliveryTheme.typography.labelLarge.medium
+            style = FoodDeliveryTheme.typography.labelLarge.medium,
         )
     }
 }
@@ -53,7 +54,7 @@ private fun MainButtonDisabledPreview() {
     FoodDeliveryTheme {
         MainButton(
             textStringId = R.string.action_login_continue,
-            enabled = false
+            enabled = false,
         ) {}
     }
 }

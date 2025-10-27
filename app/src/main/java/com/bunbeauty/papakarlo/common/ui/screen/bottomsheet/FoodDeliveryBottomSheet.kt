@@ -26,18 +26,18 @@ import com.bunbeauty.papakarlo.common.ui.theme.bold
 @Composable
 fun FoodDeliveryBottomSheet(
     @StringRes titleStringId: Int,
-    content: @Composable ColumnScope.() -> Unit
+    content: @Composable ColumnScope.() -> Unit,
 ) {
     FoodDeliveryBottomSheet(
         title = stringResource(id = titleStringId),
-        content = content
+        content = content,
     )
 }
 
 @Composable
 fun FoodDeliveryBottomSheet(
     title: String,
-    content: @Composable ColumnScope.() -> Unit
+    content: @Composable ColumnScope.() -> Unit,
 ) {
     FoodDeliveryBottomSheet(
         title = {
@@ -46,35 +46,36 @@ fun FoodDeliveryBottomSheet(
                 text = title,
                 style = FoodDeliveryTheme.typography.titleMedium.bold,
                 color = FoodDeliveryTheme.colors.mainColors.onSurface,
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
             )
         },
-        content = content
+        content = content,
     )
 }
 
 @Composable
 private fun FoodDeliveryBottomSheet(
     title: @Composable () -> Unit,
-    content: @Composable ColumnScope.() -> Unit
+    content: @Composable ColumnScope.() -> Unit,
 ) {
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clip(FoodDeliveryBottomSheetDefaults.bottomSheetShape)
-            .background(FoodDeliveryTheme.colors.mainColors.surface)
-            .padding(horizontal = FoodDeliveryTheme.dimensions.screenContentSpace)
-            .padding(bottom = FoodDeliveryTheme.dimensions.screenContentSpace, top = 8.dp)
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .clip(FoodDeliveryBottomSheetDefaults.bottomSheetShape)
+                .background(FoodDeliveryTheme.colors.mainColors.surface)
+                .padding(horizontal = FoodDeliveryTheme.dimensions.screenContentSpace)
+                .padding(bottom = FoodDeliveryTheme.dimensions.screenContentSpace, top = 8.dp),
     ) {
         Spacer(
-            modifier = Modifier
-                .width(32.dp)
-                .height(4.dp)
-                .background(
-                    color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
-                    shape = RoundedCornerShape(2.dp)
-                )
-                .align(CenterHorizontally)
+            modifier =
+                Modifier
+                    .width(32.dp)
+                    .height(4.dp)
+                    .background(
+                        color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
+                        shape = RoundedCornerShape(2.dp),
+                    ).align(CenterHorizontally),
         )
         Spacer(modifier = Modifier.height(16.dp))
         title()

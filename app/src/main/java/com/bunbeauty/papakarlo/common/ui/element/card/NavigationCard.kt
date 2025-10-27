@@ -22,31 +22,32 @@ fun NavigationCard(
     clickable: Boolean = true,
     elevated: Boolean = true,
     label: String,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     FoodDeliveryCard(
         modifier = modifier,
         clickable = clickable,
         elevated = elevated,
-        onClick = onClick
+        onClick = onClick,
     ) {
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 12.dp),
-            verticalAlignment = Alignment.CenterVertically
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 12.dp),
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             OverflowingText(
                 text = label,
                 style = FoodDeliveryTheme.typography.bodyLarge,
-                color = FoodDeliveryTheme.colors.mainColors.onSurface
+                color = FoodDeliveryTheme.colors.mainColors.onSurface,
             )
             Spacer(modifier = Modifier.weight(1f))
             Icon(
                 modifier = Modifier.icon16(),
                 painter = painterResource(R.drawable.ic_right_arrow),
                 tint = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
-                contentDescription = null
+                contentDescription = null,
             )
         }
     }
@@ -58,7 +59,7 @@ private fun NavigationCardPreview() {
     FoodDeliveryTheme {
         NavigationCard(
             label = "Название раздела",
-            onClick = {}
+            onClick = {},
         )
     }
 }

@@ -11,24 +11,22 @@ import kotlinx.serialization.Serializable
 @Serializable
 data object MenuScreenDestination
 
-fun NavController.navigateToMenuScreen(
-    navOptions: NavOptions
-) = navigate(route = MenuScreenDestination, navOptions)
+fun NavController.navigateToMenuScreen(navOptions: NavOptions) = navigate(route = MenuScreenDestination, navOptions)
 
 fun NavGraphBuilder.menuScreenRoute(
     goToProductDetailsFragment: (
         uuid: String,
         name: String,
-        productDetailsOpenedFrom: ProductDetailsOpenedFrom
+        productDetailsOpenedFrom: ProductDetailsOpenedFrom,
     ) -> Unit,
     goToProfile: () -> Unit,
-    goToConsumerCart: () -> Unit
+    goToConsumerCart: () -> Unit,
 ) {
     composable<MenuScreenDestination> {
         MenuRoute(
             goToProductDetailsFragment = goToProductDetailsFragment,
             goToProfile = goToProfile,
-            goToConsumerCart = goToConsumerCart
+            goToConsumerCart = goToConsumerCart,
         )
     }
 }

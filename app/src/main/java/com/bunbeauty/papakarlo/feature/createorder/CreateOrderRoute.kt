@@ -73,41 +73,41 @@ import kotlinx.collections.immutable.persistentListOf
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun CreateOrder.DataState.mapState(): CreateOrderViewState {
-    return toViewState()
-}
+fun CreateOrder.DataState.mapState(): CreateOrderViewState = toViewState()
 
 @Composable
 fun CreateOrderRoute(
     viewModel: CreateOrderViewModel = koinViewModel(),
     back: () -> Unit,
     goToProfile: () -> Unit,
-    goToCreateAddress: () -> Unit
+    goToCreateAddress: () -> Unit,
 ) {
     LaunchedEffect(Unit) {
         viewModel.onAction(CreateOrder.Action.Init)
     }
 
     val viewState by viewModel.dataState.collectAsStateWithLifecycle()
-    val onAction = remember {
-        { event: CreateOrder.Action ->
-            viewModel.onAction(event)
+    val onAction =
+        remember {
+            { event: CreateOrder.Action ->
+                viewModel.onAction(event)
+            }
         }
-    }
 
     val effects by viewModel.events.collectAsStateWithLifecycle()
-    val consumeEffects = remember {
-        {
-            viewModel.consumeEvents(effects)
+    val consumeEffects =
+        remember {
+            {
+                viewModel.consumeEvents(effects)
+            }
         }
-    }
 
     CreateOrderEffect(
         effects = effects,
         back = back,
         goToProfile = goToProfile,
         goToCreateAddress = goToCreateAddress,
-        consumeEffects = consumeEffects
+        consumeEffects = consumeEffects,
     )
     CreateOrderScreen(viewState = viewState.mapState(), onAction = onAction)
 }
@@ -115,39 +115,42 @@ fun CreateOrderRoute(
 @Composable
 private fun CreateOrderScreen(
     viewState: CreateOrderViewState,
-    onAction: (CreateOrder.Action) -> Unit
+    onAction: (CreateOrder.Action) -> Unit,
 ) {
     FoodDeliveryScaffold(
         title = stringResource(id = R.string.title_create_order),
         backActionClick = {
             onAction(CreateOrder.Action.Back)
         },
-        backgroundColor = FoodDeliveryTheme.colors.mainColors.surface
+        backgroundColor = FoodDeliveryTheme.colors.mainColors.surface,
     ) {
         Column(modifier = Modifier.fillMaxSize()) {
             Column(
-                modifier = Modifier
-                    .weight(1f)
-                    .verticalScroll(rememberScrollState())
-                    .padding(vertical = FoodDeliveryTheme.dimensions.mediumSpace)
+                modifier =
+                    Modifier
+                        .weight(1f)
+                        .verticalScroll(rememberScrollState())
+                        .padding(vertical = FoodDeliveryTheme.dimensions.mediumSpace),
             ) {
                 val focusManager = LocalFocusManager.current
 
                 FoodDeliverySwitcher(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp)
-                        .padding(bottom = 8.dp),
-                    optionResIdList = persistentListOf(
-                        stringResource(R.string.action_create_order_delivery),
-                        stringResource(R.string.action_create_order_pickup)
-                    ),
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp)
+                            .padding(bottom = 8.dp),
+                    optionResIdList =
+                        persistentListOf(
+                            stringResource(R.string.action_create_order_delivery),
+                            stringResource(R.string.action_create_order_pickup),
+                        ),
                     position = viewState.switcherPosition,
                     isLoading = viewState.isLoadingSwitcher,
                     onPositionChanged = { position ->
                         focusManager.clearFocus()
                         onAction(CreateOrder.Action.ChangeMethod(position))
-                    }
+                    },
                 )
 
                 when (viewState.createOrderType) {
@@ -156,7 +159,7 @@ private fun CreateOrderScreen(
                             viewState = viewState,
                             createOrderType = viewState.createOrderType,
                             focusManager = focusManager,
-                            onAction = onAction
+                            onAction = onAction,
                         )
                     }
 
@@ -165,7 +168,7 @@ private fun CreateOrderScreen(
                             viewState = viewState,
                             createOrderType = viewState.createOrderType,
                             focusManager = focusManager,
-                            onAction = onAction
+                            onAction = onAction,
                         )
                     }
                 }
@@ -173,21 +176,21 @@ private fun CreateOrderScreen(
 
             BottomAmountBar(
                 viewState = viewState,
-                onAction = onAction
+                onAction = onAction,
             )
         }
         DeferredTimeBottomSheet(
             isShown = viewState.isDeferredTimeShown,
             title = stringResource(viewState.deferredTimeStringId),
-            onAction = onAction
+            onAction = onAction,
         )
         TimePickerDialog(
             timePicker = viewState.timePicker,
-            onAction = onAction
+            onAction = onAction,
         )
         PaymentMethodListBottomSheet(
             paymentMethodList = viewState.paymentMethodList,
-            onAction = onAction
+            onAction = onAction,
         )
     }
 }
@@ -198,7 +201,7 @@ fun CreateOrderEffect(
     back: () -> Unit,
     goToProfile: () -> Unit,
     goToCreateAddress: () -> Unit,
-    consumeEffects: () -> Unit
+    consumeEffects: () -> Unit,
 ) {
     val activity = LocalActivity.current
     LaunchedEffect(effects) {
@@ -208,13 +211,13 @@ fun CreateOrderEffect(
 
                 CreateOrder.Event.ShowSomethingWentWrongErrorEvent -> {
                     (activity as? IMessageHost)?.showErrorMessage(
-                        activity.resources.getString(R.string.error_something_went_wrong)
+                        activity.resources.getString(R.string.error_something_went_wrong),
                     )
                 }
 
                 CreateOrder.Event.ShowUserUnauthorizedErrorEvent -> {
                     (activity as? IMessageHost)?.showErrorMessage(
-                        activity.resources.getString(R.string.error_user)
+                        activity.resources.getString(R.string.error_user),
                     )
                 }
 
@@ -222,39 +225,39 @@ fun CreateOrderEffect(
                     (activity as? IMessageHost)?.showInfoMessage(
                         activity.resources.getString(
                             R.string.msg_order_code,
-                            effect.code
-                        )
+                            effect.code,
+                        ),
                     )
                     goToProfile()
                 }
 
                 CreateOrder.Event.ShowUserAddressError -> {
                     (activity as? IMessageHost)?.showErrorMessage(
-                        activity.resources.getString(R.string.error_user_address)
+                        activity.resources.getString(R.string.error_user_address),
                     )
                 }
 
                 CreateOrder.Event.ShowPaymentMethodError -> {
                     (activity as? IMessageHost)?.showErrorMessage(
-                        activity.resources.getString(R.string.error_payment_method)
+                        activity.resources.getString(R.string.error_payment_method),
                     )
                 }
 
                 CreateOrder.Event.ShowChangeError -> {
                     (activity as? IMessageHost)?.showErrorMessage(
-                        activity.resources.getString(R.string.error_change)
+                        activity.resources.getString(R.string.error_change),
                     )
                 }
 
                 CreateOrder.Event.ShowAdditionalUtensilsError -> {
                     (activity as? IMessageHost)?.showErrorMessage(
-                        activity.resources.getString(R.string.error_additional_utensils)
+                        activity.resources.getString(R.string.error_additional_utensils),
                     )
                 }
 
                 CreateOrder.Event.OrderNotAvailableErrorEvent -> {
                     (activity as? IMessageHost)?.showErrorMessage(
-                        activity.resources.getString(R.string.warning_no_order_available)
+                        activity.resources.getString(R.string.warning_no_order_available),
                     )
                 }
 
@@ -270,17 +273,17 @@ private fun DeliveryContent(
     viewState: CreateOrderViewState,
     createOrderType: CreateOrderViewState.CreateOrderType.Delivery,
     focusManager: FocusManager,
-    onAction: (CreateOrder.Action) -> Unit
+    onAction: (CreateOrder.Action) -> Unit,
 ) {
     Column {
         DeliveryAddressCard(
             viewState = viewState,
             createOrderType = createOrderType,
-            onAction = onAction
+            onAction = onAction,
         )
         DeliveryAddressListBottomSheet(
             deliveryAddressList = createOrderType.deliveryAddressList,
-            onAction = onAction
+            onAction = onAction,
         )
 
         when (createOrderType.state) {
@@ -289,27 +292,29 @@ private fun DeliveryContent(
                     title = stringResource(R.string.warning_no_order_available),
                     icon = R.drawable.ic_warning,
                     iconDescription = stringResource(R.string.description_ic_warning),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp)
-                        .padding(top = 16.dp),
-                    cardColors = negativeCardStatusColors
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp)
+                            .padding(top = 16.dp),
+                    cardColors = negativeCardStatusColors,
                 )
             }
 
             CreateOrderViewState.CreateOrderType.Delivery.State.ENABLED -> {
                 if (viewState.isAddressErrorShown) {
                     ErrorText(
-                        modifier = Modifier
-                            .padding(top = 4.dp)
-                            .padding(horizontal = 16.dp),
-                        messageStringId = R.string.error_select_delivery_address
+                        modifier =
+                            Modifier
+                                .padding(top = 4.dp)
+                                .padding(horizontal = 16.dp),
+                        messageStringId = R.string.error_select_delivery_address,
                     )
                 }
                 CommonContent(
                     viewState = viewState,
                     focusManager = focusManager,
-                    onAction = onAction
+                    onAction = onAction,
                 )
                 when (createOrderType.workload) {
                     CreateOrderViewState.CreateOrderType.Delivery.Workload.LOW -> Unit
@@ -318,11 +323,12 @@ private fun DeliveryContent(
                             title = stringResource(R.string.msg_create_order_average_traffic),
                             icon = R.drawable.ic_warning,
                             iconDescription = stringResource(R.string.description_ic_warning),
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 16.dp)
-                                .padding(top = 16.dp),
-                            cardColors = warningCardStatusColors
+                            modifier =
+                                Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = 16.dp)
+                                    .padding(top = 16.dp),
+                            cardColors = warningCardStatusColors,
                         )
                     }
 
@@ -331,11 +337,12 @@ private fun DeliveryContent(
                             title = stringResource(R.string.msg_create_order_high_traffic),
                             icon = R.drawable.ic_warning,
                             iconDescription = stringResource(R.string.description_ic_warning),
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 16.dp)
-                                .padding(top = 16.dp),
-                            cardColors = negativeCardStatusColors
+                            modifier =
+                                Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = 16.dp)
+                                    .padding(top = 16.dp),
+                            cardColors = negativeCardStatusColors,
                         )
                     }
                 }
@@ -346,11 +353,12 @@ private fun DeliveryContent(
                     title = stringResource(R.string.error_user_address),
                     icon = R.drawable.ic_warning,
                     iconDescription = stringResource(R.string.description_ic_warning),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp)
-                        .padding(top = 16.dp),
-                    cardColors = warningCardStatusColors
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp)
+                            .padding(top = 16.dp),
+                    cardColors = warningCardStatusColors,
                 )
             }
         }
@@ -361,7 +369,7 @@ private fun DeliveryContent(
 private fun DeliveryAddressCard(
     viewState: CreateOrderViewState,
     createOrderType: CreateOrderViewState.CreateOrderType.Delivery,
-    onAction: (CreateOrder.Action) -> Unit
+    onAction: (CreateOrder.Action) -> Unit,
 ) {
     NavigationCardWithDivider(
         label = stringResource(R.string.delivery_address),
@@ -373,7 +381,7 @@ private fun DeliveryAddressCard(
             } else {
                 onAction(CreateOrder.Action.DeliveryAddressClick)
             }
-        }
+        },
     )
 }
 
@@ -382,24 +390,24 @@ private fun PickupContent(
     viewState: CreateOrderViewState,
     createOrderType: CreateOrderViewState.CreateOrderType.Pickup,
     focusManager: FocusManager,
-    onAction: (CreateOrder.Action) -> Unit
+    onAction: (CreateOrder.Action) -> Unit,
 ) {
     Column {
         PickupAddressCard(
             createOrderType = createOrderType,
             viewState = viewState,
             focusManager = focusManager,
-            onAction = onAction
+            onAction = onAction,
         )
         PickupAddressListBottomSheet(
             pickupAddressList = createOrderType.pickupAddressList,
-            onAction = onAction
+            onAction = onAction,
         )
         if (createOrderType.isEnabled) {
             CommonContent(
                 viewState = viewState,
                 focusManager = focusManager,
-                onAction = onAction
+                onAction = onAction,
             )
         } else {
             if (createOrderType.hasOpenedCafe) {
@@ -408,22 +416,24 @@ private fun PickupContent(
                     text = stringResource(R.string.warning_no_order_available),
                     icon = R.drawable.ic_warning,
                     iconDescription = stringResource(R.string.description_ic_warning),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp)
-                        .padding(top = 16.dp),
-                    cardColors = warningCardStatusColors
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp)
+                            .padding(top = 16.dp),
+                    cardColors = warningCardStatusColors,
                 )
             } else {
                 WarningCard(
                     title = stringResource(R.string.warning_no_order_available),
                     icon = R.drawable.ic_warning,
                     iconDescription = stringResource(R.string.description_ic_warning),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp)
-                        .padding(top = 16.dp),
-                    cardColors = negativeCardStatusColors
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp)
+                            .padding(top = 16.dp),
+                    cardColors = negativeCardStatusColors,
                 )
             }
         }
@@ -435,7 +445,7 @@ private fun PickupAddressCard(
     createOrderType: CreateOrderViewState.CreateOrderType.Pickup,
     viewState: CreateOrderViewState,
     focusManager: FocusManager,
-    onAction: (CreateOrder.Action) -> Unit
+    onAction: (CreateOrder.Action) -> Unit,
 ) {
     NavigationCardWithDivider(
         label = stringResource(id = R.string.pickup_address),
@@ -444,7 +454,7 @@ private fun PickupAddressCard(
         onClick = {
             focusManager.clearFocus()
             onAction(CreateOrder.Action.PickupAddressClick)
-        }
+        },
     )
 }
 
@@ -452,34 +462,34 @@ private fun PickupAddressCard(
 private fun CommonContent(
     viewState: CreateOrderViewState,
     focusManager: FocusManager,
-    onAction: (CreateOrder.Action) -> Unit
+    onAction: (CreateOrder.Action) -> Unit,
 ) {
     if (viewState.isLoadingSwitcher) return
 
     DeferredTimeCard(
         viewState = viewState,
         focusManager = focusManager,
-        onAction = onAction
+        onAction = onAction,
     )
     PaymentMethodCard(
         viewState = viewState,
         focusManager = focusManager,
-        onAction = onAction
+        onAction = onAction,
     )
     Column(modifier = Modifier.padding(top = 16.dp)) {
         ChangeBlock(
             viewState = viewState,
-            onAction = onAction
+            onAction = onAction,
         )
         AdditionalUtensilsTextField(
             viewState = viewState,
             focusManager = focusManager,
-            onAction = onAction
+            onAction = onAction,
         )
         CommentTextField(
             viewState = viewState,
             focusManager = focusManager,
-            onAction = onAction
+            onAction = onAction,
         )
     }
 }
@@ -489,7 +499,7 @@ private fun DeferredTimeCard(
     viewState: CreateOrderViewState,
     focusManager: FocusManager,
     onAction: (CreateOrder.Action) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     NavigationCardWithDivider(
         modifier = modifier,
@@ -499,7 +509,7 @@ private fun DeferredTimeCard(
         onClick = {
             focusManager.clearFocus()
             onAction(CreateOrder.Action.DeferredTimeClick)
-        }
+        },
     )
 }
 
@@ -508,7 +518,7 @@ private fun PaymentMethodCard(
     viewState: CreateOrderViewState,
     focusManager: FocusManager,
     onAction: (CreateOrder.Action) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     NavigationCardWithDivider(
         modifier = modifier,
@@ -518,15 +528,16 @@ private fun PaymentMethodCard(
         onClick = {
             focusManager.clearFocus()
             onAction(CreateOrder.Action.PaymentMethodClick)
-        }
+        },
     )
 
     if (viewState.isPaymentMethodErrorShown) {
         ErrorText(
-            modifier = Modifier
-                .padding(top = 4.dp)
-                .padding(horizontal = 16.dp),
-            messageStringId = R.string.error_select_payment_method
+            modifier =
+                Modifier
+                    .padding(top = 4.dp)
+                    .padding(horizontal = 16.dp),
+            messageStringId = R.string.error_select_payment_method,
         )
     }
 }
@@ -535,7 +546,7 @@ private fun PaymentMethodCard(
 private fun ChangeBlock(
     viewState: CreateOrderViewState,
     onAction: (CreateOrder.Action) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     if (!viewState.showChange) {
         return
@@ -547,79 +558,87 @@ private fun ChangeBlock(
         shape = FoodDeliveryCardDefaults.zeroCardShape,
         onClick = {
             onAction(
-                CreateOrder.Action.ChangeWithoutChangeChecked
+                CreateOrder.Action.ChangeWithoutChangeChecked,
             )
-        }
+        },
     ) {
         Row(
-            modifier = Modifier.padding(
-                vertical = 8.dp,
-                horizontal = 16.dp
-            ),
-            verticalAlignment = Alignment.CenterVertically
+            modifier =
+                Modifier.padding(
+                    vertical = 8.dp,
+                    horizontal = 16.dp,
+                ),
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             FoodDeliveryCheckbox(
                 modifier = Modifier.size(24.dp),
                 checked = viewState.withoutChangeChecked,
                 onCheckedChange = {
                     onAction(
-                        CreateOrder.Action.ChangeWithoutChangeChecked
+                        CreateOrder.Action.ChangeWithoutChangeChecked,
                     )
-                }
+                },
             )
             Text(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 4.dp),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(start = 4.dp),
                 text = stringResource(R.string.msg_without_change),
                 style = FoodDeliveryTheme.typography.bodyMedium,
-                color = FoodDeliveryTheme.colors.mainColors.onSurface
+                color = FoodDeliveryTheme.colors.mainColors.onSurface,
             )
         }
     }
 
     AnimatedVisibility(
         visible = !viewState.withoutChangeChecked,
-        enter = expandVertically(
-            animationSpec = tween(500)
-        ),
-        exit = shrinkVertically(
-            animationSpec = tween(500)
-        )
+        enter =
+            expandVertically(
+                animationSpec = tween(500),
+            ),
+        exit =
+            shrinkVertically(
+                animationSpec = tween(500),
+            ),
     ) {
         val focusManager = LocalFocusManager.current
         FoodDeliveryTextField(
-            modifier = Modifier
-                .padding(bottom = 8.dp)
-                .padding(horizontal = 16.dp)
-                .fillMaxWidth(),
+            modifier =
+                Modifier
+                    .padding(bottom = 8.dp)
+                    .padding(horizontal = 16.dp)
+                    .fillMaxWidth(),
             value = viewState.change,
             labelStringId = R.string.hint_change,
-            keyboardOptions = FoodDeliveryTextFieldDefaults.keyboardOptions(
-                keyboardType = KeyboardType.Number,
-                imeAction = ImeAction.Done
-            ),
-            keyboardActions = FoodDeliveryTextFieldDefaults.keyboardActions(
-                onDone = {
-                    focusManager.clearFocus()
-                }
-            ),
+            keyboardOptions =
+                FoodDeliveryTextFieldDefaults.keyboardOptions(
+                    keyboardType = KeyboardType.Number,
+                    imeAction = ImeAction.Done,
+                ),
+            keyboardActions =
+                FoodDeliveryTextFieldDefaults.keyboardActions(
+                    onDone = {
+                        focusManager.clearFocus()
+                    },
+                ),
             onValueChange = { value ->
                 onAction(
-                    CreateOrder.Action.ChangeChange(change = value)
+                    CreateOrder.Action.ChangeChange(change = value),
                 )
             },
             maxSymbols = 10,
-            errorMessageStringId = R.string.error_enter_correct_amount.takeIf {
-                viewState.isChangeErrorShown
-            },
+            errorMessageStringId =
+                R.string.error_enter_correct_amount.takeIf {
+                    viewState.isChangeErrorShown
+                },
             trailingIcon = {
                 Text(
                     text = RUBLE_CURRENCY,
                     style = FoodDeliveryTheme.typography.bodyLarge,
-                    color = FoodDeliveryTheme.colors.mainColors.onSurface
+                    color = FoodDeliveryTheme.colors.mainColors.onSurface,
                 )
-            }
+            },
         )
     }
 }
@@ -629,34 +648,38 @@ private fun AdditionalUtensilsTextField(
     viewState: CreateOrderViewState,
     focusManager: FocusManager,
     onAction: (CreateOrder.Action) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     if (!viewState.additionalUtensils) return
 
     FoodDeliveryTextField(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(bottom = 8.dp)
-            .padding(horizontal = 16.dp),
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .padding(bottom = 8.dp)
+                .padding(horizontal = 16.dp),
         value = viewState.additionalUtensilsCount,
         labelStringId = R.string.additional_utensils_count,
-        keyboardOptions = FoodDeliveryTextFieldDefaults.keyboardOptions(
-            keyboardType = KeyboardType.Number,
-            imeAction = ImeAction.Done
-        ),
+        keyboardOptions =
+            FoodDeliveryTextFieldDefaults.keyboardOptions(
+                keyboardType = KeyboardType.Number,
+                imeAction = ImeAction.Done,
+            ),
         onValueChange = { value ->
             onAction(CreateOrder.Action.ChangeAdditionalUtensils(additionalUtensilsCount = value))
         },
-        keyboardActions = FoodDeliveryTextFieldDefaults.keyboardActions(
-            onDone = {
-                focusManager.clearFocus()
-            }
-        ),
-        errorMessageStringId = R.string.error_additional_utensils.takeIf {
-            viewState.isAdditionalUtensilsErrorShown
-        },
+        keyboardActions =
+            FoodDeliveryTextFieldDefaults.keyboardActions(
+                onDone = {
+                    focusManager.clearFocus()
+                },
+            ),
+        errorMessageStringId =
+            R.string.error_additional_utensils.takeIf {
+                viewState.isAdditionalUtensilsErrorShown
+            },
         maxSymbols = 10,
-        maxLines = 1
+        maxLines = 1,
     )
 }
 
@@ -665,52 +688,55 @@ private fun CommentTextField(
     viewState: CreateOrderViewState,
     focusManager: FocusManager,
     onAction: (CreateOrder.Action) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     FoodDeliveryTextField(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp),
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
         value = viewState.comment,
         labelStringId = R.string.comment,
-        keyboardOptions = FoodDeliveryTextFieldDefaults.keyboardOptions(
-            imeAction = ImeAction.Done
-        ),
-        keyboardActions = FoodDeliveryTextFieldDefaults.keyboardActions(
-            onDone = {
-                focusManager.clearFocus()
-            }
-        ),
+        keyboardOptions =
+            FoodDeliveryTextFieldDefaults.keyboardOptions(
+                imeAction = ImeAction.Done,
+            ),
+        keyboardActions =
+            FoodDeliveryTextFieldDefaults.keyboardActions(
+                onDone = {
+                    focusManager.clearFocus()
+                },
+            ),
         onValueChange = { value ->
             onAction(CreateOrder.Action.ChangeComment(comment = value))
         },
         maxSymbols = 100,
-        maxLines = 3
+        maxLines = 3,
     )
 }
 
 @Composable
 private fun ErrorText(
     modifier: Modifier = Modifier,
-    @StringRes messageStringId: Int
+    @StringRes messageStringId: Int,
 ) {
     Text(
         modifier = modifier,
         text = stringResource(messageStringId),
         style = FoodDeliveryTheme.typography.bodySmall,
-        color = FoodDeliveryTheme.colors.mainColors.error
+        color = FoodDeliveryTheme.colors.mainColors.error,
     )
 }
 
 @Composable
 private fun BottomAmountBar(
     viewState: CreateOrderViewState,
-    onAction: (CreateOrder.Action) -> Unit
+    onAction: (CreateOrder.Action) -> Unit,
 ) {
     FoodDeliverySurface(modifier = Modifier.fillMaxWidth()) {
         Column(
             modifier = Modifier.padding(16.dp),
-            verticalArrangement = spacedBy(16.dp)
+            verticalArrangement = spacedBy(16.dp),
         ) {
             when (viewState.cartTotal) {
                 CartTotalUI.Loading -> {
@@ -731,10 +757,10 @@ private fun BottomAmountBar(
                         CreateOrder.Action.CreateClick(
                             withoutChange = viewState.withoutChange,
                             changeFrom = viewState.changeFrom,
-                            additionalUtensils = viewState.additionalUtensilsName
-                        )
+                            additionalUtensils = viewState.additionalUtensilsName,
+                        ),
                     )
-                }
+                },
             )
         }
     }
@@ -744,35 +770,37 @@ private fun BottomAmountBar(
 private fun BottomAmountBarLoadingContent() {
     LoadingRow(
         leftWidth = 50.dp,
-        rightWidth = 32.dp
+        rightWidth = 32.dp,
     )
     LoadingRow(
         leftWidth = 64.dp,
-        rightWidth = 40.dp
+        rightWidth = 40.dp,
     )
     LoadingRow(
         leftWidth = 96.dp,
-        rightWidth = 80.dp
+        rightWidth = 80.dp,
     )
 }
 
 @Composable
 private fun BottomAmountBarSuccessContent(
     cartTotal: CartTotalUI.Success,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier,
-        verticalArrangement = spacedBy(8.dp)
+        verticalArrangement = spacedBy(8.dp),
     ) {
         AnimatedVisibility(
             visible = cartTotal.motivation != null,
-            enter = expandVertically(
-                animationSpec = tween(500)
-            ),
-            exit = shrinkVertically(
-                animationSpec = tween(500)
-            )
+            enter =
+                expandVertically(
+                    animationSpec = tween(500),
+                ),
+            exit =
+                shrinkVertically(
+                    animationSpec = tween(500),
+                ),
         ) {
             Motivation(motivation = cartTotal.motivation)
         }
@@ -782,31 +810,33 @@ private fun BottomAmountBarSuccessContent(
                     modifier = Modifier.weight(1f),
                     text = stringResource(R.string.msg_order_details_discount),
                     style = FoodDeliveryTheme.typography.bodyMedium,
-                    color = FoodDeliveryTheme.colors.mainColors.onSurface
+                    color = FoodDeliveryTheme.colors.mainColors.onSurface,
                 )
                 DiscountCard(discount = discount)
             }
         }
         AnimatedVisibility(
             visible = cartTotal.deliveryCost != null,
-            enter = expandVertically(
-                animationSpec = tween(500)
-            ),
-            exit = shrinkVertically(
-                animationSpec = tween(500)
-            )
+            enter =
+                expandVertically(
+                    animationSpec = tween(500),
+                ),
+            exit =
+                shrinkVertically(
+                    animationSpec = tween(500),
+                ),
         ) {
             Row {
                 Text(
                     modifier = Modifier.weight(1f),
                     text = stringResource(R.string.msg_delivery),
                     style = FoodDeliveryTheme.typography.bodyMedium,
-                    color = FoodDeliveryTheme.colors.mainColors.onSurface
+                    color = FoodDeliveryTheme.colors.mainColors.onSurface,
                 )
                 Text(
                     text = cartTotal.deliveryCost.orEmpty(),
                     style = FoodDeliveryTheme.typography.bodyMedium,
-                    color = FoodDeliveryTheme.colors.mainColors.onSurface
+                    color = FoodDeliveryTheme.colors.mainColors.onSurface,
                 )
             }
         }
@@ -815,7 +845,7 @@ private fun BottomAmountBarSuccessContent(
                 modifier = Modifier.weight(1f),
                 text = stringResource(R.string.msg_create_order_amount_to_pay),
                 style = FoodDeliveryTheme.typography.bodyMedium.bold,
-                color = FoodDeliveryTheme.colors.mainColors.onSurface
+                color = FoodDeliveryTheme.colors.mainColors.onSurface,
             )
             cartTotal.oldFinalCost?.let { oldFinalCost ->
                 Text(
@@ -823,86 +853,98 @@ private fun BottomAmountBarSuccessContent(
                     text = oldFinalCost,
                     style = FoodDeliveryTheme.typography.bodyMedium.bold,
                     color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
-                    textDecoration = TextDecoration.LineThrough
+                    textDecoration = TextDecoration.LineThrough,
                 )
             }
             Text(
                 text = cartTotal.newFinalCost,
                 style = FoodDeliveryTheme.typography.bodyMedium.bold,
-                color = FoodDeliveryTheme.colors.mainColors.onSurface
+                color = FoodDeliveryTheme.colors.mainColors.onSurface,
             )
         }
     }
 }
 
 @Composable
-private fun LoadingRow(leftWidth: Dp, rightWidth: Dp) {
+private fun LoadingRow(
+    leftWidth: Dp,
+    rightWidth: Dp,
+) {
     Row {
         val shape = RoundedCornerShape(4.dp)
         Shimmer(
-            modifier = Modifier
-                .width(leftWidth)
-                .height(20.dp)
-                .clip(shape)
+            modifier =
+                Modifier
+                    .width(leftWidth)
+                    .height(20.dp)
+                    .clip(shape),
         )
         Spacer(modifier = Modifier.weight(1f))
         Shimmer(
-            modifier = Modifier
-                .width(rightWidth)
-                .height(20.dp)
-                .clip(shape)
+            modifier =
+                Modifier
+                    .width(rightWidth)
+                    .height(20.dp)
+                    .clip(shape),
         )
     }
 }
 
-private val createOrderViewStatePreviewMock = CreateOrderViewState(
-    createOrderType = CreateOrderViewState.CreateOrderType.Delivery(
-        deliveryAddress = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
-        deliveryAddressList = DeliveryAddressListUI(
-            isShown = false,
-            addressList = persistentListOf()
-        ),
-        state = CreateOrderViewState.CreateOrderType.Delivery.State.ENABLED,
-        workload = CreateOrderViewState.CreateOrderType.Delivery.Workload.LOW
-    ),
-    isAddressErrorShown = false,
-    comment = "Коммент",
-    deferredTime = "Как можно скорее",
-    deferredTimeStringId = R.string.delivery_time,
-    selectedPaymentMethod = PaymentMethodUI(
-        uuid = "",
-        name = "Наличка",
-        value = PaymentMethodValueUI(
-            value = "Наличка",
-            valueToCopy = "Наличка"
-        )
-    ),
-    isPaymentMethodErrorShown = false,
-    showChange = true,
-    withoutChange = "Без сдачи",
-    changeFrom = "Cдача с",
-    withoutChangeChecked = true,
-    change = "",
-    isChangeErrorShown = false,
-    cartTotal = CartTotalUI.Loading,
-    isLoadingCreateOrder = false,
-    isDeferredTimeShown = false,
-    timePicker = TimePickerUI(
-        isShown = false,
-        minTime = TimeUI(0, 0),
-        initialTime = TimeUI(0, 0)
-    ),
-    paymentMethodList = PaymentMethodListUI(
-        isShown = false,
-        paymentMethodList = persistentListOf()
-    ),
-    isOrderCreationEnabled = false,
-    isLoadingSwitcher = false,
-    additionalUtensils = false,
-    additionalUtensilsCount = "",
-    additionalUtensilsName = "Количество приборов",
-    isAdditionalUtensilsErrorShown = false
-)
+private val createOrderViewStatePreviewMock =
+    CreateOrderViewState(
+        createOrderType =
+            CreateOrderViewState.CreateOrderType.Delivery(
+                deliveryAddress = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
+                deliveryAddressList =
+                    DeliveryAddressListUI(
+                        isShown = false,
+                        addressList = persistentListOf(),
+                    ),
+                state = CreateOrderViewState.CreateOrderType.Delivery.State.ENABLED,
+                workload = CreateOrderViewState.CreateOrderType.Delivery.Workload.LOW,
+            ),
+        isAddressErrorShown = false,
+        comment = "Коммент",
+        deferredTime = "Как можно скорее",
+        deferredTimeStringId = R.string.delivery_time,
+        selectedPaymentMethod =
+            PaymentMethodUI(
+                uuid = "",
+                name = "Наличка",
+                value =
+                    PaymentMethodValueUI(
+                        value = "Наличка",
+                        valueToCopy = "Наличка",
+                    ),
+            ),
+        isPaymentMethodErrorShown = false,
+        showChange = true,
+        withoutChange = "Без сдачи",
+        changeFrom = "Cдача с",
+        withoutChangeChecked = true,
+        change = "",
+        isChangeErrorShown = false,
+        cartTotal = CartTotalUI.Loading,
+        isLoadingCreateOrder = false,
+        isDeferredTimeShown = false,
+        timePicker =
+            TimePickerUI(
+                isShown = false,
+                minTime = TimeUI(0, 0),
+                initialTime = TimeUI(0, 0),
+            ),
+        paymentMethodList =
+            PaymentMethodListUI(
+                isShown = false,
+                paymentMethodList = persistentListOf(),
+            ),
+        isOrderCreationEnabled = false,
+        isLoadingSwitcher = false,
+        additionalUtensils = false,
+        additionalUtensilsCount = "",
+        additionalUtensilsName = "Количество приборов",
+        isAdditionalUtensilsErrorShown = false,
+    )
 
 @Preview(showSystemUi = true)
 @Composable
@@ -910,7 +952,7 @@ private fun CartTotalLoadingPreview() {
     FoodDeliveryTheme {
         CreateOrderScreen(
             viewState = createOrderViewStatePreviewMock,
-            onAction = {}
+            onAction = {},
         )
     }
 }
@@ -920,12 +962,13 @@ private fun CartTotalLoadingPreview() {
 private fun SelectedDeliveryPreview() {
     FoodDeliveryTheme {
         CreateOrderScreen(
-            viewState = createOrderViewStatePreviewMock.copy(
-                isOrderCreationEnabled = true,
-                isLoadingCreateOrder = false,
-                isLoadingSwitcher = false
-            ),
-            onAction = {}
+            viewState =
+                createOrderViewStatePreviewMock.copy(
+                    isOrderCreationEnabled = true,
+                    isLoadingCreateOrder = false,
+                    isLoadingSwitcher = false,
+                ),
+            onAction = {},
         )
     }
 }
@@ -936,27 +979,30 @@ private fun SelectedPickUpPreview() {
     FoodDeliveryTheme {
         CreateOrderScreen(
             createOrderViewStatePreviewMock.copy(
-                createOrderType = CreateOrderViewState.CreateOrderType.Pickup(
-                    pickupAddress = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
-                    pickupAddressList = PickupAddressListUI(
-                        isShown = false,
-                        addressList = persistentListOf()
+                createOrderType =
+                    CreateOrderViewState.CreateOrderType.Pickup(
+                        pickupAddress = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
+                        pickupAddressList =
+                            PickupAddressListUI(
+                                isShown = false,
+                                addressList = persistentListOf(),
+                            ),
+                        hasOpenedCafe = true,
+                        isEnabled = true,
                     ),
-                    hasOpenedCafe = true,
-                    isEnabled = true
-                ),
                 isOrderCreationEnabled = true,
                 isLoadingCreateOrder = false,
                 isLoadingSwitcher = false,
-                cartTotal = CartTotalUI.Success(
-                    motivation = null,
-                    discount = null,
-                    deliveryCost = null,
-                    oldFinalCost = null,
-                    newFinalCost = "650 ₽"
-                )
+                cartTotal =
+                    CartTotalUI.Success(
+                        motivation = null,
+                        discount = null,
+                        deliveryCost = null,
+                        oldFinalCost = null,
+                        newFinalCost = "650 ₽",
+                    ),
             ),
-            onAction = {}
+            onAction = {},
         )
     }
 }
@@ -967,27 +1013,30 @@ private fun PickupCreateOrderNotEnabledPreview() {
     FoodDeliveryTheme {
         CreateOrderScreen(
             createOrderViewStatePreviewMock.copy(
-                createOrderType = CreateOrderViewState.CreateOrderType.Pickup(
-                    pickupAddress = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
-                    pickupAddressList = PickupAddressListUI(
-                        isShown = false,
-                        addressList = persistentListOf()
+                createOrderType =
+                    CreateOrderViewState.CreateOrderType.Pickup(
+                        pickupAddress = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
+                        pickupAddressList =
+                            PickupAddressListUI(
+                                isShown = false,
+                                addressList = persistentListOf(),
+                            ),
+                        hasOpenedCafe = true,
+                        isEnabled = false,
                     ),
-                    hasOpenedCafe = true,
-                    isEnabled = false
-                ),
                 isOrderCreationEnabled = false,
                 isLoadingCreateOrder = false,
                 isLoadingSwitcher = false,
-                cartTotal = CartTotalUI.Success(
-                    motivation = null,
-                    discount = null,
-                    deliveryCost = null,
-                    oldFinalCost = null,
-                    newFinalCost = "650 ₽"
-                )
+                cartTotal =
+                    CartTotalUI.Success(
+                        motivation = null,
+                        discount = null,
+                        deliveryCost = null,
+                        oldFinalCost = null,
+                        newFinalCost = "650 ₽",
+                    ),
             ),
-            onAction = {}
+            onAction = {},
         )
     }
 }
@@ -1001,15 +1050,16 @@ private fun DeliveryCreateOrderNotEnabledPreview() {
                 isOrderCreationEnabled = false,
                 isLoadingCreateOrder = false,
                 isLoadingSwitcher = false,
-                cartTotal = CartTotalUI.Success(
-                    motivation = null,
-                    discount = null,
-                    deliveryCost = null,
-                    oldFinalCost = null,
-                    newFinalCost = "650 ₽"
-                )
+                cartTotal =
+                    CartTotalUI.Success(
+                        motivation = null,
+                        discount = null,
+                        deliveryCost = null,
+                        oldFinalCost = null,
+                        newFinalCost = "650 ₽",
+                    ),
             ),
-            onAction = {}
+            onAction = {},
         )
     }
 }
@@ -1020,27 +1070,30 @@ private fun DeliveryCreateOrderHighTrafficPreview() {
     FoodDeliveryTheme {
         CreateOrderScreen(
             createOrderViewStatePreviewMock.copy(
-                createOrderType = CreateOrderViewState.CreateOrderType.Delivery(
-                    deliveryAddress = null,
-                    deliveryAddressList = DeliveryAddressListUI(
-                        isShown = false,
-                        addressList = persistentListOf()
+                createOrderType =
+                    CreateOrderViewState.CreateOrderType.Delivery(
+                        deliveryAddress = null,
+                        deliveryAddressList =
+                            DeliveryAddressListUI(
+                                isShown = false,
+                                addressList = persistentListOf(),
+                            ),
+                        state = CreateOrderViewState.CreateOrderType.Delivery.State.ENABLED,
+                        workload = CreateOrderViewState.CreateOrderType.Delivery.Workload.HIGH,
                     ),
-                    state = CreateOrderViewState.CreateOrderType.Delivery.State.ENABLED,
-                    workload = CreateOrderViewState.CreateOrderType.Delivery.Workload.HIGH
-                ),
                 isOrderCreationEnabled = false,
                 isLoadingCreateOrder = false,
                 isLoadingSwitcher = false,
-                cartTotal = CartTotalUI.Success(
-                    motivation = null,
-                    discount = null,
-                    deliveryCost = null,
-                    oldFinalCost = null,
-                    newFinalCost = "650 ₽"
-                )
+                cartTotal =
+                    CartTotalUI.Success(
+                        motivation = null,
+                        discount = null,
+                        deliveryCost = null,
+                        oldFinalCost = null,
+                        newFinalCost = "650 ₽",
+                    ),
             ),
-            onAction = {}
+            onAction = {},
         )
     }
 }
@@ -1051,27 +1104,30 @@ private fun DeliveryCreateOrderNeedAddressPreview() {
     FoodDeliveryTheme {
         CreateOrderScreen(
             createOrderViewStatePreviewMock.copy(
-                createOrderType = CreateOrderViewState.CreateOrderType.Delivery(
-                    deliveryAddress = null,
-                    deliveryAddressList = DeliveryAddressListUI(
-                        isShown = false,
-                        addressList = persistentListOf()
+                createOrderType =
+                    CreateOrderViewState.CreateOrderType.Delivery(
+                        deliveryAddress = null,
+                        deliveryAddressList =
+                            DeliveryAddressListUI(
+                                isShown = false,
+                                addressList = persistentListOf(),
+                            ),
+                        state = CreateOrderViewState.CreateOrderType.Delivery.State.NEED_ADDRESS,
+                        workload = CreateOrderViewState.CreateOrderType.Delivery.Workload.HIGH,
                     ),
-                    state = CreateOrderViewState.CreateOrderType.Delivery.State.NEED_ADDRESS,
-                    workload = CreateOrderViewState.CreateOrderType.Delivery.Workload.HIGH
-                ),
                 isOrderCreationEnabled = false,
                 isLoadingCreateOrder = false,
                 isLoadingSwitcher = false,
-                cartTotal = CartTotalUI.Success(
-                    motivation = null,
-                    discount = null,
-                    deliveryCost = null,
-                    oldFinalCost = null,
-                    newFinalCost = "650 ₽"
-                )
+                cartTotal =
+                    CartTotalUI.Success(
+                        motivation = null,
+                        discount = null,
+                        deliveryCost = null,
+                        oldFinalCost = null,
+                        newFinalCost = "650 ₽",
+                    ),
             ),
-            onAction = {}
+            onAction = {},
         )
     }
 }

@@ -49,38 +49,43 @@ fun LoginRoute(
     viewModel: LoginViewModel = koinViewModel(),
     successLoginDirection: SuccessLoginDirection,
     back: () -> Unit,
-    goToConfirm: (phoneNumber: String, successLoginDirection: SuccessLoginDirection) -> Unit
+    goToConfirm: (phoneNumber: String, successLoginDirection: SuccessLoginDirection) -> Unit,
 ) {
     LaunchedEffect(Unit) {
         viewModel.onAction(Login.Action.Init)
     }
     val viewState by viewModel.dataState.collectAsStateWithLifecycle()
 
-    val onAction = remember {
-        { event: Login.Action ->
-            viewModel.onAction(event)
+    val onAction =
+        remember {
+            { event: Login.Action ->
+                viewModel.onAction(event)
+            }
         }
-    }
 
     val effects by viewModel.events.collectAsStateWithLifecycle()
-    val consumeEffects = remember {
-        {
-            viewModel.consumeEvents(effects)
+    val consumeEffects =
+        remember {
+            {
+                viewModel.consumeEvents(effects)
+            }
         }
-    }
 
     LoginEffect(
         effects = effects,
         back = back,
         successLoginDirection = successLoginDirection,
         goToConfirm = goToConfirm,
-        consumeEffects = consumeEffects
+        consumeEffects = consumeEffects,
     )
     LoginScreen(viewState = viewState, onAction = onAction)
 }
 
 @Composable
-private fun LoginScreen(viewState: Login.ViewDataState, onAction: (Login.Action) -> Unit) {
+private fun LoginScreen(
+    viewState: Login.ViewDataState,
+    onAction: (Login.Action) -> Unit,
+) {
     FoodDeliveryScaffold(
         backActionClick = {
             onAction(Login.Action.BackClick)
@@ -88,23 +93,25 @@ private fun LoginScreen(viewState: Login.ViewDataState, onAction: (Login.Action)
         backgroundColor = FoodDeliveryTheme.colors.mainColors.surface,
         actionButton = {
             LoadingButton(
-                modifier = Modifier
-                    .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
+                modifier =
+                    Modifier
+                        .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
                 textStringId = R.string.action_login_continue,
                 isLoading = viewState.isLoading,
                 onClick = {
                     onAction(Login.Action.NextClick)
-                }
+                },
             )
-        }
+        },
     ) {
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-                .padding(FoodDeliveryTheme.dimensions.mediumSpace),
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState())
+                    .padding(FoodDeliveryTheme.dimensions.mediumSpace),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+            verticalArrangement = Arrangement.Center,
         ) {
             BoxWithConstraints {
                 val constraints = this
@@ -112,7 +119,7 @@ private fun LoginScreen(viewState: Login.ViewDataState, onAction: (Login.Action)
                     Image(
                         modifier = Modifier.height(156.dp),
                         painter = painterResource(R.drawable.logo_medium),
-                        contentDescription = stringResource(R.string.description_login_logo)
+                        contentDescription = stringResource(R.string.description_login_logo),
                     )
                 }
             }
@@ -120,37 +127,42 @@ private fun LoginScreen(viewState: Login.ViewDataState, onAction: (Login.Action)
                 modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
                 text = stringResource(R.string.msg_login_info),
                 style = FoodDeliveryTheme.typography.bodyLarge,
-                color = FoodDeliveryTheme.colors.mainColors.onSurface
+                color = FoodDeliveryTheme.colors.mainColors.onSurface,
             )
 
-            val focusRequester = remember {
-                FocusRequester()
-            }
+            val focusRequester =
+                remember {
+                    FocusRequester()
+                }
             FoodDeliveryTextField(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
                 focusRequester = focusRequester,
-                value = TextFieldValue(
-                    text = viewState.phoneNumber,
-                    selection = TextRange(viewState.phoneNumberCursorPosition)
-                ),
+                value =
+                    TextFieldValue(
+                        text = viewState.phoneNumber,
+                        selection = TextRange(viewState.phoneNumberCursorPosition),
+                    ),
                 labelStringId = R.string.hint_login_phone,
-                keyboardOptions = FoodDeliveryTextFieldDefaults.keyboardOptions(
-                    keyboardType = KeyboardType.Phone,
-                    imeAction = ImeAction.Done
-                ),
+                keyboardOptions =
+                    FoodDeliveryTextFieldDefaults.keyboardOptions(
+                        keyboardType = KeyboardType.Phone,
+                        imeAction = ImeAction.Done,
+                    ),
                 onValueChange = { value ->
                     onAction(Login.Action.ChangePhoneNumber(value.text, value.selection.start))
                 },
-                errorMessageId = if (viewState.hasPhoneError) {
-                    R.string.error_login_phone
-                } else {
-                    null
-                }
+                errorMessageId =
+                    if (viewState.hasPhoneError) {
+                        R.string.error_login_phone
+                    } else {
+                        null
+                    },
             )
             Spacer(
-                modifier = Modifier.height(FoodDeliveryTheme.dimensions.scrollScreenBottomSpace)
+                modifier = Modifier.height(FoodDeliveryTheme.dimensions.scrollScreenBottomSpace),
             )
 
             LaunchedEffect(Unit) {
@@ -166,7 +178,7 @@ private fun LoginEffect(
     successLoginDirection: SuccessLoginDirection,
     back: () -> Unit,
     goToConfirm: (phoneNumber: String, successLoginDirection: SuccessLoginDirection) -> Unit,
-    consumeEffects: () -> Unit
+    consumeEffects: () -> Unit,
 ) {
     val activity = LocalActivity.current
     LaunchedEffect(effects) {
@@ -175,19 +187,19 @@ private fun LoginEffect(
                 is Login.Event.NavigateToConfirm -> {
                     goToConfirm(
                         effect.phoneNumber,
-                        successLoginDirection
+                        successLoginDirection,
                     )
                 }
 
                 Login.Event.ShowTooManyRequestsError -> {
                     (activity as? IMessageHost)?.showErrorMessage(
-                        activity.resources.getString(R.string.error_login_too_many_requests)
+                        activity.resources.getString(R.string.error_login_too_many_requests),
                     )
                 }
 
                 Login.Event.ShowSomethingWentWrongError -> {
                     (activity as? IMessageHost)?.showErrorMessage(
-                        activity.resources.getString(R.string.error_something_went_wrong)
+                        activity.resources.getString(R.string.error_something_went_wrong),
                     )
                 }
 
@@ -203,13 +215,14 @@ private fun LoginEffect(
 private fun LoginScreenPreview() {
     FoodDeliveryTheme {
         LoginScreen(
-            viewState = Login.ViewDataState(
-                phoneNumber = "+7 (900) 900-90-90",
-                phoneNumberCursorPosition = 18,
-                hasPhoneError = false,
-                isLoading = false
-            ),
-            onAction = {}
+            viewState =
+                Login.ViewDataState(
+                    phoneNumber = "+7 (900) 900-90-90",
+                    phoneNumberCursorPosition = 18,
+                    hasPhoneError = false,
+                    isLoading = false,
+                ),
+            onAction = {},
         )
     }
 }

@@ -10,21 +10,20 @@ import kotlinx.serialization.Serializable
 @Serializable
 data object OrderListScreenDestination
 
-fun NavController.navigateToOrderListScreen(
-    navOptions: NavOptions
-) = navigate(
-    route = OrderListScreenDestination,
-    navOptions
-)
+fun NavController.navigateToOrderListScreen(navOptions: NavOptions) =
+    navigate(
+        route = OrderListScreenDestination,
+        navOptions,
+    )
 
 fun NavGraphBuilder.orderListScreenRoute(
     back: () -> Unit,
-    goToOrderDetails: (String) -> Unit
+    goToOrderDetails: (String) -> Unit,
 ) {
     composable<OrderListScreenDestination> {
         OrderListRoute(
             back = back,
-            goToOrderDetails = goToOrderDetails
+            goToOrderDetails = goToOrderDetails,
         )
     }
 }
