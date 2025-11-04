@@ -40,7 +40,7 @@ class SocketService(
         return try {
             val socketSession = client.webSocketSession {
                 method = HttpMethod.Get
-                url("ws", null, 80, path)
+                url("wss", null, 443, path)
                 header(AUTHORIZATION_HEADER, BEARER + token)
             }
             val uuid = uuidGenerator.generateUuid()
