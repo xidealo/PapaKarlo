@@ -46,6 +46,7 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.navigation.foodDeliveryNavGraphBuilder
 import com.bunbeauty.papakarlo.navigation.splash.SplashScreenDestination
+import com.bunbeauty.shared.ui.FirstComposeScreen
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -136,23 +137,13 @@ class MainActivity :
             ) {
                 ConnectionErrorMessage(visible = mainState.connectionLost)
                 StatusBarMessage(statusBarMessage = mainState.statusBarMessage)
-                val navController = rememberNavController()
 
                 Box(
                     modifier =
                         Modifier
                             .fillMaxSize(),
                 ) {
-                    NavHost(
-                        navController = navController,
-                        startDestination = SplashScreenDestination,
-                        popEnterTransition = { EnterTransition.None },
-                        popExitTransition = { ExitTransition.None },
-                    ) {
-                        foodDeliveryNavGraphBuilder(
-                            navController = navController,
-                        )
-                    }
+                    FoodDeliveryNavHost()
                 }
             }
         }

@@ -1,4 +1,5 @@
 import CommonApplication.deploymentTarget
+import org.gradle.kotlin.dsl.implementation
 
 plugins {
     alias(libs.plugins.multiplatform)
@@ -6,6 +7,8 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.sqldelight)
     alias(libs.plugins.mokkery)
+    alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.compose)
     alias(libs.plugins.kotlin.serialization)
 }
 
@@ -50,6 +53,12 @@ kotlin {
                 implementation(libs.sqlDelight.coroutines.extensions)
 
                 implementation(libs.kotlinx.collections.immutable)
+                implementation(compose.components.resources)
+                implementation(compose.runtime)
+                implementation(compose.foundation)
+                implementation(compose.material3)
+                implementation(compose.ui)
+                implementation(compose.components.uiToolingPreview)
             }
         }
         val commonTest by getting {
@@ -67,6 +76,8 @@ kotlin {
                 implementation(libs.datastore.preferences)
                 implementation(libs.lifecycle.viewmodel.ktx)
 
+                implementation(libs.activity.compose)
+                implementation(compose.uiTooling)
                 implementation(project.dependencies.platform(libs.firebase.bom))
                 implementation(libs.firebase.messaging)
                 implementation(libs.sqlDelight.android)
