@@ -4,13 +4,12 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
+import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.EnterTransition
-import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
@@ -40,13 +39,10 @@ import androidx.compose.ui.unit.dp
 import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.rememberNavController
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.navigation.foodDeliveryNavGraphBuilder
-import com.bunbeauty.papakarlo.navigation.splash.SplashScreenDestination
-import com.bunbeauty.shared.ui.FirstComposeScreen
+import com.bunbeauty.shared.ui.main.IMessageHost
+import com.bunbeauty.shared.ui.navigation.FoodDeliveryNavHost
+import com.bunbeauty.shared.ui.theme.FoodDeliveryTheme
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -143,7 +139,19 @@ class MainActivity :
                         Modifier
                             .fillMaxSize(),
                 ) {
-                    FoodDeliveryNavHost()
+                    val activity = LocalActivity.current
+                    FoodDeliveryNavHost(
+                        showInfoMessage = { message ->
+                            (activity as? IMessageHost)?.showErrorMessage(
+                                message
+                            )
+                        },
+                        showErrorMessage = { message ->
+                            (activity as? IMessageHost)?.showErrorMessage(
+                                message
+                            )
+                        }
+                    )
                 }
             }
         }

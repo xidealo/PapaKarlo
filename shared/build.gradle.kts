@@ -1,5 +1,4 @@
 import CommonApplication.deploymentTarget
-import org.gradle.kotlin.dsl.implementation
 
 plugins {
     alias(libs.plugins.multiplatform)
@@ -10,6 +9,7 @@ plugins {
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.compose)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.ktLint)
 }
 
 kotlin {
@@ -44,9 +44,6 @@ kotlin {
 
                 implementation(libs.kotlinx.serialization.json)
 
-                implementation(libs.koin.core)
-                api(libs.koin.test)
-
                 implementation(libs.kotlinx.datetime)
 
                 implementation(libs.sqlDelight.runtime)
@@ -59,6 +56,10 @@ kotlin {
                 implementation(compose.material3)
                 implementation(compose.ui)
                 implementation(compose.components.uiToolingPreview)
+                implementation(libs.bundles.navigation)
+                implementation(libs.bundles.di)
+                implementation(libs.bundles.coil)
+                api(libs.koin.test)
             }
         }
         val commonTest by getting {

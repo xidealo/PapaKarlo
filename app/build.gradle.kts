@@ -127,11 +127,9 @@ dependencies {
     implementation(libs.appcompat)
     implementation(libs.core.ktx)
 
-    implementation(libs.bundles.navigation)
-
     implementation(libs.bundles.lifecycle)
 
-    implementation(libs.bundles.di)
+    implementation(libs.bundles.di.android)
     testImplementation(libs.koin.test)
 
     implementation(libs.kotlinx.serialization.json)

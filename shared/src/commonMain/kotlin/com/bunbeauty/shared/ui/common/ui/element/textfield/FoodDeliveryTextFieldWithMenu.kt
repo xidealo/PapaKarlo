@@ -1,0 +1,111 @@
+package com.bunbeauty.shared.ui.common.ui.element.textfield
+
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import org.jetbrains.compose.resources.stringResource
+
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.PopupProperties
+import com.bunbeauty.shared.ui.theme.FoodDeliveryTheme
+import com.bunbeauty.shared.presentation.SuggestionUi
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
+import org.jetbrains.compose.resources.StringResource
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun FoodDeliveryTextFieldWithMenu(
+    expanded: Boolean,
+    onExpandedChange: (Boolean) -> Unit,
+    onSuggestionClick: (suggestion: SuggestionUi) -> Unit,
+    modifier: Modifier = Modifier,
+    value: String = "",
+    labelStringId: StringResource,
+    onValueChange: (value: String) -> Unit,
+    errorMessageStringId: StringResource? = null,
+    suggestionsList: ImmutableList<SuggestionUi> = persistentListOf(),
+    isLoading: Boolean = false,
+) {
+    Column {
+        ExposedDropdownMenuBox(
+            modifier = modifier,
+            expanded = expanded,
+            onExpandedChange = onExpandedChange,
+        ) {
+            FoodDeliveryBaseTextField(
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .menuAnchor(),
+                value = value,
+                labelStringId = labelStringId,
+                onValueChange = onValueChange,
+                isError = errorMessageStringId != null,
+                isLoading = isLoading,
+            )
+
+            if (suggestionsList.isNotEmpty()) {
+                DropdownMenu(
+                    modifier =
+                        Modifier
+                            .background(FoodDeliveryTheme.colors.mainColors.surface)
+                            .exposedDropdownSize(),
+                    expanded = expanded,
+                    properties =
+                        PopupProperties(
+                            focusable = false,
+                            dismissOnClickOutside = true,
+                            dismissOnBackPress = true,
+                        ),
+                    onDismissRequest = {},
+                ) {
+                    suggestionsList.forEach { suggestion ->
+                        DropdownMenuItem(
+                            text = {
+                                val text =
+                                    buildAnnotatedString {
+                                        append(suggestion.value)
+                                        withStyle(SpanStyle(FoodDeliveryTheme.colors.mainColors.onSurfaceVariant)) {
+                                            append(suggestion.postfix)
+                                        }
+                                    }
+                                Text(
+                                    text = text,
+                                    color = FoodDeliveryTheme.colors.mainColors.onSurface,
+                                    style = FoodDeliveryTheme.typography.bodyMedium,
+                                )
+                            },
+                            onClick = {
+                                onSuggestionClick(suggestion)
+                            },
+                        )
+                    }
+                }
+            }
+        }
+        errorMessageStringId?.let { stringId ->
+            Text(
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(start = 16.dp, top = 4.dp),
+                text = stringResource(stringId),
+                style = FoodDeliveryTheme.typography.bodySmall,
+                color = FoodDeliveryTheme.colors.mainColors.error,
+            )
+        }
+    }
+}
