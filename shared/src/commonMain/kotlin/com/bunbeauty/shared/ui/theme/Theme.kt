@@ -59,7 +59,7 @@ fun FoodDeliveryTheme(
 }
 
 private fun getAppColors(
-    flavor: String = "",
+    flavor: String = "djan",
     isDarkTheme: Boolean,
 ): AppColors {
     val company = FoodDeliveryCompany.getByFlavor(flavor)

@@ -1,5 +1,7 @@
 package com.bunbeauty.shared.presentation.menu
 
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.bunbeauty.analytic.AnalyticService
 import com.bunbeauty.analytic.event.menu.AddMenuProductClickEvent
 import com.bunbeauty.analytic.event.menu.LoadedMenuEvent
@@ -12,7 +14,6 @@ import com.bunbeauty.shared.domain.feature.menu.AddMenuProductUseCase
 import com.bunbeauty.shared.domain.interactor.menu_product.IMenuProductInteractor
 import com.bunbeauty.shared.domain.model.menu.MenuSection
 import com.bunbeauty.shared.extension.launchSafe
-import com.bunbeauty.shared.presentation.base.SharedViewModel
 import com.bunbeauty.shared.presentation.menu.mapper.toMenuItemList
 import com.bunbeauty.shared.presentation.menu.model.CategoryItem
 import com.bunbeauty.shared.presentation.menu.model.MenuDataState
@@ -32,7 +33,7 @@ class MenuViewModel(
     private val addMenuProductUseCase: AddMenuProductUseCase,
     private val getDiscountUseCase: GetDiscountUseCase,
     private val analyticService: AnalyticService
-) : SharedViewModel() {
+) : ViewModel() {
 
     private val mutableMenuState = MutableStateFlow(
         MenuDataState(
@@ -66,7 +67,7 @@ class MenuViewModel(
     }
 
     private fun observeCart() {
-        sharedScope.launchSafe(
+        viewModelScope.launchSafe(
             block = {
                 observeCartUseCase().collectLatest { cartTotalAndCount ->
                     mutableMenuState.update { state ->
@@ -89,7 +90,7 @@ class MenuViewModel(
             )
         }
 
-        sharedScope.launchSafe(
+        viewModelScope.launchSafe(
             block = {
                 val time = measureTime {
                     val menuSectionList = menuProductInteractor.getMenuSectionList()
@@ -103,9 +104,9 @@ class MenuViewModel(
                             MenuItem.Discount(discount = discount)
                         }
                     val menuItemList = listOfNotNull(discountItem) +
-                        menuSectionList.flatMap { menuSection ->
-                            menuSection.toMenuItemList()
-                        }
+                            menuSectionList.flatMap { menuSection ->
+                                menuSection.toMenuItemList()
+                            }
                     mutableMenuState.update { oldState ->
                         oldState.copy(
                             categoryItemList = menuSectionList.map { menuSection ->
@@ -141,7 +142,7 @@ class MenuViewModel(
 
         currentMenuPosition = menuPosition
 
-        sharedScope.launchSafe(
+        viewModelScope.launchSafe(
             block = {
                 val menuItemModelList = mutableMenuState.value.menuItemList
                 menuItemModelList.filterIsInstance<MenuItem.CategoryHeader>()
@@ -193,7 +194,7 @@ class MenuViewModel(
                 menuProductUuidEventParameter = MenuProductUuidEventParameter(value = menuProduct.uuid)
             )
         )
-        sharedScope.launchSafe(
+        viewModelScope.launchSafe(
             block = {
                 if (menuProduct.hasAdditions) {
                     mutableMenuState.update { oldState ->
@@ -226,7 +227,7 @@ class MenuViewModel(
     }
 
     private fun setCategory(categoryUuid: String) {
-        sharedScope.launch {
+        viewModelScope.launch {
             if (selectedCategoryUuid == categoryUuid) {
                 return@launch
             }
