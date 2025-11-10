@@ -136,40 +136,23 @@ fun ConsumerCartScreen(
         },
         backgroundColor = FoodDeliveryTheme.colors.mainColors.surface,
     ) {
-        AnimatedContent(
-            targetState = viewState,
-            label = ANIMATION_LABEL,
-            transitionSpec = {
-                ContentTransform(
-                    targetContentEnter =
-                        fadeIn(
-                            animationSpec = tween(delayMillis = ANIMATION_DURATION_MILLIS),
-                        ),
-                    initialContentExit =
-                        fadeOut(
-                            animationSpec = tween(delayMillis = ANIMATION_DURATION_MILLIS),
-                        ),
+        when (viewState) {
+            ConsumerCartViewState.Loading -> LoadingScreen()
+
+            is ConsumerCartViewState.Success -> {
+                ConsumerCartSuccessScreen(
+                    viewState = viewState,
+                    onAction = onAction,
                 )
-            },
-        ) { viewState ->
-            when (viewState) {
-                ConsumerCartViewState.Loading -> LoadingScreen()
+            }
 
-                is ConsumerCartViewState.Success -> {
-                    ConsumerCartSuccessScreen(
-                        viewState = viewState,
-                        onAction = onAction,
-                    )
-                }
-
-                ConsumerCartViewState.Error -> {
-                    ErrorScreen(
-                        mainTextId = Res.string.error_consumer_cart_loading,
-                        onClick = {
-                            onAction(ConsumerCart.Action.OnErrorButtonClick)
-                        },
-                    )
-                }
+            ConsumerCartViewState.Error -> {
+                ErrorScreen(
+                    mainTextId = Res.string.error_consumer_cart_loading,
+                    onClick = {
+                        onAction(ConsumerCart.Action.OnErrorButtonClick)
+                    },
+                )
             }
         }
     }
@@ -360,14 +343,14 @@ private fun BottomPanel(
                         color = FoodDeliveryTheme.colors.mainColors.onSurface,
                     )
                 }
-               MainButton(
-                   modifier = Modifier.padding(top = 8.dp),
-                   textStringId = Res.string.action_consumer_cart_creeate_order,
-                   onClick = {
-                       onAction(ConsumerCart.Action.OnCreateOrderClick)
-                   },
-                   enabled = bottomPanelInfo.orderAvailable,
-               )
+                MainButton(
+                    modifier = Modifier.padding(top = 8.dp),
+                    textStringId = Res.string.action_consumer_cart_creeate_order,
+                    onClick = {
+                        onAction(ConsumerCart.Action.OnCreateOrderClick)
+                    },
+                    enabled = bottomPanelInfo.orderAvailable,
+                )
             }
         }
     }
