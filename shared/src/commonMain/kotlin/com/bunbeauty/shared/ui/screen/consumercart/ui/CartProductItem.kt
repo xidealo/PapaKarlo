@@ -81,9 +81,10 @@ fun CartProductItem(
                     ) {
                         cartProductItem.additions?.let { additions ->
                             Text(
-                                modifier =
-                                    Modifier
-                                        .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
+                                modifier = Modifier
+                                    .padding(
+                                        end = FoodDeliveryTheme.dimensions.smallSpace
+                                    ),
                                 text = additions,
                                 style = FoodDeliveryTheme.typography.bodySmall,
                                 color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,

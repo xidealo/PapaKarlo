@@ -53,13 +53,13 @@
     <!-- MENU -->
     <string name="title_menu">Меню</string>
     <string name="error_menu_loading">Не удалось загрузить меню</string>
-    <string name="title_menu_discount">Скидка %s%%</string>
-    <string name="msg_menu_discount">Успей сделать первый заказ со скидкой %s%%</string>
+    <string name="title_menu_discount">Скидка %1$s%%</string>
+    <string name="msg_menu_discount">Успей сделать первый заказ со скидкой %1$s%%</string>
     <string name="msg_menu_product_added">Добавлено</string>
     <string name="msg_menu_product_edited">Изменено</string>
 
     <!-- PRODUCT DETAILS -->
-    <string name="action_product_details_want">Добавить за %s</string>
+    <string name="action_product_details_want">Добавить за %1$s</string>
 
     <!-- CONSUMER CART -->
     <string name="title_cart">Корзина</string>
@@ -68,9 +68,9 @@
     <string name="title_consumer_cart_empty">Корзина пуста</string>
     <string name="msg_consumer_cart_empty">Добавьте товар из «Меню»</string>
     <string name="msg_consumer_cart_recommendations">Рекомендуем</string>
-    <string name="msg_consumer_cart_min_order">Минимальная сумма заказа на доставку: %s</string>
-    <string name="msg_consumer_cart_for_lower_delivery">Добавте еще на %s для уменьшения стоимости доставки</string>
-    <string name="msg_consumer_cart_for_free_delivery">Добавте еще на %s для бесплатной доставки</string>
+    <string name="msg_consumer_cart_min_order">Минимальная сумма заказа на доставку: %1$s</string>
+    <string name="msg_consumer_cart_for_lower_delivery">Добавте еще на %1$s для уменьшения стоимости доставки</string>
+    <string name="msg_consumer_cart_for_free_delivery">Добавте еще на %1$s для бесплатной доставки</string>
     <string name="msg_consumer_cart_lower_delivery">Уменьшенная стоимость доставки</string>
     <string name="msg_consumer_cart_free_delivery">Бесплатная доставка</string>
     <string name="title_consumer_cart_total">Cумма заказа</string>
@@ -107,7 +107,7 @@
     <string name="error_change">Укажите с какой суммы подготовить сдачу</string>
     <string name="error_additional_utensils">Укажите количество приборов</string>
     <string name="error_enter_correct_amount">Укажите корректную сумму</string>
-    <string name="msg_order_code">Код заказа %s</string>
+    <string name="msg_order_code">Код заказа %1$s</string>
     <string name="msg_create_order_amount_to_pay">Сумма к оплате</string>
     <string name="msg_create_order_chose_cafe">Выберите другое кафе</string>
     <string name="msg_create_order_average_traffic">Ожидание заказа до 1.5 ч.</string>
@@ -210,7 +210,7 @@
     <string name="error_login_too_many_requests">Превышен лимит на отправку сообщений</string>
 
     <!-- CONFIRM -->
-    <string name="msg_confirm_enter_code">Введите код подтверждения ✉\nКод был отправлен на номер\n%s</string>
+    <string name="msg_confirm_enter_code">Введите код подтверждения ✉\nКод был отправлен на номер\n%1$s</string>
     <string name="msg_request_code">Запросить код повторно</string>
     <string name="msg_request_code_sec">Запросить код повторно %1$d сек.</string>
     <string name="error_no_attempts">Превышено количество попыток ввода кода</string>

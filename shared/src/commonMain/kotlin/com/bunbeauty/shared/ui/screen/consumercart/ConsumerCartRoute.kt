@@ -360,14 +360,14 @@ private fun BottomPanel(
                         color = FoodDeliveryTheme.colors.mainColors.onSurface,
                     )
                 }
-                MainButton(
-                    modifier = Modifier.padding(top = 8.dp),
-                    textStringId = Res.string.action_consumer_cart_creeate_order,
-                    onClick = {
-                        onAction(ConsumerCart.Action.OnCreateOrderClick)
-                    },
-                    enabled = bottomPanelInfo.orderAvailable,
-                )
+               MainButton(
+                   modifier = Modifier.padding(top = 8.dp),
+                   textStringId = Res.string.action_consumer_cart_creeate_order,
+                   onClick = {
+                       onAction(ConsumerCart.Action.OnCreateOrderClick)
+                   },
+                   enabled = bottomPanelInfo.orderAvailable,
+               )
             }
         }
     }

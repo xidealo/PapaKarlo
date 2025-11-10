@@ -20,22 +20,25 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import papakarlo.shared.generated.resources.Res
+import com.bunbeauty.shared.presentation.MainViewModel
 import com.bunbeauty.shared.ui.common.ui.element.FoodDeliveryHorizontalDivider
 import com.bunbeauty.shared.ui.common.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.shared.ui.common.ui.element.card.FoodDeliveryCardDefaults
 import com.bunbeauty.shared.ui.common.ui.icon16
 import com.bunbeauty.shared.ui.common.ui.icon24
+import com.bunbeauty.shared.ui.screen.main.LocalStatusBarColor
 import com.bunbeauty.shared.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.shared.ui.theme.bold
 import com.bunbeauty.shared.ui.theme.medium
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import org.jetbrains.compose.resources.DrawableResource
+import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.viewmodel.koinViewModel
+import papakarlo.shared.generated.resources.Res
 import papakarlo.shared.generated.resources.description_company_logo
 import papakarlo.shared.generated.resources.ic_arrow_back
 import papakarlo.shared.generated.resources.ic_cart_24
@@ -43,6 +46,7 @@ import papakarlo.shared.generated.resources.ic_cart_24
 @Composable
 fun FoodDeliveryTopAppBar(
     title: String?,
+    mainViewModel: MainViewModel = koinViewModel(),
     backActionClick: (() -> Unit)? = null,
     actions: ImmutableList<FoodDeliveryToolbarActions> = persistentListOf(),
     isScrolled: Boolean = false,
@@ -59,9 +63,11 @@ fun FoodDeliveryTopAppBar(
         animationSpec = tween(500),
         label = "barColor",
     )
-    // TODO SET BAR COLOR
+
+    val statusBarColorState = LocalStatusBarColor.current
+
     LaunchedEffect(barColor) {
-        // (localActivity as? MainActivity)?.setStatusBarColor(barColor)
+        statusBarColorState?.value = barColor
     }
 
     Column(modifier = Modifier.background(barColor)) {

@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.feature.main
+package com.bunbeauty.shared.ui.screen.main
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.Color
@@ -6,10 +6,9 @@ import androidx.compose.ui.graphics.Color
 @Immutable
 data class MainState(
     val connectionLost: Boolean = false,
-    val statusBarMessage: StatusBarMessage =
-        StatusBarMessage(
-            isVisible = false,
-        ),
+    val statusBarMessage: StatusBarMessage = StatusBarMessage(
+        isVisible = false,
+    ),
     val paddingBottomSnackbar: Int = 0,
     val statusBarColor: Color? = null,
     val eventList: List<Event> = emptyList(),

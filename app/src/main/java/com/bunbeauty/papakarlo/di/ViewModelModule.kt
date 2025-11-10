@@ -1,6 +1,6 @@
 package com.bunbeauty.papakarlo.di
 
-import com.bunbeauty.papakarlo.feature.main.MainViewModel
+import com.bunbeauty.shared.presentation.MainViewModel
 import com.bunbeauty.shared.presentation.cafe_list.CafeListViewModel
 import com.bunbeauty.shared.presentation.confirm.ConfirmViewModel
 import com.bunbeauty.shared.presentation.consumercart.ConsumerCartViewModel
@@ -33,7 +33,6 @@ fun viewModelModule() =
         }
         viewModel {
             MainViewModel(
-                networkUtil = get(),
                 isOrderAvailableUseCase = get(),
             )
         }

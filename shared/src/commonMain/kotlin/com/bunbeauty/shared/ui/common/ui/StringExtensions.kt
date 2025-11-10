@@ -7,7 +7,6 @@ import com.bunbeauty.shared.domain.model.date_time.Time
 import com.bunbeauty.shared.domain.model.order.OrderAddress
 import org.jetbrains.compose.resources.stringResource
 import papakarlo.shared.generated.resources.Res
-import papakarlo.shared.generated.resources.asap
 import papakarlo.shared.generated.resources.delivery_time
 import papakarlo.shared.generated.resources.month_april
 import papakarlo.shared.generated.resources.month_august
@@ -29,9 +28,6 @@ import papakarlo.shared.generated.resources.msg_address_house_short
 import papakarlo.shared.generated.resources.msg_delivery
 import papakarlo.shared.generated.resources.msg_pickup
 import papakarlo.shared.generated.resources.pickup_time
-
-
-//TODO подумать куда можно положить (мб другой файл)
 
 @Composable
 fun DateTime.getDateTimeString(): String {

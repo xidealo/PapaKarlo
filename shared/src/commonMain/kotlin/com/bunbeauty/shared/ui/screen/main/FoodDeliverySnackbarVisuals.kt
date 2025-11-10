@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.feature.main
+package com.bunbeauty.shared.ui.screen.main
 
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarVisuals

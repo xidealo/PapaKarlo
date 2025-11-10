@@ -36,19 +36,24 @@ import com.bunbeauty.shared.ui.theme.color.VoljaneDarkColors
 import com.bunbeauty.shared.ui.theme.color.YuliarDarkColors
 import com.bunbeauty.shared.ui.theme.color.YuliarLightColors
 
+private var BASE_THEME_FLAVOR: String = "papakarlo"
+
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun FoodDeliveryTheme(
+    flavor: String = BASE_THEME_FLAVOR,
     isDarkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit,
 ) {
-    val colors = getAppColors(isDarkTheme = isDarkTheme)
-    val rememberedColors =
-        remember {
-            colors.copy()
-        }.apply {
-            update(colors)
-        }
+    val colors = getAppColors(
+        isDarkTheme = isDarkTheme,
+        flavor = flavor
+    )
+    val rememberedColors = remember {
+        colors.copy()
+    }.apply {
+        update(colors)
+    }
 
     CompositionLocalProvider(
         LocalAppColors provides rememberedColors,
@@ -59,7 +64,7 @@ fun FoodDeliveryTheme(
 }
 
 private fun getAppColors(
-    flavor: String = "djan",
+    flavor: String,
     isDarkTheme: Boolean,
 ): AppColors {
     val company = FoodDeliveryCompany.getByFlavor(flavor)
