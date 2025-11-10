@@ -1491,15 +1491,16 @@
 		AC6E61CD2EA18CBD004F9248 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 02A99D5729CBA0BE004D2F7B /* Localizable.strings */; };
 		AC6E61CE2EA18CBD004F9248 /* CommonColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 023B6B052CDAB33C0051D6E1 /* CommonColors.xcassets */; };
 		AC6E61CF2EA18CBD004F9248 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557BA273AAA24004C7B11 /* Assets.xcassets */; };
-		AC6E61D32EA18CBD004F9248 /* Pods_taverna.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A85EEF264D45EDCECCFB0AC2 /* Pods_taverna.framework */; };
 		AC6E61DF2EA18E24004F9248 /* voljane.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AC6E61DD2EA18E24004F9248 /* voljane.xcassets */; };
 		AC6E61E02EA18E24004F9248 /* voljane.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC6E61DC2EA18E24004F9248 /* voljane.plist */; };
 		AC6E61E12EA18E24004F9248 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC6E61DB2EA18E24004F9248 /* GoogleService-Info.plist */; };
-		C927C79DE52353C2CEDE0C36 /* Pods_taverna.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A85EEF264D45EDCECCFB0AC2 /* Pods_taverna.framework */; };
+		C927C79DE52353C2CEDE0C36 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		CB4F7FFBACC3358427B7F28F /* Pods_emoji.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C67BA2EA9F070E4A515A937 /* Pods_emoji.framework */; };
 		D2B2C9D4143E4D68813E7BCA /* Pods_djan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F16CA71F7A1C57D286A0E36 /* Pods_djan.framework */; };
+		D899D3AE18F8B4D2F508352A /* Pods_taverna.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFA26521372BE9B9203F7E9E /* Pods_taverna.framework */; };
 		EFA9E2E0F12AB7A3BA2D93B1 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		F6F3956E5844208EDFA03DA0 /* Pods_yuliar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9C10411EF2D7D08F04B8829 /* Pods_yuliar.framework */; };
+		F8D6960333B5A2C9B870AA16 /* Pods_voljane.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC3DEBDBCD6763F6A38742CD /* Pods_voljane.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -1683,6 +1684,7 @@
 		489E409EBEBDF7E6BF7226FE /* Pods-djan.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-djan.release.xcconfig"; path = "Target Support Files/Pods-djan/Pods-djan.release.xcconfig"; sourceTree = "<group>"; };
 		593B49170A1371F67F4512CE /* Pods-yuliar.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-yuliar.debug.xcconfig"; path = "Target Support Files/Pods-yuliar/Pods-yuliar.debug.xcconfig"; sourceTree = "<group>"; };
 		5A95B0BC15E4ECB39EC1D686 /* Pods_tandirhouse.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_tandirhouse.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5C0B3BC48E734D024E3808F8 /* Pods-voljane.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-voljane.debug.xcconfig"; path = "Target Support Files/Pods-voljane/Pods-voljane.debug.xcconfig"; sourceTree = "<group>"; };
 		5E7B8330DF2A7ACB54716EE5 /* Pods-usadba.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-usadba.release.xcconfig"; path = "Target Support Files/Pods-usadba/Pods-usadba.release.xcconfig"; sourceTree = "<group>"; };
 		643AFD6C0F947194714A5D16 /* Pods-papakarlo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-papakarlo.debug.xcconfig"; path = "Target Support Files/Pods-papakarlo/Pods-papakarlo.debug.xcconfig"; sourceTree = "<group>"; };
 		64CB69F2C086D432C94A41AE /* Pods_usadba.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_usadba.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1701,21 +1703,23 @@
 		995FDF2C47AA75DEB0AF3748 /* Pods-vkuskavkaza.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-vkuskavkaza.debug.xcconfig"; path = "Target Support Files/Pods-vkuskavkaza/Pods-vkuskavkaza.debug.xcconfig"; sourceTree = "<group>"; };
 		9F16CA71F7A1C57D286A0E36 /* Pods_djan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_djan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4F374E300689A868C53F1F1 /* Pods-emoji.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-emoji.release.xcconfig"; path = "Target Support Files/Pods-emoji/Pods-emoji.release.xcconfig"; sourceTree = "<group>"; };
-		A85EEF264D45EDCECCFB0AC2 /* Pods_taverna.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_taverna.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC6E61D92EA18CBD004F9248 /* voljane.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = voljane.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC6E61DA2EA18CBD004F9248 /* taverna copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "taverna copy-Info.plist"; path = "/Users/mark.shavlovsky/Downloads/PapaKarlo/PapaKarlo/iosApp/taverna copy-Info.plist"; sourceTree = "<absolute>"; };
-		AC6E61DB2EA18E24004F9248 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		AC6E61DB2EA18E24004F9248 /* GoogleService-Info.plist */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		AC6E61DC2EA18E24004F9248 /* voljane.plist */ = {isa = PBXFileReference; explicitFileType = text.xml; path = voljane.plist; sourceTree = "<group>"; };
 		AC6E61DD2EA18E24004F9248 /* voljane.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = voljane.xcassets; sourceTree = "<group>"; };
 		AD685DC99B68FD89495E8E8B /* Pods-yuliar.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-yuliar.release.xcconfig"; path = "Target Support Files/Pods-yuliar/Pods-yuliar.release.xcconfig"; sourceTree = "<group>"; };
 		AEDAC5FBA5CFEA3772421BD5 /* Pods-taverna.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-taverna.release.xcconfig"; path = "Target Support Files/Pods-taverna/Pods-taverna.release.xcconfig"; sourceTree = "<group>"; };
 		BBEEAE62D2C2DB51503FD7E4 /* Pods-usadba.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-usadba.debug.xcconfig"; path = "Target Support Files/Pods-usadba/Pods-usadba.debug.xcconfig"; sourceTree = "<group>"; };
+		CC3DEBDBCD6763F6A38742CD /* Pods_voljane.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_voljane.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD93CCF3300C802B84A927C6 /* Pods-gustopub.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-gustopub.debug.xcconfig"; path = "Target Support Files/Pods-gustopub/Pods-gustopub.debug.xcconfig"; sourceTree = "<group>"; };
 		E3A4259DB6C3AB4D444D246E /* Pods-tandirhouse.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tandirhouse.debug.xcconfig"; path = "Target Support Files/Pods-tandirhouse/Pods-tandirhouse.debug.xcconfig"; sourceTree = "<group>"; };
 		E901DAB913ABB91CFEDC615E /* Pods-legenda.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-legenda.debug.xcconfig"; path = "Target Support Files/Pods-legenda/Pods-legenda.debug.xcconfig"; sourceTree = "<group>"; };
 		ED787CFFDA700D6B3F7441FD /* Pods_papakarlo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_papakarlo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F34C54463C7B604E3EF12A46 /* Pods-vkuskavkaza.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-vkuskavkaza.release.xcconfig"; path = "Target Support Files/Pods-vkuskavkaza/Pods-vkuskavkaza.release.xcconfig"; sourceTree = "<group>"; };
 		F9C10411EF2D7D08F04B8829 /* Pods_yuliar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_yuliar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FCA789989AB4A3F50EFB7144 /* Pods-voljane.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-voljane.release.xcconfig"; path = "Target Support Files/Pods-voljane/Pods-voljane.release.xcconfig"; sourceTree = "<group>"; };
+		FFA26521372BE9B9203F7E9E /* Pods_taverna.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_taverna.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1783,7 +1787,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C927C79DE52353C2CEDE0C36 /* Pods_taverna.framework in Frameworks */,
+				C927C79DE52353C2CEDE0C36 /* (null) in Frameworks */,
+				D899D3AE18F8B4D2F508352A /* Pods_taverna.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1807,7 +1812,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AC6E61D32EA18CBD004F9248 /* Pods_taverna.framework in Frameworks */,
+				F8D6960333B5A2C9B870AA16 /* Pods_voljane.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2345,6 +2350,8 @@
 				792D2B258DB59DC5BCC93B65 /* Pods-estpoest.release.xcconfig */,
 				443C76E5741E04A829A8347D /* Pods-taverna.debug.xcconfig */,
 				AEDAC5FBA5CFEA3772421BD5 /* Pods-taverna.release.xcconfig */,
+				5C0B3BC48E734D024E3808F8 /* Pods-voljane.debug.xcconfig */,
+				FCA789989AB4A3F50EFB7144 /* Pods-voljane.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -2444,7 +2451,8 @@
 				64CB69F2C086D432C94A41AE /* Pods_usadba.framework */,
 				82D390E07A4CF79E374BF150 /* Pods_vkuskavkaza.framework */,
 				F9C10411EF2D7D08F04B8829 /* Pods_yuliar.framework */,
-				A85EEF264D45EDCECCFB0AC2 /* Pods_taverna.framework */,
+				CC3DEBDBCD6763F6A38742CD /* Pods_voljane.framework */,
+				FFA26521372BE9B9203F7E9E /* Pods_taverna.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -2462,6 +2470,7 @@
 				0219B7FD2B8FB97C00305E2D /* Frameworks */,
 				0219B7FF2B8FB97C00305E2D /* ShellScript */,
 				890F5630758F0509EAF87B0B /* [CP] Embed Pods Frameworks */,
+				69E07C2C3CB7BB7CCC6425D0 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -2482,6 +2491,7 @@
 				025BF7ED2CAB354D00DF0946 /* Frameworks */,
 				025BF7EF2CAB354D00DF0946 /* ShellScript */,
 				AD0A8FF89004778ED80BDD00 /* [CP] Embed Pods Frameworks */,
+				D601BBBAE41C52DA565D372D /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -2502,6 +2512,7 @@
 				025F434A2CD0159400C854AF /* Frameworks */,
 				025F434C2CD0159400C854AF /* ShellScript */,
 				080E384EE7C5A7A9EB61EBD7 /* [CP] Embed Pods Frameworks */,
+				707C4E446892D21E761A6509 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -2522,6 +2533,7 @@
 				025F786B2CD14C3400C87D99 /* Frameworks */,
 				025F786D2CD14C3400C87D99 /* ShellScript */,
 				0421C5FE4B9186E79141DA7F /* [CP] Embed Pods Frameworks */,
+				EA9BCB5C2B2273AF3768A2BE /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -2542,6 +2554,7 @@
 				026BF2E62DB7F4B700BBD91E /* Frameworks */,
 				026BF2E82DB7F4B700BBD91E /* ShellScript */,
 				337C90CF64760AEA6C583C4F /* [CP] Embed Pods Frameworks */,
+				38143CF9118C182A62D94B01 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -2562,6 +2575,7 @@
 				026C1FC42A2690B900838266 /* Frameworks */,
 				026C1FC62A2690B900838266 /* ShellScript */,
 				83E6467E0FA983023477E15E /* [CP] Embed Pods Frameworks */,
+				0EF8315D87A2D0A6B6824AB4 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -2582,6 +2596,7 @@
 				027CB0882A346F7B00350EB2 /* Frameworks */,
 				027CB08A2A346F7B00350EB2 /* ShellScript */,
 				EBA7B5916F5A659159A92985 /* [CP] Embed Pods Frameworks */,
+				1EE190B8F45841B41E73DC35 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -2602,6 +2617,7 @@
 				027E62B72E25504E00648562 /* Frameworks */,
 				027E62B92E25504E00648562 /* ShellScript */,
 				BF0AFE24C0AC36C3A4F9C53D /* [CP] Embed Pods Frameworks */,
+				F5CAF9EE9BD4887E6DDE1DAC /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -2622,6 +2638,7 @@
 				02891FDD2BDAEA0D0043B466 /* Frameworks */,
 				02891FDF2BDAEA0D0043B466 /* ShellScript */,
 				457D2A811D54D15CA0DB745F /* [CP] Embed Pods Frameworks */,
+				3508FE2CDF4672EC5C836B6B /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -2642,6 +2659,7 @@
 				02ADC3A729D9D0880062A141 /* Frameworks */,
 				02ADC3A929D9D0880062A141 /* ShellScript */,
 				77C6DF1EFF1A6FDAD69CA8CF /* [CP] Embed Pods Frameworks */,
+				21C4500CE8A31424E7CDCFA9 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -2662,6 +2680,7 @@
 				FAB66D7FD21CA0242210288D /* Frameworks */,
 				0221D3A62958964C002E4F20 /* ShellScript */,
 				E93991EDB3D87C261F4C1018 /* [CP] Embed Pods Frameworks */,
+				D0E68C8BE057D9D5376BA65F /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -2682,6 +2701,7 @@
 				AC6E61D22EA18CBD004F9248 /* Frameworks */,
 				AC6E61D42EA18CBD004F9248 /* ShellScript */,
 				AC6E61D52EA18CBD004F9248 /* [CP] Embed Pods Frameworks */,
+				2107D313C766823D8B178FE1 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -3206,6 +3226,90 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-usadba/Pods-usadba-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		0EF8315D87A2D0A6B6824AB4 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-djan/Pods-djan-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-djan/Pods-djan-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-djan/Pods-djan-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		1EE190B8F45841B41E73DC35 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-gustopub/Pods-gustopub-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-gustopub/Pods-gustopub-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-gustopub/Pods-gustopub-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		2107D313C766823D8B178FE1 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-voljane/Pods-voljane-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-voljane/Pods-voljane-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-voljane/Pods-voljane-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		21C4500CE8A31424E7CDCFA9 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-yuliar/Pods-yuliar-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-yuliar/Pods-yuliar-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-yuliar/Pods-yuliar-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		22BF03DDD54B381DDAB4D9D4 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -3271,6 +3375,48 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-estpoest/Pods-estpoest-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		3508FE2CDF4672EC5C836B6B /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-vkuskavkaza/Pods-vkuskavkaza-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-vkuskavkaza/Pods-vkuskavkaza-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-vkuskavkaza/Pods-vkuskavkaza-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		38143CF9118C182A62D94B01 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-estpoest/Pods-estpoest-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-estpoest/Pods-estpoest-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-estpoest/Pods-estpoest-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		3EF41C9FB5E140702FBEF69E /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -3334,6 +3480,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-vkuskavkaza/Pods-vkuskavkaza-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		69E07C2C3CB7BB7CCC6425D0 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-tandirhouse/Pods-tandirhouse-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-tandirhouse/Pods-tandirhouse-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-tandirhouse/Pods-tandirhouse-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		707C4E446892D21E761A6509 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-usadba/Pods-usadba-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-usadba/Pods-usadba-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-usadba/Pods-usadba-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		77C6DF1EFF1A6FDAD69CA8CF /* [CP] Embed Pods Frameworks */ = {
@@ -3436,7 +3624,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-taverna-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-voljane-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3468,19 +3656,19 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-taverna/Pods-taverna-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-voljane/Pods-voljane-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			inputPaths = (
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-taverna/Pods-taverna-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-voljane/Pods-voljane-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-taverna/Pods-taverna-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-voljane/Pods-voljane-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		AD0A8FF89004778ED80BDD00 /* [CP] Embed Pods Frameworks */ = {
@@ -3591,6 +3779,48 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		D0E68C8BE057D9D5376BA65F /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-papakarlo/Pods-papakarlo-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-papakarlo/Pods-papakarlo-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-papakarlo/Pods-papakarlo-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D601BBBAE41C52DA565D372D /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-legenda/Pods-legenda-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-legenda/Pods-legenda-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-legenda/Pods-legenda-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		D933146BD5F3DC1E0E0C0F6F /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -3656,6 +3886,27 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-papakarlo/Pods-papakarlo-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		EA9BCB5C2B2273AF3768A2BE /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-emoji/Pods-emoji-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-emoji/Pods-emoji-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-emoji/Pods-emoji-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		EBA7B5916F5A659159A92985 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -3675,6 +3926,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-gustopub/Pods-gustopub-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F5CAF9EE9BD4887E6DDE1DAC /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-taverna/Pods-taverna-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-taverna/Pods-taverna-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-taverna/Pods-taverna-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -7096,7 +7368,7 @@
 		};
 		AC6E61D72EA18CBD004F9248 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 443C76E5741E04A829A8347D /* Pods-taverna.debug.xcconfig */;
+			baseConfigurationReference = 5C0B3BC48E734D024E3808F8 /* Pods-voljane.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = papakarlo.entitlements;
@@ -7177,7 +7449,7 @@
 		};
 		AC6E61D82EA18CBD004F9248 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = AEDAC5FBA5CFEA3772421BD5 /* Pods-taverna.release.xcconfig */;
+			baseConfigurationReference = FCA789989AB4A3F50EFB7144 /* Pods-voljane.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = papakarlo.entitlements;
