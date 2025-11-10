@@ -81,22 +81,22 @@ fun MainScreen(
                 ConnectionErrorMessage(visible = mainState.connectionLost)
                 StatusBarMessage(statusBarMessage = mainState.statusBarMessage)
 
-//                Box(
-//                    modifier = Modifier.fillMaxSize(),
-//                ) {
-//                    FoodDeliveryNavHost(
-//                        showInfoMessage = { message ->
-//                            viewModel.showErrorMessage(
-//                                message
-//                            )
-//                        },
-//                        showErrorMessage = { message ->
-//                            viewModel.showErrorMessage(
-//                                message
-//                            )
-//                        }
-//                    )
-//                }
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                ) {
+                    FoodDeliveryNavHost(
+                        showInfoMessage = { message ->
+                            viewModel.showErrorMessage(
+                                message
+                            )
+                        },
+                        showErrorMessage = { message ->
+                            viewModel.showErrorMessage(
+                                message
+                            )
+                        }
+                    )
+                }
             }
         }
     }

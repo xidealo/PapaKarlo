@@ -11,7 +11,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class LoginScreenDestination(
-    val successLoginDirection: SuccessLoginDirection,
+    val successLoginDirection: String,
 )
 
 fun NavController.navigateToLoginScreen(
@@ -20,7 +20,7 @@ fun NavController.navigateToLoginScreen(
 ) = navigate(
     route =
         LoginScreenDestination(
-            successLoginDirection = successLoginDirection,
+            successLoginDirection = successLoginDirection.name,
         ),
     navOptions = navOptions,
 )
@@ -35,7 +35,7 @@ fun NavGraphBuilder.loginScreenRoute(
         val args = backStackEntry.toRoute<LoginScreenDestination>()
 
         LoginRoute(
-            successLoginDirection = args.successLoginDirection,
+            successLoginDirection = SuccessLoginDirection.valueOf(args.successLoginDirection),
             back = back,
             goToConfirm = goToConfirm,
             showInfoMessage = showInfoMessage,

@@ -36,15 +36,6 @@ struct ComposeView: UIViewControllerRepresentable {
     func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
 }
 
-
-//struct ComposeView: UIViewControllerRepresentable {
-//    func makeUIViewController(context: Context) -> UIViewController {
-//      //  MainScreenKt.MainScreen()
-//    }
-//
-//}
-
-
 protocol HasApply {}
 
 extension HasApply {

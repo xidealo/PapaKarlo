@@ -13,7 +13,7 @@ import kotlinx.serialization.Serializable
 data class ProductDetailsScreenDestination(
     val uuid: String,
     val name: String,
-    val productDetailsOpenedFrom: ProductDetailsOpenedFrom,
+    val productDetailsOpenedFrom: String,
     val additionUuidList: List<String>,
     val cartProductUuid: String?,
 )
@@ -30,7 +30,7 @@ fun NavController.navigateToProductDetailsScreen(
         ProductDetailsScreenDestination(
             uuid = uuid,
             name = name,
-            productDetailsOpenedFrom = productDetailsOpenedFrom,
+            productDetailsOpenedFrom = productDetailsOpenedFrom.name,
             additionUuidList = additionUuidList,
             cartProductUuid = cartProductUuid,
         ),
@@ -49,7 +49,7 @@ fun NavGraphBuilder.productDetailsScreenRoute(
             back = back,
             menuProductUuid = args.uuid,
             menuProductName = args.name,
-            productDetailsOpenedFrom = args.productDetailsOpenedFrom,
+            productDetailsOpenedFrom = ProductDetailsOpenedFrom.valueOf(args.productDetailsOpenedFrom),
             cartProductUuid = args.cartProductUuid,
             additionUuidList = args.additionUuidList,
             showInfoMessage = showInfoMessage,
