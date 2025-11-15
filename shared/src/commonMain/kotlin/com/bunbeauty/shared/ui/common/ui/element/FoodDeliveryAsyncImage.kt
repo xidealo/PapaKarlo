@@ -25,7 +25,11 @@ fun FoodDeliveryAsyncImage(
 ) {
     AsyncImage(
         modifier = modifier,
-        model = photoLink,
+        model = ImageRequest
+            .Builder(LocalPlatformContext.current)
+            .data(photoLink)
+            .crossfade(enable = true)
+            .build(),
         contentDescription = contentDescription,
         contentScale = contentScale,
     )
