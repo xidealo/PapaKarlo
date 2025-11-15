@@ -7,7 +7,6 @@ class CompanyUuidProvider(
     flavor: String,
     isDebug: Boolean
 ) {
-
     val companyUuid: String = if (isDebug) {
         TEST_COMPANY_UUID
     } else {
