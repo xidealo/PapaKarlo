@@ -42,7 +42,7 @@ import papakarlo.shared.generated.resources.msg_settings_email_updated
 fun SettingsRoute(
     viewModel: SettingsViewModel = koinViewModel(),
     back: () -> Unit,
-    showInfoMessage: (String) -> Unit,
+    showInfoMessage: (String, Int) -> Unit,
     showErrorMessage: (String) -> Unit,
 ) {
     LaunchedEffect(Unit) {
@@ -120,14 +120,17 @@ fun SettingsEffect(
     effects: List<SettingsState.Event>,
     back: () -> Unit,
     consumeEffects: () -> Unit,
-    showInfoMessage: (String) -> Unit,
+    showInfoMessage: (String, Int) -> Unit,
     showErrorMessage: (String) -> Unit,
 ) {
     LaunchedEffect(effects) {
         effects.forEach { effect ->
             when (effect) {
                 SettingsState.Event.ShowEmailChangedSuccessfullyEvent -> {
-                    showInfoMessage(getString(Res.string.msg_settings_email_updated))
+                    showInfoMessage(
+                        getString(Res.string.msg_settings_email_updated),
+                        0
+                    )
                 }
 
                 SettingsState.Event.ShowEmailChangingFailedEvent -> {

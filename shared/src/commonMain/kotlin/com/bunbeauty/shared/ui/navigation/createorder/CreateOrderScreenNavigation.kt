@@ -17,7 +17,7 @@ fun NavGraphBuilder.createOrderScreenRoute(
     back: () -> Unit,
     goToProfile: () -> Unit,
     goToCreateAddress: () -> Unit,
-    showInfoMessage: (String) -> Unit,
+    showInfoMessage: (String, Int) -> Unit,
     showErrorMessage: (String) -> Unit,
 ) {
     composable<CreateOrderScreenDestination> {

@@ -53,8 +53,8 @@
     <!-- MENU -->
     <string name="title_menu">Меню</string>
     <string name="error_menu_loading">Не удалось загрузить меню</string>
-    <string name="title_menu_discount">Скидка %1$s%%</string>
-    <string name="msg_menu_discount">Успей сделать первый заказ со скидкой %1$s%%</string>
+    <string name="title_menu_discount">Скидка %1$s%</string>
+    <string name="msg_menu_discount">Успей сделать первый заказ со скидкой %1$s%</string>
     <string name="msg_menu_product_added">Добавлено</string>
     <string name="msg_menu_product_edited">Изменено</string>
 

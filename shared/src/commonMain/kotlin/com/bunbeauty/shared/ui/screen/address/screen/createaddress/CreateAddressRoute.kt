@@ -56,7 +56,7 @@ fun CreateAddress.DataState.mapState(): CreateAddressViewState = mapCreateAddres
 fun CreateAddressRoute(
     viewModel: CreateAddressViewModel = koinViewModel(),
     back: () -> Unit,
-    showInfoMessage: (String) -> Unit,
+    showInfoMessage: (String, Int) -> Unit,
     showErrorMessage: (String) -> Unit,
 ) {
     val viewState by viewModel.dataState.collectAsStateWithLifecycle()
@@ -92,7 +92,7 @@ fun CreateAddressEffect(
     effects: List<CreateAddress.Event>,
     back: () -> Unit,
     consumeEffects: () -> Unit,
-    showInfoMessage: (String) -> Unit,
+    showInfoMessage: (String, Int) -> Unit,
     showErrorMessage: (String) -> Unit,
 ) {
     LaunchedEffect(effects) {
@@ -103,7 +103,7 @@ fun CreateAddressEffect(
                 }
 
                 CreateAddress.Event.AddressCreatedSuccess -> {
-                    showInfoMessage(getString(Res.string.msg_create_address_created))
+                    showInfoMessage(getString(Res.string.msg_create_address_created), 0)
                     back()
                 }
 

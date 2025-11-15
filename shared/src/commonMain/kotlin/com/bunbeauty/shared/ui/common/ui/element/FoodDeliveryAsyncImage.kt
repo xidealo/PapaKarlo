@@ -32,5 +32,7 @@ fun FoodDeliveryAsyncImage(
             .build(),
         contentDescription = contentDescription,
         contentScale = contentScale,
+        error = error,
+        placeholder = placeholder
     )
 }

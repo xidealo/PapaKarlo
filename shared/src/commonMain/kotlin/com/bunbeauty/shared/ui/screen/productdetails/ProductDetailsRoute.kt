@@ -75,7 +75,7 @@ fun ProductDetailsRoute(
     productDetailsOpenedFrom: ProductDetailsOpenedFrom,
     additionUuidList: List<String>,
     cartProductUuid: String?,
-    showInfoMessage: (String) -> Unit,
+    showInfoMessage: (String, Int) -> Unit,
     showErrorMessage: (String) -> Unit,
 ) {
     LaunchedEffect(Unit) {
@@ -128,7 +128,7 @@ fun ProductDetailsEffect(
     effects: List<ProductDetailsState.Event>,
     back: () -> Unit,
     consumeEffects: () -> Unit,
-    showInfoMessage: (String) -> Unit,
+    showInfoMessage: (String, Int) -> Unit,
     showErrorMessage: (String) -> Unit,
 ) {
     LaunchedEffect(effects) {
@@ -138,9 +138,8 @@ fun ProductDetailsEffect(
 
                 ProductDetailsState.Event.EditedProduct -> {
                     showInfoMessage(
-                        getString(
-                            Res.string.msg_menu_product_edited,
-                        )
+                        getString(Res.string.msg_menu_product_edited),
+                        FAB_SNACKBAR_BOTTOM_PADDING
                     )
                     back()
                 }
@@ -152,11 +151,11 @@ fun ProductDetailsEffect(
                 }
 
                 ProductDetailsState.Event.AddedProduct -> {
-                    // TODO paddingBottom = FAB_SNACKBAR_BOTTOM_PADDING,
                     showInfoMessage(
                         getString(
                             Res.string.msg_menu_product_added,
-                        )
+                        ),
+                        FAB_SNACKBAR_BOTTOM_PADDING
                     )
                     back()
                 }

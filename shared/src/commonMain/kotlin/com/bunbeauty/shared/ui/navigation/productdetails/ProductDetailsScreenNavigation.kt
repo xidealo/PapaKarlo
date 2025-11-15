@@ -40,7 +40,7 @@ fun NavController.navigateToProductDetailsScreen(
 
 fun NavGraphBuilder.productDetailsScreenRoute(
     back: () -> Unit,
-    showInfoMessage: (String) -> Unit,
+    showInfoMessage: (String, Int) -> Unit,
     showErrorMessage: (String) -> Unit,
 ) {
     composable<ProductDetailsScreenDestination> { backStackEntry ->

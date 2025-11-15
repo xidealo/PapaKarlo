@@ -33,7 +33,6 @@ fun NavGraphBuilder.confirmScreenRoute(
     back: () -> Unit,
     goBackToProfileFragment: () -> Unit,
     goToCreateOrderFragment: () -> Unit,
-    showInfoMessage: (String) -> Unit,
     showErrorMessage: (String) -> Unit,
 ) {
     composable<ConfirmScreenDestination> { backStackEntry ->
@@ -45,7 +44,6 @@ fun NavGraphBuilder.confirmScreenRoute(
             back = back,
             goBackToProfileFragment = goBackToProfileFragment,
             goToCreateOrderFragment = goToCreateOrderFragment,
-            showInfoMessage = showInfoMessage,
             showErrorMessage = showErrorMessage,
         )
     }

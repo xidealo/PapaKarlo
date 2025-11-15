@@ -47,7 +47,6 @@ fun ConfirmRoute(
     back: () -> Unit,
     goBackToProfileFragment: () -> Unit,
     goToCreateOrderFragment: () -> Unit,
-    showInfoMessage: (String) -> Unit,
     showErrorMessage: (String) -> Unit,
 ) {
     LaunchedEffect(Unit) {
@@ -77,7 +76,6 @@ fun ConfirmRoute(
         goBackToProfileFragment = goBackToProfileFragment,
         goToCreateOrderFragment = goToCreateOrderFragment,
         consumeEffects = consumeEffects,
-        showInfoMessage = showInfoMessage,
         showErrorMessage = showErrorMessage,
         
     )
@@ -132,7 +130,6 @@ fun ConfirmEffect(
     goBackToProfileFragment: () -> Unit,
     goToCreateOrderFragment: () -> Unit,
     consumeEffects: () -> Unit,
-    showInfoMessage: (String) -> Unit,
     showErrorMessage: (String) -> Unit,
 ) {
     LaunchedEffect(effects) {

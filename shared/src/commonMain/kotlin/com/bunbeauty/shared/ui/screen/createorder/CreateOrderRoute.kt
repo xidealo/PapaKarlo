@@ -112,7 +112,7 @@ fun CreateOrderRoute(
     back: () -> Unit,
     goToProfile: () -> Unit,
     goToCreateAddress: () -> Unit,
-    showInfoMessage: (String) -> Unit,
+    showInfoMessage: (String, Int) -> Unit,
     showErrorMessage: (String) -> Unit,
 ) {
     LaunchedEffect(Unit) {
@@ -237,7 +237,7 @@ fun CreateOrderEffect(
     goToProfile: () -> Unit,
     goToCreateAddress: () -> Unit,
     consumeEffects: () -> Unit,
-    showInfoMessage: (String) -> Unit,
+    showInfoMessage: (String, Int) -> Unit,
     showErrorMessage: (String) -> Unit,
 ) {
     LaunchedEffect(effects) {
@@ -255,12 +255,12 @@ fun CreateOrderEffect(
                 }
 
                 is CreateOrder.Event.OrderCreatedEvent -> {
-
                     showInfoMessage(
                         getString(
                             Res.string.msg_order_code,
                             effect.code,
                         ),
+                        0
                     )
                     goToProfile()
                 }

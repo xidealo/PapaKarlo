@@ -85,9 +85,10 @@ fun MainScreen(
                     modifier = Modifier.fillMaxSize(),
                 ) {
                     FoodDeliveryNavHost(
-                        showInfoMessage = { message ->
-                            viewModel.showErrorMessage(
-                                message
+                        showInfoMessage = { message, padding ->
+                            viewModel.showInfoMessage(
+                                text = message,
+                                paddingBottom = padding
                             )
                         },
                         showErrorMessage = { message ->

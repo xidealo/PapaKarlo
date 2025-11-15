@@ -18,7 +18,7 @@ fun NavController.navigateToCreateAddressScreenDestination(navOptions: NavOption
 
 fun NavGraphBuilder.createAddressScreenRoute(
     back: () -> Unit,
-    showInfoMessage: (String) -> Unit,
+    showInfoMessage: (String, Int) -> Unit,
     showErrorMessage: (String) -> Unit,
 ) {
     composable<CreateAddressScreenDestination> {
@@ -26,6 +26,6 @@ fun NavGraphBuilder.createAddressScreenRoute(
             back = back,
             showInfoMessage = showInfoMessage,
             showErrorMessage = showErrorMessage,
-            )
+        )
     }
 }

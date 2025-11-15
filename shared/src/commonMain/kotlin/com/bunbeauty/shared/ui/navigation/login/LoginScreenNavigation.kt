@@ -28,7 +28,6 @@ fun NavController.navigateToLoginScreen(
 fun NavGraphBuilder.loginScreenRoute(
     back: () -> Unit,
     goToConfirm: (phoneNumber: String, successLoginDirection: SuccessLoginDirection) -> Unit,
-    showInfoMessage: (String) -> Unit,
     showErrorMessage: (String) -> Unit,
 ) {
     composable<LoginScreenDestination> { backStackEntry ->
@@ -38,7 +37,6 @@ fun NavGraphBuilder.loginScreenRoute(
             successLoginDirection = SuccessLoginDirection.valueOf(args.successLoginDirection),
             back = back,
             goToConfirm = goToConfirm,
-            showInfoMessage = showInfoMessage,
             showErrorMessage = showErrorMessage,
         )
     }

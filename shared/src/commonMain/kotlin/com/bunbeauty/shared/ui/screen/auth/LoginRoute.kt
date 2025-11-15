@@ -57,7 +57,6 @@ fun LoginRoute(
     successLoginDirection: SuccessLoginDirection,
     back: () -> Unit,
     goToConfirm: (phoneNumber: String, successLoginDirection: SuccessLoginDirection) -> Unit,
-    showInfoMessage: (String) -> Unit,
     showErrorMessage: (String) -> Unit,
 ) {
     LaunchedEffect(Unit) {
@@ -86,10 +85,8 @@ fun LoginRoute(
         successLoginDirection = successLoginDirection,
         goToConfirm = goToConfirm,
         consumeEffects = consumeEffects,
-        showInfoMessage = showInfoMessage,
         showErrorMessage = showErrorMessage,
-
-        )
+    )
     LoginScreen(viewState = viewState, onAction = onAction)
 }
 
@@ -193,7 +190,6 @@ private fun LoginEffect(
     back: () -> Unit,
     goToConfirm: (phoneNumber: String, successLoginDirection: SuccessLoginDirection) -> Unit,
     consumeEffects: () -> Unit,
-    showInfoMessage: (String) -> Unit,
     showErrorMessage: (String) -> Unit,
 ) {
     LaunchedEffect(effects) {

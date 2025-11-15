@@ -43,7 +43,7 @@ internal val emptyNavOptions = navOptions { }
 
 fun NavGraphBuilder.foodDeliveryNavGraphBuilder(
     navController: NavController,
-    showInfoMessage: (String) -> Unit,
+    showInfoMessage: (String, Int) -> Unit,
     showErrorMessage: (String) -> Unit,
 ) {
     cafeListScreenRoute(
@@ -192,7 +192,6 @@ fun NavGraphBuilder.foodDeliveryNavGraphBuilder(
             )
         },
         showErrorMessage = showErrorMessage,
-        showInfoMessage = showInfoMessage
     )
     confirmScreenRoute(
         back = navController::navigateUp,
@@ -218,7 +217,6 @@ fun NavGraphBuilder.foodDeliveryNavGraphBuilder(
             )
         },
         showErrorMessage = showErrorMessage,
-        showInfoMessage = showInfoMessage
     )
 
     profileScreenRoute(

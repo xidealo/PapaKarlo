@@ -15,7 +15,7 @@ fun NavController.navigateToSettingsScreen(navOptions: NavOptions) =
 
 fun NavGraphBuilder.settingsScreenRoute(
     back: () -> Unit,
-    showInfoMessage: (String) -> Unit,
+    showInfoMessage: (String, Int) -> Unit,
     showErrorMessage: (String) -> Unit,
 ) {
     composable<SettingsScreenDestination> {
