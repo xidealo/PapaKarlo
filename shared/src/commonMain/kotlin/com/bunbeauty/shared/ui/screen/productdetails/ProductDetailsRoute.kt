@@ -206,46 +206,30 @@ private fun ProductDetailsScreen(
         },
         backgroundColor = FoodDeliveryTheme.colors.mainColors.surface,
     ) {
-        AnimatedContent(
-            targetState = productDetailsViewState,
-            label = ANIMATION_LABEL,
-            transitionSpec = {
-                ContentTransform(
-                    targetContentEnter =
-                        fadeIn(
-                            animationSpec = tween(delayMillis = ANIMATION_DURATION_MILLIS),
-                        ),
-                    initialContentExit =
-                        fadeOut(
-                            animationSpec = tween(delayMillis = ANIMATION_DURATION_MILLIS),
-                        ),
+        when (productDetailsViewState) {
+            is ProductDetailsViewState.Success -> {
+                ProductDetailsSuccessScreen(
+                    productDetailsViewState.menuProductUi,
+                    onAction = onAction,
                 )
-            },
-        ) { productDetailsViewState ->
-            when (productDetailsViewState) {
-                is ProductDetailsViewState.Success -> {
-                    ProductDetailsSuccessScreen(
-                        productDetailsViewState.menuProductUi,
-                        onAction = onAction,
+            }
+
+            is ProductDetailsViewState.Loading -> {
+                LoadingScreen()
+            }
+
+            is ProductDetailsViewState.Error -> {
+                ErrorScreen(mainTextId = Res.string.common_error) {
+                    onAction(
+                        ProductDetailsState.Action.Init(
+                            menuProductUuid = menuProductUuid,
+                            selectedAdditionUuidList = additionUuidList,
+                        ),
                     )
-                }
-
-                is ProductDetailsViewState.Loading -> {
-                    LoadingScreen()
-                }
-
-                is ProductDetailsViewState.Error -> {
-                    ErrorScreen(mainTextId = Res.string.common_error) {
-                        onAction(
-                            ProductDetailsState.Action.Init(
-                                menuProductUuid = menuProductUuid,
-                                selectedAdditionUuidList = additionUuidList,
-                            ),
-                        )
-                    }
                 }
             }
         }
+
     }
 }
 
