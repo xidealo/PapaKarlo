@@ -6,7 +6,6 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import coil3.toUri
 import papakarlo.shared.generated.resources.Res
 import com.bunbeauty.shared.ui.common.ui.element.CircularProgressBar
 import com.bunbeauty.shared.ui.common.ui.element.card.NavigationIconCard
@@ -16,8 +15,10 @@ import com.bunbeauty.shared.ui.screen.cafe.model.CafeOptions
 import com.bunbeauty.shared.Constants.COORDINATES_DIVIDER
 import com.bunbeauty.shared.Constants.MAPS_LINK
 import com.bunbeauty.shared.Constants.PHONE_LINK
+import com.bunbeauty.shared.OpenExternalSource
 import com.bunbeauty.shared.presentation.cafe_list.CafeList
 import com.bunbeauty.shared.ui.screen.cafe.screen.cafelist.CafeListViewState
+import org.koin.compose.koinInject
 import papakarlo.shared.generated.resources.description_cafe_options_call
 import papakarlo.shared.generated.resources.description_cafe_options_map
 import papakarlo.shared.generated.resources.ic_address
@@ -49,16 +50,18 @@ fun CafeOptionsBottomSheet(
 }
 
 @Composable
-private fun CafeOptionsSuccessScreen(cafeOptions: CafeOptions) {
+private fun CafeOptionsSuccessScreen(
+    cafeOptions: CafeOptions,
+    openExternalSource: OpenExternalSource = koinInject<OpenExternalSource>(),
+) {
     NavigationIconCard(
         iconId = Res.drawable.ic_call,
         iconDescriptionStringId = Res.string.description_cafe_options_call,
         label = cafeOptions.callToCafe,
         elevated = false,
     ) {
-        val uri = (PHONE_LINK + cafeOptions.phone).toUri()
-        //TODO FIX GO BY URI
-        // goByUri(uri = uri, action = Intent.ACTION_DIAL, activity = activity)
+        val uri = (PHONE_LINK + cafeOptions.phone)
+        openExternalSource.openPhone(uri)
     }
     NavigationIconCard(
         modifier = Modifier.padding(top = 8.dp),
@@ -68,20 +71,10 @@ private fun CafeOptionsSuccessScreen(cafeOptions: CafeOptions) {
         elevated = false,
     ) {
         val uri =
-            (MAPS_LINK + cafeOptions.latitude + COORDINATES_DIVIDER + cafeOptions.longitude).toUri()
-        //TODO FIX GO BY URI
-        //goByUri(uri = uri, action = Intent.ACTION_VIEW, activity = activity)
+            (MAPS_LINK + cafeOptions.latitude + COORDINATES_DIVIDER + cafeOptions.longitude)
+        openExternalSource.openMap(uri)
     }
 }
-
-//private fun goByUri(
-//    uri: Uri,
-//    action: String,
-//    activity: Activity?,
-//) {
-//    val intent = Intent(action, uri)
-//    activity?.startActivity(intent)
-//}
 
 @Preview
 @Composable

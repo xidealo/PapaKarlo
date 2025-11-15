@@ -8,16 +8,22 @@ actual class OpenExternalSource(
     val context: Context,
 ) {
     actual fun openPhone(uri: String) {
-        val intent = Intent(Intent.ACTION_DIAL, uri.toUri())
-        context.startActivity(intent)
+        openExternalSource(action = Intent.ACTION_DIAL, uri = uri)
     }
 
     actual fun openMap(uri: String) {
-        openLink(uri = uri)
+        openExternalSource(action = Intent.ACTION_VIEW, uri = uri)
     }
 
     actual fun openLink(uri: String) {
-        val intent = Intent(Intent.ACTION_VIEW, uri.toUri()).apply {
+        openExternalSource(action = Intent.ACTION_VIEW, uri = uri)
+    }
+
+    private fun openExternalSource(
+        action: String,
+        uri: String,
+    ) {
+        val intent = Intent(action, uri.toUri()).apply {
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         }
         context.startActivity(intent)
