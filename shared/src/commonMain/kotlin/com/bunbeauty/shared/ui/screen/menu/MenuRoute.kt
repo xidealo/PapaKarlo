@@ -49,6 +49,7 @@ import com.bunbeauty.shared.ui.screen.menu.state.MenuItemUi
 import com.bunbeauty.shared.ui.screen.menu.state.MenuViewState
 import com.bunbeauty.shared.ui.screen.menu.ui.MenuProductItem
 import com.bunbeauty.shared.ui.screen.topcart.TopCartUi
+import com.bunbeauty.shared.ui.theme.logoSmall
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.getString
@@ -167,8 +168,7 @@ private fun MenuScreen(
             ),
         scrollableState = menuLazyGridState,
         backgroundColor = FoodDeliveryTheme.colors.mainColors.surface,
-        //TODO LOGO SMALL
-        drawableId = Res.drawable.ic_discount,
+        drawableId = logoSmall,
         appBarContent = {
             if (viewState.state is MenuDataState.State.Success) {
                 CategoryRow(

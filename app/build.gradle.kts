@@ -1,12 +1,15 @@
 import com.android.build.gradle.internal.api.BaseVariantOutputImpl
 import com.github.triplet.gradle.androidpublisher.ReleaseStatus
 import com.github.triplet.gradle.play.PlayPublisherExtension
+import org.gradle.kotlin.dsl.components
+import org.gradle.kotlin.dsl.resources
 import java.io.FileInputStream
 import java.util.Properties
 
 plugins {
     alias(libs.plugins.application)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.compose)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.google.service)
     alias(libs.plugins.kotlin.parcelize)

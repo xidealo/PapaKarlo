@@ -35,8 +35,14 @@ import com.bunbeauty.shared.ui.theme.color.VoljaneColors
 import com.bunbeauty.shared.ui.theme.color.VoljaneDarkColors
 import com.bunbeauty.shared.ui.theme.color.YuliarDarkColors
 import com.bunbeauty.shared.ui.theme.color.YuliarLightColors
+import org.jetbrains.compose.resources.DrawableResource
+import papakarlo.shared.generated.resources.Res
+import papakarlo.shared.generated.resources.logo_medium_emoji
+import papakarlo.shared.generated.resources.logo_small_emoji
 
 private var BASE_THEME_FLAVOR: String = "papakarlo"
+var logoMedium: DrawableResource? = null
+var logoSmall: DrawableResource? = null
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -70,6 +76,7 @@ private fun getAppColors(
     val company = FoodDeliveryCompany.getByFlavor(flavor)
     return when (company) {
         FoodDeliveryCompany.PAPA_KARLO -> {
+
             if (isDarkTheme) {
                 PapaKarloDarkColors
             } else {
@@ -142,6 +149,8 @@ private fun getAppColors(
         }
 
         FoodDeliveryCompany.EMOJI -> {
+            logoMedium = Res.drawable.logo_medium_emoji
+            logoSmall = Res.drawable.logo_small_emoji
             if (isDarkTheme) {
                 EmojiDarkColors
             } else {
