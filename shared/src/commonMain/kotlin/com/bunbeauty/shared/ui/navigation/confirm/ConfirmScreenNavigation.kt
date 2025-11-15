@@ -8,11 +8,12 @@ import androidx.navigation.toRoute
 import com.bunbeauty.shared.domain.model.SuccessLoginDirection
 import com.bunbeauty.shared.ui.screen.auth.ConfirmRoute
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.descriptors.PrimitiveKind
 
 @Serializable
 data class ConfirmScreenDestination(
     val phoneNumber: String,
-    val successLoginDirection: SuccessLoginDirection,
+    val successLoginDirection: String,
 )
 
 fun NavController.navigateToConfirmScreen(
@@ -23,7 +24,7 @@ fun NavController.navigateToConfirmScreen(
     route =
         ConfirmScreenDestination(
             phoneNumber = phoneNumber,
-            successLoginDirection = successLoginDirection,
+            successLoginDirection = successLoginDirection.name,
         ),
     navOptions = navOptions,
 )
@@ -40,7 +41,7 @@ fun NavGraphBuilder.confirmScreenRoute(
 
         ConfirmRoute(
             phoneNumber = args.phoneNumber,
-            successLoginDirection = args.successLoginDirection,
+            successLoginDirection = SuccessLoginDirection.valueOf(args.successLoginDirection),
             back = back,
             goBackToProfileFragment = goBackToProfileFragment,
             goToCreateOrderFragment = goToCreateOrderFragment,

@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.di
+package com.bunbeauty.shared.di
 
 import com.bunbeauty.shared.presentation.MainViewModel
 import com.bunbeauty.shared.presentation.cafe_list.CafeListViewModel

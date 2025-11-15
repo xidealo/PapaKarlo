@@ -4,11 +4,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
+import coil3.Image
 import org.jetbrains.compose.resources.painterResource
 import coil3.compose.AsyncImage
+import coil3.compose.LocalPlatformContext
 import coil3.request.ImageRequest
 import coil3.request.crossfade
+import org.jetbrains.compose.resources.imageResource
 import papakarlo.shared.generated.resources.Res
 import papakarlo.shared.generated.resources.placeholder_small
 
@@ -23,14 +25,11 @@ fun FoodDeliveryAsyncImage(
 ) {
     AsyncImage(
         modifier = modifier,
-        model =
-            ImageRequest
-                .Builder(LocalContext.current)
-                .data(photoLink)
-                .crossfade(enable = true)
-                .build(),
-        placeholder = placeholder,
-        error = error,
+        model = ImageRequest
+            .Builder(LocalPlatformContext.current)
+            .data(photoLink)
+            .crossfade(enable = true)
+            .build(),
         contentDescription = contentDescription,
         contentScale = contentScale,
     )

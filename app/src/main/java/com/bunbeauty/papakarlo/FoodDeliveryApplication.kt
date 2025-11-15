@@ -9,7 +9,6 @@ import android.os.Build
 import com.bunbeauty.core.Logger
 import com.bunbeauty.papakarlo.di.appModule
 import com.bunbeauty.papakarlo.di.appUtilModule
-import com.bunbeauty.papakarlo.di.viewModelModule
 import com.bunbeauty.shared.Constants.CHANNEL_ID
 import com.bunbeauty.shared.data.CompanyUuidProvider
 import com.bunbeauty.shared.di.initKoin
@@ -50,7 +49,6 @@ class FoodDeliveryApplication :
             modules(
                 appModule(),
                 appUtilModule(),
-                viewModelModule(),
             )
         }
 
