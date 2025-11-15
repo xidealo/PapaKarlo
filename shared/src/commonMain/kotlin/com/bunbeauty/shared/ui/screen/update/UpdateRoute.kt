@@ -24,6 +24,7 @@ import androidx.compose.ui.text.style.TextAlign
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.bunbeauty.shared.OpenExternalSource
 import papakarlo.shared.generated.resources.Res
 import com.bunbeauty.shared.ui.common.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.shared.ui.common.ui.element.button.MainButton
@@ -35,6 +36,7 @@ import com.bunbeauty.shared.domain.model.link.Link
 import com.bunbeauty.shared.domain.model.link.LinkType
 import com.bunbeauty.shared.presentation.update.UpdateState
 import com.bunbeauty.shared.presentation.update.UpdateViewModel
+import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
 import papakarlo.shared.generated.resources.action_update_update
 import papakarlo.shared.generated.resources.description_google_play
@@ -93,16 +95,13 @@ fun UpdateState.DataState.mapState(): UpdateViewState =
 fun UpdateEffect(
     effects: List<UpdateState.Event>,
     consumeEffects: () -> Unit,
+    openExternalSource: OpenExternalSource = koinInject<OpenExternalSource>(),
 ) {
     LaunchedEffect(effects) {
         effects.forEach { effect ->
             when (effect) {
                 is UpdateState.Event.NavigateToUpdateEvent -> {
-                    // TODO ADD GO TO SHOP
-
-//                    val uri = effect.linkValue.toUri()
-//                    val intent = Intent(Intent.ACTION_VIEW, uri)
-//                    localActivity?.startActivity(intent)
+                    openExternalSource.openLink(uri = effect.linkValue)
                 }
             }
         }

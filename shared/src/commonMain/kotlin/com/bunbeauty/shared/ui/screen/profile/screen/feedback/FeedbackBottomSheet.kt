@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
+import com.bunbeauty.shared.OpenExternalSource
 import com.bunbeauty.shared.presentation.profile.ProfileState
 import com.bunbeauty.shared.ui.common.ui.element.card.NavigationIconCard
 import com.bunbeauty.shared.ui.common.ui.screen.bottomsheet.FoodDeliveryModalBottomSheet
@@ -14,6 +15,7 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.koin.compose.koinInject
 import papakarlo.shared.generated.resources.Res
 import papakarlo.shared.generated.resources.action_feedback_instagram
 import papakarlo.shared.generated.resources.action_feedback_play_market
@@ -23,15 +25,6 @@ import papakarlo.shared.generated.resources.ic_instagram
 import papakarlo.shared.generated.resources.ic_link
 import papakarlo.shared.generated.resources.ic_vk
 import papakarlo.shared.generated.resources.title_feedback
-
-//private fun goByLink(
-//    link: String,
-//    context: Context?,
-//) {
-//    val uri = link.toUri()
-//    val intent = Intent(Intent.ACTION_VIEW, uri)
-//    context?.startActivity(intent)
-//}
 
 @Composable
 fun FeedBackBottomSheetScreen(
@@ -52,7 +45,10 @@ fun FeedBackBottomSheetScreen(
 }
 
 @Composable
-private fun FeedbackScreen(linkList: ImmutableList<LinkUI>) {
+private fun FeedbackScreen(
+    linkList: ImmutableList<LinkUI>,
+    openExternalSource: OpenExternalSource = koinInject<OpenExternalSource>(),
+) {
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
         linkList.forEach { link ->
             NavigationIconCard(
@@ -62,8 +58,7 @@ private fun FeedbackScreen(linkList: ImmutableList<LinkUI>) {
                 label = link.value,
                 elevated = false,
                 onClick = {
-                    //TODO ADD GO BY LINK
-                    //goByLink(link = link.value, context = context)
+                    openExternalSource.openLink(uri = link.value)
                 },
             )
         }

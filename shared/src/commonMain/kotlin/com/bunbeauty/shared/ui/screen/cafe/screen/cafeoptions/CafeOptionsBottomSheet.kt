@@ -58,7 +58,7 @@ private fun CafeOptionsSuccessScreen(cafeOptions: CafeOptions) {
     ) {
         val uri = (PHONE_LINK + cafeOptions.phone).toUri()
         //TODO FIX GO BY URI
-        //goByUri(uri = uri, action = Intent.ACTION_DIAL, activity = activity)
+        // goByUri(uri = uri, action = Intent.ACTION_DIAL, activity = activity)
     }
     NavigationIconCard(
         modifier = Modifier.padding(top = 8.dp),
