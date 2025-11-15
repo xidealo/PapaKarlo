@@ -37,8 +37,14 @@ import com.bunbeauty.shared.ui.theme.color.YuliarDarkColors
 import com.bunbeauty.shared.ui.theme.color.YuliarLightColors
 import org.jetbrains.compose.resources.DrawableResource
 import papakarlo.shared.generated.resources.Res
+import papakarlo.shared.generated.resources.logo_medium_djan
 import papakarlo.shared.generated.resources.logo_medium_emoji
+import papakarlo.shared.generated.resources.logo_medium_estpoest
+import papakarlo.shared.generated.resources.logo_medium_gustopub
+import papakarlo.shared.generated.resources.logo_small_djan
 import papakarlo.shared.generated.resources.logo_small_emoji
+import papakarlo.shared.generated.resources.logo_small_estpoest
+import papakarlo.shared.generated.resources.logo_small_gustopub
 
 private var BASE_THEME_FLAVOR: String = "papakarlo"
 var logoMedium: DrawableResource? = null
@@ -93,6 +99,8 @@ private fun getAppColors(
         }
 
         FoodDeliveryCompany.DJAN -> {
+            logoMedium = Res.drawable.logo_medium_djan
+            logoSmall = Res.drawable.logo_small_djan
             if (isDarkTheme) {
                 DjanDarkColors
             } else {
@@ -101,6 +109,8 @@ private fun getAppColors(
         }
 
         FoodDeliveryCompany.GUSTO_PUB -> {
+            logoMedium = Res.drawable.logo_medium_gustopub
+            logoSmall = Res.drawable.logo_small_gustopub
             if (isDarkTheme) {
                 GustoPubDarkColors
             } else {
@@ -125,6 +135,8 @@ private fun getAppColors(
         }
 
         FoodDeliveryCompany.EST_POEST -> {
+            logoMedium = Res.drawable.logo_medium_estpoest
+            logoSmall = Res.drawable.logo_small_estpoest
             if (isDarkTheme) {
                 EstPoestDarkColors
             } else {

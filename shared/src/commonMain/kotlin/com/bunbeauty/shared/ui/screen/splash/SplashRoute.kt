@@ -17,6 +17,7 @@ import papakarlo.shared.generated.resources.Res
 import com.bunbeauty.shared.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.shared.presentation.splash.Splash
 import com.bunbeauty.shared.presentation.splash.SplashViewModel
+import com.bunbeauty.shared.ui.theme.logoMedium
 import org.koin.compose.viewmodel.koinViewModel
 import papakarlo.shared.generated.resources.description_company_logo
 import papakarlo.shared.generated.resources.ic_discount
@@ -68,11 +69,14 @@ private fun SplashScreen(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center,
     ) {
-        //TODO ADD LOGO
-        Image(
-            painter = painterResource(Res.drawable.ic_discount),
-            contentDescription = stringResource(Res.string.description_company_logo),
-        )
+        logoMedium?.let { logo ->
+            Image(
+                painter = painterResource(resource = logo),
+                contentDescription = stringResource(
+                    resource = Res.string.description_company_logo
+                ),
+            )
+        }
     }
 }
 

@@ -38,6 +38,7 @@ import com.bunbeauty.shared.presentation.login.Login
 import com.bunbeauty.shared.presentation.login.LoginViewModel
 import com.bunbeauty.shared.ui.common.ui.element.button.LoadingButton
 import com.bunbeauty.shared.ui.common.ui.element.textfield.FoodDeliveryTextField
+import com.bunbeauty.shared.ui.theme.logoMedium
 import org.jetbrains.compose.resources.getString
 import org.koin.compose.viewmodel.koinViewModel
 import papakarlo.shared.generated.resources.action_login_continue
@@ -126,12 +127,13 @@ private fun LoginScreen(
             BoxWithConstraints {
                 val constraints = this
                 if (constraints.maxHeight > logoBoxHeightLimit) {
-                    Image(
-                        modifier = Modifier.height(156.dp),
-                        // TODO CHANGE LOGO
-                        painter = painterResource(Res.drawable.ic_address),
-                        contentDescription = stringResource(Res.string.description_login_logo),
-                    )
+                    logoMedium?.let { logo ->
+                        Image(
+                            modifier = Modifier.height(height = 156.dp),
+                            painter = painterResource(resource = logo),
+                            contentDescription = stringResource(resource = Res.string.description_login_logo),
+                        )
+                    }
                 }
             }
             Text(
