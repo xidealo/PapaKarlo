@@ -8,7 +8,6 @@ import android.media.RingtoneManager
 import android.os.Build
 import com.bunbeauty.core.Logger
 import com.bunbeauty.papakarlo.di.appModule
-import com.bunbeauty.papakarlo.di.appUtilModule
 import com.bunbeauty.shared.Constants.CHANNEL_ID
 import com.bunbeauty.shared.data.CompanyUuidProvider
 import com.bunbeauty.shared.di.initKoin
@@ -48,7 +47,6 @@ class FoodDeliveryApplication :
             androidContext(this@FoodDeliveryApplication)
             modules(
                 appModule(),
-                appUtilModule(),
             )
         }
 
