@@ -95,7 +95,10 @@ fun ProfileState.DataState.mapState(): ProfileViewState =
                 ProfileState.DataState.State.ERROR -> ProfileViewState.State.Error
                 ProfileState.DataState.State.LOADING -> ProfileViewState.State.Loading
             },
-        aboutBottomSheetUI = ProfileViewState.AboutBottomSheetUI(isShown = isShowAboutAppBottomSheet),
+        aboutBottomSheetUI = ProfileViewState.AboutBottomSheetUI(
+            isShown = isShowAboutAppBottomSheet,
+            version = appVersion
+        ),
         feedBackBottomSheetUI =
             ProfileViewState.FeedBackBottomSheetUI(
                 isShown = isShowFeedbackBottomSheet,
@@ -206,7 +209,7 @@ private fun ProfileScreen(
         AboutAppBottomSheet(
             aboutBottomSheetUI = viewState.aboutBottomSheetUI,
             onAction = onAction,
-            appVersion = "TODO APP VERSION"
+            appVersion = viewState.aboutBottomSheetUI.version
         )
         FeedBackBottomSheetScreen(
             feedBackBottomSheetUI = viewState.feedBackBottomSheetUI,
@@ -494,7 +497,10 @@ val profileViewStateMock =
     ProfileViewState(
         state = ProfileViewState.State.Loading,
         lastOrder = null,
-        aboutBottomSheetUI = ProfileViewState.AboutBottomSheetUI(isShown = false),
+        aboutBottomSheetUI = ProfileViewState.AboutBottomSheetUI(
+            isShown = false,
+            version = ""
+        ),
         feedBackBottomSheetUI =
             ProfileViewState.FeedBackBottomSheetUI(
                 isShown = false,

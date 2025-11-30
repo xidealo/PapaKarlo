@@ -12,7 +12,8 @@ interface ProfileState {
         val state: State,
         val linkList: List<Link>,
         val isShowAboutAppBottomSheet: Boolean,
-        val isShowFeedbackBottomSheet: Boolean
+        val isShowFeedbackBottomSheet: Boolean,
+        val appVersion: String
     ) : BaseDataState {
         enum class State {
             AUTHORIZED,

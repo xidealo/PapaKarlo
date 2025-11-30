@@ -1,5 +1,6 @@
 package com.bunbeauty.shared.di
 
+import com.bunbeauty.core.buildVersionQualifier
 import com.bunbeauty.shared.presentation.MainViewModel
 import com.bunbeauty.shared.presentation.cafe_list.CafeListViewModel
 import com.bunbeauty.shared.presentation.confirm.ConfirmViewModel
@@ -113,6 +114,7 @@ fun viewModelModule() =
                 getLinkListUseCase = get(),
                 observeLastOrderUseCase = get(),
                 stopObserveOrdersUseCase = get(),
+                buildVersion = get(buildVersionQualifier)
             )
         }
         viewModel {

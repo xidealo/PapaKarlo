@@ -16,6 +16,7 @@ data class ProfileViewState(
     @Immutable
     data class AboutBottomSheetUI(
         val isShown: Boolean,
+        val version: String
     )
 
     @Immutable
