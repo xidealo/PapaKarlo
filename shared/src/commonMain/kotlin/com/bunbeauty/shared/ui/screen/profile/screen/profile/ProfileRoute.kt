@@ -192,19 +192,19 @@ private fun ProfileScreen(
                     },
                 )
 
-            ProfileViewState.State.Loading -> LoadingScreen()
+            ProfileViewState.State.Loading -> {
+                LoadingScreen()
+            }
 
-            ProfileViewState.State.Authorized ->
-                AuthorizedProfileScreen(
-                    state = viewState,
-                    onAction = onAction,
-                )
+            ProfileViewState.State.Authorized -> AuthorizedProfileScreen(
+                state = viewState,
+                onAction = onAction,
+            )
 
-            ProfileViewState.State.Unauthorized ->
-                UnauthorizedProfileScreen(
-                    onAction = onAction,
-                    state = viewState,
-                )
+            ProfileViewState.State.Unauthorized -> UnauthorizedProfileScreen(
+                onAction = onAction,
+                state = viewState,
+            )
         }
         AboutAppBottomSheet(
             aboutBottomSheetUI = viewState.aboutBottomSheetUI,

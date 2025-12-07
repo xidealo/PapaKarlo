@@ -1,6 +1,6 @@
 package com.bunbeauty.designsystem.ui.element.shimmer
 
-import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
@@ -20,37 +20,36 @@ import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 
 @Composable
 fun Shimmer(modifier: Modifier) {
-    val durationMillis = 2_000
+    val durationMillis = 6_000
     val widthOfShadowBrush = 200
     val angleOfAxisY = 45f
     val transition = rememberInfiniteTransition(label = "shimmer")
-    val translateAnimation =
-        transition.animateFloat(
-            initialValue = 0f,
-            targetValue = 200f,
-            animationSpec =
-                infiniteRepeatable(
-                    animation = tween(durationMillis = durationMillis),
-                    repeatMode = RepeatMode.Restart,
-                ),
-            label = "shimmer",
+    val translateAnim = transition.animateFloat(
+        initialValue = 0f,
+        targetValue = 1000f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(
+                durationMillis = durationMillis,
+                easing = LinearEasing
+            )
         )
+    )
 
     val shimmerColors =
         listOf(
+            FoodDeliveryTheme.colors.mainColors.surfaceVariant
+                .copy(alpha = 0.9f),
             FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
-                .copy(alpha = 0.6f),
+                .copy(alpha = 0.4f),
             FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
-                .copy(alpha = 0.3f),
-            FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
-                .copy(alpha = 0.6f),
+                .copy(alpha = 0.2f),
         )
 
     val brush =
         Brush.linearGradient(
             colors = shimmerColors,
-            start = Offset(x = translateAnimation.value - widthOfShadowBrush, y = 0.0f),
-            end = Offset(x = translateAnimation.value, y = angleOfAxisY),
+            start = Offset(x = translateAnim.value - widthOfShadowBrush, y = 0.0f),
+            end = Offset(x = translateAnim.value, y = angleOfAxisY),
             tileMode = TileMode.Mirror,
         )
 

@@ -219,7 +219,7 @@ private fun MenuScreen(
                 }
 
                 else -> {
-                    LoadingScreen()
+                    MenuLoadingScreen()
                 }
             }
         }
@@ -340,22 +340,22 @@ private fun MenuColumn(
         ) { index, menuItem ->
             when (menuItem) {
                 is MenuItemUi.Discount -> {
-                    BannerCard(
-                        title =
-                            stringResource(
-                                resource = Res.string.title_menu_discount,
-                                menuItem.discount,
-                            ),
-                        text =
-                            stringResource(
-                                resource = Res.string.msg_menu_discount,
-                                menuItem.discount,
-                            ),
-                        icon = Res.drawable.ic_discount,
-                        iconDescription = stringResource(
-                            Res.string.description_ic_discount,
-                        ),
-                    )
+//                    BannerCard(
+//                        title =
+//                            stringResource(
+//                                resource = Res.string.title_menu_discount,
+//                                menuItem.discount,
+//                            ),
+//                        text =
+//                            stringResource(
+//                                resource = Res.string.msg_menu_discount,
+//                                menuItem.discount,
+//                            ),
+//                        icon = Res.drawable.ic_discount,
+//                        iconDescription = stringResource(
+//                            Res.string.description_ic_discount,
+//                        ),
+//                    )
                 }
 
                 is MenuItemUi.CategoryHeader -> {

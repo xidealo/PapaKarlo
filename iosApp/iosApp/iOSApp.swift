@@ -22,6 +22,7 @@ struct PapaKarloSwiftApp: App {
     var body: some Scene {
         WindowGroup {
             ComposeView()
+                    .ignoresSafeArea(edges: .all)
                     .ignoresSafeArea(.keyboard)
         }
     }
