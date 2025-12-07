@@ -32,7 +32,7 @@ struct ComposeView: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> UIViewController {
 
         AppIosKt.MainViewController(
-           // flovr: Bundle.main.object(forInfoDictionaryKey: "CFBundleName") as? String ?? ""
+            flavor: Bundle.main.object(forInfoDictionaryKey: "CFBundleName") as? String ?? ""
         )
     }
 

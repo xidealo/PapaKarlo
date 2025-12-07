@@ -67,14 +67,14 @@ struct CreateAddressView: View {
                                 viewModel.onAction(action: CreateAddressActionStreetTextChange(street: changedValue))
                             },
                             selectSuggetion: { streetItem in
-                                viewModel.onAction(action: CreateAddressActionSuggestionSelect(
-                                    suggestion: SuggestionUi(
-                                        id: streetItem.id,
-                                        value: streetItem.name,
-                                        postfix: streetItem.postfix
-                                    )
-                                )
-                                )
+//                                viewModel.onAction(action: CreateAddressActionSuggestionSelect(
+//                                    suggestion: SuggestionUi(
+//                                        id: streetItem.id,
+//                                        value: streetItem.name,
+//                                        postfix: streetItem.postfix
+//                                    )
+//                                )
+//                                )
                             },
                             focusChangeListener: { isSelected in
                                 viewModel.onAction(action: CreateAddressActionStreetFocusChange(isFocused: isSelected))
