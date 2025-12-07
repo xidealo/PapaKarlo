@@ -4,11 +4,14 @@ import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -26,6 +29,7 @@ import com.bunbeauty.shared.ui.common.ui.screen.LoadingScreen
 import com.bunbeauty.shared.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.shared.presentation.user_address_list.UserAddressListDataState
 import com.bunbeauty.shared.presentation.user_address_list.UserAddressListViewModel
+import com.bunbeauty.shared.ui.common.ui.element.FoodDeliveryHorizontalDivider
 import com.bunbeauty.shared.ui.common.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.shared.ui.common.ui.screen.EmptyScreen
 import com.bunbeauty.shared.ui.screen.address.mapper.toUserAddressItem
@@ -68,19 +72,17 @@ fun UserAddressListRoute(
     val viewState by viewModel.dataState.collectAsStateWithLifecycle()
 
     val effects by viewModel.events.collectAsStateWithLifecycle()
-    val consumeEffects =
-        remember {
-            {
-                viewModel.consumeEvents(effects)
-            }
+    val consumeEffects = remember {
+        {
+            viewModel.consumeEvents(effects)
         }
+    }
 
-    val onAction =
-        remember {
-            { event: UserAddressListDataState.Action ->
-                viewModel.onAction(event)
-            }
+    val onAction = remember {
+        { event: UserAddressListDataState.Action ->
+            viewModel.onAction(event)
         }
+    }
 
     UserAddressEffect(
         effects = effects,
@@ -114,65 +116,57 @@ private fun UserAddressListScreen(
                 )
             }
         },
+        backgroundColor = FoodDeliveryTheme.colors.mainColors.surface,
     ) {
-        Crossfade(
-            targetState = viewState.state,
-            label = "UserAddressListScreen",
-        ) { state ->
-            when (viewState.state) {
-                UserAddressListViewState.State.Error ->
-                    ErrorScreen(
-                        mainTextId = Res.string.error_addresses_list_loading,
-                        onClick = {
-                            onAction(UserAddressListDataState.Action.OnRefreshClicked)
-                        },
-                    )
+        when (viewState.state) {
+            UserAddressListViewState.State.Error ->
+                ErrorScreen(
+                    mainTextId = Res.string.error_addresses_list_loading,
+                    onClick = {
+                        onAction(UserAddressListDataState.Action.OnRefreshClicked)
+                    },
+                )
 
-                UserAddressListViewState.State.Loading ->
-                    LoadingScreen()
+            UserAddressListViewState.State.Loading ->
+                LoadingScreen()
 
-                UserAddressListViewState.State.Success ->
-                    UserAddressListSuccessScreen(viewState.userAddressItems)
+            UserAddressListViewState.State.Success ->
+                UserAddressListSuccessScreen(viewState.userAddressItems)
 
-                UserAddressListViewState.State.Empty ->
-                    EmptyScreen(
-                        imageId = Res.drawable.ic_address,
-                        imageDescriptionId = Res.string.description_cafe_addresses_empty,
-                        mainTextId = Res.string.title_my_addresses_empty,
-                        extraTextId = Res.string.msg_my_addresses_empty,
-                        buttonTextId = Res.string.action_add_addresses,
-                        onClick = { onAction(UserAddressListDataState.Action.Init) },
-                    )
-            }
+            UserAddressListViewState.State.Empty ->
+                EmptyScreen(
+                    imageId = Res.drawable.ic_address,
+                    imageDescriptionId = Res.string.description_cafe_addresses_empty,
+                    mainTextId = Res.string.title_my_addresses_empty,
+                    extraTextId = Res.string.msg_my_addresses_empty,
+                    buttonTextId = Res.string.action_add_addresses,
+                    onClick = { onAction(UserAddressListDataState.Action.Init) },
+                )
         }
     }
 }
 
 @Composable
 private fun UserAddressListSuccessScreen(userAddressItems: List<UserAddressItem>) {
-    Box(
-        modifier =
-            Modifier
-                .fillMaxSize()
-                .background(FoodDeliveryTheme.colors.mainColors.background)
-                .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
+    LazyColumn(
+        modifier = Modifier.fillMaxSize(),
+        contentPadding =
+            PaddingValues(
+                bottom = FoodDeliveryTheme.dimensions.scrollScreenBottomSpace,
+            ),
+        verticalArrangement = spacedBy(8.dp),
     ) {
-        LazyColumn(
-            modifier = Modifier.fillMaxSize(),
-            contentPadding =
-                PaddingValues(
-                    top = FoodDeliveryTheme.dimensions.mediumSpace,
-                    bottom = FoodDeliveryTheme.dimensions.scrollScreenBottomSpace,
-                ),
-            verticalArrangement = spacedBy(8.dp),
-        ) {
-            itemsIndexed(userAddressItems) { i, userAddressItem ->
+        items(userAddressItems) { userAddressItem ->
+            Column {
                 SelectableItem(
                     title = userAddressItem.address,
                     clickable = false,
-                    elevated = true,
+                    elevated = false,
                     onClick = {},
                     enabled = true,
+                )
+                FoodDeliveryHorizontalDivider(
+                    modifier = Modifier.padding(horizontal = 16.dp)
                 )
             }
         }

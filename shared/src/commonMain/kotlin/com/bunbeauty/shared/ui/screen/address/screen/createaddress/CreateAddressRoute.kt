@@ -138,115 +138,104 @@ private fun CreateAddressScreen(
                 },
             )
         },
+        backgroundColor = FoodDeliveryTheme.colors.mainColors.surface,
     ) {
         Column(
             modifier =
                 Modifier
                     .fillMaxSize()
-                    .verticalScroll(rememberScrollState())
+                    .verticalScroll(state = rememberScrollState())
                     .padding(horizontal = 16.dp),
         ) {
-            FoodDeliveryCard(
-                modifier = Modifier.padding(top = 16.dp),
-                clickable = false,
-            ) {
-                Column(
-                    modifier =
-                        Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp),
-                ) {
-                    val focusManager = LocalFocusManager.current
-                    var expanded by remember(viewState.suggestionListNotEmpty) {
-                        mutableStateOf(viewState.suggestionListNotEmpty)
-                    }
-                    FoodDeliveryTextFieldWithMenu(
-                        modifier =
-                            Modifier
-                                .fillMaxWidth()
-                                .onFocusChanged { focusState ->
-                                    onAction(CreateAddress.Action.StreetFocusChange(isFocused = focusState.isFocused))
-                                    expanded =
-                                        focusState.isFocused && viewState.suggestionListNotEmpty
-                                },
-                        expanded = expanded,
-                        onExpandedChange = { value ->
-                            expanded = value
-                        },
-                        onSuggestionClick = { suggestion ->
-                            focusManager.moveFocus(FocusDirection.Down)
-                            onAction(CreateAddress.Action.SuggestionSelect(suggestion = suggestion))
-                        },
-                        value = viewState.street,
-                        labelStringId = Res.string.hint_create_address_street,
-                        onValueChange = { street ->
-                            onAction(CreateAddress.Action.StreetTextChange(street = street))
-                        },
-                        errorMessageStringId = viewState.streetErrorStringId,
-                        suggestionsList = viewState.streetSuggestionList,
-                        isLoading = viewState.isSuggestionLoading,
-                    )
 
-                    FoodDeliveryTextField(
-                        modifier = Modifier.fillMaxWidth(),
-                        value = viewState.house,
-                        labelStringId = Res.string.hint_create_address_house,
-                        onValueChange = { value ->
-                            onAction(CreateAddress.Action.HouseTextChange(house = value))
-                        },
-                        maxSymbols = 5,
-                        errorMessageStringId = viewState.houseErrorStringId,
-                    )
-
-                    FoodDeliveryTextField(
-                        modifier = Modifier.fillMaxWidth(),
-                        value = viewState.flat,
-                        labelStringId = Res.string.hint_create_address_flat,
-                        onValueChange = { value ->
-                            onAction(CreateAddress.Action.FlatTextChange(flat = value))
-                        },
-                        maxSymbols = 5,
-                    )
-
-                    FoodDeliveryTextField(
-                        modifier = Modifier.fillMaxWidth(),
-                        value = viewState.entrance,
-                        labelStringId = Res.string.hint_create_address_entrance,
-                        onValueChange = { value ->
-                            onAction(CreateAddress.Action.EntranceTextChange(entrance = value))
-                        },
-                        maxSymbols = 5,
-                    )
-
-                    FoodDeliveryTextField(
-                        modifier = Modifier.fillMaxWidth(),
-                        value = viewState.floor,
-                        labelStringId = Res.string.hint_create_address_floor,
-                        onValueChange = { value ->
-                            onAction(CreateAddress.Action.FloorTextChange(floor = value))
-                        },
-                        maxSymbols = 5,
-                    )
-
-                    FoodDeliveryTextField(
-                        modifier = Modifier.fillMaxWidth(),
-                        value = viewState.comment,
-                        labelStringId = Res.string.hint_create_address_comment,
-                        keyboardOptions =
-                            FoodDeliveryTextFieldDefaults.keyboardOptionsDefault(
-                                imeAction = ImeAction.Done,
-                            ),
-                        maxLines = 5,
-                        onValueChange = { value ->
-                            onAction(CreateAddress.Action.CommentTextChange(comment = value))
-                        },
-                        maxSymbols = 100,
-                    )
-                }
+            val focusManager = LocalFocusManager.current
+            var expanded by remember(viewState.suggestionListNotEmpty) {
+                mutableStateOf(viewState.suggestionListNotEmpty)
             }
+            FoodDeliveryTextFieldWithMenu(
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .onFocusChanged { focusState ->
+                            onAction(CreateAddress.Action.StreetFocusChange(isFocused = focusState.isFocused))
+                            expanded =
+                                focusState.isFocused && viewState.suggestionListNotEmpty
+                        },
+                expanded = expanded,
+                onExpandedChange = { value ->
+                    expanded = value
+                },
+                onSuggestionClick = { suggestion ->
+                    focusManager.moveFocus(FocusDirection.Down)
+                    onAction(CreateAddress.Action.SuggestionSelect(suggestion = suggestion))
+                },
+                value = viewState.street,
+                labelStringId = Res.string.hint_create_address_street,
+                onValueChange = { street ->
+                    onAction(CreateAddress.Action.StreetTextChange(street = street))
+                },
+                errorMessageStringId = viewState.streetErrorStringId,
+                suggestionsList = viewState.streetSuggestionList,
+                isLoading = viewState.isSuggestionLoading,
+            )
 
-            Spacer(modifier = Modifier.height(FoodDeliveryTheme.dimensions.scrollScreenBottomSpace))
+            FoodDeliveryTextField(
+                modifier = Modifier.fillMaxWidth(),
+                value = viewState.house,
+                labelStringId = Res.string.hint_create_address_house,
+                onValueChange = { value ->
+                    onAction(CreateAddress.Action.HouseTextChange(house = value))
+                },
+                maxSymbols = 5,
+                errorMessageStringId = viewState.houseErrorStringId,
+            )
+
+            FoodDeliveryTextField(
+                modifier = Modifier.fillMaxWidth(),
+                value = viewState.flat,
+                labelStringId = Res.string.hint_create_address_flat,
+                onValueChange = { value ->
+                    onAction(CreateAddress.Action.FlatTextChange(flat = value))
+                },
+                maxSymbols = 5,
+            )
+
+            FoodDeliveryTextField(
+                modifier = Modifier.fillMaxWidth(),
+                value = viewState.entrance,
+                labelStringId = Res.string.hint_create_address_entrance,
+                onValueChange = { value ->
+                    onAction(CreateAddress.Action.EntranceTextChange(entrance = value))
+                },
+                maxSymbols = 5,
+            )
+
+            FoodDeliveryTextField(
+                modifier = Modifier.fillMaxWidth(),
+                value = viewState.floor,
+                labelStringId = Res.string.hint_create_address_floor,
+                onValueChange = { value ->
+                    onAction(CreateAddress.Action.FloorTextChange(floor = value))
+                },
+                maxSymbols = 5,
+            )
+
+            FoodDeliveryTextField(
+                modifier = Modifier.fillMaxWidth(),
+                value = viewState.comment,
+                labelStringId = Res.string.hint_create_address_comment,
+                keyboardOptions =
+                    FoodDeliveryTextFieldDefaults.keyboardOptionsDefault(
+                        imeAction = ImeAction.Done,
+                    ),
+                maxLines = 5,
+                onValueChange = { value ->
+                    onAction(CreateAddress.Action.CommentTextChange(comment = value))
+                },
+                maxSymbols = 100,
+            )
         }
+        Spacer(modifier = Modifier.height(FoodDeliveryTheme.dimensions.scrollScreenBottomSpace))
     }
 }
 
