@@ -24,11 +24,11 @@ import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.bunbeauty.designsystem.ui.animation.slideInAndSlideOutVerticallyWithFadeAnimation
+import com.bunbeauty.designsystem.ui.element.button.FoodDeliveryButtonDefaults
 import papakarlo.shared.generated.resources.Res
-import com.bunbeauty.shared.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.shared.ui.common.ui.animation.slideInAndSlideOutVerticallyWithFadeAnimation
-import com.bunbeauty.shared.ui.common.ui.element.button.FoodDeliveryButtonDefaults
-import com.bunbeauty.shared.ui.theme.bold
+import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
+import com.bunbeauty.designsystem.theme.bold
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.StringResource
 import papakarlo.shared.generated.resources.description_consumer_cart_decrease

@@ -4,7 +4,7 @@ import com.bunbeauty.shared.Constants
 import com.bunbeauty.shared.presentation.product_details.AdditionItem
 import com.bunbeauty.shared.presentation.product_details.MenuProductAdditionItem
 import com.bunbeauty.shared.presentation.product_details.ProductDetailsState
-import com.bunbeauty.shared.ui.screen.topcart.TopCartUi
+import com.bunbeauty.designsystem.ui.element.TopCartUi
 import kotlinx.collections.immutable.toPersistentList
 
 fun ProductDetailsState.DataState.map(): ProductDetailsViewState {

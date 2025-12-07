@@ -21,16 +21,11 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
+import com.bunbeauty.designsystem.ui.element.FoodDeliveryScaffold
+import com.bunbeauty.designsystem.ui.element.button.LoadingButton
 import com.bunbeauty.shared.presentation.create_address.CreateAddress
 import com.bunbeauty.shared.presentation.create_address.CreateAddressViewModel
-import com.bunbeauty.shared.ui.common.ui.element.FoodDeliveryScaffold
-import com.bunbeauty.shared.ui.common.ui.element.button.LoadingButton
-import com.bunbeauty.shared.ui.common.ui.element.card.FoodDeliveryCard
-import com.bunbeauty.shared.ui.common.ui.element.textfield.FoodDeliveryTextField
-import com.bunbeauty.shared.ui.common.ui.element.textfield.FoodDeliveryTextFieldDefaults
-import com.bunbeauty.shared.ui.common.ui.element.textfield.FoodDeliveryTextFieldWithMenu
-import com.bunbeauty.shared.ui.main.IMessageHost
-import com.bunbeauty.shared.ui.theme.FoodDeliveryTheme
 import kotlinx.collections.immutable.persistentListOf
 import org.jetbrains.compose.resources.getString
 import org.jetbrains.compose.resources.stringResource
@@ -152,7 +147,7 @@ private fun CreateAddressScreen(
             var expanded by remember(viewState.suggestionListNotEmpty) {
                 mutableStateOf(viewState.suggestionListNotEmpty)
             }
-            FoodDeliveryTextFieldWithMenu(
+            _root_ide_package_.com.bunbeauty.designsystem.ui.element.textfield.FoodDeliveryTextFieldWithMenu(
                 modifier =
                     Modifier
                         .fillMaxWidth()
@@ -179,7 +174,7 @@ private fun CreateAddressScreen(
                 isLoading = viewState.isSuggestionLoading,
             )
 
-            FoodDeliveryTextField(
+            _root_ide_package_.com.bunbeauty.designsystem.ui.element.textfield.FoodDeliveryTextField(
                 modifier = Modifier.fillMaxWidth(),
                 value = viewState.house,
                 labelStringId = Res.string.hint_create_address_house,
@@ -190,7 +185,7 @@ private fun CreateAddressScreen(
                 errorMessageStringId = viewState.houseErrorStringId,
             )
 
-            FoodDeliveryTextField(
+            _root_ide_package_.com.bunbeauty.designsystem.ui.element.textfield.FoodDeliveryTextField(
                 modifier = Modifier.fillMaxWidth(),
                 value = viewState.flat,
                 labelStringId = Res.string.hint_create_address_flat,
@@ -200,7 +195,7 @@ private fun CreateAddressScreen(
                 maxSymbols = 5,
             )
 
-            FoodDeliveryTextField(
+            _root_ide_package_.com.bunbeauty.designsystem.ui.element.textfield.FoodDeliveryTextField(
                 modifier = Modifier.fillMaxWidth(),
                 value = viewState.entrance,
                 labelStringId = Res.string.hint_create_address_entrance,
@@ -210,7 +205,7 @@ private fun CreateAddressScreen(
                 maxSymbols = 5,
             )
 
-            FoodDeliveryTextField(
+            _root_ide_package_.com.bunbeauty.designsystem.ui.element.textfield.FoodDeliveryTextField(
                 modifier = Modifier.fillMaxWidth(),
                 value = viewState.floor,
                 labelStringId = Res.string.hint_create_address_floor,
@@ -220,12 +215,12 @@ private fun CreateAddressScreen(
                 maxSymbols = 5,
             )
 
-            FoodDeliveryTextField(
+            _root_ide_package_.com.bunbeauty.designsystem.ui.element.textfield.FoodDeliveryTextField(
                 modifier = Modifier.fillMaxWidth(),
                 value = viewState.comment,
                 labelStringId = Res.string.hint_create_address_comment,
                 keyboardOptions =
-                    FoodDeliveryTextFieldDefaults.keyboardOptionsDefault(
+                    _root_ide_package_.com.bunbeauty.designsystem.ui.element.textfield.FoodDeliveryTextFieldDefaults.keyboardOptionsDefault(
                         imeAction = ImeAction.Done,
                     ),
                 maxLines = 5,

@@ -1,10 +1,5 @@
 package com.bunbeauty.shared.ui.screen.consumercart
 
-import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.ContentTransform
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
 import androidx.compose.foundation.layout.Column
@@ -29,18 +24,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
+import com.bunbeauty.designsystem.theme.bold
+import com.bunbeauty.designsystem.theme.medium
+import com.bunbeauty.designsystem.ui.element.FoodDeliveryScaffold
+import com.bunbeauty.designsystem.ui.element.button.MainButton
+import com.bunbeauty.designsystem.ui.element.card.DiscountCard
+import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryItem
+import com.bunbeauty.designsystem.ui.element.surface.FoodDeliverySurface
+import com.bunbeauty.designsystem.ui.screen.EmptyScreen
+import com.bunbeauty.designsystem.ui.screen.ErrorScreen
+import com.bunbeauty.designsystem.ui.screen.LoadingScreen
 import com.bunbeauty.shared.domain.model.SuccessLoginDirection
 import com.bunbeauty.shared.presentation.consumercart.ConsumerCart
 import com.bunbeauty.shared.presentation.consumercart.ConsumerCartViewModel
 import com.bunbeauty.shared.presentation.product_details.ProductDetailsOpenedFrom
-import com.bunbeauty.shared.ui.common.ui.element.FoodDeliveryScaffold
-import com.bunbeauty.shared.ui.common.ui.element.button.MainButton
-import com.bunbeauty.shared.ui.common.ui.element.card.DiscountCard
-import com.bunbeauty.shared.ui.common.ui.element.card.FoodDeliveryItem
-import com.bunbeauty.shared.ui.common.ui.element.surface.FoodDeliverySurface
-import com.bunbeauty.shared.ui.common.ui.screen.EmptyScreen
-import com.bunbeauty.shared.ui.common.ui.screen.ErrorScreen
-import com.bunbeauty.shared.ui.common.ui.screen.LoadingScreen
 import com.bunbeauty.shared.ui.screen.consumercart.mapper.toConsumerCartViewState
 import com.bunbeauty.shared.ui.screen.consumercart.state.ConsumerCartViewState
 import com.bunbeauty.shared.ui.screen.consumercart.ui.CartProductItem
@@ -48,9 +46,6 @@ import com.bunbeauty.shared.ui.screen.menu.state.MenuItemUi
 import com.bunbeauty.shared.ui.screen.menu.ui.MenuProductItem
 import com.bunbeauty.shared.ui.screen.motivation.Motivation
 import com.bunbeauty.shared.ui.screen.motivation.MotivationUi
-import com.bunbeauty.shared.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.shared.ui.theme.bold
-import com.bunbeauty.shared.ui.theme.medium
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import org.jetbrains.compose.resources.getString
@@ -71,10 +66,6 @@ import papakarlo.shared.generated.resources.title_cart
 import papakarlo.shared.generated.resources.title_consumer_cart_discount
 import papakarlo.shared.generated.resources.title_consumer_cart_empty
 import papakarlo.shared.generated.resources.title_consumer_cart_total
-
-
-private const val ANIMATION_LABEL = "ConsumerCartFragment"
-private const val ANIMATION_DURATION_MILLIS = 200
 
 @Composable
 fun ConsumerCartRoute(

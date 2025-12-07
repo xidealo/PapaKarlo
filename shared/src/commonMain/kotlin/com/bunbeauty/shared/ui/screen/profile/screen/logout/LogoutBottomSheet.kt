@@ -6,11 +6,12 @@ import androidx.compose.ui.Modifier
 import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.unit.dp
 import papakarlo.shared.generated.resources.Res
-import com.bunbeauty.shared.ui.common.ui.element.button.MainButton
-import com.bunbeauty.shared.ui.common.ui.screen.bottomsheet.FoodDeliveryModalBottomSheet
+import com.bunbeauty.designsystem.ui.element.button.MainButton
+import com.bunbeauty.designsystem.ui.element.button.SecondaryButton
+import com.bunbeauty.designsystem.ui.screen.bottomsheet.FoodDeliveryModalBottomSheet
+
 import com.bunbeauty.shared.ui.screen.profile.screen.settings.SettingsViewState
 import com.bunbeauty.shared.presentation.settings.SettingsState
-import com.bunbeauty.shared.ui.common.ui.element.button.SecondaryButton
 import papakarlo.shared.generated.resources.action_logout
 import papakarlo.shared.generated.resources.action_logout_cancel
 import papakarlo.shared.generated.resources.title_logout

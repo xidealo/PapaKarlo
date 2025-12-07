@@ -30,15 +30,15 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import papakarlo.shared.generated.resources.Res
-import com.bunbeauty.shared.ui.common.ui.element.FoodDeliveryScaffold
+import com.bunbeauty.designsystem.ui.element.FoodDeliveryScaffold
+import com.bunbeauty.designsystem.ui.element.button.LoadingButton
+import com.bunbeauty.designsystem.ui.element.textfield.FoodDeliveryTextField
+import com.bunbeauty.designsystem.ui.element.textfield.FoodDeliveryTextFieldDefaults
 import com.bunbeauty.shared.domain.model.SuccessLoginDirection
-import com.bunbeauty.shared.ui.common.ui.element.textfield.FoodDeliveryTextFieldDefaults
-import com.bunbeauty.shared.ui.theme.FoodDeliveryTheme
+import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
+import com.bunbeauty.designsystem.theme.logoMedium
 import com.bunbeauty.shared.presentation.login.Login
 import com.bunbeauty.shared.presentation.login.LoginViewModel
-import com.bunbeauty.shared.ui.common.ui.element.button.LoadingButton
-import com.bunbeauty.shared.ui.common.ui.element.textfield.FoodDeliveryTextField
-import com.bunbeauty.shared.ui.theme.logoMedium
 import org.jetbrains.compose.resources.getString
 import org.koin.compose.viewmodel.koinViewModel
 import papakarlo.shared.generated.resources.action_login_continue
@@ -47,7 +47,6 @@ import papakarlo.shared.generated.resources.error_login_phone
 import papakarlo.shared.generated.resources.error_login_too_many_requests
 import papakarlo.shared.generated.resources.error_something_went_wrong
 import papakarlo.shared.generated.resources.hint_login_phone
-import papakarlo.shared.generated.resources.ic_address
 import papakarlo.shared.generated.resources.msg_login_info
 
 private val logoBoxHeightLimit: Dp = 200.dp

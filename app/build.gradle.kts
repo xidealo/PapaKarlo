@@ -126,6 +126,7 @@ dependencies {
     implementation(project(":shared"))
     implementation(project(":analytic"))
     implementation(project(":core"))
+    implementation(project(":designsystem"))
 
     implementation(libs.appcompat)
     implementation(libs.core.ktx)

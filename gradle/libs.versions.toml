@@ -28,6 +28,11 @@ collectionsImmutable = "0.4.0"
 ktLint = "13.1.0"
 tripletPlay = "3.12.1"
 compose = "1.9.3"
+kotlinStdlib = "2.2.21"
+kotlinTest = "2.2.21"
+runner = "1.5.2"
+core = "1.5.0"
+junit = "1.1.5"
 
 [libraries]
 appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appCompact" }
@@ -99,6 +104,11 @@ kotlin-serialization = { module = "org.jetbrains.kotlin:kotlin-serialization", v
 firebase-crashlytics-gradle = { module = "com.google.firebase:firebase-crashlytics-gradle", version.ref = "crashlytics" }
 sqlDelight-gradle-plugin = { module = "com.squareup.sqldelight:gradle-plugin", version.ref = "sqlDelight" }
 play-publisher = { module = "com.github.triplet.gradle:play-publisher", version.ref = "publisher" }
+kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlinStdlib" }
+kotlin-test = { group = "org.jetbrains.kotlin", name = "kotlin-test", version.ref = "kotlinTest" }
+androidx-runner = { group = "androidx.test", name = "runner", version.ref = "runner" }
+androidx-core = { group = "androidx.test", name = "core", version.ref = "core" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junit" }
 
 [plugins]
 
@@ -118,6 +128,8 @@ sqldelight = { id = "com.squareup.sqldelight", version.ref = "sqlDelight" }
 mokkery = { id = "dev.mokkery", version.ref = "mokkery" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 android-library = { id = "com.android.library", version.ref = "gradle" }
+android-kotlin-multiplatform-library = { id = "com.android.kotlin.multiplatform.library", version.ref = "gradle" }
+android-lint = { id = "com.android.lint", version.ref = "gradle" }
 
 [bundles]
 navigation = [

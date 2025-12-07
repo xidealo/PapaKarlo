@@ -20,8 +20,8 @@ import com.bunbeauty.shared.domain.model.date_time.Time
 import com.bunbeauty.shared.presentation.createorder.CreateOrder
 import com.bunbeauty.shared.ui.screen.createorder.TimePickerUI
 import com.bunbeauty.shared.ui.screen.createorder.TimeUI
-import com.bunbeauty.shared.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.shared.ui.theme.medium
+import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
+import com.bunbeauty.designsystem.theme.medium
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import papakarlo.shared.generated.resources.Res

@@ -20,10 +20,10 @@ import androidx.compose.ui.text.style.TextAlign
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import papakarlo.shared.generated.resources.Res
-import com.bunbeauty.shared.ui.common.ui.element.FoodDeliveryScaffold
-import com.bunbeauty.shared.ui.common.ui.element.button.MainButton
-import com.bunbeauty.shared.ui.common.ui.screen.LoadingScreen
-import com.bunbeauty.shared.ui.theme.FoodDeliveryTheme
+import com.bunbeauty.designsystem.ui.element.FoodDeliveryScaffold
+import com.bunbeauty.designsystem.ui.element.button.MainButton
+import com.bunbeauty.designsystem.ui.screen.LoadingScreen
+import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.shared.domain.model.SuccessLoginDirection
 import org.koin.compose.viewmodel.koinViewModel
 import com.bunbeauty.shared.presentation.confirm.Confirm

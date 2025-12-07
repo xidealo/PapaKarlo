@@ -7,10 +7,10 @@ import androidx.compose.ui.Modifier
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import papakarlo.shared.generated.resources.Res
-import com.bunbeauty.shared.ui.common.ui.element.CircularProgressBar
-import com.bunbeauty.shared.ui.common.ui.element.card.NavigationIconCard
-import com.bunbeauty.shared.ui.common.ui.screen.bottomsheet.FoodDeliveryModalBottomSheet
-import com.bunbeauty.shared.ui.theme.FoodDeliveryTheme
+import com.bunbeauty.designsystem.ui.element.card.NavigationIconCard
+import com.bunbeauty.designsystem.ui.screen.bottomsheet.FoodDeliveryModalBottomSheet
+import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
+import com.bunbeauty.designsystem.ui.element.CircularProgressBar
 import com.bunbeauty.shared.ui.screen.cafe.model.CafeOptions
 import com.bunbeauty.shared.Constants.COORDINATES_DIVIDER
 import com.bunbeauty.shared.Constants.MAPS_LINK

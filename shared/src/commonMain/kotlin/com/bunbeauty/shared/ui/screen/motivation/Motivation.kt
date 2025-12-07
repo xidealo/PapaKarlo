@@ -24,9 +24,9 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.unit.dp
 import papakarlo.shared.generated.resources.Res
-import com.bunbeauty.shared.ui.common.ui.icon24
-import com.bunbeauty.shared.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.shared.ui.theme.bold
+import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
+import com.bunbeauty.designsystem.theme.bold
+import com.bunbeauty.designsystem.ui.icon24
 import papakarlo.shared.generated.resources.ic_delivery
 import papakarlo.shared.generated.resources.ic_warning
 import papakarlo.shared.generated.resources.msg_consumer_cart_for_free_delivery

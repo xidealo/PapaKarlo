@@ -1,6 +1,6 @@
 package com.bunbeauty.shared.presentation.create_address
 
-import com.bunbeauty.shared.presentation.SuggestionUi
+import com.bunbeauty.designsystem.ui.element.textfield.SuggestionUi
 import com.bunbeauty.shared.presentation.base.BaseAction
 import com.bunbeauty.shared.presentation.base.BaseDataState
 import com.bunbeauty.shared.presentation.base.BaseEvent

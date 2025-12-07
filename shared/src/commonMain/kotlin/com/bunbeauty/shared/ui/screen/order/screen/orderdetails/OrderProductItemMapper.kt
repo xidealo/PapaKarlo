@@ -2,7 +2,7 @@ package com.bunbeauty.shared.ui.screen.order.screen.orderdetails
 
 import androidx.compose.runtime.Composable
 import com.bunbeauty.shared.presentation.order_details.OrderDetails
-import com.bunbeauty.shared.ui.common.ui.getCountString
+import com.bunbeauty.shared.ui.common.getCountString
 
 @Composable
 fun OrderDetails.DataState.OrderDetailsData.OrderProductItem.toItem(): OrderProductUiItem =

@@ -19,12 +19,12 @@ import androidx.compose.ui.text.style.TextAlign
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import papakarlo.shared.generated.resources.Res
-import com.bunbeauty.shared.ui.common.ui.element.FoodDeliveryAsyncImage
-import com.bunbeauty.shared.ui.common.ui.element.OverflowingText
-import com.bunbeauty.shared.ui.common.ui.element.card.FoodDeliveryCard
+import com.bunbeauty.designsystem.ui.element.OverflowingText
+import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.shared.ui.screen.order.screen.orderdetails.OrderProductUiItem
-import com.bunbeauty.shared.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.shared.ui.theme.bold
+import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
+import com.bunbeauty.designsystem.theme.bold
+import com.bunbeauty.designsystem.ui.element.FoodDeliveryAsyncImage
 import papakarlo.shared.generated.resources.description_product
 
 @Composable
