@@ -34,7 +34,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import papakarlo.shared.generated.resources.Res
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.designsystem.ui.screen.ErrorScreen
-import com.bunbeauty.designsystem.ui.screen.LoadingScreen
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.theme.bold
 import com.bunbeauty.designsystem.theme.logoSmall
@@ -340,22 +339,22 @@ private fun MenuColumn(
         ) { index, menuItem ->
             when (menuItem) {
                 is MenuItemUi.Discount -> {
-//                    BannerCard(
-//                        title =
-//                            stringResource(
-//                                resource = Res.string.title_menu_discount,
-//                                menuItem.discount,
-//                            ),
-//                        text =
-//                            stringResource(
-//                                resource = Res.string.msg_menu_discount,
-//                                menuItem.discount,
-//                            ),
-//                        icon = Res.drawable.ic_discount,
-//                        iconDescription = stringResource(
-//                            Res.string.description_ic_discount,
-//                        ),
-//                    )
+                    BannerCard(
+                        title =
+                            stringResource(
+                                resource = Res.string.title_menu_discount,
+                                menuItem.discount,
+                            ),
+                        text =
+                            stringResource(
+                                resource = Res.string.msg_menu_discount,
+                                menuItem.discount,
+                            ),
+                        icon = Res.drawable.ic_discount,
+                        iconDescription = stringResource(
+                            Res.string.description_ic_discount,
+                        ),
+                    )
                 }
 
                 is MenuItemUi.CategoryHeader -> {

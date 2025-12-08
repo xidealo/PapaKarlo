@@ -2,8 +2,8 @@ package com.bunbeauty.shared.ui.screen.menu
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -25,7 +25,7 @@ fun MenuLoadingScreen() {
     Column {
         LazyRow(
             horizontalArrangement = spacedBy(8.dp),
-            modifier = Modifier.padding(horizontal = 16.dp)
+            contentPadding = PaddingValues(horizontal = 16.dp)
         ) {
             items(6) {
                 Shimmer(
