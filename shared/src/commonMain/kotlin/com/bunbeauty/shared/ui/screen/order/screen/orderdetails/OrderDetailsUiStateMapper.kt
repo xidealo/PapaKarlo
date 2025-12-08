@@ -2,11 +2,11 @@ package com.bunbeauty.shared.ui.screen.order.screen.orderdetails
 
 import androidx.compose.runtime.Composable
 import com.bunbeauty.shared.presentation.order_details.OrderDetails
-import com.bunbeauty.shared.ui.common.ui.getDateTimeString
-import com.bunbeauty.shared.ui.common.ui.getDeferredString
-import com.bunbeauty.shared.ui.common.ui.getOrderAddressString
-import com.bunbeauty.shared.ui.common.ui.getPickupMethodString
-import com.bunbeauty.shared.ui.common.ui.getTimeString
+import com.bunbeauty.shared.ui.common.getDateTimeString
+import com.bunbeauty.shared.ui.common.getDeferredString
+import com.bunbeauty.shared.ui.common.getOrderAddressString
+import com.bunbeauty.shared.ui.common.getPickupMethodString
+import com.bunbeauty.shared.ui.common.getTimeString
 import com.bunbeauty.shared.ui.screen.order.ui.getOrderStatusName
 import com.bunbeauty.shared.ui.screen.profile.screen.profile.mapToString
 import org.jetbrains.compose.resources.stringResource

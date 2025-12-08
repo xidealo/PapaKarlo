@@ -12,11 +12,11 @@ import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import papakarlo.shared.generated.resources.Res
-import com.bunbeauty.shared.ui.common.ui.element.FoodDeliveryScaffold
-import com.bunbeauty.shared.ui.common.ui.element.card.FoodDeliveryItem
-import com.bunbeauty.shared.ui.common.ui.screen.ErrorScreen
-import com.bunbeauty.shared.ui.common.ui.screen.LoadingScreen
-import com.bunbeauty.shared.ui.theme.FoodDeliveryTheme
+import com.bunbeauty.designsystem.ui.element.FoodDeliveryScaffold
+import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryItem
+import com.bunbeauty.designsystem.ui.screen.ErrorScreen
+import com.bunbeauty.designsystem.ui.screen.LoadingScreen
+import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.shared.ui.screen.cafe.model.CafeOptions
 import com.bunbeauty.shared.domain.model.cafe.CafeOpenState
 import com.bunbeauty.shared.presentation.cafe_list.CafeList

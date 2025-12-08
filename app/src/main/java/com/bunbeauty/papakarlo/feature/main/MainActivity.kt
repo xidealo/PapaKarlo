@@ -14,7 +14,7 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.shared.presentation.MainViewModel
 import com.bunbeauty.shared.ui.main.IMessageHost
 import com.bunbeauty.shared.ui.screen.main.MainScreen
-import com.bunbeauty.shared.ui.theme.FoodDeliveryTheme
+import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity :

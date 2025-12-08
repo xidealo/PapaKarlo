@@ -1509,7 +1509,6 @@
 		020FEEC028D3AF14002B3D69 /* CafeAddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CafeAddressViewModel.swift; sourceTree = "<group>"; };
 		021920C32B7417F5004EE254 /* CreateAddressViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAddressViewState.swift; sourceTree = "<group>"; };
 		0219B8042B8FB97C00305E2D /* tandirhouse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tandirhouse.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		0219B8052B8FB97C00305E2D /* gustopub copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "gustopub copy-Info.plist"; path = "/Users/marksavlovskij/Downloads/pepe/PapaKarlo/iosApp/gustopub copy-Info.plist"; sourceTree = "<absolute>"; };
 		0219B8082B8FBA2900305E2D /* tandirHouse.plist */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc.preprocessed; fileEncoding = 4; path = tandirHouse.plist; sourceTree = "<group>"; };
 		0219B8092B8FBA2900305E2D /* tandirHouseAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = tandirHouseAssets.xcassets; sourceTree = "<group>"; };
 		0219B80E2B8FBC3500305E2D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -1601,18 +1600,15 @@
 		0254EF932B6CFA5700982CA5 /* OrderDetailsViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDetailsViewState.swift; sourceTree = "<group>"; };
 		025775142ACCA01600DDBC94 /* DiscountCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscountCard.swift; sourceTree = "<group>"; };
 		025BF7F42CAB354D00DF0946 /* legenda.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = legenda.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		025BF7F52CAB354D00DF0946 /* papakarlo copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "papakarlo copy-Info.plist"; path = "/Users/marksavlovskij/Downloads/pepe/PapaKarlo/iosApp/papakarlo copy-Info.plist"; sourceTree = "<absolute>"; };
 		025D1AFD2C7B5BF600677822 /* Version.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Version.xcconfig; sourceTree = "<group>"; };
 		025F43512CD0159400C854AF /* usadba.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = usadba.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		025F43522CD0159400C854AF /* legenda copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "legenda copy-Info.plist"; path = "/Users/marksavlovskij/Downloads/pepe/PapaKarlo/iosApp/legenda copy-Info.plist"; sourceTree = "<absolute>"; };
 		025F43812CD029B500C854AF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		025F43822CD029B500C854AF /* legenda.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = legenda.plist; sourceTree = "<group>"; };
+		025F43822CD029B500C854AF /* legenda.plist */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; path = legenda.plist; sourceTree = "<group>"; };
 		025F43832CD029B500C854AF /* legendaAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = legendaAssets.xcassets; sourceTree = "<group>"; };
 		025F438A2CD02BCA00C854AF /* usadbaAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = usadbaAssets.xcassets; sourceTree = "<group>"; };
 		025F438B2CD02BCA00C854AF /* usadba.plist */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; path = usadba.plist; sourceTree = "<group>"; };
 		025F438C2CD02BCA00C854AF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		025F78722CD14C3400C87D99 /* emoji.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = emoji.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		025F78732CD14C3400C87D99 /* usadba copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "usadba copy-Info.plist"; path = "/Users/marksavlovskij/Downloads/pepe/PapaKarlo/iosApp/usadba copy-Info.plist"; sourceTree = "<absolute>"; };
 		025F787B2CD14DB100C87D99 /* emoji.plist */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc.preprocessed; fileEncoding = 4; path = emoji.plist; sourceTree = "<group>"; };
 		025F787C2CD14DB100C87D99 /* emojiAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = emojiAssets.xcassets; sourceTree = "<group>"; };
 		025F787D2CD14DB100C87D99 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -1628,7 +1624,6 @@
 		0269DB3D2C263DEA009D36AE /* PaymentMethodUi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodUi.swift; sourceTree = "<group>"; };
 		0269E1372DAE9B39006507C9 /* FoodDeliveryExtendedFab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodDeliveryExtendedFab.swift; sourceTree = "<group>"; };
 		026BF2ED2DB7F4B700BBD91E /* estpoest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = estpoest.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		026BF2EE2DB7F4B700BBD91E /* emoji copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "emoji copy-Info.plist"; path = "/Users/marksavlovskij/Downloads/pepe/PapaKarlo/iosApp/emoji copy-Info.plist"; sourceTree = "<absolute>"; };
 		026BF2F02DB7FFEB00BBD91E /* estpoest.plist */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc.preprocessed; fileEncoding = 4; path = estpoest.plist; sourceTree = "<group>"; };
 		026BF2F12DB7FFEB00BBD91E /* estpoestAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = estpoestAssets.xcassets; sourceTree = "<group>"; };
 		026BF2F82DB8070700BBD91E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -1640,8 +1635,7 @@
 		027CB08F2A346F7B00350EB2 /* gustopub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = gustopub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		027CB0932A34713400350EB2 /* gustoPubAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = gustoPubAssets.xcassets; sourceTree = "<group>"; };
 		027E62BE2E25504E00648562 /* taverna.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = taverna.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		027E62BF2E25504E00648562 /* estpoest copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "estpoest copy-Info.plist"; path = "/Users/marksavlovskij/Downloads/pepe/PapaKarlo/iosApp/estpoest copy-Info.plist"; sourceTree = "<absolute>"; };
-		027E62C12E2550A200648562 /* taverna.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = taverna.plist; sourceTree = "<group>"; };
+		027E62C12E2550A200648562 /* taverna.plist */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; path = taverna.plist; sourceTree = "<group>"; };
 		027E62C22E2550A200648562 /* tavernaAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = tavernaAssets.xcassets; sourceTree = "<group>"; };
 		027E62CC2E2552F700648562 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0280BE2A29A0ED14007F7416 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
@@ -1649,7 +1643,6 @@
 		0288683E2A3B9BFE00EC2A22 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		028868402A3B9E3D00EC2A22 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		02891FE42BDAEA0D0043B466 /* vkuskavkaza.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = vkuskavkaza.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		02891FE52BDAEA0D0043B466 /* tandirhouse copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "tandirhouse copy-Info.plist"; path = "/Users/marksavlovskij/Downloads/pepe/PapaKarlo/iosApp/tandirhouse copy-Info.plist"; sourceTree = "<absolute>"; };
 		028920192BDAF5A70043B466 /* vkusKavkaza.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = vkusKavkaza.xcassets; sourceTree = "<group>"; };
 		0289201A2BDAF5A70043B466 /* vkusKavkaza.plist */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc.preprocessed; fileEncoding = 4; path = vkusKavkaza.plist; sourceTree = "<group>"; };
 		0289201B2BDAF5A70043B466 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -1704,7 +1697,6 @@
 		9F16CA71F7A1C57D286A0E36 /* Pods_djan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_djan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4F374E300689A868C53F1F1 /* Pods-emoji.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-emoji.release.xcconfig"; path = "Target Support Files/Pods-emoji/Pods-emoji.release.xcconfig"; sourceTree = "<group>"; };
 		AC6E61D92EA18CBD004F9248 /* voljane.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = voljane.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		AC6E61DA2EA18CBD004F9248 /* taverna copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "taverna copy-Info.plist"; path = "/Users/mark.shavlovsky/Downloads/PapaKarlo/PapaKarlo/iosApp/taverna copy-Info.plist"; sourceTree = "<absolute>"; };
 		AC6E61DB2EA18E24004F9248 /* GoogleService-Info.plist */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		AC6E61DC2EA18E24004F9248 /* voljane.plist */ = {isa = PBXFileReference; explicitFileType = text.xml; path = voljane.plist; sourceTree = "<group>"; };
 		AC6E61DD2EA18E24004F9248 /* voljane.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = voljane.xcassets; sourceTree = "<group>"; };
@@ -2365,15 +2357,7 @@
 				7555FF7C242A565900829871 /* Products */,
 				50DE2F3B6643F72B29F5DDAC /* Pods */,
 				0275EBC92A9B380D00F8ECE2 /* Recovered References */,
-				0219B8052B8FB97C00305E2D /* gustopub copy-Info.plist */,
-				02891FE52BDAEA0D0043B466 /* tandirhouse copy-Info.plist */,
-				025BF7F52CAB354D00DF0946 /* papakarlo copy-Info.plist */,
-				025F43522CD0159400C854AF /* legenda copy-Info.plist */,
-				025F78732CD14C3400C87D99 /* usadba copy-Info.plist */,
-				026BF2EE2DB7F4B700BBD91E /* emoji copy-Info.plist */,
 				CA8259FE21CB4A15BB1EAB85 /* Frameworks */,
-				027E62BF2E25504E00648562 /* estpoest copy-Info.plist */,
-				AC6E61DA2EA18CBD004F9248 /* taverna copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};

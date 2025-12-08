@@ -32,24 +32,23 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import papakarlo.shared.generated.resources.Res
-import com.bunbeauty.shared.ui.common.ui.element.FoodDeliveryScaffold
-import com.bunbeauty.shared.ui.common.ui.screen.ErrorScreen
-import com.bunbeauty.shared.ui.common.ui.screen.LoadingScreen
-import com.bunbeauty.shared.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.shared.ui.theme.bold
+import com.bunbeauty.designsystem.ui.element.FoodDeliveryScaffold
+import com.bunbeauty.designsystem.ui.screen.ErrorScreen
+import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
+import com.bunbeauty.designsystem.theme.bold
+import com.bunbeauty.designsystem.theme.logoSmall
+import com.bunbeauty.designsystem.ui.element.FoodDeliveryAction
 import com.bunbeauty.shared.presentation.menu.MenuViewModel
 import com.bunbeauty.shared.presentation.menu.model.CategoryItem
 import com.bunbeauty.shared.presentation.menu.model.MenuDataState
 import com.bunbeauty.shared.presentation.product_details.ProductDetailsOpenedFrom
-import com.bunbeauty.shared.ui.common.ui.element.button.FoodDeliveryExtendedFab
-import com.bunbeauty.shared.ui.common.ui.element.card.BannerCard
-import com.bunbeauty.shared.ui.common.ui.element.topbar.FoodDeliveryAction
 import com.bunbeauty.shared.ui.screen.menu.mapper.toMenuViewState
 import com.bunbeauty.shared.ui.screen.menu.state.MenuItemUi
 import com.bunbeauty.shared.ui.screen.menu.state.MenuViewState
 import com.bunbeauty.shared.ui.screen.menu.ui.MenuProductItem
-import com.bunbeauty.shared.ui.screen.topcart.TopCartUi
-import com.bunbeauty.shared.ui.theme.logoSmall
+import com.bunbeauty.designsystem.ui.element.TopCartUi
+import com.bunbeauty.designsystem.ui.element.button.FoodDeliveryExtendedFab
+import com.bunbeauty.designsystem.ui.element.card.BannerCard
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.getString
@@ -219,7 +218,7 @@ private fun MenuScreen(
                 }
 
                 else -> {
-                    LoadingScreen()
+                    MenuLoadingScreen()
                 }
             }
         }

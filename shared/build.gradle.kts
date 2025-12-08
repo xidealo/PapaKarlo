@@ -37,6 +37,7 @@ kotlin {
             dependencies {
                 implementation(project(":analytic"))
                 implementation(project(":core"))
+                implementation(project(":designsystem"))
 
                 implementation(libs.bundles.ktor)
 
@@ -97,6 +98,7 @@ kotlin {
         val iosSimulatorArm64Main by getting
         val iosMain by creating {
             dependencies {
+                
                 implementation(libs.sqlDelight.native)
                 implementation(libs.ktor.client.darwin)
             }

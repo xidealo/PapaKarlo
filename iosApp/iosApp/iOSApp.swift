@@ -22,6 +22,7 @@ struct PapaKarloSwiftApp: App {
     var body: some Scene {
         WindowGroup {
             ComposeView()
+                    .ignoresSafeArea(edges: .all)
                     .ignoresSafeArea(.keyboard)
         }
     }
@@ -30,7 +31,10 @@ struct PapaKarloSwiftApp: App {
 
 struct ComposeView: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> UIViewController {
-        AppIosKt.MainViewController()
+
+        AppIosKt.MainViewController(
+            flavor: Bundle.main.object(forInfoDictionaryKey: "CFBundleName") as? String ?? ""
+        )
     }
 
     func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}

@@ -16,8 +16,8 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import papakarlo.shared.generated.resources.Res
-import com.bunbeauty.shared.ui.common.ui.element.card.FoodDeliveryCard
-import com.bunbeauty.shared.ui.theme.FoodDeliveryTheme
+import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryCard
+import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.shared.domain.model.order.OrderStatus
 import org.jetbrains.compose.resources.DrawableResource
 import papakarlo.shared.generated.resources.ic_accpted

@@ -27,19 +27,19 @@ import com.bunbeauty.shared.presentation.product_details.MenuProductAdditionItem
 import com.bunbeauty.shared.presentation.product_details.ProductDetailsOpenedFrom
 import com.bunbeauty.shared.presentation.product_details.ProductDetailsState
 import com.bunbeauty.shared.presentation.product_details.ProductDetailsViewModel
-import com.bunbeauty.shared.ui.common.ui.element.FoodDeliveryAsyncImage
-import com.bunbeauty.shared.ui.common.ui.element.FoodDeliveryScaffold
-import com.bunbeauty.shared.ui.common.ui.element.button.FoodDeliveryExtendedFab
-import com.bunbeauty.shared.ui.common.ui.element.card.FoodDeliveryCard
-import com.bunbeauty.shared.ui.common.ui.element.card.FoodDeliveryCardDefaults
-import com.bunbeauty.shared.ui.common.ui.element.card.FoodDeliveryCheckbox
-import com.bunbeauty.shared.ui.common.ui.element.card.FoodDeliveryItem
-import com.bunbeauty.shared.ui.common.ui.element.card.FoodDeliveryRadioButton
-import com.bunbeauty.shared.ui.common.ui.screen.ErrorScreen
-import com.bunbeauty.shared.ui.common.ui.screen.LoadingScreen
-import com.bunbeauty.shared.ui.screen.topcart.TopCartUi
-import com.bunbeauty.shared.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.shared.ui.theme.bold
+import com.bunbeauty.designsystem.ui.element.FoodDeliveryAsyncImage
+import com.bunbeauty.designsystem.ui.element.FoodDeliveryScaffold
+import com.bunbeauty.designsystem.ui.element.button.FoodDeliveryExtendedFab
+import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryCard
+import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryCardDefaults
+import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryCheckbox
+import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryItem
+import com.bunbeauty.designsystem.ui.screen.ErrorScreen
+import com.bunbeauty.designsystem.ui.screen.LoadingScreen
+import com.bunbeauty.designsystem.ui.element.TopCartUi
+import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
+import com.bunbeauty.designsystem.theme.bold
+import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryRadioButton
 import kotlinx.collections.immutable.persistentListOf
 import org.jetbrains.compose.resources.getString
 import org.jetbrains.compose.resources.painterResource
@@ -55,11 +55,6 @@ import papakarlo.shared.generated.resources.error_consumer_cart_add_product
 import papakarlo.shared.generated.resources.ic_plus_16
 import papakarlo.shared.generated.resources.msg_menu_product_added
 import papakarlo.shared.generated.resources.msg_menu_product_edited
-import papakarlo.shared.generated.resources.placeholder_large
-
-
-private const val ANIMATION_LABEL = "ProductDetailsFragment"
-private const val ANIMATION_DURATION_MILLIS = 200
 
 @Composable
 fun ProductDetailsRoute(
@@ -384,7 +379,6 @@ private fun ProductCard(
                     .fillMaxWidth()
                     .clip(FoodDeliveryCardDefaults.cardShape),
             photoLink = menuProductUi.photoLink,
-            placeholder = painterResource(Res.drawable.placeholder_large),
             contentDescription = stringResource(Res.string.description_product),
             contentScale = ContentScale.FillWidth,
         )

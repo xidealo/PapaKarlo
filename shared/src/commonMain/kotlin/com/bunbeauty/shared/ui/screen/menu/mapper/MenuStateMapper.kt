@@ -5,7 +5,7 @@ import com.bunbeauty.shared.presentation.menu.model.MenuDataState
 import com.bunbeauty.shared.presentation.menu.model.MenuItem
 import com.bunbeauty.shared.ui.screen.menu.state.MenuItemUi
 import com.bunbeauty.shared.ui.screen.menu.state.MenuViewState
-import com.bunbeauty.shared.ui.screen.topcart.TopCartUi
+import com.bunbeauty.designsystem.ui.element.TopCartUi
 import kotlinx.collections.immutable.toImmutableList
 
 fun MenuDataState.toMenuViewState(): MenuViewState =

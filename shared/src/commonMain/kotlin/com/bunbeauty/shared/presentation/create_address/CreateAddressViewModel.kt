@@ -5,7 +5,7 @@ import com.bunbeauty.shared.domain.feature.address.GetSuggestionsUseCase
 import com.bunbeauty.shared.domain.model.Suggestion
 import com.bunbeauty.shared.domain.use_case.address.SaveSelectedUserAddressUseCase
 import com.bunbeauty.shared.extension.launchSafe
-import com.bunbeauty.shared.presentation.SuggestionUi
+import com.bunbeauty.designsystem.ui.element.textfield.SuggestionUi
 import com.bunbeauty.shared.presentation.base.SharedStateViewModel
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.FlowPreview

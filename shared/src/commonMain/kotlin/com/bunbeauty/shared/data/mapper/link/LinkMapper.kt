@@ -8,7 +8,7 @@ import com.bunbeauty.shared.domain.model.link.LinkType
 class LinkMapper {
 
     fun toLink(linkServer: LinkServer): Link {
-        val type = LinkType.values().find { linkType ->
+        val type = LinkType.entries.find { linkType ->
             linkType.name == linkServer.type
         } ?: LinkType.UNKNOWN
 
@@ -20,7 +20,7 @@ class LinkMapper {
     }
 
     fun toLink(linkEntity: LinkEntity): Link {
-        val type = LinkType.values().find { linkType ->
+        val type = LinkType.entries.find { linkType ->
             linkType.name == linkEntity.type
         } ?: LinkType.UNKNOWN
 

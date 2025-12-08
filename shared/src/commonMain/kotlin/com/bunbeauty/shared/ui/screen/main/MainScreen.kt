@@ -31,9 +31,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.bunbeauty.designsystem.ui.topbar.LocalStatusBarColor
 import com.bunbeauty.shared.presentation.MainViewModel
 import com.bunbeauty.shared.ui.navigation.FoodDeliveryNavHost
-import com.bunbeauty.shared.ui.theme.FoodDeliveryTheme
+import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
@@ -42,7 +43,6 @@ import papakarlo.shared.generated.resources.Res
 import papakarlo.shared.generated.resources.error_no_internet
 import papakarlo.shared.generated.resources.warning_no_order_available
 
-val LocalStatusBarColor = compositionLocalOf<MutableState<Color>?> { null }
 
 @Composable
 fun MainScreen(
