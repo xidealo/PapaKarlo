@@ -5,6 +5,8 @@ import android.content.pm.PackageInfo
 import android.os.Build
 import com.bunbeauty.core.buildVersionQualifier
 import com.bunbeauty.shared.DataStoreRepo
+import com.bunbeauty.shared.NetworkUtil
+import com.bunbeauty.shared.OpenExternalSource
 import com.bunbeauty.shared.data.DataStoreRepository
 import com.bunbeauty.shared.data.DatabaseDriverFactory
 import com.bunbeauty.shared.data.UuidGenerator
@@ -37,6 +39,16 @@ actual fun platformModule() = module {
     factory {
         UpdateNotificationUseCase(
             userRepository = get()
+        )
+    }
+    single {
+        OpenExternalSource(
+            context = get()
+        )
+    }
+    single {
+        NetworkUtil(
+            connectivityManager = get()
         )
     }
 }

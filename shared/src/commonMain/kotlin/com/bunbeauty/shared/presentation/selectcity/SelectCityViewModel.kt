@@ -6,7 +6,7 @@ import com.bunbeauty.shared.extension.launchSafe
 import com.bunbeauty.shared.presentation.base.SharedStateViewModel
 
 class SelectCityViewModel(
-    private val cityInteractor: ICityInteractor
+    private val cityInteractor: ICityInteractor,
 ) : SharedStateViewModel<SelectCityDataState.DataState, SelectCityDataState.Action, SelectCityDataState.Event>(
     initDataState = SelectCityDataState.DataState(
         state = SelectCityDataState.DataState.State.LOADING,
@@ -16,7 +16,7 @@ class SelectCityViewModel(
 
     override fun reduce(
         action: SelectCityDataState.Action,
-        dataState: SelectCityDataState.DataState
+        dataState: SelectCityDataState.DataState,
     ) {
         when (action) {
             is SelectCityDataState.Action.OnCitySelected -> onCitySelected(city = action.city)
@@ -45,8 +45,6 @@ class SelectCityViewModel(
         )
     }
 
-
-
     private fun onCitySelected(city: City) {
         sharedScope.launchSafe(
             block = {
@@ -56,7 +54,9 @@ class SelectCityViewModel(
                 }
             },
             onError = {
-                // TODO handle error
+                setState {
+                    copy(state = SelectCityDataState.DataState.State.ERROR)
+                }
             }
         )
     }

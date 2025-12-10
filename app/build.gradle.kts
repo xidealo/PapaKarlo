@@ -1,11 +1,14 @@
 import com.android.build.gradle.internal.api.BaseVariantOutputImpl
 import com.github.triplet.gradle.androidpublisher.ReleaseStatus
 import com.github.triplet.gradle.play.PlayPublisherExtension
+import org.gradle.kotlin.dsl.components
+import org.gradle.kotlin.dsl.resources
 import java.io.FileInputStream
 import java.util.Properties
 
 plugins {
     alias(libs.plugins.application)
+    alias(libs.plugins.compose.compiler)
     alias(libs.plugins.compose)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.google.service)
@@ -123,15 +126,14 @@ dependencies {
     implementation(project(":shared"))
     implementation(project(":analytic"))
     implementation(project(":core"))
+    implementation(project(":designsystem"))
 
     implementation(libs.appcompat)
     implementation(libs.core.ktx)
 
-    implementation(libs.bundles.navigation)
-
     implementation(libs.bundles.lifecycle)
 
-    implementation(libs.bundles.di)
+    implementation(libs.bundles.di.android)
     testImplementation(libs.koin.test)
 
     implementation(libs.kotlinx.serialization.json)

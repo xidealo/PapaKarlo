@@ -110,7 +110,8 @@ fun initKoin(appDeclaration: KoinAppDeclaration = {}) = startKoin {
         analyticModule(),
         additionUseCaseModule(),
         menuModule(),
-        addressModule()
+        addressModule(),
+        viewModelModule(),
     )
 }
 
@@ -121,6 +122,7 @@ fun initKoin() = startKoin {
     modules(
         databaseModule(),
         platformModule(),
+        viewModelModule(),
         providerModule(),
         networkModule(),
         dataMapperModule(),

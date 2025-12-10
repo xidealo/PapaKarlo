@@ -14,7 +14,8 @@ struct ProfileView: View {
         state: ProfileStateDataState.State.loading,
         linkList: [],
         isShowAboutAppBottomSheet: false,
-        isShowFeedbackBottomSheet: false
+        isShowFeedbackBottomSheet: false,
+        appVersion: ""
     )
 
     var viewModel = ProfileViewModel(
@@ -22,7 +23,8 @@ struct ProfileView: View {
         getLastOrderUseCase: iosComponent.provideGetLastOrderUseCase(),
         getLinkListUseCase: iosComponent.provideGetLinkListUseCase(),
         observeLastOrderUseCase: iosComponent.provideObserveLastOrderUseCase(),
-        stopObserveOrdersUseCase: iosComponent.provideStopObserveOrdersUseCase()
+        stopObserveOrdersUseCase: iosComponent.provideStopObserveOrdersUseCase(),
+        buildVersion: 0
     )
 
     @State var showCreatedAddress: Bool = false

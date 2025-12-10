@@ -17,14 +17,16 @@ class ProfileViewModel(
     private val getLastOrderUseCase: GetLastOrderUseCase,
     private val getLinkListUseCase: GetLinkListUseCase,
     private val observeLastOrderUseCase: ObserveLastOrderUseCase,
-    private val stopObserveOrdersUseCase: StopObserveOrdersUseCase
+    private val stopObserveOrdersUseCase: StopObserveOrdersUseCase,
+    buildVersion: Long
 ) : SharedStateViewModel<ProfileState.DataState, ProfileState.Action, ProfileState.Event>(
     initDataState = ProfileState.DataState(
         lastOrder = null,
         state = ProfileState.DataState.State.LOADING,
         linkList = listOf(),
         isShowAboutAppBottomSheet = false,
-        isShowFeedbackBottomSheet = false
+        isShowFeedbackBottomSheet = false,
+        appVersion = buildVersion.toString()
     )
 ) {
 
