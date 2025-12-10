@@ -131,11 +131,10 @@ private fun UpdateScreen(
                     },
                 )
 
-            is UpdateViewState.State.Success ->
-                UpdateScreenSuccess(
-                    viewState = viewState.state,
-                    onAction = onAction,
-                )
+            is UpdateViewState.State.Success -> UpdateScreenSuccess(
+                viewState = viewState.state,
+                onAction = onAction,
+            )
         }
     }
 }
@@ -149,27 +148,27 @@ private fun UpdateScreenSuccess(
         modifier =
             Modifier
                 .fillMaxSize()
-                .padding(horizontal = 16.dp),
+                .background(color = FoodDeliveryTheme.colors.mainColors.surface),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Spacer(modifier = Modifier.weight(1f))
+        Spacer(modifier = Modifier.weight(weight = 1f))
 
         Box(
             modifier =
                 Modifier
-                    .size(120.dp)
+                    .size(size = 120.dp)
                     .clip(CircleShape)
-                    .background(FoodDeliveryTheme.colors.statusColors.warning),
+                    .background(color = FoodDeliveryTheme.colors.statusColors.warning),
             contentAlignment = Alignment.Center,
         ) {
             Icon(
                 modifier =
                     Modifier
                         .padding(start = 8.dp)
-                        .size(64.dp),
-                painter = painterResource(Res.drawable.ic_google_play),
+                        .size(size = 64.dp),
+                painter = painterResource(resource = Res.drawable.ic_google_play),
                 tint = FoodDeliveryTheme.colors.statusColors.onStatus,
-                contentDescription = stringResource(Res.string.description_google_play),
+                contentDescription = stringResource(resource = Res.string.description_google_play),
             )
         }
 
@@ -177,8 +176,9 @@ private fun UpdateScreenSuccess(
             modifier =
                 Modifier
                     .fillMaxWidth()
-                    .padding(top = 32.dp),
-            text = stringResource(Res.string.msg_update_new_title_app_version),
+                    .padding(top = 32.dp)
+                    .padding(horizontal = 16.dp),
+            text = stringResource(resource = Res.string.msg_update_new_title_app_version),
             style = FoodDeliveryTheme.typography.titleMedium.bold,
             color = FoodDeliveryTheme.colors.mainColors.onBackground,
             textAlign = TextAlign.Center,
@@ -187,8 +187,9 @@ private fun UpdateScreenSuccess(
             modifier =
                 Modifier
                     .fillMaxWidth()
-                    .padding(top = 8.dp),
-            text = stringResource(Res.string.msg_update_new_app_version),
+                    .padding(top = 8.dp)
+                    .padding(horizontal = 16.dp),
+            text = stringResource(resource =Res.string.msg_update_new_app_version),
             style = FoodDeliveryTheme.typography.bodyLarge,
             color = FoodDeliveryTheme.colors.mainColors.onBackground,
             textAlign = TextAlign.Center,
@@ -197,6 +198,8 @@ private fun UpdateScreenSuccess(
         Spacer(modifier = Modifier.weight(1f))
 
         MainButton(
+            modifier = Modifier
+                .padding(horizontal = 16.dp),
             textStringId = Res.string.action_update_update,
         ) {
             viewState.link?.linkValue?.let { link ->

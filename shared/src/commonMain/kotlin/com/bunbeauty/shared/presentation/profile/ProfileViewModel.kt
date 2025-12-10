@@ -1,6 +1,7 @@
 package com.bunbeauty.shared.presentation.profile
 
 import com.bunbeauty.core.Logger
+import com.bunbeauty.shared.Constants.VERSION_DIVIDER
 import com.bunbeauty.shared.domain.feature.link.GetLinkListUseCase
 import com.bunbeauty.shared.domain.feature.order.GetLastOrderUseCase
 import com.bunbeauty.shared.domain.feature.order.ObserveLastOrderUseCase
@@ -26,7 +27,7 @@ class ProfileViewModel(
         linkList = listOf(),
         isShowAboutAppBottomSheet = false,
         isShowFeedbackBottomSheet = false,
-        appVersion = buildVersion.toString()
+        appVersion = buildVersion.toString().toCharArray().joinToString(VERSION_DIVIDER)
     )
 ) {
 

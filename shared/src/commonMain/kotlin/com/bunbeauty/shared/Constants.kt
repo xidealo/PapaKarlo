@@ -49,6 +49,7 @@ object Constants {
     const val CODE_DIVIDER = "-"
     const val WORKING_HOURS_DIVIDER = " - "
     const val COORDINATES_DIVIDER = ","
+    const val VERSION_DIVIDER = "."
     const val ADDRESS_DIVIDER = ", "
 
     // SIGN
