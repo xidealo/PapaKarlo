@@ -9,10 +9,10 @@ import kotlinx.coroutines.flow.Flow
 interface OrderRepo {
 
     suspend fun observeOrderUpdates(token: String): Pair<String?, Flow<Order>>
-    suspend fun observeOrderListUpdates(
+    suspend fun observeLightOrderListUpdates(
         token: String,
         userUuid: String
-    ): Pair<String?, Flow<List<Order>>>
+    ): Pair<String?, Flow<List<LightOrder>>>
 
     suspend fun stopOrderUpdatesObservation(uuid: String)
 
