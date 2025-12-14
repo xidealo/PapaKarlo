@@ -46,6 +46,7 @@ fun CreateOrder.DataState.toViewState(): CreateOrderViewState {
                 Res.string.pickup_time
             },
         hasTimePickerError = hasTimePickerError,
+        showTimePickerHint = showTimePickerHint,
         deferredTime = deferredTime.toDeferredTimeString(),
         selectedPaymentMethod = selectedPaymentMethod?.toPaymentMethodUI(),
         isPaymentMethodErrorShown = isPaymentMethodErrorShown,

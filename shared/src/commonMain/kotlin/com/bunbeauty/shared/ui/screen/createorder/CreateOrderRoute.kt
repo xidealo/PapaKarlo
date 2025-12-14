@@ -4,7 +4,6 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -543,7 +542,7 @@ private fun DeferredTimeCard(
                 onAction(CreateOrder.Action.DeferredTimeClick)
             },
         )
-        if (viewState.hasTimePickerError) {
+        if (viewState.showTimePickerHint) {
             Text(
                 modifier =
                     Modifier
@@ -551,7 +550,11 @@ private fun DeferredTimeCard(
                         .padding(start = 16.dp, top = 4.dp),
                 text = stringResource(resource = Res.string.warning_no_time_available),
                 style = FoodDeliveryTheme.typography.bodySmall,
-                color = FoodDeliveryTheme.colors.mainColors.error,
+                color = if (viewState.hasTimePickerError) {
+                    FoodDeliveryTheme.colors.mainColors.error
+                } else {
+                    FoodDeliveryTheme.colors.mainColors.onSurface
+                },
             )
         }
     }
@@ -983,7 +986,8 @@ private val createOrderViewStatePreviewMock =
         additionalUtensilsCount = "",
         additionalUtensilsName = "Количество приборов",
         isAdditionalUtensilsErrorShown = false,
-        hasTimePickerError = false
+        hasTimePickerError = false,
+        showTimePickerHint = false
     )
 
 @Preview(showBackground = true)

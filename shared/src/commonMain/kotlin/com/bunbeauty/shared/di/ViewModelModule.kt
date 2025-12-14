@@ -74,7 +74,6 @@ fun viewModelModule() =
                 getSelectedPaymentMethodUseCase = get(),
                 getExtendedCommentUseCase = get(),
                 getAdditionalUtensilsUseCase = get(),
-                getIsTimeAvailableUseCase = get()
             )
         }
         viewModel {

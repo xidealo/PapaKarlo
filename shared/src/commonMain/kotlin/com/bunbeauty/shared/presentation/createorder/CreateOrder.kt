@@ -39,6 +39,7 @@ interface CreateOrder {
             minutes = 0
         ),
         val hasTimePickerError: Boolean = false,
+        val showTimePickerHint: Boolean = false,
 
         val paymentMethodList: List<SelectablePaymentMethod> = emptyList(),
         val isPaymentMethodListShown: Boolean = false,

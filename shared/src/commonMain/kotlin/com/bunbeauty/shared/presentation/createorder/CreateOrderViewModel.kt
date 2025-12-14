@@ -16,7 +16,6 @@ import com.bunbeauty.shared.domain.feature.motivation.GetMotivationUseCase
 import com.bunbeauty.shared.domain.feature.order.CreateOrderUseCase
 import com.bunbeauty.shared.domain.feature.order.ExtendedComment
 import com.bunbeauty.shared.domain.feature.order.GetExtendedCommentUseCase
-import com.bunbeauty.shared.domain.feature.order.GetIsTimeAvailableUseCase
 import com.bunbeauty.shared.domain.feature.payment.GetSelectablePaymentMethodListUseCase
 import com.bunbeauty.shared.domain.feature.payment.GetSelectedPaymentMethodUseCase
 import com.bunbeauty.shared.domain.feature.payment.SavePaymentMethodUseCase
@@ -60,7 +59,6 @@ class CreateOrderViewModel(
     private val getSelectedPaymentMethodUseCase: GetSelectedPaymentMethodUseCase,
     private val getExtendedCommentUseCase: GetExtendedCommentUseCase,
     private val getAdditionalUtensilsUseCase: GetAdditionalUtensilsUseCase,
-    private val getIsTimeAvailableUseCase: GetIsTimeAvailableUseCase,
 ) : SharedStateViewModel<CreateOrder.DataState, CreateOrder.Action, CreateOrder.Event>(
     initDataState = CreateOrder.DataState(
         isDelivery = true,
@@ -346,7 +344,8 @@ class CreateOrderViewModel(
                 deferredTime = CreateOrder.DeferredTime.Later(
                     time = deferredTime
                 ),
-                hasTimePickerError = !getIsTimeAvailableUseCase(deferredTime)
+                showTimePickerHint = true,
+                hasTimePickerError = false
             )
         }
     }
@@ -355,7 +354,8 @@ class CreateOrderViewModel(
         setState {
             copy(
                 isDeferredTimeShown = false,
-                deferredTime = CreateOrder.DeferredTime.Asap
+                deferredTime = CreateOrder.DeferredTime.Asap,
+                showTimePickerHint = true,
             )
         }
     }
