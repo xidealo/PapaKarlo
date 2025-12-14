@@ -2,6 +2,7 @@ package com.bunbeauty.shared.di.usecase
 
 import com.bunbeauty.shared.domain.feature.order.CreateOrderUseCase
 import com.bunbeauty.shared.domain.feature.order.GetExtendedCommentUseCase
+import com.bunbeauty.shared.domain.feature.order.GetIsTimeAvailableUseCase
 import com.bunbeauty.shared.domain.feature.order.GetLastOrderUseCase
 import com.bunbeauty.shared.domain.feature.order.ObserveLastOrderUseCase
 import com.bunbeauty.shared.domain.feature.order.ObserveOrderListUseCase
@@ -36,6 +37,9 @@ internal fun orderUseCaseModule() = module {
             dataStoreRepo = get(),
             orderRepo = get(),
         )
+    }
+    factory {
+        GetIsTimeAvailableUseCase()
     }
     factory {
         ObserveOrderUseCase(

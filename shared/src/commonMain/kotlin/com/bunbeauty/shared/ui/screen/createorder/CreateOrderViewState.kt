@@ -13,6 +13,7 @@ data class CreateOrderViewState(
     val createOrderType: CreateOrderType,
     val isAddressErrorShown: Boolean,
     val deferredTime: String,
+    val hasTimePickerError: Boolean,
     val deferredTimeStringId: StringResource,
     val selectedPaymentMethod: PaymentMethodUI?,
     val isPaymentMethodErrorShown: Boolean,

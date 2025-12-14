@@ -38,6 +38,7 @@ interface CreateOrder {
             hours = 0,
             minutes = 0
         ),
+        val hasTimePickerError: Boolean = false,
 
         val paymentMethodList: List<SelectablePaymentMethod> = emptyList(),
         val isPaymentMethodListShown: Boolean = false,
@@ -144,6 +145,7 @@ interface CreateOrder {
         data object ShowUserAddressError : Event
         data object ShowPaymentMethodError : Event
         data object ShowChangeError : Event
+        data object ShowTimePickerError : Event
         data object ShowAdditionalUtensilsError : Event
         data object Back : Event
     }
