@@ -4,7 +4,6 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -82,6 +81,7 @@ import papakarlo.shared.generated.resources.description_ic_warning
 import papakarlo.shared.generated.resources.error_additional_utensils
 import papakarlo.shared.generated.resources.error_change
 import papakarlo.shared.generated.resources.error_enter_correct_amount
+import papakarlo.shared.generated.resources.error_no_time_available
 import papakarlo.shared.generated.resources.error_payment_method
 import papakarlo.shared.generated.resources.error_select_delivery_address
 import papakarlo.shared.generated.resources.error_select_payment_method
@@ -102,6 +102,7 @@ import papakarlo.shared.generated.resources.payment_method
 import papakarlo.shared.generated.resources.pickup_address
 import papakarlo.shared.generated.resources.title_create_order
 import papakarlo.shared.generated.resources.warning_no_order_available
+import papakarlo.shared.generated.resources.warning_no_time_available
 
 
 @Composable
@@ -267,23 +268,27 @@ fun CreateOrderEffect(
                 }
 
                 CreateOrder.Event.ShowUserAddressError -> {
-                    showErrorMessage(getString(Res.string.error_user_address))
+                    showErrorMessage(getString(resource = Res.string.error_user_address))
                 }
 
                 CreateOrder.Event.ShowPaymentMethodError -> {
-                    showErrorMessage(getString(Res.string.error_payment_method))
+                    showErrorMessage(getString(resource = Res.string.error_payment_method))
                 }
 
                 CreateOrder.Event.ShowChangeError -> {
-                    showErrorMessage(getString(Res.string.error_change))
+                    showErrorMessage(getString(resource = Res.string.error_change))
                 }
 
                 CreateOrder.Event.ShowAdditionalUtensilsError -> {
-                    showErrorMessage(getString(Res.string.error_additional_utensils))
+                    showErrorMessage(getString(resource = Res.string.error_additional_utensils))
                 }
 
                 CreateOrder.Event.OrderNotAvailableErrorEvent -> {
-                    showErrorMessage(getString(Res.string.warning_no_order_available))
+                    showErrorMessage(getString(resource = Res.string.warning_no_order_available))
+                }
+
+                CreateOrder.Event.ShowTimePickerError -> {
+                    showErrorMessage(getString(resource = Res.string.error_no_time_available))
                 }
 
                 CreateOrder.Event.Back -> back()
@@ -526,16 +531,33 @@ private fun DeferredTimeCard(
     onAction: (CreateOrder.Action) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    NavigationCardWithDivider(
-        modifier = modifier,
-        label = stringResource(resource = viewState.deferredTimeStringId),
-        value = viewState.deferredTime,
-        clickable = viewState.isFieldsEnabled,
-        onClick = {
-            focusManager.clearFocus()
-            onAction(CreateOrder.Action.DeferredTimeClick)
-        },
-    )
+    Column {
+        NavigationCardWithDivider(
+            modifier = modifier,
+            label = stringResource(resource = viewState.deferredTimeStringId),
+            value = viewState.deferredTime,
+            clickable = viewState.isFieldsEnabled,
+            onClick = {
+                focusManager.clearFocus()
+                onAction(CreateOrder.Action.DeferredTimeClick)
+            },
+        )
+        if (viewState.showTimePickerHint) {
+            Text(
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(start = 16.dp, top = 4.dp),
+                text = stringResource(resource = Res.string.warning_no_time_available),
+                style = FoodDeliveryTheme.typography.bodySmall,
+                color = if (viewState.hasTimePickerError) {
+                    FoodDeliveryTheme.colors.mainColors.error
+                } else {
+                    FoodDeliveryTheme.colors.mainColors.onSurface
+                },
+            )
+        }
+    }
 }
 
 @Composable
@@ -964,6 +986,8 @@ private val createOrderViewStatePreviewMock =
         additionalUtensilsCount = "",
         additionalUtensilsName = "Количество приборов",
         isAdditionalUtensilsErrorShown = false,
+        hasTimePickerError = false,
+        showTimePickerHint = false
     )
 
 @Preview(showBackground = true)

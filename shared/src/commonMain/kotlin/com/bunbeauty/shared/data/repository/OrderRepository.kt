@@ -54,17 +54,15 @@ class OrderRepository(
         }.filterNotNull()
     }
 
-    override suspend fun observeOrderListUpdates(
+    override suspend fun observeLightOrderListUpdates(
         token: String,
         userUuid: String
-    ): Pair<String?, Flow<List<Order>>> {
+    ): Pair<String?, Flow<List<LightOrder>>> {
         val (uuid, orderUpdatesFlow) = observeOrderUpdatesServer(token)
         return uuid to orderUpdatesFlow.map {
-            orderDao.getOrderWithProductListByUserUuid(userUuid).groupBy { orderWithProductEntity ->
-                orderWithProductEntity.orderUuid
-            }.map { (_, orderWithProductEntityList) ->
-                orderMapper.toOrder(orderWithProductEntityList)
-            }.filterNotNull()
+            lightOrderDao.getLightOrderList(count = 30).map { lightOrderEntity ->
+                orderMapper.toLightOrder(lightOrderEntity)
+            }
         }
     }
 

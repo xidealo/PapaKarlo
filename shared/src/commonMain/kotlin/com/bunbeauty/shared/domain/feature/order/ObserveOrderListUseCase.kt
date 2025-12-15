@@ -11,7 +11,6 @@ import kotlinx.coroutines.flow.merge
 class ObserveOrderListUseCase(
     private val dataStoreRepo: DataStoreRepo,
     private val orderRepo: OrderRepo,
-    private val lightOrderMapper: LightOrderMapper
 ) {
 
     suspend operator fun invoke(): Pair<String?, Flow<List<LightOrder>>> {
@@ -19,10 +18,10 @@ class ObserveOrderListUseCase(
         val userUuid = dataStoreRepo.getUserUuid() ?: return null to flow {}
         val orderList = orderRepo.getOrderList(token = token)
 
-        val (uuid, orderListUpdatesFlow) = orderRepo.observeOrderListUpdates(token, userUuid)
+        val (uuid, orderListUpdatesFlow) = orderRepo.observeLightOrderListUpdates(token, userUuid)
         return uuid to merge(
             flow { emit(orderList) },
-            orderListUpdatesFlow.mapListFlow(lightOrderMapper::toLightOrder)
+            orderListUpdatesFlow
         )
     }
 }
