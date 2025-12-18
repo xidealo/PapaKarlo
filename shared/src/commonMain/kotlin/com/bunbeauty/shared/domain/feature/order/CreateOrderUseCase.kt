@@ -12,14 +12,16 @@ import com.bunbeauty.shared.domain.model.product.CreatedOrderProduct
 import com.bunbeauty.shared.domain.repo.CartProductRepo
 import com.bunbeauty.shared.domain.repo.OrderRepo
 import com.bunbeauty.shared.domain.util.DateTimeUtil
+import kotlin.time.ExperimentalTime
 
 class CreateOrderUseCase(
     private val dataStoreRepo: DataStoreRepo,
     private val cartProductRepo: CartProductRepo,
     private val dateTimeUtil: DateTimeUtil,
-    private val orderRepo: OrderRepo
+    private val orderRepo: OrderRepo,
 ) {
 
+    @OptIn(ExperimentalTime::class)
     suspend operator fun invoke(
         isDelivery: Boolean,
         selectedUserAddress: UserAddress?,
@@ -27,7 +29,7 @@ class CreateOrderUseCase(
         orderComment: String?,
         deferredTime: Time?,
         timeZone: String,
-        paymentMethod: String?
+        paymentMethod: String?,
     ): OrderCode? {
         val token = dataStoreRepo.getToken() ?: return null
         val cartProductList = cartProductRepo.getCartProductList()
@@ -70,7 +72,7 @@ class CreateOrderUseCase(
             paymentMethod = paymentMethod
         )
 
-        return orderRepo.createOrder(token = token, createdOrder = createdOrder)
+        return null //orderRepo.createOrder(token = token, createdOrder = createdOrder)
     }
 
     private fun getSortedAdditionUuidList(cartProduct: CartProduct) =

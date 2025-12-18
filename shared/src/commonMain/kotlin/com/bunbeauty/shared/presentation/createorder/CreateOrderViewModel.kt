@@ -58,7 +58,7 @@ class CreateOrderViewModel(
     private val getWorkloadCafeUseCase: GetWorkloadCafeUseCase,
     private val getSelectedPaymentMethodUseCase: GetSelectedPaymentMethodUseCase,
     private val getExtendedCommentUseCase: GetExtendedCommentUseCase,
-    private val getAdditionalUtensilsUseCase: GetAdditionalUtensilsUseCase
+    private val getAdditionalUtensilsUseCase: GetAdditionalUtensilsUseCase,
 ) : SharedStateViewModel<CreateOrder.DataState, CreateOrder.Action, CreateOrder.Event>(
     initDataState = CreateOrder.DataState(
         isDelivery = true,
@@ -343,7 +343,9 @@ class CreateOrderViewModel(
                 isTimePickerShown = false,
                 deferredTime = CreateOrder.DeferredTime.Later(
                     time = deferredTime
-                )
+                ),
+                showTimePickerHint = true,
+                hasTimePickerError = false
             )
         }
     }
@@ -352,7 +354,8 @@ class CreateOrderViewModel(
         setState {
             copy(
                 isDeferredTimeShown = false,
-                deferredTime = CreateOrder.DeferredTime.Asap
+                deferredTime = CreateOrder.DeferredTime.Asap,
+                showTimePickerHint = true,
             )
         }
     }
@@ -406,7 +409,7 @@ class CreateOrderViewModel(
     private fun createClick(
         withoutChange: String,
         changeFrom: String,
-        additionalUtensils: String
+        additionalUtensils: String,
     ) {
         val state = mutableDataState.value
 
@@ -438,8 +441,8 @@ class CreateOrderViewModel(
             (state.cartTotal as? CreateOrder.CartTotal.Success)?.newFinalCostValue ?: 0
         val isChangeLessThenCost = (state.change ?: 0) < newFinalCost
         val isChangeIncorrect = state.paymentByCash &&
-            !state.withoutChangeChecked &&
-            isChangeLessThenCost
+                !state.withoutChangeChecked &&
+                isChangeLessThenCost
         setState {
             copy(isChangeErrorShown = isChangeIncorrect)
         }
@@ -451,7 +454,7 @@ class CreateOrderViewModel(
         }
 
         val isAdditionalUtensilsIncorrect = state.additionalUtensils &&
-            state.additionalUtensilsCount.isEmpty()
+                state.additionalUtensilsCount.isEmpty()
 
         setState {
             copy(isAdditionalUtensilsErrorShown = isAdditionalUtensilsIncorrect)
@@ -460,6 +463,13 @@ class CreateOrderViewModel(
         if (isAdditionalUtensilsIncorrect) {
             addEvent {
                 CreateOrder.Event.ShowAdditionalUtensilsError
+            }
+            return
+        }
+
+        if (state.hasTimePickerError) {
+            addEvent {
+                CreateOrder.Event.ShowTimePickerError
             }
             return
         }
@@ -632,7 +642,7 @@ class CreateOrderViewModel(
     }
 
     fun changeAdditionalUtensilsCount(
-        additionalUtensilsCount: String
+        additionalUtensilsCount: String,
     ) {
         setState {
             copy(

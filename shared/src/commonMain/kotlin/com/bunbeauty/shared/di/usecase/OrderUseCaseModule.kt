@@ -35,7 +35,6 @@ internal fun orderUseCaseModule() = module {
         ObserveOrderListUseCase(
             dataStoreRepo = get(),
             orderRepo = get(),
-            lightOrderMapper = get()
         )
     }
     factory {
