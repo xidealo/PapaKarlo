@@ -3,6 +3,7 @@ package com.bunbeauty.shared.presentation.createorder
 import com.bunbeauty.core.Logger
 import com.bunbeauty.shared.Constants.PERCENT
 import com.bunbeauty.shared.Constants.RUBLE_CURRENCY
+import com.bunbeauty.shared.domain.exeptions.NotAllowedTimeForOrderException
 import com.bunbeauty.shared.domain.exeptions.OrderNotAvailableException
 import com.bunbeauty.shared.domain.feature.address.GetCurrentUserAddressWithCityUseCase
 import com.bunbeauty.shared.domain.feature.cafe.GetAdditionalUtensilsUseCase
@@ -355,7 +356,8 @@ class CreateOrderViewModel(
             copy(
                 isDeferredTimeShown = false,
                 deferredTime = CreateOrder.DeferredTime.Asap,
-                showTimePickerHint = true,
+                showTimePickerHint = false,
+                hasTimePickerError = false
             )
         }
     }
@@ -673,6 +675,17 @@ class CreateOrderViewModel(
                         }
                         addEvent {
                             CreateOrder.Event.OrderNotAvailableErrorEvent
+                        }
+                    }
+
+                    is NotAllowedTimeForOrderException -> {
+                        setState {
+                            copy(
+                                hasTimePickerError = true
+                            )
+                        }
+                        addEvent {
+                            CreateOrder.Event.ShowTimePickerError
                         }
                     }
 

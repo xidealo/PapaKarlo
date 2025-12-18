@@ -228,15 +228,6 @@ internal class NetworkConnectorImpl(
     }
 
     // POST
-
-    @Deprecated("Outdated login method")
-    override suspend fun postLogin(loginPostServer: LoginPostServer): ApiResult<AuthResponseServer> {
-        return postData(
-            path = "client/login",
-            body = loginPostServer
-        )
-    }
-
     override suspend fun postUserAddress(
         token: String,
         userAddress: UserAddressPostServer,
@@ -264,7 +255,7 @@ internal class NetworkConnectorImpl(
         order: OrderPostServer,
     ): ApiResult<OrderCodeServer> {
         return postData(
-            path = "v4/order",
+            path = "v5/order",
             body = order,
             token = token
         )
