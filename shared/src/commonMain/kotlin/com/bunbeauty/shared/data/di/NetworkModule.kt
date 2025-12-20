@@ -6,6 +6,7 @@ import com.bunbeauty.core.Logger.NETWORK_TAG
 import com.bunbeauty.shared.domain.exeptions.AuthSessionTimeoutException
 import com.bunbeauty.shared.domain.exeptions.InvalidCodeException
 import com.bunbeauty.shared.domain.exeptions.NoAttemptsException
+import com.bunbeauty.shared.domain.exeptions.NotAllowedTimeForOrderException
 import com.bunbeauty.shared.domain.exeptions.OrderNotAvailableException
 import com.bunbeauty.shared.domain.exeptions.TooManyRequestsException
 import com.bunbeauty.shared.httpClientEngine
@@ -42,6 +43,7 @@ fun networkModule() = module {
                         802 -> throw InvalidCodeException()
                         803 -> throw AuthSessionTimeoutException()
                         901 -> throw OrderNotAvailableException()
+                        902 -> throw NotAllowedTimeForOrderException()
                     }
                 }
             }

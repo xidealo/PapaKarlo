@@ -76,8 +76,6 @@ interface NetworkConnector {
     suspend fun getLinkList(): ApiResult<ListServer<LinkServer>>
     suspend fun getRecommendationData(): ApiResult<RecommendationDataServer>
 
-    @Deprecated("Outdated login method")
-    suspend fun postLogin(loginPostServer: LoginPostServer): ApiResult<AuthResponseServer>
     suspend fun postUserAddress(
         token: String,
         userAddress: UserAddressPostServer

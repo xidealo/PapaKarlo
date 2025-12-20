@@ -3,9 +3,11 @@ package com.bunbeauty.shared.presentation.createorder
 import com.bunbeauty.core.Logger
 import com.bunbeauty.shared.Constants.PERCENT
 import com.bunbeauty.shared.Constants.RUBLE_CURRENCY
+import com.bunbeauty.shared.domain.exeptions.NotAllowedTimeForOrderException
 import com.bunbeauty.shared.domain.exeptions.OrderNotAvailableException
 import com.bunbeauty.shared.domain.feature.address.GetCurrentUserAddressWithCityUseCase
 import com.bunbeauty.shared.domain.feature.cafe.GetAdditionalUtensilsUseCase
+import com.bunbeauty.shared.domain.feature.cafe.GetDeferredTimeHintUseCase
 import com.bunbeauty.shared.domain.feature.cafe.GetSelectableCafeListUseCase
 import com.bunbeauty.shared.domain.feature.cafe.GetWorkloadCafeUseCase
 import com.bunbeauty.shared.domain.feature.cafe.HasOpenedCafeUseCase
@@ -59,6 +61,7 @@ class CreateOrderViewModel(
     private val getSelectedPaymentMethodUseCase: GetSelectedPaymentMethodUseCase,
     private val getExtendedCommentUseCase: GetExtendedCommentUseCase,
     private val getAdditionalUtensilsUseCase: GetAdditionalUtensilsUseCase,
+    private val getDeferredTimeHintUseCase: GetDeferredTimeHintUseCase,
 ) : SharedStateViewModel<CreateOrder.DataState, CreateOrder.Action, CreateOrder.Event>(
     initDataState = CreateOrder.DataState(
         isDelivery = true,
@@ -344,7 +347,7 @@ class CreateOrderViewModel(
                 deferredTime = CreateOrder.DeferredTime.Later(
                     time = deferredTime
                 ),
-                showTimePickerHint = true,
+                showTimePickerHint = getDeferredTimeHintUseCase(deferredTime),
                 hasTimePickerError = false
             )
         }
@@ -355,7 +358,8 @@ class CreateOrderViewModel(
             copy(
                 isDeferredTimeShown = false,
                 deferredTime = CreateOrder.DeferredTime.Asap,
-                showTimePickerHint = true,
+                showTimePickerHint = false,
+                hasTimePickerError = false
             )
         }
     }
@@ -673,6 +677,17 @@ class CreateOrderViewModel(
                         }
                         addEvent {
                             CreateOrder.Event.OrderNotAvailableErrorEvent
+                        }
+                    }
+
+                    is NotAllowedTimeForOrderException -> {
+                        setState {
+                            copy(
+                                hasTimePickerError = true
+                            )
+                        }
+                        addEvent {
+                            CreateOrder.Event.ShowTimePickerError
                         }
                     }
 
