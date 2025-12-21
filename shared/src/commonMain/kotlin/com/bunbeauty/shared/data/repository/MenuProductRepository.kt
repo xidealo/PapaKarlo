@@ -24,96 +24,101 @@ class MenuProductRepository(
     private val menuProductCategoryReferenceDao: IMenuProductCategoryReferenceDao,
     private val menuProductMapper: IMenuProductMapper,
     private val additionDao: IAdditionDao,
-    private val additionGroupDao: IAdditionGroupDao
-) : CacheListRepository<MenuProduct>(), MenuProductRepo {
-
+    private val additionGroupDao: IAdditionGroupDao,
+) : CacheListRepository<MenuProduct>(),
+    MenuProductRepo {
     override val tag: String = "MENU_PRODUCT_TAG"
 
-    override suspend fun getMenuProductList(): List<MenuProduct> {
-        return getCacheOrListData(
+    override suspend fun getMenuProductList(): List<MenuProduct> =
+        getCacheOrListData(
             onApiRequest = networkConnector::getMenuProductList,
             onLocalRequest = {
-                menuProductMapper.toMenuProductList(
-                    menuProductDao.getMenuProductWithCategoryList()
-                ).map { menuProduct ->
-                    menuProduct.copy(
-                        additionGroups = getAdditionGroups(menuProduct)
-                    )
-                }
+                menuProductMapper
+                    .toMenuProductList(
+                        menuProductDao.getMenuProductWithCategoryList(),
+                    ).map { menuProduct ->
+                        menuProduct.copy(
+                            additionGroups = getAdditionGroups(menuProduct),
+                        )
+                    }
             },
             onSaveLocally = ::saveMenuLocally,
-            serverToDomainModel = menuProductMapper::toMenuProduct
+            serverToDomainModel = menuProductMapper::toMenuProduct,
         )
-    }
 
-    private suspend fun getAdditionGroups(
-        menuProduct: MenuProduct
-    ) = additionGroupDao.getAdditionGroupEntityList(
-        menuProduct = menuProduct.uuid
-    ).map(mapAdditionGroupEntityToGroup)
-        .map { additionGroup ->
-            additionGroup.copy(
-                additionList = getAdditions(additionGroup)
-            )
-        }
+    private suspend fun getAdditionGroups(menuProduct: MenuProduct) =
+        additionGroupDao
+            .getAdditionGroupEntityList(
+                menuProduct = menuProduct.uuid,
+            ).map(mapAdditionGroupEntityToGroup)
+            .map { additionGroup ->
+                additionGroup.copy(
+                    additionList = getAdditions(additionGroup),
+                )
+            }
 
-    override fun observeMenuProductList(): Flow<List<MenuProduct>> {
-        return menuProductDao.observeMenuProductList().map { menuProductWithCategoryEntityList ->
+    override fun observeMenuProductList(): Flow<List<MenuProduct>> =
+        menuProductDao.observeMenuProductList().map { menuProductWithCategoryEntityList ->
             menuProductMapper.toMenuProductList(menuProductWithCategoryEntityList)
         }
-    }
 
-    override fun observeMenuProductByUuid(menuProductUuid: String): Flow<MenuProduct?> {
-        return menuProductDao.observeMenuProductByUuid(menuProductUuid)
+    override fun observeMenuProductByUuid(menuProductUuid: String): Flow<MenuProduct?> =
+        menuProductDao
+            .observeMenuProductByUuid(menuProductUuid)
             .mapFlow(menuProductMapper::toMenuProduct)
-    }
 
-    override suspend fun getMenuProductByUuid(menuProductUuid: String): MenuProduct? {
-        return getCacheOrListData(
+    override suspend fun getMenuProductByUuid(menuProductUuid: String): MenuProduct? =
+        getCacheOrListData(
             onApiRequest = networkConnector::getMenuProductList,
             onLocalRequest = {
-                menuProductMapper.toMenuProductList(
-                    menuProductDao.getMenuProductWithCategoryList()
-                ).map { menuProduct ->
-                    menuProduct.copy(
-                        additionGroups = getAdditionGroups(menuProduct)
-                    )
-                }
+                menuProductMapper
+                    .toMenuProductList(
+                        menuProductDao.getMenuProductWithCategoryList(),
+                    ).map { menuProduct ->
+                        menuProduct.copy(
+                            additionGroups = getAdditionGroups(menuProduct),
+                        )
+                    }
             },
             onSaveLocally = ::saveMenuLocally,
-            serverToDomainModel = menuProductMapper::toMenuProduct
+            serverToDomainModel = menuProductMapper::toMenuProduct,
         ).find { menuProduct -> menuProduct.uuid == menuProductUuid }
-    }
 
     private suspend fun getAdditions(additionGroup: AdditionGroup) =
-        additionDao.getAdditionEntityListByAdditionGroup(
-            additionGroup.uuid
-        ).map(mapAdditionEntityToAddition)
+        additionDao
+            .getAdditionEntityListByAdditionGroup(
+                additionGroup.uuid,
+            ).map(mapAdditionEntityToAddition)
 
     private suspend fun saveMenuLocally(menuProductServerList: List<MenuProductServer>) {
-        menuProductMapper.toCategoryEntityList(menuProductServerList)
+        menuProductMapper
+            .toCategoryEntityList(menuProductServerList)
             .let { categoryEntityList ->
                 categoryDao.insertCategoryList(categoryEntityList)
             }
-        menuProductServerList.map(menuProductMapper::toMenuProductEntity)
+        menuProductServerList
+            .map(menuProductMapper::toMenuProductEntity)
             .let { menuProductEntityList ->
                 menuProductDao.insertMenuProductList(menuProductEntityList)
             }
 
-        menuProductMapper.toAdditionGroupEntityList(menuProductServerList)
+        menuProductMapper
+            .toAdditionGroupEntityList(menuProductServerList)
             .let { additionGroupEntityList ->
                 additionGroupDao.insertList(additionGroupEntityList)
             }
 
-        menuProductMapper.toAdditionEntityList(menuProductServerList)
+        menuProductMapper
+            .toAdditionEntityList(menuProductServerList)
             .let { additionEntityList ->
                 additionDao.insertList(additionEntityList)
             }
 
-        menuProductServerList.flatMap(menuProductMapper::toMenuProductCategoryReference)
+        menuProductServerList
+            .flatMap(menuProductMapper::toMenuProductCategoryReference)
             .let { menuProductCategoryReferenceList ->
                 menuProductCategoryReferenceDao.updateMenuProductReferenceList(
-                    menuProductCategoryReferenceList
+                    menuProductCategoryReferenceList,
                 )
             }
     }

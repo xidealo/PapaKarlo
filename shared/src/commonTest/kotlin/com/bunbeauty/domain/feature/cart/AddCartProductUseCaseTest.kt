@@ -25,7 +25,6 @@ import kotlin.test.Test
 import kotlin.test.assertFailsWith
 
 class AddCartProductUseCaseTest {
-
     private val getCartProductCountUseCase: GetCartProductCountUseCase = mock()
     private val cartProductRepo: CartProductRepo = mock()
     private val cartProductAdditionRepository: CartProductAdditionRepo = mock(MockMode.autofill)
@@ -34,75 +33,79 @@ class AddCartProductUseCaseTest {
     private val additionGroupRepository: AdditionGroupRepo = mock()
     private val getAdditionPriorityUseCase: GetAdditionPriorityUseCase = mock()
     private val menuProductUuid = "menu_product_uuid"
-    private val addCartProduct: AddCartProductUseCase = AddCartProductUseCase(
-        getCartProductCountUseCase = getCartProductCountUseCase,
-        cartProductRepo = cartProductRepo,
-        cartProductAdditionRepository = cartProductAdditionRepository,
-        additionRepository = additionRepository,
-        areAdditionsEqualUseCase = areAdditionsEqualUseCase,
-        additionGroupRepository = additionGroupRepository,
-        getAdditionPriorityUseCase = getAdditionPriorityUseCase
-    )
-
-    @Test
-    fun `throws CartProductLimitReachedException when cart is full`() = runTest {
-        // Given
-        everySuspend {
-            getCartProductCountUseCase()
-        } returns 99
-
-        // When-Then
-        assertFailsWith(CartProductLimitReachedException::class) {
-            addCartProduct(
-                menuProductUuid = menuProductUuid,
-                additionUuidList = emptyList()
-            )
-        }
-        verifySuspend(mode = VerifyMode.atLeast(0)) {
-            cartProductRepo.getCartProductListByMenuProductUuid(any())
-        }
-        verifySuspend(mode = VerifyMode.atLeast(0)) {
-            cartProductRepo.saveAsCartProduct(any())
-        }
-        verifySuspend(mode = VerifyMode.atLeast(0)) {
-            cartProductRepo.updateCartProductCount(any(), any())
-        }
-    }
-
-    @Test
-    fun `save as new cart product when there is no cart product with the same uuid`() = runTest {
-        // Given
-        val menuProductUuid = "menuProductUuid"
-        val cartProductUuid = "cartProductUuid"
-        everySuspend { getCartProductCountUseCase() } returns 0
-        everySuspend {
-            cartProductRepo.getCartProductListByMenuProductUuid(menuProductUuid = menuProductUuid)
-        } returns emptyList()
-        everySuspend { cartProductRepo.saveAsCartProduct(menuProductUuid = menuProductUuid) } returns cartProductUuid
-
-        // When
-        addCartProduct(
-            menuProductUuid = menuProductUuid,
-            additionUuidList = emptyList()
+    private val addCartProduct: AddCartProductUseCase =
+        AddCartProductUseCase(
+            getCartProductCountUseCase = getCartProductCountUseCase,
+            cartProductRepo = cartProductRepo,
+            cartProductAdditionRepository = cartProductAdditionRepository,
+            additionRepository = additionRepository,
+            areAdditionsEqualUseCase = areAdditionsEqualUseCase,
+            additionGroupRepository = additionGroupRepository,
+            getAdditionPriorityUseCase = getAdditionPriorityUseCase,
         )
 
-        // Then
-        verifySuspend(mode = VerifyMode.atLeast(1)) {
-            cartProductRepo.saveAsCartProduct(
-                menuProductUuid = menuProductUuid
-            )
+    @Test
+    fun `throws CartProductLimitReachedException when cart is full`() =
+        runTest {
+            // Given
+            everySuspend {
+                getCartProductCountUseCase()
+            } returns 99
+
+            // When-Then
+            assertFailsWith(CartProductLimitReachedException::class) {
+                addCartProduct(
+                    menuProductUuid = menuProductUuid,
+                    additionUuidList = emptyList(),
+                )
+            }
+            verifySuspend(mode = VerifyMode.atLeast(0)) {
+                cartProductRepo.getCartProductListByMenuProductUuid(any())
+            }
+            verifySuspend(mode = VerifyMode.atLeast(0)) {
+                cartProductRepo.saveAsCartProduct(any())
+            }
+            verifySuspend(mode = VerifyMode.atLeast(0)) {
+                cartProductRepo.updateCartProductCount(any(), any())
+            }
         }
-    }
+
+    @Test
+    fun `save as new cart product when there is no cart product with the same uuid`() =
+        runTest {
+            // Given
+            val menuProductUuid = "menuProductUuid"
+            val cartProductUuid = "cartProductUuid"
+            everySuspend { getCartProductCountUseCase() } returns 0
+            everySuspend {
+                cartProductRepo.getCartProductListByMenuProductUuid(menuProductUuid = menuProductUuid)
+            } returns emptyList()
+            everySuspend { cartProductRepo.saveAsCartProduct(menuProductUuid = menuProductUuid) } returns cartProductUuid
+
+            // When
+            addCartProduct(
+                menuProductUuid = menuProductUuid,
+                additionUuidList = emptyList(),
+            )
+
+            // Then
+            verifySuspend(mode = VerifyMode.atLeast(1)) {
+                cartProductRepo.saveAsCartProduct(
+                    menuProductUuid = menuProductUuid,
+                )
+            }
+        }
 
     @Test
     fun `save as new cart product when there is cart product with the same uuid but different additions`() =
         runTest {
             // Given
             val menuProductUuid = "menuProductUuid"
-            val cartProduct = getCartProduct(
-                menuProduct = getMenuProduct(uuid = menuProductUuid),
-                cartProductAdditionList = emptyList()
-            )
+            val cartProduct =
+                getCartProduct(
+                    menuProduct = getMenuProduct(uuid = menuProductUuid),
+                    cartProductAdditionList = emptyList(),
+                )
             val additionGroupUuid = "additionGroupUuid"
             val additionUuid1 = "additionUuid1"
             val additionUuid2 = "additionUuid2"
@@ -118,7 +121,7 @@ class AddCartProductUseCaseTest {
             everySuspend {
                 areAdditionsEqualUseCase(
                     cartProduct = cartProduct,
-                    additionUuidList = additionUuidList
+                    additionUuidList = additionUuidList,
                 )
             } returns false
             everySuspend {
@@ -127,13 +130,13 @@ class AddCartProductUseCaseTest {
             everySuspend {
                 getAdditionPriorityUseCase(
                     additionGroup = additionGroup,
-                    addition = addition1
+                    addition = addition1,
                 )
             } returns 1
             everySuspend {
                 getAdditionPriorityUseCase(
                     additionGroup = additionGroup,
-                    addition = addition2
+                    addition = addition2,
                 )
             } returns 2
             everySuspend { cartProductRepo.saveAsCartProduct(menuProductUuid = menuProductUuid) } returns cartProductUuid
@@ -142,13 +145,13 @@ class AddCartProductUseCaseTest {
             everySuspend {
                 cartProductAdditionRepository.saveAsCartProductAddition(
                     cartProductUuid = cartProductUuid,
-                    addition = addition1.copy(priority = 1)
+                    addition = addition1.copy(priority = 1),
                 )
             } returns Unit
             everySuspend {
                 cartProductAdditionRepository.saveAsCartProductAddition(
                     cartProductUuid = cartProductUuid,
-                    addition = addition2.copy(priority = 2)
+                    addition = addition2.copy(priority = 2),
                 )
             } returns Unit
 
@@ -158,19 +161,19 @@ class AddCartProductUseCaseTest {
             // Then
             verifySuspend(mode = VerifyMode.atLeast(1)) {
                 cartProductRepo.saveAsCartProduct(
-                    menuProductUuid = menuProductUuid
+                    menuProductUuid = menuProductUuid,
                 )
             }
             verifySuspend(mode = VerifyMode.atLeast(1)) {
                 cartProductAdditionRepository.saveAsCartProductAddition(
                     cartProductUuid = cartProductUuid,
-                    addition = addition1.copy(priority = 1)
+                    addition = addition1.copy(priority = 1),
                 )
             }
             verifySuspend(mode = VerifyMode.atLeast(1)) {
                 cartProductAdditionRepository.saveAsCartProductAddition(
                     cartProductUuid = cartProductUuid,
-                    addition = addition2.copy(priority = 2)
+                    addition = addition2.copy(priority = 2),
                 )
             }
         }
@@ -181,12 +184,13 @@ class AddCartProductUseCaseTest {
             // Given
             val menuProductUuid = "menuProductUuid"
             val cartProductUuid = "cartProductUuid"
-            val cartProduct = getCartProduct(
-                uuid = cartProductUuid,
-                menuProduct = getMenuProduct(uuid = menuProductUuid),
-                count = 2,
-                cartProductAdditionList = emptyList()
-            )
+            val cartProduct =
+                getCartProduct(
+                    uuid = cartProductUuid,
+                    menuProduct = getMenuProduct(uuid = menuProductUuid),
+                    count = 2,
+                    cartProductAdditionList = emptyList(),
+                )
             val additionUuidList = listOf("additionUuid1", "additionUuid2")
             everySuspend { getCartProductCountUseCase() } returns 1
             everySuspend {
@@ -195,13 +199,13 @@ class AddCartProductUseCaseTest {
             everySuspend {
                 areAdditionsEqualUseCase(
                     cartProduct = cartProduct,
-                    additionUuidList = additionUuidList
+                    additionUuidList = additionUuidList,
                 )
             } returns true
             everySuspend {
                 cartProductRepo.updateCartProductCount(
                     cartProductUuid = cartProductUuid,
-                    count = 3
+                    count = 3,
                 )
             } returns Unit
 
@@ -212,7 +216,7 @@ class AddCartProductUseCaseTest {
             verifySuspend(mode = VerifyMode.atLeast(1)) {
                 cartProductRepo.updateCartProductCount(
                     cartProductUuid = cartProductUuid,
-                    count = 3
+                    count = 3,
                 )
             }
         }

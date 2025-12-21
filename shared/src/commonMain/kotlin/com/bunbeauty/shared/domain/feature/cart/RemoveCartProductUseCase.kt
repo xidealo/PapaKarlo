@@ -5,18 +5,18 @@ import com.bunbeauty.shared.domain.repo.CartProductRepo
 
 class RemoveCartProductUseCase(
     private val cartProductRepo: CartProductRepo,
-    private val cartProductAdditionRepository: CartProductAdditionRepo
+    private val cartProductAdditionRepository: CartProductAdditionRepo,
 ) {
-
     suspend operator fun invoke(cartProductUuid: String): Boolean {
-        val cartProduct = cartProductRepo.getCartProduct(
-            cartProductUuid = cartProductUuid
-        ) ?: return false
+        val cartProduct =
+            cartProductRepo.getCartProduct(
+                cartProductUuid = cartProductUuid,
+            ) ?: return false
 
         if (cartProduct.count > 1) {
             cartProductRepo.updateCartProductCount(
                 cartProduct.uuid,
-                cartProduct.count - 1
+                cartProduct.count - 1,
             )
         } else {
             cartProductRepo.deleteCartProduct(cartProduct.uuid)

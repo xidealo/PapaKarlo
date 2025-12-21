@@ -22,9 +22,9 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import papakarlo.designsystem.generated.resources.Res
-import papakarlo.designsystem.generated.resources.hint_create_order_comment
 import papakarlo.designsystem.generated.resources.ic_address
 import papakarlo.designsystem.generated.resources.ic_clear
+import papakarlo.designsystem.generated.resources.preview_string
 
 @Composable
 fun FoodDeliveryBaseTextField(
@@ -170,7 +170,7 @@ private fun FoodDeliveryTextBaseFieldPreview() {
     FoodDeliveryTheme {
         FoodDeliveryBaseTextField(
             value = "Нужно больше еды \n ...",
-            labelStringId = Res.string.hint_create_order_comment,
+            labelStringId = Res.string.preview_string,
             onValueChange = {},
         )
     }
@@ -182,7 +182,7 @@ private fun FoodDeliveryTextBaseFieldWithLoadingPreview() {
     FoodDeliveryTheme {
         FoodDeliveryBaseTextField(
             value = "Нужно больше еды \n ...",
-            labelStringId = Res.string.hint_create_order_comment,
+            labelStringId = Res.string.preview_string,
             onValueChange = {},
             isLoading = true,
         )
@@ -195,7 +195,7 @@ private fun FoodDeliveryTextBaseFieldWithErrorPreview() {
     FoodDeliveryTheme {
         FoodDeliveryBaseTextField(
             value = "Нужно больше еды \n ...",
-            labelStringId = Res.string.hint_create_order_comment,
+            labelStringId = Res.string.preview_string,
             onValueChange = {},
             isError = true,
         )
@@ -208,7 +208,7 @@ private fun FoodDeliveryTextBaseFieldWithTrailingIconPreview() {
     FoodDeliveryTheme {
         FoodDeliveryBaseTextField(
             value = "Нужно больше еды \n ...",
-            labelStringId = Res.string.hint_create_order_comment,
+            labelStringId = Res.string.preview_string,
             onValueChange = {},
             trailingIcon = {
                 Icon(

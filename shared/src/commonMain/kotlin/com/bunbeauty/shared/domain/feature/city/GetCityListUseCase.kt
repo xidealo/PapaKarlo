@@ -4,10 +4,7 @@ import com.bunbeauty.shared.domain.model.city.City
 import com.bunbeauty.shared.domain.repo.CityRepo
 
 class GetCityListUseCase(
-    private val cityRepo: CityRepo
+    private val cityRepo: CityRepo,
 ) {
-
-    suspend operator fun invoke(): List<City> {
-        return cityRepo.getCityList()
-    }
+    suspend operator fun invoke(): List<City> = cityRepo.getCityList()
 }

@@ -3,7 +3,7 @@ package com.bunbeauty.shared.presentation.menu.model
 sealed class MenuItem {
     data class CategoryHeader(
         val uuid: String,
-        val name: String
+        val name: String,
     ) : MenuItem()
 
     data class Product(
@@ -13,10 +13,10 @@ sealed class MenuItem {
         val name: String,
         val oldPrice: String?,
         val newPrice: String,
-        val hasAdditions: Boolean
+        val hasAdditions: Boolean,
     ) : MenuItem()
 
     data class Discount(
-        val discount: String
+        val discount: String,
     ) : MenuItem()
 }

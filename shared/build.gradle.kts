@@ -98,7 +98,7 @@ kotlin {
         val iosSimulatorArm64Main by getting
         val iosMain by creating {
             dependencies {
-                
+
                 implementation(libs.sqlDelight.native)
                 implementation(libs.ktor.client.darwin)
             }

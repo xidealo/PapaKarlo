@@ -8,12 +8,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
-import org.jetbrains.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.theme.medium
+import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.shared.domain.model.cafe.CafeOpenState
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun CafeItem(

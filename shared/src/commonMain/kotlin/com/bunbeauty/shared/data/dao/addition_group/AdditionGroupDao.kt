@@ -3,8 +3,9 @@ package com.bunbeauty.shared.data.dao.addition_group
 import com.bunbeauty.shared.db.AdditionGroupEntity
 import com.bunbeauty.shared.db.FoodDeliveryDatabase
 
-class AdditionGroupDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IAdditionGroupDao {
-
+class AdditionGroupDao(
+    foodDeliveryDatabase: FoodDeliveryDatabase,
+) : IAdditionGroupDao {
     private val additionGroupEntityQueries = foodDeliveryDatabase.additionGroupEntityQueries
 
     override suspend fun insertList(additionGroupEntities: List<AdditionGroupEntity>) {
@@ -13,11 +14,9 @@ class AdditionGroupDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IAdditionGr
         }
     }
 
-    override suspend fun getAdditionGroupEntity(uuid: String): AdditionGroupEntity? {
-        return additionGroupEntityQueries.getAdditionGroupByUuid(uuid).executeAsOneOrNull()
-    }
+    override suspend fun getAdditionGroupEntity(uuid: String): AdditionGroupEntity? =
+        additionGroupEntityQueries.getAdditionGroupByUuid(uuid).executeAsOneOrNull()
 
-    override suspend fun getAdditionGroupEntityList(menuProductUuid: String): List<AdditionGroupEntity> {
-        return additionGroupEntityQueries.getAdditionGroupListByMenuProductUuid(menuProductUuid).executeAsList()
-    }
+    override suspend fun getAdditionGroupEntityList(menuProductUuid: String): List<AdditionGroupEntity> =
+        additionGroupEntityQueries.getAdditionGroupListByMenuProductUuid(menuProductUuid).executeAsList()
 }

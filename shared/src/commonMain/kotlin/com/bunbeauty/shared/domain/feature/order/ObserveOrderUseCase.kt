@@ -12,9 +12,8 @@ import kotlinx.coroutines.flow.merge
 
 class ObserveOrderUseCase(
     private val dataStoreRepo: DataStoreRepo,
-    private val orderRepo: OrderRepo
+    private val orderRepo: OrderRepo,
 ) {
-
     suspend operator fun invoke(orderUuid: String): Pair<String?, Flow<Order?>> {
         val token = dataStoreRepo.getToken() ?: return null to flow {}
         val order = orderRepo.getOrderByUuid(token = token, orderUuid = orderUuid)
@@ -22,23 +21,25 @@ class ObserveOrderUseCase(
             null to flow { emit(null) }
         } else {
             val (uuid, orderUpdatesFlow) = orderRepo.observeOrderUpdates(token)
-            uuid to merge(
-                flow { emit(order) },
-                orderUpdatesFlow.filter { orderUpdate ->
-                    orderUpdate.uuid == order.uuid
-                }.map { orderUpdate ->
-                    orderUpdate.copy(
-                        orderProductList = getOrderProductListWithSortedAdditions(orderUpdate)
-                    )
-                }
-            )
+            uuid to
+                merge(
+                    flow { emit(order) },
+                    orderUpdatesFlow
+                        .filter { orderUpdate ->
+                            orderUpdate.uuid == order.uuid
+                        }.map { orderUpdate ->
+                            orderUpdate.copy(
+                                orderProductList = getOrderProductListWithSortedAdditions(orderUpdate),
+                            )
+                        },
+                )
         }
     }
 
     private fun getOrderProductListWithSortedAdditions(order: Order) =
         order.orderProductList.map { orderProduct ->
             orderProduct.copy(
-                orderAdditionList = getSortedOrderAdditions(orderProduct)
+                orderAdditionList = getSortedOrderAdditions(orderProduct),
             )
         }
 

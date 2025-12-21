@@ -1,13 +1,13 @@
 package com.bunbeauty.shared.ui.screen.cafe.screen.cafelist
 
 import androidx.compose.runtime.Composable
-import org.jetbrains.compose.resources.stringResource
-import papakarlo.shared.generated.resources.Res
-import com.bunbeauty.shared.ui.screen.cafe.model.CafeOptions
-import com.bunbeauty.shared.ui.screen.cafe.ui.CafeItemAndroid
 import com.bunbeauty.shared.domain.model.cafe.CafeOpenState
 import com.bunbeauty.shared.presentation.cafe_list.CafeList
+import com.bunbeauty.shared.ui.screen.cafe.model.CafeOptions
+import com.bunbeauty.shared.ui.screen.cafe.ui.CafeItemAndroid
 import kotlinx.collections.immutable.toPersistentList
+import org.jetbrains.compose.resources.stringResource
+import papakarlo.shared.generated.resources.Res
 import papakarlo.shared.generated.resources.action_cafe_options_call
 import papakarlo.shared.generated.resources.action_cafe_options_show_map
 import papakarlo.shared.generated.resources.msg_cafe_close_soon
@@ -63,8 +63,8 @@ private fun getCafeStatusText(cafeOpenState: CafeOpenState): String =
         is CafeOpenState.Opened -> stringResource(Res.string.msg_cafe_open)
         is CafeOpenState.CloseSoon -> {
             stringResource(Res.string.msg_cafe_close_soon) +
-                    cafeOpenState.minutesUntil +
-                    getMinuteString(cafeOpenState.minutesUntil)
+                cafeOpenState.minutesUntil +
+                getMinuteString(cafeOpenState.minutesUntil)
         }
 
         is CafeOpenState.Closed -> stringResource(Res.string.msg_cafe_closed)

@@ -11,7 +11,7 @@ import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import papakarlo.designsystem.generated.resources.Res
-import papakarlo.designsystem.generated.resources.action_logout
+import papakarlo.designsystem.generated.resources.preview_string
 
 @Composable
 fun SecondaryButton(
@@ -41,7 +41,7 @@ fun SecondaryButton(
 private fun SecondaryButtonPreview() {
     FoodDeliveryTheme {
         SecondaryButton(
-            textStringId = Res.string.action_logout,
+            textStringId = Res.string.preview_string,
             onClick = {},
         )
     }

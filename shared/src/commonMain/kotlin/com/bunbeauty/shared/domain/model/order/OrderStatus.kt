@@ -7,5 +7,5 @@ enum class OrderStatus {
     SENT_OUT,
     DELIVERED,
     DONE,
-    CANCELED
+    CANCELED,
 }

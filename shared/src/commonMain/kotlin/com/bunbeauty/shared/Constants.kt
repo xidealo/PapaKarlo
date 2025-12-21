@@ -1,7 +1,6 @@
 package com.bunbeauty.shared
 
 object Constants {
-
     // COMPANY
     const val TEST_COMPANY_UUID = "fd483dcb-3f44-457f-b4d4-f82d2aa83b46"
 

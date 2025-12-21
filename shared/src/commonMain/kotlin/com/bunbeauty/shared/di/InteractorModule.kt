@@ -12,44 +12,45 @@ import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
 import com.bunbeauty.shared.domain.interactor.user.UserInteractor
 import org.koin.dsl.module
 
-internal fun interactorModule() = module {
-    single<IUserInteractor> {
-        UserInteractor(
-            userRepo = get(),
-            orderRepo = get(),
-            cafeRepo = get(),
-            userAddressRepo = get()
-        )
+internal fun interactorModule() =
+    module {
+        single<IUserInteractor> {
+            UserInteractor(
+                userRepo = get(),
+                orderRepo = get(),
+                cafeRepo = get(),
+                userAddressRepo = get(),
+            )
+        }
+        single<ICityInteractor> {
+            CityInteractor(
+                dataStoreRepo = get(),
+                cityRepo = get(),
+            )
+        }
+        single {
+            CityInteractor(
+                dataStoreRepo = get(),
+                cityRepo = get(),
+            )
+        }
+        single<ICartProductInteractor> {
+            CartProductInteractor(
+                cartProductRepo = get(),
+                getCartTotalFlowUseCase = get(),
+                cartProductAdditionRepository = get(),
+            )
+        }
+        single<ICafeInteractor> {
+            CafeInteractor(
+                cafeRepo = get(),
+                dataStoreRepo = get(),
+            )
+        }
+        single<IMenuProductInteractor> {
+            MenuProductInteractor(
+                menuProductRepo = get(),
+                getMenuProductListUseCase = get(),
+            )
+        }
     }
-    single<ICityInteractor> {
-        CityInteractor(
-            dataStoreRepo = get(),
-            cityRepo = get()
-        )
-    }
-    single {
-        CityInteractor(
-            dataStoreRepo = get(),
-            cityRepo = get()
-        )
-    }
-    single<ICartProductInteractor> {
-        CartProductInteractor(
-            cartProductRepo = get(),
-            getCartTotalFlowUseCase = get(),
-            cartProductAdditionRepository = get()
-        )
-    }
-    single<ICafeInteractor> {
-        CafeInteractor(
-            cafeRepo = get(),
-            dataStoreRepo = get()
-        )
-    }
-    single<IMenuProductInteractor> {
-        MenuProductInteractor(
-            menuProductRepo = get(),
-            getMenuProductListUseCase = get()
-        )
-    }
-}

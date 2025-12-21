@@ -12,14 +12,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import papakarlo.shared.generated.resources.Res
-import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
+import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.shared.domain.model.order.OrderStatus
 import org.jetbrains.compose.resources.DrawableResource
+import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
+import papakarlo.shared.generated.resources.Res
 import papakarlo.shared.generated.resources.ic_accpted
 import papakarlo.shared.generated.resources.ic_canceled
 import papakarlo.shared.generated.resources.ic_delivered
@@ -64,7 +64,7 @@ fun OrderStatusBar(
                     modifier =
                         Modifier
                             .padding(start = 16.dp),
-                    painter = painterResource( getIcon(status = orderStatus)),
+                    painter = painterResource(getIcon(status = orderStatus)),
                     tint = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
                     contentDescription = null,
                 )

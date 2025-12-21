@@ -15,27 +15,30 @@ class GetSelectedPaymentMethodUseCaseTest {
     @Test
     fun `invoke should return selected payment method when one exists`() {
         // Arrange
-        val expectedMethod = getPaymentMethod(
-            name = PaymentMethodName.CARD
-        )
-        val methods = listOf(
-            SelectablePaymentMethod(
-                paymentMethod = getPaymentMethod(
-                    name = PaymentMethodName.CASH
-                ),
-                false
-            ),
-            SelectablePaymentMethod(
-                expectedMethod,
-                true
-            ),
-            SelectablePaymentMethod(
-                getPaymentMethod(
-                    name = PaymentMethodName.CARD_NUMBER
-                ),
-                false
+        val expectedMethod =
+            getPaymentMethod(
+                name = PaymentMethodName.CARD,
             )
-        )
+        val methods =
+            listOf(
+                SelectablePaymentMethod(
+                    paymentMethod =
+                        getPaymentMethod(
+                            name = PaymentMethodName.CASH,
+                        ),
+                    false,
+                ),
+                SelectablePaymentMethod(
+                    expectedMethod,
+                    true,
+                ),
+                SelectablePaymentMethod(
+                    getPaymentMethod(
+                        name = PaymentMethodName.CARD_NUMBER,
+                    ),
+                    false,
+                ),
+            )
 
         // Act
         val result = useCase(methods)
@@ -47,20 +50,23 @@ class GetSelectedPaymentMethodUseCaseTest {
     @Test
     fun `invoke should return null when no payment method is selected`() {
         // Arrange
-        val methods = listOf(
-            SelectablePaymentMethod(
-                paymentMethod = getPaymentMethod(
-                    name = PaymentMethodName.CASH
+        val methods =
+            listOf(
+                SelectablePaymentMethod(
+                    paymentMethod =
+                        getPaymentMethod(
+                            name = PaymentMethodName.CASH,
+                        ),
+                    false,
                 ),
-                false
-            ),
-            SelectablePaymentMethod(
-                paymentMethod = getPaymentMethod(
-                    name = PaymentMethodName.CARD
+                SelectablePaymentMethod(
+                    paymentMethod =
+                        getPaymentMethod(
+                            name = PaymentMethodName.CARD,
+                        ),
+                    false,
                 ),
-                false
             )
-        )
 
         // Act
         val result = useCase(methods)
@@ -72,27 +78,31 @@ class GetSelectedPaymentMethodUseCaseTest {
     @Test
     fun `invoke should return first selected method when multiple are selected`() {
         // Arrange
-        val expectedMethod = getPaymentMethod(
-            name = PaymentMethodName.CARD
-        )
-        val methods = listOf(
-            getSelectablePaymentMethod(
-                paymentMethod = getPaymentMethod(
-                    name = PaymentMethodName.CASH
-                ),
-                false
-            ),
-            getSelectablePaymentMethod(
-                expectedMethod,
-                true
-            ),
-            getSelectablePaymentMethod(
-                paymentMethod = getPaymentMethod(
-                    name = PaymentMethodName.CASH
-                ),
-                true
+        val expectedMethod =
+            getPaymentMethod(
+                name = PaymentMethodName.CARD,
             )
-        )
+        val methods =
+            listOf(
+                getSelectablePaymentMethod(
+                    paymentMethod =
+                        getPaymentMethod(
+                            name = PaymentMethodName.CASH,
+                        ),
+                    false,
+                ),
+                getSelectablePaymentMethod(
+                    expectedMethod,
+                    true,
+                ),
+                getSelectablePaymentMethod(
+                    paymentMethod =
+                        getPaymentMethod(
+                            name = PaymentMethodName.CASH,
+                        ),
+                    true,
+                ),
+            )
 
         // Act
         val result = useCase(methods)
@@ -113,13 +123,15 @@ class GetSelectedPaymentMethodUseCaseTest {
     @Test
     fun `invoke should handle single item selected`() {
         // Arrange
-        val expectedMethod = getPaymentMethod(
-            name = PaymentMethodName.CARD
-        )
+        val expectedMethod =
+            getPaymentMethod(
+                name = PaymentMethodName.CARD,
+            )
 
-        val methods = listOf(
-            getSelectablePaymentMethod(expectedMethod, true)
-        )
+        val methods =
+            listOf(
+                getSelectablePaymentMethod(expectedMethod, true),
+            )
 
         // Act
         val result = useCase(methods)
@@ -131,9 +143,10 @@ class GetSelectedPaymentMethodUseCaseTest {
     @Test
     fun `invoke should handle single item not selected`() {
         // Arrange
-        val methods = listOf(
-            getSelectablePaymentMethod(getPaymentMethod(), false)
-        )
+        val methods =
+            listOf(
+                getSelectablePaymentMethod(getPaymentMethod(), false),
+            )
 
         // Act
         val result = useCase(methods)

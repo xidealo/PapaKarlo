@@ -29,6 +29,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.LifecycleStartEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
+import com.bunbeauty.designsystem.theme.bold
+import com.bunbeauty.designsystem.ui.element.FoodDeliveryHorizontalDivider
+import com.bunbeauty.designsystem.ui.element.FoodDeliveryScaffold
+import com.bunbeauty.designsystem.ui.element.button.MainButton
+import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryCard
+import com.bunbeauty.designsystem.ui.element.card.NavigationIconCardWithDivider
+import com.bunbeauty.designsystem.ui.screen.ErrorScreen
+import com.bunbeauty.designsystem.ui.screen.LoadingScreen
 import com.bunbeauty.shared.domain.model.SuccessLoginDirection
 import com.bunbeauty.shared.domain.model.date_time.Date
 import com.bunbeauty.shared.domain.model.date_time.DateTime
@@ -37,20 +46,11 @@ import com.bunbeauty.shared.domain.model.order.LightOrder
 import com.bunbeauty.shared.domain.model.order.OrderStatus
 import com.bunbeauty.shared.presentation.profile.ProfileState
 import com.bunbeauty.shared.presentation.profile.ProfileViewModel
-import com.bunbeauty.designsystem.ui.element.FoodDeliveryScaffold
-import com.bunbeauty.designsystem.ui.element.button.MainButton
-import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryCard
-import com.bunbeauty.designsystem.ui.screen.ErrorScreen
-import com.bunbeauty.designsystem.ui.screen.LoadingScreen
+import com.bunbeauty.shared.ui.common.getDateTimeString
 import com.bunbeauty.shared.ui.screen.order.ui.OrderStatusChip
 import com.bunbeauty.shared.ui.screen.order.ui.getOrderStatusName
 import com.bunbeauty.shared.ui.screen.profile.screen.aboutapp.AboutAppBottomSheet
 import com.bunbeauty.shared.ui.screen.profile.screen.feedback.FeedBackBottomSheetScreen
-import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
-import com.bunbeauty.designsystem.theme.bold
-import com.bunbeauty.designsystem.ui.element.FoodDeliveryHorizontalDivider
-import com.bunbeauty.designsystem.ui.element.card.NavigationIconCardWithDivider
-import com.bunbeauty.shared.ui.common.getDateTimeString
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
 import org.jetbrains.compose.resources.painterResource
@@ -83,7 +83,6 @@ import papakarlo.shared.generated.resources.title_profile
 import papakarlo.shared.generated.resources.title_profile_cafe_list
 import papakarlo.shared.generated.resources.title_profile_no_profile
 
-
 @Composable
 fun ProfileState.DataState.mapState(): ProfileViewState =
     ProfileViewState(
@@ -95,10 +94,11 @@ fun ProfileState.DataState.mapState(): ProfileViewState =
                 ProfileState.DataState.State.ERROR -> ProfileViewState.State.Error
                 ProfileState.DataState.State.LOADING -> ProfileViewState.State.Loading
             },
-        aboutBottomSheetUI = ProfileViewState.AboutBottomSheetUI(
-            isShown = isShowAboutAppBottomSheet,
-            version = appVersion
-        ),
+        aboutBottomSheetUI =
+            ProfileViewState.AboutBottomSheetUI(
+                isShown = isShowAboutAppBottomSheet,
+                version = appVersion,
+            ),
         feedBackBottomSheetUI =
             ProfileViewState.FeedBackBottomSheetUI(
                 isShown = isShowFeedbackBottomSheet,
@@ -196,20 +196,22 @@ private fun ProfileScreen(
                 LoadingScreen()
             }
 
-            ProfileViewState.State.Authorized -> AuthorizedProfileScreen(
-                state = viewState,
-                onAction = onAction,
-            )
+            ProfileViewState.State.Authorized ->
+                AuthorizedProfileScreen(
+                    state = viewState,
+                    onAction = onAction,
+                )
 
-            ProfileViewState.State.Unauthorized -> UnauthorizedProfileScreen(
-                onAction = onAction,
-                state = viewState,
-            )
+            ProfileViewState.State.Unauthorized ->
+                UnauthorizedProfileScreen(
+                    onAction = onAction,
+                    state = viewState,
+                )
         }
         AboutAppBottomSheet(
             aboutBottomSheetUI = viewState.aboutBottomSheetUI,
             onAction = onAction,
-            appVersion = viewState.aboutBottomSheetUI.version
+            appVersion = viewState.aboutBottomSheetUI.version,
         )
         FeedBackBottomSheetScreen(
             feedBackBottomSheetUI = viewState.feedBackBottomSheetUI,
@@ -497,10 +499,11 @@ val profileViewStateMock =
     ProfileViewState(
         state = ProfileViewState.State.Loading,
         lastOrder = null,
-        aboutBottomSheetUI = ProfileViewState.AboutBottomSheetUI(
-            isShown = false,
-            version = ""
-        ),
+        aboutBottomSheetUI =
+            ProfileViewState.AboutBottomSheetUI(
+                isShown = false,
+                version = "",
+            ),
         feedBackBottomSheetUI =
             ProfileViewState.FeedBackBottomSheetUI(
                 isShown = false,

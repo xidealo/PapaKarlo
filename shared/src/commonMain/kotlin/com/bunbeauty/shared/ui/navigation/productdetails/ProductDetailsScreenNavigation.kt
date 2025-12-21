@@ -35,8 +35,7 @@ fun NavController.navigateToProductDetailsScreen(
             cartProductUuid = cartProductUuid,
         ),
     navOptions = navOptions,
-
-    )
+)
 
 fun NavGraphBuilder.productDetailsScreenRoute(
     back: () -> Unit,

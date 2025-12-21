@@ -6,24 +6,25 @@ import com.bunbeauty.shared.domain.feature.payment.GetSelectedPaymentMethodUseCa
 import com.bunbeauty.shared.domain.feature.payment.SavePaymentMethodUseCase
 import org.koin.dsl.module
 
-internal fun paymentUseCaseModule() = module {
-    factory {
-        GetPaymentMethodListUseCase(
-            paymentRepo = get()
-        )
+internal fun paymentUseCaseModule() =
+    module {
+        factory {
+            GetPaymentMethodListUseCase(
+                paymentRepo = get(),
+            )
+        }
+        factory {
+            GetSelectablePaymentMethodListUseCase(
+                paymentRepo = get(),
+                dataStoreRepo = get(),
+            )
+        }
+        factory {
+            SavePaymentMethodUseCase(
+                dataStoreRepo = get(),
+            )
+        }
+        factory {
+            GetSelectedPaymentMethodUseCase()
+        }
     }
-    factory {
-        GetSelectablePaymentMethodListUseCase(
-            paymentRepo = get(),
-            dataStoreRepo = get()
-        )
-    }
-    factory {
-        SavePaymentMethodUseCase(
-            dataStoreRepo = get()
-        )
-    }
-    factory {
-        GetSelectedPaymentMethodUseCase()
-    }
-}

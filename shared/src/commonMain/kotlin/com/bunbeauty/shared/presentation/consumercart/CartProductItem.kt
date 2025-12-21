@@ -9,5 +9,5 @@ data class CartProductItem(
     val count: Int,
     val menuProductUuid: String,
     val additions: String?,
-    val additionUuidList: List<String>
+    val additionUuidList: List<String>,
 )

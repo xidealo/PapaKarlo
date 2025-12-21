@@ -1,6 +1,5 @@
 package com.bunbeauty.shared.ui.screen.address.screen.createaddress
 
-
 import androidx.compose.runtime.Immutable
 import com.bunbeauty.designsystem.ui.element.textfield.SuggestionUi
 import com.bunbeauty.shared.presentation.base.BaseViewState

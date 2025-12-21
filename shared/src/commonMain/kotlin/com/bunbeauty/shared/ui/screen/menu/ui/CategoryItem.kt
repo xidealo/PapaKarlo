@@ -7,13 +7,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
-import org.jetbrains.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryCard
-import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryCardDefaults
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.theme.medium
+import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryCard
+import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryCardDefaults
 import com.bunbeauty.shared.presentation.menu.model.CategoryItem
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun CategoryItem(

@@ -25,11 +25,8 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import papakarlo.designsystem.generated.resources.Res
-import papakarlo.designsystem.generated.resources.action_consumer_cart_menu
-import papakarlo.designsystem.generated.resources.description_consumer_cart_empty
 import papakarlo.designsystem.generated.resources.ic_cart_24
-import papakarlo.designsystem.generated.resources.msg_consumer_cart_empty
-import papakarlo.designsystem.generated.resources.title_consumer_cart_empty
+import papakarlo.designsystem.generated.resources.preview_string
 
 @Composable
 fun EmptyScreen(
@@ -108,9 +105,9 @@ fun EmptyScreen(
 private fun EmptyScreenPreview() {
     EmptyScreen(
         imageId = Res.drawable.ic_cart_24,
-        imageDescriptionId = Res.string.description_consumer_cart_empty,
-        mainTextId = Res.string.title_consumer_cart_empty,
-        extraTextId = Res.string.msg_consumer_cart_empty,
-        buttonTextId = Res.string.action_consumer_cart_menu,
+        imageDescriptionId = Res.string.preview_string,
+        mainTextId = Res.string.preview_string,
+        extraTextId = Res.string.preview_string,
+        buttonTextId = Res.string.preview_string,
     )
 }

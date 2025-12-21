@@ -25,15 +25,15 @@ class ConfirmViewModel(
     private val checkCode: CheckCodeUseCase,
     private val resendCode: ResendCodeUseCase,
     private val updateNotificationUseCase: UpdateNotificationUseCase,
-    private val analyticService: AnalyticService
+    private val analyticService: AnalyticService,
 ) : SharedStateViewModel<Confirm.ViewDataState, Confirm.Action, Confirm.Event>(
-    initDataState = Confirm.ViewDataState(
-        phoneNumber = "",
-        resendSeconds = TIMER_SECONDS,
-        isLoading = false
-    )
-) {
-
+        initDataState =
+            Confirm.ViewDataState(
+                phoneNumber = "",
+                resendSeconds = TIMER_SECONDS,
+                isLoading = false,
+            ),
+    ) {
     private var timerJob: Job? = null
 
     private var direction: SuccessLoginDirection? = null
@@ -42,12 +42,15 @@ class ConfirmViewModel(
         startResendTimer()
     }
 
-    override fun reduce(action: Confirm.Action, dataState: Confirm.ViewDataState) {
+    override fun reduce(
+        action: Confirm.Action,
+        dataState: Confirm.ViewDataState,
+    ) {
         when (action) {
             is Confirm.Action.Init -> {
                 init(
                     direction = action.direction,
-                    phoneNumber = action.phoneNumber
+                    phoneNumber = action.phoneNumber,
                 )
             }
 
@@ -65,7 +68,10 @@ class ConfirmViewModel(
         }
     }
 
-    private fun init(direction: SuccessLoginDirection, phoneNumber: String) {
+    private fun init(
+        direction: SuccessLoginDirection,
+        phoneNumber: String,
+    ) {
         this.direction = direction
         setState {
             copy(phoneNumber = formatPhoneNumber(phoneNumber))
@@ -87,7 +93,7 @@ class ConfirmViewModel(
                     copy(isLoading = false)
                 }
                 handleException(throwable)
-            }
+            },
         )
     }
 
@@ -108,21 +114,23 @@ class ConfirmViewModel(
             block = {
                 resendCode()
             },
-            onError = ::handleException
+            onError = ::handleException,
         )
     }
 
     private fun handleException(throwable: Throwable) {
         analyticService.sendEvent(
-            event = ConfirmErrorShowEvent(
-                error = when (throwable) {
-                    is TooManyRequestsException -> "TooManyRequests"
-                    is NoAttemptsException -> "NoAttempts"
-                    is InvalidCodeException -> "InvalidCode"
-                    is AuthSessionTimeoutException -> "AuthSessionTimeout"
-                    else -> "SomethingWentWrong"
-                }
-            )
+            event =
+                ConfirmErrorShowEvent(
+                    error =
+                        when (throwable) {
+                            is TooManyRequestsException -> "TooManyRequests"
+                            is NoAttemptsException -> "NoAttempts"
+                            is InvalidCodeException -> "InvalidCode"
+                            is AuthSessionTimeoutException -> "AuthSessionTimeout"
+                            else -> "SomethingWentWrong"
+                        },
+                ),
         )
 
         addEvent {
@@ -140,14 +148,15 @@ class ConfirmViewModel(
         setState {
             copy(resendSeconds = TIMER_SECONDS)
         }
-        timerJob = sharedScope.launch {
-            while (dataState.value.resendSeconds > 0) {
-                delay(TIMER_INTERVAL_MILLIS)
-                setState {
-                    copy(resendSeconds = resendSeconds - 1)
+        timerJob =
+            sharedScope.launch {
+                while (dataState.value.resendSeconds > 0) {
+                    delay(TIMER_INTERVAL_MILLIS)
+                    setState {
+                        copy(resendSeconds = resendSeconds - 1)
+                    }
                 }
             }
-        }
         timerJob?.start()
     }
 }

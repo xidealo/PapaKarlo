@@ -5,14 +5,13 @@ import com.bunbeauty.shared.data.network.ApiResult
 import com.bunbeauty.shared.data.network.model.ListServer
 
 abstract class BaseRepository {
-
     abstract val tag: String
 
     suspend fun <T, R> ApiResult<T>.getNullableResult(
         onError: (suspend (ApiError) -> R?)? = null,
-        onSuccess: (suspend (T) -> R?)
-    ): R? {
-        return when (this) {
+        onSuccess: (suspend (T) -> R?),
+    ): R? =
+        when (this) {
             is ApiResult.Success -> {
                 data?.let {
                     onSuccess(data)
@@ -22,13 +21,12 @@ abstract class BaseRepository {
                 onError?.invoke(apiError)
             }
         }
-    }
 
     suspend fun <T, R> ApiResult<ListServer<T>>.getListResult(
         onError: (suspend (ApiError) -> R),
-        onSuccess: (suspend (List<T>) -> R)
-    ): R {
-        return when (this) {
+        onSuccess: (suspend (List<T>) -> R),
+    ): R =
+        when (this) {
             is ApiResult.Success -> {
                 data?.let {
                     onSuccess(data.results)
@@ -38,5 +36,4 @@ abstract class BaseRepository {
                 onError(apiError)
             }
         }
-    }
 }

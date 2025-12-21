@@ -5,7 +5,6 @@ import com.bunbeauty.shared.domain.model.profile.User
 import kotlinx.coroutines.flow.Flow
 
 interface UserRepo {
-
     fun observeUserByUuid(userUuid: String): Flow<User?>
 
     suspend fun getProfile(): Profile.Authorized?
@@ -17,5 +16,6 @@ interface UserRepo {
     suspend fun disableUser(token: String)
 
     fun updateNotificationToken(notificationToken: String)
+
     suspend fun updateNotificationTokenSuspend(notificationToken: String)
 }

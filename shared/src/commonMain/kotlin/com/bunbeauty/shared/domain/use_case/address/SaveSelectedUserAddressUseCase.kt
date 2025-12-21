@@ -5,7 +5,7 @@ import com.bunbeauty.shared.domain.repo.UserAddressRepo
 
 class SaveSelectedUserAddressUseCase(
     private val dataStoreRepo: DataStoreRepo,
-    private val userAddressRepo: UserAddressRepo
+    private val userAddressRepo: UserAddressRepo,
 ) {
     suspend operator fun invoke(addressUuid: String) {
         val userCityUuid = dataStoreRepo.getUserAndCityUuid()
@@ -13,13 +13,14 @@ class SaveSelectedUserAddressUseCase(
         userAddressRepo.saveSelectedUserAddress(
             addressUuid = addressUuid,
             userUuid = userCityUuid.userUuid,
-            cityUuid = userCityUuid.cityUuid
+            cityUuid = userCityUuid.cityUuid,
         )
 
-        val userAddress = userAddressRepo.getSelectedAddressByUserAndCityUuid(
-            userUuid = userCityUuid.userUuid,
-            cityUuid = userCityUuid.cityUuid
-        )
+        val userAddress =
+            userAddressRepo.getSelectedAddressByUserAndCityUuid(
+                userUuid = userCityUuid.userUuid,
+                cityUuid = userCityUuid.cityUuid,
+            )
 
         dataStoreRepo.saveUserCafeUuid(userCafeUuid = userAddress?.cafeUuid.orEmpty())
     }

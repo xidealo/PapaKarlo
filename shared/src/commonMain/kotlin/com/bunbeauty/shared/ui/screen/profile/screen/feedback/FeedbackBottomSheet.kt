@@ -4,13 +4,13 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
+import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.ui.element.card.NavigationIconCard
+import com.bunbeauty.designsystem.ui.screen.bottomsheet.FoodDeliveryModalBottomSheet
 import com.bunbeauty.shared.OpenExternalSource
 import com.bunbeauty.shared.presentation.profile.ProfileState
-import com.bunbeauty.designsystem.ui.screen.bottomsheet.FoodDeliveryModalBottomSheet
 import com.bunbeauty.shared.ui.screen.profile.screen.feedback.model.LinkUI
 import com.bunbeauty.shared.ui.screen.profile.screen.profile.ProfileViewState
-import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import org.jetbrains.compose.resources.stringResource

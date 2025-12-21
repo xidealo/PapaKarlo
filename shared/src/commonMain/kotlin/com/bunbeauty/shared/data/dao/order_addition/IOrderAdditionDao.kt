@@ -4,5 +4,6 @@ import com.bunbeauty.shared.db.OrderAdditionEntity
 
 interface IOrderAdditionDao {
     suspend fun insert(orderAdditionEntity: OrderAdditionEntity)
+
     suspend fun deleteAll()
 }

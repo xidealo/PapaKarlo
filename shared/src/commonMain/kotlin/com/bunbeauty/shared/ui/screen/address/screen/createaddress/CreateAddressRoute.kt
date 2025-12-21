@@ -142,7 +142,6 @@ private fun CreateAddressScreen(
                     .verticalScroll(state = rememberScrollState())
                     .padding(horizontal = 16.dp),
         ) {
-
             val focusManager = LocalFocusManager.current
             var expanded by remember(viewState.suggestionListNotEmpty) {
                 mutableStateOf(viewState.suggestionListNotEmpty)
@@ -154,7 +153,8 @@ private fun CreateAddressScreen(
                         .onFocusChanged { focusState ->
                             onAction(CreateAddress.Action.StreetFocusChange(isFocused = focusState.isFocused))
                             expanded =
-                                focusState.isFocused && viewState.suggestionListNotEmpty
+                                focusState.isFocused &&
+                                viewState.suggestionListNotEmpty
                         },
                 expanded = expanded,
                 onExpandedChange = { value ->

@@ -12,13 +12,13 @@ import kotlinx.coroutines.flow.Flow
 class CityRepository(
     private val networkConnector: NetworkConnector,
     private val cityDao: ICityDao,
-    private val cityMapper: ICityMapper
-) : CacheListRepository<City>(), CityRepo {
-
+    private val cityMapper: ICityMapper,
+) : CacheListRepository<City>(),
+    CityRepo {
     override val tag: String = "CITY_TAG"
 
-    override suspend fun getCityList(): List<City> {
-        return getCacheOrListData(
+    override suspend fun getCityList(): List<City> =
+        getCacheOrListData(
             onApiRequest = networkConnector::getCityList,
             onLocalRequest = {
                 cityDao.getCityList().map(cityMapper::toCity)
@@ -26,21 +26,15 @@ class CityRepository(
             onSaveLocally = { cityServerList ->
                 cityDao.insertCityList(cityServerList.map(cityMapper::toCityEntity))
             },
-            serverToDomainModel = cityMapper::toCity
+            serverToDomainModel = cityMapper::toCity,
         )
-    }
 
-    override suspend fun getCityByUuid(cityUuid: String): City? {
-        return cityDao.getCityByUuid(cityUuid)?.let { cityEntity ->
+    override suspend fun getCityByUuid(cityUuid: String): City? =
+        cityDao.getCityByUuid(cityUuid)?.let { cityEntity ->
             cityMapper.toCity(cityEntity)
         }
-    }
 
-    override fun observeCityList(): Flow<List<City>> {
-        return cityDao.observeCityList().mapListFlow(cityMapper::toCity)
-    }
+    override fun observeCityList(): Flow<List<City>> = cityDao.observeCityList().mapListFlow(cityMapper::toCity)
 
-    override fun observeCityByUuid(cityUuid: String): Flow<City?> {
-        return cityDao.observeCityByUuid(cityUuid).mapFlow(cityMapper::toCity)
-    }
+    override fun observeCityByUuid(cityUuid: String): Flow<City?> = cityDao.observeCityByUuid(cityUuid).mapFlow(cityMapper::toCity)
 }

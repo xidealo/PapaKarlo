@@ -10,9 +10,8 @@ import com.bunbeauty.shared.extension.getNullableResult
 class PaymentRepository(
     private val networkConnector: NetworkConnector,
     private val paymentMethodMapper: PaymentMethodMapper,
-    private val paymentMethodDao: IPaymentMethodDao
+    private val paymentMethodDao: IPaymentMethodDao,
 ) : PaymentRepo {
-
     private var paymentMethodListCache: List<PaymentMethod>? = null
 
     override suspend fun getPaymentMethodList(): List<PaymentMethod> {
@@ -31,21 +30,21 @@ class PaymentRepository(
         }
     }
 
-    suspend fun getRemotePaymentMethodList(): List<PaymentMethod>? {
-        return networkConnector.getPaymentMethodList()
+    suspend fun getRemotePaymentMethodList(): List<PaymentMethod>? =
+        networkConnector
+            .getPaymentMethodList()
             .getNullableResult { paymentMethodServerList ->
                 paymentMethodServerList.results.mapNotNull(paymentMethodMapper::toPaymentMethod)
             }
-    }
 
-    suspend fun getLocalPaymentMethodList(): List<PaymentMethod> {
-        return paymentMethodDao.getPaymentMethodList()
+    suspend fun getLocalPaymentMethodList(): List<PaymentMethod> =
+        paymentMethodDao
+            .getPaymentMethodList()
             .mapNotNull(paymentMethodMapper::toPaymentMethod)
-    }
 
     suspend fun savePaymentMethodListLocally(paymentMethodList: List<PaymentMethod>) {
         paymentMethodDao.insertPaymentMethodList(
-            paymentMethodList.map(paymentMethodMapper::toPaymentMethodEntity)
+            paymentMethodList.map(paymentMethodMapper::toPaymentMethodEntity),
         )
     }
 }

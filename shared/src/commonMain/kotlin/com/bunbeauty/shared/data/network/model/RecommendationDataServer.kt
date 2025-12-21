@@ -6,5 +6,5 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class RecommendationDataServer(
     @SerialName("maxVisibleCount")
-    val maxVisibleCount: Int
+    val maxVisibleCount: Int,
 )

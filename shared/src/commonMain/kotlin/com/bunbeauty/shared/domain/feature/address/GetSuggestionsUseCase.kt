@@ -9,9 +9,8 @@ import com.bunbeauty.shared.domain.repo.SuggestionRepo
 
 class GetSuggestionsUseCase(
     private val suggestionRepo: SuggestionRepo,
-    private val dataStoreRepo: DataStoreRepo
+    private val dataStoreRepo: DataStoreRepo,
 ) {
-
     suspend operator fun invoke(query: String): List<Suggestion> {
         val token = dataStoreRepo.getToken() ?: throw NoTokenException()
         val cityUuid = dataStoreRepo.getSelectedCityUuid() ?: throw NoSelectedCityUuidException()
@@ -19,7 +18,7 @@ class GetSuggestionsUseCase(
         return suggestionRepo.getSuggestionList(
             token = token,
             query = query,
-            cityUuid = cityUuid
+            cityUuid = cityUuid,
         ) ?: throw DataNotFoundException()
     }
 }

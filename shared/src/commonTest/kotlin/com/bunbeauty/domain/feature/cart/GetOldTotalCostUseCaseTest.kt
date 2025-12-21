@@ -15,52 +15,55 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class GetOldTotalCostUseCaseTest {
-
     private val getCartProductAdditionsPriceUseCase: GetCartProductAdditionsPriceUseCase = mock()
-    private val getOldTotalCostUseCase: GetOldTotalCostUseCase = GetOldTotalCostUseCaseImpl(
-        getCartProductAdditionsPriceUseCase = getCartProductAdditionsPriceUseCase
-    )
+    private val getOldTotalCostUseCase: GetOldTotalCostUseCase =
+        GetOldTotalCostUseCaseImpl(
+            getCartProductAdditionsPriceUseCase = getCartProductAdditionsPriceUseCase,
+        )
 
     @Test
-    fun `should return zero newFinalCost when product list is empty`() = runTest {
-        // When
-        val oldFinalCost = getOldTotalCostUseCase(emptyList())
-        everySuspend { getCartProductAdditionsPriceUseCase(any()) } returns 0
+    fun `should return zero newFinalCost when product list is empty`() =
+        runTest {
+            // When
+            val oldFinalCost = getOldTotalCostUseCase(emptyList())
+            everySuspend { getCartProductAdditionsPriceUseCase(any()) } returns 0
 
-        // Then
-        assertEquals(
-            expected = 0,
-            actual = oldFinalCost
-        )
-    }
+            // Then
+            assertEquals(
+                expected = 0,
+                actual = oldFinalCost,
+            )
+        }
 
     @Test
     fun `should return oldFinalCost equals sum of oldPrice and additions when cart product list is not empty`() =
         runTest {
             // Given
-            val cartProductListMockData = listOf(
-                getCartProduct(
-                    count = 1,
-                    menuProduct = getMenuProduct(newPrice = 50, oldPrice = 100),
-                    cartProductAdditionList = listOf(getCartProductAddition(price = 100))
-                ),
-                getCartProduct(
-                    count = 1,
-                    menuProduct = getMenuProduct(newPrice = 50, oldPrice = 100),
-                    cartProductAdditionList = listOf(
-                        getCartProductAddition(price = 75),
-                        getCartProductAddition(price = 75)
-                    )
+            val cartProductListMockData =
+                listOf(
+                    getCartProduct(
+                        count = 1,
+                        menuProduct = getMenuProduct(newPrice = 50, oldPrice = 100),
+                        cartProductAdditionList = listOf(getCartProductAddition(price = 100)),
+                    ),
+                    getCartProduct(
+                        count = 1,
+                        menuProduct = getMenuProduct(newPrice = 50, oldPrice = 100),
+                        cartProductAdditionList =
+                            listOf(
+                                getCartProductAddition(price = 75),
+                                getCartProductAddition(price = 75),
+                            ),
+                    ),
                 )
-            )
             everySuspend { getCartProductAdditionsPriceUseCase(listOf(getCartProductAddition(price = 100))) } returns 100
 
             everySuspend {
                 getCartProductAdditionsPriceUseCase(
                     listOf(
                         getCartProductAddition(price = 75),
-                        getCartProductAddition(price = 75)
-                    )
+                        getCartProductAddition(price = 75),
+                    ),
                 )
             } returns 150
 
@@ -70,7 +73,7 @@ class GetOldTotalCostUseCaseTest {
             // Then
             assertEquals(
                 expected = 450,
-                actual = oldFinalCost
+                actual = oldFinalCost,
             )
         }
 }

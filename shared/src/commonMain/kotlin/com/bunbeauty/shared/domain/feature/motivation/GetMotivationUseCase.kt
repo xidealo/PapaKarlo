@@ -5,10 +5,12 @@ import com.bunbeauty.shared.domain.use_case.address.GetUserAddressListUseCase
 
 class GetMotivationUseCase(
     private val getCurrentUserAddressUseCase: GetCurrentUserAddressUseCase,
-    private val getUserAddressListUseCase: GetUserAddressListUseCase
+    private val getUserAddressListUseCase: GetUserAddressListUseCase,
 ) {
-
-    suspend operator fun invoke(newTotalCost: Int, isDelivery: Boolean): Motivation? {
+    suspend operator fun invoke(
+        newTotalCost: Int,
+        isDelivery: Boolean,
+    ): Motivation? {
         if (!isDelivery) {
             return null
         }
@@ -31,12 +33,13 @@ class GetMotivationUseCase(
                     val increaseAmountBy = forLowDeliveryCost - newTotalCost
                     Motivation.ForLowerDelivery(
                         increaseAmountBy = increaseAmountBy,
-                        progress = if (newTotalCost >= forLowDeliveryCost) {
-                            1f
-                        } else {
-                            newTotalCost.toFloat() / forLowDeliveryCost
-                        },
-                        isFree = lowDeliveryCost <= 0
+                        progress =
+                            if (newTotalCost >= forLowDeliveryCost) {
+                                1f
+                            } else {
+                                newTotalCost.toFloat() / forLowDeliveryCost
+                            },
+                        isFree = lowDeliveryCost <= 0,
                     )
                 }
             }

@@ -12,32 +12,34 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
 class RequestCodeUseCaseTest {
-
     private val authRepo: AuthRepo = mock()
-    private val requestCode: RequestCodeUseCase = RequestCodeUseCase(
-        authRepo = authRepo
-    )
-
-    @Test
-    fun `should return Unit when code is requested successfully`() = runTest {
-        val phoneNumber = "+71234567890"
-        everySuspend { authRepo.requestCode(phoneNumber) } returns true
-
-        val result = requestCode(phoneNumber)
-
-        assertEquals(Unit, result)
-    }
-
-    @Test
-    fun `should throw SomethingWentWrongException when code request failed`() = runTest {
-        val phoneNumber = "+71234567890"
-        everySuspend { authRepo.requestCode(phoneNumber) } returns false
-
-        assertFailsWith(
-            exceptionClass = SomethingWentWrongException::class,
-            block = {
-                requestCode(phoneNumber)
-            }
+    private val requestCode: RequestCodeUseCase =
+        RequestCodeUseCase(
+            authRepo = authRepo,
         )
-    }
+
+    @Test
+    fun `should return Unit when code is requested successfully`() =
+        runTest {
+            val phoneNumber = "+71234567890"
+            everySuspend { authRepo.requestCode(phoneNumber) } returns true
+
+            val result = requestCode(phoneNumber)
+
+            assertEquals(Unit, result)
+        }
+
+    @Test
+    fun `should throw SomethingWentWrongException when code request failed`() =
+        runTest {
+            val phoneNumber = "+71234567890"
+            everySuspend { authRepo.requestCode(phoneNumber) } returns false
+
+            assertFailsWith(
+                exceptionClass = SomethingWentWrongException::class,
+                block = {
+                    requestCode(phoneNumber)
+                },
+            )
+        }
 }

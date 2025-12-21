@@ -72,13 +72,13 @@ class MainViewModel(
             state.copy(
                 paddingBottomSnackbar = paddingBottom,
             ) +
-                    MainState.Event.ShowMessageEvent(
-                        message =
-                            FoodDeliveryMessage(
-                                type = type,
-                                text = text,
-                            ),
-                    )
+                MainState.Event.ShowMessageEvent(
+                    message =
+                        FoodDeliveryMessage(
+                            type = type,
+                            text = text,
+                        ),
+                )
         }
     }
 

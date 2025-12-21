@@ -19,28 +19,28 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
-import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
-import org.jetbrains.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import papakarlo.shared.generated.resources.Res
+import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
+import com.bunbeauty.designsystem.theme.logoMedium
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.designsystem.ui.element.button.LoadingButton
 import com.bunbeauty.designsystem.ui.element.textfield.FoodDeliveryTextField
 import com.bunbeauty.designsystem.ui.element.textfield.FoodDeliveryTextFieldDefaults
 import com.bunbeauty.shared.domain.model.SuccessLoginDirection
-import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
-import com.bunbeauty.designsystem.theme.logoMedium
 import com.bunbeauty.shared.presentation.login.Login
 import com.bunbeauty.shared.presentation.login.LoginViewModel
 import org.jetbrains.compose.resources.getString
+import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
+import papakarlo.shared.generated.resources.Res
 import papakarlo.shared.generated.resources.action_login_continue
 import papakarlo.shared.generated.resources.description_login_logo
 import papakarlo.shared.generated.resources.error_login_phone
@@ -94,8 +94,7 @@ fun LoginRoute(
 private fun LoginScreen(
     viewState: Login.ViewDataState,
     onAction: (Login.Action) -> Unit,
-
-    ) {
+) {
     FoodDeliveryScaffold(
         backActionClick = {
             onAction(Login.Action.BackClick)

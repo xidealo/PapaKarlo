@@ -13,94 +13,106 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class GetMenuProductListUseCaseTest {
-
     private val menuProductRepo: MenuProductRepo = mock()
 
-    private var getMenuProductListUseCase: GetMenuProductListUseCaseImpl = GetMenuProductListUseCaseImpl(
-        menuProductRepo = menuProductRepo
-
-    )
+    private var getMenuProductListUseCase: GetMenuProductListUseCaseImpl =
+        GetMenuProductListUseCaseImpl(
+            menuProductRepo = menuProductRepo,
+        )
 
     @Test
-    fun `return only visible menu products`() = runTest {
-        val menuProduct1 = getFakeMenuProduct(uuid = "1", visible = true)
-        val menuProduct2 = getFakeMenuProduct(uuid = "2", visible = false)
-        val menuProduct3 = getFakeMenuProduct(uuid = "3", visible = true)
-        val initialList = listOf(
-            menuProduct1,
-            menuProduct2,
-            menuProduct3
-        )
-        everySuspend { menuProductRepo.getMenuProductList() } returns initialList
-        val expectedList = listOf(
-            menuProduct1,
-            menuProduct3
-        )
+    fun `return only visible menu products`() =
+        runTest {
+            val menuProduct1 = getFakeMenuProduct(uuid = "1", visible = true)
+            val menuProduct2 = getFakeMenuProduct(uuid = "2", visible = false)
+            val menuProduct3 = getFakeMenuProduct(uuid = "3", visible = true)
+            val initialList =
+                listOf(
+                    menuProduct1,
+                    menuProduct2,
+                    menuProduct3,
+                )
+            everySuspend { menuProductRepo.getMenuProductList() } returns initialList
+            val expectedList =
+                listOf(
+                    menuProduct1,
+                    menuProduct3,
+                )
 
-        val resultMenuProductList = getMenuProductListUseCase()
+            val resultMenuProductList = getMenuProductListUseCase()
 
-        assertEquals(expectedList, resultMenuProductList)
-    }
+            assertEquals(expectedList, resultMenuProductList)
+        }
 
     @Test
-    fun `return menu products with only visible addition groups`() = runTest {
-        val additionGroup11 = getFakeAdditionGroup(uuid = "1.1", isVisible = true)
-        val additionGroup12 = getFakeAdditionGroup(uuid = "1.2", isVisible = false)
-        val additionGroup13 = getFakeAdditionGroup(uuid = "1.3", isVisible = true)
-        val additionGroup21 = getFakeAdditionGroup(uuid = "2.1", isVisible = true)
-        val additionGroup22 = getFakeAdditionGroup(uuid = "2.2", isVisible = false)
-        val menuProduct1 = getFakeMenuProduct(
-            uuid = "1",
-            visible = true,
-            additionGroups = listOf(
-                additionGroup11,
-                additionGroup12,
-                additionGroup13
-            )
-        )
-        val menuProduct2 = getFakeMenuProduct(
-            uuid = "2",
-            visible = true,
-            additionGroups = listOf(
-                additionGroup21,
-                additionGroup22
-            )
-        )
-        val initialList = listOf(
-            menuProduct1,
-            menuProduct2
-        )
-        everySuspend { menuProductRepo.getMenuProductList() } returns initialList
+    fun `return menu products with only visible addition groups`() =
+        runTest {
+            val additionGroup11 = getFakeAdditionGroup(uuid = "1.1", isVisible = true)
+            val additionGroup12 = getFakeAdditionGroup(uuid = "1.2", isVisible = false)
+            val additionGroup13 = getFakeAdditionGroup(uuid = "1.3", isVisible = true)
+            val additionGroup21 = getFakeAdditionGroup(uuid = "2.1", isVisible = true)
+            val additionGroup22 = getFakeAdditionGroup(uuid = "2.2", isVisible = false)
+            val menuProduct1 =
+                getFakeMenuProduct(
+                    uuid = "1",
+                    visible = true,
+                    additionGroups =
+                        listOf(
+                            additionGroup11,
+                            additionGroup12,
+                            additionGroup13,
+                        ),
+                )
+            val menuProduct2 =
+                getFakeMenuProduct(
+                    uuid = "2",
+                    visible = true,
+                    additionGroups =
+                        listOf(
+                            additionGroup21,
+                            additionGroup22,
+                        ),
+                )
+            val initialList =
+                listOf(
+                    menuProduct1,
+                    menuProduct2,
+                )
+            everySuspend { menuProductRepo.getMenuProductList() } returns initialList
 
-        val updatedMenuProduct1 = getFakeMenuProduct(
-            uuid = "1",
-            visible = true,
-            additionGroups = listOf(
-                additionGroup11,
-                additionGroup13
-            )
-        )
-        val updatedMenuProduct2 = getFakeMenuProduct(
-            uuid = "2",
-            visible = true,
-            additionGroups = listOf(additionGroup21)
-        )
-        val expectedList = listOf(
-            updatedMenuProduct1,
-            updatedMenuProduct2
-        )
+            val updatedMenuProduct1 =
+                getFakeMenuProduct(
+                    uuid = "1",
+                    visible = true,
+                    additionGroups =
+                        listOf(
+                            additionGroup11,
+                            additionGroup13,
+                        ),
+                )
+            val updatedMenuProduct2 =
+                getFakeMenuProduct(
+                    uuid = "2",
+                    visible = true,
+                    additionGroups = listOf(additionGroup21),
+                )
+            val expectedList =
+                listOf(
+                    updatedMenuProduct1,
+                    updatedMenuProduct2,
+                )
 
-        val resultMenuProductList = getMenuProductListUseCase()
+            val resultMenuProductList = getMenuProductListUseCase()
 
-        assertEquals(expectedList, resultMenuProductList)
-    }
+            assertEquals(expectedList, resultMenuProductList)
+        }
 
     private fun getFakeMenuProduct(
         uuid: String,
         visible: Boolean,
-        additionGroups: List<AdditionGroup> = emptyList()
-    ): MenuProduct {
-        return MenuProduct(
+        additionGroups: List<AdditionGroup> = emptyList(),
+    ): MenuProduct =
+        MenuProduct(
             uuid = uuid,
             name = "name",
             newPrice = 0,
@@ -110,30 +122,29 @@ class GetMenuProductListUseCaseTest {
             description = "description",
             comboDescription = "comboDescription",
             photoLink = "photoLink",
-            categoryList = listOf(
-                Category(
-                    uuid = "uuid",
-                    name = "free",
-                    priority = 1
-                )
-            ),
+            categoryList =
+                listOf(
+                    Category(
+                        uuid = "uuid",
+                        name = "free",
+                        priority = 1,
+                    ),
+                ),
             visible = visible,
             isRecommended = false,
-            additionGroups = additionGroups
+            additionGroups = additionGroups,
         )
-    }
 
     private fun getFakeAdditionGroup(
         uuid: String,
-        isVisible: Boolean
-    ): AdditionGroup {
-        return AdditionGroup(
+        isVisible: Boolean,
+    ): AdditionGroup =
+        AdditionGroup(
             uuid = uuid,
             additionList = emptyList(),
             isVisible = isVisible,
             name = "name",
             singleChoice = true,
-            priority = 1
+            priority = 1,
         )
-    }
 }

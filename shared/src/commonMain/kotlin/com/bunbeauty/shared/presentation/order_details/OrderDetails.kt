@@ -14,15 +14,14 @@ interface OrderDetails {
     data class DataState(
         val orderUuid: String,
         val orderDetailsData: OrderDetailsData,
-        val screenState: ScreenState
+        val screenState: ScreenState,
     ) : BaseDataState {
-
         data class OrderDetailsData(
             val orderProductItemList: List<OrderProductItem>,
             val orderInfo: OrderInfo?,
             val deliveryCost: String?,
             val newTotalCost: String,
-            val discount: String?
+            val discount: String?,
         ) {
             data class OrderInfo(
                 val code: String,
@@ -32,7 +31,7 @@ interface OrderDetails {
                 val address: OrderAddress,
                 val comment: String?,
                 val isDelivery: Boolean,
-                val paymentMethod: PaymentMethodName?
+                val paymentMethod: PaymentMethodName?,
             )
 
             data class OrderProductItem(
@@ -43,21 +42,28 @@ interface OrderDetails {
                 val photoLink: String,
                 val count: String,
                 val additions: List<OrderAddition>,
-                val isLast: Boolean
+                val isLast: Boolean,
             )
         }
 
         enum class ScreenState {
             LOADING,
             SUCCESS,
-            ERROR
+            ERROR,
         }
     }
 
     sealed interface Action : BaseAction {
         data object Back : Action
-        data class StartObserve(val orderUuid: String) : Action
-        data class Reload(val orderUuid: String) : Action
+
+        data class StartObserve(
+            val orderUuid: String,
+        ) : Action
+
+        data class Reload(
+            val orderUuid: String,
+        ) : Action
+
         data object StopObserve : Action
     }
 

@@ -1,9 +1,9 @@
 package com.bunbeauty.shared.ui.screen.menu.state
 
 import androidx.compose.runtime.Immutable
+import com.bunbeauty.designsystem.ui.element.TopCartUi
 import com.bunbeauty.shared.presentation.menu.model.CategoryItem
 import com.bunbeauty.shared.presentation.menu.model.MenuDataState
-import com.bunbeauty.designsystem.ui.element.TopCartUi
 import kotlinx.collections.immutable.ImmutableList
 
 // TODO refactor

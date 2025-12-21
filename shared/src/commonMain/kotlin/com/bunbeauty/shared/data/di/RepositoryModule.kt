@@ -42,151 +42,152 @@ import com.bunbeauty.shared.domain.repo.UserRepo
 import com.bunbeauty.shared.domain.repo.VersionRepo
 import org.koin.dsl.module
 
-fun repositoryModule() = module {
-    single {
-        SocketService(
-            uuidGenerator = get(),
-            client = get(),
-            json = get()
-        )
+fun repositoryModule() =
+    module {
+        single {
+            SocketService(
+                uuidGenerator = get(),
+                client = get(),
+                json = get(),
+            )
+        }
+        single<NetworkConnector> {
+            NetworkConnectorImpl(
+                client = get(),
+                socketService = get(),
+                companyUuidProvider = get(),
+            )
+        }
+        single<CartProductRepo> {
+            CartProductRepository(
+                uuidGenerator = get(),
+                cartProductDao = get(),
+                menuProductDao = get(),
+                cartProductMapper = get(),
+            )
+        }
+        single<OrderRepo> {
+            OrderRepository(
+                orderDao = get(),
+                networkConnector = get(),
+                orderMapper = get(),
+                orderAdditionDao = get(),
+                orderProductDao = get(),
+                lightOrderDao = get(),
+            )
+        }
+        single<MenuProductRepo> {
+            MenuProductRepository(
+                networkConnector = get(),
+                menuProductDao = get(),
+                categoryDao = get(),
+                menuProductCategoryReferenceDao = get(),
+                menuProductMapper = get(),
+                additionDao = get(),
+                additionGroupDao = get(),
+            )
+        }
+        single<UserAddressRepo> {
+            UserAddressRepository(
+                networkConnector = get(),
+                userAddressDao = get(),
+                userAddressMapper = get(),
+                dataStoreRepo = get(),
+            )
+        }
+        single<CafeRepo> {
+            CafeRepository(
+                networkConnector = get(),
+                cafeStorage = get(),
+                cafeDao = get(),
+                dataStoreRepo = get(),
+            )
+        }
+        single<UserRepo> {
+            UserRepository(
+                networkConnector = get(),
+                profileMapper = get(),
+                userMapper = get(),
+                userDao = get(),
+                userAddressDao = get(),
+                orderDao = get(),
+                dataStoreRepo = get(),
+            )
+        }
+        single<CityRepo> {
+            CityRepository(
+                networkConnector = get(),
+                cityDao = get(),
+                cityMapper = get(),
+            )
+        }
+        single<CompanyRepo> {
+            CompanyRepository(
+                networkConnector = get(),
+            )
+        }
+        single<VersionRepo> {
+            VersionRepository(
+                networkConnector = get(),
+            )
+        }
+        single {
+            SettingsRepository(
+                dataStoreRepo = get(),
+                networkConnector = get(),
+                settingsMapper = get(),
+            )
+        }
+        single<PaymentRepo> {
+            PaymentRepository(
+                networkConnector = get(),
+                paymentMethodMapper = get(),
+                paymentMethodDao = get(),
+            )
+        }
+        single<LinkRepo> {
+            LinkRepository(
+                networkConnector = get(),
+                linkMapper = get(),
+                linkDao = get(),
+            )
+        }
+        single<DiscountRepo> {
+            DiscountRepository(
+                networkConnector = get(),
+                dataStoreRepo = get(),
+            )
+        }
+        single<AuthRepo> {
+            AuthRepository(
+                networkConnector = get(),
+            )
+        }
+        single<RecommendationRepo> {
+            RecommendationRepository(
+                networkConnector = get(),
+                dataStoreRepo = get(),
+            )
+        }
+        single<CartProductAdditionRepo> {
+            CartProductAdditionRepository(
+                uuidGenerator = get(),
+                cartProductAdditionDao = get(),
+            )
+        }
+        single<AdditionRepo> {
+            AdditionRepository(
+                additionDao = get(),
+            )
+        }
+        single<AdditionGroupRepo> {
+            AdditionGroupRepository(
+                additionGroupDao = get(),
+            )
+        }
+        single<SuggestionRepo> {
+            SuggestionRepository(
+                networkConnector = get(),
+            )
+        }
     }
-    single<NetworkConnector> {
-        NetworkConnectorImpl(
-            client = get(),
-            socketService = get(),
-            companyUuidProvider = get()
-        )
-    }
-    single<CartProductRepo> {
-        CartProductRepository(
-            uuidGenerator = get(),
-            cartProductDao = get(),
-            menuProductDao = get(),
-            cartProductMapper = get()
-        )
-    }
-    single<OrderRepo> {
-        OrderRepository(
-            orderDao = get(),
-            networkConnector = get(),
-            orderMapper = get(),
-            orderAdditionDao = get(),
-            orderProductDao = get(),
-            lightOrderDao = get()
-        )
-    }
-    single<MenuProductRepo> {
-        MenuProductRepository(
-            networkConnector = get(),
-            menuProductDao = get(),
-            categoryDao = get(),
-            menuProductCategoryReferenceDao = get(),
-            menuProductMapper = get(),
-            additionDao = get(),
-            additionGroupDao = get()
-        )
-    }
-    single<UserAddressRepo> {
-        UserAddressRepository(
-            networkConnector = get(),
-            userAddressDao = get(),
-            userAddressMapper = get(),
-            dataStoreRepo = get()
-        )
-    }
-    single<CafeRepo> {
-        CafeRepository(
-            networkConnector = get(),
-            cafeStorage = get(),
-            cafeDao = get(),
-            dataStoreRepo = get()
-        )
-    }
-    single<UserRepo> {
-        UserRepository(
-            networkConnector = get(),
-            profileMapper = get(),
-            userMapper = get(),
-            userDao = get(),
-            userAddressDao = get(),
-            orderDao = get(),
-            dataStoreRepo = get()
-        )
-    }
-    single<CityRepo> {
-        CityRepository(
-            networkConnector = get(),
-            cityDao = get(),
-            cityMapper = get()
-        )
-    }
-    single<CompanyRepo> {
-        CompanyRepository(
-            networkConnector = get()
-        )
-    }
-    single<VersionRepo> {
-        VersionRepository(
-            networkConnector = get()
-        )
-    }
-    single {
-        SettingsRepository(
-            dataStoreRepo = get(),
-            networkConnector = get(),
-            settingsMapper = get()
-        )
-    }
-    single<PaymentRepo> {
-        PaymentRepository(
-            networkConnector = get(),
-            paymentMethodMapper = get(),
-            paymentMethodDao = get()
-        )
-    }
-    single<LinkRepo> {
-        LinkRepository(
-            networkConnector = get(),
-            linkMapper = get(),
-            linkDao = get()
-        )
-    }
-    single<DiscountRepo> {
-        DiscountRepository(
-            networkConnector = get(),
-            dataStoreRepo = get()
-        )
-    }
-    single<AuthRepo> {
-        AuthRepository(
-            networkConnector = get()
-        )
-    }
-    single<RecommendationRepo> {
-        RecommendationRepository(
-            networkConnector = get(),
-            dataStoreRepo = get()
-        )
-    }
-    single<CartProductAdditionRepo> {
-        CartProductAdditionRepository(
-            uuidGenerator = get(),
-            cartProductAdditionDao = get()
-        )
-    }
-    single<AdditionRepo> {
-        AdditionRepository(
-            additionDao = get()
-        )
-    }
-    single<AdditionGroupRepo> {
-        AdditionGroupRepository(
-            additionGroupDao = get()
-        )
-    }
-    single<SuggestionRepo> {
-        SuggestionRepository(
-            networkConnector = get()
-        )
-    }
-}

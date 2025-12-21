@@ -3,11 +3,11 @@ package com.bunbeauty.shared.presentation.motivation
 import com.bunbeauty.shared.Constants.RUBLE_CURRENCY
 import com.bunbeauty.shared.domain.feature.motivation.Motivation
 
-fun Motivation.toMotivationData(): MotivationData {
-    return when (this) {
+fun Motivation.toMotivationData(): MotivationData =
+    when (this) {
         is Motivation.MinOrderCost -> {
             MotivationData.MinOrderCost(
-                cost = "$cost $RUBLE_CURRENCY"
+                cost = "$cost $RUBLE_CURRENCY",
             )
         }
 
@@ -15,7 +15,7 @@ fun Motivation.toMotivationData(): MotivationData {
             MotivationData.ForLowerDelivery(
                 increaseAmountBy = "$increaseAmountBy $RUBLE_CURRENCY",
                 progress = progress,
-                isFree = isFree
+                isFree = isFree,
             )
         }
 
@@ -23,4 +23,3 @@ fun Motivation.toMotivationData(): MotivationData {
             MotivationData.LowerDeliveryAchieved(isFree = isFree)
         }
     }
-}

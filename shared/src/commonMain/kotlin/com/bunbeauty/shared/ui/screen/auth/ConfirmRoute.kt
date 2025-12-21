@@ -15,21 +15,21 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import org.jetbrains.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import papakarlo.shared.generated.resources.Res
+import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.designsystem.ui.element.button.MainButton
 import com.bunbeauty.designsystem.ui.screen.LoadingScreen
-import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.shared.domain.model.SuccessLoginDirection
-import org.koin.compose.viewmodel.koinViewModel
 import com.bunbeauty.shared.presentation.confirm.Confirm
 import com.bunbeauty.shared.presentation.confirm.ConfirmViewModel
 import com.bunbeauty.shared.ui.screen.auth.ui.SmsEditText
 import org.jetbrains.compose.resources.getString
+import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.koin.compose.viewmodel.koinViewModel
+import papakarlo.shared.generated.resources.Res
 import papakarlo.shared.generated.resources.error_code_confirmation_timeout
 import papakarlo.shared.generated.resources.error_invalid_code
 import papakarlo.shared.generated.resources.error_login_too_many_requests
@@ -77,7 +77,6 @@ fun ConfirmRoute(
         goToCreateOrderFragment = goToCreateOrderFragment,
         consumeEffects = consumeEffects,
         showErrorMessage = showErrorMessage,
-        
     )
     ConfirmScreen(viewState = viewState, onAction = onAction)
 }
@@ -137,31 +136,31 @@ fun ConfirmEffect(
             when (effect) {
                 Confirm.Event.ShowTooManyRequestsError -> {
                     showErrorMessage(
-                        getString(Res.string.error_login_too_many_requests)
+                        getString(Res.string.error_login_too_many_requests),
                     )
                 }
 
                 Confirm.Event.ShowNoAttemptsError -> {
                     showErrorMessage(
-                        getString(Res.string.error_no_attempts)
+                        getString(Res.string.error_no_attempts),
                     )
                 }
 
                 Confirm.Event.ShowInvalidCodeError -> {
                     showErrorMessage(
-                        getString(Res.string.error_invalid_code)
+                        getString(Res.string.error_invalid_code),
                     )
                 }
 
                 Confirm.Event.ShowAuthSessionTimeoutError -> {
                     showErrorMessage(
-                        getString(Res.string.error_code_confirmation_timeout)
+                        getString(Res.string.error_code_confirmation_timeout),
                     )
                 }
 
                 Confirm.Event.ShowSomethingWentWrongError -> {
                     showErrorMessage(
-                        getString(Res.string.error_something_went_wrong)
+                        getString(Res.string.error_something_went_wrong),
                     )
                 }
 

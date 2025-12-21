@@ -6,5 +6,5 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class DiscountServer(
     @SerialName("firstOrderDiscountPercent")
-    val discount: Int?
+    val discount: Int?,
 )

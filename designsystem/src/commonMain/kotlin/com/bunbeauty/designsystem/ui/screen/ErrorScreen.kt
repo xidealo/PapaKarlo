@@ -26,9 +26,8 @@ import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import papakarlo.designsystem.generated.resources.Res
 import papakarlo.designsystem.generated.resources.action_retry
-import papakarlo.designsystem.generated.resources.common_error
 import papakarlo.designsystem.generated.resources.ic_error
-import papakarlo.designsystem.generated.resources.internet_error
+import papakarlo.designsystem.generated.resources.preview_string
 
 @Composable
 fun ErrorScreen(
@@ -99,8 +98,8 @@ fun ErrorScreen(
 private fun ErrorScreenPreview() {
     FoodDeliveryTheme {
         ErrorScreen(
-            mainTextId = Res.string.common_error,
-            extraTextId = Res.string.internet_error,
+            mainTextId = Res.string.preview_string,
+            extraTextId = Res.string.preview_string,
             onClick = {},
         )
     }

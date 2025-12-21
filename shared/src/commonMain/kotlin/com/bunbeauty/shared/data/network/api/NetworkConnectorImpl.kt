@@ -30,7 +30,6 @@ import com.bunbeauty.shared.data.network.model.login.AuthResponseServer
 import com.bunbeauty.shared.data.network.model.login.AuthSessionServer
 import com.bunbeauty.shared.data.network.model.login.CodeRequestServer
 import com.bunbeauty.shared.data.network.model.login.CodeServer
-import com.bunbeauty.shared.data.network.model.login.LoginPostServer
 import com.bunbeauty.shared.data.network.model.order.get.LightOrderServer
 import com.bunbeauty.shared.data.network.model.order.get.OrderCodeServer
 import com.bunbeauty.shared.data.network.model.order.get.OrderServer
@@ -64,253 +63,230 @@ internal class NetworkConnectorImpl(
     private val client: HttpClient,
     private val socketService: SocketService,
     private val companyUuidProvider: CompanyUuidProvider,
-) : KoinComponent, NetworkConnector {
-
+) : KoinComponent,
+    NetworkConnector {
     // GET
 
-    override suspend fun getForceUpdateVersion(): ApiResult<ForceUpdateVersionServer> {
-        return getData(
+    override suspend fun getForceUpdateVersion(): ApiResult<ForceUpdateVersionServer> =
+        getData(
             path = "force_update_version",
             parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuidProvider.companyUuid),
-            timeout = FORCE_UPDATE_TIMEOUT
+            timeout = FORCE_UPDATE_TIMEOUT,
         )
-    }
 
-    override suspend fun getCategoryList(): ApiResult<ListServer<CategoryServer>> {
-        return getData(
+    override suspend fun getCategoryList(): ApiResult<ListServer<CategoryServer>> =
+        getData(
             path = "category",
-            parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuidProvider.companyUuid)
+            parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuidProvider.companyUuid),
         )
-    }
 
-    override suspend fun getMenuProductList(): ApiResult<ListServer<MenuProductServer>> {
-        return getData(
+    override suspend fun getMenuProductList(): ApiResult<ListServer<MenuProductServer>> =
+        getData(
             path = "menu_product",
-            parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuidProvider.companyUuid)
+            parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuidProvider.companyUuid),
         )
-    }
 
-    override suspend fun getCityList(): ApiResult<ListServer<CityServer>> {
-        return getData(
+    override suspend fun getCityList(): ApiResult<ListServer<CityServer>> =
+        getData(
             path = "city",
-            parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuidProvider.companyUuid)
+            parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuidProvider.companyUuid),
         )
-    }
 
-    override suspend fun getCafeListByCityUuid(cityUuid: String): ApiResult<ListServer<CafeServer>> {
-        return getData(
+    override suspend fun getCafeListByCityUuid(cityUuid: String): ApiResult<ListServer<CafeServer>> =
+        getData(
             path = "cafe",
-            parameters = hashMapOf(CITY_UUID_PARAMETER to cityUuid)
+            parameters = hashMapOf(CITY_UUID_PARAMETER to cityUuid),
         )
-    }
 
-    override suspend fun getStreetListByCityUuid(cityUuid: String): ApiResult<ListServer<StreetServer>> {
-        return getData(
+    override suspend fun getStreetListByCityUuid(cityUuid: String): ApiResult<ListServer<StreetServer>> =
+        getData(
             path = "street",
-            parameters = hashMapOf(CITY_UUID_PARAMETER to cityUuid)
+            parameters = hashMapOf(CITY_UUID_PARAMETER to cityUuid),
         )
-    }
 
-    override suspend fun getDelivery(): ApiResult<DeliveryServer> {
-        return getData(
+    override suspend fun getDelivery(): ApiResult<DeliveryServer> =
+        getData(
             path = "delivery",
-            parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuidProvider.companyUuid)
+            parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuidProvider.companyUuid),
         )
-    }
 
-    override suspend fun getDiscount(): ApiResult<DiscountServer> {
-        return getData(
+    override suspend fun getDiscount(): ApiResult<DiscountServer> =
+        getData(
             path = "discount",
-            parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuidProvider.companyUuid)
+            parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuidProvider.companyUuid),
         )
-    }
 
     override suspend fun getSuggestions(
         token: String,
         query: String,
         cityUuid: String,
-    ): ApiResult<ListServer<SuggestionServer>> {
-        return getData(
+    ): ApiResult<ListServer<SuggestionServer>> =
+        getData(
             path = "street/suggestions",
-            parameters = mapOf(
-                QUERY_PARAMETER to query,
-                CITY_UUID_PARAMETER to cityUuid
-            ),
-            token = token
+            parameters =
+                mapOf(
+                    QUERY_PARAMETER to query,
+                    CITY_UUID_PARAMETER to cityUuid,
+                ),
+            token = token,
         )
-    }
 
     override suspend fun getUserAddressListByCityUuid(
         token: String,
         cityUuid: String,
-    ): ApiResult<ListServer<AddressServer>> {
-        return getData(
+    ): ApiResult<ListServer<AddressServer>> =
+        getData(
             path = "v2/address",
             parameters = mapOf(CITY_UUID_PARAMETER to cityUuid),
-            token = token
+            token = token,
         )
-    }
 
-    override suspend fun getPayment(token: String): ApiResult<PaymentServer> {
-        return getData(
+    override suspend fun getPayment(token: String): ApiResult<PaymentServer> =
+        getData(
             path = "payment",
-            token = token
+            token = token,
         )
-    }
 
-    override suspend fun getProfile(token: String): ApiResult<ProfileServer> {
-        return getData(
+    override suspend fun getProfile(token: String): ApiResult<ProfileServer> =
+        getData(
             path = "client",
-            token = token
+            token = token,
         )
-    }
 
     override suspend fun getLightOrderList(
         token: String,
         count: Int?,
-    ): ApiResult<ListServer<LightOrderServer>> {
-        return getData(
+    ): ApiResult<ListServer<LightOrderServer>> =
+        getData(
             path = "/client/order/light/list",
-            parameters = buildMap {
-                if (count != null) {
-                    put("count", count)
-                }
-            },
-            token = token
+            parameters =
+                buildMap {
+                    if (count != null) {
+                        put("count", count)
+                    }
+                },
+            token = token,
         )
-    }
 
-    override suspend fun getOrderByUuid(token: String, uuid: String): ApiResult<OrderServer> {
-        return getData(
-            path = "/client/order",
-            parameters = buildMap {
-                put("uuid", uuid)
-            },
-            token = token
-        )
-    }
-
-    override suspend fun getLastOrder(
+    override suspend fun getOrderByUuid(
         token: String,
-    ): ApiResult<OrderServer> {
-        return getData(
+        uuid: String,
+    ): ApiResult<OrderServer> =
+        getData(
+            path = "/client/order",
+            parameters =
+                buildMap {
+                    put("uuid", uuid)
+                },
+            token = token,
+        )
+
+    override suspend fun getLastOrder(token: String): ApiResult<OrderServer> =
+        getData(
             path = "client/last_order",
-            token = token
+            token = token,
         )
-    }
 
-    override suspend fun getSettings(token: String): ApiResult<SettingsServer> {
-        return getData(
+    override suspend fun getSettings(token: String): ApiResult<SettingsServer> =
+        getData(
             path = "client/settings",
-            token = token
+            token = token,
         )
-    }
 
-    override suspend fun getPaymentMethodList(): ApiResult<ListServer<PaymentMethodServer>> {
-        return getData(
+    override suspend fun getPaymentMethodList(): ApiResult<ListServer<PaymentMethodServer>> =
+        getData(
             path = "payment_method",
-            parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuidProvider.companyUuid)
+            parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuidProvider.companyUuid),
         )
-    }
 
-    override suspend fun getLinkList(): ApiResult<ListServer<LinkServer>> {
-        return getData(
+    override suspend fun getLinkList(): ApiResult<ListServer<LinkServer>> =
+        getData(
             path = "link",
-            parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuidProvider.companyUuid)
+            parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuidProvider.companyUuid),
         )
-    }
 
-    override suspend fun getRecommendationData(): ApiResult<RecommendationDataServer> {
-        return getData(
+    override suspend fun getRecommendationData(): ApiResult<RecommendationDataServer> =
+        getData(
             path = "recommendation",
-            parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuidProvider.companyUuid)
+            parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuidProvider.companyUuid),
         )
-    }
 
     // POST
     override suspend fun postUserAddress(
         token: String,
         userAddress: UserAddressPostServer,
-    ): ApiResult<AddressServer> {
-        return postData(
+    ): ApiResult<AddressServer> =
+        postData(
             path = "v2/address",
             body = userAddress,
-            token = token
+            token = token,
         )
-    }
 
     override suspend fun putNotificationToken(
         updateNotificationTokenRequest: UpdateNotificationTokenRequest,
         token: String,
-    ): ApiResult<Unit> {
-        return putData(
+    ): ApiResult<Unit> =
+        putData(
             path = "client/notification_token",
             body = updateNotificationTokenRequest,
-            token = token
+            token = token,
         )
-    }
 
     override suspend fun postOrder(
         token: String,
         order: OrderPostServer,
-    ): ApiResult<OrderCodeServer> {
-        return postData(
+    ): ApiResult<OrderCodeServer> =
+        postData(
             path = "v5/order",
             body = order,
-            token = token
+            token = token,
         )
-    }
 
-    override suspend fun postCodeRequest(codeRequest: CodeRequestServer): ApiResult<AuthSessionServer> {
-        return postData(
+    override suspend fun postCodeRequest(codeRequest: CodeRequestServer): ApiResult<AuthSessionServer> =
+        postData(
             path = "client/code_request",
             body = codeRequest,
-            parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuidProvider.companyUuid)
+            parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuidProvider.companyUuid),
         )
-    }
 
     // PATCH
 
     override suspend fun patchSettings(
         token: String,
         patchUserServer: PatchUserServer,
-    ): ApiResult<SettingsServer> {
-        return patchData(
+    ): ApiResult<SettingsServer> =
+        patchData(
             path = "client/settings",
             body = patchUserServer,
-            token = token
+            token = token,
         )
-    }
 
     // PUT
 
-    override suspend fun putCodeResend(uuid: String): ApiResult<Unit> {
-        return putData(
+    override suspend fun putCodeResend(uuid: String): ApiResult<Unit> =
+        putData(
             path = "client/code_resend",
-            parameters = mapOf(UUID_PARAMETER to uuid)
+            parameters = mapOf(UUID_PARAMETER to uuid),
         )
-    }
 
     override suspend fun putCodeCheck(
         code: CodeServer,
         uuid: String,
-    ): ApiResult<AuthResponseServer> {
-        return putData(
+    ): ApiResult<AuthResponseServer> =
+        putData(
             path = "client/code_check",
             body = code,
-            parameters = mapOf(UUID_PARAMETER to uuid)
+            parameters = mapOf(UUID_PARAMETER to uuid),
         )
-    }
 
     // WEB_SOCKET
 
-    override suspend fun startOrderUpdatesObservation(token: String): Pair<String?, Flow<OrderUpdateServer>> {
-        return socketService.observeSocketMessages(
+    override suspend fun startOrderUpdatesObservation(token: String): Pair<String?, Flow<OrderUpdateServer>> =
+        socketService.observeSocketMessages(
             path = "client/order/v2/subscribe",
             serializer = OrderUpdateServer.serializer(),
-            token = token
+            token = token,
         )
-    }
 
     override suspend fun stopOrderUpdatesObservation(uuid: String) {
         socketService.closeSession(uuid)
@@ -323,18 +299,17 @@ internal class NetworkConnectorImpl(
         parameters: Map<String, Any> = mapOf(),
         token: String? = null,
         timeout: Long = COMMON_TIMEOUT,
-    ): ApiResult<R> {
-        return safeCall {
+    ): ApiResult<R> =
+        safeCall {
             client.get {
                 buildRequest(
                     path = path,
                     parameters = parameters,
                     token = token,
-                    timeout = timeout
+                    timeout = timeout,
                 )
             }
         }
-    }
 
     private suspend inline fun <reified R> postData(
         path: String,
@@ -342,19 +317,18 @@ internal class NetworkConnectorImpl(
         body: Any,
         token: String? = null,
         timeout: Long = COMMON_TIMEOUT,
-    ): ApiResult<R> {
-        return safeCall {
+    ): ApiResult<R> =
+        safeCall {
             client.post {
                 buildRequest(
                     path = path,
                     parameters = parameters,
                     body = body,
                     token = token,
-                    timeout = timeout
+                    timeout = timeout,
                 )
             }
         }
-    }
 
     private suspend inline fun <reified R> patchData(
         path: String,
@@ -362,19 +336,18 @@ internal class NetworkConnectorImpl(
         parameters: Map<String, String> = mapOf(),
         token: String? = null,
         timeout: Long = COMMON_TIMEOUT,
-    ): ApiResult<R> {
-        return safeCall {
+    ): ApiResult<R> =
+        safeCall {
             client.patch {
                 buildRequest(
                     path = path,
                     parameters = parameters,
                     body = body,
                     token = token,
-                    timeout = timeout
+                    timeout = timeout,
                 )
             }
         }
-    }
 
     private suspend inline fun <reified R> putData(
         path: String,
@@ -382,24 +355,21 @@ internal class NetworkConnectorImpl(
         parameters: Map<String, String> = mapOf(),
         token: String? = null,
         timeout: Long = COMMON_TIMEOUT,
-    ): ApiResult<R> {
-        return safeCall {
+    ): ApiResult<R> =
+        safeCall {
             client.put {
                 buildRequest(
                     path = path,
                     parameters = parameters,
                     body = body,
                     token = token,
-                    timeout = timeout
+                    timeout = timeout,
                 )
             }
         }
-    }
 
-    private suspend inline fun <reified R> safeCall(
-        networkCall: () -> HttpResponse,
-    ): ApiResult<R> {
-        return try {
+    private suspend inline fun <reified R> safeCall(networkCall: () -> HttpResponse): ApiResult<R> =
+        try {
             val call = networkCall()
             ApiResult.Success(call.body())
         } catch (exception: FoodDeliveryNetworkException) {
@@ -409,7 +379,6 @@ internal class NetworkConnectorImpl(
         } catch (exception: Throwable) {
             ApiResult.Error(ApiError(0, exception.message.toString()))
         }
-    }
 
     private fun HttpRequestBuilder.buildRequest(
         path: String,

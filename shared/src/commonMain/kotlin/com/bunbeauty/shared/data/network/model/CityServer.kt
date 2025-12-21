@@ -7,13 +7,10 @@ import kotlinx.serialization.Serializable
 data class CityServer(
     @SerialName("uuid")
     val uuid: String,
-
     @SerialName("name")
     val name: String,
-
     @SerialName("timeZone")
     val timeZone: String,
-
     @SerialName("isVisible")
-    val isVisible: Boolean
+    val isVisible: Boolean,
 )

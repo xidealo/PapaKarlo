@@ -41,9 +41,9 @@ import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import papakarlo.designsystem.generated.resources.Res
-import papakarlo.designsystem.generated.resources.description_company_logo
 import papakarlo.designsystem.generated.resources.ic_arrow_back
 import papakarlo.designsystem.generated.resources.ic_cart_24
+import papakarlo.designsystem.generated.resources.preview_string
 
 val LocalStatusBarColor = compositionLocalOf<MutableState<Color>?> { null }
 
@@ -217,7 +217,7 @@ private fun LogoImage(
                 modifier
                     .height(40.dp),
             painter = painterResource(drawableId),
-            contentDescription = stringResource(Res.string.description_company_logo),
+            contentDescription = stringResource(Res.string.preview_string),
         )
     }
 }

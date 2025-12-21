@@ -4,8 +4,8 @@ import com.bunbeauty.shared.data.network.model.CafeServer
 import com.bunbeauty.shared.db.CafeEntity
 import com.bunbeauty.shared.domain.model.cafe.Cafe
 
-fun CafeServer.toCafeEntity(): CafeEntity {
-    return CafeEntity(
+fun CafeServer.toCafeEntity(): CafeEntity =
+    CafeEntity(
         uuid = uuid,
         fromTime = fromTime,
         toTime = toTime,
@@ -18,12 +18,11 @@ fun CafeServer.toCafeEntity(): CafeEntity {
         isVisible = isVisible,
         workType = workType,
         workload = workload,
-        additionalUtensils = additionalUtensils
+        additionalUtensils = additionalUtensils,
     )
-}
 
-fun CafeEntity.toCafe(): Cafe {
-    return Cafe(
+fun CafeEntity.toCafe(): Cafe =
+    Cafe(
         uuid = uuid,
         fromTime = fromTime,
         toTime = toTime,
@@ -35,12 +34,11 @@ fun CafeEntity.toCafe(): Cafe {
         isVisible = isVisible,
         workType = Cafe.WorkType.valueOf(workType),
         workload = Cafe.Workload.valueOf(workload),
-        additionalUtensils = additionalUtensils
+        additionalUtensils = additionalUtensils,
     )
-}
 
-fun CafeServer.toCafe(): Cafe {
-    return Cafe(
+fun CafeServer.toCafe(): Cafe =
+    Cafe(
         uuid = uuid,
         fromTime = fromTime,
         toTime = toTime,
@@ -52,6 +50,5 @@ fun CafeServer.toCafe(): Cafe {
         isVisible = isVisible,
         workType = Cafe.WorkType.valueOf(workType),
         workload = Cafe.Workload.valueOf(workload),
-        additionalUtensils = additionalUtensils
+        additionalUtensils = additionalUtensils,
     )
-}

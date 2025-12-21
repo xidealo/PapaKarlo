@@ -8,7 +8,6 @@ import androidx.navigation.toRoute
 import com.bunbeauty.shared.domain.model.SuccessLoginDirection
 import com.bunbeauty.shared.ui.screen.auth.ConfirmRoute
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.descriptors.PrimitiveKind
 
 @Serializable
 data class ConfirmScreenDestination(

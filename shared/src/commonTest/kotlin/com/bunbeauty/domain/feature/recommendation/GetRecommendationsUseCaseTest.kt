@@ -16,36 +16,39 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class GetRecommendationsUseCaseTest {
-
     private val recommendationRepository: RecommendationRepo = mock()
     private val cartProductRepo: CartProductRepo = mock()
     private val getMenuProductListUseCase: GetMenuProductListUseCase = mock()
-    val getRecommendationsUseCase: GetRecommendationsUseCase = GetRecommendationsUseCase(
-        recommendationRepository = recommendationRepository,
-        cartProductRepo = cartProductRepo,
-        getMenuProductListUseCase = getMenuProductListUseCase
-    )
-
-    @Test
-    fun `return empty list when has no recommendations`() = runTest {
-        everySuspend { recommendationRepository.getMaxVisibleCount() } returns 3
-        everySuspend { getMenuProductListUseCase() } returns listOf()
-        everySuspend { cartProductRepo.getCartProductList() } returns listOf(
-            getCartProductWithCategory("1", "1")
+    val getRecommendationsUseCase: GetRecommendationsUseCase =
+        GetRecommendationsUseCase(
+            recommendationRepository = recommendationRepository,
+            cartProductRepo = cartProductRepo,
+            getMenuProductListUseCase = getMenuProductListUseCase,
         )
-        assertTrue(getRecommendationsUseCase().isEmpty())
-    }
 
     @Test
-    fun `return empty list when has no menu products`() = runTest {
-        everySuspend { recommendationRepository.getMaxVisibleCount() } returns 3
-        everySuspend { getMenuProductListUseCase() } returns listOf()
-        everySuspend { cartProductRepo.getCartProductList() } returns listOf()
+    fun `return empty list when has no recommendations`() =
+        runTest {
+            everySuspend { recommendationRepository.getMaxVisibleCount() } returns 3
+            everySuspend { getMenuProductListUseCase() } returns listOf()
+            everySuspend { cartProductRepo.getCartProductList() } returns
+                listOf(
+                    getCartProductWithCategory("1", "1"),
+                )
+            assertTrue(getRecommendationsUseCase().isEmpty())
+        }
 
-        val recommendations = getRecommendationsUseCase()
+    @Test
+    fun `return empty list when has no menu products`() =
+        runTest {
+            everySuspend { recommendationRepository.getMaxVisibleCount() } returns 3
+            everySuspend { getMenuProductListUseCase() } returns listOf()
+            everySuspend { cartProductRepo.getCartProductList() } returns listOf()
 
-        assertEquals(emptyList(), recommendations)
-    }
+            val recommendations = getRecommendationsUseCase()
+
+            assertEquals(emptyList(), recommendations)
+        }
 
     @Test
     fun `return recommendation list when cartProductList has no same category products`() =
@@ -53,18 +56,20 @@ class GetRecommendationsUseCaseTest {
             everySuspend { recommendationRepository.getMaxVisibleCount() } returns 3
             everySuspend { getMenuProductListUseCase() } returns
                 listOf(
-                    getMenuProductWithCategory("2", "1")
+                    getMenuProductWithCategory("2", "1"),
                 )
 
-            everySuspend { cartProductRepo.getCartProductList() } returns listOf(
-                getCartProductWithCategory("1", "1")
-            )
+            everySuspend { cartProductRepo.getCartProductList() } returns
+                listOf(
+                    getCartProductWithCategory("1", "1"),
+                )
 
             assertEquals(
-                expected = listOf(
-                    getMenuProductWithCategory("2", "1")
-                ),
-                actual = getRecommendationsUseCase()
+                expected =
+                    listOf(
+                        getMenuProductWithCategory("2", "1"),
+                    ),
+                actual = getRecommendationsUseCase(),
             )
         }
 
@@ -72,13 +77,15 @@ class GetRecommendationsUseCaseTest {
     fun `return empty recommendation list when cartProductList has same category and no other recommendations`() =
         runTest {
             everySuspend { recommendationRepository.getMaxVisibleCount() } returns 3
-            everySuspend { getMenuProductListUseCase() } returns listOf(
-                getMenuProductWithCategory("1", "1")
-            )
+            everySuspend { getMenuProductListUseCase() } returns
+                listOf(
+                    getMenuProductWithCategory("1", "1"),
+                )
 
-            everySuspend { cartProductRepo.getCartProductList() } returns listOf(
-                getCartProductWithCategory("1", "1")
-            )
+            everySuspend { cartProductRepo.getCartProductList() } returns
+                listOf(
+                    getCartProductWithCategory("1", "1"),
+                )
             assertTrue(getRecommendationsUseCase().isEmpty())
         }
 
@@ -86,19 +93,22 @@ class GetRecommendationsUseCaseTest {
     fun `return recommendations list when cartProductList has same category but recommendations has different menuProductUuid`() =
         runTest {
             everySuspend { recommendationRepository.getMaxVisibleCount() } returns 3
-            everySuspend { getMenuProductListUseCase() } returns listOf(
-                getMenuProductWithCategory("1", "1"),
-                getMenuProductWithCategory("1", "2")
-            )
+            everySuspend { getMenuProductListUseCase() } returns
+                listOf(
+                    getMenuProductWithCategory("1", "1"),
+                    getMenuProductWithCategory("1", "2"),
+                )
 
-            everySuspend { cartProductRepo.getCartProductList() } returns listOf(
-                getCartProductWithCategory("1", "1")
-            )
+            everySuspend { cartProductRepo.getCartProductList() } returns
+                listOf(
+                    getCartProductWithCategory("1", "1"),
+                )
             assertEquals(
-                expected = listOf(
-                    getMenuProductWithCategory("1", "2")
-                ),
-                actual = getRecommendationsUseCase()
+                expected =
+                    listOf(
+                        getMenuProductWithCategory("1", "2"),
+                    ),
+                actual = getRecommendationsUseCase(),
             )
         }
 
@@ -106,19 +116,22 @@ class GetRecommendationsUseCaseTest {
     fun `return recommendation list when cartProductList has same category but not same by uuid`() =
         runTest {
             everySuspend { recommendationRepository.getMaxVisibleCount() } returns 3
-            everySuspend { getMenuProductListUseCase() } returns listOf(
-                getMenuProductWithCategory("1", "1"),
-                getMenuProductWithCategory("2", "2")
-            )
+            everySuspend { getMenuProductListUseCase() } returns
+                listOf(
+                    getMenuProductWithCategory("1", "1"),
+                    getMenuProductWithCategory("2", "2"),
+                )
 
-            everySuspend { cartProductRepo.getCartProductList() } returns listOf(
-                getCartProductWithCategory("1", "1")
-            )
+            everySuspend { cartProductRepo.getCartProductList() } returns
+                listOf(
+                    getCartProductWithCategory("1", "1"),
+                )
             assertEquals(
-                expected = listOf(
-                    getMenuProductWithCategory("2", "2")
-                ),
-                actual = getRecommendationsUseCase()
+                expected =
+                    listOf(
+                        getMenuProductWithCategory("2", "2"),
+                    ),
+                actual = getRecommendationsUseCase(),
             )
         }
 
@@ -126,24 +139,27 @@ class GetRecommendationsUseCaseTest {
     fun `return recommendations size equal maxVisibleCount`() =
         runTest {
             everySuspend { recommendationRepository.getMaxVisibleCount() } returns 3
-            everySuspend { getMenuProductListUseCase() } returns listOf(
-                getMenuProductWithCategory("1", "1"),
-                getMenuProductWithCategory("2", "2"),
-                getMenuProductWithCategory("3", "3"),
-                getMenuProductWithCategory("4", "4"),
-                getMenuProductWithCategory("5", "5")
-            )
-            everySuspend { cartProductRepo.getCartProductList() } returns listOf(
-                getCartProductWithCategory("1", "1")
-            )
-
-            assertEquals(
-                expected = listOf(
+            everySuspend { getMenuProductListUseCase() } returns
+                listOf(
+                    getMenuProductWithCategory("1", "1"),
                     getMenuProductWithCategory("2", "2"),
                     getMenuProductWithCategory("3", "3"),
-                    getMenuProductWithCategory("4", "4")
-                ),
-                actual = getRecommendationsUseCase()
+                    getMenuProductWithCategory("4", "4"),
+                    getMenuProductWithCategory("5", "5"),
+                )
+            everySuspend { cartProductRepo.getCartProductList() } returns
+                listOf(
+                    getCartProductWithCategory("1", "1"),
+                )
+
+            assertEquals(
+                expected =
+                    listOf(
+                        getMenuProductWithCategory("2", "2"),
+                        getMenuProductWithCategory("3", "3"),
+                        getMenuProductWithCategory("4", "4"),
+                    ),
+                actual = getRecommendationsUseCase(),
             )
         }
 
@@ -151,25 +167,27 @@ class GetRecommendationsUseCaseTest {
     fun `return recommendations when cartProductList has same category but not all`() =
         runTest {
             everySuspend { recommendationRepository.getMaxVisibleCount() } returns 4
-            everySuspend { getMenuProductListUseCase() } returns listOf(
-                getMenuProductWithCategory("1", "1"),
-                getMenuProductWithCategory("2", "2"),
-                getMenuProductWithCategory("3", "3"),
-                getMenuProductWithCategory("4", "4")
-
-            )
-
-            everySuspend { cartProductRepo.getCartProductList() } returns listOf(
-                getCartProductWithCategory("1", "1")
-            )
-
-            assertEquals(
-                expected = listOf(
+            everySuspend { getMenuProductListUseCase() } returns
+                listOf(
+                    getMenuProductWithCategory("1", "1"),
                     getMenuProductWithCategory("2", "2"),
                     getMenuProductWithCategory("3", "3"),
-                    getMenuProductWithCategory("4", "4")
-                ),
-                actual = getRecommendationsUseCase()
+                    getMenuProductWithCategory("4", "4"),
+                )
+
+            everySuspend { cartProductRepo.getCartProductList() } returns
+                listOf(
+                    getCartProductWithCategory("1", "1"),
+                )
+
+            assertEquals(
+                expected =
+                    listOf(
+                        getMenuProductWithCategory("2", "2"),
+                        getMenuProductWithCategory("3", "3"),
+                        getMenuProductWithCategory("4", "4"),
+                    ),
+                actual = getRecommendationsUseCase(),
             )
         }
 
@@ -177,45 +195,49 @@ class GetRecommendationsUseCaseTest {
     fun `return recommendations when cartProducts has same category but not all and many cartProducts`() =
         runTest {
             everySuspend { recommendationRepository.getMaxVisibleCount() } returns 4
-            everySuspend { getMenuProductListUseCase() } returns listOf(
-                getMenuProductWithCategory("1", "1"),
-                getMenuProductWithCategory("2", "2"),
-                getMenuProductWithCategory("3", "3"),
-                getMenuProductWithCategory("4", "4")
-
-            )
-
-            everySuspend { cartProductRepo.getCartProductList() } returns listOf(
-                getCartProductWithCategory("1", "1"),
-                getCartProductWithCategory("2", "2")
-            )
-            assertEquals(
-                expected = listOf(
+            everySuspend { getMenuProductListUseCase() } returns
+                listOf(
+                    getMenuProductWithCategory("1", "1"),
+                    getMenuProductWithCategory("2", "2"),
                     getMenuProductWithCategory("3", "3"),
-                    getMenuProductWithCategory("4", "4")
-                ),
-                actual = getRecommendationsUseCase()
+                    getMenuProductWithCategory("4", "4"),
+                )
+
+            everySuspend { cartProductRepo.getCartProductList() } returns
+                listOf(
+                    getCartProductWithCategory("1", "1"),
+                    getCartProductWithCategory("2", "2"),
+                )
+            assertEquals(
+                expected =
+                    listOf(
+                        getMenuProductWithCategory("3", "3"),
+                        getMenuProductWithCategory("4", "4"),
+                    ),
+                actual = getRecommendationsUseCase(),
             )
         }
 
-    private fun getCartProductWithCategory(categoryUuid: String, menuProductUuid: String) =
-        getCartProduct(
-            menuProduct = getMenuProductWithCategory(categoryUuid, menuProductUuid)
-        )
+    private fun getCartProductWithCategory(
+        categoryUuid: String,
+        menuProductUuid: String,
+    ) = getCartProduct(
+        menuProduct = getMenuProductWithCategory(categoryUuid, menuProductUuid),
+    )
 
     private fun getMenuProductWithCategory(
         categoryUuid: String,
         menuProductUuid: String,
-        visible: Boolean = true
-    ) =
-        getMenuProduct(
-            uuid = menuProductUuid,
-            categoryList = listOf(
+        visible: Boolean = true,
+    ) = getMenuProduct(
+        uuid = menuProductUuid,
+        categoryList =
+            listOf(
                 getCategoryProduct(
-                    uuid = categoryUuid
-                )
+                    uuid = categoryUuid,
+                ),
             ),
-            visible = visible,
-            isRecommended = true
-        )
+        visible = visible,
+        isRecommended = true,
+    )
 }

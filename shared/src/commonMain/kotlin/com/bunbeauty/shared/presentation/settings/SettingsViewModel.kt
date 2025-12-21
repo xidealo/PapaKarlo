@@ -26,22 +26,25 @@ class SettingsViewModel(
     private val saveSelectedCityUseCase: SaveSelectedCityUseCase,
     private val disableUserUseCase: DisableUserUseCase,
     private val userInteractor: IUserInteractor,
-    private val analyticService: AnalyticService
+    private val analyticService: AnalyticService,
 ) : SharedStateViewModel<SettingsState.DataState, SettingsState.Action, SettingsState.Event>(
-    SettingsState.DataState()
-) {
-
+        SettingsState.DataState(),
+    ) {
     private var observeSettingsJob: Job? = null
 
-    override fun reduce(action: SettingsState.Action, dataState: SettingsState.DataState) {
+    override fun reduce(
+        action: SettingsState.Action,
+        dataState: SettingsState.DataState,
+    ) {
         when (action) {
             SettingsState.Action.BackClick -> backClick()
             SettingsState.Action.LoadData -> loadData()
             SettingsState.Action.OnCityClicked -> onCityClicked()
 
-            SettingsState.Action.OnLogoutClicked -> onLogoutClicked(
-                phoneNumber = dataState.settings?.phoneNumber.toString()
-            )
+            SettingsState.Action.OnLogoutClicked ->
+                onLogoutClicked(
+                    phoneNumber = dataState.settings?.phoneNumber.toString(),
+                )
 
             SettingsState.Action.OnLogoutConfirmClicked -> logout()
 
@@ -64,14 +67,15 @@ class SettingsViewModel(
 
     private fun onLogoutClicked(phoneNumber: String) {
         analyticService.sendEvent(
-            event = LogoutSettingsClickEvent(
-                phone = phoneNumber
-            )
+            event =
+                LogoutSettingsClickEvent(
+                    phone = phoneNumber,
+                ),
         )
 
         setState {
             copy(
-                isShowLogoutBottomSheet = true
+                isShowLogoutBottomSheet = true,
             )
         }
     }
@@ -79,7 +83,7 @@ class SettingsViewModel(
     private fun onCloseLogoutClicked() {
         setState {
             copy(
-                isShowLogoutBottomSheet = false
+                isShowLogoutBottomSheet = false,
             )
         }
     }
@@ -87,7 +91,7 @@ class SettingsViewModel(
     private fun onCloseCityListBottomSheetClicked() {
         setState {
             copy(
-                isShowCityListBottomSheet = false
+                isShowCityListBottomSheet = false,
             )
         }
     }
@@ -95,7 +99,7 @@ class SettingsViewModel(
     private fun onCityClicked() {
         setState {
             copy(
-                isShowCityListBottomSheet = true
+                isShowCityListBottomSheet = true,
             )
         }
     }
@@ -112,7 +116,7 @@ class SettingsViewModel(
             block = {
                 setState {
                     copy(
-                        isShowLogoutBottomSheet = false
+                        isShowLogoutBottomSheet = false,
                     )
                 }
                 observeSettingsJob?.cancel()
@@ -123,7 +127,7 @@ class SettingsViewModel(
             },
             onError = { error ->
                 println(error)
-            }
+            },
         )
     }
 
@@ -137,23 +141,26 @@ class SettingsViewModel(
     @OptIn(ExperimentalCoroutinesApi::class)
     private fun observeSettings() {
         observeSettingsJob?.cancel()
-        observeSettingsJob = observeSelectedCityUseCase().flatMapLatest { city ->
-            observeSettingsUseCase().map { settings ->
-                setState {
-                    val state = if (city == null || settings == null) {
-                        SettingsState.DataState.State.ERROR
-                    } else {
-                        SettingsState.DataState.State.SUCCESS
-                    }
+        observeSettingsJob =
+            observeSelectedCityUseCase()
+                .flatMapLatest { city ->
+                    observeSettingsUseCase().map { settings ->
+                        setState {
+                            val state =
+                                if (city == null || settings == null) {
+                                    SettingsState.DataState.State.ERROR
+                                } else {
+                                    SettingsState.DataState.State.SUCCESS
+                                }
 
-                    copy(
-                        settings = settings,
-                        selectedCity = city,
-                        state = state
-                    )
-                }
-            }
-        }.launchIn(sharedScope)
+                            copy(
+                                settings = settings,
+                                selectedCity = city,
+                                state = state,
+                            )
+                        }
+                    }
+                }.launchIn(sharedScope)
     }
 
     private fun loadCityList() {
@@ -165,7 +172,7 @@ class SettingsViewModel(
             },
             onError = { error ->
                 println(error)
-            }
+            },
         )
     }
 }

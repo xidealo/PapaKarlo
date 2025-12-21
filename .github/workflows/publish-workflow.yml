@@ -72,7 +72,8 @@ jobs:
           "usadba",
           "emoji",
           "estpoest",
-          "taverna"
+          "taverna",
+          "voljane"
         ]
     steps:
       - uses: actions/checkout@v4

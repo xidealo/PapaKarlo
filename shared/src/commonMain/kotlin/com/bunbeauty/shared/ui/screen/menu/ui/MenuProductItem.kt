@@ -8,17 +8,17 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.text.style.TextDecoration
-import org.jetbrains.compose.ui.tooling.preview.Preview
-import papakarlo.shared.generated.resources.Res
-import com.bunbeauty.designsystem.ui.element.FoodDeliveryAsyncImage
-import com.bunbeauty.designsystem.ui.element.OverflowingText
-import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.theme.bold
+import com.bunbeauty.designsystem.ui.element.FoodDeliveryAsyncImage
+import com.bunbeauty.designsystem.ui.element.OverflowingText
 import com.bunbeauty.designsystem.ui.element.button.SmallButton
+import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.shared.ui.screen.menu.state.MenuItemUi
+import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
+import papakarlo.shared.generated.resources.Res
 import papakarlo.shared.generated.resources.action_product_want
 import papakarlo.shared.generated.resources.description_product
 

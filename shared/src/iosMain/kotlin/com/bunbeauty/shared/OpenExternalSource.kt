@@ -21,7 +21,7 @@ actual class OpenExternalSource {
         UIApplication.sharedApplication.openURL(
             url = url,
             options = emptyMap<Any?, Any?>(),
-            completionHandler = null
+            completionHandler = null,
         )
     }
 }

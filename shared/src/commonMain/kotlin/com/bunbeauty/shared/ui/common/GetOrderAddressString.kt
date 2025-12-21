@@ -18,31 +18,31 @@ fun OrderAddress.getOrderAddressString(): String =
         val entranceShort = stringResource(Res.string.msg_address_entrance_short)
         val floorShort = stringResource(Res.string.msg_address_floor_short)
         street +
-                getStringPart(
-                    ADDRESS_DIVIDER,
-                    houseShort,
-                    house
-                ) +
-                getStringPart(
-                    ADDRESS_DIVIDER,
-                    flatShort,
-                    flat
-                ) +
-                getInvertedStringPart(
-                    ADDRESS_DIVIDER,
-                    entrance,
-                    entranceShort
-                ) +
-                getInvertedStringPart(
-                    ADDRESS_DIVIDER,
-                    floor,
-                    floorShort
-                ) +
-                getStringPart(
-                    ADDRESS_DIVIDER,
-                    "",
-                    comment
-                )
+            getStringPart(
+                ADDRESS_DIVIDER,
+                houseShort,
+                house,
+            ) +
+            getStringPart(
+                ADDRESS_DIVIDER,
+                flatShort,
+                flat,
+            ) +
+            getInvertedStringPart(
+                ADDRESS_DIVIDER,
+                entrance,
+                entranceShort,
+            ) +
+            getInvertedStringPart(
+                ADDRESS_DIVIDER,
+                floor,
+                floorShort,
+            ) +
+            getStringPart(
+                ADDRESS_DIVIDER,
+                "",
+                comment,
+            )
     } else {
         description
     }

@@ -16,9 +16,10 @@ class GetMenuProductUseCaseTest {
     private val menuProductRepo: MenuProductRepo = mock()
     private val menuProductUuid = "menuProductUuid"
 
-    private val getMenuProductUseCase: GetMenuProductUseCase = GetMenuProductUseCase(
-        menuProductRepo = menuProductRepo
-    )
+    private val getMenuProductUseCase: GetMenuProductUseCase =
+        GetMenuProductUseCase(
+            menuProductRepo = menuProductRepo,
+        )
 
     @Test
     fun `should return menu product with addition group list sorted by priority`() =
@@ -27,21 +28,25 @@ class GetMenuProductUseCaseTest {
             val additionGroup10 = getAdditionGroup(priority = 10)
             val additionGroup2 = getAdditionGroup(priority = 2)
 
-            val initialAdditionGroups = listOf(
-                additionGroup10,
-                additionGroup2
-            )
-
-            val initialMenuProduct = getMenuProduct(
-                additionGroups = initialAdditionGroups
-            )
-
-            val menuProductWithSortedAdditionGroups = getMenuProduct(
-                additionGroups = listOf(
+            val initialAdditionGroups =
+                listOf(
+                    additionGroup10,
                     additionGroup2,
-                    additionGroup10
                 )
-            )
+
+            val initialMenuProduct =
+                getMenuProduct(
+                    additionGroups = initialAdditionGroups,
+                )
+
+            val menuProductWithSortedAdditionGroups =
+                getMenuProduct(
+                    additionGroups =
+                        listOf(
+                            additionGroup2,
+                            additionGroup10,
+                        ),
+                )
 
             everySuspend { menuProductRepo.getMenuProductByUuid(menuProductUuid) } returns initialMenuProduct
 
@@ -51,7 +56,7 @@ class GetMenuProductUseCaseTest {
             // Then
             assertEquals(
                 expected = menuProductWithSortedAdditionGroups,
-                actual = result
+                actual = result,
             )
         }
 
@@ -62,20 +67,24 @@ class GetMenuProductUseCaseTest {
             val additionGroup10 = getAdditionGroup(priority = 10)
             val additionGroup2 = getAdditionGroup(priority = 2, isVisible = false)
 
-            val initialAdditionGroups = listOf(
-                additionGroup10,
-                additionGroup2
-            )
-
-            val initialMenuProduct = getMenuProduct(
-                additionGroups = initialAdditionGroups
-            )
-
-            val menuProductWithFilteredAdditionGroups = getMenuProduct(
-                additionGroups = listOf(
-                    additionGroup10
+            val initialAdditionGroups =
+                listOf(
+                    additionGroup10,
+                    additionGroup2,
                 )
-            )
+
+            val initialMenuProduct =
+                getMenuProduct(
+                    additionGroups = initialAdditionGroups,
+                )
+
+            val menuProductWithFilteredAdditionGroups =
+                getMenuProduct(
+                    additionGroups =
+                        listOf(
+                            additionGroup10,
+                        ),
+                )
 
             everySuspend { menuProductRepo.getMenuProductByUuid(menuProductUuid) } returns initialMenuProduct
 
@@ -85,7 +94,7 @@ class GetMenuProductUseCaseTest {
             // Then
             assertEquals(
                 expected = menuProductWithFilteredAdditionGroups,
-                actual = result
+                actual = result,
             )
         }
 
@@ -97,31 +106,37 @@ class GetMenuProductUseCaseTest {
             val addition10 = getAddition(priority = 10)
             val addition2 = getAddition(priority = 2)
 
-            val initialAdditionGroups = listOf(
-                getAdditionGroup(
-                    additions = listOf(
-                        addition10,
-                        addition2
-                    )
+            val initialAdditionGroups =
+                listOf(
+                    getAdditionGroup(
+                        additions =
+                            listOf(
+                                addition10,
+                                addition2,
+                            ),
+                    ),
                 )
-            )
 
-            val additionGroupsWithSortedAdditions = listOf(
-                getAdditionGroup(
-                    additions = listOf(
-                        addition2,
-                        addition10
-                    )
+            val additionGroupsWithSortedAdditions =
+                listOf(
+                    getAdditionGroup(
+                        additions =
+                            listOf(
+                                addition2,
+                                addition10,
+                            ),
+                    ),
                 )
-            )
 
-            val initialMenuProduct = getMenuProduct(
-                additionGroups = initialAdditionGroups
-            )
+            val initialMenuProduct =
+                getMenuProduct(
+                    additionGroups = initialAdditionGroups,
+                )
 
-            val menuProductWithSortedAdditionGroups = getMenuProduct(
-                additionGroups = additionGroupsWithSortedAdditions
-            )
+            val menuProductWithSortedAdditionGroups =
+                getMenuProduct(
+                    additionGroups = additionGroupsWithSortedAdditions,
+                )
 
             everySuspend { menuProductRepo.getMenuProductByUuid(menuProductUuid) } returns initialMenuProduct
 
@@ -131,7 +146,7 @@ class GetMenuProductUseCaseTest {
             // Then
             assertEquals(
                 expected = menuProductWithSortedAdditionGroups,
-                actual = result
+                actual = result,
             )
         }
 
@@ -143,30 +158,36 @@ class GetMenuProductUseCaseTest {
             val addition10 = getAddition(priority = 10)
             val addition2 = getAddition(priority = 2, isVisible = false)
 
-            val initialAdditionGroups = listOf(
-                getAdditionGroup(
-                    additions = listOf(
-                        addition10,
-                        addition2
-                    )
+            val initialAdditionGroups =
+                listOf(
+                    getAdditionGroup(
+                        additions =
+                            listOf(
+                                addition10,
+                                addition2,
+                            ),
+                    ),
                 )
-            )
 
-            val additionGroupsWithFilttredAdditions = listOf(
-                getAdditionGroup(
-                    additions = listOf(
-                        addition10
-                    )
+            val additionGroupsWithFilttredAdditions =
+                listOf(
+                    getAdditionGroup(
+                        additions =
+                            listOf(
+                                addition10,
+                            ),
+                    ),
                 )
-            )
 
-            val initialMenuProduct = getMenuProduct(
-                additionGroups = initialAdditionGroups
-            )
+            val initialMenuProduct =
+                getMenuProduct(
+                    additionGroups = initialAdditionGroups,
+                )
 
-            val menuProductWithFilteredAdditionGroups = getMenuProduct(
-                additionGroups = additionGroupsWithFilttredAdditions
-            )
+            val menuProductWithFilteredAdditionGroups =
+                getMenuProduct(
+                    additionGroups = additionGroupsWithFilttredAdditions,
+                )
 
             everySuspend { menuProductRepo.getMenuProductByUuid(menuProductUuid) } returns initialMenuProduct
 
@@ -176,7 +197,7 @@ class GetMenuProductUseCaseTest {
             // Then
             assertEquals(
                 expected = menuProductWithFilteredAdditionGroups,
-                actual = result
+                actual = result,
             )
         }
 }

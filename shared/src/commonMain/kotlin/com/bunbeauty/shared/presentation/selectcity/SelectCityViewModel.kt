@@ -8,12 +8,12 @@ import com.bunbeauty.shared.presentation.base.SharedStateViewModel
 class SelectCityViewModel(
     private val cityInteractor: ICityInteractor,
 ) : SharedStateViewModel<SelectCityDataState.DataState, SelectCityDataState.Action, SelectCityDataState.Event>(
-    initDataState = SelectCityDataState.DataState(
-        state = SelectCityDataState.DataState.State.LOADING,
-        cityList = emptyList()
-    )
-) {
-
+        initDataState =
+            SelectCityDataState.DataState(
+                state = SelectCityDataState.DataState.State.LOADING,
+                cityList = emptyList(),
+            ),
+    ) {
     override fun reduce(
         action: SelectCityDataState.Action,
         dataState: SelectCityDataState.DataState,
@@ -32,7 +32,7 @@ class SelectCityViewModel(
                 setState {
                     copy(
                         state = SelectCityDataState.DataState.State.SUCCESS,
-                        cityList = cityInteractor.getCityList() ?: emptyList()
+                        cityList = cityInteractor.getCityList() ?: emptyList(),
                     )
                 }
             },
@@ -40,8 +40,7 @@ class SelectCityViewModel(
                 setState {
                     copy(state = SelectCityDataState.DataState.State.ERROR)
                 }
-            }
-
+            },
         )
     }
 
@@ -57,7 +56,7 @@ class SelectCityViewModel(
                 setState {
                     copy(state = SelectCityDataState.DataState.State.ERROR)
                 }
-            }
+            },
         )
     }
 }

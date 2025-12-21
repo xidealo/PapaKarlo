@@ -20,5 +20,5 @@ data class AdditionServer(
     @SerialName("uuid")
     val uuid: String,
     @SerialName("priority")
-    val priority: Int
+    val priority: Int,
 )

@@ -4,5 +4,5 @@ class SocialNetworkLinks(
     val vkLink: String?,
     val instagramLink: String?,
     val googlePlayLink: String?,
-    val appStoreLink: String?
+    val appStoreLink: String?,
 )

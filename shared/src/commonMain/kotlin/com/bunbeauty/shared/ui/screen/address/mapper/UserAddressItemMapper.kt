@@ -1,13 +1,13 @@
 package com.bunbeauty.shared.ui.screen.address.mapper
 
 import androidx.compose.runtime.Composable
-import org.jetbrains.compose.resources.stringResource
-import papakarlo.shared.generated.resources.Res
 import com.bunbeauty.shared.Constants.ADDRESS_DIVIDER
 import com.bunbeauty.shared.domain.model.address.SelectableUserAddress
 import com.bunbeauty.shared.domain.model.address.UserAddress
 import com.bunbeauty.shared.domain.model.address.UserAddressWithCity
 import com.bunbeauty.shared.ui.screen.address.model.UserAddressItem
+import org.jetbrains.compose.resources.stringResource
+import papakarlo.shared.generated.resources.Res
 import papakarlo.shared.generated.resources.msg_address_entrance_short
 import papakarlo.shared.generated.resources.msg_address_flat_short
 import papakarlo.shared.generated.resources.msg_address_floor_short

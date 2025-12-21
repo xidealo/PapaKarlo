@@ -14,17 +14,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
-import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.text.style.TextDecoration
-import org.jetbrains.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import papakarlo.shared.generated.resources.Res
-import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.theme.bold
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryAsyncImage
 import com.bunbeauty.designsystem.ui.element.OverflowingText
+import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.shared.ui.screen.consumercart.state.ConsumerCartViewState
+import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
+import papakarlo.shared.generated.resources.Res
 import papakarlo.shared.generated.resources.description_product
 
 @Composable
@@ -81,10 +81,11 @@ fun CartProductItem(
                     ) {
                         cartProductItem.additions?.let { additions ->
                             Text(
-                                modifier = Modifier
-                                    .padding(
-                                        end = FoodDeliveryTheme.dimensions.smallSpace
-                                    ),
+                                modifier =
+                                    Modifier
+                                        .padding(
+                                            end = FoodDeliveryTheme.dimensions.smallSpace,
+                                        ),
                                 text = additions,
                                 style = FoodDeliveryTheme.typography.bodySmall,
                                 color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,

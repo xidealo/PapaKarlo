@@ -12,40 +12,43 @@ class GetCartTotalFlowUseCase(
     private val getDiscountUseCase: GetDiscountUseCase,
     private val getNewTotalCostUseCase: GetNewTotalCostUseCase,
     private val getOldTotalCostUseCase: GetOldTotalCostUseCase,
-    private val getDeliveryCostFlowUseCase: GetDeliveryCostFlowUseCase
+    private val getDeliveryCostFlowUseCase: GetDeliveryCostFlowUseCase,
 ) {
-
     suspend operator fun invoke(isDelivery: Boolean): Flow<CartTotal> {
         val cartProductList = cartProductRepo.getCartProductList()
 
         val newTotalCost = getNewTotalCostUseCase(cartProductList)
-        val oldTotalCost = checkOldTotalCost(
-            oldTotalCost = getOldTotalCostUseCase(cartProductList),
-            newTotalCost = newTotalCost
-        )
+        val oldTotalCost =
+            checkOldTotalCost(
+                oldTotalCost = getOldTotalCostUseCase(cartProductList),
+                newTotalCost = newTotalCost,
+            )
 
         return getDeliveryCostFlowUseCase(
             newTotalCost = newTotalCost,
-            isDelivery = isDelivery
+            isDelivery = isDelivery,
         ).map { deliveryCost ->
             CartTotal(
                 discount = getDiscountUseCase()?.firstOrderDiscount,
                 deliveryCost = deliveryCost,
                 oldTotalCost = oldTotalCost,
                 newTotalCost = newTotalCost,
-                oldFinalCost = oldTotalCost?.let {
-                    oldTotalCost + (deliveryCost ?: 0)
-                },
-                newFinalCost = newTotalCost + (deliveryCost ?: 0)
+                oldFinalCost =
+                    oldTotalCost?.let {
+                        oldTotalCost + (deliveryCost ?: 0)
+                    },
+                newFinalCost = newTotalCost + (deliveryCost ?: 0),
             )
         }
     }
 
-    private fun checkOldTotalCost(oldTotalCost: Int, newTotalCost: Int): Int? {
-        return if (oldTotalCost == newTotalCost) {
+    private fun checkOldTotalCost(
+        oldTotalCost: Int,
+        newTotalCost: Int,
+    ): Int? =
+        if (oldTotalCost == newTotalCost) {
             null
         } else {
             oldTotalCost
         }
-    }
 }

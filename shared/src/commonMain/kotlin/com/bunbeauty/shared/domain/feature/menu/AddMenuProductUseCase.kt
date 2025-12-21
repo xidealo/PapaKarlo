@@ -7,9 +7,8 @@ import com.bunbeauty.shared.domain.repo.CartProductRepo
 
 class AddMenuProductUseCase(
     private val getCartProductCountUseCase: GetCartProductCountUseCase,
-    private val cartProductRepo: CartProductRepo
+    private val cartProductRepo: CartProductRepo,
 ) {
-
     suspend operator fun invoke(menuProductUuid: String) {
         if (getCartProductCountUseCase() >= CART_PRODUCT_LIMIT) {
             throw CartProductLimitReachedException()
@@ -21,7 +20,7 @@ class AddMenuProductUseCase(
         } else {
             cartProductRepo.updateCartProductCount(
                 cartProductUuid = cartProductList.first().uuid,
-                count = cartProductList.first().count + 1
+                count = cartProductList.first().count + 1,
             )
         }
     }

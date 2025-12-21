@@ -8,9 +8,8 @@ import com.bunbeauty.shared.domain.model.address.CreatedUserAddress
 import com.bunbeauty.shared.domain.model.address.UserAddress
 
 class UserAddressMapper {
-
-    fun toUserAddress(userAddressEntity: UserAddressEntity): UserAddress {
-        return userAddressEntity.run {
+    fun toUserAddress(userAddressEntity: UserAddressEntity): UserAddress =
+        userAddressEntity.run {
             UserAddress(
                 uuid = uuid,
                 street = streetName,
@@ -24,13 +23,12 @@ class UserAddressMapper {
                 forLowDeliveryCost = forLowDeliveryCost,
                 lowDeliveryCost = lowDeliveryCost,
                 userUuid = userUuid,
-                cafeUuid = cafeUuid
+                cafeUuid = cafeUuid,
             )
         }
-    }
 
-    fun toUserAddress(addressServer: AddressServer): UserAddress {
-        return addressServer.run {
+    fun toUserAddress(addressServer: AddressServer): UserAddress =
+        addressServer.run {
             UserAddress(
                 uuid = uuid,
                 street = street,
@@ -44,13 +42,12 @@ class UserAddressMapper {
                 forLowDeliveryCost = forLowDeliveryCost,
                 lowDeliveryCost = lowDeliveryCost,
                 userUuid = userUuid,
-                cafeUuid = cafeUuid
+                cafeUuid = cafeUuid,
             )
         }
-    }
 
-    fun toUserAddressEntity(addressServer: AddressServer): UserAddressEntity {
-        return addressServer.run {
+    fun toUserAddressEntity(addressServer: AddressServer): UserAddressEntity =
+        addressServer.run {
             UserAddressEntity(
                 uuid = uuid,
                 streetName = street,
@@ -65,24 +62,23 @@ class UserAddressMapper {
                 forLowDeliveryCost = forLowDeliveryCost,
                 lowDeliveryCost = lowDeliveryCost,
                 userUuid = userUuid,
-                cafeUuid = cafeUuid
+                cafeUuid = cafeUuid,
             )
         }
-    }
 
-    fun toUserAddressPostServer(createdUserAddress: CreatedUserAddress): UserAddressPostServer {
-        return UserAddressPostServer(
-            street = UserAddressStreetPostServer(
-                fiasId = createdUserAddress.street.fiasId,
-                name = createdUserAddress.street.street
-            ),
+    fun toUserAddressPostServer(createdUserAddress: CreatedUserAddress): UserAddressPostServer =
+        UserAddressPostServer(
+            street =
+                UserAddressStreetPostServer(
+                    fiasId = createdUserAddress.street.fiasId,
+                    name = createdUserAddress.street.street,
+                ),
             house = createdUserAddress.house,
             flat = createdUserAddress.flat,
             entrance = createdUserAddress.entrance,
             floor = createdUserAddress.floor,
             comment = createdUserAddress.comment,
             isVisible = createdUserAddress.isVisible,
-            cityUuid = createdUserAddress.cityUuid
+            cityUuid = createdUserAddress.cityUuid,
         )
-    }
 }

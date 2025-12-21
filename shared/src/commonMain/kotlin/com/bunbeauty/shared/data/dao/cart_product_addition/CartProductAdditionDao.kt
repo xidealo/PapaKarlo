@@ -3,8 +3,9 @@ package com.bunbeauty.shared.data.dao.cart_product_addition
 import com.bunbeauty.shared.db.CartProductAdditionEntity
 import com.bunbeauty.shared.db.FoodDeliveryDatabase
 
-class CartProductAdditionDao(foodDeliveryDatabase: FoodDeliveryDatabase) : ICartProductAdditionDao {
-
+class CartProductAdditionDao(
+    foodDeliveryDatabase: FoodDeliveryDatabase,
+) : ICartProductAdditionDao {
     private val cartProductAdditionEntityQueries =
         foodDeliveryDatabase.cartProductAdditionEntityQueries
 

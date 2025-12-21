@@ -16,5 +16,5 @@ data class OrderWithAmounts(
     val deliveryCost: Int?,
     val orderProductList: List<OrderProductWithCosts>,
     val oldAmountToPay: Int?,
-    val newAmountToPay: Int
+    val newAmountToPay: Int,
 )

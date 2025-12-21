@@ -23,9 +23,10 @@ actual class OpenExternalSource(
         action: String,
         uri: String,
     ) {
-        val intent = Intent(action, uri.toUri()).apply {
-            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        }
+        val intent =
+            Intent(action, uri.toUri()).apply {
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
         context.startActivity(intent)
     }
 }

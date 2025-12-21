@@ -88,23 +88,23 @@ fun NavGraphBuilder.foodDeliveryNavGraphBuilder(
         goToConsumerCart = {
             navController.navigateConsumerCartScreen(emptyNavOptions)
         },
-        showErrorMessage = showErrorMessage
+        showErrorMessage = showErrorMessage,
     )
     productDetailsScreenRoute(
         back = navController::navigateUp,
         showErrorMessage = showErrorMessage,
-        showInfoMessage = showInfoMessage
+        showInfoMessage = showInfoMessage,
     )
     orderDetailsScreenRoute(back = navController::navigateUp)
     settingsScreenRoute(
         back = navController::navigateUp,
         showErrorMessage = showErrorMessage,
-        showInfoMessage = showInfoMessage
+        showInfoMessage = showInfoMessage,
     )
     createAddressScreenRoute(
         back = navController::navigateUp,
         showErrorMessage = showErrorMessage,
-        showInfoMessage = showInfoMessage
+        showInfoMessage = showInfoMessage,
     )
     orderListScreenRoute(
         back = navController::navigateUp,
@@ -129,11 +129,11 @@ fun NavGraphBuilder.foodDeliveryNavGraphBuilder(
             )
         },
         goToProductFragment = {
-                uuid,
-                name,
-                productDetailsOpenedFrom,
-                additionUuidList,
-                cartProductUuid,
+            uuid,
+            name,
+            productDetailsOpenedFrom,
+            additionUuidList,
+            cartProductUuid,
             ->
             navController.navigateToProductDetailsScreen(
                 uuid = uuid,
@@ -174,7 +174,7 @@ fun NavGraphBuilder.foodDeliveryNavGraphBuilder(
             navController.navigateToCreateAddressScreenDestination(emptyNavOptions)
         },
         showErrorMessage = showErrorMessage,
-        showInfoMessage = showInfoMessage
+        showInfoMessage = showInfoMessage,
     )
     userAddressListScreenRoute(
         back = navController::navigateUp,

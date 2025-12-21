@@ -6,15 +6,18 @@ import com.bunbeauty.shared.extension.launchSafe
 import com.bunbeauty.shared.presentation.base.SharedStateViewModel
 
 class UpdateViewModel(
-    private val getLinkUseCase: GetLinkUseCase
+    private val getLinkUseCase: GetLinkUseCase,
 ) : SharedStateViewModel<UpdateState.DataState, UpdateState.Action, UpdateState.Event>(
-    initDataState = UpdateState.DataState(
-        link = null,
-        state = UpdateState.DataState.State.LOADING
-    )
-) {
-
-    override fun reduce(action: UpdateState.Action, dataState: UpdateState.DataState) {
+        initDataState =
+            UpdateState.DataState(
+                link = null,
+                state = UpdateState.DataState.State.LOADING,
+            ),
+    ) {
+    override fun reduce(
+        action: UpdateState.Action,
+        dataState: UpdateState.DataState,
+    ) {
         when (action) {
             is UpdateState.Action.Init -> updateLink(linkType = action.linkType)
 
@@ -32,22 +35,23 @@ class UpdateViewModel(
                 val link = getLinkUseCase(linkType = linkType)
                 setState {
                     copy(
-                        state = if (link == null) {
-                            UpdateState.DataState.State.ERROR
-                        } else {
-                            UpdateState.DataState.State.SUCCESS
-                        },
-                        link = link
+                        state =
+                            if (link == null) {
+                                UpdateState.DataState.State.ERROR
+                            } else {
+                                UpdateState.DataState.State.SUCCESS
+                            },
+                        link = link,
                     )
                 }
             },
             onError = {
                 setState {
                     copy(
-                        state = UpdateState.DataState.State.ERROR
+                        state = UpdateState.DataState.State.ERROR,
                     )
                 }
-            }
+            },
         )
     }
 }

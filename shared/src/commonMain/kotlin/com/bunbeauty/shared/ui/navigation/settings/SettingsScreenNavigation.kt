@@ -10,8 +10,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data object SettingsScreenDestination
 
-fun NavController.navigateToSettingsScreen(navOptions: NavOptions) =
-    navigate(route = SettingsScreenDestination, navOptions)
+fun NavController.navigateToSettingsScreen(navOptions: NavOptions) = navigate(route = SettingsScreenDestination, navOptions)
 
 fun NavGraphBuilder.settingsScreenRoute(
     back: () -> Unit,

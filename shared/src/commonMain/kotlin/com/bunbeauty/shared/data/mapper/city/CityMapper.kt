@@ -5,29 +5,25 @@ import com.bunbeauty.shared.db.CityEntity
 import com.bunbeauty.shared.domain.model.city.City
 
 class CityMapper : ICityMapper {
-
-    override fun toCityEntity(cityServer: CityServer): CityEntity {
-        return CityEntity(
+    override fun toCityEntity(cityServer: CityServer): CityEntity =
+        CityEntity(
             uuid = cityServer.uuid,
             name = cityServer.name,
             timeZone = cityServer.timeZone,
-            isVisible = cityServer.isVisible
+            isVisible = cityServer.isVisible,
         )
-    }
 
-    override fun toCity(cityServer: CityServer): City {
-        return City(
+    override fun toCity(cityServer: CityServer): City =
+        City(
             uuid = cityServer.uuid,
             name = cityServer.name,
-            timeZone = cityServer.timeZone
+            timeZone = cityServer.timeZone,
         )
-    }
 
-    override fun toCity(cityEntity: CityEntity): City {
-        return City(
+    override fun toCity(cityEntity: CityEntity): City =
+        City(
             uuid = cityEntity.uuid,
             name = cityEntity.name,
-            timeZone = cityEntity.timeZone
+            timeZone = cityEntity.timeZone,
         )
-    }
 }

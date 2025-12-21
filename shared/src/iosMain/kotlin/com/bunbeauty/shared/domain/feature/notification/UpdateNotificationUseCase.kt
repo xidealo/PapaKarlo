@@ -7,7 +7,7 @@ import kotlinx.cinterop.ExperimentalForeignApi
 import kotlin.coroutines.suspendCoroutine
 
 actual class UpdateNotificationUseCase(
-    private val userRepository: UserRepo
+    private val userRepository: UserRepo,
 ) {
     actual suspend operator fun invoke() {
         try {
@@ -18,8 +18,8 @@ actual class UpdateNotificationUseCase(
     }
 
     @OptIn(ExperimentalForeignApi::class)
-    private suspend fun getNotificationToken(): String {
-        return suspendCoroutine { continuation ->
+    private suspend fun getNotificationToken(): String =
+        suspendCoroutine { continuation ->
             FIRMessaging.messaging().tokenWithCompletion { token, error ->
                 if (error != null) {
                     continuation.resumeWith(Result.failure(Exception(error.toString())))
@@ -32,5 +32,4 @@ actual class UpdateNotificationUseCase(
                 }
             }
         }
-    }
 }

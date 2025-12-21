@@ -13,7 +13,7 @@ import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import papakarlo.designsystem.generated.resources.Res
-import papakarlo.designsystem.generated.resources.action_create_order_create_order
+import papakarlo.designsystem.generated.resources.preview_string
 
 @Composable
 fun SmallButton(
@@ -49,7 +49,7 @@ private fun SmallButtonPreview() {
     FoodDeliveryTheme {
         SmallButton(
             modifier = Modifier.wrapContentSize(),
-            textStringId = Res.string.action_create_order_create_order,
+            textStringId = Res.string.preview_string,
             onClick = { },
         )
     }

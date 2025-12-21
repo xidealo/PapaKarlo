@@ -8,19 +8,22 @@ import com.bunbeauty.shared.presentation.base.BaseEvent
 interface SelectCityDataState {
     data class DataState(
         val state: State,
-        val cityList: List<City> = emptyList()
+        val cityList: List<City> = emptyList(),
     ) : BaseDataState {
-
         enum class State {
             LOADING,
             SUCCESS,
-            ERROR
+            ERROR,
         }
     }
 
     sealed interface Action : BaseAction {
         data object OnRefreshClicked : Action
-        data class OnCitySelected(val city: City) : Action
+
+        data class OnCitySelected(
+            val city: City,
+        ) : Action
+
         data object GetCityList : Action
     }
 

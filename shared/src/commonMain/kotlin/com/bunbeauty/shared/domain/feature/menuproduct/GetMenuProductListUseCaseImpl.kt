@@ -8,20 +8,19 @@ interface GetMenuProductListUseCase {
 }
 
 class GetMenuProductListUseCaseImpl(
-    private val menuProductRepo: MenuProductRepo
+    private val menuProductRepo: MenuProductRepo,
 ) : GetMenuProductListUseCase {
-
-    override suspend operator fun invoke(): List<MenuProduct> {
-        return menuProductRepo.getMenuProductList()
+    override suspend operator fun invoke(): List<MenuProduct> =
+        menuProductRepo
+            .getMenuProductList()
             .filter { menuProduct ->
                 menuProduct.visible
-            }
-            .map { menuProduct ->
+            }.map { menuProduct ->
                 menuProduct.copy(
-                    additionGroups = menuProduct.additionGroups.filter { additionGroup ->
-                        additionGroup.isVisible
-                    }
+                    additionGroups =
+                        menuProduct.additionGroups.filter { additionGroup ->
+                            additionGroup.isVisible
+                        },
                 )
             }
-    }
 }

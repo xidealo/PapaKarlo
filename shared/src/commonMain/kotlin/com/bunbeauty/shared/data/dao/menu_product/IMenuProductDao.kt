@@ -5,7 +5,6 @@ import com.bunbeauty.shared.db.MenuProductWithCategoryEntity
 import kotlinx.coroutines.flow.Flow
 
 interface IMenuProductDao {
-
     suspend fun insertMenuProductList(menuProductList: List<MenuProductEntity>)
 
     suspend fun getMenuProductWithCategoryList(): List<MenuProductWithCategoryEntity>

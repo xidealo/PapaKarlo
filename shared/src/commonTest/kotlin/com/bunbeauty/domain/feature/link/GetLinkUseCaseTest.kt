@@ -13,40 +13,43 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
 class GetLinkUseCaseTest {
-
     private val linkRepo: LinkRepo = mock()
-    private val getLinkUseCase: GetLinkUseCase = GetLinkUseCase(
-        linkRepo = linkRepo
-    )
-
-    @Test
-    fun `returns link when link with matching type exists`() = runTest {
-        // Given
-        val linkType = LinkType.GOOGLE_PLAY
-        val expectedLink = Link(
-            type = linkType,
-            uuid = "uuid",
-            linkValue = "https://promo.example.com"
+    private val getLinkUseCase: GetLinkUseCase =
+        GetLinkUseCase(
+            linkRepo = linkRepo,
         )
-        everySuspend { linkRepo.getLinkList() } returns listOf(expectedLink)
-
-        // When
-        val result = getLinkUseCase.invoke(linkType)
-
-        // Then
-        assertEquals(expectedLink, result)
-    }
 
     @Test
-    fun `returns null when no link with matching type exists`() = runTest {
-        // Given
-        val linkType = LinkType.GOOGLE_PLAY
-        everySuspend { linkRepo.getLinkList() } returns emptyList()
+    fun `returns link when link with matching type exists`() =
+        runTest {
+            // Given
+            val linkType = LinkType.GOOGLE_PLAY
+            val expectedLink =
+                Link(
+                    type = linkType,
+                    uuid = "uuid",
+                    linkValue = "https://promo.example.com",
+                )
+            everySuspend { linkRepo.getLinkList() } returns listOf(expectedLink)
 
-        // When
-        val result = getLinkUseCase.invoke(linkType)
+            // When
+            val result = getLinkUseCase.invoke(linkType)
 
-        // Then
-        assertNull(result)
-    }
+            // Then
+            assertEquals(expectedLink, result)
+        }
+
+    @Test
+    fun `returns null when no link with matching type exists`() =
+        runTest {
+            // Given
+            val linkType = LinkType.GOOGLE_PLAY
+            everySuspend { linkRepo.getLinkList() } returns emptyList()
+
+            // When
+            val result = getLinkUseCase.invoke(linkType)
+
+            // Then
+            assertNull(result)
+        }
 }

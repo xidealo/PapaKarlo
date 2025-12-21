@@ -8,17 +8,16 @@ import kotlinx.coroutines.flow.map
 interface GetDeliveryCostFlowUseCase {
     suspend operator fun invoke(
         newTotalCost: Int,
-        isDelivery: Boolean? = null
+        isDelivery: Boolean? = null,
     ): Flow<Int?>
 }
 
 class GetDeliveryCostFlowUseCaseImpl(
-    private val getCurrentUserAddressFlowUseCase: GetCurrentUserAddressFlowUseCase
+    private val getCurrentUserAddressFlowUseCase: GetCurrentUserAddressFlowUseCase,
 ) : GetDeliveryCostFlowUseCase {
-
     override suspend operator fun invoke(
         newTotalCost: Int,
-        isDelivery: Boolean?
+        isDelivery: Boolean?,
     ): Flow<Int?> {
         if (isDelivery == false) {
             return flowOf(null)

@@ -36,56 +36,57 @@ import com.bunbeauty.shared.data.dao.user_address.IUserAddressDao
 import com.bunbeauty.shared.data.dao.user_address.UserAddressDao
 import org.koin.dsl.module
 
-fun databaseModule() = module {
-    single<ICafeDao> {
-        CafeDao(foodDeliveryDatabase = get())
+fun databaseModule() =
+    module {
+        single<ICafeDao> {
+            CafeDao(foodDeliveryDatabase = get())
+        }
+        single<ICartProductDao> {
+            CartProductDao(foodDeliveryDatabase = get())
+        }
+        single<ICityDao> {
+            CityDao(foodDeliveryDatabase = get())
+        }
+        single<IMenuProductDao> {
+            MenuProductDao(foodDeliveryDatabase = get())
+        }
+        single<ICategoryDao> {
+            CategoryDao(foodDeliveryDatabase = get())
+        }
+        single<IMenuProductCategoryReferenceDao> {
+            MenuProductCategoryReferenceDao(foodDeliveryDatabase = get())
+        }
+        single<IUserDao> {
+            UserDao(foodDeliveryDatabase = get())
+        }
+        single<IUserAddressDao> {
+            UserAddressDao(foodDeliveryDatabase = get())
+        }
+        single<IOrderDao> {
+            OrderDao(foodDeliveryDatabase = get())
+        }
+        single<IPaymentMethodDao> {
+            PaymentMethodDao(foodDeliveryDatabase = get())
+        }
+        single<ILinkDao> {
+            LinkDao(foodDeliveryDatabase = get())
+        }
+        single<ICartProductAdditionDao> {
+            CartProductAdditionDao(foodDeliveryDatabase = get())
+        }
+        single<IOrderProductDao> {
+            OrderProductDao(foodDeliveryDatabase = get())
+        }
+        single<IAdditionDao> {
+            AdditionDao(foodDeliveryDatabase = get())
+        }
+        single<IOrderAdditionDao> {
+            OrderAdditionDao(foodDeliveryDatabase = get())
+        }
+        single<IAdditionGroupDao> {
+            AdditionGroupDao(foodDeliveryDatabase = get())
+        }
+        single<LightOrderDao> {
+            LightOrderDaoImpl(foodDeliveryDatabase = get())
+        }
     }
-    single<ICartProductDao> {
-        CartProductDao(foodDeliveryDatabase = get())
-    }
-    single<ICityDao> {
-        CityDao(foodDeliveryDatabase = get())
-    }
-    single<IMenuProductDao> {
-        MenuProductDao(foodDeliveryDatabase = get())
-    }
-    single<ICategoryDao> {
-        CategoryDao(foodDeliveryDatabase = get())
-    }
-    single<IMenuProductCategoryReferenceDao> {
-        MenuProductCategoryReferenceDao(foodDeliveryDatabase = get())
-    }
-    single<IUserDao> {
-        UserDao(foodDeliveryDatabase = get())
-    }
-    single<IUserAddressDao> {
-        UserAddressDao(foodDeliveryDatabase = get())
-    }
-    single<IOrderDao> {
-        OrderDao(foodDeliveryDatabase = get())
-    }
-    single<IPaymentMethodDao> {
-        PaymentMethodDao(foodDeliveryDatabase = get())
-    }
-    single<ILinkDao> {
-        LinkDao(foodDeliveryDatabase = get())
-    }
-    single<ICartProductAdditionDao> {
-        CartProductAdditionDao(foodDeliveryDatabase = get())
-    }
-    single<IOrderProductDao> {
-        OrderProductDao(foodDeliveryDatabase = get())
-    }
-    single<IAdditionDao> {
-        AdditionDao(foodDeliveryDatabase = get())
-    }
-    single<IOrderAdditionDao> {
-        OrderAdditionDao(foodDeliveryDatabase = get())
-    }
-    single<IAdditionGroupDao> {
-        AdditionGroupDao(foodDeliveryDatabase = get())
-    }
-    single<LightOrderDao> {
-        LightOrderDaoImpl(foodDeliveryDatabase = get())
-    }
-}

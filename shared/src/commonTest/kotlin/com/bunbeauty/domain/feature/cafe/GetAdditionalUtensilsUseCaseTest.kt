@@ -11,53 +11,56 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class GetAdditionalUtensilsUseCaseTest {
-
     private val cafeRepo: CafeRepo = mock()
 
     private val getAdditionalUtensilsUseCase: GetAdditionalUtensilsUseCase =
         GetAdditionalUtensilsUseCase(
-            cafeRepo = cafeRepo
+            cafeRepo = cafeRepo,
         )
 
     @Test
-    fun `invoke should return true when cafe has additional utensils`() = runTest {
-        // Arrange
-        val cafeUuid = "cafe123"
-        everySuspend { cafeRepo.getCafeByUuid(cafeUuid) } returns getCafe(
-            uuid = cafeUuid,
-            additionalUtensils = true
-        )
+    fun `invoke should return true when cafe has additional utensils`() =
+        runTest {
+            // Arrange
+            val cafeUuid = "cafe123"
+            everySuspend { cafeRepo.getCafeByUuid(cafeUuid) } returns
+                getCafe(
+                    uuid = cafeUuid,
+                    additionalUtensils = true,
+                )
 
-        // Act
-        val result = getAdditionalUtensilsUseCase(cafeUuid)
+            // Act
+            val result = getAdditionalUtensilsUseCase(cafeUuid)
 
-        // Assert
-        assertEquals(true, result)
-    }
-
-    @Test
-    fun `invoke should return false when cafe does not have additional utensils`() = runTest {
-        // Arrange
-        val cafeUuid = "cafe123"
-        everySuspend { cafeRepo.getCafeByUuid(cafeUuid) } returns getCafe(uuid = "1")
-
-        // Act
-        val result = getAdditionalUtensilsUseCase(cafeUuid)
-
-        // Assert
-        assertEquals(false, result)
-    }
+            // Assert
+            assertEquals(true, result)
+        }
 
     @Test
-    fun `invoke should return false when cafe is not found`() = runTest {
-        // Arrange
-        val cafeUuid = "non-existent-cafe"
-        everySuspend { cafeRepo.getCafeByUuid(cafeUuid) } returns null
+    fun `invoke should return false when cafe does not have additional utensils`() =
+        runTest {
+            // Arrange
+            val cafeUuid = "cafe123"
+            everySuspend { cafeRepo.getCafeByUuid(cafeUuid) } returns getCafe(uuid = "1")
 
-        // Act
-        val result = getAdditionalUtensilsUseCase(cafeUuid)
+            // Act
+            val result = getAdditionalUtensilsUseCase(cafeUuid)
 
-        // Assert
-        assertEquals(false, result)
-    }
+            // Assert
+            assertEquals(false, result)
+        }
+
+    @Test
+    fun `invoke should return false when cafe is not found`() =
+        runTest {
+            // Arrange
+            val cafeUuid = "non-existent-cafe"
+            everySuspend { cafeRepo.getCafeByUuid(cafeUuid) } returns null
+
+            // Act
+            val result = getAdditionalUtensilsUseCase(cafeUuid)
+
+            // Assert
+            assertEquals(false, result)
+        }
 }
