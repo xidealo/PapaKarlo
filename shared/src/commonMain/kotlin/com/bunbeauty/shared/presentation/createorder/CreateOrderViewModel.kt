@@ -683,7 +683,8 @@ class CreateOrderViewModel(
                     is NotAllowedTimeForOrderException -> {
                         setState {
                             copy(
-                                hasTimePickerError = true
+                                hasTimePickerError = true,
+                                showTimePickerHint = true
                             )
                         }
                         addEvent {
