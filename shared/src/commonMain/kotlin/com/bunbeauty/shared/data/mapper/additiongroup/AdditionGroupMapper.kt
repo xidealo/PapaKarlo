@@ -11,6 +11,6 @@ val mapAdditionGroupEntityToGroup: AdditionGroupEntity.() -> AdditionGroup =
             priority = priority,
             additionList = emptyList(),
             isVisible = isVisible,
-            singleChoice = singleChoice
+            singleChoice = singleChoice,
         )
     }

@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -25,52 +24,56 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Composable
 fun MenuLoadingScreen() {
     Box(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
     ) {
         Column {
             LazyRow(
                 horizontalArrangement = spacedBy(8.dp),
-                contentPadding = PaddingValues(horizontal = 16.dp)
+                contentPadding = PaddingValues(horizontal = 16.dp),
             ) {
                 items(6) {
                     Shimmer(
-                        modifier = Modifier
-                            .width(width = 80.dp)
-                            .height(height = 30.dp)
-                            .clip(shape = RoundedCornerShape(16.dp))
+                        modifier =
+                            Modifier
+                                .width(width = 80.dp)
+                                .height(height = 30.dp)
+                                .clip(shape = RoundedCornerShape(16.dp)),
                     )
                 }
-
             }
 
             Shimmer(
-                modifier = Modifier
-                    .padding(top = 32.dp, bottom = 8.dp)
-                    .padding(horizontal = 16.dp)
-                    .width(123.dp)
-                    .height(height = 30.dp)
-                    .clip(shape = RoundedCornerShape(16.dp))
+                modifier =
+                    Modifier
+                        .padding(top = 32.dp, bottom = 8.dp)
+                        .padding(horizontal = 16.dp)
+                        .width(123.dp)
+                        .height(height = 30.dp)
+                        .clip(shape = RoundedCornerShape(16.dp)),
             )
 
             repeat(3) { times ->
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(space = 8.dp),
-                    modifier = Modifier
-                        .padding(horizontal = 16.dp)
+                    modifier =
+                        Modifier
+                            .padding(horizontal = 16.dp),
                 ) {
                     Shimmer(
-                        modifier = Modifier
-                            .padding(top = 8.dp)
-                            .weight(1f)
-                            .height(height = 180.dp)
-                            .clip(shape = RoundedCornerShape(16.dp))
+                        modifier =
+                            Modifier
+                                .padding(top = 8.dp)
+                                .weight(1f)
+                                .height(height = 180.dp)
+                                .clip(shape = RoundedCornerShape(16.dp)),
                     )
                     Shimmer(
-                        modifier = Modifier
-                            .padding(top = 8.dp)
-                            .weight(1f)
-                            .height(height = 180.dp)
-                            .clip(shape = RoundedCornerShape(16.dp))
+                        modifier =
+                            Modifier
+                                .padding(top = 8.dp)
+                                .weight(1f)
+                                .height(height = 180.dp)
+                                .clip(shape = RoundedCornerShape(16.dp)),
                     )
                 }
             }
@@ -78,20 +81,19 @@ fun MenuLoadingScreen() {
 
         Row(
             Modifier
-                .align(Alignment.BottomEnd)
+                .align(Alignment.BottomEnd),
         ) {
             Shimmer(
-                modifier = Modifier
-                    .padding(bottom = 26.dp, end = 16.dp)
-                    .width(width = 106.dp)
-                    .height(height = 54.dp)
-                    .clip(shape = RoundedCornerShape(16.dp))
+                modifier =
+                    Modifier
+                        .padding(bottom = 26.dp, end = 16.dp)
+                        .width(width = 106.dp)
+                        .height(height = 54.dp)
+                        .clip(shape = RoundedCornerShape(16.dp)),
             )
         }
     }
-
 }
-
 
 @Preview
 @Composable

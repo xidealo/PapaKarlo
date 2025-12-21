@@ -47,11 +47,12 @@ fun DateTime.getDateTimeString(): String {
 }
 
 @Composable
-fun Time.getTimeString(): String = "${
-    addFirstZero(
-        hours
-    )
-}:${addFirstZero(minutes)}"
+fun Time.getTimeString(): String =
+    "${
+        addFirstZero(
+            hours,
+        )
+    }:${addFirstZero(minutes)}"
 
 private fun addFirstZero(number: Int): String =
     if (number < 10) {
@@ -60,8 +61,8 @@ private fun addFirstZero(number: Int): String =
         number.toString()
     }
 
-
 fun getCountString(count: Int): String = "× $count"
+
 fun getCountString(count: String): String = "× $count"
 
 fun getStringPart(

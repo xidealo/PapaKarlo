@@ -5,11 +5,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 class OrderUpdateServer(
-
     @SerialName("uuid")
     val uuid: String,
-
     @SerialName("status")
-    val status: String
-
+    val status: String,
 )

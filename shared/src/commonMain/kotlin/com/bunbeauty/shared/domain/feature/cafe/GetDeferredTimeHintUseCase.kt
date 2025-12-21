@@ -9,9 +9,11 @@ import kotlin.time.ExperimentalTime
 class GetDeferredTimeHintUseCase {
     @OptIn(ExperimentalTime::class)
     operator fun invoke(time: Time): Boolean {
-        val now = Clock.System.now()
-            .toLocalDateTime(TimeZone.currentSystemDefault())
-            .time
+        val now =
+            Clock.System
+                .now()
+                .toLocalDateTime(TimeZone.currentSystemDefault())
+                .time
 
         val currentMinutes = now.hour * 60 + now.minute + 60
 

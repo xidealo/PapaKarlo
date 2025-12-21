@@ -19,32 +19,33 @@ class ProfileViewModel(
     private val getLinkListUseCase: GetLinkListUseCase,
     private val observeLastOrderUseCase: ObserveLastOrderUseCase,
     private val stopObserveOrdersUseCase: StopObserveOrdersUseCase,
-    buildVersion: Long
+    buildVersion: Long,
 ) : SharedStateViewModel<ProfileState.DataState, ProfileState.Action, ProfileState.Event>(
-    initDataState = ProfileState.DataState(
-        lastOrder = null,
-        state = ProfileState.DataState.State.LOADING,
-        linkList = listOf(),
-        isShowAboutAppBottomSheet = false,
-        isShowFeedbackBottomSheet = false,
-        appVersion = buildVersion.toString().toCharArray().joinToString(VERSION_DIVIDER)
-    )
-) {
-
+        initDataState =
+            ProfileState.DataState(
+                lastOrder = null,
+                state = ProfileState.DataState.State.LOADING,
+                linkList = listOf(),
+                isShowAboutAppBottomSheet = false,
+                isShowFeedbackBottomSheet = false,
+                appVersion = buildVersion.toString().toCharArray().joinToString(VERSION_DIVIDER),
+            ),
+    ) {
     private var observeLastOrderJob: Job? = null
     private var orderObservationUuid: String? = null
 
     override fun reduce(
         action: ProfileState.Action,
-        dataState: ProfileState.DataState
+        dataState: ProfileState.DataState,
     ) {
         when (action) {
             ProfileState.Action.BackClicked -> onBackClicked()
             ProfileState.Action.Init -> loadData()
             ProfileState.Action.OnRefreshClicked -> loadData()
-            is ProfileState.Action.OnLastOrderClicked -> onLastOrderClicked(
-                uuid = action.uuid
-            )
+            is ProfileState.Action.OnLastOrderClicked ->
+                onLastOrderClicked(
+                    uuid = action.uuid,
+                )
 
             ProfileState.Action.OnOrderHistoryClicked -> onOrderHistoryClicked()
             ProfileState.Action.OnSettingsClick -> onSettingsClicked()
@@ -69,40 +70,42 @@ class ProfileViewModel(
                 setState {
                     copy(
                         lastOrder = lastOrder,
-                        state = if (userInteractor.isUserAuthorize()) {
-                            ProfileState.DataState.State.AUTHORIZED
-                        } else {
-                            ProfileState.DataState.State.UNAUTHORIZED
-                        },
-                        linkList = linkList
+                        state =
+                            if (userInteractor.isUserAuthorize()) {
+                                ProfileState.DataState.State.AUTHORIZED
+                            } else {
+                                ProfileState.DataState.State.UNAUTHORIZED
+                            },
+                        linkList = linkList,
                     )
                 }
             },
             onError = {
                 setState {
                     copy(
-                        state = ProfileState.DataState.State.ERROR
+                        state = ProfileState.DataState.State.ERROR,
                     )
                 }
-            }
+            },
         )
     }
 
     private fun observeLastOrder() {
-        observeLastOrderJob = sharedScope.launchSafe(
-            block = {
-                val (uuid, lastOrderFlow) = observeLastOrderUseCase()
-                orderObservationUuid = uuid
-                lastOrderFlow.collectLatest { lightOrder ->
-                    setState {
-                        copy(lastOrder = lightOrder)
+        observeLastOrderJob =
+            sharedScope.launchSafe(
+                block = {
+                    val (uuid, lastOrderFlow) = observeLastOrderUseCase()
+                    orderObservationUuid = uuid
+                    lastOrderFlow.collectLatest { lightOrder ->
+                        setState {
+                            copy(lastOrder = lightOrder)
+                        }
                     }
-                }
-            },
-            onError = { error ->
-                Logger.logE("Profile", error.stackTraceToString())
-            }
-        )
+                },
+                onError = { error ->
+                    Logger.logE("Profile", error.stackTraceToString())
+                },
+            )
     }
 
     fun stopLastOrderObservation() {
@@ -154,7 +157,7 @@ class ProfileViewModel(
     fun onCloseAboutAppBottomSheet() {
         setState {
             copy(
-                isShowAboutAppBottomSheet = false
+                isShowAboutAppBottomSheet = false,
             )
         }
     }
@@ -162,7 +165,7 @@ class ProfileViewModel(
     fun onCloseFeedbackBottomSheet() {
         setState {
             copy(
-                isShowFeedbackBottomSheet = false
+                isShowFeedbackBottomSheet = false,
             )
         }
     }
@@ -170,7 +173,7 @@ class ProfileViewModel(
     fun onFeedbackClicked() {
         setState {
             copy(
-                isShowFeedbackBottomSheet = true
+                isShowFeedbackBottomSheet = true,
             )
         }
     }
@@ -178,7 +181,7 @@ class ProfileViewModel(
     fun onAboutAppClicked() {
         setState {
             copy(
-                isShowAboutAppBottomSheet = true
+                isShowAboutAppBottomSheet = true,
             )
         }
     }

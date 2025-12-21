@@ -10,19 +10,18 @@ interface GetCurrentUserAddressUseCase {
 
 class GetCurrentUserAddressUseCaseImpl(
     private val dataStoreRepo: DataStoreRepo,
-    private val userAddressRepo: UserAddressRepo
+    private val userAddressRepo: UserAddressRepo,
 ) : GetCurrentUserAddressUseCase {
-
     override suspend operator fun invoke(): UserAddress? {
         val userUuid = dataStoreRepo.getUserUuid() ?: return null
         val cityUuid = dataStoreRepo.getSelectedCityUuid() ?: return null
 
         return userAddressRepo.getSelectedAddressByUserAndCityUuid(
             userUuid = userUuid,
-            cityUuid = cityUuid
+            cityUuid = cityUuid,
         ) ?: userAddressRepo.getFirstUserAddressByUserAndCityUuid(
             userUuid = userUuid,
-            cityUuid = cityUuid
+            cityUuid = cityUuid,
         )
     }
 }

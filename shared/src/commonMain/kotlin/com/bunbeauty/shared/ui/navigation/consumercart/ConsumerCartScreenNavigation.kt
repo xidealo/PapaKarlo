@@ -35,7 +35,7 @@ fun NavGraphBuilder.consumerCartScreenRoute(
             goToCreateOrderFragment = goToCreateOrderFragment,
             goToLoginFragment = goToLoginFragment,
             goToProductFragment = goToProductFragment,
-            showErrorMessage = showErrorMessage
+            showErrorMessage = showErrorMessage,
         )
     }
 }

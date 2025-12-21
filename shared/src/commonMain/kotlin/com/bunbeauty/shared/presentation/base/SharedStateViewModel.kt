@@ -7,9 +7,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 
-abstract class SharedStateViewModel<DS : BaseDataState, A : BaseAction, E : BaseEvent>(initDataState: DS) :
-    ViewModel() {
-
+abstract class SharedStateViewModel<DS : BaseDataState, A : BaseAction, E : BaseEvent>(
+    initDataState: DS,
+) : ViewModel() {
     protected val sharedScope: CoroutineScope = viewModelScope
 
     protected val mutableDataState = MutableStateFlow(initDataState)
@@ -22,7 +22,10 @@ abstract class SharedStateViewModel<DS : BaseDataState, A : BaseAction, E : Base
         reduce(action, mutableDataState.value)
     }
 
-    protected abstract fun reduce(action: A, dataState: DS)
+    protected abstract fun reduce(
+        action: A,
+        dataState: DS,
+    )
 
     fun consumeEvents(events: List<E>) {
         mutableEvents.update { list ->

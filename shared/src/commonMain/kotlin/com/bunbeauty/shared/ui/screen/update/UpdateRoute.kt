@@ -18,26 +18,26 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import org.jetbrains.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
-import com.bunbeauty.shared.OpenExternalSource
-import papakarlo.shared.generated.resources.Res
+import com.bunbeauty.designsystem.theme.bold
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.designsystem.ui.element.button.MainButton
 import com.bunbeauty.designsystem.ui.screen.ErrorScreen
 import com.bunbeauty.designsystem.ui.screen.LoadingScreen
-import com.bunbeauty.designsystem.theme.bold
+import com.bunbeauty.shared.OpenExternalSource
 import com.bunbeauty.shared.domain.model.link.Link
 import com.bunbeauty.shared.domain.model.link.LinkType
 import com.bunbeauty.shared.presentation.update.UpdateState
 import com.bunbeauty.shared.presentation.update.UpdateViewModel
+import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
+import papakarlo.shared.generated.resources.Res
 import papakarlo.shared.generated.resources.action_update_update
 import papakarlo.shared.generated.resources.description_google_play
 import papakarlo.shared.generated.resources.error_common_data_loading
@@ -131,10 +131,11 @@ private fun UpdateScreen(
                     },
                 )
 
-            is UpdateViewState.State.Success -> UpdateScreenSuccess(
-                viewState = viewState.state,
-                onAction = onAction,
-            )
+            is UpdateViewState.State.Success ->
+                UpdateScreenSuccess(
+                    viewState = viewState.state,
+                    onAction = onAction,
+                )
         }
     }
 }
@@ -189,7 +190,7 @@ private fun UpdateScreenSuccess(
                     .fillMaxWidth()
                     .padding(top = 8.dp)
                     .padding(horizontal = 16.dp),
-            text = stringResource(resource =Res.string.msg_update_new_app_version),
+            text = stringResource(resource = Res.string.msg_update_new_app_version),
             style = FoodDeliveryTheme.typography.bodyLarge,
             color = FoodDeliveryTheme.colors.mainColors.onBackground,
             textAlign = TextAlign.Center,
@@ -198,8 +199,9 @@ private fun UpdateScreenSuccess(
         Spacer(modifier = Modifier.weight(1f))
 
         MainButton(
-            modifier = Modifier
-                .padding(horizontal = 16.dp),
+            modifier =
+                Modifier
+                    .padding(horizontal = 16.dp),
             textStringId = Res.string.action_update_update,
         ) {
             viewState.link?.linkValue?.let { link ->

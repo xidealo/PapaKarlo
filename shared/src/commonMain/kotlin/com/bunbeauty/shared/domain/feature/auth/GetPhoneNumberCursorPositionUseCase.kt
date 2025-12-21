@@ -1,10 +1,12 @@
 package com.bunbeauty.shared.domain.feature.auth
 
 class GetPhoneNumberCursorPositionUseCase(
-    private val formatPhoneNumber: FormatPhoneNumberUseCase
+    private val formatPhoneNumber: FormatPhoneNumberUseCase,
 ) {
-
-    operator fun invoke(phoneNumber: String, cursorPosition: Int): Int {
+    operator fun invoke(
+        phoneNumber: String,
+        cursorPosition: Int,
+    ): Int {
         var newPosition = cursorPosition
         when (cursorPosition) {
             0, 1 -> {

@@ -10,33 +10,33 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import org.jetbrains.compose.resources.stringResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import papakarlo.shared.generated.resources.Res
+import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.designsystem.ui.element.button.MainButton
-import com.bunbeauty.designsystem.ui.screen.ErrorScreen
-import com.bunbeauty.designsystem.ui.screen.LoadingScreen
-import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
-import com.bunbeauty.shared.ui.screen.city.screen.CityUI
 import com.bunbeauty.designsystem.ui.element.card.NavigationCardWithDivider
 import com.bunbeauty.designsystem.ui.element.card.TextCardWithDivider
-import com.bunbeauty.shared.ui.screen.city.screen.changecity.CityListBottomSheetScreen
-import com.bunbeauty.shared.ui.screen.profile.screen.logout.LogoutBottomSheetScreen
-import papakarlo.shared.generated.resources.action_logout
-import papakarlo.shared.generated.resources.common_city
-import papakarlo.shared.generated.resources.error_common_data_loading
-import papakarlo.shared.generated.resources.hint_settings_phone
-import papakarlo.shared.generated.resources.title_settings
+import com.bunbeauty.designsystem.ui.screen.ErrorScreen
+import com.bunbeauty.designsystem.ui.screen.LoadingScreen
 import com.bunbeauty.shared.presentation.settings.SettingsState
 import com.bunbeauty.shared.presentation.settings.SettingsViewModel
+import com.bunbeauty.shared.ui.screen.city.screen.CityUI
+import com.bunbeauty.shared.ui.screen.city.screen.changecity.CityListBottomSheetScreen
+import com.bunbeauty.shared.ui.screen.profile.screen.logout.LogoutBottomSheetScreen
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
 import org.jetbrains.compose.resources.getString
+import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
+import papakarlo.shared.generated.resources.Res
+import papakarlo.shared.generated.resources.action_logout
+import papakarlo.shared.generated.resources.common_city
+import papakarlo.shared.generated.resources.error_common_data_loading
 import papakarlo.shared.generated.resources.error_something_went_wrong
+import papakarlo.shared.generated.resources.hint_settings_phone
 import papakarlo.shared.generated.resources.msg_settings_email_updated
+import papakarlo.shared.generated.resources.title_settings
 
 @Composable
 fun SettingsRoute(
@@ -129,7 +129,7 @@ fun SettingsEffect(
                 SettingsState.Event.ShowEmailChangedSuccessfullyEvent -> {
                     showInfoMessage(
                         getString(Res.string.msg_settings_email_updated),
-                        0
+                        0,
                     )
                 }
 

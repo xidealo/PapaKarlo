@@ -9,12 +9,12 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.ui.graphics.Color
 import androidx.core.app.NotificationManagerCompat
+import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.BuildConfig
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.shared.presentation.MainViewModel
 import com.bunbeauty.shared.ui.main.IMessageHost
 import com.bunbeauty.shared.ui.screen.main.MainScreen
-import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity :
@@ -33,7 +33,7 @@ class MainActivity :
 
         setContent {
             FoodDeliveryTheme(
-                flavor = BuildConfig.FLAVOR
+                flavor = BuildConfig.FLAVOR,
             ) {
                 MainScreen()
             }

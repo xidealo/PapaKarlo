@@ -14,5 +14,5 @@ class LightOrderServer(
     @SerialName("time")
     val time: Long,
     @SerialName("timeZone")
-    val timeZone: String
+    val timeZone: String,
 )

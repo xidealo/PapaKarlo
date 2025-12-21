@@ -7,15 +7,15 @@ import com.bunbeauty.shared.db.UserEntity
 import com.bunbeauty.shared.domain.model.profile.Profile
 
 interface IProfileMapper {
-
     fun toProfile(
         userUuid: String,
         userAddressCount: Long,
-        lastOrderEntity: OrderEntity?
+        lastOrderEntity: OrderEntity?,
     ): Profile.Authorized
 
     fun toProfile(profileServer: ProfileServer): Profile.Authorized
 
     fun toUserEntity(profileServer: ProfileServer): UserEntity
+
     fun toUserAddressEntityList(profileServer: ProfileServer): List<UserAddressEntity>
 }

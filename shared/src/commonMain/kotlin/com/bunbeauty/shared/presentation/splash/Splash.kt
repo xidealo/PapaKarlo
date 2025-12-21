@@ -5,7 +5,6 @@ import com.bunbeauty.shared.presentation.base.BaseEvent
 import com.bunbeauty.shared.presentation.base.BaseViewDataState
 
 interface Splash {
-
     data object DataState : BaseViewDataState
 
     sealed interface Action : BaseAction {
@@ -14,7 +13,9 @@ interface Splash {
 
     sealed interface Effect : BaseEvent {
         data object NavigateToUpdateEffect : Effect
+
         data object NavigateToMenuEffect : Effect
+
         data object NavigateToSelectCityEffect : Effect
     }
 }

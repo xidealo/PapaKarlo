@@ -10,8 +10,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data object CreateOrderScreenDestination
 
-fun NavController.navigateToCreateOrderScreen(navOptions: NavOptions) =
-    navigate(route = CreateOrderScreenDestination, navOptions)
+fun NavController.navigateToCreateOrderScreen(navOptions: NavOptions) = navigate(route = CreateOrderScreenDestination, navOptions)
 
 fun NavGraphBuilder.createOrderScreenRoute(
     back: () -> Unit,

@@ -1,8 +1,6 @@
 import com.android.build.gradle.internal.api.BaseVariantOutputImpl
 import com.github.triplet.gradle.androidpublisher.ReleaseStatus
 import com.github.triplet.gradle.play.PlayPublisherExtension
-import org.gradle.kotlin.dsl.components
-import org.gradle.kotlin.dsl.resources
 import java.io.FileInputStream
 import java.util.Properties
 

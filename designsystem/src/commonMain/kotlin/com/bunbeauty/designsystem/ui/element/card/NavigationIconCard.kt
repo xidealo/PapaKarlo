@@ -22,6 +22,7 @@ import papakarlo.designsystem.generated.resources.description_ic_about
 import papakarlo.designsystem.generated.resources.description_ic_next
 import papakarlo.designsystem.generated.resources.ic_info
 import papakarlo.designsystem.generated.resources.ic_right_arrow
+import papakarlo.designsystem.generated.resources.preview_string
 
 @Composable
 fun NavigationIconCard(
@@ -86,7 +87,7 @@ private fun NavigationIconCardPreview() {
     FoodDeliveryTheme {
         NavigationIconCard(
             iconId = Res.drawable.ic_info,
-            iconDescriptionStringId = Res.string.description_ic_about,
+            iconDescriptionStringId = Res.string.preview_string,
             label = "Текст",
         ) {}
     }

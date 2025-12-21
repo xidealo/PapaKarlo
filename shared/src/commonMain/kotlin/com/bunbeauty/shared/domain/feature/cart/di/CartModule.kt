@@ -13,64 +13,65 @@ import com.bunbeauty.shared.domain.feature.cart.RemoveCartProductUseCase
 import com.bunbeauty.shared.domain.feature.motivation.GetMotivationUseCase
 import org.koin.dsl.module
 
-internal fun cartModule() = module {
-    factory {
-        ObserveCartUseCase(
-            cartProductRepo = get(),
-            getNewTotalCostUseCase = get()
-        )
+internal fun cartModule() =
+    module {
+        factory {
+            ObserveCartUseCase(
+                cartProductRepo = get(),
+                getNewTotalCostUseCase = get(),
+            )
+        }
+        factory {
+            AddCartProductUseCase(
+                getCartProductCountUseCase = get(),
+                cartProductRepo = get(),
+                cartProductAdditionRepository = get(),
+                additionRepository = get(),
+                areAdditionsEqualUseCase = get(),
+                additionGroupRepository = get(),
+                getAdditionPriorityUseCase = get(),
+            )
+        }
+        factory {
+            GetRecommendationsUseCase(
+                recommendationRepository = get(),
+                cartProductRepo = get(),
+                getMenuProductListUseCase = get(),
+            )
+        }
+        factory {
+            RemoveCartProductUseCase(
+                cartProductRepo = get(),
+                cartProductAdditionRepository = get(),
+            )
+        }
+        factory {
+            EditCartProductUseCase(
+                cartProductRepo = get(),
+                cartProductAdditionRepository = get(),
+                areAdditionsEqualUseCase = get(),
+            )
+        }
+        factory {
+            IncreaseCartProductCountUseCase(
+                getCartProductCountUseCase = get(),
+                cartProductRepo = get(),
+            )
+        }
+        factory<GetCartProductCountUseCase> {
+            GetCartProductCountUseCaseImpl(
+                cartProductRepo = get(),
+            )
+        }
+        factory {
+            GetMotivationUseCase(
+                getCurrentUserAddressUseCase = get(),
+                getUserAddressListUseCase = get(),
+            )
+        }
+        factory<GetDeliveryCostFlowUseCase> {
+            GetDeliveryCostFlowUseCaseImpl(
+                getCurrentUserAddressFlowUseCase = get(),
+            )
+        }
     }
-    factory {
-        AddCartProductUseCase(
-            getCartProductCountUseCase = get(),
-            cartProductRepo = get(),
-            cartProductAdditionRepository = get(),
-            additionRepository = get(),
-            areAdditionsEqualUseCase = get(),
-            additionGroupRepository = get(),
-            getAdditionPriorityUseCase = get()
-        )
-    }
-    factory {
-        GetRecommendationsUseCase(
-            recommendationRepository = get(),
-            cartProductRepo = get(),
-            getMenuProductListUseCase = get()
-        )
-    }
-    factory {
-        RemoveCartProductUseCase(
-            cartProductRepo = get(),
-            cartProductAdditionRepository = get()
-        )
-    }
-    factory {
-        EditCartProductUseCase(
-            cartProductRepo = get(),
-            cartProductAdditionRepository = get(),
-            areAdditionsEqualUseCase = get()
-        )
-    }
-    factory {
-        IncreaseCartProductCountUseCase(
-            getCartProductCountUseCase = get(),
-            cartProductRepo = get()
-        )
-    }
-    factory<GetCartProductCountUseCase> {
-        GetCartProductCountUseCaseImpl(
-            cartProductRepo = get()
-        )
-    }
-    factory {
-        GetMotivationUseCase(
-            getCurrentUserAddressUseCase = get(),
-            getUserAddressListUseCase = get()
-        )
-    }
-    factory<GetDeliveryCostFlowUseCase> {
-        GetDeliveryCostFlowUseCaseImpl(
-            getCurrentUserAddressFlowUseCase = get()
-        )
-    }
-}

@@ -19,49 +19,51 @@ import kotlinx.coroutines.flow.map
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-actual class DataStoreRepository : DataStoreRepo, KoinComponent {
-
+actual class DataStoreRepository :
+    DataStoreRepo,
+    KoinComponent {
     private val context: Context by inject()
 
     private val Context.tokenDataStore: DataStore<Preferences> by preferencesDataStore(
-        name = TOKEN_DATA_STORE
+        name = TOKEN_DATA_STORE,
     )
 
     private val Context.deliveryDataStore: DataStore<Preferences> by preferencesDataStore(
-        name = DELIVERY_DATA_STORE
+        name = DELIVERY_DATA_STORE,
     )
 
     private val Context.settingsDataStore: DataStore<Preferences> by preferencesDataStore(
-        name = SETTINGS_DATA_STORE
+        name = SETTINGS_DATA_STORE,
     )
 
     private val Context.userUuidDataStore: DataStore<Preferences> by preferencesDataStore(
-        name = USER_UUID_DATA_STORE
+        name = USER_UUID_DATA_STORE,
     )
 
     private val Context.selectedCityDataStore: DataStore<Preferences> by preferencesDataStore(
-        name = SELECTED_CITY_DATA_STORE
+        name = SELECTED_CITY_DATA_STORE,
     )
 
     private val Context.selectedPaymentMethodDataStore: DataStore<Preferences> by preferencesDataStore(
-        name = SELECTED_PAYMENT_METHOD_DATA_STORE
+        name = SELECTED_PAYMENT_METHOD_DATA_STORE,
     )
 
     private val Context.discountDataStore: DataStore<Preferences> by preferencesDataStore(
-        name = DISCOUNT_DATA_STORE
+        name = DISCOUNT_DATA_STORE,
     )
 
     private val Context.recommendationDataStore: DataStore<Preferences> by preferencesDataStore(
-        name = RECOMMENDATION_DATA_STORE
+        name = RECOMMENDATION_DATA_STORE,
     )
 
     private val Context.userCafeUuid: DataStore<Preferences> by preferencesDataStore(
-        name = USER_CAFE_DATA_STORE
+        name = USER_CAFE_DATA_STORE,
     )
 
-    actual override val token: Flow<String?> = context.tokenDataStore.data.map { tokenDataStore ->
-        tokenDataStore[TOKEN_KEY]
-    }
+    actual override val token: Flow<String?> =
+        context.tokenDataStore.data.map { tokenDataStore ->
+            tokenDataStore[TOKEN_KEY]
+        }
 
     actual override suspend fun getToken() = token.firstOrNull()
 
@@ -102,7 +104,7 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
                     Settings(
                         userUuid = userUuid,
                         phoneNumber = phoneNumber,
-                        email = settingsDataStore[SETTINGS_EMAIL_KEY]
+                        email = settingsDataStore[SETTINGS_EMAIL_KEY],
                     )
                 }
             }
@@ -160,35 +162,33 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
         }
     }
 
-    actual override suspend fun getSelectedCityUuid(): String? {
-        return context.selectedCityDataStore.data.map { selectedCityDataStore ->
-            selectedCityDataStore[SELECTED_CITY_UUID_KEY]
-        }.firstOrNull()
-    }
+    actual override suspend fun getSelectedCityUuid(): String? =
+        context.selectedCityDataStore.data
+            .map { selectedCityDataStore ->
+                selectedCityDataStore[SELECTED_CITY_UUID_KEY]
+            }.firstOrNull()
 
-    actual override fun observeUserAndCityUuid(): Flow<UserCityUuid> {
-        return userUuid.flatMapLatest { userUuid ->
+    actual override fun observeUserAndCityUuid(): Flow<UserCityUuid> =
+        userUuid.flatMapLatest { userUuid ->
             selectedCityUuid.map { cityUuid ->
                 UserCityUuid(
                     userUuid = userUuid.orEmpty(),
-                    cityUuid = cityUuid.orEmpty()
+                    cityUuid = cityUuid.orEmpty(),
                 )
             }
         }
-    }
 
-    actual override suspend fun getUserAndCityUuid(): UserCityUuid {
-        return UserCityUuid(
+    actual override suspend fun getUserAndCityUuid(): UserCityUuid =
+        UserCityUuid(
             userUuid = getUserUuid().orEmpty(),
-            cityUuid = getSelectedCityUuid().orEmpty()
+            cityUuid = getSelectedCityUuid().orEmpty(),
         )
-    }
 
     actual override val discount: Flow<Discount?> =
         context.discountDataStore.data.map { discountDataStore ->
             discountDataStore[FIRST_ORDER_DISCOUNT_KEY]?.let { firstOrderDiscount ->
                 Discount(
-                    firstOrderDiscount = firstOrderDiscount
+                    firstOrderDiscount = firstOrderDiscount,
                 )
             }
         }
@@ -209,8 +209,7 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
             recommendationDataStore[RECOMMENDATION_MAX_VISIBLE_KEY]
         }
 
-    actual override suspend fun getRecommendationMaxVisible() =
-        recommendationMaxVisible.firstOrNull()
+    actual override suspend fun getRecommendationMaxVisible() = recommendationMaxVisible.firstOrNull()
 
     actual override suspend fun saveRecommendationMaxVisible(recommendationMaxVisible: Int) {
         context.recommendationDataStore.edit { recommendationDataStore ->
@@ -223,9 +222,7 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
             userCafeDataStore[USER_CAFE_UUID_KEY]
         }
 
-    actual override suspend fun getUserCafeUuid(): String? {
-        return userCafeUuid.firstOrNull()
-    }
+    actual override suspend fun getUserCafeUuid(): String? = userCafeUuid.firstOrNull()
 
     actual override suspend fun saveUserCafeUuid(userCafeUuid: String) {
         context.userCafeUuid.edit { recommendationDataStore ->

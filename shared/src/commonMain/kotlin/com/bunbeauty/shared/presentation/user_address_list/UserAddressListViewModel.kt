@@ -8,16 +8,17 @@ import kotlinx.coroutines.launch
 
 class UserAddressListViewModel(
     private val getSelectableUserAddressListUseCase: GetSelectableUserAddressListUseCase,
-    private val saveSelectedUserAddressUseCase: SaveSelectedUserAddressUseCase
+    private val saveSelectedUserAddressUseCase: SaveSelectedUserAddressUseCase,
 ) : SharedStateViewModel<UserAddressListDataState.DataState, UserAddressListDataState.Action, UserAddressListDataState.Event>(
-    initDataState = UserAddressListDataState.DataState(
-        userAddressList = emptyList(),
-        state = UserAddressListDataState.DataState.State.LOADING
-    )
-) {
+        initDataState =
+            UserAddressListDataState.DataState(
+                userAddressList = emptyList(),
+                state = UserAddressListDataState.DataState.State.LOADING,
+            ),
+    ) {
     override fun reduce(
         action: UserAddressListDataState.Action,
-        dataState: UserAddressListDataState.DataState
+        dataState: UserAddressListDataState.DataState,
     ) {
         when (action) {
             UserAddressListDataState.Action.BackClicked -> onBackClicked()
@@ -27,11 +28,10 @@ class UserAddressListViewModel(
         }
     }
 
-
     private fun update() {
         setState {
             copy(
-                state = UserAddressListDataState.DataState.State.LOADING
+                state = UserAddressListDataState.DataState.State.LOADING,
             )
         }
         sharedScope.launchSafe(
@@ -40,21 +40,22 @@ class UserAddressListViewModel(
                 setState {
                     copy(
                         userAddressList = addressList,
-                        state = if (addressList.isEmpty()) {
-                            UserAddressListDataState.DataState.State.EMPTY
-                        } else {
-                            UserAddressListDataState.DataState.State.SUCCESS
-                        }
+                        state =
+                            if (addressList.isEmpty()) {
+                                UserAddressListDataState.DataState.State.EMPTY
+                            } else {
+                                UserAddressListDataState.DataState.State.SUCCESS
+                            },
                     )
                 }
             },
             onError = {
                 setState {
                     copy(
-                        state = UserAddressListDataState.DataState.State.ERROR
+                        state = UserAddressListDataState.DataState.State.ERROR,
                     )
                 }
-            }
+            },
         )
     }
 
@@ -63,6 +64,7 @@ class UserAddressListViewModel(
             UserAddressListDataState.Event.OpenCreateAddressEvent
         }
     }
+
     private fun onBackClicked() {
         addEvent {
             UserAddressListDataState.Event.GoBackEvent
@@ -73,12 +75,12 @@ class UserAddressListViewModel(
     fun onUserAddressChanged(userAddressUuid: String) {
         sharedScope.launch {
             saveSelectedUserAddressUseCase(userAddressUuid)
-           addEvent {
-               UserAddressListDataState.Event.GoBackEvent
-           }
+            addEvent {
+                UserAddressListDataState.Event.GoBackEvent
+            }
             setState {
                 copy(
-                    state = UserAddressListDataState.DataState.State.LOADING
+                    state = UserAddressListDataState.DataState.State.LOADING,
                 )
             }
             println("EVENTS ${events.value}")

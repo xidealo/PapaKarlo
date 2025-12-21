@@ -11,12 +11,14 @@ class SplashViewModel(
     private val checkUpdateUseCase: CheckUpdateUseCase,
     private val cityInteractor: ICityInteractor,
     private val getIsOneCityUseCase: CheckOneCityUseCase,
-    private val saveOneCityUseCase: SaveOneCityUseCase
+    private val saveOneCityUseCase: SaveOneCityUseCase,
 ) : SharedStateViewModel<Splash.DataState, Splash.Action, Splash.Effect>(
-    initDataState = Splash.DataState
-) {
-
-    override fun reduce(action: Splash.Action, dataState: Splash.DataState) {
+        initDataState = Splash.DataState,
+    ) {
+    override fun reduce(
+        action: Splash.Action,
+        dataState: Splash.DataState,
+    ) {
         when (action) {
             is Splash.Action.Init -> checkAppVersion()
         }
@@ -35,7 +37,7 @@ class SplashViewModel(
             },
             onError = {
                 // add error state
-            }
+            },
         )
     }
 

@@ -6,8 +6,9 @@ import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import kotlinx.coroutines.flow.Flow
 
-class CategoryDao(foodDeliveryDatabase: FoodDeliveryDatabase) : ICategoryDao {
-
+class CategoryDao(
+    foodDeliveryDatabase: FoodDeliveryDatabase,
+) : ICategoryDao {
     private val categoryEntityQueries = foodDeliveryDatabase.categoryEntityQueries
 
     override suspend fun insertCategoryList(categoryList: List<CategoryEntity>) {
@@ -16,13 +17,11 @@ class CategoryDao(foodDeliveryDatabase: FoodDeliveryDatabase) : ICategoryDao {
                 categoryEntityQueries.insertCategory(
                     uuid = categoryEntity.uuid,
                     name = categoryEntity.name,
-                    priority = categoryEntity.priority
+                    priority = categoryEntity.priority,
                 )
             }
         }
     }
 
-    override fun observeCategoryList(): Flow<List<CategoryEntity>> {
-        return categoryEntityQueries.getCategoryList().asFlow().mapToList()
-    }
+    override fun observeCategoryList(): Flow<List<CategoryEntity>> = categoryEntityQueries.getCategoryList().asFlow().mapToList()
 }

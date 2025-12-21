@@ -10,14 +10,15 @@ interface GetNewTotalCostUseCase {
 
 class GetNewTotalCostUseCaseImpl(
     private val getDiscountUseCase: GetDiscountUseCase,
-    private val getCartProductAdditionsPriceUseCase: GetCartProductAdditionsPriceUseCase
+    private val getCartProductAdditionsPriceUseCase: GetCartProductAdditionsPriceUseCase,
 ) : GetNewTotalCostUseCase {
     override suspend operator fun invoke(cartProductList: List<CartProduct>): Int {
-        val newTotalCost = cartProductList.sumOf { cartProduct ->
-            val sumOfNewPriceAndAdditions =
-                cartProduct.product.newPrice + getCartProductAdditionsPriceUseCase(additionList = cartProduct.additionList)
-            sumOfNewPriceAndAdditions * cartProduct.count
-        }
+        val newTotalCost =
+            cartProductList.sumOf { cartProduct ->
+                val sumOfNewPriceAndAdditions =
+                    cartProduct.product.newPrice + getCartProductAdditionsPriceUseCase(additionList = cartProduct.additionList)
+                sumOfNewPriceAndAdditions * cartProduct.count
+            }
         val discount =
             (newTotalCost * (getDiscountUseCase()?.firstOrderDiscount ?: 0) / 100.0).toInt()
         return newTotalCost - discount

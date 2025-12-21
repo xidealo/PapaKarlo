@@ -9,12 +9,9 @@ import com.bunbeauty.shared.domain.repo.CafeRepo
 
 class CafeInteractor(
     private val cafeRepo: CafeRepo,
-    private val dataStoreRepo: DataStoreRepo
+    private val dataStoreRepo: DataStoreRepo,
 ) : ICafeInteractor {
-
-    override suspend fun getCafeByUuid(cafeUuid: String): Cafe? {
-        return cafeRepo.getCafeByUuid(cafeUuid)
-    }
+    override suspend fun getCafeByUuid(cafeUuid: String): Cafe? = cafeRepo.getCafeByUuid(cafeUuid)
 
     override suspend fun saveSelectedCafe(cafeUuid: String) {
         val userUuid = dataStoreRepo.getUserUuid()
@@ -28,11 +25,12 @@ class CafeInteractor(
     override fun getCafeTime(daySeconds: Int): String {
         val hours = daySeconds / SECONDS_IN_HOUR
         val minutes = (daySeconds % SECONDS_IN_HOUR) / SECONDS_IN_MINUTE
-        val minutesString = if (minutes < 10) {
-            "0$minutes"
-        } else {
-            minutes.toString()
-        }
+        val minutesString =
+            if (minutes < 10) {
+                "0$minutes"
+            } else {
+                minutes.toString()
+            }
 
         return "$hours$TIME_DIVIDER$minutesString"
     }

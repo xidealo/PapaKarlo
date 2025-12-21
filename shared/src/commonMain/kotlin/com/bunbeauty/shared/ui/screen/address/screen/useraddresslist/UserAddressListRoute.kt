@@ -14,6 +14,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryHorizontalDivider
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.designsystem.ui.element.button.MainButton
@@ -25,7 +26,6 @@ import com.bunbeauty.shared.presentation.user_address_list.UserAddressListDataSt
 import com.bunbeauty.shared.presentation.user_address_list.UserAddressListViewModel
 import com.bunbeauty.shared.ui.screen.address.mapper.toUserAddressItem
 import com.bunbeauty.shared.ui.screen.address.model.UserAddressItem
-import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
@@ -67,17 +67,19 @@ fun UserAddressListRoute(
     val viewState by viewModel.dataState.collectAsStateWithLifecycle()
 
     val effects by viewModel.events.collectAsStateWithLifecycle()
-    val consumeEffects = remember {
-        {
-            viewModel.consumeEvents(effects)
+    val consumeEffects =
+        remember {
+            {
+                viewModel.consumeEvents(effects)
+            }
         }
-    }
 
-    val onAction = remember {
-        { event: UserAddressListDataState.Action ->
-            viewModel.onAction(event)
+    val onAction =
+        remember {
+            { event: UserAddressListDataState.Action ->
+                viewModel.onAction(event)
+            }
         }
-    }
 
     UserAddressEffect(
         effects = effects,
@@ -161,7 +163,7 @@ private fun UserAddressListSuccessScreen(userAddressItems: List<UserAddressItem>
                     enabled = true,
                 )
                 FoodDeliveryHorizontalDivider(
-                    modifier = Modifier.padding(horizontal = 16.dp)
+                    modifier = Modifier.padding(horizontal = 16.dp),
                 )
             }
         }

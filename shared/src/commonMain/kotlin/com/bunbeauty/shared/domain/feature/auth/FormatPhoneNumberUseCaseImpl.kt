@@ -7,16 +7,17 @@ interface FormatPhoneNumberUseCase {
 }
 
 class FormatPhoneNumberUseCaseImpl : FormatPhoneNumberUseCase {
-
     override operator fun invoke(phoneNumber: String): String {
-        val numbers = phoneNumber.run {
-            if (!contains(Constants.PHONE_CODE) && isNotEmpty()) {
-                ""
-            } else {
-                this
-            }
-        }.replace(Constants.PHONE_CODE, "")
-            .replace(Regex("\\D"), "")
+        val numbers =
+            phoneNumber
+                .run {
+                    if (!contains(Constants.PHONE_CODE) && isNotEmpty()) {
+                        ""
+                    } else {
+                        this
+                    }
+                }.replace(Constants.PHONE_CODE, "")
+                .replace(Regex("\\D"), "")
         val firstGroup = numbers.take(3)
         val secondGroup = numbers.drop(3).take(3)
         val thirdGroup = numbers.drop(6).take(2)

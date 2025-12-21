@@ -7,9 +7,9 @@ import com.google.firebase.Firebase
 import com.google.firebase.messaging.messaging
 
 actual class SubscribeToNotificationUseCase {
-
     actual operator fun invoke(companyUuid: String) {
-        Firebase.messaging.subscribeToTopic("$NEWS_NOTIFICATION_PREFIX$companyUuid")
+        Firebase.messaging
+            .subscribeToTopic("$NEWS_NOTIFICATION_PREFIX$companyUuid")
             .addOnSuccessListener {
                 Logger.logD(NOTIFICATION_TAG, "SubscribeToNotification success")
             }

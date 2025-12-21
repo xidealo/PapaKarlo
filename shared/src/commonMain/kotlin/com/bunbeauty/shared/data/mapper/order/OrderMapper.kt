@@ -19,140 +19,145 @@ import com.bunbeauty.shared.domain.util.DateTimeUtil
 
 class OrderMapper(
     private val orderProductMapper: IOrderProductMapper,
-    private val dateTimeUtil: DateTimeUtil
+    private val dateTimeUtil: DateTimeUtil,
 ) : IOrderMapper {
-    override fun toLightOrder(orderEntity: OrderEntity): LightOrder {
-        return LightOrder(
+    override fun toLightOrder(orderEntity: OrderEntity): LightOrder =
+        LightOrder(
             uuid = orderEntity.uuid,
             status = OrderStatus.valueOf(orderEntity.status),
             code = orderEntity.code,
-            dateTime = dateTimeUtil.toDateTime(orderEntity.time, orderEntity.timeZone)
+            dateTime = dateTimeUtil.toDateTime(orderEntity.time, orderEntity.timeZone),
         )
-    }
 
-    override fun toLightOrder(orderServer: OrderServer): LightOrder {
-        return LightOrder(
+    override fun toLightOrder(orderServer: OrderServer): LightOrder =
+        LightOrder(
             uuid = orderServer.uuid,
             status = OrderStatus.valueOf(orderServer.status),
             code = orderServer.code,
-            dateTime = dateTimeUtil.toDateTime(orderServer.time, orderServer.timeZone)
+            dateTime = dateTimeUtil.toDateTime(orderServer.time, orderServer.timeZone),
         )
-    }
 
-    override fun toLightOrder(lightOrderServer: LightOrderServer): LightOrder {
-        return LightOrder(
+    override fun toLightOrder(lightOrderServer: LightOrderServer): LightOrder =
+        LightOrder(
             uuid = lightOrderServer.uuid,
             code = lightOrderServer.code,
             status = OrderStatus.valueOf(lightOrderServer.status),
-            dateTime = dateTimeUtil.toDateTime(
-                millis = lightOrderServer.time,
-                timeZone = lightOrderServer.timeZone
-            )
+            dateTime =
+                dateTimeUtil.toDateTime(
+                    millis = lightOrderServer.time,
+                    timeZone = lightOrderServer.timeZone,
+                ),
         )
-    }
 
-    override fun toLightOrder(lightOrderEntity: LightOrderEntity): LightOrder {
-        return LightOrder(
+    override fun toLightOrder(lightOrderEntity: LightOrderEntity): LightOrder =
+        LightOrder(
             uuid = lightOrderEntity.uuid,
             code = lightOrderEntity.code,
             status = OrderStatus.valueOf(lightOrderEntity.status),
-            dateTime = dateTimeUtil.toDateTime(
-                millis = lightOrderEntity.time,
-                timeZone = lightOrderEntity.timeZone
-            )
+            dateTime =
+                dateTimeUtil.toDateTime(
+                    millis = lightOrderEntity.time,
+                    timeZone = lightOrderEntity.timeZone,
+                ),
         )
-    }
 
-    override fun toLightOrderEntity(lightOrderServer: LightOrderServer): LightOrderEntity {
-        return LightOrderEntity(
+    override fun toLightOrderEntity(lightOrderServer: LightOrderServer): LightOrderEntity =
+        LightOrderEntity(
             uuid = lightOrderServer.uuid,
             code = lightOrderServer.code,
             status = lightOrderServer.status,
             time = lightOrderServer.time,
-            timeZone = lightOrderServer.timeZone
+            timeZone = lightOrderServer.timeZone,
         )
-    }
 
-    override fun toOrderCode(orderServer: OrderServer): OrderCode {
-        return OrderCode(
-            code = orderServer.code
+    override fun toOrderCode(orderServer: OrderServer): OrderCode =
+        OrderCode(
+            code = orderServer.code,
         )
-    }
 
-    override fun toOrder(orderWithProductEntityList: List<OrderWithProductEntity>): Order? {
-        return orderWithProductEntityList.groupBy { orderWithProductEntity ->
-            orderWithProductEntity.uuid
-        }.map { (_, groupedOrderWithProductEntityList) ->
-            val firstOrderWithProductEntity =
-                groupedOrderWithProductEntityList.first()
+    override fun toOrder(orderWithProductEntityList: List<OrderWithProductEntity>): Order? =
+        orderWithProductEntityList
+            .groupBy { orderWithProductEntity ->
+                orderWithProductEntity.uuid
+            }.map { (_, groupedOrderWithProductEntityList) ->
+                val firstOrderWithProductEntity =
+                    groupedOrderWithProductEntityList.first()
 
-            Order(
-                uuid = firstOrderWithProductEntity.uuid,
-                code = firstOrderWithProductEntity.code,
-                status = OrderStatus.valueOf(firstOrderWithProductEntity.status),
-                dateTime = dateTimeUtil.toDateTime(
-                    millis = firstOrderWithProductEntity.time,
-                    timeZone = firstOrderWithProductEntity.timeZone
-                ),
-                isDelivery = firstOrderWithProductEntity.isDelivery,
-                deferredTime = firstOrderWithProductEntity.deferredTime?.let { millis ->
-                    dateTimeUtil.toTime(millis, firstOrderWithProductEntity.timeZone)
-                },
-                address = OrderAddress(
-                    description = firstOrderWithProductEntity.address,
-                    street = firstOrderWithProductEntity.addressStreet,
-                    house = firstOrderWithProductEntity.addressHouse,
-                    flat = firstOrderWithProductEntity.addressFlat,
-                    entrance = firstOrderWithProductEntity.addressEntrance,
-                    floor = firstOrderWithProductEntity.addressFloor,
-                    comment = firstOrderWithProductEntity.addressComment
-                ),
-                comment = firstOrderWithProductEntity.comment,
-                deliveryCost = firstOrderWithProductEntity.deliveryCost,
-                orderProductList = orderProductMapper.toOrderProduct(
-                    groupedOrderWithProductEntityList
-                ),
-                paymentMethod = PaymentMethodName.values()
-                    .firstOrNull { it.name == firstOrderWithProductEntity.paymentMethod },
-                oldTotalCost = firstOrderWithProductEntity.oldTotalCost,
-                newTotalCost = firstOrderWithProductEntity.newTotalCost,
-                percentDiscount = firstOrderWithProductEntity.percentDiscount
-            )
-        }.firstOrNull()
-    }
+                Order(
+                    uuid = firstOrderWithProductEntity.uuid,
+                    code = firstOrderWithProductEntity.code,
+                    status = OrderStatus.valueOf(firstOrderWithProductEntity.status),
+                    dateTime =
+                        dateTimeUtil.toDateTime(
+                            millis = firstOrderWithProductEntity.time,
+                            timeZone = firstOrderWithProductEntity.timeZone,
+                        ),
+                    isDelivery = firstOrderWithProductEntity.isDelivery,
+                    deferredTime =
+                        firstOrderWithProductEntity.deferredTime?.let { millis ->
+                            dateTimeUtil.toTime(millis, firstOrderWithProductEntity.timeZone)
+                        },
+                    address =
+                        OrderAddress(
+                            description = firstOrderWithProductEntity.address,
+                            street = firstOrderWithProductEntity.addressStreet,
+                            house = firstOrderWithProductEntity.addressHouse,
+                            flat = firstOrderWithProductEntity.addressFlat,
+                            entrance = firstOrderWithProductEntity.addressEntrance,
+                            floor = firstOrderWithProductEntity.addressFloor,
+                            comment = firstOrderWithProductEntity.addressComment,
+                        ),
+                    comment = firstOrderWithProductEntity.comment,
+                    deliveryCost = firstOrderWithProductEntity.deliveryCost,
+                    orderProductList =
+                        orderProductMapper.toOrderProduct(
+                            groupedOrderWithProductEntityList,
+                        ),
+                    paymentMethod =
+                        PaymentMethodName
+                            .values()
+                            .firstOrNull { it.name == firstOrderWithProductEntity.paymentMethod },
+                    oldTotalCost = firstOrderWithProductEntity.oldTotalCost,
+                    newTotalCost = firstOrderWithProductEntity.newTotalCost,
+                    percentDiscount = firstOrderWithProductEntity.percentDiscount,
+                )
+            }.firstOrNull()
 
-    override fun toOrder(orderServer: OrderServer): Order {
-        return Order(
+    override fun toOrder(orderServer: OrderServer): Order =
+        Order(
             uuid = orderServer.uuid,
             code = orderServer.code,
             status = OrderStatus.valueOf(orderServer.status),
             dateTime = dateTimeUtil.toDateTime(orderServer.time, orderServer.timeZone),
             isDelivery = orderServer.isDelivery,
-            deferredTime = orderServer.deferredTime?.let { millis ->
-                dateTimeUtil.toTime(millis, orderServer.timeZone)
-            },
-            address = OrderAddress(
-                description = orderServer.address.description,
-                street = orderServer.address.street,
-                house = orderServer.address.house,
-                flat = orderServer.address.flat,
-                entrance = orderServer.address.entrance,
-                floor = orderServer.address.floor,
-                comment = orderServer.address.comment
-            ),
+            deferredTime =
+                orderServer.deferredTime?.let { millis ->
+                    dateTimeUtil.toTime(millis, orderServer.timeZone)
+                },
+            address =
+                OrderAddress(
+                    description = orderServer.address.description,
+                    street = orderServer.address.street,
+                    house = orderServer.address.house,
+                    flat = orderServer.address.flat,
+                    entrance = orderServer.address.entrance,
+                    floor = orderServer.address.floor,
+                    comment = orderServer.address.comment,
+                ),
             comment = orderServer.comment,
             deliveryCost = orderServer.deliveryCost,
             orderProductList = orderServer.oderProductList.map(orderProductMapper::toOrderProduct),
-            paymentMethod = PaymentMethodName.values()
-                .firstOrNull { it.name == orderServer.paymentMethod },
+            paymentMethod =
+                PaymentMethodName
+                    .values()
+                    .firstOrNull { it.name == orderServer.paymentMethod },
             oldTotalCost = orderServer.oldTotalCost,
             newTotalCost = orderServer.newTotalCost,
-            percentDiscount = orderServer.percentDiscount
+            percentDiscount = orderServer.percentDiscount,
         )
-    }
 
-    override fun toOrderEntity(orderServer: OrderServer): OrderEntity {
-        return OrderEntity(
+    override fun toOrderEntity(orderServer: OrderServer): OrderEntity =
+        OrderEntity(
             uuid = orderServer.uuid,
             status = orderServer.status,
             isDelivery = orderServer.isDelivery,
@@ -173,27 +178,26 @@ class OrderMapper(
             paymentMethod = orderServer.paymentMethod,
             oldTotalCost = orderServer.oldTotalCost,
             newTotalCost = orderServer.newTotalCost,
-            percentDiscount = orderServer.percentDiscount
+            percentDiscount = orderServer.percentDiscount,
         )
-    }
 
-    override fun toOrderPostServer(createdOrder: CreatedOrder): OrderPostServer {
-        return OrderPostServer(
+    override fun toOrderPostServer(createdOrder: CreatedOrder): OrderPostServer =
+        OrderPostServer(
             isDelivery = createdOrder.isDelivery,
-            address = OrderAddressPostServer(
-                uuid = createdOrder.address.uuid,
-                description = createdOrder.address.description,
-                street = createdOrder.address.street,
-                house = createdOrder.address.house,
-                flat = createdOrder.address.flat,
-                entrance = createdOrder.address.entrance,
-                floor = createdOrder.address.floor,
-                comment = createdOrder.address.comment
-            ),
+            address =
+                OrderAddressPostServer(
+                    uuid = createdOrder.address.uuid,
+                    description = createdOrder.address.description,
+                    street = createdOrder.address.street,
+                    house = createdOrder.address.house,
+                    flat = createdOrder.address.flat,
+                    entrance = createdOrder.address.entrance,
+                    floor = createdOrder.address.floor,
+                    comment = createdOrder.address.comment,
+                ),
             comment = createdOrder.comment,
             deferredTime = createdOrder.deferredTime,
             orderProducts = createdOrder.orderProducts.map(orderProductMapper::toPostServerModel),
-            paymentMethod = createdOrder.paymentMethod
+            paymentMethod = createdOrder.paymentMethod,
         )
-    }
 }

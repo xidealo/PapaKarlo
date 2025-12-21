@@ -8,5 +8,5 @@ data class PaymentServer(
     @SerialName("phoneNumber")
     val phoneNumber: String?,
     @SerialName("cardNumber")
-    val cardNumber: String?
+    val cardNumber: String?,
 )

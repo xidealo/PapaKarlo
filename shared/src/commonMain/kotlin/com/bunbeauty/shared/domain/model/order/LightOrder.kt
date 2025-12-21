@@ -6,5 +6,5 @@ data class LightOrder(
     val uuid: String,
     val status: OrderStatus,
     val code: String,
-    val dateTime: DateTime
+    val dateTime: DateTime,
 )

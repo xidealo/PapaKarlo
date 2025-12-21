@@ -17,8 +17,8 @@ import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import papakarlo.designsystem.generated.resources.Res
 import papakarlo.designsystem.generated.resources.description_ic_next
-import papakarlo.designsystem.generated.resources.hint_settings_phone
 import papakarlo.designsystem.generated.resources.ic_right_arrow
+import papakarlo.designsystem.generated.resources.preview_string
 
 @Composable
 fun NavigationTextCard(
@@ -74,7 +74,7 @@ private fun TextNavigationCardPreview() {
     FoodDeliveryTheme {
         NavigationTextCard(
             modifier = Modifier.padding(FoodDeliveryTheme.dimensions.mediumSpace),
-            hintStringId = Res.string.hint_settings_phone,
+            hintStringId = Res.string.preview_string,
             label = "+7 999 000-00-00",
             onClick = {},
         )

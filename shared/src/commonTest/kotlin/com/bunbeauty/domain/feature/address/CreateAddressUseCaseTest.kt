@@ -21,15 +21,15 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
 class CreateAddressUseCaseTest {
-
     private val dataStoreRepo = mock<DataStoreRepo>()
 
     private val userAddressRepo = mock<UserAddressRepo>()
 
-    private val createAddressUseCase: CreateAddressUseCase = CreateAddressUseCase(
-        dataStoreRepo = dataStoreRepo,
-        userAddressRepo = userAddressRepo
-    )
+    private val createAddressUseCase: CreateAddressUseCase =
+        CreateAddressUseCase(
+            dataStoreRepo = dataStoreRepo,
+            userAddressRepo = userAddressRepo,
+        )
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @BeforeTest
@@ -38,112 +38,122 @@ class CreateAddressUseCaseTest {
     }
 
     @Test
-    fun `return NoTokenException when token is null`() = runTest {
-        everySuspend { dataStoreRepo.getToken() } returns null
+    fun `return NoTokenException when token is null`() =
+        runTest {
+            everySuspend { dataStoreRepo.getToken() } returns null
 
-        assertFailsWith(
-            exceptionClass = NoTokenException::class,
-            block = {
-                createAddressUseCase(
-                    street = Suggestion(
-                        fiasId = "fiasId",
-                        street = "street",
-                        details = null
-                    ),
-                    house = "house",
-                    flat = "flat",
-                    entrance = "entrance",
-                    comment = "comment",
-                    floor = "floor"
-                )
-            }
-        )
-    }
-
-    @Test
-    fun `return NoSelectedCityUuidException when selected city uuid is null`() = runTest {
-        everySuspend { dataStoreRepo.getToken() } returns ""
-
-        everySuspend { dataStoreRepo.getSelectedCityUuid() } returns null
-
-        assertFailsWith(
-            exceptionClass = NoSelectedCityUuidException::class,
-            block = {
-                createAddressUseCase(
-                    street = Suggestion(
-                        fiasId = "fiasId",
-                        street = "street",
-                        details = null
-                    ),
-                    house = "house",
-                    flat = "flat",
-                    entrance = "entrance",
-                    comment = "comment",
-                    floor = "floor"
-                )
-            }
-        )
-    }
+            assertFailsWith(
+                exceptionClass = NoTokenException::class,
+                block = {
+                    createAddressUseCase(
+                        street =
+                            Suggestion(
+                                fiasId = "fiasId",
+                                street = "street",
+                                details = null,
+                            ),
+                        house = "house",
+                        flat = "flat",
+                        entrance = "entrance",
+                        comment = "comment",
+                        floor = "floor",
+                    )
+                },
+            )
+        }
 
     @Test
-    fun `return userAddress when all data is ok`() = runTest {
-        everySuspend { dataStoreRepo.getToken() }.returns("token")
-        everySuspend { dataStoreRepo.getSelectedCityUuid() }.returns("cityUuid")
-        val userAddress = UserAddress(
-            uuid = "uuid",
-            street = "street",
-            house = "house",
-            flat = "flat",
-            entrance = "entrance",
-            comment = "comment",
-            floor = "floor",
-            minOrderCost = null,
-            normalDeliveryCost = 100,
-            forLowDeliveryCost = null,
-            lowDeliveryCost = null,
-            userUuid = "userUuid",
-            cafeUuid = "cafeUuid"
-        )
+    fun `return NoSelectedCityUuidException when selected city uuid is null`() =
+        runTest {
+            everySuspend { dataStoreRepo.getToken() } returns ""
 
-        everySuspend {
-            userAddressRepo.saveUserAddress(
-                token = "token",
-                createdUserAddress = CreatedUserAddress(
-                    street = Suggestion(
-                        fiasId = "fiasId",
-                        street = "street",
-                        details = null
-                    ),
+            everySuspend { dataStoreRepo.getSelectedCityUuid() } returns null
+
+            assertFailsWith(
+                exceptionClass = NoSelectedCityUuidException::class,
+                block = {
+                    createAddressUseCase(
+                        street =
+                            Suggestion(
+                                fiasId = "fiasId",
+                                street = "street",
+                                details = null,
+                            ),
+                        house = "house",
+                        flat = "flat",
+                        entrance = "entrance",
+                        comment = "comment",
+                        floor = "floor",
+                    )
+                },
+            )
+        }
+
+    @Test
+    fun `return userAddress when all data is ok`() =
+        runTest {
+            everySuspend { dataStoreRepo.getToken() }.returns("token")
+            everySuspend { dataStoreRepo.getSelectedCityUuid() }.returns("cityUuid")
+            val userAddress =
+                UserAddress(
+                    uuid = "uuid",
+                    street = "street",
                     house = "house",
                     flat = "flat",
                     entrance = "entrance",
                     comment = "comment",
                     floor = "floor",
-                    cityUuid = "cityUuid",
-                    isVisible = true
+                    minOrderCost = null,
+                    normalDeliveryCost = 100,
+                    forLowDeliveryCost = null,
+                    lowDeliveryCost = null,
+                    userUuid = "userUuid",
+                    cafeUuid = "cafeUuid",
                 )
-            )
-        }.returns(userAddress)
 
-        everySuspend {
-            dataStoreRepo.saveUserCafeUuid(
-                userCafeUuid = "cafeUuid"
-            )
-        }.returns(Unit)
+            everySuspend {
+                userAddressRepo.saveUserAddress(
+                    token = "token",
+                    createdUserAddress =
+                        CreatedUserAddress(
+                            street =
+                                Suggestion(
+                                    fiasId = "fiasId",
+                                    street = "street",
+                                    details = null,
+                                ),
+                            house = "house",
+                            flat = "flat",
+                            entrance = "entrance",
+                            comment = "comment",
+                            floor = "floor",
+                            cityUuid = "cityUuid",
+                            isVisible = true,
+                        ),
+                )
+            }.returns(userAddress)
 
-        val createdUserAddress = createAddressUseCase(
-            street = Suggestion(
-                fiasId = "fiasId",
-                street = "street",
-                details = null
-            ),
-            house = "house",
-            flat = "flat",
-            entrance = "entrance",
-            comment = "comment",
-            floor = "floor"
-        )
+            everySuspend {
+                dataStoreRepo.saveUserCafeUuid(
+                    userCafeUuid = "cafeUuid",
+                )
+            }.returns(Unit)
 
-        assertEquals(userAddress, createdUserAddress)
-    }
+            val createdUserAddress =
+                createAddressUseCase(
+                    street =
+                        Suggestion(
+                            fiasId = "fiasId",
+                            street = "street",
+                            details = null,
+                        ),
+                    house = "house",
+                    flat = "flat",
+                    entrance = "entrance",
+                    comment = "comment",
+                    floor = "floor",
+                )
+
+            assertEquals(userAddress, createdUserAddress)
+        }
 }

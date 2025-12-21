@@ -16,43 +16,48 @@ class CheckOneCityUseCaseTest {
     private val useCase: CheckOneCityUseCase = CheckOneCityUseCase(cityRepo = cityRepo)
 
     @Test
-    fun `invoke returns true when city list has exactly one city`() = runTest {
-        // Given
-        everySuspend { cityRepo.getCityList() } returns listOf(
-            getCity()
-        )
+    fun `invoke returns true when city list has exactly one city`() =
+        runTest {
+            // Given
+            everySuspend { cityRepo.getCityList() } returns
+                listOf(
+                    getCity(),
+                )
 
-        // When
-        val result = useCase.invoke()
+            // When
+            val result = useCase.invoke()
 
-        // Then
-        assertTrue(result)
-    }
-
-    @Test
-    fun `invoke returns false when city list has more than one city`() = runTest {
-        // Given
-        everySuspend { cityRepo.getCityList() } returns listOf(
-            getCity(name = "City1"),
-            getCity(name = "City2")
-        )
-
-        // When
-        val result = useCase.invoke()
-
-        // Then
-        assertFalse(result)
-    }
+            // Then
+            assertTrue(result)
+        }
 
     @Test
-    fun `invoke returns false when city list is empty`() = runTest {
-        // Given
-        everySuspend { cityRepo.getCityList() } returns emptyList()
+    fun `invoke returns false when city list has more than one city`() =
+        runTest {
+            // Given
+            everySuspend { cityRepo.getCityList() } returns
+                listOf(
+                    getCity(name = "City1"),
+                    getCity(name = "City2"),
+                )
 
-        // When
-        val result = useCase.invoke()
+            // When
+            val result = useCase.invoke()
 
-        // Then
-        assertFalse(result)
-    }
+            // Then
+            assertFalse(result)
+        }
+
+    @Test
+    fun `invoke returns false when city list is empty`() =
+        runTest {
+            // Given
+            everySuspend { cityRepo.getCityList() } returns emptyList()
+
+            // When
+            val result = useCase.invoke()
+
+            // Then
+            assertFalse(result)
+        }
 }

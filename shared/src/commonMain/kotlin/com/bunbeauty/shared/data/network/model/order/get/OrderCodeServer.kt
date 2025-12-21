@@ -6,5 +6,5 @@ import kotlinx.serialization.Serializable
 @Serializable
 class OrderCodeServer(
     @SerialName("code")
-    val code: String
+    val code: String,
 )

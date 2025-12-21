@@ -12,18 +12,21 @@ import kotlinx.coroutines.flow.collectLatest
 
 class CafeListViewModel(
     private val cafeInteractor: ICafeInteractor,
-    private val observeCafeWithOpenStateListUseCase: ObserveCafeWithOpenStateListUseCase
+    private val observeCafeWithOpenStateListUseCase: ObserveCafeWithOpenStateListUseCase,
 ) : SharedStateViewModel<CafeList.DataState, CafeList.Action, CafeList.Event>(
-    initDataState = CafeList.DataState(
-        cafeList = listOf(),
-        isLoading = true,
-        isShownCafeOptionBottomSheet = false
-    )
-) {
-
+        initDataState =
+            CafeList.DataState(
+                cafeList = listOf(),
+                isLoading = true,
+                isShownCafeOptionBottomSheet = false,
+            ),
+    ) {
     private var observeCafeListJob: Job? = null
 
-    override fun reduce(action: CafeList.Action, dataState: CafeList.DataState) {
+    override fun reduce(
+        action: CafeList.Action,
+        dataState: CafeList.DataState,
+    ) {
         when (action) {
             CafeList.Action.Init -> observeCafeList()
 
@@ -33,19 +36,20 @@ class CafeListViewModel(
                         setState {
                             copy(
                                 isShownCafeOptionBottomSheet = true,
-                                selectedCafe = cafeInteractor.getCafeByUuid(
-                                    cafeUuid = action.cafeUuid
-                                )
+                                selectedCafe =
+                                    cafeInteractor.getCafeByUuid(
+                                        cafeUuid = action.cafeUuid,
+                                    ),
                             )
                         }
                     },
                     onError = { error ->
                         setState {
                             copy(
-                                throwable = error
+                                throwable = error,
                             )
                         }
-                    }
+                    },
                 )
             }
 
@@ -59,38 +63,40 @@ class CafeListViewModel(
 
     private fun observeCafeList() {
         observeCafeListJob?.cancel()
-        observeCafeListJob = sharedScope.launchSafe(
-            block = {
-                observeCafeWithOpenStateListUseCase()
-                    .collectLatest { cafeWithOpenStateList ->
-                        setState {
-                            copy(
-                                cafeList = cafeWithOpenStateList.mapIndexed { index, cafeWithOpenState ->
-                                    cafeWithOpenState.toCafeItem(
-                                        isLast = index == cafeWithOpenStateList.lastIndex
-                                    )
-                                },
-                                isLoading = false,
-                                throwable = null
-                            )
+        observeCafeListJob =
+            sharedScope.launchSafe(
+                block = {
+                    observeCafeWithOpenStateListUseCase()
+                        .collectLatest { cafeWithOpenStateList ->
+                            setState {
+                                copy(
+                                    cafeList =
+                                        cafeWithOpenStateList.mapIndexed { index, cafeWithOpenState ->
+                                            cafeWithOpenState.toCafeItem(
+                                                isLast = index == cafeWithOpenStateList.lastIndex,
+                                            )
+                                        },
+                                    isLoading = false,
+                                    throwable = null,
+                                )
+                            }
                         }
+                },
+                onError = { error ->
+                    setState {
+                        copy(
+                            throwable = error,
+                        )
                     }
-            },
-            onError = { error ->
-                setState {
-                    copy(
-                        throwable = error
-                    )
-                }
-            }
-        )
+                },
+            )
     }
 
     private fun closeBottomSheet() {
         setState {
             copy(
                 isShownCafeOptionBottomSheet = false,
-                selectedCafe = null
+                selectedCafe = null,
             )
         }
     }
@@ -111,7 +117,7 @@ class CafeListViewModel(
             phone = cafe.phone,
             workingHours = "$fromTime$WORKING_HOURS_DIVIDER$toTime",
             cafeOpenState = openState,
-            isLast = isLast
+            isLast = isLast,
         )
     }
 }

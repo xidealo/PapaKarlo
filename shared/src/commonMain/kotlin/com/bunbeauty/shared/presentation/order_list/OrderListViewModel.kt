@@ -11,24 +11,24 @@ import kotlinx.coroutines.launch
 
 class OrderListViewModel(
     private val observeOrderListUseCase: ObserveOrderListUseCase,
-    private val stopObserveOrdersUseCase: StopObserveOrdersUseCase
+    private val stopObserveOrdersUseCase: StopObserveOrdersUseCase,
 ) : SharedStateViewModel<OrderListState.DataState, OrderListState.Action, OrderListState.Event>(
-    initDataState = OrderListState.DataState()
-) {
-
+        initDataState = OrderListState.DataState(),
+    ) {
     private var orderObservationUuid: String? = null
     private var observeOrdersJob: Job? = null
 
     override fun reduce(
         action: OrderListState.Action,
-        dataState: OrderListState.DataState
+        dataState: OrderListState.DataState,
     ) {
         when (action) {
             OrderListState.Action.BackClicked -> onBackClicked()
             OrderListState.Action.OnRefreshClicked -> observeOrders()
-            is OrderListState.Action.OnOrderClicked -> onOrderClicked(
-                uuid = action.uuid
-            )
+            is OrderListState.Action.OnOrderClicked ->
+                onOrderClicked(
+                    uuid = action.uuid,
+                )
 
             OrderListState.Action.StartObserveOrder -> observeOrders()
             OrderListState.Action.StopObserveOrder -> stopObserveOrders()
@@ -47,33 +47,32 @@ class OrderListViewModel(
         }
     }
 
-
     private fun observeOrders() {
-        observeOrdersJob = sharedScope.launchSafe(
-            block = {
-                val (uuid, orderListFlow) = observeOrderListUseCase()
-                orderObservationUuid = uuid
-                orderListFlow.collectLatest { orderList ->
-                    setState {
-                        copy(
-                            orderList = orderList,
-                            state = if (orderList.isEmpty()) {
-                                OrderListState.DataState.State.EMPTY
-                            } else {
-                                OrderListState.DataState.State.SUCCESS
-                            }
-                        )
+        observeOrdersJob =
+            sharedScope.launchSafe(
+                block = {
+                    val (uuid, orderListFlow) = observeOrderListUseCase()
+                    orderObservationUuid = uuid
+                    orderListFlow.collectLatest { orderList ->
+                        setState {
+                            copy(
+                                orderList = orderList,
+                                state =
+                                    if (orderList.isEmpty()) {
+                                        OrderListState.DataState.State.EMPTY
+                                    } else {
+                                        OrderListState.DataState.State.SUCCESS
+                                    },
+                            )
+                        }
                     }
-                }
-
-            },
-            onError =
-                { error ->
-                    Logger.logE("OrderList", error.stackTraceToString())
-                }
-        )
+                },
+                onError =
+                    { error ->
+                        Logger.logE("OrderList", error.stackTraceToString())
+                    },
+            )
     }
-
 
     private fun stopObserveOrders() {
         observeOrdersJob?.cancel()
@@ -84,6 +83,4 @@ class OrderListViewModel(
         }
         orderObservationUuid = null
     }
-
-
 }

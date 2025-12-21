@@ -8,8 +8,9 @@ import com.squareup.sqldelight.runtime.coroutines.mapToList
 import com.squareup.sqldelight.runtime.coroutines.mapToOneOrNull
 import kotlinx.coroutines.flow.Flow
 
-class CafeDao(foodDeliveryDatabase: FoodDeliveryDatabase) : ICafeDao {
-
+class CafeDao(
+    foodDeliveryDatabase: FoodDeliveryDatabase,
+) : ICafeDao {
     private val cityEntityQueries = foodDeliveryDatabase.cafeEntityQueries
     private val selectedCafeUuidEntityQueries = foodDeliveryDatabase.selectedCafeUuidEntityQueries
 
@@ -29,7 +30,7 @@ class CafeDao(foodDeliveryDatabase: FoodDeliveryDatabase) : ICafeDao {
                     isVisible = cafeEntity.isVisible,
                     workType = cafeEntity.workType,
                     workload = cafeEntity.workload,
-                    additionalUtensils = cafeEntity.additionalUtensils
+                    additionalUtensils = cafeEntity.additionalUtensils,
                 )
             }
         }
@@ -39,47 +40,40 @@ class CafeDao(foodDeliveryDatabase: FoodDeliveryDatabase) : ICafeDao {
         selectedCafeUuidEntityQueries.insertSelectedCafeUuid(
             userUuid = selectedCafeUuidEntity.userUuid,
             cityUuid = selectedCafeUuidEntity.cityUuid,
-            cafeUuid = selectedCafeUuidEntity.cafeUuid
+            cafeUuid = selectedCafeUuidEntity.cafeUuid,
         )
     }
 
     override suspend fun getSelectedCafeByUserAndCityUuid(
         userUuid: String,
-        cityUuid: String
-    ): CafeEntity? {
-        return cityEntityQueries.getSelectedCafeByUserAndCityUuid(userUuid, cityUuid)
+        cityUuid: String,
+    ): CafeEntity? =
+        cityEntityQueries
+            .getSelectedCafeByUserAndCityUuid(userUuid, cityUuid)
             .executeAsOneOrNull()
-    }
 
-    override suspend fun getFirstCafeByCityUuid(cityUuid: String): CafeEntity? {
-        return cityEntityQueries.getFirstCafeByCityUuid(cityUuid).executeAsOneOrNull()
-    }
+    override suspend fun getFirstCafeByCityUuid(cityUuid: String): CafeEntity? =
+        cityEntityQueries.getFirstCafeByCityUuid(cityUuid).executeAsOneOrNull()
 
-    override fun observeCafeListByCityUuid(cityUuid: String): Flow<List<CafeEntity>> {
-        return cityEntityQueries.getCafeListByCityUuid(cityUuid).asFlow().mapToList()
-    }
+    override fun observeCafeListByCityUuid(cityUuid: String): Flow<List<CafeEntity>> =
+        cityEntityQueries.getCafeListByCityUuid(cityUuid).asFlow().mapToList()
 
-    override fun observeCafeByUuid(uuid: String): Flow<CafeEntity?> {
-        return cityEntityQueries.getCafeByUuid(uuid).asFlow().mapToOneOrNull()
-    }
+    override fun observeCafeByUuid(uuid: String): Flow<CafeEntity?> = cityEntityQueries.getCafeByUuid(uuid).asFlow().mapToOneOrNull()
 
     override fun observeSelectedCafeByUserAndCityUuid(
         userUuid: String,
-        cityUuid: String
-    ): Flow<CafeEntity?> {
-        return cityEntityQueries.getSelectedCafeByUserAndCityUuid(userUuid, cityUuid).asFlow()
+        cityUuid: String,
+    ): Flow<CafeEntity?> =
+        cityEntityQueries
+            .getSelectedCafeByUserAndCityUuid(userUuid, cityUuid)
+            .asFlow()
             .mapToOneOrNull()
-    }
 
-    override fun observeFirstCafeByCityUuid(cityUuid: String): Flow<CafeEntity?> {
-        return cityEntityQueries.getFirstCafeByCityUuid(cityUuid).asFlow().mapToOneOrNull()
-    }
+    override fun observeFirstCafeByCityUuid(cityUuid: String): Flow<CafeEntity?> =
+        cityEntityQueries.getFirstCafeByCityUuid(cityUuid).asFlow().mapToOneOrNull()
 
-    override suspend fun getCafeListByCityUuid(cityUuid: String): List<CafeEntity> {
-        return cityEntityQueries.getCafeListByCityUuid(cityUuid).executeAsList()
-    }
+    override suspend fun getCafeListByCityUuid(cityUuid: String): List<CafeEntity> =
+        cityEntityQueries.getCafeListByCityUuid(cityUuid).executeAsList()
 
-    override suspend fun getCafeByUuid(uuid: String): CafeEntity? {
-        return cityEntityQueries.getCafeByUuid(uuid).executeAsOneOrNull()
-    }
+    override suspend fun getCafeByUuid(uuid: String): CafeEntity? = cityEntityQueries.getCafeByUuid(uuid).executeAsOneOrNull()
 }

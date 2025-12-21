@@ -15,73 +15,81 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
 class GetMotivationUseCaseTest {
-
     private val getCurrentUserAddressUseCase: GetCurrentUserAddressUseCase = mock()
     private val getUserAddressListUseCase: GetUserAddressListUseCase = mock(MockMode.autofill)
 
-    private val getMotivationUseCase: GetMotivationUseCase = GetMotivationUseCase(
-        getCurrentUserAddressUseCase = getCurrentUserAddressUseCase,
-        getUserAddressListUseCase = getUserAddressListUseCase
-    )
-
-    @Test
-    fun `return null when no min order cost and no low delivery`() = runTest {
-        val userAddress: UserAddress = userAddress.copy(
-            minOrderCost = null,
-            forLowDeliveryCost = null,
-            lowDeliveryCost = null
+    private val getMotivationUseCase: GetMotivationUseCase =
+        GetMotivationUseCase(
+            getCurrentUserAddressUseCase = getCurrentUserAddressUseCase,
+            getUserAddressListUseCase = getUserAddressListUseCase,
         )
 
-        everySuspend { getCurrentUserAddressUseCase() } returns userAddress
+    @Test
+    fun `return null when no min order cost and no low delivery`() =
+        runTest {
+            val userAddress: UserAddress =
+                userAddress.copy(
+                    minOrderCost = null,
+                    forLowDeliveryCost = null,
+                    lowDeliveryCost = null,
+                )
 
-        val motivation = getMotivationUseCase(newTotalCost = 100, isDelivery = true)
+            everySuspend { getCurrentUserAddressUseCase() } returns userAddress
 
-        assertNull(motivation)
-    }
+            val motivation = getMotivationUseCase(newTotalCost = 100, isDelivery = true)
+
+            assertNull(motivation)
+        }
 
     @Test
-    fun `return MinOrderCost motivation when cost is less then min order cost`() = runTest {
-        val userAddress: UserAddress = userAddress.copy(
-            minOrderCost = 500,
-            forLowDeliveryCost = null,
-            lowDeliveryCost = null
-        )
-        everySuspend { getCurrentUserAddressUseCase() } returns userAddress
-        val expected = Motivation.MinOrderCost(cost = 500)
+    fun `return MinOrderCost motivation when cost is less then min order cost`() =
+        runTest {
+            val userAddress: UserAddress =
+                userAddress.copy(
+                    minOrderCost = 500,
+                    forLowDeliveryCost = null,
+                    lowDeliveryCost = null,
+                )
+            everySuspend { getCurrentUserAddressUseCase() } returns userAddress
+            val expected = Motivation.MinOrderCost(cost = 500)
 
-        val motivation = getMotivationUseCase(newTotalCost = 100, isDelivery = true)
+            val motivation = getMotivationUseCase(newTotalCost = 100, isDelivery = true)
 
-        assertEquals(expected, motivation)
-    }
+            assertEquals(expected, motivation)
+        }
 
     @Test
-    fun `return null when cost is more then min order cost`() = runTest {
-        val userAddress: UserAddress = userAddress.copy(
-            minOrderCost = 500,
-            forLowDeliveryCost = null,
-            lowDeliveryCost = null
-        )
-        everySuspend { getCurrentUserAddressUseCase() } returns userAddress
+    fun `return null when cost is more then min order cost`() =
+        runTest {
+            val userAddress: UserAddress =
+                userAddress.copy(
+                    minOrderCost = 500,
+                    forLowDeliveryCost = null,
+                    lowDeliveryCost = null,
+                )
+            everySuspend { getCurrentUserAddressUseCase() } returns userAddress
 
-        val motivation = getMotivationUseCase(newTotalCost = 520, isDelivery = true)
+            val motivation = getMotivationUseCase(newTotalCost = 520, isDelivery = true)
 
-        assertNull(motivation)
-    }
+            assertNull(motivation)
+        }
 
     @Test
     fun `return ForLowerDelivery motivation when cost is less then needed for free delivery`() =
         runTest {
-            val userAddress: UserAddress = userAddress.copy(
-                minOrderCost = 500,
-                forLowDeliveryCost = 1000,
-                lowDeliveryCost = 0
-            )
+            val userAddress: UserAddress =
+                userAddress.copy(
+                    minOrderCost = 500,
+                    forLowDeliveryCost = 1000,
+                    lowDeliveryCost = 0,
+                )
             everySuspend { getCurrentUserAddressUseCase() } returns userAddress
-            val expected = Motivation.ForLowerDelivery(
-                increaseAmountBy = 400,
-                progress = 0.6f,
-                isFree = true
-            )
+            val expected =
+                Motivation.ForLowerDelivery(
+                    increaseAmountBy = 400,
+                    progress = 0.6f,
+                    isFree = true,
+                )
 
             val motivation = getMotivationUseCase(newTotalCost = 600, isDelivery = true)
 
@@ -91,11 +99,12 @@ class GetMotivationUseCaseTest {
     @Test
     fun `return LowerDeliveryAchieved motivation when cost is more then needed for lower delivery`() =
         runTest {
-            val userAddress: UserAddress = userAddress.copy(
-                minOrderCost = null,
-                forLowDeliveryCost = 1000,
-                lowDeliveryCost = 100
-            )
+            val userAddress: UserAddress =
+                userAddress.copy(
+                    minOrderCost = null,
+                    forLowDeliveryCost = 1000,
+                    lowDeliveryCost = 100,
+                )
             everySuspend { getCurrentUserAddressUseCase() } returns userAddress
             val expected = Motivation.LowerDeliveryAchieved(isFree = false)
 
@@ -107,11 +116,12 @@ class GetMotivationUseCaseTest {
     @Test
     fun `return null motivation when delivery is false`() =
         runTest {
-            val userAddress: UserAddress = userAddress.copy(
-                minOrderCost = null,
-                forLowDeliveryCost = 1000,
-                lowDeliveryCost = 100
-            )
+            val userAddress: UserAddress =
+                userAddress.copy(
+                    minOrderCost = null,
+                    forLowDeliveryCost = 1000,
+                    lowDeliveryCost = 100,
+                )
             everySuspend { getCurrentUserAddressUseCase() } returns userAddress
             val expected = null
 
@@ -120,19 +130,20 @@ class GetMotivationUseCaseTest {
             assertEquals(expected, motivation)
         }
 
-    private val userAddress = UserAddress(
-        uuid = "",
-        street = "",
-        house = "",
-        flat = null,
-        entrance = null,
-        floor = null,
-        comment = null,
-        minOrderCost = null,
-        normalDeliveryCost = 0,
-        forLowDeliveryCost = null,
-        lowDeliveryCost = null,
-        userUuid = "",
-        cafeUuid = "cafeUuid"
-    )
+    private val userAddress =
+        UserAddress(
+            uuid = "",
+            street = "",
+            house = "",
+            flat = null,
+            entrance = null,
+            floor = null,
+            comment = null,
+            minOrderCost = null,
+            normalDeliveryCost = 0,
+            forLowDeliveryCost = null,
+            lowDeliveryCost = null,
+            userUuid = "",
+            cafeUuid = "cafeUuid",
+        )
 }

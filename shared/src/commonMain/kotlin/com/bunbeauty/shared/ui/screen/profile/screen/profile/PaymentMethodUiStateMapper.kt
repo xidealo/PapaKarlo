@@ -13,19 +13,20 @@ import papakarlo.shared.generated.resources.msg_payment_cash
 import papakarlo.shared.generated.resources.msg_payment_phone_number
 
 @Composable
-fun PaymentMethod.map(): PaymentMethodUI = PaymentMethodUI(
-    uuid = uuid,
-    name = name.mapToString(),
-    value =
-        valueToShow?.let { value ->
-            valueToCopy?.let { valueToCopy ->
-                PaymentMethodValueUI(
-                    value = value,
-                    valueToCopy = valueToCopy,
-                )
-            }
-        },
-)
+fun PaymentMethod.map(): PaymentMethodUI =
+    PaymentMethodUI(
+        uuid = uuid,
+        name = name.mapToString(),
+        value =
+            valueToShow?.let { value ->
+                valueToCopy?.let { valueToCopy ->
+                    PaymentMethodValueUI(
+                        value = value,
+                        valueToCopy = valueToCopy,
+                    )
+                }
+            },
+    )
 
 @Composable
 fun PaymentMethodName.mapToString(): String =
@@ -37,4 +38,3 @@ fun PaymentMethodName.mapToString(): String =
     }.let { nameResId ->
         stringResource(resource = nameResId)
     }
-

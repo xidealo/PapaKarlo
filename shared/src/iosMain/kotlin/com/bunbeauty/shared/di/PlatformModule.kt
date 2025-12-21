@@ -16,30 +16,31 @@ import org.koin.dsl.module
 import kotlin.experimental.ExperimentalNativeApi
 
 @OptIn(ExperimentalNativeApi::class)
-actual fun platformModule() = module {
-    single {
-        FoodDeliveryDatabase(DatabaseDriverFactory().createDriver())
+actual fun platformModule() =
+    module {
+        single {
+            FoodDeliveryDatabase(DatabaseDriverFactory().createDriver())
+        }
+        single<DataStoreRepo> {
+            DataStoreRepository()
+        }
+        single {
+            UuidGenerator()
+        }
+        factory {
+            UpdateNotificationUseCase(
+                userRepository = get(),
+            )
+        }
+        single(flavorQualifier) { targetName }
+        single { NetworkUtil() }
+        factory { OpenExternalSource() }
+        single(isDebugQualifier) { Platform.isDebugBinary }
+        single(buildVersionQualifier) {
+            platform.Foundation.NSBundle.mainBundle
+                .infoDictionary
+                ?.get("CFBundleVersion")
+                .toString()
+                .toLong()
+        }
     }
-    single<DataStoreRepo> {
-        DataStoreRepository()
-    }
-    single {
-        UuidGenerator()
-    }
-    factory {
-        UpdateNotificationUseCase(
-            userRepository = get()
-        )
-    }
-    single(flavorQualifier) { targetName }
-    single { NetworkUtil() }
-    factory { OpenExternalSource() }
-    single(isDebugQualifier) { Platform.isDebugBinary }
-    single(buildVersionQualifier) {
-        platform.Foundation.NSBundle.mainBundle
-            .infoDictionary
-            ?.get("CFBundleVersion")
-            .toString()
-            .toLong()
-    }
-}

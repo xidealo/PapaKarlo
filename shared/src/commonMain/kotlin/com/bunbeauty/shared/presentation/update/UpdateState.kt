@@ -9,21 +9,28 @@ import com.bunbeauty.shared.presentation.base.BaseViewDataState
 sealed interface UpdateState {
     data class DataState(
         val link: Link?,
-        val state: State
+        val state: State,
     ) : BaseViewDataState {
         enum class State {
             LOADING,
             SUCCESS,
-            ERROR
+            ERROR,
         }
     }
 
     sealed interface Action : BaseAction {
-        data class Init(val linkType: LinkType) : Action
-        data class UpdateClick(val linkValue: String) : Action
+        data class Init(
+            val linkType: LinkType,
+        ) : Action
+
+        data class UpdateClick(
+            val linkValue: String,
+        ) : Action
     }
 
     sealed interface Event : BaseEvent {
-        data class NavigateToUpdateEvent(val linkValue: String) : Event
+        data class NavigateToUpdateEvent(
+            val linkValue: String,
+        ) : Event
     }
 }

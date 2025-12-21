@@ -35,7 +35,7 @@ fun viewModelModule() =
         viewModel {
             MainViewModel(
                 isOrderAvailableUseCase = get(),
-                networkUtil = get()
+                networkUtil = get(),
             )
         }
         viewModel {
@@ -74,7 +74,7 @@ fun viewModelModule() =
                 getSelectedPaymentMethodUseCase = get(),
                 getExtendedCommentUseCase = get(),
                 getAdditionalUtensilsUseCase = get(),
-                getDeferredTimeHintUseCase = get()
+                getDeferredTimeHintUseCase = get(),
             )
         }
         viewModel {
@@ -115,7 +115,7 @@ fun viewModelModule() =
                 getLinkListUseCase = get(),
                 observeLastOrderUseCase = get(),
                 stopObserveOrdersUseCase = get(),
-                buildVersion = get(buildVersionQualifier)
+                buildVersion = get(buildVersionQualifier),
             )
         }
         viewModel {

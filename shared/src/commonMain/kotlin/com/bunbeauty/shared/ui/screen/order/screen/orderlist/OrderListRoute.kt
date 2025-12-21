@@ -12,24 +12,23 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import org.jetbrains.compose.resources.stringResource
-
-import org.jetbrains.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.LifecycleStartEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import papakarlo.shared.generated.resources.Res
+import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.designsystem.ui.screen.EmptyScreen
 import com.bunbeauty.designsystem.ui.screen.ErrorScreen
 import com.bunbeauty.designsystem.ui.screen.LoadingScreen
-import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.shared.domain.model.order.OrderStatus
 import com.bunbeauty.shared.presentation.order_list.OrderListState
 import com.bunbeauty.shared.presentation.order_list.OrderListViewModel
 import com.bunbeauty.shared.ui.screen.order.model.OrderItem
 import com.bunbeauty.shared.ui.screen.order.toItem
+import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
+import papakarlo.shared.generated.resources.Res
 import papakarlo.shared.generated.resources.description_cafe_addresses_empty
 import papakarlo.shared.generated.resources.error_order_list_loading
 import papakarlo.shared.generated.resources.ic_history
@@ -38,8 +37,8 @@ import papakarlo.shared.generated.resources.title_my_orders
 import papakarlo.shared.generated.resources.title_order_list_empty
 
 @Composable
-fun OrderListState.DataState.mapState(): OrderListViewState {
-    return OrderListViewState(
+fun OrderListState.DataState.mapState(): OrderListViewState =
+    OrderListViewState(
         state =
             when (state) {
                 OrderListState.DataState.State.SUCCESS -> OrderListViewState.State.Success
@@ -47,11 +46,11 @@ fun OrderListState.DataState.mapState(): OrderListViewState {
                 OrderListState.DataState.State.ERROR -> OrderListViewState.State.Error
                 OrderListState.DataState.State.EMPTY -> OrderListViewState.State.Empty
             },
-        orderList = orderList.map { lightOrder ->
-            lightOrder.toItem()
-        },
+        orderList =
+            orderList.map { lightOrder ->
+                lightOrder.toItem()
+            },
     )
-}
 
 @Composable
 fun OrderListRoute(

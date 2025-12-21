@@ -23,7 +23,7 @@ import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import papakarlo.designsystem.generated.resources.Res
-import papakarlo.designsystem.generated.resources.common_email
+import papakarlo.designsystem.generated.resources.preview_string
 
 @Composable
 fun FoodDeliveryBottomSheet(
@@ -91,7 +91,7 @@ private fun FoodDeliveryBottomSheet(
 fun FoodDeliveryBottomSheetPreview() {
     FoodDeliveryTheme {
         FoodDeliveryBottomSheet(
-            titleStringId = Res.string.common_email
+            titleStringId = Res.string.preview_string
         ) {
             Spacer(modifier = Modifier.height(300.dp))
         }

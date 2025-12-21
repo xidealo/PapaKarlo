@@ -6,39 +6,39 @@ import com.bunbeauty.shared.domain.model.payment_method.PaymentMethod
 import com.bunbeauty.shared.domain.model.payment_method.PaymentMethodName
 
 class PaymentMethodMapper {
-
     fun toPaymentMethod(paymentMethodServer: PaymentMethodServer): PaymentMethod? {
-        val name = PaymentMethodName.values().find { paymentMethodName ->
-            paymentMethodName.name == paymentMethodServer.name
-        } ?: return null
+        val name =
+            PaymentMethodName.values().find { paymentMethodName ->
+                paymentMethodName.name == paymentMethodServer.name
+            } ?: return null
 
         return PaymentMethod(
             uuid = paymentMethodServer.uuid,
             name = name,
             valueToShow = paymentMethodServer.value,
-            valueToCopy = paymentMethodServer.valueToCopy
+            valueToCopy = paymentMethodServer.valueToCopy,
         )
     }
 
     fun toPaymentMethod(paymentMethodEntity: PaymentMethodEntity): PaymentMethod? {
-        val name = PaymentMethodName.values().find { paymentMethodName ->
-            paymentMethodName.name == paymentMethodEntity.name
-        } ?: return null
+        val name =
+            PaymentMethodName.values().find { paymentMethodName ->
+                paymentMethodName.name == paymentMethodEntity.name
+            } ?: return null
 
         return PaymentMethod(
             uuid = paymentMethodEntity.uuid,
             name = name,
             valueToShow = paymentMethodEntity.value_,
-            valueToCopy = paymentMethodEntity.valueToCopy
+            valueToCopy = paymentMethodEntity.valueToCopy,
         )
     }
 
-    fun toPaymentMethodEntity(paymentMethod: PaymentMethod): PaymentMethodEntity {
-        return PaymentMethodEntity(
+    fun toPaymentMethodEntity(paymentMethod: PaymentMethod): PaymentMethodEntity =
+        PaymentMethodEntity(
             uuid = paymentMethod.uuid,
             name = paymentMethod.name.name,
             value_ = paymentMethod.valueToShow,
-            valueToCopy = paymentMethod.valueToCopy
+            valueToCopy = paymentMethod.valueToCopy,
         )
-    }
 }

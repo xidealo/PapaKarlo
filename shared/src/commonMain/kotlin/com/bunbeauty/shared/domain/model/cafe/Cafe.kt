@@ -12,18 +12,18 @@ data class Cafe(
     val isVisible: Boolean,
     val workType: WorkType,
     val workload: Workload,
-    val additionalUtensils: Boolean
+    val additionalUtensils: Boolean,
 ) {
     enum class WorkType {
         DELIVERY,
         PICKUP,
         DELIVERY_AND_PICKUP,
-        CLOSED
+        CLOSED,
     }
 
     enum class Workload {
         LOW,
         AVERAGE,
-        HIGH
+        HIGH,
     }
 }

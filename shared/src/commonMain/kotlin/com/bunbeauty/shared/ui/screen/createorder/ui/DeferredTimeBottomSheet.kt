@@ -5,14 +5,14 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import org.jetbrains.compose.resources.stringResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bunbeauty.designsystem.ui.element.card.NavigationCard
 import com.bunbeauty.designsystem.ui.element.card.SimpleCard
-import papakarlo.shared.generated.resources.Res
 import com.bunbeauty.designsystem.ui.screen.bottomsheet.FoodDeliveryModalBottomSheet
 import com.bunbeauty.shared.presentation.createorder.CreateOrder
+import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
+import papakarlo.shared.generated.resources.Res
 import papakarlo.shared.generated.resources.action_deferred_time_asap
 import papakarlo.shared.generated.resources.action_deferred_time_select_time
 

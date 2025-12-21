@@ -20,7 +20,7 @@ fun getMenuProduct(
     categoryList: List<Category> = emptyList(),
     isRecommended: Boolean = false,
     visible: Boolean = true,
-    additionGroups: List<AdditionGroup> = emptyList()
+    additionGroups: List<AdditionGroup> = emptyList(),
 ) = MenuProduct(
     uuid = uuid,
     name = "Kapusta",
@@ -34,37 +34,44 @@ fun getMenuProduct(
     categoryList = categoryList,
     visible = visible,
     isRecommended = isRecommended,
-    additionGroups = additionGroups
+    additionGroups = additionGroups,
 )
 
 fun getCartProduct(
     uuid: String = "1",
     count: Int = 0,
     menuProduct: MenuProduct = getMenuProduct(),
-    cartProductAdditionList: List<CartProductAddition> = emptyList()
+    cartProductAdditionList: List<CartProductAddition> = emptyList(),
 ) = CartProduct(
     uuid = uuid,
     count = count,
     product = menuProduct,
-    additionList = cartProductAdditionList
+    additionList = cartProductAdditionList,
 )
 
-fun getCategoryProduct(uuid: String, name: String = "", priority: Int = 0) = Category(
+fun getCategoryProduct(
+    uuid: String,
+    name: String = "",
+    priority: Int = 0,
+) = Category(
     uuid = uuid,
     name = name,
-    priority = priority
+    priority = priority,
 )
 
-fun getCartProductAddition(uuid: String = "1", additionUuid: String = "1", price: Int? = 100) =
-    CartProductAddition(
-        uuid = uuid,
-        name = "",
-        fullName = null,
-        price = price,
-        cartProductUuid = "",
-        additionUuid = additionUuid,
-        priority = null
-    )
+fun getCartProductAddition(
+    uuid: String = "1",
+    additionUuid: String = "1",
+    price: Int? = 100,
+) = CartProductAddition(
+    uuid = uuid,
+    name = "",
+    fullName = null,
+    price = price,
+    cartProductUuid = "",
+    additionUuid = additionUuid,
+    priority = null,
+)
 
 fun getAddition(
     uuid: String = "1",
@@ -72,7 +79,7 @@ fun getAddition(
     additionGroupUuid: String = "",
     isVisible: Boolean = true,
     price: Int? = 0,
-    isSelected: Boolean = false
+    isSelected: Boolean = false,
 ) = Addition(
     uuid = uuid,
     name = "",
@@ -82,7 +89,7 @@ fun getAddition(
     isVisible = isVisible,
     photoLink = "",
     additionGroupUuid = additionGroupUuid,
-    priority = priority
+    priority = priority,
 )
 
 fun getAdditionGroup(
@@ -90,14 +97,14 @@ fun getAdditionGroup(
     priority: Int = 0,
     additions: List<Addition> = emptyList(),
     isVisible: Boolean = true,
-    singleChoice: Boolean = false
+    singleChoice: Boolean = false,
 ) = AdditionGroup(
     uuid = uuid,
     name = "",
     isVisible = isVisible,
     priority = priority,
     additionList = additions,
-    singleChoice = singleChoice
+    singleChoice = singleChoice,
 )
 
 fun getCity(
@@ -105,18 +112,18 @@ fun getCity(
     name: String = "",
     timeZone: String = "",
     isVisible: Boolean = true,
-    singleChoice: Boolean = false
+    singleChoice: Boolean = false,
 ) = City(
     uuid = uuid,
     name = name,
-    timeZone = timeZone
+    timeZone = timeZone,
 )
 
 fun getCafe(
     uuid: String,
     workType: Cafe.WorkType = Cafe.WorkType.DELIVERY_AND_PICKUP,
     workload: Cafe.Workload = Cafe.Workload.LOW,
-    additionalUtensils: Boolean = false
+    additionalUtensils: Boolean = false,
 ) = Cafe(
     uuid = uuid,
     fromTime = 0,
@@ -129,25 +136,25 @@ fun getCafe(
     isVisible = true,
     workType = workType,
     workload = workload,
-    additionalUtensils = additionalUtensils
+    additionalUtensils = additionalUtensils,
 )
 
 fun getSelectablePaymentMethod(
     paymentMethod: PaymentMethod,
-    isSelected: Boolean
+    isSelected: Boolean,
 ) = SelectablePaymentMethod(
     paymentMethod = paymentMethod,
-    isSelected = isSelected
+    isSelected = isSelected,
 )
 
 fun getPaymentMethod(
     uuid: String = "",
     name: PaymentMethodName = PaymentMethodName.CASH,
     valueToShow: String? = null,
-    valueToCopy: String? = null
+    valueToCopy: String? = null,
 ) = PaymentMethod(
     uuid = uuid,
     name = name,
     valueToShow = valueToShow,
-    valueToCopy = valueToCopy
+    valueToCopy = valueToCopy,
 )

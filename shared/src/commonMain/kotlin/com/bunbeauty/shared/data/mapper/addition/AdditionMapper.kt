@@ -13,6 +13,6 @@ val mapAdditionEntityToAddition: AdditionEntity.() -> Addition = {
         uuid = uuid,
         additionGroupUuid = additionGroupUuid,
         fullName = fullName,
-        priority = priority
+        priority = priority,
     )
 }

@@ -8,7 +8,6 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class CheckPhoneNumberUseCaseTest {
-
     lateinit var checkPhoneNumberUseCase: CheckPhoneNumberUseCase
 
     @BeforeTest
@@ -17,20 +16,22 @@ class CheckPhoneNumberUseCaseTest {
     }
 
     @Test
-    fun `should return false when phone number is not complete`() = runTest {
-        val phoneNumber = "+7123456789"
+    fun `should return false when phone number is not complete`() =
+        runTest {
+            val phoneNumber = "+7123456789"
 
-        val isCorrect = checkPhoneNumberUseCase(phoneNumber)
+            val isCorrect = checkPhoneNumberUseCase(phoneNumber)
 
-        assertFalse(isCorrect)
-    }
+            assertFalse(isCorrect)
+        }
 
     @Test
-    fun `should return true when phone number is completed`() = runTest {
-        val phoneNumber = "+71234567890"
+    fun `should return true when phone number is completed`() =
+        runTest {
+            val phoneNumber = "+71234567890"
 
-        val isCorrect = checkPhoneNumberUseCase(phoneNumber)
+            val isCorrect = checkPhoneNumberUseCase(phoneNumber)
 
-        assertTrue(isCorrect)
-    }
+            assertTrue(isCorrect)
+        }
 }

@@ -19,31 +19,29 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import org.jetbrains.compose.resources.stringResource
-
 import androidx.compose.ui.text.style.TextAlign
-import org.jetbrains.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.LifecycleStartEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import papakarlo.shared.generated.resources.Res
-import com.bunbeauty.designsystem.ui.element.FoodDeliveryScaffold
-import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryCard
-import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryItem
-import com.bunbeauty.designsystem.ui.screen.ErrorScreen
-import com.bunbeauty.designsystem.ui.screen.LoadingScreen
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.theme.bold
 import com.bunbeauty.designsystem.theme.medium
+import com.bunbeauty.designsystem.ui.element.FoodDeliveryScaffold
+import com.bunbeauty.designsystem.ui.element.card.DiscountCard
+import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryCard
+import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryItem
+import com.bunbeauty.designsystem.ui.element.surface.FoodDeliverySurface
+import com.bunbeauty.designsystem.ui.screen.ErrorScreen
+import com.bunbeauty.designsystem.ui.screen.LoadingScreen
 import com.bunbeauty.shared.domain.model.order.OrderStatus
 import com.bunbeauty.shared.presentation.order_details.OrderDetails
 import com.bunbeauty.shared.presentation.order_details.OrderDetailsViewModel
-import com.bunbeauty.designsystem.ui.element.card.DiscountCard
-import com.bunbeauty.designsystem.ui.element.surface.FoodDeliverySurface
 import com.bunbeauty.shared.ui.screen.order.ui.OrderProductItem
 import com.bunbeauty.shared.ui.screen.order.ui.OrderStatusBar
+import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
-import org.koin.compose.koinInject
+import papakarlo.shared.generated.resources.Res
 import papakarlo.shared.generated.resources.error_order_details_discount
 import papakarlo.shared.generated.resources.msg_order_details_address
 import papakarlo.shared.generated.resources.msg_order_details_comment
@@ -92,7 +90,7 @@ fun OrderDetailsRoute(
 
     OrderDetailsScreen(
         viewState = viewState.mapToOrderDetailsViewState(),
-        onAction = onAction
+        onAction = onAction,
     )
 }
 
@@ -466,12 +464,12 @@ private fun getOrderInfo(): OrderDetailsViewState.OrderInfo =
         deferredTime = "10:30",
         address =
             "" +
-                    "ул. Лука" +
-                    "2" +
-                    "10" +
-                    "1" +
-                    "3" +
-                    "тест",
+                "ул. Лука" +
+                "2" +
+                "10" +
+                "1" +
+                "3" +
+                "тест",
         comment = "давай кушать",
         pickupMethod = "доставка",
         statusName = "Готовится",

@@ -6,24 +6,25 @@ import com.bunbeauty.shared.domain.use_case.address.GetUserAddressListUseCaseImp
 import com.bunbeauty.shared.domain.use_case.address.SaveSelectedUserAddressUseCase
 import org.koin.dsl.module
 
-fun userAddressUseCaseModule() = module {
-    factory<GetUserAddressListUseCase> {
-        GetUserAddressListUseCaseImpl(
-            dataStoreRepo = get(),
-            userAddressRepo = get()
-        )
+fun userAddressUseCaseModule() =
+    module {
+        factory<GetUserAddressListUseCase> {
+            GetUserAddressListUseCaseImpl(
+                dataStoreRepo = get(),
+                userAddressRepo = get(),
+            )
+        }
+        factory {
+            GetSelectableUserAddressListUseCase(
+                dataStoreRepo = get(),
+                userAddressRepo = get(),
+                getCurrentUserAddressUseCase = get(),
+            )
+        }
+        factory {
+            SaveSelectedUserAddressUseCase(
+                dataStoreRepo = get(),
+                userAddressRepo = get(),
+            )
+        }
     }
-    factory {
-        GetSelectableUserAddressListUseCase(
-            dataStoreRepo = get(),
-            userAddressRepo = get(),
-            getCurrentUserAddressUseCase = get()
-        )
-    }
-    factory {
-        SaveSelectedUserAddressUseCase(
-            dataStoreRepo = get(),
-            userAddressRepo = get()
-        )
-    }
-}

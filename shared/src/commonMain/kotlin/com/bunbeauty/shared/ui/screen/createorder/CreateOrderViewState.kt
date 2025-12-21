@@ -1,6 +1,5 @@
 package com.bunbeauty.shared.ui.screen.createorder
 
-
 import androidx.compose.runtime.Immutable
 import com.bunbeauty.shared.presentation.base.BaseViewState
 import com.bunbeauty.shared.ui.screen.motivation.MotivationUi

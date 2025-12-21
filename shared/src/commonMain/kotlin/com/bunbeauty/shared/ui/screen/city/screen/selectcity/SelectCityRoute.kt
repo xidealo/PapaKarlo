@@ -10,23 +10,22 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import org.jetbrains.compose.resources.stringResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import papakarlo.shared.generated.resources.Res
+import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.designsystem.ui.screen.ErrorScreen
 import com.bunbeauty.designsystem.ui.screen.LoadingScreen
-import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.shared.domain.model.city.City
 import com.bunbeauty.shared.presentation.selectcity.SelectCityDataState
 import com.bunbeauty.shared.presentation.selectcity.SelectCityViewModel
 import com.bunbeauty.shared.ui.screen.city.ui.CityItem
+import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
+import papakarlo.shared.generated.resources.Res
 import papakarlo.shared.generated.resources.error_select_city_loading
 import papakarlo.shared.generated.resources.title_select_city
-
 
 @Composable
 private fun SelectCityDataState.DataState.mapState(): SelectCityViewState =

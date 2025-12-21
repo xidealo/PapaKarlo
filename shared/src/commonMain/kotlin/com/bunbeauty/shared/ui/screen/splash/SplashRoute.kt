@@ -9,18 +9,17 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.resources.stringResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import papakarlo.shared.generated.resources.Res
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.theme.logoMedium
 import com.bunbeauty.shared.presentation.splash.Splash
 import com.bunbeauty.shared.presentation.splash.SplashViewModel
+import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
+import papakarlo.shared.generated.resources.Res
 import papakarlo.shared.generated.resources.description_company_logo
-
 
 @Composable
 fun SplashRoute(
@@ -71,9 +70,10 @@ private fun SplashScreen(
         logoMedium?.let { logo ->
             Image(
                 painter = painterResource(resource = logo),
-                contentDescription = stringResource(
-                    resource = Res.string.description_company_logo
-                ),
+                contentDescription =
+                    stringResource(
+                        resource = Res.string.description_company_logo,
+                    ),
             )
         }
     }

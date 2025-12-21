@@ -10,9 +10,8 @@ import kotlinx.coroutines.flow.Flow
 class SettingsRepository(
     private val dataStoreRepo: DataStoreRepo,
     private val networkConnector: NetworkConnector,
-    private val settingsMapper: SettingsMapper
+    private val settingsMapper: SettingsMapper,
 ) : BaseRepository() {
-
     override val tag: String = "SETTINGS_TAG"
 
     suspend fun observeSettings(token: String): Flow<Settings?> {
@@ -22,11 +21,13 @@ class SettingsRepository(
         return dataStoreRepo.settings
     }
 
-    suspend fun updateEmail(email: String, token: String): Settings? {
-        return networkConnector.patchSettings(token, PatchUserServer(email = email)).getNullableResult { settingsServer ->
+    suspend fun updateEmail(
+        email: String,
+        token: String,
+    ): Settings? =
+        networkConnector.patchSettings(token, PatchUserServer(email = email)).getNullableResult { settingsServer ->
             val settings = settingsMapper.toSettings(settingsServer)
             dataStoreRepo.saveSettings(settings)
             settings
         }
-    }
 }

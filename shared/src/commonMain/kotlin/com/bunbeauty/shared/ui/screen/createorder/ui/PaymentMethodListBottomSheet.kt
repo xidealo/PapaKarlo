@@ -4,19 +4,17 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
-import org.jetbrains.compose.resources.stringResource
-
-import org.jetbrains.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bunbeauty.designsystem.ui.element.selectable.SelectableItem
-import papakarlo.shared.generated.resources.Res
 import com.bunbeauty.designsystem.ui.screen.bottomsheet.FoodDeliveryModalBottomSheet
-
 import com.bunbeauty.shared.presentation.createorder.CreateOrder
 import com.bunbeauty.shared.ui.screen.createorder.PaymentMethodListUI
 import com.bunbeauty.shared.ui.screen.createorder.SelectablePaymentMethodUI
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
+import papakarlo.shared.generated.resources.Res
 import papakarlo.shared.generated.resources.payment_method
 
 @Composable
@@ -72,18 +70,19 @@ private fun PaymentMethodListBottomSheetContent(
 @Composable
 private fun PaymentMethodListBottomSheetPreview() {
     PaymentMethodListBottomSheetContent(
-        paymentMethodList = persistentListOf(
-            SelectablePaymentMethodUI(
-                uuid = "1",
-                name = "Налика",
-                isSelected = false,
+        paymentMethodList =
+            persistentListOf(
+                SelectablePaymentMethodUI(
+                    uuid = "1",
+                    name = "Налика",
+                    isSelected = false,
+                ),
+                SelectablePaymentMethodUI(
+                    uuid = "2",
+                    name = "Картой курьеру",
+                    isSelected = true,
+                ),
             ),
-            SelectablePaymentMethodUI(
-                uuid = "2",
-                name = "Картой курьеру",
-                isSelected = true,
-            ),
-        ),
         onAction = {},
     )
 }

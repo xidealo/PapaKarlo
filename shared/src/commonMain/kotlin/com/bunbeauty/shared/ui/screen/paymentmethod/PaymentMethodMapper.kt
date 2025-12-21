@@ -1,14 +1,14 @@
 package com.bunbeauty.shared.ui.screen.paymentmethod
 
 import androidx.compose.runtime.Composable
-import org.jetbrains.compose.resources.stringResource
-import papakarlo.shared.generated.resources.Res
 import com.bunbeauty.shared.domain.model.payment_method.PaymentMethod
 import com.bunbeauty.shared.domain.model.payment_method.PaymentMethodName
 import com.bunbeauty.shared.domain.model.payment_method.SelectablePaymentMethod
 import com.bunbeauty.shared.ui.screen.createorder.SelectablePaymentMethodUI
 import com.bunbeauty.shared.ui.screen.profile.screen.payment.PaymentMethodUI
 import com.bunbeauty.shared.ui.screen.profile.screen.payment.PaymentMethodValueUI
+import org.jetbrains.compose.resources.stringResource
+import papakarlo.shared.generated.resources.Res
 import papakarlo.shared.generated.resources.msg_payment_card
 import papakarlo.shared.generated.resources.msg_payment_card_number
 import papakarlo.shared.generated.resources.msg_payment_cash

@@ -9,32 +9,33 @@ import com.bunbeauty.shared.domain.feature.auth.RequestCodeUseCase
 import com.bunbeauty.shared.domain.feature.auth.ResendCodeUseCase
 import org.koin.dsl.module
 
-internal fun authUseCaseModule() = module {
-    factory {
-        ResendCodeUseCase(
-            authRepo = get()
-        )
+internal fun authUseCaseModule() =
+    module {
+        factory {
+            ResendCodeUseCase(
+                authRepo = get(),
+            )
+        }
+        factory {
+            CheckCodeUseCase(
+                authRepo = get(),
+                dataStoreRepo = get(),
+            )
+        }
+        factory {
+            RequestCodeUseCase(
+                authRepo = get(),
+            )
+        }
+        factory<FormatPhoneNumberUseCase> {
+            FormatPhoneNumberUseCaseImpl()
+        }
+        factory {
+            GetPhoneNumberCursorPositionUseCase(
+                formatPhoneNumber = get(),
+            )
+        }
+        factory {
+            CheckPhoneNumberUseCase()
+        }
     }
-    factory {
-        CheckCodeUseCase(
-            authRepo = get(),
-            dataStoreRepo = get()
-        )
-    }
-    factory {
-        RequestCodeUseCase(
-            authRepo = get()
-        )
-    }
-    factory<FormatPhoneNumberUseCase> {
-        FormatPhoneNumberUseCaseImpl()
-    }
-    factory {
-        GetPhoneNumberCursorPositionUseCase(
-            formatPhoneNumber = get()
-        )
-    }
-    factory {
-        CheckPhoneNumberUseCase()
-    }
-}

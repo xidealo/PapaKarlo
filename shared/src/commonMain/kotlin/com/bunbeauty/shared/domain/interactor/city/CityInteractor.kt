@@ -10,29 +10,25 @@ import kotlinx.coroutines.flow.map
 
 class CityInteractor(
     private val dataStoreRepo: DataStoreRepo,
-    private val cityRepo: CityRepo
+    private val cityRepo: CityRepo,
 ) : ICityInteractor {
+    override suspend fun getCityList(): List<City>? = cityRepo.getCityList().ifEmpty { null }
 
-    override suspend fun getCityList(): List<City>? {
-        return cityRepo.getCityList().ifEmpty { null }
-    }
-
-    override suspend fun checkIsCitySelected(): Boolean {
-        return dataStoreRepo.getSelectedCityUuid() != null
-    }
+    override suspend fun checkIsCitySelected(): Boolean = dataStoreRepo.getSelectedCityUuid() != null
 
     override suspend fun saveSelectedCity(city: City) {
         dataStoreRepo.saveSelectedCityUuid(city.uuid)
     }
 
-    override fun observeCityList(): CommonFlow<List<SelectableCity>> {
-        return cityRepo.observeCityList().map { cityList ->
-            cityList.map { city ->
-                SelectableCity(
-                    city = city,
-                    isSelected = dataStoreRepo.getSelectedCityUuid() == city.uuid
-                )
-            }
-        }.asCommonFlow()
-    }
+    override fun observeCityList(): CommonFlow<List<SelectableCity>> =
+        cityRepo
+            .observeCityList()
+            .map { cityList ->
+                cityList.map { city ->
+                    SelectableCity(
+                        city = city,
+                        isSelected = dataStoreRepo.getSelectedCityUuid() == city.uuid,
+                    )
+                }
+            }.asCommonFlow()
 }

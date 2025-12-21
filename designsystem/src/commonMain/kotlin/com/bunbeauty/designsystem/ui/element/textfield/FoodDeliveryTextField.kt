@@ -22,7 +22,7 @@ import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import papakarlo.designsystem.generated.resources.Res
-import papakarlo.designsystem.generated.resources.hint_create_order_comment
+import papakarlo.designsystem.generated.resources.preview_string
 
 @Composable
 fun FoodDeliveryTextField(
@@ -120,7 +120,7 @@ fun FoodDeliveryTextField(
 private fun FoodDeliveryTextFieldPreview() {
     FoodDeliveryTextField(
         value = "Нужно больше еды \n ...",
-        labelStringId = Res.string.hint_create_order_comment,
+        labelStringId = Res.string.preview_string,
         onValueChange = {},
     )
 }

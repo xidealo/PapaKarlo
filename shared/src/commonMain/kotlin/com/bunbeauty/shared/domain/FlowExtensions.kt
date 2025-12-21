@@ -12,31 +12,33 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import org.koin.core.component.getScopeName
 
-inline fun <IM, OM> Flow<List<IM>>.mapListFlow(crossinline block: suspend ((IM) -> OM)): Flow<List<OM>> {
-    return map { inputModelList ->
+inline fun <IM, OM> Flow<List<IM>>.mapListFlow(crossinline block: suspend ((IM) -> OM)): Flow<List<OM>> =
+    map { inputModelList ->
         inputModelList.map { inputModel ->
             block(inputModel)
         }
     }
-}
 
-inline fun <IM, OM> Flow<IM?>.mapFlow(crossinline block: suspend ((IM) -> OM)): Flow<OM?> {
-    return map { inputModel ->
+inline fun <IM, OM> Flow<IM?>.mapFlow(crossinline block: suspend ((IM) -> OM)): Flow<OM?> =
+    map { inputModel ->
         inputModel?.let {
             block(inputModel)
         }
     }
-}
 
 fun <T> Flow<T>.asCommonFlow(): CommonFlow<T> = CommonFlow(this)
+
 fun <T> MutableStateFlow<T>.asCommonStateFlow(): CommonStateFlow<T> = CommonStateFlow(this.asStateFlow())
+
 fun <T> StateFlow<T>.asCommonStateFlow(): CommonStateFlow<T> = CommonStateFlow(this)
 
 interface Closeable {
     fun close()
 }
 
-class CommonFlow<T>(private val origin: Flow<T>) : Flow<T> by origin {
+class CommonFlow<T>(
+    private val origin: Flow<T>,
+) : Flow<T> by origin {
     fun watch(block: (T) -> Unit): Closeable {
         val job = SupervisorJob()
 
@@ -53,7 +55,9 @@ class CommonFlow<T>(private val origin: Flow<T>) : Flow<T> by origin {
     }
 }
 
-class CommonStateFlow<T>(private val origin: StateFlow<T>) : StateFlow<T> by origin {
+class CommonStateFlow<T>(
+    private val origin: StateFlow<T>,
+) : StateFlow<T> by origin {
     fun watch(block: (T) -> Unit): Closeable {
         val job = SupervisorJob()
 

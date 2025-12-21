@@ -21,20 +21,17 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.ui.topbar.LocalStatusBarColor
 import com.bunbeauty.shared.presentation.MainViewModel
 import com.bunbeauty.shared.ui.navigation.FoodDeliveryNavHost
-import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
@@ -43,25 +40,22 @@ import papakarlo.shared.generated.resources.Res
 import papakarlo.shared.generated.resources.error_no_internet
 import papakarlo.shared.generated.resources.warning_no_order_available
 
-
 @Composable
-fun MainScreen(
-    viewModel: MainViewModel = koinViewModel(),
-) {
+fun MainScreen(viewModel: MainViewModel = koinViewModel()) {
     val mainState by viewModel.mainState.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
 
     HandleEventList(
         eventList = mainState.eventList,
         snackbarHostState = snackbarHostState,
-        consumeEventList = viewModel::consumeEventList
+        consumeEventList = viewModel::consumeEventList,
     )
 
     val color = FoodDeliveryTheme.colors.mainColors.surface
     val statusBarColor = remember { mutableStateOf(color) }
 
     CompositionLocalProvider(
-        LocalStatusBarColor provides statusBarColor
+        LocalStatusBarColor provides statusBarColor,
     ) {
         Scaffold(
             snackbarHost = {
@@ -72,11 +66,12 @@ fun MainScreen(
             },
         ) {
             Column(
-                modifier = Modifier
-                    .background(color = statusBarColor.value)
-                    .statusBarsPadding()
-                    .navigationBarsPadding()
-                    .imePadding(),
+                modifier =
+                    Modifier
+                        .background(color = statusBarColor.value)
+                        .statusBarsPadding()
+                        .navigationBarsPadding()
+                        .imePadding(),
             ) {
                 ConnectionErrorMessage(visible = mainState.connectionLost)
                 StatusBarMessage(statusBarMessage = mainState.statusBarMessage)
@@ -88,14 +83,14 @@ fun MainScreen(
                         showInfoMessage = { message, padding ->
                             viewModel.showInfoMessage(
                                 text = message,
-                                paddingBottom = padding
+                                paddingBottom = padding,
                             )
                         },
                         showErrorMessage = { message ->
                             viewModel.showErrorMessage(
-                                message
+                                message,
                             )
-                        }
+                        },
                     )
                 }
             }
@@ -111,10 +106,11 @@ private fun ConnectionErrorMessage(visible: Boolean) {
         exit = slideOutVertically(tween(300)),
     ) {
         Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(FoodDeliveryTheme.colors.mainColors.error)
-                .padding(8.dp),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .background(FoodDeliveryTheme.colors.mainColors.error)
+                    .padding(8.dp),
             contentAlignment = Alignment.Center,
         ) {
             Text(
@@ -134,10 +130,11 @@ private fun StatusBarMessage(statusBarMessage: MainState.StatusBarMessage) {
         exit = slideOutVertically(tween(300)),
     ) {
         Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(FoodDeliveryTheme.colors.statusColors.warning)
-                .padding(8.dp),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .background(FoodDeliveryTheme.colors.statusColors.warning)
+                    .padding(8.dp),
             contentAlignment = Alignment.Center,
         ) {
             if (statusBarMessage.isVisible) {
@@ -164,14 +161,16 @@ private fun FoodDeliverySnackbarHost(
                 .imePadding(),
     ) { snackbarData ->
         (snackbarData.visuals as? FoodDeliverySnackbarVisuals)?.let { visuals ->
-            val containerColor = when (visuals.foodDeliveryMessage.type) {
-                FoodDeliveryMessageType.INFO -> FoodDeliveryTheme.colors.mainColors.primary
-                FoodDeliveryMessageType.ERROR -> FoodDeliveryTheme.colors.mainColors.error
-            }
-            val contentColor = when (visuals.foodDeliveryMessage.type) {
-                FoodDeliveryMessageType.INFO -> FoodDeliveryTheme.colors.mainColors.onPrimary
-                FoodDeliveryMessageType.ERROR -> FoodDeliveryTheme.colors.mainColors.onError
-            }
+            val containerColor =
+                when (visuals.foodDeliveryMessage.type) {
+                    FoodDeliveryMessageType.INFO -> FoodDeliveryTheme.colors.mainColors.primary
+                    FoodDeliveryMessageType.ERROR -> FoodDeliveryTheme.colors.mainColors.error
+                }
+            val contentColor =
+                when (visuals.foodDeliveryMessage.type) {
+                    FoodDeliveryMessageType.INFO -> FoodDeliveryTheme.colors.mainColors.onPrimary
+                    FoodDeliveryMessageType.ERROR -> FoodDeliveryTheme.colors.mainColors.onError
+                }
             Snackbar(
                 snackbarData = snackbarData,
                 containerColor = containerColor,

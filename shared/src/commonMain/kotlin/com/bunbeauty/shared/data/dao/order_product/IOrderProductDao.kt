@@ -4,5 +4,6 @@ import com.bunbeauty.shared.db.OrderProductEntity
 
 interface IOrderProductDao {
     suspend fun insert(orderProductEntity: OrderProductEntity)
+
     suspend fun deleteAll()
 }

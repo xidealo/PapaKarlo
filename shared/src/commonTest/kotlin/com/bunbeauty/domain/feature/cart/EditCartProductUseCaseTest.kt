@@ -18,169 +18,177 @@ import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
 
 class EditCartProductUseCaseTest {
-
     private val cartProductRepo: CartProductRepo = mock()
     private val cartProductAdditionRepository: CartProductAdditionRepo =
         mock(MockMode.autofill)
     private val areAdditionsEqualUseCase: AreAdditionsEqualUseCase = mock()
-    private val editCartProductUseCase: EditCartProductUseCase = EditCartProductUseCase(
-        cartProductRepo = cartProductRepo,
-        cartProductAdditionRepository = cartProductAdditionRepository,
-        areAdditionsEqualUseCase = areAdditionsEqualUseCase
-    )
-
-    @Test
-    fun `delete previous additions when additions are not equal`() = runTest {
-        val initialCartProductAddition = getCartProductAddition()
-        val initialAddition = getAddition()
-        val initialCartProduct = getCartProduct(
-            menuProduct = getMenuProduct(),
-            cartProductAdditionList = listOf(initialCartProductAddition)
-        )
-        // Given
-        everySuspend { cartProductRepo.getCartProduct(initialCartProduct.uuid) } returns initialCartProduct
-        everySuspend {
-            areAdditionsEqualUseCase(
-                initialCartProduct,
-                listOf(initialAddition.uuid)
-            )
-        } returns false
-        everySuspend { cartProductAdditionRepository.delete(cartProductAdditionUuid = initialCartProductAddition.uuid) } returns Unit
-        everySuspend {
-            cartProductAdditionRepository.saveAsCartProductAddition(
-                cartProductUuid = initialCartProduct.uuid,
-                addition = initialAddition
-            )
-        } returns Unit
-
-        // When
-        editCartProductUseCase(initialCartProduct.uuid, listOf(initialAddition))
-
-        // Then
-        verifySuspend {
-            cartProductAdditionRepository.delete(cartProductAdditionUuid = initialCartProductAddition.uuid)
-        }
-    }
-
-    @Test
-    fun `insert new additions when additions are not equal`() = runTest {
-        val initialCartProductAddition = getCartProductAddition()
-        val initialAddition = getAddition()
-        val initialCartProduct = getCartProduct(
-            menuProduct = getMenuProduct(),
-            cartProductAdditionList = listOf(initialCartProductAddition)
-        )
-        // Given
-        everySuspend { cartProductRepo.getCartProduct(initialCartProduct.uuid) } returns initialCartProduct
-        everySuspend {
-            areAdditionsEqualUseCase(
-                initialCartProduct,
-                listOf(initialAddition.uuid)
-            )
-        } returns false
-        everySuspend { cartProductAdditionRepository.delete(cartProductAdditionUuid = initialCartProductAddition.uuid) } returns Unit
-        everySuspend {
-            cartProductAdditionRepository.saveAsCartProductAddition(
-                cartProductUuid = initialCartProduct.uuid,
-                addition = initialAddition
-            )
-        } returns Unit
-
-        // When
-        editCartProductUseCase(initialCartProduct.uuid, listOf(initialAddition))
-
-        // Then
-        verifySuspend {
-            cartProductAdditionRepository.saveAsCartProductAddition(
-                cartProductUuid = initialCartProduct.uuid,
-                addition = initialAddition
-            )
-        }
-    }
-
-    @Test
-    fun `return from method when not found cart product`() = runTest {
-        val initialCartProductAddition = getCartProductAddition()
-        val initialAddition = getAddition()
-        val initialCartProduct = getCartProduct(
-            menuProduct = getMenuProduct(),
-            cartProductAdditionList = listOf(initialCartProductAddition)
+    private val editCartProductUseCase: EditCartProductUseCase =
+        EditCartProductUseCase(
+            cartProductRepo = cartProductRepo,
+            cartProductAdditionRepository = cartProductAdditionRepository,
+            areAdditionsEqualUseCase = areAdditionsEqualUseCase,
         )
 
-        // Given
-        everySuspend { cartProductRepo.getCartProduct(initialCartProduct.uuid) } returns null
-        everySuspend {
-            areAdditionsEqualUseCase(
-                initialCartProduct,
-                listOf(initialAddition.uuid)
-            )
-        } returns false
-        everySuspend { cartProductAdditionRepository.delete(cartProductAdditionUuid = initialCartProductAddition.uuid) } returns Unit
-        everySuspend {
-            cartProductAdditionRepository.saveAsCartProductAddition(
-                cartProductUuid = initialCartProduct.uuid,
-                addition = initialAddition
-            )
-        } returns Unit
+    @Test
+    fun `delete previous additions when additions are not equal`() =
+        runTest {
+            val initialCartProductAddition = getCartProductAddition()
+            val initialAddition = getAddition()
+            val initialCartProduct =
+                getCartProduct(
+                    menuProduct = getMenuProduct(),
+                    cartProductAdditionList = listOf(initialCartProductAddition),
+                )
+            // Given
+            everySuspend { cartProductRepo.getCartProduct(initialCartProduct.uuid) } returns initialCartProduct
+            everySuspend {
+                areAdditionsEqualUseCase(
+                    initialCartProduct,
+                    listOf(initialAddition.uuid),
+                )
+            } returns false
+            everySuspend { cartProductAdditionRepository.delete(cartProductAdditionUuid = initialCartProductAddition.uuid) } returns Unit
+            everySuspend {
+                cartProductAdditionRepository.saveAsCartProductAddition(
+                    cartProductUuid = initialCartProduct.uuid,
+                    addition = initialAddition,
+                )
+            } returns Unit
 
-        // When
-        editCartProductUseCase(initialCartProduct.uuid, listOf(initialAddition))
+            // When
+            editCartProductUseCase(initialCartProduct.uuid, listOf(initialAddition))
 
-        // Then
-        verifySuspend(mode = VerifyMode.atLeast(0)) {
-            cartProductAdditionRepository.delete(cartProductAdditionUuid = initialCartProductAddition.uuid)
+            // Then
+            verifySuspend {
+                cartProductAdditionRepository.delete(cartProductAdditionUuid = initialCartProductAddition.uuid)
+            }
         }
-        verifySuspend(mode = VerifyMode.atLeast(0)) {
-            areAdditionsEqualUseCase(
-                initialCartProduct,
-                listOf(initialAddition.uuid)
-            )
-        }
-        verifySuspend(mode = VerifyMode.atLeast(0)) {
-            cartProductAdditionRepository.saveAsCartProductAddition(
-                cartProductUuid = initialCartProduct.uuid,
-                addition = initialAddition
-            )
-        }
-    }
 
     @Test
-    fun `return from method when has same additions`() = runTest {
-        val initialCartProductAddition = getCartProductAddition()
-        val initialAddition = getAddition()
-        val initialCartProduct = getCartProduct(
-            menuProduct = getMenuProduct(),
-            cartProductAdditionList = listOf(initialCartProductAddition)
-        )
+    fun `insert new additions when additions are not equal`() =
+        runTest {
+            val initialCartProductAddition = getCartProductAddition()
+            val initialAddition = getAddition()
+            val initialCartProduct =
+                getCartProduct(
+                    menuProduct = getMenuProduct(),
+                    cartProductAdditionList = listOf(initialCartProductAddition),
+                )
+            // Given
+            everySuspend { cartProductRepo.getCartProduct(initialCartProduct.uuid) } returns initialCartProduct
+            everySuspend {
+                areAdditionsEqualUseCase(
+                    initialCartProduct,
+                    listOf(initialAddition.uuid),
+                )
+            } returns false
+            everySuspend { cartProductAdditionRepository.delete(cartProductAdditionUuid = initialCartProductAddition.uuid) } returns Unit
+            everySuspend {
+                cartProductAdditionRepository.saveAsCartProductAddition(
+                    cartProductUuid = initialCartProduct.uuid,
+                    addition = initialAddition,
+                )
+            } returns Unit
 
-        // Given
-        everySuspend { cartProductRepo.getCartProduct(initialCartProduct.uuid) } returns initialCartProduct
-        everySuspend {
-            areAdditionsEqualUseCase(
-                initialCartProduct,
-                listOf(initialAddition.uuid)
-            )
-        } returns true
-        everySuspend { cartProductAdditionRepository.delete(cartProductAdditionUuid = initialCartProductAddition.uuid) } returns Unit
-        everySuspend {
-            cartProductAdditionRepository.saveAsCartProductAddition(
-                cartProductUuid = initialCartProduct.uuid,
-                addition = initialAddition
-            )
-        } returns Unit
+            // When
+            editCartProductUseCase(initialCartProduct.uuid, listOf(initialAddition))
 
-        // When
-        editCartProductUseCase(initialCartProduct.uuid, listOf(initialAddition))
-
-        // Then
-        verifySuspend(mode = VerifyMode.atLeast(0)) {
-            cartProductAdditionRepository.delete(cartProductAdditionUuid = initialCartProductAddition.uuid)
+            // Then
+            verifySuspend {
+                cartProductAdditionRepository.saveAsCartProductAddition(
+                    cartProductUuid = initialCartProduct.uuid,
+                    addition = initialAddition,
+                )
+            }
         }
-        verifySuspend(mode = VerifyMode.atLeast(0)) {
-            cartProductAdditionRepository.saveAsCartProductAddition(
-                cartProductUuid = initialCartProduct.uuid,
-                addition = initialAddition
-            )
+
+    @Test
+    fun `return from method when not found cart product`() =
+        runTest {
+            val initialCartProductAddition = getCartProductAddition()
+            val initialAddition = getAddition()
+            val initialCartProduct =
+                getCartProduct(
+                    menuProduct = getMenuProduct(),
+                    cartProductAdditionList = listOf(initialCartProductAddition),
+                )
+
+            // Given
+            everySuspend { cartProductRepo.getCartProduct(initialCartProduct.uuid) } returns null
+            everySuspend {
+                areAdditionsEqualUseCase(
+                    initialCartProduct,
+                    listOf(initialAddition.uuid),
+                )
+            } returns false
+            everySuspend { cartProductAdditionRepository.delete(cartProductAdditionUuid = initialCartProductAddition.uuid) } returns Unit
+            everySuspend {
+                cartProductAdditionRepository.saveAsCartProductAddition(
+                    cartProductUuid = initialCartProduct.uuid,
+                    addition = initialAddition,
+                )
+            } returns Unit
+
+            // When
+            editCartProductUseCase(initialCartProduct.uuid, listOf(initialAddition))
+
+            // Then
+            verifySuspend(mode = VerifyMode.atLeast(0)) {
+                cartProductAdditionRepository.delete(cartProductAdditionUuid = initialCartProductAddition.uuid)
+            }
+            verifySuspend(mode = VerifyMode.atLeast(0)) {
+                areAdditionsEqualUseCase(
+                    initialCartProduct,
+                    listOf(initialAddition.uuid),
+                )
+            }
+            verifySuspend(mode = VerifyMode.atLeast(0)) {
+                cartProductAdditionRepository.saveAsCartProductAddition(
+                    cartProductUuid = initialCartProduct.uuid,
+                    addition = initialAddition,
+                )
+            }
         }
-    }
+
+    @Test
+    fun `return from method when has same additions`() =
+        runTest {
+            val initialCartProductAddition = getCartProductAddition()
+            val initialAddition = getAddition()
+            val initialCartProduct =
+                getCartProduct(
+                    menuProduct = getMenuProduct(),
+                    cartProductAdditionList = listOf(initialCartProductAddition),
+                )
+
+            // Given
+            everySuspend { cartProductRepo.getCartProduct(initialCartProduct.uuid) } returns initialCartProduct
+            everySuspend {
+                areAdditionsEqualUseCase(
+                    initialCartProduct,
+                    listOf(initialAddition.uuid),
+                )
+            } returns true
+            everySuspend { cartProductAdditionRepository.delete(cartProductAdditionUuid = initialCartProductAddition.uuid) } returns Unit
+            everySuspend {
+                cartProductAdditionRepository.saveAsCartProductAddition(
+                    cartProductUuid = initialCartProduct.uuid,
+                    addition = initialAddition,
+                )
+            } returns Unit
+
+            // When
+            editCartProductUseCase(initialCartProduct.uuid, listOf(initialAddition))
+
+            // Then
+            verifySuspend(mode = VerifyMode.atLeast(0)) {
+                cartProductAdditionRepository.delete(cartProductAdditionUuid = initialCartProductAddition.uuid)
+            }
+            verifySuspend(mode = VerifyMode.atLeast(0)) {
+                cartProductAdditionRepository.saveAsCartProductAddition(
+                    cartProductUuid = initialCartProduct.uuid,
+                    addition = initialAddition,
+                )
+            }
+        }
 }

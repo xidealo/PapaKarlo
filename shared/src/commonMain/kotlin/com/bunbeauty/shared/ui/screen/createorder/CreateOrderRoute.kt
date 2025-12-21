@@ -104,7 +104,6 @@ import papakarlo.shared.generated.resources.title_create_order
 import papakarlo.shared.generated.resources.warning_no_order_available
 import papakarlo.shared.generated.resources.warning_no_time_available
 
-
 @Composable
 fun CreateOrder.DataState.mapState(): CreateOrderViewState = toViewState()
 
@@ -252,7 +251,6 @@ fun CreateOrderEffect(
                 }
 
                 CreateOrder.Event.ShowUserUnauthorizedErrorEvent -> {
-
                     showErrorMessage(getString(Res.string.error_user))
                 }
 
@@ -262,7 +260,7 @@ fun CreateOrderEffect(
                             Res.string.msg_order_code,
                             effect.code,
                         ),
-                        0
+                        0,
                     )
                     goToProfile()
                 }
@@ -550,11 +548,12 @@ private fun DeferredTimeCard(
                         .padding(start = 16.dp, top = 4.dp),
                 text = stringResource(resource = Res.string.warning_no_time_available),
                 style = FoodDeliveryTheme.typography.bodySmall,
-                color = if (viewState.hasTimePickerError) {
-                    FoodDeliveryTheme.colors.mainColors.error
-                } else {
-                    FoodDeliveryTheme.colors.mainColors.onSurface
-                },
+                color =
+                    if (viewState.hasTimePickerError) {
+                        FoodDeliveryTheme.colors.mainColors.error
+                    } else {
+                        FoodDeliveryTheme.colors.mainColors.onSurface
+                    },
             )
         }
     }
@@ -580,9 +579,10 @@ private fun PaymentMethodCard(
 
     if (viewState.isPaymentMethodErrorShown) {
         ErrorText(
-            modifier = Modifier
-                .padding(top = 4.dp)
-                .padding(horizontal = 16.dp),
+            modifier =
+                Modifier
+                    .padding(top = 4.dp)
+                    .padding(horizontal = 16.dp),
             messageStringId = Res.string.error_select_payment_method,
         )
     }
@@ -650,9 +650,11 @@ private fun ChangeBlock(
     ) {
         val focusManager = LocalFocusManager.current
         FoodDeliveryTextField(
-            modifier = Modifier.padding(bottom = 8.dp)
-                .padding(horizontal = 16.dp)
-                .fillMaxWidth(),
+            modifier =
+                Modifier
+                    .padding(bottom = 8.dp)
+                    .padding(horizontal = 16.dp)
+                    .fillMaxWidth(),
             value = viewState.change,
             labelStringId = Res.string.hint_change,
             keyboardOptions =
@@ -741,14 +743,16 @@ private fun CommentTextField(
                 .padding(horizontal = 16.dp),
         value = viewState.comment,
         labelStringId = Res.string.comment,
-        keyboardOptions = FoodDeliveryTextFieldDefaults.keyboardOptionsDefault(
-            imeAction = ImeAction.Done,
-        ),
-        keyboardActions = FoodDeliveryTextFieldDefaults.keyboardActionsDefault(
-            onDone = {
-                focusManager.clearFocus()
-            },
-        ),
+        keyboardOptions =
+            FoodDeliveryTextFieldDefaults.keyboardOptionsDefault(
+                imeAction = ImeAction.Done,
+            ),
+        keyboardActions =
+            FoodDeliveryTextFieldDefaults.keyboardActionsDefault(
+                onDone = {
+                    focusManager.clearFocus()
+                },
+            ),
         onValueChange = { value ->
             onAction(CreateOrder.Action.ChangeComment(comment = value))
         },
@@ -987,7 +991,7 @@ private val createOrderViewStatePreviewMock =
         additionalUtensilsName = "Количество приборов",
         isAdditionalUtensilsErrorShown = false,
         hasTimePickerError = false,
-        showTimePickerHint = false
+        showTimePickerHint = false,
     )
 
 @Preview(showBackground = true)

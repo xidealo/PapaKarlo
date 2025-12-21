@@ -10,7 +10,7 @@ import com.bunbeauty.shared.domain.repo.UserAddressRepo
 
 class CreateAddressUseCase(
     private val dataStoreRepo: DataStoreRepo,
-    private val userAddressRepo: UserAddressRepo
+    private val userAddressRepo: UserAddressRepo,
 ) {
     suspend operator fun invoke(
         street: Suggestion,
@@ -18,24 +18,26 @@ class CreateAddressUseCase(
         flat: String,
         entrance: String,
         floor: String,
-        comment: String
+        comment: String,
     ): UserAddress? {
         val token = dataStoreRepo.getToken() ?: throw NoTokenException()
         val cityUuid = dataStoreRepo.getSelectedCityUuid() ?: throw NoSelectedCityUuidException()
-        val createdUserAddress = CreatedUserAddress(
-            street = street,
-            house = house,
-            flat = flat,
-            entrance = entrance,
-            floor = floor,
-            comment = comment,
-            isVisible = true,
-            cityUuid = cityUuid
-        )
-        val savedAddress = userAddressRepo.saveUserAddress(
-            token = token,
-            createdUserAddress = createdUserAddress
-        )
+        val createdUserAddress =
+            CreatedUserAddress(
+                street = street,
+                house = house,
+                flat = flat,
+                entrance = entrance,
+                floor = floor,
+                comment = comment,
+                isVisible = true,
+                cityUuid = cityUuid,
+            )
+        val savedAddress =
+            userAddressRepo.saveUserAddress(
+                token = token,
+                createdUserAddress = createdUserAddress,
+            )
 
         dataStoreRepo.saveUserCafeUuid(userCafeUuid = savedAddress?.cafeUuid.orEmpty())
 

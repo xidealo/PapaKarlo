@@ -10,5 +10,5 @@ data class SettingsServer(
     @SerialName("phoneNumber")
     val phoneNumber: String,
     @SerialName("email")
-    val email: String?
+    val email: String?,
 )

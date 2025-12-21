@@ -12,19 +12,20 @@ interface GetDiscountUseCase {
 class GetDiscountUseCaseImpl(
     private val discountRepository: DiscountRepo,
     private val orderRepository: OrderRepo,
-    private val dataStoreRepo: DataStoreRepo
+    private val dataStoreRepo: DataStoreRepo,
 ) : GetDiscountUseCase {
     override suspend operator fun invoke(): Discount? {
         val userUuid = dataStoreRepo.getUserUuid()
         val token = dataStoreRepo.getToken()
-        val lastOrder = if (userUuid != null && token != null) {
-            orderRepository.getLastOrderByUserUuidLocalFirst(
-                token = token,
-                userUuid = userUuid
-            )
-        } else {
-            null
-        }
+        val lastOrder =
+            if (userUuid != null && token != null) {
+                orderRepository.getLastOrderByUserUuidLocalFirst(
+                    token = token,
+                    userUuid = userUuid,
+                )
+            } else {
+                null
+            }
 
         return if (lastOrder == null) {
             discountRepository.getDiscount()

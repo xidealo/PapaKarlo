@@ -8,8 +8,9 @@ import com.squareup.sqldelight.runtime.coroutines.mapToList
 import com.squareup.sqldelight.runtime.coroutines.mapToOneOrNull
 import kotlinx.coroutines.flow.Flow
 
-class UserAddressDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IUserAddressDao {
-
+class UserAddressDao(
+    foodDeliveryDatabase: FoodDeliveryDatabase,
+) : IUserAddressDao {
     private val userAddressEntityQueries = foodDeliveryDatabase.userAddressEntityQueries
     private val selectedUserAddressUuidEntityQueries =
         foodDeliveryDatabase.selectedUserAddressUuidEntityQueries
@@ -36,7 +37,7 @@ class UserAddressDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IUserAddressD
                         forLowDeliveryCost = forLowDeliveryCost,
                         lowDeliveryCost = lowDeliveryCost,
                         userUuid = userUuid,
-                        cafeUuid = cafeUuid
+                        cafeUuid = cafeUuid,
                     )
                 }
             }
@@ -47,79 +48,82 @@ class UserAddressDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IUserAddressD
         selectedUserAddressUuidEntityQueries.insertSelectedUserAddressUuid(
             userUuid = selectedUserAddressUuidEntity.userUuid,
             cityUuid = selectedUserAddressUuidEntity.cityUuid,
-            userAddressUuid = selectedUserAddressUuidEntity.userAddressUuid
+            userAddressUuid = selectedUserAddressUuidEntity.userAddressUuid,
         )
     }
 
     override suspend fun getUserAddressCountByUserAndCityUuid(
         userUuid: String,
-        cityUuid: String
-    ): Long {
-        return userAddressEntityQueries.getUserAddressCountByUserUuidAndCityUuid(
-            userUuid = userUuid,
-            cityUuid = cityUuid
-        ).executeAsOne()
-    }
+        cityUuid: String,
+    ): Long =
+        userAddressEntityQueries
+            .getUserAddressCountByUserUuidAndCityUuid(
+                userUuid = userUuid,
+                cityUuid = cityUuid,
+            ).executeAsOne()
 
     override fun observeSelectedUserAddressByUserAndCityUuid(
         userUuid: String,
-        cityUuid: String
-    ): Flow<UserAddressEntity?> {
-        return userAddressEntityQueries.getSelectedUserAddressByUserAndCityUuid(
-            userUuid = userUuid,
-            cityUuid = cityUuid
-        ).asFlow().mapToOneOrNull()
-    }
+        cityUuid: String,
+    ): Flow<UserAddressEntity?> =
+        userAddressEntityQueries
+            .getSelectedUserAddressByUserAndCityUuid(
+                userUuid = userUuid,
+                cityUuid = cityUuid,
+            ).asFlow()
+            .mapToOneOrNull()
 
     override suspend fun getSelectedUserAddressByUserAndCityUuid(
         userUuid: String,
-        cityUuid: String
-    ): UserAddressEntity? {
-        return userAddressEntityQueries.getSelectedUserAddressByUserAndCityUuid(
-            userUuid = userUuid,
-            cityUuid = cityUuid
-        ).executeAsOneOrNull()
-    }
+        cityUuid: String,
+    ): UserAddressEntity? =
+        userAddressEntityQueries
+            .getSelectedUserAddressByUserAndCityUuid(
+                userUuid = userUuid,
+                cityUuid = cityUuid,
+            ).executeAsOneOrNull()
 
     override suspend fun getUserAddressListByUserAndCityUuid(
         userUuid: String,
-        cityUuid: String
-    ): List<UserAddressEntity> {
-        return userAddressEntityQueries.getUserAddressListByUserUuidAndCityUuid(
-            userUuid = userUuid,
-            cityUuid = cityUuid
-        ).executeAsList()
-    }
+        cityUuid: String,
+    ): List<UserAddressEntity> =
+        userAddressEntityQueries
+            .getUserAddressListByUserUuidAndCityUuid(
+                userUuid = userUuid,
+                cityUuid = cityUuid,
+            ).executeAsList()
 
     override suspend fun geFirstUserAddressByUserAndCityUuid(
         userUuid: String,
-        cityUuid: String
-    ): UserAddressEntity? {
-        return userAddressEntityQueries.getFirstUserAddressByUserAndCityUuid(
-            userUuid = userUuid,
-            cityUuid = cityUuid
-        ).executeAsOneOrNull()
-    }
+        cityUuid: String,
+    ): UserAddressEntity? =
+        userAddressEntityQueries
+            .getFirstUserAddressByUserAndCityUuid(
+                userUuid = userUuid,
+                cityUuid = cityUuid,
+            ).executeAsOneOrNull()
 
     override fun observeFirstUserAddressByUserAndCityUuid(
         userUuid: String,
-        cityUuid: String
-    ): Flow<UserAddressEntity?> {
-        return userAddressEntityQueries.getFirstUserAddressByUserAndCityUuid(
-            userUuid = userUuid,
-            cityUuid = cityUuid
-        ).asFlow().mapToOneOrNull()
-    }
+        cityUuid: String,
+    ): Flow<UserAddressEntity?> =
+        userAddressEntityQueries
+            .getFirstUserAddressByUserAndCityUuid(
+                userUuid = userUuid,
+                cityUuid = cityUuid,
+            ).asFlow()
+            .mapToOneOrNull()
 
     override fun observeUserAddressListByUserAndCityUuid(
         userUuid: String,
-        cityUuid: String
-    ): Flow<List<UserAddressEntity>> {
-        return userAddressEntityQueries.getUserAddressListByUserUuidAndCityUuid(
-            userUuid = userUuid,
-            cityUuid = cityUuid
-        ).asFlow().mapToList()
-    }
+        cityUuid: String,
+    ): Flow<List<UserAddressEntity>> =
+        userAddressEntityQueries
+            .getUserAddressListByUserUuidAndCityUuid(
+                userUuid = userUuid,
+                cityUuid = cityUuid,
+            ).asFlow()
+            .mapToList()
 
     override suspend fun deleteAll() {
         selectedUserAddressUuidEntityQueries.deleteAll()

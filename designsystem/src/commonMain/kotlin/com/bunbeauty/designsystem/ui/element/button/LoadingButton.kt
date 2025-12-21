@@ -16,7 +16,7 @@ import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import papakarlo.designsystem.generated.resources.Res
-import papakarlo.designsystem.generated.resources.action_create_order_create_order
+import papakarlo.designsystem.generated.resources.preview_string
 
 @Composable
 fun LoadingButton(
@@ -64,7 +64,7 @@ fun LoadingButton(
 private fun LoadingButtonPreview() {
     FoodDeliveryTheme {
         LoadingButton(
-            textStringId = Res.string.action_create_order_create_order,
+            textStringId = Res.string.preview_string,
             isLoading = false,
             onClick = {},
         )
@@ -76,7 +76,7 @@ private fun LoadingButtonPreview() {
 private fun LoadingButtonLoadingPreview() {
     FoodDeliveryTheme {
         LoadingButton(
-            textStringId = Res.string.action_create_order_create_order,
+            textStringId = Res.string.preview_string,
             isLoading = true,
             onClick = {},
         )
@@ -88,7 +88,7 @@ private fun LoadingButtonLoadingPreview() {
 private fun LoadingButtonDisabledPreview() {
     FoodDeliveryTheme {
         LoadingButton(
-            textStringId = Res.string.action_create_order_create_order,
+            textStringId = Res.string.preview_string,
             isLoading = false,
             isEnabled = false,
             onClick = {},

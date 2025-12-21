@@ -21,28 +21,27 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
+import com.bunbeauty.designsystem.theme.bold
+import com.bunbeauty.designsystem.ui.element.FoodDeliveryAsyncImage
+import com.bunbeauty.designsystem.ui.element.FoodDeliveryScaffold
+import com.bunbeauty.designsystem.ui.element.TopCartUi
+import com.bunbeauty.designsystem.ui.element.button.FoodDeliveryExtendedFab
+import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryCard
+import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryCardDefaults
+import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryCheckbox
+import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryItem
+import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryRadioButton
+import com.bunbeauty.designsystem.ui.screen.ErrorScreen
+import com.bunbeauty.designsystem.ui.screen.LoadingScreen
 import com.bunbeauty.shared.Constants.FAB_SNACKBAR_BOTTOM_PADDING
 import com.bunbeauty.shared.presentation.product_details.AdditionItem
 import com.bunbeauty.shared.presentation.product_details.MenuProductAdditionItem
 import com.bunbeauty.shared.presentation.product_details.ProductDetailsOpenedFrom
 import com.bunbeauty.shared.presentation.product_details.ProductDetailsState
 import com.bunbeauty.shared.presentation.product_details.ProductDetailsViewModel
-import com.bunbeauty.designsystem.ui.element.FoodDeliveryAsyncImage
-import com.bunbeauty.designsystem.ui.element.FoodDeliveryScaffold
-import com.bunbeauty.designsystem.ui.element.button.FoodDeliveryExtendedFab
-import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryCard
-import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryCardDefaults
-import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryCheckbox
-import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryItem
-import com.bunbeauty.designsystem.ui.screen.ErrorScreen
-import com.bunbeauty.designsystem.ui.screen.LoadingScreen
-import com.bunbeauty.designsystem.ui.element.TopCartUi
-import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
-import com.bunbeauty.designsystem.theme.bold
-import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryRadioButton
 import kotlinx.collections.immutable.persistentListOf
 import org.jetbrains.compose.resources.getString
-import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
@@ -129,14 +128,14 @@ fun ProductDetailsEffect(
                 ProductDetailsState.Event.EditedProduct -> {
                     showInfoMessage(
                         getString(Res.string.msg_menu_product_edited),
-                        FAB_SNACKBAR_BOTTOM_PADDING
+                        FAB_SNACKBAR_BOTTOM_PADDING,
                     )
                     back()
                 }
 
                 ProductDetailsState.Event.ShowAddProductError -> {
                     showErrorMessage(
-                        getString(resource = Res.string.error_consumer_cart_add_product)
+                        getString(resource = Res.string.error_consumer_cart_add_product),
                     )
                 }
 
@@ -145,7 +144,7 @@ fun ProductDetailsEffect(
                         getString(
                             Res.string.msg_menu_product_added,
                         ),
-                        FAB_SNACKBAR_BOTTOM_PADDING
+                        FAB_SNACKBAR_BOTTOM_PADDING,
                     )
                     back()
                 }
@@ -219,7 +218,6 @@ private fun ProductDetailsScreen(
                 }
             }
         }
-
     }
 }
 
@@ -462,7 +460,7 @@ private fun ProductDetailsSuccessScreenPreview() {
                             newPrice = "280 ₽",
                             description =
                                 "Сочная котлетка, сыр Чедр, маринованный огурчик, помидор, " +
-                                        "красный лук, салат, фирменный соус, булочка с кунжутом",
+                                    "красный лук, салат, фирменный соус, булочка с кунжутом",
                             additionList =
                                 persistentListOf(
                                     AdditionItem.AdditionHeaderItem(

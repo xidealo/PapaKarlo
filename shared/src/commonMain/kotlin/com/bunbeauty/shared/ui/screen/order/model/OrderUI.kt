@@ -1,6 +1,5 @@
 package com.bunbeauty.shared.ui.screen.order.model
 
-
 import com.bunbeauty.shared.domain.model.order.OrderStatus
 import org.jetbrains.compose.resources.StringResource
 

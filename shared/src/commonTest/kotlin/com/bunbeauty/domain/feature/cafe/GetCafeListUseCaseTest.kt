@@ -19,53 +19,61 @@ class GetCafeListUseCaseTest {
 
     private val cafeRepo: CafeRepo = mock()
 
-    private val getCafeListUseCase: GetCafeListUseCaseImpl = GetCafeListUseCaseImpl(
-        dataStoreRepo = dataStoreRepo,
-        cafeRepo = cafeRepo
-    )
-
-    @Test
-    fun `throw NoSelectedCityUuidException when no city is selected`() = runTest {
-        everySuspend { dataStoreRepo.getSelectedCityUuid() } returns null
-
-        assertFailsWith<NoSelectedCityUuidException> {
-            getCafeListUseCase()
-        }
-    }
-
-    @Test
-    fun `throw EmptyCafeListException when no visible cafes`() = runTest {
-        val cityUuid = "cityUuid"
-        everySuspend { dataStoreRepo.getSelectedCityUuid() } returns cityUuid
-        everySuspend {
-            cafeRepo.getCafeList(cityUuid)
-        } returns listOf(
-            getFakeCafe(uuid = "1", isVisible = false)
+    private val getCafeListUseCase: GetCafeListUseCaseImpl =
+        GetCafeListUseCaseImpl(
+            dataStoreRepo = dataStoreRepo,
+            cafeRepo = cafeRepo,
         )
 
-        assertFailsWith<EmptyCafeListException> {
-            getCafeListUseCase()
+    @Test
+    fun `throw NoSelectedCityUuidException when no city is selected`() =
+        runTest {
+            everySuspend { dataStoreRepo.getSelectedCityUuid() } returns null
+
+            assertFailsWith<NoSelectedCityUuidException> {
+                getCafeListUseCase()
+            }
         }
-    }
 
     @Test
-    fun `invoke should return only visible cafes`() = runTest {
-        val cityUuid = "cityUuid"
-        val cafe1 = getFakeCafe(uuid = "1", isVisible = true)
-        val cafe2 = getFakeCafe(uuid = "2", isVisible = false)
-        val cafe3 = getFakeCafe(uuid = "3", isVisible = true)
-        val cafeList = listOf(cafe1, cafe2, cafe3)
-        everySuspend { dataStoreRepo.getSelectedCityUuid() } returns cityUuid
-        everySuspend { cafeRepo.getCafeList(cityUuid) } returns cafeList
-        val expected = listOf(cafe1, cafe3)
+    fun `throw EmptyCafeListException when no visible cafes`() =
+        runTest {
+            val cityUuid = "cityUuid"
+            everySuspend { dataStoreRepo.getSelectedCityUuid() } returns cityUuid
+            everySuspend {
+                cafeRepo.getCafeList(cityUuid)
+            } returns
+                listOf(
+                    getFakeCafe(uuid = "1", isVisible = false),
+                )
 
-        val result = getCafeListUseCase()
+            assertFailsWith<EmptyCafeListException> {
+                getCafeListUseCase()
+            }
+        }
 
-        assertEquals(expected, result)
-    }
+    @Test
+    fun `invoke should return only visible cafes`() =
+        runTest {
+            val cityUuid = "cityUuid"
+            val cafe1 = getFakeCafe(uuid = "1", isVisible = true)
+            val cafe2 = getFakeCafe(uuid = "2", isVisible = false)
+            val cafe3 = getFakeCafe(uuid = "3", isVisible = true)
+            val cafeList = listOf(cafe1, cafe2, cafe3)
+            everySuspend { dataStoreRepo.getSelectedCityUuid() } returns cityUuid
+            everySuspend { cafeRepo.getCafeList(cityUuid) } returns cafeList
+            val expected = listOf(cafe1, cafe3)
 
-    private fun getFakeCafe(uuid: String, isVisible: Boolean): Cafe {
-        return Cafe(
+            val result = getCafeListUseCase()
+
+            assertEquals(expected, result)
+        }
+
+    private fun getFakeCafe(
+        uuid: String,
+        isVisible: Boolean,
+    ): Cafe =
+        Cafe(
             uuid = uuid,
             fromTime = 0,
             toTime = 0,
@@ -77,7 +85,6 @@ class GetCafeListUseCaseTest {
             isVisible = isVisible,
             workType = Cafe.WorkType.DELIVERY_AND_PICKUP,
             workload = Cafe.Workload.LOW,
-            additionalUtensils = false
+            additionalUtensils = false,
         )
-    }
 }

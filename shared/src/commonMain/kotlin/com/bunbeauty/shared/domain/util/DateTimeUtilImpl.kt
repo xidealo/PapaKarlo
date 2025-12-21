@@ -16,53 +16,64 @@ import kotlin.time.ExperimentalTime
 
 @OptIn(ExperimentalTime::class)
 class DateTimeUtilImpl : DateTimeUtil {
-
     private val currentMillis: Long
         get() = Clock.System.now().toEpochMilliseconds()
 
-    override fun toDateTime(millis: Long, timeZone: String): DateTime {
-        return getLocalDateTime(millis, timeZone).dateTime
-    }
+    override fun toDateTime(
+        millis: Long,
+        timeZone: String,
+    ): DateTime = getLocalDateTime(millis, timeZone).dateTime
 
-    override fun toTime(millis: Long, timeZone: String): Time {
+    override fun toTime(
+        millis: Long,
+        timeZone: String,
+    ): Time {
         val localTime = getLocalDateTime(millis, timeZone).time
         return Time(hours = localTime.hour, minutes = localTime.minute)
     }
 
-    override fun getCurrentMinuteSecond(timeZone: String): MinuteSecond {
-        return getCurrentMinuteSecond(currentMillis, timeZone)
-    }
+    override fun getCurrentMinuteSecond(timeZone: String): MinuteSecond = getCurrentMinuteSecond(currentMillis, timeZone)
 
-    override fun getDateTimeIn(hour: Int, minute: Int, timeZone: String): DateTime {
-        return getDateTimeIn(currentMillis, hour, minute, timeZone)
-    }
+    override fun getDateTimeIn(
+        hour: Int,
+        minute: Int,
+        timeZone: String,
+    ): DateTime = getDateTimeIn(currentMillis, hour, minute, timeZone)
 
-    override fun getMillisByTime(time: Time, timeZone: String): Long {
-        return getMillisByHourAndMinute(currentMillis, time, timeZone)
-    }
+    override fun getMillisByTime(
+        time: Time,
+        timeZone: String,
+    ): Long = getMillisByHourAndMinute(currentMillis, time, timeZone)
 
-    fun getCurrentMinuteSecond(currentMillis: Long, timeZone: String): MinuteSecond {
-        return getLocalDateTime(currentMillis, timeZone).minuteSecond
-    }
+    fun getCurrentMinuteSecond(
+        currentMillis: Long,
+        timeZone: String,
+    ): MinuteSecond = getLocalDateTime(currentMillis, timeZone).minuteSecond
 
-    fun getCurrentDateTime(currentMillis: Long, timeZone: String): DateTime {
-        return getLocalDateTime(currentMillis, timeZone).dateTime
-    }
+    fun getCurrentDateTime(
+        currentMillis: Long,
+        timeZone: String,
+    ): DateTime = getLocalDateTime(currentMillis, timeZone).dateTime
 
     @OptIn(ExperimentalTime::class)
-    fun getDateTimeIn(currentMillis: Long, hour: Int, minute: Int, timeZone: String): DateTime {
-        return getInstant(currentMillis).plus(hour, DateTimeUnit.HOUR)
+    fun getDateTimeIn(
+        currentMillis: Long,
+        hour: Int,
+        minute: Int,
+        timeZone: String,
+    ): DateTime =
+        getInstant(currentMillis)
+            .plus(hour, DateTimeUnit.HOUR)
             .plus(minute, DateTimeUnit.MINUTE)
             .toEpochMilliseconds()
             .let { millis ->
                 toDateTime(millis, timeZone)
             }
-    }
 
     fun getMillisByHourAndMinute(
         currentMillis: Long,
         time: Time,
-        timeZone: String
+        timeZone: String,
     ): Long {
         val currentLocalDateTime = getLocalDateTime(currentMillis, timeZone)
         return LocalDateTime(
@@ -72,38 +83,41 @@ class DateTimeUtilImpl : DateTimeUtil {
             hour = time.hours,
             minute = time.minutes,
             second = 0,
-            nanosecond = 0
+            nanosecond = 0,
         ).toInstant(TimeZone.of(timeZone))
             .toEpochMilliseconds()
     }
 
-    private fun getLocalDateTime(millis: Long, timeZone: String): LocalDateTime {
-        return getInstant(millis).toLocalDateTime(TimeZone.of(timeZone))
-    }
+    private fun getLocalDateTime(
+        millis: Long,
+        timeZone: String,
+    ): LocalDateTime = getInstant(millis).toLocalDateTime(TimeZone.of(timeZone))
 
-    private fun getInstant(millis: Long): Instant {
-        return Instant.fromEpochMilliseconds(millis)
-    }
+    private fun getInstant(millis: Long): Instant = Instant.fromEpochMilliseconds(millis)
 
     private val LocalDateTime.time
-        get() = Time(
-            hours = hour,
-            minutes = minute
-        )
+        get() =
+            Time(
+                hours = hour,
+                minutes = minute,
+            )
 
     private val LocalDateTime.dateTime
-        get() = DateTime(
-            time = Time(hours = time.hour, minutes = time.minute),
-            date = Date(
-                dayOfMonth = dayOfMonth,
-                monthNumber = monthNumber,
-                year = year
+        get() =
+            DateTime(
+                time = Time(hours = time.hour, minutes = time.minute),
+                date =
+                    Date(
+                        dayOfMonth = dayOfMonth,
+                        monthNumber = monthNumber,
+                        year = year,
+                    ),
             )
-        )
 
     private val LocalDateTime.minuteSecond
-        get() = MinuteSecond(
-            minuteOfDay = minute + hour * 60,
-            secondOfMinute = second
-        )
+        get() =
+            MinuteSecond(
+                minuteOfDay = minute + hour * 60,
+                secondOfMinute = second,
+            )
 }

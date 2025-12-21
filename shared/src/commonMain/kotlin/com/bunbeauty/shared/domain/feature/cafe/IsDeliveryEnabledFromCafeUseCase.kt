@@ -4,7 +4,7 @@ import com.bunbeauty.shared.domain.model.cafe.Cafe.WorkType
 import com.bunbeauty.shared.domain.repo.CafeRepo
 
 class IsDeliveryEnabledFromCafeUseCase(
-    private val cafeRepo: CafeRepo
+    private val cafeRepo: CafeRepo,
 ) {
     suspend operator fun invoke(cafeUuid: String): Boolean {
         val workType = cafeRepo.getCafeByUuid(cafeUuid = cafeUuid)?.workType ?: WorkType.CLOSED

@@ -19,111 +19,118 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class GetDiscountUseCaseTest {
-
     private val discountRepository: DiscountRepo = mock()
     private val orderRepository: OrderRepo = mock()
     private val dataStoreRepo: DataStoreRepo = mock()
-    private val getDiscountUseCase: GetDiscountUseCase = GetDiscountUseCaseImpl(
-        discountRepository = discountRepository,
-        orderRepository = orderRepository,
-        dataStoreRepo = dataStoreRepo
-    )
-
-    @Test
-    fun `should return firstDiscount 10 when token is null`() = runTest {
-        // Given
-
-        everySuspend { dataStoreRepo.getToken() } returns null
-        everySuspend { dataStoreRepo.getUserUuid() } returns "uuid"
-        everySuspend { discountRepository.getDiscount() } returns Discount(10)
-
-        // When
-        val discount = getDiscountUseCase()
-
-        // Then
-        assertEquals(
-            expected = 10,
-            actual = discount?.firstOrderDiscount
+    private val getDiscountUseCase: GetDiscountUseCase =
+        GetDiscountUseCaseImpl(
+            discountRepository = discountRepository,
+            orderRepository = orderRepository,
+            dataStoreRepo = dataStoreRepo,
         )
-    }
 
     @Test
-    fun `should return firstDiscount 10 when userUuid is null`() = runTest {
-        // Given
+    fun `should return firstDiscount 10 when token is null`() =
+        runTest {
+            // Given
 
-        everySuspend { dataStoreRepo.getToken() } returns "token"
-        everySuspend { dataStoreRepo.getUserUuid() } returns null
-        everySuspend { discountRepository.getDiscount() } returns Discount(10)
+            everySuspend { dataStoreRepo.getToken() } returns null
+            everySuspend { dataStoreRepo.getUserUuid() } returns "uuid"
+            everySuspend { discountRepository.getDiscount() } returns Discount(10)
 
-        // When
-        val discount = getDiscountUseCase()
+            // When
+            val discount = getDiscountUseCase()
 
-        // Then
-        assertEquals(
-            expected = 10,
-            actual = discount?.firstOrderDiscount
-        )
-    }
-
-    @Test
-    fun `should return firstDiscount 10 when lastOrder is null`() = runTest {
-        // Given
-
-        everySuspend { dataStoreRepo.getToken() } returns "token"
-        everySuspend { dataStoreRepo.getUserUuid() } returns "userUuid"
-        everySuspend {
-            orderRepository.getLastOrderByUserUuidLocalFirst(
-                "token",
-                "userUuid"
+            // Then
+            assertEquals(
+                expected = 10,
+                actual = discount?.firstOrderDiscount,
             )
-        } returns null
-
-        everySuspend { discountRepository.getDiscount() } returns Discount(10)
-
-        // When
-        val discount = getDiscountUseCase()
-
-        // Then
-        assertEquals(
-            expected = 10,
-            actual = discount?.firstOrderDiscount
-        )
-    }
+        }
 
     @Test
-    fun `should return null when lastOrder is not empty`() = runTest {
-        // Given
+    fun `should return firstDiscount 10 when userUuid is null`() =
+        runTest {
+            // Given
 
-        everySuspend { dataStoreRepo.getToken() } returns "token"
-        everySuspend { dataStoreRepo.getUserUuid() } returns "userUuid"
-        everySuspend {
-            orderRepository.getLastOrderByUserUuidLocalFirst(
-                "token",
-                "userUuid"
+            everySuspend { dataStoreRepo.getToken() } returns "token"
+            everySuspend { dataStoreRepo.getUserUuid() } returns null
+            everySuspend { discountRepository.getDiscount() } returns Discount(10)
+
+            // When
+            val discount = getDiscountUseCase()
+
+            // Then
+            assertEquals(
+                expected = 10,
+                actual = discount?.firstOrderDiscount,
             )
-        } returns LightOrder(
-            uuid = "uuid",
-            status = OrderStatus.DONE,
-            code = "code",
-            dateTime = DateTime(
-                date = Date(
-                    dayOfMonth = 5474,
-                    monthNumber = 7337,
-                    year = 1992
-                ),
-                time = Time(hours = 3796, minutes = 8009)
+        }
+
+    @Test
+    fun `should return firstDiscount 10 when lastOrder is null`() =
+        runTest {
+            // Given
+
+            everySuspend { dataStoreRepo.getToken() } returns "token"
+            everySuspend { dataStoreRepo.getUserUuid() } returns "userUuid"
+            everySuspend {
+                orderRepository.getLastOrderByUserUuidLocalFirst(
+                    "token",
+                    "userUuid",
+                )
+            } returns null
+
+            everySuspend { discountRepository.getDiscount() } returns Discount(10)
+
+            // When
+            val discount = getDiscountUseCase()
+
+            // Then
+            assertEquals(
+                expected = 10,
+                actual = discount?.firstOrderDiscount,
             )
-        )
+        }
 
-        everySuspend { discountRepository.getDiscount() } returns Discount(10)
+    @Test
+    fun `should return null when lastOrder is not empty`() =
+        runTest {
+            // Given
 
-        // When
-        val discount = getDiscountUseCase()
+            everySuspend { dataStoreRepo.getToken() } returns "token"
+            everySuspend { dataStoreRepo.getUserUuid() } returns "userUuid"
+            everySuspend {
+                orderRepository.getLastOrderByUserUuidLocalFirst(
+                    "token",
+                    "userUuid",
+                )
+            } returns
+                LightOrder(
+                    uuid = "uuid",
+                    status = OrderStatus.DONE,
+                    code = "code",
+                    dateTime =
+                        DateTime(
+                            date =
+                                Date(
+                                    dayOfMonth = 5474,
+                                    monthNumber = 7337,
+                                    year = 1992,
+                                ),
+                            time = Time(hours = 3796, minutes = 8009),
+                        ),
+                )
 
-        // Then
-        assertEquals(
-            expected = null,
-            actual = discount
-        )
-    }
+            everySuspend { discountRepository.getDiscount() } returns Discount(10)
+
+            // When
+            val discount = getDiscountUseCase()
+
+            // Then
+            assertEquals(
+                expected = null,
+                actual = discount,
+            )
+        }
 }

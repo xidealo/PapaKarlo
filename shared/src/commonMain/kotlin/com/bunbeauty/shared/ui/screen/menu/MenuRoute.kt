@@ -27,17 +27,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
-import org.jetbrains.compose.resources.stringResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import papakarlo.shared.generated.resources.Res
-import com.bunbeauty.designsystem.ui.element.FoodDeliveryScaffold
-import com.bunbeauty.designsystem.ui.screen.ErrorScreen
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.theme.bold
 import com.bunbeauty.designsystem.theme.logoSmall
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryAction
+import com.bunbeauty.designsystem.ui.element.FoodDeliveryScaffold
+import com.bunbeauty.designsystem.ui.element.TopCartUi
+import com.bunbeauty.designsystem.ui.element.button.FoodDeliveryExtendedFab
+import com.bunbeauty.designsystem.ui.element.card.BannerCard
+import com.bunbeauty.designsystem.ui.screen.ErrorScreen
 import com.bunbeauty.shared.presentation.menu.MenuViewModel
 import com.bunbeauty.shared.presentation.menu.model.CategoryItem
 import com.bunbeauty.shared.presentation.menu.model.MenuDataState
@@ -46,13 +46,13 @@ import com.bunbeauty.shared.ui.screen.menu.mapper.toMenuViewState
 import com.bunbeauty.shared.ui.screen.menu.state.MenuItemUi
 import com.bunbeauty.shared.ui.screen.menu.state.MenuViewState
 import com.bunbeauty.shared.ui.screen.menu.ui.MenuProductItem
-import com.bunbeauty.designsystem.ui.element.TopCartUi
-import com.bunbeauty.designsystem.ui.element.button.FoodDeliveryExtendedFab
-import com.bunbeauty.designsystem.ui.element.card.BannerCard
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.getString
+import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
+import papakarlo.shared.generated.resources.Res
 import papakarlo.shared.generated.resources.description_ic_discount
 import papakarlo.shared.generated.resources.error_consumer_cart_add_product
 import papakarlo.shared.generated.resources.error_menu_loading
@@ -62,7 +62,6 @@ import papakarlo.shared.generated.resources.ic_profile
 import papakarlo.shared.generated.resources.msg_menu_discount
 import papakarlo.shared.generated.resources.title_menu
 import papakarlo.shared.generated.resources.title_menu_discount
-
 
 @Composable
 fun MenuRoute(
@@ -94,8 +93,7 @@ fun MenuRoute(
         goToProductDetailsFragment = goToProductDetailsFragment,
         consumeEffects = consumeEffects,
         showErrorMessage = showErrorMessage,
-
-        )
+    )
 
     MenuScreen(
         viewState = viewState.toMenuViewState(),
@@ -331,7 +329,7 @@ private fun MenuColumn(
                 when (menuItemModel) {
                     is MenuItemUi.Discount,
                     is MenuItemUi.CategoryHeader,
-                        -> GridItemSpan(maxLineSpan)
+                    -> GridItemSpan(maxLineSpan)
 
                     else -> GridItemSpan(1)
                 }
@@ -351,9 +349,10 @@ private fun MenuColumn(
                                 menuItem.discount,
                             ),
                         icon = Res.drawable.ic_discount,
-                        iconDescription = stringResource(
-                            Res.string.description_ic_discount,
-                        ),
+                        iconDescription =
+                            stringResource(
+                                Res.string.description_ic_discount,
+                            ),
                     )
                 }
 

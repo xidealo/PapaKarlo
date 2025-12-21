@@ -27,36 +27,37 @@ import org.koin.core.component.KoinComponent
 class SocketService(
     private val uuidGenerator: UuidGenerator,
     private val client: HttpClient,
-    private val json: Json
+    private val json: Json,
 ) : KoinComponent {
-
     private var socketSessionMap: MutableMap<String, WebSocketSession> = hashMapOf()
 
     suspend fun <S> observeSocketMessages(
         path: String,
         serializer: KSerializer<S>,
-        token: String
+        token: String,
     ): Pair<String?, Flow<S>> {
         return try {
-            val socketSession = client.webSocketSession {
-                method = HttpMethod.Get
-                url("wss", null, 443, path)
-                header(AUTHORIZATION_HEADER, BEARER + token)
-            }
+            val socketSession =
+                client.webSocketSession {
+                    method = HttpMethod.Get
+                    url("wss", null, 443, path)
+                    header(AUTHORIZATION_HEADER, BEARER + token)
+                }
             val uuid = uuidGenerator.generateUuid()
             socketSessionMap[uuid] = socketSession
             return if (socketSession.isActive) {
                 Logger.logD(Logger.WEB_SOCKET_TAG, "Connect $uuid")
-                val flow = socketSession.incoming
-                    .receiveAsFlow()
-                    .filter { it is Frame.Text }
-                    .map { frame ->
-                        val message = frame as Frame.Text
-                        Logger.logD(Logger.WEB_SOCKET_TAG, "Message: ${message.readText()}")
-                        json.decodeFromString(serializer, message.readText())
-                    }.catch { exception ->
-                        Logger.logE(Logger.WEB_SOCKET_TAG, "Exception: ${exception.message}")
-                    }
+                val flow =
+                    socketSession.incoming
+                        .receiveAsFlow()
+                        .filter { it is Frame.Text }
+                        .map { frame ->
+                            val message = frame as Frame.Text
+                            Logger.logD(Logger.WEB_SOCKET_TAG, "Message: ${message.readText()}")
+                            json.decodeFromString(serializer, message.readText())
+                        }.catch { exception ->
+                            Logger.logE(Logger.WEB_SOCKET_TAG, "Exception: ${exception.message}")
+                        }
                 uuid to flow
             } else {
                 null to flow { }

@@ -6,28 +6,30 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class GetExtendedCommentUseCaseTest {
-
     private val useCase = GetExtendedCommentUseCase()
     private val rubleCurrency = "₽"
 
     @Test
     fun `invoke should return just comment when no additional info`() {
         // Arrange
-        val extendedComment = ExtendedComment(
-            comment = "Test comment",
-            change = ExtendedComment.Change(
-                paymentByCash = false,
-                withoutChangeChecked = false,
-                withoutChange = "",
-                changeFrom = "",
-                change = ""
-            ),
-            additionalUtensils = ExtendedComment.AdditionalUtensils(
-                isAdditionalUtensils = false,
-                count = "",
-                name = ""
+        val extendedComment =
+            ExtendedComment(
+                comment = "Test comment",
+                change =
+                    ExtendedComment.Change(
+                        paymentByCash = false,
+                        withoutChangeChecked = false,
+                        withoutChange = "",
+                        changeFrom = "",
+                        change = "",
+                    ),
+                additionalUtensils =
+                    ExtendedComment.AdditionalUtensils(
+                        isAdditionalUtensils = false,
+                        count = "",
+                        name = "",
+                    ),
             )
-        )
 
         // Act
         val result = useCase(extendedComment)
@@ -39,21 +41,24 @@ class GetExtendedCommentUseCaseTest {
     @Test
     fun `invoke should include change info when payment by cash`() {
         // Arrange
-        val extendedComment = ExtendedComment(
-            comment = "Test comment",
-            change = ExtendedComment.Change(
-                paymentByCash = true,
-                withoutChangeChecked = false,
-                withoutChange = "Without change",
-                changeFrom = "Сдача с",
-                change = "500"
-            ),
-            additionalUtensils = ExtendedComment.AdditionalUtensils(
-                isAdditionalUtensils = false,
-                count = "",
-                name = ""
+        val extendedComment =
+            ExtendedComment(
+                comment = "Test comment",
+                change =
+                    ExtendedComment.Change(
+                        paymentByCash = true,
+                        withoutChangeChecked = false,
+                        withoutChange = "Without change",
+                        changeFrom = "Сдача с",
+                        change = "500",
+                    ),
+                additionalUtensils =
+                    ExtendedComment.AdditionalUtensils(
+                        isAdditionalUtensils = false,
+                        count = "",
+                        name = "",
+                    ),
             )
-        )
 
         // Act
         val result = useCase(extendedComment)
@@ -65,21 +70,24 @@ class GetExtendedCommentUseCaseTest {
     @Test
     fun `invoke should include without change when checked`() {
         // Arrange
-        val extendedComment = ExtendedComment(
-            comment = "Test comment",
-            change = ExtendedComment.Change(
-                paymentByCash = true,
-                withoutChangeChecked = true,
-                withoutChange = "Без сдачи",
-                changeFrom = "",
-                change = ""
-            ),
-            additionalUtensils = ExtendedComment.AdditionalUtensils(
-                isAdditionalUtensils = false,
-                count = "",
-                name = ""
+        val extendedComment =
+            ExtendedComment(
+                comment = "Test comment",
+                change =
+                    ExtendedComment.Change(
+                        paymentByCash = true,
+                        withoutChangeChecked = true,
+                        withoutChange = "Без сдачи",
+                        changeFrom = "",
+                        change = "",
+                    ),
+                additionalUtensils =
+                    ExtendedComment.AdditionalUtensils(
+                        isAdditionalUtensils = false,
+                        count = "",
+                        name = "",
+                    ),
             )
-        )
 
         // Act
         val result = useCase(extendedComment)
@@ -91,21 +99,24 @@ class GetExtendedCommentUseCaseTest {
     @Test
     fun `invoke should include utensils info when present`() {
         // Arrange
-        val extendedComment = ExtendedComment(
-            comment = "Test comment",
-            change = ExtendedComment.Change(
-                paymentByCash = false,
-                withoutChangeChecked = false,
-                withoutChange = "",
-                changeFrom = "",
-                change = ""
-            ),
-            additionalUtensils = ExtendedComment.AdditionalUtensils(
-                isAdditionalUtensils = true,
-                count = "2",
-                name = "Вилки"
+        val extendedComment =
+            ExtendedComment(
+                comment = "Test comment",
+                change =
+                    ExtendedComment.Change(
+                        paymentByCash = false,
+                        withoutChangeChecked = false,
+                        withoutChange = "",
+                        changeFrom = "",
+                        change = "",
+                    ),
+                additionalUtensils =
+                    ExtendedComment.AdditionalUtensils(
+                        isAdditionalUtensils = true,
+                        count = "2",
+                        name = "Вилки",
+                    ),
             )
-        )
 
         // Act
         val result = useCase(extendedComment)
@@ -117,21 +128,24 @@ class GetExtendedCommentUseCaseTest {
     @Test
     fun `invoke should combine all info when all present`() {
         // Arrange
-        val extendedComment = ExtendedComment(
-            comment = "Test comment",
-            change = ExtendedComment.Change(
-                paymentByCash = true,
-                withoutChangeChecked = false,
-                withoutChange = "Без сдачи",
-                changeFrom = "Сдача с",
-                change = "1000"
-            ),
-            additionalUtensils = ExtendedComment.AdditionalUtensils(
-                isAdditionalUtensils = true,
-                count = "3",
-                name = "Ложки"
+        val extendedComment =
+            ExtendedComment(
+                comment = "Test comment",
+                change =
+                    ExtendedComment.Change(
+                        paymentByCash = true,
+                        withoutChangeChecked = false,
+                        withoutChange = "Без сдачи",
+                        changeFrom = "Сдача с",
+                        change = "1000",
+                    ),
+                additionalUtensils =
+                    ExtendedComment.AdditionalUtensils(
+                        isAdditionalUtensils = true,
+                        count = "3",
+                        name = "Ложки",
+                    ),
             )
-        )
 
         // Act
         val result = useCase(extendedComment)
@@ -143,21 +157,24 @@ class GetExtendedCommentUseCaseTest {
     @Test
     fun `invoke should handle empty comment`() {
         // Arrange
-        val extendedComment = ExtendedComment(
-            comment = "",
-            change = ExtendedComment.Change(
-                paymentByCash = true,
-                withoutChangeChecked = false,
-                withoutChange = "",
-                changeFrom = "Сдача с",
-                change = "200"
-            ),
-            additionalUtensils = ExtendedComment.AdditionalUtensils(
-                isAdditionalUtensils = true,
-                count = "1",
-                name = "Нож"
+        val extendedComment =
+            ExtendedComment(
+                comment = "",
+                change =
+                    ExtendedComment.Change(
+                        paymentByCash = true,
+                        withoutChangeChecked = false,
+                        withoutChange = "",
+                        changeFrom = "Сдача с",
+                        change = "200",
+                    ),
+                additionalUtensils =
+                    ExtendedComment.AdditionalUtensils(
+                        isAdditionalUtensils = true,
+                        count = "1",
+                        name = "Нож",
+                    ),
             )
-        )
 
         // Act
         val result = useCase(extendedComment)
@@ -169,21 +186,24 @@ class GetExtendedCommentUseCaseTest {
     @Test
     fun `invoke should trim whitespace`() {
         // Arrange
-        val extendedComment = ExtendedComment(
-            comment = "  Test comment  ",
-            change = ExtendedComment.Change(
-                paymentByCash = false,
-                withoutChangeChecked = false,
-                withoutChange = "",
-                changeFrom = "",
-                change = ""
-            ),
-            additionalUtensils = ExtendedComment.AdditionalUtensils(
-                isAdditionalUtensils = false,
-                count = "",
-                name = ""
+        val extendedComment =
+            ExtendedComment(
+                comment = "  Test comment  ",
+                change =
+                    ExtendedComment.Change(
+                        paymentByCash = false,
+                        withoutChangeChecked = false,
+                        withoutChange = "",
+                        changeFrom = "",
+                        change = "",
+                    ),
+                additionalUtensils =
+                    ExtendedComment.AdditionalUtensils(
+                        isAdditionalUtensils = false,
+                        count = "",
+                        name = "",
+                    ),
             )
-        )
 
         // Act
         val result = useCase(extendedComment)

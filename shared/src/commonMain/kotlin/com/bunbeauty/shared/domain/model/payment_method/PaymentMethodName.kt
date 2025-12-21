@@ -4,5 +4,5 @@ enum class PaymentMethodName {
     CASH,
     CARD,
     CARD_NUMBER,
-    PHONE_NUMBER
+    PHONE_NUMBER,
 }

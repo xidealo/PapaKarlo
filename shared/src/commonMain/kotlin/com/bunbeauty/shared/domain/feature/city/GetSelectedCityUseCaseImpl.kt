@@ -10,12 +10,10 @@ interface GetSelectedCityUseCase {
 
 class GetSelectedCityUseCaseImpl(
     private val cityRepo: CityRepo,
-    private val dataStoreRepo: DataStoreRepo
+    private val dataStoreRepo: DataStoreRepo,
 ) : GetSelectedCityUseCase {
-
-    override suspend operator fun invoke(): City? {
-        return dataStoreRepo.getSelectedCityUuid()?.let { cityUuid ->
+    override suspend operator fun invoke(): City? =
+        dataStoreRepo.getSelectedCityUuid()?.let { cityUuid ->
             cityRepo.getCityByUuid(cityUuid)
         }
-    }
 }

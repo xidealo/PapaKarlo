@@ -8,27 +8,26 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import org.jetbrains.compose.resources.stringResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import papakarlo.shared.generated.resources.Res
+import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryItem
 import com.bunbeauty.designsystem.ui.screen.ErrorScreen
 import com.bunbeauty.designsystem.ui.screen.LoadingScreen
-import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
-import com.bunbeauty.shared.ui.screen.cafe.model.CafeOptions
 import com.bunbeauty.shared.domain.model.cafe.CafeOpenState
 import com.bunbeauty.shared.presentation.cafe_list.CafeList
 import com.bunbeauty.shared.presentation.cafe_list.CafeListViewModel
+import com.bunbeauty.shared.ui.screen.cafe.model.CafeOptions
 import com.bunbeauty.shared.ui.screen.cafe.screen.cafeoptions.CafeOptionsBottomSheet
 import com.bunbeauty.shared.ui.screen.cafe.ui.CafeItem
 import com.bunbeauty.shared.ui.screen.cafe.ui.CafeItemAndroid
 import kotlinx.collections.immutable.persistentListOf
+import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
+import papakarlo.shared.generated.resources.Res
 import papakarlo.shared.generated.resources.error_cafe_list_loading
 import papakarlo.shared.generated.resources.title_cafe_list
-
 
 @Composable
 fun CafeList.DataState.mapState(): CafeListViewState = toViewState()

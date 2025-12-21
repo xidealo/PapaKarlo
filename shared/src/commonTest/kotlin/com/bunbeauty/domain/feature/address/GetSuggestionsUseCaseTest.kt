@@ -15,69 +15,73 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
 class GetSuggestionsUseCaseTest {
-
     private val dataStoreRepo: DataStoreRepo = mock()
 
     private val suggestionRepo: SuggestionRepo = mock()
 
-    private val getSuggestionsUseCase: GetSuggestionsUseCase = GetSuggestionsUseCase(
-        suggestionRepo = suggestionRepo,
-        dataStoreRepo = dataStoreRepo
-    )
-
-    @Test
-    fun `return NoTokenException when token is null`() = runTest {
-        everySuspend { dataStoreRepo.getToken() } returns null
-
-        assertFailsWith(
-            exceptionClass = NoTokenException::class,
-            block = {
-                getSuggestionsUseCase(query = "ул Киро")
-            }
+    private val getSuggestionsUseCase: GetSuggestionsUseCase =
+        GetSuggestionsUseCase(
+            suggestionRepo = suggestionRepo,
+            dataStoreRepo = dataStoreRepo,
         )
-    }
 
     @Test
-    fun `return NoSelectedCityUuidException when token is null`() = runTest {
-        everySuspend { dataStoreRepo.getToken() } returns "token"
-        everySuspend { dataStoreRepo.getSelectedCityUuid() } returns null
+    fun `return NoTokenException when token is null`() =
+        runTest {
+            everySuspend { dataStoreRepo.getToken() } returns null
 
-        assertFailsWith(
-            exceptionClass = NoSelectedCityUuidException::class,
-            block = {
-                getSuggestionsUseCase(query = "ул Киро")
-            }
-        )
-    }
-
-    @Test
-    fun `return suggestion list when all data is ok`() = runTest {
-        everySuspend { dataStoreRepo.getToken() } returns "token"
-        everySuspend { dataStoreRepo.getSelectedCityUuid() } returns "cityUuid"
-
-        val query = "ул Киро"
-        val suggestionList = listOf(
-            Suggestion(
-                fiasId = "fiasId1",
-                street = "street1",
-                details = null
-            ),
-            Suggestion(
-                fiasId = "fiasId2",
-                street = "street2",
-                details = null
+            assertFailsWith(
+                exceptionClass = NoTokenException::class,
+                block = {
+                    getSuggestionsUseCase(query = "ул Киро")
+                },
             )
-        )
-        everySuspend {
-            suggestionRepo.getSuggestionList(
-                token = "token",
-                query = query,
-                cityUuid = "cityUuid"
+        }
+
+    @Test
+    fun `return NoSelectedCityUuidException when token is null`() =
+        runTest {
+            everySuspend { dataStoreRepo.getToken() } returns "token"
+            everySuspend { dataStoreRepo.getSelectedCityUuid() } returns null
+
+            assertFailsWith(
+                exceptionClass = NoSelectedCityUuidException::class,
+                block = {
+                    getSuggestionsUseCase(query = "ул Киро")
+                },
             )
-        } returns suggestionList
+        }
 
-        val result = getSuggestionsUseCase(query = query)
+    @Test
+    fun `return suggestion list when all data is ok`() =
+        runTest {
+            everySuspend { dataStoreRepo.getToken() } returns "token"
+            everySuspend { dataStoreRepo.getSelectedCityUuid() } returns "cityUuid"
 
-        assertEquals(suggestionList, result)
-    }
+            val query = "ул Киро"
+            val suggestionList =
+                listOf(
+                    Suggestion(
+                        fiasId = "fiasId1",
+                        street = "street1",
+                        details = null,
+                    ),
+                    Suggestion(
+                        fiasId = "fiasId2",
+                        street = "street2",
+                        details = null,
+                    ),
+                )
+            everySuspend {
+                suggestionRepo.getSuggestionList(
+                    token = "token",
+                    query = query,
+                    cityUuid = "cityUuid",
+                )
+            } returns suggestionList
+
+            val result = getSuggestionsUseCase(query = query)
+
+            assertEquals(suggestionList, result)
+        }
 }

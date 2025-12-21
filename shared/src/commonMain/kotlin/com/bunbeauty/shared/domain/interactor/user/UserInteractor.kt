@@ -10,9 +10,8 @@ class UserInteractor(
     private val userRepo: UserRepo,
     private val orderRepo: OrderRepo,
     private val cafeRepo: CafeRepo,
-    private val userAddressRepo: UserAddressRepo
+    private val userAddressRepo: UserAddressRepo,
 ) : IUserInteractor {
-
     override suspend fun clearUserCache() {
         userRepo.clearUserCache()
         orderRepo.clearCache()
@@ -20,15 +19,12 @@ class UserInteractor(
         userAddressRepo.clearCache()
     }
 
-    override suspend fun isUserAuthorize(): Boolean {
-        return userRepo.getToken() != null
-    }
+    override suspend fun isUserAuthorize(): Boolean = userRepo.getToken() != null
 
-    override suspend fun getProfile(): Profile? {
-        return if (isUserAuthorize()) {
+    override suspend fun getProfile(): Profile? =
+        if (isUserAuthorize()) {
             userRepo.getProfile()
         } else {
             Profile.Unauthorized
         }
-    }
 }

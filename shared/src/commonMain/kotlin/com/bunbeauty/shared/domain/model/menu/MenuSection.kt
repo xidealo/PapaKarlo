@@ -5,5 +5,5 @@ import com.bunbeauty.shared.domain.model.product.MenuProduct
 
 data class MenuSection(
     val category: Category,
-    val menuProductList: List<MenuProduct>
+    val menuProductList: List<MenuProduct>,
 )

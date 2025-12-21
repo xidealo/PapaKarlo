@@ -11,7 +11,7 @@ import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import papakarlo.designsystem.generated.resources.Res
-import papakarlo.designsystem.generated.resources.action_login_continue
+import papakarlo.designsystem.generated.resources.preview_string
 
 @Composable
 fun MainButton(
@@ -46,7 +46,7 @@ fun MainButton(
 private fun MainButtonPreview() {
     FoodDeliveryTheme {
         MainButton(
-            textStringId = Res.string.action_login_continue
+            textStringId = Res.string.preview_string
         ) {}
     }
 }
@@ -56,7 +56,7 @@ private fun MainButtonPreview() {
 private fun MainButtonDisabledPreview() {
     FoodDeliveryTheme {
         MainButton(
-            textStringId = Res.string.action_login_continue,
+            textStringId = Res.string.preview_string,
             enabled = false,
         ) {}
     }

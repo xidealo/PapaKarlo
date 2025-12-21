@@ -15,32 +15,34 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class GetCurrentUserAddressWithCityUseCaseTest {
-
     private val fakeUserUuid = "userUuid"
     private val fakeSelectedCityUuid = "selectedCityUuid"
-    private val fakeCity = getCity(
-        "Kimry"
-    )
-    private val userAddressMock = UserAddress(
-        uuid = "pulvinar",
-        street = "conclusionemque",
-        house = "purus",
-        flat = null,
-        entrance = null,
-        floor = null,
-        comment = null,
-        minOrderCost = null,
-        normalDeliveryCost = 2028,
-        forLowDeliveryCost = null,
-        lowDeliveryCost = null,
-        userUuid = "his",
-        cafeUuid = "cafeUuid"
-    )
+    private val fakeCity =
+        getCity(
+            "Kimry",
+        )
+    private val userAddressMock =
+        UserAddress(
+            uuid = "pulvinar",
+            street = "conclusionemque",
+            house = "purus",
+            flat = null,
+            entrance = null,
+            floor = null,
+            comment = null,
+            minOrderCost = null,
+            normalDeliveryCost = 2028,
+            forLowDeliveryCost = null,
+            lowDeliveryCost = null,
+            userUuid = "his",
+            cafeUuid = "cafeUuid",
+        )
 
-    private val dataStoreRepo: DataStoreRepo = mock {
-        everySuspend { getUserUuid() } returns fakeUserUuid
-        everySuspend { getSelectedCityUuid() } returns fakeSelectedCityUuid
-    }
+    private val dataStoreRepo: DataStoreRepo =
+        mock {
+            everySuspend { getUserUuid() } returns fakeUserUuid
+            everySuspend { getSelectedCityUuid() } returns fakeSelectedCityUuid
+        }
 
     private val userAddressRepo: UserAddressRepo = mock()
     private val getSelectedCityUseCaseImpl: GetSelectedCityUseCase = mock()
@@ -49,59 +51,61 @@ class GetCurrentUserAddressWithCityUseCaseTest {
         GetCurrentUserAddressWithCityUseCaseImpl(
             dataStoreRepo = dataStoreRepo,
             userAddressRepo = userAddressRepo,
-            getSelectedCityUseCase = getSelectedCityUseCaseImpl
+            getSelectedCityUseCase = getSelectedCityUseCaseImpl,
         )
 
     @Test
-    fun `return selected address with city address  is selected`() = runTest {
-        everySuspend {
-            userAddressRepo.getSelectedAddressByUserAndCityUuid(
-                userUuid = fakeUserUuid,
-                cityUuid = fakeSelectedCityUuid
+    fun `return selected address with city address  is selected`() =
+        runTest {
+            everySuspend {
+                userAddressRepo.getSelectedAddressByUserAndCityUuid(
+                    userUuid = fakeUserUuid,
+                    cityUuid = fakeSelectedCityUuid,
+                )
+            } returns userAddressMock
+            everySuspend {
+                getSelectedCityUseCaseImpl()
+            } returns fakeCity
+
+            val currentUserAddress = getCurrentUserAddressWithCityUseCaseImpl()
+
+            assertEquals(
+                UserAddressWithCity(
+                    userAddressMock,
+                    fakeCity.name,
+                ),
+                currentUserAddress,
             )
-        } returns userAddressMock
-        everySuspend {
-            getSelectedCityUseCaseImpl()
-        } returns fakeCity
-
-        val currentUserAddress = getCurrentUserAddressWithCityUseCaseImpl()
-
-        assertEquals(
-            UserAddressWithCity(
-                userAddressMock,
-                fakeCity.name
-            ),
-            currentUserAddress
-        )
-    }
+        }
 
     @Test
-    fun `return first address with city when address is not selected`() = runTest {
-        everySuspend {
-            userAddressRepo.getSelectedAddressByUserAndCityUuid(
-                userUuid = fakeUserUuid,
-                cityUuid = fakeSelectedCityUuid
+    fun `return first address with city when address is not selected`() =
+        runTest {
+            everySuspend {
+                userAddressRepo.getSelectedAddressByUserAndCityUuid(
+                    userUuid = fakeUserUuid,
+                    cityUuid = fakeSelectedCityUuid,
+                )
+            } returns null
+            everySuspend {
+                userAddressRepo.getFirstUserAddressByUserAndCityUuid(
+                    userUuid = fakeUserUuid,
+                    cityUuid = fakeSelectedCityUuid,
+                )
+            } returns userAddressMock
+
+            everySuspend {
+                getSelectedCityUseCaseImpl()
+            } returns fakeCity
+
+            val currentUserAddress = getCurrentUserAddressWithCityUseCaseImpl()
+
+            assertEquals(
+                UserAddressWithCity(
+                    userAddressMock,
+                    fakeCity.name,
+                ),
+                currentUserAddress,
             )
-        } returns null
-        everySuspend {
-            userAddressRepo.getFirstUserAddressByUserAndCityUuid(
-                userUuid = fakeUserUuid,
-                cityUuid = fakeSelectedCityUuid
-            )
-        } returns userAddressMock
-
-        everySuspend {
-            getSelectedCityUseCaseImpl()
-        } returns fakeCity
-
-        val currentUserAddress = getCurrentUserAddressWithCityUseCaseImpl()
-
-        assertEquals(
-            UserAddressWithCity(
-                userAddressMock,
-                fakeCity.name
-            ),
-            currentUserAddress
-        )
-    }
+        }
 }

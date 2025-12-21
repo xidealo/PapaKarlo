@@ -28,10 +28,10 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
-import org.jetbrains.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.bunbeauty.designsystem.ui.element.textfield.FoodDeliveryTextFieldDefaults
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
+import com.bunbeauty.designsystem.ui.element.textfield.FoodDeliveryTextFieldDefaults
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun SmsEditText(

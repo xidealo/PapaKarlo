@@ -23,7 +23,7 @@ fun FoodDeliveryNavHost(
         foodDeliveryNavGraphBuilder(
             navController = navController,
             showErrorMessage = showErrorMessage,
-            showInfoMessage = showInfoMessage
+            showInfoMessage = showInfoMessage,
         )
     }
 }
