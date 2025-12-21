@@ -542,7 +542,7 @@ private fun DeferredTimeCard(
                 onAction(CreateOrder.Action.DeferredTimeClick)
             },
         )
-        if (viewState.showTimePickerHint) {
+        AnimatedVisibility(visible = viewState.showTimePickerHint) {
             Text(
                 modifier =
                     Modifier

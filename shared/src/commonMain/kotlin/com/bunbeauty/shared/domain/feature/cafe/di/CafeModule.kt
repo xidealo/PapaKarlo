@@ -3,6 +3,7 @@ package com.bunbeauty.shared.domain.feature.cafe.di
 import com.bunbeauty.shared.domain.feature.cafe.GetAdditionalUtensilsUseCase
 import com.bunbeauty.shared.domain.feature.cafe.GetCafeListUseCase
 import com.bunbeauty.shared.domain.feature.cafe.GetCafeListUseCaseImpl
+import com.bunbeauty.shared.domain.feature.cafe.GetDeferredTimeHintUseCase
 import com.bunbeauty.shared.domain.feature.cafe.GetSelectableCafeListUseCase
 import com.bunbeauty.shared.domain.feature.cafe.GetWorkloadCafeUseCase
 import com.bunbeauty.shared.domain.feature.cafe.HasOpenedCafeUseCase
@@ -58,5 +59,8 @@ internal fun cafeModule() = module {
         GetAdditionalUtensilsUseCase(
             cafeRepo = get()
         )
+    }
+    factory {
+        GetDeferredTimeHintUseCase()
     }
 }
