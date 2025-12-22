@@ -8,9 +8,6 @@ import android.media.RingtoneManager
 import android.os.Build
 import com.bunbeauty.core.Logger
 import com.bunbeauty.papakarlo.di.appModule
-import com.bunbeauty.papakarlo.di.appUtilModule
-import com.bunbeauty.papakarlo.di.uiMapperModule
-import com.bunbeauty.papakarlo.di.viewModelModule
 import com.bunbeauty.shared.Constants.CHANNEL_ID
 import com.bunbeauty.shared.data.CompanyUuidProvider
 import com.bunbeauty.shared.di.initKoin
@@ -31,7 +28,10 @@ import kotlin.coroutines.CoroutineContext
 private const val NOTIFICATION_NEWS_CHANNEL_NAME = "NEWS"
 private const val FOOD_DELIVERY_APPLICATION_TAG = "FoodDeliveryApplication"
 
-class FoodDeliveryApplication : Application(), KoinComponent, CoroutineScope {
+class FoodDeliveryApplication :
+    Application(),
+    KoinComponent,
+    CoroutineScope {
     override val coroutineContext: CoroutineContext = SupervisorJob()
 
     private val subscribeToNotification: SubscribeToNotificationUseCase by inject()
@@ -47,14 +47,12 @@ class FoodDeliveryApplication : Application(), KoinComponent, CoroutineScope {
             androidContext(this@FoodDeliveryApplication)
             modules(
                 appModule(),
-                appUtilModule(),
-                uiMapperModule(),
-                viewModelModule()
             )
         }
 
         FirebaseCrashlytics.getInstance().isCrashlyticsCollectionEnabled = !BuildConfig.DEBUG
-        FirebaseAnalytics.getInstance(applicationContext)
+        FirebaseAnalytics
+            .getInstance(applicationContext)
             .setAnalyticsCollectionEnabled(!BuildConfig.DEBUG)
         subscribeToNotification(companyUuid = companyUuidProvider.companyUuid)
         createNotificationChannel()
@@ -67,20 +65,23 @@ class FoodDeliveryApplication : Application(), KoinComponent, CoroutineScope {
         }
 
         val importance = NotificationManager.IMPORTANCE_DEFAULT
-        val channel = NotificationChannel(
-            CHANNEL_ID,
-            NOTIFICATION_NEWS_CHANNEL_NAME,
-            importance
-        ).apply {
-            enableLights(true)
-            enableVibration(true)
+        val channel =
+            NotificationChannel(
+                CHANNEL_ID,
+                NOTIFICATION_NEWS_CHANNEL_NAME,
+                importance,
+            ).apply {
+                enableLights(true)
+                enableVibration(true)
 
-            val soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
-            val attributes = AudioAttributes.Builder()
-                .setUsage(AudioAttributes.USAGE_NOTIFICATION)
-                .build()
-            setSound(soundUri, attributes)
-        }
+                val soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+                val attributes =
+                    AudioAttributes
+                        .Builder()
+                        .setUsage(AudioAttributes.USAGE_NOTIFICATION)
+                        .build()
+                setSound(soundUri, attributes)
+            }
         val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.createNotificationChannel(channel)
     }
@@ -92,7 +93,7 @@ class FoodDeliveryApplication : Application(), KoinComponent, CoroutineScope {
             } catch (e: Exception) {
                 Logger.logE(
                     FOOD_DELIVERY_APPLICATION_TAG,
-                    "Not updateNotificationToken cause: ${e.javaClass.name} "
+                    "Not updateNotificationToken cause: ${e.javaClass.name} ",
                 )
             }
         }

@@ -8,7 +8,7 @@ interface IsPickupEnabledFromCafeUseCase {
 }
 
 class IsPickupEnabledFromCafeUseCaseImpl(
-    private val cafeRepo: CafeRepo
+    private val cafeRepo: CafeRepo,
 ) : IsPickupEnabledFromCafeUseCase {
     override suspend operator fun invoke(cafeUuid: String): Boolean {
         val workType = cafeRepo.getCafeByUuid(cafeUuid = cafeUuid)?.workType ?: WorkType.CLOSED

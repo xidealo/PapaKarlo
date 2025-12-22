@@ -32,6 +32,7 @@ platform :ios do
      usaba
      estpoest
      taverna
+     voljane
   end
 
   def build_and_upload(app_identifier, scheme)
@@ -93,5 +94,9 @@ platform :ios do
   desc "Push a new taverna release build to the App Store"
   lane :taverna do
     build_and_upload("com.bunbeauty.taverna", "taverna")
+  end
+  desc "Push a new voljane release build to the App Store"
+  lane :voljane do
+    build_and_upload("com.bunbeauty.voljane", "voljane")
   end
 end

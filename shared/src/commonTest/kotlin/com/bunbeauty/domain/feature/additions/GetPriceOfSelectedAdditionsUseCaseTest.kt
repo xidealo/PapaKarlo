@@ -6,7 +6,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class GetPriceOfSelectedAdditionsUseCaseTest {
-
     val useCase = GetPriceOfSelectedAdditionsUseCase()
 
     @Test
@@ -21,15 +20,17 @@ class GetPriceOfSelectedAdditionsUseCaseTest {
     @Test
     fun `should return zero for non-selected additions`() {
         // Given
-        val addition1 = getAddition(
-            isSelected = false,
-            price = 20
-        )
+        val addition1 =
+            getAddition(
+                isSelected = false,
+                price = 20,
+            )
 
-        val addition2 = getAddition(
-            isSelected = false,
-            price = 20
-        )
+        val addition2 =
+            getAddition(
+                isSelected = false,
+                price = 20,
+            )
 
         // When
         val result = useCase.invoke(listOf(addition1, addition2))
@@ -41,22 +42,26 @@ class GetPriceOfSelectedAdditionsUseCaseTest {
     @Test
     fun `should return sum of prices for selected additions`() {
         // Given
-        val addition1 = getAddition(
-            isSelected = true,
-            price = 10
-        )
-        val addition2 = getAddition(
-            isSelected = true,
-            price = 20
-        )
-        val addition3 = getAddition(
-            isSelected = false,
-            price = 30
-        )
-        val addition4 = getAddition(
-            isSelected = true,
-            price = null
-        )
+        val addition1 =
+            getAddition(
+                isSelected = true,
+                price = 10,
+            )
+        val addition2 =
+            getAddition(
+                isSelected = true,
+                price = 20,
+            )
+        val addition3 =
+            getAddition(
+                isSelected = false,
+                price = 30,
+            )
+        val addition4 =
+            getAddition(
+                isSelected = true,
+                price = null,
+            )
 
         val useCase = GetPriceOfSelectedAdditionsUseCase()
 

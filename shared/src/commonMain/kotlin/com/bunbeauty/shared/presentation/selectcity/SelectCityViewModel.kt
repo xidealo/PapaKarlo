@@ -6,17 +6,17 @@ import com.bunbeauty.shared.extension.launchSafe
 import com.bunbeauty.shared.presentation.base.SharedStateViewModel
 
 class SelectCityViewModel(
-    private val cityInteractor: ICityInteractor
+    private val cityInteractor: ICityInteractor,
 ) : SharedStateViewModel<SelectCityDataState.DataState, SelectCityDataState.Action, SelectCityDataState.Event>(
-    initDataState = SelectCityDataState.DataState(
-        state = SelectCityDataState.DataState.State.LOADING,
-        cityList = emptyList()
-    )
-) {
-
+        initDataState =
+            SelectCityDataState.DataState(
+                state = SelectCityDataState.DataState.State.LOADING,
+                cityList = emptyList(),
+            ),
+    ) {
     override fun reduce(
         action: SelectCityDataState.Action,
-        dataState: SelectCityDataState.DataState
+        dataState: SelectCityDataState.DataState,
     ) {
         when (action) {
             is SelectCityDataState.Action.OnCitySelected -> onCitySelected(city = action.city)
@@ -32,7 +32,7 @@ class SelectCityViewModel(
                 setState {
                     copy(
                         state = SelectCityDataState.DataState.State.SUCCESS,
-                        cityList = cityInteractor.getCityList() ?: emptyList()
+                        cityList = cityInteractor.getCityList() ?: emptyList(),
                     )
                 }
             },
@@ -40,12 +40,9 @@ class SelectCityViewModel(
                 setState {
                     copy(state = SelectCityDataState.DataState.State.ERROR)
                 }
-            }
-
+            },
         )
     }
-
-
 
     private fun onCitySelected(city: City) {
         sharedScope.launchSafe(
@@ -56,8 +53,10 @@ class SelectCityViewModel(
                 }
             },
             onError = {
-                // TODO handle error
-            }
+                setState {
+                    copy(state = SelectCityDataState.DataState.State.ERROR)
+                }
+            },
         )
     }
 }

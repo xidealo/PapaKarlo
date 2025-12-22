@@ -8,30 +8,31 @@ import com.bunbeauty.shared.domain.feature.address.GetCurrentUserAddressWithCity
 import com.bunbeauty.shared.domain.feature.address.GetSuggestionsUseCase
 import org.koin.dsl.module
 
-internal fun addressModule() = module {
-    factory {
-        GetSuggestionsUseCase(
-            suggestionRepo = get(),
-            dataStoreRepo = get()
-        )
+internal fun addressModule() =
+    module {
+        factory {
+            GetSuggestionsUseCase(
+                suggestionRepo = get(),
+                dataStoreRepo = get(),
+            )
+        }
+        factory<GetCurrentUserAddressUseCase> {
+            GetCurrentUserAddressUseCaseImpl(
+                dataStoreRepo = get(),
+                userAddressRepo = get(),
+            )
+        }
+        factory<GetCurrentUserAddressWithCityUseCase> {
+            GetCurrentUserAddressWithCityUseCaseImpl(
+                dataStoreRepo = get(),
+                userAddressRepo = get(),
+                getSelectedCityUseCase = get(),
+            )
+        }
+        factory {
+            GetCurrentUserAddressFlowUseCase(
+                dataStoreRepo = get(),
+                userAddressRepo = get(),
+            )
+        }
     }
-    factory<GetCurrentUserAddressUseCase> {
-        GetCurrentUserAddressUseCaseImpl(
-            dataStoreRepo = get(),
-            userAddressRepo = get()
-        )
-    }
-    factory<GetCurrentUserAddressWithCityUseCase> {
-        GetCurrentUserAddressWithCityUseCaseImpl(
-            dataStoreRepo = get(),
-            userAddressRepo = get(),
-            getSelectedCityUseCase = get()
-        )
-    }
-    factory {
-        GetCurrentUserAddressFlowUseCase(
-            dataStoreRepo = get(),
-            userAddressRepo = get()
-        )
-    }
-}

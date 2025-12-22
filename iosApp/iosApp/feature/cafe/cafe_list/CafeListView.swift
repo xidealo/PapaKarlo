@@ -17,7 +17,6 @@ struct CafeListView: View {
     )
 
     @State var listener: Closeable?
-    @State var eventsListener: Closeable?
 
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
 

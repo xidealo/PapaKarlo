@@ -14,10 +14,9 @@ struct UserAddressListView: View {
         saveSelectedUserAddressUseCase: iosComponent.provideSaveSelectedUserAddressUseCase()
     )
 
-    @State var userAddressViewState = UserAddressListState(
+    @State var userAddressViewState = UserAddressListDataStateDataState(
         userAddressList: [],
-        eventList: [],
-        state: UserAddressListState.State.loading
+        state: UserAddressListDataStateDataState.State.loading
     )
 
     var title: LocalizedStringKey = "title_my_addresses"
@@ -29,6 +28,7 @@ struct UserAddressListView: View {
     @State var isClickable: Bool
 
     @State var listener: Closeable?
+    @State var eventListener: Closeable?
 
     var closedCallback: () -> Void
 
@@ -42,9 +42,9 @@ struct UserAddressListView: View {
                 }
             )
             switch userAddressViewState.state {
-            case UserAddressListState.State.loading: LoadingView()
-            case UserAddressListState.State.empty: EmptyAddressListView(show: show)
-            case UserAddressListState.State.success: SuccessAddressListView(
+            case UserAddressListDataStateDataState.State.loading: LoadingView()
+            case UserAddressListDataStateDataState.State.empty: EmptyAddressListView(show: show)
+            case UserAddressListDataStateDataState.State.success: SuccessAddressListView(
                     addressItemList: userAddressViewState.userAddressList.map { userAddress in
                         AddressItem(
                             id: userAddress.address.uuid,
@@ -65,14 +65,39 @@ struct UserAddressListView: View {
         .background(AppColor.background)
         .hiddenNavigationBarStyle()
         .onAppear {
-            listener = viewModel.addressListState.watch { addressListVM in
+            viewModel.onAction(action: UserAddressListDataStateActionInit())
+
+            listener = viewModel.dataState.watch { addressListVM in
                 if let notNullAddressListVM = addressListVM {
                     userAddressViewState = notNullAddressListVM
                 }
             }
-            viewModel.update()
+            
+            eventListener = viewModel.events.watch { _events in
+        
+                if let events = _events {
+                    let userAddressListEvents = events as? [UserAddressListDataStateEvent] ?? []
+
+                    for event in userAddressListEvents {
+                        print(event)
+                        switch event {
+                        case is UserAddressListDataStateEventGoBackEvent:
+                            closedCallback()
+                            self.mode.wrappedValue.dismiss()
+                        default:
+                            print("def")
+                        }
+                    }
+                    
+                    if !userAddressListEvents.isEmpty {
+                        viewModel.consumeEvents(events: userAddressListEvents)
+                    }
+                }
+            }
         }
         .onDisappear {
+            eventListener?.close()
+            eventListener = nil
             listener?.close()
             listener = nil
         }
@@ -86,8 +111,8 @@ struct SuccessAddressListView: View {
 
     @State var show: Bool
     let viewModel: UserAddressListViewModel
-    @State var userAddressListState: UserAddressListState
-    @State var listener: Closeable?
+    @State var userAddressListState: UserAddressListDataStateDataState
+    @State var eventListener: Closeable?
 
     var closedCallback: () -> Void
 
@@ -120,33 +145,8 @@ struct SuccessAddressListView: View {
             ) {
                 ButtonText(text: Strings.ACTION_ADDRESS_LIST_ADD)
             }.padding(Diems.MEDIUM_PADDING)
-        }.onAppear {
-            viewModel.addressListState.watch { addressListVM in
-
-                if let notNullAddressListVM = addressListVM {
-                    userAddressListState = notNullAddressListVM
-                }
-
-                // work with actions
-                for event in userAddressListState.eventList {
-                    switch event {
-                    case is UserAddressListStateEventGoBack:
-                        closedCallback()
-                        self.mode.wrappedValue.dismiss()
-                    default:
-                        print("def")
-                    }
-                }
-
-                if !userAddressListState.eventList.isEmpty {
-                    viewModel.consumeEventList(eventList: userAddressListState.eventList)
-                }
-            }
         }
-        .onDisappear {
-            listener?.close()
-            listener = nil
-        }.overlay(
+       .overlay(
             overlayView: ToastView(
                 toast: Toast(title: "Адрес добавлен \(userAddressListState.userAddressList.last?.getAddress() ?? "")"),
                 show: $show, backgroundColor: AppColor.primary,

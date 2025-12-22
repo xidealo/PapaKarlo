@@ -19,26 +19,27 @@ import com.bunbeauty.shared.data.mapper.user.IUserMapper
 import com.bunbeauty.shared.data.mapper.user.UserMapper
 import org.koin.dsl.module
 
-fun dataMapperModule() = module {
-    factory<IMenuProductMapper> { MenuProductMapper() }
-    factory<ICartProductMapper> { CartProductMapper() }
-    factory<IProfileMapper> {
-        ProfileMapper(
-            userAddressMapper = get(),
-            orderMapper = get()
-        )
+fun dataMapperModule() =
+    module {
+        factory<IMenuProductMapper> { MenuProductMapper() }
+        factory<ICartProductMapper> { CartProductMapper() }
+        factory<IProfileMapper> {
+            ProfileMapper(
+                userAddressMapper = get(),
+                orderMapper = get(),
+            )
+        }
+        factory<IUserMapper> { UserMapper() }
+        factory<ICityMapper> { CityMapper() }
+        factory<IOrderMapper> { OrderMapper(orderProductMapper = get(), dateTimeUtil = get()) }
+        factory<IOrderProductMapper> { OrderProductMapper() }
+        factory {
+            SettingsMapper()
+        }
+        factory {
+            PaymentMethodMapper()
+        }
+        factory {
+            LinkMapper()
+        }
     }
-    factory<IUserMapper> { UserMapper() }
-    factory<ICityMapper> { CityMapper() }
-    factory<IOrderMapper> { OrderMapper(orderProductMapper = get(), dateTimeUtil = get()) }
-    factory<IOrderProductMapper> { OrderProductMapper() }
-    factory {
-        SettingsMapper()
-    }
-    factory {
-        PaymentMethodMapper()
-    }
-    factory {
-        LinkMapper()
-    }
-}

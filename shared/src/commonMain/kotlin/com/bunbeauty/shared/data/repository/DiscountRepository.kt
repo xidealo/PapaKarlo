@@ -8,23 +8,20 @@ import com.bunbeauty.shared.domain.repo.DiscountRepo
 
 class DiscountRepository(
     private val networkConnector: NetworkConnector,
-    private val dataStoreRepo: DataStoreRepo
-) : CacheRepository<Discount>(), DiscountRepo {
-
+    private val dataStoreRepo: DataStoreRepo,
+) : CacheRepository<Discount>(),
+    DiscountRepo {
     override val tag: String = "DISCOUNT_TAG"
 
-    override suspend fun getDiscount(): Discount? {
-        return getCacheOrData(
+    override suspend fun getDiscount(): Discount? =
+        getCacheOrData(
             onApiRequest = networkConnector::getDiscount,
             onLocalRequest = dataStoreRepo::getDiscount,
             onSaveLocally = { discountServer ->
                 dataStoreRepo.saveDiscount(toDiscount(discountServer))
             },
-            serverToDomainModel = ::toDiscount
+            serverToDomainModel = ::toDiscount,
         )
-    }
 
-    private fun toDiscount(discountServer: DiscountServer): Discount {
-        return Discount(firstOrderDiscount = discountServer.discount)
-    }
+    private fun toDiscount(discountServer: DiscountServer): Discount = Discount(firstOrderDiscount = discountServer.discount)
 }

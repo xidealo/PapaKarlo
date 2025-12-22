@@ -11,11 +11,12 @@ interface GetSelectedCityTimeZoneUseCase {
 
 class GetSelectedCityTimeZoneUseCaseImpl(
     private val cityRepo: CityRepo,
-    private val dataStoreRepo: DataStoreRepo
+    private val dataStoreRepo: DataStoreRepo,
 ) : GetSelectedCityTimeZoneUseCase {
-    override suspend operator fun invoke(): String {
-        return dataStoreRepo.getSelectedCityUuid()?.let { cityUuid ->
-            cityRepo.getCityByUuid(cityUuid)
-        }?.timeZone ?: DEFAULT_TIME_ZONE
-    }
+    override suspend operator fun invoke(): String =
+        dataStoreRepo
+            .getSelectedCityUuid()
+            ?.let { cityUuid ->
+                cityRepo.getCityByUuid(cityUuid)
+            }?.timeZone ?: DEFAULT_TIME_ZONE
 }

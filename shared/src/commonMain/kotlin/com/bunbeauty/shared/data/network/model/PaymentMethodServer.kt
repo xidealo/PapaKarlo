@@ -5,16 +5,12 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 class PaymentMethodServer(
-
     @SerialName("uuid")
     val uuid: String,
-
     @SerialName("name")
     val name: String,
-
     @SerialName("value")
     val value: String?,
-
     @SerialName("valueToCopy")
-    val valueToCopy: String?
+    val valueToCopy: String?,
 )

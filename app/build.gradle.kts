@@ -6,6 +6,7 @@ import java.util.Properties
 
 plugins {
     alias(libs.plugins.application)
+    alias(libs.plugins.compose.compiler)
     alias(libs.plugins.compose)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.google.service)
@@ -56,7 +57,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
             signingConfig = signingConfigs.getByName("release")
         }
@@ -74,7 +75,7 @@ android {
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17.toString()
+        jvmTarget = JavaVersion.VERSION_21.toString()
     }
 
     buildFeatures {
@@ -85,8 +86,8 @@ android {
 
     compileOptions {
         isCoreLibraryDesugaringEnabled = true
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
 
     lint {
@@ -123,15 +124,14 @@ dependencies {
     implementation(project(":shared"))
     implementation(project(":analytic"))
     implementation(project(":core"))
+    implementation(project(":designsystem"))
 
     implementation(libs.appcompat)
     implementation(libs.core.ktx)
 
-    implementation(libs.bundles.navigation)
-
     implementation(libs.bundles.lifecycle)
 
-    implementation(libs.bundles.di)
+    implementation(libs.bundles.di.android)
     testImplementation(libs.koin.test)
 
     implementation(libs.kotlinx.serialization.json)
@@ -160,7 +160,7 @@ tasks.register("assembleAll") {
     dependsOn(
         FoodDeliveryFlavor.values().map { flavor ->
             flavor.assembleReleaseBundle
-        }
+        },
     )
 }
 
@@ -169,18 +169,18 @@ tasks.register("publishAll") {
     dependsOn(
         FoodDeliveryFlavor.values().map { flavor ->
             flavor.publishReleaseBundle
-        }
+        },
     )
 }
 
 fun commonPlayConfig(
     playPublisherExtension: PlayPublisherExtension,
-    buildGradle: Build_gradle
+    buildGradle: Build_gradle,
 ) {
     with(playPublisherExtension) {
         track.set("production")
         defaultToAppBundles.set(true)
-        userFraction.set(0.99)
+        userFraction.set(0.25)
         serviceAccountCredentials.set(buildGradle.file("google-play-api-key.json"))
         releaseStatus.set(ReleaseStatus.IN_PROGRESS)
     }

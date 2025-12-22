@@ -5,10 +5,26 @@ import com.bunbeauty.shared.domain.model.date_time.MinuteSecond
 import com.bunbeauty.shared.domain.model.date_time.Time
 
 interface DateTimeUtil {
+    fun toDateTime(
+        millis: Long,
+        timeZone: String,
+    ): DateTime
 
-    fun toDateTime(millis: Long, timeZone: String): DateTime
-    fun toTime(millis: Long, timeZone: String): Time
+    fun toTime(
+        millis: Long,
+        timeZone: String,
+    ): Time
+
     fun getCurrentMinuteSecond(timeZone: String): MinuteSecond
-    fun getDateTimeIn(hour: Int, minute: Int, timeZone: String): DateTime
-    fun getMillisByTime(time: Time, timeZone: String): Long
+
+    fun getDateTimeIn(
+        hour: Int,
+        minute: Int,
+        timeZone: String,
+    ): DateTime
+
+    fun getMillisByTime(
+        time: Time,
+        timeZone: String,
+    ): Long
 }

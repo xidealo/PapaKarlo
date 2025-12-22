@@ -8,7 +8,7 @@ class CreatedOrder(
     val comment: String?,
     val deferredTime: Long?,
     val orderProducts: List<CreatedOrderProduct>,
-    val paymentMethod: String?
+    val paymentMethod: String?,
 )
 
 class CreatedOrderAddress(
@@ -19,5 +19,5 @@ class CreatedOrderAddress(
     val flat: String? = null,
     val entrance: String? = null,
     val floor: String? = null,
-    val comment: String? = null
+    val comment: String? = null,
 )

@@ -1,10 +1,16 @@
 package com.bunbeauty.shared.presentation.base
 
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.bunbeauty.shared.domain.asCommonStateFlow
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 
-abstract class SharedStateViewModel<DS : BaseDataState, A : BaseAction, E : BaseEvent>(initDataState: DS) : SharedViewModel() {
+abstract class SharedStateViewModel<DS : BaseDataState, A : BaseAction, E : BaseEvent>(
+    initDataState: DS,
+) : ViewModel() {
+    protected val sharedScope: CoroutineScope = viewModelScope
 
     protected val mutableDataState = MutableStateFlow(initDataState)
     val dataState = mutableDataState.asCommonStateFlow()
@@ -16,7 +22,10 @@ abstract class SharedStateViewModel<DS : BaseDataState, A : BaseAction, E : Base
         reduce(action, mutableDataState.value)
     }
 
-    protected abstract fun reduce(action: A, dataState: DS)
+    protected abstract fun reduce(
+        action: A,
+        dataState: DS,
+    )
 
     fun consumeEvents(events: List<E>) {
         mutableEvents.update { list ->

@@ -18,42 +18,42 @@ class CafeRepository(
     private val networkConnector: NetworkConnector,
     private val cafeDao: ICafeDao,
     private val cafeStorage: CafeStorage,
-    private val dataStoreRepo: DataStoreRepo
+    private val dataStoreRepo: DataStoreRepo,
 ) : CafeRepo {
-
     private var cafeListCache: List<Cafe>? = null
 
-    override suspend fun getCafeList(
-        selectedCityUuid: String
-    ): List<Cafe> {
-        val list = if (cafeListCache == null) {
-            val cafeList = networkConnector.getCafeListByCityUuid(cityUuid = selectedCityUuid)
-                .dataOrNull()
-                ?.results
-                .also { cafeServerList ->
-                    if (cafeServerList != null) {
-                        withContext(Dispatchers.IO) {
-                            cafeDao.insertCafeList(
-                                cafeServerList.map { cafeServer ->
-                                    cafeServer.toCafeEntity()
+    override suspend fun getCafeList(selectedCityUuid: String): List<Cafe> {
+        val list =
+            if (cafeListCache == null) {
+                val cafeList =
+                    networkConnector
+                        .getCafeListByCityUuid(cityUuid = selectedCityUuid)
+                        .dataOrNull()
+                        ?.results
+                        .also { cafeServerList ->
+                            if (cafeServerList != null) {
+                                withContext(Dispatchers.IO) {
+                                    cafeDao.insertCafeList(
+                                        cafeServerList.map { cafeServer ->
+                                            cafeServer.toCafeEntity()
+                                        },
+                                    )
                                 }
-                            )
+                            }
+                        }?.map { cafeServer ->
+                            cafeServer.toCafe()
+                        } ?: cafeDao
+                        .getCafeListByCityUuid(cityUuid = selectedCityUuid)
+                        .map { cafeEntity ->
+                            cafeEntity.toCafe()
                         }
-                    }
-                }
-                ?.map { cafeServer ->
-                    cafeServer.toCafe()
-                } ?: cafeDao.getCafeListByCityUuid(cityUuid = selectedCityUuid)
-                .map { cafeEntity ->
-                    cafeEntity.toCafe()
-                }
 
-            cafeListCache = cafeList
+                cafeListCache = cafeList
 
-            cafeList
-        } else {
-            cafeListCache
-        }
+                cafeList
+            } else {
+                cafeListCache
+            }
 
         return list ?: emptyList()
     }
@@ -61,30 +61,28 @@ class CafeRepository(
     override suspend fun saveSelectedCafeUuid(
         userUuid: String,
         selectedCityUuid: String,
-        cafeUuid: String
+        cafeUuid: String,
     ) {
-        val selectedCafeUuidEntity = SelectedCafeUuidEntity(
-            userUuid = userUuid,
-            cityUuid = selectedCityUuid,
-            cafeUuid = cafeUuid
-        )
+        val selectedCafeUuidEntity =
+            SelectedCafeUuidEntity(
+                userUuid = userUuid,
+                cityUuid = selectedCityUuid,
+                cafeUuid = cafeUuid,
+            )
         cafeDao.insertSelectedCafeUuid(selectedCafeUuidEntity)
     }
 
-    override suspend fun getCafeByUuid(cafeUuid: String): Cafe? {
-        return getCafeList(
-            selectedCityUuid = dataStoreRepo.getSelectedCityUuid().orEmpty()
+    override suspend fun getCafeByUuid(cafeUuid: String): Cafe? =
+        getCafeList(
+            selectedCityUuid = dataStoreRepo.getSelectedCityUuid().orEmpty(),
         ).find { cafe ->
             cafe.uuid == cafeUuid
         }
-    }
 
     override suspend fun getSelectedCafeByUserAndCityUuid(
         userUuid: String,
-        cityUuid: String
-    ): Cafe? {
-        return cafeDao.getSelectedCafeByUserAndCityUuid(userUuid, cityUuid)?.toCafe()
-    }
+        cityUuid: String,
+    ): Cafe? = cafeDao.getSelectedCafeByUserAndCityUuid(userUuid, cityUuid)?.toCafe()
 
     override fun clearCache() {
         cafeStorage.clear()

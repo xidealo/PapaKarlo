@@ -17,22 +17,24 @@ class AddCartProductUseCase(
     private val additionRepository: AdditionRepo,
     private val areAdditionsEqualUseCase: AreAdditionsEqualUseCase,
     private val additionGroupRepository: AdditionGroupRepo,
-    private val getAdditionPriorityUseCase: GetAdditionPriorityUseCase
+    private val getAdditionPriorityUseCase: GetAdditionPriorityUseCase,
 ) {
     suspend operator fun invoke(
         menuProductUuid: String,
-        additionUuidList: List<String>
+        additionUuidList: List<String>,
     ) {
         if (getCartProductCountUseCase() >= CART_PRODUCT_LIMIT) {
             throw CartProductLimitReachedException()
         }
 
-        val cartProductWithSameAdditions = getCartProductWithSameAdditions(
-            cartProductList = cartProductRepo.getCartProductListByMenuProductUuid(
-                menuProductUuid
-            ),
-            additionUuidList = additionUuidList
-        )
+        val cartProductWithSameAdditions =
+            getCartProductWithSameAdditions(
+                cartProductList =
+                    cartProductRepo.getCartProductListByMenuProductUuid(
+                        menuProductUuid,
+                    ),
+                additionUuidList = additionUuidList,
+            )
 
         if (cartProductWithSameAdditions == null) {
             val cartProductUuid =
@@ -43,34 +45,35 @@ class AddCartProductUseCase(
                         additionGroupRepository.getAdditionGroup(uuid = addition.additionGroupUuid)
                     cartProductAdditionRepository.saveAsCartProductAddition(
                         cartProductUuid = cartProductUuid,
-                        addition = addition.copy(
-                            priority = additionGroup?.let {
-                                getAdditionPriorityUseCase(
-                                    additionGroup = additionGroup,
-                                    addition = addition
-                                )
-                            } ?: addition.priority
-                        )
+                        addition =
+                            addition.copy(
+                                priority =
+                                    additionGroup?.let {
+                                        getAdditionPriorityUseCase(
+                                            additionGroup = additionGroup,
+                                            addition = addition,
+                                        )
+                                    } ?: addition.priority,
+                            ),
                     )
                 }
             }
         } else {
             cartProductRepo.updateCartProductCount(
                 cartProductUuid = cartProductWithSameAdditions.uuid,
-                count = cartProductWithSameAdditions.count + 1
+                count = cartProductWithSameAdditions.count + 1,
             )
         }
     }
 
     private fun getCartProductWithSameAdditions(
         cartProductList: List<CartProduct>,
-        additionUuidList: List<String>
-    ): CartProduct? {
-        return cartProductList.firstOrNull { cartProduct ->
+        additionUuidList: List<String>,
+    ): CartProduct? =
+        cartProductList.firstOrNull { cartProduct ->
             areAdditionsEqualUseCase(
                 cartProduct = cartProduct,
-                additionUuidList = additionUuidList
+                additionUuidList = additionUuidList,
             )
         }
-    }
 }

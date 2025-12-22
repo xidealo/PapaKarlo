@@ -11,15 +11,15 @@ import kotlinx.coroutines.flow.flow
 import org.koin.core.component.KoinComponent
 import platform.Foundation.NSUserDefaults
 
-actual class DataStoreRepository : DataStoreRepo, KoinComponent {
+actual class DataStoreRepository :
+    DataStoreRepo,
+    KoinComponent {
+    actual override val token: Flow<String?> =
+        flow {
+            emit(getToken())
+        }
 
-    actual override val token: Flow<String?> = flow {
-        emit(getToken())
-    }
-
-    actual override suspend fun getToken(): String? {
-        return NSUserDefaults.standardUserDefaults.stringForKey(TOKEN_KEY)
-    }
+    actual override suspend fun getToken(): String? = NSUserDefaults.standardUserDefaults.stringForKey(TOKEN_KEY)
 
     actual override suspend fun saveToken(token: String) {
         NSUserDefaults.standardUserDefaults.setObject(token, TOKEN_KEY)
@@ -29,33 +29,33 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
         NSUserDefaults.standardUserDefaults.removeObjectForKey(TOKEN_KEY)
     }
 
-    actual override val delivery: Flow<Delivery?> = flow {
-        emit(
-            Delivery(
-                cost = NSUserDefaults.standardUserDefaults.integerForKey(DELIVERY_COST_KEY).toInt(),
-                forFree = NSUserDefaults.standardUserDefaults.integerForKey(
-                    DELIVERY_FOR_FREE_KEY
-                ).toInt()
+    actual override val delivery: Flow<Delivery?> =
+        flow {
+            emit(
+                Delivery(
+                    cost = NSUserDefaults.standardUserDefaults.integerForKey(DELIVERY_COST_KEY).toInt(),
+                    forFree =
+                        NSUserDefaults.standardUserDefaults
+                            .integerForKey(
+                                DELIVERY_FOR_FREE_KEY,
+                            ).toInt(),
+                ),
             )
-        )
-    }
+        }
 
-    actual override suspend fun getDelivery(): Delivery? {
-        return delivery.firstOrNull()
-    }
+    actual override suspend fun getDelivery(): Delivery? = delivery.firstOrNull()
 
     actual override suspend fun saveDelivery(delivery: Delivery) {
         NSUserDefaults.standardUserDefaults.setObject(delivery.cost, DELIVERY_COST_KEY)
         NSUserDefaults.standardUserDefaults.setObject(delivery.forFree, DELIVERY_FOR_FREE_KEY)
     }
 
-    actual override val userUuid: Flow<String?> = flow {
-        emit(NSUserDefaults.standardUserDefaults.stringForKey(USER_UUID_KEY))
-    }
+    actual override val userUuid: Flow<String?> =
+        flow {
+            emit(NSUserDefaults.standardUserDefaults.stringForKey(USER_UUID_KEY))
+        }
 
-    actual override suspend fun getUserUuid(): String? {
-        return userUuid.firstOrNull()
-    }
+    actual override suspend fun getUserUuid(): String? = userUuid.firstOrNull()
 
     actual override suspend fun saveUserUuid(userId: String) {
         NSUserDefaults.standardUserDefaults.setObject(userId, USER_UUID_KEY)
@@ -65,135 +65,142 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
         NSUserDefaults.standardUserDefaults.removeObjectForKey(USER_UUID_KEY)
     }
 
-    actual override val selectedCityUuid: Flow<String?> = flow {
-        emit(NSUserDefaults.standardUserDefaults.stringForKey(SELECTED_CITY_UUID_KEY))
-    }
+    actual override val selectedCityUuid: Flow<String?> =
+        flow {
+            emit(NSUserDefaults.standardUserDefaults.stringForKey(SELECTED_CITY_UUID_KEY))
+        }
 
     actual override suspend fun saveSelectedCityUuid(cityUuid: String) {
         NSUserDefaults.standardUserDefaults.setObject(cityUuid, SELECTED_CITY_UUID_KEY)
     }
 
-    actual override suspend fun getSelectedCityUuid(): String? {
-        return NSUserDefaults.standardUserDefaults.stringForKey(SELECTED_CITY_UUID_KEY)
-    }
+    actual override suspend fun getSelectedCityUuid(): String? = NSUserDefaults.standardUserDefaults.stringForKey(SELECTED_CITY_UUID_KEY)
 
-    actual override val selectedPaymentMethodUuid: Flow<String?> = flow {
-        emit(NSUserDefaults.standardUserDefaults.stringForKey(SELECTED_PAYMENT_METHOD_UUID_KEY))
-    }
+    actual override val selectedPaymentMethodUuid: Flow<String?> =
+        flow {
+            emit(NSUserDefaults.standardUserDefaults.stringForKey(SELECTED_PAYMENT_METHOD_UUID_KEY))
+        }
 
     actual override suspend fun saveSelectedPaymentMethodUuid(selectedPaymentMethodUuid: String) {
         NSUserDefaults.standardUserDefaults.setObject(
             selectedPaymentMethodUuid,
-            SELECTED_PAYMENT_METHOD_UUID_KEY
+            SELECTED_PAYMENT_METHOD_UUID_KEY,
         )
     }
 
-    actual override val discount: Flow<Discount?> = flow {
-        emit(
-            Discount(
-                firstOrderDiscount = NSUserDefaults.standardUserDefaults
-                    .integerForKey(FIRST_DISCOUNT_KEY).toInt()
+    actual override val discount: Flow<Discount?> =
+        flow {
+            emit(
+                Discount(
+                    firstOrderDiscount =
+                        NSUserDefaults.standardUserDefaults
+                            .integerForKey(FIRST_DISCOUNT_KEY)
+                            .toInt(),
+                ),
             )
-        )
-    }
+        }
 
-    actual override suspend fun getDiscount(): Discount? {
-        return discount.firstOrNull()
-    }
+    actual override suspend fun getDiscount(): Discount? = discount.firstOrNull()
 
     actual override suspend fun saveDiscount(discount: Discount) {
         NSUserDefaults.standardUserDefaults.setObject(
             discount.firstOrderDiscount,
-            FIRST_DISCOUNT_KEY
+            FIRST_DISCOUNT_KEY,
         )
     }
 
-    actual override fun observeUserAndCityUuid(): Flow<UserCityUuid> {
-        return flow {
+    actual override fun observeUserAndCityUuid(): Flow<UserCityUuid> =
+        flow {
             emit(
                 UserCityUuid(
-                    userUuid = NSUserDefaults.standardUserDefaults.stringForKey(
-                        USER_UUID_KEY
-                    ).toString(),
-                    cityUuid = NSUserDefaults.standardUserDefaults.stringForKey(
-                        SELECTED_CITY_UUID_KEY
-                    ).toString()
-                )
+                    userUuid =
+                        NSUserDefaults.standardUserDefaults
+                            .stringForKey(
+                                USER_UUID_KEY,
+                            ).toString(),
+                    cityUuid =
+                        NSUserDefaults.standardUserDefaults
+                            .stringForKey(
+                                SELECTED_CITY_UUID_KEY,
+                            ).toString(),
+                ),
             )
         }
-    }
 
-    actual override suspend fun getUserAndCityUuid(): UserCityUuid {
-        return UserCityUuid(
+    actual override suspend fun getUserAndCityUuid(): UserCityUuid =
+        UserCityUuid(
             userUuid = getUserUuid() ?: "",
-            cityUuid = getSelectedCityUuid() ?: ""
+            cityUuid = getSelectedCityUuid() ?: "",
         )
-    }
 
-    actual override val settings: Flow<Settings?> = flow {
-        emit(
-            Settings(
-                userUuid = NSUserDefaults.standardUserDefaults.stringForKey(
-                    USER_UUID_KEY
-                ).toString(),
-                phoneNumber = NSUserDefaults.standardUserDefaults.stringForKey(
-                    SETTINGS_PHONE_NUMBER_KEY
-                ).toString(),
-                email = NSUserDefaults.standardUserDefaults.stringForKey(
-                    SETTINGS_EMAIL_KEY
-                ).toString()
+    actual override val settings: Flow<Settings?> =
+        flow {
+            emit(
+                Settings(
+                    userUuid =
+                        NSUserDefaults.standardUserDefaults
+                            .stringForKey(
+                                USER_UUID_KEY,
+                            ).toString(),
+                    phoneNumber =
+                        NSUserDefaults.standardUserDefaults
+                            .stringForKey(
+                                SETTINGS_PHONE_NUMBER_KEY,
+                            ).toString(),
+                    email =
+                        NSUserDefaults.standardUserDefaults
+                            .stringForKey(
+                                SETTINGS_EMAIL_KEY,
+                            ).toString(),
+                ),
             )
-        )
-    }
+        }
 
-    actual override suspend fun getSettings(): Settings? {
-        return settings.firstOrNull()
-    }
+    actual override suspend fun getSettings(): Settings? = settings.firstOrNull()
 
     actual override suspend fun saveSettings(settings: Settings) {
         NSUserDefaults.standardUserDefaults.setObject(settings.userUuid, SETTINGS_USER_UUID_KEY)
         NSUserDefaults.standardUserDefaults.setObject(
             settings.phoneNumber,
-            SETTINGS_PHONE_NUMBER_KEY
+            SETTINGS_PHONE_NUMBER_KEY,
         )
         NSUserDefaults.standardUserDefaults.setObject(settings.email, SETTINGS_EMAIL_KEY)
     }
 
-    actual override val recommendationMaxVisible: Flow<Int?> = flow {
-        emit(
-            NSUserDefaults.standardUserDefaults.integerForKey(
-                RECOMMENDATION_MAX_VISIBLE_KEY
-            ).toInt()
-        )
-    }
+    actual override val recommendationMaxVisible: Flow<Int?> =
+        flow {
+            emit(
+                NSUserDefaults.standardUserDefaults
+                    .integerForKey(
+                        RECOMMENDATION_MAX_VISIBLE_KEY,
+                    ).toInt(),
+            )
+        }
 
-    actual override suspend fun getRecommendationMaxVisible(): Int? {
-        return recommendationMaxVisible.firstOrNull()
-    }
+    actual override suspend fun getRecommendationMaxVisible(): Int? = recommendationMaxVisible.firstOrNull()
 
     actual override suspend fun saveRecommendationMaxVisible(recommendationMaxVisible: Int) {
         NSUserDefaults.standardUserDefaults.setObject(
             recommendationMaxVisible,
-            RECOMMENDATION_MAX_VISIBLE_KEY
+            RECOMMENDATION_MAX_VISIBLE_KEY,
         )
     }
 
-    actual override val userCafeUuid: Flow<String?> = flow {
-        emit(
-            NSUserDefaults.standardUserDefaults.stringForKey(
-                USER_CAFE_UUID_KEY
+    actual override val userCafeUuid: Flow<String?> =
+        flow {
+            emit(
+                NSUserDefaults.standardUserDefaults.stringForKey(
+                    USER_CAFE_UUID_KEY,
+                ),
             )
-        )
-    }
+        }
 
-    actual override suspend fun getUserCafeUuid(): String? {
-        return userCafeUuid.firstOrNull()
-    }
+    actual override suspend fun getUserCafeUuid(): String? = userCafeUuid.firstOrNull()
 
     actual override suspend fun saveUserCafeUuid(userCafeUuid: String) {
         NSUserDefaults.standardUserDefaults.setObject(
             userCafeUuid,
-            USER_CAFE_UUID_KEY
+            USER_CAFE_UUID_KEY,
         )
     }
 

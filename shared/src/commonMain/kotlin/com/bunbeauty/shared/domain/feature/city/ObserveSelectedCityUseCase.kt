@@ -8,14 +8,12 @@ import kotlinx.coroutines.flow.map
 
 class ObserveSelectedCityUseCase(
     private val cityRepo: CityRepo,
-    private val dataStoreRepo: DataStoreRepo
+    private val dataStoreRepo: DataStoreRepo,
 ) {
-
-    operator fun invoke(): Flow<City?> {
-        return dataStoreRepo.selectedCityUuid.map { cityUuid ->
+    operator fun invoke(): Flow<City?> =
+        dataStoreRepo.selectedCityUuid.map { cityUuid ->
             cityUuid?.let {
                 cityRepo.getCityByUuid(cityUuid)
             }
         }
-    }
 }

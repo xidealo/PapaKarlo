@@ -9,7 +9,6 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 
 abstract class CacheListRepository<D> : BaseRepository() {
-
     val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
     protected var cache: List<D>? = null
@@ -19,7 +18,7 @@ abstract class CacheListRepository<D> : BaseRepository() {
         crossinline onApiRequest: suspend () -> ApiResult<ListServer<S>>,
         crossinline onLocalRequest: suspend () -> List<D>,
         crossinline onSaveLocally: suspend (List<S>) -> Unit,
-        crossinline serverToDomainModel: (S) -> D
+        crossinline serverToDomainModel: (S) -> D,
     ): List<D> {
         val cacheData = cache
         return if (cacheData != null && isCacheValid(cacheData)) {
@@ -33,12 +32,13 @@ abstract class CacheListRepository<D> : BaseRepository() {
                     scope.launch {
                         onSaveLocally(serverModelList)
                     }
-                    serverModelList.map { serverModel ->
-                        serverToDomainModel(serverModel)
-                    }.also { domainModelList ->
-                        cache = domainModelList
-                    }
-                }
+                    serverModelList
+                        .map { serverModel ->
+                            serverToDomainModel(serverModel)
+                        }.also { domainModelList ->
+                            cache = domainModelList
+                        }
+                },
             )
         }
     }

@@ -10,7 +10,7 @@ val mapOrderAdditionServerToOrderAdditionEntity: OrderAdditionServer.(String) ->
             uuid = uuid,
             name = name,
             orderProductUuid = orderProductUuid,
-            priority = priority
+            priority = priority,
         )
     }
 
@@ -19,6 +19,6 @@ val mapOrderAdditionServerToOrderAddition: OrderAdditionServer.() -> OrderAdditi
         OrderAddition(
             uuid = uuid,
             name = name,
-            priority = priority
+            priority = priority,
         )
     }

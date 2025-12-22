@@ -1,0 +1,602 @@
+package com.bunbeauty.shared.ui.screen.profile.screen.profile
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredWidthIn
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.LifecycleStartEffect
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
+import com.bunbeauty.designsystem.theme.bold
+import com.bunbeauty.designsystem.ui.element.FoodDeliveryHorizontalDivider
+import com.bunbeauty.designsystem.ui.element.FoodDeliveryScaffold
+import com.bunbeauty.designsystem.ui.element.button.MainButton
+import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryCard
+import com.bunbeauty.designsystem.ui.element.card.NavigationIconCardWithDivider
+import com.bunbeauty.designsystem.ui.screen.ErrorScreen
+import com.bunbeauty.designsystem.ui.screen.LoadingScreen
+import com.bunbeauty.shared.domain.model.SuccessLoginDirection
+import com.bunbeauty.shared.domain.model.date_time.Date
+import com.bunbeauty.shared.domain.model.date_time.DateTime
+import com.bunbeauty.shared.domain.model.date_time.Time
+import com.bunbeauty.shared.domain.model.order.LightOrder
+import com.bunbeauty.shared.domain.model.order.OrderStatus
+import com.bunbeauty.shared.presentation.profile.ProfileState
+import com.bunbeauty.shared.presentation.profile.ProfileViewModel
+import com.bunbeauty.shared.ui.common.getDateTimeString
+import com.bunbeauty.shared.ui.screen.order.ui.OrderStatusChip
+import com.bunbeauty.shared.ui.screen.order.ui.getOrderStatusName
+import com.bunbeauty.shared.ui.screen.profile.screen.aboutapp.AboutAppBottomSheet
+import com.bunbeauty.shared.ui.screen.profile.screen.feedback.FeedBackBottomSheetScreen
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
+import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.koin.compose.viewmodel.koinViewModel
+import papakarlo.shared.generated.resources.Res
+import papakarlo.shared.generated.resources.action_profile_login
+import papakarlo.shared.generated.resources.action_profile_my_addresses
+import papakarlo.shared.generated.resources.action_profile_my_orders
+import papakarlo.shared.generated.resources.action_profile_settings
+import papakarlo.shared.generated.resources.description_empty_profile
+import papakarlo.shared.generated.resources.description_ic_about
+import papakarlo.shared.generated.resources.description_ic_feedback
+import papakarlo.shared.generated.resources.description_ic_my_addresses
+import papakarlo.shared.generated.resources.description_ic_my_orders
+import papakarlo.shared.generated.resources.description_ic_settings
+import papakarlo.shared.generated.resources.error_cafe_list_loading
+import papakarlo.shared.generated.resources.ic_address
+import papakarlo.shared.generated.resources.ic_cafes
+import papakarlo.shared.generated.resources.ic_history
+import papakarlo.shared.generated.resources.ic_info
+import papakarlo.shared.generated.resources.ic_profile
+import papakarlo.shared.generated.resources.ic_settings
+import papakarlo.shared.generated.resources.ic_star
+import papakarlo.shared.generated.resources.msg_profile_no_profile
+import papakarlo.shared.generated.resources.title_about_app
+import papakarlo.shared.generated.resources.title_feedback
+import papakarlo.shared.generated.resources.title_profile
+import papakarlo.shared.generated.resources.title_profile_cafe_list
+import papakarlo.shared.generated.resources.title_profile_no_profile
+
+@Composable
+fun ProfileState.DataState.mapState(): ProfileViewState =
+    ProfileViewState(
+        lastOrder = lastOrder,
+        state =
+            when (state) {
+                ProfileState.DataState.State.AUTHORIZED -> ProfileViewState.State.Authorized
+                ProfileState.DataState.State.UNAUTHORIZED -> ProfileViewState.State.Unauthorized
+                ProfileState.DataState.State.ERROR -> ProfileViewState.State.Error
+                ProfileState.DataState.State.LOADING -> ProfileViewState.State.Loading
+            },
+        aboutBottomSheetUI =
+            ProfileViewState.AboutBottomSheetUI(
+                isShown = isShowAboutAppBottomSheet,
+                version = appVersion,
+            ),
+        feedBackBottomSheetUI =
+            ProfileViewState.FeedBackBottomSheetUI(
+                isShown = isShowFeedbackBottomSheet,
+                linkList =
+                    linkList
+                        .map { link ->
+                            link.toUI()
+                        }.toPersistentList(),
+            ),
+    )
+
+@Composable
+fun ProfileRoute(
+    viewModel: ProfileViewModel = koinViewModel(),
+    back: () -> Unit,
+    goToUserAddress: (Boolean) -> Unit,
+    goToLogin: (SuccessLoginDirection) -> Unit,
+    goToOrderDetailsFragment: (String) -> Unit,
+    goToOrdersFragment: () -> Unit,
+    goToSettingsFragment: () -> Unit,
+    goToCafeListFragment: () -> Unit,
+) {
+    LaunchedEffect(Unit) {
+        viewModel.onAction(ProfileState.Action.Init)
+    }
+
+    LifecycleStartEffect(Unit) {
+        viewModel.onAction(ProfileState.Action.StartObserveOrder)
+        onStopOrDispose {
+            viewModel.onAction(ProfileState.Action.StopObserveOrder)
+        }
+    }
+
+    val viewState by viewModel.dataState.collectAsStateWithLifecycle()
+
+    val onAction =
+        remember {
+            { event: ProfileState.Action ->
+                viewModel.onAction(event)
+            }
+        }
+
+    val effects by viewModel.events.collectAsStateWithLifecycle()
+    val consumeEffects =
+        remember {
+            {
+                viewModel.consumeEvents(effects)
+            }
+        }
+
+    ProfileEffect(
+        effects = effects,
+        back = back,
+        goToUserAddress = goToUserAddress,
+        goToLogin = goToLogin,
+        goToOrderDetailsFragment = goToOrderDetailsFragment,
+        goToOrdersFragment = goToOrdersFragment,
+        goToSettingsFragment = goToSettingsFragment,
+        goToCafeListFragment = goToCafeListFragment,
+        consumeEffects = consumeEffects,
+    )
+    ProfileScreen(
+        viewState = viewState.mapState(),
+        onAction = onAction,
+    )
+}
+
+@Composable
+private fun ProfileScreen(
+    viewState: ProfileViewState,
+    onAction: (ProfileState.Action) -> Unit,
+) {
+    FoodDeliveryScaffold(
+        title = stringResource(Res.string.title_profile),
+        backActionClick = {
+            onAction(ProfileState.Action.BackClicked)
+        },
+        backgroundColor = FoodDeliveryTheme.colors.mainColors.surface,
+        actionButton = {
+            if (viewState.state == ProfileViewState.State.Unauthorized) {
+                LoginButton(onAction)
+            }
+        },
+    ) {
+        when (viewState.state) {
+            ProfileViewState.State.Error ->
+                ErrorScreen(
+                    mainTextId = Res.string.error_cafe_list_loading,
+                    onClick = {
+                        onAction(ProfileState.Action.OnRefreshClicked)
+                    },
+                )
+
+            ProfileViewState.State.Loading -> {
+                LoadingScreen()
+            }
+
+            ProfileViewState.State.Authorized ->
+                AuthorizedProfileScreen(
+                    state = viewState,
+                    onAction = onAction,
+                )
+
+            ProfileViewState.State.Unauthorized ->
+                UnauthorizedProfileScreen(
+                    onAction = onAction,
+                    state = viewState,
+                )
+        }
+        AboutAppBottomSheet(
+            aboutBottomSheetUI = viewState.aboutBottomSheetUI,
+            onAction = onAction,
+            appVersion = viewState.aboutBottomSheetUI.version,
+        )
+        FeedBackBottomSheetScreen(
+            feedBackBottomSheetUI = viewState.feedBackBottomSheetUI,
+            onAction = onAction,
+        )
+    }
+}
+
+@Composable
+fun ProfileEffect(
+    effects: List<ProfileState.Event>,
+    back: () -> Unit,
+    goToUserAddress: (Boolean) -> Unit,
+    goToLogin: (SuccessLoginDirection) -> Unit,
+    goToOrderDetailsFragment: (String) -> Unit,
+    goToOrdersFragment: () -> Unit,
+    goToSettingsFragment: () -> Unit,
+    goToCafeListFragment: () -> Unit,
+    consumeEffects: () -> Unit,
+) {
+    LaunchedEffect(effects) {
+        effects.forEach { effect ->
+            when (effect) {
+                ProfileState.Event.OpenAddressList -> {
+                    goToUserAddress(false)
+                }
+
+                ProfileState.Event.OpenLogin -> {
+                    goToLogin(SuccessLoginDirection.BACK_TO_PROFILE)
+                }
+
+                is ProfileState.Event.OpenOrderDetails -> {
+                    goToOrderDetailsFragment(effect.orderUuid)
+                }
+
+                ProfileState.Event.OpenOrderList -> {
+                    goToOrdersFragment()
+                }
+
+                ProfileState.Event.OpenSettings -> {
+                    goToSettingsFragment()
+                }
+
+                ProfileState.Event.ShowCafeList -> {
+                    goToCafeListFragment()
+                }
+
+                ProfileState.Event.GoBackEvent -> back()
+            }
+        }
+        consumeEffects()
+    }
+}
+
+@Composable
+private fun LoginButton(onAction: (ProfileState.Action) -> Unit) {
+    MainButton(
+        modifier =
+            Modifier
+                .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
+        textStringId = Res.string.action_profile_login,
+        onClick = { onAction(ProfileState.Action.OnLoginClicked) },
+    )
+}
+
+@Composable
+private fun AuthorizedProfileScreen(
+    state: ProfileViewState,
+    onAction: (ProfileState.Action) -> Unit,
+) {
+    Column(
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState()),
+    ) {
+        state.lastOrder?.let { lastOrder ->
+            OrderProfile(
+                onClick = {
+                    onAction(
+                        ProfileState.Action.OnLastOrderClicked(
+                            uuid = state.lastOrder.uuid,
+                            code = state.lastOrder.code,
+                        ),
+                    )
+                },
+                modifier = Modifier.padding(bottom = 16.dp),
+                state = state,
+            )
+
+            FoodDeliveryHorizontalDivider(
+                modifier =
+                    Modifier
+                        .padding(horizontal = 16.dp),
+            )
+        }
+        NavigationIconCardWithDivider(
+            modifier = Modifier.fillMaxWidth(),
+            iconId = Res.drawable.ic_settings,
+            iconDescriptionStringId = Res.string.description_ic_settings,
+            labelStringId = Res.string.action_profile_settings,
+            onClick = { onAction(ProfileState.Action.OnSettingsClick) },
+        )
+        NavigationIconCardWithDivider(
+            modifier =
+                Modifier
+                    .fillMaxWidth(),
+            iconId = Res.drawable.ic_address,
+            iconDescriptionStringId = Res.string.description_ic_my_addresses,
+            labelStringId = Res.string.action_profile_my_addresses,
+            onClick = { onAction(ProfileState.Action.OnYourAddressesClicked) },
+        )
+        NavigationIconCardWithDivider(
+            modifier =
+                Modifier
+                    .fillMaxWidth(),
+            iconId = Res.drawable.ic_history,
+            iconDescriptionStringId = Res.string.description_ic_my_orders,
+            labelStringId = Res.string.action_profile_my_orders,
+            onClick = { onAction(ProfileState.Action.OnOrderHistoryClicked) },
+        )
+        ProfileInfoCards(
+            modifier = Modifier,
+            onAction = onAction,
+            state = state,
+        )
+    }
+}
+
+@Composable
+private fun UnauthorizedProfileScreen(
+    onAction: (ProfileState.Action) -> Unit,
+    state: ProfileViewState,
+) {
+    Column(
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState()),
+    ) {
+        ProfileInfoCards(
+            modifier = Modifier,
+            onAction = onAction,
+            state = state,
+        )
+        Spacer(modifier = Modifier.weight(1f))
+        Column(
+            modifier = Modifier.padding(top = 16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            Box(
+                modifier =
+                    Modifier
+                        .size(120.dp)
+                        .clip(CircleShape)
+                        .background(
+                            FoodDeliveryTheme.colors.mainColors.primary.copy(
+                                alpha = 0.6f,
+                            ),
+                        ),
+                contentAlignment = Alignment.Center,
+            ) {
+                Icon(
+                    modifier = Modifier.size(64.dp),
+                    painter = painterResource(Res.drawable.ic_profile),
+                    tint = FoodDeliveryTheme.colors.statusColors.onStatus,
+                    contentDescription = stringResource(Res.string.description_empty_profile),
+                )
+            }
+            Text(
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(top = 32.dp),
+                text = stringResource(Res.string.title_profile_no_profile),
+                style = FoodDeliveryTheme.typography.titleMedium.bold,
+                color = FoodDeliveryTheme.colors.mainColors.onBackground,
+                textAlign = TextAlign.Center,
+            )
+            Text(
+                modifier =
+                    Modifier
+                        .padding(top = 8.dp)
+                        .padding(horizontal = 16.dp),
+                text = stringResource(Res.string.msg_profile_no_profile),
+                style = FoodDeliveryTheme.typography.bodyLarge,
+                color = FoodDeliveryTheme.colors.mainColors.onBackground,
+                textAlign = TextAlign.Center,
+            )
+        }
+        Spacer(modifier = Modifier.weight(1f))
+
+        Spacer(modifier = Modifier.height(FoodDeliveryTheme.dimensions.scrollScreenBottomSpace))
+    }
+}
+
+@Composable
+private fun ProfileInfoCards(
+    state: ProfileViewState,
+    modifier: Modifier = Modifier,
+    onAction: (ProfileState.Action) -> Unit,
+) {
+    Column(modifier = modifier) {
+        NavigationIconCardWithDivider(
+            modifier = Modifier.fillMaxWidth(),
+            iconId = Res.drawable.ic_cafes,
+            iconDescriptionStringId = Res.string.title_profile_cafe_list,
+            labelStringId = Res.string.title_profile_cafe_list,
+            onClick = { onAction(ProfileState.Action.OnCafeListClicked) },
+        )
+        NavigationIconCardWithDivider(
+            modifier =
+                Modifier
+                    .fillMaxWidth(),
+            iconId = Res.drawable.ic_star,
+            iconDescriptionStringId = Res.string.description_ic_feedback,
+            labelStringId = Res.string.title_feedback,
+            onClick = {
+                onAction(
+                    ProfileState.Action.OnFeedbackClicked,
+                )
+            },
+        )
+        NavigationIconCardWithDivider(
+            modifier =
+                Modifier
+                    .fillMaxWidth(),
+            iconId = Res.drawable.ic_info,
+            iconDescriptionStringId = Res.string.description_ic_about,
+            labelStringId = Res.string.title_about_app,
+            onClick = { onAction(ProfileState.Action.OnAboutAppClicked) },
+        )
+    }
+}
+
+@Composable
+private fun OrderProfile(
+    modifier: Modifier = Modifier,
+    state: ProfileViewState,
+    onClick: () -> Unit,
+) {
+    FoodDeliveryCard(
+        modifier = modifier,
+        onClick = onClick,
+        elevated = false,
+        shape = RoundedCornerShape(0.dp),
+    ) {
+        Row(
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp)
+                    .padding(vertical = 16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Text(
+                text = state.lastOrder?.code.orEmpty(),
+                modifier =
+                    Modifier
+                        .requiredWidthIn(min = FoodDeliveryTheme.dimensions.codeWidth)
+                        .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
+                style = FoodDeliveryTheme.typography.titleMedium.bold,
+                color = FoodDeliveryTheme.colors.mainColors.onSurface,
+            )
+
+            OrderStatusChip(
+                orderStatus = state.lastOrder?.status ?: OrderStatus.ACCEPTED,
+                statusName = (state.lastOrder?.status ?: OrderStatus.ACCEPTED).getOrderStatusName(),
+            )
+            Text(
+                modifier =
+                    Modifier
+                        .weight(1f)
+                        .wrapContentWidth(Alignment.End),
+                text = state.lastOrder?.dateTime?.getDateTimeString() ?: "—",
+                style = FoodDeliveryTheme.typography.bodySmall,
+                color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
+                textAlign = TextAlign.End,
+            )
+        }
+    }
+}
+
+val profileViewStateMock =
+    ProfileViewState(
+        state = ProfileViewState.State.Loading,
+        lastOrder = null,
+        aboutBottomSheetUI =
+            ProfileViewState.AboutBottomSheetUI(
+                isShown = false,
+                version = "",
+            ),
+        feedBackBottomSheetUI =
+            ProfileViewState.FeedBackBottomSheetUI(
+                isShown = false,
+                linkList = persistentListOf(),
+            ),
+    )
+
+@Preview(showBackground = true)
+@Composable
+private fun AuthorizedProfileScreenWithLastOrderPreview() {
+    FoodDeliveryTheme {
+        ProfileScreen(
+            viewState =
+                profileViewStateMock.copy(
+                    state = ProfileViewState.State.Authorized,
+                    lastOrder =
+                        LightOrder(
+                            uuid = "uuid",
+                            status = OrderStatus.DONE,
+                            code = "code",
+                            dateTime =
+                                DateTime(
+                                    date =
+                                        Date(
+                                            dayOfMonth = 5474,
+                                            monthNumber = 7337,
+                                            year = 1992,
+                                        ),
+                                    time = Time(hours = 3796, minutes = 8009),
+                                ),
+                        ),
+                ),
+            onAction = {},
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun AuthorizedProfileScreenWithoutLastOrderPreview() {
+    FoodDeliveryTheme {
+        ProfileScreen(
+            viewState =
+                profileViewStateMock.copy(
+                    state = ProfileViewState.State.Authorized,
+                    lastOrder = null,
+                ),
+            onAction = {},
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun UnauthorizedProfileScreenPreview() {
+    FoodDeliveryTheme {
+        ProfileScreen(
+            viewState =
+                profileViewStateMock.copy(
+                    state = ProfileViewState.State.Unauthorized,
+                    lastOrder = null,
+                ),
+            onAction = {},
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun LoadingProfileScreenPreview() {
+    FoodDeliveryTheme {
+        ProfileScreen(
+            viewState =
+                profileViewStateMock.copy(
+                    state = ProfileViewState.State.Loading,
+                    lastOrder = null,
+                ),
+            onAction = {},
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun ErrorProfileScreenPreview() {
+    FoodDeliveryTheme {
+        ProfileScreen(
+            viewState =
+                profileViewStateMock.copy(
+                    state = ProfileViewState.State.Error,
+                    lastOrder = null,
+                ),
+            onAction = {},
+        )
+    }
+}

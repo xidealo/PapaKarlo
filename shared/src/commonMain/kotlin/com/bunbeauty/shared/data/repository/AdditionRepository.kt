@@ -6,9 +6,7 @@ import com.bunbeauty.shared.domain.model.addition.Addition
 import com.bunbeauty.shared.domain.repo.AdditionRepo
 
 class AdditionRepository(
-    private val additionDao: IAdditionDao
+    private val additionDao: IAdditionDao,
 ) : AdditionRepo {
-    override suspend fun getAddition(uuid: String): Addition? {
-        return additionDao.getAdditionEntity(uuid)?.mapAdditionEntityToAddition()
-    }
+    override suspend fun getAddition(uuid: String): Addition? = additionDao.getAdditionEntity(uuid)?.mapAdditionEntityToAddition()
 }

@@ -12,9 +12,8 @@ import kotlinx.coroutines.flow.merge
 class ObserveLastOrderUseCase(
     private val dataStoreRepo: DataStoreRepo,
     private val orderRepo: OrderRepo,
-    private val lightOrderMapper: LightOrderMapper
+    private val lightOrderMapper: LightOrderMapper,
 ) {
-
     suspend operator fun invoke(): Pair<String?, Flow<LightOrder?>> {
         val token = dataStoreRepo.getToken() ?: return null to flow {}
         val userUuid = dataStoreRepo.getUserUuid() ?: return null to flow {}
@@ -25,12 +24,14 @@ class ObserveLastOrderUseCase(
             null to flow { emit(null) }
         } else {
             val (uuid, orderUpdatesFlow) = orderRepo.observeOrderUpdates(token)
-            uuid to merge(
-                flow { emit(lastOrder) },
-                orderUpdatesFlow.filter { order ->
-                    order.uuid == lastOrder.uuid
-                }.map(lightOrderMapper::toLightOrder)
-            )
+            uuid to
+                merge(
+                    flow { emit(lastOrder) },
+                    orderUpdatesFlow
+                        .filter { order ->
+                            order.uuid == lastOrder.uuid
+                        }.map(lightOrderMapper::toLightOrder),
+                )
         }
     }
 }

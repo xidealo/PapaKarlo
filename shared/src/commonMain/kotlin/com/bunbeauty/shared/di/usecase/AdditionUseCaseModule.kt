@@ -10,20 +10,21 @@ import com.bunbeauty.shared.domain.feature.addition.GetCartProductAdditionsPrice
 import com.bunbeauty.shared.domain.feature.addition.GetPriceOfSelectedAdditionsUseCase
 import org.koin.dsl.module
 
-internal fun additionUseCaseModule() = module {
-    factory<AreAdditionsEqualUseCase> {
-        AreAdditionsEqualUseCaseImpl()
+internal fun additionUseCaseModule() =
+    module {
+        factory<AreAdditionsEqualUseCase> {
+            AreAdditionsEqualUseCaseImpl()
+        }
+        factory<GetAdditionPriorityUseCase> {
+            GetAdditionPriorityUseCaseImpl()
+        }
+        factory<GetCartProductAdditionsPriceUseCase> {
+            GetCartProductAdditionsPriceUseCaseImpl()
+        }
+        factory {
+            GetPriceOfSelectedAdditionsUseCase()
+        }
+        factory {
+            GetAdditionGroupsWithSelectedAdditionUseCase()
+        }
     }
-    factory<GetAdditionPriorityUseCase> {
-        GetAdditionPriorityUseCaseImpl()
-    }
-    factory<GetCartProductAdditionsPriceUseCase> {
-        GetCartProductAdditionsPriceUseCaseImpl()
-    }
-    factory {
-        GetPriceOfSelectedAdditionsUseCase()
-    }
-    factory {
-        GetAdditionGroupsWithSelectedAdditionUseCase()
-    }
-}

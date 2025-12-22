@@ -61,7 +61,13 @@ import com.bunbeauty.shared.domain.feature.menuproduct.GetMenuProductUseCase
 import com.bunbeauty.shared.domain.feature.motivation.GetMotivationUseCase
 import com.bunbeauty.shared.domain.feature.notification.SubscribeToNotificationUseCase
 import com.bunbeauty.shared.domain.feature.notification.UpdateNotificationUseCase
-import com.bunbeauty.shared.domain.feature.order.*
+import com.bunbeauty.shared.domain.feature.order.CreateOrderUseCase
+import com.bunbeauty.shared.domain.feature.order.GetExtendedCommentUseCase
+import com.bunbeauty.shared.domain.feature.order.GetLastOrderUseCase
+import com.bunbeauty.shared.domain.feature.order.ObserveLastOrderUseCase
+import com.bunbeauty.shared.domain.feature.order.ObserveOrderListUseCase
+import com.bunbeauty.shared.domain.feature.order.ObserveOrderUseCase
+import com.bunbeauty.shared.domain.feature.order.StopObserveOrdersUseCase
 import com.bunbeauty.shared.domain.feature.orderavailable.IsOrderAvailableUseCase
 import com.bunbeauty.shared.domain.feature.payment.GetPaymentMethodListUseCase
 import com.bunbeauty.shared.domain.feature.payment.GetSelectablePaymentMethodListUseCase
@@ -79,145 +85,212 @@ import com.bunbeauty.shared.domain.interactor.city.ICityInteractor
 import com.bunbeauty.shared.domain.interactor.menu_product.IMenuProductInteractor
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
 import com.bunbeauty.shared.domain.use_case.DisableUserUseCase
-import com.bunbeauty.shared.domain.use_case.address.*
+import com.bunbeauty.shared.domain.use_case.address.GetSelectableUserAddressListUseCase
+import com.bunbeauty.shared.domain.use_case.address.GetUserAddressListUseCase
+import com.bunbeauty.shared.domain.use_case.address.SaveSelectedUserAddressUseCase
 import com.bunbeauty.shared.domain.use_case.deferred_time.GetMinTimeUseCase
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 import org.koin.core.context.startKoin
 import org.koin.dsl.KoinAppDeclaration
 
-fun initKoin(appDeclaration: KoinAppDeclaration = {}) = startKoin {
-    appDeclaration()
-    modules(
-        networkModule(),
-        databaseModule(),
-        providerModule(),
-        dataMapperModule(),
-        repositoryModule(),
-        storageModule(),
-        interactorModule(),
-        utilModule(),
-        platformModule(),
-        domainMapperModule(),
-        cityUseCaseModule(),
-        userAddressUseCaseModule(),
-        orderUseCaseModule(),
-        cartModule(),
-        cafeModule(),
-        paymentUseCaseModule(),
-        authUseCaseModule(),
-        useCaseModules(),
-        analyticModule(),
-        additionUseCaseModule(),
-        menuModule(),
-        addressModule()
-    )
-}
+fun initKoin(appDeclaration: KoinAppDeclaration = {}) =
+    startKoin {
+        appDeclaration()
+        modules(
+            networkModule(),
+            databaseModule(),
+            providerModule(),
+            dataMapperModule(),
+            repositoryModule(),
+            storageModule(),
+            interactorModule(),
+            utilModule(),
+            platformModule(),
+            domainMapperModule(),
+            cityUseCaseModule(),
+            userAddressUseCaseModule(),
+            orderUseCaseModule(),
+            cartModule(),
+            cafeModule(),
+            paymentUseCaseModule(),
+            authUseCaseModule(),
+            useCaseModules(),
+            analyticModule(),
+            additionUseCaseModule(),
+            menuModule(),
+            addressModule(),
+            viewModelModule(),
+        )
+    }
 
 /**
  * Function for init in IOS
  * */
-fun initKoin() = startKoin {
-    modules(
-        databaseModule(),
-        platformModule(),
-        providerModule(),
-        networkModule(),
-        dataMapperModule(),
-        repositoryModule(),
-        storageModule(),
-        interactorModule(),
-        utilModule(),
-        domainMapperModule(),
-        cityUseCaseModule(),
-        userAddressUseCaseModule(),
-        orderUseCaseModule(),
-        cartModule(),
-        cafeModule(),
-        paymentUseCaseModule(),
-        authUseCaseModule(),
-        useCaseModules(),
-        analyticModule(),
-        additionUseCaseModule(),
-        menuModule(),
-        addressModule()
-    )
-}
+fun initKoin() =
+    startKoin {
+        modules(
+            databaseModule(),
+            platformModule(),
+            viewModelModule(),
+            providerModule(),
+            networkModule(),
+            dataMapperModule(),
+            repositoryModule(),
+            storageModule(),
+            interactorModule(),
+            utilModule(),
+            domainMapperModule(),
+            cityUseCaseModule(),
+            userAddressUseCaseModule(),
+            orderUseCaseModule(),
+            cartModule(),
+            cafeModule(),
+            paymentUseCaseModule(),
+            authUseCaseModule(),
+            useCaseModules(),
+            analyticModule(),
+            additionUseCaseModule(),
+            menuModule(),
+            addressModule(),
+        )
+    }
 
 class IosComponent : KoinComponent {
     // Interactors
     fun provideCityInteractor(): ICityInteractor = get()
+
     fun provideMenuInteractor(): IMenuProductInteractor = get()
+
     fun provideCafeInteractor(): ICafeInteractor = get()
+
     fun provideCartProductInteractor(): ICartProductInteractor = get()
+
     fun provideIUserInteractor(): IUserInteractor = get()
 
     // Use cases
     fun provideDisableUserUseCase(): DisableUserUseCase = get()
+
     fun provideGetUserAddressListUseCase(): GetUserAddressListUseCase = get()
+
     fun provideGetSelectableUserAddressListUseCase(): GetSelectableUserAddressListUseCase = get()
+
     fun provideGetCafeListUseCase(): GetCafeListUseCase = get()
+
     fun provideGetSelectableCafeListUseCase(): GetSelectableCafeListUseCase = get()
+
     fun provideGetCartTotalUseCase(): GetCartTotalFlowUseCase = get()
+
     fun provideGetMinTimeUseCase(): GetMinTimeUseCase = get()
+
     fun provideCreateOrderUseCase(): CreateOrderUseCase = get()
+
     fun provideGetSelectedCityTimeZoneUseCase(): GetSelectedCityTimeZoneUseCase = get()
+
     fun provideObserveSettingsUseCase(): ObserveSettingsUseCase = get()
+
     fun provideObserveSelectedCityUseCase(): ObserveSelectedCityUseCase = get()
+
     fun provideUpdateEmailUseCase(): UpdateEmailUseCase = get()
+
     fun provideGetCityListUseCase(): GetCityListUseCase = get()
+
     fun provideSaveSelectedCityUseCase(): SaveSelectedCityUseCase = get()
+
     fun provideObserveLastOrderUseCase(): ObserveLastOrderUseCase = get()
+
     fun provideStopObserveOrdersUseCase(): StopObserveOrdersUseCase = get()
+
     fun provideObserveOrderListUseCase(): ObserveOrderListUseCase = get()
+
     fun provideObserveOrderUseCase(): ObserveOrderUseCase = get()
+
     fun provideCreateAddressUseCase(): CreateAddressUseCase = get()
+
     fun provideSaveSelectedUserAddressUseCase(): SaveSelectedUserAddressUseCase = get()
+
     fun provideGetLastOrderUseCase(): GetLastOrderUseCase = get()
+
     fun provideGetFilteredStreetListUseCase(): GetFilteredStreetListUseCase = get()
+
     fun provideObserveCartUseCase(): ObserveCartUseCase = get()
+
     fun provideRemoveCartProductUseCase(): RemoveCartProductUseCase = get()
+
     fun provideGetLinkListUseCase(): GetLinkListUseCase = get()
+
     fun provideGetLinkUseCase(): GetLinkUseCase = get()
+
     fun provideGetPaymentMethodListUseCase(): GetPaymentMethodListUseCase = get()
+
     fun provideSubscribeToNotificationUseCase(): SubscribeToNotificationUseCase = get()
-    fun provideGetSelectablePaymentMethodListUseCase(): GetSelectablePaymentMethodListUseCase =
-        get()
+
+    fun provideGetSelectablePaymentMethodListUseCase(): GetSelectablePaymentMethodListUseCase = get()
 
     fun provideAddCartProductUseCase(): AddCartProductUseCase = get()
+
     fun provideGetDiscountUseCase(): GetDiscountUseCase = get()
+
     fun provideSavePaymentMethodUseCase(): SavePaymentMethodUseCase = get()
+
     fun provideRequestCodeUseCase(): RequestCodeUseCase = get()
+
     fun provideFormatPhoneNumberUseCase(): FormatPhoneNumberUseCase = get()
+
     fun provideGetPhoneNumberCursorPositionUseCase(): GetPhoneNumberCursorPositionUseCase = get()
+
     fun provideCheckCodeUseCase(): CheckCodeUseCase = get()
+
     fun provideResendCodeUseCase(): ResendCodeUseCase = get()
+
     fun provideCheckPhoneNumberUseCase(): CheckPhoneNumberUseCase = get()
+
     fun provideGetRecommendationsUseCase(): GetRecommendationsUseCase = get()
+
     fun provideGetMenuProductByUuidUseCase(): GetMenuProductUseCase = get()
+
     fun provideGetSuggestionsUseCase(): GetSuggestionsUseCase = get()
+
     fun provideIncreaseCartProductCountUseCase(): IncreaseCartProductCountUseCase = get()
+
     fun provideAddMenuProductUseCase(): AddMenuProductUseCase = get()
+
     fun provideEditCartProductUseCase(): EditCartProductUseCase = get()
-    fun provideGetAdditionGroupsWithSelectedAdditionUseCase(): GetAdditionGroupsWithSelectedAdditionUseCase =
-        get()
+
+    fun provideGetAdditionGroupsWithSelectedAdditionUseCase(): GetAdditionGroupsWithSelectedAdditionUseCase = get()
 
     fun provideGetPriceOfSelectedAdditionsUseCase(): GetPriceOfSelectedAdditionsUseCase = get()
+
     fun provideObserveCafeWithOpenStateListUseCase(): ObserveCafeWithOpenStateListUseCase = get()
+
     fun provideGetMotivationUseCaseUseCase(): GetMotivationUseCase = get()
+
     fun provideIsOrderAvailableUseCase(): IsOrderAvailableUseCase = get()
+
     fun provideCheckUpdateUseCase(): CheckUpdateUseCase = get()
+
     fun provideCheckOneCityUseCase(): CheckOneCityUseCase = get()
+
     fun provideSaveOneCityUseCase(): SaveOneCityUseCase = get()
+
     fun provideGetCurrentUserAddressUseCase(): GetCurrentUserAddressUseCase = get()
+
     fun provideIsPickupEnabledFromCafeUseCase(): IsPickupEnabledFromCafeUseCase = get()
+
     fun provideHasOpenedCafeUseCase(): HasOpenedCafeUseCase = get()
+
     fun provideGetWorkloadCafeUseCase(): GetWorkloadCafeUseCase = get()
+
     fun provideIsDeliveryEnabledFromCafeUseCase(): IsDeliveryEnabledFromCafeUseCase = get()
+
     fun provideUpdateNotificationUseCase(): UpdateNotificationUseCase = get()
+
     fun provideGetCurrentUserAddressWithCityUseCase(): GetCurrentUserAddressWithCityUseCase = get()
+
     fun provideGetExtendedCommentUseCase(): GetExtendedCommentUseCase = get()
+
     fun provideGetSelectedPaymentMethodUseCase(): GetSelectedPaymentMethodUseCase = get()
+
     fun provideGetAdditionalUtensilsUseCase(): GetAdditionalUtensilsUseCase = get()
 
     // Mapper
@@ -225,6 +298,8 @@ class IosComponent : KoinComponent {
 
     // Other
     fun provideApiRepo(): NetworkConnector = get()
+
     fun provideAnalyticService(): AnalyticService = get()
+
     fun provideCompanyUuidProvider(): CompanyUuidProvider = get()
 }

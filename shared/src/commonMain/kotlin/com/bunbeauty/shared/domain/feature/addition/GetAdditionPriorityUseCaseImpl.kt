@@ -6,7 +6,7 @@ import com.bunbeauty.shared.domain.model.addition.AdditionGroup
 interface GetAdditionPriorityUseCase {
     operator fun invoke(
         additionGroup: AdditionGroup,
-        addition: Addition
+        addition: Addition,
     ): Int
 }
 
@@ -17,6 +17,6 @@ class GetAdditionPriorityUseCaseImpl : GetAdditionPriorityUseCase {
 
     override operator fun invoke(
         additionGroup: AdditionGroup,
-        addition: Addition
+        addition: Addition,
     ) = additionGroup.priority * ADDITION_GROUP_COEFFICIENT + addition.priority
 }

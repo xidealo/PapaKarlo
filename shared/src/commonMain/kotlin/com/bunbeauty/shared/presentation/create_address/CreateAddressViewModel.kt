@@ -1,11 +1,11 @@
 package com.bunbeauty.shared.presentation.create_address
 
+import com.bunbeauty.designsystem.ui.element.textfield.SuggestionUi
 import com.bunbeauty.shared.domain.feature.address.CreateAddressUseCase
 import com.bunbeauty.shared.domain.feature.address.GetSuggestionsUseCase
 import com.bunbeauty.shared.domain.model.Suggestion
 import com.bunbeauty.shared.domain.use_case.address.SaveSelectedUserAddressUseCase
 import com.bunbeauty.shared.extension.launchSafe
-import com.bunbeauty.shared.presentation.SuggestionUi
 import com.bunbeauty.shared.presentation.base.SharedStateViewModel
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.FlowPreview
@@ -23,32 +23,35 @@ private const val SUGGESTION_REQUEST_DEBOUNCE_MILLIS = 1_000L
 class CreateAddressViewModel(
     private val getSuggestionsUseCase: GetSuggestionsUseCase,
     private val createAddressUseCase: CreateAddressUseCase,
-    private val saveSelectedUserAddressUseCase: SaveSelectedUserAddressUseCase
+    private val saveSelectedUserAddressUseCase: SaveSelectedUserAddressUseCase,
 ) : SharedStateViewModel<CreateAddress.DataState, CreateAddress.Action, CreateAddress.Event>(
-    initDataState = CreateAddress.DataState(
-        street = "",
-        streetFocused = false,
-        streetSuggestionList = listOf(),
-        isSuggestionLoading = false,
-        selectedStreetSuggestion = null,
-        hasStreetError = false,
-        house = "",
-        hasHouseError = false,
-        flat = "",
-        entrance = "",
-        floor = "",
-        comment = "",
-        isCreateLoading = false
-    )
-) {
-
+        initDataState =
+            CreateAddress.DataState(
+                street = "",
+                streetFocused = false,
+                streetSuggestionList = listOf(),
+                isSuggestionLoading = false,
+                selectedStreetSuggestion = null,
+                hasStreetError = false,
+                house = "",
+                hasHouseError = false,
+                flat = "",
+                entrance = "",
+                floor = "",
+                comment = "",
+                isCreateLoading = false,
+            ),
+    ) {
     private var suggestionsJob: Job? = null
 
     init {
         observeStreetChanges()
     }
 
-    override fun reduce(action: CreateAddress.Action, dataState: CreateAddress.DataState) {
+    override fun reduce(
+        action: CreateAddress.Action,
+        dataState: CreateAddress.DataState,
+    ) {
         when (action) {
             is CreateAddress.Action.Init -> {
                 observeStreetChanges()
@@ -89,9 +92,10 @@ class CreateAddressViewModel(
                 handleSaveClick()
             }
 
-            CreateAddress.Action.BackClick -> addEvent {
-                CreateAddress.Event.Back
-            }
+            CreateAddress.Action.BackClick ->
+                addEvent {
+                    CreateAddress.Event.Back
+                }
         }
     }
 
@@ -102,13 +106,13 @@ class CreateAddressViewModel(
                 copy(
                     street = street,
                     streetSuggestionList = persistentListOf(),
-                    isSuggestionLoading = false
+                    isSuggestionLoading = false,
                 )
             }
         } else {
             setState {
                 copy(
-                    street = street
+                    street = street,
                 )
             }
         }
@@ -129,7 +133,7 @@ class CreateAddressViewModel(
                 streetSuggestionList = persistentListOf(),
                 selectedStreetSuggestion = suggestion,
                 isSuggestionLoading = false,
-                hasStreetError = false
+                hasStreetError = false,
             )
         }
     }
@@ -143,7 +147,7 @@ class CreateAddressViewModel(
             setState {
                 copy(
                     house = house,
-                    hasHouseError = false
+                    hasHouseError = false,
                 )
             }
         }
@@ -180,7 +184,7 @@ class CreateAddressViewModel(
         setState {
             copy(
                 hasStreetError = hasStreetError,
-                hasHouseError = hasHouseError
+                hasHouseError = hasHouseError,
             )
         }
 
@@ -193,18 +197,20 @@ class CreateAddressViewModel(
         }
         sharedScope.launchSafe(
             block = {
-                val userAddress = createAddressUseCase(
-                    street = Suggestion(
-                        fiasId = streetSuggestion.id,
-                        street = streetSuggestion.value,
-                        details = null
-                    ),
-                    house = dataState.value.house,
-                    flat = dataState.value.flat,
-                    entrance = dataState.value.entrance,
-                    floor = dataState.value.floor,
-                    comment = dataState.value.comment
-                )
+                val userAddress =
+                    createAddressUseCase(
+                        street =
+                            Suggestion(
+                                fiasId = streetSuggestion.id,
+                                street = streetSuggestion.value,
+                                details = null,
+                            ),
+                        house = dataState.value.house,
+                        flat = dataState.value.flat,
+                        entrance = dataState.value.entrance,
+                        floor = dataState.value.floor,
+                        comment = dataState.value.comment,
+                    )
 
                 if (userAddress == null) {
                     showCreationFailed()
@@ -217,7 +223,7 @@ class CreateAddressViewModel(
             },
             onError = {
                 showCreationFailed()
-            }
+            },
         )
     }
 
@@ -232,57 +238,58 @@ class CreateAddressViewModel(
 
     @OptIn(FlowPreview::class)
     private fun observeStreetChanges() {
-        mutableDataState.map { state ->
-            CreateAddress.StreetField(
-                street = state.street,
-                isFocused = state.streetFocused,
-                selectedSuggestion = state.selectedStreetSuggestion
-            )
-        }.distinctUntilChanged()
+        mutableDataState
+            .map { state ->
+                CreateAddress.StreetField(
+                    street = state.street,
+                    isFocused = state.streetFocused,
+                    selectedSuggestion = state.selectedStreetSuggestion,
+                )
+            }.distinctUntilChanged()
             .debounce(SUGGESTION_REQUEST_DEBOUNCE_MILLIS)
             .filter { streetField ->
                 streetField.isFocused &&
                     (streetField.street != streetField.selectedSuggestion?.value) &&
                     (streetField.street.length >= LETTER_COUNT_FOR_SUGGESTIONS)
-            }
-            .onEach { (street, _) ->
+            }.onEach { (street, _) ->
                 requestSuggestions(query = street)
             }.launchIn(sharedScope)
     }
 
     private fun requestSuggestions(query: String) {
         suggestionsJob?.cancel()
-        suggestionsJob = sharedScope.launchSafe(
-            block = {
-                setState {
-                    copy(isSuggestionLoading = true)
-                }
-                val suggestionList = getSuggestionsUseCase(query = query)
-                setState {
-                    copy(
-                        streetSuggestionList = suggestionList.map(::mapSuggestion),
-                        isSuggestionLoading = false
-                    )
-                }
-            },
-            onError = {
-                addEvent {
-                    CreateAddress.Event.SuggestionLoadingFailed
-                }
-                setState {
-                    copy(isSuggestionLoading = false)
-                }
-            }
-        )
+        suggestionsJob =
+            sharedScope.launchSafe(
+                block = {
+                    setState {
+                        copy(isSuggestionLoading = true)
+                    }
+                    val suggestionList = getSuggestionsUseCase(query = query)
+                    setState {
+                        copy(
+                            streetSuggestionList = suggestionList.map(::mapSuggestion),
+                            isSuggestionLoading = false,
+                        )
+                    }
+                },
+                onError = {
+                    addEvent {
+                        CreateAddress.Event.SuggestionLoadingFailed
+                    }
+                    setState {
+                        copy(isSuggestionLoading = false)
+                    }
+                },
+            )
     }
 
-    private fun mapSuggestion(suggestion: Suggestion): SuggestionUi {
-        return SuggestionUi(
+    private fun mapSuggestion(suggestion: Suggestion): SuggestionUi =
+        SuggestionUi(
             id = suggestion.fiasId,
             value = suggestion.street,
-            postfix = suggestion.details?.let { details ->
-                ", $details"
-            }
+            postfix =
+                suggestion.details?.let { details ->
+                    ", $details"
+                },
         )
-    }
 }

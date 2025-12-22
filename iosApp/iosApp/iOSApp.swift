@@ -14,16 +14,30 @@ let dateUtil = DateUtil()
 @main
 struct PapaKarloSwiftApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-
+    
     init() {
         KoinKt.doInitKoin()
     }
 
     var body: some Scene {
         WindowGroup {
-            SplashView()
+            ComposeView()
+                    .ignoresSafeArea(edges: .all)
+                    .ignoresSafeArea(.keyboard)
         }
     }
+    
+}
+
+struct ComposeView: UIViewControllerRepresentable {
+    func makeUIViewController(context: Context) -> UIViewController {
+
+        AppIosKt.MainViewController(
+            flavor: Bundle.main.object(forInfoDictionaryKey: "CFBundleName") as? String ?? ""
+        )
+    }
+
+    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
 }
 
 protocol HasApply {}

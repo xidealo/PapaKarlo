@@ -6,36 +6,36 @@ import com.bunbeauty.shared.domain.model.link.Link
 import com.bunbeauty.shared.domain.model.link.LinkType
 
 class LinkMapper {
-
     fun toLink(linkServer: LinkServer): Link {
-        val type = LinkType.values().find { linkType ->
-            linkType.name == linkServer.type
-        } ?: LinkType.UNKNOWN
+        val type =
+            LinkType.entries.find { linkType ->
+                linkType.name == linkServer.type
+            } ?: LinkType.UNKNOWN
 
         return Link(
             uuid = linkServer.uuid,
             type = type,
-            linkValue = linkServer.value
+            linkValue = linkServer.value,
         )
     }
 
     fun toLink(linkEntity: LinkEntity): Link {
-        val type = LinkType.values().find { linkType ->
-            linkType.name == linkEntity.type
-        } ?: LinkType.UNKNOWN
+        val type =
+            LinkType.entries.find { linkType ->
+                linkType.name == linkEntity.type
+            } ?: LinkType.UNKNOWN
 
         return Link(
             uuid = linkEntity.uuid,
             type = type,
-            linkValue = linkEntity.value_
+            linkValue = linkEntity.value_,
         )
     }
 
-    fun toLinkEntity(link: Link): LinkEntity {
-        return LinkEntity(
+    fun toLinkEntity(link: Link): LinkEntity =
+        LinkEntity(
             uuid = link.uuid,
             type = link.type.name,
-            value_ = link.linkValue
+            value_ = link.linkValue,
         )
-    }
 }

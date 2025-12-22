@@ -9,9 +9,7 @@ class CafeStorage {
         userCafe = cafe
     }
 
-    fun getUserCafe(): Cafe? {
-        return userCafe
-    }
+    fun getUserCafe(): Cafe? = userCafe
 
     fun clear() {
         userCafe = null

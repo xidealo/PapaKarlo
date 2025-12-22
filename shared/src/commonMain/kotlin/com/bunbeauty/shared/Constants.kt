@@ -1,33 +1,8 @@
 package com.bunbeauty.shared
 
 object Constants {
-
     // COMPANY
     const val TEST_COMPANY_UUID = "fd483dcb-3f44-457f-b4d4-f82d2aa83b46"
-
-    const val PAPA_KARLO_TARGET_NAME = "papakarlo"
-    const val PAPA_KARLO_FLAVOR_NAME = PAPA_KARLO_TARGET_NAME
-    const val PAPA_KARLO_COMPANY_UUID = "7416dba5-2825-4fe3-abfb-1494a5e2bf99"
-
-    const val YULIAR_TARGET_NAME = "yuliar"
-    const val YULIAR_FLAVOR_NAME = YULIAR_TARGET_NAME
-    const val YULIAR_COMPANY_UUID = "8b91126f-be08-423a-b1dc-dea78ae79cd0"
-
-    const val DJAN_TARGET_NAME = "djan"
-    const val DJAN_FLAVOR_NAME = DJAN_TARGET_NAME
-    const val DJAN_COMPANY_UUID = "136ce426-15ab-49eb-ab78-19da43fca191"
-
-    const val GUSTO_PUB_TARGET_NAME = "gustopub"
-    const val GUSTO_PUB_FLAVOR_NAME = GUSTO_PUB_TARGET_NAME
-    const val GUSTO_PUB_COMPANY_UUID = "e1d1474b-6fba-4dff-826f-48e89abc48e3"
-
-    const val TANDIR_HOUSE_TARGET_NAME = "tandirhouse"
-    const val TANDIR_HOUSE_FLAVOR_NAME = TANDIR_HOUSE_TARGET_NAME
-    const val TANDIR_HOUSE_COMPANY_UUID = "355b609e-12af-4622-8f40-a42ea0eef85a"
-
-    const val VKUS_KAVKAZA_TARGET_NAME = "vkuskavkaza"
-    const val VKUS_KAVKAZA_FLAVOR_NAME = VKUS_KAVKAZA_TARGET_NAME
-    const val VKUS_KAVKAZA_COMPANY_UUID = "90aa09b7-5407-435b-82eb-6d450660e405"
 
     // NOTIFICATION
 
@@ -73,6 +48,7 @@ object Constants {
     const val CODE_DIVIDER = "-"
     const val WORKING_HOURS_DIVIDER = " - "
     const val COORDINATES_DIVIDER = ","
+    const val VERSION_DIVIDER = "."
     const val ADDRESS_DIVIDER = ", "
 
     // SIGN

@@ -12,7 +12,7 @@ class GetSelectableCafeListUseCase(
     private val dataStoreRepo: DataStoreRepo,
     private val cafeRepo: CafeRepo,
     private val getCafeListUseCase: GetCafeListUseCase,
-    private val isPickupEnabledFromCafeUseCaseImpl: IsPickupEnabledFromCafeUseCase
+    private val isPickupEnabledFromCafeUseCaseImpl: IsPickupEnabledFromCafeUseCase,
 ) {
     suspend operator fun invoke(): List<SelectableCafe> {
         val cityUuid = dataStoreRepo.getSelectedCityUuid() ?: throw NoSelectedCityUuidException()
@@ -20,28 +20,30 @@ class GetSelectableCafeListUseCase(
 
         val selectedCafe = getSelectedCafe(userUuid, cityUuid)
 
-        return getCafeListUseCase().map { cafe ->
-            SelectableCafe(
-                cafe = cafe,
-                isSelected = cafe.uuid == selectedCafe?.uuid,
-                canBePickup = isPickupEnabledFromCafeUseCaseImpl(cafeUuid = cafe.uuid)
-            )
-        }.sortedByDescending { selectableCafe ->
-            selectableCafe.canBePickup
-        }
+        return getCafeListUseCase()
+            .map { cafe ->
+                SelectableCafe(
+                    cafe = cafe,
+                    isSelected = cafe.uuid == selectedCafe?.uuid,
+                    canBePickup = isPickupEnabledFromCafeUseCaseImpl(cafeUuid = cafe.uuid),
+                )
+            }.sortedByDescending { selectableCafe ->
+                selectableCafe.canBePickup
+            }
     }
 
     private suspend fun getSelectedCafe(
         userUuid: String,
-        cityUuid: String
+        cityUuid: String,
     ): Cafe? {
         val cafeList = getCafeListUseCase().ifEmpty { throw EmptyCafeListException() }
-        val selectedCafe = cafeRepo.getSelectedCafeByUserAndCityUuid(
-            userUuid = userUuid,
-            cityUuid = cityUuid
-        ) ?: cafeList.firstOrNull { cafe ->
-            isPickupEnabledFromCafeUseCaseImpl(cafeUuid = cafe.uuid)
-        } ?: cafeList.firstOrNull()
+        val selectedCafe =
+            cafeRepo.getSelectedCafeByUserAndCityUuid(
+                userUuid = userUuid,
+                cityUuid = cityUuid,
+            ) ?: cafeList.firstOrNull { cafe ->
+                isPickupEnabledFromCafeUseCaseImpl(cafeUuid = cafe.uuid)
+            } ?: cafeList.firstOrNull()
         return selectedCafe
     }
 }

@@ -12,5 +12,5 @@ data class OrderMenuProduct(
     val nutrition: Int?,
     val description: String,
     val comboDescription: String?,
-    val photoLink: String
+    val photoLink: String,
 ) : Product()

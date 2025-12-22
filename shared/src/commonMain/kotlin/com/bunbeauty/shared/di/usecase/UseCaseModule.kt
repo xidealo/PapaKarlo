@@ -27,107 +27,108 @@ import com.bunbeauty.shared.domain.use_case.DisableUserUseCase
 import com.bunbeauty.shared.domain.use_case.deferred_time.GetMinTimeUseCase
 import org.koin.dsl.module
 
-internal fun useCaseModules() = module {
-    factory {
-        GetCartTotalFlowUseCase(
-            cartProductRepo = get(),
-            getDiscountUseCase = get(),
-            getNewTotalCostUseCase = get(),
-            getOldTotalCostUseCase = get(),
-            getDeliveryCostFlowUseCase = get()
-        )
-    }
-    factory<GetNewTotalCostUseCase> {
-        GetNewTotalCostUseCaseImpl(
-            getDiscountUseCase = get(),
-            getCartProductAdditionsPriceUseCase = get()
-        )
-    }
-    factory<GetOldTotalCostUseCase> {
-        GetOldTotalCostUseCaseImpl(
-            getCartProductAdditionsPriceUseCase = get()
-        )
-    }
+internal fun useCaseModules() =
+    module {
+        factory {
+            GetCartTotalFlowUseCase(
+                cartProductRepo = get(),
+                getDiscountUseCase = get(),
+                getNewTotalCostUseCase = get(),
+                getOldTotalCostUseCase = get(),
+                getDeliveryCostFlowUseCase = get(),
+            )
+        }
+        factory<GetNewTotalCostUseCase> {
+            GetNewTotalCostUseCaseImpl(
+                getDiscountUseCase = get(),
+                getCartProductAdditionsPriceUseCase = get(),
+            )
+        }
+        factory<GetOldTotalCostUseCase> {
+            GetOldTotalCostUseCaseImpl(
+                getCartProductAdditionsPriceUseCase = get(),
+            )
+        }
 
-    factory {
-        GetMinTimeUseCase(dateTimeUtil = get())
+        factory {
+            GetMinTimeUseCase(dateTimeUtil = get())
+        }
+        factory {
+            DisableUserUseCase(
+                userRepo = get(),
+                dataStoreRepo = get(),
+            )
+        }
+        factory {
+            ObserveSettingsUseCase(
+                settingsRepository = get(),
+                dataStoreRepo = get(),
+            )
+        }
+        factory {
+            UpdateEmailUseCase(
+                settingsRepository = get(),
+                dataStoreRepo = get(),
+            )
+        }
+        factory<GetSelectedCityTimeZoneUseCase> {
+            GetSelectedCityTimeZoneUseCaseImpl(
+                cityRepo = get(),
+                dataStoreRepo = get(),
+            )
+        }
+        factory {
+            CreateAddressUseCase(
+                dataStoreRepo = get(),
+                userAddressRepo = get(),
+            )
+        }
+        factory {
+            GetMenuProductUseCase(
+                menuProductRepo = get(),
+            )
+        }
+        factory<GetMenuProductListUseCase> {
+            GetMenuProductListUseCaseImpl(
+                menuProductRepo = get(),
+            )
+        }
+        factory {
+            GetFilteredStreetListUseCase()
+        }
+        factory {
+            GetLinkListUseCase(
+                linkRepo = get(),
+            )
+        }
+        factory {
+            GetLinkUseCase(
+                linkRepo = get(),
+            )
+        }
+        factory {
+            SubscribeToNotificationUseCase()
+        }
+        factory<GetDiscountUseCase> {
+            GetDiscountUseCaseImpl(
+                discountRepository = get(),
+                orderRepository = get(),
+                dataStoreRepo = get(),
+            )
+        }
+        factory {
+            CheckUpdateUseCase(
+                versionRepo = get(),
+                buildVersion = get(buildVersionQualifier),
+            )
+        }
+        factory {
+            CheckOneCityUseCase(cityRepo = get())
+        }
+        factory {
+            SaveOneCityUseCase(
+                cityRepo = get(),
+                dataStoreRepo = get(),
+            )
+        }
     }
-    factory {
-        DisableUserUseCase(
-            userRepo = get(),
-            dataStoreRepo = get()
-        )
-    }
-    factory {
-        ObserveSettingsUseCase(
-            settingsRepository = get(),
-            dataStoreRepo = get()
-        )
-    }
-    factory {
-        UpdateEmailUseCase(
-            settingsRepository = get(),
-            dataStoreRepo = get()
-        )
-    }
-    factory<GetSelectedCityTimeZoneUseCase> {
-        GetSelectedCityTimeZoneUseCaseImpl(
-            cityRepo = get(),
-            dataStoreRepo = get()
-        )
-    }
-    factory {
-        CreateAddressUseCase(
-            dataStoreRepo = get(),
-            userAddressRepo = get()
-        )
-    }
-    factory {
-        GetMenuProductUseCase(
-            menuProductRepo = get()
-        )
-    }
-    factory<GetMenuProductListUseCase> {
-        GetMenuProductListUseCaseImpl(
-            menuProductRepo = get()
-        )
-    }
-    factory {
-        GetFilteredStreetListUseCase()
-    }
-    factory {
-        GetLinkListUseCase(
-            linkRepo = get()
-        )
-    }
-    factory {
-        GetLinkUseCase(
-            linkRepo = get()
-        )
-    }
-    factory {
-        SubscribeToNotificationUseCase()
-    }
-    factory<GetDiscountUseCase> {
-        GetDiscountUseCaseImpl(
-            discountRepository = get(),
-            orderRepository = get(),
-            dataStoreRepo = get()
-        )
-    }
-    factory {
-        CheckUpdateUseCase(
-            versionRepo = get(),
-            buildVersion = get(buildVersionQualifier)
-        )
-    }
-    factory {
-        CheckOneCityUseCase(cityRepo = get())
-    }
-    factory {
-        SaveOneCityUseCase(
-            cityRepo = get(),
-            dataStoreRepo = get()
-        )
-    }
-}

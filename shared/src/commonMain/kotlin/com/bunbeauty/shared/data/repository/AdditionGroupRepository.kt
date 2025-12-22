@@ -6,9 +6,8 @@ import com.bunbeauty.shared.domain.model.addition.AdditionGroup
 import com.bunbeauty.shared.domain.repo.AdditionGroupRepo
 
 class AdditionGroupRepository(
-    private val additionGroupDao: IAdditionGroupDao
+    private val additionGroupDao: IAdditionGroupDao,
 ) : AdditionGroupRepo {
-    override suspend fun getAdditionGroup(uuid: String): AdditionGroup? {
-        return additionGroupDao.getAdditionGroupEntity(uuid)?.mapAdditionGroupEntityToGroup()
-    }
+    override suspend fun getAdditionGroup(uuid: String): AdditionGroup? =
+        additionGroupDao.getAdditionGroupEntity(uuid)?.mapAdditionGroupEntityToGroup()
 }

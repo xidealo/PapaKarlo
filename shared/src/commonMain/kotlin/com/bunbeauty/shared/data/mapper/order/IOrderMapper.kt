@@ -12,15 +12,23 @@ import com.bunbeauty.shared.domain.model.order.Order
 import com.bunbeauty.shared.domain.model.order.OrderCode
 
 interface IOrderMapper {
-
     fun toLightOrder(orderEntity: OrderEntity): LightOrder
+
     fun toLightOrder(orderServer: OrderServer): LightOrder
+
     fun toLightOrder(lightOrderServer: LightOrderServer): LightOrder
+
     fun toLightOrder(lightOrderEntity: LightOrderEntity): LightOrder
+
     fun toLightOrderEntity(lightOrderServer: LightOrderServer): LightOrderEntity
+
     fun toOrderCode(orderServer: OrderServer): OrderCode
+
     fun toOrder(orderWithProductEntityList: List<OrderWithProductEntity>): Order?
+
     fun toOrder(orderServer: OrderServer): Order
+
     fun toOrderEntity(orderServer: OrderServer): OrderEntity
+
     fun toOrderPostServer(createdOrder: CreatedOrder): OrderPostServer
 }

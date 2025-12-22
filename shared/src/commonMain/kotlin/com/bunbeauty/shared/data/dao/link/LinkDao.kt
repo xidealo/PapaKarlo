@@ -3,8 +3,9 @@ package com.bunbeauty.shared.data.dao.link
 import com.bunbeauty.shared.db.FoodDeliveryDatabase
 import com.bunbeauty.shared.db.LinkEntity
 
-class LinkDao(foodDeliveryDatabase: FoodDeliveryDatabase) : ILinkDao {
-
+class LinkDao(
+    foodDeliveryDatabase: FoodDeliveryDatabase,
+) : ILinkDao {
     private val linkEntityQueries = foodDeliveryDatabase.linkEntityQueries
 
     override suspend fun insertLinkList(linkList: List<LinkEntity>) {
@@ -13,13 +14,11 @@ class LinkDao(foodDeliveryDatabase: FoodDeliveryDatabase) : ILinkDao {
                 linkEntityQueries.insertLink(
                     uuid = link.uuid,
                     type = link.type,
-                    value_ = link.value_
+                    value_ = link.value_,
                 )
             }
         }
     }
 
-    override suspend fun getLinkList(): List<LinkEntity> {
-        return linkEntityQueries.getLinkList().executeAsList()
-    }
+    override suspend fun getLinkList(): List<LinkEntity> = linkEntityQueries.getLinkList().executeAsList()
 }

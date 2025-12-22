@@ -10,7 +10,7 @@ interface GetUserAddressListUseCase {
 
 class GetUserAddressListUseCaseImpl(
     private val dataStoreRepo: DataStoreRepo,
-    private val userAddressRepo: UserAddressRepo
+    private val userAddressRepo: UserAddressRepo,
 ) : GetUserAddressListUseCase {
     override suspend operator fun invoke(): List<UserAddress> {
         val userUuid = dataStoreRepo.getUserUuid() ?: return emptyList()
@@ -19,7 +19,7 @@ class GetUserAddressListUseCaseImpl(
         return userAddressRepo.getUserAddressListByUserAndCityUuid(
             userUuid = userUuid,
             cityUuid = cityUuid,
-            token = token
+            token = token,
         )
     }
 }

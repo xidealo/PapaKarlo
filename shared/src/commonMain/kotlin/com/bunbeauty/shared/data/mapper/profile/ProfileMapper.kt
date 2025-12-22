@@ -10,46 +10,44 @@ import com.bunbeauty.shared.domain.model.profile.Profile
 
 class ProfileMapper(
     private val orderMapper: IOrderMapper,
-    private val userAddressMapper: UserAddressMapper
+    private val userAddressMapper: UserAddressMapper,
 ) : IProfileMapper {
-
     override fun toProfile(
         userUuid: String,
         userAddressCount: Long,
-        lastOrderEntity: OrderEntity?
-    ): Profile.Authorized {
-        return Profile.Authorized(
+        lastOrderEntity: OrderEntity?,
+    ): Profile.Authorized =
+        Profile.Authorized(
             userUuid = userUuid,
             hasAddresses = userAddressCount > 0,
-            lastOrder = lastOrderEntity?.let { orderEntity ->
-                orderMapper.toLightOrder(orderEntity)
-            }
+            lastOrder =
+                lastOrderEntity?.let { orderEntity ->
+                    orderMapper.toLightOrder(orderEntity)
+                },
         )
-    }
 
-    override fun toProfile(profileServer: ProfileServer): Profile.Authorized {
-        return Profile.Authorized(
+    override fun toProfile(profileServer: ProfileServer): Profile.Authorized =
+        Profile.Authorized(
             userUuid = profileServer.uuid,
             hasAddresses = profileServer.addresses.isNotEmpty(),
-            lastOrder = profileServer.orders.maxByOrNull { orderServer ->
-                orderServer.time
-            }?.let { orderServer ->
-                orderMapper.toLightOrder(orderServer)
-            }
+            lastOrder =
+                profileServer.orders
+                    .maxByOrNull { orderServer ->
+                        orderServer.time
+                    }?.let { orderServer ->
+                        orderMapper.toLightOrder(orderServer)
+                    },
         )
-    }
 
-    override fun toUserEntity(profileServer: ProfileServer): UserEntity {
-        return UserEntity(
+    override fun toUserEntity(profileServer: ProfileServer): UserEntity =
+        UserEntity(
             uuid = profileServer.uuid,
             phone = profileServer.phoneNumber,
-            email = profileServer.email
+            email = profileServer.email,
         )
-    }
 
-    override fun toUserAddressEntityList(profileServer: ProfileServer): List<UserAddressEntity> {
-        return profileServer.addresses.map { addressServer ->
+    override fun toUserAddressEntityList(profileServer: ProfileServer): List<UserAddressEntity> =
+        profileServer.addresses.map { addressServer ->
             userAddressMapper.toUserAddressEntity(addressServer)
         }
-    }
 }

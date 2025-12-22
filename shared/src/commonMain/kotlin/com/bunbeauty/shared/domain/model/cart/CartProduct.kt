@@ -8,5 +8,5 @@ data class CartProduct(
     val uuid: String,
     override val count: Int,
     override val product: MenuProduct,
-    val additionList: List<CartProductAddition>
+    val additionList: List<CartProductAddition>,
 ) : ProductPosition()

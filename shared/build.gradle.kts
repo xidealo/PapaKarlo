@@ -6,7 +6,10 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.sqldelight)
     alias(libs.plugins.mokkery)
+    alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.compose)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.ktLint)
 }
 
 kotlin {
@@ -34,6 +37,7 @@ kotlin {
             dependencies {
                 implementation(project(":analytic"))
                 implementation(project(":core"))
+                implementation(project(":designsystem"))
 
                 implementation(libs.bundles.ktor)
 
@@ -41,15 +45,22 @@ kotlin {
 
                 implementation(libs.kotlinx.serialization.json)
 
-                implementation(libs.koin.core)
-                api(libs.koin.test)
-
                 implementation(libs.kotlinx.datetime)
 
                 implementation(libs.sqlDelight.runtime)
                 implementation(libs.sqlDelight.coroutines.extensions)
 
                 implementation(libs.kotlinx.collections.immutable)
+                implementation(compose.components.resources)
+                implementation(compose.runtime)
+                implementation(compose.foundation)
+                implementation(compose.material3)
+                implementation(compose.ui)
+                implementation(compose.components.uiToolingPreview)
+                implementation(libs.bundles.navigation)
+                implementation(libs.bundles.di)
+                implementation(libs.bundles.coil)
+                api(libs.koin.test)
             }
         }
         val commonTest by getting {
@@ -67,6 +78,8 @@ kotlin {
                 implementation(libs.datastore.preferences)
                 implementation(libs.lifecycle.viewmodel.ktx)
 
+                implementation(libs.activity.compose)
+                implementation(compose.uiTooling)
                 implementation(project.dependencies.platform(libs.firebase.bom))
                 implementation(libs.firebase.messaging)
                 implementation(libs.sqlDelight.android)
@@ -85,6 +98,7 @@ kotlin {
         val iosSimulatorArm64Main by getting
         val iosMain by creating {
             dependencies {
+
                 implementation(libs.sqlDelight.native)
                 implementation(libs.ktor.client.darwin)
             }
@@ -118,8 +132,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
 }
 

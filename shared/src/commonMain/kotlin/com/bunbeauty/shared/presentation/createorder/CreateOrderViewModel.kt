@@ -3,9 +3,11 @@ package com.bunbeauty.shared.presentation.createorder
 import com.bunbeauty.core.Logger
 import com.bunbeauty.shared.Constants.PERCENT
 import com.bunbeauty.shared.Constants.RUBLE_CURRENCY
+import com.bunbeauty.shared.domain.exeptions.NotAllowedTimeForOrderException
 import com.bunbeauty.shared.domain.exeptions.OrderNotAvailableException
 import com.bunbeauty.shared.domain.feature.address.GetCurrentUserAddressWithCityUseCase
 import com.bunbeauty.shared.domain.feature.cafe.GetAdditionalUtensilsUseCase
+import com.bunbeauty.shared.domain.feature.cafe.GetDeferredTimeHintUseCase
 import com.bunbeauty.shared.domain.feature.cafe.GetSelectableCafeListUseCase
 import com.bunbeauty.shared.domain.feature.cafe.GetWorkloadCafeUseCase
 import com.bunbeauty.shared.domain.feature.cafe.HasOpenedCafeUseCase
@@ -58,33 +60,37 @@ class CreateOrderViewModel(
     private val getWorkloadCafeUseCase: GetWorkloadCafeUseCase,
     private val getSelectedPaymentMethodUseCase: GetSelectedPaymentMethodUseCase,
     private val getExtendedCommentUseCase: GetExtendedCommentUseCase,
-    private val getAdditionalUtensilsUseCase: GetAdditionalUtensilsUseCase
+    private val getAdditionalUtensilsUseCase: GetAdditionalUtensilsUseCase,
+    private val getDeferredTimeHintUseCase: GetDeferredTimeHintUseCase,
 ) : SharedStateViewModel<CreateOrder.DataState, CreateOrder.Action, CreateOrder.Event>(
-    initDataState = CreateOrder.DataState(
-        isDelivery = true,
-        userAddressList = emptyList(),
-        selectedUserAddressWithCity = null,
-        isAddressErrorShown = CreateOrder.DataState.AddressErrorState.INIT,
-        cafeList = emptyList(),
-        selectedCafe = null,
-        comment = "",
-        deferredTime = CreateOrder.DeferredTime.Asap,
-        paymentMethodList = emptyList(),
-        selectedPaymentMethod = null,
-        cartTotal = CreateOrder.CartTotal.Loading,
-        isLoading = true,
-        deliveryState = CreateOrder.DataState.DeliveryState.ENABLED,
-        isPickupEnabled = true,
-        hasOpenedCafe = true,
-        workload = Cafe.Workload.LOW,
-        additionalUtensils = false,
-        additionalUtensilsCount = ""
-    )
-) {
-
+        initDataState =
+            CreateOrder.DataState(
+                isDelivery = true,
+                userAddressList = emptyList(),
+                selectedUserAddressWithCity = null,
+                isAddressErrorShown = CreateOrder.DataState.AddressErrorState.INIT,
+                cafeList = emptyList(),
+                selectedCafe = null,
+                comment = "",
+                deferredTime = CreateOrder.DeferredTime.Asap,
+                paymentMethodList = emptyList(),
+                selectedPaymentMethod = null,
+                cartTotal = CreateOrder.CartTotal.Loading,
+                isLoading = true,
+                deliveryState = CreateOrder.DataState.DeliveryState.ENABLED,
+                isPickupEnabled = true,
+                hasOpenedCafe = true,
+                workload = Cafe.Workload.LOW,
+                additionalUtensils = false,
+                additionalUtensilsCount = "",
+            ),
+    ) {
     private var getCartTotalJob: Job? = null
 
-    override fun reduce(action: CreateOrder.Action, dataState: CreateOrder.DataState) {
+    override fun reduce(
+        action: CreateOrder.Action,
+        dataState: CreateOrder.DataState,
+    ) {
         when (action) {
             CreateOrder.Action.Init -> {
                 loadData(isDelivery = dataState.isDelivery)
@@ -109,7 +115,7 @@ class CreateOrderViewModel(
             is CreateOrder.Action.ChangeDeliveryAddress -> {
                 changeUserAddress(
                     userAddressUuid = action.addressUuid,
-                    isDelivery = dataState.isDelivery
+                    isDelivery = dataState.isDelivery,
                 )
             }
 
@@ -124,7 +130,7 @@ class CreateOrderViewModel(
             is CreateOrder.Action.ChangePickupAddress -> {
                 changeCafeAddress(
                     cafeUuid = action.addressUuid,
-                    isDelivery = dataState.isDelivery
+                    isDelivery = dataState.isDelivery,
                 )
             }
 
@@ -180,17 +186,19 @@ class CreateOrderViewModel(
                 createClick(
                     withoutChange = action.withoutChange,
                     changeFrom = action.changeFrom,
-                    additionalUtensils = action.additionalUtensils
+                    additionalUtensils = action.additionalUtensils,
                 )
             }
 
-            CreateOrder.Action.Back -> addEvent {
-                CreateOrder.Event.Back
-            }
+            CreateOrder.Action.Back ->
+                addEvent {
+                    CreateOrder.Event.Back
+                }
 
-            is CreateOrder.Action.ChangeAdditionalUtensils -> changeAdditionalUtensilsCount(
-                additionalUtensilsCount = action.additionalUtensilsCount
-            )
+            is CreateOrder.Action.ChangeAdditionalUtensils ->
+                changeAdditionalUtensilsCount(
+                    additionalUtensilsCount = action.additionalUtensilsCount,
+                )
         }
     }
 
@@ -212,7 +220,7 @@ class CreateOrderViewModel(
         val isDelivery = position == DELIVERY_POSITION
         setState {
             copy(
-                isDelivery = isDelivery
+                isDelivery = isDelivery,
             )
         }
 
@@ -228,19 +236,21 @@ class CreateOrderViewModel(
             block = {
                 setState {
                     copy(
-                        additionalUtensils = getAdditionalUtensilsUseCase(
-                            cafeUuid = if (isDelivery) {
-                                selectedUserAddressWithCity?.userAddress?.cafeUuid.orEmpty()
-                            } else {
-                                selectedCafe?.uuid.orEmpty()
-                            }
-                        )
+                        additionalUtensils =
+                            getAdditionalUtensilsUseCase(
+                                cafeUuid =
+                                    if (isDelivery) {
+                                        selectedUserAddressWithCity?.userAddress?.cafeUuid.orEmpty()
+                                    } else {
+                                        selectedCafe?.uuid.orEmpty()
+                                    },
+                            ),
                     )
                 }
             },
             onError = {
                 // stub
-            }
+            },
         )
     }
 
@@ -262,7 +272,10 @@ class CreateOrderViewModel(
         }
     }
 
-    private fun changeUserAddress(userAddressUuid: String, isDelivery: Boolean) {
+    private fun changeUserAddress(
+        userAddressUuid: String,
+        isDelivery: Boolean,
+    ) {
         setState {
             copy(isUserAddressListShown = false)
         }
@@ -285,7 +298,10 @@ class CreateOrderViewModel(
         }
     }
 
-    private fun changeCafeAddress(cafeUuid: String, isDelivery: Boolean) {
+    private fun changeCafeAddress(
+        cafeUuid: String,
+        isDelivery: Boolean,
+    ) {
         setState {
             copy(isCafeListShown = false)
         }
@@ -318,15 +334,16 @@ class CreateOrderViewModel(
                     copy(
                         isTimePickerShown = true,
                         minDeferredTime = getMinTime(timeZone),
-                        initialDeferredTime = if (deferredTime is CreateOrder.DeferredTime.Later) {
-                            deferredTime.time
-                        } else {
-                            minDeferredTime
-                        }
+                        initialDeferredTime =
+                            if (deferredTime is CreateOrder.DeferredTime.Later) {
+                                deferredTime.time
+                            } else {
+                                minDeferredTime
+                            },
                     )
                 }
             },
-            onError = {}
+            onError = {},
         )
     }
 
@@ -341,9 +358,12 @@ class CreateOrderViewModel(
             copy(
                 isDeferredTimeShown = false,
                 isTimePickerShown = false,
-                deferredTime = CreateOrder.DeferredTime.Later(
-                    time = deferredTime
-                )
+                deferredTime =
+                    CreateOrder.DeferredTime.Later(
+                        time = deferredTime,
+                    ),
+                showTimePickerHint = getDeferredTimeHintUseCase(deferredTime),
+                hasTimePickerError = false,
             )
         }
     }
@@ -352,7 +372,9 @@ class CreateOrderViewModel(
         setState {
             copy(
                 isDeferredTimeShown = false,
-                deferredTime = CreateOrder.DeferredTime.Asap
+                deferredTime = CreateOrder.DeferredTime.Asap,
+                showTimePickerHint = false,
+                hasTimePickerError = false,
             )
         }
     }
@@ -360,7 +382,7 @@ class CreateOrderViewModel(
     private fun paymentMethodClick() {
         setState {
             copy(
-                isPaymentMethodListShown = true
+                isPaymentMethodListShown = true,
             )
         }
     }
@@ -368,7 +390,7 @@ class CreateOrderViewModel(
     private fun hidePaymentMethodList() {
         setState {
             copy(
-                isPaymentMethodListShown = false
+                isPaymentMethodListShown = false,
             )
         }
     }
@@ -376,7 +398,7 @@ class CreateOrderViewModel(
     private fun changePaymentMethod(paymentMethodUuid: String) {
         setState {
             copy(
-                isPaymentMethodListShown = false
+                isPaymentMethodListShown = false,
             )
         }
         withLoading {
@@ -406,7 +428,7 @@ class CreateOrderViewModel(
     private fun createClick(
         withoutChange: String,
         changeFrom: String,
-        additionalUtensils: String
+        additionalUtensils: String,
     ) {
         val state = mutableDataState.value
 
@@ -437,9 +459,10 @@ class CreateOrderViewModel(
         val newFinalCost =
             (state.cartTotal as? CreateOrder.CartTotal.Success)?.newFinalCostValue ?: 0
         val isChangeLessThenCost = (state.change ?: 0) < newFinalCost
-        val isChangeIncorrect = state.paymentByCash &&
-            !state.withoutChangeChecked &&
-            isChangeLessThenCost
+        val isChangeIncorrect =
+            state.paymentByCash &&
+                !state.withoutChangeChecked &&
+                isChangeLessThenCost
         setState {
             copy(isChangeErrorShown = isChangeIncorrect)
         }
@@ -450,8 +473,9 @@ class CreateOrderViewModel(
             return
         }
 
-        val isAdditionalUtensilsIncorrect = state.additionalUtensils &&
-            state.additionalUtensilsCount.isEmpty()
+        val isAdditionalUtensilsIncorrect =
+            state.additionalUtensils &&
+                state.additionalUtensilsCount.isEmpty()
 
         setState {
             copy(isAdditionalUtensilsErrorShown = isAdditionalUtensilsIncorrect)
@@ -464,38 +488,50 @@ class CreateOrderViewModel(
             return
         }
 
+        if (state.hasTimePickerError) {
+            addEvent {
+                CreateOrder.Event.ShowTimePickerError
+            }
+            return
+        }
+
         withLoading {
             if (userInteractor.isUserAuthorize()) {
-                val orderCode = createOrder(
-                    isDelivery = state.isDelivery,
-                    selectedUserAddress = state.selectedUserAddressWithCity?.userAddress,
-                    selectedCafe = state.selectedCafe,
-                    orderComment = getExtendedCommentUseCase(
-                        ExtendedComment(
-                            comment = state.comment,
-                            change = ExtendedComment.Change(
-                                paymentByCash = state.paymentByCash,
-                                withoutChangeChecked = state.withoutChangeChecked,
-                                withoutChange = withoutChange,
-                                changeFrom = changeFrom,
-                                change = state.change?.toString().orEmpty()
-                            ),
-                            additionalUtensils = ExtendedComment.AdditionalUtensils(
-                                isAdditionalUtensils = state.additionalUtensils,
-                                count = state.additionalUtensilsCount,
-                                name = additionalUtensils
-                            )
-                        )
-                    ).takeIf { comment ->
-                        comment.isNotBlank()
-                    },
-                    deferredTime = when (state.deferredTime) {
-                        CreateOrder.DeferredTime.Asap -> null
-                        is CreateOrder.DeferredTime.Later -> state.deferredTime.time
-                    },
-                    timeZone = getSelectedCityTimeZone(),
-                    paymentMethod = state.selectedPaymentMethod.name.name
-                )
+                val orderCode =
+                    createOrder(
+                        isDelivery = state.isDelivery,
+                        selectedUserAddress = state.selectedUserAddressWithCity?.userAddress,
+                        selectedCafe = state.selectedCafe,
+                        orderComment =
+                            getExtendedCommentUseCase(
+                                ExtendedComment(
+                                    comment = state.comment,
+                                    change =
+                                        ExtendedComment.Change(
+                                            paymentByCash = state.paymentByCash,
+                                            withoutChangeChecked = state.withoutChangeChecked,
+                                            withoutChange = withoutChange,
+                                            changeFrom = changeFrom,
+                                            change = state.change?.toString().orEmpty(),
+                                        ),
+                                    additionalUtensils =
+                                        ExtendedComment.AdditionalUtensils(
+                                            isAdditionalUtensils = state.additionalUtensils,
+                                            count = state.additionalUtensilsCount,
+                                            name = additionalUtensils,
+                                        ),
+                                ),
+                            ).takeIf { comment ->
+                                comment.isNotBlank()
+                            },
+                        deferredTime =
+                            when (state.deferredTime) {
+                                CreateOrder.DeferredTime.Asap -> null
+                                is CreateOrder.DeferredTime.Later -> state.deferredTime.time
+                            },
+                        timeZone = getSelectedCityTimeZone(),
+                        paymentMethod = state.selectedPaymentMethod.name.name,
+                    )
                 if (orderCode == null) {
                     addEvent {
                         CreateOrder.Event.ShowSomethingWentWrongErrorEvent
@@ -527,7 +563,7 @@ class CreateOrderViewModel(
         setState {
             copy(
                 paymentMethodList = paymentMethodList,
-                selectedPaymentMethod = selectedPaymentMethod
+                selectedPaymentMethod = selectedPaymentMethod,
             )
         }
         if (selectedPaymentMethod != null) {
@@ -545,22 +581,25 @@ class CreateOrderViewModel(
             copy(
                 userAddressList = userAddressList,
                 selectedUserAddressWithCity = userAddressWithCity,
-                deliveryState = userAddressWithCity?.userAddress?.cafeUuid?.let { cafeUuid ->
-                    if (isDeliveryEnabledFromCafeUseCase(cafeUuid = cafeUuid)) {
-                        CreateOrder.DataState.DeliveryState.ENABLED
+                deliveryState =
+                    userAddressWithCity?.userAddress?.cafeUuid?.let { cafeUuid ->
+                        if (isDeliveryEnabledFromCafeUseCase(cafeUuid = cafeUuid)) {
+                            CreateOrder.DataState.DeliveryState.ENABLED
+                        } else {
+                            CreateOrder.DataState.DeliveryState.NOT_ENABLED
+                        }
+                    } ?: CreateOrder.DataState.DeliveryState.NEED_ADDRESS,
+                isAddressErrorShown =
+                    if (userAddressWithCity != null) {
+                        CreateOrder.DataState.AddressErrorState.NO_ERROR
                     } else {
-                        CreateOrder.DataState.DeliveryState.NOT_ENABLED
-                    }
-                } ?: CreateOrder.DataState.DeliveryState.NEED_ADDRESS,
-                isAddressErrorShown = if (userAddressWithCity != null) {
-                    CreateOrder.DataState.AddressErrorState.NO_ERROR
-                } else {
-                    isAddressErrorShown
-                },
-                workload = userAddressWithCity?.userAddress?.cafeUuid?.let { cafeUuid ->
-                    getWorkloadCafeUseCase(cafeUuid = cafeUuid)
-                } ?: Cafe.Workload.LOW,
-                isLoadingSwitcher = false
+                        isAddressErrorShown
+                    },
+                workload =
+                    userAddressWithCity?.userAddress?.cafeUuid?.let { cafeUuid ->
+                        getWorkloadCafeUseCase(cafeUuid = cafeUuid)
+                    } ?: Cafe.Workload.LOW,
+                isLoadingSwitcher = false,
             )
         }
     }
@@ -571,72 +610,80 @@ class CreateOrderViewModel(
             copy(cafeList = cafeList)
         }
 
-        cafeList.find { cafe ->
-            cafe.isSelected
-        }?.let { selectedCafe ->
-            setState {
-                copy(
-                    selectedCafe = selectedCafe.cafe,
-                    isPickupEnabled = isPickupEnabledFromCafeUseCase(
-                        cafeUuid = selectedCafe.cafe.uuid
-                    ),
-                    hasOpenedCafe = hasOpenedCafeUseCase(
-                        cafeList = cafeList.map { selectableCafe ->
-                            selectableCafe.cafe
-                        }
+        cafeList
+            .find { cafe ->
+                cafe.isSelected
+            }?.let { selectedCafe ->
+                setState {
+                    copy(
+                        selectedCafe = selectedCafe.cafe,
+                        isPickupEnabled =
+                            isPickupEnabledFromCafeUseCase(
+                                cafeUuid = selectedCafe.cafe.uuid,
+                            ),
+                        hasOpenedCafe =
+                            hasOpenedCafeUseCase(
+                                cafeList =
+                                    cafeList.map { selectableCafe ->
+                                        selectableCafe.cafe
+                                    },
+                            ),
                     )
-                )
+                }
             }
-        }
     }
 
     private suspend fun updateCartTotal() {
         getCartTotalJob?.cancel()
-        getCartTotalJob = sharedScope.launchSafe(
-            block = {
-                val isDelivery = mutableDataState.value.isDelivery
+        getCartTotalJob =
+            sharedScope.launchSafe(
+                block = {
+                    val isDelivery = mutableDataState.value.isDelivery
 
-                getCartTotalFlowUseCase(isDelivery = isDelivery).collect { cartTotal ->
+                    getCartTotalFlowUseCase(isDelivery = isDelivery).collect { cartTotal ->
 
-                    val motivation = getMotivationUseCase(
-                        newTotalCost = cartTotal.newTotalCost,
-                        isDelivery = isDelivery
-                    )
-                    val motivationData = motivation?.toMotivationData()
+                        val motivation =
+                            getMotivationUseCase(
+                                newTotalCost = cartTotal.newTotalCost,
+                                isDelivery = isDelivery,
+                            )
+                        val motivationData = motivation?.toMotivationData()
 
-                    setState {
-                        copy(
-                            cartTotal = CreateOrder.CartTotal.Success(
-                                motivation = motivationData,
-                                discount = cartTotal.discount?.let { discount ->
-                                    "$discount$PERCENT"
-                                },
-                                deliveryCost = cartTotal.deliveryCost?.let { deliveryCost ->
-                                    "$deliveryCost $RUBLE_CURRENCY"
-                                },
-                                oldFinalCost = cartTotal.oldFinalCost?.let { oldFinalCost ->
-                                    "$oldFinalCost $RUBLE_CURRENCY"
-                                },
-                                newFinalCost = "${cartTotal.newFinalCost} $RUBLE_CURRENCY",
-                                newFinalCostValue = cartTotal.newFinalCost
-                            ),
-                            isDelivery = isDelivery
-                        )
+                        setState {
+                            copy(
+                                cartTotal =
+                                    CreateOrder.CartTotal.Success(
+                                        motivation = motivationData,
+                                        discount =
+                                            cartTotal.discount?.let { discount ->
+                                                "$discount$PERCENT"
+                                            },
+                                        deliveryCost =
+                                            cartTotal.deliveryCost?.let { deliveryCost ->
+                                                "$deliveryCost $RUBLE_CURRENCY"
+                                            },
+                                        oldFinalCost =
+                                            cartTotal.oldFinalCost?.let { oldFinalCost ->
+                                                "$oldFinalCost $RUBLE_CURRENCY"
+                                            },
+                                        newFinalCost = "${cartTotal.newFinalCost} $RUBLE_CURRENCY",
+                                        newFinalCostValue = cartTotal.newFinalCost,
+                                    ),
+                                isDelivery = isDelivery,
+                            )
+                        }
                     }
-                }
-            },
-            onError = { error ->
-                Logger.logE(CREATION_ORDER_VIEW_MODEL_TAG, error.stackTraceToString())
-            }
-        )
+                },
+                onError = { error ->
+                    Logger.logE(CREATION_ORDER_VIEW_MODEL_TAG, error.stackTraceToString())
+                },
+            )
     }
 
-    fun changeAdditionalUtensilsCount(
-        additionalUtensilsCount: String
-    ) {
+    fun changeAdditionalUtensilsCount(additionalUtensilsCount: String) {
         setState {
             copy(
-                additionalUtensilsCount = additionalUtensilsCount
+                additionalUtensilsCount = additionalUtensilsCount,
             )
         }
     }
@@ -658,7 +705,7 @@ class CreateOrderViewModel(
                     is OrderNotAvailableException -> {
                         setState {
                             copy(
-                                deliveryState = CreateOrder.DataState.DeliveryState.NOT_ENABLED
+                                deliveryState = CreateOrder.DataState.DeliveryState.NOT_ENABLED,
                             )
                         }
                         addEvent {
@@ -666,14 +713,27 @@ class CreateOrderViewModel(
                         }
                     }
 
-                    else -> addEvent {
-                        CreateOrder.Event.ShowSomethingWentWrongErrorEvent
+                    is NotAllowedTimeForOrderException -> {
+                        setState {
+                            copy(
+                                hasTimePickerError = true,
+                                showTimePickerHint = true,
+                            )
+                        }
+                        addEvent {
+                            CreateOrder.Event.ShowTimePickerError
+                        }
                     }
+
+                    else ->
+                        addEvent {
+                            CreateOrder.Event.ShowSomethingWentWrongErrorEvent
+                        }
                 }
                 setState {
                     copy(isLoading = false)
                 }
-            }
+            },
         )
     }
 }

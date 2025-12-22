@@ -7,8 +7,9 @@ import com.squareup.sqldelight.runtime.coroutines.mapToList
 import com.squareup.sqldelight.runtime.coroutines.mapToOneOrNull
 import kotlinx.coroutines.flow.Flow
 
-class CityDao(foodDeliveryDatabase: FoodDeliveryDatabase) : ICityDao {
-
+class CityDao(
+    foodDeliveryDatabase: FoodDeliveryDatabase,
+) : ICityDao {
     private val cityEntityQueries = foodDeliveryDatabase.cityEntityQueries
 
     override suspend fun insertCityList(cityList: List<CityEntity>) {
@@ -18,25 +19,17 @@ class CityDao(foodDeliveryDatabase: FoodDeliveryDatabase) : ICityDao {
                     uuid = cityEntity.uuid,
                     name = cityEntity.name,
                     timeZone = cityEntity.timeZone,
-                    isVisible = cityEntity.isVisible
+                    isVisible = cityEntity.isVisible,
                 )
             }
         }
     }
 
-    override suspend fun getCityList(): List<CityEntity> {
-        return cityEntityQueries.getCityList().executeAsList()
-    }
+    override suspend fun getCityList(): List<CityEntity> = cityEntityQueries.getCityList().executeAsList()
 
-    override suspend fun getCityByUuid(uuid: String): CityEntity? {
-        return cityEntityQueries.getCityByUuid(uuid).executeAsOneOrNull()
-    }
+    override suspend fun getCityByUuid(uuid: String): CityEntity? = cityEntityQueries.getCityByUuid(uuid).executeAsOneOrNull()
 
-    override fun observeCityByUuid(uuid: String): Flow<CityEntity?> {
-        return cityEntityQueries.getCityByUuid(uuid).asFlow().mapToOneOrNull()
-    }
+    override fun observeCityByUuid(uuid: String): Flow<CityEntity?> = cityEntityQueries.getCityByUuid(uuid).asFlow().mapToOneOrNull()
 
-    override fun observeCityList(): Flow<List<CityEntity>> {
-        return cityEntityQueries.getCityList().asFlow().mapToList()
-    }
+    override fun observeCityList(): Flow<List<CityEntity>> = cityEntityQueries.getCityList().asFlow().mapToList()
 }

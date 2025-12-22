@@ -3,10 +3,7 @@ package com.bunbeauty.shared.domain.feature.city
 import com.bunbeauty.shared.DataStoreRepo
 
 class SaveSelectedCityUseCase(
-    private val dataStoreRepo: DataStoreRepo
+    private val dataStoreRepo: DataStoreRepo,
 ) {
-
-    suspend operator fun invoke(cityUuid: String) {
-        return dataStoreRepo.saveSelectedCityUuid(cityUuid)
-    }
+    suspend operator fun invoke(cityUuid: String) = dataStoreRepo.saveSelectedCityUuid(cityUuid)
 }

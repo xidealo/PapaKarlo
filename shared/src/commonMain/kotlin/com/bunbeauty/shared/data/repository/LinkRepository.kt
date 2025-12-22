@@ -10,9 +10,8 @@ import com.bunbeauty.shared.extension.getNullableResult
 class LinkRepository(
     private val networkConnector: NetworkConnector,
     private val linkMapper: LinkMapper,
-    private val linkDao: ILinkDao
+    private val linkDao: ILinkDao,
 ) : LinkRepo {
-
     private var linkListCache: List<Link>? = null
 
     override suspend fun getLinkList(): List<Link> {
@@ -31,20 +30,18 @@ class LinkRepository(
         }
     }
 
-    suspend fun getRemoteLinkList(): List<Link>? {
-        return networkConnector.getLinkList()
+    suspend fun getRemoteLinkList(): List<Link>? =
+        networkConnector
+            .getLinkList()
             .getNullableResult { linkServerList ->
                 linkServerList.results.map(linkMapper::toLink)
             }
-    }
 
-    suspend fun getLocalLinkList(): List<Link> {
-        return linkDao.getLinkList().map(linkMapper::toLink)
-    }
+    suspend fun getLocalLinkList(): List<Link> = linkDao.getLinkList().map(linkMapper::toLink)
 
     suspend fun saveLinkListLocally(linkList: List<Link>) {
         linkDao.insertLinkList(
-            linkList.map(linkMapper::toLinkEntity)
+            linkList.map(linkMapper::toLinkEntity),
         )
     }
 }

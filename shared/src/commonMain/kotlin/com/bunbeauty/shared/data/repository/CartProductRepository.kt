@@ -15,46 +15,43 @@ class CartProductRepository(
     private val uuidGenerator: UuidGenerator,
     private val cartProductDao: ICartProductDao,
     private val menuProductDao: IMenuProductDao,
-    private val cartProductMapper: ICartProductMapper
+    private val cartProductMapper: ICartProductMapper,
 ) : CartProductRepo {
-
-    override fun observeCartProductList(): Flow<List<CartProduct>> {
-        return cartProductDao.observeCartProductList().map { cartProductList ->
+    override fun observeCartProductList(): Flow<List<CartProduct>> =
+        cartProductDao.observeCartProductList().map { cartProductList ->
             cartProductList.toCartProductList()
         }
-    }
 
-    override suspend fun getCartProductList(): List<CartProduct> {
-        return cartProductDao.getCartProductList().toCartProductList()
-    }
+    override suspend fun getCartProductList(): List<CartProduct> = cartProductDao.getCartProductList().toCartProductList()
 
-    override suspend fun getCartProduct(cartProductUuid: String): CartProduct? {
-        return cartProductDao
+    override suspend fun getCartProduct(cartProductUuid: String): CartProduct? =
+        cartProductDao
             .getCartProductByUuid(cartProductUuid)
             .toCartProductList()
             .firstOrNull()
-    }
 
-    override suspend fun getCartProductListByMenuProductUuid(
-        menuProductUuid: String
-    ): List<CartProduct> {
-        return cartProductDao.getCartProductByMenuProductUuid(menuProductUuid)
+    override suspend fun getCartProductListByMenuProductUuid(menuProductUuid: String): List<CartProduct> =
+        cartProductDao
+            .getCartProductByMenuProductUuid(menuProductUuid)
             .toCartProductList()
-    }
 
     override suspend fun saveAsCartProduct(menuProductUuid: String): String {
         val uuid = uuidGenerator.generateUuid()
-        val cartProductEntity = CartProductEntity(
-            uuid = uuid,
-            count = 1,
-            menuProductUuid = menuProductUuid
-        )
+        val cartProductEntity =
+            CartProductEntity(
+                uuid = uuid,
+                count = 1,
+                menuProductUuid = menuProductUuid,
+            )
         cartProductDao.insertCartProduct(cartProductEntity)
 
         return uuid
     }
 
-    override suspend fun updateCartProductCount(cartProductUuid: String, count: Int) {
+    override suspend fun updateCartProductCount(
+        cartProductUuid: String,
+        count: Int,
+    ) {
         cartProductDao.updateCartProductCountByUuid(cartProductUuid, count)
     }
 
@@ -66,8 +63,8 @@ class CartProductRepository(
         cartProductDao.deleteAllCartProducts()
     }
 
-    private suspend fun List<CartProductWithMenuProductEntity>.toCartProductList(): List<CartProduct> {
-        return filter { cartProductWithMenuProductEntity ->
+    private suspend fun List<CartProductWithMenuProductEntity>.toCartProductList(): List<CartProduct> =
+        filter { cartProductWithMenuProductEntity ->
             cartProductWithMenuProductEntity.visible
         }.groupBy { cartProductWithMenuProductEntity ->
             cartProductWithMenuProductEntity.cartProductUuid
@@ -78,8 +75,7 @@ class CartProductRepository(
 
             cartProductMapper.toCartProduct(
                 cartProductWithMenuProductEntityList = cartProductWithMenuProductEntityList,
-                menuProductWithCategoryEntityList = menuProductWithCategoryList
+                menuProductWithCategoryEntityList = menuProductWithCategoryList,
             )
         }
-    }
 }

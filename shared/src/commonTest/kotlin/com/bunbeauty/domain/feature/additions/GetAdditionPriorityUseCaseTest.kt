@@ -9,7 +9,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class GetAdditionPriorityUseCaseTest {
-
     private lateinit var useCase: GetAdditionPriorityUseCaseImpl
 
     @BeforeTest
@@ -18,18 +17,20 @@ class GetAdditionPriorityUseCaseTest {
     }
 
     @Test
-    fun `calculate correct priority`() = runTest {
-        // Given
-        val addition = getAddition(priority = 1)
-        val additionGroup = getAdditionGroup(priority = 1)
+    fun `calculate correct priority`() =
+        runTest {
+            // Given
+            val addition = getAddition(priority = 1)
+            val additionGroup = getAdditionGroup(priority = 1)
 
-        // When
-        val result = useCase(
-            additionGroup = additionGroup,
-            addition = addition
-        )
+            // When
+            val result =
+                useCase(
+                    additionGroup = additionGroup,
+                    addition = addition,
+                )
 
-        // Then
-        assertEquals(11, result)
-    }
+            // Then
+            assertEquals(11, result)
+        }
 }

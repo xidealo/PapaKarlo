@@ -6,16 +6,17 @@ import com.bunbeauty.shared.domain.repo.RecommendationRepo
 
 class RecommendationRepository(
     private val networkConnector: NetworkConnector,
-    private val dataStoreRepo: DataStoreRepo
-) : CacheRepository<Int>(), RecommendationRepo {
+    private val dataStoreRepo: DataStoreRepo,
+) : CacheRepository<Int>(),
+    RecommendationRepo {
     companion object {
         private const val DEFAULT_RECOMMENDATIONS_COUNT = 6
     }
 
     override val tag: String = "RECOMMENDATION_TAG"
 
-    override suspend fun getMaxVisibleCount(): Int {
-        return getCacheOrData(
+    override suspend fun getMaxVisibleCount(): Int =
+        getCacheOrData(
             onApiRequest = networkConnector::getRecommendationData,
             onLocalRequest = {
                 dataStoreRepo.getRecommendationMaxVisible()
@@ -25,7 +26,6 @@ class RecommendationRepository(
             },
             serverToDomainModel = { recommendationProductListServer ->
                 recommendationProductListServer.maxVisibleCount
-            }
+            },
         ) ?: DEFAULT_RECOMMENDATIONS_COUNT
-    }
 }

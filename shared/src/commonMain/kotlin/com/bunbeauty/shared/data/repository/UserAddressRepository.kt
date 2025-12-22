@@ -17,28 +17,30 @@ open class UserAddressRepository(
     private val networkConnector: NetworkConnector,
     private val userAddressDao: IUserAddressDao,
     private val userAddressMapper: UserAddressMapper,
-    private val dataStoreRepo: DataStoreRepo
-) : BaseRepository(), UserAddressRepo {
-
+    private val dataStoreRepo: DataStoreRepo,
+) : BaseRepository(),
+    UserAddressRepo {
     override val tag: String = "USER_ADDRESS_TAG"
 
     private var userAddressCache: UserAddressCache? = null
 
     override suspend fun saveUserAddress(
         token: String,
-        createdUserAddress: CreatedUserAddress
+        createdUserAddress: CreatedUserAddress,
     ): UserAddress? {
         val userAddressPostServer = userAddressMapper.toUserAddressPostServer(createdUserAddress)
-        return networkConnector.postUserAddress(token, userAddressPostServer)
+        return networkConnector
+            .postUserAddress(token, userAddressPostServer)
             .getNullableResult { addressServer ->
                 val userAddressEntity = userAddressMapper.toUserAddressEntity(addressServer)
                 userAddressDao.insertUserAddress(userAddressEntity)
 
                 val userAddress = userAddressMapper.toUserAddress(addressServer)
                 userAddressCache?.let { cache ->
-                    userAddressCache = cache.copy(
-                        userAddressList = cache.userAddressList + userAddress
-                    )
+                    userAddressCache =
+                        cache.copy(
+                            userAddressList = cache.userAddressList + userAddress,
+                        )
                 }
 
                 userAddress
@@ -48,49 +50,50 @@ open class UserAddressRepository(
     override suspend fun saveSelectedUserAddress(
         addressUuid: String,
         userUuid: String,
-        cityUuid: String
+        cityUuid: String,
     ) {
-        val selectedUserAddressUuid = SelectedUserAddressUuidEntity(
-            userUuid = userUuid,
-            cityUuid = cityUuid,
-            userAddressUuid = addressUuid
-        )
+        val selectedUserAddressUuid =
+            SelectedUserAddressUuidEntity(
+                userUuid = userUuid,
+                cityUuid = cityUuid,
+                userAddressUuid = addressUuid,
+            )
 
         userAddressDao.insertSelectedUserAddressUuid(selectedUserAddressUuid)
     }
 
     override suspend fun getSelectedAddressByUserAndCityUuid(
         userUuid: String,
-        cityUuid: String
-    ): UserAddress? {
-        return userAddressDao.getSelectedUserAddressByUserAndCityUuid(userUuid, cityUuid)
+        cityUuid: String,
+    ): UserAddress? =
+        userAddressDao
+            .getSelectedUserAddressByUserAndCityUuid(userUuid, cityUuid)
             ?.let { userAddressEntity ->
                 userAddressMapper.toUserAddress(userAddressEntity)
             }
-    }
 
     override suspend fun getFirstUserAddressByUserAndCityUuid(
         userUuid: String,
-        cityUuid: String
-    ): UserAddress? {
-        return userAddressDao.geFirstUserAddressByUserAndCityUuid(
-            userUuid = userUuid,
-            cityUuid = cityUuid
-        )?.let { userAddressEntity ->
-            userAddressMapper.toUserAddress(userAddressEntity)
-        } ?: dataStoreRepo.getToken()?.let { token ->
+        cityUuid: String,
+    ): UserAddress? =
+        userAddressDao
+            .geFirstUserAddressByUserAndCityUuid(
+                userUuid = userUuid,
+                cityUuid = cityUuid,
+            )?.let { userAddressEntity ->
+                userAddressMapper.toUserAddress(userAddressEntity)
+            } ?: dataStoreRepo.getToken()?.let { token ->
             getUserAddressListByUserAndCityUuid(
                 userUuid = userUuid,
                 cityUuid = cityUuid,
-                token = token
+                token = token,
             ).firstOrNull()
         }
-    }
 
     override suspend fun getUserAddressListByUserAndCityUuid(
         userUuid: String,
         cityUuid: String,
-        token: String
+        token: String,
     ): List<UserAddress> {
         val cache = userAddressCache
         return if (cache != null &&
@@ -101,55 +104,58 @@ open class UserAddressRepository(
         } else {
             networkConnector.getUserAddressListByCityUuid(token, cityUuid).getListResult(
                 onError = {
-                    userAddressDao.getUserAddressListByUserAndCityUuid(userUuid, cityUuid)
+                    userAddressDao
+                        .getUserAddressListByUserAndCityUuid(userUuid, cityUuid)
                         .map(userAddressMapper::toUserAddress)
                 },
                 onSuccess = { userAddressSeverList ->
                     userAddressDao.insertUserAddressList(
-                        userAddressSeverList.map(userAddressMapper::toUserAddressEntity)
+                        userAddressSeverList.map(userAddressMapper::toUserAddressEntity),
                     )
-                    userAddressSeverList.map(userAddressMapper::toUserAddress)
+                    userAddressSeverList
+                        .map(userAddressMapper::toUserAddress)
                         .also { userAddressList ->
-                            userAddressCache = UserAddressCache(
-                                userAddressList = userAddressList,
-                                userUuid = userUuid,
-                                cityUuid = cityUuid
-                            )
+                            userAddressCache =
+                                UserAddressCache(
+                                    userAddressList = userAddressList,
+                                    userUuid = userUuid,
+                                    cityUuid = cityUuid,
+                                )
                         }
-                }
+                },
             )
         }
     }
 
     override fun observeSelectedUserAddressByUserAndCityUuid(
         userUuid: String,
-        cityUuid: String
-    ): Flow<UserAddress?> {
-        return userAddressDao.observeSelectedUserAddressByUserAndCityUuid(
-            userUuid = userUuid,
-            cityUuid = cityUuid
-        ).mapFlow(userAddressMapper::toUserAddress)
-    }
+        cityUuid: String,
+    ): Flow<UserAddress?> =
+        userAddressDao
+            .observeSelectedUserAddressByUserAndCityUuid(
+                userUuid = userUuid,
+                cityUuid = cityUuid,
+            ).mapFlow(userAddressMapper::toUserAddress)
 
     override fun observeFirstUserAddressByUserAndCityUuid(
         userUuid: String,
-        cityUuid: String
-    ): Flow<UserAddress?> {
-        return userAddressDao.observeFirstUserAddressByUserAndCityUuid(
-            userUuid = userUuid,
-            cityUuid = cityUuid
-        ).mapFlow(userAddressMapper::toUserAddress)
-    }
+        cityUuid: String,
+    ): Flow<UserAddress?> =
+        userAddressDao
+            .observeFirstUserAddressByUserAndCityUuid(
+                userUuid = userUuid,
+                cityUuid = cityUuid,
+            ).mapFlow(userAddressMapper::toUserAddress)
 
     override fun observeUserAddressListByUserUuidAndCityUuid(
         userUuid: String,
-        cityUuid: String
-    ): Flow<List<UserAddress>> {
-        return userAddressDao.observeUserAddressListByUserAndCityUuid(
-            userUuid = userUuid,
-            cityUuid = cityUuid
-        ).mapListFlow(userAddressMapper::toUserAddress)
-    }
+        cityUuid: String,
+    ): Flow<List<UserAddress>> =
+        userAddressDao
+            .observeUserAddressListByUserAndCityUuid(
+                userUuid = userUuid,
+                cityUuid = cityUuid,
+            ).mapListFlow(userAddressMapper::toUserAddress)
 
     override suspend fun clearCache() {
         userAddressDao.deleteAll()

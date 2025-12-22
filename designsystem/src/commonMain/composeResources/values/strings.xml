@@ -1,0 +1,13 @@
+<resources>
+    <string name="preview_string">Строка для превью</string>
+
+    <string name="description_ic_next">Переход</string>
+    <string name="description_ic_about">О приложении</string>
+    <string name="description_ic_checked">Выбрано</string>
+    <string name="description_product">Фото блюда</string>
+    <string name="description_product_addition">Фото добавки</string>
+    <string name="description_ic_discount">Скидка</string>
+    <string name="description_ic_warning">Предупреждение</string>
+    <string name="action_retry">Повторить попытку</string>
+
+</resources>

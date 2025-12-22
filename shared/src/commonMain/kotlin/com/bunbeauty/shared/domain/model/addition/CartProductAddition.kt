@@ -7,5 +7,5 @@ data class CartProductAddition(
     val price: Int?,
     val cartProductUuid: String,
     val additionUuid: String,
-    val priority: Int?
+    val priority: Int?,
 )

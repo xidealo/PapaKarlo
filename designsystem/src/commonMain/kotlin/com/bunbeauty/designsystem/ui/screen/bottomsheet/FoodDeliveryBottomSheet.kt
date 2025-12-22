@@ -1,0 +1,99 @@
+package com.bunbeauty.designsystem.ui.screen.bottomsheet
+
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
+import com.bunbeauty.designsystem.theme.bold
+import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
+import papakarlo.designsystem.generated.resources.Res
+import papakarlo.designsystem.generated.resources.preview_string
+
+@Composable
+fun FoodDeliveryBottomSheet(
+    titleStringId: StringResource,
+    content: @Composable ColumnScope.() -> Unit,
+) {
+    FoodDeliveryBottomSheet(
+        title = stringResource(resource = titleStringId),
+        content = content,
+    )
+}
+
+@Composable
+fun FoodDeliveryBottomSheet(
+    title: String,
+    content: @Composable ColumnScope.() -> Unit,
+) {
+    FoodDeliveryBottomSheet(
+        title = {
+            Text(
+                modifier = Modifier.fillMaxWidth(),
+                text = title,
+                style = FoodDeliveryTheme.typography.titleMedium.bold,
+                color = FoodDeliveryTheme.colors.mainColors.onSurface,
+                textAlign = TextAlign.Center,
+            )
+        },
+        content = content,
+    )
+}
+
+@Composable
+private fun FoodDeliveryBottomSheet(
+    title: @Composable () -> Unit,
+    content: @Composable ColumnScope.() -> Unit,
+) {
+    Column(
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .clip(_root_ide_package_.com.bunbeauty.designsystem.ui.screen.bottomsheet.FoodDeliveryBottomSheetDefaults.bottomSheetShape)
+                .background(FoodDeliveryTheme.colors.mainColors.surface)
+                .padding(horizontal = FoodDeliveryTheme.dimensions.screenContentSpace)
+                .padding(bottom = FoodDeliveryTheme.dimensions.screenContentSpace, top = 8.dp),
+    ) {
+        Spacer(
+            modifier =
+                Modifier
+                    .width(32.dp)
+                    .height(4.dp)
+                    .background(
+                        color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
+                        shape = RoundedCornerShape(2.dp),
+                    ).align(CenterHorizontally),
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+        title()
+        Spacer(modifier = Modifier.height(16.dp))
+        content()
+    }
+}
+
+@Preview
+@Composable
+fun FoodDeliveryBottomSheetPreview() {
+    FoodDeliveryTheme {
+        FoodDeliveryBottomSheet(
+            titleStringId = Res.string.preview_string
+        ) {
+            Spacer(modifier = Modifier.height(300.dp))
+        }
+    }
+}

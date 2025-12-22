@@ -8,5 +8,5 @@ data class CafeItem(
     val phone: String,
     val workingHours: String,
     val cafeOpenState: CafeOpenState,
-    val isLast: Boolean
+    val isLast: Boolean,
 )

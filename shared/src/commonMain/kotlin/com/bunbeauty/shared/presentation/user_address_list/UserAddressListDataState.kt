@@ -8,26 +8,29 @@ import com.bunbeauty.shared.presentation.base.BaseEvent
 interface UserAddressListDataState {
     data class DataState(
         val userAddressList: List<SelectableUserAddress> = emptyList(),
-        val state: State
+        val state: State,
     ) : BaseDataState {
         enum class State {
             SUCCESS,
             ERROR,
             EMPTY,
-            LOADING
+            LOADING,
         }
     }
 
-    sealed interface Action: BaseAction {
+    sealed interface Action : BaseAction {
         data object Init : Action
+
         data object BackClicked : Action
+
         data object OnClickedCreateAddress : Action
+
         data object OnRefreshClicked : Action
     }
 
-    sealed interface Event: BaseEvent {
+    sealed interface Event : BaseEvent {
         object OpenCreateAddressEvent : Event
+
         object GoBackEvent : Event
     }
 }
-

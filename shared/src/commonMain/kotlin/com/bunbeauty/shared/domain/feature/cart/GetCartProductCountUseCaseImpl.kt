@@ -7,11 +7,10 @@ interface GetCartProductCountUseCase {
 }
 
 class GetCartProductCountUseCaseImpl(
-    private val cartProductRepo: CartProductRepo
+    private val cartProductRepo: CartProductRepo,
 ) : GetCartProductCountUseCase {
-    override suspend operator fun invoke(): Int {
-        return cartProductRepo.getCartProductList().sumOf { cartProduct ->
+    override suspend operator fun invoke(): Int =
+        cartProductRepo.getCartProductList().sumOf { cartProduct ->
             cartProduct.count
         }
-    }
 }

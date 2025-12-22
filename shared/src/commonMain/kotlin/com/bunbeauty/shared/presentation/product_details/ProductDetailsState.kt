@@ -7,11 +7,10 @@ import com.bunbeauty.shared.presentation.base.BaseDataState
 import com.bunbeauty.shared.presentation.base.BaseEvent
 
 interface ProductDetailsState {
-
     data class DataState(
         val cartCostAndCount: CartCostAndCount?,
         val menuProduct: MenuProduct,
-        val screenState: ScreenState
+        val screenState: ScreenState,
     ) : BaseDataState {
         data class MenuProduct(
             val uuid: String,
@@ -23,7 +22,7 @@ interface ProductDetailsState {
             val currency: String,
             val priceWithAdditions: Int,
             val description: String,
-            val additionGroups: List<AdditionGroup>
+            val additionGroups: List<AdditionGroup>,
         ) {
             val additionList =
                 additionGroups.flatMap { additionGroups -> additionGroups.additionList }
@@ -33,26 +32,36 @@ interface ProductDetailsState {
             SUCCESS,
             ERROR,
             LOADING,
-            INIT
+            INIT,
         }
     }
 
     sealed interface Action : BaseAction {
-        data class Init(val menuProductUuid: String, val selectedAdditionUuidList: List<String>) :
-            Action
+        data class Init(
+            val menuProductUuid: String,
+            val selectedAdditionUuidList: List<String>,
+        ) : Action
 
         data object BackClick : Action
-        data class AdditionClick(val uuid: String, val groupUuid: String) : Action
+
+        data class AdditionClick(
+            val uuid: String,
+            val groupUuid: String,
+        ) : Action
+
         data class AddProductToCartClick(
             val productDetailsOpenedFrom: ProductDetailsOpenedFrom,
-            val cartProductUuid: String?
+            val cartProductUuid: String?,
         ) : Action
     }
 
     sealed interface Event : BaseEvent {
         data object NavigateBack : Event
+
         data object AddedProduct : Event
+
         data object EditedProduct : Event
+
         data object ShowAddProductError : Event
     }
 }

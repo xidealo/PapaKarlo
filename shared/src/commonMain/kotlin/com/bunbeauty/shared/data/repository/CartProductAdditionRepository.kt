@@ -8,19 +8,23 @@ import com.bunbeauty.shared.domain.repo.CartProductAdditionRepo
 
 class CartProductAdditionRepository(
     private val uuidGenerator: UuidGenerator,
-    private val cartProductAdditionDao: ICartProductAdditionDao
+    private val cartProductAdditionDao: ICartProductAdditionDao,
 ) : CartProductAdditionRepo {
-    override suspend fun saveAsCartProductAddition(cartProductUuid: String, addition: Addition) {
+    override suspend fun saveAsCartProductAddition(
+        cartProductUuid: String,
+        addition: Addition,
+    ) {
         val uuid = uuidGenerator.generateUuid()
-        val cartProductAdditionEntity = CartProductAdditionEntity(
-            uuid = uuid,
-            name = addition.name,
-            price = addition.price,
-            additionUuid = addition.uuid,
-            cartProductUuid = cartProductUuid,
-            fullName = addition.fullName,
-            priority = addition.priority
-        )
+        val cartProductAdditionEntity =
+            CartProductAdditionEntity(
+                uuid = uuid,
+                name = addition.name,
+                price = addition.price,
+                additionUuid = addition.uuid,
+                cartProductUuid = cartProductUuid,
+                fullName = addition.fullName,
+                priority = addition.priority,
+            )
         cartProductAdditionDao.insertCartProductAddition(cartProductAdditionEntity)
     }
 

@@ -21,6 +21,6 @@ val mapOrderProductServerToOrderProductEntity: OrderProductServer.() -> OrderPro
             oldCommonPrice = oldCommonPrice,
             newTotalCost = newTotalCost,
             oldTotalCost = oldTotalCost,
-            orderUuid = orderUuid
+            orderUuid = orderUuid,
         )
     }

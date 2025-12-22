@@ -8,7 +8,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class GetCartProductAdditionsPriceUseCaseTest {
-
     private lateinit var useCase: GetCartProductAdditionsPriceUseCaseImpl
 
     @BeforeTest
@@ -17,20 +16,23 @@ class GetCartProductAdditionsPriceUseCaseTest {
     }
 
     @Test
-    fun `calculate correct price`() = runTest {
-        // Given
-        val additionList = listOf(
-            getCartProductAddition(price = 10),
-            getCartProductAddition(price = 10),
-            getCartProductAddition(price = null)
-        )
+    fun `calculate correct price`() =
+        runTest {
+            // Given
+            val additionList =
+                listOf(
+                    getCartProductAddition(price = 10),
+                    getCartProductAddition(price = 10),
+                    getCartProductAddition(price = null),
+                )
 
-        // When
-        val result = useCase(
-            additionList = additionList
-        )
+            // When
+            val result =
+                useCase(
+                    additionList = additionList,
+                )
 
-        // Then
-        assertEquals(20, result)
-    }
+            // Then
+            assertEquals(20, result)
+        }
 }

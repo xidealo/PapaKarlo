@@ -6,7 +6,7 @@ import com.bunbeauty.shared.domain.repo.OrderRepo
 
 class GetLastOrderUseCase(
     private val orderRepo: OrderRepo,
-    private val dataStoreRepo: DataStoreRepo
+    private val dataStoreRepo: DataStoreRepo,
 ) {
     suspend operator fun invoke(): LightOrder? {
         val token = dataStoreRepo.getToken() ?: return null

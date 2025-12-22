@@ -10,26 +10,26 @@ import kotlinx.coroutines.flow.flowOf
 
 class GetCurrentUserAddressFlowUseCase(
     private val dataStoreRepo: DataStoreRepo,
-    private val userAddressRepo: UserAddressRepo
+    private val userAddressRepo: UserAddressRepo,
 ) {
-
     @OptIn(ExperimentalCoroutinesApi::class)
     suspend operator fun invoke(): Flow<UserAddress?> {
         val userUuid = dataStoreRepo.getUserUuid() ?: return flowOf(null)
         val cityUuid = dataStoreRepo.getSelectedCityUuid() ?: return flowOf(null)
 
-        return userAddressRepo.observeSelectedUserAddressByUserAndCityUuid(
-            userUuid = userUuid,
-            cityUuid = cityUuid
-        ).flatMapLatest { userAddress ->
-            if (userAddress == null) {
-                userAddressRepo.observeFirstUserAddressByUserAndCityUuid(
-                    userUuid = userUuid,
-                    cityUuid = cityUuid
-                )
-            } else {
-                flowOf(userAddress)
+        return userAddressRepo
+            .observeSelectedUserAddressByUserAndCityUuid(
+                userUuid = userUuid,
+                cityUuid = cityUuid,
+            ).flatMapLatest { userAddress ->
+                if (userAddress == null) {
+                    userAddressRepo.observeFirstUserAddressByUserAndCityUuid(
+                        userUuid = userUuid,
+                        cityUuid = cityUuid,
+                    )
+                } else {
+                    flowOf(userAddress)
+                }
             }
-        }
     }
 }

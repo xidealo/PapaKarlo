@@ -1,5 +1,5 @@
 package com.bunbeauty.papakarlo
 
-class A {
+class Test {
     fun test() {}
 }

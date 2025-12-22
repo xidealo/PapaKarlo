@@ -6,32 +6,26 @@ import com.bunbeauty.shared.db.UserEntity
 import com.bunbeauty.shared.domain.model.profile.User
 
 class UserMapper : IUserMapper {
-
-    override fun toEntityModel(profileServer: ProfileServer): UserEntity {
-        return UserEntity(
+    override fun toEntityModel(profileServer: ProfileServer): UserEntity =
+        UserEntity(
             uuid = profileServer.uuid,
             phone = profileServer.phoneNumber,
-            email = profileServer.email
+            email = profileServer.email,
         )
-    }
 
-    override fun toUser(userEntity: UserEntity): User {
-        return User(
+    override fun toUser(userEntity: UserEntity): User =
+        User(
             uuid = userEntity.uuid,
             phone = userEntity.phone,
-            email = userEntity.email
+            email = userEntity.email,
         )
-    }
 
-    override fun toUser(profileServer: ProfileServer): User {
-        return User(
+    override fun toUser(profileServer: ProfileServer): User =
+        User(
             uuid = profileServer.uuid,
             phone = profileServer.phoneNumber,
-            email = profileServer.email
+            email = profileServer.email,
         )
-    }
 
-    override fun toPatchServerModel(email: String): PatchUserServer {
-        return PatchUserServer(email = email)
-    }
+    override fun toPatchServerModel(email: String): PatchUserServer = PatchUserServer(email = email)
 }

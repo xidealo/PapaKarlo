@@ -17,91 +17,95 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class RemoveCartProductUseCaseTest {
-
     private val cartProductRepo: CartProductRepo = mock()
     private val cartProductAdditionRepository: CartProductAdditionRepo = mock()
     private val cartProductUuid = "cart_uuid"
-    private val removeCartProduct: RemoveCartProductUseCase = RemoveCartProductUseCase(
-        cartProductRepo = cartProductRepo,
-        cartProductAdditionRepository = cartProductAdditionRepository
-    )
-
-    @Test
-    fun `return false when there is no product in cart`() = runTest {
-        // Given
-        everySuspend { cartProductRepo.getCartProduct(cartProductUuid) } returns null
-        everySuspend { cartProductAdditionRepository.delete(cartProductUuid) } returns Unit
-
-        // When
-        val result = removeCartProduct(cartProductUuid)
-
-        // Then
-        verifySuspend(mode = VerifyMode.atLeast(1)) {
-            cartProductRepo.getCartProduct(cartProductUuid)
-        }
-        assertFalse(result)
-    }
-
-    @Test
-    fun `return true when product count more than 1`() = runTest {
-        // Given
-        val initialCartProduct = getCartProduct(
-            uuid = cartProductUuid,
-            count = 2,
-            menuProduct = getMenuProduct()
+    private val removeCartProduct: RemoveCartProductUseCase =
+        RemoveCartProductUseCase(
+            cartProductRepo = cartProductRepo,
+            cartProductAdditionRepository = cartProductAdditionRepository,
         )
-        everySuspend { cartProductRepo.getCartProduct(cartProductUuid) } returns initialCartProduct
-
-        everySuspend {
-            cartProductRepo.updateCartProductCount(
-                cartProductUuid,
-                1
-            )
-        } returns Unit
-        everySuspend { cartProductAdditionRepository.delete(cartProductUuid) } returns Unit
-
-        // When
-        val result = removeCartProduct(cartProductUuid)
-
-        // Then
-        verifySuspend(mode = VerifyMode.atLeast(1)) {
-            cartProductRepo.getCartProduct(cartProductUuid)
-        }
-        verifySuspend(mode = VerifyMode.atLeast(1)) {
-            cartProductRepo.updateCartProductCount(cartProductUuid, 1)
-        }
-        assertTrue(result)
-    }
 
     @Test
-    fun `return true when product count equals 1`() = runTest {
-        // Given
-        val initialCartProductAddition = getCartProductAddition(uuid = "1")
-        val cartProduct =
-            getCartProduct(
-                uuid = cartProductUuid,
-                count = 1,
-                menuProduct = getMenuProduct(),
-                cartProductAdditionList = listOf(initialCartProductAddition)
-            )
-        everySuspend { cartProductRepo.getCartProduct(cartProductUuid) } returns cartProduct
+    fun `return false when there is no product in cart`() =
+        runTest {
+            // Given
+            everySuspend { cartProductRepo.getCartProduct(cartProductUuid) } returns null
+            everySuspend { cartProductAdditionRepository.delete(cartProductUuid) } returns Unit
 
-        everySuspend { cartProductRepo.deleteCartProduct(cartProductUuid) } returns Unit
-        everySuspend { cartProductAdditionRepository.delete(initialCartProductAddition.uuid) } returns Unit
+            // When
+            val result = removeCartProduct(cartProductUuid)
 
-        // When
-        val result = removeCartProduct(cartProductUuid)
+            // Then
+            verifySuspend(mode = VerifyMode.atLeast(1)) {
+                cartProductRepo.getCartProduct(cartProductUuid)
+            }
+            assertFalse(result)
+        }
 
-        // Then
-        verifySuspend(mode = VerifyMode.atLeast(1)) {
-            cartProductRepo.getCartProduct(cartProductUuid)
+    @Test
+    fun `return true when product count more than 1`() =
+        runTest {
+            // Given
+            val initialCartProduct =
+                getCartProduct(
+                    uuid = cartProductUuid,
+                    count = 2,
+                    menuProduct = getMenuProduct(),
+                )
+            everySuspend { cartProductRepo.getCartProduct(cartProductUuid) } returns initialCartProduct
+
+            everySuspend {
+                cartProductRepo.updateCartProductCount(
+                    cartProductUuid,
+                    1,
+                )
+            } returns Unit
+            everySuspend { cartProductAdditionRepository.delete(cartProductUuid) } returns Unit
+
+            // When
+            val result = removeCartProduct(cartProductUuid)
+
+            // Then
+            verifySuspend(mode = VerifyMode.atLeast(1)) {
+                cartProductRepo.getCartProduct(cartProductUuid)
+            }
+            verifySuspend(mode = VerifyMode.atLeast(1)) {
+                cartProductRepo.updateCartProductCount(cartProductUuid, 1)
+            }
+            assertTrue(result)
         }
-        verifySuspend(mode = VerifyMode.atLeast(1)) {
-            cartProductRepo.deleteCartProduct(cartProductUuid)
+
+    @Test
+    fun `return true when product count equals 1`() =
+        runTest {
+            // Given
+            val initialCartProductAddition = getCartProductAddition(uuid = "1")
+            val cartProduct =
+                getCartProduct(
+                    uuid = cartProductUuid,
+                    count = 1,
+                    menuProduct = getMenuProduct(),
+                    cartProductAdditionList = listOf(initialCartProductAddition),
+                )
+            everySuspend { cartProductRepo.getCartProduct(cartProductUuid) } returns cartProduct
+
+            everySuspend { cartProductRepo.deleteCartProduct(cartProductUuid) } returns Unit
+            everySuspend { cartProductAdditionRepository.delete(initialCartProductAddition.uuid) } returns Unit
+
+            // When
+            val result = removeCartProduct(cartProductUuid)
+
+            // Then
+            verifySuspend(mode = VerifyMode.atLeast(1)) {
+                cartProductRepo.getCartProduct(cartProductUuid)
+            }
+            verifySuspend(mode = VerifyMode.atLeast(1)) {
+                cartProductRepo.deleteCartProduct(cartProductUuid)
+            }
+            verifySuspend(mode = VerifyMode.atLeast(1)) {
+                cartProductAdditionRepository.delete(initialCartProductAddition.uuid)
+            }
+            assertTrue(result)
         }
-        verifySuspend(mode = VerifyMode.atLeast(1)) {
-            cartProductAdditionRepository.delete(initialCartProductAddition.uuid)
-        }
-        assertTrue(result)
-    }
 }

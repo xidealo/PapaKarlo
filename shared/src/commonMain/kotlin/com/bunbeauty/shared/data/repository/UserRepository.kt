@@ -31,12 +31,14 @@ class UserRepository(
     private val userDao: IUserDao,
     private val userAddressDao: IUserAddressDao,
     private val orderDao: IOrderDao,
-    private val dataStoreRepo: DataStoreRepo
-) : DatabaseCacheRepository(), UserRepo, CoroutineScope {
-
-    val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
-        Logger.logE("UserRepository", throwable.printStackTrace())
-    }
+    private val dataStoreRepo: DataStoreRepo,
+) : DatabaseCacheRepository(),
+    UserRepo,
+    CoroutineScope {
+    val coroutineExceptionHandler =
+        CoroutineExceptionHandler { _, throwable ->
+            Logger.logE("UserRepository", throwable.printStackTrace())
+        }
 
     override val coroutineContext: CoroutineContext
         get() = SupervisorJob() + Dispatchers.IO + coroutineExceptionHandler
@@ -44,30 +46,29 @@ class UserRepository(
     override val tag: String = "USER_TAG"
     var cachedUserUuid: String? = null
 
-    override fun observeUserByUuid(userUuid: String): Flow<User?> {
-        return userDao.observeUserByUuid(uuid = userUuid).mapFlow(userMapper::toUser)
-    }
+    override fun observeUserByUuid(userUuid: String): Flow<User?> = userDao.observeUserByUuid(uuid = userUuid).mapFlow(userMapper::toUser)
 
     override suspend fun getProfile(): Profile.Authorized? {
         val token = dataStoreRepo.getToken() ?: return null
 
         return dataStoreRepo.getUserAndCityUuid().let { userCityUuid ->
-            val profile = getCacheOrData(
-                isCacheValid = {
-                    cachedUserUuid == userCityUuid.userUuid
-                },
-                onLocalRequest = {
-                    getProfileLocally(
-                        userUuid = userCityUuid.userUuid,
-                        cityUuid = userCityUuid.cityUuid
-                    )
-                },
-                onApiRequest = {
-                    networkConnector.getProfile(token = token)
-                },
-                onSaveLocally = ::saveProfileLocally,
-                serverToDomainModel = profileMapper::toProfile
-            )
+            val profile =
+                getCacheOrData(
+                    isCacheValid = {
+                        cachedUserUuid == userCityUuid.userUuid
+                    },
+                    onLocalRequest = {
+                        getProfileLocally(
+                            userUuid = userCityUuid.userUuid,
+                            cityUuid = userCityUuid.cityUuid,
+                        )
+                    },
+                    onApiRequest = {
+                        networkConnector.getProfile(token = token)
+                    },
+                    onSaveLocally = ::saveProfileLocally,
+                    serverToDomainModel = profileMapper::toProfile,
+                )
             cachedUserUuid = profile?.userUuid
             profile
         }
@@ -78,9 +79,7 @@ class UserRepository(
         userDao.deleteAll()
     }
 
-    override suspend fun getToken(): String? {
-        return dataStoreRepo.getToken()
-    }
+    override suspend fun getToken(): String? = dataStoreRepo.getToken()
 
     override suspend fun disableUser(token: String) {
         networkConnector.patchSettings(token, PatchUserServer(isActive = false))
@@ -90,10 +89,11 @@ class UserRepository(
         launch {
             dataStoreRepo.getToken()?.let { token ->
                 networkConnector.putNotificationToken(
-                    updateNotificationTokenRequest = UpdateNotificationTokenRequest(
-                        token = notificationToken
-                    ),
-                    token = token
+                    updateNotificationTokenRequest =
+                        UpdateNotificationTokenRequest(
+                            token = notificationToken,
+                        ),
+                    token = token,
                 )
             }
         }
@@ -102,10 +102,11 @@ class UserRepository(
     override suspend fun updateNotificationTokenSuspend(notificationToken: String) {
         dataStoreRepo.getToken()?.let { token ->
             networkConnector.putNotificationToken(
-                updateNotificationTokenRequest = UpdateNotificationTokenRequest(
-                    token = notificationToken
-                ),
-                token = token
+                updateNotificationTokenRequest =
+                    UpdateNotificationTokenRequest(
+                        token = notificationToken,
+                    ),
+                token = token,
             )
         }
     }
@@ -117,19 +118,23 @@ class UserRepository(
         }
     }
 
-    private suspend fun getProfileLocally(userUuid: String, cityUuid: String): Profile.Authorized? {
-        return userDao.getUserByUuid(userUuid)?.let { userEntity ->
+    private suspend fun getProfileLocally(
+        userUuid: String,
+        cityUuid: String,
+    ): Profile.Authorized? =
+        userDao.getUserByUuid(userUuid)?.let { userEntity ->
             val userAddressCount =
                 userAddressDao.getUserAddressCountByUserAndCityUuid(userUuid, cityUuid)
-            val lastOrderEntity = orderDao.getOrderListByUserUuid(
-                userUuid = userUuid,
-                count = 1
-            ).firstOrNull()
+            val lastOrderEntity =
+                orderDao
+                    .getOrderListByUserUuid(
+                        userUuid = userUuid,
+                        count = 1,
+                    ).firstOrNull()
             profileMapper.toProfile(
                 userUuid = userEntity.uuid,
                 userAddressCount = userAddressCount,
-                lastOrderEntity = lastOrderEntity
+                lastOrderEntity = lastOrderEntity,
             )
         }
-    }
 }

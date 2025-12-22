@@ -8,15 +8,16 @@ interface GetOldTotalCostUseCase {
 }
 
 class GetOldTotalCostUseCaseImpl(
-    private val getCartProductAdditionsPriceUseCase: GetCartProductAdditionsPriceUseCase
+    private val getCartProductAdditionsPriceUseCase: GetCartProductAdditionsPriceUseCase,
 ) : GetOldTotalCostUseCase {
     override operator fun invoke(cartProductList: List<CartProduct>): Int {
-        val oldTotalCost = cartProductList.sumOf { cartProduct ->
-            val price = (cartProduct.product.oldPrice ?: cartProduct.product.newPrice)
-            val sumOfCostAndAdditions =
-                price + getCartProductAdditionsPriceUseCase(cartProduct.additionList)
-            sumOfCostAndAdditions * cartProduct.count
-        }
+        val oldTotalCost =
+            cartProductList.sumOf { cartProduct ->
+                val price = (cartProduct.product.oldPrice ?: cartProduct.product.newPrice)
+                val sumOfCostAndAdditions =
+                    price + getCartProductAdditionsPriceUseCase(cartProduct.additionList)
+                sumOfCostAndAdditions * cartProduct.count
+            }
 
         return oldTotalCost
     }

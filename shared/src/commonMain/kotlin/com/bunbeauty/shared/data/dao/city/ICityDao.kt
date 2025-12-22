@@ -4,7 +4,6 @@ import com.bunbeauty.shared.db.CityEntity
 import kotlinx.coroutines.flow.Flow
 
 interface ICityDao {
-
     suspend fun insertCityList(cityList: List<CityEntity>)
 
     suspend fun getCityList(): List<CityEntity>
