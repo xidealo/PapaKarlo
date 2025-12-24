@@ -7,7 +7,6 @@ import com.bunbeauty.shared.domain.feature.city.GetSelectedCityTimeZoneUseCase
 import com.bunbeauty.shared.domain.feature.city.GetSelectedCityTimeZoneUseCaseImpl
 import com.bunbeauty.shared.domain.feature.discount.GetDiscountUseCase
 import com.bunbeauty.shared.domain.feature.discount.GetDiscountUseCaseImpl
-import com.bunbeauty.shared.domain.feature.link.GetLinkListUseCase
 import com.bunbeauty.shared.domain.feature.link.GetLinkUseCase
 import com.bunbeauty.shared.domain.feature.menuproduct.GetMenuProductListUseCase
 import com.bunbeauty.shared.domain.feature.menuproduct.GetMenuProductListUseCaseImpl
@@ -95,11 +94,6 @@ internal fun useCaseModules() =
         }
         factory {
             GetFilteredStreetListUseCase()
-        }
-        factory {
-            GetLinkListUseCase(
-                linkRepo = get(),
-            )
         }
         factory {
             GetLinkUseCase(
