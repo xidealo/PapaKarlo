@@ -34,6 +34,7 @@ import com.bunbeauty.shared.domain.feature.auth.RequestCodeUseCase
 import com.bunbeauty.shared.domain.feature.auth.ResendCodeUseCase
 import com.bunbeauty.shared.domain.feature.cafe.GetAdditionalUtensilsUseCase
 import com.bunbeauty.shared.domain.feature.cafe.GetCafeListUseCase
+import com.bunbeauty.shared.domain.feature.cafe.GetDeferredTimeHintUseCase
 import com.bunbeauty.shared.domain.feature.cafe.GetSelectableCafeListUseCase
 import com.bunbeauty.shared.domain.feature.cafe.GetWorkloadCafeUseCase
 import com.bunbeauty.shared.domain.feature.cafe.HasOpenedCafeUseCase
@@ -292,6 +293,8 @@ class IosComponent : KoinComponent {
     fun provideGetSelectedPaymentMethodUseCase(): GetSelectedPaymentMethodUseCase = get()
 
     fun provideGetAdditionalUtensilsUseCase(): GetAdditionalUtensilsUseCase = get()
+
+    fun provideGetDeferredTimeHintUseCase(): GetDeferredTimeHintUseCase = get()
 
     // Mapper
     fun provideUserAddressMapper(): UserAddressMapper = get()
