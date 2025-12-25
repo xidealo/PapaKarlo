@@ -103,6 +103,22 @@ Push a new emoji release build to the App Store
 
 Push a new estpoest release build to the App Store
 
+### ios taverna
+
+```sh
+[bundle exec] fastlane ios taverna
+```
+
+Push a new taverna release build to the App Store
+
+### ios voljane
+
+```sh
+[bundle exec] fastlane ios voljane
+```
+
+Push a new voljane release build to the App Store
+
 ----
 
 This README.md is auto-generated and will be re-generated every time [_fastlane_](https://fastlane.tools) is run.
