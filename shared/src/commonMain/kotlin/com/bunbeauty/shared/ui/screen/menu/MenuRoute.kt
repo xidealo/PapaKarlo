@@ -75,7 +75,6 @@ fun MenuRoute(
     goToConsumerCart: () -> Unit,
     showErrorMessage: (String) -> Unit,
 ) {
-
     val viewState by viewModel.menuState.collectAsStateWithLifecycle()
 
     val consumeEffects =

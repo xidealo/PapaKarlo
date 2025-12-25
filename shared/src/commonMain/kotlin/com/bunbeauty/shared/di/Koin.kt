@@ -293,6 +293,7 @@ class IosComponent : KoinComponent {
     fun provideGetSelectedPaymentMethodUseCase(): GetSelectedPaymentMethodUseCase = get()
 
     fun provideGetAdditionalUtensilsUseCase(): GetAdditionalUtensilsUseCase = get()
+
     fun provideGetDeferredTimeHintUseCase(): GetDeferredTimeHintUseCase = get()
 
     // Mapper
