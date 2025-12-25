@@ -59,7 +59,8 @@ struct CreateOrderView: View {
         getWorkloadCafeUseCase: iosComponent.provideGetWorkloadCafeUseCase(),
         getSelectedPaymentMethodUseCase: iosComponent.provideGetSelectedPaymentMethodUseCase(),
         getExtendedCommentUseCase: iosComponent.provideGetExtendedCommentUseCase(),
-        getAdditionalUtensilsUseCase: iosComponent.provideGetAdditionalUtensilsUseCase()
+        getAdditionalUtensilsUseCase: iosComponent.provideGetAdditionalUtensilsUseCase(),
+        getDeferredTimeHintUseCase: iosComponent.provideGetDeferredTimeHintUseCase()
     )
 
     @State var createOrderViewState: CreateOrderViewState?
