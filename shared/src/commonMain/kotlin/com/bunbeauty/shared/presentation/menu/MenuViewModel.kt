@@ -51,6 +51,7 @@ class MenuViewModel(
     private var currentMenuPosition = 0
 
     init {
+        getMenu()
         observeCart()
     }
 
@@ -106,9 +107,9 @@ class MenuViewModel(
                             }
                         val menuItemList =
                             listOfNotNull(discountItem) +
-                                menuSectionList.flatMap { menuSection ->
-                                    menuSection.toMenuItemList()
-                                }
+                                    menuSectionList.flatMap { menuSection ->
+                                        menuSection.toMenuItemList()
+                                    }
                         mutableMenuState.update { oldState ->
                             oldState.copy(
                                 categoryItemList =
@@ -177,10 +178,10 @@ class MenuViewModel(
 
         mutableMenuState.update { oldState ->
             oldState +
-                MenuDataState.Event.GoToSelectedItem(
-                    uuid = menuProduct.uuid,
-                    name = menuProduct.name,
-                )
+                    MenuDataState.Event.GoToSelectedItem(
+                        uuid = menuProduct.uuid,
+                        name = menuProduct.name,
+                    )
         }
     }
 
@@ -205,10 +206,10 @@ class MenuViewModel(
                 if (menuProduct.hasAdditions) {
                     mutableMenuState.update { oldState ->
                         oldState +
-                            MenuDataState.Event.GoToSelectedItem(
-                                uuid = menuProduct.uuid,
-                                name = menuProduct.name,
-                            )
+                                MenuDataState.Event.GoToSelectedItem(
+                                    uuid = menuProduct.uuid,
+                                    name = menuProduct.name,
+                                )
                     }
                 } else {
                     addMenuProductUseCase(menuProductUuid = menuProduct.uuid)
