@@ -51,6 +51,7 @@ class MenuViewModel(
     private var currentMenuPosition = 0
 
     init {
+        getMenu()
         observeCart()
     }
 
