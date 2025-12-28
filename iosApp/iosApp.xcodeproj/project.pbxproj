@@ -1697,7 +1697,7 @@
 		9F16CA71F7A1C57D286A0E36 /* Pods_djan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_djan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4F374E300689A868C53F1F1 /* Pods-emoji.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-emoji.release.xcconfig"; path = "Target Support Files/Pods-emoji/Pods-emoji.release.xcconfig"; sourceTree = "<group>"; };
 		AC6E61D92EA18CBD004F9248 /* voljane.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = voljane.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		AC6E61DB2EA18E24004F9248 /* GoogleService-Info.plist */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		AC6E61DB2EA18E24004F9248 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		AC6E61DC2EA18E24004F9248 /* voljane.plist */ = {isa = PBXFileReference; explicitFileType = text.xml; path = voljane.plist; sourceTree = "<group>"; };
 		AC6E61DD2EA18E24004F9248 /* voljane.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = voljane.xcassets; sourceTree = "<group>"; };
 		AD685DC99B68FD89495E8E8B /* Pods-yuliar.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-yuliar.release.xcconfig"; path = "Target Support Files/Pods-yuliar/Pods-yuliar.release.xcconfig"; sourceTree = "<group>"; };
