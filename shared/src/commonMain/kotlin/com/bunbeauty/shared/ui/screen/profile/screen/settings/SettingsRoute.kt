@@ -86,22 +86,24 @@ fun SettingsState.DataState.mapState(): SettingsViewState =
     SettingsViewState(
         phoneNumber = settings?.phoneNumber.orEmpty(),
         selectedCityName = selectedCity?.name.orEmpty(),
-        state = when (state) {
-            SettingsState.DataState.State.SUCCESS -> {
-                SettingsViewState.State.Success
-            }
+        state =
+            when (state) {
+                SettingsState.DataState.State.SUCCESS -> {
+                    SettingsViewState.State.Success
+                }
 
-            SettingsState.DataState.State.ERROR -> {
-                SettingsViewState.State.Error
-            }
+                SettingsState.DataState.State.ERROR -> {
+                    SettingsViewState.State.Error
+                }
 
-            SettingsState.DataState.State.LOADING -> {
-                SettingsViewState.State.Loading
-            }
-        },
-        logoutUI = SettingsViewState.LogoutBottomSheetUI(
-            isShown = isShowLogoutBottomSheet,
-        ),
+                SettingsState.DataState.State.LOADING -> {
+                    SettingsViewState.State.Loading
+                }
+            },
+        logoutUI =
+            SettingsViewState.LogoutBottomSheetUI(
+                isShown = isShowLogoutBottomSheet,
+            ),
         cityListBottomSheetUI =
             SettingsViewState.CityListBottomSheetUI(
                 isShown = isShowCityListBottomSheet,
@@ -115,9 +117,10 @@ fun SettingsState.DataState.mapState(): SettingsViewState =
                             )
                         }.toPersistentList(),
             ),
-        disableUserBottomSheetUI = SettingsViewState.DisableUserBottomSheetUI(
-            isShown = isShowDisableUserBottomSheet
-        )
+        disableUserBottomSheetUI =
+            SettingsViewState.DisableUserBottomSheetUI(
+                isShown = isShowDisableUserBottomSheet,
+            ),
     )
 
 @Composable
@@ -188,7 +191,7 @@ fun SettingsScreen(
                 )
                 DisableUserBottomSheetScreen(
                     disableUserBottomSheetUI = viewState.disableUserBottomSheetUI,
-                    onAction = onAction
+                    onAction = onAction,
                 )
             }
 
@@ -234,7 +237,7 @@ fun SettingsScreenSuccess(
             onClick = {
                 onAction(SettingsState.Action.DisableUser)
             },
-            elevated = false
+            elevated = false,
         )
     }
 }
@@ -250,9 +253,10 @@ val previewSettingsViewState =
                 isShown = false,
                 cityListUI = persistentListOf(),
             ),
-        disableUserBottomSheetUI = SettingsViewState.DisableUserBottomSheetUI(
-            isShown = false
-        )
+        disableUserBottomSheetUI =
+            SettingsViewState.DisableUserBottomSheetUI(
+                isShown = false,
+            ),
     )
 
 @Preview(showBackground = true)

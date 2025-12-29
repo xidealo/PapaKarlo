@@ -44,7 +44,9 @@ interface SettingsState {
         data object LoadData : Action
 
         data object DisableUser : Action
+
         data object CloseDisableUserBottomSheet : Action
+
         data object DisableUserBottomSheet : Action
 
         data object BackClick : Action

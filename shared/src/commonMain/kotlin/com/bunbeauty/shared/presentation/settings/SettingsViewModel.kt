@@ -26,8 +26,8 @@ class SettingsViewModel(
     private val userInteractor: IUserInteractor,
     private val analyticService: AnalyticService,
 ) : SharedStateViewModel<SettingsState.DataState, SettingsState.Action, SettingsState.Event>(
-    SettingsState.DataState(),
-) {
+        SettingsState.DataState(),
+    ) {
     private var observeSettingsJob: Job? = null
 
     override fun reduce(
@@ -68,9 +68,10 @@ class SettingsViewModel(
 
     private fun onLogoutClicked(phoneNumber: String) {
         analyticService.sendEvent(
-            event = LogoutSettingsClickEvent(
-                phone = phoneNumber,
-            ),
+            event =
+                LogoutSettingsClickEvent(
+                    phone = phoneNumber,
+                ),
         )
 
         setState {
@@ -117,7 +118,7 @@ class SettingsViewModel(
                 setState {
                     copy(
                         isShowLogoutBottomSheet = false,
-                        state = SettingsState.DataState.State.LOADING
+                        state = SettingsState.DataState.State.LOADING,
                     )
                 }
                 observeSettingsJob?.cancel()
@@ -135,7 +136,7 @@ class SettingsViewModel(
     fun onDisableUserClicked() {
         setState {
             copy(
-                isShowDisableUserBottomSheet = true
+                isShowDisableUserBottomSheet = true,
             )
         }
     }
@@ -143,7 +144,7 @@ class SettingsViewModel(
     fun onCloseDisableUserClickedBS() {
         setState {
             copy(
-                isShowDisableUserBottomSheet = false
+                isShowDisableUserBottomSheet = false,
             )
         }
     }
@@ -152,7 +153,7 @@ class SettingsViewModel(
         sharedScope.launch {
             setState {
                 copy(
-                    state = SettingsState.DataState.State.LOADING
+                    state = SettingsState.DataState.State.LOADING,
                 )
             }
             disableUserUseCase()
@@ -168,11 +169,12 @@ class SettingsViewModel(
                 .flatMapLatest { city ->
                     observeSettingsUseCase().map { settings ->
                         setState {
-                            val state = if (city == null || settings == null) {
-                                SettingsState.DataState.State.ERROR
-                            } else {
-                                SettingsState.DataState.State.SUCCESS
-                            }
+                            val state =
+                                if (city == null || settings == null) {
+                                    SettingsState.DataState.State.ERROR
+                                } else {
+                                    SettingsState.DataState.State.SUCCESS
+                                }
 
                             copy(
                                 settings = settings,
