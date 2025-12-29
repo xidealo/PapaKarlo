@@ -10,10 +10,12 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.designsystem.ui.element.button.MainButton
+import com.bunbeauty.designsystem.ui.element.button.SecondaryButton
 import com.bunbeauty.designsystem.ui.element.card.NavigationCardWithDivider
 import com.bunbeauty.designsystem.ui.element.card.TextCardWithDivider
 import com.bunbeauty.designsystem.ui.screen.ErrorScreen
@@ -22,6 +24,7 @@ import com.bunbeauty.shared.presentation.settings.SettingsState
 import com.bunbeauty.shared.presentation.settings.SettingsViewModel
 import com.bunbeauty.shared.ui.screen.city.screen.CityUI
 import com.bunbeauty.shared.ui.screen.city.screen.changecity.CityListBottomSheetScreen
+import com.bunbeauty.shared.ui.screen.profile.screen.disableuser.DisableUserBottomSheetScreen
 import com.bunbeauty.shared.ui.screen.profile.screen.logout.LogoutBottomSheetScreen
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
@@ -31,6 +34,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import papakarlo.shared.generated.resources.Res
 import papakarlo.shared.generated.resources.action_logout
+import papakarlo.shared.generated.resources.action_settings_delete
 import papakarlo.shared.generated.resources.common_city
 import papakarlo.shared.generated.resources.error_common_data_loading
 import papakarlo.shared.generated.resources.error_something_went_wrong
@@ -82,24 +86,22 @@ fun SettingsState.DataState.mapState(): SettingsViewState =
     SettingsViewState(
         phoneNumber = settings?.phoneNumber.orEmpty(),
         selectedCityName = selectedCity?.name.orEmpty(),
-        state =
-            when (state) {
-                SettingsState.DataState.State.SUCCESS -> {
-                    SettingsViewState.State.Success
-                }
+        state = when (state) {
+            SettingsState.DataState.State.SUCCESS -> {
+                SettingsViewState.State.Success
+            }
 
-                SettingsState.DataState.State.ERROR -> {
-                    SettingsViewState.State.Error
-                }
+            SettingsState.DataState.State.ERROR -> {
+                SettingsViewState.State.Error
+            }
 
-                SettingsState.DataState.State.LOADING -> {
-                    SettingsViewState.State.Loading
-                }
-            },
-        logoutUI =
-            SettingsViewState.LogoutBottomSheetUI(
-                isShown = isShowLogoutBottomSheet,
-            ),
+            SettingsState.DataState.State.LOADING -> {
+                SettingsViewState.State.Loading
+            }
+        },
+        logoutUI = SettingsViewState.LogoutBottomSheetUI(
+            isShown = isShowLogoutBottomSheet,
+        ),
         cityListBottomSheetUI =
             SettingsViewState.CityListBottomSheetUI(
                 isShown = isShowCityListBottomSheet,
@@ -113,6 +115,9 @@ fun SettingsState.DataState.mapState(): SettingsViewState =
                             )
                         }.toPersistentList(),
             ),
+        disableUserBottomSheetUI = SettingsViewState.DisableUserBottomSheetUI(
+            isShown = isShowDisableUserBottomSheet
+        )
     )
 
 @Composable
@@ -181,6 +186,10 @@ fun SettingsScreen(
                     cityListBottomSheetUI = viewState.cityListBottomSheetUI,
                     onAction = onAction,
                 )
+                DisableUserBottomSheetScreen(
+                    disableUserBottomSheetUI = viewState.disableUserBottomSheetUI,
+                    onAction = onAction
+                )
             }
 
             SettingsViewState.State.Error ->
@@ -218,6 +227,15 @@ fun SettingsScreenSuccess(
             label = stringResource(Res.string.common_city),
             value = settingsState.selectedCityName,
         )
+
+        SecondaryButton(
+            modifier = Modifier.padding(top = 16.dp),
+            textStringId = Res.string.action_settings_delete,
+            onClick = {
+                onAction(SettingsState.Action.DisableUser)
+            },
+            elevated = false
+        )
     }
 }
 
@@ -232,6 +250,9 @@ val previewSettingsViewState =
                 isShown = false,
                 cityListUI = persistentListOf(),
             ),
+        disableUserBottomSheetUI = SettingsViewState.DisableUserBottomSheetUI(
+            isShown = false
+        )
     )
 
 @Preview(showBackground = true)

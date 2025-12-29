@@ -6,7 +6,6 @@ import com.bunbeauty.shared.domain.feature.city.GetCityListUseCase
 import com.bunbeauty.shared.domain.feature.city.ObserveSelectedCityUseCase
 import com.bunbeauty.shared.domain.feature.city.SaveSelectedCityUseCase
 import com.bunbeauty.shared.domain.feature.settings.ObserveSettingsUseCase
-import com.bunbeauty.shared.domain.feature.settings.UpdateEmailUseCase
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
 import com.bunbeauty.shared.domain.use_case.DisableUserUseCase
 import com.bunbeauty.shared.extension.launchSafe
@@ -21,15 +20,14 @@ import kotlinx.coroutines.launch
 class SettingsViewModel(
     private val observeSettingsUseCase: ObserveSettingsUseCase,
     private val observeSelectedCityUseCase: ObserveSelectedCityUseCase,
-    private val updateEmailUseCase: UpdateEmailUseCase,
     private val getCityListUseCase: GetCityListUseCase,
     private val saveSelectedCityUseCase: SaveSelectedCityUseCase,
     private val disableUserUseCase: DisableUserUseCase,
     private val userInteractor: IUserInteractor,
     private val analyticService: AnalyticService,
 ) : SharedStateViewModel<SettingsState.DataState, SettingsState.Action, SettingsState.Event>(
-        SettingsState.DataState(),
-    ) {
+    SettingsState.DataState(),
+) {
     private var observeSettingsJob: Job? = null
 
     override fun reduce(
@@ -51,6 +49,9 @@ class SettingsViewModel(
             SettingsState.Action.CloseLogoutBottomSheet -> onCloseLogoutClicked()
             is SettingsState.Action.OnCitySelected -> onCitySelected(action.cityUuid)
             SettingsState.Action.CloseCityListBottomSheet -> onCloseCityListBottomSheetClicked()
+            SettingsState.Action.DisableUser -> onDisableUserClicked()
+            SettingsState.Action.CloseDisableUserBottomSheet -> onCloseDisableUserClickedBS()
+            SettingsState.Action.DisableUserBottomSheet -> disableUser()
         }
     }
 
@@ -67,10 +68,9 @@ class SettingsViewModel(
 
     private fun onLogoutClicked(phoneNumber: String) {
         analyticService.sendEvent(
-            event =
-                LogoutSettingsClickEvent(
-                    phone = phoneNumber,
-                ),
+            event = LogoutSettingsClickEvent(
+                phone = phoneNumber,
+            ),
         )
 
         setState {
@@ -117,6 +117,7 @@ class SettingsViewModel(
                 setState {
                     copy(
                         isShowLogoutBottomSheet = false,
+                        state = SettingsState.DataState.State.LOADING
                     )
                 }
                 observeSettingsJob?.cancel()
@@ -131,8 +132,29 @@ class SettingsViewModel(
         )
     }
 
+    fun onDisableUserClicked() {
+        setState {
+            copy(
+                isShowDisableUserBottomSheet = true
+            )
+        }
+    }
+
+    fun onCloseDisableUserClickedBS() {
+        setState {
+            copy(
+                isShowDisableUserBottomSheet = false
+            )
+        }
+    }
+
     fun disableUser() {
         sharedScope.launch {
+            setState {
+                copy(
+                    state = SettingsState.DataState.State.LOADING
+                )
+            }
             disableUserUseCase()
             logout()
         }
@@ -146,12 +168,11 @@ class SettingsViewModel(
                 .flatMapLatest { city ->
                     observeSettingsUseCase().map { settings ->
                         setState {
-                            val state =
-                                if (city == null || settings == null) {
-                                    SettingsState.DataState.State.ERROR
-                                } else {
-                                    SettingsState.DataState.State.SUCCESS
-                                }
+                            val state = if (city == null || settings == null) {
+                                SettingsState.DataState.State.ERROR
+                            } else {
+                                SettingsState.DataState.State.SUCCESS
+                            }
 
                             copy(
                                 settings = settings,
