@@ -15,14 +15,6 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 ## iOS
 
-### ios deployAll
-
-```sh
-[bundle exec] fastlane ios deployAll
-```
-
-
-
 ### ios papakarlo
 
 ```sh
@@ -77,15 +69,7 @@ Push a new djan release build to the App Store
 [bundle exec] fastlane ios usaba
 ```
 
-Push a new usadba release build to the App Store
-
-### ios legenda
-
-```sh
-[bundle exec] fastlane ios legenda
-```
-
-Push a new legenda release build to the App Store
+Push a new usaba release build to the App Store
 
 ### ios emoji
 
@@ -118,6 +102,14 @@ Push a new taverna release build to the App Store
 ```
 
 Push a new voljane release build to the App Store
+
+### ios deployAll
+
+```sh
+[bundle exec] fastlane ios deployAll
+```
+
+Deploy all apps to TestFlight
 
 ----
 
