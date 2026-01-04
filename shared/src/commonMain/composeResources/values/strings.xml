@@ -223,6 +223,8 @@
     <string name="title_settings">Настройки</string>
     <string name="hint_settings_phone">Номер телефона</string>
     <string name="msg_settings_email_updated">Почта успешно обновлена</string>
+    <string name="action_settings_delete">Удалить аккаунт</string>
+    <string name="msg_settings_delete">Вы уверены, что хотите удалить аккаунт?</string>
 
     <!-- ORDERS -->
     <string name="title_my_orders">Мои заказы</string>
