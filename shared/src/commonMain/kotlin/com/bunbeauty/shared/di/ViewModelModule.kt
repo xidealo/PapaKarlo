@@ -139,7 +139,6 @@ fun viewModelModule() =
             SettingsViewModel(
                 observeSettingsUseCase = get(),
                 observeSelectedCityUseCase = get(),
-                updateEmailUseCase = get(),
                 getCityListUseCase = get(),
                 saveSelectedCityUseCase = get(),
                 disableUserUseCase = get(),
