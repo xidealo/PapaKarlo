@@ -74,10 +74,6 @@ android {
         }
     }
 
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_21.toString()
-    }
-
     buildFeatures {
         viewBinding = true
         compose = true
@@ -103,7 +99,7 @@ android {
     playConfigs {
         FoodDeliveryFlavor.values().forEach { flavor ->
             register(flavor.key) {
-                commonPlayConfig(this, this@Build_gradle)
+                commonPlayConfig(this)
             }
         }
     }
@@ -175,13 +171,12 @@ tasks.register("publishAll") {
 
 fun commonPlayConfig(
     playPublisherExtension: PlayPublisherExtension,
-    buildGradle: Build_gradle,
 ) {
     with(playPublisherExtension) {
         track.set("production")
         defaultToAppBundles.set(true)
         userFraction.set(0.75)
-        serviceAccountCredentials.set(buildGradle.file("google-play-api-key.json"))
+        serviceAccountCredentials.set(file("google-play-api-key.json"))
         releaseStatus.set(ReleaseStatus.IN_PROGRESS)
     }
 }

@@ -1,6 +1,12 @@
 package com.bunbeauty.shared.ui.screen.menu
 
+import androidx.compose.animation.AnimatedContentScope
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.Crossfade
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionLayout
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -63,8 +69,11 @@ import papakarlo.shared.generated.resources.msg_menu_discount
 import papakarlo.shared.generated.resources.title_menu
 import papakarlo.shared.generated.resources.title_menu_discount
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun MenuRoute(
+    sharedTransitionScope: SharedTransitionScope,
+    animatedContentScope: AnimatedContentScope,
     viewModel: MenuViewModel = koinViewModel(),
     goToProductDetailsFragment: (
         uuid: String,
@@ -103,6 +112,8 @@ fun MenuRoute(
         onStopAutoScroll = viewModel::onStopAutoScroll,
         onAddProductClicked = viewModel::onAddProductClicked,
         onMenuItemClicked = viewModel::onMenuItemClicked,
+        sharedTransitionScope = sharedTransitionScope,
+        animatedContentScope = animatedContentScope,
     )
 }
 
@@ -137,9 +148,12 @@ private fun MenuEffect(
     }
 }
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 private fun MenuScreen(
     viewState: MenuViewState,
+    sharedTransitionScope: SharedTransitionScope,
+    animatedContentScope: AnimatedVisibilityScope,
     onMenuPositionChanged: (Int) -> Unit,
     goToProfile: () -> Unit,
     goToConsumerCart: () -> Unit,
@@ -189,40 +203,40 @@ private fun MenuScreen(
         },
         floatingActionButtonPosition = FabPosition.End,
     ) {
-        Crossfade(
-            targetState = viewState.state,
-            label = "MenuScreen",
-        ) { state ->
-            when (state) {
-                is MenuDataState.State.Success -> {
-                    MenuSuccessScreen(
-                        menu = viewState,
-                        menuLazyGridState = menuLazyGridState,
-                        onMenuPositionChanged = onMenuPositionChanged,
-                        onAddProductClicked = onAddProductClicked,
-                        onMenuItemClicked = onMenuItemClicked,
-                    )
-                }
+        when (viewState.state) {
+            is MenuDataState.State.Success -> {
+                MenuSuccessScreen(
+                    menu = viewState,
+                    menuLazyGridState = menuLazyGridState,
+                    onMenuPositionChanged = onMenuPositionChanged,
+                    onAddProductClicked = onAddProductClicked,
+                    onMenuItemClicked = onMenuItemClicked,
+                    sharedTransitionScope = sharedTransitionScope,
+                    animatedContentScope = animatedContentScope,
+                )
+            }
 
-                is MenuDataState.State.Error -> {
-                    ErrorScreen(
-                        mainTextId = Res.string.error_menu_loading,
-                        onClick = errorAction,
-                    )
-                }
+            is MenuDataState.State.Error -> {
+                ErrorScreen(
+                    mainTextId = Res.string.error_menu_loading,
+                    onClick = errorAction,
+                )
+            }
 
-                else -> {
-                    MenuLoadingScreen()
-                }
+            else -> {
+                MenuLoadingScreen()
             }
         }
     }
 }
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 private fun MenuSuccessScreen(
     menu: MenuViewState,
     menuLazyGridState: LazyGridState,
+    sharedTransitionScope: SharedTransitionScope,
+    animatedContentScope: AnimatedVisibilityScope,
     onMenuPositionChanged: (Int) -> Unit,
     onAddProductClicked: (menuProductUuid: String) -> Unit,
     onMenuItemClicked: (menuProductUuid: String) -> Unit,
@@ -241,6 +255,8 @@ private fun MenuSuccessScreen(
             menuLazyListState = menuLazyGridState,
             onAddProductClicked = onAddProductClicked,
             onMenuItemClicked = onMenuItemClicked,
+            sharedTransitionScope = sharedTransitionScope,
+            animatedContentScope = animatedContentScope,
         )
     }
 }
@@ -303,10 +319,13 @@ private fun CategoryRow(
     }
 }
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 private fun MenuColumn(
     menu: MenuViewState,
     menuLazyListState: LazyGridState,
+    sharedTransitionScope: SharedTransitionScope,
+    animatedContentScope: AnimatedVisibilityScope,
     onAddProductClicked: (menuProductUuid: String) -> Unit,
     onMenuItemClicked: (menuProductUuid: String) -> Unit,
 ) {
@@ -325,7 +344,7 @@ private fun MenuColumn(
                 when (menuItemModel) {
                     is MenuItemUi.Discount,
                     is MenuItemUi.CategoryHeader,
-                    -> GridItemSpan(maxLineSpan)
+                        -> GridItemSpan(maxLineSpan)
 
                     else -> GridItemSpan(1)
                 }
@@ -371,6 +390,8 @@ private fun MenuColumn(
 
                 is MenuItemUi.Product -> {
                     MenuProductItem(
+                        sharedTransitionScope = sharedTransitionScope,
+                        animatedContentScope = animatedContentScope,
                         modifier = Modifier.padding(top = 8.dp),
                         menuProductItem = menuItem,
                         onAddProductClick = onAddProductClicked,
@@ -381,6 +402,7 @@ private fun MenuColumn(
         }
     }
 }
+
 
 @Preview(showBackground = true)
 @Composable
@@ -408,45 +430,50 @@ private fun MenuScreenSuccessPreview() {
             newPrice = "99",
             oldPrice = "100",
         )
-
-    FoodDeliveryTheme {
-        MenuScreen(
-            viewState =
-                MenuViewState(
-                    categoryItemList =
-                        persistentListOf(
-                            getCategoryItem("1"),
-                            getCategoryItem("2"),
-                            getCategoryItem("3"),
+    SharedTransitionLayout {
+        AnimatedVisibility(visible = true) {
+            FoodDeliveryTheme {
+                MenuScreen(
+                    viewState =
+                        MenuViewState(
+                            categoryItemList =
+                                persistentListOf(
+                                    getCategoryItem("1"),
+                                    getCategoryItem("2"),
+                                    getCategoryItem("3"),
+                                ),
+                            menuItemList =
+                                persistentListOf(
+                                    getMenuCategoryHeaderItem("4"),
+                                    getMenuProductItem("5"),
+                                    getMenuProductItem("6"),
+                                    getMenuCategoryHeaderItem("7"),
+                                    getMenuProductItem("8"),
+                                ),
+                            state = MenuDataState.State.Success,
+                            userScrollEnabled = true,
+                            topCartUi =
+                                TopCartUi(
+                                    cost = "100",
+                                    count = "2",
+                                ),
+                            eventList = persistentListOf(),
                         ),
-                    menuItemList =
-                        persistentListOf(
-                            getMenuCategoryHeaderItem("4"),
-                            getMenuProductItem("5"),
-                            getMenuProductItem("6"),
-                            getMenuCategoryHeaderItem("7"),
-                            getMenuProductItem("8"),
-                        ),
-                    state = MenuDataState.State.Success,
-                    userScrollEnabled = true,
-                    topCartUi =
-                        TopCartUi(
-                            cost = "100",
-                            count = "2",
-                        ),
-                    eventList = persistentListOf(),
-                ),
-            onMenuPositionChanged = {},
-            errorAction = {},
-            goToProfile = {},
-            goToConsumerCart = {},
-            onCategoryClicked = {},
-            onStartAutoScroll = {},
-            getMenuListPosition = { 0 },
-            onStopAutoScroll = {},
-            onAddProductClicked = {},
-            onMenuItemClicked = {},
-        )
+                    onMenuPositionChanged = {},
+                    errorAction = {},
+                    goToProfile = {},
+                    goToConsumerCart = {},
+                    onCategoryClicked = {},
+                    onStartAutoScroll = {},
+                    getMenuListPosition = { 0 },
+                    onStopAutoScroll = {},
+                    onAddProductClicked = {},
+                    onMenuItemClicked = {},
+                    animatedContentScope = this,
+                    sharedTransitionScope = this@SharedTransitionLayout,
+                )
+            }
+        }
     }
 }
 
@@ -454,31 +481,37 @@ private fun MenuScreenSuccessPreview() {
 @Composable
 private fun MenuScreenLoadingPreview() {
     FoodDeliveryTheme {
-        MenuScreen(
-            viewState =
-                MenuViewState(
-                    categoryItemList = persistentListOf(),
-                    topCartUi =
-                        TopCartUi(
-                            cost = "100",
-                            count = "2",
+        SharedTransitionLayout {
+            AnimatedVisibility(visible = true) {
+                MenuScreen(
+                    viewState =
+                        MenuViewState(
+                            categoryItemList = persistentListOf(),
+                            topCartUi =
+                                TopCartUi(
+                                    cost = "100",
+                                    count = "2",
+                                ),
+                            menuItemList = persistentListOf(),
+                            state = MenuDataState.State.Loading,
+                            userScrollEnabled = true,
+                            eventList = persistentListOf(),
                         ),
-                    menuItemList = persistentListOf(),
-                    state = MenuDataState.State.Loading,
-                    userScrollEnabled = true,
-                    eventList = persistentListOf(),
-                ),
-            onMenuPositionChanged = {},
-            errorAction = {},
-            goToProfile = {},
-            goToConsumerCart = {},
-            onCategoryClicked = {},
-            onStartAutoScroll = {},
-            getMenuListPosition = { 0 },
-            onStopAutoScroll = {},
-            onAddProductClicked = {},
-            onMenuItemClicked = {},
-        )
+                    onMenuPositionChanged = {},
+                    errorAction = {},
+                    goToProfile = {},
+                    goToConsumerCart = {},
+                    onCategoryClicked = {},
+                    onStartAutoScroll = {},
+                    getMenuListPosition = { 0 },
+                    onStopAutoScroll = {},
+                    onAddProductClicked = {},
+                    onMenuItemClicked = {},
+                    animatedContentScope = this,
+                    sharedTransitionScope = this@SharedTransitionLayout,
+                )
+            }
+        }
     }
 }
 
@@ -486,30 +519,36 @@ private fun MenuScreenLoadingPreview() {
 @Composable
 private fun MenuScreenErrorPreview() {
     FoodDeliveryTheme {
-        MenuScreen(
-            viewState =
-                MenuViewState(
-                    categoryItemList = persistentListOf(),
-                    topCartUi =
-                        TopCartUi(
-                            cost = "100",
-                            count = "2",
+        SharedTransitionLayout {
+            AnimatedVisibility(visible = true) {
+                MenuScreen(
+                    viewState =
+                        MenuViewState(
+                            categoryItemList = persistentListOf(),
+                            topCartUi =
+                                TopCartUi(
+                                    cost = "100",
+                                    count = "2",
+                                ),
+                            menuItemList = persistentListOf(),
+                            state = MenuDataState.State.Error(Throwable()),
+                            userScrollEnabled = true,
+                            eventList = persistentListOf(),
                         ),
-                    menuItemList = persistentListOf(),
-                    state = MenuDataState.State.Error(Throwable()),
-                    userScrollEnabled = true,
-                    eventList = persistentListOf(),
-                ),
-            onMenuPositionChanged = {},
-            errorAction = {},
-            goToProfile = {},
-            goToConsumerCart = {},
-            onCategoryClicked = {},
-            onStartAutoScroll = {},
-            getMenuListPosition = { 0 },
-            onStopAutoScroll = {},
-            onAddProductClicked = {},
-            onMenuItemClicked = {},
-        )
+                    onMenuPositionChanged = {},
+                    errorAction = {},
+                    goToProfile = {},
+                    goToConsumerCart = {},
+                    onCategoryClicked = {},
+                    onStartAutoScroll = {},
+                    getMenuListPosition = { 0 },
+                    onStopAutoScroll = {},
+                    onAddProductClicked = {},
+                    onMenuItemClicked = {},
+                    animatedContentScope = this,
+                    sharedTransitionScope = this@SharedTransitionLayout,
+                )
+            }
+        }
     }
 }

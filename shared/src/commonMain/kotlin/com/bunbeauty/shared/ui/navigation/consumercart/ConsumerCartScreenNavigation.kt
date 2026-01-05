@@ -1,11 +1,18 @@
 package com.bunbeauty.shared.ui.navigation.consumercart
 
+import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.bunbeauty.shared.domain.model.SuccessLoginDirection
 import com.bunbeauty.shared.presentation.product_details.ProductDetailsOpenedFrom
+import com.bunbeauty.shared.ui.navigation.navAnimationSpecDurationForEnterFade
+import com.bunbeauty.shared.ui.navigation.navAnimationSpecDurationForPopFade
+import com.bunbeauty.shared.ui.navigation.navAnimationSpecScaleForFade
 import com.bunbeauty.shared.ui.screen.consumercart.ConsumerCartRoute
 import kotlinx.serialization.Serializable
 
@@ -28,7 +35,34 @@ fun NavGraphBuilder.consumerCartScreenRoute(
     ) -> Unit,
     showErrorMessage: (String) -> Unit,
 ) {
-    composable<ConsumerCartScreenDestination> {
+    composable<ConsumerCartScreenDestination>(
+        enterTransition = {
+            fadeIn(
+                navAnimationSpecDurationForEnterFade
+            ) + scaleIn(
+                initialScale = navAnimationSpecScaleForFade,
+                animationSpec = navAnimationSpecDurationForEnterFade
+            )
+        },
+        exitTransition = {
+            fadeOut(
+                animationSpec = navAnimationSpecDurationForEnterFade
+            )
+        },
+        popEnterTransition = {
+            fadeIn(
+                navAnimationSpecDurationForPopFade
+            ) + scaleIn(
+                initialScale = navAnimationSpecScaleForFade,
+                animationSpec = navAnimationSpecDurationForPopFade
+            )
+        },
+        popExitTransition = {
+            fadeOut(
+                animationSpec = navAnimationSpecDurationForPopFade
+            )
+        }
+    ) {
         ConsumerCartRoute(
             back = back,
             goToMenuFragment = goToMenuFragment,

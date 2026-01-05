@@ -25,6 +25,7 @@ import org.jetbrains.compose.resources.DrawableResource
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FoodDeliveryScaffold(
+    modifier: Modifier = Modifier,
     title: String? = null,
     backActionClick: (() -> Unit)? = null,
     topActions: ImmutableList<FoodDeliveryToolbarActions> = persistentListOf(),
@@ -42,7 +43,7 @@ fun FoodDeliveryScaffold(
 
     Scaffold(
         modifier =
-            Modifier
+            modifier
                 .nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             FoodDeliveryTopAppBar(

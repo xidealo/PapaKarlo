@@ -1,10 +1,14 @@
 package com.bunbeauty.shared.ui.navigation.orderdetails
 
+import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.fadeOut
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
+import com.bunbeauty.shared.ui.navigation.navAnimationSpecDurationForEnterFade
+import com.bunbeauty.shared.ui.navigation.navAnimationSpecDurationForSlide
 import com.bunbeauty.shared.ui.screen.order.screen.orderdetails.OrderDetailsRoute
 import kotlinx.serialization.Serializable
 import kotlin.String
@@ -26,7 +30,30 @@ fun NavController.navigateToOrderDetailsScreen(
 )
 
 fun NavGraphBuilder.orderDetailsScreenRoute(back: () -> Unit) {
-    composable<OrderDetailsScreenDestination> { backStackEntry ->
+    composable<OrderDetailsScreenDestination>(
+        enterTransition = {
+            slideIntoContainer(
+                AnimatedContentTransitionScope.SlideDirection.Left,
+                navAnimationSpecDurationForSlide
+            )
+        },
+        exitTransition = {
+            fadeOut(
+                animationSpec = navAnimationSpecDurationForEnterFade
+            )
+        },
+        popEnterTransition = {
+            slideIntoContainer(
+                AnimatedContentTransitionScope.SlideDirection.Right,
+                navAnimationSpecDurationForSlide
+            )
+        },
+        popExitTransition = {
+            slideOutOfContainer(
+                AnimatedContentTransitionScope.SlideDirection.Right,
+                navAnimationSpecDurationForSlide
+            )
+        }) { backStackEntry ->
         val args = backStackEntry.toRoute<OrderDetailsScreenDestination>()
         OrderDetailsRoute(
             orderUuid = args.orderUuid,

@@ -1,5 +1,15 @@
 package com.bunbeauty.shared.ui.screen.productdetails
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.AnimatedContentScope
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.EnterExitState
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionLayout
+import androidx.compose.animation.SharedTransitionScope
+import androidx.compose.animation.core.Transition
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -35,6 +45,7 @@ import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryRadioButton
 import com.bunbeauty.designsystem.ui.screen.ErrorScreen
 import com.bunbeauty.designsystem.ui.screen.LoadingScreen
 import com.bunbeauty.shared.Constants.FAB_SNACKBAR_BOTTOM_PADDING
+import com.bunbeauty.shared.domain.exeptions.EmptyStreetListException
 import com.bunbeauty.shared.presentation.product_details.AdditionItem
 import com.bunbeauty.shared.presentation.product_details.MenuProductAdditionItem
 import com.bunbeauty.shared.presentation.product_details.ProductDetailsOpenedFrom
@@ -55,8 +66,11 @@ import papakarlo.shared.generated.resources.ic_plus_16
 import papakarlo.shared.generated.resources.msg_menu_product_added
 import papakarlo.shared.generated.resources.msg_menu_product_edited
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun ProductDetailsRoute(
+    sharedTransitionScope: SharedTransitionScope,
+    animatedContentScope: AnimatedContentScope,
     viewModel: ProductDetailsViewModel = koinViewModel(),
     back: () -> Unit,
     menuProductUuid: String,
@@ -109,6 +123,8 @@ fun ProductDetailsRoute(
         onAction = onAction,
         productDetailsOpenedFrom = productDetailsOpenedFrom,
         cartProductUuid = cartProductUuid,
+        sharedTransitionScope = sharedTransitionScope,
+        animatedContentScope = animatedContentScope,
     )
 }
 
@@ -154,6 +170,7 @@ fun ProductDetailsEffect(
     }
 }
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 private fun ProductDetailsScreen(
     menuProductName: String,
@@ -162,9 +179,12 @@ private fun ProductDetailsScreen(
     productDetailsOpenedFrom: ProductDetailsOpenedFrom,
     cartProductUuid: String?,
     productDetailsViewState: ProductDetailsViewState,
+    sharedTransitionScope: SharedTransitionScope,
+    animatedContentScope: AnimatedVisibilityScope,
     onAction: (ProductDetailsState.Action) -> Unit,
 ) {
     FoodDeliveryScaffold(
+        modifier = Modifier,
         title = menuProductName,
         backActionClick = {
             onAction(ProductDetailsState.Action.BackClick)
@@ -198,8 +218,10 @@ private fun ProductDetailsScreen(
         when (productDetailsViewState) {
             is ProductDetailsViewState.Success -> {
                 ProductDetailsSuccessScreen(
-                    productDetailsViewState.menuProductUi,
+                    menuProductUi = productDetailsViewState.menuProductUi,
                     onAction = onAction,
+                    sharedTransitionScope = sharedTransitionScope,
+                    animatedContentScope = animatedContentScope,
                 )
             }
 
@@ -221,9 +243,12 @@ private fun ProductDetailsScreen(
     }
 }
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 private fun ProductDetailsSuccessScreen(
     menuProductUi: ProductDetailsViewState.Success.MenuProductUi,
+    sharedTransitionScope: SharedTransitionScope,
+    animatedContentScope: AnimatedVisibilityScope,
     onAction: (ProductDetailsState.Action) -> Unit,
 ) {
     LazyColumn(
@@ -239,6 +264,8 @@ private fun ProductDetailsSuccessScreen(
                         .padding(horizontal = 16.dp)
                         .padding(top = 16.dp),
                 menuProductUi = menuProductUi,
+                sharedTransitionScope = sharedTransitionScope,
+                animatedContentScope = animatedContentScope,
             )
         }
         items(
@@ -363,76 +390,108 @@ private fun AdditionItem(
     }
 }
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 private fun ProductCard(
-    modifier: Modifier = Modifier,
     menuProductUi: ProductDetailsViewState.Success.MenuProductUi,
+    sharedTransitionScope: SharedTransitionScope,
+    animatedContentScope: AnimatedVisibilityScope,
+    modifier: Modifier = Modifier,
 ) {
-    Column(
-        modifier = modifier,
-    ) {
-        FoodDeliveryAsyncImage(
-            modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .clip(FoodDeliveryCardDefaults.cardShape),
-            photoLink = menuProductUi.photoLink,
-            contentDescription = stringResource(Res.string.description_product),
-            contentScale = ContentScale.FillWidth,
-        )
+    with(sharedTransitionScope) {
         Column(
-            modifier =
-                Modifier
-                    .padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
+            modifier = modifier,
         ) {
-            Row {
-                Text(
-                    modifier =
-                        Modifier
-                            .weight(1f)
-                            .alignByBaseline()
-                            .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
-                    text = menuProductUi.name,
-                    style = FoodDeliveryTheme.typography.titleMedium.bold,
-                    color = FoodDeliveryTheme.colors.mainColors.onSurface,
-                )
-                Text(
-                    modifier = Modifier.alignByBaseline(),
-                    text = menuProductUi.size,
-                    style = FoodDeliveryTheme.typography.bodySmall,
-                    color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
-                )
-            }
-            Row(
+            FoodDeliveryAsyncImage(
                 modifier =
                     Modifier
-                        .padding(top = FoodDeliveryTheme.dimensions.smallSpace),
-            ) {
-                menuProductUi.oldPrice?.let {
-                    Text(
-                        modifier =
-                            Modifier
-                                .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
-                        text = menuProductUi.oldPrice,
-                        style = FoodDeliveryTheme.typography.bodyLarge,
-                        color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
-                        textDecoration = TextDecoration.LineThrough,
-                    )
-                }
-                Text(
-                    text = menuProductUi.newPrice,
-                    style = FoodDeliveryTheme.typography.bodyLarge.bold,
-                    color = FoodDeliveryTheme.colors.mainColors.onSurface,
-                )
-            }
-            Text(
+                        .sharedElement(
+                            sharedContentState = sharedTransitionScope.rememberSharedContentState(
+                                key = "image-${menuProductUi.uuid}"
+                            ),
+                            animatedVisibilityScope = animatedContentScope
+                        )
+                        .fillMaxWidth()
+                        .clip(FoodDeliveryCardDefaults.cardShape),
+                photoLink = menuProductUi.photoLink,
+                contentDescription = stringResource(Res.string.description_product),
+                contentScale = ContentScale.FillWidth,
+            )
+            Column(
                 modifier =
                     Modifier
                         .padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
-                text = menuProductUi.description,
-                style = FoodDeliveryTheme.typography.bodyLarge,
-                color = FoodDeliveryTheme.colors.mainColors.onSurface,
-            )
+            ) {
+                Row {
+                    Text(
+                        modifier =
+                            Modifier
+                                .weight(1f)
+                                .alignByBaseline()
+                                .padding(end = FoodDeliveryTheme.dimensions.smallSpace)
+                                .sharedElement(
+                                    sharedContentState = sharedTransitionScope.rememberSharedContentState(
+                                        key = "text-${menuProductUi.uuid}"
+                                    ),
+                                    animatedVisibilityScope = animatedContentScope
+                                ),
+                        text = menuProductUi.name,
+                        style = FoodDeliveryTheme.typography.titleMedium.bold,
+                        color = FoodDeliveryTheme.colors.mainColors.onSurface,
+                    )
+                    Text(
+                        modifier = Modifier.alignByBaseline(),
+                        text = menuProductUi.size,
+                        style = FoodDeliveryTheme.typography.bodySmall,
+                        color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
+                    )
+                }
+                Row(
+                    modifier =
+                        Modifier
+                            .padding(top = FoodDeliveryTheme.dimensions.smallSpace),
+                ) {
+                    menuProductUi.oldPrice?.let {
+                        Text(
+                            modifier =
+                                Modifier
+                                    .padding(end = FoodDeliveryTheme.dimensions.smallSpace)
+                                    .sharedElement(
+                                        sharedContentState = sharedTransitionScope
+                                            .rememberSharedContentState(
+                                                key = "oldPrice-${menuProductUi.uuid}"
+                                            ),
+                                        animatedVisibilityScope = animatedContentScope
+                                    ),
+                            text = menuProductUi.oldPrice,
+                            style = FoodDeliveryTheme.typography.bodyLarge,
+                            color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
+                            textDecoration = TextDecoration.LineThrough,
+                        )
+                    }
+                    Text(
+                        modifier = Modifier.sharedElement(
+                            sharedContentState = sharedTransitionScope.rememberSharedContentState(
+                                key = "price-${menuProductUi.uuid}"
+                            ),
+                            animatedVisibilityScope = animatedContentScope
+                        ),
+                        text = menuProductUi.newPrice,
+                        style = FoodDeliveryTheme.typography.bodyLarge.bold,
+                        color = FoodDeliveryTheme.colors.mainColors.onSurface,
+                    )
+                }
+                AnimatedContent(menuProductUi.description) {
+                    Text(
+                        modifier =
+                            Modifier
+                                .padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
+                        text = menuProductUi.description,
+                        style = FoodDeliveryTheme.typography.bodyLarge,
+                        color = FoodDeliveryTheme.colors.mainColors.onSurface,
+                    )
+                }
+            }
         }
     }
 }
@@ -441,103 +500,110 @@ private fun ProductCard(
 @Composable
 private fun ProductDetailsSuccessScreenPreview() {
     FoodDeliveryTheme {
-        ProductDetailsScreen(
-            menuProductName = "Бэргер куриный Макс с экстра сырным соусом",
-            menuProductUuid = "",
-            productDetailsViewState =
-                ProductDetailsViewState.Success(
-                    topCartUi =
-                        TopCartUi(
-                            cost = "100",
-                            count = "2",
-                        ),
-                    menuProductUi =
-                        ProductDetailsViewState.Success.MenuProductUi(
-                            photoLink = "",
-                            name = "Бэргер куриный Макс с экстра сырным соусом",
-                            size = "300 г",
-                            oldPrice = "320 ₽",
-                            newPrice = "280 ₽",
-                            description =
-                                "Сочная котлетка, сыр Чедр, маринованный огурчик, помидор, " +
-                                    "красный лук, салат, фирменный соус, булочка с кунжутом",
-                            additionList =
-                                persistentListOf(
-                                    AdditionItem.AdditionHeaderItem(
-                                        key = "key1",
-                                        uuid = "uuid1",
-                                        name = "Булочка",
-                                    ),
-                                    AdditionItem.AdditionListItem(
-                                        key = "key2",
-                                        product =
-                                            MenuProductAdditionItem(
-                                                uuid = "uuid2",
-                                                isSelected = true,
-                                                name = "БулОЧКА Валентина",
-                                                price = "+200",
-                                                photoLink = "",
-                                                isLast = false,
-                                                groupId = "",
-                                            ),
-                                        isMultiple = false,
-                                    ),
-                                    AdditionItem.AdditionListItem(
-                                        key = "key3",
-                                        product =
-                                            MenuProductAdditionItem(
-                                                uuid = "uuid3",
-                                                isSelected = false,
-                                                name = "БулОЧКА Марка",
-                                                price = "300",
-                                                photoLink = "",
-                                                isLast = true,
-                                                groupId = "",
-                                            ),
-                                        isMultiple = false,
-                                    ),
-                                    AdditionItem.AdditionHeaderItem(
-                                        key = "key4",
-                                        uuid = "uuid4",
-                                        name = "Добавить по вкусу",
-                                    ),
-                                    AdditionItem.AdditionListItem(
-                                        key = "key5",
-                                        product =
-                                            MenuProductAdditionItem(
-                                                uuid = "uuid5",
-                                                isSelected = true,
-                                                name = "Монкейэс",
-                                                price = "13",
-                                                photoLink = "",
-                                                isLast = false,
-                                                groupId = "",
-                                            ),
-                                        isMultiple = true,
-                                    ),
-                                    AdditionItem.AdditionListItem(
-                                        key = "key6",
-                                        product =
-                                            MenuProductAdditionItem(
-                                                uuid = "uuid6",
-                                                isSelected = false,
-                                                name = "Лида в лаваше",
-                                                price = "2",
-                                                photoLink = "",
-                                                isLast = true,
-                                                groupId = "",
-                                            ),
-                                        isMultiple = true,
-                                    ),
+        SharedTransitionLayout {
+            AnimatedVisibility(visible = true) {
+                ProductDetailsScreen(
+                    animatedContentScope = this,
+                    sharedTransitionScope = this@SharedTransitionLayout,
+                    menuProductName = "Бэргер куриный Макс с экстра сырным соусом",
+                    menuProductUuid = "",
+                    productDetailsViewState =
+                        ProductDetailsViewState.Success(
+                            topCartUi =
+                                TopCartUi(
+                                    cost = "100",
+                                    count = "2",
                                 ),
-                            priceWithAdditions = "300 ₽",
+                            menuProductUi =
+                                ProductDetailsViewState.Success.MenuProductUi(
+                                    photoLink = "",
+                                    name = "Бэргер куриный Макс с экстра сырным соусом",
+                                    size = "300 г",
+                                    oldPrice = "320 ₽",
+                                    newPrice = "280 ₽",
+                                    description =
+                                        "Сочная котлетка, сыр Чедр, маринованный огурчик, помидор, " +
+                                                "красный лук, салат, фирменный соус, булочка с кунжутом",
+                                    additionList =
+                                        persistentListOf(
+                                            AdditionItem.AdditionHeaderItem(
+                                                key = "key1",
+                                                uuid = "uuid1",
+                                                name = "Булочка",
+                                            ),
+                                            AdditionItem.AdditionListItem(
+                                                key = "key2",
+                                                product =
+                                                    MenuProductAdditionItem(
+                                                        uuid = "uuid2",
+                                                        isSelected = true,
+                                                        name = "БулОЧКА Валентина",
+                                                        price = "+200",
+                                                        photoLink = "",
+                                                        isLast = false,
+                                                        groupId = "",
+                                                    ),
+                                                isMultiple = false,
+                                            ),
+                                            AdditionItem.AdditionListItem(
+                                                key = "key3",
+                                                product =
+                                                    MenuProductAdditionItem(
+                                                        uuid = "uuid3",
+                                                        isSelected = false,
+                                                        name = "БулОЧКА Марка",
+                                                        price = "300",
+                                                        photoLink = "",
+                                                        isLast = true,
+                                                        groupId = "",
+                                                    ),
+                                                isMultiple = false,
+                                            ),
+                                            AdditionItem.AdditionHeaderItem(
+                                                key = "key4",
+                                                uuid = "uuid4",
+                                                name = "Добавить по вкусу",
+                                            ),
+                                            AdditionItem.AdditionListItem(
+                                                key = "key5",
+                                                product =
+                                                    MenuProductAdditionItem(
+                                                        uuid = "uuid5",
+                                                        isSelected = true,
+                                                        name = "Монкейэс",
+                                                        price = "13",
+                                                        photoLink = "",
+                                                        isLast = false,
+                                                        groupId = "",
+                                                    ),
+                                                isMultiple = true,
+                                            ),
+                                            AdditionItem.AdditionListItem(
+                                                key = "key6",
+                                                product =
+                                                    MenuProductAdditionItem(
+                                                        uuid = "uuid6",
+                                                        isSelected = false,
+                                                        name = "Лида в лаваше",
+                                                        price = "2",
+                                                        photoLink = "",
+                                                        isLast = true,
+                                                        groupId = "",
+                                                    ),
+                                                isMultiple = true,
+                                            ),
+                                        ),
+                                    priceWithAdditions = "300 ₽",
+                                    uuid = "uid"
+                                ),
                         ),
-                ),
-            additionUuidList = persistentListOf(),
-            onAction = {},
-            productDetailsOpenedFrom = ProductDetailsOpenedFrom.CART_PRODUCT,
-            cartProductUuid = "",
-        )
+                    additionUuidList = persistentListOf(),
+                    onAction = {},
+                    productDetailsOpenedFrom = ProductDetailsOpenedFrom.CART_PRODUCT,
+                    cartProductUuid = "",
+                )
+            }
+        }
     }
 }
 
@@ -545,14 +611,20 @@ private fun ProductDetailsSuccessScreenPreview() {
 @Composable
 private fun ProductDetailsLoadingScreenPreview() {
     FoodDeliveryTheme {
-        ProductDetailsScreen(
-            menuProductName = "Бэргер куриный Макс с экстра сырным соусом",
-            menuProductUuid = "",
-            productDetailsOpenedFrom = ProductDetailsOpenedFrom.CART_PRODUCT,
-            cartProductUuid = "",
-            productDetailsViewState = ProductDetailsViewState.Loading,
-            additionUuidList = persistentListOf(),
-            onAction = {},
-        )
+        SharedTransitionLayout {
+            AnimatedVisibility(visible = true) {
+                ProductDetailsScreen(
+                    menuProductName = "Бэргер куриный Макс с экстра сырным соусом",
+                    menuProductUuid = "",
+                    productDetailsOpenedFrom = ProductDetailsOpenedFrom.CART_PRODUCT,
+                    cartProductUuid = "",
+                    productDetailsViewState = ProductDetailsViewState.Loading,
+                    additionUuidList = persistentListOf(),
+                    onAction = {},
+                    animatedContentScope = this,
+                    sharedTransitionScope = this@SharedTransitionLayout,
+                )
+            }
+        }
     }
 }
