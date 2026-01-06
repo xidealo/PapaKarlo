@@ -63,6 +63,7 @@ fun ProductDetailsState.DataState.map(): ProductDetailsViewState {
                             description = menuProduct.description,
                             additionList = additionList.toPersistentList(),
                             priceWithAdditions = "${menuProduct.priceWithAdditions} ${menuProduct.currency}",
+                            uuid = menuProduct.uuid,
                         )
                     },
             )

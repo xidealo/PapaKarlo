@@ -1,4 +1,5 @@
 import CommonApplication.deploymentTarget
+import org.gradle.kotlin.dsl.implementation
 
 plugins {
     alias(libs.plugins.multiplatform)
@@ -51,12 +52,16 @@ kotlin {
                 implementation(libs.sqlDelight.coroutines.extensions)
 
                 implementation(libs.kotlinx.collections.immutable)
+
                 implementation(compose.components.resources)
                 implementation(compose.runtime)
                 implementation(compose.foundation)
                 implementation(compose.material3)
                 implementation(compose.ui)
+                implementation(compose.animation)
+                implementation(compose.animationGraphics)
                 implementation(compose.components.uiToolingPreview)
+
                 implementation(libs.bundles.navigation)
                 implementation(libs.bundles.di)
                 implementation(libs.bundles.coil)

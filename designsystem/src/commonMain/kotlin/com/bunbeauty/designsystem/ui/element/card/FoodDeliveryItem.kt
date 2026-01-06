@@ -16,7 +16,7 @@ fun FoodDeliveryItem(
     Column {
         content()
         if (needDivider) {
-            _root_ide_package_.com.bunbeauty.designsystem.ui.element.FoodDeliveryHorizontalDivider(
+            FoodDeliveryHorizontalDivider(
                 modifier =
                     Modifier
                         .padding(horizontal = 16.dp),

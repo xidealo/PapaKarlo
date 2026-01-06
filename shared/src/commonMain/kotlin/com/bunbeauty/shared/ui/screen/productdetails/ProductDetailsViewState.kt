@@ -23,6 +23,7 @@ sealed interface ProductDetailsViewState : BaseViewState {
             val priceWithAdditions: String,
             val description: String,
             val additionList: ImmutableList<AdditionItem>,
+            val uuid: String,
         )
     }
 
