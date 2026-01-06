@@ -53,7 +53,6 @@ kotlin {
 
                 implementation(libs.kotlinx.collections.immutable)
 
-
                 implementation(compose.components.resources)
                 implementation(compose.runtime)
                 implementation(compose.foundation)
@@ -62,7 +61,6 @@ kotlin {
                 implementation(compose.animation)
                 implementation(compose.animationGraphics)
                 implementation(compose.components.uiToolingPreview)
-                
 
                 implementation(libs.bundles.navigation)
                 implementation(libs.bundles.di)

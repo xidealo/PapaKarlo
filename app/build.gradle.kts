@@ -169,9 +169,7 @@ tasks.register("publishAll") {
     )
 }
 
-fun commonPlayConfig(
-    playPublisherExtension: PlayPublisherExtension,
-) {
+fun commonPlayConfig(playPublisherExtension: PlayPublisherExtension) {
     with(playPublisherExtension) {
         track.set("production")
         defaultToAppBundles.set(true)

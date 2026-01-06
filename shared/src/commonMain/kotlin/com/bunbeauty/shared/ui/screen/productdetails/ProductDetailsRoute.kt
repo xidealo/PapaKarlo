@@ -1,20 +1,19 @@
 package com.bunbeauty.shared.ui.screen.productdetails
 
-import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.AnimatedVisibilityScope
-import androidx.compose.animation.EnterExitState
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.animation.SharedTransitionScope
-import androidx.compose.animation.core.Transition
+import androidx.compose.animation.with
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -45,7 +44,6 @@ import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryRadioButton
 import com.bunbeauty.designsystem.ui.screen.ErrorScreen
 import com.bunbeauty.designsystem.ui.screen.LoadingScreen
 import com.bunbeauty.shared.Constants.FAB_SNACKBAR_BOTTOM_PADDING
-import com.bunbeauty.shared.domain.exeptions.EmptyStreetListException
 import com.bunbeauty.shared.presentation.product_details.AdditionItem
 import com.bunbeauty.shared.presentation.product_details.MenuProductAdditionItem
 import com.bunbeauty.shared.presentation.product_details.ProductDetailsOpenedFrom
@@ -337,7 +335,6 @@ private fun AdditionItem(
                 contentDescription = stringResource(resource = Res.string.description_product_addition),
                 contentScale = ContentScale.FillWidth,
                 error = null,
-                placeholder = null,
             )
 
             Text(
@@ -390,7 +387,7 @@ private fun AdditionItem(
     }
 }
 
-@OptIn(ExperimentalSharedTransitionApi::class)
+@OptIn(ExperimentalSharedTransitionApi::class, ExperimentalAnimationApi::class)
 @Composable
 private fun ProductCard(
     menuProductUi: ProductDetailsViewState.Success.MenuProductUi,
@@ -406,13 +403,14 @@ private fun ProductCard(
                 modifier =
                     Modifier
                         .sharedElement(
-                            sharedContentState = sharedTransitionScope.rememberSharedContentState(
-                                key = "image-${menuProductUi.uuid}"
-                            ),
-                            animatedVisibilityScope = animatedContentScope
-                        )
-                        .fillMaxWidth()
-                        .clip(FoodDeliveryCardDefaults.cardShape),
+                            sharedContentState =
+                                sharedTransitionScope.rememberSharedContentState(
+                                    key = "image-${menuProductUi.uuid}",
+                                ),
+                            animatedVisibilityScope = animatedContentScope,
+                        ).fillMaxWidth()
+                        .clip(FoodDeliveryCardDefaults.cardShape)
+                        .heightIn(min = 228.dp),
                 photoLink = menuProductUi.photoLink,
                 contentDescription = stringResource(Res.string.description_product),
                 contentScale = ContentScale.FillWidth,
@@ -430,10 +428,11 @@ private fun ProductCard(
                                 .alignByBaseline()
                                 .padding(end = FoodDeliveryTheme.dimensions.smallSpace)
                                 .sharedElement(
-                                    sharedContentState = sharedTransitionScope.rememberSharedContentState(
-                                        key = "text-${menuProductUi.uuid}"
-                                    ),
-                                    animatedVisibilityScope = animatedContentScope
+                                    sharedContentState =
+                                        sharedTransitionScope.rememberSharedContentState(
+                                            key = "text-${menuProductUi.uuid}",
+                                        ),
+                                    animatedVisibilityScope = animatedContentScope,
                                 ),
                         text = menuProductUi.name,
                         style = FoodDeliveryTheme.typography.titleMedium.bold,
@@ -457,11 +456,12 @@ private fun ProductCard(
                                 Modifier
                                     .padding(end = FoodDeliveryTheme.dimensions.smallSpace)
                                     .sharedElement(
-                                        sharedContentState = sharedTransitionScope
-                                            .rememberSharedContentState(
-                                                key = "oldPrice-${menuProductUi.uuid}"
-                                            ),
-                                        animatedVisibilityScope = animatedContentScope
+                                        sharedContentState =
+                                            sharedTransitionScope
+                                                .rememberSharedContentState(
+                                                    key = "oldPrice-${menuProductUi.uuid}",
+                                                ),
+                                        animatedVisibilityScope = animatedContentScope,
                                     ),
                             text = menuProductUi.oldPrice,
                             style = FoodDeliveryTheme.typography.bodyLarge,
@@ -470,27 +470,28 @@ private fun ProductCard(
                         )
                     }
                     Text(
-                        modifier = Modifier.sharedElement(
-                            sharedContentState = sharedTransitionScope.rememberSharedContentState(
-                                key = "price-${menuProductUi.uuid}"
+                        modifier =
+                            Modifier.sharedElement(
+                                sharedContentState =
+                                    sharedTransitionScope.rememberSharedContentState(
+                                        key = "price-${menuProductUi.uuid}",
+                                    ),
+                                animatedVisibilityScope = animatedContentScope,
                             ),
-                            animatedVisibilityScope = animatedContentScope
-                        ),
                         text = menuProductUi.newPrice,
                         style = FoodDeliveryTheme.typography.bodyLarge.bold,
                         color = FoodDeliveryTheme.colors.mainColors.onSurface,
                     )
                 }
-                AnimatedContent(menuProductUi.description) {
-                    Text(
-                        modifier =
-                            Modifier
-                                .padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
-                        text = menuProductUi.description,
-                        style = FoodDeliveryTheme.typography.bodyLarge,
-                        color = FoodDeliveryTheme.colors.mainColors.onSurface,
-                    )
-                }
+
+                Text(
+                    modifier =
+                        Modifier
+                            .padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
+                    text = menuProductUi.description,
+                    style = FoodDeliveryTheme.typography.bodyLarge,
+                    color = FoodDeliveryTheme.colors.mainColors.onSurface,
+                )
             }
         }
     }
@@ -523,7 +524,7 @@ private fun ProductDetailsSuccessScreenPreview() {
                                     newPrice = "280 ₽",
                                     description =
                                         "Сочная котлетка, сыр Чедр, маринованный огурчик, помидор, " +
-                                                "красный лук, салат, фирменный соус, булочка с кунжутом",
+                                            "красный лук, салат, фирменный соус, булочка с кунжутом",
                                     additionList =
                                         persistentListOf(
                                             AdditionItem.AdditionHeaderItem(
@@ -594,7 +595,7 @@ private fun ProductDetailsSuccessScreenPreview() {
                                             ),
                                         ),
                                     priceWithAdditions = "300 ₽",
-                                    uuid = "uid"
+                                    uuid = "uid",
                                 ),
                         ),
                     additionUuidList = persistentListOf(),

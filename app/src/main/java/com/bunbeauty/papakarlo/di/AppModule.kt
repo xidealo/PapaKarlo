@@ -16,14 +16,17 @@ fun appModule() =
     module {
         single { androidContext().resources }
         single {
-            androidContext().imageLoader.newBuilder()
+            androidContext()
+                .imageLoader
+                .newBuilder()
                 .memoryCache {
-                    MemoryCache.Builder()
+                    MemoryCache
+                        .Builder()
                         .maxSizePercent(context = get(), 0.25)
                         .build()
-                }
-                .diskCache {
-                    DiskCache.Builder()
+                }.diskCache {
+                    DiskCache
+                        .Builder()
                         .directory(directory = androidContext().cacheDir.resolve("image_cache"))
                         .maxSizePercent(0.02)
                         .build()

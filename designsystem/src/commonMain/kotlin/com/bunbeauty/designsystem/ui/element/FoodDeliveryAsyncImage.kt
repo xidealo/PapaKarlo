@@ -20,7 +20,6 @@ fun FoodDeliveryAsyncImage(
     contentScale: ContentScale,
     modifier: Modifier = Modifier,
     error: Painter? = painterResource(Res.drawable.placeholder_small),
-    placeholder: Painter? = painterResource(Res.drawable.placeholder_small),
 ) {
     AsyncImage(
         modifier = modifier,
@@ -34,6 +33,5 @@ fun FoodDeliveryAsyncImage(
         contentDescription = contentDescription,
         contentScale = contentScale,
         error = error,
-        //placeholder = placeholder
     )
 }

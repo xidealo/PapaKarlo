@@ -344,7 +344,7 @@ private fun MenuColumn(
                 when (menuItemModel) {
                     is MenuItemUi.Discount,
                     is MenuItemUi.CategoryHeader,
-                        -> GridItemSpan(maxLineSpan)
+                    -> GridItemSpan(maxLineSpan)
 
                     else -> GridItemSpan(1)
                 }
@@ -402,7 +402,6 @@ private fun MenuColumn(
         }
     }
 }
-
 
 @Preview(showBackground = true)
 @Composable

@@ -6,8 +6,8 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
-import com.bunbeauty.shared.ui.navigation.navAnimationSpecDurationForEnterFade
-import com.bunbeauty.shared.ui.navigation.navAnimationSpecDurationForSlide
+import com.bunbeauty.shared.ui.navigation.NavAnimationSpec.navAnimationSpecDurationForEnterFade
+import com.bunbeauty.shared.ui.navigation.NavAnimationSpec.navAnimationSpecDurationForSlide
 import com.bunbeauty.shared.ui.screen.order.screen.orderlist.OrderListRoute
 import kotlinx.serialization.Serializable
 
@@ -28,26 +28,26 @@ fun NavGraphBuilder.orderListScreenRoute(
         enterTransition = {
             slideIntoContainer(
                 AnimatedContentTransitionScope.SlideDirection.Left,
-                navAnimationSpecDurationForSlide
+                navAnimationSpecDurationForSlide,
             )
         },
         exitTransition = {
             fadeOut(
-                animationSpec = navAnimationSpecDurationForEnterFade
+                animationSpec = navAnimationSpecDurationForEnterFade,
             )
         },
         popEnterTransition = {
             slideIntoContainer(
                 AnimatedContentTransitionScope.SlideDirection.Right,
-                navAnimationSpecDurationForSlide
+                navAnimationSpecDurationForSlide,
             )
         },
         popExitTransition = {
             slideOutOfContainer(
                 AnimatedContentTransitionScope.SlideDirection.Right,
-                navAnimationSpecDurationForSlide
+                navAnimationSpecDurationForSlide,
             )
-        }
+        },
     ) {
         OrderListRoute(
             back = back,

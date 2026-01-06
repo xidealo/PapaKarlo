@@ -44,17 +44,19 @@ fun MenuProductItem(
     ) {
         Column {
             FoodDeliveryAsyncImage(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .heightIn(min = 110.dp),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .heightIn(min = 120.dp),
                 photoLink = menuProductItem.photoLink,
                 contentDescription = stringResource(resource = Res.string.description_product),
                 contentScale = ContentScale.FillWidth,
             )
             Column(
-                modifier = Modifier.padding(
-                    all = FoodDeliveryTheme.dimensions.smallSpace
-                )
+                modifier =
+                    Modifier.padding(
+                        all = FoodDeliveryTheme.dimensions.smallSpace,
+                    ),
             ) {
                 OverflowingText(
                     text = menuProductItem.name,
@@ -95,7 +97,6 @@ fun MenuProductItem(
     }
 }
 
-
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun MenuProductItem(
@@ -115,37 +116,41 @@ fun MenuProductItem(
         ) {
             Column {
                 FoodDeliveryAsyncImage(
-                    modifier = Modifier
-                        .sharedElement(
-                            sharedContentState = sharedTransitionScope
-                                .rememberSharedContentState(key = "image-${menuProductItem.uuid}"),
-                            animatedVisibilityScope = animatedContentScope
-                        )
-                        .fillMaxWidth()
-                        .clip(shape = RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp))
-                        .heightIn(min = 110.dp),
+                    modifier =
+                        Modifier
+                            .sharedElement(
+                                sharedContentState =
+                                    sharedTransitionScope
+                                        .rememberSharedContentState(key = "image-${menuProductItem.uuid}"),
+                                animatedVisibilityScope = animatedContentScope,
+                            ).fillMaxWidth()
+                            .clip(shape = RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp))
+                            .heightIn(min = 120.dp),
                     photoLink = menuProductItem.photoLink,
                     contentDescription = stringResource(Res.string.description_product),
                     contentScale = ContentScale.FillWidth,
                 )
                 Column(modifier = Modifier.padding(FoodDeliveryTheme.dimensions.smallSpace)) {
                     OverflowingText(
-                        modifier = Modifier
-                            .sharedElement(
-                                sharedContentState = sharedTransitionScope
-                                    .rememberSharedContentState(
-                                        key = "text-${menuProductItem.uuid}"
-                                    ),
-                                animatedVisibilityScope = animatedContentScope
-                            ),
+                        modifier =
+                            Modifier
+                                .sharedElement(
+                                    sharedContentState =
+                                        sharedTransitionScope
+                                            .rememberSharedContentState(
+                                                key = "text-${menuProductItem.uuid}",
+                                            ),
+                                    animatedVisibilityScope = animatedContentScope,
+                                ),
                         text = menuProductItem.name,
                         style = FoodDeliveryTheme.typography.titleSmall.bold,
                         color = FoodDeliveryTheme.colors.mainColors.onSurface,
                     )
                     Row(
-                        modifier = Modifier.padding(
-                            top = FoodDeliveryTheme.dimensions.verySmallSpace
-                        )
+                        modifier =
+                            Modifier.padding(
+                                top = FoodDeliveryTheme.dimensions.verySmallSpace,
+                            ),
                     ) {
                         menuProductItem.oldPrice?.let { oldPrice ->
                             Text(
@@ -153,11 +158,12 @@ fun MenuProductItem(
                                     Modifier
                                         .padding(end = FoodDeliveryTheme.dimensions.verySmallSpace)
                                         .sharedElement(
-                                            sharedContentState = sharedTransitionScope
-                                                .rememberSharedContentState(
-                                                    key = "oldPrice-${menuProductItem.uuid}"
-                                                ),
-                                            animatedVisibilityScope = animatedContentScope
+                                            sharedContentState =
+                                                sharedTransitionScope
+                                                    .rememberSharedContentState(
+                                                        key = "oldPrice-${menuProductItem.uuid}",
+                                                    ),
+                                            animatedVisibilityScope = animatedContentScope,
                                         ),
                                 text = oldPrice,
                                 style = FoodDeliveryTheme.typography.bodySmall,
@@ -166,14 +172,16 @@ fun MenuProductItem(
                             )
                         }
                         Text(
-                            modifier = Modifier
-                                .sharedElement(
-                                    sharedContentState = sharedTransitionScope
-                                        .rememberSharedContentState(
-                                            key = "price-${menuProductItem.uuid}"
-                                        ),
-                                    animatedVisibilityScope = animatedContentScope
-                                ),
+                            modifier =
+                                Modifier
+                                    .sharedElement(
+                                        sharedContentState =
+                                            sharedTransitionScope
+                                                .rememberSharedContentState(
+                                                    key = "price-${menuProductItem.uuid}",
+                                                ),
+                                        animatedVisibilityScope = animatedContentScope,
+                                    ),
                             text = menuProductItem.newPrice,
                             style = FoodDeliveryTheme.typography.bodySmall.bold,
                             color = FoodDeliveryTheme.colors.mainColors.onSurface,
