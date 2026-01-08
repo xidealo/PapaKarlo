@@ -27,7 +27,7 @@ kaspresso = "1.6.0"
 collectionsImmutable = "0.4.0"
 ktLint = "13.1.0"
 tripletPlay = "3.13.0"
-compose = "1.10.0-rc02"
+compose = "1.9.3"
 
 [libraries]
 appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appCompact" }

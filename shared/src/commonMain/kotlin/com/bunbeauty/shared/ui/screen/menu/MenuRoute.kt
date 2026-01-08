@@ -403,6 +403,7 @@ private fun MenuColumn(
     }
 }
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Preview(showBackground = true)
 @Composable
 private fun MenuScreenSuccessPreview() {
@@ -476,6 +477,7 @@ private fun MenuScreenSuccessPreview() {
     }
 }
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Preview(showBackground = true)
 @Composable
 private fun MenuScreenLoadingPreview() {
@@ -514,6 +516,7 @@ private fun MenuScreenLoadingPreview() {
     }
 }
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Preview(showBackground = true)
 @Composable
 private fun MenuScreenErrorPreview() {

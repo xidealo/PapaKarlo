@@ -18,7 +18,7 @@ struct PapaKarloSwiftApp: App {
     init() {
         KoinKt.doInitKoin()
     }
-
+    
     var body: some Scene {
         WindowGroup {
             ComposeView()
@@ -31,12 +31,16 @@ struct PapaKarloSwiftApp: App {
 
 struct ComposeView: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> UIViewController {
-
-        AppIosKt.MainViewController(
+        let vc = AppIosKt.MainViewController(
             flavor: Bundle.main.object(forInfoDictionaryKey: "CFBundleName") as? String ?? ""
         )
+        
+        vc.view.insetsLayoutMarginsFromSafeArea = false
+        vc.additionalSafeAreaInsets = .zero
+        
+        return vc
     }
-
+    
     func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
 }
 

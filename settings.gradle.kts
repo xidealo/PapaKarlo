@@ -14,3 +14,4 @@ rootProject.name = "PapaKarlo"
 include(":analytic")
 include(":core")
 include(":designsystem")
+include(":feature:menu")
