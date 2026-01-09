@@ -3,7 +3,7 @@ package com.bunbeauty.shared.ui.screen.createorder
 import androidx.compose.runtime.Immutable
 import com.bunbeauty.core.base.BaseViewState
 import com.bunbeauty.profile.ui.screen.payment.PaymentMethodUI
-import com.bunbeauty.shared.ui.screen.motivation.MotivationUi
+import com.bunbeauty.shared.ui.motivation.MotivationUi
 import kotlinx.collections.immutable.ImmutableList
 import org.jetbrains.compose.resources.StringResource
 

@@ -62,7 +62,7 @@ import com.bunbeauty.shared.ui.screen.createorder.ui.DeliveryAddressListBottomSh
 import com.bunbeauty.shared.ui.screen.createorder.ui.PaymentMethodListBottomSheet
 import com.bunbeauty.shared.ui.screen.createorder.ui.PickupAddressListBottomSheet
 import com.bunbeauty.shared.ui.screen.createorder.ui.TimePickerDialog
-import com.bunbeauty.shared.ui.screen.motivation.Motivation
+import com.bunbeauty.shared.ui.motivation.Motivation
 import kotlinx.collections.immutable.persistentListOf
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.getString

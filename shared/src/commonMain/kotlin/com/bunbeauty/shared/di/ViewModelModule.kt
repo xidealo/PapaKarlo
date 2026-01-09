@@ -2,11 +2,9 @@ package com.bunbeauty.shared.di
 
 import com.bunbeauty.shared.presentation.MainViewModel
 import com.bunbeauty.shared.presentation.cafe_list.CafeListViewModel
-import com.bunbeauty.shared.presentation.confirm.ConfirmViewModel
 import com.bunbeauty.shared.presentation.consumercart.ConsumerCartViewModel
 import com.bunbeauty.shared.presentation.create_address.CreateAddressViewModel
 import com.bunbeauty.shared.presentation.createorder.CreateOrderViewModel
-import com.bunbeauty.shared.presentation.login.LoginViewModel
 import com.bunbeauty.shared.presentation.order_details.OrderDetailsViewModel
 import com.bunbeauty.shared.presentation.order_list.OrderListViewModel
 import com.bunbeauty.profile.presentation.selectcity.SelectCityViewModel
@@ -94,23 +92,8 @@ fun viewModelModule() =
                 stopObserveOrdersUseCase = get(),
             )
         }
-        viewModel {
-            LoginViewModel(
-                requestCode = get(),
-                formatPhoneNumber = get(),
-                getPhoneNumberCursorPosition = get(),
-                checkPhoneNumber = get(),
-            )
-        }
-        viewModel {
-            ConfirmViewModel(
-                formatPhoneNumber = get(),
-                checkCode = get(),
-                resendCode = get(),
-                analyticService = get(),
-                updateNotificationUseCase = get(),
-            )
-        }
+
+
         viewModel {
             SelectCityViewModel(
                 cityInteractor = get(),

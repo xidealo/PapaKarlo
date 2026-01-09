@@ -6,18 +6,15 @@ import android.app.NotificationManager
 import android.media.AudioAttributes
 import android.media.RingtoneManager
 import android.os.Build
-import com.bunbeauty.core.Logger
 import com.bunbeauty.papakarlo.di.appModule
 import com.bunbeauty.core.Constants.CHANNEL_ID
 import com.bunbeauty.shared.data.CompanyUuidProvider
 import com.bunbeauty.shared.di.initKoin
 import com.bunbeauty.shared.domain.feature.notification.SubscribeToNotificationUseCase
-import com.bunbeauty.shared.domain.feature.notification.UpdateNotificationUseCase
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.launch
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.component.KoinComponent
@@ -26,7 +23,6 @@ import org.koin.core.logger.Level
 import kotlin.coroutines.CoroutineContext
 
 private const val NOTIFICATION_NEWS_CHANNEL_NAME = "NEWS"
-private const val FOOD_DELIVERY_APPLICATION_TAG = "FoodDeliveryApplication"
 
 class FoodDeliveryApplication :
     Application(),
@@ -36,7 +32,6 @@ class FoodDeliveryApplication :
 
     private val subscribeToNotification: SubscribeToNotificationUseCase by inject()
     private val companyUuidProvider: CompanyUuidProvider by inject()
-    private val updateNotificationUseCase: UpdateNotificationUseCase by inject()
 
     override fun onCreate() {
         setTheme(R.style.AppTheme)
@@ -56,7 +51,6 @@ class FoodDeliveryApplication :
             .setAnalyticsCollectionEnabled(!BuildConfig.DEBUG)
         subscribeToNotification(companyUuid = companyUuidProvider.companyUuid)
         createNotificationChannel()
-        updateNotificationToken()
     }
 
     private fun createNotificationChannel() {
@@ -84,18 +78,5 @@ class FoodDeliveryApplication :
             }
         val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.createNotificationChannel(channel)
-    }
-
-    private fun updateNotificationToken() {
-        launch {
-            try {
-                updateNotificationUseCase()
-            } catch (e: Exception) {
-                Logger.logE(
-                    FOOD_DELIVERY_APPLICATION_TAG,
-                    "Not updateNotificationToken cause: ${e.javaClass.name} ",
-                )
-            }
-        }
     }
 }

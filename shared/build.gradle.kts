@@ -1,5 +1,4 @@
 import CommonApplication.deploymentTarget
-import org.gradle.kotlin.dsl.implementation
 
 plugins {
     alias(libs.plugins.multiplatform)
@@ -42,6 +41,7 @@ kotlin {
                 implementation(project(":feature:menu"))
                 implementation(project(":feature:profile"))
                 implementation(project(":feature:productdetails"))
+                implementation(project(":feature:auth"))
 
                 implementation(libs.bundles.ktor)
 

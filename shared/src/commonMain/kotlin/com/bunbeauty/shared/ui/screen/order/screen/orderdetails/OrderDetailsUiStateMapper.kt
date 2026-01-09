@@ -4,7 +4,6 @@ import androidx.compose.runtime.Composable
 import com.bunbeauty.shared.presentation.order_details.OrderDetails
 import com.bunbeauty.designsystem.ui.getDateTimeString
 import com.bunbeauty.designsystem.ui.getDeferredString
-import com.bunbeauty.shared.ui.common.getOrderAddressString
 import com.bunbeauty.designsystem.ui.getPickupMethodString
 import com.bunbeauty.designsystem.ui.getTimeString
 import com.bunbeauty.profile.ui.screen.profile.getOrderStatusName

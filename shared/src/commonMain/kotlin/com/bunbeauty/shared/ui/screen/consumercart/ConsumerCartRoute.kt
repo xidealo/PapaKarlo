@@ -44,8 +44,8 @@ import com.bunbeauty.core.model.ProductDetailsOpenedFrom
 import com.bunbeauty.shared.ui.screen.consumercart.mapper.toConsumerCartViewState
 import com.bunbeauty.shared.ui.screen.consumercart.state.ConsumerCartViewState
 import com.bunbeauty.shared.ui.screen.consumercart.ui.CartProductItem
-import com.bunbeauty.shared.ui.screen.motivation.Motivation
-import com.bunbeauty.shared.ui.screen.motivation.MotivationUi
+import com.bunbeauty.shared.ui.motivation.Motivation
+import com.bunbeauty.shared.ui.motivation.MotivationUi
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import org.jetbrains.compose.resources.getString

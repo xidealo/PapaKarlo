@@ -10,7 +10,7 @@ import androidx.navigation.toRoute
 import com.bunbeauty.core.model.SuccessLoginDirection
 import com.bunbeauty.shared.ui.navigation.NavAnimationSpec.navAnimationSpecDurationForEnterFade
 import com.bunbeauty.shared.ui.navigation.NavAnimationSpec.navAnimationSpecDurationForSlide
-import com.bunbeauty.shared.ui.screen.auth.ConfirmRoute
+import com.bunbeauty.auth.ui.ConfirmRoute
 import kotlinx.serialization.Serializable
 
 @Serializable
