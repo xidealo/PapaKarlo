@@ -1,11 +1,11 @@
 package com.bunbeauty.shared.presentation.cafe_list
 
 import com.bunbeauty.core.Constants.WORKING_HOURS_DIVIDER
-import com.bunbeauty.shared.domain.feature.cafe.ObserveCafeWithOpenStateListUseCase
 import com.bunbeauty.shared.domain.interactor.cafe.ICafeInteractor
 import com.bunbeauty.core.extension.launchSafe
 import com.bunbeauty.core.model.cafe.CafeWithOpenState
 import com.bunbeauty.core.base.SharedStateViewModel
+import com.bunbeauty.core.domain.cafe.ObserveCafeWithOpenStateListUseCase
 import com.bunbeauty.shared.presentation.cafe_list.CafeList.Action.OnCloseCafeOptionBottomSheetClicked
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest

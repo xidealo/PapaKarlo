@@ -6,11 +6,14 @@ import com.bunbeauty.shared.data.network.api.NetworkConnector
 import com.bunbeauty.core.model.payment_method.PaymentMethod
 import com.bunbeauty.core.domain.repo.PaymentRepo
 import com.bunbeauty.core.extension.getNullableResult
+import com.bunbeauty.shared.DataStoreRepo
+import kotlinx.coroutines.flow.firstOrNull
 
 class PaymentRepository(
     private val networkConnector: NetworkConnector,
     private val paymentMethodMapper: PaymentMethodMapper,
     private val paymentMethodDao: IPaymentMethodDao,
+    private val dataStoreRepo: DataStoreRepo,
 ) : PaymentRepo {
     private var paymentMethodListCache: List<PaymentMethod>? = null
 
@@ -30,6 +33,13 @@ class PaymentRepository(
         }
     }
 
+    override suspend fun getSelectedPaymentMethodUuid(): String? {
+       return dataStoreRepo.selectedPaymentMethodUuid.firstOrNull()
+    }
+
+    override suspend fun saveSelectedPaymentMethodUuid(selectedPaymentMethodUuid: String) {
+        dataStoreRepo.saveSelectedPaymentMethodUuid(selectedPaymentMethodUuid = selectedPaymentMethodUuid)
+    }
     suspend fun getRemotePaymentMethodList(): List<PaymentMethod>? =
         networkConnector
             .getPaymentMethodList()

@@ -146,6 +146,7 @@ fun repositoryModule() =
                 networkConnector = get(),
                 paymentMethodMapper = get(),
                 paymentMethodDao = get(),
+                dataStoreRepo = get()
             )
         }
         single<LinkRepo> {
@@ -164,6 +165,7 @@ fun repositoryModule() =
         single<AuthRepo> {
             AuthRepository(
                 networkConnector = get(),
+                dataStoreRepo = get()
             )
         }
         single<RecommendationRepo> {
@@ -191,6 +193,7 @@ fun repositoryModule() =
         single<SuggestionRepo> {
             SuggestionRepository(
                 networkConnector = get(),
+                dataStoreRepo = get()
             )
         }
     }

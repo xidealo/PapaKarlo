@@ -11,10 +11,10 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import com.bunbeauty.core.model.ProductDetailsOpenedFrom
+import com.bunbeauty.productdetails.ui.ProductDetailsRoute
 import com.bunbeauty.shared.ui.navigation.NavAnimationSpec.NAV_ANIMATION_SPEC_SCALE_FOR_FADE
 import com.bunbeauty.shared.ui.navigation.NavAnimationSpec.navAnimationSpecDurationForEnterFade
 import com.bunbeauty.shared.ui.navigation.NavAnimationSpec.navAnimationSpecDurationForPopFade
-import com.bunbeauty.shared.ui.screen.productdetails.ProductDetailsRoute
 import kotlinx.serialization.Serializable
 
 @Serializable

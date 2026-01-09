@@ -3,7 +3,7 @@ package com.bunbeauty.domain.feature.cart
 import com.bunbeauty.getCartProduct
 import com.bunbeauty.getCartProductAddition
 import com.bunbeauty.getMenuProduct
-import com.bunbeauty.shared.domain.feature.cart.RemoveCartProductUseCase
+import com.bunbeauty.core.domain.cart.RemoveCartProductUseCase
 import com.bunbeauty.core.domain.repo.CartProductAdditionRepo
 import com.bunbeauty.core.domain.repo.CartProductRepo
 import dev.mokkery.answering.returns

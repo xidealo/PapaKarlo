@@ -3,7 +3,7 @@ package com.bunbeauty.domain.feature.recommendation
 import com.bunbeauty.getCartProduct
 import com.bunbeauty.getCategoryProduct
 import com.bunbeauty.getMenuProduct
-import com.bunbeauty.shared.domain.feature.cart.GetRecommendationsUseCase
+import com.bunbeauty.core.domain.cart.GetRecommendationsUseCase
 import com.bunbeauty.core.domain.menu_product.GetMenuProductListUseCase
 import com.bunbeauty.core.domain.repo.CartProductRepo
 import com.bunbeauty.core.domain.repo.RecommendationRepo

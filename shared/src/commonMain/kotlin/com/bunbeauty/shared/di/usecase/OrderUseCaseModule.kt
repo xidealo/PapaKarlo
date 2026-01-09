@@ -7,7 +7,7 @@ import com.bunbeauty.core.domain.order.ObserveLastOrderUseCase
 import com.bunbeauty.core.domain.order.ObserveOrderListUseCase
 import com.bunbeauty.core.domain.order.ObserveOrderUseCase
 import com.bunbeauty.core.domain.order.StopObserveOrdersUseCase
-import com.bunbeauty.shared.domain.feature.orderavailable.IsOrderAvailableUseCase
+import com.bunbeauty.core.domain.orderavailable.IsOrderAvailableUseCase
 import org.koin.dsl.module
 
 internal fun orderUseCaseModule() =

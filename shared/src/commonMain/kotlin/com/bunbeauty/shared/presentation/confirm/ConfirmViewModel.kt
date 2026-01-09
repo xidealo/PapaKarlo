@@ -6,13 +6,13 @@ import com.bunbeauty.core.domain.exeptions.AuthSessionTimeoutException
 import com.bunbeauty.core.domain.exeptions.InvalidCodeException
 import com.bunbeauty.core.domain.exeptions.NoAttemptsException
 import com.bunbeauty.core.domain.exeptions.TooManyRequestsException
-import com.bunbeauty.shared.domain.feature.auth.CheckCodeUseCase
-import com.bunbeauty.shared.domain.feature.auth.FormatPhoneNumberUseCase
-import com.bunbeauty.shared.domain.feature.auth.ResendCodeUseCase
 import com.bunbeauty.shared.domain.feature.notification.UpdateNotificationUseCase
 import com.bunbeauty.core.model.SuccessLoginDirection
 import com.bunbeauty.core.extension.launchSafe
 import com.bunbeauty.core.base.SharedStateViewModel
+import com.bunbeauty.core.domain.auth.CheckCodeUseCase
+import com.bunbeauty.core.domain.auth.FormatPhoneNumberUseCase
+import com.bunbeauty.core.domain.auth.ResendCodeUseCase
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch

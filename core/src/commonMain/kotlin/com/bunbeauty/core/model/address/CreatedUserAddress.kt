@@ -10,5 +10,4 @@ data class CreatedUserAddress(
     val floor: String,
     val comment: String,
     val isVisible: Boolean,
-    val cityUuid: String,
 )

@@ -113,7 +113,6 @@ class CreateAddressUseCaseTest {
 
             everySuspend {
                 userAddressRepo.saveUserAddress(
-                    token = "token",
                     createdUserAddress =
                         CreatedUserAddress(
                             street =
@@ -127,7 +126,6 @@ class CreateAddressUseCaseTest {
                             entrance = "entrance",
                             comment = "comment",
                             floor = "floor",
-                            cityUuid = "cityUuid",
                             isVisible = true,
                         ),
                 )

@@ -4,7 +4,7 @@ import com.bunbeauty.shared.domain.feature.address.GetCurrentUserAddressUseCase
 import com.bunbeauty.shared.domain.feature.motivation.GetMotivationUseCase
 import com.bunbeauty.shared.domain.feature.motivation.Motivation
 import com.bunbeauty.core.model.address.UserAddress
-import com.bunbeauty.shared.domain.use_case.address.GetUserAddressListUseCase
+import com.bunbeauty.core.domain.address.GetUserAddressListUseCase
 import dev.mokkery.MockMode
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend

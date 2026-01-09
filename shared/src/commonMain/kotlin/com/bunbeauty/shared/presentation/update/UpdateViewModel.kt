@@ -1,9 +1,9 @@
 package com.bunbeauty.shared.presentation.update
 
-import com.bunbeauty.shared.domain.feature.link.GetLinkUseCase
 import com.bunbeauty.core.model.link.LinkType
 import com.bunbeauty.core.extension.launchSafe
 import com.bunbeauty.core.base.SharedStateViewModel
+import com.bunbeauty.core.domain.link.GetLinkUseCase
 
 class UpdateViewModel(
     private val getLinkUseCase: GetLinkUseCase,

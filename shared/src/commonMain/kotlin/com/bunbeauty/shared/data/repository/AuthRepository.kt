@@ -7,14 +7,17 @@ import com.bunbeauty.core.domain.repo.AuthRepo
 import com.bunbeauty.core.extension.dataOrNull
 import com.bunbeauty.core.extension.isSuccess
 import com.bunbeauty.core.model.AuthResponse
+import com.bunbeauty.shared.DataStoreRepo
 
 class AuthRepository(
     private val networkConnector: NetworkConnector,
+    private val dataStoreRepo: DataStoreRepo,
 ) : AuthRepo {
     private var authSessionUuid: String? = null
 
     override suspend fun requestCode(phoneNumber: String): Boolean {
-        val response = networkConnector.postCodeRequest(CodeRequestServer(phoneNumber = phoneNumber))
+        val response =
+            networkConnector.postCodeRequest(CodeRequestServer(phoneNumber = phoneNumber))
         authSessionUuid = response.dataOrNull()?.uuid
 
         return response.isSuccess
@@ -24,6 +27,14 @@ class AuthRepository(
         authSessionUuid?.let { uuid ->
             networkConnector.putCodeResend(uuid = uuid).isSuccess
         } ?: false
+
+    override suspend fun saveToken(token: String) {
+        dataStoreRepo.saveToken(token)
+    }
+
+    override suspend fun saveUserUuid(userUuid: String) {
+        dataStoreRepo.saveUserUuid(userUuid)
+    }
 
     override suspend fun checkCode(code: String): AuthResponse? =
         authSessionUuid?.let { uuid ->

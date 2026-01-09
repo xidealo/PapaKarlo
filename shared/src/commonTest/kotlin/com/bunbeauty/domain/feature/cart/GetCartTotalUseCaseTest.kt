@@ -2,7 +2,7 @@ package com.bunbeauty.domain.feature.cart
 
 import com.bunbeauty.getCartProduct
 import com.bunbeauty.getMenuProduct
-import com.bunbeauty.shared.domain.feature.cart.GetDeliveryCostFlowUseCase
+import com.bunbeauty.core.domain.cart.GetDeliveryCostFlowUseCase
 import com.bunbeauty.core.domain.discount.GetDiscountUseCase
 import com.bunbeauty.shared.domain.interactor.cart.GetCartTotalFlowUseCase
 import com.bunbeauty.core.domain.GetNewTotalCostUseCase

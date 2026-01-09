@@ -1,5 +1,7 @@
 package com.bunbeauty.shared.data.repository
 
+import com.bunbeauty.core.domain.exeptions.NoSelectedCityUuidException
+import com.bunbeauty.core.domain.exeptions.NoUserUuidException
 import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.data.dao.cafe.ICafeDao
 import com.bunbeauty.shared.data.mapper.cafe.toCafe
@@ -22,7 +24,9 @@ class CafeRepository(
 ) : CafeRepo {
     private var cafeListCache: List<Cafe>? = null
 
-    override suspend fun getCafeList(selectedCityUuid: String): List<Cafe> {
+    override suspend fun getCafeList(): List<Cafe> {
+        val selectedCityUuid = dataStoreRepo.getSelectedCityUuid() ?: throw NoSelectedCityUuidException()
+
         val list =
             if (cafeListCache == null) {
                 val cafeList =
@@ -73,16 +77,16 @@ class CafeRepository(
     }
 
     override suspend fun getCafeByUuid(cafeUuid: String): Cafe? =
-        getCafeList(
-            selectedCityUuid = dataStoreRepo.getSelectedCityUuid().orEmpty(),
-        ).find { cafe ->
+        getCafeList().find { cafe ->
             cafe.uuid == cafeUuid
         }
 
-    override suspend fun getSelectedCafeByUserAndCityUuid(
-        userUuid: String,
-        cityUuid: String,
-    ): Cafe? = cafeDao.getSelectedCafeByUserAndCityUuid(userUuid, cityUuid)?.toCafe()
+    override suspend fun getSelectedCafeByUserAndCityUuid(): Cafe? {
+        val cityUuid = dataStoreRepo.getSelectedCityUuid() ?: throw NoSelectedCityUuidException()
+        val userUuid = dataStoreRepo.getUserUuid() ?: throw NoUserUuidException()
+
+        return cafeDao.getSelectedCafeByUserAndCityUuid(userUuid, cityUuid)?.toCafe()
+    }
 
     override fun clearCache() {
         cafeStorage.clear()

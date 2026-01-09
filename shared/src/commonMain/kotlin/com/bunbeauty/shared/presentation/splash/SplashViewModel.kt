@@ -1,11 +1,11 @@
 package com.bunbeauty.shared.presentation.splash
 
-import com.bunbeauty.shared.domain.feature.splash.CheckOneCityUseCase
-import com.bunbeauty.shared.domain.feature.splash.CheckUpdateUseCase
-import com.bunbeauty.shared.domain.feature.splash.SaveOneCityUseCase
 import com.bunbeauty.core.domain.city.ICityInteractor
 import com.bunbeauty.core.extension.launchSafe
 import com.bunbeauty.core.base.SharedStateViewModel
+import com.bunbeauty.core.domain.splash.CheckOneCityUseCase
+import com.bunbeauty.core.domain.splash.CheckUpdateUseCase
+import com.bunbeauty.core.domain.splash.SaveOneCityUseCase
 
 class SplashViewModel(
     private val checkUpdateUseCase: CheckUpdateUseCase,

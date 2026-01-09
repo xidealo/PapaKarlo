@@ -102,6 +102,9 @@ class UserRepository(
         }
     }
 
+    override suspend fun saveUserCafeUuid(cafeUuid: String) {
+        dataStoreRepo.saveUserCafeUuid(userCafeUuid = cafeUuid)
+    }
     override suspend fun updateNotificationTokenSuspend(notificationToken: String) {
         dataStoreRepo.getToken()?.let { token ->
             networkConnector.putNotificationToken(

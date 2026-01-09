@@ -4,7 +4,7 @@ import com.bunbeauty.core.model.cafe.Cafe
 
 
 interface CafeRepo {
-    suspend fun getCafeList(selectedCityUuid: String): List<Cafe>
+    suspend fun getCafeList(): List<Cafe>
 
     suspend fun saveSelectedCafeUuid(
         userUuid: String,
@@ -14,10 +14,7 @@ interface CafeRepo {
 
     suspend fun getCafeByUuid(cafeUuid: String): Cafe?
 
-    suspend fun getSelectedCafeByUserAndCityUuid(
-        userUuid: String,
-        cityUuid: String,
-    ): Cafe?
+    suspend fun getSelectedCafeByUserAndCityUuid(): Cafe?
 
     fun clearCache()
 }

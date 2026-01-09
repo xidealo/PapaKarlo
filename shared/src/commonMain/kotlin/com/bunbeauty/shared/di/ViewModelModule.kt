@@ -9,7 +9,6 @@ import com.bunbeauty.shared.presentation.createorder.CreateOrderViewModel
 import com.bunbeauty.shared.presentation.login.LoginViewModel
 import com.bunbeauty.shared.presentation.order_details.OrderDetailsViewModel
 import com.bunbeauty.shared.presentation.order_list.OrderListViewModel
-import com.bunbeauty.shared.presentation.product_details.ProductDetailsViewModel
 import com.bunbeauty.profile.presentation.selectcity.SelectCityViewModel
 import com.bunbeauty.shared.presentation.splash.SplashViewModel
 import com.bunbeauty.shared.presentation.update.UpdateViewModel
@@ -110,18 +109,6 @@ fun viewModelModule() =
                 resendCode = get(),
                 analyticService = get(),
                 updateNotificationUseCase = get(),
-            )
-        }
-
-        viewModel {
-            ProductDetailsViewModel(
-                getMenuProductUseCase = get(),
-                observeCartUseCase = get(),
-                addCartProductUseCase = get(),
-                analyticService = get(),
-                editCartProductUseCase = get(),
-                getAdditionGroupsWithSelectedAdditionUseCase = get(),
-                getSelectedAdditionsPriceUseCase = get(),
             )
         }
         viewModel {

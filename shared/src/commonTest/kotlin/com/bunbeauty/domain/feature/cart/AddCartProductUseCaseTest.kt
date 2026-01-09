@@ -7,7 +7,7 @@ import com.bunbeauty.getMenuProduct
 import com.bunbeauty.shared.domain.exeptions.CartProductLimitReachedException
 import com.bunbeauty.shared.domain.feature.addition.AreAdditionsEqualUseCase
 import com.bunbeauty.shared.domain.feature.addition.GetAdditionPriorityUseCase
-import com.bunbeauty.shared.domain.feature.cart.AddCartProductUseCase
+import com.bunbeauty.core.domain.cart.AddCartProductUseCase
 import com.bunbeauty.core.domain.GetCartProductCountUseCase
 import com.bunbeauty.core.domain.repo.AdditionGroupRepo
 import com.bunbeauty.core.domain.repo.AdditionRepo

@@ -1,29 +1,29 @@
 package com.bunbeauty.shared.di.usecase
 
 import com.bunbeauty.core.buildVersionQualifier
-import com.bunbeauty.shared.domain.feature.address.CreateAddressUseCase
-import com.bunbeauty.shared.domain.feature.address.GetFilteredStreetListUseCase
+import com.bunbeauty.core.domain.DisableUserUseCase
+import com.bunbeauty.core.domain.GetNewTotalCostUseCase
+import com.bunbeauty.core.domain.GetNewTotalCostUseCaseImpl
+import com.bunbeauty.core.domain.address.CreateAddressUseCase
+import com.bunbeauty.core.domain.address.GetFilteredStreetListUseCase
 import com.bunbeauty.core.domain.city.GetSelectedCityTimeZoneUseCase
 import com.bunbeauty.core.domain.city.GetSelectedCityTimeZoneUseCaseImpl
+import com.bunbeauty.core.domain.deferred_time.GetMinTimeUseCase
 import com.bunbeauty.core.domain.discount.GetDiscountUseCase
 import com.bunbeauty.core.domain.discount.GetDiscountUseCaseImpl
-import com.bunbeauty.shared.domain.feature.link.GetLinkUseCase
+import com.bunbeauty.core.domain.link.GetLinkUseCase
 import com.bunbeauty.core.domain.menu_product.GetMenuProductListUseCase
 import com.bunbeauty.core.domain.menu_product.GetMenuProductListUseCaseImpl
 import com.bunbeauty.core.domain.menu_product.GetMenuProductUseCase
-import com.bunbeauty.shared.domain.feature.notification.SubscribeToNotificationUseCase
 import com.bunbeauty.core.domain.settings.ObserveSettingsUseCase
 import com.bunbeauty.core.domain.settings.UpdateEmailUseCase
-import com.bunbeauty.shared.domain.feature.splash.CheckOneCityUseCase
-import com.bunbeauty.shared.domain.feature.splash.CheckUpdateUseCase
-import com.bunbeauty.shared.domain.feature.splash.SaveOneCityUseCase
+import com.bunbeauty.core.domain.splash.CheckOneCityUseCase
+import com.bunbeauty.core.domain.splash.CheckUpdateUseCase
+import com.bunbeauty.core.domain.splash.SaveOneCityUseCase
+import com.bunbeauty.shared.domain.feature.notification.SubscribeToNotificationUseCase
 import com.bunbeauty.shared.domain.interactor.cart.GetCartTotalFlowUseCase
-import com.bunbeauty.core.domain.GetNewTotalCostUseCase
-import com.bunbeauty.core.domain.GetNewTotalCostUseCaseImpl
 import com.bunbeauty.shared.domain.interactor.cart.GetOldTotalCostUseCase
 import com.bunbeauty.shared.domain.interactor.cart.GetOldTotalCostUseCaseImpl
-import com.bunbeauty.core.domain.DisableUserUseCase
-import com.bunbeauty.shared.domain.use_case.deferred_time.GetMinTimeUseCase
 import org.koin.dsl.module
 
 internal fun useCaseModules() =
@@ -74,8 +74,8 @@ internal fun useCaseModules() =
         }
         factory {
             CreateAddressUseCase(
-                dataStoreRepo = get(),
                 userAddressRepo = get(),
+                userRepo = get(),
             )
         }
         factory {
@@ -117,7 +117,6 @@ internal fun useCaseModules() =
         factory {
             SaveOneCityUseCase(
                 cityRepo = get(),
-                dataStoreRepo = get(),
             )
         }
     }

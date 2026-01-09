@@ -9,13 +9,10 @@ import com.bunbeauty.analytic.parameter.MenuProductUuidEventParameter
 import com.bunbeauty.core.Logger
 import com.bunbeauty.core.Constants.PERCENT
 import com.bunbeauty.core.Constants.RUBLE_CURRENCY
-import com.bunbeauty.shared.domain.feature.cart.GetRecommendationsUseCase
-import com.bunbeauty.shared.domain.feature.cart.IncreaseCartProductCountUseCase
-import com.bunbeauty.shared.domain.feature.cart.RemoveCartProductUseCase
+import com.bunbeauty.core.domain.cart.GetRecommendationsUseCase
+import com.bunbeauty.core.domain.cart.IncreaseCartProductCountUseCase
+import com.bunbeauty.core.domain.cart.RemoveCartProductUseCase
 import com.bunbeauty.core.domain.menu_product.AddMenuProductUseCase
-import com.bunbeauty.shared.domain.feature.motivation.GetMotivationUseCase
-import com.bunbeauty.shared.domain.feature.motivation.Motivation
-import com.bunbeauty.shared.domain.feature.orderavailable.IsOrderAvailableUseCase
 import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
 import com.bunbeauty.core.domain.user.IUserInteractor
 import com.bunbeauty.core.model.product.MenuProduct
@@ -24,6 +21,9 @@ import com.bunbeauty.core.model.MenuItem
 import com.bunbeauty.core.model.cart.ConsumerCartDomain
 import com.bunbeauty.core.model.mapper.toMenuProductItem
 import com.bunbeauty.core.base.SharedStateViewModel
+import com.bunbeauty.core.domain.motivation.GetMotivationUseCase
+import com.bunbeauty.core.domain.motivation.Motivation
+import com.bunbeauty.core.domain.orderavailable.IsOrderAvailableUseCase
 import com.bunbeauty.shared.presentation.consumercart.mapper.toCartProductItem
 import com.bunbeauty.shared.presentation.motivation.toMotivationData
 import com.bunbeauty.core.model.ProductDetailsOpenedFrom
