@@ -2,7 +2,7 @@ package com.bunbeauty.shared.domain.use_case.address
 
 import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.domain.feature.address.GetCurrentUserAddressUseCase
-import com.bunbeauty.shared.domain.model.address.SelectableUserAddress
+import com.bunbeauty.core.model.address.SelectableUserAddress
 import com.bunbeauty.shared.domain.repo.UserAddressRepo
 
 class GetSelectableUserAddressListUseCase(

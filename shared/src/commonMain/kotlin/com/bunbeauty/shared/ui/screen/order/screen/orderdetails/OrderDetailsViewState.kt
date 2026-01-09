@@ -1,6 +1,6 @@
 package com.bunbeauty.shared.ui.screen.order.screen.orderdetails
 
-import com.bunbeauty.shared.domain.model.order.OrderStatus
+import com.bunbeauty.core.model.order.OrderStatus
 import com.bunbeauty.shared.presentation.base.BaseViewState
 import com.bunbeauty.shared.presentation.order_details.OrderDetails
 

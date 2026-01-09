@@ -1,8 +1,8 @@
 package com.bunbeauty.shared.data.repository
 
+import com.bunbeauty.core.model.addition.AdditionGroup
 import com.bunbeauty.shared.data.dao.addition_group.IAdditionGroupDao
 import com.bunbeauty.shared.data.mapper.additiongroup.mapAdditionGroupEntityToGroup
-import com.bunbeauty.shared.domain.model.addition.AdditionGroup
 import com.bunbeauty.shared.domain.repo.AdditionGroupRepo
 
 class AdditionGroupRepository(

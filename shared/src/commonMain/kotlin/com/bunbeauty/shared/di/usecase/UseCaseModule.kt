@@ -5,12 +5,12 @@ import com.bunbeauty.shared.domain.feature.address.CreateAddressUseCase
 import com.bunbeauty.shared.domain.feature.address.GetFilteredStreetListUseCase
 import com.bunbeauty.shared.domain.feature.city.GetSelectedCityTimeZoneUseCase
 import com.bunbeauty.shared.domain.feature.city.GetSelectedCityTimeZoneUseCaseImpl
-import com.bunbeauty.shared.domain.feature.discount.GetDiscountUseCase
-import com.bunbeauty.shared.domain.feature.discount.GetDiscountUseCaseImpl
+import com.bunbeauty.core.domain.discount.GetDiscountUseCase
+import com.bunbeauty.core.domain.discount.GetDiscountUseCaseImpl
 import com.bunbeauty.shared.domain.feature.link.GetLinkUseCase
-import com.bunbeauty.shared.domain.feature.menuproduct.GetMenuProductListUseCase
-import com.bunbeauty.shared.domain.feature.menuproduct.GetMenuProductListUseCaseImpl
-import com.bunbeauty.shared.domain.feature.menuproduct.GetMenuProductUseCase
+import com.bunbeauty.core.domain.menu_product.GetMenuProductListUseCase
+import com.bunbeauty.core.domain.menu_product.GetMenuProductListUseCaseImpl
+import com.bunbeauty.core.domain.menu_product.GetMenuProductUseCase
 import com.bunbeauty.shared.domain.feature.notification.SubscribeToNotificationUseCase
 import com.bunbeauty.shared.domain.feature.settings.ObserveSettingsUseCase
 import com.bunbeauty.shared.domain.feature.settings.UpdateEmailUseCase
@@ -18,8 +18,8 @@ import com.bunbeauty.shared.domain.feature.splash.CheckOneCityUseCase
 import com.bunbeauty.shared.domain.feature.splash.CheckUpdateUseCase
 import com.bunbeauty.shared.domain.feature.splash.SaveOneCityUseCase
 import com.bunbeauty.shared.domain.interactor.cart.GetCartTotalFlowUseCase
-import com.bunbeauty.shared.domain.interactor.cart.GetNewTotalCostUseCase
-import com.bunbeauty.shared.domain.interactor.cart.GetNewTotalCostUseCaseImpl
+import com.bunbeauty.core.domain.GetNewTotalCostUseCase
+import com.bunbeauty.core.domain.GetNewTotalCostUseCaseImpl
 import com.bunbeauty.shared.domain.interactor.cart.GetOldTotalCostUseCase
 import com.bunbeauty.shared.domain.interactor.cart.GetOldTotalCostUseCaseImpl
 import com.bunbeauty.shared.domain.use_case.DisableUserUseCase
@@ -107,7 +107,6 @@ internal fun useCaseModules() =
             GetDiscountUseCaseImpl(
                 discountRepository = get(),
                 orderRepository = get(),
-                dataStoreRepo = get(),
             )
         }
         factory {

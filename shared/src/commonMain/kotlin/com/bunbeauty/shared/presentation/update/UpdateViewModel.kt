@@ -1,8 +1,8 @@
 package com.bunbeauty.shared.presentation.update
 
 import com.bunbeauty.shared.domain.feature.link.GetLinkUseCase
-import com.bunbeauty.shared.domain.model.link.LinkType
-import com.bunbeauty.shared.extension.launchSafe
+import com.bunbeauty.core.model.link.LinkType
+import com.bunbeauty.core.extension.launchSafe
 import com.bunbeauty.shared.presentation.base.SharedStateViewModel
 
 class UpdateViewModel(

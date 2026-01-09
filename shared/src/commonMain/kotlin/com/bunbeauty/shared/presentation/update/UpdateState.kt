@@ -1,7 +1,7 @@
 package com.bunbeauty.shared.presentation.update
 
-import com.bunbeauty.shared.domain.model.link.Link
-import com.bunbeauty.shared.domain.model.link.LinkType
+import com.bunbeauty.core.model.link.Link
+import com.bunbeauty.core.model.link.LinkType
 import com.bunbeauty.shared.presentation.base.BaseAction
 import com.bunbeauty.shared.presentation.base.BaseEvent
 import com.bunbeauty.shared.presentation.base.BaseViewDataState

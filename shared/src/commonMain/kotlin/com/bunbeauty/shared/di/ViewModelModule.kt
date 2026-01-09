@@ -8,7 +8,6 @@ import com.bunbeauty.shared.presentation.consumercart.ConsumerCartViewModel
 import com.bunbeauty.shared.presentation.create_address.CreateAddressViewModel
 import com.bunbeauty.shared.presentation.createorder.CreateOrderViewModel
 import com.bunbeauty.shared.presentation.login.LoginViewModel
-import com.bunbeauty.shared.presentation.menu.MenuViewModel
 import com.bunbeauty.shared.presentation.order_details.OrderDetailsViewModel
 import com.bunbeauty.shared.presentation.order_list.OrderListViewModel
 import com.bunbeauty.shared.presentation.product_details.ProductDetailsViewModel
@@ -23,15 +22,6 @@ import org.koin.dsl.module
 
 fun viewModelModule() =
     module {
-        viewModel {
-            MenuViewModel(
-                menuProductInteractor = get(),
-                observeCartUseCase = get(),
-                addMenuProductUseCase = get(),
-                getDiscountUseCase = get(),
-                analyticService = get(),
-            )
-        }
         viewModel {
             MainViewModel(
                 isOrderAvailableUseCase = get(),

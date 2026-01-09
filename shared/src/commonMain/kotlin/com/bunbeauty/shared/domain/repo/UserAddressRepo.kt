@@ -1,7 +1,7 @@
 package com.bunbeauty.shared.domain.repo
 
-import com.bunbeauty.shared.domain.model.address.CreatedUserAddress
-import com.bunbeauty.shared.domain.model.address.UserAddress
+import com.bunbeauty.core.model.address.CreatedUserAddress
+import com.bunbeauty.core.model.address.UserAddress
 import kotlinx.coroutines.flow.Flow
 
 interface UserAddressRepo {

@@ -1,11 +1,11 @@
 package com.bunbeauty.shared.presentation.consumercart
 
+import com.bunbeauty.core.model.MenuItem
 import com.bunbeauty.shared.presentation.base.BaseAction
 import com.bunbeauty.shared.presentation.base.BaseDataState
 import com.bunbeauty.shared.presentation.base.BaseEvent
-import com.bunbeauty.shared.presentation.menu.model.MenuItem
 import com.bunbeauty.shared.presentation.motivation.MotivationData
-import com.bunbeauty.shared.presentation.product_details.ProductDetailsOpenedFrom
+import com.bunbeauty.core.model.ProductDetailsOpenedFrom
 
 interface ConsumerCart {
     data class DataState(

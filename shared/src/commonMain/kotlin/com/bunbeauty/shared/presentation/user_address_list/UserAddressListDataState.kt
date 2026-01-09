@@ -1,6 +1,6 @@
 package com.bunbeauty.shared.presentation.user_address_list
 
-import com.bunbeauty.shared.domain.model.address.SelectableUserAddress
+import com.bunbeauty.core.model.address.SelectableUserAddress
 import com.bunbeauty.shared.presentation.base.BaseAction
 import com.bunbeauty.shared.presentation.base.BaseDataState
 import com.bunbeauty.shared.presentation.base.BaseEvent

@@ -1,9 +1,9 @@
 package com.bunbeauty.shared.data.repository
 
 import com.bunbeauty.shared.data.network.api.NetworkConnector
-import com.bunbeauty.shared.domain.model.Suggestion
+import com.bunbeauty.core.model.Suggestion
 import com.bunbeauty.shared.domain.repo.SuggestionRepo
-import com.bunbeauty.shared.extension.dataOrNull
+import com.bunbeauty.core.extension.dataOrNull
 
 class SuggestionRepository(
     private val networkConnector: NetworkConnector,

@@ -1,5 +1,7 @@
 package com.bunbeauty.shared.data.repository
 
+import com.bunbeauty.core.model.addition.AdditionGroup
+import com.bunbeauty.core.model.product.MenuProduct
 import com.bunbeauty.shared.data.dao.addition.IAdditionDao
 import com.bunbeauty.shared.data.dao.addition_group.IAdditionGroupDao
 import com.bunbeauty.shared.data.dao.category.ICategoryDao
@@ -11,11 +13,10 @@ import com.bunbeauty.shared.data.mapper.menuProduct.IMenuProductMapper
 import com.bunbeauty.shared.data.network.api.NetworkConnector
 import com.bunbeauty.shared.data.network.model.MenuProductServer
 import com.bunbeauty.shared.domain.mapFlow
-import com.bunbeauty.shared.domain.model.addition.AdditionGroup
-import com.bunbeauty.shared.domain.model.product.MenuProduct
-import com.bunbeauty.shared.domain.repo.MenuProductRepo
+import com.bunbeauty.core.domain.repo.MenuProductRepo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlin.collections.map
 
 class MenuProductRepository(
     private val networkConnector: NetworkConnector,
@@ -78,7 +79,7 @@ class MenuProductRepository(
                         menuProduct.copy(
                             additionGroups = getAdditionGroups(menuProduct),
                         )
-                    }
+                    } as List<MenuProduct>
             },
             onSaveLocally = ::saveMenuLocally,
             serverToDomainModel = menuProductMapper::toMenuProduct,

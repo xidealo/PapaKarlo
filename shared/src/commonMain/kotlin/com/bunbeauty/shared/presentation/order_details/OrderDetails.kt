@@ -1,11 +1,11 @@
 package com.bunbeauty.shared.presentation.order_details
 
-import com.bunbeauty.shared.domain.model.addition.OrderAddition
-import com.bunbeauty.shared.domain.model.date_time.DateTime
-import com.bunbeauty.shared.domain.model.date_time.Time
-import com.bunbeauty.shared.domain.model.order.OrderAddress
-import com.bunbeauty.shared.domain.model.order.OrderStatus
-import com.bunbeauty.shared.domain.model.payment_method.PaymentMethodName
+import com.bunbeauty.core.model.addition.OrderAddition
+import com.bunbeauty.core.model.date_time.DateTime
+import com.bunbeauty.core.model.date_time.Time
+import com.bunbeauty.core.model.order.OrderAddress
+import com.bunbeauty.core.model.order.OrderStatus
+import com.bunbeauty.core.model.payment_method.PaymentMethodName
 import com.bunbeauty.shared.presentation.base.BaseAction
 import com.bunbeauty.shared.presentation.base.BaseDataState
 import com.bunbeauty.shared.presentation.base.BaseEvent

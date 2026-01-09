@@ -1,13 +1,13 @@
 package com.bunbeauty.shared.presentation.profile
 
 import com.bunbeauty.core.Logger
-import com.bunbeauty.shared.Constants.VERSION_DIVIDER
+import com.bunbeauty.core.Constants.VERSION_DIVIDER
 import com.bunbeauty.shared.domain.feature.link.GetLinkListUseCase
 import com.bunbeauty.shared.domain.feature.order.GetLastOrderUseCase
 import com.bunbeauty.shared.domain.feature.order.ObserveLastOrderUseCase
 import com.bunbeauty.shared.domain.feature.order.StopObserveOrdersUseCase
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
-import com.bunbeauty.shared.extension.launchSafe
+import com.bunbeauty.core.extension.launchSafe
 import com.bunbeauty.shared.presentation.base.SharedStateViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest

@@ -7,9 +7,9 @@ import com.bunbeauty.shared.data.mapper.cafe.toCafeEntity
 import com.bunbeauty.shared.data.network.api.NetworkConnector
 import com.bunbeauty.shared.data.storage.CafeStorage
 import com.bunbeauty.shared.db.SelectedCafeUuidEntity
-import com.bunbeauty.shared.domain.model.cafe.Cafe
 import com.bunbeauty.shared.domain.repo.CafeRepo
-import com.bunbeauty.shared.extension.dataOrNull
+import com.bunbeauty.core.extension.dataOrNull
+import com.bunbeauty.core.model.cafe.Cafe
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.withContext

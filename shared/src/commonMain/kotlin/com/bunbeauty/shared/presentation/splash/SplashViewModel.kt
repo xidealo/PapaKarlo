@@ -4,7 +4,7 @@ import com.bunbeauty.shared.domain.feature.splash.CheckOneCityUseCase
 import com.bunbeauty.shared.domain.feature.splash.CheckUpdateUseCase
 import com.bunbeauty.shared.domain.feature.splash.SaveOneCityUseCase
 import com.bunbeauty.shared.domain.interactor.city.ICityInteractor
-import com.bunbeauty.shared.extension.launchSafe
+import com.bunbeauty.core.extension.launchSafe
 import com.bunbeauty.shared.presentation.base.SharedStateViewModel
 
 class SplashViewModel(

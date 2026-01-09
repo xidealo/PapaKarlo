@@ -1,8 +1,8 @@
 package com.bunbeauty.shared.data.mapper.cafe
 
+import com.bunbeauty.core.model.cafe.Cafe
 import com.bunbeauty.shared.data.network.model.CafeServer
 import com.bunbeauty.shared.db.CafeEntity
-import com.bunbeauty.shared.domain.model.cafe.Cafe
 
 fun CafeServer.toCafeEntity(): CafeEntity =
     CafeEntity(

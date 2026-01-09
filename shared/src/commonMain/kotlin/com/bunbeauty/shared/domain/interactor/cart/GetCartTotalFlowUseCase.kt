@@ -1,9 +1,10 @@
 package com.bunbeauty.shared.domain.interactor.cart
 
+import com.bunbeauty.core.domain.GetNewTotalCostUseCase
+import com.bunbeauty.core.model.cart.CartTotal
 import com.bunbeauty.shared.domain.feature.cart.GetDeliveryCostFlowUseCase
-import com.bunbeauty.shared.domain.feature.discount.GetDiscountUseCase
-import com.bunbeauty.shared.domain.model.cart.CartTotal
-import com.bunbeauty.shared.domain.repo.CartProductRepo
+import com.bunbeauty.core.domain.discount.GetDiscountUseCase
+import com.bunbeauty.core.domain.repo.CartProductRepo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 

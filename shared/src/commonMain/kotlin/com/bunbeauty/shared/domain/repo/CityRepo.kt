@@ -1,6 +1,6 @@
 package com.bunbeauty.shared.domain.repo
 
-import com.bunbeauty.shared.domain.model.city.City
+import com.bunbeauty.core.model.city.City
 import kotlinx.coroutines.flow.Flow
 
 interface CityRepo {

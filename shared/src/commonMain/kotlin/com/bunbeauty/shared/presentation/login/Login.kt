@@ -1,6 +1,6 @@
 package com.bunbeauty.shared.presentation.login
 
-import com.bunbeauty.shared.Constants.PHONE_CODE
+import com.bunbeauty.core.Constants.PHONE_CODE
 import com.bunbeauty.shared.presentation.base.BaseAction
 import com.bunbeauty.shared.presentation.base.BaseEvent
 import com.bunbeauty.shared.presentation.base.BaseViewDataState

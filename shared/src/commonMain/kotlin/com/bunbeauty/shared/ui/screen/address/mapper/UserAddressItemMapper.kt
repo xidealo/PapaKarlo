@@ -1,10 +1,10 @@
 package com.bunbeauty.shared.ui.screen.address.mapper
 
 import androidx.compose.runtime.Composable
-import com.bunbeauty.shared.Constants.ADDRESS_DIVIDER
-import com.bunbeauty.shared.domain.model.address.SelectableUserAddress
-import com.bunbeauty.shared.domain.model.address.UserAddress
-import com.bunbeauty.shared.domain.model.address.UserAddressWithCity
+import com.bunbeauty.core.Constants.ADDRESS_DIVIDER
+import com.bunbeauty.core.model.address.SelectableUserAddress
+import com.bunbeauty.core.model.address.UserAddress
+import com.bunbeauty.core.model.address.UserAddressWithCity
 import com.bunbeauty.shared.ui.screen.address.model.UserAddressItem
 import org.jetbrains.compose.resources.stringResource
 import papakarlo.shared.generated.resources.Res

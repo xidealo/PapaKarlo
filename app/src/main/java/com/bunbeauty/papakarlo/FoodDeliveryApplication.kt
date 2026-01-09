@@ -8,7 +8,7 @@ import android.media.RingtoneManager
 import android.os.Build
 import com.bunbeauty.core.Logger
 import com.bunbeauty.papakarlo.di.appModule
-import com.bunbeauty.shared.Constants.CHANNEL_ID
+import com.bunbeauty.core.Constants.CHANNEL_ID
 import com.bunbeauty.shared.data.CompanyUuidProvider
 import com.bunbeauty.shared.di.initKoin
 import com.bunbeauty.shared.domain.feature.notification.SubscribeToNotificationUseCase

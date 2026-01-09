@@ -3,8 +3,8 @@ package com.bunbeauty.domain.feature.menuproduct
 import com.bunbeauty.getAddition
 import com.bunbeauty.getAdditionGroup
 import com.bunbeauty.getMenuProduct
-import com.bunbeauty.shared.domain.feature.menuproduct.GetMenuProductUseCase
-import com.bunbeauty.shared.domain.repo.MenuProductRepo
+import com.bunbeauty.core.domain.menu_product.GetMenuProductUseCase
+import com.bunbeauty.core.domain.repo.MenuProductRepo
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.mock

@@ -1,15 +1,16 @@
 package com.bunbeauty.shared.domain.feature.cafe
 
-import com.bunbeauty.shared.Constants.SECONDS_IN_MINUTE
+import com.bunbeauty.core.Constants.SECONDS_IN_MINUTE
+import com.bunbeauty.core.model.cafe.Cafe
+import com.bunbeauty.core.model.cafe.CafeOpenState
+import com.bunbeauty.core.model.cafe.CafeWithOpenState
 import com.bunbeauty.shared.domain.feature.city.GetSelectedCityTimeZoneUseCase
-import com.bunbeauty.shared.domain.model.cafe.Cafe
-import com.bunbeauty.shared.domain.model.cafe.CafeOpenState
-import com.bunbeauty.shared.domain.model.cafe.CafeWithOpenState
 import com.bunbeauty.shared.domain.util.DateTimeUtil
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
+import kotlin.collections.map
 
 class ObserveCafeWithOpenStateListUseCase(
     private val getSelectedCityTimeZoneUseCase: GetSelectedCityTimeZoneUseCase,

@@ -1,8 +1,8 @@
 package com.bunbeauty.shared.domain.interactor.user
 
-import com.bunbeauty.shared.domain.model.profile.Profile
+import com.bunbeauty.core.model.profile.Profile
 import com.bunbeauty.shared.domain.repo.CafeRepo
-import com.bunbeauty.shared.domain.repo.OrderRepo
+import com.bunbeauty.core.domain.repo.OrderRepo
 import com.bunbeauty.shared.domain.repo.UserAddressRepo
 import com.bunbeauty.shared.domain.repo.UserRepo
 

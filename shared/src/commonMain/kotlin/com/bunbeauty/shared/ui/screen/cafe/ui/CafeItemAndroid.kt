@@ -1,6 +1,6 @@
 package com.bunbeauty.shared.ui.screen.cafe.ui
 
-import com.bunbeauty.shared.domain.model.cafe.CafeOpenState
+import com.bunbeauty.core.model.cafe.CafeOpenState
 
 data class CafeItemAndroid(
     val uuid: String,

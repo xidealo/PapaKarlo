@@ -1,8 +1,8 @@
 package com.bunbeauty.domain.feature.link
 
 import com.bunbeauty.shared.domain.feature.link.GetLinkUseCase
-import com.bunbeauty.shared.domain.model.link.Link
-import com.bunbeauty.shared.domain.model.link.LinkType
+import com.bunbeauty.core.model.link.Link
+import com.bunbeauty.core.model.link.LinkType
 import com.bunbeauty.shared.domain.repo.LinkRepo
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend

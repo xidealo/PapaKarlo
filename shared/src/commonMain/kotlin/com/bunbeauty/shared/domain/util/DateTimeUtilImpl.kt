@@ -1,9 +1,9 @@
 package com.bunbeauty.shared.domain.util
 
-import com.bunbeauty.shared.domain.model.date_time.Date
-import com.bunbeauty.shared.domain.model.date_time.DateTime
-import com.bunbeauty.shared.domain.model.date_time.MinuteSecond
-import com.bunbeauty.shared.domain.model.date_time.Time
+import com.bunbeauty.core.model.date_time.Date
+import com.bunbeauty.core.model.date_time.DateTime
+import com.bunbeauty.core.model.date_time.MinuteSecond
+import com.bunbeauty.core.model.date_time.Time
 import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDateTime

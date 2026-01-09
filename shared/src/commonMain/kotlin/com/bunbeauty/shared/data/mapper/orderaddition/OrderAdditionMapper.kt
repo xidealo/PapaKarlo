@@ -1,8 +1,8 @@
 package com.bunbeauty.shared.data.mapper.orderaddition
 
+import com.bunbeauty.core.model.addition.OrderAddition
 import com.bunbeauty.shared.data.network.model.order.get.OrderAdditionServer
 import com.bunbeauty.shared.db.OrderAdditionEntity
-import com.bunbeauty.shared.domain.model.addition.OrderAddition
 
 val mapOrderAdditionServerToOrderAdditionEntity: OrderAdditionServer.(String) -> OrderAdditionEntity =
     { orderProductUuid ->

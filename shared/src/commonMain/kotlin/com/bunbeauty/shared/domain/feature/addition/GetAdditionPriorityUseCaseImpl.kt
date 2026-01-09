@@ -1,7 +1,8 @@
 package com.bunbeauty.shared.domain.feature.addition
 
-import com.bunbeauty.shared.domain.model.addition.Addition
-import com.bunbeauty.shared.domain.model.addition.AdditionGroup
+import com.bunbeauty.core.model.addition.Addition
+import com.bunbeauty.core.model.addition.AdditionGroup
+
 
 interface GetAdditionPriorityUseCase {
     operator fun invoke(

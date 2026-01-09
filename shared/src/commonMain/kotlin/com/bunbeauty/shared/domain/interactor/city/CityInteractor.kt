@@ -3,8 +3,8 @@ package com.bunbeauty.shared.domain.interactor.city
 import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.domain.CommonFlow
 import com.bunbeauty.shared.domain.asCommonFlow
-import com.bunbeauty.shared.domain.model.city.City
-import com.bunbeauty.shared.domain.model.city.SelectableCity
+import com.bunbeauty.core.model.city.City
+import com.bunbeauty.core.model.city.SelectableCity
 import com.bunbeauty.shared.domain.repo.CityRepo
 import kotlinx.coroutines.flow.map
 

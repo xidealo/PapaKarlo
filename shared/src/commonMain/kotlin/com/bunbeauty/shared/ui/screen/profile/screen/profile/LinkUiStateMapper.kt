@@ -1,7 +1,7 @@
 package com.bunbeauty.shared.ui.screen.profile.screen.profile
 
-import com.bunbeauty.shared.domain.model.link.Link
-import com.bunbeauty.shared.domain.model.link.LinkType
+import com.bunbeauty.core.model.link.Link
+import com.bunbeauty.core.model.link.LinkType
 import com.bunbeauty.shared.ui.screen.profile.screen.feedback.model.LinkUI
 import papakarlo.shared.generated.resources.Res
 import papakarlo.shared.generated.resources.action_feedback_app_store

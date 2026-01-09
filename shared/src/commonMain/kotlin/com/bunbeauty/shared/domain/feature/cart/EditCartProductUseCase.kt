@@ -1,9 +1,9 @@
 package com.bunbeauty.shared.domain.feature.cart
 
+import com.bunbeauty.core.model.addition.Addition
 import com.bunbeauty.shared.domain.feature.addition.AreAdditionsEqualUseCase
-import com.bunbeauty.shared.domain.model.addition.Addition
 import com.bunbeauty.shared.domain.repo.CartProductAdditionRepo
-import com.bunbeauty.shared.domain.repo.CartProductRepo
+import com.bunbeauty.core.domain.repo.CartProductRepo
 
 class EditCartProductUseCase(
     private val cartProductRepo: CartProductRepo,

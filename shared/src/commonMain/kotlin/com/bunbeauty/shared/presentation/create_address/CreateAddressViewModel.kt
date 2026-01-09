@@ -3,9 +3,9 @@ package com.bunbeauty.shared.presentation.create_address
 import com.bunbeauty.designsystem.ui.element.textfield.SuggestionUi
 import com.bunbeauty.shared.domain.feature.address.CreateAddressUseCase
 import com.bunbeauty.shared.domain.feature.address.GetSuggestionsUseCase
-import com.bunbeauty.shared.domain.model.Suggestion
+import com.bunbeauty.core.model.Suggestion
 import com.bunbeauty.shared.domain.use_case.address.SaveSelectedUserAddressUseCase
-import com.bunbeauty.shared.extension.launchSafe
+import com.bunbeauty.core.extension.launchSafe
 import com.bunbeauty.shared.presentation.base.SharedStateViewModel
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.FlowPreview

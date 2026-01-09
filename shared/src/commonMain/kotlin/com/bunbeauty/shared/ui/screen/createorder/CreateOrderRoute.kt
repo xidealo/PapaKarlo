@@ -51,7 +51,7 @@ import com.bunbeauty.designsystem.ui.element.surface.FoodDeliverySurface
 import com.bunbeauty.designsystem.ui.element.switcher.FoodDeliverySwitcher
 import com.bunbeauty.designsystem.ui.element.textfield.FoodDeliveryTextField
 import com.bunbeauty.designsystem.ui.element.textfield.FoodDeliveryTextFieldDefaults
-import com.bunbeauty.shared.Constants.RUBLE_CURRENCY
+import com.bunbeauty.core.Constants.RUBLE_CURRENCY
 import com.bunbeauty.shared.presentation.createorder.CreateOrder
 import com.bunbeauty.shared.presentation.createorder.CreateOrderViewModel
 import com.bunbeauty.shared.ui.screen.createorder.mapper.toViewState

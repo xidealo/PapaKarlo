@@ -3,9 +3,9 @@ package com.bunbeauty.shared.data.repository
 import com.bunbeauty.shared.data.dao.payment_method.IPaymentMethodDao
 import com.bunbeauty.shared.data.mapper.payment.PaymentMethodMapper
 import com.bunbeauty.shared.data.network.api.NetworkConnector
-import com.bunbeauty.shared.domain.model.payment_method.PaymentMethod
+import com.bunbeauty.core.model.payment_method.PaymentMethod
 import com.bunbeauty.shared.domain.repo.PaymentRepo
-import com.bunbeauty.shared.extension.getNullableResult
+import com.bunbeauty.core.extension.getNullableResult
 
 class PaymentRepository(
     private val networkConnector: NetworkConnector,

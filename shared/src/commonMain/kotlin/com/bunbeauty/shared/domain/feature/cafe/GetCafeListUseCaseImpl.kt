@@ -1,9 +1,9 @@
 package com.bunbeauty.shared.domain.feature.cafe
 
+import com.bunbeauty.core.domain.exeptions.EmptyCafeListException
 import com.bunbeauty.shared.DataStoreRepo
-import com.bunbeauty.shared.domain.exeptions.EmptyCafeListException
-import com.bunbeauty.shared.domain.exeptions.NoSelectedCityUuidException
-import com.bunbeauty.shared.domain.model.cafe.Cafe
+import com.bunbeauty.core.domain.exeptions.NoSelectedCityUuidException
+import com.bunbeauty.core.model.cafe.Cafe
 import com.bunbeauty.shared.domain.repo.CafeRepo
 
 interface GetCafeListUseCase {

@@ -1,7 +1,8 @@
 package com.bunbeauty.shared.presentation.product_details
 
-import com.bunbeauty.shared.domain.model.addition.AdditionGroup
-import com.bunbeauty.shared.domain.model.cart.CartCostAndCount
+import com.bunbeauty.core.model.ProductDetailsOpenedFrom
+import com.bunbeauty.core.model.addition.AdditionGroup
+import com.bunbeauty.core.model.cart.CartCostAndCount
 import com.bunbeauty.shared.presentation.base.BaseAction
 import com.bunbeauty.shared.presentation.base.BaseDataState
 import com.bunbeauty.shared.presentation.base.BaseEvent

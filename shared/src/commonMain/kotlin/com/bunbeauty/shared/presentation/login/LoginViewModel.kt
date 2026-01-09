@@ -1,12 +1,12 @@
 package com.bunbeauty.shared.presentation.login
 
-import com.bunbeauty.shared.domain.exeptions.InvalidPhoneNumberException
-import com.bunbeauty.shared.domain.exeptions.TooManyRequestsException
+import com.bunbeauty.core.domain.exeptions.InvalidPhoneNumberException
+import com.bunbeauty.core.domain.exeptions.TooManyRequestsException
 import com.bunbeauty.shared.domain.feature.auth.CheckPhoneNumberUseCase
 import com.bunbeauty.shared.domain.feature.auth.FormatPhoneNumberUseCase
 import com.bunbeauty.shared.domain.feature.auth.GetPhoneNumberCursorPositionUseCase
 import com.bunbeauty.shared.domain.feature.auth.RequestCodeUseCase
-import com.bunbeauty.shared.extension.launchSafe
+import com.bunbeauty.core.extension.launchSafe
 import com.bunbeauty.shared.presentation.base.SharedStateViewModel
 
 class LoginViewModel(

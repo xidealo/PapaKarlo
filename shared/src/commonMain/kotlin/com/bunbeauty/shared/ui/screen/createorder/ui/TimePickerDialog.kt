@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.theme.medium
-import com.bunbeauty.shared.domain.model.date_time.Time
+import com.bunbeauty.core.model.date_time.Time
 import com.bunbeauty.shared.presentation.createorder.CreateOrder
 import com.bunbeauty.shared.ui.screen.createorder.TimePickerUI
 import com.bunbeauty.shared.ui.screen.createorder.TimeUI

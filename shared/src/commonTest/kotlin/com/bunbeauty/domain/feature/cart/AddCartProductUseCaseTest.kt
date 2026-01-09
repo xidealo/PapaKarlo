@@ -8,11 +8,11 @@ import com.bunbeauty.shared.domain.exeptions.CartProductLimitReachedException
 import com.bunbeauty.shared.domain.feature.addition.AreAdditionsEqualUseCase
 import com.bunbeauty.shared.domain.feature.addition.GetAdditionPriorityUseCase
 import com.bunbeauty.shared.domain.feature.cart.AddCartProductUseCase
-import com.bunbeauty.shared.domain.feature.cart.GetCartProductCountUseCase
+import com.bunbeauty.core.domain.GetCartProductCountUseCase
 import com.bunbeauty.shared.domain.repo.AdditionGroupRepo
 import com.bunbeauty.shared.domain.repo.AdditionRepo
 import com.bunbeauty.shared.domain.repo.CartProductAdditionRepo
-import com.bunbeauty.shared.domain.repo.CartProductRepo
+import com.bunbeauty.core.domain.repo.CartProductRepo
 import dev.mokkery.MockMode
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend

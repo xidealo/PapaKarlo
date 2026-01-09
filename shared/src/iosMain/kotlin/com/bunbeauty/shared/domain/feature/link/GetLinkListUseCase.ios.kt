@@ -1,7 +1,7 @@
 package com.bunbeauty.shared.domain.feature.link
 
-import com.bunbeauty.shared.domain.model.link.Link
-import com.bunbeauty.shared.domain.model.link.LinkType
+import com.bunbeauty.core.model.link.Link
+import com.bunbeauty.core.model.link.LinkType
 import com.bunbeauty.shared.domain.repo.LinkRepo
 
 actual class GetLinkListUseCase(

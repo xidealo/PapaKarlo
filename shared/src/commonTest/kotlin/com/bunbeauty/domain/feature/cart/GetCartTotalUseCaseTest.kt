@@ -3,11 +3,11 @@ package com.bunbeauty.domain.feature.cart
 import com.bunbeauty.getCartProduct
 import com.bunbeauty.getMenuProduct
 import com.bunbeauty.shared.domain.feature.cart.GetDeliveryCostFlowUseCase
-import com.bunbeauty.shared.domain.feature.discount.GetDiscountUseCase
+import com.bunbeauty.core.domain.discount.GetDiscountUseCase
 import com.bunbeauty.shared.domain.interactor.cart.GetCartTotalFlowUseCase
-import com.bunbeauty.shared.domain.interactor.cart.GetNewTotalCostUseCase
+import com.bunbeauty.core.domain.GetNewTotalCostUseCase
 import com.bunbeauty.shared.domain.interactor.cart.GetOldTotalCostUseCase
-import com.bunbeauty.shared.domain.repo.CartProductRepo
+import com.bunbeauty.core.domain.repo.CartProductRepo
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.matcher.any

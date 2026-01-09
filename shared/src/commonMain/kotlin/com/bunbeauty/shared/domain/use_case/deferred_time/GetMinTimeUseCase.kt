@@ -1,7 +1,7 @@
 package com.bunbeauty.shared.domain.use_case.deferred_time
 
-import com.bunbeauty.shared.Constants
-import com.bunbeauty.shared.domain.model.date_time.Time
+import com.bunbeauty.core.Constants
+import com.bunbeauty.core.model.date_time.Time
 import com.bunbeauty.shared.domain.util.DateTimeUtil
 
 class GetMinTimeUseCase(

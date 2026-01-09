@@ -1,7 +1,7 @@
 package com.bunbeauty.shared.ui.screen.city.screen.selectcity
 
 import androidx.compose.runtime.Immutable
-import com.bunbeauty.shared.domain.model.city.City
+import com.bunbeauty.core.model.city.City
 import com.bunbeauty.shared.presentation.base.BaseViewState
 
 @Immutable

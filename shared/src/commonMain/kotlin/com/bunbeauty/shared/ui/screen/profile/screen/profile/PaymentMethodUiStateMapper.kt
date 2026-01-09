@@ -1,8 +1,8 @@
 package com.bunbeauty.shared.ui.screen.profile.screen.profile
 
 import androidx.compose.runtime.Composable
-import com.bunbeauty.shared.domain.model.payment_method.PaymentMethod
-import com.bunbeauty.shared.domain.model.payment_method.PaymentMethodName
+import com.bunbeauty.core.model.payment_method.PaymentMethod
+import com.bunbeauty.core.model.payment_method.PaymentMethodName
 import com.bunbeauty.shared.ui.screen.profile.screen.payment.PaymentMethodUI
 import com.bunbeauty.shared.ui.screen.profile.screen.payment.PaymentMethodValueUI
 import org.jetbrains.compose.resources.stringResource

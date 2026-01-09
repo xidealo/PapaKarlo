@@ -1,7 +1,7 @@
 package com.bunbeauty.shared.domain.feature.order
 
-import com.bunbeauty.shared.domain.model.order.LightOrder
-import com.bunbeauty.shared.domain.model.order.Order
+import com.bunbeauty.core.model.order.LightOrder
+import com.bunbeauty.core.model.order.Order
 
 class LightOrderMapper {
     fun toLightOrder(order: Order): LightOrder =

@@ -4,8 +4,8 @@ import com.bunbeauty.getCartProduct
 import com.bunbeauty.getCategoryProduct
 import com.bunbeauty.getMenuProduct
 import com.bunbeauty.shared.domain.feature.cart.GetRecommendationsUseCase
-import com.bunbeauty.shared.domain.feature.menuproduct.GetMenuProductListUseCase
-import com.bunbeauty.shared.domain.repo.CartProductRepo
+import com.bunbeauty.core.domain.menu_product.GetMenuProductListUseCase
+import com.bunbeauty.core.domain.repo.CartProductRepo
 import com.bunbeauty.shared.domain.repo.RecommendationRepo
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend

@@ -39,6 +39,7 @@ kotlin {
                 implementation(project(":analytic"))
                 implementation(project(":core"))
                 implementation(project(":designsystem"))
+                implementation(project(":feature:menu"))
 
                 implementation(libs.bundles.ktor)
 

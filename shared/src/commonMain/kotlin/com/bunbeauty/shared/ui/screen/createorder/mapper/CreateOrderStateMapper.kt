@@ -1,7 +1,7 @@
 package com.bunbeauty.shared.ui.screen.createorder.mapper
 
 import androidx.compose.runtime.Composable
-import com.bunbeauty.shared.domain.model.cafe.Cafe
+import com.bunbeauty.core.model.cafe.Cafe
 import com.bunbeauty.shared.presentation.createorder.CreateOrder
 import com.bunbeauty.shared.presentation.createorder.CreateOrder.DataState.AddressErrorState
 import com.bunbeauty.shared.ui.screen.address.mapper.toAddressString

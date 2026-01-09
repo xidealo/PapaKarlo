@@ -3,7 +3,7 @@ package com.bunbeauty.domain.feature.motivation
 import com.bunbeauty.shared.domain.feature.address.GetCurrentUserAddressUseCase
 import com.bunbeauty.shared.domain.feature.motivation.GetMotivationUseCase
 import com.bunbeauty.shared.domain.feature.motivation.Motivation
-import com.bunbeauty.shared.domain.model.address.UserAddress
+import com.bunbeauty.core.model.address.UserAddress
 import com.bunbeauty.shared.domain.use_case.address.GetUserAddressListUseCase
 import dev.mokkery.MockMode
 import dev.mokkery.answering.returns

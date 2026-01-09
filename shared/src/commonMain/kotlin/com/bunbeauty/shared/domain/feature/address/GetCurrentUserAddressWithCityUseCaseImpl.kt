@@ -2,7 +2,7 @@ package com.bunbeauty.shared.domain.feature.address
 
 import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.domain.feature.city.GetSelectedCityUseCase
-import com.bunbeauty.shared.domain.model.address.UserAddressWithCity
+import com.bunbeauty.core.model.address.UserAddressWithCity
 import com.bunbeauty.shared.domain.repo.UserAddressRepo
 
 interface GetCurrentUserAddressWithCityUseCase {

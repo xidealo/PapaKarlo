@@ -46,7 +46,6 @@ internal fun orderUseCaseModule() =
         }
         factory {
             GetLastOrderUseCase(
-                dataStoreRepo = get(),
                 orderRepo = get(),
             )
         }

@@ -1,6 +1,6 @@
 package com.bunbeauty.shared.domain.feature.addition
 
-import com.bunbeauty.shared.domain.model.addition.Addition
+import com.bunbeauty.core.model.addition.Addition
 
 class GetPriceOfSelectedAdditionsUseCase {
     operator fun invoke(additions: List<Addition>) =

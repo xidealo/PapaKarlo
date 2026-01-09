@@ -14,7 +14,7 @@ import com.bunbeauty.designsystem.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryItem
 import com.bunbeauty.designsystem.ui.screen.ErrorScreen
 import com.bunbeauty.designsystem.ui.screen.LoadingScreen
-import com.bunbeauty.shared.domain.model.cafe.CafeOpenState
+import com.bunbeauty.core.model.cafe.CafeOpenState
 import com.bunbeauty.shared.presentation.cafe_list.CafeList
 import com.bunbeauty.shared.presentation.cafe_list.CafeListViewModel
 import com.bunbeauty.shared.ui.screen.cafe.model.CafeOptions

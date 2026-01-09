@@ -1,6 +1,6 @@
 package com.bunbeauty.shared.domain.feature.addition
 
-import com.bunbeauty.shared.domain.model.cart.CartProduct
+import com.bunbeauty.core.model.cart.CartProduct
 
 interface AreAdditionsEqualUseCase {
     operator fun invoke(

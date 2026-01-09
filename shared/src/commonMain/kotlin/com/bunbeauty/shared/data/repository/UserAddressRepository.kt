@@ -1,5 +1,8 @@
 package com.bunbeauty.shared.data.repository
 
+import com.bunbeauty.core.model.address.CreatedUserAddress
+import com.bunbeauty.core.model.address.UserAddress
+import com.bunbeauty.core.model.address.UserAddressCache
 import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.data.dao.user_address.IUserAddressDao
 import com.bunbeauty.shared.data.mapper.user_address.UserAddressMapper
@@ -7,9 +10,6 @@ import com.bunbeauty.shared.data.network.api.NetworkConnector
 import com.bunbeauty.shared.db.SelectedUserAddressUuidEntity
 import com.bunbeauty.shared.domain.mapFlow
 import com.bunbeauty.shared.domain.mapListFlow
-import com.bunbeauty.shared.domain.model.address.CreatedUserAddress
-import com.bunbeauty.shared.domain.model.address.UserAddress
-import com.bunbeauty.shared.domain.model.address.UserAddressCache
 import com.bunbeauty.shared.domain.repo.UserAddressRepo
 import kotlinx.coroutines.flow.Flow
 

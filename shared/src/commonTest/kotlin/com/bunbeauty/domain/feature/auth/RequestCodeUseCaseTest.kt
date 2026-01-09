@@ -1,6 +1,6 @@
 package com.bunbeauty.domain.feature.auth
 
-import com.bunbeauty.shared.domain.exeptions.SomethingWentWrongException
+import com.bunbeauty.core.domain.exeptions.SomethingWentWrongException
 import com.bunbeauty.shared.domain.feature.auth.RequestCodeUseCase
 import com.bunbeauty.shared.domain.repo.AuthRepo
 import dev.mokkery.answering.returns

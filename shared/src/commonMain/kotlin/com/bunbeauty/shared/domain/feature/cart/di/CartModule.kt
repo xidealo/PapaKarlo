@@ -2,13 +2,13 @@ package com.bunbeauty.shared.domain.feature.cart.di
 
 import com.bunbeauty.shared.domain.feature.cart.AddCartProductUseCase
 import com.bunbeauty.shared.domain.feature.cart.EditCartProductUseCase
-import com.bunbeauty.shared.domain.feature.cart.GetCartProductCountUseCase
-import com.bunbeauty.shared.domain.feature.cart.GetCartProductCountUseCaseImpl
+import com.bunbeauty.core.domain.GetCartProductCountUseCase
+import com.bunbeauty.core.domain.GetCartProductCountUseCaseImpl
 import com.bunbeauty.shared.domain.feature.cart.GetDeliveryCostFlowUseCase
 import com.bunbeauty.shared.domain.feature.cart.GetDeliveryCostFlowUseCaseImpl
 import com.bunbeauty.shared.domain.feature.cart.GetRecommendationsUseCase
 import com.bunbeauty.shared.domain.feature.cart.IncreaseCartProductCountUseCase
-import com.bunbeauty.shared.domain.feature.cart.ObserveCartUseCase
+import com.bunbeauty.core.domain.ObserveCartUseCase
 import com.bunbeauty.shared.domain.feature.cart.RemoveCartProductUseCase
 import com.bunbeauty.shared.domain.feature.motivation.GetMotivationUseCase
 import org.koin.dsl.module

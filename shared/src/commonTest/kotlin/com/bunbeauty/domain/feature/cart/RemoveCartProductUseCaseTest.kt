@@ -5,7 +5,7 @@ import com.bunbeauty.getCartProductAddition
 import com.bunbeauty.getMenuProduct
 import com.bunbeauty.shared.domain.feature.cart.RemoveCartProductUseCase
 import com.bunbeauty.shared.domain.repo.CartProductAdditionRepo
-import com.bunbeauty.shared.domain.repo.CartProductRepo
+import com.bunbeauty.core.domain.repo.CartProductRepo
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.mock

@@ -1,7 +1,7 @@
 package com.bunbeauty.domain.feature.auth
 
 import com.bunbeauty.shared.DataStoreRepo
-import com.bunbeauty.shared.domain.exeptions.SomethingWentWrongException
+import com.bunbeauty.core.domain.exeptions.SomethingWentWrongException
 import com.bunbeauty.shared.domain.feature.auth.CheckCodeUseCase
 import com.bunbeauty.shared.domain.model.AuthResponse
 import com.bunbeauty.shared.domain.repo.AuthRepo

@@ -1,6 +1,6 @@
 package com.bunbeauty.shared.domain.feature.address
 
-import com.bunbeauty.shared.domain.model.street.Street
+import com.bunbeauty.core.model.street.Street
 
 class GetFilteredStreetListUseCase {
     operator fun invoke(

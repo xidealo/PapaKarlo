@@ -2,11 +2,11 @@ package com.bunbeauty.shared.domain.interactor.cart
 
 import com.bunbeauty.shared.domain.CommonFlow
 import com.bunbeauty.shared.domain.asCommonFlow
-import com.bunbeauty.shared.domain.model.cart.CartProduct
-import com.bunbeauty.shared.domain.model.cart.ConsumerCartDomain
-import com.bunbeauty.shared.domain.model.cart.LightCartProduct
+import com.bunbeauty.core.model.cart.CartProduct
+import com.bunbeauty.core.model.cart.ConsumerCartDomain
+import com.bunbeauty.core.model.cart.LightCartProduct
 import com.bunbeauty.shared.domain.repo.CartProductAdditionRepo
-import com.bunbeauty.shared.domain.repo.CartProductRepo
+import com.bunbeauty.core.domain.repo.CartProductRepo
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 

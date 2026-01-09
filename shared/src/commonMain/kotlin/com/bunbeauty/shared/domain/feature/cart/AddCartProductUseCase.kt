@@ -1,14 +1,15 @@
 package com.bunbeauty.shared.domain.feature.cart
 
-import com.bunbeauty.shared.Constants.CART_PRODUCT_LIMIT
-import com.bunbeauty.shared.domain.exeptions.CartProductLimitReachedException
+import com.bunbeauty.core.Constants.CART_PRODUCT_LIMIT
+import com.bunbeauty.core.domain.GetCartProductCountUseCase
+import com.bunbeauty.core.domain.exeptions.CartProductLimitReachedException
 import com.bunbeauty.shared.domain.feature.addition.AreAdditionsEqualUseCase
 import com.bunbeauty.shared.domain.feature.addition.GetAdditionPriorityUseCase
-import com.bunbeauty.shared.domain.model.cart.CartProduct
+import com.bunbeauty.core.model.cart.CartProduct
 import com.bunbeauty.shared.domain.repo.AdditionGroupRepo
 import com.bunbeauty.shared.domain.repo.AdditionRepo
 import com.bunbeauty.shared.domain.repo.CartProductAdditionRepo
-import com.bunbeauty.shared.domain.repo.CartProductRepo
+import com.bunbeauty.core.domain.repo.CartProductRepo
 
 class AddCartProductUseCase(
     private val getCartProductCountUseCase: GetCartProductCountUseCase,

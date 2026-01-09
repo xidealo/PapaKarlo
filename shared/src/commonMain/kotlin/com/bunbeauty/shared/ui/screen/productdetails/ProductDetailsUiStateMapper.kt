@@ -1,7 +1,7 @@
 package com.bunbeauty.shared.ui.screen.productdetails
 
 import com.bunbeauty.designsystem.ui.element.TopCartUi
-import com.bunbeauty.shared.Constants
+import com.bunbeauty.core.Constants
 import com.bunbeauty.shared.presentation.product_details.AdditionItem
 import com.bunbeauty.shared.presentation.product_details.MenuProductAdditionItem
 import com.bunbeauty.shared.presentation.product_details.ProductDetailsState

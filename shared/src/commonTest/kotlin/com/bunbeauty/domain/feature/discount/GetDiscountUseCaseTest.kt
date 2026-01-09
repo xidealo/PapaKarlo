@@ -1,16 +1,16 @@
 package com.bunbeauty.domain.feature.discount
 
 import com.bunbeauty.shared.DataStoreRepo
-import com.bunbeauty.shared.domain.feature.discount.GetDiscountUseCase
-import com.bunbeauty.shared.domain.feature.discount.GetDiscountUseCaseImpl
-import com.bunbeauty.shared.domain.model.Discount
+import com.bunbeauty.core.domain.discount.GetDiscountUseCase
+import com.bunbeauty.core.domain.discount.GetDiscountUseCaseImpl
+import com.bunbeauty.core.model.Discount
 import com.bunbeauty.shared.domain.model.date_time.Date
-import com.bunbeauty.shared.domain.model.date_time.DateTime
-import com.bunbeauty.shared.domain.model.date_time.Time
-import com.bunbeauty.shared.domain.model.order.LightOrder
-import com.bunbeauty.shared.domain.model.order.OrderStatus
-import com.bunbeauty.shared.domain.repo.DiscountRepo
-import com.bunbeauty.shared.domain.repo.OrderRepo
+import com.bunbeauty.core.model.date_time.DateTime
+import com.bunbeauty.core.model.date_time.Time
+import com.bunbeauty.core.model.order.LightOrder
+import com.bunbeauty.core.model.order.OrderStatus
+import com.bunbeauty.core.domain.repo.DiscountRepo
+import com.bunbeauty.core.domain.repo.OrderRepo
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.mock

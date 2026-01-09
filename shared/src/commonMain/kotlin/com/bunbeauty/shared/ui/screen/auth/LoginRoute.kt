@@ -32,7 +32,7 @@ import com.bunbeauty.designsystem.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.designsystem.ui.element.button.LoadingButton
 import com.bunbeauty.designsystem.ui.element.textfield.FoodDeliveryTextField
 import com.bunbeauty.designsystem.ui.element.textfield.FoodDeliveryTextFieldDefaults
-import com.bunbeauty.shared.domain.model.SuccessLoginDirection
+import com.bunbeauty.core.model.SuccessLoginDirection
 import com.bunbeauty.shared.presentation.login.Login
 import com.bunbeauty.shared.presentation.login.LoginViewModel
 import org.jetbrains.compose.resources.getString

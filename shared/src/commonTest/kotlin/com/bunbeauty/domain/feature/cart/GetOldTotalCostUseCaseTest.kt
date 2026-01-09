@@ -3,7 +3,7 @@ package com.bunbeauty.domain.feature.cart
 import com.bunbeauty.getCartProduct
 import com.bunbeauty.getCartProductAddition
 import com.bunbeauty.getMenuProduct
-import com.bunbeauty.shared.domain.feature.addition.GetCartProductAdditionsPriceUseCase
+import com.bunbeauty.core.domain.GetCartProductAdditionsPriceUseCase
 import com.bunbeauty.shared.domain.interactor.cart.GetOldTotalCostUseCase
 import com.bunbeauty.shared.domain.interactor.cart.GetOldTotalCostUseCaseImpl
 import dev.mokkery.answering.returns

@@ -1,6 +1,6 @@
 package com.bunbeauty.shared.domain.feature.cafe
 
-import com.bunbeauty.shared.domain.model.cafe.Cafe
+import com.bunbeauty.core.model.cafe.Cafe
 
 class HasOpenedCafeUseCase(
     private val isPickupEnabledFromCafeUseCase: IsPickupEnabledFromCafeUseCase,

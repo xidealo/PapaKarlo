@@ -1,6 +1,6 @@
 package com.bunbeauty.shared.presentation.confirm
 
-import com.bunbeauty.shared.domain.model.SuccessLoginDirection
+import com.bunbeauty.core.model.SuccessLoginDirection
 import com.bunbeauty.shared.presentation.base.BaseAction
 import com.bunbeauty.shared.presentation.base.BaseEvent
 import com.bunbeauty.shared.presentation.base.BaseViewDataState

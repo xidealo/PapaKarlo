@@ -1,7 +1,7 @@
 package com.bunbeauty.shared.ui.screen.profile.screen.profile
 
 import androidx.compose.runtime.Immutable
-import com.bunbeauty.shared.domain.model.order.LightOrder
+import com.bunbeauty.core.model.order.LightOrder
 import com.bunbeauty.shared.presentation.base.BaseViewState
 import com.bunbeauty.shared.ui.screen.profile.screen.feedback.model.LinkUI
 import kotlinx.collections.immutable.ImmutableList

@@ -1,6 +1,6 @@
 package com.bunbeauty.shared.domain.feature.addition
 
-import com.bunbeauty.shared.domain.model.addition.AdditionGroup
+import com.bunbeauty.core.model.addition.AdditionGroup
 
 class GetAdditionGroupsWithSelectedAdditionUseCase {
     operator fun invoke(

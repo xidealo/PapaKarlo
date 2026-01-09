@@ -1,8 +1,8 @@
 package com.bunbeauty.shared.data.mapper.city
 
+import com.bunbeauty.core.model.city.City
 import com.bunbeauty.shared.data.network.model.CityServer
 import com.bunbeauty.shared.db.CityEntity
-import com.bunbeauty.shared.domain.model.city.City
 
 class CityMapper : ICityMapper {
     override fun toCityEntity(cityServer: CityServer): CityEntity =

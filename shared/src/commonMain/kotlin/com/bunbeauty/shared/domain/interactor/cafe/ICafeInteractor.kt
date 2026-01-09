@@ -1,6 +1,6 @@
 package com.bunbeauty.shared.domain.interactor.cafe
 
-import com.bunbeauty.shared.domain.model.cafe.Cafe
+import com.bunbeauty.core.model.cafe.Cafe
 
 interface ICafeInteractor {
     fun getCafeTime(daySeconds: Int): String

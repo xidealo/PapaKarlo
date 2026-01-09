@@ -1,6 +1,6 @@
 package com.bunbeauty.shared.domain.repo
 
-import com.bunbeauty.shared.domain.model.Suggestion
+import com.bunbeauty.core.model.Suggestion
 
 interface SuggestionRepo {
     suspend fun getSuggestionList(

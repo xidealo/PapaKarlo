@@ -1,6 +1,6 @@
 package com.bunbeauty.shared.presentation.motivation
 
-import com.bunbeauty.shared.Constants.RUBLE_CURRENCY
+import com.bunbeauty.core.Constants.RUBLE_CURRENCY
 import com.bunbeauty.shared.domain.feature.motivation.Motivation
 
 fun Motivation.toMotivationData(): MotivationData =

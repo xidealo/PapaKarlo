@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.dp
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.theme.medium
 import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryCard
-import com.bunbeauty.shared.domain.model.cafe.CafeOpenState
+import com.bunbeauty.core.model.cafe.CafeOpenState
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable

@@ -1,7 +1,7 @@
 package com.bunbeauty.shared.domain.feature.notification
 
 import cocoapods.FirebaseMessaging.FIRMessaging
-import com.bunbeauty.shared.Constants
+import com.bunbeauty.core.Constants
 import kotlinx.cinterop.ExperimentalForeignApi
 
 actual class SubscribeToNotificationUseCase {

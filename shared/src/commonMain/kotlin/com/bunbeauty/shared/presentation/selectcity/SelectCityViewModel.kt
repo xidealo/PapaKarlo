@@ -1,8 +1,8 @@
 package com.bunbeauty.shared.presentation.selectcity
 
 import com.bunbeauty.shared.domain.interactor.city.ICityInteractor
-import com.bunbeauty.shared.domain.model.city.City
-import com.bunbeauty.shared.extension.launchSafe
+import com.bunbeauty.core.extension.launchSafe
+import com.bunbeauty.core.model.city.City
 import com.bunbeauty.shared.presentation.base.SharedStateViewModel
 
 class SelectCityViewModel(

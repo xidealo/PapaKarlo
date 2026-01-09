@@ -1,8 +1,8 @@
 package com.bunbeauty.shared.domain.feature.settings
 
+import com.bunbeauty.core.model.Settings
 import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.data.repository.SettingsRepository
-import com.bunbeauty.shared.domain.model.Settings
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 

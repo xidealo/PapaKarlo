@@ -1,6 +1,6 @@
 package com.bunbeauty.shared.domain.feature.cafe
 
-import com.bunbeauty.shared.domain.model.date_time.Time
+import com.bunbeauty.core.model.date_time.Time
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import kotlin.time.Clock

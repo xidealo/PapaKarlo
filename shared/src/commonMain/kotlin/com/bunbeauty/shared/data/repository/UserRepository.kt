@@ -1,6 +1,8 @@
 package com.bunbeauty.shared.data.repository
 
 import com.bunbeauty.core.Logger
+import com.bunbeauty.core.model.profile.Profile
+import com.bunbeauty.core.model.profile.User
 import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.data.dao.order.IOrderDao
 import com.bunbeauty.shared.data.dao.user.IUserDao
@@ -12,8 +14,6 @@ import com.bunbeauty.shared.data.network.model.UpdateNotificationTokenRequest
 import com.bunbeauty.shared.data.network.model.profile.get.ProfileServer
 import com.bunbeauty.shared.data.network.model.profile.patch.PatchUserServer
 import com.bunbeauty.shared.domain.mapFlow
-import com.bunbeauty.shared.domain.model.profile.Profile
-import com.bunbeauty.shared.domain.model.profile.User
 import com.bunbeauty.shared.domain.repo.UserRepo
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope

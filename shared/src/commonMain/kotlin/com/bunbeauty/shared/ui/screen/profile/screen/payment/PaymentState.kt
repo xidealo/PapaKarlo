@@ -1,6 +1,6 @@
 package com.bunbeauty.shared.ui.screen.profile.screen.payment
 
-import com.bunbeauty.shared.domain.model.Payment
+import com.bunbeauty.core.model.Payment
 
 data class PaymentState(
     val paymentInfo: String,

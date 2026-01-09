@@ -1,8 +1,8 @@
 package com.bunbeauty.shared.ui.common
 
 import androidx.compose.runtime.Composable
-import com.bunbeauty.shared.domain.model.date_time.DateTime
-import com.bunbeauty.shared.domain.model.date_time.Time
+import com.bunbeauty.core.model.date_time.DateTime
+import com.bunbeauty.core.model.date_time.Time
 import org.jetbrains.compose.resources.stringResource
 import papakarlo.shared.generated.resources.Res
 import papakarlo.shared.generated.resources.delivery_time

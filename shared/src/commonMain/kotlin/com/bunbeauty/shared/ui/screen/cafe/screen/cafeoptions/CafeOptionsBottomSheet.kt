@@ -9,9 +9,9 @@ import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.ui.element.CircularProgressBar
 import com.bunbeauty.designsystem.ui.element.card.NavigationIconCard
 import com.bunbeauty.designsystem.ui.screen.bottomsheet.FoodDeliveryModalBottomSheet
-import com.bunbeauty.shared.Constants.COORDINATES_DIVIDER
-import com.bunbeauty.shared.Constants.MAPS_LINK
-import com.bunbeauty.shared.Constants.PHONE_LINK
+import com.bunbeauty.core.Constants.COORDINATES_DIVIDER
+import com.bunbeauty.core.Constants.MAPS_LINK
+import com.bunbeauty.core.Constants.PHONE_LINK
 import com.bunbeauty.shared.OpenExternalSource
 import com.bunbeauty.shared.presentation.cafe_list.CafeList
 import com.bunbeauty.shared.ui.screen.cafe.model.CafeOptions

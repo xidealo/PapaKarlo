@@ -1,7 +1,7 @@
 package com.bunbeauty.shared.domain.feature.city
 
+import com.bunbeauty.core.model.city.City
 import com.bunbeauty.shared.DataStoreRepo
-import com.bunbeauty.shared.domain.model.city.City
 import com.bunbeauty.shared.domain.repo.CityRepo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map

@@ -1,6 +1,6 @@
 package com.bunbeauty.shared.data.storage
 
-import com.bunbeauty.shared.domain.model.cafe.Cafe
+import com.bunbeauty.core.model.cafe.Cafe
 
 class CafeStorage {
     private var userCafe: Cafe? = null

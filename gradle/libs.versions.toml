@@ -27,7 +27,7 @@ kaspresso = "1.6.0"
 collectionsImmutable = "0.4.0"
 ktLint = "13.1.0"
 tripletPlay = "3.13.0"
-compose = "1.9.3"
+compose = "1.11.0-alpha01"
 
 [libraries]
 appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appCompact" }
@@ -118,6 +118,10 @@ sqldelight = { id = "com.squareup.sqldelight", version.ref = "sqlDelight" }
 mokkery = { id = "dev.mokkery", version.ref = "mokkery" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 android-library = { id = "com.android.library", version.ref = "gradle" }
+
+# Plugins defined by this project
+client-compose-multiplatform-feature = { id = "com.bunbeauty.compose.multiplatform.feature", version = "1.0" }
+client-android-application = { id = "com.bunbeauty.android.application", version = "1.0" }
 
 [bundles]
 navigation = [

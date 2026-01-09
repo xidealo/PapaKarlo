@@ -1,6 +1,6 @@
 package com.bunbeauty.shared.domain.interactor.user
 
-import com.bunbeauty.shared.domain.model.profile.Profile
+import com.bunbeauty.core.model.profile.Profile
 
 interface IUserInteractor {
     suspend fun clearUserCache()

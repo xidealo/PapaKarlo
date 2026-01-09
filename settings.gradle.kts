@@ -1,4 +1,6 @@
 pluginManagement {
+    includeBuild("build-logic")
+
     repositories {
         google()
         mavenCentral()
@@ -13,5 +15,6 @@ include(
 rootProject.name = "PapaKarlo"
 include(":analytic")
 include(":core")
+include(":di")
 include(":designsystem")
 include(":feature:menu")

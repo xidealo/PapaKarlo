@@ -1,6 +1,6 @@
 package com.bunbeauty.shared.presentation.order_list
 
-import com.bunbeauty.shared.domain.model.order.LightOrder
+import com.bunbeauty.core.model.order.LightOrder
 import com.bunbeauty.shared.presentation.base.BaseAction
 import com.bunbeauty.shared.presentation.base.BaseDataState
 import com.bunbeauty.shared.presentation.base.BaseEvent

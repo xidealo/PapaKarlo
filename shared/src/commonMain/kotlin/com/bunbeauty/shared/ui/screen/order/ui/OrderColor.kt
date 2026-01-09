@@ -3,7 +3,7 @@ package com.bunbeauty.shared.ui.screen.order.ui
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
-import com.bunbeauty.shared.domain.model.order.OrderStatus
+import com.bunbeauty.core.model.order.OrderStatus
 
 @Composable
 fun getOrderColor(orderStatus: OrderStatus): Color =

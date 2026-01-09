@@ -24,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.bunbeauty.core.model.SuccessLoginDirection
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.theme.bold
 import com.bunbeauty.designsystem.theme.medium
@@ -35,15 +36,14 @@ import com.bunbeauty.designsystem.ui.element.surface.FoodDeliverySurface
 import com.bunbeauty.designsystem.ui.screen.EmptyScreen
 import com.bunbeauty.designsystem.ui.screen.ErrorScreen
 import com.bunbeauty.designsystem.ui.screen.LoadingScreen
-import com.bunbeauty.shared.domain.model.SuccessLoginDirection
+import com.bunbeauty.menu.ui.MenuProductItem
+import com.bunbeauty.menu.ui.state.MenuItemUi
 import com.bunbeauty.shared.presentation.consumercart.ConsumerCart
 import com.bunbeauty.shared.presentation.consumercart.ConsumerCartViewModel
-import com.bunbeauty.shared.presentation.product_details.ProductDetailsOpenedFrom
+import com.bunbeauty.core.model.ProductDetailsOpenedFrom
 import com.bunbeauty.shared.ui.screen.consumercart.mapper.toConsumerCartViewState
 import com.bunbeauty.shared.ui.screen.consumercart.state.ConsumerCartViewState
 import com.bunbeauty.shared.ui.screen.consumercart.ui.CartProductItem
-import com.bunbeauty.shared.ui.screen.menu.state.MenuItemUi
-import com.bunbeauty.shared.ui.screen.menu.ui.MenuProductItem
 import com.bunbeauty.shared.ui.screen.motivation.Motivation
 import com.bunbeauty.shared.ui.screen.motivation.MotivationUi
 import kotlinx.collections.immutable.ImmutableList

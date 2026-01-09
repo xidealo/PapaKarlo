@@ -1,10 +1,10 @@
 package com.bunbeauty.shared.domain.feature.cart
 
-import com.bunbeauty.shared.domain.feature.menuproduct.GetMenuProductListUseCase
-import com.bunbeauty.shared.domain.model.cart.CartProduct
-import com.bunbeauty.shared.domain.model.category.Category
-import com.bunbeauty.shared.domain.model.product.MenuProduct
-import com.bunbeauty.shared.domain.repo.CartProductRepo
+import com.bunbeauty.core.model.cart.CartProduct
+import com.bunbeauty.core.model.category.Category
+import com.bunbeauty.core.model.product.MenuProduct
+import com.bunbeauty.core.domain.menu_product.GetMenuProductListUseCase
+import com.bunbeauty.core.domain.repo.CartProductRepo
 import com.bunbeauty.shared.domain.repo.RecommendationRepo
 
 /*

@@ -2,16 +2,16 @@ package com.bunbeauty.shared.presentation.confirm
 
 import com.bunbeauty.analytic.AnalyticService
 import com.bunbeauty.analytic.event.ConfirmErrorShowEvent
-import com.bunbeauty.shared.domain.exeptions.AuthSessionTimeoutException
-import com.bunbeauty.shared.domain.exeptions.InvalidCodeException
-import com.bunbeauty.shared.domain.exeptions.NoAttemptsException
-import com.bunbeauty.shared.domain.exeptions.TooManyRequestsException
+import com.bunbeauty.core.domain.exeptions.AuthSessionTimeoutException
+import com.bunbeauty.core.domain.exeptions.InvalidCodeException
+import com.bunbeauty.core.domain.exeptions.NoAttemptsException
+import com.bunbeauty.core.domain.exeptions.TooManyRequestsException
 import com.bunbeauty.shared.domain.feature.auth.CheckCodeUseCase
 import com.bunbeauty.shared.domain.feature.auth.FormatPhoneNumberUseCase
 import com.bunbeauty.shared.domain.feature.auth.ResendCodeUseCase
 import com.bunbeauty.shared.domain.feature.notification.UpdateNotificationUseCase
-import com.bunbeauty.shared.domain.model.SuccessLoginDirection
-import com.bunbeauty.shared.extension.launchSafe
+import com.bunbeauty.core.model.SuccessLoginDirection
+import com.bunbeauty.core.extension.launchSafe
 import com.bunbeauty.shared.presentation.base.SharedStateViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay

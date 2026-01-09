@@ -1,7 +1,7 @@
 package com.bunbeauty.shared.ui.screen.deferredtime
 
 import androidx.compose.runtime.Composable
-import com.bunbeauty.shared.domain.model.date_time.Time
+import com.bunbeauty.core.model.date_time.Time
 import com.bunbeauty.shared.presentation.createorder.CreateOrder
 import com.bunbeauty.shared.ui.screen.createorder.TimeUI
 import org.jetbrains.compose.resources.stringResource

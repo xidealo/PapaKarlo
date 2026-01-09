@@ -1,7 +1,7 @@
 package com.bunbeauty.shared.data.repository
 
+import com.bunbeauty.core.model.company.Company
 import com.bunbeauty.shared.data.network.api.NetworkConnector
-import com.bunbeauty.shared.domain.model.company.Company
 import com.bunbeauty.shared.domain.repo.CompanyRepo
 
 class CompanyRepository(

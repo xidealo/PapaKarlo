@@ -1,7 +1,7 @@
 package com.bunbeauty.shared.ui.screen.cafe.screen.cafelist
 
 import androidx.compose.runtime.Composable
-import com.bunbeauty.shared.domain.model.cafe.CafeOpenState
+import com.bunbeauty.core.model.cafe.CafeOpenState
 import com.bunbeauty.shared.presentation.cafe_list.CafeList
 import com.bunbeauty.shared.ui.screen.cafe.model.CafeOptions
 import com.bunbeauty.shared.ui.screen.cafe.ui.CafeItemAndroid

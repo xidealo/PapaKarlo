@@ -42,10 +42,10 @@ import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryItem
 import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryRadioButton
 import com.bunbeauty.designsystem.ui.screen.ErrorScreen
 import com.bunbeauty.designsystem.ui.screen.LoadingScreen
-import com.bunbeauty.shared.Constants.FAB_SNACKBAR_BOTTOM_PADDING
+import com.bunbeauty.core.Constants.FAB_SNACKBAR_BOTTOM_PADDING
 import com.bunbeauty.shared.presentation.product_details.AdditionItem
 import com.bunbeauty.shared.presentation.product_details.MenuProductAdditionItem
-import com.bunbeauty.shared.presentation.product_details.ProductDetailsOpenedFrom
+import com.bunbeauty.core.model.ProductDetailsOpenedFrom
 import com.bunbeauty.shared.presentation.product_details.ProductDetailsState
 import com.bunbeauty.shared.presentation.product_details.ProductDetailsViewModel
 import kotlinx.collections.immutable.persistentListOf

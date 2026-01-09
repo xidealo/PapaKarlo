@@ -16,7 +16,7 @@ import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.designsystem.ui.screen.ErrorScreen
 import com.bunbeauty.designsystem.ui.screen.LoadingScreen
-import com.bunbeauty.shared.domain.model.city.City
+import com.bunbeauty.core.model.city.City
 import com.bunbeauty.shared.presentation.selectcity.SelectCityDataState
 import com.bunbeauty.shared.presentation.selectcity.SelectCityViewModel
 import com.bunbeauty.shared.ui.screen.city.ui.CityItem

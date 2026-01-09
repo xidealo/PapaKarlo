@@ -3,11 +3,11 @@ package com.bunbeauty.domain.feature.order
 import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.domain.feature.order.GetLastOrderUseCase
 import com.bunbeauty.shared.domain.model.date_time.Date
-import com.bunbeauty.shared.domain.model.date_time.DateTime
-import com.bunbeauty.shared.domain.model.date_time.Time
-import com.bunbeauty.shared.domain.model.order.LightOrder
-import com.bunbeauty.shared.domain.model.order.OrderStatus
-import com.bunbeauty.shared.domain.repo.OrderRepo
+import com.bunbeauty.core.model.date_time.DateTime
+import com.bunbeauty.core.model.date_time.Time
+import com.bunbeauty.core.model.order.LightOrder
+import com.bunbeauty.core.model.order.OrderStatus
+import com.bunbeauty.core.domain.repo.OrderRepo
 import dev.mokkery.MockMode
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend

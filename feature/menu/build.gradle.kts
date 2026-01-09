@@ -1,41 +1,41 @@
-import CommonApplication.deploymentTarget
-
 plugins {
-    alias(libs.plugins.multiplatform)
-    alias(libs.plugins.android.library)
+    alias(libs.plugins.client.compose.multiplatform.feature)
 }
 
-@OptIn(org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi::class)
 kotlin {
-    applyDefaultHierarchyTemplate()
-
-    androidTarget()
-    iosX64()
-    iosArm64()
-    iosSimulatorArm64()
-
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(libs.koin.core)
+                implementation(project(":designsystem"))
+                implementation(project(":analytic"))
+                implementation(project(":core"))
+
+                implementation(libs.kotlinx.collections.immutable)
+
+                implementation(compose.components.resources)
+                implementation(compose.runtime)
+                implementation(compose.foundation)
+                implementation(compose.material3)
+                implementation(compose.ui)
+                implementation(compose.animation)
+                implementation(compose.animationGraphics)
+                implementation(compose.components.uiToolingPreview)
+
+                implementation(libs.bundles.navigation)
+                implementation(libs.bundles.di)
+                implementation(libs.bundles.coil)
             }
         }
-        val commonTest by getting {
-            dependencies {}
+
+        val androidMain by getting {
+            dependencies {
+                implementation(libs.activity.compose)
+                implementation(compose.uiTooling)
+            }
         }
     }
 }
 
 android {
     namespace = "com.bunbeauty.feature.menu"
-    compileSdk = AndroidSdk.compile
-    defaultConfig {
-        minSdk = AndroidSdk.min
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_21
-        targetCompatibility = JavaVersion.VERSION_21
-    }
-
 }

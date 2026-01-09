@@ -2,9 +2,9 @@ package com.bunbeauty.domain.feature.payment
 
 import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.domain.feature.payment.GetSelectablePaymentMethodListUseCase
-import com.bunbeauty.shared.domain.model.payment_method.PaymentMethod
-import com.bunbeauty.shared.domain.model.payment_method.PaymentMethodName
-import com.bunbeauty.shared.domain.model.payment_method.SelectablePaymentMethod
+import com.bunbeauty.core.model.payment_method.PaymentMethod
+import com.bunbeauty.core.model.payment_method.PaymentMethodName
+import com.bunbeauty.core.model.payment_method.SelectablePaymentMethod
 import com.bunbeauty.shared.domain.repo.PaymentRepo
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend

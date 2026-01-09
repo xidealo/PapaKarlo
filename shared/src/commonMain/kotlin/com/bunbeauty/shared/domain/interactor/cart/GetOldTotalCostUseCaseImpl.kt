@@ -1,7 +1,7 @@
 package com.bunbeauty.shared.domain.interactor.cart
 
-import com.bunbeauty.shared.domain.feature.addition.GetCartProductAdditionsPriceUseCase
-import com.bunbeauty.shared.domain.model.cart.CartProduct
+import com.bunbeauty.core.model.cart.CartProduct
+import com.bunbeauty.core.domain.GetCartProductAdditionsPriceUseCase
 
 interface GetOldTotalCostUseCase {
     operator fun invoke(cartProductList: List<CartProduct>): Int

@@ -1,6 +1,7 @@
 package com.bunbeauty.shared.domain.repo
 
-import com.bunbeauty.shared.domain.model.cafe.Cafe
+import com.bunbeauty.core.model.cafe.Cafe
+
 
 interface CafeRepo {
     suspend fun getCafeList(selectedCityUuid: String): List<Cafe>

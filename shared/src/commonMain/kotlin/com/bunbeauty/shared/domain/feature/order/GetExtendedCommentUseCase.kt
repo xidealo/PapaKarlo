@@ -1,6 +1,6 @@
 package com.bunbeauty.shared.domain.feature.order
 
-import com.bunbeauty.shared.Constants.RUBLE_CURRENCY
+import com.bunbeauty.core.Constants.RUBLE_CURRENCY
 
 data class ExtendedComment(
     val comment: String,

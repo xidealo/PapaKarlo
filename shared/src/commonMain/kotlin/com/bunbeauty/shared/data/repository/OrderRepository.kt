@@ -13,13 +13,14 @@ import com.bunbeauty.shared.data.network.model.order.get.LightOrderServer
 import com.bunbeauty.shared.data.network.model.order.get.OrderProductServer
 import com.bunbeauty.shared.data.network.model.order.get.OrderServer
 import com.bunbeauty.shared.data.network.model.order.get.OrderUpdateServer
-import com.bunbeauty.shared.domain.model.order.CreatedOrder
-import com.bunbeauty.shared.domain.model.order.LightOrder
-import com.bunbeauty.shared.domain.model.order.Order
-import com.bunbeauty.shared.domain.model.order.OrderCode
-import com.bunbeauty.shared.domain.model.order.OrderStatus
-import com.bunbeauty.shared.domain.repo.OrderRepo
-import com.bunbeauty.shared.extension.getNullableResult
+import com.bunbeauty.core.domain.repo.OrderRepo
+import com.bunbeauty.core.extension.getNullableResult
+import com.bunbeauty.core.model.order.CreatedOrder
+import com.bunbeauty.core.model.order.LightOrder
+import com.bunbeauty.core.model.order.Order
+import com.bunbeauty.core.model.order.OrderCode
+import com.bunbeauty.core.model.order.OrderStatus
+import com.bunbeauty.shared.DataStoreRepo
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
@@ -41,6 +42,7 @@ class OrderRepository(
     private val orderAdditionDao: IOrderAdditionDao,
     private val orderProductDao: IOrderProductDao,
     private val lightOrderDao: LightOrderDao,
+    private val dataStoreRepo: DataStoreRepo,
 ) : OrderRepo,
     CoroutineScope {
     private var cacheLastOrder: LightOrder? = null
@@ -50,10 +52,10 @@ class OrderRepository(
     override suspend fun observeOrderUpdates(token: String): Pair<String?, Flow<Order>> {
         val (uuid, orderUpdatesFlow) = observeOrderUpdatesServer(token)
         return uuid to
-            orderUpdatesFlow
-                .map { orderUpdateServer ->
-                    orderMapper.toOrder(orderDao.getOrderWithProductListByUuid(orderUpdateServer.uuid))
-                }.filterNotNull()
+                orderUpdatesFlow
+                    .map { orderUpdateServer ->
+                        orderMapper.toOrder(orderDao.getOrderWithProductListByUuid(orderUpdateServer.uuid))
+                    }.filterNotNull()
     }
 
     override suspend fun observeLightOrderListUpdates(
@@ -62,11 +64,11 @@ class OrderRepository(
     ): Pair<String?, Flow<List<LightOrder>>> {
         val (uuid, orderUpdatesFlow) = observeOrderUpdatesServer(token)
         return uuid to
-            orderUpdatesFlow.map {
-                lightOrderDao.getLightOrderList(count = 30).map { lightOrderEntity ->
-                    orderMapper.toLightOrder(lightOrderEntity)
+                orderUpdatesFlow.map {
+                    lightOrderDao.getLightOrderList(count = 30).map { lightOrderEntity ->
+                        orderMapper.toLightOrder(lightOrderEntity)
+                    }
                 }
-            }
     }
 
     override suspend fun stopOrderUpdatesObservation(uuid: String) {
@@ -119,15 +121,16 @@ class OrderRepository(
                 },
             )
 
-    override suspend fun getLastOrderByUserUuidLocalFirst(
-        token: String,
-        userUuid: String,
-    ): LightOrder? =
-        if (cacheLastOrder == null) {
+    override suspend fun getLastOrderByUserUuidLocalFirst(): LightOrder? {
+        val userUuid = dataStoreRepo.getUserUuid() ?: return null
+        val token = dataStoreRepo.getToken() ?: return null
+
+        return if (cacheLastOrder == null) {
             getLastOrderByUserUuidNetworkFirst(token = token, userUuid = userUuid)
         } else {
             cacheLastOrder
         }
+    }
 
     override suspend fun getOrderByUuid(
         token: String,
@@ -163,22 +166,22 @@ class OrderRepository(
     private suspend fun observeOrderUpdatesServer(token: String): Pair<String?, Flow<OrderUpdateServer>> {
         val (uuid, orderUpdatesFlow) = networkConnector.startOrderUpdatesObservation(token)
         return uuid to
-            orderUpdatesFlow.onEach { orderUpdateServer ->
-                if (orderUpdateServer.uuid == cacheLastOrder?.uuid) {
-                    cacheLastOrder =
-                        cacheLastOrder?.copy(
-                            status = OrderStatus.valueOf(orderUpdateServer.status),
-                        )
+                orderUpdatesFlow.onEach { orderUpdateServer ->
+                    if (orderUpdateServer.uuid == cacheLastOrder?.uuid) {
+                        cacheLastOrder =
+                            cacheLastOrder?.copy(
+                                status = OrderStatus.valueOf(orderUpdateServer.status),
+                            )
+                    }
+                    orderDao.updateOrderStatusByUuid(
+                        uuid = orderUpdateServer.uuid,
+                        status = orderUpdateServer.status,
+                    )
+                    lightOrderDao.updateLightOrderStatusByUuid(
+                        uuid = orderUpdateServer.uuid,
+                        status = orderUpdateServer.status,
+                    )
                 }
-                orderDao.updateOrderStatusByUuid(
-                    uuid = orderUpdateServer.uuid,
-                    status = orderUpdateServer.status,
-                )
-                lightOrderDao.updateLightOrderStatusByUuid(
-                    uuid = orderUpdateServer.uuid,
-                    status = orderUpdateServer.status,
-                )
-            }
     }
 
     private suspend fun insertOrderAdditions(orderProductServer: OrderProductServer) {

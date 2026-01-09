@@ -1,13 +1,13 @@
 package com.bunbeauty.shared.presentation.createorder
 
-import com.bunbeauty.shared.domain.model.address.SelectableUserAddress
-import com.bunbeauty.shared.domain.model.address.UserAddressWithCity
-import com.bunbeauty.shared.domain.model.cafe.Cafe
-import com.bunbeauty.shared.domain.model.cafe.SelectableCafe
-import com.bunbeauty.shared.domain.model.date_time.Time
-import com.bunbeauty.shared.domain.model.payment_method.PaymentMethod
-import com.bunbeauty.shared.domain.model.payment_method.PaymentMethodName
-import com.bunbeauty.shared.domain.model.payment_method.SelectablePaymentMethod
+import com.bunbeauty.core.model.address.SelectableUserAddress
+import com.bunbeauty.core.model.address.UserAddressWithCity
+import com.bunbeauty.core.model.cafe.Cafe
+import com.bunbeauty.core.model.cafe.SelectableCafe
+import com.bunbeauty.core.model.date_time.Time
+import com.bunbeauty.core.model.payment_method.PaymentMethod
+import com.bunbeauty.core.model.payment_method.PaymentMethodName
+import com.bunbeauty.core.model.payment_method.SelectablePaymentMethod
 import com.bunbeauty.shared.presentation.base.BaseAction
 import com.bunbeauty.shared.presentation.base.BaseDataState
 import com.bunbeauty.shared.presentation.base.BaseEvent

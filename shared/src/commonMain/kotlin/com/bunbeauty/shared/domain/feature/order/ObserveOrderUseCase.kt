@@ -1,9 +1,9 @@
 package com.bunbeauty.shared.domain.feature.order
 
+import com.bunbeauty.core.model.order.Order
 import com.bunbeauty.shared.DataStoreRepo
-import com.bunbeauty.shared.domain.model.order.Order
-import com.bunbeauty.shared.domain.model.product.OrderProduct
-import com.bunbeauty.shared.domain.repo.OrderRepo
+import com.bunbeauty.core.model.product.OrderProduct
+import com.bunbeauty.core.domain.repo.OrderRepo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flow

@@ -3,7 +3,7 @@ package com.bunbeauty.shared.ui.screen.cafe.ui
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
-import com.bunbeauty.shared.domain.model.cafe.CafeOpenState
+import com.bunbeauty.core.model.cafe.CafeOpenState
 
 @Composable
 fun getCafeStatusColor(cafeStatus: CafeOpenState): Color =

@@ -1,7 +1,7 @@
 package com.bunbeauty.shared.presentation.consumercart.mapper
 
-import com.bunbeauty.shared.Constants.RUBLE_CURRENCY
-import com.bunbeauty.shared.domain.model.cart.LightCartProduct
+import com.bunbeauty.core.Constants.RUBLE_CURRENCY
+import com.bunbeauty.core.model.cart.LightCartProduct
 import com.bunbeauty.shared.presentation.consumercart.CartProductItem
 
 fun LightCartProduct.toCartProductItem(): CartProductItem =

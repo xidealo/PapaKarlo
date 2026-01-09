@@ -1,8 +1,8 @@
 package com.bunbeauty.shared.ui.screen.consumercart.state
 
 import androidx.compose.runtime.Immutable
+import com.bunbeauty.menu.ui.state.MenuItemUi
 import com.bunbeauty.shared.presentation.base.BaseViewState
-import com.bunbeauty.shared.ui.screen.menu.state.MenuItemUi
 import com.bunbeauty.shared.ui.screen.motivation.MotivationUi
 import kotlinx.collections.immutable.ImmutableList
 

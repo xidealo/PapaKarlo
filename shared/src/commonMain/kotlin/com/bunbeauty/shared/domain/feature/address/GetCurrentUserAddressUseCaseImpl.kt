@@ -1,7 +1,7 @@
 package com.bunbeauty.shared.domain.feature.address
 
+import com.bunbeauty.core.model.address.UserAddress
 import com.bunbeauty.shared.DataStoreRepo
-import com.bunbeauty.shared.domain.model.address.UserAddress
 import com.bunbeauty.shared.domain.repo.UserAddressRepo
 
 interface GetCurrentUserAddressUseCase {

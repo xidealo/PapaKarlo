@@ -1,9 +1,9 @@
 package com.bunbeauty.shared.ui.screen.paymentmethod
 
 import androidx.compose.runtime.Composable
-import com.bunbeauty.shared.domain.model.payment_method.PaymentMethod
-import com.bunbeauty.shared.domain.model.payment_method.PaymentMethodName
-import com.bunbeauty.shared.domain.model.payment_method.SelectablePaymentMethod
+import com.bunbeauty.core.model.payment_method.PaymentMethod
+import com.bunbeauty.core.model.payment_method.PaymentMethodName
+import com.bunbeauty.core.model.payment_method.SelectablePaymentMethod
 import com.bunbeauty.shared.ui.screen.createorder.SelectablePaymentMethodUI
 import com.bunbeauty.shared.ui.screen.profile.screen.payment.PaymentMethodUI
 import com.bunbeauty.shared.ui.screen.profile.screen.payment.PaymentMethodValueUI

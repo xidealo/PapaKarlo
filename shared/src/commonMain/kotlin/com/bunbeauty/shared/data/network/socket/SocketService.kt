@@ -1,8 +1,8 @@
 package com.bunbeauty.shared.data.network.socket
 
 import com.bunbeauty.core.Logger
-import com.bunbeauty.shared.Constants.AUTHORIZATION_HEADER
-import com.bunbeauty.shared.Constants.BEARER
+import com.bunbeauty.core.Constants.AUTHORIZATION_HEADER
+import com.bunbeauty.core.Constants.BEARER
 import com.bunbeauty.shared.data.UuidGenerator
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.websocket.webSocketSession

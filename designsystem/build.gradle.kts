@@ -63,6 +63,10 @@ android {
     defaultConfig {
         minSdk = AndroidSdk.min
     }
+    compose.resources {
+        publicResClass = true
+        generateResClass = auto
+    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_21
         targetCompatibility = JavaVersion.VERSION_21

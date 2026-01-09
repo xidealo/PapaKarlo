@@ -1,11 +1,11 @@
 package com.bunbeauty.shared.data.mapper.user_address
 
+import com.bunbeauty.core.model.address.CreatedUserAddress
+import com.bunbeauty.core.model.address.UserAddress
 import com.bunbeauty.shared.data.network.model.AddressServer
 import com.bunbeauty.shared.data.network.model.UserAddressPostServer
 import com.bunbeauty.shared.data.network.model.UserAddressStreetPostServer
 import com.bunbeauty.shared.db.UserAddressEntity
-import com.bunbeauty.shared.domain.model.address.CreatedUserAddress
-import com.bunbeauty.shared.domain.model.address.UserAddress
 
 class UserAddressMapper {
     fun toUserAddress(userAddressEntity: UserAddressEntity): UserAddress =

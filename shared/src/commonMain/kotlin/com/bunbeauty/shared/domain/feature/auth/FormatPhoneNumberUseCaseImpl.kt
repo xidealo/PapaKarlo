@@ -1,6 +1,6 @@
 package com.bunbeauty.shared.domain.feature.auth
 
-import com.bunbeauty.shared.Constants
+import com.bunbeauty.core.Constants
 
 interface FormatPhoneNumberUseCase {
     operator fun invoke(phoneNumber: String): String
