@@ -1,8 +1,8 @@
 package com.bunbeauty.shared.presentation.splash
 
-import com.bunbeauty.shared.presentation.base.BaseAction
-import com.bunbeauty.shared.presentation.base.BaseEvent
-import com.bunbeauty.shared.presentation.base.BaseViewDataState
+import com.bunbeauty.core.base.BaseAction
+import com.bunbeauty.core.base.BaseEvent
+import com.bunbeauty.core.base.BaseViewDataState
 
 interface Splash {
     data object DataState : BaseViewDataState

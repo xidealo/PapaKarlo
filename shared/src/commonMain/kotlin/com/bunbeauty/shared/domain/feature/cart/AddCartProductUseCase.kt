@@ -6,9 +6,9 @@ import com.bunbeauty.core.domain.exeptions.CartProductLimitReachedException
 import com.bunbeauty.shared.domain.feature.addition.AreAdditionsEqualUseCase
 import com.bunbeauty.shared.domain.feature.addition.GetAdditionPriorityUseCase
 import com.bunbeauty.core.model.cart.CartProduct
-import com.bunbeauty.shared.domain.repo.AdditionGroupRepo
-import com.bunbeauty.shared.domain.repo.AdditionRepo
-import com.bunbeauty.shared.domain.repo.CartProductAdditionRepo
+import com.bunbeauty.core.domain.repo.AdditionGroupRepo
+import com.bunbeauty.core.domain.repo.AdditionRepo
+import com.bunbeauty.core.domain.repo.CartProductAdditionRepo
 import com.bunbeauty.core.domain.repo.CartProductRepo
 
 class AddCartProductUseCase(

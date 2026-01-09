@@ -8,9 +8,9 @@ import com.bunbeauty.core.model.date_time.Time
 import com.bunbeauty.core.model.payment_method.PaymentMethod
 import com.bunbeauty.core.model.payment_method.PaymentMethodName
 import com.bunbeauty.core.model.payment_method.SelectablePaymentMethod
-import com.bunbeauty.shared.presentation.base.BaseAction
-import com.bunbeauty.shared.presentation.base.BaseDataState
-import com.bunbeauty.shared.presentation.base.BaseEvent
+import com.bunbeauty.core.base.BaseAction
+import com.bunbeauty.core.base.BaseDataState
+import com.bunbeauty.core.base.BaseEvent
 import com.bunbeauty.shared.presentation.motivation.MotivationData
 
 interface CreateOrder {

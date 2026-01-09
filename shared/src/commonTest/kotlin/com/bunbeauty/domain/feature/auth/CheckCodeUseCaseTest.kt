@@ -4,7 +4,7 @@ import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.core.domain.exeptions.SomethingWentWrongException
 import com.bunbeauty.shared.domain.feature.auth.CheckCodeUseCase
 import com.bunbeauty.shared.domain.model.AuthResponse
-import com.bunbeauty.shared.domain.repo.AuthRepo
+import com.bunbeauty.core.domain.repo.AuthRepo
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.mock

@@ -35,9 +35,9 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
-import papakarlo.shared.generated.resources.Res
-import papakarlo.shared.generated.resources.error_no_internet
-import papakarlo.shared.generated.resources.warning_no_order_available
+import papakarlo.designsystem.generated.resources.Res
+import papakarlo.designsystem.generated.resources.error_no_internet
+import papakarlo.designsystem.generated.resources.warning_no_order_available
 
 @Composable
 fun MainScreen(

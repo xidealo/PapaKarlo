@@ -2,7 +2,7 @@ package com.bunbeauty.shared.ui.screen.update
 
 import androidx.compose.runtime.Immutable
 import com.bunbeauty.core.model.link.Link
-import com.bunbeauty.shared.presentation.base.BaseViewState
+import com.bunbeauty.core.base.BaseViewState
 
 @Immutable
 data class UpdateViewState(

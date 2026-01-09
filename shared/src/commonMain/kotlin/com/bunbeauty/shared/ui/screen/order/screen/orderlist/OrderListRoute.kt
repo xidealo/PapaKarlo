@@ -21,6 +21,7 @@ import com.bunbeauty.designsystem.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.designsystem.ui.screen.EmptyScreen
 import com.bunbeauty.designsystem.ui.screen.ErrorScreen
 import com.bunbeauty.designsystem.ui.screen.LoadingScreen
+import com.bunbeauty.profile.ui.screen.profile.getOrderColor
 import com.bunbeauty.shared.presentation.order_list.OrderListState
 import com.bunbeauty.shared.presentation.order_list.OrderListViewModel
 import com.bunbeauty.shared.ui.screen.order.model.OrderItem
@@ -28,13 +29,13 @@ import com.bunbeauty.shared.ui.screen.order.toItem
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
-import papakarlo.shared.generated.resources.Res
-import papakarlo.shared.generated.resources.description_cafe_addresses_empty
-import papakarlo.shared.generated.resources.error_order_list_loading
-import papakarlo.shared.generated.resources.ic_history
-import papakarlo.shared.generated.resources.msg_order_list_empty
-import papakarlo.shared.generated.resources.title_my_orders
-import papakarlo.shared.generated.resources.title_order_list_empty
+import papakarlo.designsystem.generated.resources.Res
+import papakarlo.designsystem.generated.resources.description_cafe_addresses_empty
+import papakarlo.designsystem.generated.resources.error_order_list_loading
+import papakarlo.designsystem.generated.resources.ic_history
+import papakarlo.designsystem.generated.resources.msg_order_list_empty
+import papakarlo.designsystem.generated.resources.title_my_orders
+import papakarlo.designsystem.generated.resources.title_order_list_empty
 
 @Composable
 fun OrderListState.DataState.mapState(): OrderListViewState =
@@ -207,6 +208,8 @@ private fun OrderListScreenSuccessPreview() {
                                 code = "А-01",
                                 dateTime = "18.03.2023 11:53",
                                 statusName = OrderStatus.NOT_ACCEPTED.name,
+                                background = OrderStatus.NOT_ACCEPTED.getOrderColor(),
+
                             ),
                             OrderItem(
                                 uuid = "",
@@ -214,6 +217,8 @@ private fun OrderListScreenSuccessPreview() {
                                 code = "Б-02",
                                 dateTime = "18.03.2023 11:53",
                                 statusName = OrderStatus.ACCEPTED.name,
+                                background = OrderStatus.ACCEPTED.getOrderColor(),
+
                             ),
                             OrderItem(
                                 uuid = "",
@@ -221,6 +226,8 @@ private fun OrderListScreenSuccessPreview() {
                                 code = "В-03",
                                 dateTime = "18.03.2023 11:53",
                                 statusName = OrderStatus.PREPARING.name,
+                                background = OrderStatus.PREPARING.getOrderColor(),
+
                             ),
                             OrderItem(
                                 uuid = "",
@@ -228,6 +235,8 @@ private fun OrderListScreenSuccessPreview() {
                                 code = "Г-04",
                                 dateTime = "18.03.2023 11:53",
                                 statusName = OrderStatus.DONE.name,
+                                background = OrderStatus.DONE.getOrderColor(),
+
                             ),
                             OrderItem(
                                 uuid = "",
@@ -235,6 +244,8 @@ private fun OrderListScreenSuccessPreview() {
                                 code = "Д-05",
                                 dateTime = "18.03.2023 11:53",
                                 statusName = OrderStatus.SENT_OUT.name,
+                                background = OrderStatus.SENT_OUT.getOrderColor(),
+
                             ),
                             OrderItem(
                                 uuid = "",
@@ -242,6 +253,8 @@ private fun OrderListScreenSuccessPreview() {
                                 code = "Е-06",
                                 dateTime = "18.03.2023 11:53",
                                 statusName = OrderStatus.DELIVERED.name,
+                                background = OrderStatus.DELIVERED.getOrderColor(),
+
                             ),
                             OrderItem(
                                 uuid = "",
@@ -249,6 +262,8 @@ private fun OrderListScreenSuccessPreview() {
                                 code = "Ж-07",
                                 dateTime = "18.03.2023 11:53",
                                 statusName = OrderStatus.CANCELED.name,
+                                background = OrderStatus.CANCELED.getOrderColor(),
+
                             ),
                         ),
                 ),

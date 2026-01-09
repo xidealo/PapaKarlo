@@ -17,13 +17,13 @@ import com.bunbeauty.shared.domain.feature.motivation.GetMotivationUseCase
 import com.bunbeauty.shared.domain.feature.motivation.Motivation
 import com.bunbeauty.shared.domain.feature.orderavailable.IsOrderAvailableUseCase
 import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
-import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
+import com.bunbeauty.core.domain.user.IUserInteractor
 import com.bunbeauty.core.model.product.MenuProduct
 import com.bunbeauty.core.extension.launchSafe
 import com.bunbeauty.core.model.MenuItem
 import com.bunbeauty.core.model.cart.ConsumerCartDomain
 import com.bunbeauty.core.model.mapper.toMenuProductItem
-import com.bunbeauty.shared.presentation.base.SharedStateViewModel
+import com.bunbeauty.core.base.SharedStateViewModel
 import com.bunbeauty.shared.presentation.consumercart.mapper.toCartProductItem
 import com.bunbeauty.shared.presentation.motivation.toMotivationData
 import com.bunbeauty.core.model.ProductDetailsOpenedFrom

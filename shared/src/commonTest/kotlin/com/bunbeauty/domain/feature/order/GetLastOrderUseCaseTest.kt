@@ -1,7 +1,7 @@
 package com.bunbeauty.domain.feature.order
 
 import com.bunbeauty.shared.DataStoreRepo
-import com.bunbeauty.shared.domain.feature.order.GetLastOrderUseCase
+import com.bunbeauty.core.domain.order.GetLastOrderUseCase
 import com.bunbeauty.shared.domain.model.date_time.Date
 import com.bunbeauty.core.model.date_time.DateTime
 import com.bunbeauty.core.model.date_time.Time

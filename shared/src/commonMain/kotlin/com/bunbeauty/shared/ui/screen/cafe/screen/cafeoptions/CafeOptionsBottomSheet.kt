@@ -18,11 +18,11 @@ import com.bunbeauty.shared.ui.screen.cafe.model.CafeOptions
 import com.bunbeauty.shared.ui.screen.cafe.screen.cafelist.CafeListViewState
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.koinInject
-import papakarlo.shared.generated.resources.Res
-import papakarlo.shared.generated.resources.description_cafe_options_call
-import papakarlo.shared.generated.resources.description_cafe_options_map
-import papakarlo.shared.generated.resources.ic_address
-import papakarlo.shared.generated.resources.ic_call
+import papakarlo.designsystem.generated.resources.ic_address
+import papakarlo.designsystem.generated.resources.ic_call
+import papakarlo.designsystem.generated.resources.Res
+import papakarlo.designsystem.generated.resources.description_cafe_options_call
+import papakarlo.designsystem.generated.resources.description_cafe_options_map
 
 @Composable
 fun CafeOptionsBottomSheet(

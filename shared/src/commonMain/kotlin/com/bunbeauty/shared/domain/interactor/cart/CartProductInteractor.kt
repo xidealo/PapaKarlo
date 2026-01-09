@@ -5,7 +5,7 @@ import com.bunbeauty.shared.domain.asCommonFlow
 import com.bunbeauty.core.model.cart.CartProduct
 import com.bunbeauty.core.model.cart.ConsumerCartDomain
 import com.bunbeauty.core.model.cart.LightCartProduct
-import com.bunbeauty.shared.domain.repo.CartProductAdditionRepo
+import com.bunbeauty.core.domain.repo.CartProductAdditionRepo
 import com.bunbeauty.core.domain.repo.CartProductRepo
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map

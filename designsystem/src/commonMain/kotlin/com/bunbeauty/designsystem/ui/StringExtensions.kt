@@ -1,0 +1,104 @@
+package com.bunbeauty.designsystem.ui
+
+import androidx.compose.runtime.Composable
+import com.bunbeauty.core.model.date_time.DateTime
+import com.bunbeauty.core.model.date_time.Time
+import org.jetbrains.compose.resources.stringResource
+import papakarlo.designsystem.generated.resources.Res
+import papakarlo.designsystem.generated.resources.month_january
+import papakarlo.designsystem.generated.resources.delivery_time
+import papakarlo.designsystem.generated.resources.month_april
+import papakarlo.designsystem.generated.resources.month_august
+import papakarlo.designsystem.generated.resources.month_december
+import papakarlo.designsystem.generated.resources.month_february
+import papakarlo.designsystem.generated.resources.month_july
+import papakarlo.designsystem.generated.resources.month_june
+import papakarlo.designsystem.generated.resources.month_march
+import papakarlo.designsystem.generated.resources.month_may
+import papakarlo.designsystem.generated.resources.month_november
+import papakarlo.designsystem.generated.resources.month_october
+import papakarlo.designsystem.generated.resources.month_september
+import papakarlo.designsystem.generated.resources.month_unknown
+import papakarlo.designsystem.generated.resources.msg_delivery
+import papakarlo.designsystem.generated.resources.msg_pickup
+import papakarlo.designsystem.generated.resources.pickup_time
+
+@Composable
+fun DateTime.getDateTimeString(): String {
+    val monthName =
+        when (date.monthNumber) {
+            1 -> Res.string.month_january
+            2 -> Res.string.month_february
+            3 -> Res.string.month_march
+            4 -> Res.string.month_april
+            5 -> Res.string.month_may
+            6 -> Res.string.month_june
+            7 -> Res.string.month_july
+            8 -> Res.string.month_august
+            9 -> Res.string.month_september
+            10 -> Res.string.month_october
+            11 -> Res.string.month_november
+            12 -> Res.string.month_december
+            else -> Res.string.month_unknown
+        }.let { monthResourceId ->
+            stringResource(monthResourceId)
+        }
+    return "${date.dayOfMonth} $monthName ${time.getTimeString()}"
+}
+
+@Composable
+fun Time.getTimeString(): String =
+    "${
+        addFirstZero(
+            hours,
+        )
+    }:${addFirstZero(minutes)}"
+
+private fun addFirstZero(number: Int): String =
+    if (number < 10) {
+        "0$number"
+    } else {
+        number.toString()
+    }
+
+fun getCountString(count: Int): String = "× $count"
+
+fun getCountString(count: String): String = "× $count"
+
+fun getStringPart(
+    divider: String,
+    description: String,
+    data: Any?,
+): String =
+    if (data == null || data.toString().isEmpty()) {
+        ""
+    } else {
+        divider + description + data
+    }
+
+fun getInvertedStringPart(
+    divider: String,
+    data: Any?,
+    description: String,
+): String =
+    if (data == null || data.toString().isEmpty()) {
+        ""
+    } else {
+        divider + data + description
+    }
+
+@Composable
+fun getPickupMethodString(isDelivery: Boolean): String =
+    if (isDelivery) {
+        stringResource(Res.string.msg_delivery)
+    } else {
+        stringResource(Res.string.msg_pickup)
+    }
+
+@Composable
+fun getDeferredString(isDelivery: Boolean): String =
+    if (isDelivery) {
+        stringResource(Res.string.delivery_time)
+    } else {
+        stringResource(Res.string.pickup_time)
+    }

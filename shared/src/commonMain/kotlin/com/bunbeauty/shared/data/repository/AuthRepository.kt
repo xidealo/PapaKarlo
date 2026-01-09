@@ -3,7 +3,7 @@ package com.bunbeauty.shared.data.repository
 import com.bunbeauty.shared.data.network.api.NetworkConnector
 import com.bunbeauty.shared.data.network.model.login.CodeRequestServer
 import com.bunbeauty.shared.data.network.model.login.CodeServer
-import com.bunbeauty.shared.domain.repo.AuthRepo
+import com.bunbeauty.core.domain.repo.AuthRepo
 import com.bunbeauty.core.extension.dataOrNull
 import com.bunbeauty.core.extension.isSuccess
 import com.bunbeauty.core.model.AuthResponse

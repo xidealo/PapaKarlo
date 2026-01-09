@@ -1,10 +1,10 @@
 package com.bunbeauty.shared.di.usecase
 
-import com.bunbeauty.shared.domain.feature.city.GetCityListUseCase
-import com.bunbeauty.shared.domain.feature.city.GetSelectedCityUseCase
-import com.bunbeauty.shared.domain.feature.city.GetSelectedCityUseCaseImpl
-import com.bunbeauty.shared.domain.feature.city.ObserveSelectedCityUseCase
-import com.bunbeauty.shared.domain.feature.city.SaveSelectedCityUseCase
+import com.bunbeauty.core.domain.city.GetCityListUseCase
+import com.bunbeauty.core.domain.city.GetSelectedCityUseCase
+import com.bunbeauty.core.domain.city.GetSelectedCityUseCaseImpl
+import com.bunbeauty.core.domain.city.ObserveSelectedCityUseCase
+import com.bunbeauty.core.domain.city.SaveSelectedCityUseCase
 import org.koin.dsl.module
 
 internal fun cityUseCaseModule() =
@@ -17,18 +17,16 @@ internal fun cityUseCaseModule() =
         factory<GetSelectedCityUseCase> {
             GetSelectedCityUseCaseImpl(
                 cityRepo = get(),
-                dataStoreRepo = get(),
             )
         }
         factory {
             ObserveSelectedCityUseCase(
                 cityRepo = get(),
-                dataStoreRepo = get(),
             )
         }
         factory {
             SaveSelectedCityUseCase(
-                dataStoreRepo = get(),
+                cityRepo = get()
             )
         }
     }

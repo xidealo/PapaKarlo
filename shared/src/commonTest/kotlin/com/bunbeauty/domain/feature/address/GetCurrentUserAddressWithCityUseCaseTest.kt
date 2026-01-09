@@ -3,10 +3,10 @@ package com.bunbeauty.domain.feature.address
 import com.bunbeauty.getCity
 import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.domain.feature.address.GetCurrentUserAddressWithCityUseCaseImpl
-import com.bunbeauty.shared.domain.feature.city.GetSelectedCityUseCase
+import com.bunbeauty.core.domain.city.GetSelectedCityUseCase
 import com.bunbeauty.core.model.address.UserAddress
 import com.bunbeauty.core.model.address.UserAddressWithCity
-import com.bunbeauty.shared.domain.repo.UserAddressRepo
+import com.bunbeauty.core.domain.repo.UserAddressRepo
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.mock

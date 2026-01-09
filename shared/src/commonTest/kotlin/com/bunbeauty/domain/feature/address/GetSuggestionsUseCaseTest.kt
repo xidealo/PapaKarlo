@@ -5,7 +5,7 @@ import com.bunbeauty.core.domain.exeptions.NoSelectedCityUuidException
 import com.bunbeauty.core.domain.exeptions.NoTokenException
 import com.bunbeauty.shared.domain.feature.address.GetSuggestionsUseCase
 import com.bunbeauty.core.model.Suggestion
-import com.bunbeauty.shared.domain.repo.SuggestionRepo
+import com.bunbeauty.core.domain.repo.SuggestionRepo
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.mock

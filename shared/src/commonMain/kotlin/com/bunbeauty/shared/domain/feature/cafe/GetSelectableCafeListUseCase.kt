@@ -6,7 +6,7 @@ import com.bunbeauty.core.domain.exeptions.NoSelectedCityUuidException
 import com.bunbeauty.core.domain.exeptions.NoUserUuidException
 import com.bunbeauty.core.model.cafe.Cafe
 import com.bunbeauty.core.model.cafe.SelectableCafe
-import com.bunbeauty.shared.domain.repo.CafeRepo
+import com.bunbeauty.core.domain.repo.CafeRepo
 
 class GetSelectableCafeListUseCase(
     private val dataStoreRepo: DataStoreRepo,

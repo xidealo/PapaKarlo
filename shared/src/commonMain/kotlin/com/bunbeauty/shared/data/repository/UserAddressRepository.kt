@@ -10,7 +10,7 @@ import com.bunbeauty.shared.data.network.api.NetworkConnector
 import com.bunbeauty.shared.db.SelectedUserAddressUuidEntity
 import com.bunbeauty.shared.domain.mapFlow
 import com.bunbeauty.shared.domain.mapListFlow
-import com.bunbeauty.shared.domain.repo.UserAddressRepo
+import com.bunbeauty.core.domain.repo.UserAddressRepo
 import kotlinx.coroutines.flow.Flow
 
 open class UserAddressRepository(

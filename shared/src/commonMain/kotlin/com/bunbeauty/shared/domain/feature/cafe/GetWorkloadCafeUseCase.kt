@@ -1,7 +1,7 @@
 package com.bunbeauty.shared.domain.feature.cafe
 
 import com.bunbeauty.core.model.cafe.Cafe
-import com.bunbeauty.shared.domain.repo.CafeRepo
+import com.bunbeauty.core.domain.repo.CafeRepo
 
 class GetWorkloadCafeUseCase(
     private val cafeRepo: CafeRepo,

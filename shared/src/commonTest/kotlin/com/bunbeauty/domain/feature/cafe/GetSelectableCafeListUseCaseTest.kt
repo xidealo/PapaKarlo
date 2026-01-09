@@ -9,7 +9,7 @@ import com.bunbeauty.shared.domain.feature.cafe.GetCafeListUseCase
 import com.bunbeauty.shared.domain.feature.cafe.GetSelectableCafeListUseCase
 import com.bunbeauty.shared.domain.feature.cafe.IsPickupEnabledFromCafeUseCase
 import com.bunbeauty.core.model.cafe.SelectableCafe
-import com.bunbeauty.shared.domain.repo.CafeRepo
+import com.bunbeauty.core.domain.repo.CafeRepo
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.mock

@@ -49,12 +49,12 @@ import com.bunbeauty.shared.domain.feature.cart.IncreaseCartProductCountUseCase
 import com.bunbeauty.core.domain.ObserveCartUseCase
 import com.bunbeauty.shared.domain.feature.cart.RemoveCartProductUseCase
 import com.bunbeauty.shared.domain.feature.cart.di.cartModule
-import com.bunbeauty.shared.domain.feature.city.GetCityListUseCase
-import com.bunbeauty.shared.domain.feature.city.GetSelectedCityTimeZoneUseCase
-import com.bunbeauty.shared.domain.feature.city.ObserveSelectedCityUseCase
-import com.bunbeauty.shared.domain.feature.city.SaveSelectedCityUseCase
+import com.bunbeauty.core.domain.city.GetCityListUseCase
+import com.bunbeauty.core.domain.city.GetSelectedCityTimeZoneUseCase
+import com.bunbeauty.core.domain.city.ObserveSelectedCityUseCase
+import com.bunbeauty.core.domain.city.SaveSelectedCityUseCase
 import com.bunbeauty.core.domain.discount.GetDiscountUseCase
-import com.bunbeauty.shared.domain.feature.link.GetLinkListUseCase
+import com.bunbeauty.core.domain.link.GetLinkListUseCase
 import com.bunbeauty.shared.domain.feature.link.GetLinkUseCase
 import com.bunbeauty.core.domain.menu_product.AddMenuProductUseCase
 import com.bunbeauty.shared.domain.feature.menu.di.menuModule
@@ -62,31 +62,32 @@ import com.bunbeauty.core.domain.menu_product.GetMenuProductUseCase
 import com.bunbeauty.shared.domain.feature.motivation.GetMotivationUseCase
 import com.bunbeauty.shared.domain.feature.notification.SubscribeToNotificationUseCase
 import com.bunbeauty.shared.domain.feature.notification.UpdateNotificationUseCase
-import com.bunbeauty.shared.domain.feature.order.CreateOrderUseCase
-import com.bunbeauty.shared.domain.feature.order.GetExtendedCommentUseCase
-import com.bunbeauty.shared.domain.feature.order.GetLastOrderUseCase
-import com.bunbeauty.shared.domain.feature.order.ObserveLastOrderUseCase
-import com.bunbeauty.shared.domain.feature.order.ObserveOrderListUseCase
-import com.bunbeauty.shared.domain.feature.order.ObserveOrderUseCase
-import com.bunbeauty.shared.domain.feature.order.StopObserveOrdersUseCase
+import com.bunbeauty.core.domain.order.CreateOrderUseCase
+import com.bunbeauty.core.domain.order.GetExtendedCommentUseCase
+import com.bunbeauty.core.domain.order.GetLastOrderUseCase
+import com.bunbeauty.core.domain.order.ObserveLastOrderUseCase
+import com.bunbeauty.core.domain.order.ObserveOrderListUseCase
+import com.bunbeauty.core.domain.order.ObserveOrderUseCase
+import com.bunbeauty.core.domain.order.StopObserveOrdersUseCase
 import com.bunbeauty.shared.domain.feature.orderavailable.IsOrderAvailableUseCase
 import com.bunbeauty.shared.domain.feature.payment.GetPaymentMethodListUseCase
 import com.bunbeauty.shared.domain.feature.payment.GetSelectablePaymentMethodListUseCase
 import com.bunbeauty.shared.domain.feature.payment.GetSelectedPaymentMethodUseCase
 import com.bunbeauty.shared.domain.feature.payment.SavePaymentMethodUseCase
-import com.bunbeauty.shared.domain.feature.settings.ObserveSettingsUseCase
-import com.bunbeauty.shared.domain.feature.settings.UpdateEmailUseCase
+import com.bunbeauty.core.domain.settings.ObserveSettingsUseCase
+import com.bunbeauty.core.domain.settings.UpdateEmailUseCase
 import com.bunbeauty.shared.domain.feature.splash.CheckOneCityUseCase
 import com.bunbeauty.shared.domain.feature.splash.CheckUpdateUseCase
 import com.bunbeauty.shared.domain.feature.splash.SaveOneCityUseCase
 import com.bunbeauty.shared.domain.interactor.cafe.ICafeInteractor
 import com.bunbeauty.shared.domain.interactor.cart.GetCartTotalFlowUseCase
 import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
-import com.bunbeauty.shared.domain.interactor.city.ICityInteractor
+import com.bunbeauty.core.domain.city.ICityInteractor
 import com.bunbeauty.core.domain.menu_product.IMenuProductInteractor
 import com.bunbeauty.menu.di.menuFeatureModule
-import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
-import com.bunbeauty.shared.domain.use_case.DisableUserUseCase
+import com.bunbeauty.profile.di.profileFeatureModule
+import com.bunbeauty.core.domain.user.IUserInteractor
+import com.bunbeauty.core.domain.DisableUserUseCase
 import com.bunbeauty.shared.domain.use_case.address.GetSelectableUserAddressListUseCase
 import com.bunbeauty.shared.domain.use_case.address.GetUserAddressListUseCase
 import com.bunbeauty.shared.domain.use_case.address.SaveSelectedUserAddressUseCase
@@ -124,6 +125,7 @@ fun initKoin(appDeclaration: KoinAppDeclaration = {}) =
             menuFeatureModule(),
             addressModule(),
             viewModelModule(),
+            profileFeatureModule(),
         )
     }
 
@@ -157,6 +159,7 @@ fun initKoin() =
             menuModule(),
             menuFeatureModule(),
             addressModule(),
+            profileFeatureModule(),
         )
     }
 

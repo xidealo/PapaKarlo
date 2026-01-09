@@ -52,20 +52,20 @@ import org.jetbrains.compose.resources.getString
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
-import papakarlo.shared.generated.resources.Res
-import papakarlo.shared.generated.resources.action_consumer_cart_creeate_order
-import papakarlo.shared.generated.resources.action_consumer_cart_menu
-import papakarlo.shared.generated.resources.description_consumer_cart_empty
-import papakarlo.shared.generated.resources.error_consumer_cart_add_product
-import papakarlo.shared.generated.resources.error_consumer_cart_loading
-import papakarlo.shared.generated.resources.error_consumer_cart_remove_product
-import papakarlo.shared.generated.resources.ic_cart_24
-import papakarlo.shared.generated.resources.msg_consumer_cart_empty
-import papakarlo.shared.generated.resources.msg_consumer_cart_recommendations
-import papakarlo.shared.generated.resources.title_cart
-import papakarlo.shared.generated.resources.title_consumer_cart_discount
-import papakarlo.shared.generated.resources.title_consumer_cart_empty
-import papakarlo.shared.generated.resources.title_consumer_cart_total
+import papakarlo.designsystem.generated.resources.ic_cart_24
+import papakarlo.designsystem.generated.resources.Res
+import papakarlo.designsystem.generated.resources.action_consumer_cart_creeate_order
+import papakarlo.designsystem.generated.resources.action_consumer_cart_menu
+import papakarlo.designsystem.generated.resources.description_consumer_cart_empty
+import papakarlo.designsystem.generated.resources.error_consumer_cart_add_product
+import papakarlo.designsystem.generated.resources.error_consumer_cart_loading
+import papakarlo.designsystem.generated.resources.error_consumer_cart_remove_product
+import papakarlo.designsystem.generated.resources.msg_consumer_cart_empty
+import papakarlo.designsystem.generated.resources.msg_consumer_cart_recommendations
+import papakarlo.designsystem.generated.resources.title_cart
+import papakarlo.designsystem.generated.resources.title_consumer_cart_discount
+import papakarlo.designsystem.generated.resources.title_consumer_cart_empty
+import papakarlo.designsystem.generated.resources.title_consumer_cart_total
 
 @Composable
 fun ConsumerCartRoute(

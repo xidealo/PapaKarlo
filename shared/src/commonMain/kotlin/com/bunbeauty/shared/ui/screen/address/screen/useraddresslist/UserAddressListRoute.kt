@@ -29,14 +29,14 @@ import com.bunbeauty.shared.ui.screen.address.model.UserAddressItem
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
-import papakarlo.shared.generated.resources.Res
-import papakarlo.shared.generated.resources.action_add_addresses
-import papakarlo.shared.generated.resources.description_cafe_addresses_empty
-import papakarlo.shared.generated.resources.error_addresses_list_loading
-import papakarlo.shared.generated.resources.ic_address
-import papakarlo.shared.generated.resources.msg_my_addresses_empty
-import papakarlo.shared.generated.resources.title_my_addresses
-import papakarlo.shared.generated.resources.title_my_addresses_empty
+import papakarlo.designsystem.generated.resources.Res
+import papakarlo.designsystem.generated.resources.ic_address
+import papakarlo.designsystem.generated.resources.title_my_addresses
+import papakarlo.designsystem.generated.resources.action_add_addresses
+import papakarlo.designsystem.generated.resources.description_cafe_addresses_empty
+import papakarlo.designsystem.generated.resources.error_addresses_list_loading
+import papakarlo.designsystem.generated.resources.msg_my_addresses_empty
+import papakarlo.designsystem.generated.resources.title_my_addresses_empty
 
 @Composable
 private fun UserAddressListDataState.DataState.mapState(): UserAddressListViewState =

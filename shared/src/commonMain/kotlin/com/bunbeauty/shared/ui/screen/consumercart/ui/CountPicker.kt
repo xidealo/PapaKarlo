@@ -30,11 +30,11 @@ import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import papakarlo.shared.generated.resources.Res
-import papakarlo.shared.generated.resources.description_consumer_cart_decrease
-import papakarlo.shared.generated.resources.description_consumer_cart_increase
-import papakarlo.shared.generated.resources.ic_minus_16
-import papakarlo.shared.generated.resources.ic_plus_16
+import papakarlo.designsystem.generated.resources.Res
+import papakarlo.designsystem.generated.resources.description_consumer_cart_decrease
+import papakarlo.designsystem.generated.resources.description_consumer_cart_increase
+import papakarlo.designsystem.generated.resources.ic_minus_16
+import papakarlo.designsystem.generated.resources.ic_plus_16
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable

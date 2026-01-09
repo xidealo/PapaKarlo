@@ -24,8 +24,8 @@ import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.shared.ui.screen.consumercart.state.ConsumerCartViewState
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import papakarlo.shared.generated.resources.Res
-import papakarlo.shared.generated.resources.description_product
+import papakarlo.designsystem.generated.resources.Res
+import papakarlo.designsystem.generated.resources.description_product
 
 @Composable
 fun CartProductItem(

@@ -1,6 +1,6 @@
 package com.bunbeauty.shared.domain.feature.splash
 
-import com.bunbeauty.shared.domain.repo.CityRepo
+import com.bunbeauty.core.domain.repo.CityRepo
 
 private const val ONE_CITY_COUNT = 1
 

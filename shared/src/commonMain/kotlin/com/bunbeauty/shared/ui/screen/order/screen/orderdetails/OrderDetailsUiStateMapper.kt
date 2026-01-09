@@ -2,16 +2,16 @@ package com.bunbeauty.shared.ui.screen.order.screen.orderdetails
 
 import androidx.compose.runtime.Composable
 import com.bunbeauty.shared.presentation.order_details.OrderDetails
-import com.bunbeauty.shared.ui.common.getDateTimeString
-import com.bunbeauty.shared.ui.common.getDeferredString
+import com.bunbeauty.designsystem.ui.getDateTimeString
+import com.bunbeauty.designsystem.ui.getDeferredString
 import com.bunbeauty.shared.ui.common.getOrderAddressString
-import com.bunbeauty.shared.ui.common.getPickupMethodString
-import com.bunbeauty.shared.ui.common.getTimeString
-import com.bunbeauty.shared.ui.screen.order.ui.getOrderStatusName
-import com.bunbeauty.shared.ui.screen.profile.screen.profile.mapToString
+import com.bunbeauty.designsystem.ui.getPickupMethodString
+import com.bunbeauty.designsystem.ui.getTimeString
+import com.bunbeauty.profile.ui.screen.profile.getOrderStatusName
+import com.bunbeauty.profile.ui.screen.profile.mapToString
 import org.jetbrains.compose.resources.stringResource
-import papakarlo.shared.generated.resources.Res
-import papakarlo.shared.generated.resources.asap
+import papakarlo.designsystem.generated.resources.Res
+import papakarlo.designsystem.generated.resources.asap
 
 @Composable
 fun OrderDetails.DataState.mapToOrderDetailsViewState() =

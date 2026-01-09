@@ -4,12 +4,12 @@ import com.bunbeauty.shared.domain.interactor.cafe.CafeInteractor
 import com.bunbeauty.shared.domain.interactor.cafe.ICafeInteractor
 import com.bunbeauty.shared.domain.interactor.cart.CartProductInteractor
 import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
-import com.bunbeauty.shared.domain.interactor.city.CityInteractor
-import com.bunbeauty.shared.domain.interactor.city.ICityInteractor
+import com.bunbeauty.core.domain.city.CityInteractor
+import com.bunbeauty.core.domain.city.ICityInteractor
 import com.bunbeauty.core.domain.menu_product.IMenuProductInteractor
 import com.bunbeauty.core.domain.menu_product.MenuProductInteractor
-import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
-import com.bunbeauty.shared.domain.interactor.user.UserInteractor
+import com.bunbeauty.core.domain.user.IUserInteractor
+import com.bunbeauty.core.domain.user.UserInteractor
 import org.koin.dsl.module
 
 internal fun interactorModule() =
@@ -24,13 +24,11 @@ internal fun interactorModule() =
         }
         single<ICityInteractor> {
             CityInteractor(
-                dataStoreRepo = get(),
                 cityRepo = get(),
             )
         }
         single {
             CityInteractor(
-                dataStoreRepo = get(),
                 cityRepo = get(),
             )
         }

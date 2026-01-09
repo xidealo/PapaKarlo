@@ -41,16 +41,16 @@ import com.bunbeauty.shared.ui.screen.order.ui.OrderStatusBar
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
-import papakarlo.shared.generated.resources.Res
-import papakarlo.shared.generated.resources.error_order_details_discount
-import papakarlo.shared.generated.resources.msg_order_details_address
-import papakarlo.shared.generated.resources.msg_order_details_comment
-import papakarlo.shared.generated.resources.msg_order_details_date_time
-import papakarlo.shared.generated.resources.msg_order_details_delivery_cost
-import papakarlo.shared.generated.resources.msg_order_details_discount
-import papakarlo.shared.generated.resources.msg_order_details_order_cost
-import papakarlo.shared.generated.resources.msg_order_details_payment_method
-import papakarlo.shared.generated.resources.msg_order_details_pickup_method
+import papakarlo.designsystem.generated.resources.Res
+import papakarlo.designsystem.generated.resources.error_order_details_discount
+import papakarlo.designsystem.generated.resources.msg_order_details_address
+import papakarlo.designsystem.generated.resources.msg_order_details_comment
+import papakarlo.designsystem.generated.resources.msg_order_details_date_time
+import papakarlo.designsystem.generated.resources.msg_order_details_delivery_cost
+import papakarlo.designsystem.generated.resources.msg_order_details_discount
+import papakarlo.designsystem.generated.resources.msg_order_details_order_cost
+import papakarlo.designsystem.generated.resources.msg_order_details_payment_method
+import papakarlo.designsystem.generated.resources.msg_order_details_pickup_method
 
 @Composable
 fun OrderDetailsRoute(

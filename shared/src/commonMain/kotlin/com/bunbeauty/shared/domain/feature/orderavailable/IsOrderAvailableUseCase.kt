@@ -1,6 +1,6 @@
 package com.bunbeauty.shared.domain.feature.orderavailable
 
-import com.bunbeauty.shared.domain.repo.CompanyRepo
+import com.bunbeauty.core.domain.repo.CompanyRepo
 
 class IsOrderAvailableUseCase(
     private val companyRepo: CompanyRepo,

@@ -2,7 +2,7 @@ package com.bunbeauty.shared.data.repository
 
 import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.data.network.api.NetworkConnector
-import com.bunbeauty.shared.domain.repo.RecommendationRepo
+import com.bunbeauty.core.domain.repo.RecommendationRepo
 
 class RecommendationRepository(
     private val networkConnector: NetworkConnector,

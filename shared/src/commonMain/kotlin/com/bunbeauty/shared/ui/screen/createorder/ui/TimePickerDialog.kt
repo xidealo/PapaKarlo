@@ -24,9 +24,9 @@ import com.bunbeauty.shared.ui.screen.createorder.TimePickerUI
 import com.bunbeauty.shared.ui.screen.createorder.TimeUI
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import papakarlo.shared.generated.resources.Res
-import papakarlo.shared.generated.resources.common_cancel
-import papakarlo.shared.generated.resources.common_ok
+import papakarlo.designsystem.generated.resources.Res
+import papakarlo.designsystem.generated.resources.common_cancel
+import papakarlo.designsystem.generated.resources.common_ok
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

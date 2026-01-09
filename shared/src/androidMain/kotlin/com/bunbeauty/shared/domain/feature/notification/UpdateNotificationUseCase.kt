@@ -1,6 +1,6 @@
 package com.bunbeauty.shared.domain.feature.notification
 
-import com.bunbeauty.shared.domain.repo.UserRepo
+import com.bunbeauty.core.domain.repo.UserRepo
 import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.coroutines.tasks.await
 

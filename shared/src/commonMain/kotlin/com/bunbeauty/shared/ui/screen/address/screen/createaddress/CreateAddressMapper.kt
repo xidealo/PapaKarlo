@@ -2,9 +2,9 @@ package com.bunbeauty.shared.ui.screen.address.screen.createaddress
 
 import com.bunbeauty.shared.presentation.create_address.CreateAddress
 import kotlinx.collections.immutable.toPersistentList
-import papakarlo.shared.generated.resources.Res
-import papakarlo.shared.generated.resources.error_create_address_house
-import papakarlo.shared.generated.resources.error_create_address_street
+import papakarlo.designsystem.generated.resources.Res
+import papakarlo.designsystem.generated.resources.error_create_address_house
+import papakarlo.designsystem.generated.resources.error_create_address_street
 
 val mapCreateAddressState: CreateAddress.DataState.() -> CreateAddressViewState = {
     CreateAddressViewState(

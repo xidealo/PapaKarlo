@@ -4,7 +4,7 @@ import com.bunbeauty.core.domain.exeptions.EmptyCafeListException
 import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.core.domain.exeptions.NoSelectedCityUuidException
 import com.bunbeauty.core.model.cafe.Cafe
-import com.bunbeauty.shared.domain.repo.CafeRepo
+import com.bunbeauty.core.domain.repo.CafeRepo
 
 interface GetCafeListUseCase {
     suspend operator fun invoke(): List<Cafe>

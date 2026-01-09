@@ -26,14 +26,14 @@ import com.bunbeauty.designsystem.theme.bold
 import com.bunbeauty.designsystem.ui.icon24
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
-import papakarlo.shared.generated.resources.Res
-import papakarlo.shared.generated.resources.ic_delivery
-import papakarlo.shared.generated.resources.ic_warning
-import papakarlo.shared.generated.resources.msg_consumer_cart_for_free_delivery
-import papakarlo.shared.generated.resources.msg_consumer_cart_for_lower_delivery
-import papakarlo.shared.generated.resources.msg_consumer_cart_free_delivery
-import papakarlo.shared.generated.resources.msg_consumer_cart_lower_delivery
-import papakarlo.shared.generated.resources.msg_consumer_cart_min_order
+import papakarlo.designsystem.generated.resources.Res
+import papakarlo.designsystem.generated.resources.ic_delivery
+import papakarlo.designsystem.generated.resources.ic_warning
+import papakarlo.designsystem.generated.resources.msg_consumer_cart_for_free_delivery
+import papakarlo.designsystem.generated.resources.msg_consumer_cart_for_lower_delivery
+import papakarlo.designsystem.generated.resources.msg_consumer_cart_free_delivery
+import papakarlo.designsystem.generated.resources.msg_consumer_cart_lower_delivery
+import papakarlo.designsystem.generated.resources.msg_consumer_cart_min_order
 
 @Composable
 fun Motivation(

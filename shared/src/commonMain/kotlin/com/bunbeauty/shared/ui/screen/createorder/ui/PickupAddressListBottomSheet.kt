@@ -14,8 +14,8 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import papakarlo.shared.generated.resources.Res
-import papakarlo.shared.generated.resources.pickup_address
+import papakarlo.designsystem.generated.resources.Res
+import papakarlo.designsystem.generated.resources.pickup_address
 
 @Composable
 fun PickupAddressListBottomSheet(

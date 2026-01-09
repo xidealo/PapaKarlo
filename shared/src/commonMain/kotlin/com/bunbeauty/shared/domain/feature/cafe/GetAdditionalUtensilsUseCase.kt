@@ -1,6 +1,6 @@
 package com.bunbeauty.shared.domain.feature.cafe
 
-import com.bunbeauty.shared.domain.repo.CafeRepo
+import com.bunbeauty.core.domain.repo.CafeRepo
 
 class GetAdditionalUtensilsUseCase(
     private val cafeRepo: CafeRepo,

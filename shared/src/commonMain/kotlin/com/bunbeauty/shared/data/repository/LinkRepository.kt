@@ -3,7 +3,7 @@ package com.bunbeauty.shared.data.repository
 import com.bunbeauty.shared.data.dao.link.ILinkDao
 import com.bunbeauty.shared.data.mapper.link.LinkMapper
 import com.bunbeauty.shared.data.network.api.NetworkConnector
-import com.bunbeauty.shared.domain.repo.LinkRepo
+import com.bunbeauty.core.domain.repo.LinkRepo
 import com.bunbeauty.core.extension.getNullableResult
 import com.bunbeauty.core.model.link.Link
 

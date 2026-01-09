@@ -37,14 +37,14 @@ import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
-import papakarlo.shared.generated.resources.Res
-import papakarlo.shared.generated.resources.action_update_update
-import papakarlo.shared.generated.resources.description_google_play
-import papakarlo.shared.generated.resources.error_common_data_loading
-import papakarlo.shared.generated.resources.ic_google_play
-import papakarlo.shared.generated.resources.msg_update_new_app_version
-import papakarlo.shared.generated.resources.msg_update_new_title_app_version
-import papakarlo.shared.generated.resources.title_update_new_app_version
+import papakarlo.designsystem.generated.resources.Res
+import papakarlo.designsystem.generated.resources.action_update_update
+import papakarlo.designsystem.generated.resources.description_google_play
+import papakarlo.designsystem.generated.resources.error_common_data_loading
+import papakarlo.designsystem.generated.resources.ic_google_play
+import papakarlo.designsystem.generated.resources.msg_update_new_app_version
+import papakarlo.designsystem.generated.resources.msg_update_new_title_app_version
+import papakarlo.designsystem.generated.resources.title_update_new_app_version
 
 @Composable
 fun UpdateRoute(viewModel: UpdateViewModel = koinViewModel()) {

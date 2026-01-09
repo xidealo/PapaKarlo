@@ -1,7 +1,7 @@
 package com.bunbeauty.shared.domain.feature.payment
 
 import com.bunbeauty.core.model.payment_method.PaymentMethod
-import com.bunbeauty.shared.domain.repo.PaymentRepo
+import com.bunbeauty.core.domain.repo.PaymentRepo
 
 class GetPaymentMethodListUseCase(
     private val paymentRepo: PaymentRepo,

@@ -5,7 +5,7 @@ import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.core.domain.exeptions.NoSelectedCityUuidException
 import com.bunbeauty.core.domain.exeptions.NoTokenException
 import com.bunbeauty.core.model.Suggestion
-import com.bunbeauty.shared.domain.repo.SuggestionRepo
+import com.bunbeauty.core.domain.repo.SuggestionRepo
 
 class GetSuggestionsUseCase(
     private val suggestionRepo: SuggestionRepo,

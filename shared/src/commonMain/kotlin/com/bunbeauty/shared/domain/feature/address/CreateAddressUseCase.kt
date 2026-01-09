@@ -6,7 +6,7 @@ import com.bunbeauty.core.model.Suggestion
 import com.bunbeauty.core.model.address.CreatedUserAddress
 import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.core.model.address.UserAddress
-import com.bunbeauty.shared.domain.repo.UserAddressRepo
+import com.bunbeauty.core.domain.repo.UserAddressRepo
 
 class CreateAddressUseCase(
     private val dataStoreRepo: DataStoreRepo,

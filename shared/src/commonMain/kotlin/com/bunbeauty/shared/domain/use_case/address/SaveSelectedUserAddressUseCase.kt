@@ -1,7 +1,7 @@
 package com.bunbeauty.shared.domain.use_case.address
 
 import com.bunbeauty.shared.DataStoreRepo
-import com.bunbeauty.shared.domain.repo.UserAddressRepo
+import com.bunbeauty.core.domain.repo.UserAddressRepo
 
 class SaveSelectedUserAddressUseCase(
     private val dataStoreRepo: DataStoreRepo,

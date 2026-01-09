@@ -15,6 +15,8 @@ import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.theme.bold
 import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.core.model.order.OrderStatus
+import com.bunbeauty.designsystem.ui.element.OrderStatusChip
+import com.bunbeauty.profile.ui.screen.profile.getOrderColor
 import com.bunbeauty.shared.ui.screen.order.model.OrderItem
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -45,7 +47,11 @@ fun OrderItem(
                 style = FoodDeliveryTheme.typography.titleMedium.bold,
                 color = FoodDeliveryTheme.colors.mainColors.onSurface,
             )
-            OrderStatusChip(orderStatus = orderItem.status, statusName = orderItem.statusName)
+            OrderStatusChip(
+                orderStatus = orderItem.status,
+                statusName = orderItem.statusName,
+                background = orderItem.background
+            )
             Text(
                 modifier =
                     Modifier
@@ -72,6 +78,7 @@ private fun OrderItemPreview() {
                     statusName = "Обрабатывается",
                     code = "Щ-99",
                     dateTime = "9 февраля 22:00",
+                    background = OrderStatus.NOT_ACCEPTED.getOrderColor()
                 ),
             onClick = {},
         )
@@ -90,6 +97,7 @@ private fun OrderItemLageFontPreview() {
                     statusName = "Обрабатывается",
                     code = "Щ-99",
                     dateTime = "9 февраля 22:00",
+                    background = OrderStatus.NOT_ACCEPTED.getOrderColor()
                 ),
             onClick = {},
         )

@@ -7,11 +7,11 @@ import com.bunbeauty.core.model.address.UserAddress
 import com.bunbeauty.core.model.address.UserAddressWithCity
 import com.bunbeauty.shared.ui.screen.address.model.UserAddressItem
 import org.jetbrains.compose.resources.stringResource
-import papakarlo.shared.generated.resources.Res
-import papakarlo.shared.generated.resources.msg_address_entrance_short
-import papakarlo.shared.generated.resources.msg_address_flat_short
-import papakarlo.shared.generated.resources.msg_address_floor_short
-import papakarlo.shared.generated.resources.msg_address_house_short
+import papakarlo.designsystem.generated.resources.Res
+import papakarlo.designsystem.generated.resources.msg_address_entrance_short
+import papakarlo.designsystem.generated.resources.msg_address_flat_short
+import papakarlo.designsystem.generated.resources.msg_address_floor_short
+import papakarlo.designsystem.generated.resources.msg_address_house_short
 
 @Composable
 fun SelectableUserAddress.toUserAddressItem(): UserAddressItem =

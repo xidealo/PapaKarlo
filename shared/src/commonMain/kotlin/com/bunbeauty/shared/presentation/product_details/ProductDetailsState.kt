@@ -3,9 +3,9 @@ package com.bunbeauty.shared.presentation.product_details
 import com.bunbeauty.core.model.ProductDetailsOpenedFrom
 import com.bunbeauty.core.model.addition.AdditionGroup
 import com.bunbeauty.core.model.cart.CartCostAndCount
-import com.bunbeauty.shared.presentation.base.BaseAction
-import com.bunbeauty.shared.presentation.base.BaseDataState
-import com.bunbeauty.shared.presentation.base.BaseEvent
+import com.bunbeauty.core.base.BaseAction
+import com.bunbeauty.core.base.BaseDataState
+import com.bunbeauty.core.base.BaseEvent
 
 interface ProductDetailsState {
     data class DataState(

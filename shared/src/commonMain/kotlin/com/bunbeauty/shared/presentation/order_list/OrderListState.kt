@@ -1,9 +1,9 @@
 package com.bunbeauty.shared.presentation.order_list
 
 import com.bunbeauty.core.model.order.LightOrder
-import com.bunbeauty.shared.presentation.base.BaseAction
-import com.bunbeauty.shared.presentation.base.BaseDataState
-import com.bunbeauty.shared.presentation.base.BaseEvent
+import com.bunbeauty.core.base.BaseAction
+import com.bunbeauty.core.base.BaseDataState
+import com.bunbeauty.core.base.BaseEvent
 
 interface OrderListState {
     data class DataState(

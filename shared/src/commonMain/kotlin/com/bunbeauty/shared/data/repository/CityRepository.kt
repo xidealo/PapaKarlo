@@ -6,13 +6,19 @@ import com.bunbeauty.shared.data.mapper.city.ICityMapper
 import com.bunbeauty.shared.data.network.api.NetworkConnector
 import com.bunbeauty.shared.domain.mapFlow
 import com.bunbeauty.shared.domain.mapListFlow
-import com.bunbeauty.shared.domain.repo.CityRepo
+import com.bunbeauty.core.domain.repo.CityRepo
+import com.bunbeauty.shared.DataStoreRepo
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 
 class CityRepository(
     private val networkConnector: NetworkConnector,
     private val cityDao: ICityDao,
     private val cityMapper: ICityMapper,
+    private val dataStoreRepo: DataStoreRepo,
 ) : CacheListRepository<City>(),
     CityRepo {
     override val tag: String = "CITY_TAG"
@@ -34,7 +40,27 @@ class CityRepository(
             cityMapper.toCity(cityEntity)
         }
 
-    override fun observeCityList(): Flow<List<City>> = cityDao.observeCityList().mapListFlow(cityMapper::toCity)
+    @OptIn(ExperimentalCoroutinesApi::class)
+    override fun observeSelectedCity(): Flow<City?> {
+        return dataStoreRepo.selectedCityUuid.flatMapLatest { cityUuid ->
+            cityUuid?.let {
+                observeCityByUuid(it)
+            } ?: flow { emit(null) }
+        }
+    }
 
-    override fun observeCityByUuid(cityUuid: String): Flow<City?> = cityDao.observeCityByUuid(cityUuid).mapFlow(cityMapper::toCity)
+    override suspend fun getSelectedCityUuid(): String? {
+        return dataStoreRepo.getSelectedCityUuid()
+    }
+
+    override suspend fun saveSelectedCityUuid(cityUuid: String) {
+        dataStoreRepo.saveSelectedCityUuid(cityUuid = cityUuid)
+    }
+
+    override fun observeCityList(): Flow<List<City>> =
+        cityDao.observeCityList().mapListFlow(cityMapper::toCity)
+
+    override fun observeCityByUuid(cityUuid: String): Flow<City?> =
+        cityDao.observeCityByUuid(cityUuid).mapFlow(cityMapper::toCity)
+
 }

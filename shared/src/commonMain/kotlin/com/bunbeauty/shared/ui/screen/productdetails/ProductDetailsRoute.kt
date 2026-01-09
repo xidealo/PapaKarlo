@@ -53,15 +53,15 @@ import org.jetbrains.compose.resources.getString
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
-import papakarlo.shared.generated.resources.Res
-import papakarlo.shared.generated.resources.action_product_details_want
-import papakarlo.shared.generated.resources.common_error
-import papakarlo.shared.generated.resources.description_product
-import papakarlo.shared.generated.resources.description_product_addition
-import papakarlo.shared.generated.resources.error_consumer_cart_add_product
-import papakarlo.shared.generated.resources.ic_plus_16
-import papakarlo.shared.generated.resources.msg_menu_product_added
-import papakarlo.shared.generated.resources.msg_menu_product_edited
+import papakarlo.designsystem.generated.resources.Res
+import papakarlo.designsystem.generated.resources.action_product_details_want
+import papakarlo.designsystem.generated.resources.common_error
+import papakarlo.designsystem.generated.resources.description_product
+import papakarlo.designsystem.generated.resources.description_product_addition
+import papakarlo.designsystem.generated.resources.error_consumer_cart_add_product
+import papakarlo.designsystem.generated.resources.ic_plus_16
+import papakarlo.designsystem.generated.resources.msg_menu_product_added
+import papakarlo.designsystem.generated.resources.msg_menu_product_edited
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable

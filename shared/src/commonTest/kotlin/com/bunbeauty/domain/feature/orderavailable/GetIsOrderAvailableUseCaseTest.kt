@@ -2,7 +2,7 @@ package com.bunbeauty.domain.feature.orderavailable
 
 import com.bunbeauty.shared.domain.feature.orderavailable.IsOrderAvailableUseCase
 import com.bunbeauty.shared.domain.model.company.Company
-import com.bunbeauty.shared.domain.repo.CompanyRepo
+import com.bunbeauty.core.domain.repo.CompanyRepo
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.mock

@@ -15,7 +15,7 @@ import com.bunbeauty.shared.data.network.model.order.post.OrderPostServer
 import com.bunbeauty.shared.db.LightOrderEntity
 import com.bunbeauty.shared.db.OrderEntity
 import com.bunbeauty.shared.db.OrderWithProductEntity
-import com.bunbeauty.shared.domain.util.DateTimeUtil
+import com.bunbeauty.core.domain.util.DateTimeUtil
 
 class OrderMapper(
     private val orderProductMapper: IOrderProductMapper,

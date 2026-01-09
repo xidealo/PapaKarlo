@@ -40,6 +40,7 @@ kotlin {
                 implementation(project(":core"))
                 implementation(project(":designsystem"))
                 implementation(project(":feature:menu"))
+                implementation(project(":feature:profile"))
 
                 implementation(libs.bundles.ktor)
 

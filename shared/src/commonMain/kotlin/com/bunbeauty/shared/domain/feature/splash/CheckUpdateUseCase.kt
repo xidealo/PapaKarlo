@@ -1,6 +1,6 @@
 package com.bunbeauty.shared.domain.feature.splash
 
-import com.bunbeauty.shared.domain.repo.VersionRepo
+import com.bunbeauty.core.domain.repo.VersionRepo
 
 class CheckUpdateUseCase(
     private val versionRepo: VersionRepo,

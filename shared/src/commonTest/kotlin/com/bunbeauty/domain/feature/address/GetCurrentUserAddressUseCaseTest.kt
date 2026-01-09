@@ -3,7 +3,7 @@ package com.bunbeauty.domain.feature.address
 import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.domain.feature.address.GetCurrentUserAddressUseCaseImpl
 import com.bunbeauty.core.model.address.UserAddress
-import com.bunbeauty.shared.domain.repo.UserAddressRepo
+import com.bunbeauty.core.domain.repo.UserAddressRepo
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.mock

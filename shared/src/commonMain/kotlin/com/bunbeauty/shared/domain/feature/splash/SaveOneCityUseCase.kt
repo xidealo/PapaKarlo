@@ -2,7 +2,7 @@ package com.bunbeauty.shared.domain.feature.splash
 
 import com.bunbeauty.core.domain.exeptions.NoCityException
 import com.bunbeauty.shared.DataStoreRepo
-import com.bunbeauty.shared.domain.repo.CityRepo
+import com.bunbeauty.core.domain.repo.CityRepo
 
 class SaveOneCityUseCase(
     private val cityRepo: CityRepo,

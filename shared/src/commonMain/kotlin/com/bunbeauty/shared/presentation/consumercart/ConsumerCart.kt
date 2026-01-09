@@ -1,9 +1,9 @@
 package com.bunbeauty.shared.presentation.consumercart
 
 import com.bunbeauty.core.model.MenuItem
-import com.bunbeauty.shared.presentation.base.BaseAction
-import com.bunbeauty.shared.presentation.base.BaseDataState
-import com.bunbeauty.shared.presentation.base.BaseEvent
+import com.bunbeauty.core.base.BaseAction
+import com.bunbeauty.core.base.BaseDataState
+import com.bunbeauty.core.base.BaseEvent
 import com.bunbeauty.shared.presentation.motivation.MotivationData
 import com.bunbeauty.core.model.ProductDetailsOpenedFrom
 

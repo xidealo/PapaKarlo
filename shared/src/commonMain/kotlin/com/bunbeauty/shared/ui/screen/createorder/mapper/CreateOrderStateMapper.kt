@@ -20,12 +20,12 @@ import com.bunbeauty.shared.ui.screen.paymentmethod.toPaymentMethodUI
 import com.bunbeauty.shared.ui.screen.paymentmethod.toSelectablePaymentMethodUI
 import kotlinx.collections.immutable.toImmutableList
 import org.jetbrains.compose.resources.stringResource
-import papakarlo.shared.generated.resources.Res
-import papakarlo.shared.generated.resources.delivery_time
-import papakarlo.shared.generated.resources.msg_additional_utensils_count
-import papakarlo.shared.generated.resources.msg_change_from
-import papakarlo.shared.generated.resources.msg_without_change
-import papakarlo.shared.generated.resources.pickup_time
+import papakarlo.designsystem.generated.resources.Res
+import papakarlo.designsystem.generated.resources.delivery_time
+import papakarlo.designsystem.generated.resources.msg_additional_utensils_count
+import papakarlo.designsystem.generated.resources.msg_change_from
+import papakarlo.designsystem.generated.resources.msg_without_change
+import papakarlo.designsystem.generated.resources.pickup_time
 
 @Composable
 fun CreateOrder.DataState.toViewState(): CreateOrderViewState {

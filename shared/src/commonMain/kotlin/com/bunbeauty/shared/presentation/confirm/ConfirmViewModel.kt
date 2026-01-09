@@ -12,7 +12,7 @@ import com.bunbeauty.shared.domain.feature.auth.ResendCodeUseCase
 import com.bunbeauty.shared.domain.feature.notification.UpdateNotificationUseCase
 import com.bunbeauty.core.model.SuccessLoginDirection
 import com.bunbeauty.core.extension.launchSafe
-import com.bunbeauty.shared.presentation.base.SharedStateViewModel
+import com.bunbeauty.core.base.SharedStateViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch

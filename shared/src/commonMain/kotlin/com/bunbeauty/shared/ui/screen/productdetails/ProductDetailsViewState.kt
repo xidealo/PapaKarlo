@@ -2,7 +2,7 @@ package com.bunbeauty.shared.ui.screen.productdetails
 
 import androidx.compose.runtime.Immutable
 import com.bunbeauty.designsystem.ui.element.TopCartUi
-import com.bunbeauty.shared.presentation.base.BaseViewState
+import com.bunbeauty.core.base.BaseViewState
 import com.bunbeauty.shared.presentation.product_details.AdditionItem
 import kotlinx.collections.immutable.ImmutableList
 

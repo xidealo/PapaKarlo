@@ -5,8 +5,8 @@ import com.bunbeauty.core.model.date_time.Time
 import com.bunbeauty.shared.presentation.createorder.CreateOrder
 import com.bunbeauty.shared.ui.screen.createorder.TimeUI
 import org.jetbrains.compose.resources.stringResource
-import papakarlo.shared.generated.resources.Res
-import papakarlo.shared.generated.resources.asap
+import papakarlo.designsystem.generated.resources.Res
+import papakarlo.designsystem.generated.resources.asap
 
 @Composable
 fun CreateOrder.DeferredTime.toDeferredTimeString(): String =

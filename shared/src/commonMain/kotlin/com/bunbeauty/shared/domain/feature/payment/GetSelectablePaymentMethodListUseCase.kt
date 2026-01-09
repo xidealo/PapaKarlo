@@ -2,7 +2,7 @@ package com.bunbeauty.shared.domain.feature.payment
 
 import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.core.model.payment_method.SelectablePaymentMethod
-import com.bunbeauty.shared.domain.repo.PaymentRepo
+import com.bunbeauty.core.domain.repo.PaymentRepo
 import kotlinx.coroutines.flow.firstOrNull
 
 class GetSelectablePaymentMethodListUseCase(

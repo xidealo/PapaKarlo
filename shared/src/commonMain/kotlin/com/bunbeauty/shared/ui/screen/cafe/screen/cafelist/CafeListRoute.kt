@@ -25,9 +25,9 @@ import kotlinx.collections.immutable.persistentListOf
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
-import papakarlo.shared.generated.resources.Res
-import papakarlo.shared.generated.resources.error_cafe_list_loading
-import papakarlo.shared.generated.resources.title_cafe_list
+import papakarlo.designsystem.generated.resources.Res
+import papakarlo.designsystem.generated.resources.error_cafe_list_loading
+import papakarlo.designsystem.generated.resources.title_cafe_list
 
 @Composable
 fun CafeList.DataState.mapState(): CafeListViewState = toViewState()

@@ -40,14 +40,14 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
-import papakarlo.shared.generated.resources.Res
-import papakarlo.shared.generated.resources.action_login_continue
-import papakarlo.shared.generated.resources.description_login_logo
-import papakarlo.shared.generated.resources.error_login_phone
-import papakarlo.shared.generated.resources.error_login_too_many_requests
-import papakarlo.shared.generated.resources.error_something_went_wrong
-import papakarlo.shared.generated.resources.hint_login_phone
-import papakarlo.shared.generated.resources.msg_login_info
+import papakarlo.designsystem.generated.resources.Res
+import papakarlo.designsystem.generated.resources.action_login_continue
+import papakarlo.designsystem.generated.resources.description_login_logo
+import papakarlo.designsystem.generated.resources.error_login_phone
+import papakarlo.designsystem.generated.resources.error_login_too_many_requests
+import papakarlo.designsystem.generated.resources.error_something_went_wrong
+import papakarlo.designsystem.generated.resources.hint_login_phone
+import papakarlo.designsystem.generated.resources.msg_login_info
 
 private val logoBoxHeightLimit: Dp = 200.dp
 

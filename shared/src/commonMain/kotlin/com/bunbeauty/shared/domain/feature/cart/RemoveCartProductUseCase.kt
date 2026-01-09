@@ -1,6 +1,6 @@
 package com.bunbeauty.shared.domain.feature.cart
 
-import com.bunbeauty.shared.domain.repo.CartProductAdditionRepo
+import com.bunbeauty.core.domain.repo.CartProductAdditionRepo
 import com.bunbeauty.core.domain.repo.CartProductRepo
 
 class RemoveCartProductUseCase(

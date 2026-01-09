@@ -1,6 +1,5 @@
 package com.bunbeauty.shared.di
 
-import com.bunbeauty.core.buildVersionQualifier
 import com.bunbeauty.shared.presentation.MainViewModel
 import com.bunbeauty.shared.presentation.cafe_list.CafeListViewModel
 import com.bunbeauty.shared.presentation.confirm.ConfirmViewModel
@@ -11,9 +10,7 @@ import com.bunbeauty.shared.presentation.login.LoginViewModel
 import com.bunbeauty.shared.presentation.order_details.OrderDetailsViewModel
 import com.bunbeauty.shared.presentation.order_list.OrderListViewModel
 import com.bunbeauty.shared.presentation.product_details.ProductDetailsViewModel
-import com.bunbeauty.shared.presentation.profile.ProfileViewModel
-import com.bunbeauty.shared.presentation.selectcity.SelectCityViewModel
-import com.bunbeauty.shared.presentation.settings.SettingsViewModel
+import com.bunbeauty.profile.presentation.selectcity.SelectCityViewModel
 import com.bunbeauty.shared.presentation.splash.SplashViewModel
 import com.bunbeauty.shared.presentation.update.UpdateViewModel
 import com.bunbeauty.shared.presentation.user_address_list.UserAddressListViewModel
@@ -99,16 +96,6 @@ fun viewModelModule() =
             )
         }
         viewModel {
-            ProfileViewModel(
-                userInteractor = get(),
-                getLastOrderUseCase = get(),
-                getLinkListUseCase = get(),
-                observeLastOrderUseCase = get(),
-                stopObserveOrdersUseCase = get(),
-                buildVersion = get(buildVersionQualifier),
-            )
-        }
-        viewModel {
             LoginViewModel(
                 requestCode = get(),
                 formatPhoneNumber = get(),
@@ -125,18 +112,7 @@ fun viewModelModule() =
                 updateNotificationUseCase = get(),
             )
         }
-        viewModel {
-            SettingsViewModel(
-                observeSettingsUseCase = get(),
-                observeSelectedCityUseCase = get(),
-                updateEmailUseCase = get(),
-                getCityListUseCase = get(),
-                saveSelectedCityUseCase = get(),
-                disableUserUseCase = get(),
-                userInteractor = get(),
-                analyticService = get(),
-            )
-        }
+
         viewModel {
             ProductDetailsViewModel(
                 getMenuProductUseCase = get(),

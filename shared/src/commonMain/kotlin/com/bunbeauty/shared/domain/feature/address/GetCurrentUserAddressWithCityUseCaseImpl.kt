@@ -1,9 +1,9 @@
 package com.bunbeauty.shared.domain.feature.address
 
 import com.bunbeauty.shared.DataStoreRepo
-import com.bunbeauty.shared.domain.feature.city.GetSelectedCityUseCase
+import com.bunbeauty.core.domain.city.GetSelectedCityUseCase
 import com.bunbeauty.core.model.address.UserAddressWithCity
-import com.bunbeauty.shared.domain.repo.UserAddressRepo
+import com.bunbeauty.core.domain.repo.UserAddressRepo
 
 interface GetCurrentUserAddressWithCityUseCase {
     suspend operator fun invoke(): UserAddressWithCity?

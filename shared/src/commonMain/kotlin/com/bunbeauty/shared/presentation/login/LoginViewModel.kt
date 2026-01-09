@@ -7,7 +7,7 @@ import com.bunbeauty.shared.domain.feature.auth.FormatPhoneNumberUseCase
 import com.bunbeauty.shared.domain.feature.auth.GetPhoneNumberCursorPositionUseCase
 import com.bunbeauty.shared.domain.feature.auth.RequestCodeUseCase
 import com.bunbeauty.core.extension.launchSafe
-import com.bunbeauty.shared.presentation.base.SharedStateViewModel
+import com.bunbeauty.core.base.SharedStateViewModel
 
 class LoginViewModel(
     private val requestCode: RequestCodeUseCase,

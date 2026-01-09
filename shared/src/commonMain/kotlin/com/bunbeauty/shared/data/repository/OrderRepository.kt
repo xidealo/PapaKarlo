@@ -27,6 +27,7 @@ import kotlinx.coroutines.IO
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -49,7 +50,9 @@ class OrderRepository(
 
     override val coroutineContext: CoroutineContext = SupervisorJob() + Dispatchers.IO
 
-    override suspend fun observeOrderUpdates(token: String): Pair<String?, Flow<Order>> {
+    override suspend fun observeOrderUpdates(): Pair<String?, Flow<Order>> {
+        val token = dataStoreRepo.getToken() ?: return null to flow { }
+
         val (uuid, orderUpdatesFlow) = observeOrderUpdatesServer(token)
         return uuid to
                 orderUpdatesFlow
@@ -59,9 +62,8 @@ class OrderRepository(
     }
 
     override suspend fun observeLightOrderListUpdates(
-        token: String,
-        userUuid: String,
     ): Pair<String?, Flow<List<LightOrder>>> {
+        val token = dataStoreRepo.getToken() ?: return null to flow { }
         val (uuid, orderUpdatesFlow) = observeOrderUpdatesServer(token)
         return uuid to
                 orderUpdatesFlow.map {
@@ -75,8 +77,10 @@ class OrderRepository(
         networkConnector.stopOrderUpdatesObservation(uuid)
     }
 
-    override suspend fun getOrderList(token: String): List<LightOrder> =
-        networkConnector
+    override suspend fun getOrderList(): List<LightOrder> {
+        val token = dataStoreRepo.getToken() ?: return emptyList()
+
+        return networkConnector
             .getLightOrderList(
                 token = token,
                 count = ORDER_LIMIT,
@@ -95,11 +99,14 @@ class OrderRepository(
                 },
             ) ?: emptyList()
 
-    override suspend fun getLastOrderByUserUuidNetworkFirst(
-        token: String,
-        userUuid: String,
-    ): LightOrder? =
-        networkConnector
+    }
+
+    override suspend fun getLastOrderByUserUuidNetworkFirst(): LightOrder? {
+
+        val token = dataStoreRepo.getToken() ?: return null
+        val userUuid = dataStoreRepo.getUserUuid() ?: return null
+
+        return networkConnector
             .getLastOrder(
                 token = token,
             ).getNullableResult(
@@ -120,23 +127,26 @@ class OrderRepository(
                     lightOrder
                 },
             )
+    }
+
 
     override suspend fun getLastOrderByUserUuidLocalFirst(): LightOrder? {
         val userUuid = dataStoreRepo.getUserUuid() ?: return null
         val token = dataStoreRepo.getToken() ?: return null
 
         return if (cacheLastOrder == null) {
-            getLastOrderByUserUuidNetworkFirst(token = token, userUuid = userUuid)
+            getLastOrderByUserUuidNetworkFirst()
         } else {
             cacheLastOrder
         }
     }
 
     override suspend fun getOrderByUuid(
-        token: String,
         orderUuid: String,
-    ): Order? =
-        networkConnector.getOrderByUuid(token = token, uuid = orderUuid).getNullableResult(
+    ): Order? {
+        val userUuid = dataStoreRepo.getUserUuid() ?: return null
+        val token = dataStoreRepo.getToken() ?: return null
+        return networkConnector.getOrderByUuid(token = token, uuid = orderUuid).getNullableResult(
             onError = {
                 orderDao.getOrderWithProductListByUuid(orderUuid).let(orderMapper::toOrder)
             },
@@ -145,11 +155,14 @@ class OrderRepository(
                 orderMapper.toOrder(orderServer)
             },
         )
+    }
+
 
     override suspend fun createOrder(
-        token: String,
         createdOrder: CreatedOrder,
     ): OrderCode? {
+        val token = dataStoreRepo.getToken() ?: return null
+
         val orderPostServer = orderMapper.toOrderPostServer(createdOrder)
         return networkConnector
             .postOrder(

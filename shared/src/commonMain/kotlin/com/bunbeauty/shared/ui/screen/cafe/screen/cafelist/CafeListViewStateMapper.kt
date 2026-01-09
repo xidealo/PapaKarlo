@@ -7,15 +7,15 @@ import com.bunbeauty.shared.ui.screen.cafe.model.CafeOptions
 import com.bunbeauty.shared.ui.screen.cafe.ui.CafeItemAndroid
 import kotlinx.collections.immutable.toPersistentList
 import org.jetbrains.compose.resources.stringResource
-import papakarlo.shared.generated.resources.Res
-import papakarlo.shared.generated.resources.action_cafe_options_call
-import papakarlo.shared.generated.resources.action_cafe_options_show_map
-import papakarlo.shared.generated.resources.msg_cafe_close_soon
-import papakarlo.shared.generated.resources.msg_cafe_closed
-import papakarlo.shared.generated.resources.msg_cafe_minute
-import papakarlo.shared.generated.resources.msg_cafe_minutes
-import papakarlo.shared.generated.resources.msg_cafe_minutes_234
-import papakarlo.shared.generated.resources.msg_cafe_open
+import papakarlo.designsystem.generated.resources.Res
+import papakarlo.designsystem.generated.resources.action_cafe_options_call
+import papakarlo.designsystem.generated.resources.action_cafe_options_show_map
+import papakarlo.designsystem.generated.resources.msg_cafe_close_soon
+import papakarlo.designsystem.generated.resources.msg_cafe_closed
+import papakarlo.designsystem.generated.resources.msg_cafe_minute
+import papakarlo.designsystem.generated.resources.msg_cafe_minutes
+import papakarlo.designsystem.generated.resources.msg_cafe_minutes_234
+import papakarlo.designsystem.generated.resources.msg_cafe_open
 
 @Composable
 fun CafeList.DataState.toViewState(): CafeListViewState {

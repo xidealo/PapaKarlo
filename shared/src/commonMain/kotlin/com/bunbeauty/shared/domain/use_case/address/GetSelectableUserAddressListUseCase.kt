@@ -3,7 +3,7 @@ package com.bunbeauty.shared.domain.use_case.address
 import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.domain.feature.address.GetCurrentUserAddressUseCase
 import com.bunbeauty.core.model.address.SelectableUserAddress
-import com.bunbeauty.shared.domain.repo.UserAddressRepo
+import com.bunbeauty.core.domain.repo.UserAddressRepo
 
 class GetSelectableUserAddressListUseCase(
     private val dataStoreRepo: DataStoreRepo,

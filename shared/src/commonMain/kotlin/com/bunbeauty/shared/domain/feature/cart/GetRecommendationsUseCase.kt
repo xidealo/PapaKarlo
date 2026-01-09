@@ -5,7 +5,7 @@ import com.bunbeauty.core.model.category.Category
 import com.bunbeauty.core.model.product.MenuProduct
 import com.bunbeauty.core.domain.menu_product.GetMenuProductListUseCase
 import com.bunbeauty.core.domain.repo.CartProductRepo
-import com.bunbeauty.shared.domain.repo.RecommendationRepo
+import com.bunbeauty.core.domain.repo.RecommendationRepo
 
 /*
 * 1 - Берем список рекомендаций

@@ -31,18 +31,18 @@ import org.jetbrains.compose.resources.getString
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
-import papakarlo.shared.generated.resources.Res
-import papakarlo.shared.generated.resources.action_create_address_save
-import papakarlo.shared.generated.resources.error_create_address_fail
-import papakarlo.shared.generated.resources.error_create_address_loading
-import papakarlo.shared.generated.resources.hint_create_address_comment
-import papakarlo.shared.generated.resources.hint_create_address_entrance
-import papakarlo.shared.generated.resources.hint_create_address_flat
-import papakarlo.shared.generated.resources.hint_create_address_floor
-import papakarlo.shared.generated.resources.hint_create_address_house
-import papakarlo.shared.generated.resources.hint_create_address_street
-import papakarlo.shared.generated.resources.msg_create_address_created
-import papakarlo.shared.generated.resources.title_create_address
+import papakarlo.designsystem.generated.resources.Res
+import papakarlo.designsystem.generated.resources.action_create_address_save
+import papakarlo.designsystem.generated.resources.error_create_address_fail
+import papakarlo.designsystem.generated.resources.error_create_address_loading
+import papakarlo.designsystem.generated.resources.hint_create_address_comment
+import papakarlo.designsystem.generated.resources.hint_create_address_entrance
+import papakarlo.designsystem.generated.resources.hint_create_address_flat
+import papakarlo.designsystem.generated.resources.hint_create_address_floor
+import papakarlo.designsystem.generated.resources.hint_create_address_house
+import papakarlo.designsystem.generated.resources.hint_create_address_street
+import papakarlo.designsystem.generated.resources.msg_create_address_created
+import papakarlo.designsystem.generated.resources.title_create_address
 
 @Composable
 fun CreateAddress.DataState.mapState(): CreateAddressViewState = mapCreateAddressState()

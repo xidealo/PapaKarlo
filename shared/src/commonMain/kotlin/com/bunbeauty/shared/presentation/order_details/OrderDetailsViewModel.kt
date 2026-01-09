@@ -2,11 +2,11 @@ package com.bunbeauty.shared.presentation.order_details
 
 import com.bunbeauty.core.Constants.PERCENT
 import com.bunbeauty.core.Constants.RUBLE_CURRENCY
-import com.bunbeauty.shared.domain.feature.order.ObserveOrderUseCase
-import com.bunbeauty.shared.domain.feature.order.StopObserveOrdersUseCase
+import com.bunbeauty.core.domain.order.ObserveOrderUseCase
+import com.bunbeauty.core.domain.order.StopObserveOrdersUseCase
 import com.bunbeauty.core.model.order.Order
 import com.bunbeauty.core.extension.launchSafe
-import com.bunbeauty.shared.presentation.base.SharedStateViewModel
+import com.bunbeauty.core.base.SharedStateViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 

@@ -2,7 +2,7 @@ package com.bunbeauty.shared.domain.feature.auth
 
 import com.bunbeauty.core.domain.exeptions.SomethingWentWrongException
 import com.bunbeauty.shared.DataStoreRepo
-import com.bunbeauty.shared.domain.repo.AuthRepo
+import com.bunbeauty.core.domain.repo.AuthRepo
 
 class CheckCodeUseCase(
     private val authRepo: AuthRepo,

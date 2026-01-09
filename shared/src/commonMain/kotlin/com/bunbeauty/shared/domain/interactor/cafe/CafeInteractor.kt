@@ -5,7 +5,7 @@ import com.bunbeauty.core.Constants.SECONDS_IN_MINUTE
 import com.bunbeauty.core.Constants.TIME_DIVIDER
 import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.core.model.cafe.Cafe
-import com.bunbeauty.shared.domain.repo.CafeRepo
+import com.bunbeauty.core.domain.repo.CafeRepo
 
 class CafeInteractor(
     private val cafeRepo: CafeRepo,

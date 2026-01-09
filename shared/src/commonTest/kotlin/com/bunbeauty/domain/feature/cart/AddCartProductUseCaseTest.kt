@@ -9,9 +9,9 @@ import com.bunbeauty.shared.domain.feature.addition.AreAdditionsEqualUseCase
 import com.bunbeauty.shared.domain.feature.addition.GetAdditionPriorityUseCase
 import com.bunbeauty.shared.domain.feature.cart.AddCartProductUseCase
 import com.bunbeauty.core.domain.GetCartProductCountUseCase
-import com.bunbeauty.shared.domain.repo.AdditionGroupRepo
-import com.bunbeauty.shared.domain.repo.AdditionRepo
-import com.bunbeauty.shared.domain.repo.CartProductAdditionRepo
+import com.bunbeauty.core.domain.repo.AdditionGroupRepo
+import com.bunbeauty.core.domain.repo.AdditionRepo
+import com.bunbeauty.core.domain.repo.CartProductAdditionRepo
 import com.bunbeauty.core.domain.repo.CartProductRepo
 import dev.mokkery.MockMode
 import dev.mokkery.answering.returns

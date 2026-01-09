@@ -4,8 +4,8 @@ import com.bunbeauty.core.Constants.SECONDS_IN_MINUTE
 import com.bunbeauty.core.model.cafe.Cafe
 import com.bunbeauty.core.model.cafe.CafeOpenState
 import com.bunbeauty.core.model.cafe.CafeWithOpenState
-import com.bunbeauty.shared.domain.feature.city.GetSelectedCityTimeZoneUseCase
-import com.bunbeauty.shared.domain.util.DateTimeUtil
+import com.bunbeauty.core.domain.city.GetSelectedCityTimeZoneUseCase
+import com.bunbeauty.core.domain.util.DateTimeUtil
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

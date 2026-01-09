@@ -12,9 +12,9 @@ import com.bunbeauty.designsystem.ui.screen.bottomsheet.FoodDeliveryModalBottomS
 import com.bunbeauty.shared.presentation.createorder.CreateOrder
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import papakarlo.shared.generated.resources.Res
-import papakarlo.shared.generated.resources.action_deferred_time_asap
-import papakarlo.shared.generated.resources.action_deferred_time_select_time
+import papakarlo.designsystem.generated.resources.Res
+import papakarlo.designsystem.generated.resources.action_deferred_time_asap
+import papakarlo.designsystem.generated.resources.action_deferred_time_select_time
 
 @Composable
 fun DeferredTimeBottomSheet(

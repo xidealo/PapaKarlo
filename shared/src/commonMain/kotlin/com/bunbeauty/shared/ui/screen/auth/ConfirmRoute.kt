@@ -29,15 +29,15 @@ import org.jetbrains.compose.resources.getString
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
-import papakarlo.shared.generated.resources.Res
-import papakarlo.shared.generated.resources.error_code_confirmation_timeout
-import papakarlo.shared.generated.resources.error_invalid_code
-import papakarlo.shared.generated.resources.error_login_too_many_requests
-import papakarlo.shared.generated.resources.error_no_attempts
-import papakarlo.shared.generated.resources.error_something_went_wrong
-import papakarlo.shared.generated.resources.msg_confirm_enter_code
-import papakarlo.shared.generated.resources.msg_request_code
-import papakarlo.shared.generated.resources.msg_request_code_sec
+import papakarlo.designsystem.generated.resources.Res
+import papakarlo.designsystem.generated.resources.error_code_confirmation_timeout
+import papakarlo.designsystem.generated.resources.error_invalid_code
+import papakarlo.designsystem.generated.resources.error_login_too_many_requests
+import papakarlo.designsystem.generated.resources.error_no_attempts
+import papakarlo.designsystem.generated.resources.error_something_went_wrong
+import papakarlo.designsystem.generated.resources.msg_confirm_enter_code
+import papakarlo.designsystem.generated.resources.msg_request_code
+import papakarlo.designsystem.generated.resources.msg_request_code_sec
 
 @Composable
 fun ConfirmRoute(

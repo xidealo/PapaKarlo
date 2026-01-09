@@ -5,7 +5,7 @@ import com.bunbeauty.shared.domain.feature.cafe.ObserveCafeWithOpenStateListUseC
 import com.bunbeauty.shared.domain.interactor.cafe.ICafeInteractor
 import com.bunbeauty.core.extension.launchSafe
 import com.bunbeauty.core.model.cafe.CafeWithOpenState
-import com.bunbeauty.shared.presentation.base.SharedStateViewModel
+import com.bunbeauty.core.base.SharedStateViewModel
 import com.bunbeauty.shared.presentation.cafe_list.CafeList.Action.OnCloseCafeOptionBottomSheetClicked
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest

@@ -2,12 +2,12 @@ package com.bunbeauty.domain.feature.cafe
 
 import com.bunbeauty.shared.domain.feature.cafe.GetCafeListUseCase
 import com.bunbeauty.shared.domain.feature.cafe.ObserveCafeWithOpenStateListUseCase
-import com.bunbeauty.shared.domain.feature.city.GetSelectedCityTimeZoneUseCase
+import com.bunbeauty.core.domain.city.GetSelectedCityTimeZoneUseCase
 import com.bunbeauty.core.model.cafe.Cafe
 import com.bunbeauty.core.model.cafe.CafeOpenState
 import com.bunbeauty.core.model.cafe.CafeWithOpenState
 import com.bunbeauty.shared.domain.model.date_time.MinuteSecond
-import com.bunbeauty.shared.domain.util.DateTimeUtil
+import com.bunbeauty.core.domain.util.DateTimeUtil
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.mock

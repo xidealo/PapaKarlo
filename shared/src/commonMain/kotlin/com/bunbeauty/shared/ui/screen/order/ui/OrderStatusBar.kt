@@ -16,17 +16,20 @@ import androidx.compose.ui.unit.dp
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.core.model.order.OrderStatus
+import com.bunbeauty.designsystem.ui.element.EmptyOrderStatusChip
+import com.bunbeauty.designsystem.ui.element.PassedOrderStatusChip
+import com.bunbeauty.profile.ui.screen.profile.getOrderColor
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import papakarlo.shared.generated.resources.Res
-import papakarlo.shared.generated.resources.ic_accpted
-import papakarlo.shared.generated.resources.ic_canceled
-import papakarlo.shared.generated.resources.ic_delivered
-import papakarlo.shared.generated.resources.ic_delivering
-import papakarlo.shared.generated.resources.ic_done
-import papakarlo.shared.generated.resources.ic_not_accpted
-import papakarlo.shared.generated.resources.ic_preparing
+import papakarlo.designsystem.generated.resources.Res
+import papakarlo.designsystem.generated.resources.ic_accpted
+import papakarlo.designsystem.generated.resources.ic_canceled
+import papakarlo.designsystem.generated.resources.ic_delivered
+import papakarlo.designsystem.generated.resources.ic_delivering
+import papakarlo.designsystem.generated.resources.ic_done
+import papakarlo.designsystem.generated.resources.ic_not_accpted
+import papakarlo.designsystem.generated.resources.ic_preparing
 
 const val FIRST_POSITION = 0
 const val LAST_POSITION = 4
@@ -101,7 +104,7 @@ fun OrderStatusBar(
                                     Modifier
                                         .padding(start = startSpace)
                                         .weight(1f),
-                                orderStatus = orderStatus,
+                                background = orderStatus.getOrderColor(),
                                 roundedCornerShape = getRoundedShape(i),
                             )
                         }

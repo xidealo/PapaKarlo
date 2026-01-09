@@ -7,7 +7,7 @@ import com.bunbeauty.shared.domain.feature.address.CreateAddressUseCase
 import com.bunbeauty.core.model.Suggestion
 import com.bunbeauty.core.model.address.CreatedUserAddress
 import com.bunbeauty.core.model.address.UserAddress
-import com.bunbeauty.shared.domain.repo.UserAddressRepo
+import com.bunbeauty.core.domain.repo.UserAddressRepo
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.mock

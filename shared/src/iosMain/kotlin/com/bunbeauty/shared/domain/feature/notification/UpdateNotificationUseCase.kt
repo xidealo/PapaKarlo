@@ -2,7 +2,7 @@ package com.bunbeauty.shared.domain.feature.notification
 
 import cocoapods.FirebaseMessaging.FIRMessaging
 import com.bunbeauty.core.Logger
-import com.bunbeauty.shared.domain.repo.UserRepo
+import com.bunbeauty.core.domain.repo.UserRepo
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlin.coroutines.suspendCoroutine
 

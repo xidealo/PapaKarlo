@@ -1,7 +1,7 @@
 package com.bunbeauty.shared.ui.screen.address.screen.useraddresslist
 
 import androidx.compose.runtime.Immutable
-import com.bunbeauty.shared.presentation.base.BaseViewState
+import com.bunbeauty.core.base.BaseViewState
 import com.bunbeauty.shared.ui.screen.address.model.UserAddressItem
 
 @Immutable

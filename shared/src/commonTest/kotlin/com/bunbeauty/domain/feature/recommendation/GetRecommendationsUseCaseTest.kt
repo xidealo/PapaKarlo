@@ -6,7 +6,7 @@ import com.bunbeauty.getMenuProduct
 import com.bunbeauty.shared.domain.feature.cart.GetRecommendationsUseCase
 import com.bunbeauty.core.domain.menu_product.GetMenuProductListUseCase
 import com.bunbeauty.core.domain.repo.CartProductRepo
-import com.bunbeauty.shared.domain.repo.RecommendationRepo
+import com.bunbeauty.core.domain.repo.RecommendationRepo
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.mock
