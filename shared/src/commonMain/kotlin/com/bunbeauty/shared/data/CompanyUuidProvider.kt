@@ -1,6 +1,6 @@
 package com.bunbeauty.shared.data
 
-import com.bunbeauty.core.FoodDeliveryCompany
+import com.bunbeauty.designsystem.FoodDeliveryCompany
 import com.bunbeauty.core.Constants.TEST_COMPANY_UUID
 
 class CompanyUuidProvider(

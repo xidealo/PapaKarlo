@@ -46,6 +46,9 @@ kotlin {
                 implementation(project(":feature:splash"))
                 implementation(project(":feature:cafe"))
                 implementation(project(":feature:update"))
+                implementation(project(":feature:order"))
+                implementation(project(":feature:createorder"))
+                implementation(project(":feature:consumercart"))
 
                 implementation(libs.bundles.ktor)
 

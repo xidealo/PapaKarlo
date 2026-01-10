@@ -25,28 +25,29 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.LifecycleStartEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
-import com.bunbeauty.designsystem.theme.bold
-import com.bunbeauty.designsystem.ui.element.FoodDeliveryHorizontalDivider
-import com.bunbeauty.designsystem.ui.element.FoodDeliveryScaffold
-import com.bunbeauty.designsystem.ui.element.button.MainButton
-import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryCard
-import com.bunbeauty.designsystem.ui.element.card.NavigationIconCardWithDivider
-import com.bunbeauty.designsystem.ui.screen.ErrorScreen
-import com.bunbeauty.designsystem.ui.screen.LoadingScreen
+import com.bunbeauty.core.extension.getOrderColor
+import com.bunbeauty.core.extension.getOrderStatusName
 import com.bunbeauty.core.model.SuccessLoginDirection
 import com.bunbeauty.core.model.date_time.Date
 import com.bunbeauty.core.model.date_time.DateTime
 import com.bunbeauty.core.model.date_time.Time
 import com.bunbeauty.core.model.order.LightOrder
 import com.bunbeauty.core.model.order.OrderStatus
+import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
+import com.bunbeauty.designsystem.theme.bold
+import com.bunbeauty.designsystem.ui.element.FoodDeliveryHorizontalDivider
+import com.bunbeauty.designsystem.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.designsystem.ui.element.OrderStatusChip
-import com.bunbeauty.designsystem.ui.getDateTimeString
+import com.bunbeauty.designsystem.ui.element.button.MainButton
+import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryCard
+import com.bunbeauty.designsystem.ui.element.card.NavigationIconCardWithDivider
+import com.bunbeauty.core.extension.getDateTimeString
+import com.bunbeauty.designsystem.ui.screen.ErrorScreen
+import com.bunbeauty.designsystem.ui.screen.LoadingScreen
 import com.bunbeauty.profile.presentation.profile.ProfileState
 import com.bunbeauty.profile.presentation.profile.ProfileViewModel
 import com.bunbeauty.profile.ui.screen.aboutapp.AboutAppBottomSheet
@@ -58,7 +59,6 @@ import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import papakarlo.designsystem.generated.resources.Res
-import papakarlo.designsystem.generated.resources.error_cafe_list_loading
 import papakarlo.designsystem.generated.resources.action_profile_login
 import papakarlo.designsystem.generated.resources.action_profile_my_addresses
 import papakarlo.designsystem.generated.resources.action_profile_my_orders
@@ -69,6 +69,7 @@ import papakarlo.designsystem.generated.resources.description_ic_feedback
 import papakarlo.designsystem.generated.resources.description_ic_my_addresses
 import papakarlo.designsystem.generated.resources.description_ic_my_orders
 import papakarlo.designsystem.generated.resources.description_ic_settings
+import papakarlo.designsystem.generated.resources.error_cafe_list_loading
 import papakarlo.designsystem.generated.resources.ic_address
 import papakarlo.designsystem.generated.resources.ic_cafes
 import papakarlo.designsystem.generated.resources.ic_history
@@ -77,42 +78,12 @@ import papakarlo.designsystem.generated.resources.ic_profile
 import papakarlo.designsystem.generated.resources.ic_settings
 import papakarlo.designsystem.generated.resources.ic_star
 import papakarlo.designsystem.generated.resources.msg_profile_no_profile
-import papakarlo.designsystem.generated.resources.msg_status_accepted
-import papakarlo.designsystem.generated.resources.msg_status_canceled
-import papakarlo.designsystem.generated.resources.msg_status_delivered
-import papakarlo.designsystem.generated.resources.msg_status_done
-import papakarlo.designsystem.generated.resources.msg_status_not_accepted
-import papakarlo.designsystem.generated.resources.msg_status_preparing
-import papakarlo.designsystem.generated.resources.msg_status_sent_out
 import papakarlo.designsystem.generated.resources.title_about_app
 import papakarlo.designsystem.generated.resources.title_feedback
 import papakarlo.designsystem.generated.resources.title_profile
 import papakarlo.designsystem.generated.resources.title_profile_cafe_list
 import papakarlo.designsystem.generated.resources.title_profile_no_profile
 
-@Composable
-fun OrderStatus.getOrderStatusName(): String =
-    when (this) {
-        OrderStatus.NOT_ACCEPTED -> stringResource(Res.string.msg_status_not_accepted)
-        OrderStatus.ACCEPTED -> stringResource(Res.string.msg_status_accepted)
-        OrderStatus.PREPARING -> stringResource(Res.string.msg_status_preparing)
-        OrderStatus.SENT_OUT -> stringResource(Res.string.msg_status_sent_out)
-        OrderStatus.DELIVERED -> stringResource(Res.string.msg_status_delivered)
-        OrderStatus.DONE -> stringResource(Res.string.msg_status_done)
-        OrderStatus.CANCELED -> stringResource(Res.string.msg_status_canceled)
-    }
-
-@Composable
-fun OrderStatus.getOrderColor(): Color =
-    when (this) {
-        OrderStatus.NOT_ACCEPTED -> FoodDeliveryTheme.colors.orderColors.notAccepted
-        OrderStatus.ACCEPTED -> FoodDeliveryTheme.colors.orderColors.accepted
-        OrderStatus.PREPARING -> FoodDeliveryTheme.colors.orderColors.preparing
-        OrderStatus.SENT_OUT -> FoodDeliveryTheme.colors.orderColors.sentOut
-        OrderStatus.DONE -> FoodDeliveryTheme.colors.orderColors.done
-        OrderStatus.DELIVERED -> FoodDeliveryTheme.colors.orderColors.delivered
-        OrderStatus.CANCELED -> FoodDeliveryTheme.colors.orderColors.canceled
-    }
 
 @Composable
 fun ProfileState.DataState.mapState(): ProfileViewState =
@@ -509,7 +480,6 @@ private fun OrderProfile(
             )
 
             OrderStatusChip(
-                orderStatus = lastOrder.status,
                 statusName = lastOrder.status.getOrderStatusName(),
                 background = lastOrder.status.getOrderColor()
             )

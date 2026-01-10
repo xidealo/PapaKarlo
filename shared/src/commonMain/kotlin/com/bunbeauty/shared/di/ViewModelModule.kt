@@ -1,11 +1,10 @@
 package com.bunbeauty.shared.di
 
 import com.bunbeauty.shared.presentation.MainViewModel
-import com.bunbeauty.cafe.presentation.cafe_list.CafeListViewModel
 import com.bunbeauty.shared.presentation.consumercart.ConsumerCartViewModel
 import com.bunbeauty.shared.presentation.createorder.CreateOrderViewModel
-import com.bunbeauty.shared.presentation.order_details.OrderDetailsViewModel
-import com.bunbeauty.shared.presentation.order_list.OrderListViewModel
+import com.bunbeauty.order.presentation.order_details.OrderDetailsViewModel
+import com.bunbeauty.order.presentation.order_list.OrderListViewModel
 import com.bunbeauty.profile.presentation.selectcity.SelectCityViewModel
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
@@ -55,21 +54,6 @@ fun viewModelModule() =
                 getExtendedCommentUseCase = get(),
                 getAdditionalUtensilsUseCase = get(),
                 getDeferredTimeHintUseCase = get(),
-            )
-        }
-
-        viewModel {
-            OrderListViewModel(
-                observeOrderListUseCase = get(),
-                stopObserveOrdersUseCase = get(),
-            )
-        }
-
-
-        viewModel {
-            OrderDetailsViewModel(
-                observeOrderUseCase = get(),
-                stopObserveOrdersUseCase = get(),
             )
         }
 

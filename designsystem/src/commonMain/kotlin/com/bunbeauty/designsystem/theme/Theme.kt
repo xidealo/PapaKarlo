@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.remember
-import com.bunbeauty.core.FoodDeliveryCompany
+import com.bunbeauty.designsystem.FoodDeliveryCompany
 import com.bunbeauty.designsystem.theme.color.AppColors
 import com.bunbeauty.designsystem.theme.color.DjanDarkColors
 import com.bunbeauty.designsystem.theme.color.DjanLightColors

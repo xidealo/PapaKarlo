@@ -9,7 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import com.bunbeauty.shared.ui.navigation.NavAnimationSpec.navAnimationSpecDurationForEnterFade
 import com.bunbeauty.shared.ui.navigation.NavAnimationSpec.navAnimationSpecDurationForSlide
-import com.bunbeauty.shared.ui.screen.order.screen.orderdetails.OrderDetailsRoute
+import com.bunbeauty.order.ui.screen.orderdetails.OrderDetailsRoute
 import kotlinx.serialization.Serializable
 import kotlin.String
 

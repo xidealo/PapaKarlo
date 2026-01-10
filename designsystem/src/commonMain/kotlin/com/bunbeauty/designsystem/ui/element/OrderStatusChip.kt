@@ -15,7 +15,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.bunbeauty.core.model.order.OrderStatus
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.theme.medium
 import com.bunbeauty.designsystem.ui.icon16
@@ -32,7 +31,6 @@ private val zeroStatusShape = RoundedCornerShape(0.dp)
 @Composable
 fun OrderStatusChip(
     modifier: Modifier = Modifier,
-    orderStatus: OrderStatus,
     statusName: String,
     background: Color,
 ) {
@@ -96,7 +94,6 @@ fun PassedOrderStatusChip(
 private fun StatusChipPreview() {
     FoodDeliveryTheme {
         OrderStatusChip(
-            orderStatus = OrderStatus.ACCEPTED,
             statusName = "Принят",
             background = FoodDeliveryTheme.colors.orderColors.sentOut
         )
