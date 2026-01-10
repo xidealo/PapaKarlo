@@ -29,7 +29,7 @@ import com.bunbeauty.core.domain.user.IUserInteractor
 import com.bunbeauty.core.extension.launchSafe
 import com.bunbeauty.core.model.cafe.Cafe
 import com.bunbeauty.core.model.date_time.Time
-import com.bunbeauty.shared.domain.interactor.cafe.ICafeInteractor
+import com.bunbeauty.core.domain.cafe.ICafeInteractor
 import com.bunbeauty.shared.domain.interactor.cart.GetCartTotalFlowUseCase
 import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
 import com.bunbeauty.shared.presentation.motivation.toMotivationData

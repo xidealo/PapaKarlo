@@ -4,7 +4,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
-import com.bunbeauty.shared.ui.screen.splash.SplashRoute
+import com.bunbeauty.splash.ui.SplashRoute
 import kotlinx.serialization.Serializable
 
 @Serializable

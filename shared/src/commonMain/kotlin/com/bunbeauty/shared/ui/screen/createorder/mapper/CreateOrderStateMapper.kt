@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import com.bunbeauty.core.model.cafe.Cafe
 import com.bunbeauty.shared.presentation.createorder.CreateOrder
 import com.bunbeauty.shared.presentation.createorder.CreateOrder.DataState.AddressErrorState
-import com.bunbeauty.shared.ui.screen.address.mapper.toAddressString
+import com.bunbeauty.address.ui.mapper.toAddressString
 import com.bunbeauty.shared.ui.screen.createorder.CartTotalUI
 import com.bunbeauty.shared.ui.screen.createorder.CreateOrderViewState
 import com.bunbeauty.shared.ui.screen.createorder.DeliveryAddressListUI

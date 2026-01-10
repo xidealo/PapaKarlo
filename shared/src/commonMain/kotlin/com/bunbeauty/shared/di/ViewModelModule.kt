@@ -1,16 +1,12 @@
 package com.bunbeauty.shared.di
 
 import com.bunbeauty.shared.presentation.MainViewModel
-import com.bunbeauty.shared.presentation.cafe_list.CafeListViewModel
+import com.bunbeauty.cafe.presentation.cafe_list.CafeListViewModel
 import com.bunbeauty.shared.presentation.consumercart.ConsumerCartViewModel
-import com.bunbeauty.shared.presentation.create_address.CreateAddressViewModel
 import com.bunbeauty.shared.presentation.createorder.CreateOrderViewModel
 import com.bunbeauty.shared.presentation.order_details.OrderDetailsViewModel
 import com.bunbeauty.shared.presentation.order_list.OrderListViewModel
 import com.bunbeauty.profile.presentation.selectcity.SelectCityViewModel
-import com.bunbeauty.shared.presentation.splash.SplashViewModel
-import com.bunbeauty.shared.presentation.update.UpdateViewModel
-import com.bunbeauty.shared.presentation.user_address_list.UserAddressListViewModel
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
@@ -61,31 +57,15 @@ fun viewModelModule() =
                 getDeferredTimeHintUseCase = get(),
             )
         }
-        viewModel {
-            CafeListViewModel(
-                cafeInteractor = get(),
-                observeCafeWithOpenStateListUseCase = get(),
-            )
-        }
+
         viewModel {
             OrderListViewModel(
                 observeOrderListUseCase = get(),
                 stopObserveOrdersUseCase = get(),
             )
         }
-        viewModel {
-            CreateAddressViewModel(
-                getSuggestionsUseCase = get(),
-                createAddressUseCase = get(),
-                saveSelectedUserAddressUseCase = get(),
-            )
-        }
-        viewModel {
-            UserAddressListViewModel(
-                getSelectableUserAddressListUseCase = get(),
-                saveSelectedUserAddressUseCase = get(),
-            )
-        }
+
+
         viewModel {
             OrderDetailsViewModel(
                 observeOrderUseCase = get(),
@@ -99,17 +79,6 @@ fun viewModelModule() =
                 cityInteractor = get(),
             )
         }
-        viewModel {
-            SplashViewModel(
-                checkUpdateUseCase = get(),
-                cityInteractor = get(),
-                getIsOneCityUseCase = get(),
-                saveOneCityUseCase = get(),
-            )
-        }
-        viewModel {
-            UpdateViewModel(
-                getLinkUseCase = get(),
-            )
-        }
+
+
     }

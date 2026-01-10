@@ -8,7 +8,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.bunbeauty.shared.ui.navigation.NavAnimationSpec.navAnimationSpecDurationForEnterFade
 import com.bunbeauty.shared.ui.navigation.NavAnimationSpec.navAnimationSpecDurationForSlide
-import com.bunbeauty.shared.ui.screen.cafe.screen.cafelist.CafeListRoute
+import com.bunbeauty.cafe.ui.screen.cafelist.CafeListRoute
 import kotlinx.serialization.Serializable
 
 @Serializable

@@ -4,7 +4,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
-import com.bunbeauty.shared.ui.screen.update.UpdateRoute
+import com.bunbeauty.update.ui.UpdateRoute
 import kotlinx.serialization.Serializable
 
 @Serializable

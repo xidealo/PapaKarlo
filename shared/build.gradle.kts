@@ -42,6 +42,10 @@ kotlin {
                 implementation(project(":feature:profile"))
                 implementation(project(":feature:productdetails"))
                 implementation(project(":feature:auth"))
+                implementation(project(":feature:address"))
+                implementation(project(":feature:splash"))
+                implementation(project(":feature:cafe"))
+                implementation(project(":feature:update"))
 
                 implementation(libs.bundles.ktor)
 

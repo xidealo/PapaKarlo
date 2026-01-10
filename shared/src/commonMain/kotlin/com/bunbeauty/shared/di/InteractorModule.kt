@@ -1,7 +1,7 @@
 package com.bunbeauty.shared.di
 
-import com.bunbeauty.shared.domain.interactor.cafe.CafeInteractor
-import com.bunbeauty.shared.domain.interactor.cafe.ICafeInteractor
+import com.bunbeauty.core.domain.cafe.CafeInteractor
+import com.bunbeauty.core.domain.cafe.ICafeInteractor
 import com.bunbeauty.shared.domain.interactor.cart.CartProductInteractor
 import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
 import com.bunbeauty.core.domain.city.CityInteractor
@@ -42,7 +42,6 @@ internal fun interactorModule() =
         single<ICafeInteractor> {
             CafeInteractor(
                 cafeRepo = get(),
-                dataStoreRepo = get(),
             )
         }
         single<IMenuProductInteractor> {

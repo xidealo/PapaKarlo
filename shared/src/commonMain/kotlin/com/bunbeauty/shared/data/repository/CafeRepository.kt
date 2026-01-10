@@ -25,7 +25,8 @@ class CafeRepository(
     private var cafeListCache: List<Cafe>? = null
 
     override suspend fun getCafeList(): List<Cafe> {
-        val selectedCityUuid = dataStoreRepo.getSelectedCityUuid() ?: throw NoSelectedCityUuidException()
+        val selectedCityUuid =
+            dataStoreRepo.getSelectedCityUuid() ?: throw NoSelectedCityUuidException()
 
         val list =
             if (cafeListCache == null) {
@@ -63,10 +64,11 @@ class CafeRepository(
     }
 
     override suspend fun saveSelectedCafeUuid(
-        userUuid: String,
-        selectedCityUuid: String,
         cafeUuid: String,
     ) {
+        val userUuid = dataStoreRepo.getUserUuid() ?: return
+        val selectedCityUuid = dataStoreRepo.getSelectedCityUuid() ?: return
+
         val selectedCafeUuidEntity =
             SelectedCafeUuidEntity(
                 userUuid = userUuid,

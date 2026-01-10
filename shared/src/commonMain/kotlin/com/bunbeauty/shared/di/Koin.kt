@@ -1,9 +1,11 @@
 package com.bunbeauty.shared.di
 
+import com.bunbeauty.address.di.addressFeatureModule
 import com.bunbeauty.analytic.AnalyticService
 import com.bunbeauty.analytic.di.analyticModule
 import com.bunbeauty.auth.di.authFeatureModule
 import com.bunbeauty.auth.domain.UpdateNotificationUseCase
+import com.bunbeauty.cafe.di.cafeFeatureModule
 import com.bunbeauty.core.domain.DisableUserUseCase
 import com.bunbeauty.core.domain.ObserveCartUseCase
 import com.bunbeauty.core.domain.addition.GetAdditionGroupsWithSelectedAdditionUseCase
@@ -91,9 +93,11 @@ import com.bunbeauty.shared.di.usecase.paymentUseCaseModule
 import com.bunbeauty.shared.di.usecase.useCaseModules
 import com.bunbeauty.shared.di.usecase.userAddressUseCaseModule
 import com.bunbeauty.shared.domain.feature.notification.SubscribeToNotificationUseCase
-import com.bunbeauty.shared.domain.interactor.cafe.ICafeInteractor
+import com.bunbeauty.core.domain.cafe.ICafeInteractor
 import com.bunbeauty.shared.domain.interactor.cart.GetCartTotalFlowUseCase
 import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
+import com.bunbeauty.splash.di.splashFeatureModule
+import com.bunbeauty.update.di.updateFeatureModule
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 import org.koin.core.context.startKoin
@@ -130,6 +134,10 @@ fun initKoin(appDeclaration: KoinAppDeclaration = {}) =
             profileFeatureModule(),
             productDetailsFeatureModule(),
             authFeatureModule(),
+            addressFeatureModule(),
+            splashFeatureModule(),
+            updateFeatureModule(),
+            cafeFeatureModule(),
         )
     }
 
@@ -166,6 +174,10 @@ fun initKoin() =
             profileFeatureModule(),
             productDetailsFeatureModule(),
             authFeatureModule(),
+            addressFeatureModule(),
+            splashFeatureModule(),
+            updateFeatureModule(),
+            cafeFeatureModule(),
         )
     }
 

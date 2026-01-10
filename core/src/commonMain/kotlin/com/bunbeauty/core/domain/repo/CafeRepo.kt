@@ -7,8 +7,6 @@ interface CafeRepo {
     suspend fun getCafeList(): List<Cafe>
 
     suspend fun saveSelectedCafeUuid(
-        userUuid: String,
-        selectedCityUuid: String,
         cafeUuid: String,
     )
 
