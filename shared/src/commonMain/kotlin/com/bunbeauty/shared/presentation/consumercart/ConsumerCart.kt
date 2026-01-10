@@ -4,7 +4,7 @@ import com.bunbeauty.core.model.MenuItem
 import com.bunbeauty.core.base.BaseAction
 import com.bunbeauty.core.base.BaseDataState
 import com.bunbeauty.core.base.BaseEvent
-import com.bunbeauty.shared.presentation.motivation.MotivationData
+import com.bunbeauty.core.motivation.MotivationData
 import com.bunbeauty.core.model.ProductDetailsOpenedFrom
 
 interface ConsumerCart {

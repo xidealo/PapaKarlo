@@ -4,7 +4,7 @@ import com.bunbeauty.menu.ui.mapper.toMenuProductItemUi
 import com.bunbeauty.shared.presentation.consumercart.CartProductItem
 import com.bunbeauty.shared.presentation.consumercart.ConsumerCart
 import com.bunbeauty.shared.ui.screen.consumercart.state.ConsumerCartViewState
-import com.bunbeauty.shared.ui.motivation.toMotivationUi
+import com.bunbeauty.core.motivation.toMotivationUi
 import kotlinx.collections.immutable.toImmutableList
 
 fun ConsumerCart.DataState.toConsumerCartViewState(): ConsumerCartViewState =

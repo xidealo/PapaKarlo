@@ -2,8 +2,8 @@ package com.bunbeauty.shared.di
 
 import com.bunbeauty.core.domain.cafe.CafeInteractor
 import com.bunbeauty.core.domain.cafe.ICafeInteractor
-import com.bunbeauty.shared.domain.interactor.cart.CartProductInteractor
-import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
+import com.bunbeauty.core.domain.cart.CartProductInteractor
+import com.bunbeauty.core.domain.cart.ICartProductInteractor
 import com.bunbeauty.core.domain.city.CityInteractor
 import com.bunbeauty.core.domain.city.ICityInteractor
 import com.bunbeauty.core.domain.menu_product.IMenuProductInteractor

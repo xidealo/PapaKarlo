@@ -2,7 +2,7 @@ package com.bunbeauty.address.ui.screen.useraddresslist
 
 import androidx.compose.runtime.Immutable
 import com.bunbeauty.core.base.BaseViewState
-import com.bunbeauty.address.ui.model.UserAddressItem
+import com.bunbeauty.core.model.UserAddressItem
 
 @Immutable
 data class UserAddressListViewState(

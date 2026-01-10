@@ -4,9 +4,9 @@ import com.bunbeauty.getCartProduct
 import com.bunbeauty.getMenuProduct
 import com.bunbeauty.core.domain.cart.GetDeliveryCostFlowUseCase
 import com.bunbeauty.core.domain.discount.GetDiscountUseCase
-import com.bunbeauty.shared.domain.interactor.cart.GetCartTotalFlowUseCase
+import com.bunbeauty.core.domain.cart.GetCartTotalFlowUseCase
 import com.bunbeauty.core.domain.GetNewTotalCostUseCase
-import com.bunbeauty.shared.domain.interactor.cart.GetOldTotalCostUseCase
+import com.bunbeauty.core.domain.cart.GetOldTotalCostUseCase
 import com.bunbeauty.core.domain.repo.CartProductRepo
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend

@@ -13,7 +13,7 @@ import com.bunbeauty.core.domain.cart.GetRecommendationsUseCase
 import com.bunbeauty.core.domain.cart.IncreaseCartProductCountUseCase
 import com.bunbeauty.core.domain.cart.RemoveCartProductUseCase
 import com.bunbeauty.core.domain.menu_product.AddMenuProductUseCase
-import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
+import com.bunbeauty.core.domain.cart.ICartProductInteractor
 import com.bunbeauty.core.domain.user.IUserInteractor
 import com.bunbeauty.core.model.product.MenuProduct
 import com.bunbeauty.core.extension.launchSafe
@@ -25,7 +25,7 @@ import com.bunbeauty.core.domain.motivation.GetMotivationUseCase
 import com.bunbeauty.core.domain.motivation.Motivation
 import com.bunbeauty.core.domain.orderavailable.IsOrderAvailableUseCase
 import com.bunbeauty.shared.presentation.consumercart.mapper.toCartProductItem
-import com.bunbeauty.shared.presentation.motivation.toMotivationData
+import com.bunbeauty.core.motivation.toMotivationData
 import com.bunbeauty.core.model.ProductDetailsOpenedFrom
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn

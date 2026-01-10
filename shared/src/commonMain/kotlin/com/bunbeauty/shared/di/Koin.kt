@@ -94,9 +94,10 @@ import com.bunbeauty.shared.di.usecase.useCaseModules
 import com.bunbeauty.shared.di.usecase.userAddressUseCaseModule
 import com.bunbeauty.shared.domain.feature.notification.SubscribeToNotificationUseCase
 import com.bunbeauty.core.domain.cafe.ICafeInteractor
+import com.bunbeauty.createorder.di.createOrderFeatureModule
 import com.bunbeauty.order.di.orderFeatureModule
-import com.bunbeauty.shared.domain.interactor.cart.GetCartTotalFlowUseCase
-import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
+import com.bunbeauty.core.domain.cart.GetCartTotalFlowUseCase
+import com.bunbeauty.core.domain.cart.ICartProductInteractor
 import com.bunbeauty.splash.di.splashFeatureModule
 import com.bunbeauty.update.di.updateFeatureModule
 import org.koin.core.component.KoinComponent
@@ -140,6 +141,7 @@ fun initKoin(appDeclaration: KoinAppDeclaration = {}) =
             updateFeatureModule(),
             cafeFeatureModule(),
             orderFeatureModule(),
+            createOrderFeatureModule(),
         )
     }
 
@@ -181,6 +183,7 @@ fun initKoin() =
             updateFeatureModule(),
             cafeFeatureModule(),
             orderFeatureModule(),
+            createOrderFeatureModule(),
         )
     }
 
