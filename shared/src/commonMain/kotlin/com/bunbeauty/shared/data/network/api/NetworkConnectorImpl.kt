@@ -1,14 +1,14 @@
 package com.bunbeauty.shared.data.network.api
 
+import com.bunbeauty.core.ApiError
+import com.bunbeauty.core.ApiResult
 import com.bunbeauty.core.Constants.AUTHORIZATION_HEADER
 import com.bunbeauty.core.Constants.CITY_UUID_PARAMETER
 import com.bunbeauty.core.Constants.COMPANY_UUID_PARAMETER
 import com.bunbeauty.core.Constants.QUERY_PARAMETER
 import com.bunbeauty.core.Constants.UUID_PARAMETER
-import com.bunbeauty.shared.data.CompanyUuidProvider
-import com.bunbeauty.core.ApiError
-import com.bunbeauty.core.ApiResult
 import com.bunbeauty.core.domain.exeptions.FoodDeliveryNetworkException
+import com.bunbeauty.shared.data.CompanyUuidProvider
 import com.bunbeauty.shared.data.network.model.AddressServer
 import com.bunbeauty.shared.data.network.model.CafeServer
 import com.bunbeauty.shared.data.network.model.CategoryServer

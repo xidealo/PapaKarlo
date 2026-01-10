@@ -66,7 +66,10 @@ class UserAddressMapper {
             )
         }
 
-    fun toUserAddressPostServer(createdUserAddress: CreatedUserAddress, cityUuid: String): UserAddressPostServer =
+    fun toUserAddressPostServer(
+        createdUserAddress: CreatedUserAddress,
+        cityUuid: String,
+    ): UserAddressPostServer =
         UserAddressPostServer(
             street =
                 UserAddressStreetPostServer(

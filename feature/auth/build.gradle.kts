@@ -48,7 +48,6 @@ kotlin {
                 implementation(libs.activity.compose)
                 implementation(compose.uiTooling)
                 implementation(libs.firebase.messaging)
-
             }
         }
     }

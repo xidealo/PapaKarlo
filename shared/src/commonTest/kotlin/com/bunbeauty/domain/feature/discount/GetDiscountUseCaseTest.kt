@@ -2,14 +2,14 @@ package com.bunbeauty.domain.feature.discount
 
 import com.bunbeauty.core.domain.discount.GetDiscountUseCase
 import com.bunbeauty.core.domain.discount.GetDiscountUseCaseImpl
+import com.bunbeauty.core.domain.repo.DiscountRepo
+import com.bunbeauty.core.domain.repo.OrderRepo
 import com.bunbeauty.core.model.Discount
+import com.bunbeauty.core.model.date_time.Date
 import com.bunbeauty.core.model.date_time.DateTime
 import com.bunbeauty.core.model.date_time.Time
 import com.bunbeauty.core.model.order.LightOrder
 import com.bunbeauty.core.model.order.OrderStatus
-import com.bunbeauty.core.domain.repo.DiscountRepo
-import com.bunbeauty.core.domain.repo.OrderRepo
-import com.bunbeauty.core.model.date_time.Date
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.mock
@@ -32,6 +32,7 @@ class GetDiscountUseCaseTest {
             // Given
 
             everySuspend { discountRepository.getDiscount() } returns Discount(10)
+            everySuspend { orderRepository.getLastOrderByUserUuidLocalFirst() } returns null
 
             // When
             val discount = getDiscountUseCase()
@@ -49,6 +50,7 @@ class GetDiscountUseCaseTest {
             // Given
 
             everySuspend { discountRepository.getDiscount() } returns Discount(10)
+            everySuspend { orderRepository.getLastOrderByUserUuidLocalFirst() } returns null
 
             // When
             val discount = getDiscountUseCase()

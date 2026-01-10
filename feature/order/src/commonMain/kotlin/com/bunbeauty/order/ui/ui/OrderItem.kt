@@ -12,11 +12,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.bunbeauty.core.extension.getOrderColor
+import com.bunbeauty.core.model.order.OrderStatus
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.theme.bold
-import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryCard
-import com.bunbeauty.core.model.order.OrderStatus
 import com.bunbeauty.designsystem.ui.element.OrderStatusChip
+import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.order.ui.model.OrderItem
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -49,7 +49,7 @@ fun OrderItem(
             )
             OrderStatusChip(
                 statusName = orderItem.statusName,
-                background = orderItem.background
+                background = orderItem.background,
             )
             Text(
                 modifier =
@@ -77,7 +77,7 @@ private fun OrderItemPreview() {
                     statusName = "Обрабатывается",
                     code = "Щ-99",
                     dateTime = "9 февраля 22:00",
-                    background = OrderStatus.NOT_ACCEPTED.getOrderColor()
+                    background = OrderStatus.NOT_ACCEPTED.getOrderColor(),
                 ),
             onClick = {},
         )
@@ -96,7 +96,7 @@ private fun OrderItemLageFontPreview() {
                     statusName = "Обрабатывается",
                     code = "Щ-99",
                     dateTime = "9 февраля 22:00",
-                    background = OrderStatus.NOT_ACCEPTED.getOrderColor()
+                    background = OrderStatus.NOT_ACCEPTED.getOrderColor(),
                 ),
             onClick = {},
         )

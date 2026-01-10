@@ -1,7 +1,7 @@
 package com.bunbeauty.domain.feature.additions
 
-import com.bunbeauty.getCartProductAddition
 import com.bunbeauty.core.domain.GetCartProductAdditionsPriceUseCaseImpl
+import com.bunbeauty.getCartProductAddition
 import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test

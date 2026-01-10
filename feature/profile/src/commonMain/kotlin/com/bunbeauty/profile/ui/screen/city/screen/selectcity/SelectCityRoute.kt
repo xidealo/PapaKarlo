@@ -12,11 +12,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.bunbeauty.core.model.city.City
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.designsystem.ui.screen.ErrorScreen
 import com.bunbeauty.designsystem.ui.screen.LoadingScreen
-import com.bunbeauty.core.model.city.City
 import com.bunbeauty.profile.presentation.selectcity.SelectCityDataState
 import com.bunbeauty.profile.presentation.selectcity.SelectCityViewModel
 import com.bunbeauty.profile.ui.screen.city.ui.CityItem

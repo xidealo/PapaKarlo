@@ -8,13 +8,14 @@ import com.bunbeauty.shared.ui.screen.main.MainScreen
 import platform.UIKit.UIViewController
 
 @Suppress("FunctionName")
-fun MainViewController(flavor: String): UIViewController = ComposeUIViewController {
-    Logger.logD("MainViewController", "Flavor: $flavor")
-    FoodDeliveryTheme(
-        flavor = flavor,
-    ) {
-        MainScreen(
-            modifier = Modifier
-        )
+fun MainViewController(flavor: String): UIViewController =
+    ComposeUIViewController {
+        Logger.logD("MainViewController", "Flavor: $flavor")
+        FoodDeliveryTheme(
+            flavor = flavor,
+        ) {
+            MainScreen(
+                modifier = Modifier,
+            )
+        }
     }
-}

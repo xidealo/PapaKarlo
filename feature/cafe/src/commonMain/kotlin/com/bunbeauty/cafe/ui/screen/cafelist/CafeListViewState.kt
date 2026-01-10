@@ -1,9 +1,9 @@
 package com.bunbeauty.cafe.ui.screen.cafelist
 
 import androidx.compose.runtime.Immutable
-import com.bunbeauty.core.base.BaseViewState
-import com.bunbeauty.cafe.ui.model.CafeOptions
 import com.bunbeauty.cafe.ui.CafeItemAndroid
+import com.bunbeauty.cafe.ui.model.CafeOptions
+import com.bunbeauty.core.base.BaseViewState
 import kotlinx.collections.immutable.ImmutableList
 
 @Immutable

@@ -19,7 +19,6 @@ import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import papakarlo.designsystem.generated.resources.Res
 import papakarlo.designsystem.generated.resources.description_ic_discount
-import papakarlo.designsystem.generated.resources.description_ic_warning
 import papakarlo.designsystem.generated.resources.ic_discount
 import papakarlo.designsystem.generated.resources.msg_menu_discount
 import papakarlo.designsystem.generated.resources.title_menu_discount

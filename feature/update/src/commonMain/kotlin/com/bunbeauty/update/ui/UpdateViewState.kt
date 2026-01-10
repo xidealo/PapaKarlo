@@ -1,8 +1,8 @@
 package com.bunbeauty.update.ui
 
 import androidx.compose.runtime.Immutable
-import com.bunbeauty.core.model.link.Link
 import com.bunbeauty.core.base.BaseViewState
+import com.bunbeauty.core.model.link.Link
 
 @Immutable
 data class UpdateViewState(

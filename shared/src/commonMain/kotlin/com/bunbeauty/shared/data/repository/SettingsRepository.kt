@@ -13,7 +13,8 @@ class SettingsRepository(
     private val dataStoreRepo: DataStoreRepo,
     private val networkConnector: NetworkConnector,
     private val settingsMapper: SettingsMapper,
-) : BaseRepository(), SettingsRepo {
+) : BaseRepository(),
+    SettingsRepo {
     override val tag: String = "SETTINGS_TAG"
 
     override suspend fun observeSettings(): Flow<Settings?> {
@@ -25,16 +26,14 @@ class SettingsRepository(
         return dataStoreRepo.settings
     }
 
-    override suspend fun updateEmail(
-        email: String,
-    ): Settings? {
+    override suspend fun updateEmail(email: String): Settings? {
         val token = dataStoreRepo.getToken() ?: return null
-        return networkConnector.patchSettings(token, PatchUserServer(email = email))
+        return networkConnector
+            .patchSettings(token, PatchUserServer(email = email))
             .getNullableResult { settingsServer ->
                 val settings = settingsMapper.toSettings(settingsServer)
                 dataStoreRepo.saveSettings(settings)
                 settings
             }
     }
-
 }

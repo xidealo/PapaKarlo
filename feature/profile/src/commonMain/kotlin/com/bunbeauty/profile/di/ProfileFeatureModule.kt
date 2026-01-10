@@ -6,27 +6,28 @@ import com.bunbeauty.profile.presentation.settings.SettingsViewModel
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
-fun profileFeatureModule() = module {
-    viewModel {
-        ProfileViewModel(
-            userInteractor = get(),
-            getLastOrderUseCase = get(),
-            getLinkListUseCase = get(),
-            observeLastOrderUseCase = get(),
-            stopObserveOrdersUseCase = get(),
-            buildVersion = get(buildVersionQualifier),
-        )
+fun profileFeatureModule() =
+    module {
+        viewModel {
+            ProfileViewModel(
+                userInteractor = get(),
+                getLastOrderUseCase = get(),
+                getLinkListUseCase = get(),
+                observeLastOrderUseCase = get(),
+                stopObserveOrdersUseCase = get(),
+                buildVersion = get(buildVersionQualifier),
+            )
+        }
+        viewModel {
+            SettingsViewModel(
+                observeSettingsUseCase = get(),
+                observeSelectedCityUseCase = get(),
+                updateEmailUseCase = get(),
+                getCityListUseCase = get(),
+                saveSelectedCityUseCase = get(),
+                disableUserUseCase = get(),
+                userInteractor = get(),
+                analyticService = get(),
+            )
+        }
     }
-    viewModel {
-        SettingsViewModel(
-            observeSettingsUseCase = get(),
-            observeSelectedCityUseCase = get(),
-            updateEmailUseCase = get(),
-            getCityListUseCase = get(),
-            saveSelectedCityUseCase = get(),
-            disableUserUseCase = get(),
-            userInteractor = get(),
-            analyticService = get(),
-        )
-    }
-}

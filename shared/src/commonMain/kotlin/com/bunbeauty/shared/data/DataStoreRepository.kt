@@ -1,10 +1,10 @@
 package com.bunbeauty.shared.data
 
 import com.bunbeauty.core.model.Delivery
-import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.core.model.Discount
 import com.bunbeauty.core.model.Settings
 import com.bunbeauty.core.model.UserCityUuid
+import com.bunbeauty.shared.DataStoreRepo
 import kotlinx.coroutines.flow.Flow
 import org.koin.core.component.KoinComponent
 

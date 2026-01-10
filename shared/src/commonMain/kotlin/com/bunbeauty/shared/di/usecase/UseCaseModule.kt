@@ -6,6 +6,9 @@ import com.bunbeauty.core.domain.GetNewTotalCostUseCase
 import com.bunbeauty.core.domain.GetNewTotalCostUseCaseImpl
 import com.bunbeauty.core.domain.address.CreateAddressUseCase
 import com.bunbeauty.core.domain.address.GetFilteredStreetListUseCase
+import com.bunbeauty.core.domain.cart.GetCartTotalFlowUseCase
+import com.bunbeauty.core.domain.cart.GetOldTotalCostUseCase
+import com.bunbeauty.core.domain.cart.GetOldTotalCostUseCaseImpl
 import com.bunbeauty.core.domain.city.GetSelectedCityTimeZoneUseCase
 import com.bunbeauty.core.domain.city.GetSelectedCityTimeZoneUseCaseImpl
 import com.bunbeauty.core.domain.deferred_time.GetMinTimeUseCase
@@ -21,9 +24,6 @@ import com.bunbeauty.core.domain.splash.CheckOneCityUseCase
 import com.bunbeauty.core.domain.splash.CheckUpdateUseCase
 import com.bunbeauty.core.domain.splash.SaveOneCityUseCase
 import com.bunbeauty.shared.domain.feature.notification.SubscribeToNotificationUseCase
-import com.bunbeauty.core.domain.cart.GetCartTotalFlowUseCase
-import com.bunbeauty.core.domain.cart.GetOldTotalCostUseCase
-import com.bunbeauty.core.domain.cart.GetOldTotalCostUseCaseImpl
 import org.koin.dsl.module
 
 internal fun useCaseModules() =

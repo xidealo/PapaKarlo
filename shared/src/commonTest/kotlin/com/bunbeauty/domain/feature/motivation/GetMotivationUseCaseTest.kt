@@ -1,10 +1,10 @@
 package com.bunbeauty.domain.feature.motivation
 
 import com.bunbeauty.core.domain.address.GetCurrentUserAddressUseCase
-import com.bunbeauty.core.model.address.UserAddress
 import com.bunbeauty.core.domain.address.GetUserAddressListUseCase
 import com.bunbeauty.core.domain.motivation.GetMotivationUseCase
 import com.bunbeauty.core.domain.motivation.Motivation
+import com.bunbeauty.core.model.address.UserAddress
 import dev.mokkery.MockMode
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend

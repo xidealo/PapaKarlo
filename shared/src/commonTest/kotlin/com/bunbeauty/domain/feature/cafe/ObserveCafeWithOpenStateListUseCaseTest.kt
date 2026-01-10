@@ -69,10 +69,10 @@ class ObserveCafeWithOpenStateListUseCaseTest {
             everySuspend {
                 dataTimeUtil.getCurrentMinuteSecond(timeZone)
             } returns
-                    MinuteSecond(
-                        minuteOfDay = 8 * 60, // 8:00:30
-                        secondOfMinute = 30,
-                    )
+                MinuteSecond(
+                    minuteOfDay = 8 * 60, // 8:00:30
+                    secondOfMinute = 30,
+                )
             val cafe =
                 getFakeCafe(
                     fromTime = 8 * 60 * 60, // 8:00:00

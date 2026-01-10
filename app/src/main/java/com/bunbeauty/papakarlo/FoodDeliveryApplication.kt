@@ -6,8 +6,8 @@ import android.app.NotificationManager
 import android.media.AudioAttributes
 import android.media.RingtoneManager
 import android.os.Build
-import com.bunbeauty.papakarlo.di.appModule
 import com.bunbeauty.core.Constants.CHANNEL_ID
+import com.bunbeauty.papakarlo.di.appModule
 import com.bunbeauty.shared.data.CompanyUuidProvider
 import com.bunbeauty.shared.di.initKoin
 import com.bunbeauty.shared.domain.feature.notification.SubscribeToNotificationUseCase

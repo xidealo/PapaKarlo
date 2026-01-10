@@ -2,6 +2,9 @@ package com.bunbeauty.shared.data.repository
 
 import com.bunbeauty.core.domain.exeptions.NoSelectedCityUuidException
 import com.bunbeauty.core.domain.exeptions.NoUserUuidException
+import com.bunbeauty.core.domain.repo.CafeRepo
+import com.bunbeauty.core.extension.dataOrNull
+import com.bunbeauty.core.model.cafe.Cafe
 import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.data.dao.cafe.ICafeDao
 import com.bunbeauty.shared.data.mapper.cafe.toCafe
@@ -9,9 +12,6 @@ import com.bunbeauty.shared.data.mapper.cafe.toCafeEntity
 import com.bunbeauty.shared.data.network.api.NetworkConnector
 import com.bunbeauty.shared.data.storage.CafeStorage
 import com.bunbeauty.shared.db.SelectedCafeUuidEntity
-import com.bunbeauty.core.domain.repo.CafeRepo
-import com.bunbeauty.core.extension.dataOrNull
-import com.bunbeauty.core.model.cafe.Cafe
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.withContext
@@ -63,9 +63,7 @@ class CafeRepository(
         return list ?: emptyList()
     }
 
-    override suspend fun saveSelectedCafeUuid(
-        cafeUuid: String,
-    ) {
+    override suspend fun saveSelectedCafeUuid(cafeUuid: String) {
         val userUuid = dataStoreRepo.getUserUuid() ?: return
         val selectedCityUuid = dataStoreRepo.getSelectedCityUuid() ?: return
 

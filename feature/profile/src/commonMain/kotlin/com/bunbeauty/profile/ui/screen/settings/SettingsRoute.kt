@@ -30,13 +30,13 @@ import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import papakarlo.designsystem.generated.resources.Res
-import papakarlo.designsystem.generated.resources.title_settings
 import papakarlo.designsystem.generated.resources.action_logout
 import papakarlo.designsystem.generated.resources.common_city
 import papakarlo.designsystem.generated.resources.error_common_data_loading
 import papakarlo.designsystem.generated.resources.error_something_went_wrong
 import papakarlo.designsystem.generated.resources.hint_settings_phone
 import papakarlo.designsystem.generated.resources.msg_settings_email_updated
+import papakarlo.designsystem.generated.resources.title_settings
 
 @Composable
 fun SettingsRoute(

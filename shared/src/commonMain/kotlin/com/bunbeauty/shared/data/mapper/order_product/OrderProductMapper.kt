@@ -41,8 +41,9 @@ class OrderProductMapper : IOrderProductMapper {
                                 OrderAddition(
                                     uuid = orderAdditionEntityUuid,
                                     name = orderWithProductEntity.orderAdditionEntityName ?: "",
-                                    priority = orderWithProductEntity.orderAdditionEntityPriority
-                                        ?: 0,
+                                    priority =
+                                        orderWithProductEntity.orderAdditionEntityPriority
+                                            ?: 0,
                                 )
                             }
                         },

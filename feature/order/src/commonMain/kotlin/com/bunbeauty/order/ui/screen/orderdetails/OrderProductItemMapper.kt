@@ -1,8 +1,8 @@
 package com.bunbeauty.order.ui.screen.orderdetails
 
 import androidx.compose.runtime.Composable
-import com.bunbeauty.order.presentation.order_details.OrderDetails
 import com.bunbeauty.core.extension.getCountString
+import com.bunbeauty.order.presentation.order_details.OrderDetails
 
 @Composable
 fun OrderDetails.DataState.OrderDetailsData.OrderProductItem.toItem(): OrderProductUiItem =

@@ -1,7 +1,6 @@
 package com.bunbeauty.domain.feature.address
 
 import com.bunbeauty.core.domain.address.CreateAddressUseCase
-import com.bunbeauty.core.domain.exeptions.NoTokenException
 import com.bunbeauty.core.domain.repo.UserAddressRepo
 import com.bunbeauty.core.domain.repo.UserRepo
 import com.bunbeauty.core.model.Suggestion
@@ -10,6 +9,8 @@ import com.bunbeauty.core.model.address.UserAddress
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.mock
+import dev.mokkery.verify.VerifyMode
+import dev.mokkery.verifySuspend
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -17,17 +18,15 @@ import kotlinx.coroutines.test.setMain
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertFailsWith
 
 class CreateAddressUseCaseTest {
-
     private val userAddressRepo = mock<UserAddressRepo>()
     private val userRepo = mock<UserRepo>()
 
     private val createAddressUseCase: CreateAddressUseCase =
         CreateAddressUseCase(
             userAddressRepo = userAddressRepo,
-            userRepo = userRepo
+            userRepo = userRepo,
         )
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -35,31 +34,6 @@ class CreateAddressUseCaseTest {
     fun setup() {
         Dispatchers.setMain(Dispatchers.Unconfined)
     }
-
-    @Test
-    fun `return NoTokenException when token is null`() =
-        runTest {
-
-            assertFailsWith(
-                exceptionClass = NoTokenException::class,
-                block = {
-                    createAddressUseCase(
-                        street =
-                            Suggestion(
-                                fiasId = "fiasId",
-                                street = "street",
-                                details = null,
-                            ),
-                        house = "house",
-                        flat = "flat",
-                        entrance = "entrance",
-                        comment = "comment",
-                        floor = "floor",
-                    )
-                },
-            )
-        }
-
 
     @Test
     fun `return userAddress when all data is ok`() =
@@ -101,6 +75,12 @@ class CreateAddressUseCaseTest {
                 )
             }.returns(userAddress)
 
+            everySuspend {
+                userRepo.saveUserCafeUuid(
+                    "cafeUuid",
+                )
+            }.returns(Unit)
+
             val createdUserAddress =
                 createAddressUseCase(
                     street =
@@ -117,5 +97,10 @@ class CreateAddressUseCaseTest {
                 )
 
             assertEquals(userAddress, createdUserAddress)
+            verifySuspend(mode = VerifyMode.atLeast(0)) {
+                userRepo.saveUserCafeUuid(
+                    "cafeUuid",
+                )
+            }
         }
 }

@@ -5,18 +5,19 @@ import com.bunbeauty.address.presentation.user_address_list.UserAddressListViewM
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
-fun addressFeatureModule() = module {
-    viewModel {
-        CreateAddressViewModel(
-            getSuggestionsUseCase = get(),
-            createAddressUseCase = get(),
-            saveSelectedUserAddressUseCase = get(),
-        )
+fun addressFeatureModule() =
+    module {
+        viewModel {
+            CreateAddressViewModel(
+                getSuggestionsUseCase = get(),
+                createAddressUseCase = get(),
+                saveSelectedUserAddressUseCase = get(),
+            )
+        }
+        viewModel {
+            UserAddressListViewModel(
+                getSelectableUserAddressListUseCase = get(),
+                saveSelectedUserAddressUseCase = get(),
+            )
+        }
     }
-    viewModel {
-        UserAddressListViewModel(
-            getSelectableUserAddressListUseCase = get(),
-            saveSelectedUserAddressUseCase = get(),
-        )
-    }
-}

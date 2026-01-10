@@ -8,11 +8,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.bunbeauty.core.model.CategoryItem
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.theme.medium
 import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryCardDefaults
-import com.bunbeauty.core.model.CategoryItem
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
@@ -21,11 +21,12 @@ fun CategoryItem(
     categoryItem: CategoryItem,
     onClick: () -> Unit,
 ) {
-    val color = if (categoryItem.isSelected) {
-        FoodDeliveryTheme.colors.mainColors.primary
-    } else {
-        FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
-    }
+    val color =
+        if (categoryItem.isSelected) {
+            FoodDeliveryTheme.colors.mainColors.primary
+        } else {
+            FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
+        }
     FoodDeliveryCard(
         modifier = modifier,
         elevated = false,

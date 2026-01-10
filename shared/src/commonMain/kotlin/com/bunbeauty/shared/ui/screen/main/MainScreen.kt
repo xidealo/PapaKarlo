@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarHost
@@ -60,15 +59,16 @@ fun MainScreen(
         LocalStatusBarColor provides statusBarColor,
     ) {
         Scaffold(
-            modifier = Modifier
-                .fillMaxSize(),
+            modifier =
+                Modifier
+                    .fillMaxSize(),
             snackbarHost = {
                 FoodDeliverySnackbarHost(
                     snackbarHostState = snackbarHostState,
                     paddingBottom = mainState.paddingBottomSnackbar,
                 )
             },
-            containerColor = statusBarColor.value
+            containerColor = statusBarColor.value,
         ) { paddingsValues ->
             Column(
                 modifier =
@@ -80,8 +80,9 @@ fun MainScreen(
                 StatusBarMessage(statusBarMessage = mainState.statusBarMessage)
 
                 Box(
-                    modifier = Modifier
-                        .fillMaxSize()
+                    modifier =
+                        Modifier
+                            .fillMaxSize(),
                 ) {
                     FoodDeliveryNavHost(
                         showInfoMessage = { message, padding ->

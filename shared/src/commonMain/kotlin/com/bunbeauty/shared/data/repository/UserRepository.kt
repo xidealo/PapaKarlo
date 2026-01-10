@@ -1,6 +1,7 @@
 package com.bunbeauty.shared.data.repository
 
 import com.bunbeauty.core.Logger
+import com.bunbeauty.core.domain.repo.UserRepo
 import com.bunbeauty.core.model.profile.Profile
 import com.bunbeauty.core.model.profile.User
 import com.bunbeauty.shared.DataStoreRepo
@@ -14,7 +15,6 @@ import com.bunbeauty.shared.data.network.model.UpdateNotificationTokenRequest
 import com.bunbeauty.shared.data.network.model.profile.get.ProfileServer
 import com.bunbeauty.shared.data.network.model.profile.patch.PatchUserServer
 import com.bunbeauty.shared.domain.mapFlow
-import com.bunbeauty.core.domain.repo.UserRepo
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -46,8 +46,7 @@ class UserRepository(
     override val tag: String = "USER_TAG"
     var cachedUserUuid: String? = null
 
-    override fun observeUserByUuid(userUuid: String): Flow<User?> =
-        userDao.observeUserByUuid(uuid = userUuid).mapFlow(userMapper::toUser)
+    override fun observeUserByUuid(userUuid: String): Flow<User?> = userDao.observeUserByUuid(uuid = userUuid).mapFlow(userMapper::toUser)
 
     override suspend fun getProfile(): Profile.Authorized? {
         val token = dataStoreRepo.getToken() ?: return null
@@ -105,6 +104,7 @@ class UserRepository(
     override suspend fun saveUserCafeUuid(cafeUuid: String) {
         dataStoreRepo.saveUserCafeUuid(userCafeUuid = cafeUuid)
     }
+
     override suspend fun updateNotificationTokenSuspend(notificationToken: String) {
         dataStoreRepo.getToken()?.let { token ->
             networkConnector.putNotificationToken(

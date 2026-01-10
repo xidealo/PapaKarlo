@@ -1,6 +1,14 @@
 package com.bunbeauty.shared.data.repository
 
 import com.bunbeauty.core.Logger
+import com.bunbeauty.core.domain.repo.OrderRepo
+import com.bunbeauty.core.extension.getNullableResult
+import com.bunbeauty.core.model.order.CreatedOrder
+import com.bunbeauty.core.model.order.LightOrder
+import com.bunbeauty.core.model.order.Order
+import com.bunbeauty.core.model.order.OrderCode
+import com.bunbeauty.core.model.order.OrderStatus
+import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.data.dao.lightorder.LightOrderDao
 import com.bunbeauty.shared.data.dao.order.IOrderDao
 import com.bunbeauty.shared.data.dao.order_addition.IOrderAdditionDao
@@ -13,14 +21,6 @@ import com.bunbeauty.shared.data.network.model.order.get.LightOrderServer
 import com.bunbeauty.shared.data.network.model.order.get.OrderProductServer
 import com.bunbeauty.shared.data.network.model.order.get.OrderServer
 import com.bunbeauty.shared.data.network.model.order.get.OrderUpdateServer
-import com.bunbeauty.core.domain.repo.OrderRepo
-import com.bunbeauty.core.extension.getNullableResult
-import com.bunbeauty.core.model.order.CreatedOrder
-import com.bunbeauty.core.model.order.LightOrder
-import com.bunbeauty.core.model.order.Order
-import com.bunbeauty.core.model.order.OrderCode
-import com.bunbeauty.core.model.order.OrderStatus
-import com.bunbeauty.shared.DataStoreRepo
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
@@ -55,22 +55,21 @@ class OrderRepository(
 
         val (uuid, orderUpdatesFlow) = observeOrderUpdatesServer(token)
         return uuid to
-                orderUpdatesFlow
-                    .map { orderUpdateServer ->
-                        orderMapper.toOrder(orderDao.getOrderWithProductListByUuid(orderUpdateServer.uuid))
-                    }.filterNotNull()
+            orderUpdatesFlow
+                .map { orderUpdateServer ->
+                    orderMapper.toOrder(orderDao.getOrderWithProductListByUuid(orderUpdateServer.uuid))
+                }.filterNotNull()
     }
 
-    override suspend fun observeLightOrderListUpdates(
-    ): Pair<String?, Flow<List<LightOrder>>> {
+    override suspend fun observeLightOrderListUpdates(): Pair<String?, Flow<List<LightOrder>>> {
         val token = dataStoreRepo.getToken() ?: return null to flow { }
         val (uuid, orderUpdatesFlow) = observeOrderUpdatesServer(token)
         return uuid to
-                orderUpdatesFlow.map {
-                    lightOrderDao.getLightOrderList(count = 30).map { lightOrderEntity ->
-                        orderMapper.toLightOrder(lightOrderEntity)
-                    }
+            orderUpdatesFlow.map {
+                lightOrderDao.getLightOrderList(count = 30).map { lightOrderEntity ->
+                    orderMapper.toLightOrder(lightOrderEntity)
                 }
+            }
     }
 
     override suspend fun stopOrderUpdatesObservation(uuid: String) {
@@ -98,11 +97,9 @@ class OrderRepository(
                     }
                 },
             ) ?: emptyList()
-
     }
 
     override suspend fun getLastOrderByUserUuidNetworkFirst(): LightOrder? {
-
         val token = dataStoreRepo.getToken() ?: return null
         val userUuid = dataStoreRepo.getUserUuid() ?: return null
 
@@ -129,7 +126,6 @@ class OrderRepository(
             )
     }
 
-
     override suspend fun getLastOrderByUserUuidLocalFirst(): LightOrder? {
         val userUuid = dataStoreRepo.getUserUuid() ?: return null
         val token = dataStoreRepo.getToken() ?: return null
@@ -141,9 +137,7 @@ class OrderRepository(
         }
     }
 
-    override suspend fun getOrderByUuid(
-        orderUuid: String,
-    ): Order? {
+    override suspend fun getOrderByUuid(orderUuid: String): Order? {
         val userUuid = dataStoreRepo.getUserUuid() ?: return null
         val token = dataStoreRepo.getToken() ?: return null
         return networkConnector.getOrderByUuid(token = token, uuid = orderUuid).getNullableResult(
@@ -157,10 +151,7 @@ class OrderRepository(
         )
     }
 
-
-    override suspend fun createOrder(
-        createdOrder: CreatedOrder,
-    ): OrderCode? {
+    override suspend fun createOrder(createdOrder: CreatedOrder): OrderCode? {
         val token = dataStoreRepo.getToken() ?: return null
 
         val orderPostServer = orderMapper.toOrderPostServer(createdOrder)
@@ -179,22 +170,22 @@ class OrderRepository(
     private suspend fun observeOrderUpdatesServer(token: String): Pair<String?, Flow<OrderUpdateServer>> {
         val (uuid, orderUpdatesFlow) = networkConnector.startOrderUpdatesObservation(token)
         return uuid to
-                orderUpdatesFlow.onEach { orderUpdateServer ->
-                    if (orderUpdateServer.uuid == cacheLastOrder?.uuid) {
-                        cacheLastOrder =
-                            cacheLastOrder?.copy(
-                                status = OrderStatus.valueOf(orderUpdateServer.status),
-                            )
-                    }
-                    orderDao.updateOrderStatusByUuid(
-                        uuid = orderUpdateServer.uuid,
-                        status = orderUpdateServer.status,
-                    )
-                    lightOrderDao.updateLightOrderStatusByUuid(
-                        uuid = orderUpdateServer.uuid,
-                        status = orderUpdateServer.status,
-                    )
+            orderUpdatesFlow.onEach { orderUpdateServer ->
+                if (orderUpdateServer.uuid == cacheLastOrder?.uuid) {
+                    cacheLastOrder =
+                        cacheLastOrder?.copy(
+                            status = OrderStatus.valueOf(orderUpdateServer.status),
+                        )
                 }
+                orderDao.updateOrderStatusByUuid(
+                    uuid = orderUpdateServer.uuid,
+                    status = orderUpdateServer.status,
+                )
+                lightOrderDao.updateLightOrderStatusByUuid(
+                    uuid = orderUpdateServer.uuid,
+                    status = orderUpdateServer.status,
+                )
+            }
     }
 
     private suspend fun insertOrderAdditions(orderProductServer: OrderProductServer) {

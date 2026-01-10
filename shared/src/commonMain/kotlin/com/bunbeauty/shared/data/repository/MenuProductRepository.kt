@@ -1,5 +1,6 @@
 package com.bunbeauty.shared.data.repository
 
+import com.bunbeauty.core.domain.repo.MenuProductRepo
 import com.bunbeauty.core.model.addition.AdditionGroup
 import com.bunbeauty.core.model.product.MenuProduct
 import com.bunbeauty.shared.data.dao.addition.IAdditionDao
@@ -13,7 +14,6 @@ import com.bunbeauty.shared.data.mapper.menuProduct.IMenuProductMapper
 import com.bunbeauty.shared.data.network.api.NetworkConnector
 import com.bunbeauty.shared.data.network.model.MenuProductServer
 import com.bunbeauty.shared.domain.mapFlow
-import com.bunbeauty.core.domain.repo.MenuProductRepo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlin.collections.map

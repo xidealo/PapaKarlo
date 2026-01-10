@@ -1,9 +1,9 @@
 package com.bunbeauty.cafe.presentation.cafe_list
 
-import com.bunbeauty.core.model.cafe.Cafe
 import com.bunbeauty.core.base.BaseAction
 import com.bunbeauty.core.base.BaseDataState
 import com.bunbeauty.core.base.BaseEvent
+import com.bunbeauty.core.model.cafe.Cafe
 
 interface CafeList {
     data class DataState(

@@ -1,41 +1,43 @@
 package com.bunbeauty.productdetails.ui
 
-import com.bunbeauty.designsystem.ui.element.TopCartUi
 import com.bunbeauty.core.Constants
+import com.bunbeauty.designsystem.ui.element.TopCartUi
 import com.bunbeauty.productdetails.presentation.AdditionItem
 import com.bunbeauty.productdetails.presentation.MenuProductAdditionItem
 import com.bunbeauty.productdetails.presentation.ProductDetailsState
 import kotlinx.collections.immutable.toPersistentList
 
 fun ProductDetailsState.DataState.map(): ProductDetailsViewState {
-    val additionList = buildList {
-        menuProduct.additionGroups.forEach { additionGroup ->
-            add(
-                AdditionItem.AdditionHeaderItem(
-                    key = "AdditionHeaderItem + ${additionGroup.uuid}",
-                    uuid = additionGroup.uuid,
-                    name = additionGroup.name,
-                ),
-            )
-            addAll(
-                additionGroup.additionList.mapIndexed { index, addition ->
-                    AdditionItem.AdditionListItem(
-                        key = "AdditionListItem + ${addition.uuid}",
-                        product = MenuProductAdditionItem(
-                            uuid = addition.uuid,
-                            isSelected = addition.isSelected,
-                            name = addition.name,
-                            price = addition.price?.let { price -> "+$price ${Constants.RUBLE_CURRENCY}" },
-                            isLast = additionGroup.additionList.lastIndex == index,
-                            photoLink = addition.photoLink,
-                            groupId = additionGroup.uuid,
-                        ),
-                        isMultiple = !additionGroup.singleChoice,
-                    )
-                },
-            )
+    val additionList =
+        buildList {
+            menuProduct.additionGroups.forEach { additionGroup ->
+                add(
+                    AdditionItem.AdditionHeaderItem(
+                        key = "AdditionHeaderItem + ${additionGroup.uuid}",
+                        uuid = additionGroup.uuid,
+                        name = additionGroup.name,
+                    ),
+                )
+                addAll(
+                    additionGroup.additionList.mapIndexed { index, addition ->
+                        AdditionItem.AdditionListItem(
+                            key = "AdditionListItem + ${addition.uuid}",
+                            product =
+                                MenuProductAdditionItem(
+                                    uuid = addition.uuid,
+                                    isSelected = addition.isSelected,
+                                    name = addition.name,
+                                    price = addition.price?.let { price -> "+$price ${Constants.RUBLE_CURRENCY}" },
+                                    isLast = additionGroup.additionList.lastIndex == index,
+                                    photoLink = addition.photoLink,
+                                    groupId = additionGroup.uuid,
+                                ),
+                            isMultiple = !additionGroup.singleChoice,
+                        )
+                    },
+                )
+            }
         }
-    }
 
     return when (screenState) {
         ProductDetailsState.DataState.ScreenState.SUCCESS ->

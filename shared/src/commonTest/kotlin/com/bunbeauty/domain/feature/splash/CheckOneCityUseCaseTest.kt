@@ -1,8 +1,8 @@
 package com.bunbeauty.domain.feature.splash
 
-import com.bunbeauty.getCity
 import com.bunbeauty.core.domain.repo.CityRepo
 import com.bunbeauty.core.domain.splash.CheckOneCityUseCase
+import com.bunbeauty.getCity
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.mock

@@ -1,9 +1,9 @@
 package com.bunbeauty.domain.feature.link
 
 import com.bunbeauty.core.domain.link.GetLinkUseCase
+import com.bunbeauty.core.domain.repo.LinkRepo
 import com.bunbeauty.core.model.link.Link
 import com.bunbeauty.core.model.link.LinkType
-import com.bunbeauty.core.domain.repo.LinkRepo
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.mock

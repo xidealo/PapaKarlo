@@ -1,6 +1,5 @@
 package com.bunbeauty.shared.di.usecase
 
-
 import com.bunbeauty.core.domain.auth.CheckCodeUseCase
 import com.bunbeauty.core.domain.auth.CheckPhoneNumberUseCase
 import com.bunbeauty.core.domain.auth.FormatPhoneNumberUseCase

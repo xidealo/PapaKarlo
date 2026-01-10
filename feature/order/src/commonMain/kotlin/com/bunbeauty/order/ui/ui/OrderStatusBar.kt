@@ -14,11 +14,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.bunbeauty.core.extension.getOrderColor
-import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
-import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.core.model.order.OrderStatus
+import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.ui.element.EmptyOrderStatusChip
 import com.bunbeauty.designsystem.ui.element.PassedOrderStatusChip
+import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryCard
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview

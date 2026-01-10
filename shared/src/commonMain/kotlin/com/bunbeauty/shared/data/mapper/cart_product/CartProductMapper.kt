@@ -48,8 +48,9 @@ class CartProductMapper : ICartProductMapper {
                             name = cartProductWithMenuProductEntity.cartProductAdditionName ?: "",
                             price = cartProductWithMenuProductEntity.cartProductAdditionPrice,
                             cartProductUuid = cartProductWithMenuProductEntity.cartProductUuid,
-                            additionUuid = cartProductWithMenuProductEntity.cartProductAdditionAdditionUuid
-                                ?: "",
+                            additionUuid =
+                                cartProductWithMenuProductEntity.cartProductAdditionAdditionUuid
+                                    ?: "",
                             fullName = cartProductWithMenuProductEntity.cartProductAdditionFullName,
                             priority = cartProductWithMenuProductEntity.cartProductAdditionPriority,
                         )

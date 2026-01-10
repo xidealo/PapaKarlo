@@ -1,18 +1,18 @@
 package com.bunbeauty.order.presentation.consumercart
 
-import com.bunbeauty.core.model.MenuItem
 import com.bunbeauty.core.base.BaseAction
 import com.bunbeauty.core.base.BaseDataState
 import com.bunbeauty.core.base.BaseEvent
-import com.bunbeauty.core.motivation.MotivationData
+import com.bunbeauty.core.model.MenuItem
 import com.bunbeauty.core.model.ProductDetailsOpenedFrom
+import com.bunbeauty.core.motivation.MotivationData
 
 interface ConsumerCart {
     data class DataState(
         val state: State,
         val motivation: MotivationData?,
         val cartProductItemList: List<CartProductItem>,
-        val recommendationList: List<MenuItem.Product >,
+        val recommendationList: List<MenuItem.Product>,
         val discount: String?,
         val oldTotalCost: String?,
         val newTotalCost: String,

@@ -1,8 +1,8 @@
 package com.bunbeauty.address.ui.screen.createaddress
 
 import androidx.compose.runtime.Immutable
-import com.bunbeauty.designsystem.ui.element.textfield.SuggestionUi
 import com.bunbeauty.core.base.BaseViewState
+import com.bunbeauty.designsystem.ui.element.textfield.SuggestionUi
 import kotlinx.collections.immutable.ImmutableList
 import org.jetbrains.compose.resources.StringResource
 

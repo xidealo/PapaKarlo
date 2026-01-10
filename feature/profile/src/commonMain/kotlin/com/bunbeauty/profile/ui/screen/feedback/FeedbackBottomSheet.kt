@@ -8,9 +8,9 @@ import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.ui.element.card.NavigationIconCard
 import com.bunbeauty.designsystem.ui.screen.bottomsheet.FoodDeliveryModalBottomSheet
 import com.bunbeauty.profile.presentation.profile.ProfileState
-import com.bunbeauty.shared.OpenExternalSource
 import com.bunbeauty.profile.ui.screen.feedback.model.LinkUI
 import com.bunbeauty.profile.ui.screen.profile.ProfileViewState
+import com.bunbeauty.shared.OpenExternalSource
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import org.jetbrains.compose.resources.stringResource

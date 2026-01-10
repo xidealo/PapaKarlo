@@ -2,8 +2,8 @@ package com.bunbeauty.domain.feature.cafe
 
 import com.bunbeauty.core.domain.cafe.HasOpenedCafeUseCase
 import com.bunbeauty.core.domain.cafe.IsPickupEnabledFromCafeUseCase
-import com.bunbeauty.getCafe
 import com.bunbeauty.core.model.cafe.Cafe
+import com.bunbeauty.getCafe
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.mock

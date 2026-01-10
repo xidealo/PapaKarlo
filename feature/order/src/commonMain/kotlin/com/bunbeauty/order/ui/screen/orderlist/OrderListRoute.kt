@@ -209,7 +209,6 @@ private fun OrderListScreenSuccessPreview() {
                                 dateTime = "18.03.2023 11:53",
                                 statusName = OrderStatus.NOT_ACCEPTED.name,
                                 background = OrderStatus.NOT_ACCEPTED.getOrderColor(),
-
                             ),
                             OrderItem(
                                 uuid = "",
@@ -218,7 +217,6 @@ private fun OrderListScreenSuccessPreview() {
                                 dateTime = "18.03.2023 11:53",
                                 statusName = OrderStatus.ACCEPTED.name,
                                 background = OrderStatus.ACCEPTED.getOrderColor(),
-
                             ),
                             OrderItem(
                                 uuid = "",
@@ -227,7 +225,6 @@ private fun OrderListScreenSuccessPreview() {
                                 dateTime = "18.03.2023 11:53",
                                 statusName = OrderStatus.PREPARING.name,
                                 background = OrderStatus.PREPARING.getOrderColor(),
-
                             ),
                             OrderItem(
                                 uuid = "",
@@ -236,7 +233,6 @@ private fun OrderListScreenSuccessPreview() {
                                 dateTime = "18.03.2023 11:53",
                                 statusName = OrderStatus.DONE.name,
                                 background = OrderStatus.DONE.getOrderColor(),
-
                             ),
                             OrderItem(
                                 uuid = "",
@@ -245,7 +241,6 @@ private fun OrderListScreenSuccessPreview() {
                                 dateTime = "18.03.2023 11:53",
                                 statusName = OrderStatus.SENT_OUT.name,
                                 background = OrderStatus.SENT_OUT.getOrderColor(),
-
                             ),
                             OrderItem(
                                 uuid = "",
@@ -254,7 +249,6 @@ private fun OrderListScreenSuccessPreview() {
                                 dateTime = "18.03.2023 11:53",
                                 statusName = OrderStatus.DELIVERED.name,
                                 background = OrderStatus.DELIVERED.getOrderColor(),
-
                             ),
                             OrderItem(
                                 uuid = "",
@@ -263,7 +257,6 @@ private fun OrderListScreenSuccessPreview() {
                                 dateTime = "18.03.2023 11:53",
                                 statusName = OrderStatus.CANCELED.name,
                                 background = OrderStatus.CANCELED.getOrderColor(),
-
                             ),
                         ),
                 ),

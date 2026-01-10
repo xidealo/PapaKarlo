@@ -26,10 +26,12 @@ class CheckCodeUseCaseTest {
             val token = "token"
             val userUuid = "userUuid"
             everySuspend { authRepo.checkCode(code) } returns
-                    AuthResponse(
-                        token = token,
-                        userUuid = userUuid,
-                    )
+                AuthResponse(
+                    token = token,
+                    userUuid = userUuid,
+                )
+            everySuspend { authRepo.saveToken(token) } returns Unit
+            everySuspend { authRepo.saveUserUuid(userUuid) } returns Unit
 
             checkCodeUseCase(code)
 

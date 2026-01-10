@@ -58,15 +58,15 @@ import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import papakarlo.designsystem.generated.resources.Res
-import papakarlo.designsystem.generated.resources.title_menu_discount
-import papakarlo.designsystem.generated.resources.msg_menu_discount
 import papakarlo.designsystem.generated.resources.description_ic_discount
 import papakarlo.designsystem.generated.resources.error_consumer_cart_add_product
 import papakarlo.designsystem.generated.resources.error_menu_loading
 import papakarlo.designsystem.generated.resources.ic_cart_24
 import papakarlo.designsystem.generated.resources.ic_discount
 import papakarlo.designsystem.generated.resources.ic_profile
+import papakarlo.designsystem.generated.resources.msg_menu_discount
 import papakarlo.designsystem.generated.resources.title_menu
+import papakarlo.designsystem.generated.resources.title_menu_discount
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
@@ -343,7 +343,7 @@ private fun MenuColumn(
                 when (menuItemModel) {
                     is MenuItemUi.Discount,
                     is MenuItemUi.CategoryHeader,
-                        -> GridItemSpan(maxLineSpan)
+                    -> GridItemSpan(maxLineSpan)
 
                     else -> GridItemSpan(1)
                 }

@@ -1,11 +1,11 @@
 package com.bunbeauty.productdetails.presentation
 
-import com.bunbeauty.core.model.ProductDetailsOpenedFrom
-import com.bunbeauty.core.model.addition.AdditionGroup
-import com.bunbeauty.core.model.cart.CartCostAndCount
 import com.bunbeauty.core.base.BaseAction
 import com.bunbeauty.core.base.BaseDataState
 import com.bunbeauty.core.base.BaseEvent
+import com.bunbeauty.core.model.ProductDetailsOpenedFrom
+import com.bunbeauty.core.model.addition.AdditionGroup
+import com.bunbeauty.core.model.cart.CartCostAndCount
 
 interface ProductDetailsState {
     data class DataState(

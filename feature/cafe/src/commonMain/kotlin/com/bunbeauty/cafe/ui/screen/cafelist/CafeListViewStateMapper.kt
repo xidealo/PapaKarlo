@@ -2,9 +2,9 @@ package com.bunbeauty.cafe.ui.screen.cafelist
 
 import androidx.compose.runtime.Composable
 import com.bunbeauty.cafe.presentation.cafe_list.CafeList
-import com.bunbeauty.core.model.cafe.CafeOpenState
-import com.bunbeauty.cafe.ui.model.CafeOptions
 import com.bunbeauty.cafe.ui.CafeItemAndroid
+import com.bunbeauty.cafe.ui.model.CafeOptions
+import com.bunbeauty.core.model.cafe.CafeOpenState
 import kotlinx.collections.immutable.toPersistentList
 import org.jetbrains.compose.resources.stringResource
 import papakarlo.designsystem.generated.resources.Res

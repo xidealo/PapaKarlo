@@ -17,13 +17,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.bunbeauty.auth.presentation.confirm.Confirm
+import com.bunbeauty.auth.presentation.confirm.ConfirmViewModel
 import com.bunbeauty.core.model.SuccessLoginDirection
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.designsystem.ui.element.button.MainButton
 import com.bunbeauty.designsystem.ui.screen.LoadingScreen
-import com.bunbeauty.auth.presentation.confirm.Confirm
-import com.bunbeauty.auth.presentation.confirm.ConfirmViewModel
 import org.jetbrains.compose.resources.getString
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview

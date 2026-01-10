@@ -13,10 +13,10 @@ import com.bunbeauty.core.domain.discount.GetDiscountUseCase
 import com.bunbeauty.core.domain.menu_product.AddMenuProductUseCase
 import com.bunbeauty.core.domain.menu_product.IMenuProductInteractor
 import com.bunbeauty.core.extension.launchSafe
-import com.bunbeauty.core.model.menu.MenuSection
-import com.bunbeauty.core.model.mapper.toMenuItemList
 import com.bunbeauty.core.model.CategoryItem
 import com.bunbeauty.core.model.MenuItem
+import com.bunbeauty.core.model.mapper.toMenuItemList
+import com.bunbeauty.core.model.menu.MenuSection
 import com.bunbeauty.menu.presentation.model.MenuDataState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

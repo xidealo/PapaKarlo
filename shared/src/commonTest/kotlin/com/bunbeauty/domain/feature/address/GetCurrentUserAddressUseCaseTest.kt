@@ -1,9 +1,8 @@
 package com.bunbeauty.domain.feature.address
 
 import com.bunbeauty.core.domain.address.GetCurrentUserAddressUseCaseImpl
-import com.bunbeauty.shared.DataStoreRepo
-import com.bunbeauty.core.model.address.UserAddress
 import com.bunbeauty.core.domain.repo.UserAddressRepo
+import com.bunbeauty.core.model.address.UserAddress
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.mock
@@ -12,8 +11,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class GetCurrentUserAddressUseCaseTest {
-    private val fakeUserUuid = "userUuid"
-    private val fakeSelectedCityUuid = "selectedCityUuid"
     private val userAddressMock: UserAddress =
         UserAddress(
             uuid = "pulvinar",
@@ -54,12 +51,10 @@ class GetCurrentUserAddressUseCaseTest {
     fun `return first address when address is not selected`() =
         runTest {
             everySuspend {
-                userAddressRepo.getSelectedAddressByUserAndCityUuid(
-                )
+                userAddressRepo.getSelectedAddressByUserAndCityUuid()
             } returns null
             everySuspend {
-                userAddressRepo.getFirstUserAddressByUserAndCityUuid(
-                )
+                userAddressRepo.getFirstUserAddressByUserAndCityUuid()
             } returns userAddressMock
 
             val currentUserAddress = getCurrentUserAddressUseCase()

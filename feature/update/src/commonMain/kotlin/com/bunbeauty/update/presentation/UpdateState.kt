@@ -1,10 +1,10 @@
 package com.bunbeauty.update.presentation
 
-import com.bunbeauty.core.model.link.Link
-import com.bunbeauty.core.model.link.LinkType
 import com.bunbeauty.core.base.BaseAction
 import com.bunbeauty.core.base.BaseEvent
 import com.bunbeauty.core.base.BaseViewDataState
+import com.bunbeauty.core.model.link.Link
+import com.bunbeauty.core.model.link.LinkType
 
 sealed interface UpdateState {
     data class DataState(

@@ -1,8 +1,8 @@
 package com.bunbeauty.profile.ui.screen.city.screen.selectcity
 
 import androidx.compose.runtime.Immutable
-import com.bunbeauty.core.model.city.City
 import com.bunbeauty.core.base.BaseViewState
+import com.bunbeauty.core.model.city.City
 
 @Immutable
 data class SelectCityViewState(

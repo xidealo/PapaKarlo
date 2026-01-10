@@ -26,7 +26,7 @@ internal fun cityUseCaseModule() =
         }
         factory {
             SaveSelectedCityUseCase(
-                cityRepo = get()
+                cityRepo = get(),
             )
         }
     }

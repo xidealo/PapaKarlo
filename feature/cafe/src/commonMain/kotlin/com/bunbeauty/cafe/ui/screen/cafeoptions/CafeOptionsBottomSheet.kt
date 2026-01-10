@@ -6,23 +6,23 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.bunbeauty.cafe.presentation.cafe_list.CafeList
+import com.bunbeauty.cafe.ui.model.CafeOptions
+import com.bunbeauty.cafe.ui.screen.cafelist.CafeListViewState
+import com.bunbeauty.core.Constants.COORDINATES_DIVIDER
+import com.bunbeauty.core.Constants.MAPS_LINK
+import com.bunbeauty.core.Constants.PHONE_LINK
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.ui.element.CircularProgressBar
 import com.bunbeauty.designsystem.ui.element.card.NavigationIconCard
 import com.bunbeauty.designsystem.ui.screen.bottomsheet.FoodDeliveryModalBottomSheet
-import com.bunbeauty.core.Constants.COORDINATES_DIVIDER
-import com.bunbeauty.core.Constants.MAPS_LINK
-import com.bunbeauty.core.Constants.PHONE_LINK
 import com.bunbeauty.shared.OpenExternalSource
-import com.bunbeauty.cafe.ui.model.CafeOptions
-import com.bunbeauty.cafe.ui.screen.cafelist.CafeListViewState
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.koinInject
-import papakarlo.designsystem.generated.resources.ic_address
-import papakarlo.designsystem.generated.resources.ic_call
 import papakarlo.designsystem.generated.resources.Res
 import papakarlo.designsystem.generated.resources.description_cafe_options_call
 import papakarlo.designsystem.generated.resources.description_cafe_options_map
+import papakarlo.designsystem.generated.resources.ic_address
+import papakarlo.designsystem.generated.resources.ic_call
 
 @Composable
 fun CafeOptionsBottomSheet(

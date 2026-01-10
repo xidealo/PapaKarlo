@@ -1,5 +1,3 @@
-import CommonApplication.deploymentTarget
-
 plugins {
     alias(libs.plugins.client.compose.multiplatform.feature)
 }
@@ -34,7 +32,6 @@ kotlin {
                 implementation(libs.activity.compose)
                 implementation(compose.uiTooling)
                 implementation(libs.firebase.messaging)
-
             }
         }
     }

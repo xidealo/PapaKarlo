@@ -1,8 +1,8 @@
 package com.bunbeauty.shared.di
 
-import com.bunbeauty.shared.presentation.MainViewModel
 import com.bunbeauty.order.presentation.consumercart.ConsumerCartViewModel
 import com.bunbeauty.profile.presentation.selectcity.SelectCityViewModel
+import com.bunbeauty.shared.presentation.MainViewModel
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
@@ -33,5 +33,4 @@ fun viewModelModule() =
                 cityInteractor = get(),
             )
         }
-
     }

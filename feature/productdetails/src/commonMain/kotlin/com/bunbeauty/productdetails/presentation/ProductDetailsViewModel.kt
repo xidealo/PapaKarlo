@@ -6,17 +6,17 @@ import com.bunbeauty.analytic.event.menu.AddMenuProductDetailsClickEvent
 import com.bunbeauty.analytic.event.recommendation.AddRecommendationProductDetailsClickEvent
 import com.bunbeauty.analytic.parameter.MenuProductUuidEventParameter
 import com.bunbeauty.core.Constants.RUBLE_CURRENCY
-import com.bunbeauty.core.domain.ObserveCartUseCase
-import com.bunbeauty.core.domain.menu_product.GetMenuProductUseCase
-import com.bunbeauty.core.model.addition.AdditionGroup
-import com.bunbeauty.core.model.product.MenuProduct
-import com.bunbeauty.core.extension.launchSafe
-import com.bunbeauty.core.model.ProductDetailsOpenedFrom
 import com.bunbeauty.core.base.SharedStateViewModel
+import com.bunbeauty.core.domain.ObserveCartUseCase
 import com.bunbeauty.core.domain.addition.GetAdditionGroupsWithSelectedAdditionUseCase
 import com.bunbeauty.core.domain.addition.GetPriceOfSelectedAdditionsUseCase
 import com.bunbeauty.core.domain.cart.AddCartProductUseCase
 import com.bunbeauty.core.domain.cart.EditCartProductUseCase
+import com.bunbeauty.core.domain.menu_product.GetMenuProductUseCase
+import com.bunbeauty.core.extension.launchSafe
+import com.bunbeauty.core.model.ProductDetailsOpenedFrom
+import com.bunbeauty.core.model.addition.AdditionGroup
+import com.bunbeauty.core.model.product.MenuProduct
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 

@@ -16,6 +16,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.bunbeauty.address.presentation.user_address_list.UserAddressListDataState
 import com.bunbeauty.address.presentation.user_address_list.UserAddressListViewModel
+import com.bunbeauty.core.extension.toUserAddressItem
+import com.bunbeauty.core.model.UserAddressItem
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryHorizontalDivider
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryScaffold
@@ -24,24 +26,23 @@ import com.bunbeauty.designsystem.ui.element.selectable.SelectableItem
 import com.bunbeauty.designsystem.ui.screen.EmptyScreen
 import com.bunbeauty.designsystem.ui.screen.ErrorScreen
 import com.bunbeauty.designsystem.ui.screen.LoadingScreen
-import com.bunbeauty.core.extension.toUserAddressItem
-import com.bunbeauty.core.model.UserAddressItem
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import papakarlo.designsystem.generated.resources.Res
-import papakarlo.designsystem.generated.resources.ic_address
-import papakarlo.designsystem.generated.resources.title_my_addresses
 import papakarlo.designsystem.generated.resources.action_add_addresses
 import papakarlo.designsystem.generated.resources.description_cafe_addresses_empty
 import papakarlo.designsystem.generated.resources.error_addresses_list_loading
+import papakarlo.designsystem.generated.resources.ic_address
 import papakarlo.designsystem.generated.resources.msg_my_addresses_empty
+import papakarlo.designsystem.generated.resources.title_my_addresses
 import papakarlo.designsystem.generated.resources.title_my_addresses_empty
 
 @Composable
 private fun UserAddressListDataState.DataState.mapState(): UserAddressListViewState =
     UserAddressListViewState(
-        userAddressItems = userAddressList.map { userAddressList ->
+        userAddressItems =
+            userAddressList.map { userAddressList ->
                 userAddressList.toUserAddressItem()
             },
         state =

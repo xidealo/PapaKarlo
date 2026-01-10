@@ -77,7 +77,7 @@ fun CreateOrder.DataState.toViewState(): CreateOrderViewState {
         isOrderCreationEnabled =
             if (isDelivery) {
                 deliveryState == CreateOrder.DataState.DeliveryState.ENABLED &&
-                        (cartTotalUI as? CartTotalUI.Success)?.motivation !is MotivationUi.MinOrderCost
+                    (cartTotalUI as? CartTotalUI.Success)?.motivation !is MotivationUi.MinOrderCost
             } else {
                 isPickupEnabled
             },

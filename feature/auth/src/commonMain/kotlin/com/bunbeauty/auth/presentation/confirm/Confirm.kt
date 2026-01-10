@@ -1,9 +1,9 @@
 package com.bunbeauty.auth.presentation.confirm
 
-import com.bunbeauty.core.model.SuccessLoginDirection
 import com.bunbeauty.core.base.BaseAction
 import com.bunbeauty.core.base.BaseEvent
 import com.bunbeauty.core.base.BaseViewDataState
+import com.bunbeauty.core.model.SuccessLoginDirection
 
 interface Confirm {
     data class ViewDataState(

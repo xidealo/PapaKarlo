@@ -1,8 +1,8 @@
 package com.bunbeauty.shared.data
 
+import com.bunbeauty.core.model.Discount
 import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.domain.model.Delivery
-import com.bunbeauty.core.model.Discount
 import com.bunbeauty.shared.domain.model.Settings
 import com.bunbeauty.shared.domain.model.UserCityUuid
 import kotlinx.coroutines.flow.Flow

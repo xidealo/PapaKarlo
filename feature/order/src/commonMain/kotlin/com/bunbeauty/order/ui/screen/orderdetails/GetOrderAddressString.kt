@@ -7,19 +7,20 @@ import com.bunbeauty.core.extension.getStringPart
 import com.bunbeauty.core.model.order.OrderAddress
 import org.jetbrains.compose.resources.stringResource
 import papakarlo.designsystem.generated.resources.Res
-import papakarlo.designsystem.generated.resources.msg_address_house_short
 import papakarlo.designsystem.generated.resources.msg_address_entrance_short
 import papakarlo.designsystem.generated.resources.msg_address_flat_short
 import papakarlo.designsystem.generated.resources.msg_address_floor_short
+import papakarlo.designsystem.generated.resources.msg_address_house_short
 
 @Composable
 fun OrderAddress.getOrderAddressString(): String =
-    (if (description.isNullOrEmpty()) {
-        val houseShort = stringResource(resource = Res.string.msg_address_house_short)
-        val flatShort = stringResource(resource = Res.string.msg_address_flat_short)
-        val entranceShort = stringResource(resource = Res.string.msg_address_entrance_short)
-        val floorShort = stringResource(resource = Res.string.msg_address_floor_short)
-        street +
+    (
+        if (description.isNullOrEmpty()) {
+            val houseShort = stringResource(resource = Res.string.msg_address_house_short)
+            val flatShort = stringResource(resource = Res.string.msg_address_flat_short)
+            val entranceShort = stringResource(resource = Res.string.msg_address_entrance_short)
+            val floorShort = stringResource(resource = Res.string.msg_address_floor_short)
+            street +
                 getStringPart(
                     ADDRESS_DIVIDER,
                     houseShort,
@@ -45,6 +46,7 @@ fun OrderAddress.getOrderAddressString(): String =
                     "",
                     comment,
                 )
-    } else {
-        description
-    }).toString()
+        } else {
+            description
+        }
+    ).toString()

@@ -1,7 +1,7 @@
 package com.bunbeauty.order.ui.screen.orderdetails
 
-import com.bunbeauty.core.model.order.OrderStatus
 import com.bunbeauty.core.base.BaseViewState
+import com.bunbeauty.core.model.order.OrderStatus
 import com.bunbeauty.order.presentation.order_details.OrderDetails
 
 data class OrderDetailsViewState(

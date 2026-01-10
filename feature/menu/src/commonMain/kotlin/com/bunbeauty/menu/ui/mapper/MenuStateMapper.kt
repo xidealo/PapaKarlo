@@ -3,9 +3,9 @@ package com.bunbeauty.menu.ui.mapper
 import com.bunbeauty.core.Constants.RUBLE_CURRENCY
 import com.bunbeauty.core.model.MenuItem
 import com.bunbeauty.designsystem.ui.element.TopCartUi
-import com.bunbeauty.menu.ui.state.MenuViewState
 import com.bunbeauty.menu.presentation.model.MenuDataState
 import com.bunbeauty.menu.ui.state.MenuItemUi
+import com.bunbeauty.menu.ui.state.MenuViewState
 import kotlinx.collections.immutable.toImmutableList
 
 fun MenuDataState.toMenuViewState(): MenuViewState =

@@ -1,14 +1,11 @@
 package com.bunbeauty.domain.feature.splash
 
 import com.bunbeauty.core.domain.exeptions.NoCityException
-import com.bunbeauty.getCity
-import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.core.domain.repo.CityRepo
 import com.bunbeauty.core.domain.splash.SaveOneCityUseCase
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.mock
-import dev.mokkery.verifySuspend
 import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
 import kotlin.test.assertFailsWith

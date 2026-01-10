@@ -1,12 +1,11 @@
 package com.bunbeauty.domain.feature.address
 
 import com.bunbeauty.core.domain.address.GetCurrentUserAddressWithCityUseCaseImpl
-import com.bunbeauty.getCity
-import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.core.domain.city.GetSelectedCityUseCase
+import com.bunbeauty.core.domain.repo.UserAddressRepo
 import com.bunbeauty.core.model.address.UserAddress
 import com.bunbeauty.core.model.address.UserAddressWithCity
-import com.bunbeauty.core.domain.repo.UserAddressRepo
+import com.bunbeauty.getCity
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.mock
@@ -15,7 +14,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class GetCurrentUserAddressWithCityUseCaseTest {
-
     private val fakeCity =
         getCity(
             "Kimry",
@@ -53,6 +51,10 @@ class GetCurrentUserAddressWithCityUseCaseTest {
                 getSelectedCityUseCaseImpl()
             } returns fakeCity
 
+            everySuspend {
+                userAddressRepo.getSelectedAddressByUserAndCityUuid()
+            } returns userAddressMock
+
             val currentUserAddress = getCurrentUserAddressWithCityUseCaseImpl()
 
             assertEquals(
@@ -67,9 +69,12 @@ class GetCurrentUserAddressWithCityUseCaseTest {
     @Test
     fun `return first address with city when address is not selected`() =
         runTest {
-
             everySuspend {
                 userAddressRepo.getFirstUserAddressByUserAndCityUuid()
+            } returns userAddressMock
+
+            everySuspend {
+                userAddressRepo.getSelectedAddressByUserAndCityUuid()
             } returns userAddressMock
 
             everySuspend {

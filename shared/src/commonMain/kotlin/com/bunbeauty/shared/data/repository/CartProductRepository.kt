@@ -1,5 +1,6 @@
 package com.bunbeauty.shared.data.repository
 
+import com.bunbeauty.core.domain.repo.CartProductRepo
 import com.bunbeauty.core.model.cart.CartProduct
 import com.bunbeauty.shared.data.UuidGenerator
 import com.bunbeauty.shared.data.dao.cart_product.ICartProductDao
@@ -7,7 +8,6 @@ import com.bunbeauty.shared.data.dao.menu_product.IMenuProductDao
 import com.bunbeauty.shared.data.mapper.cart_product.ICartProductMapper
 import com.bunbeauty.shared.db.CartProductEntity
 import com.bunbeauty.shared.db.CartProductWithMenuProductEntity
-import com.bunbeauty.core.domain.repo.CartProductRepo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 

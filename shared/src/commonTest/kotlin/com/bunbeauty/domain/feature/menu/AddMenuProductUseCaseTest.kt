@@ -1,10 +1,10 @@
 package com.bunbeauty.domain.feature.menu
 
-import com.bunbeauty.getCartProduct
 import com.bunbeauty.core.domain.GetCartProductCountUseCase
 import com.bunbeauty.core.domain.exeptions.CartProductLimitReachedException
 import com.bunbeauty.core.domain.menu_product.AddMenuProductUseCase
 import com.bunbeauty.core.domain.repo.CartProductRepo
+import com.bunbeauty.getCartProduct
 import dev.mokkery.MockMode
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend

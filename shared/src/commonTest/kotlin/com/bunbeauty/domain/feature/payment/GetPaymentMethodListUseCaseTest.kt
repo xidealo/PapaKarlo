@@ -1,9 +1,9 @@
 package com.bunbeauty.domain.feature.payment
 
 import com.bunbeauty.core.domain.payment.GetPaymentMethodListUseCase
+import com.bunbeauty.core.domain.repo.PaymentRepo
 import com.bunbeauty.core.model.payment_method.PaymentMethod
 import com.bunbeauty.core.model.payment_method.PaymentMethodName
-import com.bunbeauty.core.domain.repo.PaymentRepo
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.mock

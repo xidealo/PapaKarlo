@@ -1,10 +1,10 @@
 package com.bunbeauty.order.presentation.order_list
 
 import com.bunbeauty.core.Logger
+import com.bunbeauty.core.base.SharedStateViewModel
 import com.bunbeauty.core.domain.order.ObserveOrderListUseCase
 import com.bunbeauty.core.domain.order.StopObserveOrdersUseCase
 import com.bunbeauty.core.extension.launchSafe
-import com.bunbeauty.core.base.SharedStateViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch

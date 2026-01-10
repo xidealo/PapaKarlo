@@ -1,7 +1,7 @@
 package com.bunbeauty.profile.presentation.profile
 
-import com.bunbeauty.core.Logger
 import com.bunbeauty.core.Constants.VERSION_DIVIDER
+import com.bunbeauty.core.Logger
 import com.bunbeauty.core.base.SharedStateViewModel
 import com.bunbeauty.core.domain.link.GetLinkListUseCase
 import com.bunbeauty.core.domain.order.GetLastOrderUseCase

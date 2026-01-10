@@ -29,6 +29,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.LifecycleStartEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.bunbeauty.core.extension.getDateTimeString
 import com.bunbeauty.core.extension.getOrderColor
 import com.bunbeauty.core.extension.getOrderStatusName
 import com.bunbeauty.core.model.SuccessLoginDirection
@@ -45,7 +46,6 @@ import com.bunbeauty.designsystem.ui.element.OrderStatusChip
 import com.bunbeauty.designsystem.ui.element.button.MainButton
 import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.designsystem.ui.element.card.NavigationIconCardWithDivider
-import com.bunbeauty.core.extension.getDateTimeString
 import com.bunbeauty.designsystem.ui.screen.ErrorScreen
 import com.bunbeauty.designsystem.ui.screen.LoadingScreen
 import com.bunbeauty.profile.presentation.profile.ProfileState
@@ -83,7 +83,6 @@ import papakarlo.designsystem.generated.resources.title_feedback
 import papakarlo.designsystem.generated.resources.title_profile
 import papakarlo.designsystem.generated.resources.title_profile_cafe_list
 import papakarlo.designsystem.generated.resources.title_profile_no_profile
-
 
 @Composable
 fun ProfileState.DataState.mapState(): ProfileViewState =
@@ -481,7 +480,7 @@ private fun OrderProfile(
 
             OrderStatusChip(
                 statusName = lastOrder.status.getOrderStatusName(),
-                background = lastOrder.status.getOrderColor()
+                background = lastOrder.status.getOrderColor(),
             )
 
             Text(

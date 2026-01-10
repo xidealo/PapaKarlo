@@ -1,16 +1,15 @@
 package com.bunbeauty.domain.feature.payment
 
 import com.bunbeauty.core.domain.payment.GetSelectablePaymentMethodListUseCase
+import com.bunbeauty.core.domain.repo.PaymentRepo
 import com.bunbeauty.core.model.payment_method.PaymentMethod
 import com.bunbeauty.core.model.payment_method.PaymentMethodName
 import com.bunbeauty.core.model.payment_method.SelectablePaymentMethod
-import com.bunbeauty.core.domain.repo.PaymentRepo
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.mock
 import dev.mokkery.verify.VerifyMode
 import dev.mokkery.verifySuspend
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -33,6 +32,7 @@ class GetSelectablePaymentMethodListUseCaseTest {
             val selectedPaymentMethodUuid = "uuid2"
 
             everySuspend { paymentRepo.getPaymentMethodList() } returns paymentMethodList
+            everySuspend { paymentRepo.getSelectedPaymentMethodUuid() } returns selectedPaymentMethodUuid
 
             val result = useCase.invoke()
 
@@ -61,6 +61,7 @@ class GetSelectablePaymentMethodListUseCaseTest {
             val selectedPaymentMethodUuid = null
 
             everySuspend { paymentRepo.getPaymentMethodList() } returns paymentMethodList
+            everySuspend { paymentRepo.getSelectedPaymentMethodUuid() } returns selectedPaymentMethodUuid
 
             val result = useCase.invoke()
 

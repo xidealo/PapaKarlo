@@ -1,9 +1,9 @@
 package com.bunbeauty.order.ui.mapper
 
-import com.bunbeauty.order.ui.state.ConsumerCartViewState
 import com.bunbeauty.core.motivation.toMotivationUi
 import com.bunbeauty.order.presentation.consumercart.CartProductItem
 import com.bunbeauty.order.presentation.consumercart.ConsumerCart
+import com.bunbeauty.order.ui.state.ConsumerCartViewState
 import kotlinx.collections.immutable.toImmutableList
 
 fun ConsumerCart.DataState.toConsumerCartViewState(): ConsumerCartViewState =

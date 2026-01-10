@@ -1,9 +1,9 @@
 package com.bunbeauty.address.presentation.user_address_list
 
-import com.bunbeauty.core.model.address.SelectableUserAddress
 import com.bunbeauty.core.base.BaseAction
 import com.bunbeauty.core.base.BaseDataState
 import com.bunbeauty.core.base.BaseEvent
+import com.bunbeauty.core.model.address.SelectableUserAddress
 
 interface UserAddressListDataState {
     data class DataState(

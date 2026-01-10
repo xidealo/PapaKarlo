@@ -1,9 +1,9 @@
 package com.bunbeauty.address.presentation.create_address
 
-import com.bunbeauty.designsystem.ui.element.textfield.SuggestionUi
 import com.bunbeauty.core.base.BaseAction
 import com.bunbeauty.core.base.BaseDataState
 import com.bunbeauty.core.base.BaseEvent
+import com.bunbeauty.designsystem.ui.element.textfield.SuggestionUi
 
 interface CreateAddress {
     data class DataState(

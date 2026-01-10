@@ -2,6 +2,7 @@ package com.bunbeauty.shared.data.repository
 
 import com.bunbeauty.core.domain.exeptions.NoSelectedCityUuidException
 import com.bunbeauty.core.domain.exeptions.NoTokenException
+import com.bunbeauty.core.domain.repo.UserAddressRepo
 import com.bunbeauty.core.model.address.CreatedUserAddress
 import com.bunbeauty.core.model.address.UserAddress
 import com.bunbeauty.core.model.address.UserAddressCache
@@ -12,7 +13,6 @@ import com.bunbeauty.shared.data.network.api.NetworkConnector
 import com.bunbeauty.shared.db.SelectedUserAddressUuidEntity
 import com.bunbeauty.shared.domain.mapFlow
 import com.bunbeauty.shared.domain.mapListFlow
-import com.bunbeauty.core.domain.repo.UserAddressRepo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
@@ -27,16 +27,14 @@ open class UserAddressRepository(
 
     private var userAddressCache: UserAddressCache? = null
 
-    override suspend fun saveUserAddress(
-        createdUserAddress: CreatedUserAddress,
-    ): UserAddress? {
+    override suspend fun saveUserAddress(createdUserAddress: CreatedUserAddress): UserAddress? {
         val token = dataStoreRepo.getToken() ?: throw NoTokenException()
         val cityUuid = dataStoreRepo.getSelectedCityUuid() ?: throw NoSelectedCityUuidException()
 
         val userAddressPostServer =
             userAddressMapper.toUserAddressPostServer(
                 createdUserAddress = createdUserAddress,
-                cityUuid = cityUuid
+                cityUuid = cityUuid,
             )
 
         return networkConnector
@@ -57,9 +55,7 @@ open class UserAddressRepository(
             }
     }
 
-    override suspend fun saveSelectedUserAddress(
-        addressUuid: String,
-    ) {
+    override suspend fun saveSelectedUserAddress(addressUuid: String) {
         val userCityUuid = dataStoreRepo.getUserAndCityUuid()
 
         val selectedUserAddressUuid =
@@ -156,7 +152,6 @@ open class UserAddressRepository(
                 cityUuid = cityUuid,
             ).mapFlow(userAddressMapper::toUserAddress)
     }
-
 
     override fun observeUserAddressListByUserUuidAndCityUuid(
         userUuid: String,

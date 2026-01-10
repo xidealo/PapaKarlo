@@ -4,9 +4,9 @@ import com.bunbeauty.core.domain.cafe.GetCafeListUseCase
 import com.bunbeauty.core.domain.cafe.GetSelectableCafeListUseCase
 import com.bunbeauty.core.domain.cafe.IsPickupEnabledFromCafeUseCase
 import com.bunbeauty.core.domain.exeptions.EmptyCafeListException
-import com.bunbeauty.getCafe
-import com.bunbeauty.core.model.cafe.SelectableCafe
 import com.bunbeauty.core.domain.repo.CafeRepo
+import com.bunbeauty.core.model.cafe.SelectableCafe
+import com.bunbeauty.getCafe
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.mock
@@ -26,7 +26,6 @@ class GetSelectableCafeListUseCaseTest {
             getCafeListUseCase = getCafeListUseCase,
             isPickupEnabledFromCafeUseCaseImpl = isPickupEnabledFromCafeUseCase,
         )
-
 
     @Test
     fun `invoke should throw EmptyCafeListException when cafe list is empty`() =
@@ -56,8 +55,7 @@ class GetSelectableCafeListUseCaseTest {
 
             everySuspend { getCafeListUseCase() } returns cafes
             everySuspend {
-                cafeRepo.getSelectedCafeByUserAndCityUuid(
-                )
+                cafeRepo.getSelectedCafeByUserAndCityUuid()
             } returns selectedCafe
             everySuspend { isPickupEnabledFromCafeUseCase("cafe1") } returns true
             everySuspend { isPickupEnabledFromCafeUseCase("cafe2") } returns false
@@ -92,8 +90,7 @@ class GetSelectableCafeListUseCaseTest {
 
             everySuspend { getCafeListUseCase() } returns cafes
             everySuspend {
-                cafeRepo.getSelectedCafeByUserAndCityUuid(
-                )
+                cafeRepo.getSelectedCafeByUserAndCityUuid()
             } returns null
             everySuspend { isPickupEnabledFromCafeUseCase("cafe1") } returns false
             everySuspend { isPickupEnabledFromCafeUseCase("cafe2") } returns true
@@ -125,8 +122,7 @@ class GetSelectableCafeListUseCaseTest {
 
             everySuspend { getCafeListUseCase() } returns cafes
             everySuspend {
-                cafeRepo.getSelectedCafeByUserAndCityUuid(
-                )
+                cafeRepo.getSelectedCafeByUserAndCityUuid()
             } returns null
             everySuspend { isPickupEnabledFromCafeUseCase("cafe1") } returns false
             everySuspend { isPickupEnabledFromCafeUseCase("cafe2") } returns false

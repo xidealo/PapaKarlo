@@ -3,9 +3,9 @@ package com.bunbeauty.profile.ui.screen.city.screen.changecity
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
+import com.bunbeauty.designsystem.model.CityUI
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.ui.screen.bottomsheet.FoodDeliveryModalBottomSheet
-import com.bunbeauty.designsystem.model.CityUI
 import com.bunbeauty.profile.presentation.settings.SettingsState
 import com.bunbeauty.profile.ui.screen.city.ui.CityItem
 import com.bunbeauty.profile.ui.screen.settings.SettingsViewState

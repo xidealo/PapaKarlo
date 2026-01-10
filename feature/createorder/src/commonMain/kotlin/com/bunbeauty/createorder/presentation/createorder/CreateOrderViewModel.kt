@@ -12,8 +12,11 @@ import com.bunbeauty.core.domain.cafe.GetDeferredTimeHintUseCase
 import com.bunbeauty.core.domain.cafe.GetSelectableCafeListUseCase
 import com.bunbeauty.core.domain.cafe.GetWorkloadCafeUseCase
 import com.bunbeauty.core.domain.cafe.HasOpenedCafeUseCase
+import com.bunbeauty.core.domain.cafe.ICafeInteractor
 import com.bunbeauty.core.domain.cafe.IsDeliveryEnabledFromCafeUseCase
 import com.bunbeauty.core.domain.cafe.IsPickupEnabledFromCafeUseCase
+import com.bunbeauty.core.domain.cart.GetCartTotalFlowUseCase
+import com.bunbeauty.core.domain.cart.ICartProductInteractor
 import com.bunbeauty.core.domain.city.GetSelectedCityTimeZoneUseCase
 import com.bunbeauty.core.domain.deferred_time.GetMinTimeUseCase
 import com.bunbeauty.core.domain.exeptions.NotAllowedTimeForOrderException
@@ -29,9 +32,6 @@ import com.bunbeauty.core.domain.user.IUserInteractor
 import com.bunbeauty.core.extension.launchSafe
 import com.bunbeauty.core.model.cafe.Cafe
 import com.bunbeauty.core.model.date_time.Time
-import com.bunbeauty.core.domain.cafe.ICafeInteractor
-import com.bunbeauty.core.domain.cart.GetCartTotalFlowUseCase
-import com.bunbeauty.core.domain.cart.ICartProductInteractor
 import com.bunbeauty.core.motivation.toMotivationData
 import kotlinx.coroutines.Job
 

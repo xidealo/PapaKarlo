@@ -1,9 +1,9 @@
 package com.bunbeauty.address.presentation.user_address_list
 
+import com.bunbeauty.core.base.SharedStateViewModel
 import com.bunbeauty.core.domain.address.GetSelectableUserAddressListUseCase
 import com.bunbeauty.core.domain.address.SaveSelectedUserAddressUseCase
 import com.bunbeauty.core.extension.launchSafe
-import com.bunbeauty.core.base.SharedStateViewModel
 import kotlinx.coroutines.launch
 
 class UserAddressListViewModel(

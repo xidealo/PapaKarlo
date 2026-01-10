@@ -1,9 +1,9 @@
 package com.bunbeauty.domain.feature.cafe
 
 import com.bunbeauty.core.domain.cafe.IsDeliveryEnabledFromCafeUseCase
-import com.bunbeauty.getCafe
-import com.bunbeauty.core.model.cafe.Cafe
 import com.bunbeauty.core.domain.repo.CafeRepo
+import com.bunbeauty.core.model.cafe.Cafe
+import com.bunbeauty.getCafe
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.mock

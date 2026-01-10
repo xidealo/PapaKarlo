@@ -2,8 +2,8 @@ package com.bunbeauty.domain.feature.cafe
 
 import com.bunbeauty.core.domain.cafe.GetCafeListUseCaseImpl
 import com.bunbeauty.core.domain.exeptions.EmptyCafeListException
-import com.bunbeauty.core.model.cafe.Cafe
 import com.bunbeauty.core.domain.repo.CafeRepo
+import com.bunbeauty.core.model.cafe.Cafe
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.mock
@@ -13,7 +13,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
 class GetCafeListUseCaseTest {
-
     private val cafeRepo: CafeRepo = mock()
 
     private val getCafeListUseCase: GetCafeListUseCaseImpl =

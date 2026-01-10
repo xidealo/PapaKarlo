@@ -1,12 +1,12 @@
 package com.bunbeauty.address.presentation.create_address
 
-import com.bunbeauty.designsystem.ui.element.textfield.SuggestionUi
-import com.bunbeauty.core.model.Suggestion
-import com.bunbeauty.core.domain.address.SaveSelectedUserAddressUseCase
-import com.bunbeauty.core.extension.launchSafe
 import com.bunbeauty.core.base.SharedStateViewModel
 import com.bunbeauty.core.domain.address.CreateAddressUseCase
 import com.bunbeauty.core.domain.address.GetSuggestionsUseCase
+import com.bunbeauty.core.domain.address.SaveSelectedUserAddressUseCase
+import com.bunbeauty.core.extension.launchSafe
+import com.bunbeauty.core.model.Suggestion
+import com.bunbeauty.designsystem.ui.element.textfield.SuggestionUi
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.Job

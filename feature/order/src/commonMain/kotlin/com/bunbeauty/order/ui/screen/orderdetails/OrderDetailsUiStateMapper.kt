@@ -1,13 +1,13 @@
 package com.bunbeauty.order.ui.screen.orderdetails
 
 import androidx.compose.runtime.Composable
-import com.bunbeauty.order.presentation.order_details.OrderDetails
 import com.bunbeauty.core.extension.getDateTimeString
 import com.bunbeauty.core.extension.getDeferredString
 import com.bunbeauty.core.extension.getOrderStatusName
 import com.bunbeauty.core.extension.getPickupMethodString
 import com.bunbeauty.core.extension.getTimeString
 import com.bunbeauty.core.extension.mapToString
+import com.bunbeauty.order.presentation.order_details.OrderDetails
 import org.jetbrains.compose.resources.stringResource
 import papakarlo.designsystem.generated.resources.Res
 import papakarlo.designsystem.generated.resources.asap

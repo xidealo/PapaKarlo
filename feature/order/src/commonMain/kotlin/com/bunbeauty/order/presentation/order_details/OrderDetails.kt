@@ -1,14 +1,14 @@
 package com.bunbeauty.order.presentation.order_details
 
+import com.bunbeauty.core.base.BaseAction
+import com.bunbeauty.core.base.BaseDataState
+import com.bunbeauty.core.base.BaseEvent
 import com.bunbeauty.core.model.addition.OrderAddition
 import com.bunbeauty.core.model.date_time.DateTime
 import com.bunbeauty.core.model.date_time.Time
 import com.bunbeauty.core.model.order.OrderAddress
 import com.bunbeauty.core.model.order.OrderStatus
 import com.bunbeauty.core.model.payment_method.PaymentMethodName
-import com.bunbeauty.core.base.BaseAction
-import com.bunbeauty.core.base.BaseDataState
-import com.bunbeauty.core.base.BaseEvent
 
 interface OrderDetails {
     data class DataState(

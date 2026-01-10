@@ -40,10 +40,11 @@ class MainActivity :
                 flavor = BuildConfig.FLAVOR,
             ) {
                 MainScreen(
-                    modifier = Modifier
-                        .statusBarsPadding()
-                        .navigationBarsPadding()
-                        .imePadding()
+                    modifier =
+                        Modifier
+                            .statusBarsPadding()
+                            .navigationBarsPadding()
+                            .imePadding(),
                 )
             }
         }

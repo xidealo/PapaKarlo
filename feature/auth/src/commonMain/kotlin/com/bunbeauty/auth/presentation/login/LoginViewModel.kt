@@ -1,13 +1,13 @@
 package com.bunbeauty.auth.presentation.login
 
-import com.bunbeauty.core.domain.exeptions.InvalidPhoneNumberException
-import com.bunbeauty.core.domain.exeptions.TooManyRequestsException
+import com.bunbeauty.core.base.SharedStateViewModel
 import com.bunbeauty.core.domain.auth.CheckPhoneNumberUseCase
 import com.bunbeauty.core.domain.auth.FormatPhoneNumberUseCase
 import com.bunbeauty.core.domain.auth.GetPhoneNumberCursorPositionUseCase
-import com.bunbeauty.core.extension.launchSafe
-import com.bunbeauty.core.base.SharedStateViewModel
 import com.bunbeauty.core.domain.auth.RequestCodeUseCase
+import com.bunbeauty.core.domain.exeptions.InvalidPhoneNumberException
+import com.bunbeauty.core.domain.exeptions.TooManyRequestsException
+import com.bunbeauty.core.extension.launchSafe
 
 class LoginViewModel(
     private val requestCode: RequestCodeUseCase,

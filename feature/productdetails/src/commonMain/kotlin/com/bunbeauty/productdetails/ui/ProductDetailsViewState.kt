@@ -1,8 +1,8 @@
 package com.bunbeauty.productdetails.ui
 
 import androidx.compose.runtime.Immutable
-import com.bunbeauty.designsystem.ui.element.TopCartUi
 import com.bunbeauty.core.base.BaseViewState
+import com.bunbeauty.designsystem.ui.element.TopCartUi
 import com.bunbeauty.productdetails.presentation.AdditionItem
 import kotlinx.collections.immutable.ImmutableList
 

@@ -1,9 +1,9 @@
 package com.bunbeauty.profile.presentation.selectcity
 
-import com.bunbeauty.core.extension.launchSafe
-import com.bunbeauty.core.model.city.City
 import com.bunbeauty.core.base.SharedStateViewModel
 import com.bunbeauty.core.domain.city.ICityInteractor
+import com.bunbeauty.core.extension.launchSafe
+import com.bunbeauty.core.model.city.City
 
 class SelectCityViewModel(
     private val cityInteractor: ICityInteractor,

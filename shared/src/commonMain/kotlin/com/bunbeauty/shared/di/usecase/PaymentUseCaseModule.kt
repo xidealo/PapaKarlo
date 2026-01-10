@@ -20,7 +20,7 @@ internal fun paymentUseCaseModule() =
         }
         factory {
             SavePaymentMethodUseCase(
-                paymentRepo = get()
+                paymentRepo = get(),
             )
         }
         factory {

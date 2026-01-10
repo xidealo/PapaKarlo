@@ -31,13 +31,16 @@ import com.bunbeauty.core.domain.cafe.GetDeferredTimeHintUseCase
 import com.bunbeauty.core.domain.cafe.GetSelectableCafeListUseCase
 import com.bunbeauty.core.domain.cafe.GetWorkloadCafeUseCase
 import com.bunbeauty.core.domain.cafe.HasOpenedCafeUseCase
+import com.bunbeauty.core.domain.cafe.ICafeInteractor
 import com.bunbeauty.core.domain.cafe.IsDeliveryEnabledFromCafeUseCase
 import com.bunbeauty.core.domain.cafe.IsPickupEnabledFromCafeUseCase
 import com.bunbeauty.core.domain.cafe.ObserveCafeWithOpenStateListUseCase
 import com.bunbeauty.core.domain.cafe.di.cafeModule
 import com.bunbeauty.core.domain.cart.AddCartProductUseCase
 import com.bunbeauty.core.domain.cart.EditCartProductUseCase
+import com.bunbeauty.core.domain.cart.GetCartTotalFlowUseCase
 import com.bunbeauty.core.domain.cart.GetRecommendationsUseCase
+import com.bunbeauty.core.domain.cart.ICartProductInteractor
 import com.bunbeauty.core.domain.cart.IncreaseCartProductCountUseCase
 import com.bunbeauty.core.domain.cart.RemoveCartProductUseCase
 import com.bunbeauty.core.domain.cart.di.cartModule
@@ -73,7 +76,9 @@ import com.bunbeauty.core.domain.splash.CheckOneCityUseCase
 import com.bunbeauty.core.domain.splash.CheckUpdateUseCase
 import com.bunbeauty.core.domain.splash.SaveOneCityUseCase
 import com.bunbeauty.core.domain.user.IUserInteractor
+import com.bunbeauty.createorder.di.createOrderFeatureModule
 import com.bunbeauty.menu.di.menuFeatureModule
+import com.bunbeauty.order.di.orderFeatureModule
 import com.bunbeauty.productdetails.di.productDetailsFeatureModule
 import com.bunbeauty.profile.di.profileFeatureModule
 import com.bunbeauty.shared.data.CompanyUuidProvider
@@ -93,11 +98,6 @@ import com.bunbeauty.shared.di.usecase.paymentUseCaseModule
 import com.bunbeauty.shared.di.usecase.useCaseModules
 import com.bunbeauty.shared.di.usecase.userAddressUseCaseModule
 import com.bunbeauty.shared.domain.feature.notification.SubscribeToNotificationUseCase
-import com.bunbeauty.core.domain.cafe.ICafeInteractor
-import com.bunbeauty.createorder.di.createOrderFeatureModule
-import com.bunbeauty.order.di.orderFeatureModule
-import com.bunbeauty.core.domain.cart.GetCartTotalFlowUseCase
-import com.bunbeauty.core.domain.cart.ICartProductInteractor
 import com.bunbeauty.splash.di.splashFeatureModule
 import com.bunbeauty.update.di.updateFeatureModule
 import org.koin.core.component.KoinComponent
@@ -256,8 +256,7 @@ class IosComponent : KoinComponent {
 
     fun provideSubscribeToNotificationUseCase(): SubscribeToNotificationUseCase = get()
 
-    fun provideGetSelectablePaymentMethodListUseCase(): GetSelectablePaymentMethodListUseCase =
-        get()
+    fun provideGetSelectablePaymentMethodListUseCase(): GetSelectablePaymentMethodListUseCase = get()
 
     fun provideAddCartProductUseCase(): AddCartProductUseCase = get()
 
@@ -289,8 +288,7 @@ class IosComponent : KoinComponent {
 
     fun provideEditCartProductUseCase(): EditCartProductUseCase = get()
 
-    fun provideGetAdditionGroupsWithSelectedAdditionUseCase(): GetAdditionGroupsWithSelectedAdditionUseCase =
-        get()
+    fun provideGetAdditionGroupsWithSelectedAdditionUseCase(): GetAdditionGroupsWithSelectedAdditionUseCase = get()
 
     fun provideGetPriceOfSelectedAdditionsUseCase(): GetPriceOfSelectedAdditionsUseCase = get()
 

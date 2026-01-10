@@ -11,7 +11,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class GetSuggestionsUseCaseTest {
-
     private val suggestionRepo: SuggestionRepo = mock()
 
     private val getSuggestionsUseCase: GetSuggestionsUseCase =
@@ -22,7 +21,6 @@ class GetSuggestionsUseCaseTest {
     @Test
     fun `return suggestion list when all data is ok`() =
         runTest {
-
             val query = "ул Киро"
             val suggestionList =
                 listOf(
