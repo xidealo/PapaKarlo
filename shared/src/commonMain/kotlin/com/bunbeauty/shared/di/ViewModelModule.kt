@@ -1,8 +1,7 @@
 package com.bunbeauty.shared.di
 
 import com.bunbeauty.shared.presentation.MainViewModel
-import com.bunbeauty.shared.presentation.consumercart.ConsumerCartViewModel
-import com.bunbeauty.createorder.presentation.createorder.CreateOrderViewModel
+import com.bunbeauty.order.presentation.consumercart.ConsumerCartViewModel
 import com.bunbeauty.profile.presentation.selectcity.SelectCityViewModel
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module

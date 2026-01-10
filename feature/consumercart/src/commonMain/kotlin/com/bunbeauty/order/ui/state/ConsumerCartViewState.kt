@@ -1,7 +1,6 @@
-package com.bunbeauty.shared.ui.screen.consumercart.state
+package com.bunbeauty.order.ui.state
 
 import androidx.compose.runtime.Immutable
-import com.bunbeauty.menu.ui.state.MenuItemUi
 import com.bunbeauty.core.base.BaseViewState
 import com.bunbeauty.core.motivation.MotivationUi
 import kotlinx.collections.immutable.ImmutableList
@@ -16,9 +15,18 @@ sealed class ConsumerCartViewState(
     @Immutable
     data class Success(
         val cartProductList: ImmutableList<CartProductItemUi>,
-        val recommendationList: ImmutableList<MenuItemUi.Product>,
+        val recommendationList: ImmutableList<ProductUi>,
         val bottomPanelInfo: BottomPanelInfoUi?,
-    ) : ConsumerCartViewState(state = State.SUCCESS)
+    ) : ConsumerCartViewState(state = State.SUCCESS) {
+        data class ProductUi(
+            val key: String,
+            val uuid: String,
+            val photoLink: String,
+            val name: String,
+            val oldPrice: String?,
+            val newPrice: String,
+        )
+    }
 
     @Immutable
     data object Error : ConsumerCartViewState(state = State.ERROR)

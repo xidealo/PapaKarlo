@@ -12,7 +12,7 @@ import com.bunbeauty.core.model.ProductDetailsOpenedFrom
 import com.bunbeauty.shared.ui.navigation.NavAnimationSpec.NAV_ANIMATION_SPEC_SCALE_FOR_FADE
 import com.bunbeauty.shared.ui.navigation.NavAnimationSpec.navAnimationSpecDurationForEnterFade
 import com.bunbeauty.shared.ui.navigation.NavAnimationSpec.navAnimationSpecDurationForPopFade
-import com.bunbeauty.shared.ui.screen.consumercart.ConsumerCartRoute
+import com.bunbeauty.order.ui.ConsumerCartRoute
 import kotlinx.serialization.Serializable
 
 @Serializable

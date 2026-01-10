@@ -1,4 +1,4 @@
-package com.bunbeauty.shared.ui.screen.consumercart.ui
+package com.bunbeauty.order.ui.ui
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ExperimentalAnimationApi

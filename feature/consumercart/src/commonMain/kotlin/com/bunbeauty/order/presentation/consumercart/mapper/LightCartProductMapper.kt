@@ -1,8 +1,8 @@
-package com.bunbeauty.shared.presentation.consumercart.mapper
+package com.bunbeauty.order.presentation.consumercart.mapper
 
 import com.bunbeauty.core.Constants.RUBLE_CURRENCY
 import com.bunbeauty.core.model.cart.LightCartProduct
-import com.bunbeauty.shared.presentation.consumercart.CartProductItem
+import com.bunbeauty.order.presentation.consumercart.CartProductItem
 
 fun LightCartProduct.toCartProductItem(): CartProductItem =
     CartProductItem(

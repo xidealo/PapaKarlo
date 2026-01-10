@@ -1,4 +1,4 @@
-package com.bunbeauty.shared.presentation.consumercart
+package com.bunbeauty.order.presentation.consumercart
 
 import com.bunbeauty.analytic.AnalyticService
 import com.bunbeauty.analytic.event.cart.DecreaseCartProductClickEvent
@@ -24,7 +24,7 @@ import com.bunbeauty.core.base.SharedStateViewModel
 import com.bunbeauty.core.domain.motivation.GetMotivationUseCase
 import com.bunbeauty.core.domain.motivation.Motivation
 import com.bunbeauty.core.domain.orderavailable.IsOrderAvailableUseCase
-import com.bunbeauty.shared.presentation.consumercart.mapper.toCartProductItem
+import com.bunbeauty.order.presentation.consumercart.mapper.toCartProductItem
 import com.bunbeauty.core.motivation.toMotivationData
 import com.bunbeauty.core.model.ProductDetailsOpenedFrom
 import kotlinx.coroutines.Job

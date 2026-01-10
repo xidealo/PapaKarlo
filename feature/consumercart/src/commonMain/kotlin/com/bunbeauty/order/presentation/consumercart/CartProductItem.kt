@@ -1,4 +1,4 @@
-package com.bunbeauty.shared.presentation.consumercart
+package com.bunbeauty.order.presentation.consumercart
 
 data class CartProductItem(
     val uuid: String,

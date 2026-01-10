@@ -1,4 +1,4 @@
-package com.bunbeauty.shared.ui.screen.consumercart
+package com.bunbeauty.order.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
@@ -21,6 +22,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -36,16 +38,18 @@ import com.bunbeauty.designsystem.ui.element.surface.FoodDeliverySurface
 import com.bunbeauty.designsystem.ui.screen.EmptyScreen
 import com.bunbeauty.designsystem.ui.screen.ErrorScreen
 import com.bunbeauty.designsystem.ui.screen.LoadingScreen
-import com.bunbeauty.menu.ui.MenuProductItem
-import com.bunbeauty.menu.ui.state.MenuItemUi
-import com.bunbeauty.shared.presentation.consumercart.ConsumerCart
-import com.bunbeauty.shared.presentation.consumercart.ConsumerCartViewModel
 import com.bunbeauty.core.model.ProductDetailsOpenedFrom
-import com.bunbeauty.shared.ui.screen.consumercart.mapper.toConsumerCartViewState
-import com.bunbeauty.shared.ui.screen.consumercart.state.ConsumerCartViewState
-import com.bunbeauty.shared.ui.screen.consumercart.ui.CartProductItem
+import com.bunbeauty.order.ui.mapper.toConsumerCartViewState
+import com.bunbeauty.order.ui.state.ConsumerCartViewState
+import com.bunbeauty.order.ui.ui.CartProductItem
 import com.bunbeauty.core.motivation.Motivation
 import com.bunbeauty.core.motivation.MotivationUi
+import com.bunbeauty.designsystem.ui.element.FoodDeliveryAsyncImage
+import com.bunbeauty.designsystem.ui.element.OverflowingText
+import com.bunbeauty.designsystem.ui.element.button.SmallButton
+import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryCard
+import com.bunbeauty.order.presentation.consumercart.ConsumerCart
+import com.bunbeauty.order.presentation.consumercart.ConsumerCartViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import org.jetbrains.compose.resources.getString
@@ -56,7 +60,9 @@ import papakarlo.designsystem.generated.resources.ic_cart_24
 import papakarlo.designsystem.generated.resources.Res
 import papakarlo.designsystem.generated.resources.action_consumer_cart_creeate_order
 import papakarlo.designsystem.generated.resources.action_consumer_cart_menu
+import papakarlo.designsystem.generated.resources.action_product_want
 import papakarlo.designsystem.generated.resources.description_consumer_cart_empty
+import papakarlo.designsystem.generated.resources.description_product
 import papakarlo.designsystem.generated.resources.error_consumer_cart_add_product
 import papakarlo.designsystem.generated.resources.error_consumer_cart_loading
 import papakarlo.designsystem.generated.resources.error_consumer_cart_remove_product
@@ -348,7 +354,7 @@ private fun BottomPanel(
 }
 
 private fun LazyGridScope.recommendationItems(
-    recommendationList: ImmutableList<MenuItemUi.Product>,
+    recommendationList: ImmutableList<ConsumerCartViewState.Success.ProductUi>,
     onAction: (ConsumerCart.Action) -> Unit,
 ) {
     if (recommendationList.isNotEmpty()) {
@@ -409,6 +415,74 @@ private fun LazyGridScope.recommendationItems(
                 )
             },
         )
+    }
+}
+
+@Composable
+fun MenuProductItem(
+    modifier: Modifier = Modifier,
+    menuProductItem: ConsumerCartViewState.Success.ProductUi,
+    onAddProductClick: (String) -> Unit,
+    onProductClick: (String) -> Unit,
+) {
+    FoodDeliveryCard(
+        modifier = modifier,
+        onClick = {
+            onProductClick(menuProductItem.uuid)
+        },
+    ) {
+        Column {
+            FoodDeliveryAsyncImage(
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .heightIn(min = 120.dp),
+                photoLink = menuProductItem.photoLink,
+                contentDescription = stringResource(resource = Res.string.description_product),
+                contentScale = ContentScale.FillWidth,
+            )
+            Column(
+                modifier =
+                    Modifier.padding(
+                        all = FoodDeliveryTheme.dimensions.smallSpace,
+                    ),
+            ) {
+                OverflowingText(
+                    text = menuProductItem.name,
+                    style = FoodDeliveryTheme.typography.titleSmall.bold,
+                    color = FoodDeliveryTheme.colors.mainColors.onSurface,
+                )
+                Row(modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.verySmallSpace)) {
+                    menuProductItem.oldPrice?.let { oldPrice ->
+                        Text(
+                            modifier =
+                                Modifier
+                                    .padding(end = FoodDeliveryTheme.dimensions.verySmallSpace),
+                            text = oldPrice,
+                            style = FoodDeliveryTheme.typography.bodySmall,
+                            textDecoration = TextDecoration.LineThrough,
+                            color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
+                        )
+                    }
+                    Text(
+                        text = menuProductItem.newPrice,
+                        style = FoodDeliveryTheme.typography.bodySmall.bold,
+                        color = FoodDeliveryTheme.colors.mainColors.onSurface,
+                    )
+                }
+                SmallButton(
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(top = FoodDeliveryTheme.dimensions.smallSpace),
+                    textStringId = Res.string.action_product_want,
+                    elevated = false,
+                    onClick = {
+                        onAddProductClick(menuProductItem.uuid)
+                    },
+                )
+            }
+        }
     }
 }
 
@@ -507,7 +581,7 @@ private fun ConsumerCartErrorScreenPreview() {
 }
 
 private fun getRecommendation(uuid: String) =
-    MenuItemUi.Product(
+    ConsumerCartViewState.Success.ProductUi(
         uuid = uuid,
         key = uuid,
         photoLink = "",

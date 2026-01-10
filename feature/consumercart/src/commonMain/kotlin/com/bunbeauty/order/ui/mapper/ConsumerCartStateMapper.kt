@@ -1,10 +1,9 @@
-package com.bunbeauty.shared.ui.screen.consumercart.mapper
+package com.bunbeauty.order.ui.mapper
 
-import com.bunbeauty.menu.ui.mapper.toMenuProductItemUi
-import com.bunbeauty.shared.presentation.consumercart.CartProductItem
-import com.bunbeauty.shared.presentation.consumercart.ConsumerCart
-import com.bunbeauty.shared.ui.screen.consumercart.state.ConsumerCartViewState
+import com.bunbeauty.order.ui.state.ConsumerCartViewState
 import com.bunbeauty.core.motivation.toMotivationUi
+import com.bunbeauty.order.presentation.consumercart.CartProductItem
+import com.bunbeauty.order.presentation.consumercart.ConsumerCart
 import kotlinx.collections.immutable.toImmutableList
 
 fun ConsumerCart.DataState.toConsumerCartViewState(): ConsumerCartViewState =
@@ -23,7 +22,14 @@ fun ConsumerCart.DataState.toConsumerCartViewState(): ConsumerCartViewState =
                 recommendationList =
                     recommendationList
                         .map { menuProduct ->
-                            menuProduct.toMenuProductItemUi()
+                            ConsumerCartViewState.Success.ProductUi(
+                                key = "MenuProductItem ${menuProduct.uuid}",
+                                uuid = menuProduct.uuid,
+                                photoLink = menuProduct.photoLink,
+                                name = menuProduct.name,
+                                oldPrice = menuProduct.oldPrice,
+                                newPrice = menuProduct.newPrice,
+                            )
                         }.toImmutableList(),
                 bottomPanelInfo =
                     if (cartProductItemList.isEmpty()) {

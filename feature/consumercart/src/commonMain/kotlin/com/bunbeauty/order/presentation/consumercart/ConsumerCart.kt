@@ -1,4 +1,4 @@
-package com.bunbeauty.shared.presentation.consumercart
+package com.bunbeauty.order.presentation.consumercart
 
 import com.bunbeauty.core.model.MenuItem
 import com.bunbeauty.core.base.BaseAction
@@ -12,7 +12,7 @@ interface ConsumerCart {
         val state: State,
         val motivation: MotivationData?,
         val cartProductItemList: List<CartProductItem>,
-        val recommendationList: List<MenuItem.Product>,
+        val recommendationList: List<MenuItem.Product >,
         val discount: String?,
         val oldTotalCost: String?,
         val newTotalCost: String,

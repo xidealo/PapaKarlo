@@ -1,4 +1,4 @@
-package com.bunbeauty.shared.ui.screen.consumercart.ui
+package com.bunbeauty.order.ui.ui
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -21,7 +21,7 @@ import com.bunbeauty.designsystem.theme.bold
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryAsyncImage
 import com.bunbeauty.designsystem.ui.element.OverflowingText
 import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryCard
-import com.bunbeauty.shared.ui.screen.consumercart.state.ConsumerCartViewState
+import com.bunbeauty.order.ui.state.ConsumerCartViewState
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import papakarlo.designsystem.generated.resources.Res
