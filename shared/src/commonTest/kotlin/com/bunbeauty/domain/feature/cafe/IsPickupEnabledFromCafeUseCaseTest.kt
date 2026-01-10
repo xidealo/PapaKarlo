@@ -1,8 +1,8 @@
 package com.bunbeauty.domain.feature.cafe
 
+import com.bunbeauty.core.domain.cafe.IsPickupEnabledFromCafeUseCase
+import com.bunbeauty.core.domain.cafe.IsPickupEnabledFromCafeUseCaseImpl
 import com.bunbeauty.getCafe
-import com.bunbeauty.shared.domain.feature.cafe.IsPickupEnabledFromCafeUseCase
-import com.bunbeauty.shared.domain.feature.cafe.IsPickupEnabledFromCafeUseCaseImpl
 import com.bunbeauty.core.model.cafe.Cafe
 import com.bunbeauty.core.domain.repo.CafeRepo
 import dev.mokkery.answering.returns

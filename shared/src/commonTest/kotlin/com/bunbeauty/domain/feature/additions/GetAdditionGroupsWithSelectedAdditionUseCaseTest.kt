@@ -1,8 +1,8 @@
 package com.bunbeauty.domain.feature.additions
 
+import com.bunbeauty.core.domain.addition.GetAdditionGroupsWithSelectedAdditionUseCase
 import com.bunbeauty.getAddition
 import com.bunbeauty.getAdditionGroup
-import com.bunbeauty.shared.domain.feature.addition.GetAdditionGroupsWithSelectedAdditionUseCase
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

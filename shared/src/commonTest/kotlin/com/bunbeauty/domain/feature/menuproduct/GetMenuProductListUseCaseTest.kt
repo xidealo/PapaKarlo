@@ -2,9 +2,9 @@ package com.bunbeauty.domain.feature.menuproduct
 
 import com.bunbeauty.core.domain.menu_product.GetMenuProductListUseCaseImpl
 import com.bunbeauty.core.model.addition.AdditionGroup
-import com.bunbeauty.shared.domain.model.category.Category
 import com.bunbeauty.core.model.product.MenuProduct
 import com.bunbeauty.core.domain.repo.MenuProductRepo
+import com.bunbeauty.core.model.category.Category
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.mock

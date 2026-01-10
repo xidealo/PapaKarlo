@@ -1,10 +1,10 @@
 package com.bunbeauty.domain.feature.splash
 
+import com.bunbeauty.core.domain.exeptions.NoCityException
 import com.bunbeauty.getCity
 import com.bunbeauty.shared.DataStoreRepo
-import com.bunbeauty.shared.domain.exeptions.NoCityException
-import com.bunbeauty.shared.domain.feature.splash.SaveOneCityUseCase
 import com.bunbeauty.core.domain.repo.CityRepo
+import com.bunbeauty.core.domain.splash.SaveOneCityUseCase
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.mock
@@ -15,27 +15,10 @@ import kotlin.test.assertFailsWith
 
 class SaveOneCityUseCaseTest {
     private val cityRepo: CityRepo = mock()
-    private val dataStoreRepo: DataStoreRepo = mock()
     private val useCase: SaveOneCityUseCase =
         SaveOneCityUseCase(
             cityRepo = cityRepo,
-            dataStoreRepo = dataStoreRepo,
         )
-
-    @Test
-    fun `invoke saves city UUID when city list has one city`() =
-        runTest {
-            // Given
-            val mockCity = getCity(uuid = "city-uuid")
-            everySuspend { cityRepo.getCityList() } returns listOf(mockCity)
-            everySuspend { dataStoreRepo.saveSelectedCityUuid("city-uuid") } returns Unit
-
-            // When
-            useCase.invoke()
-
-            // Then
-            verifySuspend { dataStoreRepo.saveSelectedCityUuid("city-uuid") }
-        }
 
     @Test
     fun `invoke throws NoTokenException when city list is empty`() =

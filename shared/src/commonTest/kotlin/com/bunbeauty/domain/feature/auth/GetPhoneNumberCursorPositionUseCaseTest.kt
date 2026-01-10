@@ -1,7 +1,7 @@
 package com.bunbeauty.domain.feature.auth
 
-import com.bunbeauty.shared.domain.feature.auth.FormatPhoneNumberUseCase
-import com.bunbeauty.shared.domain.feature.auth.GetPhoneNumberCursorPositionUseCase
+import com.bunbeauty.core.domain.auth.FormatPhoneNumberUseCase
+import com.bunbeauty.core.domain.auth.GetPhoneNumberCursorPositionUseCase
 import dev.mokkery.answering.returns
 import dev.mokkery.every
 import dev.mokkery.mock

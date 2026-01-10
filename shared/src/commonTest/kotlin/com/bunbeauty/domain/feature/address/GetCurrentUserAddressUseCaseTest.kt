@@ -1,7 +1,7 @@
 package com.bunbeauty.domain.feature.address
 
+import com.bunbeauty.core.domain.address.GetCurrentUserAddressUseCaseImpl
 import com.bunbeauty.shared.DataStoreRepo
-import com.bunbeauty.shared.domain.feature.address.GetCurrentUserAddressUseCaseImpl
 import com.bunbeauty.core.model.address.UserAddress
 import com.bunbeauty.core.domain.repo.UserAddressRepo
 import dev.mokkery.answering.returns
@@ -31,17 +31,10 @@ class GetCurrentUserAddressUseCaseTest {
             cafeUuid = "cafeUuid",
         )
 
-    private val dataStoreRepo: DataStoreRepo =
-        mock {
-            everySuspend { getUserUuid() } returns fakeUserUuid
-            everySuspend { getSelectedCityUuid() } returns fakeSelectedCityUuid
-        }
-
     private val userAddressRepo: UserAddressRepo = mock()
 
     private val getCurrentUserAddressUseCase: GetCurrentUserAddressUseCaseImpl =
         GetCurrentUserAddressUseCaseImpl(
-            dataStoreRepo = dataStoreRepo,
             userAddressRepo = userAddressRepo,
         )
 
@@ -49,10 +42,7 @@ class GetCurrentUserAddressUseCaseTest {
     fun `return selected address address is selected`() =
         runTest {
             everySuspend {
-                userAddressRepo.getSelectedAddressByUserAndCityUuid(
-                    userUuid = fakeUserUuid,
-                    cityUuid = fakeSelectedCityUuid,
-                )
+                userAddressRepo.getSelectedAddressByUserAndCityUuid()
             } returns userAddressMock
 
             val currentUserAddress = getCurrentUserAddressUseCase()
@@ -65,14 +55,10 @@ class GetCurrentUserAddressUseCaseTest {
         runTest {
             everySuspend {
                 userAddressRepo.getSelectedAddressByUserAndCityUuid(
-                    userUuid = fakeUserUuid,
-                    cityUuid = fakeSelectedCityUuid,
                 )
             } returns null
             everySuspend {
                 userAddressRepo.getFirstUserAddressByUserAndCityUuid(
-                    userUuid = fakeUserUuid,
-                    cityUuid = fakeSelectedCityUuid,
                 )
             } returns userAddressMock
 

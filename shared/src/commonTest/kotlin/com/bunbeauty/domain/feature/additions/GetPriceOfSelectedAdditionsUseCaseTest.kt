@@ -1,7 +1,7 @@
 package com.bunbeauty.domain.feature.additions
 
+import com.bunbeauty.core.domain.addition.GetPriceOfSelectedAdditionsUseCase
 import com.bunbeauty.getAddition
-import com.bunbeauty.shared.domain.feature.addition.GetPriceOfSelectedAdditionsUseCase
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

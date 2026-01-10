@@ -1,62 +1,27 @@
 package com.bunbeauty.domain.feature.address
 
-import com.bunbeauty.shared.DataStoreRepo
-import com.bunbeauty.core.domain.exeptions.NoSelectedCityUuidException
-import com.bunbeauty.core.domain.exeptions.NoTokenException
-import com.bunbeauty.shared.domain.feature.address.GetSuggestionsUseCase
-import com.bunbeauty.core.model.Suggestion
+import com.bunbeauty.core.domain.address.GetSuggestionsUseCase
 import com.bunbeauty.core.domain.repo.SuggestionRepo
+import com.bunbeauty.core.model.Suggestion
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.mock
 import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertFailsWith
 
 class GetSuggestionsUseCaseTest {
-    private val dataStoreRepo: DataStoreRepo = mock()
 
     private val suggestionRepo: SuggestionRepo = mock()
 
     private val getSuggestionsUseCase: GetSuggestionsUseCase =
         GetSuggestionsUseCase(
             suggestionRepo = suggestionRepo,
-            dataStoreRepo = dataStoreRepo,
         )
-
-    @Test
-    fun `return NoTokenException when token is null`() =
-        runTest {
-            everySuspend { dataStoreRepo.getToken() } returns null
-
-            assertFailsWith(
-                exceptionClass = NoTokenException::class,
-                block = {
-                    getSuggestionsUseCase(query = "ул Киро")
-                },
-            )
-        }
-
-    @Test
-    fun `return NoSelectedCityUuidException when token is null`() =
-        runTest {
-            everySuspend { dataStoreRepo.getToken() } returns "token"
-            everySuspend { dataStoreRepo.getSelectedCityUuid() } returns null
-
-            assertFailsWith(
-                exceptionClass = NoSelectedCityUuidException::class,
-                block = {
-                    getSuggestionsUseCase(query = "ул Киро")
-                },
-            )
-        }
 
     @Test
     fun `return suggestion list when all data is ok`() =
         runTest {
-            everySuspend { dataStoreRepo.getToken() } returns "token"
-            everySuspend { dataStoreRepo.getSelectedCityUuid() } returns "cityUuid"
 
             val query = "ул Киро"
             val suggestionList =
@@ -74,9 +39,7 @@ class GetSuggestionsUseCaseTest {
                 )
             everySuspend {
                 suggestionRepo.getSuggestionList(
-                    token = "token",
                     query = query,
-                    cityUuid = "cityUuid",
                 )
             } returns suggestionList
 

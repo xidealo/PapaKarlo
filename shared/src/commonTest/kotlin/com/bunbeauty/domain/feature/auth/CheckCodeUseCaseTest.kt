@@ -1,10 +1,9 @@
 package com.bunbeauty.domain.feature.auth
 
-import com.bunbeauty.shared.DataStoreRepo
+import com.bunbeauty.core.domain.auth.CheckCodeUseCase
 import com.bunbeauty.core.domain.exeptions.SomethingWentWrongException
-import com.bunbeauty.shared.domain.feature.auth.CheckCodeUseCase
-import com.bunbeauty.shared.domain.model.AuthResponse
 import com.bunbeauty.core.domain.repo.AuthRepo
+import com.bunbeauty.core.model.AuthResponse
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.mock
@@ -15,11 +14,9 @@ import kotlin.test.assertFailsWith
 
 class CheckCodeUseCaseTest {
     private val authRepo: AuthRepo = mock()
-    private val dataStoreRepo: DataStoreRepo = mock()
     private val checkCodeUseCase: CheckCodeUseCase =
         CheckCodeUseCase(
             authRepo = authRepo,
-            dataStoreRepo = dataStoreRepo,
         )
 
     @Test
@@ -29,17 +26,15 @@ class CheckCodeUseCaseTest {
             val token = "token"
             val userUuid = "userUuid"
             everySuspend { authRepo.checkCode(code) } returns
-                AuthResponse(
-                    token = token,
-                    userUuid = userUuid,
-                )
-            everySuspend { dataStoreRepo.saveToken(token) } returns Unit
-            everySuspend { dataStoreRepo.saveUserUuid(userUuid) } returns Unit
+                    AuthResponse(
+                        token = token,
+                        userUuid = userUuid,
+                    )
 
             checkCodeUseCase(code)
 
-            verifySuspend { dataStoreRepo.saveToken(token) }
-            verifySuspend { dataStoreRepo.saveUserUuid(userUuid) }
+            verifySuspend { authRepo.saveToken(token) }
+            verifySuspend { authRepo.saveUserUuid(userUuid) }
         }
 
     @Test

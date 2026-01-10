@@ -2,10 +2,10 @@ package com.bunbeauty
 
 import com.bunbeauty.core.model.addition.Addition
 import com.bunbeauty.core.model.addition.AdditionGroup
-import com.bunbeauty.shared.domain.model.addition.CartProductAddition
+import com.bunbeauty.core.model.addition.CartProductAddition
 import com.bunbeauty.core.model.cafe.Cafe
 import com.bunbeauty.core.model.cart.CartProduct
-import com.bunbeauty.shared.domain.model.category.Category
+import com.bunbeauty.core.model.category.Category
 import com.bunbeauty.core.model.city.City
 import com.bunbeauty.core.model.payment_method.PaymentMethod
 import com.bunbeauty.core.model.payment_method.PaymentMethodName

@@ -1,7 +1,7 @@
 package com.bunbeauty.domain.feature.cafe
 
+import com.bunbeauty.core.domain.cafe.GetWorkloadCafeUseCase
 import com.bunbeauty.getCafe
-import com.bunbeauty.shared.domain.feature.cafe.GetWorkloadCafeUseCase
 import com.bunbeauty.core.model.cafe.Cafe
 import com.bunbeauty.core.domain.repo.CafeRepo
 import dev.mokkery.answering.returns

@@ -1,13 +1,13 @@
 package com.bunbeauty.domain.feature.cafe
 
-import com.bunbeauty.shared.domain.feature.cafe.GetCafeListUseCase
-import com.bunbeauty.shared.domain.feature.cafe.ObserveCafeWithOpenStateListUseCase
+import com.bunbeauty.core.domain.cafe.GetCafeListUseCase
+import com.bunbeauty.core.domain.cafe.ObserveCafeWithOpenStateListUseCase
 import com.bunbeauty.core.domain.city.GetSelectedCityTimeZoneUseCase
+import com.bunbeauty.core.domain.util.DateTimeUtil
 import com.bunbeauty.core.model.cafe.Cafe
 import com.bunbeauty.core.model.cafe.CafeOpenState
 import com.bunbeauty.core.model.cafe.CafeWithOpenState
-import com.bunbeauty.shared.domain.model.date_time.MinuteSecond
-import com.bunbeauty.core.domain.util.DateTimeUtil
+import com.bunbeauty.core.model.date_time.MinuteSecond
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.mock
@@ -69,10 +69,10 @@ class ObserveCafeWithOpenStateListUseCaseTest {
             everySuspend {
                 dataTimeUtil.getCurrentMinuteSecond(timeZone)
             } returns
-                MinuteSecond(
-                    minuteOfDay = 8 * 60, // 8:00:30
-                    secondOfMinute = 30,
-                )
+                    MinuteSecond(
+                        minuteOfDay = 8 * 60, // 8:00:30
+                        secondOfMinute = 30,
+                    )
             val cafe =
                 getFakeCafe(
                     fromTime = 8 * 60 * 60, // 8:00:00

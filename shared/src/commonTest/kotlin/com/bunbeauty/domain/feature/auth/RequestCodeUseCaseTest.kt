@@ -1,7 +1,7 @@
 package com.bunbeauty.domain.feature.auth
 
+import com.bunbeauty.core.domain.auth.RequestCodeUseCase
 import com.bunbeauty.core.domain.exeptions.SomethingWentWrongException
-import com.bunbeauty.shared.domain.feature.auth.RequestCodeUseCase
 import com.bunbeauty.core.domain.repo.AuthRepo
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend

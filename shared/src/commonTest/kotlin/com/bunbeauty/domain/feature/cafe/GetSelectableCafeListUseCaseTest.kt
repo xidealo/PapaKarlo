@@ -1,13 +1,10 @@
 package com.bunbeauty.domain.feature.cafe
 
+import com.bunbeauty.core.domain.cafe.GetCafeListUseCase
+import com.bunbeauty.core.domain.cafe.GetSelectableCafeListUseCase
+import com.bunbeauty.core.domain.cafe.IsPickupEnabledFromCafeUseCase
+import com.bunbeauty.core.domain.exeptions.EmptyCafeListException
 import com.bunbeauty.getCafe
-import com.bunbeauty.shared.DataStoreRepo
-import com.bunbeauty.shared.domain.exeptions.EmptyCafeListException
-import com.bunbeauty.core.domain.exeptions.NoSelectedCityUuidException
-import com.bunbeauty.shared.domain.exeptions.NoUserUuidException
-import com.bunbeauty.shared.domain.feature.cafe.GetCafeListUseCase
-import com.bunbeauty.shared.domain.feature.cafe.GetSelectableCafeListUseCase
-import com.bunbeauty.shared.domain.feature.cafe.IsPickupEnabledFromCafeUseCase
 import com.bunbeauty.core.model.cafe.SelectableCafe
 import com.bunbeauty.core.domain.repo.CafeRepo
 import dev.mokkery.answering.returns
@@ -19,50 +16,22 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
 class GetSelectableCafeListUseCaseTest {
-    private val dataStoreRepo: DataStoreRepo = mock()
     private val cafeRepo: CafeRepo = mock()
     private val getCafeListUseCase: GetCafeListUseCase = mock()
     private var isPickupEnabledFromCafeUseCase: IsPickupEnabledFromCafeUseCase = mock()
 
     private val getSelectableCafeListUseCase: GetSelectableCafeListUseCase =
         GetSelectableCafeListUseCase(
-            dataStoreRepo = dataStoreRepo,
             cafeRepo = cafeRepo,
             getCafeListUseCase = getCafeListUseCase,
             isPickupEnabledFromCafeUseCaseImpl = isPickupEnabledFromCafeUseCase,
         )
 
-    @Test
-    fun `invoke should throw NoSelectedCityUuidException when cityUuid is null`() =
-        runTest {
-            // Arrange
-            everySuspend { dataStoreRepo.getSelectedCityUuid() } returns null
-
-            // Act & Assert
-            assertFailsWith<NoSelectedCityUuidException> {
-                getSelectableCafeListUseCase()
-            }
-        }
-
-    @Test
-    fun `invoke should throw NoUserUuidException when userUuid is null`() =
-        runTest {
-            // Arrange
-            everySuspend { dataStoreRepo.getSelectedCityUuid() } returns "city1"
-            everySuspend { dataStoreRepo.getUserUuid() } returns null
-
-            // Act & Assert
-            assertFailsWith<NoUserUuidException> {
-                getSelectableCafeListUseCase()
-            }
-        }
 
     @Test
     fun `invoke should throw EmptyCafeListException when cafe list is empty`() =
         runTest {
             // Arrange
-            everySuspend { dataStoreRepo.getSelectedCityUuid() } returns "city1"
-            everySuspend { dataStoreRepo.getUserUuid() } returns "user1"
             everySuspend { getCafeListUseCase() } returns emptyList()
 
             // Act & Assert
@@ -85,13 +54,9 @@ class GetSelectableCafeListUseCaseTest {
                 )
             val selectedCafe = cafes[1]
 
-            everySuspend { dataStoreRepo.getSelectedCityUuid() } returns cityUuid
-            everySuspend { dataStoreRepo.getUserUuid() } returns userUuid
             everySuspend { getCafeListUseCase() } returns cafes
             everySuspend {
                 cafeRepo.getSelectedCafeByUserAndCityUuid(
-                    userUuid,
-                    cityUuid,
                 )
             } returns selectedCafe
             everySuspend { isPickupEnabledFromCafeUseCase("cafe1") } returns true
@@ -125,13 +90,9 @@ class GetSelectableCafeListUseCaseTest {
                     getCafe("cafe3"),
                 )
 
-            everySuspend { dataStoreRepo.getSelectedCityUuid() } returns cityUuid
-            everySuspend { dataStoreRepo.getUserUuid() } returns userUuid
             everySuspend { getCafeListUseCase() } returns cafes
             everySuspend {
                 cafeRepo.getSelectedCafeByUserAndCityUuid(
-                    userUuid,
-                    cityUuid,
                 )
             } returns null
             everySuspend { isPickupEnabledFromCafeUseCase("cafe1") } returns false
@@ -156,21 +117,15 @@ class GetSelectableCafeListUseCaseTest {
     fun `invoke should return list with first cafe selected when no pickup-enabled cafes`() =
         runTest {
             // Arrange
-            val cityUuid = "city1"
-            val userUuid = "user1"
             val cafes =
                 listOf(
                     getCafe("cafe1"),
                     getCafe("cafe2"),
                 )
 
-            everySuspend { dataStoreRepo.getSelectedCityUuid() } returns cityUuid
-            everySuspend { dataStoreRepo.getUserUuid() } returns userUuid
             everySuspend { getCafeListUseCase() } returns cafes
             everySuspend {
                 cafeRepo.getSelectedCafeByUserAndCityUuid(
-                    userUuid,
-                    cityUuid,
                 )
             } returns null
             everySuspend { isPickupEnabledFromCafeUseCase("cafe1") } returns false
