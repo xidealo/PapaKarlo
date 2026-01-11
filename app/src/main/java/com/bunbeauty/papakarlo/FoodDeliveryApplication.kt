@@ -54,10 +54,6 @@ class FoodDeliveryApplication :
     }
 
     private fun createNotificationChannel() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-            return
-        }
-
         val importance = NotificationManager.IMPORTANCE_DEFAULT
         val channel =
             NotificationChannel(
