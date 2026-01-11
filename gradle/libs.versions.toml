@@ -19,7 +19,7 @@ composeBom = "2025.12.01"
 activityCompose = "1.12.2"
 navigationCompose = "2.9.1"
 dataStorePreferences = "1.2.0"
-lifecycle = "2.9.6"
+lifecycle = "2.10.0"
 kotlinxDateTime = "0.7.1"
 leakcanary = "2.14"
 firebase = "34.7.0"
@@ -32,7 +32,7 @@ compose = "1.11.0-alpha01"
 [libraries]
 appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appCompact" }
 core-ktx = { module = "androidx.core:core-ktx", version.ref = "coreKtx" }
-lifecycle-viewmodel-compose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle" }
+lifecycle-viewmodel-compose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version = "2.9.6" }
 lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
 lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle" }
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
