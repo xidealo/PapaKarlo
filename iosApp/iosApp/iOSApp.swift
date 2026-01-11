@@ -9,7 +9,6 @@ import shared
 import SwiftUI
 
 let iosComponent = IosComponent()
-let dateUtil = DateUtil()
 
 @main
 struct PapaKarloSwiftApp: App {
@@ -21,9 +20,9 @@ struct PapaKarloSwiftApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ComposeView()
-                    .ignoresSafeArea(edges: .all)
-                    .ignoresSafeArea(.keyboard)
+            VStack{
+                ComposeView()
+            }
         }
     }
     

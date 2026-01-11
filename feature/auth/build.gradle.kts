@@ -11,7 +11,7 @@ kotlin {
         homepage = "Link to the Shared Module homepage"
         version = "1.0"
         ios.deploymentTarget = deploymentTarget
-        podfile = project.file("../iosApp/Podfile")
+        podfile = project.rootProject.file("iosApp/Podfile")
 
         pod("FirebaseMessaging")
         framework {
@@ -42,7 +42,6 @@ kotlin {
                 implementation(libs.bundles.coil)
             }
         }
-
         val androidMain by getting {
             dependencies {
                 implementation(libs.activity.compose)

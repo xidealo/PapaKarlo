@@ -69,12 +69,11 @@ fun MainScreen(
                 )
             },
             containerColor = statusBarColor.value,
-        ) { paddingsValues ->
+        ) {
             Column(
                 modifier =
                     modifier
-                        .fillMaxSize()
-                        .padding(paddingValues = paddingsValues),
+                        .fillMaxSize(),
             ) {
                 ConnectionErrorMessage(visible = mainState.connectionLost)
                 StatusBarMessage(statusBarMessage = mainState.statusBarMessage)
