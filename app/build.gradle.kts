@@ -125,8 +125,6 @@ dependencies {
     implementation(libs.appcompat)
     implementation(libs.core.ktx)
 
-    implementation(libs.bundles.lifecycle)
-
     implementation(libs.bundles.di.android)
     testImplementation(libs.koin.test)
 

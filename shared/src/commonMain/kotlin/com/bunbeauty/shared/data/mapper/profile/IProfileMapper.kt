@@ -1,10 +1,10 @@
 package com.bunbeauty.shared.data.mapper.profile
 
+import com.bunbeauty.core.model.profile.Profile
 import com.bunbeauty.shared.data.network.model.profile.get.ProfileServer
 import com.bunbeauty.shared.db.OrderEntity
 import com.bunbeauty.shared.db.UserAddressEntity
 import com.bunbeauty.shared.db.UserEntity
-import com.bunbeauty.shared.domain.model.profile.Profile
 
 interface IProfileMapper {
     fun toProfile(

@@ -1,6 +1,8 @@
 package com.bunbeauty.shared.di
 
+import com.bunbeauty.auth.domain.UpdateNotificationUseCase
 import com.bunbeauty.core.buildVersionQualifier
+import com.bunbeauty.core.domain.link.GetLinkListUseCase
 import com.bunbeauty.core.flavorQualifier
 import com.bunbeauty.core.isDebugQualifier
 import com.bunbeauty.core.targetName
@@ -11,8 +13,6 @@ import com.bunbeauty.shared.data.DataStoreRepository
 import com.bunbeauty.shared.data.DatabaseDriverFactory
 import com.bunbeauty.shared.data.UuidGenerator
 import com.bunbeauty.shared.db.FoodDeliveryDatabase
-import com.bunbeauty.shared.domain.feature.link.GetLinkListUseCase
-import com.bunbeauty.shared.domain.feature.notification.UpdateNotificationUseCase
 import org.koin.dsl.module
 import kotlin.experimental.ExperimentalNativeApi
 

@@ -1,6 +1,6 @@
 package com.bunbeauty.domain.feature.auth
 
-import com.bunbeauty.shared.domain.feature.auth.CheckPhoneNumberUseCase
+import com.bunbeauty.core.domain.auth.CheckPhoneNumberUseCase
 import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test

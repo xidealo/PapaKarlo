@@ -1,5 +1,7 @@
 package com.bunbeauty.shared
 
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.window.ComposeUIViewController
 import com.bunbeauty.core.Logger
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
@@ -13,6 +15,8 @@ fun MainViewController(flavor: String): UIViewController =
         FoodDeliveryTheme(
             flavor = flavor,
         ) {
-            MainScreen()
+            MainScreen(
+                modifier = Modifier
+            )
         }
     }

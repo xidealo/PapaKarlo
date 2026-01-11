@@ -1,5 +1,24 @@
 package com.bunbeauty.shared.data.di
 
+import com.bunbeauty.core.domain.repo.AdditionGroupRepo
+import com.bunbeauty.core.domain.repo.AdditionRepo
+import com.bunbeauty.core.domain.repo.AuthRepo
+import com.bunbeauty.core.domain.repo.CafeRepo
+import com.bunbeauty.core.domain.repo.CartProductAdditionRepo
+import com.bunbeauty.core.domain.repo.CartProductRepo
+import com.bunbeauty.core.domain.repo.CityRepo
+import com.bunbeauty.core.domain.repo.CompanyRepo
+import com.bunbeauty.core.domain.repo.DiscountRepo
+import com.bunbeauty.core.domain.repo.LinkRepo
+import com.bunbeauty.core.domain.repo.MenuProductRepo
+import com.bunbeauty.core.domain.repo.OrderRepo
+import com.bunbeauty.core.domain.repo.PaymentRepo
+import com.bunbeauty.core.domain.repo.RecommendationRepo
+import com.bunbeauty.core.domain.repo.SettingsRepo
+import com.bunbeauty.core.domain.repo.SuggestionRepo
+import com.bunbeauty.core.domain.repo.UserAddressRepo
+import com.bunbeauty.core.domain.repo.UserRepo
+import com.bunbeauty.core.domain.repo.VersionRepo
 import com.bunbeauty.shared.data.network.api.NetworkConnector
 import com.bunbeauty.shared.data.network.api.NetworkConnectorImpl
 import com.bunbeauty.shared.data.network.socket.SocketService
@@ -22,24 +41,6 @@ import com.bunbeauty.shared.data.repository.SuggestionRepository
 import com.bunbeauty.shared.data.repository.UserAddressRepository
 import com.bunbeauty.shared.data.repository.UserRepository
 import com.bunbeauty.shared.data.repository.VersionRepository
-import com.bunbeauty.shared.domain.repo.AdditionGroupRepo
-import com.bunbeauty.shared.domain.repo.AdditionRepo
-import com.bunbeauty.shared.domain.repo.AuthRepo
-import com.bunbeauty.shared.domain.repo.CafeRepo
-import com.bunbeauty.shared.domain.repo.CartProductAdditionRepo
-import com.bunbeauty.shared.domain.repo.CartProductRepo
-import com.bunbeauty.shared.domain.repo.CityRepo
-import com.bunbeauty.shared.domain.repo.CompanyRepo
-import com.bunbeauty.shared.domain.repo.DiscountRepo
-import com.bunbeauty.shared.domain.repo.LinkRepo
-import com.bunbeauty.shared.domain.repo.MenuProductRepo
-import com.bunbeauty.shared.domain.repo.OrderRepo
-import com.bunbeauty.shared.domain.repo.PaymentRepo
-import com.bunbeauty.shared.domain.repo.RecommendationRepo
-import com.bunbeauty.shared.domain.repo.SuggestionRepo
-import com.bunbeauty.shared.domain.repo.UserAddressRepo
-import com.bunbeauty.shared.domain.repo.UserRepo
-import com.bunbeauty.shared.domain.repo.VersionRepo
 import org.koin.dsl.module
 
 fun repositoryModule() =
@@ -74,6 +75,7 @@ fun repositoryModule() =
                 orderAdditionDao = get(),
                 orderProductDao = get(),
                 lightOrderDao = get(),
+                dataStoreRepo = get(),
             )
         }
         single<MenuProductRepo> {
@@ -119,6 +121,7 @@ fun repositoryModule() =
                 networkConnector = get(),
                 cityDao = get(),
                 cityMapper = get(),
+                dataStoreRepo = get(),
             )
         }
         single<CompanyRepo> {
@@ -131,7 +134,7 @@ fun repositoryModule() =
                 networkConnector = get(),
             )
         }
-        single {
+        single<SettingsRepo> {
             SettingsRepository(
                 dataStoreRepo = get(),
                 networkConnector = get(),
@@ -143,6 +146,7 @@ fun repositoryModule() =
                 networkConnector = get(),
                 paymentMethodMapper = get(),
                 paymentMethodDao = get(),
+                dataStoreRepo = get(),
             )
         }
         single<LinkRepo> {
@@ -161,6 +165,7 @@ fun repositoryModule() =
         single<AuthRepo> {
             AuthRepository(
                 networkConnector = get(),
+                dataStoreRepo = get(),
             )
         }
         single<RecommendationRepo> {
@@ -188,6 +193,7 @@ fun repositoryModule() =
         single<SuggestionRepo> {
             SuggestionRepository(
                 networkConnector = get(),
+                dataStoreRepo = get(),
             )
         }
     }

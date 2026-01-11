@@ -1,5 +1,11 @@
 package com.bunbeauty.shared.data.repository
 
+import com.bunbeauty.core.domain.exeptions.NoSelectedCityUuidException
+import com.bunbeauty.core.domain.exeptions.NoTokenException
+import com.bunbeauty.core.domain.repo.UserAddressRepo
+import com.bunbeauty.core.model.address.CreatedUserAddress
+import com.bunbeauty.core.model.address.UserAddress
+import com.bunbeauty.core.model.address.UserAddressCache
 import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.data.dao.user_address.IUserAddressDao
 import com.bunbeauty.shared.data.mapper.user_address.UserAddressMapper
@@ -7,11 +13,8 @@ import com.bunbeauty.shared.data.network.api.NetworkConnector
 import com.bunbeauty.shared.db.SelectedUserAddressUuidEntity
 import com.bunbeauty.shared.domain.mapFlow
 import com.bunbeauty.shared.domain.mapListFlow
-import com.bunbeauty.shared.domain.model.address.CreatedUserAddress
-import com.bunbeauty.shared.domain.model.address.UserAddress
-import com.bunbeauty.shared.domain.model.address.UserAddressCache
-import com.bunbeauty.shared.domain.repo.UserAddressRepo
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 
 open class UserAddressRepository(
     private val networkConnector: NetworkConnector,
@@ -24,11 +27,16 @@ open class UserAddressRepository(
 
     private var userAddressCache: UserAddressCache? = null
 
-    override suspend fun saveUserAddress(
-        token: String,
-        createdUserAddress: CreatedUserAddress,
-    ): UserAddress? {
-        val userAddressPostServer = userAddressMapper.toUserAddressPostServer(createdUserAddress)
+    override suspend fun saveUserAddress(createdUserAddress: CreatedUserAddress): UserAddress? {
+        val token = dataStoreRepo.getToken() ?: throw NoTokenException()
+        val cityUuid = dataStoreRepo.getSelectedCityUuid() ?: throw NoSelectedCityUuidException()
+
+        val userAddressPostServer =
+            userAddressMapper.toUserAddressPostServer(
+                createdUserAddress = createdUserAddress,
+                cityUuid = cityUuid,
+            )
+
         return networkConnector
             .postUserAddress(token, userAddressPostServer)
             .getNullableResult { addressServer ->
@@ -47,54 +55,50 @@ open class UserAddressRepository(
             }
     }
 
-    override suspend fun saveSelectedUserAddress(
-        addressUuid: String,
-        userUuid: String,
-        cityUuid: String,
-    ) {
+    override suspend fun saveSelectedUserAddress(addressUuid: String) {
+        val userCityUuid = dataStoreRepo.getUserAndCityUuid()
+
         val selectedUserAddressUuid =
             SelectedUserAddressUuidEntity(
-                userUuid = userUuid,
-                cityUuid = cityUuid,
+                userUuid = userCityUuid.userUuid,
+                cityUuid = userCityUuid.cityUuid,
                 userAddressUuid = addressUuid,
             )
 
         userAddressDao.insertSelectedUserAddressUuid(selectedUserAddressUuid)
     }
 
-    override suspend fun getSelectedAddressByUserAndCityUuid(
-        userUuid: String,
-        cityUuid: String,
-    ): UserAddress? =
-        userAddressDao
+    override suspend fun getSelectedAddressByUserAndCityUuid(): UserAddress? {
+        val userUuid = dataStoreRepo.getUserUuid() ?: return null
+        val cityUuid = dataStoreRepo.getSelectedCityUuid() ?: return null
+
+        return userAddressDao
             .getSelectedUserAddressByUserAndCityUuid(userUuid, cityUuid)
             ?.let { userAddressEntity ->
                 userAddressMapper.toUserAddress(userAddressEntity)
             }
+    }
 
-    override suspend fun getFirstUserAddressByUserAndCityUuid(
-        userUuid: String,
-        cityUuid: String,
-    ): UserAddress? =
-        userAddressDao
+    override suspend fun getFirstUserAddressByUserAndCityUuid(): UserAddress? {
+        val userUuid = dataStoreRepo.getUserUuid() ?: return null
+        val cityUuid = dataStoreRepo.getSelectedCityUuid() ?: return null
+
+        return userAddressDao
             .geFirstUserAddressByUserAndCityUuid(
                 userUuid = userUuid,
                 cityUuid = cityUuid,
             )?.let { userAddressEntity ->
                 userAddressMapper.toUserAddress(userAddressEntity)
             } ?: dataStoreRepo.getToken()?.let { token ->
-            getUserAddressListByUserAndCityUuid(
-                userUuid = userUuid,
-                cityUuid = cityUuid,
-                token = token,
-            ).firstOrNull()
+            getUserAddressListByUserAndCityUuid().firstOrNull()
         }
+    }
 
-    override suspend fun getUserAddressListByUserAndCityUuid(
-        userUuid: String,
-        cityUuid: String,
-        token: String,
-    ): List<UserAddress> {
+    override suspend fun getUserAddressListByUserAndCityUuid(): List<UserAddress> {
+        val userUuid = dataStoreRepo.getUserUuid() ?: return emptyList()
+        val cityUuid = dataStoreRepo.getSelectedCityUuid() ?: return emptyList()
+        val token = dataStoreRepo.getToken() ?: return emptyList()
+
         val cache = userAddressCache
         return if (cache != null &&
             cache.userUuid == userUuid &&
@@ -127,25 +131,27 @@ open class UserAddressRepository(
         }
     }
 
-    override fun observeSelectedUserAddressByUserAndCityUuid(
-        userUuid: String,
-        cityUuid: String,
-    ): Flow<UserAddress?> =
-        userAddressDao
+    override suspend fun observeSelectedUserAddressByUserAndCityUuid(): Flow<UserAddress?> {
+        val userUuid = dataStoreRepo.getUserUuid() ?: return flowOf(null)
+        val cityUuid = dataStoreRepo.getSelectedCityUuid() ?: return flowOf(null)
+
+        return userAddressDao
             .observeSelectedUserAddressByUserAndCityUuid(
                 userUuid = userUuid,
                 cityUuid = cityUuid,
             ).mapFlow(userAddressMapper::toUserAddress)
+    }
 
-    override fun observeFirstUserAddressByUserAndCityUuid(
-        userUuid: String,
-        cityUuid: String,
-    ): Flow<UserAddress?> =
-        userAddressDao
+    override suspend fun observeFirstUserAddressByUserAndCityUuid(): Flow<UserAddress?> {
+        val userUuid = dataStoreRepo.getUserUuid() ?: return flowOf(null)
+        val cityUuid = dataStoreRepo.getSelectedCityUuid() ?: return flowOf(null)
+
+        return userAddressDao
             .observeFirstUserAddressByUserAndCityUuid(
                 userUuid = userUuid,
                 cityUuid = cityUuid,
             ).mapFlow(userAddressMapper::toUserAddress)
+    }
 
     override fun observeUserAddressListByUserUuidAndCityUuid(
         userUuid: String,

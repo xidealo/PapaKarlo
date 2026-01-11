@@ -1,9 +1,9 @@
 package com.bunbeauty.shared.data.mapper.user
 
+import com.bunbeauty.core.model.profile.User
 import com.bunbeauty.shared.data.network.model.profile.get.ProfileServer
 import com.bunbeauty.shared.data.network.model.profile.patch.PatchUserServer
 import com.bunbeauty.shared.db.UserEntity
-import com.bunbeauty.shared.domain.model.profile.User
 
 class UserMapper : IUserMapper {
     override fun toEntityModel(profileServer: ProfileServer): UserEntity =

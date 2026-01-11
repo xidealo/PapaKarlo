@@ -1,5 +1,4 @@
 import CommonApplication.deploymentTarget
-import org.gradle.kotlin.dsl.implementation
 
 plugins {
     alias(libs.plugins.multiplatform)
@@ -39,6 +38,17 @@ kotlin {
                 implementation(project(":analytic"))
                 implementation(project(":core"))
                 implementation(project(":designsystem"))
+                implementation(project(":feature:menu"))
+                implementation(project(":feature:profile"))
+                implementation(project(":feature:productdetails"))
+                implementation(project(":feature:auth"))
+                implementation(project(":feature:address"))
+                implementation(project(":feature:splash"))
+                implementation(project(":feature:cafe"))
+                implementation(project(":feature:update"))
+                implementation(project(":feature:order"))
+                implementation(project(":feature:createorder"))
+                implementation(project(":feature:consumercart"))
 
                 implementation(libs.bundles.ktor)
 

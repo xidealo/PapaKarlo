@@ -33,7 +33,6 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(project(":core"))
                 implementation(libs.koin.core)
 
                 implementation(compose.components.resources)
@@ -62,6 +61,10 @@ android {
     compileSdk = AndroidSdk.compile
     defaultConfig {
         minSdk = AndroidSdk.min
+    }
+    compose.resources {
+        publicResClass = true
+        generateResClass = auto
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_21

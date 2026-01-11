@@ -1,7 +1,7 @@
 package com.bunbeauty.domain.feature.order
 
-import com.bunbeauty.shared.domain.feature.order.ExtendedComment
-import com.bunbeauty.shared.domain.feature.order.GetExtendedCommentUseCase
+import com.bunbeauty.core.domain.order.ExtendedComment
+import com.bunbeauty.core.domain.order.GetExtendedCommentUseCase
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

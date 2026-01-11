@@ -1,9 +1,9 @@
 package com.bunbeauty.shared.di.usecase
 
-import com.bunbeauty.shared.domain.feature.payment.GetPaymentMethodListUseCase
-import com.bunbeauty.shared.domain.feature.payment.GetSelectablePaymentMethodListUseCase
-import com.bunbeauty.shared.domain.feature.payment.GetSelectedPaymentMethodUseCase
-import com.bunbeauty.shared.domain.feature.payment.SavePaymentMethodUseCase
+import com.bunbeauty.core.domain.payment.GetPaymentMethodListUseCase
+import com.bunbeauty.core.domain.payment.GetSelectablePaymentMethodListUseCase
+import com.bunbeauty.core.domain.payment.GetSelectedPaymentMethodUseCase
+import com.bunbeauty.core.domain.payment.SavePaymentMethodUseCase
 import org.koin.dsl.module
 
 internal fun paymentUseCaseModule() =
@@ -16,12 +16,11 @@ internal fun paymentUseCaseModule() =
         factory {
             GetSelectablePaymentMethodListUseCase(
                 paymentRepo = get(),
-                dataStoreRepo = get(),
             )
         }
         factory {
             SavePaymentMethodUseCase(
-                dataStoreRepo = get(),
+                paymentRepo = get(),
             )
         }
         factory {

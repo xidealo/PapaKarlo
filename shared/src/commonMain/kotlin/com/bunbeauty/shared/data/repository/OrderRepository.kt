@@ -1,6 +1,14 @@
 package com.bunbeauty.shared.data.repository
 
 import com.bunbeauty.core.Logger
+import com.bunbeauty.core.domain.repo.OrderRepo
+import com.bunbeauty.core.extension.getNullableResult
+import com.bunbeauty.core.model.order.CreatedOrder
+import com.bunbeauty.core.model.order.LightOrder
+import com.bunbeauty.core.model.order.Order
+import com.bunbeauty.core.model.order.OrderCode
+import com.bunbeauty.core.model.order.OrderStatus
+import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.data.dao.lightorder.LightOrderDao
 import com.bunbeauty.shared.data.dao.order.IOrderDao
 import com.bunbeauty.shared.data.dao.order_addition.IOrderAdditionDao
@@ -13,19 +21,13 @@ import com.bunbeauty.shared.data.network.model.order.get.LightOrderServer
 import com.bunbeauty.shared.data.network.model.order.get.OrderProductServer
 import com.bunbeauty.shared.data.network.model.order.get.OrderServer
 import com.bunbeauty.shared.data.network.model.order.get.OrderUpdateServer
-import com.bunbeauty.shared.domain.model.order.CreatedOrder
-import com.bunbeauty.shared.domain.model.order.LightOrder
-import com.bunbeauty.shared.domain.model.order.Order
-import com.bunbeauty.shared.domain.model.order.OrderCode
-import com.bunbeauty.shared.domain.model.order.OrderStatus
-import com.bunbeauty.shared.domain.repo.OrderRepo
-import com.bunbeauty.shared.extension.getNullableResult
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -41,13 +43,16 @@ class OrderRepository(
     private val orderAdditionDao: IOrderAdditionDao,
     private val orderProductDao: IOrderProductDao,
     private val lightOrderDao: LightOrderDao,
+    private val dataStoreRepo: DataStoreRepo,
 ) : OrderRepo,
     CoroutineScope {
     private var cacheLastOrder: LightOrder? = null
 
     override val coroutineContext: CoroutineContext = SupervisorJob() + Dispatchers.IO
 
-    override suspend fun observeOrderUpdates(token: String): Pair<String?, Flow<Order>> {
+    override suspend fun observeOrderUpdates(): Pair<String?, Flow<Order>> {
+        val token = dataStoreRepo.getToken() ?: return null to flow { }
+
         val (uuid, orderUpdatesFlow) = observeOrderUpdatesServer(token)
         return uuid to
             orderUpdatesFlow
@@ -56,10 +61,8 @@ class OrderRepository(
                 }.filterNotNull()
     }
 
-    override suspend fun observeLightOrderListUpdates(
-        token: String,
-        userUuid: String,
-    ): Pair<String?, Flow<List<LightOrder>>> {
+    override suspend fun observeLightOrderListUpdates(): Pair<String?, Flow<List<LightOrder>>> {
+        val token = dataStoreRepo.getToken() ?: return null to flow { }
         val (uuid, orderUpdatesFlow) = observeOrderUpdatesServer(token)
         return uuid to
             orderUpdatesFlow.map {
@@ -73,8 +76,10 @@ class OrderRepository(
         networkConnector.stopOrderUpdatesObservation(uuid)
     }
 
-    override suspend fun getOrderList(token: String): List<LightOrder> =
-        networkConnector
+    override suspend fun getOrderList(): List<LightOrder> {
+        val token = dataStoreRepo.getToken() ?: return emptyList()
+
+        return networkConnector
             .getLightOrderList(
                 token = token,
                 count = ORDER_LIMIT,
@@ -92,12 +97,13 @@ class OrderRepository(
                     }
                 },
             ) ?: emptyList()
+    }
 
-    override suspend fun getLastOrderByUserUuidNetworkFirst(
-        token: String,
-        userUuid: String,
-    ): LightOrder? =
-        networkConnector
+    override suspend fun getLastOrderByUserUuidNetworkFirst(): LightOrder? {
+        val token = dataStoreRepo.getToken() ?: return null
+        val userUuid = dataStoreRepo.getUserUuid() ?: return null
+
+        return networkConnector
             .getLastOrder(
                 token = token,
             ).getNullableResult(
@@ -118,22 +124,23 @@ class OrderRepository(
                     lightOrder
                 },
             )
+    }
 
-    override suspend fun getLastOrderByUserUuidLocalFirst(
-        token: String,
-        userUuid: String,
-    ): LightOrder? =
-        if (cacheLastOrder == null) {
-            getLastOrderByUserUuidNetworkFirst(token = token, userUuid = userUuid)
+    override suspend fun getLastOrderByUserUuidLocalFirst(): LightOrder? {
+        val userUuid = dataStoreRepo.getUserUuid() ?: return null
+        val token = dataStoreRepo.getToken() ?: return null
+
+        return if (cacheLastOrder == null) {
+            getLastOrderByUserUuidNetworkFirst()
         } else {
             cacheLastOrder
         }
+    }
 
-    override suspend fun getOrderByUuid(
-        token: String,
-        orderUuid: String,
-    ): Order? =
-        networkConnector.getOrderByUuid(token = token, uuid = orderUuid).getNullableResult(
+    override suspend fun getOrderByUuid(orderUuid: String): Order? {
+        val userUuid = dataStoreRepo.getUserUuid() ?: return null
+        val token = dataStoreRepo.getToken() ?: return null
+        return networkConnector.getOrderByUuid(token = token, uuid = orderUuid).getNullableResult(
             onError = {
                 orderDao.getOrderWithProductListByUuid(orderUuid).let(orderMapper::toOrder)
             },
@@ -142,11 +149,11 @@ class OrderRepository(
                 orderMapper.toOrder(orderServer)
             },
         )
+    }
 
-    override suspend fun createOrder(
-        token: String,
-        createdOrder: CreatedOrder,
-    ): OrderCode? {
+    override suspend fun createOrder(createdOrder: CreatedOrder): OrderCode? {
+        val token = dataStoreRepo.getToken() ?: return null
+
         val orderPostServer = orderMapper.toOrderPostServer(createdOrder)
         return networkConnector
             .postOrder(
