@@ -132,7 +132,6 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
 
     implementation(libs.bundles.coil)
-    implementation(libs.material.dialogs.datetime)
     implementation(libs.kotlinx.collections.immutable)
 
     debugImplementation(libs.leakcanary.android)
