@@ -40,11 +40,11 @@ kotlin {
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.kotlinx.serialization.json)
                 implementation(libs.kotlinx.datetime)
+                implementation(libs.bundles.lifecycle)
 
                 implementation(compose.components.resources)
                 implementation(compose.foundation)
                 implementation(compose.material3)
-                implementation("org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose:2.9.6")
 
             }
         }
