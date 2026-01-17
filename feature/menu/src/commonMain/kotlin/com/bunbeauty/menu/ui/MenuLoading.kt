@@ -65,7 +65,7 @@ fun MenuLoadingScreen() {
                                 .padding(top = 8.dp)
                                 .weight(1f)
                                 .height(height = 180.dp)
-                                .clip(shape = RoundedCornerShape(16.dp)),
+                                .clip(shape = RoundedCornerShape(24.dp)),
                     )
                     Shimmer(
                         modifier =
@@ -73,7 +73,7 @@ fun MenuLoadingScreen() {
                                 .padding(top = 8.dp)
                                 .weight(1f)
                                 .height(height = 180.dp)
-                                .clip(shape = RoundedCornerShape(16.dp)),
+                                .clip(shape = RoundedCornerShape(24.dp)),
                     )
                 }
             }

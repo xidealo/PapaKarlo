@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -408,7 +409,7 @@ private fun ProductCard(
                                 ),
                             animatedVisibilityScope = animatedContentScope,
                         ).fillMaxWidth()
-                        .clip(FoodDeliveryCardDefaults.cardShape)
+                        .clip(shape = RoundedCornerShape(size = 16.dp))
                         .heightIn(min = 228.dp),
                 photoLink = menuProductUi.photoLink,
                 contentDescription = stringResource(Res.string.description_product),
@@ -524,7 +525,7 @@ private fun ProductDetailsSuccessScreenPreview() {
                                     newPrice = "280 ₽",
                                     description =
                                         "Сочная котлетка, сыр Чедр, маринованный огурчик, помидор, " +
-                                            "красный лук, салат, фирменный соус, булочка с кунжутом",
+                                                "красный лук, салат, фирменный соус, булочка с кунжутом",
                                     additionList =
                                         persistentListOf(
                                             AdditionItem.AdditionHeaderItem(

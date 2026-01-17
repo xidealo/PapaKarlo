@@ -51,7 +51,7 @@
     <string name="description_google_play">Google play</string>
 
     <!-- PRODUCT -->
-    <string name="action_product_want">Хочу!</string>
+    <string name="action_product_want">В корзину</string>
 
     <!-- MENU -->
     <string name="title_menu">Меню</string>

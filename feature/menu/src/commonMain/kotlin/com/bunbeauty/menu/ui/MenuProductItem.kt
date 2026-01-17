@@ -1,7 +1,9 @@
 package com.bunbeauty.menu.ui
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -29,74 +31,6 @@ import papakarlo.designsystem.generated.resources.Res
 import papakarlo.designsystem.generated.resources.action_product_want
 import papakarlo.designsystem.generated.resources.description_product
 
-@Composable
-fun MenuProductItem(
-    modifier: Modifier = Modifier,
-    menuProductItem: MenuItemUi.Product,
-    onAddProductClick: (String) -> Unit,
-    onProductClick: (String) -> Unit,
-) {
-    FoodDeliveryCard(
-        modifier = modifier,
-        onClick = {
-            onProductClick(menuProductItem.uuid)
-        },
-    ) {
-        Column {
-            FoodDeliveryAsyncImage(
-                modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .heightIn(min = 120.dp),
-                photoLink = menuProductItem.photoLink,
-                contentDescription = stringResource(resource = Res.string.description_product),
-                contentScale = ContentScale.FillWidth,
-            )
-            Column(
-                modifier =
-                    Modifier.padding(
-                        all = FoodDeliveryTheme.dimensions.smallSpace,
-                    ),
-            ) {
-                OverflowingText(
-                    text = menuProductItem.name,
-                    style = FoodDeliveryTheme.typography.titleSmall.bold,
-                    color = FoodDeliveryTheme.colors.mainColors.onSurface,
-                )
-                Row(modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.verySmallSpace)) {
-                    menuProductItem.oldPrice?.let { oldPrice ->
-                        Text(
-                            modifier =
-                                Modifier
-                                    .padding(end = FoodDeliveryTheme.dimensions.verySmallSpace),
-                            text = oldPrice,
-                            style = FoodDeliveryTheme.typography.bodySmall,
-                            textDecoration = TextDecoration.LineThrough,
-                            color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
-                        )
-                    }
-                    Text(
-                        text = menuProductItem.newPrice,
-                        style = FoodDeliveryTheme.typography.bodySmall.bold,
-                        color = FoodDeliveryTheme.colors.mainColors.onSurface,
-                    )
-                }
-                SmallButton(
-                    modifier =
-                        Modifier
-                            .fillMaxWidth()
-                            .padding(top = FoodDeliveryTheme.dimensions.smallSpace),
-                    textStringId = Res.string.action_product_want,
-                    elevated = false,
-                    onClick = {
-                        onAddProductClick(menuProductItem.uuid)
-                    },
-                )
-            }
-        }
-    }
-}
-
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun MenuProductItem(
@@ -113,6 +47,7 @@ fun MenuProductItem(
             onClick = {
                 onProductClick(menuProductItem.uuid)
             },
+            shape = RoundedCornerShape(size = 24.dp)
         ) {
             Column {
                 FoodDeliveryAsyncImage(
@@ -124,7 +59,7 @@ fun MenuProductItem(
                                         .rememberSharedContentState(key = "image-${menuProductItem.uuid}"),
                                 animatedVisibilityScope = animatedContentScope,
                             ).fillMaxWidth()
-                            .clip(shape = RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp))
+                            .clip(shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp))
                             .heightIn(min = 120.dp),
                     photoLink = menuProductItem.photoLink,
                     contentDescription = stringResource(Res.string.description_product),
@@ -191,7 +126,7 @@ fun MenuProductItem(
                         modifier =
                             Modifier
                                 .fillMaxWidth()
-                                .padding(top = FoodDeliveryTheme.dimensions.smallSpace),
+                                .padding(top = 12.dp),
                         textStringId = Res.string.action_product_want,
                         elevated = false,
                         onClick = {
@@ -208,18 +143,24 @@ fun MenuProductItem(
 @Composable
 private fun MenuProductItemPreview() {
     FoodDeliveryTheme {
-        MenuProductItem(
-            menuProductItem =
-                MenuItemUi.Product(
-                    uuid = "",
-                    key = "",
-                    photoLink = "",
-                    name = "Бэргер",
-                    newPrice = "99 ₽",
-                    oldPrice = "100 ₽",
-                ),
-            onAddProductClick = {},
-            onProductClick = {},
-        )
+        SharedTransitionLayout {
+            AnimatedVisibility(visible = true) {
+                MenuProductItem(
+                    menuProductItem =
+                        MenuItemUi.Product(
+                            uuid = "",
+                            key = "",
+                            photoLink = "",
+                            name = "Бэргер",
+                            newPrice = "99 ₽",
+                            oldPrice = "100 ₽",
+                        ),
+                    onAddProductClick = {},
+                    onProductClick = {},
+                    animatedContentScope = this,
+                    sharedTransitionScope = this@SharedTransitionLayout,
+                )
+            }
+        }
     }
 }

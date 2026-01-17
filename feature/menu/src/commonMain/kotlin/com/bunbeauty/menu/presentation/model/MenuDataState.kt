@@ -29,6 +29,9 @@ data class MenuDataState(
         ) : Event
 
         data object ShowAddProductError : Event
+        data class ShowAddedProduct(
+            val name: String,
+        ) : Event
     }
 
     operator fun plus(event: Event) = copy(eventList = eventList + event)
