@@ -56,7 +56,7 @@ import io.ktor.http.path
 import kotlinx.coroutines.flow.Flow
 import org.koin.core.component.KoinComponent
 
-private const val COMMON_TIMEOUT = 25000L
+private const val COMMON_TIMEOUT = 7000L
 private const val FORCE_UPDATE_TIMEOUT = 5000L
 
 internal class NetworkConnectorImpl(

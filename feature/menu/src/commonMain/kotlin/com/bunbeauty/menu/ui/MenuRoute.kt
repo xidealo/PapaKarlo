@@ -35,6 +35,7 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.bunbeauty.core.Constants.FAB_SNACKBAR_BOTTOM_PADDING
 import com.bunbeauty.core.model.CategoryItem
 import com.bunbeauty.core.model.ProductDetailsOpenedFrom
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
@@ -65,12 +66,13 @@ import papakarlo.designsystem.generated.resources.ic_cart_24
 import papakarlo.designsystem.generated.resources.ic_discount
 import papakarlo.designsystem.generated.resources.ic_profile
 import papakarlo.designsystem.generated.resources.msg_menu_discount
+import papakarlo.designsystem.generated.resources.msg_menu_product_added
 import papakarlo.designsystem.generated.resources.title_menu
 import papakarlo.designsystem.generated.resources.title_menu_discount
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-public fun MenuRoute(
+fun MenuRoute(
     sharedTransitionScope: SharedTransitionScope,
     animatedContentScope: AnimatedContentScope,
     viewModel: MenuViewModel = koinViewModel(),
@@ -82,6 +84,7 @@ public fun MenuRoute(
     goToProfile: () -> Unit,
     goToConsumerCart: () -> Unit,
     showErrorMessage: (String) -> Unit,
+    showInfoMessage: (String, Int) -> Unit,
 ) {
     val viewState by viewModel.menuState.collectAsStateWithLifecycle()
 
@@ -97,6 +100,7 @@ public fun MenuRoute(
         goToProductDetailsFragment = goToProductDetailsFragment,
         consumeEffects = consumeEffects,
         showErrorMessage = showErrorMessage,
+        showInfoMessage = showInfoMessage
     )
 
     MenuScreen(
@@ -126,6 +130,7 @@ private fun MenuEffect(
     ) -> Unit,
     consumeEffects: () -> Unit,
     showErrorMessage: (String) -> Unit,
+    showInfoMessage: (String, Int) -> Unit,
 ) {
     LaunchedEffect(effects) {
         effects.forEach { effect ->
@@ -140,6 +145,15 @@ private fun MenuEffect(
 
                 MenuDataState.Event.ShowAddProductError -> {
                     showErrorMessage(getString(Res.string.error_consumer_cart_add_product))
+                }
+
+                is MenuDataState.Event.ShowAddedProduct -> {
+                    showInfoMessage(
+                        getString(
+                            Res.string.msg_menu_product_added,
+                        ),
+                        FAB_SNACKBAR_BOTTOM_PADDING,
+                    )
                 }
             }
         }
@@ -343,7 +357,7 @@ private fun MenuColumn(
                 when (menuItemModel) {
                     is MenuItemUi.Discount,
                     is MenuItemUi.CategoryHeader,
-                    -> GridItemSpan(maxLineSpan)
+                        -> GridItemSpan(maxLineSpan)
 
                     else -> GridItemSpan(1)
                 }

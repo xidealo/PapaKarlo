@@ -94,6 +94,7 @@ fun NavGraphBuilder.foodDeliveryNavGraphBuilder(
         },
         showErrorMessage = showErrorMessage,
         sharedTransitionScope = sharedTransitionScope,
+        showInfoMessage = showInfoMessage
     )
     productDetailsScreenRoute(
         back = navController::navigateUp,
@@ -135,11 +136,11 @@ fun NavGraphBuilder.foodDeliveryNavGraphBuilder(
             )
         },
         goToProductFragment = {
-            uuid,
-            name,
-            productDetailsOpenedFrom,
-            additionUuidList,
-            cartProductUuid,
+                uuid,
+                name,
+                productDetailsOpenedFrom,
+                additionUuidList,
+                cartProductUuid,
             ->
             navController.navigateToProductDetailsScreen(
                 uuid = uuid,
