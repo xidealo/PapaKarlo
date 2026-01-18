@@ -136,8 +136,6 @@ private fun UserAddressListScreen(
                     imageDescriptionId = Res.string.description_cafe_addresses_empty,
                     mainTextId = Res.string.title_my_addresses_empty,
                     extraTextId = Res.string.msg_my_addresses_empty,
-                    buttonTextId = Res.string.action_add_addresses,
-                    onClick = { onAction(UserAddressListDataState.Action.Init) },
                 )
         }
     }

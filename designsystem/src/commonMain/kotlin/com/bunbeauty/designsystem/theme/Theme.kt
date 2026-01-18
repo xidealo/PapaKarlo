@@ -48,21 +48,9 @@ import papakarlo.designsystem.generated.resources.logo_medium_usadba
 import papakarlo.designsystem.generated.resources.logo_medium_vkus_kavkaza
 import papakarlo.designsystem.generated.resources.logo_medium_voljane
 import papakarlo.designsystem.generated.resources.logo_medium_yuliar
-import papakarlo.designsystem.generated.resources.logo_small_djan
-import papakarlo.designsystem.generated.resources.logo_small_emoji
-import papakarlo.designsystem.generated.resources.logo_small_estpoest
-import papakarlo.designsystem.generated.resources.logo_small_gustopub
-import papakarlo.designsystem.generated.resources.logo_small_papakarlo
-import papakarlo.designsystem.generated.resources.logo_small_tandir_house
-import papakarlo.designsystem.generated.resources.logo_small_taverna
-import papakarlo.designsystem.generated.resources.logo_small_usadba
-import papakarlo.designsystem.generated.resources.logo_small_vkus_kavkaza
-import papakarlo.designsystem.generated.resources.logo_small_voljane
-import papakarlo.designsystem.generated.resources.logo_small_yuliar
 
 private var BASE_THEME_FLAVOR: String = "papakarlo"
 var logoMedium: DrawableResource? = null
-var logoSmall: DrawableResource? = null
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -97,7 +85,6 @@ private fun getAppColors(
     return when (company) {
         FoodDeliveryCompany.PAPA_KARLO -> {
             logoMedium = Res.drawable.logo_medium_papakarlo
-            logoSmall = Res.drawable.logo_small_papakarlo
             if (isDarkTheme) {
                 PapaKarloDarkColors
             } else {
@@ -107,7 +94,6 @@ private fun getAppColors(
 
         FoodDeliveryCompany.YULIAR -> {
             logoMedium = Res.drawable.logo_medium_yuliar
-            logoSmall = Res.drawable.logo_small_yuliar
             if (isDarkTheme) {
                 YuliarDarkColors
             } else {
@@ -117,7 +103,6 @@ private fun getAppColors(
 
         FoodDeliveryCompany.DJAN -> {
             logoMedium = Res.drawable.logo_medium_djan
-            logoSmall = Res.drawable.logo_small_djan
             if (isDarkTheme) {
                 DjanDarkColors
             } else {
@@ -127,7 +112,6 @@ private fun getAppColors(
 
         FoodDeliveryCompany.GUSTO_PUB -> {
             logoMedium = Res.drawable.logo_medium_gustopub
-            logoSmall = Res.drawable.logo_small_gustopub
             if (isDarkTheme) {
                 GustoPubDarkColors
             } else {
@@ -137,7 +121,6 @@ private fun getAppColors(
 
         FoodDeliveryCompany.TANDIR_HOUSE -> {
             logoMedium = Res.drawable.logo_medium_tandir_house
-            logoSmall = Res.drawable.logo_small_tandir_house
             if (isDarkTheme) {
                 TandirHouseDarkColors
             } else {
@@ -147,7 +130,6 @@ private fun getAppColors(
 
         FoodDeliveryCompany.VKUS_KAVKAZA -> {
             logoMedium = Res.drawable.logo_medium_vkus_kavkaza
-            logoSmall = Res.drawable.logo_small_vkus_kavkaza
             if (isDarkTheme) {
                 VkusKavkazaDarkColors
             } else {
@@ -157,7 +139,6 @@ private fun getAppColors(
 
         FoodDeliveryCompany.EST_POEST -> {
             logoMedium = Res.drawable.logo_medium_estpoest
-            logoSmall = Res.drawable.logo_small_estpoest
             if (isDarkTheme) {
                 EstPoestDarkColors
             } else {
@@ -175,7 +156,6 @@ private fun getAppColors(
 
         FoodDeliveryCompany.USADBA -> {
             logoMedium = Res.drawable.logo_medium_usadba
-            logoSmall = Res.drawable.logo_small_usadba
             if (isDarkTheme) {
                 UsadbaDarkColors
             } else {
@@ -185,7 +165,6 @@ private fun getAppColors(
 
         FoodDeliveryCompany.EMOJI -> {
             logoMedium = Res.drawable.logo_medium_emoji
-            logoSmall = Res.drawable.logo_small_emoji
             if (isDarkTheme) {
                 EmojiDarkColors
             } else {
@@ -202,7 +181,6 @@ private fun getAppColors(
 
         FoodDeliveryCompany.TAVERNA -> {
             logoMedium = Res.drawable.logo_medium_taverna
-            logoSmall = Res.drawable.logo_small_taverna
             if (isDarkTheme) {
                 TavernaDarkColors
             } else {
@@ -212,7 +190,6 @@ private fun getAppColors(
 
         FoodDeliveryCompany.VOLJANE -> {
             logoMedium = Res.drawable.logo_medium_voljane
-            logoSmall = Res.drawable.logo_small_voljane
             if (isDarkTheme) {
                 VoljaneDarkColors
             } else {

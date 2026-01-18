@@ -22,7 +22,6 @@ import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.FabPosition
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -32,6 +31,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.snapshotFlow
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -40,7 +40,6 @@ import com.bunbeauty.core.model.CategoryItem
 import com.bunbeauty.core.model.ProductDetailsOpenedFrom
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.theme.bold
-import com.bunbeauty.designsystem.theme.logoSmall
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryAction
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.designsystem.ui.element.TopCartUi
@@ -100,7 +99,7 @@ fun MenuRoute(
         goToProductDetailsFragment = goToProductDetailsFragment,
         consumeEffects = consumeEffects,
         showErrorMessage = showErrorMessage,
-        showInfoMessage = showInfoMessage
+        showInfoMessage = showInfoMessage,
     )
 
     MenuScreen(
@@ -188,7 +187,6 @@ private fun MenuScreen(
             ),
         scrollableState = menuLazyGridState,
         backgroundColor = FoodDeliveryTheme.colors.mainColors.surface,
-        drawableId = logoSmall,
         appBarContent = {
             if (viewState.state is MenuDataState.State.Success) {
                 CategoryRow(
@@ -214,7 +212,7 @@ private fun MenuScreen(
                 }
             }
         },
-        floatingActionButtonPosition = FabPosition.End,
+        floatingActionButtonPosition = Alignment.BottomEnd,
     ) {
         when (viewState.state) {
             is MenuDataState.State.Success -> {
@@ -357,7 +355,7 @@ private fun MenuColumn(
                 when (menuItemModel) {
                     is MenuItemUi.Discount,
                     is MenuItemUi.CategoryHeader,
-                        -> GridItemSpan(maxLineSpan)
+                    -> GridItemSpan(maxLineSpan)
 
                     else -> GridItemSpan(1)
                 }
