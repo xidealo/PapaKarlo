@@ -53,7 +53,6 @@ fun FoodDeliveryTopAppBar(
     backActionClick: (() -> Unit)? = null,
     actions: ImmutableList<FoodDeliveryToolbarActions> = persistentListOf(),
     isScrolled: Boolean = false,
-    drawableId: DrawableResource? = null,
     content: @Composable () -> Unit = {},
 ) {
     val barColor by animateColorAsState(
@@ -74,17 +73,11 @@ fun FoodDeliveryTopAppBar(
     }
 
     Column(modifier = Modifier.background(barColor)) {
-        Box {
-            FoodDeliveryTopAppBar(
-                title = title,
-                backActionClick = backActionClick,
-                actions = actions,
-            )
-            LogoImage(
-                modifier = Modifier.align(Alignment.Center),
-                drawableId = drawableId,
-            )
-        }
+        FoodDeliveryTopAppBar(
+            title = title,
+            backActionClick = backActionClick,
+            actions = actions,
+        )
 
         content()
 
@@ -100,10 +93,12 @@ fun FoodDeliveryTopAppBar(
 @Composable
 private fun FoodDeliveryTopAppBar(
     title: String?,
+    modifier: Modifier = Modifier,
     backActionClick: (() -> Unit)? = null,
     actions: ImmutableList<FoodDeliveryToolbarActions> = persistentListOf(),
 ) {
     TopAppBar(
+        modifier = modifier,
         colors = FoodDeliveryTopAppBarDefaults.topAppBarColors(),
         title = {
             Text(

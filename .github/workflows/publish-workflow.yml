@@ -105,7 +105,7 @@ jobs:
       - name: "Set up Gradle"
         uses: gradle/gradle-build-action@v3
       - name: "Verify resources"
-        run: ls shared/src/commonMain/composeResources/values/strings.xml
+        run: ls designsystem/src/commonMain/composeResources/values/strings.xml
       - name: "Clean project"
         run: ./gradlew clean
       - name: "Assemble ${{ matrix.flavor }}"

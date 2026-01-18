@@ -32,6 +32,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.snapshotFlow
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -40,7 +41,6 @@ import com.bunbeauty.core.model.CategoryItem
 import com.bunbeauty.core.model.ProductDetailsOpenedFrom
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.theme.bold
-import com.bunbeauty.designsystem.theme.logoSmall
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryAction
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.designsystem.ui.element.TopCartUi
@@ -188,7 +188,6 @@ private fun MenuScreen(
             ),
         scrollableState = menuLazyGridState,
         backgroundColor = FoodDeliveryTheme.colors.mainColors.surface,
-        drawableId = logoSmall,
         appBarContent = {
             if (viewState.state is MenuDataState.State.Success) {
                 CategoryRow(
@@ -214,7 +213,7 @@ private fun MenuScreen(
                 }
             }
         },
-        floatingActionButtonPosition = FabPosition.End,
+        floatingActionButtonPosition = Alignment.BottomEnd,
     ) {
         when (viewState.state) {
             is MenuDataState.State.Success -> {

@@ -1,5 +1,6 @@
 package com.bunbeauty.shared
 
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.window.ComposeUIViewController
@@ -17,6 +18,7 @@ fun MainViewController(flavor: String): UIViewController =
         ) {
             MainScreen(
                 modifier = Modifier
+                    .imePadding()
             )
         }
     }

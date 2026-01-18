@@ -22,6 +22,7 @@ struct PapaKarloSwiftApp: App {
         WindowGroup {
             VStack{
                 ComposeView()
+                    .ignoresSafeArea()
             }
         }
     }

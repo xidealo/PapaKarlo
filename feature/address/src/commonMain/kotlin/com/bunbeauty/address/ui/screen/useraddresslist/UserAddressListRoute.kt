@@ -102,17 +102,6 @@ private fun UserAddressListScreen(
     FoodDeliveryScaffold(
         title = stringResource(Res.string.title_my_addresses),
         backActionClick = { onAction(UserAddressListDataState.Action.BackClicked) },
-        actionButton = {
-            if (viewState.state != UserAddressListViewState.State.Loading) {
-                MainButton(
-                    modifier =
-                        Modifier
-                            .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
-                    textStringId = Res.string.action_add_addresses,
-                    onClick = { onAction(UserAddressListDataState.Action.OnClickedCreateAddress) },
-                )
-            }
-        },
         backgroundColor = FoodDeliveryTheme.colors.mainColors.surface,
     ) {
         when (viewState.state) {
@@ -137,7 +126,7 @@ private fun UserAddressListScreen(
                     mainTextId = Res.string.title_my_addresses_empty,
                     extraTextId = Res.string.msg_my_addresses_empty,
                     buttonTextId = Res.string.action_add_addresses,
-                    onClick = { onAction(UserAddressListDataState.Action.Init) },
+                    onClick = { onAction(UserAddressListDataState.Action.OnClickedCreateAddress) },
                 )
         }
     }

@@ -43,7 +43,6 @@ class MainActivity :
                     modifier =
                         Modifier
                             .statusBarsPadding()
-                            .navigationBarsPadding()
                             .imePadding(),
                 )
             }
