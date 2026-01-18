@@ -22,7 +22,6 @@ import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.FabPosition
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -100,7 +99,7 @@ fun MenuRoute(
         goToProductDetailsFragment = goToProductDetailsFragment,
         consumeEffects = consumeEffects,
         showErrorMessage = showErrorMessage,
-        showInfoMessage = showInfoMessage
+        showInfoMessage = showInfoMessage,
     )
 
     MenuScreen(
@@ -356,7 +355,7 @@ private fun MenuColumn(
                 when (menuItemModel) {
                     is MenuItemUi.Discount,
                     is MenuItemUi.CategoryHeader,
-                        -> GridItemSpan(maxLineSpan)
+                    -> GridItemSpan(maxLineSpan)
 
                     else -> GridItemSpan(1)
                 }

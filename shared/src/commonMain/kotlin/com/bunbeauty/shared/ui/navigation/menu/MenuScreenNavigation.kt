@@ -19,8 +19,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data object MenuScreenDestination
 
-fun NavController.navigateToMenuScreen(navOptions: NavOptions) =
-    navigate(route = MenuScreenDestination, navOptions)
+fun NavController.navigateToMenuScreen(navOptions: NavOptions) = navigate(route = MenuScreenDestination, navOptions)
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 fun NavGraphBuilder.menuScreenRoute(
@@ -40,10 +39,10 @@ fun NavGraphBuilder.menuScreenRoute(
             fadeIn(
                 navAnimationSpecDurationForEnterFade,
             ) +
-                    scaleIn(
-                        initialScale = NAV_ANIMATION_SPEC_SCALE_FOR_FADE,
-                        animationSpec = navAnimationSpecDurationForEnterFade,
-                    )
+                scaleIn(
+                    initialScale = NAV_ANIMATION_SPEC_SCALE_FOR_FADE,
+                    animationSpec = navAnimationSpecDurationForEnterFade,
+                )
         },
         exitTransition = {
             fadeOut(
@@ -54,10 +53,10 @@ fun NavGraphBuilder.menuScreenRoute(
             fadeIn(
                 navAnimationSpecDurationForPopFade,
             ) +
-                    scaleIn(
-                        initialScale = NAV_ANIMATION_SPEC_SCALE_FOR_FADE,
-                        animationSpec = navAnimationSpecDurationForPopFade,
-                    )
+                scaleIn(
+                    initialScale = NAV_ANIMATION_SPEC_SCALE_FOR_FADE,
+                    animationSpec = navAnimationSpecDurationForPopFade,
+                )
         },
         popExitTransition = {
             fadeOut(
@@ -72,7 +71,7 @@ fun NavGraphBuilder.menuScreenRoute(
             showErrorMessage = showErrorMessage,
             sharedTransitionScope = sharedTransitionScope,
             animatedContentScope = this@composable,
-            showInfoMessage = showInfoMessage
+            showInfoMessage = showInfoMessage,
         )
     }
 }

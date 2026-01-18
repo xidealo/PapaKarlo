@@ -219,8 +219,10 @@ private fun CreateAddressScreen(
             )
 
             FoodDeliveryTextField(
-                modifier = Modifier.fillMaxWidth()
-                    .padding(bottom = 70.dp),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 70.dp),
                 value = viewState.comment,
                 labelStringId = Res.string.hint_create_address_comment,
                 keyboardOptions =

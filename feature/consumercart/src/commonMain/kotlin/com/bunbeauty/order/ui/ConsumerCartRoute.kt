@@ -431,7 +431,7 @@ fun MenuProductItem(
         onClick = {
             onProductClick(menuProductItem.uuid)
         },
-        shape = RoundedCornerShape(size = 24.dp)
+        shape = RoundedCornerShape(size = 24.dp),
     ) {
         Column {
             FoodDeliveryAsyncImage(
