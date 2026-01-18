@@ -170,7 +170,7 @@ fun commonPlayConfig(playPublisherExtension: PlayPublisherExtension) {
     with(playPublisherExtension) {
         track.set("production")
         defaultToAppBundles.set(true)
-        userFraction.set(0.75)
+        userFraction.set(0.95)
         serviceAccountCredentials.set(file("google-play-api-key.json"))
         releaseStatus.set(ReleaseStatus.IN_PROGRESS)
     }
