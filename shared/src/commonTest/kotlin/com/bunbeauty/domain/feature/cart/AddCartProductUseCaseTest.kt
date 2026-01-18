@@ -1,18 +1,18 @@
 package com.bunbeauty.domain.feature.cart
 
+import com.bunbeauty.core.domain.GetCartProductCountUseCase
+import com.bunbeauty.core.domain.addition.AreAdditionsEqualUseCase
+import com.bunbeauty.core.domain.addition.GetAdditionPriorityUseCase
+import com.bunbeauty.core.domain.cart.AddCartProductUseCase
+import com.bunbeauty.core.domain.exeptions.CartProductLimitReachedException
+import com.bunbeauty.core.domain.repo.AdditionGroupRepo
+import com.bunbeauty.core.domain.repo.AdditionRepo
+import com.bunbeauty.core.domain.repo.CartProductAdditionRepo
+import com.bunbeauty.core.domain.repo.CartProductRepo
 import com.bunbeauty.getAddition
 import com.bunbeauty.getAdditionGroup
 import com.bunbeauty.getCartProduct
 import com.bunbeauty.getMenuProduct
-import com.bunbeauty.shared.domain.exeptions.CartProductLimitReachedException
-import com.bunbeauty.shared.domain.feature.addition.AreAdditionsEqualUseCase
-import com.bunbeauty.shared.domain.feature.addition.GetAdditionPriorityUseCase
-import com.bunbeauty.shared.domain.feature.cart.AddCartProductUseCase
-import com.bunbeauty.shared.domain.feature.cart.GetCartProductCountUseCase
-import com.bunbeauty.shared.domain.repo.AdditionGroupRepo
-import com.bunbeauty.shared.domain.repo.AdditionRepo
-import com.bunbeauty.shared.domain.repo.CartProductAdditionRepo
-import com.bunbeauty.shared.domain.repo.CartProductRepo
 import dev.mokkery.MockMode
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend

@@ -1,9 +1,9 @@
 package com.bunbeauty.shared.data.mapper.payment
 
+import com.bunbeauty.core.model.payment_method.PaymentMethod
+import com.bunbeauty.core.model.payment_method.PaymentMethodName
 import com.bunbeauty.shared.data.network.model.PaymentMethodServer
 import com.bunbeauty.shared.db.PaymentMethodEntity
-import com.bunbeauty.shared.domain.model.payment_method.PaymentMethod
-import com.bunbeauty.shared.domain.model.payment_method.PaymentMethodName
 
 class PaymentMethodMapper {
     fun toPaymentMethod(paymentMethodServer: PaymentMethodServer): PaymentMethod? {

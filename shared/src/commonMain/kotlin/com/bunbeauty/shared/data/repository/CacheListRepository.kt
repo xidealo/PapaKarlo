@@ -1,6 +1,6 @@
 package com.bunbeauty.shared.data.repository
 
-import com.bunbeauty.shared.data.network.ApiResult
+import com.bunbeauty.core.ApiResult
 import com.bunbeauty.shared.data.network.model.ListServer
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

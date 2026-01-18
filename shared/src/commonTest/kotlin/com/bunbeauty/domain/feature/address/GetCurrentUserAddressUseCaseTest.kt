@@ -1,9 +1,8 @@
 package com.bunbeauty.domain.feature.address
 
-import com.bunbeauty.shared.DataStoreRepo
-import com.bunbeauty.shared.domain.feature.address.GetCurrentUserAddressUseCaseImpl
-import com.bunbeauty.shared.domain.model.address.UserAddress
-import com.bunbeauty.shared.domain.repo.UserAddressRepo
+import com.bunbeauty.core.domain.address.GetCurrentUserAddressUseCaseImpl
+import com.bunbeauty.core.domain.repo.UserAddressRepo
+import com.bunbeauty.core.model.address.UserAddress
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.mock
@@ -12,8 +11,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class GetCurrentUserAddressUseCaseTest {
-    private val fakeUserUuid = "userUuid"
-    private val fakeSelectedCityUuid = "selectedCityUuid"
     private val userAddressMock: UserAddress =
         UserAddress(
             uuid = "pulvinar",
@@ -31,17 +28,10 @@ class GetCurrentUserAddressUseCaseTest {
             cafeUuid = "cafeUuid",
         )
 
-    private val dataStoreRepo: DataStoreRepo =
-        mock {
-            everySuspend { getUserUuid() } returns fakeUserUuid
-            everySuspend { getSelectedCityUuid() } returns fakeSelectedCityUuid
-        }
-
     private val userAddressRepo: UserAddressRepo = mock()
 
     private val getCurrentUserAddressUseCase: GetCurrentUserAddressUseCaseImpl =
         GetCurrentUserAddressUseCaseImpl(
-            dataStoreRepo = dataStoreRepo,
             userAddressRepo = userAddressRepo,
         )
 
@@ -49,10 +39,7 @@ class GetCurrentUserAddressUseCaseTest {
     fun `return selected address address is selected`() =
         runTest {
             everySuspend {
-                userAddressRepo.getSelectedAddressByUserAndCityUuid(
-                    userUuid = fakeUserUuid,
-                    cityUuid = fakeSelectedCityUuid,
-                )
+                userAddressRepo.getSelectedAddressByUserAndCityUuid()
             } returns userAddressMock
 
             val currentUserAddress = getCurrentUserAddressUseCase()
@@ -64,16 +51,10 @@ class GetCurrentUserAddressUseCaseTest {
     fun `return first address when address is not selected`() =
         runTest {
             everySuspend {
-                userAddressRepo.getSelectedAddressByUserAndCityUuid(
-                    userUuid = fakeUserUuid,
-                    cityUuid = fakeSelectedCityUuid,
-                )
+                userAddressRepo.getSelectedAddressByUserAndCityUuid()
             } returns null
             everySuspend {
-                userAddressRepo.getFirstUserAddressByUserAndCityUuid(
-                    userUuid = fakeUserUuid,
-                    cityUuid = fakeSelectedCityUuid,
-                )
+                userAddressRepo.getFirstUserAddressByUserAndCityUuid()
             } returns userAddressMock
 
             val currentUserAddress = getCurrentUserAddressUseCase()

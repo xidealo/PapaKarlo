@@ -7,11 +7,11 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import com.bunbeauty.core.model.Delivery
+import com.bunbeauty.core.model.Discount
+import com.bunbeauty.core.model.Settings
+import com.bunbeauty.core.model.UserCityUuid
 import com.bunbeauty.shared.DataStoreRepo
-import com.bunbeauty.shared.domain.model.Delivery
-import com.bunbeauty.shared.domain.model.Discount
-import com.bunbeauty.shared.domain.model.Settings
-import com.bunbeauty.shared.domain.model.UserCityUuid
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flatMapLatest

@@ -6,9 +6,9 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
+import com.bunbeauty.createorder.ui.CreateOrderRoute
 import com.bunbeauty.shared.ui.navigation.NavAnimationSpec.navAnimationSpecDurationForEnterFade
 import com.bunbeauty.shared.ui.navigation.NavAnimationSpec.navAnimationSpecDurationForSlide
-import com.bunbeauty.shared.ui.screen.createorder.CreateOrderRoute
 import kotlinx.serialization.Serializable
 
 @Serializable

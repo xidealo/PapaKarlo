@@ -19,6 +19,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import papakarlo.designsystem.generated.resources.Res
 import papakarlo.designsystem.generated.resources.ic_cart_24
 
+
 @Composable
 fun FoodDeliveryExtendedFab(
     text: String,

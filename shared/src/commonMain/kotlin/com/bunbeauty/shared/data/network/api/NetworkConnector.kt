@@ -1,6 +1,6 @@
 package com.bunbeauty.shared.data.network.api
 
-import com.bunbeauty.shared.data.network.ApiResult
+import com.bunbeauty.core.ApiResult
 import com.bunbeauty.shared.data.network.model.AddressServer
 import com.bunbeauty.shared.data.network.model.CafeServer
 import com.bunbeauty.shared.data.network.model.CategoryServer

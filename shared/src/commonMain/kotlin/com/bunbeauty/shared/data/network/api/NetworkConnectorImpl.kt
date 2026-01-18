@@ -1,13 +1,14 @@
 package com.bunbeauty.shared.data.network.api
 
-import com.bunbeauty.shared.Constants.AUTHORIZATION_HEADER
-import com.bunbeauty.shared.Constants.CITY_UUID_PARAMETER
-import com.bunbeauty.shared.Constants.COMPANY_UUID_PARAMETER
-import com.bunbeauty.shared.Constants.QUERY_PARAMETER
-import com.bunbeauty.shared.Constants.UUID_PARAMETER
+import com.bunbeauty.core.ApiError
+import com.bunbeauty.core.ApiResult
+import com.bunbeauty.core.Constants.AUTHORIZATION_HEADER
+import com.bunbeauty.core.Constants.CITY_UUID_PARAMETER
+import com.bunbeauty.core.Constants.COMPANY_UUID_PARAMETER
+import com.bunbeauty.core.Constants.QUERY_PARAMETER
+import com.bunbeauty.core.Constants.UUID_PARAMETER
+import com.bunbeauty.core.domain.exeptions.FoodDeliveryNetworkException
 import com.bunbeauty.shared.data.CompanyUuidProvider
-import com.bunbeauty.shared.data.network.ApiError
-import com.bunbeauty.shared.data.network.ApiResult
 import com.bunbeauty.shared.data.network.model.AddressServer
 import com.bunbeauty.shared.data.network.model.CafeServer
 import com.bunbeauty.shared.data.network.model.CategoryServer
@@ -38,7 +39,6 @@ import com.bunbeauty.shared.data.network.model.order.post.OrderPostServer
 import com.bunbeauty.shared.data.network.model.profile.get.ProfileServer
 import com.bunbeauty.shared.data.network.model.profile.patch.PatchUserServer
 import com.bunbeauty.shared.data.network.socket.SocketService
-import com.bunbeauty.shared.domain.exeptions.FoodDeliveryNetworkException
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.ClientRequestException
@@ -56,7 +56,7 @@ import io.ktor.http.path
 import kotlinx.coroutines.flow.Flow
 import org.koin.core.component.KoinComponent
 
-private const val COMMON_TIMEOUT = 25000L
+private const val COMMON_TIMEOUT = 7000L
 private const val FORCE_UPDATE_TIMEOUT = 5000L
 
 internal class NetworkConnectorImpl(

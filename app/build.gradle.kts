@@ -125,8 +125,6 @@ dependencies {
     implementation(libs.appcompat)
     implementation(libs.core.ktx)
 
-    implementation(libs.bundles.lifecycle)
-
     implementation(libs.bundles.di.android)
     testImplementation(libs.koin.test)
 
@@ -134,7 +132,6 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
 
     implementation(libs.bundles.coil)
-    implementation(libs.material.dialogs.datetime)
     implementation(libs.kotlinx.collections.immutable)
 
     debugImplementation(libs.leakcanary.android)
@@ -173,7 +170,7 @@ fun commonPlayConfig(playPublisherExtension: PlayPublisherExtension) {
     with(playPublisherExtension) {
         track.set("production")
         defaultToAppBundles.set(true)
-        userFraction.set(0.75)
+        userFraction.set(0.95)
         serviceAccountCredentials.set(file("google-play-api-key.json"))
         releaseStatus.set(ReleaseStatus.IN_PROGRESS)
     }

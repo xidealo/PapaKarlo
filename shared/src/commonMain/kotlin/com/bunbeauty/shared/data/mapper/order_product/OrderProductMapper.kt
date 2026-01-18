@@ -1,13 +1,13 @@
 package com.bunbeauty.shared.data.mapper.order_product
 
+import com.bunbeauty.core.model.addition.OrderAddition
+import com.bunbeauty.core.model.product.CreatedOrderProduct
+import com.bunbeauty.core.model.product.OrderMenuProduct
+import com.bunbeauty.core.model.product.OrderProduct
 import com.bunbeauty.shared.data.mapper.orderaddition.mapOrderAdditionServerToOrderAddition
 import com.bunbeauty.shared.data.network.model.order.get.OrderProductServer
 import com.bunbeauty.shared.data.network.model.order.post.OrderProductPostServer
 import com.bunbeauty.shared.db.OrderWithProductEntity
-import com.bunbeauty.shared.domain.model.addition.OrderAddition
-import com.bunbeauty.shared.domain.model.product.CreatedOrderProduct
-import com.bunbeauty.shared.domain.model.product.OrderMenuProduct
-import com.bunbeauty.shared.domain.model.product.OrderProduct
 
 class OrderProductMapper : IOrderProductMapper {
     override fun toOrderProduct(orderWithProductEntityList: List<OrderWithProductEntity>): List<OrderProduct> =
@@ -41,7 +41,9 @@ class OrderProductMapper : IOrderProductMapper {
                                 OrderAddition(
                                     uuid = orderAdditionEntityUuid,
                                     name = orderWithProductEntity.orderAdditionEntityName ?: "",
-                                    priority = orderWithProductEntity.orderAdditionEntityPriority ?: 0,
+                                    priority =
+                                        orderWithProductEntity.orderAdditionEntityPriority
+                                            ?: 0,
                                 )
                             }
                         },

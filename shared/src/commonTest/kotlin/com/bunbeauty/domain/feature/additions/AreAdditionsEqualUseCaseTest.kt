@@ -1,9 +1,9 @@
 package com.bunbeauty.domain.feature.additions
 
+import com.bunbeauty.core.domain.addition.AreAdditionsEqualUseCaseImpl
 import com.bunbeauty.getCartProduct
 import com.bunbeauty.getCartProductAddition
 import com.bunbeauty.getMenuProduct
-import com.bunbeauty.shared.domain.feature.addition.AreAdditionsEqualUseCaseImpl
 import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test

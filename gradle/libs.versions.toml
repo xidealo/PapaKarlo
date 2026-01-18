@@ -12,7 +12,6 @@ publisher = "3.13.0"
 appCompact = "1.7.1"
 coreKtx = "1.17.0"
 coil = "3.3.0"
-datetime = "0.9.0"
 desugar = "2.1.5"
 mokkery = "3.1.1"
 composeBom = "2025.12.01"
@@ -27,14 +26,13 @@ kaspresso = "1.6.0"
 collectionsImmutable = "0.4.0"
 ktLint = "13.1.0"
 tripletPlay = "3.13.0"
-compose = "1.10.0-rc02"
+compose = "1.11.0-alpha01"
 
 [libraries]
 appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appCompact" }
 core-ktx = { module = "androidx.core:core-ktx", version.ref = "coreKtx" }
-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle" }
+lifecycle-viewmodel-compose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version = "2.9.6" }
 lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
-lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle" }
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 koin-test = { module = "io.insert-koin:koin-test", version.ref = "koin" }
@@ -47,7 +45,6 @@ kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-t
 coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }
 coil-network-ktor = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coil" }
 
-material-dialogs-datetime = { module = "io.github.vanpra.compose-material-dialogs:datetime", version.ref = "datetime" }
 leakcanary-android = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakcanary" }
 kotlinx-collections-immutable = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "collectionsImmutable" }
 kaspresso = { module = "com.kaspersky.android-components:kaspresso", version.ref = "kaspresso" }
@@ -119,15 +116,16 @@ mokkery = { id = "dev.mokkery", version.ref = "mokkery" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 android-library = { id = "com.android.library", version.ref = "gradle" }
 
+# Plugins defined by this project
+client-compose-multiplatform-feature = { id = "com.bunbeauty.compose.multiplatform.feature", version = "1.0" }
+client-android-application = { id = "com.bunbeauty.android.application", version = "1.0" }
+
 [bundles]
 navigation = [
     "androidx-navigation-compose",
 ]
 lifecycle = [
     "lifecycle-viewmodel-compose",
-    "lifecycle-viewmodel-ktx",
-    "lifecycle-runtime-ktx",
-    "lifecycle-runtime-compose",
 ]
 
 di = [

@@ -1,12 +1,12 @@
 package com.bunbeauty.shared.data.mapper.cart_product
 
+import com.bunbeauty.core.model.addition.CartProductAddition
+import com.bunbeauty.core.model.cart.CartProduct
+import com.bunbeauty.core.model.category.Category
+import com.bunbeauty.core.model.product.MenuProduct
 import com.bunbeauty.shared.db.CartProductEntity
 import com.bunbeauty.shared.db.CartProductWithMenuProductEntity
 import com.bunbeauty.shared.db.MenuProductWithCategoryEntity
-import com.bunbeauty.shared.domain.model.addition.CartProductAddition
-import com.bunbeauty.shared.domain.model.cart.CartProduct
-import com.bunbeauty.shared.domain.model.category.Category
-import com.bunbeauty.shared.domain.model.product.MenuProduct
 
 class CartProductMapper : ICartProductMapper {
     override fun toCartProduct(
@@ -48,7 +48,9 @@ class CartProductMapper : ICartProductMapper {
                             name = cartProductWithMenuProductEntity.cartProductAdditionName ?: "",
                             price = cartProductWithMenuProductEntity.cartProductAdditionPrice,
                             cartProductUuid = cartProductWithMenuProductEntity.cartProductUuid,
-                            additionUuid = cartProductWithMenuProductEntity.cartProductAdditionAdditionUuid ?: "",
+                            additionUuid =
+                                cartProductWithMenuProductEntity.cartProductAdditionAdditionUuid
+                                    ?: "",
                             fullName = cartProductWithMenuProductEntity.cartProductAdditionFullName,
                             priority = cartProductWithMenuProductEntity.cartProductAdditionPriority,
                         )

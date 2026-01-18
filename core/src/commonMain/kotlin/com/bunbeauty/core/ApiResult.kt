@@ -1,0 +1,11 @@
+package com.bunbeauty.core
+
+sealed class ApiResult<out T> {
+    data class Success<out T>(
+        val data: T?,
+    ) : ApiResult<T>()
+
+    data class Error(
+        val apiError: ApiError,
+    ) : ApiResult<Nothing>()
+}

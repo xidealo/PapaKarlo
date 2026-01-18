@@ -129,7 +129,7 @@ private fun SwitcherPreview() {
 @Composable
 private fun SwitcherWithOnePreview() {
     FoodDeliveryTheme {
-        _root_ide_package_.com.bunbeauty.designsystem.ui.element.switcher.FoodDeliverySwitcher(
+        FoodDeliverySwitcher(
             optionResIdList =
                 persistentListOf(
                     "Доставка",

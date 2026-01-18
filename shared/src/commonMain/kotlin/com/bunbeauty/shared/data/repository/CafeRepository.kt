@@ -1,5 +1,10 @@
 package com.bunbeauty.shared.data.repository
 
+import com.bunbeauty.core.domain.exeptions.NoSelectedCityUuidException
+import com.bunbeauty.core.domain.exeptions.NoUserUuidException
+import com.bunbeauty.core.domain.repo.CafeRepo
+import com.bunbeauty.core.extension.dataOrNull
+import com.bunbeauty.core.model.cafe.Cafe
 import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.data.dao.cafe.ICafeDao
 import com.bunbeauty.shared.data.mapper.cafe.toCafe
@@ -7,9 +12,6 @@ import com.bunbeauty.shared.data.mapper.cafe.toCafeEntity
 import com.bunbeauty.shared.data.network.api.NetworkConnector
 import com.bunbeauty.shared.data.storage.CafeStorage
 import com.bunbeauty.shared.db.SelectedCafeUuidEntity
-import com.bunbeauty.shared.domain.model.cafe.Cafe
-import com.bunbeauty.shared.domain.repo.CafeRepo
-import com.bunbeauty.shared.extension.dataOrNull
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.withContext
@@ -22,7 +24,10 @@ class CafeRepository(
 ) : CafeRepo {
     private var cafeListCache: List<Cafe>? = null
 
-    override suspend fun getCafeList(selectedCityUuid: String): List<Cafe> {
+    override suspend fun getCafeList(): List<Cafe> {
+        val selectedCityUuid =
+            dataStoreRepo.getSelectedCityUuid() ?: throw NoSelectedCityUuidException()
+
         val list =
             if (cafeListCache == null) {
                 val cafeList =
@@ -58,11 +63,10 @@ class CafeRepository(
         return list ?: emptyList()
     }
 
-    override suspend fun saveSelectedCafeUuid(
-        userUuid: String,
-        selectedCityUuid: String,
-        cafeUuid: String,
-    ) {
+    override suspend fun saveSelectedCafeUuid(cafeUuid: String) {
+        val userUuid = dataStoreRepo.getUserUuid() ?: return
+        val selectedCityUuid = dataStoreRepo.getSelectedCityUuid() ?: return
+
         val selectedCafeUuidEntity =
             SelectedCafeUuidEntity(
                 userUuid = userUuid,
@@ -73,16 +77,16 @@ class CafeRepository(
     }
 
     override suspend fun getCafeByUuid(cafeUuid: String): Cafe? =
-        getCafeList(
-            selectedCityUuid = dataStoreRepo.getSelectedCityUuid().orEmpty(),
-        ).find { cafe ->
+        getCafeList().find { cafe ->
             cafe.uuid == cafeUuid
         }
 
-    override suspend fun getSelectedCafeByUserAndCityUuid(
-        userUuid: String,
-        cityUuid: String,
-    ): Cafe? = cafeDao.getSelectedCafeByUserAndCityUuid(userUuid, cityUuid)?.toCafe()
+    override suspend fun getSelectedCafeByUserAndCityUuid(): Cafe? {
+        val cityUuid = dataStoreRepo.getSelectedCityUuid() ?: throw NoSelectedCityUuidException()
+        val userUuid = dataStoreRepo.getUserUuid() ?: throw NoUserUuidException()
+
+        return cafeDao.getSelectedCafeByUserAndCityUuid(userUuid, cityUuid)?.toCafe()
+    }
 
     override fun clearCache() {
         cafeStorage.clear()

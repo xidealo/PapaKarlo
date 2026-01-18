@@ -1,6 +1,6 @@
 package com.bunbeauty.shared.data.repository
 
-import com.bunbeauty.shared.data.network.ApiResult
+import com.bunbeauty.core.ApiResult
 
 abstract class DatabaseCacheRepository : BaseRepository() {
     protected suspend inline fun <S, D> getCacheOrData(

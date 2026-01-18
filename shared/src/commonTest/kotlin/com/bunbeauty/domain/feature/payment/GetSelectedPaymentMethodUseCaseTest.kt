@@ -1,10 +1,10 @@
 package com.bunbeauty.domain.feature.payment
 
+import com.bunbeauty.core.domain.payment.GetSelectedPaymentMethodUseCase
+import com.bunbeauty.core.model.payment_method.PaymentMethodName
+import com.bunbeauty.core.model.payment_method.SelectablePaymentMethod
 import com.bunbeauty.getPaymentMethod
 import com.bunbeauty.getSelectablePaymentMethod
-import com.bunbeauty.shared.domain.feature.payment.GetSelectedPaymentMethodUseCase
-import com.bunbeauty.shared.domain.model.payment_method.PaymentMethodName
-import com.bunbeauty.shared.domain.model.payment_method.SelectablePaymentMethod
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
