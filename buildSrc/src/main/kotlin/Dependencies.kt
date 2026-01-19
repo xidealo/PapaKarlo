@@ -8,7 +8,7 @@ object CommonApplication {
     private const val versionMinor = 8
     private const val versionPatch = 7
 
-    const val versionCode = 286
+    const val versionCode = 287
     const val versionName = "$versionMajor.$versionMinor.$versionPatch"
 
     const val deploymentTarget = "12.0"
