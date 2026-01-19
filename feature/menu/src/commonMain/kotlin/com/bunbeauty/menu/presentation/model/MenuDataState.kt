@@ -29,6 +29,7 @@ data class MenuDataState(
         ) : Event
 
         data object ShowAddProductError : Event
+
         data class ShowAddedProduct(
             val name: String,
         ) : Event

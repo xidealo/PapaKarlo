@@ -185,11 +185,11 @@
 		1B2890650B7D8C6309E178C1 /* Pods_usadba.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64CB69F2C086D432C94A41AE /* Pods_usadba.framework */; };
 		2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp.swift */; };
 		266301895B5C00569AB849E2 /* Pods_papakarlo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED787CFFDA700D6B3F7441FD /* Pods_papakarlo.framework */; };
-		27B27E3F857CE2AF4CAF7755 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		27B27E3F857CE2AF4CAF7755 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 		40F8CD203B1B74C608425C20 /* Pods_legenda.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44EFB0D6C47CB1C412E6147A /* Pods_legenda.framework */; };
 		4499D47CD119E33E59493A78 /* Pods_estpoest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8750C5B05EB6BDC124B6C1A9 /* Pods_estpoest.framework */; };
-		4A0B25C2EBE3215D0FC6C121 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
-		4E7FC62A990EFBCC2E806359 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		4A0B25C2EBE3215D0FC6C121 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		4E7FC62A990EFBCC2E806359 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 		631CBC599AEFC9C22878D973 /* Pods_tandirhouse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A95B0BC15E4ECB39EC1D686 /* Pods_tandirhouse.framework */; };
 		7555FF83242A565900829871 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* ContentView.swift */; };
 		7A2C3462E5A9936B219657EB /* Pods_estpoest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8750C5B05EB6BDC124B6C1A9 /* Pods_estpoest.framework */; };
@@ -210,11 +210,11 @@
 		AC6E61DF2EA18E24004F9248 /* voljane.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AC6E61DD2EA18E24004F9248 /* voljane.xcassets */; };
 		AC6E61E02EA18E24004F9248 /* voljane.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC6E61DC2EA18E24004F9248 /* voljane.plist */; };
 		AC6E61E12EA18E24004F9248 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC6E61DB2EA18E24004F9248 /* GoogleService-Info.plist */; };
-		C927C79DE52353C2CEDE0C36 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		C927C79DE52353C2CEDE0C36 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 		CB4F7FFBACC3358427B7F28F /* Pods_emoji.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C67BA2EA9F070E4A515A937 /* Pods_emoji.framework */; };
 		D2B2C9D4143E4D68813E7BCA /* Pods_djan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F16CA71F7A1C57D286A0E36 /* Pods_djan.framework */; };
 		D899D3AE18F8B4D2F508352A /* Pods_taverna.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFA26521372BE9B9203F7E9E /* Pods_taverna.framework */; };
-		EFA9E2E0F12AB7A3BA2D93B1 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		EFA9E2E0F12AB7A3BA2D93B1 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 		F6F3956E5844208EDFA03DA0 /* Pods_yuliar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9C10411EF2D7D08F04B8829 /* Pods_yuliar.framework */; };
 		F8D6960333B5A2C9B870AA16 /* Pods_voljane.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC3DEBDBCD6763F6A38742CD /* Pods_voljane.framework */; };
 /* End PBXBuildFile section */
@@ -328,7 +328,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EFA9E2E0F12AB7A3BA2D93B1 /* (null) in Frameworks */,
+				EFA9E2E0F12AB7A3BA2D93B1 /* BuildFile in Frameworks */,
 				631CBC599AEFC9C22878D973 /* Pods_tandirhouse.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -353,7 +353,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				27B27E3F857CE2AF4CAF7755 /* (null) in Frameworks */,
+				27B27E3F857CE2AF4CAF7755 /* BuildFile in Frameworks */,
 				CB4F7FFBACC3358427B7F28F /* Pods_emoji.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -371,7 +371,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4A0B25C2EBE3215D0FC6C121 /* (null) in Frameworks */,
+				4A0B25C2EBE3215D0FC6C121 /* BuildFile in Frameworks */,
 				D2B2C9D4143E4D68813E7BCA /* Pods_djan.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -388,7 +388,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C927C79DE52353C2CEDE0C36 /* (null) in Frameworks */,
+				C927C79DE52353C2CEDE0C36 /* BuildFile in Frameworks */,
 				D899D3AE18F8B4D2F508352A /* Pods_taverna.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -421,7 +421,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4E7FC62A990EFBCC2E806359 /* (null) in Frameworks */,
+				4E7FC62A990EFBCC2E806359 /* BuildFile in Frameworks */,
 				266301895B5C00569AB849E2 /* Pods_papakarlo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1422,13 +1422,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-emoji/Pods-emoji-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-emoji/Pods-emoji-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1443,13 +1439,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-usadba/Pods-usadba-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-usadba/Pods-usadba-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1464,13 +1456,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-gustopub/Pods-gustopub-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-gustopub/Pods-gustopub-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1507,13 +1495,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-voljane/Pods-voljane-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-voljane/Pods-voljane-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1528,13 +1512,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-usadba/Pods-usadba-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-usadba/Pods-usadba-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1571,13 +1551,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-estpoest/Pods-estpoest-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-estpoest/Pods-estpoest-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1592,13 +1568,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-yuliar/Pods-yuliar-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-yuliar/Pods-yuliar-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1657,13 +1629,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-vkuskavkaza/Pods-vkuskavkaza-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-vkuskavkaza/Pods-vkuskavkaza-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1678,13 +1646,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-djan/Pods-djan-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-djan/Pods-djan-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1699,13 +1663,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-legenda/Pods-legenda-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-legenda/Pods-legenda-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1720,13 +1680,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-yuliar/Pods-yuliar-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-yuliar/Pods-yuliar-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1741,13 +1697,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-djan/Pods-djan-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-djan/Pods-djan-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1762,13 +1714,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-tandirhouse/Pods-tandirhouse-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-tandirhouse/Pods-tandirhouse-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1805,13 +1753,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-tandirhouse/Pods-tandirhouse-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-tandirhouse/Pods-tandirhouse-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1826,13 +1770,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-taverna/Pods-taverna-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-taverna/Pods-taverna-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1888,13 +1828,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-voljane/Pods-voljane-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-voljane/Pods-voljane-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1909,13 +1845,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-legenda/Pods-legenda-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-legenda/Pods-legenda-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1930,13 +1862,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-vkuskavkaza/Pods-vkuskavkaza-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-vkuskavkaza/Pods-vkuskavkaza-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1951,13 +1879,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-emoji/Pods-emoji-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-emoji/Pods-emoji-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1994,13 +1918,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-taverna/Pods-taverna-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-taverna/Pods-taverna-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2059,13 +1979,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-papakarlo/Pods-papakarlo-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-papakarlo/Pods-papakarlo-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2124,13 +2040,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-papakarlo/Pods-papakarlo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-papakarlo/Pods-papakarlo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2145,13 +2057,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-gustopub/Pods-gustopub-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-gustopub/Pods-gustopub-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2166,13 +2074,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-estpoest/Pods-estpoest-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-estpoest/Pods-estpoest-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
