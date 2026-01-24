@@ -1,23 +1,14 @@
 import CommonApplication.deploymentTarget
 
 plugins {
-    alias(libs.plugins.multiplatform)
     alias(libs.plugins.cocoa)
-    alias(libs.plugins.android.library)
     alias(libs.plugins.sqldelight)
-    alias(libs.plugins.mokkery)
-    alias(libs.plugins.compose.compiler)
-    alias(libs.plugins.compose)
     alias(libs.plugins.kotlin.serialization)
-    alias(libs.plugins.ktLint)
+    alias(libs.plugins.client.compose.multiplatform.feature)
+    alias(libs.plugins.mokkery)
 }
 
 kotlin {
-    androidTarget()
-    iosX64()
-    iosArm64()
-    iosSimulatorArm64()
-
     cocoapods {
         summary = "Main shared module with presentation layer"
         homepage = "Link to the Shared Module homepage"
@@ -111,9 +102,8 @@ kotlin {
         val iosX64Main by getting
         val iosArm64Main by getting
         val iosSimulatorArm64Main by getting
-        val iosMain by creating {
+        val iosMain by getting {
             dependencies {
-
                 implementation(libs.sqlDelight.native)
                 implementation(libs.ktor.client.darwin)
             }
@@ -125,7 +115,7 @@ kotlin {
         val iosX64Test by getting
         val iosArm64Test by getting
         val iosSimulatorArm64Test by getting
-        val iosTest by creating {
+        val iosTest by getting {
             dependsOn(commonTest)
             iosX64Test.dependsOn(this)
             iosArm64Test.dependsOn(this)
@@ -137,19 +127,6 @@ kotlin {
 android {
     namespace = Namespace.shared
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
-    defaultConfig {
-        minSdk = AndroidSdk.min
-        compileSdk = AndroidSdk.compile
-    }
-    buildTypes {
-        debug {}
-        release {}
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_21
-        targetCompatibility = JavaVersion.VERSION_21
-    }
 }
 
 sqldelight {
