@@ -6,6 +6,55 @@ on:
       - feature/ios-cd
 
 jobs:
+  setup:
+    name: "Upload secrets"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: "Decode google-services.json"
+        env:
+          GOOGLE_SERVICE_JSON: ${{ secrets.GOOGLE_SERVICE_JSON }}
+        run: echo "${GOOGLE_SERVICE_JSON}" > app/google-services.json
+      - name: "Upload google-services.json"
+        uses: actions/upload-artifact@v4
+        with:
+          name: google-services
+          path: app/google-services.json
+      - name: "Decode local.properties"
+        env:
+          RELEASE_STORE_FILE: ${{ secrets.RELEASE_STORE_FILE }}
+          RELEASE_STORE_PASSWORD: ${{ secrets.RELEASE_STORE_PASSWORD }}
+          RELEASE_KEY_ALIAS: ${{ secrets.RELEASE_KEY_ALIAS }}
+          RELEASE_KEY_PASSWORD: ${{ secrets.RELEASE_KEY_PASSWORD }}
+        run: |
+          echo -e "RELEASE_STORE_FILE=$RELEASE_STORE_FILE" > local.properties
+          echo -e "RELEASE_STORE_PASSWORD=$RELEASE_STORE_PASSWORD" >> local.properties
+          echo -e "RELEASE_KEY_ALIAS=$RELEASE_KEY_ALIAS" >> local.properties
+          echo -e "RELEASE_KEY_PASSWORD=$RELEASE_KEY_PASSWORD" >> local.properties
+      - name: "Upload local.properties"
+        uses: actions/upload-artifact@v4
+        with:
+          name: local-properties
+          path: local.properties
+      - name: "Decode keystore"
+        env:
+          KEY_STORE: ${{ secrets.KEY_STORE }}
+        run: echo "${KEY_STORE}" | base64 --decode > app/keystore
+      - name: "Upload keystore"
+        uses: actions/upload-artifact@v4
+        with:
+          name: keystore
+          path: app/keystore
+      - name: "Decode google-play-api-key.json"
+        env:
+          GOOGLE_PLAY_API_KEY: ${{ secrets.GOOGLE_PLAY_API_KEY }}
+        run: echo "${GOOGLE_PLAY_API_KEY}" | base64 --decode > app/google-play-api-key.json
+      - name: "Upload google-play-api-key.json"
+        uses: actions/upload-artifact@v4
+        with:
+          name: google-play-api-key
+          path: app/google-play-api-key.json
+
   build:
     runs-on: macos-latest
 
@@ -18,6 +67,41 @@ jobs:
         with:
           ruby-version: '3.2'
           bundler-cache: true
+
+      - name: "Download google-services.json"
+        uses: actions/download-artifact@v4
+        with:
+          name: google-services
+          path: ./app
+
+      - name: "Download local.properties"
+        uses: actions/download-artifact@v4
+        with:
+          name: local-properties
+          path: .
+
+      - name: "Download keystore"
+        uses: actions/download-artifact@v4
+        with:
+          name: keystore
+          path: ./app
+
+      - name: "Download google-play-api-key.json"
+        uses: actions/download-artifact@v4
+        with:
+          name: google-play-api-key
+          path: ./app
+
+      - name: Install CocoaPods
+        run: sudo gem install cocoapods
+
+      - name: Generate KMP dummy framework
+        working-directory: .
+        run: ./gradlew :shared:generateDummyFramework
+
+      - name: Install Pods
+        working-directory: iosApp
+        run: pod install --repo-update
 
       - name: Install fastlane
         run: gem install fastlane
