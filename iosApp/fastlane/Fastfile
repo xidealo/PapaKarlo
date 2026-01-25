@@ -37,7 +37,9 @@ platform :ios do
     build_app(
       workspace: "iosApp.xcworkspace",
       scheme: scheme,
-      clean: true
+      clean: true,
+      export_method: "app-store",
+      xcargs: "-allowProvisioningUpdates"
     )
 
     deliver(
