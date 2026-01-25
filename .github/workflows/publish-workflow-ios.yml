@@ -22,10 +22,17 @@ jobs:
       - name: Install fastlane
         run: gem install fastlane
 
+      - name: Decode App Store Connect API key
+        working-directory: iosApp
+        run: |
+          mkdir -p fastlane/keys
+          echo "${{ secrets.APP_STORE_P8_BASE64 }}" | base64 --decode > fastlane/keys/AuthKey.p8
+          chmod 600 fastlane/keys/AuthKey.p8
+
       - name: Deploy all apps to TestFlight
         working-directory: iosApp
         env:
           APP_STORE_KEY_ID: ${{ secrets.APP_STORE_KEY_ID }}
           APP_STORE_ISSUER_ID: ${{ secrets.APP_STORE_ISSUER_ID }}
-          APP_STORE_P8_PATH: ${{ secrets.APP_STORE_P8_PATH }}
+          APP_STORE_P8_PATH: fastlane/keys/AuthKey.p8
         run: fastlane ios deployAll
