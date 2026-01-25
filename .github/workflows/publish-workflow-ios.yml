@@ -92,16 +92,16 @@ jobs:
           name: google-play-api-key
           path: ./app
 
-      - name: Install CocoaPods
-        run: sudo gem install cocoapods
-
+#      - name: Install CocoaPods
+#        run: sudo gem install cocoapods
+#
 #      - name: Generate KMP dummy framework
 #        working-directory: .
 #        run: ./gradlew :shared:generateDummyFramework
-
-      - name: Install Pods
-        working-directory: iosApp
-        run: pod install --repo-update
+#
+#      - name: Install Pods
+#        working-directory: iosApp
+#        run: pod install --repo-update
 
       - name: Install fastlane
         run: gem install fastlane
