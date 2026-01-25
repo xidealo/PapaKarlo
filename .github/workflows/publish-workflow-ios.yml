@@ -6,6 +6,37 @@ on:
       - feature/ios-cd
 
 jobs:
+  setup:
+    name: "Upload secrets"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: "Decode google-services.json"
+        env:
+          GOOGLE_SERVICE_JSON: ${{ secrets.GOOGLE_SERVICE_JSON }}
+        run: echo "${GOOGLE_SERVICE_JSON}" > app/google-services.json
+      - name: "Upload google-services.json"
+        uses: actions/upload-artifact@v4
+        with:
+          name: google-services
+          path: app/google-services.json
+      - name: "Decode local.properties"
+        env:
+          RELEASE_STORE_FILE: ${{ secrets.RELEASE_STORE_FILE }}
+          RELEASE_STORE_PASSWORD: ${{ secrets.RELEASE_STORE_PASSWORD }}
+          RELEASE_KEY_ALIAS: ${{ secrets.RELEASE_KEY_ALIAS }}
+          RELEASE_KEY_PASSWORD: ${{ secrets.RELEASE_KEY_PASSWORD }}
+        run: |
+          echo -e "RELEASE_STORE_FILE=$RELEASE_STORE_FILE" > local.properties
+          echo -e "RELEASE_STORE_PASSWORD=$RELEASE_STORE_PASSWORD" >> local.properties
+          echo -e "RELEASE_KEY_ALIAS=$RELEASE_KEY_ALIAS" >> local.properties
+          echo -e "RELEASE_KEY_PASSWORD=$RELEASE_KEY_PASSWORD" >> local.properties
+      - name: "Upload local.properties"
+        uses: actions/upload-artifact@v4
+        with:
+          name: local-properties
+          path: local.properties
+
   build:
     runs-on: macos-latest
 
