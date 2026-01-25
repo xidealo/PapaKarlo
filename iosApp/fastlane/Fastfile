@@ -34,7 +34,11 @@ platform :ios do
 
     #increment_build_number(build_number: latest + 1)
 
-    build_app(scheme: scheme)
+    build_app(
+      workspace: "iosApp.xcworkspace",
+      scheme: scheme,
+      clean: true
+    )
 
     deliver(
       submit_for_review: true,
