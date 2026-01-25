@@ -18,5 +18,4 @@ app_identifier([
   "com.bunbeauty.taverna"
 ])
 
-
 readonly(true)
