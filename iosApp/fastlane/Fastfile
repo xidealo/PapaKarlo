@@ -11,6 +11,11 @@ platform :ios do
       issuer_id: ENV['APP_STORE_ISSUER_ID'],
       key_filepath: ENV['APP_STORE_P8_PATH']
     )
+
+      match(
+        type: "appstore",
+        readonly: true
+      )
   end
 
   # Список приложений с идентификатором и схемой

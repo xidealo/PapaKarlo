@@ -116,7 +116,10 @@ jobs:
       - name: Deploy all apps to TestFlight
         working-directory: iosApp
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           APP_STORE_KEY_ID: ${{ secrets.APP_STORE_KEY_ID }}
           APP_STORE_ISSUER_ID: ${{ secrets.APP_STORE_ISSUER_ID }}
           APP_STORE_P8_PATH: fastlane/keys/AuthKey.p8
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+          MATCH_READONLY: "true"
         run: fastlane ios deployAll
