@@ -19,6 +19,30 @@ jobs:
           ruby-version: '3.2'
           bundler-cache: true
 
+      - name: "Download google-services.json"
+        uses: actions/download-artifact@v4
+        with:
+          name: google-services
+          path: ./app
+
+      - name: "Download local.properties"
+        uses: actions/download-artifact@v4
+        with:
+          name: local-properties
+          path: .
+
+      - name: "Download keystore"
+        uses: actions/download-artifact@v4
+        with:
+          name: keystore
+          path: ./app
+
+      - name: "Download google-play-api-key.json"
+        uses: actions/download-artifact@v4
+        with:
+          name: google-play-api-key
+          path: ./app
+
       - name: Install CocoaPods
         run: sudo gem install cocoapods
 
