@@ -86,23 +86,22 @@ jobs:
           name: keystore
           path: ./app
 
-
       - name: "Download google-play-api-key.json"
         uses: actions/download-artifact@v4
         with:
           name: google-play-api-key
           path: ./app
 
-#      - name: Install CocoaPods
-#        run: sudo gem install cocoapods
-#
-#      - name: Generate KMP dummy framework
-#        working-directory: .
-#        run: ./gradlew :shared:generateDummyFramework
-#
-#      - name: Install Pods
-#        working-directory: iosApp
-#        run: pod install --repo-update
+      - name: Install CocoaPods
+        run: sudo gem install cocoapods
+
+      - name: Generate KMP dummy framework
+        working-directory: .
+        run: ./gradlew :shared:generateDummyFramework
+
+      - name: Install Pods
+        working-directory: iosApp
+        run: pod install --repo-update
 
       - name: Install fastlane
         run: gem install fastlane
