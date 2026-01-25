@@ -24,8 +24,8 @@ platform :ios do
      #usaba:        { id: "com.bunbeauty.usadba", scheme: "usadba" },
      #emoji:        { id: "com.bunbeauty.emoji", scheme: "emoji" },
      #estpoest:     { id: "com.bunbeauty.estpoest", scheme: "estpoest" },
-     taverna:      { id: "com.bunbeauty.taverna", scheme: "taverna" },
-     #voljane:      { id: "com.bunbeauty.voljane", scheme: "voljane" }
+     #voljane:      { id: "com.bunbeauty.voljane", scheme: "voljane" },
+     taverna:      { id: "com.bunbeauty.taverna", scheme: "taverna" }
   }
 
   # Универсальная функция сборки и заливки
