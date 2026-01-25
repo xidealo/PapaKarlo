@@ -1,0 +1,21 @@
+git_url("https://github.com/xidealo/faslane_certs")
+
+storage_mode("git")
+
+type("appstore")
+
+app_identifier([
+  "com.bunbeuaty.papakarlo",
+  "com.bunbeauty.gustopub",
+  "com.bunbeauty.yuliar",
+  "com.bunbeauty.tandirhouse",
+  "com.bunbeauty.vkuskavkaza",
+  "com.bunbeauty.djan",
+  "com.bunbeauty.usadba",
+  "com.bunbeauty.emoji",
+  "com.bunbeauty.estpoest",
+  "com.bunbeauty.voljane",
+  "com.bunbeauty.taverna"
+])
+
+readonly(true)
