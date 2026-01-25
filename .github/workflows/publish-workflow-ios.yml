@@ -36,6 +36,24 @@ jobs:
         with:
           name: local-properties
           path: local.properties
+      - name: "Decode keystore"
+        env:
+          KEY_STORE: ${{ secrets.KEY_STORE }}
+        run: echo "${KEY_STORE}" | base64 --decode > app/keystore
+      - name: "Upload keystore"
+        uses: actions/upload-artifact@v4
+        with:
+          name: keystore
+          path: app/keystore
+      - name: "Decode google-play-api-key.json"
+        env:
+          GOOGLE_PLAY_API_KEY: ${{ secrets.GOOGLE_PLAY_API_KEY }}
+        run: echo "${GOOGLE_PLAY_API_KEY}" | base64 --decode > app/google-play-api-key.json
+      - name: "Upload google-play-api-key.json"
+        uses: actions/upload-artifact@v4
+        with:
+          name: google-play-api-key
+          path: app/google-play-api-key.json
 
   build:
     runs-on: macos-latest
