@@ -19,9 +19,7 @@ sealed interface UpdateState {
     }
 
     sealed interface Action : BaseAction {
-        data class Init(
-            val linkType: LinkType,
-        ) : Action
+        data object Init : Action
 
         data class UpdateClick(
             val linkValue: String,

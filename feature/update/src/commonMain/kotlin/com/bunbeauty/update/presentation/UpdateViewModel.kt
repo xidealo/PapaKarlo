@@ -8,18 +8,18 @@ import com.bunbeauty.core.model.link.LinkType
 class UpdateViewModel(
     private val getLinkUseCase: GetLinkUseCase,
 ) : SharedStateViewModel<UpdateState.DataState, UpdateState.Action, UpdateState.Event>(
-        initDataState =
-            UpdateState.DataState(
-                link = null,
-                state = UpdateState.DataState.State.LOADING,
-            ),
-    ) {
+    initDataState =
+        UpdateState.DataState(
+            link = null,
+            state = UpdateState.DataState.State.LOADING,
+        ),
+) {
     override fun reduce(
         action: UpdateState.Action,
         dataState: UpdateState.DataState,
     ) {
         when (action) {
-            is UpdateState.Action.Init -> updateLink(linkType = action.linkType)
+            is UpdateState.Action.Init -> updateLink()
 
             is UpdateState.Action.UpdateClick -> {
                 addEvent {
@@ -29,18 +29,17 @@ class UpdateViewModel(
         }
     }
 
-    private fun updateLink(linkType: LinkType) {
+    private fun updateLink() {
         sharedScope.launchSafe(
             block = {
-                val link = getLinkUseCase(linkType = linkType)
+                val link = getLinkUseCase()
                 setState {
                     copy(
-                        state =
-                            if (link == null) {
-                                UpdateState.DataState.State.ERROR
-                            } else {
-                                UpdateState.DataState.State.SUCCESS
-                            },
+                        state = if (link == null) {
+                            UpdateState.DataState.State.ERROR
+                        } else {
+                            UpdateState.DataState.State.SUCCESS
+                        },
                         link = link,
                     )
                 }
