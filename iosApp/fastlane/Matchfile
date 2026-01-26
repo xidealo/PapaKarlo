@@ -17,5 +17,3 @@ app_identifier([
   "com.bunbeauty.voljane",
   "com.bunbeauty.taverna"
 ])
-
-readonly(true)
