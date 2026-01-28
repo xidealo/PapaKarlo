@@ -50,9 +50,7 @@ import papakarlo.designsystem.generated.resources.title_update_new_app_version
 fun UpdateRoute(viewModel: UpdateViewModel = koinViewModel()) {
     LaunchedEffect(Unit) {
         viewModel.onAction(
-            UpdateState.Action.Init(
-                linkType = LinkType.GOOGLE_PLAY,
-            ),
+            UpdateState.Action.Init,
         )
     }
 
@@ -124,9 +122,7 @@ private fun UpdateScreen(
                     mainTextId = Res.string.error_common_data_loading,
                     onClick = {
                         onAction(
-                            UpdateState.Action.Init(
-                                linkType = LinkType.GOOGLE_PLAY,
-                            ),
+                            UpdateState.Action.Init,
                         )
                     },
                 )
@@ -184,6 +180,7 @@ private fun UpdateScreenSuccess(
             color = FoodDeliveryTheme.colors.mainColors.onBackground,
             textAlign = TextAlign.Center,
         )
+
         Text(
             modifier =
                 Modifier
@@ -201,7 +198,8 @@ private fun UpdateScreenSuccess(
         MainButton(
             modifier =
                 Modifier
-                    .padding(horizontal = 16.dp),
+                    .padding(horizontal = 16.dp)
+                    .padding(bottom = 16.dp),
             textStringId = Res.string.action_update_update,
         ) {
             viewState.link?.linkValue?.let { link ->
