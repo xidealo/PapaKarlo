@@ -3,7 +3,6 @@ package com.bunbeauty.update.presentation
 import com.bunbeauty.core.base.SharedStateViewModel
 import com.bunbeauty.core.domain.link.GetLinkUseCase
 import com.bunbeauty.core.extension.launchSafe
-import com.bunbeauty.core.model.link.LinkType
 
 class UpdateViewModel(
     private val getLinkUseCase: GetLinkUseCase,
@@ -19,7 +18,7 @@ class UpdateViewModel(
         dataState: UpdateState.DataState,
     ) {
         when (action) {
-            is UpdateState.Action.Init -> updateLink(linkType = action.linkType)
+            is UpdateState.Action.Init -> updateLink()
 
             is UpdateState.Action.UpdateClick -> {
                 addEvent {
@@ -29,10 +28,10 @@ class UpdateViewModel(
         }
     }
 
-    private fun updateLink(linkType: LinkType) {
+    private fun updateLink() {
         sharedScope.launchSafe(
             block = {
-                val link = getLinkUseCase(linkType = linkType)
+                val link = getLinkUseCase()
                 setState {
                     copy(
                         state =
