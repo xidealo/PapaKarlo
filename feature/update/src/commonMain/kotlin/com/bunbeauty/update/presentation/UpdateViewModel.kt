@@ -3,7 +3,6 @@ package com.bunbeauty.update.presentation
 import com.bunbeauty.core.base.SharedStateViewModel
 import com.bunbeauty.core.domain.link.GetLinkUseCase
 import com.bunbeauty.core.extension.launchSafe
-import com.bunbeauty.core.model.link.LinkType
 
 class UpdateViewModel(
     private val getLinkUseCase: GetLinkUseCase,
