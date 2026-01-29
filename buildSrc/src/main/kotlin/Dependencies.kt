@@ -11,7 +11,7 @@ object CommonApplication {
     const val versionCode = 289
     const val versionName = "$versionMajor.$versionMinor.$versionPatch"
 
-    const val deploymentTarget = "12.0"
+    const val deploymentTarget = "15.5"
 }
 
 object AndroidSdk {
