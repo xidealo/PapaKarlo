@@ -44,17 +44,17 @@ class ConsumerCartViewModel(
     private val analyticService: AnalyticService,
     private val isOrderAvailableUseCase: IsOrderAvailableUseCase,
 ) : SharedStateViewModel<ConsumerCart.DataState, ConsumerCart.Action, ConsumerCart.Event>(
-        ConsumerCart.DataState(
-            state = ConsumerCart.DataState.State.LOADING,
-            motivation = null,
-            cartProductItemList = emptyList(),
-            recommendationList = emptyList(),
-            discount = null,
-            oldTotalCost = null,
-            newTotalCost = "",
-            orderAvailable = false,
-        ),
-    ) {
+    initDataState = ConsumerCart.DataState(
+        state = ConsumerCart.DataState.State.LOADING,
+        motivation = null,
+        cartProductItemList = emptyList(),
+        recommendationList = emptyList(),
+        discount = null,
+        oldTotalCost = null,
+        newTotalCost = "",
+        orderAvailable = false,
+    ),
+) {
     private var observeConsumerCartJob: Job? = null
 
     override fun reduce(
@@ -74,7 +74,13 @@ class ConsumerCartViewModel(
             }
 
             ConsumerCart.Action.OnCreateOrderClick -> onCreateOrderClicked()
-            ConsumerCart.Action.OnErrorButtonClick -> observeConsumerCart()
+            ConsumerCart.Action.OnErrorButtonClick -> {
+                setState {
+                    copy(state = ConsumerCart.DataState.State.LOADING)
+                }
+                observeConsumerCart()
+            }
+
             ConsumerCart.Action.OnMenuClick -> onMenuClicked()
             is ConsumerCart.Action.OnCartProductClick ->
                 onCartProductClicked(
@@ -105,9 +111,6 @@ class ConsumerCartViewModel(
     }
 
     private fun observeConsumerCart() {
-        setState {
-            copy(state = ConsumerCart.DataState.State.LOADING)
-        }
         observeConsumerCartJob?.cancel()
         observeConsumerCartJob =
             cartProductInteractor
