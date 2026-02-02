@@ -15,13 +15,13 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 ## iOS
 
-### ios gustopub
+### ios emoji
 
 ```sh
-[bundle exec] fastlane ios gustopub
+[bundle exec] fastlane ios emoji
 ```
 
-Push a new gustopub release build to the App Store
+Push a new emoji release build to the App Store
 
 ### ios deployAll
 

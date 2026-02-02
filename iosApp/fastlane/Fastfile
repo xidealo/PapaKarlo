@@ -15,14 +15,14 @@ platform :ios do
 
   # Список приложений с идентификатором и схемой
   apps = {
-    #papakarlo:    { id: "com.bunbeuaty.papakarlo", scheme: "papakarlo" },
-     gustopub:     { id: "com.bunbeauty.gustopub", scheme: "gustoPub" }
+     #papakarlo:    { id: "com.bunbeuaty.papakarlo", scheme: "papakarlo" },
+     #gustopub:     { id: "com.bunbeauty.gustopub", scheme: "gustoPub" },
      #yuliar:       { id: "com.bunbeauty.yuliar", scheme: "yuliar" },
      #tandirhouse:  { id: "com.bunbeauty.tandirhouse", scheme: "tandirhouse" },
      #vkuskavkaza:  { id: "com.bunbeauty.vkuskavkaza", scheme: "vkuskavkaza" },
      #djan:         { id: "com.bunbeauty.djan", scheme: "djan" },
      #usaba:        { id: "com.bunbeauty.usadba", scheme: "usadba" },
-     #emoji:        { id: "com.bunbeauty.emoji", scheme: "emoji" },
+     emoji:        { id: "com.bunbeauty.emoji", scheme: "emoji" }
      #estpoest:     { id: "com.bunbeauty.estpoest", scheme: "estpoest" },
      #taverna:      { id: "com.bunbeauty.taverna", scheme: "taverna" },
      #voljane:      { id: "com.bunbeauty.voljane", scheme: "voljane" }
@@ -30,9 +30,6 @@ platform :ios do
 
   # Универсальная функция сборки и заливки
   def build_and_upload(app_identifier, scheme)
-    latest = latest_testflight_build_number(app_identifier: app_identifier)
-
-    #increment_build_number(build_number: latest + 1)
 
     build_app(
       workspace: "iosApp.xcworkspace",
@@ -40,6 +37,8 @@ platform :ios do
       clean: true,
       export_method: "app-store",
     )
+
+    # upload_to_testflight
 
     deliver(
       submit_for_review: true,
