@@ -15,14 +15,6 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 ## iOS
 
-### ios papakarlo
-
-```sh
-[bundle exec] fastlane ios papakarlo
-```
-
-Push a new papakarlo release build to the App Store
-
 ### ios gustopub
 
 ```sh
@@ -30,78 +22,6 @@ Push a new papakarlo release build to the App Store
 ```
 
 Push a new gustopub release build to the App Store
-
-### ios yuliar
-
-```sh
-[bundle exec] fastlane ios yuliar
-```
-
-Push a new yuliar release build to the App Store
-
-### ios tandirhouse
-
-```sh
-[bundle exec] fastlane ios tandirhouse
-```
-
-Push a new tandirhouse release build to the App Store
-
-### ios vkuskavkaza
-
-```sh
-[bundle exec] fastlane ios vkuskavkaza
-```
-
-Push a new vkuskavkaza release build to the App Store
-
-### ios djan
-
-```sh
-[bundle exec] fastlane ios djan
-```
-
-Push a new djan release build to the App Store
-
-### ios usaba
-
-```sh
-[bundle exec] fastlane ios usaba
-```
-
-Push a new usaba release build to the App Store
-
-### ios emoji
-
-```sh
-[bundle exec] fastlane ios emoji
-```
-
-Push a new emoji release build to the App Store
-
-### ios estpoest
-
-```sh
-[bundle exec] fastlane ios estpoest
-```
-
-Push a new estpoest release build to the App Store
-
-### ios taverna
-
-```sh
-[bundle exec] fastlane ios taverna
-```
-
-Push a new taverna release build to the App Store
-
-### ios voljane
-
-```sh
-[bundle exec] fastlane ios voljane
-```
-
-Push a new voljane release build to the App Store
 
 ### ios deployAll
 
