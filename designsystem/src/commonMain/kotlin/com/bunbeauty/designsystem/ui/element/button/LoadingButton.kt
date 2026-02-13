@@ -1,6 +1,7 @@
 package com.bunbeauty.designsystem.ui.element.button
 
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
@@ -11,6 +12,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.theme.medium
+import com.bunbeauty.designsystem.ui.LocalBottomBarPadding
 import com.bunbeauty.designsystem.ui.element.button.FoodDeliveryButtonDefaults.getButtonElevation
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
@@ -28,7 +30,9 @@ fun LoadingButton(
     hasShadow: Boolean = true,
 ) {
     Button(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier
+            .padding(bottom = LocalBottomBarPadding.current.value)
+            .fillMaxWidth(),
         onClick = onClick,
         colors =
             FoodDeliveryButtonDefaults.mainButtonColors(

@@ -5,29 +5,179 @@
     
     
       
-      <testcase classname="fastlane.lanes" name="0: default_platform" time="0.000234">
+      <testcase classname="fastlane.lanes" name="00: default_platform" time="0.000263">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="1: xcodes" time="0.086409">
+      <testcase classname="fastlane.lanes" name="01: xcodes" time="0.09735">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="2: app_store_connect_api_key" time="0.005535">
+      <testcase classname="fastlane.lanes" name="02: app_store_connect_api_key" time="0.048227">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="3: Switch to ios emoji lane" time="0.000595">
+      <testcase classname="fastlane.lanes" name="03: Switch to ios papakarlo lane" time="0.000226">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="4: build_app" time="40.496828">
+      <testcase classname="fastlane.lanes" name="04: build_app" time="98.123293">
         
-          <failure message="/opt/homebrew/Cellar/fastlane/2.231.1/libexec/gems/fastlane-2.231.1/fastlane/lib/fastlane/actions/actions_helper.rb:67:in &apos;Fastlane::Actions.execute_action&apos;&#10;/opt/homebrew/Cellar/fastlane/2.231.1/libexec/gems/fastlane-2.231.1/fastlane/lib/fastlane/runner.rb:255:in &apos;block in Fastlane::Runner#execute_action&apos;&#10;/opt/homebrew/Cellar/fastlane/2.231.1/libexec/gems/fastlane-2.231.1/fastlane/lib/fastlane/runner.rb:229:in &apos;Dir.chdir&apos;&#10;/opt/homebrew/Cellar/fastlane/2.231.1/libexec/gems/fastlane-2.231.1/fastlane/lib/fastlane/runner.rb:229:in &apos;Fastlane::Runner#execute_action&apos;&#10;/opt/homebrew/Cellar/fastlane/2.231.1/libexec/gems/fastlane-2.231.1/fastlane/lib/fastlane/runner.rb:157:in &apos;Fastlane::Runner#trigger_action_by_name&apos;&#10;/opt/homebrew/Cellar/fastlane/2.231.1/libexec/gems/fastlane-2.231.1/fastlane/lib/fastlane/fast_file.rb:159:in &apos;Fastlane::FastFile#method_missing&apos;&#10;Fastfile:34:in &apos;Fastlane::FastFile#build_and_upload&apos;&#10;Fastfile:64:in &apos;block (3 levels) in Fastlane::FastFile#parsing_binding&apos;&#10;/opt/homebrew/Cellar/fastlane/2.231.1/libexec/gems/fastlane-2.231.1/fastlane/lib/fastlane/lane.rb:41:in &apos;Fastlane::Lane#call&apos;&#10;/opt/homebrew/Cellar/fastlane/2.231.1/libexec/gems/fastlane-2.231.1/fastlane/lib/fastlane/runner.rb:204:in &apos;Fastlane::Runner#try_switch_to_lane&apos;&#10;/opt/homebrew/Cellar/fastlane/2.231.1/libexec/gems/fastlane-2.231.1/fastlane/lib/fastlane/runner.rb:146:in &apos;Fastlane::Runner#trigger_action_by_name&apos;&#10;/opt/homebrew/Cellar/fastlane/2.231.1/libexec/gems/fastlane-2.231.1/fastlane/lib/fastlane/fast_file.rb:159:in &apos;Fastlane::FastFile#method_missing&apos;&#10;Fastfile:73:in &apos;block (3 levels) in Fastlane::FastFile#parsing_binding&apos;&#10;Fastfile:71:in &apos;Array#each&apos;&#10;Fastfile:71:in &apos;block (2 levels) in Fastlane::FastFile#parsing_binding&apos;&#10;/opt/homebrew/Cellar/fastlane/2.231.1/libexec/gems/fastlane-2.231.1/fastlane/lib/fastlane/lane.rb:41:in &apos;Fastlane::Lane#call&apos;&#10;/opt/homebrew/Cellar/fastlane/2.231.1/libexec/gems/fastlane-2.231.1/fastlane/lib/fastlane/runner.rb:49:in &apos;block in Fastlane::Runner#execute&apos;&#10;/opt/homebrew/Cellar/fastlane/2.231.1/libexec/gems/fastlane-2.231.1/fastlane/lib/fastlane/runner.rb:45:in &apos;Dir.chdir&apos;&#10;/opt/homebrew/Cellar/fastlane/2.231.1/libexec/gems/fastlane-2.231.1/fastlane/lib/fastlane/runner.rb:45:in &apos;Fastlane::Runner#execute&apos;&#10;/opt/homebrew/Cellar/fastlane/2.231.1/libexec/gems/fastlane-2.231.1/fastlane/lib/fastlane/lane_manager.rb:46:in &apos;Fastlane::LaneManager.cruise_lane&apos;&#10;/opt/homebrew/Cellar/fastlane/2.231.1/libexec/gems/fastlane-2.231.1/fastlane/lib/fastlane/command_line_handler.rb:34:in &apos;Fastlane::CommandLineHandler.handle&apos;&#10;/opt/homebrew/Cellar/fastlane/2.231.1/libexec/gems/fastlane-2.231.1/fastlane/lib/fastlane/commands_generator.rb:110:in &apos;block (2 levels) in Fastlane::CommandsGenerator#run&apos;&#10;/opt/homebrew/Cellar/fastlane/2.231.1/libexec/gems/commander-4.6.0/lib/commander/command.rb:187:in &apos;Commander::Command#call&apos;&#10;/opt/homebrew/Cellar/fastlane/2.231.1/libexec/gems/commander-4.6.0/lib/commander/command.rb:157:in &apos;Commander::Command#run&apos;&#10;/opt/homebrew/Cellar/fastlane/2.231.1/libexec/gems/commander-4.6.0/lib/commander/runner.rb:444:in &apos;Commander::Runner#run_active_command&apos;&#10;/opt/homebrew/Cellar/fastlane/2.231.1/libexec/gems/fastlane-2.231.1/fastlane_core/lib/fastlane_core/ui/fastlane_runner.rb:124:in &apos;Commander::Runner#run!&apos;&#10;/opt/homebrew/Cellar/fastlane/2.231.1/libexec/gems/commander-4.6.0/lib/commander/delegates.rb:18:in &apos;Commander::Delegates#run!&apos;&#10;/opt/homebrew/Cellar/fastlane/2.231.1/libexec/gems/fastlane-2.231.1/fastlane/lib/fastlane/commands_generator.rb:363:in &apos;Fastlane::CommandsGenerator#run&apos;&#10;/opt/homebrew/Cellar/fastlane/2.231.1/libexec/gems/fastlane-2.231.1/fastlane/lib/fastlane/commands_generator.rb:43:in &apos;Fastlane::CommandsGenerator.start&apos;&#10;/opt/homebrew/Cellar/fastlane/2.231.1/libexec/gems/fastlane-2.231.1/fastlane/lib/fastlane/cli_tools_distributor.rb:132:in &apos;Fastlane::CLIToolsDistributor.take_off&apos;&#10;/opt/homebrew/Cellar/fastlane/2.231.1/libexec/gems/fastlane-2.231.1/bin/fastlane:23:in &apos;&lt;top (required)&gt;&apos;&#10;/opt/homebrew/lib/ruby/site_ruby/4.0.0/rubygems.rb:303:in &apos;Kernel#load&apos;&#10;/opt/homebrew/lib/ruby/site_ruby/4.0.0/rubygems.rb:303:in &apos;Gem.activate_and_load_bin_path&apos;&#10;/opt/homebrew/Cellar/fastlane/2.231.1/libexec/bin/fastlane:25:in &apos;&lt;main&gt;&apos;&#10;&#10;Error building the application - see the log above" />
+          <failure message="/opt/homebrew/Cellar/fastlane/2.231.1/libexec/gems/fastlane-2.231.1/fastlane/lib/fastlane/actions/actions_helper.rb:67:in &apos;Fastlane::Actions.execute_action&apos;&#10;/opt/homebrew/Cellar/fastlane/2.231.1/libexec/gems/fastlane-2.231.1/fastlane/lib/fastlane/runner.rb:255:in &apos;block in Fastlane::Runner#execute_action&apos;&#10;/opt/homebrew/Cellar/fastlane/2.231.1/libexec/gems/fastlane-2.231.1/fastlane/lib/fastlane/runner.rb:229:in &apos;Dir.chdir&apos;&#10;/opt/homebrew/Cellar/fastlane/2.231.1/libexec/gems/fastlane-2.231.1/fastlane/lib/fastlane/runner.rb:229:in &apos;Fastlane::Runner#execute_action&apos;&#10;/opt/homebrew/Cellar/fastlane/2.231.1/libexec/gems/fastlane-2.231.1/fastlane/lib/fastlane/runner.rb:157:in &apos;Fastlane::Runner#trigger_action_by_name&apos;&#10;/opt/homebrew/Cellar/fastlane/2.231.1/libexec/gems/fastlane-2.231.1/fastlane/lib/fastlane/fast_file.rb:159:in &apos;Fastlane::FastFile#method_missing&apos;&#10;Fastfile:34:in &apos;Fastlane::FastFile#build_and_upload&apos;&#10;Fastfile:64:in &apos;block (3 levels) in Fastlane::FastFile#parsing_binding&apos;&#10;/opt/homebrew/Cellar/fastlane/2.231.1/libexec/gems/fastlane-2.231.1/fastlane/lib/fastlane/lane.rb:41:in &apos;Fastlane::Lane#call&apos;&#10;/opt/homebrew/Cellar/fastlane/2.231.1/libexec/gems/fastlane-2.231.1/fastlane/lib/fastlane/runner.rb:204:in &apos;Fastlane::Runner#try_switch_to_lane&apos;&#10;/opt/homebrew/Cellar/fastlane/2.231.1/libexec/gems/fastlane-2.231.1/fastlane/lib/fastlane/runner.rb:146:in &apos;Fastlane::Runner#trigger_action_by_name&apos;&#10;/opt/homebrew/Cellar/fastlane/2.231.1/libexec/gems/fastlane-2.231.1/fastlane/lib/fastlane/fast_file.rb:159:in &apos;Fastlane::FastFile#method_missing&apos;&#10;Fastfile:73:in &apos;block (3 levels) in Fastlane::FastFile#parsing_binding&apos;&#10;Fastfile:71:in &apos;Array#each&apos;&#10;Fastfile:71:in &apos;block (2 levels) in Fastlane::FastFile#parsing_binding&apos;&#10;/opt/homebrew/Cellar/fastlane/2.231.1/libexec/gems/fastlane-2.231.1/fastlane/lib/fastlane/lane.rb:41:in &apos;Fastlane::Lane#call&apos;&#10;/opt/homebrew/Cellar/fastlane/2.231.1/libexec/gems/fastlane-2.231.1/fastlane/lib/fastlane/runner.rb:49:in &apos;block in Fastlane::Runner#execute&apos;&#10;/opt/homebrew/Cellar/fastlane/2.231.1/libexec/gems/fastlane-2.231.1/fastlane/lib/fastlane/runner.rb:45:in &apos;Dir.chdir&apos;&#10;/opt/homebrew/Cellar/fastlane/2.231.1/libexec/gems/fastlane-2.231.1/fastlane/lib/fastlane/runner.rb:45:in &apos;Fastlane::Runner#execute&apos;&#10;/opt/homebrew/Cellar/fastlane/2.231.1/libexec/gems/fastlane-2.231.1/fastlane/lib/fastlane/lane_manager.rb:46:in &apos;Fastlane::LaneManager.cruise_lane&apos;&#10;/opt/homebrew/Cellar/fastlane/2.231.1/libexec/gems/fastlane-2.231.1/fastlane/lib/fastlane/command_line_handler.rb:34:in &apos;Fastlane::CommandLineHandler.handle&apos;&#10;/opt/homebrew/Cellar/fastlane/2.231.1/libexec/gems/fastlane-2.231.1/fastlane/lib/fastlane/commands_generator.rb:110:in &apos;block (2 levels) in Fastlane::CommandsGenerator#run&apos;&#10;/opt/homebrew/Cellar/fastlane/2.231.1/libexec/gems/commander-4.6.0/lib/commander/command.rb:187:in &apos;Commander::Command#call&apos;&#10;/opt/homebrew/Cellar/fastlane/2.231.1/libexec/gems/commander-4.6.0/lib/commander/command.rb:157:in &apos;Commander::Command#run&apos;&#10;/opt/homebrew/Cellar/fastlane/2.231.1/libexec/gems/commander-4.6.0/lib/commander/runner.rb:444:in &apos;Commander::Runner#run_active_command&apos;&#10;/opt/homebrew/Cellar/fastlane/2.231.1/libexec/gems/fastlane-2.231.1/fastlane_core/lib/fastlane_core/ui/fastlane_runner.rb:124:in &apos;Commander::Runner#run!&apos;&#10;/opt/homebrew/Cellar/fastlane/2.231.1/libexec/gems/commander-4.6.0/lib/commander/delegates.rb:18:in &apos;Commander::Delegates#run!&apos;&#10;/opt/homebrew/Cellar/fastlane/2.231.1/libexec/gems/fastlane-2.231.1/fastlane/lib/fastlane/commands_generator.rb:363:in &apos;Fastlane::CommandsGenerator#run&apos;&#10;/opt/homebrew/Cellar/fastlane/2.231.1/libexec/gems/fastlane-2.231.1/fastlane/lib/fastlane/commands_generator.rb:43:in &apos;Fastlane::CommandsGenerator.start&apos;&#10;/opt/homebrew/Cellar/fastlane/2.231.1/libexec/gems/fastlane-2.231.1/fastlane/lib/fastlane/cli_tools_distributor.rb:132:in &apos;Fastlane::CLIToolsDistributor.take_off&apos;&#10;/opt/homebrew/Cellar/fastlane/2.231.1/libexec/gems/fastlane-2.231.1/bin/fastlane:23:in &apos;&lt;top (required)&gt;&apos;&#10;/opt/homebrew/lib/ruby/site_ruby/4.0.0/rubygems.rb:303:in &apos;Kernel#load&apos;&#10;/opt/homebrew/lib/ruby/site_ruby/4.0.0/rubygems.rb:303:in &apos;Gem.activate_and_load_bin_path&apos;&#10;/opt/homebrew/Cellar/fastlane/2.231.1/libexec/bin/fastlane:25:in &apos;&lt;main&gt;&apos;&#10;&#10;Error packaging up the application" />
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="05: Switch to ios gustopub lane" time="0.000107">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="06: build_app" time="64.478944">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="07: upload_to_testflight" time="201.334943">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="08: Switch to ios yuliar lane" time="0.00067">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="09: build_app" time="68.43025">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="10: upload_to_testflight" time="179.512664">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="11: Switch to ios tandirhouse lane" time="0.000482">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="12: build_app" time="70.218995">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="13: upload_to_testflight" time="227.051566">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="14: Switch to ios vkuskavkaza lane" time="0.000162">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="15: build_app" time="71.472642">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="16: upload_to_testflight" time="191.725429">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="17: Switch to ios djan lane" time="0.000749">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="18: build_app" time="119.389413">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="19: upload_to_testflight" time="202.432709">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="20: Switch to ios usaba lane" time="0.000981">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="21: build_app" time="70.328738">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="22: upload_to_testflight" time="188.96065">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="23: Switch to ios emoji lane" time="0.000517">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="24: build_app" time="69.092128">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="25: upload_to_testflight" time="189.124041">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="26: Switch to ios estpoest lane" time="0.000741">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="27: build_app" time="67.097929">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="28: upload_to_testflight" time="235.776938">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="29: Switch to ios taverna lane" time="0.000288">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="30: build_app" time="72.105497">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="31: upload_to_testflight" time="181.992199">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="32: Switch to ios voljane lane" time="0.000309">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="33: build_app" time="71.11146">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="34: upload_to_testflight" time="292.71228">
         
       </testcase>
     
