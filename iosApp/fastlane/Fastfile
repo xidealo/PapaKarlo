@@ -25,7 +25,8 @@ platform :ios do
      emoji:        { id: "com.bunbeauty.emoji", scheme: "emoji" },
      estpoest:     { id: "com.bunbeauty.estpoest", scheme: "estpoest" },
      taverna:      { id: "com.bunbeauty.taverna", scheme: "taverna" },
-     voljane:      { id: "com.bunbeauty.voljane", scheme: "voljane" }
+     voljane:      { id: "com.bunbeauty.voljane", scheme: "voljane" },
+     legenda:      { id: "com.bunbeauty.legenda", scheme: "legenda" }
   }
 
   # Универсальная функция сборки и заливки
