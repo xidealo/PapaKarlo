@@ -25,9 +25,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
-import com.bunbeauty.designsystem.ui.topbar.LocalStatusBarColor
+import com.bunbeauty.designsystem.ui.LocalBottomBarPadding
+import com.bunbeauty.designsystem.ui.LocalStatusBarColor
 import com.bunbeauty.shared.presentation.MainViewModel
 import com.bunbeauty.shared.ui.navigation.FoodDeliveryNavHost
 import kotlinx.coroutines.delay
@@ -42,6 +44,7 @@ import papakarlo.designsystem.generated.resources.warning_no_order_available
 fun MainScreen(
     viewModel: MainViewModel = koinViewModel(),
     modifier: Modifier = Modifier,
+    localBottomBarPadding: Dp = 0.dp,
 ) {
     val mainState by viewModel.mainState.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -54,9 +57,11 @@ fun MainScreen(
 
     val color = FoodDeliveryTheme.colors.mainColors.surface
     val statusBarColor = remember { mutableStateOf(color) }
+    val localBottomBarPadding = remember { mutableStateOf(localBottomBarPadding) }
 
     CompositionLocalProvider(
         LocalStatusBarColor provides statusBarColor,
+        LocalBottomBarPadding provides localBottomBarPadding,
     ) {
         Scaffold(
             modifier =

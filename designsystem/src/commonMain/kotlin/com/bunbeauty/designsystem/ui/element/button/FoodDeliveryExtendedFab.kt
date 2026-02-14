@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.theme.medium
+import com.bunbeauty.designsystem.ui.LocalBottomBarPadding
 import com.bunbeauty.designsystem.ui.icon24
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
@@ -29,7 +30,8 @@ fun FoodDeliveryExtendedFab(
     iconBadge: String? = null,
 ) {
     ExtendedFloatingActionButton(
-        modifier = modifier,
+        modifier = modifier
+            .padding(bottom = LocalBottomBarPadding.current.value),
         containerColor = FoodDeliveryTheme.colors.mainColors.primary,
         text = {
             Text(

@@ -15,17 +15,17 @@ platform :ios do
 
   # Список приложений с идентификатором и схемой
   apps = {
-     #papakarlo:    { id: "com.bunbeuaty.papakarlo", scheme: "papakarlo" },
-     #gustopub:     { id: "com.bunbeauty.gustopub", scheme: "gustoPub" },
-     #yuliar:       { id: "com.bunbeauty.yuliar", scheme: "yuliar" },
-     #tandirhouse:  { id: "com.bunbeauty.tandirhouse", scheme: "tandirhouse" },
-     #vkuskavkaza:  { id: "com.bunbeauty.vkuskavkaza", scheme: "vkuskavkaza" },
-     #djan:         { id: "com.bunbeauty.djan", scheme: "djan" },
-     #usaba:        { id: "com.bunbeauty.usadba", scheme: "usadba" },
-     emoji:        { id: "com.bunbeauty.emoji", scheme: "emoji" }
-     #estpoest:     { id: "com.bunbeauty.estpoest", scheme: "estpoest" },
-     #taverna:      { id: "com.bunbeauty.taverna", scheme: "taverna" },
-     #voljane:      { id: "com.bunbeauty.voljane", scheme: "voljane" }
+     papakarlo:    { id: "com.bunbeuaty.papakarlo", scheme: "papakarlo" },
+     gustopub:     { id: "com.bunbeauty.gustopub", scheme: "gustoPub" },
+     yuliar:       { id: "com.bunbeauty.yuliar", scheme: "yuliar" },
+     tandirhouse:  { id: "com.bunbeauty.tandirhouse", scheme: "tandirhouse" },
+     vkuskavkaza:  { id: "com.bunbeauty.vkuskavkaza", scheme: "vkuskavkaza" },
+     djan:         { id: "com.bunbeauty.djan", scheme: "djan" },
+     usaba:        { id: "com.bunbeauty.usadba", scheme: "usadba" },
+     emoji:        { id: "com.bunbeauty.emoji", scheme: "emoji" },
+     estpoest:     { id: "com.bunbeauty.estpoest", scheme: "estpoest" },
+     taverna:      { id: "com.bunbeauty.taverna", scheme: "taverna" },
+     voljane:      { id: "com.bunbeauty.voljane", scheme: "voljane" }
   }
 
   # Универсальная функция сборки и заливки
@@ -38,23 +38,23 @@ platform :ios do
       export_method: "app-store",
     )
 
-    # upload_to_testflight
+    upload_to_testflight
 
-    deliver(
-      submit_for_review: true,
-      automatic_release: false,
-      skip_screenshots: true,
-      force: true,
-      skip_metadata: true,
-      precheck_include_in_app_purchases: false,
-      release_notes: {
-        "ru" => "Исправлены ошибки и улучшена стабильность."
-      },
-      submission_information: {
-        export_compliance_uses_encryption: false,
-        export_compliance_encryption_updated: false
-      }
-    )
+#     deliver(
+#       submit_for_review: true,
+#       automatic_release: false,
+#       skip_screenshots: true,
+#       force: true,
+#       skip_metadata: true,
+#       precheck_include_in_app_purchases: false,
+#       release_notes: {
+#         "ru" => "Исправлены ошибки и улучшена стабильность."
+#       },
+#       submission_information: {
+#         export_compliance_uses_encryption: false,
+#         export_compliance_encryption_updated: false
+#       }
+#     )
   end
 
   # Динамическая генерация lane для каждого приложения
