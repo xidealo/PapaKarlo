@@ -40,6 +40,7 @@ import com.bunbeauty.core.model.CategoryItem
 import com.bunbeauty.core.model.ProductDetailsOpenedFrom
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.theme.bold
+import com.bunbeauty.designsystem.ui.LocalBottomBarPadding
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryAction
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.designsystem.ui.element.TopCartUi
@@ -208,6 +209,9 @@ private fun MenuScreen(
                         onClick = goToConsumerCart,
                         icon = Res.drawable.ic_cart_24,
                         iconBadge = viewState.topCartUi.count,
+                        modifier = Modifier.padding(
+                            bottom = LocalBottomBarPadding.current.value
+                        )
                     )
                 }
             }
@@ -355,7 +359,7 @@ private fun MenuColumn(
                 when (menuItemModel) {
                     is MenuItemUi.Discount,
                     is MenuItemUi.CategoryHeader,
-                    -> GridItemSpan(maxLineSpan)
+                        -> GridItemSpan(maxLineSpan)
 
                     else -> GridItemSpan(1)
                 }

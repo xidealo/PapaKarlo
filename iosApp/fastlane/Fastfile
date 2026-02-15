@@ -15,7 +15,7 @@ platform :ios do
 
   # Список приложений с идентификатором и схемой
   apps = {
-    #papakarlo:    { id: "com.bunbeuaty.papakarlo", scheme: "papakarlo" },
+     papakarlo:    { id: "com.bunbeuaty.papakarlo", scheme: "papakarlo" },
      gustopub:     { id: "com.bunbeauty.gustopub", scheme: "gustoPub" },
      yuliar:       { id: "com.bunbeauty.yuliar", scheme: "yuliar" },
      tandirhouse:  { id: "com.bunbeauty.tandirhouse", scheme: "tandirhouse" },
@@ -25,31 +25,37 @@ platform :ios do
      emoji:        { id: "com.bunbeauty.emoji", scheme: "emoji" },
      estpoest:     { id: "com.bunbeauty.estpoest", scheme: "estpoest" },
      taverna:      { id: "com.bunbeauty.taverna", scheme: "taverna" },
-     voljane:      { id: "com.bunbeauty.voljane", scheme: "voljane" }
+     voljane:      { id: "com.bunbeauty.voljane", scheme: "voljane" },
+     legenda:      { id: "com.bunbeauty.legenda", scheme: "legenda" }
   }
 
   # Универсальная функция сборки и заливки
   def build_and_upload(app_identifier, scheme)
-    latest = latest_testflight_build_number(app_identifier: app_identifier)
 
-    #increment_build_number(build_number: latest + 1)
-
-    build_app(scheme: scheme)
-
-    deliver(
-      submit_for_review: true,
-      automatic_release: false,
-      skip_screenshots: true,
-      force: true,
-      precheck_include_in_app_purchases: false,
-      release_notes: {
-        "ru" => "Исправлены ошибки и улучшена стабильность."
-      },
-      submission_information: {
-        export_compliance_uses_encryption: false,
-        export_compliance_encryption_updated: false
-      }
+    build_app(
+      workspace: "iosApp.xcworkspace",
+      scheme: scheme,
+      clean: true,
+      export_method: "app-store",
     )
+
+    upload_to_testflight
+
+#     deliver(
+#       submit_for_review: true,
+#       automatic_release: false,
+#       skip_screenshots: true,
+#       force: true,
+#       skip_metadata: true,
+#       precheck_include_in_app_purchases: false,
+#       release_notes: {
+#         "ru" => "Исправлены ошибки и улучшена стабильность."
+#       },
+#       submission_information: {
+#         export_compliance_uses_encryption: false,
+#         export_compliance_encryption_updated: false
+#       }
+#     )
   end
 
   # Динамическая генерация lane для каждого приложения

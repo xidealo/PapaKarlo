@@ -20,14 +20,17 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.theme.bold
 import com.bunbeauty.designsystem.theme.medium
+import com.bunbeauty.designsystem.ui.LocalStatusBarColor
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryAction
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryCartAction
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryHorizontalDivider
@@ -44,8 +47,6 @@ import papakarlo.designsystem.generated.resources.Res
 import papakarlo.designsystem.generated.resources.ic_arrow_back
 import papakarlo.designsystem.generated.resources.ic_cart_24
 import papakarlo.designsystem.generated.resources.preview_string
-
-val LocalStatusBarColor = compositionLocalOf<MutableState<Color>?> { null }
 
 @Composable
 fun FoodDeliveryTopAppBar(

@@ -1,10 +1,10 @@
 import CommonApplication.deploymentTarget
 
 plugins {
+    alias(libs.plugins.client.compose.multiplatform.feature)
     alias(libs.plugins.cocoa)
     alias(libs.plugins.sqldelight)
     alias(libs.plugins.kotlin.serialization)
-    alias(libs.plugins.client.compose.multiplatform.feature)
     alias(libs.plugins.mokkery)
 }
 

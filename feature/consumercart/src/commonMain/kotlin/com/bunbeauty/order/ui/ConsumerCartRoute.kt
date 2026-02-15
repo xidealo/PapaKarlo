@@ -291,7 +291,10 @@ private fun BottomPanel(
     onAction: (ConsumerCart.Action) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    FoodDeliverySurface(modifier = modifier) {
+    FoodDeliverySurface(
+        modifier = modifier,
+        elevated = false
+    ) {
         Column(
             modifier = Modifier.padding(16.dp),
             verticalArrangement = spacedBy(8.dp),
