@@ -15,13 +15,53 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 ## iOS
 
-### ios gustopub
+### ios usaba
 
 ```sh
-[bundle exec] fastlane ios gustopub
+[bundle exec] fastlane ios usaba
 ```
 
-Push a new gustopub release build to the App Store
+Push a new usaba release build to the App Store
+
+### ios emoji
+
+```sh
+[bundle exec] fastlane ios emoji
+```
+
+Push a new emoji release build to the App Store
+
+### ios estpoest
+
+```sh
+[bundle exec] fastlane ios estpoest
+```
+
+Push a new estpoest release build to the App Store
+
+### ios taverna
+
+```sh
+[bundle exec] fastlane ios taverna
+```
+
+Push a new taverna release build to the App Store
+
+### ios voljane
+
+```sh
+[bundle exec] fastlane ios voljane
+```
+
+Push a new voljane release build to the App Store
+
+### ios legenda
+
+```sh
+[bundle exec] fastlane ios legenda
+```
+
+Push a new legenda release build to the App Store
 
 ### ios deployAll
 
