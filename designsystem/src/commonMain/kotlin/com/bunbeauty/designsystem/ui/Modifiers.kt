@@ -1,7 +1,6 @@
 package com.bunbeauty.designsystem.ui
 
 import androidx.compose.foundation.layout.size
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
@@ -23,5 +22,6 @@ fun <T> Modifier.applyIfNotNull(
     }
 
 
-val LocalStatusBarColor = compositionLocalOf<MutableState<Color>?> { null }
-val LocalBottomBarPadding = compositionLocalOf { mutableStateOf(0.dp) }
+val LocalStatusBarColor =
+    compositionLocalOf { mutableStateOf(Color.Transparent) }
+val LocalBottomBarPadding = compositionLocalOf { 0.dp }

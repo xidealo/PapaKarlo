@@ -20,7 +20,6 @@ fun MainViewController(flavor: String): UIViewController =
                 modifier =
                     Modifier
                         .imePadding(),
-                localBottomBarPadding = 16.dp
             )
         }
     }
