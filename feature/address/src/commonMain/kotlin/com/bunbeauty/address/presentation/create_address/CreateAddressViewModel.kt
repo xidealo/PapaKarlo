@@ -202,7 +202,7 @@ class CreateAddressViewModel(
                         street =
                             Suggestion(
                                 fiasId = streetSuggestion.id,
-                                street = streetSuggestion.value,
+                                street = streetSuggestion.value+streetSuggestion.postfix,
                                 details = null,
                             ),
                         house = dataState.value.house,
