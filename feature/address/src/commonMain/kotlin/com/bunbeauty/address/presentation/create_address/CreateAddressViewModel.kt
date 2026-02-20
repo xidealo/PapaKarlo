@@ -180,9 +180,6 @@ class CreateAddressViewModel(
     private fun handleSaveClick() {
         val streetSuggestion = dataState.value.selectedStreetSuggestion
         val hasStreetError = streetSuggestion == null || streetSuggestion.value+streetSuggestion.postfix != dataState.value.street
-        println("hasStreetError $hasStreetError")
-        println("hasStreetError1 ${streetSuggestion?.value}")
-        println("hasStreetError2 ${dataState.value.street}")
         val hasHouseError = dataState.value.house.isBlank()
         setState {
             copy(
