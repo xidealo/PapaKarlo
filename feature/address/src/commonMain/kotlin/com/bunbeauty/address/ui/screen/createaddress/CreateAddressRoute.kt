@@ -157,7 +157,7 @@ private fun CreateAddressScreen(
                             onAction(CreateAddress.Action.StreetFocusChange(isFocused = focusState.isFocused))
                             expanded =
                                 focusState.isFocused &&
-                                viewState.suggestionListNotEmpty
+                                        viewState.suggestionListNotEmpty
                         },
                 expanded = expanded,
                 onExpandedChange = { value ->
