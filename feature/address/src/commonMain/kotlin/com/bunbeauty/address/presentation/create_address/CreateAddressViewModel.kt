@@ -129,7 +129,7 @@ class CreateAddressViewModel(
         suggestionsJob?.cancel()
         setState {
             copy(
-                street = suggestion.value,
+                street = suggestion.value + suggestion.postfix,
                 streetSuggestionList = persistentListOf(),
                 selectedStreetSuggestion = suggestion,
                 isSuggestionLoading = false,
@@ -179,7 +179,10 @@ class CreateAddressViewModel(
 
     private fun handleSaveClick() {
         val streetSuggestion = dataState.value.selectedStreetSuggestion
-        val hasStreetError = streetSuggestion == null || streetSuggestion.value != dataState.value.street
+        val hasStreetError = streetSuggestion == null || streetSuggestion.value+streetSuggestion.postfix != dataState.value.street
+        println("hasStreetError $hasStreetError")
+        println("hasStreetError1 ${streetSuggestion?.value}")
+        println("hasStreetError2 ${dataState.value.street}")
         val hasHouseError = dataState.value.house.isBlank()
         setState {
             copy(
@@ -249,8 +252,8 @@ class CreateAddressViewModel(
             .debounce(SUGGESTION_REQUEST_DEBOUNCE_MILLIS)
             .filter { streetField ->
                 streetField.isFocused &&
-                    (streetField.street != streetField.selectedSuggestion?.value) &&
-                    (streetField.street.length >= LETTER_COUNT_FOR_SUGGESTIONS)
+                        (streetField.street != streetField.selectedSuggestion?.value) &&
+                        (streetField.street.length >= LETTER_COUNT_FOR_SUGGESTIONS)
             }.onEach { (street, _) ->
                 requestSuggestions(query = street)
             }.launchIn(sharedScope)
