@@ -3,9 +3,11 @@ package com.bunbeauty.menu.ui
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.bunbeauty.core.model.CategoryItem
@@ -27,17 +29,27 @@ fun CategoryItem(
         } else {
             FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
         }
+
+    val cardColor =
+        if (categoryItem.isSelected) {
+            FoodDeliveryCardDefaults.primaryCardStatusColors
+        } else {
+            CardDefaults.cardColors(
+                containerColor = Color.Transparent,
+                contentColor = color,
+            )
+        }
+
     FoodDeliveryCard(
         modifier = modifier,
         elevated = false,
         onClick = onClick,
-        colors = FoodDeliveryCardDefaults.transparentCardColors,
+        colors = cardColor,
         shape = RoundedCornerShape(16.dp),
-        border =
-            BorderStroke(
-                width = 2.dp,
-                color = color,
-            ),
+        border = BorderStroke(
+            width = 2.dp,
+            color = color,
+        ),
     ) {
         Text(
             modifier =
@@ -48,7 +60,6 @@ fun CategoryItem(
                     ),
             text = categoryItem.name,
             style = FoodDeliveryTheme.typography.labelLarge.medium,
-            color = color,
             textAlign = TextAlign.Center,
         )
     }

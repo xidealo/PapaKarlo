@@ -63,7 +63,6 @@ class MainActivity :
                 Box(modifier = Modifier.fillMaxSize()) {
                     MainScreen(
                         modifier = Modifier
-                            .statusBarsPadding()
                             .imePadding(),
                         barColorCallback = {
                             statusBarColor.value = it

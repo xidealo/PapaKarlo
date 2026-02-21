@@ -69,7 +69,7 @@ fun FoodDeliveryTopAppBar(
     val statusBarColorState = LocalStatusBarColor.current
 
     LaunchedEffect(barColor) {
-        statusBarColorState?.value = barColor
+        statusBarColorState.value = barColor
     }
 
     if (backActionClick != null || title != null) {
@@ -104,7 +104,7 @@ private fun FoodDeliveryTopAppBarContent(
             Text(
                 text = title.orEmpty(),
                 maxLines = 1,
-                style = FoodDeliveryTheme.typography.titleMedium.bold,
+                style = FoodDeliveryTheme.typography.titleMedium.medium,
                 overflow = TextOverflow.Ellipsis,
             )
         },

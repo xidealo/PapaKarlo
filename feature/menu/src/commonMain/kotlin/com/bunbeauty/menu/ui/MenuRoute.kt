@@ -7,7 +7,10 @@ import androidx.compose.animation.Crossfade
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.animation.SharedTransitionScope
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.snapping.SnapPosition
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,6 +22,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
@@ -43,6 +48,7 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -51,6 +57,8 @@ import com.bunbeauty.core.model.CategoryItem
 import com.bunbeauty.core.model.ProductDetailsOpenedFrom
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.theme.bold
+import com.bunbeauty.designsystem.theme.logoMedium
+import com.bunbeauty.designsystem.theme.medium
 import com.bunbeauty.designsystem.ui.LocalBottomBarPadding
 import com.bunbeauty.designsystem.ui.LocalStatusBarColor
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryScaffold
@@ -73,6 +81,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import papakarlo.designsystem.generated.resources.Res
 import papakarlo.designsystem.generated.resources.description_ic_discount
+import papakarlo.designsystem.generated.resources.description_login_logo
 import papakarlo.designsystem.generated.resources.error_consumer_cart_add_product
 import papakarlo.designsystem.generated.resources.error_menu_loading
 import papakarlo.designsystem.generated.resources.ic_cart_24
@@ -303,8 +312,12 @@ private fun CategoryRow(
                 )
             ),
         contentPadding = PaddingValues(
-            vertical = 16.dp,
-            horizontal = 16.dp
+            top = 12.dp + with(LocalDensity.current) {
+                WindowInsets.statusBars.getTop(this).toDp()
+            },
+            bottom = 16.dp,
+            start = 16.dp,
+            end = 16.dp
         ),
         state = categoryLazyListState,
         horizontalArrangement = spacedBy(8.dp),
@@ -378,42 +391,61 @@ private fun MenuColumn(
         ) {
             Box(
                 modifier = Modifier.fillMaxWidth()
-                    .height(120.dp)
                     .background(LocalStatusBarColor.current.value),
             ) {
-                Row(
-                    modifier = Modifier.fillMaxSize()
+                Box(
+                    modifier = Modifier.fillMaxWidth()
                         .background(
                             color = FoodDeliveryTheme.colors.mainColors.primary,
                             shape = RoundedCornerShape(
-                                bottomEnd = 24.dp,
-                                bottomStart = 24.dp
+                                bottomEnd = 32.dp,
+                                bottomStart = 32.dp
                             )
                         )
+                        .statusBarsPadding()
                 ) {
-                    Text(
-                        modifier = Modifier.padding(
-                            start = 16.dp,
-                            top = 16.dp
-                        ).weight(1f),
-                        text = stringResource(Res.string.title_menu),
-                        maxLines = 1,
-                        style = FoodDeliveryTheme.typography.titleMedium.bold,
-                        overflow = TextOverflow.Ellipsis,
-                        color = FoodDeliveryTheme.colors.mainColors.onPrimary
-                    )
-
-                    IconButton(
-                        onClick = goToProfile,
+                    Row(
+                        modifier = Modifier.fillMaxWidth()
+                            .padding(
+                                start = 16.dp,
+                                end = 8.dp,
+                                top = 8.dp
+                            ),
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Icon(
-                            modifier = Modifier.icon24(),
-                            painter = painterResource(resource = Res.drawable.ic_profile),
-                            tint = FoodDeliveryTheme.colors.mainColors.onPrimary,
-                            contentDescription = null,
+                        Text(
+                            modifier = Modifier.weight(1f),
+                            text = stringResource(Res.string.title_menu),
+                            maxLines = 1,
+                            style = FoodDeliveryTheme.typography.titleLarge.medium,
+                            overflow = TextOverflow.Ellipsis,
+                            color = FoodDeliveryTheme.colors.mainColors.onPrimary
+                        )
+
+                        IconButton(
+                            onClick = goToProfile,
+                        ) {
+                            Icon(
+                                modifier = Modifier.icon24(),
+                                painter = painterResource(resource = Res.drawable.ic_profile),
+                                tint = FoodDeliveryTheme.colors.mainColors.onPrimary,
+                                contentDescription = null,
+                            )
+                        }
+                    }
+
+                    logoMedium?.let { logo ->
+                        Image(
+                            modifier = Modifier
+                                .height(height = 96.dp)
+                                .padding(vertical = 16.dp)
+                                .align(Alignment.Center),
+                            painter = painterResource(resource = logo),
+                            contentDescription = stringResource(resource = Res.string.description_login_logo),
                         )
                     }
                 }
+
             }
         }
 

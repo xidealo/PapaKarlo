@@ -20,8 +20,15 @@ data class AppTypography(
         TextStyle(
             fontFamily = FontFamily.Default,
             fontWeight = FontWeight.Normal,
-            fontSize = 16.sp,
+            fontSize = 18.sp,
             lineHeight = 24.sp,
+        ),
+    val titleLarge: TextStyle =
+        TextStyle(
+            fontFamily = FontFamily.Default,
+            fontWeight = FontWeight.Normal,
+            fontSize = 22.sp,
+            lineHeight = 28.sp,
         ),
     val labelSmall: TextStyle =
         TextStyle(
