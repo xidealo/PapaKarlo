@@ -8,6 +8,8 @@ import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.remember
 import com.bunbeauty.designsystem.FoodDeliveryCompany
 import com.bunbeauty.designsystem.theme.color.AppColors
+import com.bunbeauty.designsystem.theme.color.BeregColors
+import com.bunbeauty.designsystem.theme.color.BeregDarkColors
 import com.bunbeauty.designsystem.theme.color.DjanDarkColors
 import com.bunbeauty.designsystem.theme.color.DjanLightColors
 import com.bunbeauty.designsystem.theme.color.EmojiDarkColors
@@ -37,6 +39,7 @@ import com.bunbeauty.designsystem.theme.color.YuliarDarkColors
 import com.bunbeauty.designsystem.theme.color.YuliarLightColors
 import org.jetbrains.compose.resources.DrawableResource
 import papakarlo.designsystem.generated.resources.Res
+import papakarlo.designsystem.generated.resources.logo_medium_bereg
 import papakarlo.designsystem.generated.resources.logo_medium_djan
 import papakarlo.designsystem.generated.resources.logo_medium_emoji
 import papakarlo.designsystem.generated.resources.logo_medium_estpoest
@@ -194,6 +197,15 @@ private fun getAppColors(
                 VoljaneDarkColors
             } else {
                 VoljaneColors
+            }
+        }
+
+        FoodDeliveryCompany.BEREG -> {
+            logoMedium = Res.drawable.logo_medium_bereg
+            if (isDarkTheme) {
+                BeregDarkColors
+            } else {
+                BeregColors
             }
         }
     }

@@ -53,6 +53,10 @@ enum class FoodDeliveryFlavor(
     VOLJANE(
         key = "voljane",
         applicationId = "com.bunbeauty.voljane"
+    ),
+    BEREG(
+        key = "bereg",
+        applicationId = "com.bunbeauty.bereg"
     );
 
     val assembleReleaseBundle: String
