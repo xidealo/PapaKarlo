@@ -1,9 +1,9 @@
 package com.bunbeauty.shared.data.mapper.link
 
+import com.bunbeauty.core.model.link.Link
+import com.bunbeauty.core.model.link.LinkType
 import com.bunbeauty.shared.data.network.model.LinkServer
 import com.bunbeauty.shared.db.LinkEntity
-import com.bunbeauty.shared.domain.model.link.Link
-import com.bunbeauty.shared.domain.model.link.LinkType
 
 class LinkMapper {
     fun toLink(linkServer: LinkServer): Link {

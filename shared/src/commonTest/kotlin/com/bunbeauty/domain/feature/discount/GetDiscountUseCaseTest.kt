@@ -1,16 +1,15 @@
 package com.bunbeauty.domain.feature.discount
 
-import com.bunbeauty.shared.DataStoreRepo
-import com.bunbeauty.shared.domain.feature.discount.GetDiscountUseCase
-import com.bunbeauty.shared.domain.feature.discount.GetDiscountUseCaseImpl
-import com.bunbeauty.shared.domain.model.Discount
-import com.bunbeauty.shared.domain.model.date_time.Date
-import com.bunbeauty.shared.domain.model.date_time.DateTime
-import com.bunbeauty.shared.domain.model.date_time.Time
-import com.bunbeauty.shared.domain.model.order.LightOrder
-import com.bunbeauty.shared.domain.model.order.OrderStatus
-import com.bunbeauty.shared.domain.repo.DiscountRepo
-import com.bunbeauty.shared.domain.repo.OrderRepo
+import com.bunbeauty.core.domain.discount.GetDiscountUseCase
+import com.bunbeauty.core.domain.discount.GetDiscountUseCaseImpl
+import com.bunbeauty.core.domain.repo.DiscountRepo
+import com.bunbeauty.core.domain.repo.OrderRepo
+import com.bunbeauty.core.model.Discount
+import com.bunbeauty.core.model.date_time.Date
+import com.bunbeauty.core.model.date_time.DateTime
+import com.bunbeauty.core.model.date_time.Time
+import com.bunbeauty.core.model.order.LightOrder
+import com.bunbeauty.core.model.order.OrderStatus
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.mock
@@ -21,12 +20,10 @@ import kotlin.test.assertEquals
 class GetDiscountUseCaseTest {
     private val discountRepository: DiscountRepo = mock()
     private val orderRepository: OrderRepo = mock()
-    private val dataStoreRepo: DataStoreRepo = mock()
     private val getDiscountUseCase: GetDiscountUseCase =
         GetDiscountUseCaseImpl(
             discountRepository = discountRepository,
             orderRepository = orderRepository,
-            dataStoreRepo = dataStoreRepo,
         )
 
     @Test
@@ -34,9 +31,8 @@ class GetDiscountUseCaseTest {
         runTest {
             // Given
 
-            everySuspend { dataStoreRepo.getToken() } returns null
-            everySuspend { dataStoreRepo.getUserUuid() } returns "uuid"
             everySuspend { discountRepository.getDiscount() } returns Discount(10)
+            everySuspend { orderRepository.getLastOrderByUserUuidLocalFirst() } returns null
 
             // When
             val discount = getDiscountUseCase()
@@ -53,9 +49,8 @@ class GetDiscountUseCaseTest {
         runTest {
             // Given
 
-            everySuspend { dataStoreRepo.getToken() } returns "token"
-            everySuspend { dataStoreRepo.getUserUuid() } returns null
             everySuspend { discountRepository.getDiscount() } returns Discount(10)
+            everySuspend { orderRepository.getLastOrderByUserUuidLocalFirst() } returns null
 
             // When
             val discount = getDiscountUseCase()
@@ -72,13 +67,8 @@ class GetDiscountUseCaseTest {
         runTest {
             // Given
 
-            everySuspend { dataStoreRepo.getToken() } returns "token"
-            everySuspend { dataStoreRepo.getUserUuid() } returns "userUuid"
             everySuspend {
-                orderRepository.getLastOrderByUserUuidLocalFirst(
-                    "token",
-                    "userUuid",
-                )
+                orderRepository.getLastOrderByUserUuidLocalFirst()
             } returns null
 
             everySuspend { discountRepository.getDiscount() } returns Discount(10)
@@ -97,14 +87,8 @@ class GetDiscountUseCaseTest {
     fun `should return null when lastOrder is not empty`() =
         runTest {
             // Given
-
-            everySuspend { dataStoreRepo.getToken() } returns "token"
-            everySuspend { dataStoreRepo.getUserUuid() } returns "userUuid"
             everySuspend {
-                orderRepository.getLastOrderByUserUuidLocalFirst(
-                    "token",
-                    "userUuid",
-                )
+                orderRepository.getLastOrderByUserUuidLocalFirst()
             } returns
                 LightOrder(
                     uuid = "uuid",

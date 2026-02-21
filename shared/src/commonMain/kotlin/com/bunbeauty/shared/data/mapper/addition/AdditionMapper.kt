@@ -1,7 +1,7 @@
 package com.bunbeauty.shared.data.mapper.addition
 
+import com.bunbeauty.core.model.addition.Addition
 import com.bunbeauty.shared.db.AdditionEntity
-import com.bunbeauty.shared.domain.model.addition.Addition
 
 val mapAdditionEntityToAddition: AdditionEntity.() -> Addition = {
     Addition(

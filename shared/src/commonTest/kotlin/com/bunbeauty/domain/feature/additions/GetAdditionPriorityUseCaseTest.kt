@@ -1,8 +1,8 @@
 package com.bunbeauty.domain.feature.additions
 
+import com.bunbeauty.core.domain.addition.GetAdditionPriorityUseCaseImpl
 import com.bunbeauty.getAddition
 import com.bunbeauty.getAdditionGroup
-import com.bunbeauty.shared.domain.feature.addition.GetAdditionPriorityUseCaseImpl
 import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test

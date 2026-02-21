@@ -1,11 +1,11 @@
 package com.bunbeauty.domain.feature.cart
 
+import com.bunbeauty.core.domain.GetCartProductCountUseCase
+import com.bunbeauty.core.domain.cart.IncreaseCartProductCountUseCase
+import com.bunbeauty.core.domain.exeptions.CartProductLimitReachedException
+import com.bunbeauty.core.domain.exeptions.CartProductNotFoundException
+import com.bunbeauty.core.domain.repo.CartProductRepo
 import com.bunbeauty.getCartProduct
-import com.bunbeauty.shared.domain.exeptions.CartProductLimitReachedException
-import com.bunbeauty.shared.domain.exeptions.CartProductNotFoundException
-import com.bunbeauty.shared.domain.feature.cart.GetCartProductCountUseCase
-import com.bunbeauty.shared.domain.feature.cart.IncreaseCartProductCountUseCase
-import com.bunbeauty.shared.domain.repo.CartProductRepo
 import dev.mokkery.MockMode
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend

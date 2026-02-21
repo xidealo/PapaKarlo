@@ -4,9 +4,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.core.Logger
+import com.bunbeauty.core.domain.orderavailable.IsOrderAvailableUseCase
+import com.bunbeauty.core.extension.launchSafe
 import com.bunbeauty.shared.NetworkUtil
-import com.bunbeauty.shared.domain.feature.orderavailable.IsOrderAvailableUseCase
-import com.bunbeauty.shared.extension.launchSafe
 import com.bunbeauty.shared.ui.screen.main.FoodDeliveryMessage
 import com.bunbeauty.shared.ui.screen.main.FoodDeliveryMessageType
 import com.bunbeauty.shared.ui.screen.main.MainState

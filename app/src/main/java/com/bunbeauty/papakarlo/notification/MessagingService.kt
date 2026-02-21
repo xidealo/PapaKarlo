@@ -10,12 +10,12 @@ import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import com.bunbeauty.core.Constants.CHANNEL_ID
 import com.bunbeauty.core.Logger
 import com.bunbeauty.core.Logger.NOTIFICATION_TAG
+import com.bunbeauty.core.domain.repo.UserRepo
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.feature.main.MainActivity
-import com.bunbeauty.shared.Constants.CHANNEL_ID
-import com.bunbeauty.shared.domain.repo.UserRepo
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import org.koin.android.ext.android.inject

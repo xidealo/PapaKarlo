@@ -7,6 +7,10 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.core.app.NotificationManagerCompat
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
@@ -35,7 +39,13 @@ class MainActivity :
             FoodDeliveryTheme(
                 flavor = BuildConfig.FLAVOR,
             ) {
-                MainScreen()
+                MainScreen(
+                    modifier =
+                        Modifier
+                            .statusBarsPadding()
+                            .navigationBarsPadding()
+                            .imePadding(),
+                )
             }
         }
 

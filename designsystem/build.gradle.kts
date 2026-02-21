@@ -8,7 +8,6 @@ plugins {
     alias(libs.plugins.compose)
 }
 
-@OptIn(org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi::class)
 kotlin {
     applyDefaultHierarchyTemplate()
     androidTarget()
@@ -30,10 +29,11 @@ kotlin {
         }
     }
 
+
+
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(project(":core"))
                 implementation(libs.koin.core)
 
                 implementation(compose.components.resources)
@@ -55,6 +55,7 @@ kotlin {
             }
         }
     }
+
 }
 
 android {
@@ -63,8 +64,13 @@ android {
     defaultConfig {
         minSdk = AndroidSdk.min
     }
+    compose.resources {
+        publicResClass = true
+        generateResClass = auto
+    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_21
         targetCompatibility = JavaVersion.VERSION_21
     }
+
 }

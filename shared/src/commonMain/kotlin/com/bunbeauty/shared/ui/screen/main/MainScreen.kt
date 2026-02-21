@@ -10,9 +10,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarHost
@@ -27,21 +25,27 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
-import com.bunbeauty.designsystem.ui.topbar.LocalStatusBarColor
+import com.bunbeauty.designsystem.ui.LocalBottomBarPadding
+import com.bunbeauty.designsystem.ui.LocalStatusBarColor
 import com.bunbeauty.shared.presentation.MainViewModel
 import com.bunbeauty.shared.ui.navigation.FoodDeliveryNavHost
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
-import papakarlo.shared.generated.resources.Res
-import papakarlo.shared.generated.resources.error_no_internet
-import papakarlo.shared.generated.resources.warning_no_order_available
+import papakarlo.designsystem.generated.resources.Res
+import papakarlo.designsystem.generated.resources.error_no_internet
+import papakarlo.designsystem.generated.resources.warning_no_order_available
 
 @Composable
-fun MainScreen(viewModel: MainViewModel = koinViewModel()) {
+fun MainScreen(
+    viewModel: MainViewModel = koinViewModel(),
+    modifier: Modifier = Modifier,
+    localBottomBarPadding: Dp = 0.dp,
+) {
     val mainState by viewModel.mainState.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
 
@@ -53,31 +57,36 @@ fun MainScreen(viewModel: MainViewModel = koinViewModel()) {
 
     val color = FoodDeliveryTheme.colors.mainColors.surface
     val statusBarColor = remember { mutableStateOf(color) }
+    val localBottomBarPadding = remember { mutableStateOf(localBottomBarPadding) }
 
     CompositionLocalProvider(
         LocalStatusBarColor provides statusBarColor,
+        LocalBottomBarPadding provides localBottomBarPadding,
     ) {
         Scaffold(
+            modifier =
+                Modifier
+                    .fillMaxSize(),
             snackbarHost = {
                 FoodDeliverySnackbarHost(
                     snackbarHostState = snackbarHostState,
                     paddingBottom = mainState.paddingBottomSnackbar,
                 )
             },
+            containerColor = statusBarColor.value,
         ) {
             Column(
                 modifier =
-                    Modifier
-                        .background(color = statusBarColor.value)
-                        .statusBarsPadding()
-                        .navigationBarsPadding()
-                        .imePadding(),
+                    modifier
+                        .fillMaxSize(),
             ) {
                 ConnectionErrorMessage(visible = mainState.connectionLost)
                 StatusBarMessage(statusBarMessage = mainState.statusBarMessage)
 
                 Box(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier =
+                        Modifier
+                            .fillMaxSize(),
                 ) {
                     FoodDeliveryNavHost(
                         showInfoMessage = { message, padding ->

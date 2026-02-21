@@ -1,12 +1,12 @@
 package com.bunbeauty.shared.di.usecase
 
-import com.bunbeauty.shared.domain.feature.auth.CheckCodeUseCase
-import com.bunbeauty.shared.domain.feature.auth.CheckPhoneNumberUseCase
-import com.bunbeauty.shared.domain.feature.auth.FormatPhoneNumberUseCase
-import com.bunbeauty.shared.domain.feature.auth.FormatPhoneNumberUseCaseImpl
-import com.bunbeauty.shared.domain.feature.auth.GetPhoneNumberCursorPositionUseCase
-import com.bunbeauty.shared.domain.feature.auth.RequestCodeUseCase
-import com.bunbeauty.shared.domain.feature.auth.ResendCodeUseCase
+import com.bunbeauty.core.domain.auth.CheckCodeUseCase
+import com.bunbeauty.core.domain.auth.CheckPhoneNumberUseCase
+import com.bunbeauty.core.domain.auth.FormatPhoneNumberUseCase
+import com.bunbeauty.core.domain.auth.FormatPhoneNumberUseCaseImpl
+import com.bunbeauty.core.domain.auth.GetPhoneNumberCursorPositionUseCase
+import com.bunbeauty.core.domain.auth.RequestCodeUseCase
+import com.bunbeauty.core.domain.auth.ResendCodeUseCase
 import org.koin.dsl.module
 
 internal fun authUseCaseModule() =
@@ -19,7 +19,6 @@ internal fun authUseCaseModule() =
         factory {
             CheckCodeUseCase(
                 authRepo = get(),
-                dataStoreRepo = get(),
             )
         }
         factory {

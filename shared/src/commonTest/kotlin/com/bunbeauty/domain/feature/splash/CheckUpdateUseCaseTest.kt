@@ -1,7 +1,7 @@
 package com.bunbeauty.domain.feature.splash
 
-import com.bunbeauty.shared.domain.feature.splash.CheckUpdateUseCase
-import com.bunbeauty.shared.domain.repo.VersionRepo
+import com.bunbeauty.core.domain.repo.VersionRepo
+import com.bunbeauty.core.domain.splash.CheckUpdateUseCase
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.mock

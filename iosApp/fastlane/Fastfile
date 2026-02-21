@@ -1,101 +1,80 @@
-# This file contains the fastlane.tools configuration
-
-# Uncomment the line if you want fastlane to automatically update itself
-# update_fastlane
-
 default_platform(:ios)
 
 platform :ios do
-
   before_all do
-      # Select the version of Xcode for this build only
-      xcodes(version: "16.4", select_for_current_build_only: true)
+    # Выбираем версию Xcode для сборки
+    xcodes(version: "26.2", select_for_current_build_only: true)
 
-      # Make sure that the correct version of Xcode is selected
-      ensure_xcode_version(version: "16.4")
-      app_store_connect_api_key(
-         key_id: ENV['APP_STORE_KEY_ID'],
-         issuer_id: ENV['APP_STORE_ISSUER_ID'],
-         key_filepath: ENV['APP_STORE_P8_PATH']
-       )
+    # App Store Connect API Key
+    app_store_connect_api_key(
+      key_id: ENV['APP_STORE_KEY_ID'],
+      issuer_id: ENV['APP_STORE_ISSUER_ID'],
+      key_filepath: ENV['APP_STORE_P8_PATH']
+    )
   end
 
-  lane :deployAll do
-     papakarlo
-     gustopub
-     yuliar
-     tandirhouse
-     vkuskavkaza
-     djan
-     emoji
-     usaba
-     estpoest
-     taverna
-     voljane
-  end
+  # Список приложений с идентификатором и схемой
+  apps = {
+     papakarlo:    { id: "com.bunbeuaty.papakarlo", scheme: "papakarlo" },
+     gustopub:     { id: "com.bunbeauty.gustopub", scheme: "gustoPub" },
+     yuliar:       { id: "com.bunbeauty.yuliar", scheme: "yuliar" },
+     tandirhouse:  { id: "com.bunbeauty.tandirhouse", scheme: "tandirhouse" },
+     vkuskavkaza:  { id: "com.bunbeauty.vkuskavkaza", scheme: "vkuskavkaza" },
+     djan:         { id: "com.bunbeauty.djan", scheme: "djan" },
+     usaba:        { id: "com.bunbeauty.usadba", scheme: "usadba" },
+     emoji:        { id: "com.bunbeauty.emoji", scheme: "emoji" },
+     estpoest:     { id: "com.bunbeauty.estpoest", scheme: "estpoest" },
+     taverna:      { id: "com.bunbeauty.taverna", scheme: "taverna" },
+     voljane:      { id: "com.bunbeauty.voljane", scheme: "voljane" },
+     legenda:      { id: "com.bunbeauty.legenda", scheme: "legenda" }
+  }
 
+  # Универсальная функция сборки и заливки
   def build_and_upload(app_identifier, scheme)
-    # increment_build_number(xcodeproj: "iosApp.xcodeproj")
-    build_app(scheme: scheme)
+
+    build_app(
+      workspace: "iosApp.xcworkspace",
+      scheme: scheme,
+      clean: true,
+      export_method: "app-store",
+    )
+
     upload_to_testflight
+
+#     deliver(
+#       submit_for_review: true,
+#       automatic_release: false,
+#       skip_screenshots: true,
+#       force: true,
+#       skip_metadata: true,
+#       precheck_include_in_app_purchases: false,
+#       release_notes: {
+#         "ru" => "Исправлены ошибки и улучшена стабильность."
+#       },
+#       submission_information: {
+#         export_compliance_uses_encryption: false,
+#         export_compliance_encryption_updated: false
+#       }
+#     )
   end
 
- desc "Push a new papakarlo release build to the App Store"
-  lane :papakarlo do
-    build_and_upload("com.bunbeauty.papakarlo", "papakarlo")
+  # Динамическая генерация lane для каждого приложения
+  apps.each do |lane_name, config|
+    desc "Push a new #{lane_name} release build to the App Store"
+    lane lane_name do
+      build_and_upload(config[:id], config[:scheme])
+    end
   end
 
-  desc "Push a new gustopub release build to the App Store"
-  lane :gustopub do
-    build_and_upload("com.bunbeauty.gustopub", "gustoPub")
-  end
-
-  desc "Push a new yuliar release build to the App Store"
-  lane :yuliar do
-    build_and_upload("com.bunbeauty.yuliar", "yuliar")
-  end
-
-  desc "Push a new tandirhouse release build to the App Store"
-  lane :tandirhouse do
-    build_and_upload("com.bunbeauty.tandirhouse", "tandirhouse")
-  end
-
-  desc "Push a new vkuskavkaza release build to the App Store"
-  lane :vkuskavkaza do
-    build_and_upload("com.bunbeauty.vkuskavkaza", "vkuskavkaza")
-  end
-
-  desc "Push a new djan release build to the App Store"
-  lane :djan do
-    build_and_upload("com.bunbeauty.djan", "djan")
-  end
-
-  desc "Push a new usadba release build to the App Store"
-  lane :usaba do
-    build_and_upload("com.bunbeauty.usadba", "usadba")
-  end
-  
-  desc "Push a new legenda release build to the App Store"
-  lane :legenda do
-    build_and_upload("com.bunbeauty.legenda", "legenda")
-  end
-
-  desc "Push a new emoji release build to the App Store"
-  lane :emoji do
-    build_and_upload("com.bunbeauty.emoji", "emoji")
-  end
-
-  desc "Push a new estpoest release build to the App Store"
-  lane :estpoest do
-    build_and_upload("com.bunbeauty.estpoest", "estpoest")
-  end
-
-  desc "Push a new taverna release build to the App Store"
-  lane :taverna do
-    build_and_upload("com.bunbeauty.taverna", "taverna")
-  end
-  desc "Push a new voljane release build to the App Store"
-  lane :voljane do
-    build_and_upload("com.bunbeauty.voljane", "voljane")
+  # Lane для деплоя всех приложений
+  desc "Deploy all apps to TestFlight"
+  lane :deployAll do
+    apps.keys.each do |app|
+      begin
+        send(app)
+      rescue => e
+        UI.error("Failed to deploy #{app}: #{e.message}")
+      end
+    end
   end
 end

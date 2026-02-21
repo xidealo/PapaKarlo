@@ -1,10 +1,14 @@
 package com.bunbeauty.shared.ui.navigation.settings
 
+import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.fadeOut
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
-import com.bunbeauty.shared.ui.screen.profile.screen.settings.SettingsRoute
+import com.bunbeauty.profile.ui.screen.settings.SettingsRoute
+import com.bunbeauty.shared.ui.navigation.NavAnimationSpec.navAnimationSpecDurationForEnterFade
+import com.bunbeauty.shared.ui.navigation.NavAnimationSpec.navAnimationSpecDurationForSlide
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -17,7 +21,31 @@ fun NavGraphBuilder.settingsScreenRoute(
     showInfoMessage: (String, Int) -> Unit,
     showErrorMessage: (String) -> Unit,
 ) {
-    composable<SettingsScreenDestination> {
+    composable<SettingsScreenDestination>(
+        enterTransition = {
+            slideIntoContainer(
+                AnimatedContentTransitionScope.SlideDirection.Left,
+                navAnimationSpecDurationForSlide,
+            )
+        },
+        exitTransition = {
+            fadeOut(
+                animationSpec = navAnimationSpecDurationForEnterFade,
+            )
+        },
+        popEnterTransition = {
+            slideIntoContainer(
+                AnimatedContentTransitionScope.SlideDirection.Right,
+                navAnimationSpecDurationForSlide,
+            )
+        },
+        popExitTransition = {
+            slideOutOfContainer(
+                AnimatedContentTransitionScope.SlideDirection.Right,
+                navAnimationSpecDurationForSlide,
+            )
+        },
+    ) {
         SettingsRoute(
             back = back,
             showInfoMessage = showInfoMessage,

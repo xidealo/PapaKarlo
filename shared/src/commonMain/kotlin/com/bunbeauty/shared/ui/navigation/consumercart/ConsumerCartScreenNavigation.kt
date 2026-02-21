@@ -1,12 +1,18 @@
 package com.bunbeauty.shared.ui.navigation.consumercart
 
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
-import com.bunbeauty.shared.domain.model.SuccessLoginDirection
-import com.bunbeauty.shared.presentation.product_details.ProductDetailsOpenedFrom
-import com.bunbeauty.shared.ui.screen.consumercart.ConsumerCartRoute
+import com.bunbeauty.core.model.ProductDetailsOpenedFrom
+import com.bunbeauty.core.model.SuccessLoginDirection
+import com.bunbeauty.order.ui.ConsumerCartRoute
+import com.bunbeauty.shared.ui.navigation.NavAnimationSpec.NAV_ANIMATION_SPEC_SCALE_FOR_FADE
+import com.bunbeauty.shared.ui.navigation.NavAnimationSpec.navAnimationSpecDurationForEnterFade
+import com.bunbeauty.shared.ui.navigation.NavAnimationSpec.navAnimationSpecDurationForPopFade
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -28,7 +34,36 @@ fun NavGraphBuilder.consumerCartScreenRoute(
     ) -> Unit,
     showErrorMessage: (String) -> Unit,
 ) {
-    composable<ConsumerCartScreenDestination> {
+    composable<ConsumerCartScreenDestination>(
+        enterTransition = {
+            fadeIn(
+                navAnimationSpecDurationForEnterFade,
+            ) +
+                scaleIn(
+                    initialScale = NAV_ANIMATION_SPEC_SCALE_FOR_FADE,
+                    animationSpec = navAnimationSpecDurationForEnterFade,
+                )
+        },
+        exitTransition = {
+            fadeOut(
+                animationSpec = navAnimationSpecDurationForEnterFade,
+            )
+        },
+        popEnterTransition = {
+            fadeIn(
+                navAnimationSpecDurationForPopFade,
+            ) +
+                scaleIn(
+                    initialScale = NAV_ANIMATION_SPEC_SCALE_FOR_FADE,
+                    animationSpec = navAnimationSpecDurationForPopFade,
+                )
+        },
+        popExitTransition = {
+            fadeOut(
+                animationSpec = navAnimationSpecDurationForPopFade,
+            )
+        },
+    ) {
         ConsumerCartRoute(
             back = back,
             goToMenuFragment = goToMenuFragment,

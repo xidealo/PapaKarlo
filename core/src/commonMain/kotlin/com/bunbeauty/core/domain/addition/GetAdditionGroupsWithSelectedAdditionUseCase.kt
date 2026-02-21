@@ -1,0 +1,32 @@
+package com.bunbeauty.core.domain.addition
+
+import com.bunbeauty.core.model.addition.AdditionGroup
+
+class GetAdditionGroupsWithSelectedAdditionUseCase {
+    operator fun invoke(
+        additionGroups: List<AdditionGroup>,
+        groupUuid: String,
+        additionUuid: String,
+    ) = additionGroups.map { additionGroup ->
+        if (additionGroup.uuid == groupUuid) {
+            additionGroup.copy(
+                additionList =
+                    if (additionGroup.singleChoice) {
+                        additionGroup.additionList.map { addition ->
+                            addition.copy(isSelected = addition.uuid == additionUuid)
+                        }
+                    } else {
+                        additionGroup.additionList.map { addition ->
+                            if (addition.uuid == additionUuid) {
+                                addition.copy(isSelected = !addition.isSelected)
+                            } else {
+                                addition
+                            }
+                        }
+                    },
+            )
+        } else {
+            additionGroup
+        }
+    }
+}

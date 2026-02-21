@@ -1,13 +1,13 @@
 package com.bunbeauty.shared.di.usecase
 
-import com.bunbeauty.shared.domain.feature.addition.AreAdditionsEqualUseCase
-import com.bunbeauty.shared.domain.feature.addition.AreAdditionsEqualUseCaseImpl
-import com.bunbeauty.shared.domain.feature.addition.GetAdditionGroupsWithSelectedAdditionUseCase
-import com.bunbeauty.shared.domain.feature.addition.GetAdditionPriorityUseCase
-import com.bunbeauty.shared.domain.feature.addition.GetAdditionPriorityUseCaseImpl
-import com.bunbeauty.shared.domain.feature.addition.GetCartProductAdditionsPriceUseCase
-import com.bunbeauty.shared.domain.feature.addition.GetCartProductAdditionsPriceUseCaseImpl
-import com.bunbeauty.shared.domain.feature.addition.GetPriceOfSelectedAdditionsUseCase
+import com.bunbeauty.core.domain.GetCartProductAdditionsPriceUseCase
+import com.bunbeauty.core.domain.GetCartProductAdditionsPriceUseCaseImpl
+import com.bunbeauty.core.domain.addition.AreAdditionsEqualUseCase
+import com.bunbeauty.core.domain.addition.AreAdditionsEqualUseCaseImpl
+import com.bunbeauty.core.domain.addition.GetAdditionGroupsWithSelectedAdditionUseCase
+import com.bunbeauty.core.domain.addition.GetAdditionPriorityUseCase
+import com.bunbeauty.core.domain.addition.GetAdditionPriorityUseCaseImpl
+import com.bunbeauty.core.domain.addition.GetPriceOfSelectedAdditionsUseCase
 import org.koin.dsl.module
 
 internal fun additionUseCaseModule() =

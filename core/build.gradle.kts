@@ -4,6 +4,9 @@ plugins {
     alias(libs.plugins.multiplatform)
     alias(libs.plugins.cocoa)
     alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.compose)
+    alias(libs.plugins.compose.compiler)
 }
 
 @OptIn(org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi::class)
@@ -27,11 +30,22 @@ kotlin {
             isStatic = true
         }
     }
-    
+
     sourceSets {
         val commonMain by getting {
             dependencies {
+                implementation(project(":designsystem"))
+
                 implementation(libs.koin.core)
+                implementation(libs.kotlinx.coroutines.core)
+                implementation(libs.kotlinx.serialization.json)
+                implementation(libs.kotlinx.datetime)
+                implementation(libs.bundles.lifecycle)
+
+                implementation(compose.components.resources)
+                implementation(compose.foundation)
+                implementation(compose.material3)
+
             }
         }
         val commonTest by getting {

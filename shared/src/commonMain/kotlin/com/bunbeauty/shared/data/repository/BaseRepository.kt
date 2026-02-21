@@ -1,7 +1,7 @@
 package com.bunbeauty.shared.data.repository
 
-import com.bunbeauty.shared.data.network.ApiError
-import com.bunbeauty.shared.data.network.ApiResult
+import com.bunbeauty.core.ApiError
+import com.bunbeauty.core.ApiResult
 import com.bunbeauty.shared.data.network.model.ListServer
 
 abstract class BaseRepository {
@@ -14,7 +14,7 @@ abstract class BaseRepository {
         when (this) {
             is ApiResult.Success -> {
                 data?.let {
-                    onSuccess(data)
+                    onSuccess(it)
                 } ?: onError?.invoke(ApiError.DATA_IS_NULL)
             }
             is ApiResult.Error -> {
@@ -29,7 +29,7 @@ abstract class BaseRepository {
         when (this) {
             is ApiResult.Success -> {
                 data?.let {
-                    onSuccess(data.results)
+                    onSuccess(it.results)
                 } ?: onError(ApiError.DATA_IS_NULL)
             }
             is ApiResult.Error -> {
