@@ -8,17 +8,8 @@ import com.bunbeauty.core.domain.city.GetCityListUseCase
 import com.bunbeauty.core.domain.city.ObserveSelectedCityUseCase
 import com.bunbeauty.core.domain.city.SaveSelectedCityUseCase
 import com.bunbeauty.core.domain.settings.ObserveSettingsUseCase
-import com.bunbeauty.core.domain.settings.UpdateEmailUseCase
 import com.bunbeauty.core.domain.user.IUserInteractor
 import com.bunbeauty.core.extension.launchSafe
-import com.bunbeauty.shared.domain.feature.city.GetCityListUseCase
-import com.bunbeauty.shared.domain.feature.city.ObserveSelectedCityUseCase
-import com.bunbeauty.shared.domain.feature.city.SaveSelectedCityUseCase
-import com.bunbeauty.shared.domain.feature.settings.ObserveSettingsUseCase
-import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
-import com.bunbeauty.shared.domain.use_case.DisableUserUseCase
-import com.bunbeauty.shared.extension.launchSafe
-import com.bunbeauty.shared.presentation.base.SharedStateViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.flatMapLatest

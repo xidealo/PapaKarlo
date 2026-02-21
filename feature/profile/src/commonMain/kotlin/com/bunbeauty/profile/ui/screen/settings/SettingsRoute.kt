@@ -24,7 +24,6 @@ import com.bunbeauty.designsystem.ui.screen.LoadingScreen
 import com.bunbeauty.profile.presentation.settings.SettingsState
 import com.bunbeauty.profile.presentation.settings.SettingsViewModel
 import com.bunbeauty.profile.ui.screen.city.screen.changecity.CityListBottomSheetScreen
-import com.bunbeauty.shared.ui.screen.profile.screen.disableuser.DisableUserBottomSheetScreen
 import com.bunbeauty.profile.ui.screen.logout.LogoutBottomSheetScreen
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
@@ -34,7 +33,6 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import papakarlo.designsystem.generated.resources.Res
 import papakarlo.designsystem.generated.resources.action_logout
-import papakarlo.shared.generated.resources.action_settings_delete
 import papakarlo.designsystem.generated.resources.common_city
 import papakarlo.designsystem.generated.resources.error_common_data_loading
 import papakarlo.designsystem.generated.resources.error_something_went_wrong
