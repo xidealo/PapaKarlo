@@ -1,5 +1,7 @@
 package com.bunbeauty.order.ui
 
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
 import androidx.compose.foundation.layout.Column
@@ -230,7 +232,15 @@ private fun ConsumerCartSuccessScreen(
                 key = { cartProductItem -> cartProductItem.key },
                 span = { _ -> GridItemSpan(maxLineSpan) },
             ) { cartProductItem ->
-                FoodDeliveryItem(needDivider = !cartProductItem.isLast) {
+                FoodDeliveryItem(
+                    modifier =
+                        Modifier
+                            .animateItem()
+                            .animateContentSize(
+                                animationSpec = tween(500),
+                            ),
+                    needDivider = !cartProductItem.isLast,
+                ) {
                     CartProductItem(
                         cartProductItem = cartProductItem,
                         onCountIncreased = {

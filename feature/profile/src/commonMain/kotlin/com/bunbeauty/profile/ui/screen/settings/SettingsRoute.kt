@@ -10,11 +10,13 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.bunbeauty.designsystem.model.CityUI
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.designsystem.ui.element.button.MainButton
+import com.bunbeauty.designsystem.ui.element.button.SecondaryButton
 import com.bunbeauty.designsystem.ui.element.card.NavigationCardWithDivider
 import com.bunbeauty.designsystem.ui.element.card.TextCardWithDivider
 import com.bunbeauty.designsystem.ui.screen.ErrorScreen
@@ -113,6 +115,10 @@ fun SettingsState.DataState.mapState(): SettingsViewState =
                             )
                         }.toPersistentList(),
             ),
+        disableUserBottomSheetUI =
+            SettingsViewState.DisableUserBottomSheetUI(
+                isShown = isShowDisableUserBottomSheet,
+            ),
     )
 
 @Composable
@@ -181,6 +187,10 @@ fun SettingsScreen(
                     cityListBottomSheetUI = viewState.cityListBottomSheetUI,
                     onAction = onAction,
                 )
+                DisableUserBottomSheetScreen(
+                    disableUserBottomSheetUI = viewState.disableUserBottomSheetUI,
+                    onAction = onAction,
+                )
             }
 
             SettingsViewState.State.Error ->
@@ -218,6 +228,15 @@ fun SettingsScreenSuccess(
             label = stringResource(Res.string.common_city),
             value = settingsState.selectedCityName,
         )
+
+        SecondaryButton(
+            modifier = Modifier.padding(top = 16.dp),
+            textStringId = Res.string.action_settings_delete,
+            onClick = {
+                onAction(SettingsState.Action.DisableUser)
+            },
+            elevated = false,
+        )
     }
 }
 
@@ -231,6 +250,10 @@ val previewSettingsViewState =
             SettingsViewState.CityListBottomSheetUI(
                 isShown = false,
                 cityListUI = persistentListOf(),
+            ),
+        disableUserBottomSheetUI =
+            SettingsViewState.DisableUserBottomSheetUI(
+                isShown = false,
             ),
     )
 

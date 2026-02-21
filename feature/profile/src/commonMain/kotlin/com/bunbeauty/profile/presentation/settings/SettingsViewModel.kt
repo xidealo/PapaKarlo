@@ -8,7 +8,6 @@ import com.bunbeauty.core.domain.city.GetCityListUseCase
 import com.bunbeauty.core.domain.city.ObserveSelectedCityUseCase
 import com.bunbeauty.core.domain.city.SaveSelectedCityUseCase
 import com.bunbeauty.core.domain.settings.ObserveSettingsUseCase
-import com.bunbeauty.core.domain.settings.UpdateEmailUseCase
 import com.bunbeauty.core.domain.user.IUserInteractor
 import com.bunbeauty.core.extension.launchSafe
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -21,7 +20,6 @@ import kotlinx.coroutines.launch
 class SettingsViewModel(
     private val observeSettingsUseCase: ObserveSettingsUseCase,
     private val observeSelectedCityUseCase: ObserveSelectedCityUseCase,
-    private val updateEmailUseCase: UpdateEmailUseCase,
     private val getCityListUseCase: GetCityListUseCase,
     private val saveSelectedCityUseCase: SaveSelectedCityUseCase,
     private val disableUserUseCase: DisableUserUseCase,
@@ -51,6 +49,9 @@ class SettingsViewModel(
             SettingsState.Action.CloseLogoutBottomSheet -> onCloseLogoutClicked()
             is SettingsState.Action.OnCitySelected -> onCitySelected(action.cityUuid)
             SettingsState.Action.CloseCityListBottomSheet -> onCloseCityListBottomSheetClicked()
+            SettingsState.Action.DisableUser -> onDisableUserClicked()
+            SettingsState.Action.CloseDisableUserBottomSheet -> onCloseDisableUserClickedBS()
+            SettingsState.Action.DisableUserBottomSheet -> disableUser()
         }
     }
 
@@ -117,6 +118,7 @@ class SettingsViewModel(
                 setState {
                     copy(
                         isShowLogoutBottomSheet = false,
+                        state = SettingsState.DataState.State.LOADING,
                     )
                 }
                 observeSettingsJob?.cancel()
@@ -131,8 +133,29 @@ class SettingsViewModel(
         )
     }
 
+    fun onDisableUserClicked() {
+        setState {
+            copy(
+                isShowDisableUserBottomSheet = true,
+            )
+        }
+    }
+
+    fun onCloseDisableUserClickedBS() {
+        setState {
+            copy(
+                isShowDisableUserBottomSheet = false,
+            )
+        }
+    }
+
     fun disableUser() {
         sharedScope.launch {
+            setState {
+                copy(
+                    state = SettingsState.DataState.State.LOADING,
+                )
+            }
             disableUserUseCase()
             logout()
         }
