@@ -17,6 +17,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -70,34 +72,46 @@ class MainActivity :
                         },
                     )
 
-                    Spacer(
-                        modifier =
-                            Modifier
-                                .fillMaxWidth()
-                                .height(
-                                    with(LocalDensity.current) {
-                                        WindowInsets.navigationBars.getBottom(this).toDp()
-                                    },
-                                ).background(
-                                    Brush.verticalGradient(
-                                        colors =
-                                            listOf(
-                                                statusBarColor.value.copy(alpha = 0.1f),
-                                                statusBarColor.value.copy(alpha = 0.2f),
-                                                statusBarColor.value.copy(alpha = 0.3f),
-                                                statusBarColor.value.copy(alpha = 0.4f),
-                                                statusBarColor.value.copy(alpha = 0.6f),
-                                                statusBarColor.value.copy(alpha = 0.8f),
-                                            ),
-                                    ),
-                                ).blur(radius = 10.dp)
-                                .align(Alignment.BottomCenter),
+                    NavigationGradient(
+                        modifier = Modifier.align(Alignment.BottomCenter),
+                        statusBarColor = statusBarColor
                     )
                 }
             }
         }
 
         checkNotificationPermission()
+    }
+
+    @Composable
+    fun NavigationGradient(
+        modifier: Modifier,
+        statusBarColor: MutableState<Color>,
+    ) {
+        Spacer(
+            modifier =
+                modifier
+                    .fillMaxWidth()
+                    .height(
+                        with(LocalDensity.current) {
+                            WindowInsets.navigationBars.getBottom(this).toDp()
+                        },
+                    )
+                    .background(
+                        Brush.verticalGradient(
+                            colors =
+                                listOf(
+                                    statusBarColor.value.copy(alpha = 0.1f),
+                                    statusBarColor.value.copy(alpha = 0.2f),
+                                    statusBarColor.value.copy(alpha = 0.3f),
+                                    statusBarColor.value.copy(alpha = 0.4f),
+                                    statusBarColor.value.copy(alpha = 0.6f),
+                                    statusBarColor.value.copy(alpha = 0.8f),
+                                ),
+                        ),
+                    )
+                    .blur(radius = 10.dp),
+        )
     }
 
     override fun showInfoMessage(
@@ -109,10 +123,6 @@ class MainActivity :
 
     override fun showErrorMessage(text: String) {
         viewModel.showErrorMessage(text)
-    }
-
-    fun setStatusBarColor(color: Color) {
-        viewModel.setStatusColor(color = color)
     }
 
     private fun checkNotificationPermission() {

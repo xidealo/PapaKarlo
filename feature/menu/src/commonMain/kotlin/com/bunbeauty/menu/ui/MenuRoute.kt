@@ -312,11 +312,9 @@ private fun CategoryRow(
                 ),
         contentPadding =
             PaddingValues(
-                top =
-                    12.dp +
-                        with(LocalDensity.current) {
-                            WindowInsets.statusBars.getTop(this).toDp()
-                        },
+                top = 12.dp + with(LocalDensity.current) {
+                    WindowInsets.statusBars.getTop(this).toDp()
+                },
                 bottom = 16.dp,
                 start = 16.dp,
                 end = 16.dp,
@@ -483,7 +481,7 @@ private fun MenuColumn(
                 when (menuItemModel) {
                     is MenuItemUi.Discount,
                     is MenuItemUi.CategoryHeader,
-                    -> GridItemSpan(maxLineSpan)
+                        -> GridItemSpan(maxLineSpan)
 
                     else -> GridItemSpan(1)
                 }
@@ -509,7 +507,6 @@ private fun MenuColumn(
                             ),
                         modifier =
                             Modifier
-                                .padding(horizontal = 16.dp)
                                 .padding(top = 8.dp),
                     )
                 }
@@ -518,12 +515,7 @@ private fun MenuColumn(
                     Text(
                         modifier =
                             Modifier.padding(
-                                top =
-                                    if (index == 1) {
-                                        0.dp
-                                    } else {
-                                        16.dp
-                                    },
+                                top = 16.dp,
                             ),
                         text = menuItem.name,
                         style = FoodDeliveryTheme.typography.titleMedium.bold,

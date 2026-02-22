@@ -72,12 +72,12 @@ fun ProductDetailsRoute(
     sharedTransitionScope: SharedTransitionScope,
     animatedContentScope: AnimatedContentScope,
     viewModel: ProductDetailsViewModel = koinViewModel(),
-    back: () -> Unit,
     menuProductUuid: String,
     menuProductName: String,
     productDetailsOpenedFrom: ProductDetailsOpenedFrom,
     additionUuidList: List<String>,
     cartProductUuid: String?,
+    back: () -> Unit,
     showInfoMessage: (String, Int) -> Unit,
     showErrorMessage: (String) -> Unit,
 ) {
