@@ -52,7 +52,7 @@ fun MenuProductItem(
             shape = RoundedCornerShape(size = 24.dp),
         ) {
             Column(
-                modifier = Modifier.background(FoodDeliveryTheme.colors.mainColors.surfaceVariant)
+                modifier = Modifier.background(FoodDeliveryTheme.colors.mainColors.surfaceVariant),
             ) {
                 FoodDeliveryAsyncImage(
                     modifier =
@@ -70,8 +70,9 @@ fun MenuProductItem(
                     contentScale = ContentScale.FillWidth,
                 )
                 Column(
-                    modifier = Modifier
-                        .padding(FoodDeliveryTheme.dimensions.smallSpace)
+                    modifier =
+                        Modifier
+                            .padding(FoodDeliveryTheme.dimensions.smallSpace),
                 ) {
                     Row(
                         modifier =
