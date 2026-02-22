@@ -7,9 +7,11 @@ import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Snackbar
@@ -25,7 +27,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.ui.LocalBottomBarPadding
@@ -44,7 +47,7 @@ import papakarlo.designsystem.generated.resources.warning_no_order_available
 fun MainScreen(
     viewModel: MainViewModel = koinViewModel(),
     modifier: Modifier = Modifier,
-    localBottomBarPadding: Dp = 0.dp,
+    barColorCallback: (Color) -> Unit = {},
 ) {
     val mainState by viewModel.mainState.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -57,7 +60,13 @@ fun MainScreen(
 
     val color = FoodDeliveryTheme.colors.mainColors.surface
     val statusBarColor = remember { mutableStateOf(color) }
-    val localBottomBarPadding = remember { mutableStateOf(localBottomBarPadding) }
+
+    val localBottomBarPadding =
+        with(LocalDensity.current) {
+            WindowInsets.navigationBars.getBottom(this).toDp()
+        }
+
+    barColorCallback.invoke(statusBarColor.value)
 
     CompositionLocalProvider(
         LocalStatusBarColor provides statusBarColor,

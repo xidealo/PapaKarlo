@@ -7,12 +7,20 @@ import androidx.compose.animation.Crossfade
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.animation.SharedTransitionScope
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
@@ -22,6 +30,9 @@ import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -33,6 +44,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.bunbeauty.core.Constants.FAB_SNACKBAR_BOTTOM_PADDING
@@ -40,12 +53,16 @@ import com.bunbeauty.core.model.CategoryItem
 import com.bunbeauty.core.model.ProductDetailsOpenedFrom
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.theme.bold
+import com.bunbeauty.designsystem.theme.logoMedium
+import com.bunbeauty.designsystem.theme.medium
 import com.bunbeauty.designsystem.ui.LocalBottomBarPadding
-import com.bunbeauty.designsystem.ui.element.FoodDeliveryAction
+import com.bunbeauty.designsystem.ui.LocalStatusBarColor
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.designsystem.ui.element.TopCartUi
 import com.bunbeauty.designsystem.ui.element.button.FoodDeliveryExtendedFab
 import com.bunbeauty.designsystem.ui.element.card.BannerCard
+import com.bunbeauty.designsystem.ui.icon24
+import com.bunbeauty.designsystem.ui.ignoreHorizontalParentPadding
 import com.bunbeauty.designsystem.ui.screen.ErrorScreen
 import com.bunbeauty.menu.presentation.MenuViewModel
 import com.bunbeauty.menu.presentation.model.MenuDataState
@@ -55,11 +72,13 @@ import com.bunbeauty.menu.ui.state.MenuViewState
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.getString
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import papakarlo.designsystem.generated.resources.Res
 import papakarlo.designsystem.generated.resources.description_ic_discount
+import papakarlo.designsystem.generated.resources.description_login_logo
 import papakarlo.designsystem.generated.resources.error_consumer_cart_add_product
 import papakarlo.designsystem.generated.resources.error_menu_loading
 import papakarlo.designsystem.generated.resources.ic_cart_24
@@ -181,26 +200,8 @@ private fun MenuScreen(
     val menuLazyGridState = rememberLazyGridState()
 
     FoodDeliveryScaffold(
-        title = stringResource(Res.string.title_menu),
-        topActions =
-            persistentListOf(
-                FoodDeliveryAction(iconId = Res.drawable.ic_profile, onClick = goToProfile),
-            ),
         scrollableState = menuLazyGridState,
         backgroundColor = FoodDeliveryTheme.colors.mainColors.surface,
-        appBarContent = {
-            if (viewState.state is MenuDataState.State.Success) {
-                CategoryRow(
-                    modifier = Modifier.fillMaxWidth(),
-                    categoryItemList = viewState.categoryItemList,
-                    menuLazyGridState = menuLazyGridState,
-                    onCategoryClicked = onCategoryClicked,
-                    onStartAutoScroll = onStartAutoScroll,
-                    getMenuListPosition = getMenuListPosition,
-                    onStopAutoScroll = onStopAutoScroll,
-                )
-            }
-        },
         actionButton = {
             Crossfade(targetState = viewState.state) { state ->
                 if (state is MenuDataState.State.Success) {
@@ -209,9 +210,6 @@ private fun MenuScreen(
                         onClick = goToConsumerCart,
                         icon = Res.drawable.ic_cart_24,
                         iconBadge = viewState.topCartUi.count,
-                        modifier = Modifier.padding(
-                            bottom = LocalBottomBarPadding.current.value
-                        )
                     )
                 }
             }
@@ -228,6 +226,11 @@ private fun MenuScreen(
                     onMenuItemClicked = onMenuItemClicked,
                     sharedTransitionScope = sharedTransitionScope,
                     animatedContentScope = animatedContentScope,
+                    onCategoryClicked = onCategoryClicked,
+                    onStartAutoScroll = onStartAutoScroll,
+                    getMenuListPosition = getMenuListPosition,
+                    onStopAutoScroll = onStopAutoScroll,
+                    goToProfile = goToProfile,
                 )
             }
 
@@ -255,6 +258,11 @@ private fun MenuSuccessScreen(
     onMenuPositionChanged: (Int) -> Unit,
     onAddProductClicked: (menuProductUuid: String) -> Unit,
     onMenuItemClicked: (menuProductUuid: String) -> Unit,
+    onCategoryClicked: (categoryItem: CategoryItem) -> Unit,
+    onStartAutoScroll: () -> Unit,
+    getMenuListPosition: (categoryItem: CategoryItem) -> Int,
+    onStopAutoScroll: () -> Unit,
+    goToProfile: () -> Unit,
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
         val menuPosition by remember {
@@ -272,6 +280,11 @@ private fun MenuSuccessScreen(
             onMenuItemClicked = onMenuItemClicked,
             sharedTransitionScope = sharedTransitionScope,
             animatedContentScope = animatedContentScope,
+            onCategoryClicked = onCategoryClicked,
+            onStartAutoScroll = onStartAutoScroll,
+            getMenuListPosition = getMenuListPosition,
+            onStopAutoScroll = onStopAutoScroll,
+            goToProfile = goToProfile,
         )
     }
 }
@@ -289,11 +302,22 @@ private fun CategoryRow(
     val coroutineScope = rememberCoroutineScope()
     val categoryLazyListState = rememberLazyListState()
     LazyRow(
-        modifier = modifier,
+        modifier =
+            modifier
+                .background(
+                    color =
+                        LocalStatusBarColor.current.value.copy(
+                            alpha = 0.95f,
+                        ),
+                ),
         contentPadding =
             PaddingValues(
-                horizontal = FoodDeliveryTheme.dimensions.mediumSpace,
-                vertical = FoodDeliveryTheme.dimensions.smallSpace,
+                top = 12.dp + with(LocalDensity.current) {
+                    WindowInsets.statusBars.getTop(this).toDp()
+                },
+                bottom = 16.dp,
+                start = 16.dp,
+                end = 16.dp,
             ),
         state = categoryLazyListState,
         horizontalArrangement = spacedBy(8.dp),
@@ -341,17 +365,115 @@ private fun MenuColumn(
     menuLazyListState: LazyGridState,
     sharedTransitionScope: SharedTransitionScope,
     animatedContentScope: AnimatedVisibilityScope,
+    onCategoryClicked: (categoryItem: CategoryItem) -> Unit,
+    onStartAutoScroll: () -> Unit,
+    getMenuListPosition: (categoryItem: CategoryItem) -> Int,
+    onStopAutoScroll: () -> Unit,
     onAddProductClicked: (menuProductUuid: String) -> Unit,
     onMenuItemClicked: (menuProductUuid: String) -> Unit,
+    goToProfile: () -> Unit,
 ) {
     LazyVerticalGrid(
         modifier = Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 96.dp),
+        contentPadding =
+            PaddingValues(
+                bottom = 96.dp + LocalBottomBarPadding.current,
+                start = 16.dp,
+                end = 16.dp,
+            ),
         columns = GridCells.Fixed(2),
         horizontalArrangement = spacedBy(8.dp),
         state = menuLazyListState,
         userScrollEnabled = menu.userScrollEnabled,
     ) {
+        item(
+            key = "TopBar",
+            span = {
+                GridItemSpan(maxLineSpan)
+            },
+        ) {
+            Box(
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .ignoreHorizontalParentPadding(horizontal = 16.dp)
+                        .background(LocalStatusBarColor.current.value),
+            ) {
+                Box(
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .background(
+                                color = FoodDeliveryTheme.colors.mainColors.primary,
+                                shape =
+                                    RoundedCornerShape(
+                                        bottomEnd = 32.dp,
+                                        bottomStart = 32.dp,
+                                    ),
+                            ).statusBarsPadding(),
+                ) {
+                    Row(
+                        modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .padding(
+                                    start = 16.dp,
+                                    end = 8.dp,
+                                    top = 8.dp,
+                                ),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Text(
+                            modifier = Modifier.weight(1f),
+                            text = stringResource(Res.string.title_menu),
+                            maxLines = 1,
+                            style = FoodDeliveryTheme.typography.titleLarge.medium,
+                            overflow = TextOverflow.Ellipsis,
+                            color = FoodDeliveryTheme.colors.mainColors.onPrimary,
+                        )
+
+                        IconButton(
+                            onClick = goToProfile,
+                        ) {
+                            Icon(
+                                modifier = Modifier.icon24(),
+                                painter = painterResource(resource = Res.drawable.ic_profile),
+                                tint = FoodDeliveryTheme.colors.mainColors.onPrimary,
+                                contentDescription = null,
+                            )
+                        }
+                    }
+
+                    logoMedium?.let { logo ->
+                        Image(
+                            modifier =
+                                Modifier
+                                    .height(height = 96.dp)
+                                    .padding(vertical = 16.dp)
+                                    .align(Alignment.Center),
+                            painter = painterResource(resource = logo),
+                            contentDescription = stringResource(resource = Res.string.description_login_logo),
+                        )
+                    }
+                }
+            }
+        }
+
+        stickyHeader {
+            CategoryRow(
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .ignoreHorizontalParentPadding(horizontal = 16.dp),
+                categoryItemList = menu.categoryItemList,
+                menuLazyGridState = menuLazyListState,
+                onCategoryClicked = onCategoryClicked,
+                onStartAutoScroll = onStartAutoScroll,
+                getMenuListPosition = getMenuListPosition,
+                onStopAutoScroll = onStopAutoScroll,
+            )
+        }
+
         itemsIndexed(
             items = menu.menuItemList,
             key = { _, menuItemModel -> menuItemModel.key },
@@ -383,6 +505,9 @@ private fun MenuColumn(
                             stringResource(
                                 Res.string.description_ic_discount,
                             ),
+                        modifier =
+                            Modifier
+                                .padding(top = 8.dp),
                     )
                 }
 
@@ -390,12 +515,7 @@ private fun MenuColumn(
                     Text(
                         modifier =
                             Modifier.padding(
-                                top =
-                                    if (index == 0) {
-                                        0.dp
-                                    } else {
-                                        16.dp
-                                    },
+                                top = 16.dp,
                             ),
                         text = menuItem.name,
                         style = FoodDeliveryTheme.typography.titleMedium.bold,
@@ -407,7 +527,11 @@ private fun MenuColumn(
                     MenuProductItem(
                         sharedTransitionScope = sharedTransitionScope,
                         animatedContentScope = animatedContentScope,
-                        modifier = Modifier.padding(top = 8.dp),
+                        modifier =
+                            Modifier
+                                .padding(
+                                    top = 8.dp,
+                                ),
                         menuProductItem = menuItem,
                         onAddProductClick = onAddProductClicked,
                         onProductClick = onMenuItemClicked,

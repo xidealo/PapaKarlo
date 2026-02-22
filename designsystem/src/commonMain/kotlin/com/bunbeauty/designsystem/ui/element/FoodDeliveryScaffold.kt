@@ -32,7 +32,6 @@ fun FoodDeliveryScaffold(
     scrollableState: ScrollableState? = null,
     backgroundColor: Color = FoodDeliveryTheme.colors.mainColors.background,
     actionButton: @Composable () -> Unit = {},
-    appBarContent: @Composable () -> Unit = {},
     floatingActionButtonPosition: Alignment = Alignment.BottomCenter,
     content: (@Composable () -> Unit),
 ) {
@@ -56,7 +55,6 @@ fun FoodDeliveryScaffold(
                 backActionClick = backActionClick,
                 isScrolled = scrollableState?.canScrollBackward ?: scrollBehavior.isScrolled,
                 actions = topActions,
-                content = appBarContent,
             )
             content()
         }

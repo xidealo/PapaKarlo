@@ -293,7 +293,7 @@ private fun BottomPanel(
 ) {
     FoodDeliverySurface(
         modifier = modifier,
-        elevated = false
+        elevated = false,
     ) {
         Column(
             modifier = Modifier.padding(16.dp),

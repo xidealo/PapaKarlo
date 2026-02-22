@@ -299,7 +299,10 @@ private fun OrderInfoCard(
 
 @Composable
 private fun BottomAmountBar(orderDetailsViewState: OrderDetailsViewState) {
-    FoodDeliverySurface(modifier = Modifier.fillMaxWidth()) {
+    FoodDeliverySurface(
+        modifier = Modifier.fillMaxWidth(),
+        elevated = false,
+    ) {
         Column(
             modifier =
                 Modifier

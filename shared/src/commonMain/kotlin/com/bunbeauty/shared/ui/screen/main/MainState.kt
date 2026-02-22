@@ -11,7 +11,6 @@ data class MainState(
             isVisible = false,
         ),
     val paddingBottomSnackbar: Int = 0,
-    val statusBarColor: Color? = null,
     val eventList: List<Event> = emptyList(),
 ) {
     @Immutable
