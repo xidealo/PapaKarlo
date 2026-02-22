@@ -9,8 +9,6 @@ import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.snapping.SnapPosition
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,7 +18,6 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.statusBarsPadding
@@ -47,9 +44,10 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.layout
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.bunbeauty.core.Constants.FAB_SNACKBAR_BOTTOM_PADDING
@@ -233,7 +231,7 @@ private fun MenuScreen(
                     onStartAutoScroll = onStartAutoScroll,
                     getMenuListPosition = getMenuListPosition,
                     onStopAutoScroll = onStopAutoScroll,
-                    goToProfile = goToProfile
+                    goToProfile = goToProfile,
                 )
             }
 
@@ -287,7 +285,7 @@ private fun MenuSuccessScreen(
             onStartAutoScroll = onStartAutoScroll,
             getMenuListPosition = getMenuListPosition,
             onStopAutoScroll = onStopAutoScroll,
-            goToProfile = goToProfile
+            goToProfile = goToProfile,
         )
     }
 }
@@ -305,20 +303,25 @@ private fun CategoryRow(
     val coroutineScope = rememberCoroutineScope()
     val categoryLazyListState = rememberLazyListState()
     LazyRow(
-        modifier = modifier
-            .background(
-                color = LocalStatusBarColor.current.value.copy(
-                    alpha = 0.95f
-                )
+        modifier =
+            modifier
+                .background(
+                    color =
+                        LocalStatusBarColor.current.value.copy(
+                            alpha = 0.95f,
+                        ),
+                ),
+        contentPadding =
+            PaddingValues(
+                top =
+                    12.dp +
+                        with(LocalDensity.current) {
+                            WindowInsets.statusBars.getTop(this).toDp()
+                        },
+                bottom = 16.dp,
+                start = 16.dp,
+                end = 16.dp,
             ),
-        contentPadding = PaddingValues(
-            top = 12.dp + with(LocalDensity.current) {
-                WindowInsets.statusBars.getTop(this).toDp()
-            },
-            bottom = 16.dp,
-            start = 16.dp,
-            end = 16.dp
-        ),
         state = categoryLazyListState,
         horizontalArrangement = spacedBy(8.dp),
     ) {
@@ -375,9 +378,12 @@ private fun MenuColumn(
 ) {
     LazyVerticalGrid(
         modifier = Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(
-            bottom = 96.dp + LocalBottomBarPadding.current
-        ),
+        contentPadding =
+            PaddingValues(
+                bottom = 96.dp + LocalBottomBarPadding.current,
+                start = 16.dp,
+                end = 16.dp,
+            ),
         columns = GridCells.Fixed(2),
         horizontalArrangement = spacedBy(8.dp),
         state = menuLazyListState,
@@ -387,31 +393,38 @@ private fun MenuColumn(
             key = "TopBar",
             span = {
                 GridItemSpan(maxLineSpan)
-            }
+            },
         ) {
             Box(
-                modifier = Modifier.fillMaxWidth()
-                    .background(LocalStatusBarColor.current.value),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .ignoreHorizontalParentPadding(horizontal = 16.dp)
+                        .background(LocalStatusBarColor.current.value),
             ) {
                 Box(
-                    modifier = Modifier.fillMaxWidth()
-                        .background(
-                            color = FoodDeliveryTheme.colors.mainColors.primary,
-                            shape = RoundedCornerShape(
-                                bottomEnd = 32.dp,
-                                bottomStart = 32.dp
-                            )
-                        )
-                        .statusBarsPadding()
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .background(
+                                color = FoodDeliveryTheme.colors.mainColors.primary,
+                                shape =
+                                    RoundedCornerShape(
+                                        bottomEnd = 32.dp,
+                                        bottomStart = 32.dp,
+                                    ),
+                            ).statusBarsPadding(),
                 ) {
                     Row(
-                        modifier = Modifier.fillMaxWidth()
-                            .padding(
-                                start = 16.dp,
-                                end = 8.dp,
-                                top = 8.dp
-                            ),
-                        verticalAlignment = Alignment.CenterVertically
+                        modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .padding(
+                                    start = 16.dp,
+                                    end = 8.dp,
+                                    top = 8.dp,
+                                ),
+                        verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Text(
                             modifier = Modifier.weight(1f),
@@ -419,7 +432,7 @@ private fun MenuColumn(
                             maxLines = 1,
                             style = FoodDeliveryTheme.typography.titleLarge.medium,
                             overflow = TextOverflow.Ellipsis,
-                            color = FoodDeliveryTheme.colors.mainColors.onPrimary
+                            color = FoodDeliveryTheme.colors.mainColors.onPrimary,
                         )
 
                         IconButton(
@@ -436,22 +449,25 @@ private fun MenuColumn(
 
                     logoMedium?.let { logo ->
                         Image(
-                            modifier = Modifier
-                                .height(height = 96.dp)
-                                .padding(vertical = 16.dp)
-                                .align(Alignment.Center),
+                            modifier =
+                                Modifier
+                                    .height(height = 96.dp)
+                                    .padding(vertical = 16.dp)
+                                    .align(Alignment.Center),
                             painter = painterResource(resource = logo),
                             contentDescription = stringResource(resource = Res.string.description_login_logo),
                         )
                     }
                 }
-
             }
         }
 
         stickyHeader {
             CategoryRow(
-                modifier = Modifier.fillMaxWidth(),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .ignoreHorizontalParentPadding(horizontal = 16.dp),
                 categoryItemList = menu.categoryItemList,
                 menuLazyGridState = menuLazyListState,
                 onCategoryClicked = onCategoryClicked,
@@ -468,7 +484,7 @@ private fun MenuColumn(
                 when (menuItemModel) {
                     is MenuItemUi.Discount,
                     is MenuItemUi.CategoryHeader,
-                        -> GridItemSpan(maxLineSpan)
+                    -> GridItemSpan(maxLineSpan)
 
                     else -> GridItemSpan(1)
                 }
@@ -492,8 +508,10 @@ private fun MenuColumn(
                             stringResource(
                                 Res.string.description_ic_discount,
                             ),
-                        modifier = Modifier.padding(horizontal = 16.dp)
-                            .padding(top = 8.dp)
+                        modifier =
+                            Modifier
+                                .padding(horizontal = 16.dp)
+                                .padding(top = 8.dp),
                     )
                 }
 
@@ -502,12 +520,12 @@ private fun MenuColumn(
                         modifier =
                             Modifier.padding(
                                 top =
-                                    if (index == 0) {
+                                    if (index == 1) {
                                         0.dp
                                     } else {
                                         16.dp
                                     },
-                            ).padding(horizontal = 16.dp),
+                            ),
                         text = menuItem.name,
                         style = FoodDeliveryTheme.typography.titleMedium.bold,
                         color = FoodDeliveryTheme.colors.mainColors.onSurface,
@@ -518,10 +536,11 @@ private fun MenuColumn(
                     MenuProductItem(
                         sharedTransitionScope = sharedTransitionScope,
                         animatedContentScope = animatedContentScope,
-                        modifier = Modifier
-                            .padding(
-                                top = 8.dp,
-                            ),
+                        modifier =
+                            Modifier
+                                .padding(
+                                    top = 8.dp,
+                                ),
                         menuProductItem = menuItem,
                         onAddProductClick = onAddProductClicked,
                         onProductClick = onMenuItemClicked,
@@ -683,3 +702,12 @@ private fun MenuScreenErrorPreview() {
         }
     }
 }
+
+fun Modifier.ignoreHorizontalParentPadding(horizontal: Dp): Modifier =
+    this.layout { measurable, constraints ->
+        val overridenWidth = constraints.maxWidth + 2 * horizontal.roundToPx()
+        val placeable = measurable.measure(constraints.copy(maxWidth = overridenWidth))
+        layout(placeable.width, placeable.height) {
+            placeable.place(0, 0)
+        }
+    }

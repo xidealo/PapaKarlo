@@ -72,7 +72,7 @@ fun MenuProductItem(
                             Modifier.padding(
                                 top = FoodDeliveryTheme.dimensions.verySmallSpace,
                             ),
-                        verticalAlignment = Alignment.CenterVertically
+                        verticalAlignment = Alignment.CenterVertically,
                     ) {
                         menuProductItem.oldPrice?.let { oldPrice ->
                             Text(

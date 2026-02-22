@@ -46,10 +46,11 @@ fun CategoryItem(
         onClick = onClick,
         colors = cardColor,
         shape = RoundedCornerShape(16.dp),
-        border = BorderStroke(
-            width = 2.dp,
-            color = color,
-        ),
+        border =
+            BorderStroke(
+                width = 2.dp,
+                color = color,
+            ),
     ) {
         Text(
             modifier =

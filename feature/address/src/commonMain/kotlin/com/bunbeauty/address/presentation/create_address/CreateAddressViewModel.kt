@@ -56,6 +56,7 @@ class CreateAddressViewModel(
             is CreateAddress.Action.Init -> {
                 observeStreetChanges()
             }
+
             is CreateAddress.Action.StreetTextChange -> {
                 handleStreetTextChange(street = action.street)
             }
@@ -179,7 +180,8 @@ class CreateAddressViewModel(
 
     private fun handleSaveClick() {
         val streetSuggestion = dataState.value.selectedStreetSuggestion
-        val hasStreetError = streetSuggestion == null || streetSuggestion.value != dataState.value.street
+        val hasStreetError =
+            streetSuggestion == null || streetSuggestion.value != dataState.value.street
         val hasHouseError = dataState.value.house.isBlank()
         setState {
             copy(

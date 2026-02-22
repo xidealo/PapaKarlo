@@ -17,7 +17,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBars
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -49,9 +48,10 @@ class MainActivity :
         super.onCreate(savedInstanceState)
 
         enableEdgeToEdge(
-            navigationBarStyle = SystemBarStyle.dark(
-                scrim = android.graphics.Color.TRANSPARENT
-            )
+            navigationBarStyle =
+                SystemBarStyle.dark(
+                    scrim = android.graphics.Color.TRANSPARENT,
+                ),
         )
 
         setContent {
@@ -62,35 +62,36 @@ class MainActivity :
             ) {
                 Box(modifier = Modifier.fillMaxSize()) {
                     MainScreen(
-                        modifier = Modifier
-                            .imePadding(),
+                        modifier =
+                            Modifier
+                                .imePadding(),
                         barColorCallback = {
                             statusBarColor.value = it
                         },
                     )
 
                     Spacer(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(
-                                with(LocalDensity.current) {
-                                    WindowInsets.navigationBars.getBottom(this).toDp()
-                                }
-                            )
-                            .background(
-                                Brush.verticalGradient(
-                                    colors = listOf(
-                                        statusBarColor.value.copy(alpha = 0.1f),
-                                        statusBarColor.value.copy(alpha = 0.2f),
-                                        statusBarColor.value.copy(alpha = 0.3f),
-                                        statusBarColor.value.copy(alpha = 0.4f),
-                                        statusBarColor.value.copy(alpha = 0.6f),
-                                        statusBarColor.value.copy(alpha = 0.8f),
-                                    )
-                                )
-                            )
-                            .blur(radius = 10.dp)
-                            .align(Alignment.BottomCenter)
+                        modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .height(
+                                    with(LocalDensity.current) {
+                                        WindowInsets.navigationBars.getBottom(this).toDp()
+                                    },
+                                ).background(
+                                    Brush.verticalGradient(
+                                        colors =
+                                            listOf(
+                                                statusBarColor.value.copy(alpha = 0.1f),
+                                                statusBarColor.value.copy(alpha = 0.2f),
+                                                statusBarColor.value.copy(alpha = 0.3f),
+                                                statusBarColor.value.copy(alpha = 0.4f),
+                                                statusBarColor.value.copy(alpha = 0.6f),
+                                                statusBarColor.value.copy(alpha = 0.8f),
+                                            ),
+                                    ),
+                                ).blur(radius = 10.dp)
+                                .align(Alignment.BottomCenter),
                     )
                 }
             }

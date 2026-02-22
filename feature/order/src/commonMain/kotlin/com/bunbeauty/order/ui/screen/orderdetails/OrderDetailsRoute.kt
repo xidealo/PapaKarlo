@@ -301,7 +301,7 @@ private fun OrderInfoCard(
 private fun BottomAmountBar(orderDetailsViewState: OrderDetailsViewState) {
     FoodDeliverySurface(
         modifier = Modifier.fillMaxWidth(),
-        elevated = false
+        elevated = false,
     ) {
         Column(
             modifier =
@@ -467,12 +467,12 @@ private fun getOrderInfo(): OrderDetailsViewState.OrderInfo =
         deferredTime = "10:30",
         address =
             "" +
-                    "ул. Лука" +
-                    "2" +
-                    "10" +
-                    "1" +
-                    "3" +
-                    "тест",
+                "ул. Лука" +
+                "2" +
+                "10" +
+                "1" +
+                "3" +
+                "тест",
         comment = "давай кушать",
         pickupMethod = "доставка",
         statusName = "Готовится",

@@ -528,7 +528,7 @@ private fun ProductDetailsSuccessScreenPreview() {
                                     newPrice = "280 ₽",
                                     description =
                                         "Сочная котлетка, сыр Чедр, маринованный огурчик, помидор, " +
-                                                "красный лук, салат, фирменный соус, булочка с кунжутом",
+                                            "красный лук, салат, фирменный соус, булочка с кунжутом",
                                     additionList =
                                         persistentListOf(
                                             AdditionItem.AdditionHeaderItem(
