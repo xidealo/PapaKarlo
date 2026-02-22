@@ -7,7 +7,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
@@ -27,7 +29,18 @@ fun MenuLoadingScreen() {
         modifier = Modifier.fillMaxSize(),
     ) {
         Column {
+            Shimmer(
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .height(height = 118.dp)
+                        .clip(
+                            shape = RoundedCornerShape(bottomEnd = 32.dp, bottomStart = 32.dp),
+                        ),
+            )
+
             LazyRow(
+                modifier = Modifier.padding(top = 40.dp),
                 horizontalArrangement = spacedBy(8.dp),
                 contentPadding = PaddingValues(horizontal = 16.dp),
             ) {
@@ -86,7 +99,8 @@ fun MenuLoadingScreen() {
             Shimmer(
                 modifier =
                     Modifier
-                        .padding(bottom = 26.dp, end = 16.dp)
+                        .padding(bottom = 16.dp, end = 16.dp)
+                        .navigationBarsPadding()
                         .width(width = 106.dp)
                         .height(height = 54.dp)
                         .clip(shape = RoundedCornerShape(16.dp)),
