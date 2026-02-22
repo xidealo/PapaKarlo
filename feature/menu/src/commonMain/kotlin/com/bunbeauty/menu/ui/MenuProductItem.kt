@@ -5,6 +5,7 @@ import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.animation.SharedTransitionScope
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -50,7 +51,9 @@ fun MenuProductItem(
             },
             shape = RoundedCornerShape(size = 24.dp),
         ) {
-            Column {
+            Column(
+                modifier = Modifier.background(FoodDeliveryTheme.colors.mainColors.surfaceVariant)
+            ) {
                 FoodDeliveryAsyncImage(
                     modifier =
                         Modifier
@@ -66,7 +69,10 @@ fun MenuProductItem(
                     contentDescription = stringResource(Res.string.description_product),
                     contentScale = ContentScale.FillWidth,
                 )
-                Column(modifier = Modifier.padding(FoodDeliveryTheme.dimensions.smallSpace)) {
+                Column(
+                    modifier = Modifier
+                        .padding(FoodDeliveryTheme.dimensions.smallSpace)
+                ) {
                     Row(
                         modifier =
                             Modifier.padding(
