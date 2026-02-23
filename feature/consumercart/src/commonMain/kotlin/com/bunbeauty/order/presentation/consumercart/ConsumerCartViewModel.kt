@@ -44,17 +44,18 @@ class ConsumerCartViewModel(
     private val analyticService: AnalyticService,
     private val isOrderAvailableUseCase: IsOrderAvailableUseCase,
 ) : SharedStateViewModel<ConsumerCart.DataState, ConsumerCart.Action, ConsumerCart.Event>(
-    initDataState = ConsumerCart.DataState(
-        state = ConsumerCart.DataState.State.LOADING,
-        motivation = null,
-        cartProductItemList = emptyList(),
-        recommendationList = emptyList(),
-        discount = null,
-        oldTotalCost = null,
-        newTotalCost = "",
-        orderAvailable = false,
-    ),
-) {
+        initDataState =
+            ConsumerCart.DataState(
+                state = ConsumerCart.DataState.State.LOADING,
+                motivation = null,
+                cartProductItemList = emptyList(),
+                recommendationList = emptyList(),
+                discount = null,
+                oldTotalCost = null,
+                newTotalCost = "",
+                orderAvailable = false,
+            ),
+    ) {
     private var observeConsumerCartJob: Job? = null
 
     override fun reduce(

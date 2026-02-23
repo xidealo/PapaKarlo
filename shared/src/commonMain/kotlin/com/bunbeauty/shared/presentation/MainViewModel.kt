@@ -56,13 +56,6 @@ class MainViewModel(
         }
     }
 
-    fun setStatusColor(color: Color) {
-        println(color)
-        mutableMainState.update { state ->
-            state.copy(statusBarColor = color)
-        }
-    }
-
     private fun showMessage(
         text: String,
         type: FoodDeliveryMessageType,

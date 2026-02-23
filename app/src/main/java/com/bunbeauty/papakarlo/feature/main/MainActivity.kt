@@ -3,15 +3,31 @@ package com.bunbeauty.papakarlo.feature.main
 import android.Manifest
 import android.os.Build
 import android.os.Bundle
+import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
-import androidx.compose.foundation.layout.navigationBarsPadding
-import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.blur
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.dp
 import androidx.core.app.NotificationManagerCompat
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.BuildConfig
@@ -31,25 +47,71 @@ class MainActivity :
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        enableEdgeToEdge()
-        setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
 
+        enableEdgeToEdge(
+            navigationBarStyle =
+                SystemBarStyle.dark(
+                    scrim = android.graphics.Color.TRANSPARENT,
+                ),
+        )
+
         setContent {
+            val color = FoodDeliveryTheme.colors.mainColors.surface
+            val statusBarColor = remember { mutableStateOf(color) }
             FoodDeliveryTheme(
                 flavor = BuildConfig.FLAVOR,
             ) {
-                MainScreen(
-                    modifier =
-                        Modifier
-                            .statusBarsPadding()
-                            .navigationBarsPadding()
-                            .imePadding(),
-                )
+                Box(modifier = Modifier.fillMaxSize()) {
+                    MainScreen(
+                        modifier =
+                            Modifier
+                                .imePadding(),
+                        barColorCallback = {
+                            statusBarColor.value = it
+                        },
+                    )
+
+                    NavigationGradient(
+                        modifier = Modifier.align(Alignment.BottomCenter),
+                        statusBarColor = statusBarColor
+                    )
+                }
             }
         }
 
         checkNotificationPermission()
+    }
+
+    @Composable
+    fun NavigationGradient(
+        modifier: Modifier,
+        statusBarColor: MutableState<Color>,
+    ) {
+        Spacer(
+            modifier =
+                modifier
+                    .fillMaxWidth()
+                    .height(
+                        with(LocalDensity.current) {
+                            WindowInsets.navigationBars.getBottom(this).toDp()
+                        },
+                    )
+                    .background(
+                        Brush.verticalGradient(
+                            colors =
+                                listOf(
+                                    statusBarColor.value.copy(alpha = 0.1f),
+                                    statusBarColor.value.copy(alpha = 0.2f),
+                                    statusBarColor.value.copy(alpha = 0.3f),
+                                    statusBarColor.value.copy(alpha = 0.4f),
+                                    statusBarColor.value.copy(alpha = 0.6f),
+                                    statusBarColor.value.copy(alpha = 0.8f),
+                                ),
+                        ),
+                    )
+                    .blur(radius = 10.dp),
+        )
     }
 
     override fun showInfoMessage(
@@ -61,10 +123,6 @@ class MainActivity :
 
     override fun showErrorMessage(text: String) {
         viewModel.showErrorMessage(text)
-    }
-
-    fun setStatusBarColor(color: Color) {
-        viewModel.setStatusColor(color = color)
     }
 
     private fun checkNotificationPermission() {
