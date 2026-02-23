@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.bunbeauty.designsystem.model.CityUI
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
+import com.bunbeauty.designsystem.ui.LocalBottomBarPadding
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.designsystem.ui.element.button.MainButton
 import com.bunbeauty.designsystem.ui.element.button.SecondaryButton
@@ -165,7 +166,8 @@ fun SettingsScreen(
             MainButton(
                 modifier =
                     Modifier
-                        .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
+                        .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace)
+                        .padding(bottom = LocalBottomBarPadding.current),
                 text = stringResource(resource = Res.string.action_logout),
                 onClick = {
                     onAction(SettingsState.Action.OnLogoutClicked)

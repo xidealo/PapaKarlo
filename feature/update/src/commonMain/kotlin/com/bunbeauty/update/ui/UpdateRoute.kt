@@ -200,7 +200,7 @@ private fun UpdateScreenSuccess(
             modifier =
                 Modifier
                     .padding(horizontal = 16.dp)
-                    .padding(bottom = LocalBottomBarPadding.current),
+                    .padding(bottom = LocalBottomBarPadding.current + 16.dp),
             textStringId = Res.string.action_update_update,
         ) {
             viewState.link?.linkValue?.let { link ->
