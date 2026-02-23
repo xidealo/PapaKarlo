@@ -73,15 +73,8 @@ fun FoodDeliveryTextFieldWithMenu(
                     suggestionsList.forEach { suggestion ->
                         DropdownMenuItem(
                             text = {
-                                val text =
-                                    buildAnnotatedString {
-                                        append(suggestion.value)
-                                        withStyle(SpanStyle(FoodDeliveryTheme.colors.mainColors.onSurfaceVariant)) {
-                                            append(suggestion.postfix)
-                                        }
-                                    }
                                 Text(
-                                    text = text,
+                                    text = suggestion.value,
                                     color = FoodDeliveryTheme.colors.mainColors.onSurface,
                                     style = FoodDeliveryTheme.typography.bodyMedium,
                                 )

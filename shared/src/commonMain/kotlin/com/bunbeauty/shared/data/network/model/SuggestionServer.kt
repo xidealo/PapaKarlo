@@ -7,8 +7,6 @@ import kotlinx.serialization.Serializable
 class SuggestionServer(
     @SerialName("fiasId")
     val fiasId: String,
-    @SerialName("street")
-    val street: String,
-    @SerialName("details")
-    val details: String,
+    @SerialName("address")
+    val address: String,
 )

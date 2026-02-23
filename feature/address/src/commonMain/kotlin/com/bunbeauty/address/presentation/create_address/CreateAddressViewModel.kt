@@ -204,8 +204,7 @@ class CreateAddressViewModel(
                         street =
                             Suggestion(
                                 fiasId = streetSuggestion.id,
-                                street = streetSuggestion.value,
-                                details = null,
+                                address = streetSuggestion.value,
                             ),
                         house = dataState.value.house,
                         flat = dataState.value.flat,
@@ -288,10 +287,6 @@ class CreateAddressViewModel(
     private fun mapSuggestion(suggestion: Suggestion): SuggestionUi =
         SuggestionUi(
             id = suggestion.fiasId,
-            value = suggestion.street,
-            postfix =
-                suggestion.details?.let { details ->
-                    ", $details"
-                },
+            value = suggestion.address,
         )
 }
