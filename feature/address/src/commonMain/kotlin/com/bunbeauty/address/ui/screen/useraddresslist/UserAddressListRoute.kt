@@ -19,6 +19,7 @@ import com.bunbeauty.address.presentation.user_address_list.UserAddressListViewM
 import com.bunbeauty.core.extension.toUserAddressItem
 import com.bunbeauty.core.model.UserAddressItem
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
+import com.bunbeauty.designsystem.ui.LocalBottomBarPadding
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryHorizontalDivider
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.designsystem.ui.element.button.MainButton
@@ -107,7 +108,8 @@ private fun UserAddressListScreen(
                 MainButton(
                     modifier =
                         Modifier
-                            .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
+                            .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace)
+                            .padding(bottom = LocalBottomBarPadding.current),
                     textStringId = Res.string.action_add_addresses,
                     onClick = { onAction(UserAddressListDataState.Action.OnClickedCreateAddress) },
                 )

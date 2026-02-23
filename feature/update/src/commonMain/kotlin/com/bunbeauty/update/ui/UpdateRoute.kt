@@ -25,6 +25,7 @@ import com.bunbeauty.core.model.link.Link
 import com.bunbeauty.core.model.link.LinkType
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.theme.bold
+import com.bunbeauty.designsystem.ui.LocalBottomBarPadding
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.designsystem.ui.element.button.MainButton
 import com.bunbeauty.designsystem.ui.screen.ErrorScreen
@@ -199,7 +200,7 @@ private fun UpdateScreenSuccess(
             modifier =
                 Modifier
                     .padding(horizontal = 16.dp)
-                    .padding(bottom = 16.dp),
+                    .padding(bottom = LocalBottomBarPadding.current),
             textStringId = Res.string.action_update_update,
         ) {
             viewState.link?.linkValue?.let { link ->

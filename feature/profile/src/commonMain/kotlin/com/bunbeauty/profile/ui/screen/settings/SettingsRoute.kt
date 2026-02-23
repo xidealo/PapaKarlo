@@ -33,6 +33,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import papakarlo.designsystem.generated.resources.Res
 import papakarlo.designsystem.generated.resources.action_logout
+import papakarlo.designsystem.generated.resources.action_settings_delete
 import papakarlo.designsystem.generated.resources.common_city
 import papakarlo.designsystem.generated.resources.error_common_data_loading
 import papakarlo.designsystem.generated.resources.error_something_went_wrong
