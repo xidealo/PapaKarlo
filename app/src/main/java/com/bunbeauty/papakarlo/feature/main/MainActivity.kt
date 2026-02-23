@@ -74,7 +74,7 @@ class MainActivity :
 
                     NavigationGradient(
                         modifier = Modifier.align(Alignment.BottomCenter),
-                        statusBarColor = statusBarColor
+                        statusBarColor = statusBarColor,
                     )
                 }
             }
@@ -96,8 +96,7 @@ class MainActivity :
                         with(LocalDensity.current) {
                             WindowInsets.navigationBars.getBottom(this).toDp()
                         },
-                    )
-                    .background(
+                    ).background(
                         Brush.verticalGradient(
                             colors =
                                 listOf(
@@ -109,8 +108,7 @@ class MainActivity :
                                     statusBarColor.value.copy(alpha = 0.8f),
                                 ),
                         ),
-                    )
-                    .blur(radius = 10.dp),
+                    ).blur(radius = 10.dp),
         )
     }
 

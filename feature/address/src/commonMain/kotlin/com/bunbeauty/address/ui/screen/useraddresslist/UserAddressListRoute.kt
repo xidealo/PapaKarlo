@@ -149,7 +149,9 @@ private fun UserAddressListSuccessScreen(userAddressItems: List<UserAddressItem>
         modifier = Modifier.fillMaxSize(),
         contentPadding =
             PaddingValues(
-                bottom = FoodDeliveryTheme.dimensions.scrollScreenBottomSpace,
+                bottom =
+                    FoodDeliveryTheme.dimensions.scrollScreenBottomSpace +
+                        LocalBottomBarPadding.current,
             ),
         verticalArrangement = spacedBy(8.dp),
     ) {

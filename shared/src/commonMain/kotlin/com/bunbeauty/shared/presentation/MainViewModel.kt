@@ -1,6 +1,5 @@
 package com.bunbeauty.shared.presentation
 
-import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.core.Logger

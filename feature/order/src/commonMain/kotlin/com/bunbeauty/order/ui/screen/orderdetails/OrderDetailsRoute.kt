@@ -27,6 +27,7 @@ import com.bunbeauty.core.model.order.OrderStatus
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.theme.bold
 import com.bunbeauty.designsystem.theme.medium
+import com.bunbeauty.designsystem.ui.LocalBottomBarPadding
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.designsystem.ui.element.card.DiscountCard
 import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryCard
@@ -153,7 +154,10 @@ private fun OrderDetailsSuccessScreen(state: OrderDetailsViewState) {
         ) {
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),
-                contentPadding = PaddingValues(bottom = FoodDeliveryTheme.dimensions.screenContentSpace),
+                contentPadding =
+                    PaddingValues(
+                        bottom = FoodDeliveryTheme.dimensions.screenContentSpace + LocalBottomBarPadding.current,
+                    ),
                 verticalArrangement = spacedBy(8.dp),
             ) {
                 item(key = "OrderStatusBar") {

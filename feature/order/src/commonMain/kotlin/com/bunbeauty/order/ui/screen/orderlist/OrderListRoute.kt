@@ -18,6 +18,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.bunbeauty.core.extension.getOrderColor
 import com.bunbeauty.core.model.order.OrderStatus
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
+import com.bunbeauty.designsystem.ui.LocalBottomBarPadding
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.designsystem.ui.screen.EmptyScreen
 import com.bunbeauty.designsystem.ui.screen.ErrorScreen
@@ -150,7 +151,13 @@ private fun OrderListScreenSuccess(
     ) {
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
-            contentPadding = PaddingValues(FoodDeliveryTheme.dimensions.mediumSpace),
+            contentPadding =
+                PaddingValues(
+                    top = 16.dp,
+                    start = 16.dp,
+                    end = 16.dp,
+                    bottom = LocalBottomBarPadding.current + 8.dp,
+                ),
             verticalArrangement = spacedBy(8.dp),
         ) {
             items(orderItemList) { orderItem ->
