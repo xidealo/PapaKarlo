@@ -19,6 +19,7 @@ import com.bunbeauty.address.presentation.user_address_list.UserAddressListViewM
 import com.bunbeauty.core.extension.toUserAddressItem
 import com.bunbeauty.core.model.UserAddressItem
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
+import com.bunbeauty.designsystem.ui.LocalBottomBarPadding
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryHorizontalDivider
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.designsystem.ui.element.button.MainButton
@@ -147,7 +148,9 @@ private fun UserAddressListSuccessScreen(userAddressItems: List<UserAddressItem>
         modifier = Modifier.fillMaxSize(),
         contentPadding =
             PaddingValues(
-                bottom = FoodDeliveryTheme.dimensions.scrollScreenBottomSpace,
+                bottom =
+                    FoodDeliveryTheme.dimensions.scrollScreenBottomSpace +
+                        LocalBottomBarPadding.current,
             ),
         verticalArrangement = spacedBy(8.dp),
     ) {

@@ -312,9 +312,11 @@ private fun CategoryRow(
                 ),
         contentPadding =
             PaddingValues(
-                top = 12.dp + with(LocalDensity.current) {
-                    WindowInsets.statusBars.getTop(this).toDp()
-                },
+                top =
+                    12.dp +
+                        with(LocalDensity.current) {
+                            WindowInsets.statusBars.getTop(this).toDp()
+                        },
                 bottom = 16.dp,
                 start = 16.dp,
                 end = 16.dp,
@@ -481,7 +483,7 @@ private fun MenuColumn(
                 when (menuItemModel) {
                     is MenuItemUi.Discount,
                     is MenuItemUi.CategoryHeader,
-                        -> GridItemSpan(maxLineSpan)
+                    -> GridItemSpan(maxLineSpan)
 
                     else -> GridItemSpan(1)
                 }

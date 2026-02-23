@@ -24,6 +24,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.bunbeauty.address.presentation.create_address.CreateAddress
 import com.bunbeauty.address.presentation.create_address.CreateAddressViewModel
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
+import com.bunbeauty.designsystem.ui.LocalBottomBarPadding
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.designsystem.ui.element.button.LoadingButton
 import com.bunbeauty.designsystem.ui.element.textfield.FoodDeliveryTextField
@@ -222,7 +223,7 @@ private fun CreateAddressScreen(
                 modifier =
                     Modifier
                         .fillMaxWidth()
-                        .padding(bottom = 70.dp),
+                        .padding(bottom = 70.dp + LocalBottomBarPadding.current),
                 value = viewState.comment,
                 labelStringId = Res.string.hint_create_address_comment,
                 keyboardOptions =
