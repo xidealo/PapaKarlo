@@ -21,6 +21,7 @@ import com.bunbeauty.auth.presentation.confirm.Confirm
 import com.bunbeauty.auth.presentation.confirm.ConfirmViewModel
 import com.bunbeauty.core.model.SuccessLoginDirection
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
+import com.bunbeauty.designsystem.ui.LocalBottomBarPadding
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.designsystem.ui.element.button.MainButton
 import com.bunbeauty.designsystem.ui.screen.LoadingScreen
@@ -101,7 +102,8 @@ fun ConfirmScreen(
                 MainButton(
                     modifier =
                         Modifier
-                            .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
+                            .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace)
+                            .padding(bottom = LocalBottomBarPadding.current),
                     text = buttonText,
                     enabled = viewState.isResendEnable,
                 ) {

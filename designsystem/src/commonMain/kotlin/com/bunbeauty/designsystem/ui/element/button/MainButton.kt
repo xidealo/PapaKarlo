@@ -26,8 +26,7 @@ fun MainButton(
 ) {
     Button(
         modifier = modifier
-            .fillMaxWidth()
-            .padding(bottom = LocalBottomBarPadding.current),
+            .fillMaxWidth(),
         onClick = onClick,
         colors = FoodDeliveryButtonDefaults.mainButtonColors(enabled = enabled),
         shape = FoodDeliveryButtonDefaults.buttonShape,

@@ -108,7 +108,8 @@ private fun UserAddressListScreen(
                 MainButton(
                     modifier =
                         Modifier
-                            .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
+                            .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace)
+                            .padding(bottom = LocalBottomBarPadding.current),
                     textStringId = Res.string.action_add_addresses,
                     onClick = { onAction(UserAddressListDataState.Action.OnClickedCreateAddress) },
                 )

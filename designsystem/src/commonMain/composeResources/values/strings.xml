@@ -255,6 +255,8 @@
     <!-- LOGOUT -->
     <string name="title_logout">Выйти из профиля?</string>
     <string name="action_logout">Выйти</string>
+    <string name="msg_settings_delete">Вы уверены, что хотите удалить аккаунт?</string>
+    <string name="action_settings_delete">Удалить аккаунт</string>
     <string name="action_logout_cancel">Отмена</string>
 
     <!-- MONTHS -->
