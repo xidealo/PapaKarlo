@@ -356,10 +356,11 @@ private fun BottomPanel(
                     )
                 }
                 MainButton(
-                    modifier = Modifier.padding(
-                        top = 8.dp,
-                        bottom = LocalBottomBarPadding.current
-                    ),
+                    modifier =
+                        Modifier.padding(
+                            top = 8.dp,
+                            bottom = LocalBottomBarPadding.current,
+                        ),
                     textStringId = Res.string.action_consumer_cart_creeate_order,
                     onClick = {
                         onAction(ConsumerCart.Action.OnCreateOrderClick)

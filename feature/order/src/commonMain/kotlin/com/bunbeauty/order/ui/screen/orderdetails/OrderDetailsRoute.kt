@@ -156,8 +156,9 @@ private fun OrderDetailsSuccessScreen(state: OrderDetailsViewState) {
                 modifier = Modifier.fillMaxSize(),
                 contentPadding =
                     PaddingValues(
-                        bottom = FoodDeliveryTheme.dimensions.screenContentSpace
-                                + LocalBottomBarPadding.current,
+                        bottom =
+                            FoodDeliveryTheme.dimensions.screenContentSpace +
+                                LocalBottomBarPadding.current,
                     ),
                 verticalArrangement = spacedBy(8.dp),
             ) {
@@ -473,12 +474,12 @@ private fun getOrderInfo(): OrderDetailsViewState.OrderInfo =
         deferredTime = "10:30",
         address =
             "" +
-                    "ул. Лука" +
-                    "2" +
-                    "10" +
-                    "1" +
-                    "3" +
-                    "тест",
+                "ул. Лука" +
+                "2" +
+                "10" +
+                "1" +
+                "3" +
+                "тест",
         comment = "давай кушать",
         pickupMethod = "доставка",
         statusName = "Готовится",

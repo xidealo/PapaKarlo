@@ -4,7 +4,7 @@ import com.bunbeauty.core.base.BaseAction
 import com.bunbeauty.core.base.BaseDataState
 import com.bunbeauty.core.base.BaseEvent
 import com.bunbeauty.core.model.address.SelectableUserAddress
-import com.bunbeauty.core.model.address.UserAddressWithCity
+import com.bunbeauty.core.model.address.UserAddress
 import com.bunbeauty.core.model.cafe.Cafe
 import com.bunbeauty.core.model.cafe.SelectableCafe
 import com.bunbeauty.core.model.date_time.Time
@@ -17,7 +17,7 @@ interface CreateOrder {
     data class DataState(
         val isDelivery: Boolean = true,
         val userAddressList: List<SelectableUserAddress> = emptyList(),
-        val selectedUserAddressWithCity: UserAddressWithCity? = null,
+        val selectedUserAddress: UserAddress? = null,
         val isUserAddressListShown: Boolean = false,
         val isAddressErrorShown: AddressErrorState = AddressErrorState.INIT,
         val cafeList: List<SelectableCafe> = emptyList(),
