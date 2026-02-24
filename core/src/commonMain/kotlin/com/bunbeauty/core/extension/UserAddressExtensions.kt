@@ -5,16 +5,12 @@ import com.bunbeauty.core.Constants.ADDRESS_DIVIDER
 import com.bunbeauty.core.model.UserAddressItem
 import com.bunbeauty.core.model.address.SelectableUserAddress
 import com.bunbeauty.core.model.address.UserAddress
-import com.bunbeauty.core.model.address.UserAddressWithCity
 import org.jetbrains.compose.resources.stringResource
 import papakarlo.designsystem.generated.resources.Res
 import papakarlo.designsystem.generated.resources.msg_address_entrance_short
 import papakarlo.designsystem.generated.resources.msg_address_flat_short
 import papakarlo.designsystem.generated.resources.msg_address_floor_short
 import papakarlo.designsystem.generated.resources.msg_address_house_short
-
-@Composable
-fun UserAddressWithCity.toAddressString(): String = city + ADDRESS_DIVIDER + userAddress?.toAddressString()
 
 @Composable
 fun SelectableUserAddress.toUserAddressItem(): UserAddressItem =
