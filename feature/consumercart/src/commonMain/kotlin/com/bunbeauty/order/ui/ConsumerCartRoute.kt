@@ -36,6 +36,7 @@ import com.bunbeauty.core.motivation.MotivationUi
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.theme.bold
 import com.bunbeauty.designsystem.theme.medium
+import com.bunbeauty.designsystem.ui.LocalBottomBarPadding
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryAsyncImage
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.designsystem.ui.element.OverflowingText
@@ -355,7 +356,10 @@ private fun BottomPanel(
                     )
                 }
                 MainButton(
-                    modifier = Modifier.padding(top = 8.dp),
+                    modifier = Modifier.padding(
+                        top = 8.dp,
+                        bottom = LocalBottomBarPadding.current
+                    ),
                     textStringId = Res.string.action_consumer_cart_creeate_order,
                     onClick = {
                         onAction(ConsumerCart.Action.OnCreateOrderClick)
