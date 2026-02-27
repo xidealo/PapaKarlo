@@ -314,9 +314,9 @@ private fun CategoryRow(
             PaddingValues(
                 top =
                     12.dp +
-                        with(LocalDensity.current) {
-                            WindowInsets.statusBars.getTop(this).toDp()
-                        },
+                            with(LocalDensity.current) {
+                                WindowInsets.statusBars.getTop(this).toDp()
+                            },
                 bottom = 16.dp,
                 start = 16.dp,
                 end = 16.dp,
@@ -337,8 +337,14 @@ private fun CategoryRow(
                     }
                     coroutineScope.launch {
                         onStartAutoScroll()
+                        val index = getMenuListPosition(categoryItemModel)
                         menuLazyGridState.animateScrollToItem(
-                            getMenuListPosition(categoryItemModel),
+                            index = index,
+                            scrollOffset = if (index == 0) {
+                                0
+                            } else {
+                                600
+                            }
                         )
                         onStopAutoScroll()
                     }
@@ -483,7 +489,7 @@ private fun MenuColumn(
                 when (menuItemModel) {
                     is MenuItemUi.Discount,
                     is MenuItemUi.CategoryHeader,
-                    -> GridItemSpan(maxLineSpan)
+                        -> GridItemSpan(maxLineSpan)
 
                     else -> GridItemSpan(1)
                 }
