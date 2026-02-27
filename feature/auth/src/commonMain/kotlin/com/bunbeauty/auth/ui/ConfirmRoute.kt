@@ -16,6 +16,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.bunbeauty.auth.presentation.confirm.Confirm
 import com.bunbeauty.auth.presentation.confirm.ConfirmViewModel
@@ -24,6 +25,7 @@ import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.ui.LocalBottomBarPadding
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.designsystem.ui.element.button.MainButton
+import com.bunbeauty.designsystem.ui.getIsImeVisible
 import com.bunbeauty.designsystem.ui.screen.LoadingScreen
 import org.jetbrains.compose.resources.getString
 import org.jetbrains.compose.resources.stringResource
@@ -103,7 +105,14 @@ fun ConfirmScreen(
                     modifier =
                         Modifier
                             .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace)
-                            .padding(bottom = LocalBottomBarPadding.current),
+                            .padding(
+                                bottom =
+                                    if (getIsImeVisible()) {
+                                        0.dp
+                                    } else {
+                                        LocalBottomBarPadding.current
+                                    },
+                            ),
                     text = buttonText,
                     enabled = viewState.isResendEnable,
                 ) {

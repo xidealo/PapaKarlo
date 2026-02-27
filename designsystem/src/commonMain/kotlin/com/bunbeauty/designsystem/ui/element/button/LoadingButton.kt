@@ -31,7 +31,6 @@ fun LoadingButton(
 ) {
     Button(
         modifier = modifier
-            .padding(bottom = LocalBottomBarPadding.current)
             .fillMaxWidth(),
         onClick = onClick,
         colors =

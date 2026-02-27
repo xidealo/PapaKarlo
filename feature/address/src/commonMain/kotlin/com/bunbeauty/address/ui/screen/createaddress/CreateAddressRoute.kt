@@ -30,6 +30,7 @@ import com.bunbeauty.designsystem.ui.element.button.LoadingButton
 import com.bunbeauty.designsystem.ui.element.textfield.FoodDeliveryTextField
 import com.bunbeauty.designsystem.ui.element.textfield.FoodDeliveryTextFieldDefaults
 import com.bunbeauty.designsystem.ui.element.textfield.FoodDeliveryTextFieldWithMenu
+import com.bunbeauty.designsystem.ui.getIsImeVisible
 import kotlinx.collections.immutable.persistentListOf
 import org.jetbrains.compose.resources.getString
 import org.jetbrains.compose.resources.stringResource
@@ -129,7 +130,17 @@ private fun CreateAddressScreen(
         },
         actionButton = {
             LoadingButton(
-                modifier = Modifier.padding(horizontal = 16.dp),
+                modifier =
+                    Modifier
+                        .padding(horizontal = 16.dp)
+                        .padding(
+                            bottom =
+                                if (getIsImeVisible()) {
+                                    0.dp
+                                } else {
+                                    LocalBottomBarPadding.current
+                                },
+                        ),
                 textStringId = Res.string.action_create_address_save,
                 isLoading = viewState.isCreateLoading,
                 onClick = {
