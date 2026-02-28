@@ -33,8 +33,7 @@ class SuggestionRepository(
                 ?.map { suggestionServer ->
                     Suggestion(
                         fiasId = suggestionServer.fiasId,
-                        street = suggestionServer.street,
-                        details = suggestionServer.details,
+                        address = suggestionServer.address,
                     )
                 }
         if (suggestions != null) {

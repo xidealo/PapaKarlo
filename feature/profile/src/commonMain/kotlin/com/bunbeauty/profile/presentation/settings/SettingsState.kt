@@ -15,6 +15,7 @@ interface SettingsState {
         val eventList: List<Event> = emptyList(),
         val isShowLogoutBottomSheet: Boolean = false,
         val isShowCityListBottomSheet: Boolean = false,
+        val isShowDisableUserBottomSheet: Boolean = false,
     ) : BaseDataState {
         enum class State {
             SUCCESS,
@@ -41,6 +42,12 @@ interface SettingsState {
         data object OnLogoutConfirmClicked : Action
 
         data object LoadData : Action
+
+        data object DisableUser : Action
+
+        data object CloseDisableUserBottomSheet : Action
+
+        data object DisableUserBottomSheet : Action
 
         data object BackClick : Action
 

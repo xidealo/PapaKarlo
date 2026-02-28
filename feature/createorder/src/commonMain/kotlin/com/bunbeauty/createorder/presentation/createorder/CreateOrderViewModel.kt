@@ -4,7 +4,7 @@ import com.bunbeauty.core.Constants.PERCENT
 import com.bunbeauty.core.Constants.RUBLE_CURRENCY
 import com.bunbeauty.core.Logger
 import com.bunbeauty.core.base.SharedStateViewModel
-import com.bunbeauty.core.domain.address.GetCurrentUserAddressWithCityUseCase
+import com.bunbeauty.core.domain.address.GetCurrentUserAddressUseCase
 import com.bunbeauty.core.domain.address.GetSelectableUserAddressListUseCase
 import com.bunbeauty.core.domain.address.SaveSelectedUserAddressUseCase
 import com.bunbeauty.core.domain.cafe.GetAdditionalUtensilsUseCase
@@ -43,7 +43,7 @@ class CreateOrderViewModel(
     private val cafeInteractor: ICafeInteractor,
     private val userInteractor: IUserInteractor,
     private val getSelectableUserAddressList: GetSelectableUserAddressListUseCase,
-    private val getCurrentUserAddressWithCityUseCase: GetCurrentUserAddressWithCityUseCase,
+    private val getCurrentUserAddressUseCase: GetCurrentUserAddressUseCase,
     private val getSelectableCafeList: GetSelectableCafeListUseCase,
     private val getCartTotalFlowUseCase: GetCartTotalFlowUseCase,
     private val getMotivationUseCase: GetMotivationUseCase,
@@ -66,7 +66,7 @@ class CreateOrderViewModel(
             CreateOrder.DataState(
                 isDelivery = true,
                 userAddressList = emptyList(),
-                selectedUserAddressWithCity = null,
+                selectedUserAddress = null,
                 isAddressErrorShown = CreateOrder.DataState.AddressErrorState.INIT,
                 cafeList = emptyList(),
                 selectedCafe = null,
@@ -239,7 +239,7 @@ class CreateOrderViewModel(
                             getAdditionalUtensilsUseCase(
                                 cafeUuid =
                                     if (isDelivery) {
-                                        selectedUserAddressWithCity?.userAddress?.cafeUuid.orEmpty()
+                                        selectedUserAddress?.cafeUuid.orEmpty()
                                     } else {
                                         selectedCafe?.uuid.orEmpty()
                                     },
@@ -432,7 +432,7 @@ class CreateOrderViewModel(
         val state = mutableDataState.value
 
         val isDeliveryAddressNotSelected =
-            state.isDelivery && (state.selectedUserAddressWithCity?.userAddress == null)
+            state.isDelivery && (state.selectedUserAddress == null)
 
         if (isDeliveryAddressNotSelected) {
             setState {
@@ -499,7 +499,7 @@ class CreateOrderViewModel(
                 val orderCode =
                     createOrder(
                         isDelivery = state.isDelivery,
-                        selectedUserAddress = state.selectedUserAddressWithCity?.userAddress,
+                        selectedUserAddress = state.selectedUserAddress,
                         selectedCafe = state.selectedCafe,
                         orderComment =
                             getExtendedCommentUseCase(
@@ -573,15 +573,15 @@ class CreateOrderViewModel(
     }
 
     private suspend fun updateSelectedUserAddress() {
-        val userAddressWithCity = getCurrentUserAddressWithCityUseCase()
+        val userAddress = getCurrentUserAddressUseCase()
         val userAddressList = getSelectableUserAddressList()
 
         setState {
             copy(
                 userAddressList = userAddressList,
-                selectedUserAddressWithCity = userAddressWithCity,
+                selectedUserAddress = userAddress,
                 deliveryState =
-                    userAddressWithCity?.userAddress?.cafeUuid?.let { cafeUuid ->
+                    userAddress?.cafeUuid?.let { cafeUuid ->
                         if (isDeliveryEnabledFromCafeUseCase(cafeUuid = cafeUuid)) {
                             CreateOrder.DataState.DeliveryState.ENABLED
                         } else {
@@ -589,13 +589,13 @@ class CreateOrderViewModel(
                         }
                     } ?: CreateOrder.DataState.DeliveryState.NEED_ADDRESS,
                 isAddressErrorShown =
-                    if (userAddressWithCity != null) {
+                    if (userAddress != null) {
                         CreateOrder.DataState.AddressErrorState.NO_ERROR
                     } else {
                         isAddressErrorShown
                     },
                 workload =
-                    userAddressWithCity?.userAddress?.cafeUuid?.let { cafeUuid ->
+                    userAddress?.cafeUuid?.let { cafeUuid ->
                         getWorkloadCafeUseCase(cafeUuid = cafeUuid)
                     } ?: Cafe.Workload.LOW,
                 isLoadingSwitcher = false,

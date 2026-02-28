@@ -2,7 +2,6 @@ package com.bunbeauty.shared
 
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.ComposeUIViewController
 import com.bunbeauty.core.Logger
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
@@ -20,7 +19,6 @@ fun MainViewController(flavor: String): UIViewController =
                 modifier =
                     Modifier
                         .imePadding(),
-                localBottomBarPadding = 16.dp
             )
         }
     }

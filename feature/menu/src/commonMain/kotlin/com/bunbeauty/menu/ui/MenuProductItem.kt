@@ -5,6 +5,7 @@ import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.animation.SharedTransitionScope
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
@@ -49,7 +51,9 @@ fun MenuProductItem(
             },
             shape = RoundedCornerShape(size = 24.dp),
         ) {
-            Column {
+            Column(
+                modifier = Modifier.background(FoodDeliveryTheme.colors.mainColors.surfaceVariant),
+            ) {
                 FoodDeliveryAsyncImage(
                     modifier =
                         Modifier
@@ -65,27 +69,17 @@ fun MenuProductItem(
                     contentDescription = stringResource(Res.string.description_product),
                     contentScale = ContentScale.FillWidth,
                 )
-                Column(modifier = Modifier.padding(FoodDeliveryTheme.dimensions.smallSpace)) {
-                    OverflowingText(
-                        modifier =
-                            Modifier
-                                .sharedElement(
-                                    sharedContentState =
-                                        sharedTransitionScope
-                                            .rememberSharedContentState(
-                                                key = "text-${menuProductItem.uuid}",
-                                            ),
-                                    animatedVisibilityScope = animatedContentScope,
-                                ),
-                        text = menuProductItem.name,
-                        style = FoodDeliveryTheme.typography.titleSmall.bold,
-                        color = FoodDeliveryTheme.colors.mainColors.onSurface,
-                    )
+                Column(
+                    modifier =
+                        Modifier
+                            .padding(FoodDeliveryTheme.dimensions.smallSpace),
+                ) {
                     Row(
                         modifier =
                             Modifier.padding(
                                 top = FoodDeliveryTheme.dimensions.verySmallSpace,
                             ),
+                        verticalAlignment = Alignment.CenterVertically,
                     ) {
                         menuProductItem.oldPrice?.let { oldPrice ->
                             Text(
@@ -118,10 +112,28 @@ fun MenuProductItem(
                                         animatedVisibilityScope = animatedContentScope,
                                     ),
                             text = menuProductItem.newPrice,
-                            style = FoodDeliveryTheme.typography.bodySmall.bold,
+                            style = FoodDeliveryTheme.typography.bodyLarge.bold,
                             color = FoodDeliveryTheme.colors.mainColors.onSurface,
                         )
                     }
+
+                    OverflowingText(
+                        modifier =
+                            Modifier
+                                .padding(top = 4.dp)
+                                .sharedElement(
+                                    sharedContentState =
+                                        sharedTransitionScope
+                                            .rememberSharedContentState(
+                                                key = "text-${menuProductItem.uuid}",
+                                            ),
+                                    animatedVisibilityScope = animatedContentScope,
+                                ),
+                        text = menuProductItem.name,
+                        style = FoodDeliveryTheme.typography.bodyMedium,
+                        color = FoodDeliveryTheme.colors.mainColors.onSurface,
+                    )
+
                     SmallButton(
                         modifier =
                             Modifier
