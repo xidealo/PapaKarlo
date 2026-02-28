@@ -312,6 +312,10 @@ private fun BottomPanel(
         ) {
             if (bottomPanelInfo == null) {
                 MainButton(
+                    modifier =
+                        Modifier.padding(
+                            bottom = LocalBottomBarPadding.current,
+                        ),
                     textStringId = Res.string.action_consumer_cart_menu,
                     onClick = {
                         onAction(ConsumerCart.Action.OnMenuClick)

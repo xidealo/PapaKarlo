@@ -1,6 +1,7 @@
 package com.bunbeauty.papakarlo.feature.main
 
 import android.Manifest
+import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.SystemBarStyle
@@ -47,14 +48,20 @@ class MainActivity :
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
         enableEdgeToEdge(
             navigationBarStyle =
-                SystemBarStyle.dark(
-                    scrim = android.graphics.Color.TRANSPARENT,
-                ),
+                if (isDarkTheme()) {
+                    SystemBarStyle.dark(
+                        scrim = android.graphics.Color.TRANSPARENT,
+                    )
+                } else {
+                    SystemBarStyle.light(
+                        scrim = android.graphics.Color.TRANSPARENT,
+                        darkScrim = android.graphics.Color.TRANSPARENT,
+                    )
+                },
         )
+        super.onCreate(savedInstanceState)
 
         setContent {
             val color = FoodDeliveryTheme.colors.mainColors.surface
@@ -130,4 +137,8 @@ class MainActivity :
             }
         }
     }
+
+    fun isDarkTheme(): Boolean =
+        this.resources.configuration.uiMode and
+            Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
 }
