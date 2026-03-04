@@ -1,5 +1,7 @@
 package com.bunbeauty.order.ui
 
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
 import androidx.compose.foundation.layout.Column
@@ -34,6 +36,7 @@ import com.bunbeauty.core.motivation.MotivationUi
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.theme.bold
 import com.bunbeauty.designsystem.theme.medium
+import com.bunbeauty.designsystem.ui.LocalBottomBarPadding
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryAsyncImage
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.designsystem.ui.element.OverflowingText
@@ -230,7 +233,15 @@ private fun ConsumerCartSuccessScreen(
                 key = { cartProductItem -> cartProductItem.key },
                 span = { _ -> GridItemSpan(maxLineSpan) },
             ) { cartProductItem ->
-                FoodDeliveryItem(needDivider = !cartProductItem.isLast) {
+                FoodDeliveryItem(
+                    modifier =
+                        Modifier
+                            .animateItem()
+                            .animateContentSize(
+                                animationSpec = tween(500),
+                            ),
+                    needDivider = !cartProductItem.isLast,
+                ) {
                     CartProductItem(
                         cartProductItem = cartProductItem,
                         onCountIncreased = {
@@ -293,7 +304,7 @@ private fun BottomPanel(
 ) {
     FoodDeliverySurface(
         modifier = modifier,
-        elevated = false
+        elevated = false,
     ) {
         Column(
             modifier = Modifier.padding(16.dp),
@@ -301,6 +312,10 @@ private fun BottomPanel(
         ) {
             if (bottomPanelInfo == null) {
                 MainButton(
+                    modifier =
+                        Modifier.padding(
+                            bottom = LocalBottomBarPadding.current,
+                        ),
                     textStringId = Res.string.action_consumer_cart_menu,
                     onClick = {
                         onAction(ConsumerCart.Action.OnMenuClick)
@@ -345,7 +360,11 @@ private fun BottomPanel(
                     )
                 }
                 MainButton(
-                    modifier = Modifier.padding(top = 8.dp),
+                    modifier =
+                        Modifier.padding(
+                            top = 8.dp,
+                            bottom = LocalBottomBarPadding.current,
+                        ),
                     textStringId = Res.string.action_consumer_cart_creeate_order,
                     onClick = {
                         onAction(ConsumerCart.Action.OnCreateOrderClick)

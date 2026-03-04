@@ -45,6 +45,13 @@ object FoodDeliveryCardDefaults {
                 containerColor = FoodDeliveryTheme.colors.statusColors.warning,
             )
 
+    val primaryCardStatusColors: CardColors
+        @Composable get() =
+            CardDefaults.cardColors(
+                containerColor = FoodDeliveryTheme.colors.mainColors.primary,
+                contentColor = FoodDeliveryTheme.colors.mainColors.onPrimary,
+            )
+
     val negativeCardStatusColors: CardColors
         @Composable get() =
             CardDefaults.cardColors(

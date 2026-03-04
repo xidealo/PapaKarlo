@@ -10,10 +10,13 @@ import com.bunbeauty.designsystem.ui.element.FoodDeliveryHorizontalDivider
 
 @Composable
 fun FoodDeliveryItem(
+    modifier: Modifier = Modifier,
     needDivider: Boolean,
     content: @Composable ColumnScope.() -> Unit,
 ) {
-    Column {
+    Column(
+        modifier = modifier
+    ) {
         content()
         if (needDivider) {
             FoodDeliveryHorizontalDivider(

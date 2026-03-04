@@ -31,10 +31,12 @@ import com.bunbeauty.auth.presentation.login.LoginViewModel
 import com.bunbeauty.core.model.SuccessLoginDirection
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.theme.logoMedium
+import com.bunbeauty.designsystem.ui.LocalBottomBarPadding
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.designsystem.ui.element.button.LoadingButton
 import com.bunbeauty.designsystem.ui.element.textfield.FoodDeliveryTextField
 import com.bunbeauty.designsystem.ui.element.textfield.FoodDeliveryTextFieldDefaults
+import com.bunbeauty.designsystem.ui.getIsImeVisible
 import org.jetbrains.compose.resources.getString
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -104,7 +106,15 @@ private fun LoginScreen(
             LoadingButton(
                 modifier =
                     Modifier
-                        .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
+                        .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace)
+                        .padding(
+                            bottom =
+                                if (getIsImeVisible()) {
+                                    0.dp
+                                } else {
+                                    LocalBottomBarPadding.current
+                                },
+                        ),
                 textStringId = Res.string.action_login_continue,
                 isLoading = viewState.isLoading,
                 onClick = {

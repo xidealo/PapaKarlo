@@ -12,7 +12,6 @@ import com.bunbeauty.core.domain.addition.GetAdditionGroupsWithSelectedAdditionU
 import com.bunbeauty.core.domain.addition.GetPriceOfSelectedAdditionsUseCase
 import com.bunbeauty.core.domain.address.CreateAddressUseCase
 import com.bunbeauty.core.domain.address.GetCurrentUserAddressUseCase
-import com.bunbeauty.core.domain.address.GetCurrentUserAddressWithCityUseCase
 import com.bunbeauty.core.domain.address.GetFilteredStreetListUseCase
 import com.bunbeauty.core.domain.address.GetSelectableUserAddressListUseCase
 import com.bunbeauty.core.domain.address.GetSuggestionsUseCase
@@ -316,7 +315,7 @@ class IosComponent : KoinComponent {
 
     fun provideUpdateNotificationUseCase(): UpdateNotificationUseCase = get()
 
-    fun provideGetCurrentUserAddressWithCityUseCase(): GetCurrentUserAddressWithCityUseCase = get()
+    fun provideGetCurrentUserAddressWithCityUseCase(): GetCurrentUserAddressUseCase = get()
 
     fun provideGetExtendedCommentUseCase(): GetExtendedCommentUseCase = get()
 

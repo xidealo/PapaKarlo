@@ -44,6 +44,7 @@ import papakarlo.designsystem.generated.resources.logo_medium_djan
 import papakarlo.designsystem.generated.resources.logo_medium_emoji
 import papakarlo.designsystem.generated.resources.logo_medium_estpoest
 import papakarlo.designsystem.generated.resources.logo_medium_gustopub
+import papakarlo.designsystem.generated.resources.logo_medium_legenda
 import papakarlo.designsystem.generated.resources.logo_medium_papakarlo
 import papakarlo.designsystem.generated.resources.logo_medium_tandir_house
 import papakarlo.designsystem.generated.resources.logo_medium_taverna
@@ -150,6 +151,8 @@ private fun getAppColors(
         }
 
         FoodDeliveryCompany.LEGENDA -> {
+            logoMedium = Res.drawable.logo_medium_legenda
+
             if (isDarkTheme) {
                 LegendaDarkColors
             } else {

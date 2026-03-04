@@ -11,7 +11,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class GetCurrentUserAddressUseCaseTest {
-    private val userAddressMock: UserAddress =
+    private val userAddressMock =
         UserAddress(
             uuid = "pulvinar",
             street = "conclusionemque",
@@ -30,35 +30,42 @@ class GetCurrentUserAddressUseCaseTest {
 
     private val userAddressRepo: UserAddressRepo = mock()
 
-    private val getCurrentUserAddressUseCase: GetCurrentUserAddressUseCaseImpl =
+    private val getCurrentUserAddressUseCaseImpl: GetCurrentUserAddressUseCaseImpl =
         GetCurrentUserAddressUseCaseImpl(
             userAddressRepo = userAddressRepo,
         )
 
     @Test
-    fun `return selected address address is selected`() =
+    fun `return selected address with city address  is selected`() =
         runTest {
             everySuspend {
                 userAddressRepo.getSelectedAddressByUserAndCityUuid()
             } returns userAddressMock
 
-            val currentUserAddress = getCurrentUserAddressUseCase()
+            val currentUserAddress = getCurrentUserAddressUseCaseImpl()
 
-            assertEquals(userAddressMock, currentUserAddress)
+            assertEquals(
+                userAddressMock,
+                currentUserAddress,
+            )
         }
 
     @Test
-    fun `return first address when address is not selected`() =
+    fun `return first address with city when address is not selected`() =
         runTest {
-            everySuspend {
-                userAddressRepo.getSelectedAddressByUserAndCityUuid()
-            } returns null
             everySuspend {
                 userAddressRepo.getFirstUserAddressByUserAndCityUuid()
             } returns userAddressMock
 
-            val currentUserAddress = getCurrentUserAddressUseCase()
+            everySuspend {
+                userAddressRepo.getSelectedAddressByUserAndCityUuid()
+            } returns userAddressMock
 
-            assertEquals(userAddressMock, currentUserAddress)
+            val currentUserAddress = getCurrentUserAddressUseCaseImpl()
+
+            assertEquals(
+                userAddressMock,
+                currentUserAddress,
+            )
         }
 }

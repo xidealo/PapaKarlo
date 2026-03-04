@@ -66,6 +66,7 @@ object FoodDeliveryButtonDefaults {
                 disabledContainerColor = FoodDeliveryTheme.colors.mainColors.disabled,
                 disabledContentColor = FoodDeliveryTheme.colors.mainColors.onDisabled,
                 contentColor = FoodDeliveryTheme.colors.mainColors.primary,
+                containerColor = FoodDeliveryTheme.colors.mainColors.secondary
             )
 
     val iconButtonColors: IconButtonColors
