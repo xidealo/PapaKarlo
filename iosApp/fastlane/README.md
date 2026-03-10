@@ -15,6 +15,54 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 ## iOS
 
+### ios papakarlo
+
+```sh
+[bundle exec] fastlane ios papakarlo
+```
+
+Push a new papakarlo release build to the App Store
+
+### ios gustopub
+
+```sh
+[bundle exec] fastlane ios gustopub
+```
+
+Push a new gustopub release build to the App Store
+
+### ios yuliar
+
+```sh
+[bundle exec] fastlane ios yuliar
+```
+
+Push a new yuliar release build to the App Store
+
+### ios tandirhouse
+
+```sh
+[bundle exec] fastlane ios tandirhouse
+```
+
+Push a new tandirhouse release build to the App Store
+
+### ios vkuskavkaza
+
+```sh
+[bundle exec] fastlane ios vkuskavkaza
+```
+
+Push a new vkuskavkaza release build to the App Store
+
+### ios djan
+
+```sh
+[bundle exec] fastlane ios djan
+```
+
+Push a new djan release build to the App Store
+
 ### ios usaba
 
 ```sh
