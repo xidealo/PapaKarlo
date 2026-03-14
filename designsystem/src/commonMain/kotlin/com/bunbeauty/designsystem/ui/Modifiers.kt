@@ -1,11 +1,18 @@
 package com.bunbeauty.designsystem.ui
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionLayout
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.layout
@@ -33,6 +40,10 @@ val LocalStatusBarColor =
 
 val LocalBottomBarPadding = compositionLocalOf { 0.dp }
 
+val SharedTransitionScopeComposition = staticCompositionLocalOf<SharedTransitionScope> {
+    error("No SharedTransitionScopeComposition")
+}
+
 fun Modifier.ignoreHorizontalParentPadding(horizontal: Dp): Modifier =
     this.layout { measurable, constraints ->
         val overridenWidth = constraints.maxWidth + 2 * horizontal.roundToPx()
@@ -44,3 +55,18 @@ fun Modifier.ignoreHorizontalParentPadding(horizontal: Dp): Modifier =
 
 @Composable
 fun getIsImeVisible() = WindowInsets.ime.getBottom(LocalDensity.current) > 0
+
+
+@OptIn(ExperimentalSharedTransitionApi::class)
+@Composable
+fun SharedTransitionPreview(content: @Composable AnimatedVisibilityScope.() -> Unit) {
+    SharedTransitionLayout {
+        CompositionLocalProvider(
+            SharedTransitionScopeComposition provides this
+        ) {
+            AnimatedVisibility(visible = true) {
+                content()
+            }
+        }
+    }
+}
