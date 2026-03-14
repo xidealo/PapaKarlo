@@ -6,7 +6,6 @@ import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
-import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -453,9 +452,10 @@ private fun ProductCard(
                                 Modifier
                                     .padding(end = FoodDeliveryTheme.dimensions.smallSpace)
                                     .sharedElement(
-                                        sharedContentState = rememberSharedContentState(
-                                                    key = "oldPrice-${menuProductUi.uuid}",
-                                                ),
+                                        sharedContentState =
+                                            rememberSharedContentState(
+                                                key = "oldPrice-${menuProductUi.uuid}",
+                                            ),
                                         animatedVisibilityScope = animatedContentScope,
                                     ),
                             text = menuProductUi.oldPrice,
@@ -467,7 +467,8 @@ private fun ProductCard(
                     Text(
                         modifier =
                             Modifier.sharedElement(
-                                sharedContentState = rememberSharedContentState(
+                                sharedContentState =
+                                    rememberSharedContentState(
                                         key = "price-${menuProductUi.uuid}",
                                     ),
                                 animatedVisibilityScope = animatedContentScope,
@@ -518,7 +519,7 @@ private fun ProductDetailsSuccessScreenPreview() {
                                     newPrice = "280 ₽",
                                     description =
                                         "Сочная котлетка, сыр Чедр, маринованный огурчик, помидор, " +
-                                                "красный лук, салат, фирменный соус, булочка с кунжутом",
+                                            "красный лук, салат, фирменный соус, булочка с кунжутом",
                                     additionList =
                                         persistentListOf(
                                             AdditionItem.AdditionHeaderItem(

@@ -1,12 +1,10 @@
 package com.bunbeauty.menu.ui
 
 import androidx.compose.animation.AnimatedContentScope
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
-import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
@@ -309,9 +307,9 @@ private fun CategoryRow(
             PaddingValues(
                 top =
                     12.dp +
-                            with(LocalDensity.current) {
-                                WindowInsets.statusBars.getTop(this).toDp()
-                            },
+                        with(LocalDensity.current) {
+                            WindowInsets.statusBars.getTop(this).toDp()
+                        },
                 bottom = 16.dp,
                 start = 16.dp,
                 end = 16.dp,
@@ -484,7 +482,7 @@ private fun MenuColumn(
                 when (menuItemModel) {
                     is MenuItemUi.Discount,
                     is MenuItemUi.CategoryHeader,
-                        -> GridItemSpan(maxLineSpan)
+                    -> GridItemSpan(maxLineSpan)
 
                     else -> GridItemSpan(1)
                 }
@@ -573,7 +571,6 @@ private fun MenuScreenSuccessPreview() {
         )
     SharedTransitionLayout {
         SharedTransitionPreview {
-
             MenuScreen(
                 viewState =
                     MenuViewState(

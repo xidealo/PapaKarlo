@@ -3,8 +3,6 @@ package com.bunbeauty.menu.ui
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
-import androidx.compose.animation.SharedTransitionLayout
-import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -14,7 +12,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -88,9 +85,10 @@ fun MenuProductItem(
                                     Modifier
                                         .padding(end = FoodDeliveryTheme.dimensions.verySmallSpace)
                                         .sharedElement(
-                                            sharedContentState = rememberSharedContentState(
-                                                key = "oldPrice-${menuProductItem.uuid}",
-                                            ),
+                                            sharedContentState =
+                                                rememberSharedContentState(
+                                                    key = "oldPrice-${menuProductItem.uuid}",
+                                                ),
                                             animatedVisibilityScope = animatedContentScope,
                                         ),
                                 text = oldPrice,
@@ -120,9 +118,10 @@ fun MenuProductItem(
                             Modifier
                                 .padding(top = 4.dp)
                                 .sharedElement(
-                                    sharedContentState = rememberSharedContentState(
-                                        key = "text-${menuProductItem.uuid}",
-                                    ),
+                                    sharedContentState =
+                                        rememberSharedContentState(
+                                            key = "text-${menuProductItem.uuid}",
+                                        ),
                                     animatedVisibilityScope = animatedContentScope,
                                 ),
                         text = menuProductItem.name,
