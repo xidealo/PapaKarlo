@@ -1,6 +1,7 @@
 package com.bunbeauty.shared.ui.screen.main
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
@@ -33,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.ui.LocalBottomBarPadding
 import com.bunbeauty.designsystem.ui.LocalStatusBarColor
+import com.bunbeauty.designsystem.ui.SharedTransitionScopeComposition
 import com.bunbeauty.shared.presentation.MainViewModel
 import com.bunbeauty.shared.ui.navigation.FoodDeliveryNavHost
 import kotlinx.coroutines.delay
@@ -67,49 +69,51 @@ fun MainScreen(
         }
 
     barColorCallback.invoke(statusBarColor.value)
-
-    CompositionLocalProvider(
-        LocalStatusBarColor provides statusBarColor,
-        LocalBottomBarPadding provides localBottomBarPadding,
-    ) {
-        Scaffold(
-            modifier =
-                Modifier
-                    .fillMaxSize(),
-            snackbarHost = {
-                FoodDeliverySnackbarHost(
-                    snackbarHostState = snackbarHostState,
-                    paddingBottom = mainState.paddingBottomSnackbar,
-                )
-            },
-            containerColor = statusBarColor.value,
+    SharedTransitionLayout {
+        CompositionLocalProvider(
+            LocalStatusBarColor provides statusBarColor,
+            LocalBottomBarPadding provides localBottomBarPadding,
+            SharedTransitionScopeComposition provides this,
         ) {
-            Column(
+            Scaffold(
                 modifier =
-                    modifier
+                    Modifier
                         .fillMaxSize(),
+                snackbarHost = {
+                    FoodDeliverySnackbarHost(
+                        snackbarHostState = snackbarHostState,
+                        paddingBottom = mainState.paddingBottomSnackbar,
+                    )
+                },
+                containerColor = statusBarColor.value,
             ) {
-                ConnectionErrorMessage(visible = mainState.connectionLost)
-                StatusBarMessage(statusBarMessage = mainState.statusBarMessage)
-
-                Box(
+                Column(
                     modifier =
-                        Modifier
+                        modifier
                             .fillMaxSize(),
                 ) {
-                    FoodDeliveryNavHost(
-                        showInfoMessage = { message, padding ->
-                            viewModel.showInfoMessage(
-                                text = message,
-                                paddingBottom = padding,
-                            )
-                        },
-                        showErrorMessage = { message ->
-                            viewModel.showErrorMessage(
-                                message,
-                            )
-                        },
-                    )
+                    ConnectionErrorMessage(visible = mainState.connectionLost)
+                    StatusBarMessage(statusBarMessage = mainState.statusBarMessage)
+
+                    Box(
+                        modifier =
+                            Modifier
+                                .fillMaxSize(),
+                    ) {
+                        FoodDeliveryNavHost(
+                            showInfoMessage = { message, padding ->
+                                viewModel.showInfoMessage(
+                                    text = message,
+                                    paddingBottom = padding,
+                                )
+                            },
+                            showErrorMessage = { message ->
+                                viewModel.showErrorMessage(
+                                    message,
+                                )
+                            },
+                        )
+                    }
                 }
             }
         }
