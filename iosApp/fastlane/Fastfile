@@ -26,7 +26,8 @@ platform :ios do
      estpoest:     { id: "com.bunbeauty.estpoest", scheme: "estpoest" },
      taverna:      { id: "com.bunbeauty.taverna", scheme: "taverna" },
      voljane:      { id: "com.bunbeauty.voljane", scheme: "voljane" },
-     legenda:      { id: "com.bunbeauty.legenda", scheme: "legenda" }
+     legenda:      { id: "com.bunbeauty.legenda", scheme: "legenda" },
+     bereg:      { id: "com.bunbeauty.bereg", scheme: "bereg" }
   }
 
   # Универсальная функция сборки и заливки
