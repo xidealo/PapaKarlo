@@ -70,7 +70,6 @@ import com.bunbeauty.menu.presentation.model.MenuDataState
 import com.bunbeauty.menu.ui.mapper.toMenuViewState
 import com.bunbeauty.menu.ui.state.MenuItemUi
 import com.bunbeauty.menu.ui.state.MenuViewState
-import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.getString
