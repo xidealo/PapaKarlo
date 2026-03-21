@@ -1,5 +1,6 @@
 package com.bunbeauty.order.ui.mapper
 
+import com.bunbeauty.core.model.ProductUi
 import com.bunbeauty.core.motivation.toMotivationUi
 import com.bunbeauty.order.presentation.consumercart.CartProductItem
 import com.bunbeauty.order.presentation.consumercart.ConsumerCart
@@ -22,7 +23,7 @@ fun ConsumerCart.DataState.toConsumerCartViewState(): ConsumerCartViewState =
                 recommendationList =
                     recommendationList
                         .map { menuProduct ->
-                            ConsumerCartViewState.Success.ProductUi(
+                            ProductUi(
                                 key = "MenuProductItem ${menuProduct.uuid}",
                                 uuid = menuProduct.uuid,
                                 photoLink = menuProduct.photoLink,
@@ -43,6 +44,10 @@ fun ConsumerCart.DataState.toConsumerCartViewState(): ConsumerCartViewState =
                             orderAvailable = orderAvailable,
                         )
                     },
+                acceptDeleteOrder =
+                    ConsumerCartViewState.AcceptDeleteOrder(
+                        isShown = showAcceptDeleteOrder,
+                    ),
             )
         }
 

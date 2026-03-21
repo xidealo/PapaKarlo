@@ -1,6 +1,5 @@
-package com.bunbeauty.menu.ui
+package com.bunbeauty.designsystem.ui.element
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.foundation.background
@@ -20,25 +19,24 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.theme.bold
-import com.bunbeauty.designsystem.ui.SharedTransitionPreview
 import com.bunbeauty.designsystem.ui.SharedTransitionScopeComposition
-import com.bunbeauty.designsystem.ui.element.FoodDeliveryAsyncImage
-import com.bunbeauty.designsystem.ui.element.OverflowingText
 import com.bunbeauty.designsystem.ui.element.button.SmallButton
 import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryCard
-import com.bunbeauty.menu.ui.state.MenuItemUi
 import org.jetbrains.compose.resources.stringResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
 import papakarlo.designsystem.generated.resources.Res
 import papakarlo.designsystem.generated.resources.action_product_want
 import papakarlo.designsystem.generated.resources.description_product
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun MenuProductItem(
+fun FoodDeliveryProductItem(
     animatedContentScope: AnimatedVisibilityScope,
     modifier: Modifier = Modifier,
-    menuProductItem: MenuItemUi.Product,
+    uuid: String,
+    photoLink: String,
+    name: String,
+    oldPrice: String?,
+    newPrice: String,
     onAddProductClick: (String) -> Unit,
     onProductClick: (String) -> Unit,
 ) {
@@ -46,7 +44,7 @@ fun MenuProductItem(
         FoodDeliveryCard(
             modifier = modifier,
             onClick = {
-                onProductClick(menuProductItem.uuid)
+                onProductClick(uuid)
             },
             shape = RoundedCornerShape(size = 24.dp),
         ) {
@@ -58,12 +56,12 @@ fun MenuProductItem(
                         Modifier
                             .sharedElement(
                                 sharedContentState =
-                                    rememberSharedContentState(key = "image-${menuProductItem.uuid}"),
+                                    rememberSharedContentState(key = "image-${uuid}"),
                                 animatedVisibilityScope = animatedContentScope,
                             ).fillMaxWidth()
                             .clip(shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp))
                             .heightIn(min = 120.dp),
-                    photoLink = menuProductItem.photoLink,
+                    photoLink = photoLink,
                     contentDescription = stringResource(Res.string.description_product),
                     contentScale = ContentScale.FillWidth,
                 )
@@ -79,7 +77,7 @@ fun MenuProductItem(
                             ),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
-                        menuProductItem.oldPrice?.let { oldPrice ->
+                        oldPrice?.let { oldPrice ->
                             Text(
                                 modifier =
                                     Modifier
@@ -87,7 +85,7 @@ fun MenuProductItem(
                                         .sharedElement(
                                             sharedContentState =
                                                 rememberSharedContentState(
-                                                    key = "oldPrice-${menuProductItem.uuid}",
+                                                    key = "oldPrice-${uuid}",
                                                 ),
                                             animatedVisibilityScope = animatedContentScope,
                                         ),
@@ -103,11 +101,11 @@ fun MenuProductItem(
                                     .sharedElement(
                                         sharedContentState =
                                             rememberSharedContentState(
-                                                key = "price-${menuProductItem.uuid}",
+                                                key = "price-${uuid}",
                                             ),
                                         animatedVisibilityScope = animatedContentScope,
                                     ),
-                            text = menuProductItem.newPrice,
+                            text = newPrice,
                             style = FoodDeliveryTheme.typography.bodyLarge.bold,
                             color = FoodDeliveryTheme.colors.mainColors.onSurface,
                         )
@@ -120,11 +118,11 @@ fun MenuProductItem(
                                 .sharedElement(
                                     sharedContentState =
                                         rememberSharedContentState(
-                                            key = "text-${menuProductItem.uuid}",
+                                            key = "text-${uuid}",
                                         ),
                                     animatedVisibilityScope = animatedContentScope,
                                 ),
-                        text = menuProductItem.name,
+                        text = name,
                         style = FoodDeliveryTheme.typography.bodyMedium,
                         color = FoodDeliveryTheme.colors.mainColors.onSurface,
                     )
@@ -137,7 +135,7 @@ fun MenuProductItem(
                         textStringId = Res.string.action_product_want,
                         elevated = false,
                         onClick = {
-                            onAddProductClick(menuProductItem.uuid)
+                            onAddProductClick(uuid)
                         },
                     )
                 }
@@ -146,27 +144,27 @@ fun MenuProductItem(
     }
 }
 
-@Preview(widthDp = 200)
-@Composable
-private fun MenuProductItemPreview() {
-    FoodDeliveryTheme {
-        SharedTransitionPreview {
-            AnimatedVisibility(visible = true) {
-                MenuProductItem(
-                    menuProductItem =
-                        MenuItemUi.Product(
-                            uuid = "",
-                            key = "",
-                            photoLink = "",
-                            name = "Бэргер",
-                            newPrice = "99 ₽",
-                            oldPrice = "100 ₽",
-                        ),
-                    onAddProductClick = {},
-                    onProductClick = {},
-                    animatedContentScope = this,
-                )
-            }
-        }
-    }
-}
+//@Preview(widthDp = 200)
+//@Composable
+//private fun MenuProductItemPreview() {
+//    FoodDeliveryTheme {
+//        SharedTransitionPreview {
+//            AnimatedVisibility(visible = true) {
+//                FoodDeliveryProductItem(
+//                    menuProductItem =
+//                        ProductUi(
+//                            uuid = "",
+//                            key = "",
+//                            photoLink = "",
+//                            name = "Бэргер",
+//                            newPrice = "99 ₽",
+//                            oldPrice = "100 ₽",
+//                        ),
+//                    onAddProductClick = {},
+//                    onProductClick = {},
+//                    animatedContentScope = this,
+//                )
+//            }
+//        }
+//    }
+//}

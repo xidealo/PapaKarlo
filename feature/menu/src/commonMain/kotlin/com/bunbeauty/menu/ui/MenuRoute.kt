@@ -49,6 +49,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.bunbeauty.core.Constants.FAB_SNACKBAR_BOTTOM_PADDING
 import com.bunbeauty.core.model.CategoryItem
 import com.bunbeauty.core.model.ProductDetailsOpenedFrom
+import com.bunbeauty.core.model.ProductUi
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.theme.bold
 import com.bunbeauty.designsystem.theme.logoMedium
@@ -56,6 +57,7 @@ import com.bunbeauty.designsystem.theme.medium
 import com.bunbeauty.designsystem.ui.LocalBottomBarPadding
 import com.bunbeauty.designsystem.ui.LocalStatusBarColor
 import com.bunbeauty.designsystem.ui.SharedTransitionPreview
+import com.bunbeauty.designsystem.ui.element.FoodDeliveryProductItem
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.designsystem.ui.element.TopCartUi
 import com.bunbeauty.designsystem.ui.element.button.FoodDeliveryExtendedFab
@@ -68,6 +70,7 @@ import com.bunbeauty.menu.presentation.model.MenuDataState
 import com.bunbeauty.menu.ui.mapper.toMenuViewState
 import com.bunbeauty.menu.ui.state.MenuItemUi
 import com.bunbeauty.menu.ui.state.MenuViewState
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.getString
@@ -525,16 +528,20 @@ private fun MenuColumn(
                 }
 
                 is MenuItemUi.Product -> {
-                    MenuProductItem(
+                    FoodDeliveryProductItem(
                         animatedContentScope = animatedContentScope,
                         modifier =
                             Modifier
                                 .padding(
                                     top = 8.dp,
                                 ),
-                        menuProductItem = menuItem,
                         onAddProductClick = onAddProductClicked,
                         onProductClick = onMenuItemClicked,
+                        uuid = menuItem.product.uuid,
+                        photoLink = menuItem.product.photoLink,
+                        name = menuItem.product.name,
+                        oldPrice = menuItem.product.oldPrice,
+                        newPrice = menuItem.product.newPrice,
                     )
                 }
             }
@@ -560,15 +567,20 @@ private fun MenuScreenSuccessPreview() {
             name = "Бургеры",
         )
 
-    fun getMenuProductItem(key: String) =
-        MenuItemUi.Product(
-            uuid = "",
+    fun getMenuProductItem(key: String): MenuItemUi.Product {
+        val product = ProductUi(
+            uuid = key,
             key = key,
             photoLink = "",
             name = "Бэргер",
             newPrice = "99",
             oldPrice = "100",
         )
+        return MenuItemUi.Product(
+            key = key,
+            product = product
+        )
+    }
     SharedTransitionLayout {
         SharedTransitionPreview {
             MenuScreen(

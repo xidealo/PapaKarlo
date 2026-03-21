@@ -1,5 +1,6 @@
 package com.bunbeauty.order.ui.ui
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -69,40 +70,41 @@ fun CartProductItem(
                     color = FoodDeliveryTheme.colors.mainColors.onSurface,
                     maxLines = 2,
                 )
+                Box(modifier =
+                    Modifier
+                        .padding(top = 4.dp),){
+                    cartProductItem.additions?.let { additions ->
+                        Text(
+                            modifier =
+                                Modifier
+                                    .padding(
+                                        end = FoodDeliveryTheme.dimensions.smallSpace,
+                                    ),
+                            text = additions,
+                            style = FoodDeliveryTheme.typography.bodySmall,
+                            color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
+                        )
+                    }
+                }
                 Row(
                     modifier =
                         Modifier
                             .padding(top = 4.dp),
+                    verticalAlignment = CenterVertically
                 ) {
                     Column(
                         modifier =
                             Modifier
                                 .weight(1f),
                     ) {
-                        cartProductItem.additions?.let { additions ->
-                            Text(
-                                modifier =
-                                    Modifier
-                                        .padding(
-                                            end = FoodDeliveryTheme.dimensions.smallSpace,
-                                        ),
-                                text = additions,
-                                style = FoodDeliveryTheme.typography.bodySmall,
-                                color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
-                            )
-                        }
-                        Row(
-                            modifier =
-                                Modifier
-                                    .padding(top = 4.dp),
-                        ) {
+                        Row{
                             cartProductItem.oldCost?.let { oldCost ->
                                 Text(
                                     modifier =
                                         Modifier
                                             .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
                                     text = oldCost,
-                                    style = FoodDeliveryTheme.typography.bodySmall,
+                                    style = FoodDeliveryTheme.typography.bodyMedium,
                                     textDecoration = TextDecoration.LineThrough,
                                     color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
                                 )
@@ -112,7 +114,7 @@ fun CartProductItem(
                                     Modifier
                                         .weight(1f),
                                 text = cartProductItem.newCost,
-                                style = FoodDeliveryTheme.typography.bodySmall.bold,
+                                style = FoodDeliveryTheme.typography.bodyMedium.bold,
                                 color = FoodDeliveryTheme.colors.mainColors.onSurface,
                             )
                         }
@@ -146,7 +148,7 @@ private fun CartProductItemPreview() {
                     oldCost = "100 ₽",
                     photoLink = "",
                     count = 5,
-                    additions = "Обычная булка • Добавка 1 • Добавка 2",
+                    additions = "Обычная булка • Добавка 1 • Добавка 2 • Добавка 3",
                     isLast = false,
                 ),
             onCountIncreased = {},

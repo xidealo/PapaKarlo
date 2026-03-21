@@ -44,18 +44,19 @@ class ConsumerCartViewModel(
     private val analyticService: AnalyticService,
     private val isOrderAvailableUseCase: IsOrderAvailableUseCase,
 ) : SharedStateViewModel<ConsumerCart.DataState, ConsumerCart.Action, ConsumerCart.Event>(
-        initDataState =
-            ConsumerCart.DataState(
-                state = ConsumerCart.DataState.State.LOADING,
-                motivation = null,
-                cartProductItemList = emptyList(),
-                recommendationList = emptyList(),
-                discount = null,
-                oldTotalCost = null,
-                newTotalCost = "",
-                orderAvailable = false,
-            ),
-    ) {
+    initDataState =
+        ConsumerCart.DataState(
+            state = ConsumerCart.DataState.State.LOADING,
+            motivation = null,
+            cartProductItemList = emptyList(),
+            recommendationList = emptyList(),
+            discount = null,
+            oldTotalCost = null,
+            newTotalCost = "",
+            orderAvailable = false,
+            showAcceptDeleteOrder = false
+        ),
+) {
     private var observeConsumerCartJob: Job? = null
 
     override fun reduce(
@@ -69,6 +70,7 @@ class ConsumerCartViewModel(
                 )
 
             ConsumerCart.Action.BackClick -> navigateBack()
+            ConsumerCart.Action.OnClearClick -> onClearClick()
             ConsumerCart.Action.Init -> {
                 observeConsumerCart()
                 checkOrderAvailable()
@@ -102,6 +104,9 @@ class ConsumerCartViewModel(
                 onRecommendationClicked(
                     recommendationUuid = action.menuProductUuid,
                 )
+
+            ConsumerCart.Action.CensalBottomSheet -> onCensalBottomSheet()
+            ConsumerCart.Action.DeleteSelectedOrders -> onDeleteSelectedOrders()
         }
     }
 
@@ -109,6 +114,40 @@ class ConsumerCartViewModel(
         addEvent {
             ConsumerCart.Event.NavigateBack
         }
+    }
+
+    private fun onClearClick() {
+        setState {
+            copy(
+                showAcceptDeleteOrder = true
+            )
+        }
+    }
+
+    private fun onCensalBottomSheet() {
+        setState {
+            copy(
+                showAcceptDeleteOrder = false
+            )
+        }
+    }
+
+    private fun onDeleteSelectedOrders() {
+        sharedScope.launchSafe(
+            block = {
+                cartProductInteractor.removeAllProductsFromCart()
+
+                setState {
+                    copy(
+                        showAcceptDeleteOrder = false
+                    )
+                }
+            },
+            onError = {
+                // Do nothing
+            }
+
+        )
     }
 
     private fun observeConsumerCart() {
