@@ -105,7 +105,7 @@ class ConsumerCartViewModel(
                     recommendationUuid = action.menuProductUuid,
                 )
 
-            ConsumerCart.Action.CensalBottomSheet -> onCensalBottomSheet()
+            ConsumerCart.Action.CancelBottomSheet -> onCancelBottomSheet()
             ConsumerCart.Action.DeleteSelectedOrders -> onDeleteSelectedOrders()
         }
     }
@@ -124,7 +124,7 @@ class ConsumerCartViewModel(
         }
     }
 
-    private fun onCensalBottomSheet() {
+    private fun onCancelBottomSheet() {
         setState {
             copy(
                 showAcceptDeleteOrder = false

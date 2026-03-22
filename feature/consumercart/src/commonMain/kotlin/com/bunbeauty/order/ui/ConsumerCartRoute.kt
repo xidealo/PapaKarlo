@@ -489,7 +489,7 @@ private fun BottomSheetScreen(
 ) {
     FoodDeliveryModalBottomSheet(
         onDismissRequest = {
-            onAction(ConsumerCart.Action.CensalBottomSheet)
+            onAction(ConsumerCart.Action.CancelBottomSheet)
         },
         title = stringResource(Res.string.title_consumer_delete_orders),
         isShown = state.acceptDeleteOrder.isShown,
@@ -506,7 +506,7 @@ private fun BottomSheetScreen(
                     textStringId = Res.string.common_cancel,
                     elevated = false,
                     onClick = {
-                        onAction(ConsumerCart.Action.CensalBottomSheet)
+                        onAction(ConsumerCart.Action.CancelBottomSheet)
                     },
                 )
         }

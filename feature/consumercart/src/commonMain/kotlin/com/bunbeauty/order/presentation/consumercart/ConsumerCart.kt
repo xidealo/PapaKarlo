@@ -33,7 +33,7 @@ interface ConsumerCart {
 
         data object OnClearClick : Action
 
-        data object CensalBottomSheet :
+        data object CancelBottomSheet :
            Action
 
         data object DeleteSelectedOrders :
