@@ -18,7 +18,7 @@ sealed class ConsumerCartViewState(
         val cartProductList: ImmutableList<CartProductItemUi>,
         val recommendationList: ImmutableList<ProductUi>,
         val bottomPanelInfo: BottomPanelInfoUi?,
-        val acceptDeleteOrder: AcceptDeleteOrder,
+        val acceptDeleteOrder: BottomSheetState,
     ) : ConsumerCartViewState(state = State.SUCCESS)
 
     @Immutable
@@ -52,7 +52,7 @@ sealed class ConsumerCartViewState(
         SUCCESS,
     }
 
-    data class AcceptDeleteOrder(
+    data class BottomSheetState(
         val isShown: Boolean,
     )
 }

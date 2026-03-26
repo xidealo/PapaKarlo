@@ -70,14 +70,12 @@ fun CartProductItem(
                     color = FoodDeliveryTheme.colors.mainColors.onSurface,
                     maxLines = 2,
                 )
-                Box(modifier =
-                    Modifier
-                        .padding(top = 4.dp),){
                     cartProductItem.additions?.let { additions ->
                         Text(
                             modifier =
                                 Modifier
                                     .padding(
+                                        top = 4.dp,
                                         end = FoodDeliveryTheme.dimensions.smallSpace,
                                     ),
                             text = additions,
@@ -85,7 +83,6 @@ fun CartProductItem(
                             color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
                         )
                     }
-                }
                 Row(
                     modifier =
                         Modifier

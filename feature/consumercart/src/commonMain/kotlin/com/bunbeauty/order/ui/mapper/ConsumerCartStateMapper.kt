@@ -45,8 +45,8 @@ fun ConsumerCart.DataState.toConsumerCartViewState(): ConsumerCartViewState =
                         )
                     },
                 acceptDeleteOrder =
-                    ConsumerCartViewState.AcceptDeleteOrder(
-                        isShown = showAcceptDeleteOrder,
+                    ConsumerCartViewState.BottomSheetState(
+                        isShown = isClearCartConfirmationVisible,
                     ),
             )
         }

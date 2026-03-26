@@ -1,5 +1,6 @@
 package com.bunbeauty.designsystem.ui.element
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.foundation.background
@@ -19,10 +20,12 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.theme.bold
+import com.bunbeauty.designsystem.ui.SharedTransitionPreview
 import com.bunbeauty.designsystem.ui.SharedTransitionScopeComposition
 import com.bunbeauty.designsystem.ui.element.button.SmallButton
 import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryCard
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 import papakarlo.designsystem.generated.resources.Res
 import papakarlo.designsystem.generated.resources.action_product_want
 import papakarlo.designsystem.generated.resources.description_product
@@ -144,27 +147,23 @@ fun FoodDeliveryProductItem(
     }
 }
 
-//@Preview(widthDp = 200)
-//@Composable
-//private fun MenuProductItemPreview() {
-//    FoodDeliveryTheme {
-//        SharedTransitionPreview {
-//            AnimatedVisibility(visible = true) {
-//                FoodDeliveryProductItem(
-//                    menuProductItem =
-//                        ProductUi(
-//                            uuid = "",
-//                            key = "",
-//                            photoLink = "",
-//                            name = "Бэргер",
-//                            newPrice = "99 ₽",
-//                            oldPrice = "100 ₽",
-//                        ),
-//                    onAddProductClick = {},
-//                    onProductClick = {},
-//                    animatedContentScope = this,
-//                )
-//            }
-//        }
-//    }
-//}
+@Preview(widthDp = 200)
+@Composable
+private fun MenuProductItemPreview() {
+    FoodDeliveryTheme {
+        SharedTransitionPreview {
+            AnimatedVisibility(visible = true) {
+                FoodDeliveryProductItem(
+                    onAddProductClick = {},
+                    onProductClick = {},
+                    animatedContentScope = this,
+                    uuid = "",
+                    photoLink = "",
+                    name = "Бергер",
+                    newPrice = "99 ₽",
+                    oldPrice = "100 ₽",
+                )
+            }
+        }
+    }
+}

@@ -54,7 +54,7 @@ class ConsumerCartViewModel(
             oldTotalCost = null,
             newTotalCost = "",
             orderAvailable = false,
-            showAcceptDeleteOrder = false
+            isClearCartConfirmationVisible = false
         ),
 ) {
     private var observeConsumerCartJob: Job? = null
@@ -70,7 +70,7 @@ class ConsumerCartViewModel(
                 )
 
             ConsumerCart.Action.BackClick -> navigateBack()
-            ConsumerCart.Action.OnClearClick -> onClearClick()
+            ConsumerCart.Action.OnClearCartClick -> onClearClick()
             ConsumerCart.Action.Init -> {
                 observeConsumerCart()
                 checkOrderAvailable()
@@ -106,7 +106,7 @@ class ConsumerCartViewModel(
                 )
 
             ConsumerCart.Action.CancelBottomSheet -> onCancelBottomSheet()
-            ConsumerCart.Action.DeleteSelectedOrders -> onDeleteSelectedOrders()
+            ConsumerCart.Action.ConfirmClearCart -> onDeleteSelectedOrders()
         }
     }
 
@@ -119,7 +119,7 @@ class ConsumerCartViewModel(
     private fun onClearClick() {
         setState {
             copy(
-                showAcceptDeleteOrder = true
+                isClearCartConfirmationVisible = true
             )
         }
     }
@@ -127,7 +127,7 @@ class ConsumerCartViewModel(
     private fun onCancelBottomSheet() {
         setState {
             copy(
-                showAcceptDeleteOrder = false
+                isClearCartConfirmationVisible = false
             )
         }
     }
@@ -139,7 +139,7 @@ class ConsumerCartViewModel(
 
                 setState {
                     copy(
-                        showAcceptDeleteOrder = false
+                        isClearCartConfirmationVisible = false
                     )
                 }
             },

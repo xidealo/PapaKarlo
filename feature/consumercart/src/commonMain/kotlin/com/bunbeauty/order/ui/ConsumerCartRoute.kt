@@ -154,7 +154,7 @@ fun ConsumerCartScreen(
                     FoodDeliveryAction(
                         iconId = Res.drawable.ic_basket,
                         onClick = {
-                            onAction(ConsumerCart.Action.OnClearClick)
+                            onAction(ConsumerCart.Action.OnClearCartClick)
                         }
                     )
                 )
@@ -498,7 +498,7 @@ private fun BottomSheetScreen(
                     elevated = false,
                     text = stringResource(Res.string.action_consumer_delete),
                     onClick = {
-                        onAction(ConsumerCart.Action.DeleteSelectedOrders)
+                        onAction(ConsumerCart.Action.ConfirmClearCart)
                     },
                 )
                 SecondaryButton(
@@ -563,7 +563,7 @@ private fun ConsumerCartSuccessScreenPreview() {
                                     getRecommendation("6"),
                                     getRecommendation("7"),
                                 ),
-                            acceptDeleteOrder = ConsumerCartViewState.AcceptDeleteOrder(
+                            acceptDeleteOrder = ConsumerCartViewState.BottomSheetState(
                                 isShown = false
                             ),
                         ),
@@ -593,7 +593,7 @@ private fun ConsumerCartEmptyScreenPreview() {
                                     getRecommendation("1"),
                                     getRecommendation("2"),
                                 ),
-                            acceptDeleteOrder = ConsumerCartViewState.AcceptDeleteOrder(
+                            acceptDeleteOrder = ConsumerCartViewState.BottomSheetState(
                                 isShown = false
                             ),
                         ),
