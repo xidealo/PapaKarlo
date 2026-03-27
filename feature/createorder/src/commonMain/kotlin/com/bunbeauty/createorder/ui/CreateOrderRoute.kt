@@ -799,7 +799,6 @@ private fun BottomAmountBar(
             LoadingButton(
                 modifier =
                     Modifier
-                        .padding(horizontal = 16.dp)
                         .padding(
                             bottom =
                                 if (getIsImeVisible()) {
