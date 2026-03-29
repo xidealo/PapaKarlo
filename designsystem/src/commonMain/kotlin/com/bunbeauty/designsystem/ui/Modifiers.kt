@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 fun Modifier.icon24() = this.size(24.dp)
 
 fun Modifier.icon16() = this.size(16.dp)
+fun Modifier.icon20() = this.size(20.dp)
 
 fun <T> Modifier.applyIfNotNull(
     value: T?,
