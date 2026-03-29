@@ -2,6 +2,7 @@ package com.bunbeauty.order.ui
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedContentScope
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
@@ -40,6 +41,7 @@ import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.theme.bold
 import com.bunbeauty.designsystem.theme.medium
 import com.bunbeauty.designsystem.ui.LocalBottomBarPadding
+import com.bunbeauty.designsystem.ui.SharedTransitionPreview
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryAction
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryProductItem
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryScaffold
@@ -139,7 +141,7 @@ fun ConsumerCartRoute(
 fun ConsumerCartScreen(
     viewState: ConsumerCartViewState,
     onAction: (ConsumerCart.Action) -> Unit,
-    animatedContentScope: AnimatedContentScope,
+    animatedContentScope: AnimatedVisibilityScope,
 ) {
     FoodDeliveryScaffold(
         title = stringResource(resource = Res.string.title_cart),
@@ -154,7 +156,7 @@ fun ConsumerCartScreen(
                     FoodDeliveryAction(
                         iconId = Res.drawable.ic_basket,
                         onClick = {
-                            onAction(ConsumerCart.Action.OnClearCartClick)
+                            onAction(ConsumerCart.Action.OnClearConsumerCartClick)
                         }
                     )
                 )
@@ -242,9 +244,9 @@ fun ConsumerCartEffect(
 private fun ConsumerCartSuccessScreen(
     viewState: ConsumerCartViewState.Success,
     onAction: (ConsumerCart.Action) -> Unit,
-    animatedContentScope: AnimatedContentScope,
+    animatedContentScope: AnimatedVisibilityScope
 ) {
-    BottomSheetScreen(
+    ClearConsumerCartBottomSheet(
         state = viewState,
         onAction = onAction,
     )
@@ -483,7 +485,7 @@ private fun LazyGridScope.recommendationItems(
 }
 
 @Composable
-private fun BottomSheetScreen(
+private fun ClearConsumerCartBottomSheet(
     state: ConsumerCartViewState.Success,
     onAction: (ConsumerCart.Action) -> Unit,
 ) {
@@ -512,7 +514,6 @@ private fun BottomSheetScreen(
         }
 }
 
-@OptIn(ExperimentalSharedTransitionApi::class)
 @Preview(showBackground = true)
 @Composable
 private fun ConsumerCartSuccessScreenPreview() {
@@ -531,81 +532,86 @@ private fun ConsumerCartSuccessScreenPreview() {
 
     FoodDeliveryTheme {
         SharedTransitionLayout {
-            AnimatedContent(
-                targetState = true,
-            ) {
-                ConsumerCartScreen(
-                    viewState =
-                        ConsumerCartViewState.Success(
-                            cartProductList =
-                                persistentListOf(
-                                    getCartProductItemModel("1"),
-                                    getCartProductItemModel("2"),
-                                    getCartProductItemModel("3"),
-                                    getCartProductItemModel("4"),
-                                    getCartProductItemModel("5"),
+            SharedTransitionPreview {
+                AnimatedVisibility(
+                    visible = true,
+                ) {
+                    ConsumerCartScreen(
+                        viewState =
+                            ConsumerCartViewState.Success(
+                                cartProductList =
+                                    persistentListOf(
+                                        getCartProductItemModel("1"),
+                                        getCartProductItemModel("2"),
+                                        getCartProductItemModel("3"),
+                                        getCartProductItemModel("4"),
+                                        getCartProductItemModel("5"),
+                                    ),
+                                bottomPanelInfo =
+                                    ConsumerCartViewState.BottomPanelInfoUi(
+                                        motivation =
+                                            MotivationUi.ForLowerDelivery(
+                                                increaseAmountBy = "550 ₽",
+                                                progress = 0.5f,
+                                                isFree = true,
+                                            ),
+                                        discount = "10%",
+                                        oldTotalCost = "1650 ₽",
+                                        newTotalCost = "1500 ₽",
+                                        orderAvailable = true,
+                                    ),
+                                recommendationList =
+                                    persistentListOf(
+                                        getRecommendation("6"),
+                                        getRecommendation("7"),
+                                    ),
+                                acceptDeleteOrder = ConsumerCartViewState.BottomSheetState(
+                                    isShown = false
                                 ),
-                            bottomPanelInfo =
-                                ConsumerCartViewState.BottomPanelInfoUi(
-                                    motivation =
-                                        MotivationUi.ForLowerDelivery(
-                                            increaseAmountBy = "550 ₽",
-                                            progress = 0.5f,
-                                            isFree = true,
-                                        ),
-                                    discount = "10%",
-                                    oldTotalCost = "1650 ₽",
-                                    newTotalCost = "1500 ₽",
-                                    orderAvailable = true,
-                                ),
-                            recommendationList =
-                                persistentListOf(
-                                    getRecommendation("6"),
-                                    getRecommendation("7"),
-                                ),
-                            acceptDeleteOrder = ConsumerCartViewState.BottomSheetState(
-                                isShown = false
                             ),
-                        ),
-                    onAction = {},
-                    animatedContentScope = this
-                )
+                        onAction = {},
+                        animatedContentScope = this
+                    )
+                }
             }
         }
     }
 }
-
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Preview(showBackground = true)
 @Composable
 private fun ConsumerCartEmptyScreenPreview() {
     FoodDeliveryTheme {
         SharedTransitionLayout {
-            AnimatedContent(
-                targetState = true,
-            ) {
-                ConsumerCartScreen(
-                    viewState =
-                        ConsumerCartViewState.Success(
-                            cartProductList = persistentListOf(),
-                            bottomPanelInfo = null,
-                            recommendationList =
-                                persistentListOf(
-                                    getRecommendation("1"),
-                                    getRecommendation("2"),
+            SharedTransitionPreview {
+                AnimatedVisibility(
+                    visible = true,
+                ) {
+                    ConsumerCartScreen(
+                        viewState =
+                            ConsumerCartViewState.Success(
+                                cartProductList = persistentListOf(),
+                                bottomPanelInfo = null,
+                                recommendationList =
+                                    persistentListOf(
+                                        getRecommendation("1"),
+                                        getRecommendation("2"),
+                                    ),
+                                acceptDeleteOrder = ConsumerCartViewState.BottomSheetState(
+                                    isShown = false
                                 ),
-                            acceptDeleteOrder = ConsumerCartViewState.BottomSheetState(
-                                isShown = false
                             ),
-                        ),
 
-                    onAction = {},
-                    animatedContentScope = this
-                )
+                        onAction = {},
+                        animatedContentScope = this
+                    )
+                }
             }
         }
     }
 }
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Preview(showBackground = true)
 @Composable
 private fun ConsumerCartLoadingScreenPreview() {

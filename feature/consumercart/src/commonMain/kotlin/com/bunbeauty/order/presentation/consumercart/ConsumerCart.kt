@@ -31,7 +31,7 @@ import com.bunbeauty.core.motivation.MotivationData
 
             data object BackClick : Action
 
-            data object OnClearCartClick : Action
+            data object OnClearConsumerCartClick : Action
 
             data object CancelBottomSheet :
                Action

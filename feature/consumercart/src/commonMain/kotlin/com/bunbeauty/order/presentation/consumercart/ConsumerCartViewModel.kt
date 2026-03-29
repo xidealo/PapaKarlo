@@ -70,7 +70,7 @@ class ConsumerCartViewModel(
                 )
 
             ConsumerCart.Action.BackClick -> navigateBack()
-            ConsumerCart.Action.OnClearCartClick -> onClearClick()
+            ConsumerCart.Action.OnClearConsumerCartClick -> onClearConsumerCartClick()
             ConsumerCart.Action.Init -> {
                 observeConsumerCart()
                 checkOrderAvailable()
@@ -116,7 +116,7 @@ class ConsumerCartViewModel(
         }
     }
 
-    private fun onClearClick() {
+    private fun onClearConsumerCartClick() {
         setState {
             copy(
                 isClearCartConfirmationVisible = true

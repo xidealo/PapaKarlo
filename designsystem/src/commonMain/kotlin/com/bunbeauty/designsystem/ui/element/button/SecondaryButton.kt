@@ -10,13 +10,11 @@ import com.bunbeauty.designsystem.theme.medium
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import papakarlo.designsystem.generated.resources.Res
-import papakarlo.designsystem.generated.resources.preview_string
 
 @Composable
 fun SecondaryButton(
     modifier: Modifier = Modifier,
-    textStringId: StringResource,
+    text: String,
     elevated: Boolean = true,
     enabled: Boolean = true,
     onClick: () -> Unit,
@@ -30,10 +28,27 @@ fun SecondaryButton(
         enabled = enabled,
     ) {
         Text(
-            text = stringResource(resource = textStringId),
+            text = text,
             style = FoodDeliveryTheme.typography.labelLarge.medium,
         )
     }
+}
+
+@Composable
+fun SecondaryButton(
+    modifier: Modifier = Modifier,
+    textStringId: StringResource,
+    elevated: Boolean = true,
+    enabled: Boolean = true,
+    onClick: () -> Unit,
+) {
+    SecondaryButton(
+        modifier = modifier,
+        text = stringResource(textStringId),
+        elevated = elevated,
+        enabled = enabled,
+        onClick = onClick,
+    )
 }
 
 @Preview
@@ -41,7 +56,7 @@ fun SecondaryButton(
 private fun SecondaryButtonPreview() {
     FoodDeliveryTheme {
         SecondaryButton(
-            textStringId = Res.string.preview_string,
+            text = "Preview button",
             onClick = {},
         )
     }
