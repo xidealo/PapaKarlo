@@ -1,15 +1,18 @@
 package com.bunbeauty.shared.ui.screen.main
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Snackbar
@@ -25,9 +28,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
-import com.bunbeauty.designsystem.ui.topbar.LocalStatusBarColor
+import com.bunbeauty.designsystem.ui.LocalBottomBarPadding
+import com.bunbeauty.designsystem.ui.LocalStatusBarColor
+import com.bunbeauty.designsystem.ui.SharedTransitionScopeComposition
 import com.bunbeauty.shared.presentation.MainViewModel
 import com.bunbeauty.shared.ui.navigation.FoodDeliveryNavHost
 import kotlinx.coroutines.delay
@@ -42,6 +49,7 @@ import papakarlo.designsystem.generated.resources.warning_no_order_available
 fun MainScreen(
     viewModel: MainViewModel = koinViewModel(),
     modifier: Modifier = Modifier,
+    barColorCallback: (Color) -> Unit = {},
 ) {
     val mainState by viewModel.mainState.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -55,47 +63,57 @@ fun MainScreen(
     val color = FoodDeliveryTheme.colors.mainColors.surface
     val statusBarColor = remember { mutableStateOf(color) }
 
-    CompositionLocalProvider(
-        LocalStatusBarColor provides statusBarColor,
-    ) {
-        Scaffold(
-            modifier =
-                Modifier
-                    .fillMaxSize(),
-            snackbarHost = {
-                FoodDeliverySnackbarHost(
-                    snackbarHostState = snackbarHostState,
-                    paddingBottom = mainState.paddingBottomSnackbar,
-                )
-            },
-            containerColor = statusBarColor.value,
-        ) {
-            Column(
-                modifier =
-                    modifier
-                        .fillMaxSize(),
-            ) {
-                ConnectionErrorMessage(visible = mainState.connectionLost)
-                StatusBarMessage(statusBarMessage = mainState.statusBarMessage)
+    val localBottomBarPadding =
+        with(LocalDensity.current) {
+            WindowInsets.navigationBars.getBottom(this).toDp()
+        }
 
-                Box(
+    barColorCallback.invoke(statusBarColor.value)
+    SharedTransitionLayout {
+        CompositionLocalProvider(
+            LocalStatusBarColor provides statusBarColor,
+            LocalBottomBarPadding provides localBottomBarPadding,
+            SharedTransitionScopeComposition provides this,
+        ) {
+            Scaffold(
+                modifier =
+                    Modifier
+                        .fillMaxSize(),
+                snackbarHost = {
+                    FoodDeliverySnackbarHost(
+                        snackbarHostState = snackbarHostState,
+                        paddingBottom = mainState.paddingBottomSnackbar,
+                    )
+                },
+                containerColor = statusBarColor.value,
+            ) {
+                Column(
                     modifier =
-                        Modifier
+                        modifier
                             .fillMaxSize(),
                 ) {
-                    FoodDeliveryNavHost(
-                        showInfoMessage = { message, padding ->
-                            viewModel.showInfoMessage(
-                                text = message,
-                                paddingBottom = padding,
-                            )
-                        },
-                        showErrorMessage = { message ->
-                            viewModel.showErrorMessage(
-                                message,
-                            )
-                        },
-                    )
+                    ConnectionErrorMessage(visible = mainState.connectionLost)
+                    StatusBarMessage(statusBarMessage = mainState.statusBarMessage)
+
+                    Box(
+                        modifier =
+                            Modifier
+                                .fillMaxSize(),
+                    ) {
+                        FoodDeliveryNavHost(
+                            showInfoMessage = { message, padding ->
+                                viewModel.showInfoMessage(
+                                    text = message,
+                                    paddingBottom = padding,
+                                )
+                            },
+                            showErrorMessage = { message ->
+                                viewModel.showErrorMessage(
+                                    message,
+                                )
+                            },
+                        )
+                    }
                 }
             }
         }

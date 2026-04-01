@@ -74,7 +74,7 @@ class UserAddressMapper {
             street =
                 UserAddressStreetPostServer(
                     fiasId = createdUserAddress.street.fiasId,
-                    name = createdUserAddress.street.street,
+                    name = createdUserAddress.street.address,
                 ),
             house = createdUserAddress.house,
             flat = createdUserAddress.flat,

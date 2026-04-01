@@ -81,7 +81,7 @@ fun FoodDeliveryModalBottomSheet(
                         .padding(paddingValues = contentPadding),
             ) {
                 title?.let {
-                    _root_ide_package_.com.bunbeauty.designsystem.ui.screen.bottomsheet.Title(
+                    Title(
                         modifier = Modifier.padding(vertical = 16.dp),
                         title = title,
                     )

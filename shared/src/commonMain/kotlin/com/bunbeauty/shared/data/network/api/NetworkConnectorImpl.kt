@@ -122,7 +122,7 @@ internal class NetworkConnectorImpl(
         cityUuid: String,
     ): ApiResult<ListServer<SuggestionServer>> =
         getData(
-            path = "street/suggestions",
+            path = "v2/street/suggestions",
             parameters =
                 mapOf(
                     QUERY_PARAMETER to query,

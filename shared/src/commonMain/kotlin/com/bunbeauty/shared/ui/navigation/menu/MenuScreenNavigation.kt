@@ -1,7 +1,6 @@
 package com.bunbeauty.shared.ui.navigation.menu
 
 import androidx.compose.animation.ExperimentalSharedTransitionApi
-import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
@@ -23,7 +22,6 @@ fun NavController.navigateToMenuScreen(navOptions: NavOptions) = navigate(route 
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 fun NavGraphBuilder.menuScreenRoute(
-    sharedTransitionScope: SharedTransitionScope,
     goToProductDetailsFragment: (
         uuid: String,
         name: String,
@@ -69,7 +67,6 @@ fun NavGraphBuilder.menuScreenRoute(
             goToProfile = goToProfile,
             goToConsumerCart = goToConsumerCart,
             showErrorMessage = showErrorMessage,
-            sharedTransitionScope = sharedTransitionScope,
             animatedContentScope = this@composable,
             showInfoMessage = showInfoMessage,
         )

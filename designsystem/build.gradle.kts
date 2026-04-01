@@ -8,7 +8,6 @@ plugins {
     alias(libs.plugins.compose)
 }
 
-@OptIn(org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi::class)
 kotlin {
     applyDefaultHierarchyTemplate()
     androidTarget()
@@ -29,6 +28,8 @@ kotlin {
             isStatic = true
         }
     }
+
+
 
     sourceSets {
         val commonMain by getting {
@@ -54,6 +55,7 @@ kotlin {
             }
         }
     }
+
 }
 
 android {
@@ -70,4 +72,5 @@ android {
         sourceCompatibility = JavaVersion.VERSION_21
         targetCompatibility = JavaVersion.VERSION_21
     }
+
 }

@@ -6,8 +6,8 @@ import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
-import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -34,6 +34,8 @@ import com.bunbeauty.core.Constants.FAB_SNACKBAR_BOTTOM_PADDING
 import com.bunbeauty.core.model.ProductDetailsOpenedFrom
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.theme.bold
+import com.bunbeauty.designsystem.ui.LocalBottomBarPadding
+import com.bunbeauty.designsystem.ui.SharedTransitionScopeComposition
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryAsyncImage
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.designsystem.ui.element.TopCartUi
@@ -67,15 +69,14 @@ import papakarlo.designsystem.generated.resources.msg_menu_product_edited
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun ProductDetailsRoute(
-    sharedTransitionScope: SharedTransitionScope,
     animatedContentScope: AnimatedContentScope,
     viewModel: ProductDetailsViewModel = koinViewModel(),
-    back: () -> Unit,
     menuProductUuid: String,
     menuProductName: String,
     productDetailsOpenedFrom: ProductDetailsOpenedFrom,
     additionUuidList: List<String>,
     cartProductUuid: String?,
+    back: () -> Unit,
     showInfoMessage: (String, Int) -> Unit,
     showErrorMessage: (String) -> Unit,
 ) {
@@ -121,7 +122,6 @@ fun ProductDetailsRoute(
         onAction = onAction,
         productDetailsOpenedFrom = productDetailsOpenedFrom,
         cartProductUuid = cartProductUuid,
-        sharedTransitionScope = sharedTransitionScope,
         animatedContentScope = animatedContentScope,
     )
 }
@@ -177,7 +177,6 @@ private fun ProductDetailsScreen(
     productDetailsOpenedFrom: ProductDetailsOpenedFrom,
     cartProductUuid: String?,
     productDetailsViewState: ProductDetailsViewState,
-    sharedTransitionScope: SharedTransitionScope,
     animatedContentScope: AnimatedVisibilityScope,
     onAction: (ProductDetailsState.Action) -> Unit,
 ) {
@@ -218,7 +217,6 @@ private fun ProductDetailsScreen(
                 ProductDetailsSuccessScreen(
                     menuProductUi = productDetailsViewState.menuProductUi,
                     onAction = onAction,
-                    sharedTransitionScope = sharedTransitionScope,
                     animatedContentScope = animatedContentScope,
                 )
             }
@@ -245,7 +243,6 @@ private fun ProductDetailsScreen(
 @Composable
 private fun ProductDetailsSuccessScreen(
     menuProductUi: ProductDetailsViewState.Success.MenuProductUi,
-    sharedTransitionScope: SharedTransitionScope,
     animatedContentScope: AnimatedVisibilityScope,
     onAction: (ProductDetailsState.Action) -> Unit,
 ) {
@@ -253,6 +250,7 @@ private fun ProductDetailsSuccessScreen(
         modifier =
             Modifier
                 .fillMaxWidth(),
+        contentPadding = PaddingValues(bottom = LocalBottomBarPadding.current),
     ) {
         item {
             ProductCard(
@@ -262,7 +260,6 @@ private fun ProductDetailsSuccessScreen(
                         .padding(horizontal = 16.dp)
                         .padding(top = 16.dp),
                 menuProductUi = menuProductUi,
-                sharedTransitionScope = sharedTransitionScope,
                 animatedContentScope = animatedContentScope,
             )
         }
@@ -391,11 +388,10 @@ private fun AdditionItem(
 @Composable
 private fun ProductCard(
     menuProductUi: ProductDetailsViewState.Success.MenuProductUi,
-    sharedTransitionScope: SharedTransitionScope,
     animatedContentScope: AnimatedVisibilityScope,
     modifier: Modifier = Modifier,
 ) {
-    with(sharedTransitionScope) {
+    with(SharedTransitionScopeComposition.current) {
         Column(
             modifier = modifier,
         ) {
@@ -404,7 +400,7 @@ private fun ProductCard(
                     Modifier
                         .sharedElement(
                             sharedContentState =
-                                sharedTransitionScope.rememberSharedContentState(
+                                rememberSharedContentState(
                                     key = "image-${menuProductUi.uuid}",
                                 ),
                             animatedVisibilityScope = animatedContentScope,
@@ -429,7 +425,7 @@ private fun ProductCard(
                                 .padding(end = FoodDeliveryTheme.dimensions.smallSpace)
                                 .sharedElement(
                                     sharedContentState =
-                                        sharedTransitionScope.rememberSharedContentState(
+                                        rememberSharedContentState(
                                             key = "text-${menuProductUi.uuid}",
                                         ),
                                     animatedVisibilityScope = animatedContentScope,
@@ -457,10 +453,9 @@ private fun ProductCard(
                                     .padding(end = FoodDeliveryTheme.dimensions.smallSpace)
                                     .sharedElement(
                                         sharedContentState =
-                                            sharedTransitionScope
-                                                .rememberSharedContentState(
-                                                    key = "oldPrice-${menuProductUi.uuid}",
-                                                ),
+                                            rememberSharedContentState(
+                                                key = "oldPrice-${menuProductUi.uuid}",
+                                            ),
                                         animatedVisibilityScope = animatedContentScope,
                                     ),
                             text = menuProductUi.oldPrice,
@@ -473,7 +468,7 @@ private fun ProductCard(
                         modifier =
                             Modifier.sharedElement(
                                 sharedContentState =
-                                    sharedTransitionScope.rememberSharedContentState(
+                                    rememberSharedContentState(
                                         key = "price-${menuProductUi.uuid}",
                                     ),
                                 animatedVisibilityScope = animatedContentScope,
@@ -506,7 +501,6 @@ private fun ProductDetailsSuccessScreenPreview() {
             AnimatedVisibility(visible = true) {
                 ProductDetailsScreen(
                     animatedContentScope = this,
-                    sharedTransitionScope = this@SharedTransitionLayout,
                     menuProductName = "Бэргер куриный Макс с экстра сырным соусом",
                     menuProductUuid = "",
                     productDetailsViewState =
@@ -625,7 +619,6 @@ private fun ProductDetailsLoadingScreenPreview() {
                     additionUuidList = persistentListOf(),
                     onAction = {},
                     animatedContentScope = this,
-                    sharedTransitionScope = this@SharedTransitionLayout,
                 )
             }
         }

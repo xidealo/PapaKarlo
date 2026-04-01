@@ -3,8 +3,6 @@ package com.bunbeauty.core.domain.address.di
 import com.bunbeauty.core.domain.address.GetCurrentUserAddressFlowUseCase
 import com.bunbeauty.core.domain.address.GetCurrentUserAddressUseCase
 import com.bunbeauty.core.domain.address.GetCurrentUserAddressUseCaseImpl
-import com.bunbeauty.core.domain.address.GetCurrentUserAddressWithCityUseCase
-import com.bunbeauty.core.domain.address.GetCurrentUserAddressWithCityUseCaseImpl
 import com.bunbeauty.core.domain.address.GetSuggestionsUseCase
 import org.koin.dsl.module
 
@@ -20,10 +18,9 @@ fun addressModule() =
                 userAddressRepo = get(),
             )
         }
-        factory<GetCurrentUserAddressWithCityUseCase> {
-            GetCurrentUserAddressWithCityUseCaseImpl(
+        factory<GetCurrentUserAddressUseCase> {
+            GetCurrentUserAddressUseCaseImpl(
                 userAddressRepo = get(),
-                getSelectedCityUseCase = get(),
             )
         }
         factory {

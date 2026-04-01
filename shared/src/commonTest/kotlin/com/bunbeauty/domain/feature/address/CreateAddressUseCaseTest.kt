@@ -62,8 +62,7 @@ class CreateAddressUseCaseTest {
                             street =
                                 Suggestion(
                                     fiasId = "fiasId",
-                                    street = "street",
-                                    details = null,
+                                    address = "street",
                                 ),
                             house = "house",
                             flat = "flat",
@@ -86,8 +85,7 @@ class CreateAddressUseCaseTest {
                     street =
                         Suggestion(
                             fiasId = "fiasId",
-                            street = "street",
-                            details = null,
+                            address = "street",
                         ),
                     house = "house",
                     flat = "flat",

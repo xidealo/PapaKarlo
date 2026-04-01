@@ -1,6 +1,5 @@
 package com.bunbeauty.shared.presentation
 
-import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.core.Logger
@@ -53,13 +52,6 @@ class MainViewModel(
     fun consumeEventList(eventList: List<MainState.Event>) {
         mutableMainState.update { state ->
             state - eventList
-        }
-    }
-
-    fun setStatusColor(color: Color) {
-        println(color)
-        mutableMainState.update { state ->
-            state.copy(statusBarColor = color)
         }
     }
 

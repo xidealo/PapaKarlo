@@ -19,6 +19,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.theme.bold
+import com.bunbeauty.designsystem.ui.LocalBottomBarPadding
 import com.bunbeauty.designsystem.ui.element.button.MainButton
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.painterResource
@@ -85,7 +86,10 @@ fun ErrorScreen(
         MainButton(
             modifier =
                 Modifier
-                    .padding(bottom = FoodDeliveryTheme.dimensions.mediumSpace)
+                    .padding(
+                        bottom = FoodDeliveryTheme.dimensions.mediumSpace
+                                + LocalBottomBarPadding.current
+                    )
                     .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
             onClick = onClick,
             textStringId = Res.string.action_retry,

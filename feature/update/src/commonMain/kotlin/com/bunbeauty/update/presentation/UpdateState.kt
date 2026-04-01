@@ -4,7 +4,6 @@ import com.bunbeauty.core.base.BaseAction
 import com.bunbeauty.core.base.BaseEvent
 import com.bunbeauty.core.base.BaseViewDataState
 import com.bunbeauty.core.model.link.Link
-import com.bunbeauty.core.model.link.LinkType
 
 sealed interface UpdateState {
     data class DataState(
@@ -19,9 +18,7 @@ sealed interface UpdateState {
     }
 
     sealed interface Action : BaseAction {
-        data class Init(
-            val linkType: LinkType,
-        ) : Action
+        data object Init : Action
 
         data class UpdateClick(
             val linkValue: String,

@@ -40,6 +40,7 @@ import com.bunbeauty.core.model.order.LightOrder
 import com.bunbeauty.core.model.order.OrderStatus
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.theme.bold
+import com.bunbeauty.designsystem.ui.LocalBottomBarPadding
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryHorizontalDivider
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.designsystem.ui.element.OrderStatusChip
@@ -272,7 +273,8 @@ private fun LoginButton(onAction: (ProfileState.Action) -> Unit) {
     MainButton(
         modifier =
             Modifier
-                .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
+                .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace)
+                .padding(bottom = LocalBottomBarPadding.current),
         textStringId = Res.string.action_profile_login,
         onClick = { onAction(ProfileState.Action.OnLoginClicked) },
     )

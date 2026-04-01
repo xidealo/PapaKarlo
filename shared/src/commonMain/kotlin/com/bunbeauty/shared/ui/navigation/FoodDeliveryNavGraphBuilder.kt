@@ -1,7 +1,6 @@
 package com.bunbeauty.shared.ui.navigation
 
 import androidx.compose.animation.ExperimentalSharedTransitionApi
-import androidx.compose.animation.SharedTransitionScope
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.navOptions
@@ -46,7 +45,6 @@ internal val emptyNavOptions = navOptions { }
 @OptIn(ExperimentalSharedTransitionApi::class)
 fun NavGraphBuilder.foodDeliveryNavGraphBuilder(
     navController: NavController,
-    sharedTransitionScope: SharedTransitionScope,
     showInfoMessage: (String, Int) -> Unit,
     showErrorMessage: (String) -> Unit,
 ) {
@@ -93,14 +91,12 @@ fun NavGraphBuilder.foodDeliveryNavGraphBuilder(
             navController.navigateConsumerCartScreen(emptyNavOptions)
         },
         showErrorMessage = showErrorMessage,
-        sharedTransitionScope = sharedTransitionScope,
         showInfoMessage = showInfoMessage,
     )
     productDetailsScreenRoute(
         back = navController::navigateUp,
         showErrorMessage = showErrorMessage,
         showInfoMessage = showInfoMessage,
-        sharedTransitionScope = sharedTransitionScope,
     )
     orderDetailsScreenRoute(back = navController::navigateUp)
     settingsScreenRoute(

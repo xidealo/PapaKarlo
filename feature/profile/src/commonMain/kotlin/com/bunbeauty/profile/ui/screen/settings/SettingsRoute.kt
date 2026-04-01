@@ -10,11 +10,14 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.bunbeauty.designsystem.model.CityUI
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
+import com.bunbeauty.designsystem.ui.LocalBottomBarPadding
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.designsystem.ui.element.button.MainButton
+import com.bunbeauty.designsystem.ui.element.button.SecondaryButton
 import com.bunbeauty.designsystem.ui.element.card.NavigationCardWithDivider
 import com.bunbeauty.designsystem.ui.element.card.TextCardWithDivider
 import com.bunbeauty.designsystem.ui.screen.ErrorScreen
@@ -31,6 +34,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import papakarlo.designsystem.generated.resources.Res
 import papakarlo.designsystem.generated.resources.action_logout
+import papakarlo.designsystem.generated.resources.action_settings_delete
 import papakarlo.designsystem.generated.resources.common_city
 import papakarlo.designsystem.generated.resources.error_common_data_loading
 import papakarlo.designsystem.generated.resources.error_something_went_wrong
@@ -113,6 +117,10 @@ fun SettingsState.DataState.mapState(): SettingsViewState =
                             )
                         }.toPersistentList(),
             ),
+        disableUserBottomSheetUI =
+            SettingsViewState.DisableUserBottomSheetUI(
+                isShown = isShowDisableUserBottomSheet,
+            ),
     )
 
 @Composable
@@ -158,7 +166,8 @@ fun SettingsScreen(
             MainButton(
                 modifier =
                     Modifier
-                        .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
+                        .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace)
+                        .padding(bottom = LocalBottomBarPadding.current),
                 text = stringResource(resource = Res.string.action_logout),
                 onClick = {
                     onAction(SettingsState.Action.OnLogoutClicked)
@@ -179,6 +188,10 @@ fun SettingsScreen(
                 )
                 CityListBottomSheetScreen(
                     cityListBottomSheetUI = viewState.cityListBottomSheetUI,
+                    onAction = onAction,
+                )
+                DisableUserBottomSheetScreen(
+                    disableUserBottomSheetUI = viewState.disableUserBottomSheetUI,
                     onAction = onAction,
                 )
             }
@@ -218,6 +231,15 @@ fun SettingsScreenSuccess(
             label = stringResource(Res.string.common_city),
             value = settingsState.selectedCityName,
         )
+
+        SecondaryButton(
+            modifier = Modifier.padding(top = 16.dp),
+            textStringId = Res.string.action_settings_delete,
+            onClick = {
+                onAction(SettingsState.Action.DisableUser)
+            },
+            elevated = false,
+        )
     }
 }
 
@@ -231,6 +253,10 @@ val previewSettingsViewState =
             SettingsViewState.CityListBottomSheetUI(
                 isShown = false,
                 cityListUI = persistentListOf(),
+            ),
+        disableUserBottomSheetUI =
+            SettingsViewState.DisableUserBottomSheetUI(
+                isShown = false,
             ),
     )
 

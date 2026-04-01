@@ -20,14 +20,17 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.theme.bold
 import com.bunbeauty.designsystem.theme.medium
+import com.bunbeauty.designsystem.ui.LocalStatusBarColor
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryAction
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryCartAction
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryHorizontalDivider
@@ -45,15 +48,12 @@ import papakarlo.designsystem.generated.resources.ic_arrow_back
 import papakarlo.designsystem.generated.resources.ic_cart_24
 import papakarlo.designsystem.generated.resources.preview_string
 
-val LocalStatusBarColor = compositionLocalOf<MutableState<Color>?> { null }
-
 @Composable
 fun FoodDeliveryTopAppBar(
     title: String?,
     backActionClick: (() -> Unit)? = null,
     actions: ImmutableList<FoodDeliveryToolbarActions> = persistentListOf(),
     isScrolled: Boolean = false,
-    content: @Composable () -> Unit = {},
 ) {
     val barColor by animateColorAsState(
         targetValue =
@@ -69,29 +69,29 @@ fun FoodDeliveryTopAppBar(
     val statusBarColorState = LocalStatusBarColor.current
 
     LaunchedEffect(barColor) {
-        statusBarColorState?.value = barColor
+        statusBarColorState.value = barColor
     }
 
-    Column(modifier = Modifier.background(barColor)) {
-        FoodDeliveryTopAppBar(
-            title = title,
-            backActionClick = backActionClick,
-            actions = actions,
-        )
-
-        content()
-
-        if (isScrolled) {
-            FoodDeliveryHorizontalDivider(
-                color = FoodDeliveryTheme.colors.mainColors.strokeVariant
+    if (backActionClick != null || title != null) {
+        Column(modifier = Modifier.background(barColor)) {
+            FoodDeliveryTopAppBarContent(
+                title = title,
+                backActionClick = backActionClick,
+                actions = actions,
             )
+
+            if (isScrolled) {
+                FoodDeliveryHorizontalDivider(
+                    color = FoodDeliveryTheme.colors.mainColors.strokeVariant
+                )
+            }
         }
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun FoodDeliveryTopAppBar(
+private fun FoodDeliveryTopAppBarContent(
     title: String?,
     modifier: Modifier = Modifier,
     backActionClick: (() -> Unit)? = null,
@@ -104,7 +104,7 @@ private fun FoodDeliveryTopAppBar(
             Text(
                 text = title.orEmpty(),
                 maxLines = 1,
-                style = FoodDeliveryTheme.typography.titleMedium.bold,
+                style = FoodDeliveryTheme.typography.titleMedium.medium,
                 overflow = TextOverflow.Ellipsis,
             )
         },

@@ -1,7 +1,6 @@
 package com.bunbeauty.shared.ui.navigation.productdetails
 
 import androidx.compose.animation.ExperimentalSharedTransitionApi
-import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
@@ -47,7 +46,6 @@ fun NavController.navigateToProductDetailsScreen(
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 fun NavGraphBuilder.productDetailsScreenRoute(
-    sharedTransitionScope: SharedTransitionScope,
     back: () -> Unit,
     showInfoMessage: (String, Int) -> Unit,
     showErrorMessage: (String) -> Unit,
@@ -92,7 +90,6 @@ fun NavGraphBuilder.productDetailsScreenRoute(
             additionUuidList = args.additionUuidList,
             showInfoMessage = showInfoMessage,
             showErrorMessage = showErrorMessage,
-            sharedTransitionScope = sharedTransitionScope,
             animatedContentScope = this@composable,
         )
     }

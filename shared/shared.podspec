@@ -8,7 +8,7 @@ Pod::Spec.new do |spec|
     spec.summary                  = 'Main shared module with presentation layer'
     spec.vendored_frameworks      = 'build/cocoapods/framework/shared.framework'
     spec.libraries                = 'c++'
-    spec.ios.deployment_target    = '12.0'
+    spec.ios.deployment_target    = '15.5'
     spec.dependency 'FirebaseMessaging'
     if !Dir.exist?('build/cocoapods/framework/shared.framework') || Dir.empty?('build/cocoapods/framework/shared.framework')
         raise "

@@ -11,9 +11,15 @@ data class SettingsViewState(
     val state: State,
     val logoutUI: LogoutBottomSheetUI,
     val cityListBottomSheetUI: CityListBottomSheetUI,
+    val disableUserBottomSheetUI: DisableUserBottomSheetUI,
 ) : BaseViewState {
     @Immutable
     data class LogoutBottomSheetUI(
+        val isShown: Boolean,
+    )
+
+    @Immutable
+    data class DisableUserBottomSheetUI(
         val isShown: Boolean,
     )
 

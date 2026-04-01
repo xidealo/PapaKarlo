@@ -18,6 +18,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.theme.bold
+import com.bunbeauty.designsystem.ui.LocalBottomBarPadding
 import com.bunbeauty.designsystem.ui.element.button.MainButton
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.StringResource
@@ -92,6 +93,7 @@ fun EmptyScreen(
         Spacer(modifier = Modifier.weight(1f))
         buttonTextId?.let {
             MainButton(
+                modifier = Modifier.padding(bottom = LocalBottomBarPadding.current),
                 textStringId = buttonTextId,
             ) {
                 onClick?.invoke()

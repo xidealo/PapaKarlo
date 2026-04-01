@@ -26,13 +26,11 @@ class GetSuggestionsUseCaseTest {
                 listOf(
                     Suggestion(
                         fiasId = "fiasId1",
-                        street = "street1",
-                        details = null,
+                        address = "street1",
                     ),
                     Suggestion(
                         fiasId = "fiasId2",
-                        street = "street2",
-                        details = null,
+                        address = "street2",
                     ),
                 )
             everySuspend {
