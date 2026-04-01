@@ -57,16 +57,23 @@ jobs:
 
   build:
     runs-on: macos-latest
+    needs: setup
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Select Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.2'
           bundler-cache: true
+          working-directory: iosApp
 
       - name: "Download google-services.json"
         uses: actions/download-artifact@v4
@@ -103,9 +110,6 @@ jobs:
         working-directory: iosApp
         run: pod install --repo-update
 
-      - name: Install fastlane
-        run: gem install fastlane
-
       - name: Decode App Store Connect API key
         working-directory: iosApp
         run: |
@@ -122,4 +126,4 @@ jobs:
           APP_STORE_P8_PATH: fastlane/keys/AuthKey.p8
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
           MATCH_READONLY: "true"
-        run: fastlane ios deployAll
+        run: bundle exec fastlane ios deployAll

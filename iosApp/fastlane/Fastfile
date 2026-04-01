@@ -2,8 +2,12 @@ default_platform(:ios)
 
 platform :ios do
   before_all do
-    # Выбираем версию Xcode для сборки
-    xcodes(version: "26.2", select_for_current_build_only: true)
+    # Выбираем версию Xcode для сборки.
+    # На CI обычно проще выбрать Xcode на уровне runner'а; установка Xcode через xcodes
+    # запускается только если явно включено.
+    if ENV["XCODE_VERSION"] && ENV["USE_XCODES"] == "true"
+      xcodes(version: ENV["XCODE_VERSION"], select_for_current_build_only: true)
+    end
 
     # App Store Connect API Key
     app_store_connect_api_key(
@@ -31,15 +35,37 @@ platform :ios do
 
   # Универсальная функция сборки и заливки
   def build_and_upload(app_identifier, scheme)
+    # Уникальный build number для TestFlight на CI
+    if ENV["GITHUB_RUN_NUMBER"]
+      increment_build_number(
+        xcodeproj: "iosApp.xcodeproj",
+        build_number: ENV["GITHUB_RUN_NUMBER"]
+      )
+    end
+
+    # Подтягиваем сертификаты/профили для конкретного bundle id (readonly на CI)
+    match(
+      type: "appstore",
+      app_identifier: app_identifier,
+      readonly: (ENV["MATCH_READONLY"] == "true")
+    )
 
     build_app(
       workspace: "iosApp.xcworkspace",
       scheme: scheme,
       clean: true,
       export_method: "app-store",
+      export_options: {
+        provisioningProfiles: {
+          app_identifier => "match AppStore #{app_identifier}"
+        }
+      }
     )
 
-    upload_to_testflight
+    upload_to_testflight(
+      app_identifier: app_identifier,
+      skip_waiting_for_build_processing: true
+    )
 
 #     deliver(
 #       submit_for_review: true,
