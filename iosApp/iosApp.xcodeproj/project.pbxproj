@@ -194,6 +194,24 @@
 		7555FF83242A565900829871 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* ContentView.swift */; };
 		7A2C3462E5A9936B219657EB /* Pods_estpoest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8750C5B05EB6BDC124B6C1A9 /* Pods_estpoest.framework */; };
 		AA948690AA980921A1BB064B /* Pods_gustopub.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 887C9AE1E65E56405D8715FC /* Pods_gustopub.framework */; };
+		AC1027F62F819BEF00988500 /* AppColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0294FD7F29E751CC00568A10 /* AppColor.swift */; };
+		AC1027F72F819BEF00988500 /* AppTypography.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0294FD7C29E35E8300568A10 /* AppTypography.swift */; };
+		AC1027F82F819BEF00988500 /* Diems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023234DF28787A360048CF39 /* Diems.swift */; };
+		AC1027F92F819BEF00988500 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023234DE28787A360048CF39 /* Strings.swift */; };
+		AC1027FA2F819BEF00988500 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0232341F287878440048CF39 /* AppDelegate.swift */; };
+		AC1027FB2F819BEF00988500 /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp.swift */; };
+		AC1027FC2F819BEF00988500 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* ContentView.swift */; };
+		AC1027FF2F819BEF00988500 /* Version.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 025D1AFD2C7B5BF600677822 /* Version.xcconfig */; };
+		AC1028002F819BEF00988500 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */; };
+		AC1028012F819BEF00988500 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 029677F72DBE569300996CF6 /* PrivacyInfo.xcprivacy */; };
+		AC1028032F819BEF00988500 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 02A99D5729CBA0BE004D2F7B /* Localizable.strings */; };
+		AC1028042F819BEF00988500 /* CommonColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 023B6B052CDAB33C0051D6E1 /* CommonColors.xcassets */; };
+		AC1028052F819BEF00988500 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557BA273AAA24004C7B11 /* Assets.xcassets */; };
+		AC1028082F819BEF00988500 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		AC1028092F819BEF00988500 /* Pods_taverna.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFA26521372BE9B9203F7E9E /* Pods_taverna.framework */; };
+		AC1028182F819C5C00988500 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC1028112F819C3D00988500 /* GoogleService-Info.plist */; };
+		AC1028192F819C6200988500 /* mimino.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC1028122F819C3D00988500 /* mimino.plist */; };
+		AC10281A2F819C6200988500 /* miminoAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AC1028132F819C3D00988500 /* miminoAssets.xcassets */; };
 		AC47103F2F605E4600246FD5 /* AppColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0294FD7F29E751CC00568A10 /* AppColor.swift */; };
 		AC4710402F605E4600246FD5 /* AppTypography.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0294FD7C29E35E8300568A10 /* AppTypography.swift */; };
 		AC4710412F605E4600246FD5 /* Diems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023234DF28787A360048CF39 /* Diems.swift */; };
@@ -323,6 +341,11 @@
 		995FDF2C47AA75DEB0AF3748 /* Pods-vkuskavkaza.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-vkuskavkaza.debug.xcconfig"; path = "Target Support Files/Pods-vkuskavkaza/Pods-vkuskavkaza.debug.xcconfig"; sourceTree = "<group>"; };
 		9F16CA71F7A1C57D286A0E36 /* Pods_djan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_djan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4F374E300689A868C53F1F1 /* Pods-emoji.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-emoji.release.xcconfig"; path = "Target Support Files/Pods-emoji/Pods-emoji.release.xcconfig"; sourceTree = "<group>"; };
+		AC10280F2F819BEF00988500 /* mimino.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mimino.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AC1028102F819BF000988500 /* bereg copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "bereg copy-Info.plist"; path = "/Users/mark.shavlovsky/Downloads/PapaKarlo/PapaKarlo/iosApp/bereg copy-Info.plist"; sourceTree = "<absolute>"; };
+		AC1028112F819C3D00988500 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		AC1028122F819C3D00988500 /* mimino.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = mimino.plist; sourceTree = "<group>"; };
+		AC1028132F819C3D00988500 /* miminoAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = miminoAssets.xcassets; sourceTree = "<group>"; };
 		AC4710582F605E4600246FD5 /* bereg.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = bereg.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC4710592F605E4600246FD5 /* taverna copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "taverna copy-Info.plist"; path = "/Users/mark.shavlovsky/Downloads/PapaKarlo/PapaKarlo/iosApp/taverna copy-Info.plist"; sourceTree = "<absolute>"; };
 		AC47105B2F605E6800246FD5 /* bereg.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = bereg.plist; sourceTree = "<group>"; };
@@ -429,6 +452,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				F6F3956E5844208EDFA03DA0 /* Pods_yuliar.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AC1028072F819BEF00988500 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AC1028082F819BEF00988500 /* (null) in Frameworks */,
+				AC1028092F819BEF00988500 /* Pods_taverna.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -640,6 +672,7 @@
 				0275EBC92A9B380D00F8ECE2 /* Recovered References */,
 				CA8259FE21CB4A15BB1EAB85 /* Frameworks */,
 				AC4710592F605E4600246FD5 /* taverna copy-Info.plist */,
+				AC1028102F819BF000988500 /* bereg copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -659,6 +692,7 @@
 				027E62BE2E25504E00648562 /* taverna.app */,
 				AC6E61D92EA18CBD004F9248 /* voljane.app */,
 				AC4710582F605E4600246FD5 /* bereg.app */,
+				AC10280F2F819BEF00988500 /* mimino.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -670,6 +704,7 @@
 				026BF2EF2DB7FEE300BBD91E /* estpoestRes */,
 				027E62C32E2550A200648562 /* tavernaRes */,
 				AC47105D2F605E6800246FD5 /* beregRes */,
+				AC1028142F819C3D00988500 /* miminoRes */,
 				023B6B052CDAB33C0051D6E1 /* CommonColors.xcassets */,
 				025F78742CD14C4A00C87D99 /* emojiRes */,
 				025F43892CD02A5300C854AF /* usadbaRes */,
@@ -691,6 +726,16 @@
 				029677F72DBE569300996CF6 /* PrivacyInfo.xcprivacy */,
 			);
 			path = iosApp;
+			sourceTree = "<group>";
+		};
+		AC1028142F819C3D00988500 /* miminoRes */ = {
+			isa = PBXGroup;
+			children = (
+				AC1028112F819C3D00988500 /* GoogleService-Info.plist */,
+				AC1028122F819C3D00988500 /* mimino.plist */,
+				AC1028132F819C3D00988500 /* miminoAssets.xcassets */,
+			);
+			path = miminoRes;
 			sourceTree = "<group>";
 		};
 		AC47105D2F605E6800246FD5 /* beregRes */ = {
@@ -955,6 +1000,26 @@
 			productReference = 7555FF7B242A565900829871 /* papakarlo.app */;
 			productType = "com.apple.product-type.application";
 		};
+		AC1027F32F819BEF00988500 /* mimino */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AC10280C2F819BEF00988500 /* Build configuration list for PBXNativeTarget "mimino" */;
+			buildPhases = (
+				AC1027F42F819BEF00988500 /* [CP] Check Pods Manifest.lock */,
+				AC1027F52F819BEF00988500 /* Sources */,
+				AC1027FD2F819BEF00988500 /* Resources */,
+				AC1028072F819BEF00988500 /* Frameworks */,
+				AC10280A2F819BEF00988500 /* ShellScript */,
+				AC10280B2F819BEF00988500 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = mimino;
+			productName = iosApp;
+			productReference = AC10280F2F819BEF00988500 /* mimino.app */;
+			productType = "com.apple.product-type.application";
+		};
 		AC47103C2F605E4600246FD5 /* bereg */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = AC4710552F605E4600246FD5 /* Build configuration list for PBXNativeTarget "bereg" */;
@@ -1037,6 +1102,7 @@
 				027E62382E25504E00648562 /* taverna */,
 				AC6E61532EA18CBD004F9248 /* voljane */,
 				AC47103C2F605E4600246FD5 /* bereg */,
+				AC1027F32F819BEF00988500 /* mimino */,
 			);
 		};
 /* End PBXProject section */
@@ -1215,6 +1281,22 @@
 				02A99D5529CBA0BE004D2F7B /* Localizable.strings in Resources */,
 				058557BB273AAA24004C7B11 /* Assets.xcassets in Resources */,
 				0265D2A02AC9B1BF00B862FF /* GoogleService-Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AC1027FD2F819BEF00988500 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AC1027FF2F819BEF00988500 /* Version.xcconfig in Resources */,
+				AC1028002F819BEF00988500 /* Preview Assets.xcassets in Resources */,
+				AC1028012F819BEF00988500 /* PrivacyInfo.xcprivacy in Resources */,
+				AC1028032F819BEF00988500 /* Localizable.strings in Resources */,
+				AC1028042F819BEF00988500 /* CommonColors.xcassets in Resources */,
+				AC1028052F819BEF00988500 /* Assets.xcassets in Resources */,
+				AC1028182F819C5C00988500 /* GoogleService-Info.plist in Resources */,
+				AC1028192F819C6200988500 /* mimino.plist in Resources */,
+				AC10281A2F819C6200988500 /* miminoAssets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1804,6 +1886,68 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-vkuskavkaza/Pods-vkuskavkaza-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		AC1027F42F819BEF00988500 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-taverna-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AC10280A2F819BEF00988500 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 8;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
+				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
+		};
+		AC10280B2F819BEF00988500 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-taverna/Pods-taverna-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-taverna/Pods-taverna-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-taverna/Pods-taverna-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		AC47103D2F605E4600246FD5 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2213,6 +2357,20 @@
 				02323420287878440048CF39 /* AppDelegate.swift in Sources */,
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
 				7555FF83242A565900829871 /* ContentView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AC1027F52F819BEF00988500 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AC1027F62F819BEF00988500 /* AppColor.swift in Sources */,
+				AC1027F72F819BEF00988500 /* AppTypography.swift in Sources */,
+				AC1027F82F819BEF00988500 /* Diems.swift in Sources */,
+				AC1027F92F819BEF00988500 /* Strings.swift in Sources */,
+				AC1027FA2F819BEF00988500 /* AppDelegate.swift in Sources */,
+				AC1027FB2F819BEF00988500 /* iOSApp.swift in Sources */,
+				AC1027FC2F819BEF00988500 /* ContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4212,6 +4370,168 @@
 			};
 			name = Release;
 		};
+		AC10280D2F819BEF00988500 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 443C76E5741E04A829A8347D /* Pods-taverna.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = papakarlo.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
+				DEVELOPMENT_TEAM = 77HLJ933B9;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = iosApp/miminoRes/mimino.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.food-and-drink";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"c++\"",
+					"-l\"sqlite3\"",
+					"-l\"z\"",
+					"-framework",
+					"\"Accelerate\"",
+					"-framework",
+					"\"CFNetwork\"",
+					"-framework",
+					"\"CoreTelephony\"",
+					"-framework",
+					"\"FBLPromises\"",
+					"-framework",
+					"\"FirebaseAnalytics\"",
+					"-framework",
+					"\"FirebaseCrashlytics\"",
+					"-framework",
+					"\"FirebaseInstallations\"",
+					"-framework",
+					"\"Foundation\"",
+					"-framework",
+					"\"GoogleAppMeasurement\"",
+					"-framework",
+					"\"GoogleAppMeasurementIdentitySupport\"",
+					"-framework",
+					"\"GoogleDataTransport\"",
+					"-framework",
+					"\"GoogleUtilities\"",
+					"-framework",
+					"\"Kingfisher\"",
+					"-framework",
+					"\"SafariServices\"",
+					"-framework",
+					"\"Security\"",
+					"-framework",
+					"\"StoreKit\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+					"-framework",
+					"\"UIKit\"",
+					"-framework",
+					"\"nanopb\"",
+					"-framework",
+					"\"shared\"",
+					"-weak_framework",
+					"\"Combine\"",
+					"-weak_framework",
+					"\"SwiftUI\"",
+					"-w",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.bunbeauty.mimino;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		AC10280E2F819BEF00988500 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = AEDAC5FBA5CFEA3772421BD5 /* Pods-taverna.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = papakarlo.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
+				DEVELOPMENT_TEAM = 77HLJ933B9;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = iosApp/miminoRes/mimino.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.food-and-drink";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"c++\"",
+					"-l\"sqlite3\"",
+					"-l\"z\"",
+					"-framework",
+					"\"Accelerate\"",
+					"-framework",
+					"\"CFNetwork\"",
+					"-framework",
+					"\"CoreTelephony\"",
+					"-framework",
+					"\"FBLPromises\"",
+					"-framework",
+					"\"FirebaseAnalytics\"",
+					"-framework",
+					"\"FirebaseCrashlytics\"",
+					"-framework",
+					"\"FirebaseInstallations\"",
+					"-framework",
+					"\"Foundation\"",
+					"-framework",
+					"\"GoogleAppMeasurement\"",
+					"-framework",
+					"\"GoogleAppMeasurementIdentitySupport\"",
+					"-framework",
+					"\"GoogleDataTransport\"",
+					"-framework",
+					"\"GoogleUtilities\"",
+					"-framework",
+					"\"Kingfisher\"",
+					"-framework",
+					"\"SafariServices\"",
+					"-framework",
+					"\"Security\"",
+					"-framework",
+					"\"StoreKit\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+					"-framework",
+					"\"UIKit\"",
+					"-framework",
+					"\"nanopb\"",
+					"-framework",
+					"\"shared\"",
+					"-weak_framework",
+					"\"Combine\"",
+					"-weak_framework",
+					"\"SwiftUI\"",
+					"-w",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.bunbeauty.mimino;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
 		AC4710562F605E4600246FD5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 443C76E5741E04A829A8347D /* Pods-taverna.debug.xcconfig */;
@@ -4643,6 +4963,15 @@
 			buildConfigurations = (
 				7555FFA6242A565B00829871 /* Debug */,
 				7555FFA7242A565B00829871 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AC10280C2F819BEF00988500 /* Build configuration list for PBXNativeTarget "mimino" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AC10280D2F819BEF00988500 /* Debug */,
+				AC10280E2F819BEF00988500 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
