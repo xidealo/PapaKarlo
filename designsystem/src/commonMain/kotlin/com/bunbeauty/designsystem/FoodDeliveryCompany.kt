@@ -59,6 +59,10 @@ enum class FoodDeliveryCompany(
     BEREG(
         flavor = "bereg",
         companyUuid = "3ae968a8-c8d3-4e9d-a3a8-364b8d297155"
+    ),
+    MIMINO(
+        flavor = "mimino",
+        companyUuid = "e4c8a1f2-6b3d-4e7c-9f01-2a5b8c6d4e90"
     );
 
     companion object {
