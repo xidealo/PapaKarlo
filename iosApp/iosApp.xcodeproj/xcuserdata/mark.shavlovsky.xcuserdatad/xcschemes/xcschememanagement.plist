@@ -4,11 +4,6 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>bereg copy.xcscheme_^#shared#^_</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>56</integer>
-		</dict>
 		<key>bereg.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
@@ -38,6 +33,11 @@
 		<dict>
 			<key>orderHint</key>
 			<integer>7</integer>
+		</dict>
+		<key>mimino.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>56</integer>
 		</dict>
 		<key>papakarlo.xcscheme_^#shared#^_</key>
 		<dict>
@@ -78,6 +78,11 @@
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>025F42D22CD0159400C854AF</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>AC1027F32F819BEF00988500</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -185,14 +185,16 @@
 		1B2890650B7D8C6309E178C1 /* Pods_usadba.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64CB69F2C086D432C94A41AE /* Pods_usadba.framework */; };
 		2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp.swift */; };
 		266301895B5C00569AB849E2 /* Pods_papakarlo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED787CFFDA700D6B3F7441FD /* Pods_papakarlo.framework */; };
-		27B27E3F857CE2AF4CAF7755 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		27B27E3F857CE2AF4CAF7755 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		2B0B2C47CAEFDCE95F646544 /* Pods_mimino.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8B86879BA05F55F6F45177D /* Pods_mimino.framework */; };
 		40F8CD203B1B74C608425C20 /* Pods_legenda.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44EFB0D6C47CB1C412E6147A /* Pods_legenda.framework */; };
 		4499D47CD119E33E59493A78 /* Pods_estpoest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8750C5B05EB6BDC124B6C1A9 /* Pods_estpoest.framework */; };
-		4A0B25C2EBE3215D0FC6C121 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
-		4E7FC62A990EFBCC2E806359 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		4A0B25C2EBE3215D0FC6C121 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		4E7FC62A990EFBCC2E806359 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 		631CBC599AEFC9C22878D973 /* Pods_tandirhouse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A95B0BC15E4ECB39EC1D686 /* Pods_tandirhouse.framework */; };
 		7555FF83242A565900829871 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* ContentView.swift */; };
 		7A2C3462E5A9936B219657EB /* Pods_estpoest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8750C5B05EB6BDC124B6C1A9 /* Pods_estpoest.framework */; };
+		8DE838C8FE1F1FC6E00CF256 /* Pods_taverna.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5442E398E250FFBC63FAB925 /* Pods_taverna.framework */; };
 		AA948690AA980921A1BB064B /* Pods_gustopub.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 887C9AE1E65E56405D8715FC /* Pods_gustopub.framework */; };
 		AC1027F62F819BEF00988500 /* AppColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0294FD7F29E751CC00568A10 /* AppColor.swift */; };
 		AC1027F72F819BEF00988500 /* AppTypography.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0294FD7C29E35E8300568A10 /* AppTypography.swift */; };
@@ -207,8 +209,7 @@
 		AC1028032F819BEF00988500 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 02A99D5729CBA0BE004D2F7B /* Localizable.strings */; };
 		AC1028042F819BEF00988500 /* CommonColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 023B6B052CDAB33C0051D6E1 /* CommonColors.xcassets */; };
 		AC1028052F819BEF00988500 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557BA273AAA24004C7B11 /* Assets.xcassets */; };
-		AC1028082F819BEF00988500 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
-		AC1028092F819BEF00988500 /* Pods_taverna.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFA26521372BE9B9203F7E9E /* Pods_taverna.framework */; };
+		AC1028082F819BEF00988500 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 		AC1028182F819C5C00988500 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC1028112F819C3D00988500 /* GoogleService-Info.plist */; };
 		AC1028192F819C6200988500 /* mimino.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC1028122F819C3D00988500 /* mimino.plist */; };
 		AC10281A2F819C6200988500 /* miminoAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AC1028132F819C3D00988500 /* miminoAssets.xcassets */; };
@@ -225,8 +226,7 @@
 		AC47104B2F605E4600246FD5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 02A99D5729CBA0BE004D2F7B /* Localizable.strings */; };
 		AC47104C2F605E4600246FD5 /* CommonColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 023B6B052CDAB33C0051D6E1 /* CommonColors.xcassets */; };
 		AC47104D2F605E4600246FD5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557BA273AAA24004C7B11 /* Assets.xcassets */; };
-		AC4710512F605E4600246FD5 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
-		AC4710522F605E4600246FD5 /* Pods_taverna.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFA26521372BE9B9203F7E9E /* Pods_taverna.framework */; };
+		AC4710512F605E4600246FD5 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 		AC4710622F605E6800246FD5 /* beregAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AC47105C2F605E6800246FD5 /* beregAssets.xcassets */; };
 		AC4710632F605E6800246FD5 /* bereg.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC47105B2F605E6800246FD5 /* bereg.plist */; };
 		AC4710652F60615600246FD5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC4710642F60615600246FD5 /* GoogleService-Info.plist */; };
@@ -246,13 +246,14 @@
 		AC6E61DF2EA18E24004F9248 /* voljane.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AC6E61DD2EA18E24004F9248 /* voljane.xcassets */; };
 		AC6E61E02EA18E24004F9248 /* voljane.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC6E61DC2EA18E24004F9248 /* voljane.plist */; };
 		AC6E61E12EA18E24004F9248 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC6E61DB2EA18E24004F9248 /* GoogleService-Info.plist */; };
-		C927C79DE52353C2CEDE0C36 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		C927C79DE52353C2CEDE0C36 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 		CB4F7FFBACC3358427B7F28F /* Pods_emoji.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C67BA2EA9F070E4A515A937 /* Pods_emoji.framework */; };
 		D2B2C9D4143E4D68813E7BCA /* Pods_djan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F16CA71F7A1C57D286A0E36 /* Pods_djan.framework */; };
 		D899D3AE18F8B4D2F508352A /* Pods_taverna.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFA26521372BE9B9203F7E9E /* Pods_taverna.framework */; };
-		EFA9E2E0F12AB7A3BA2D93B1 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		EFA9E2E0F12AB7A3BA2D93B1 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 		F6F3956E5844208EDFA03DA0 /* Pods_yuliar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9C10411EF2D7D08F04B8829 /* Pods_yuliar.framework */; };
 		F8D6960333B5A2C9B870AA16 /* Pods_voljane.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC3DEBDBCD6763F6A38742CD /* Pods_voljane.framework */; };
+		FFAAA88EF288FBEACB134B44 /* Pods_bereg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A47F96ECAB8215DA5D28AF75 /* Pods_bereg.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -315,11 +316,14 @@
 		0474D95D1F89D7C7E414AD58 /* Pods-papakarlo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-papakarlo.release.xcconfig"; path = "Target Support Files/Pods-papakarlo/Pods-papakarlo.release.xcconfig"; sourceTree = "<group>"; };
 		058557BA273AAA24004C7B11 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		0A371985A27BFCEA9F263DB6 /* Pods-mimino.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mimino.debug.xcconfig"; path = "Target Support Files/Pods-mimino/Pods-mimino.debug.xcconfig"; sourceTree = "<group>"; };
 		0C67BA2EA9F070E4A515A937 /* Pods_emoji.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_emoji.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2152FB032600AC8F00CF470E /* iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSApp.swift; sourceTree = "<group>"; };
+		41A745169ED874D8E49013F2 /* Pods-bereg.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bereg.debug.xcconfig"; path = "Target Support Files/Pods-bereg/Pods-bereg.debug.xcconfig"; sourceTree = "<group>"; };
 		443C76E5741E04A829A8347D /* Pods-taverna.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-taverna.debug.xcconfig"; path = "Target Support Files/Pods-taverna/Pods-taverna.debug.xcconfig"; sourceTree = "<group>"; };
 		44EFB0D6C47CB1C412E6147A /* Pods_legenda.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_legenda.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		489E409EBEBDF7E6BF7226FE /* Pods-djan.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-djan.release.xcconfig"; path = "Target Support Files/Pods-djan/Pods-djan.release.xcconfig"; sourceTree = "<group>"; };
+		5442E398E250FFBC63FAB925 /* Pods_taverna.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_taverna.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		593B49170A1371F67F4512CE /* Pods-yuliar.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-yuliar.debug.xcconfig"; path = "Target Support Files/Pods-yuliar/Pods-yuliar.debug.xcconfig"; sourceTree = "<group>"; };
 		5A95B0BC15E4ECB39EC1D686 /* Pods_tandirhouse.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_tandirhouse.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C0B3BC48E734D024E3808F8 /* Pods-voljane.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-voljane.debug.xcconfig"; path = "Target Support Files/Pods-voljane/Pods-voljane.debug.xcconfig"; sourceTree = "<group>"; };
@@ -338,8 +342,10 @@
 		8750C5B05EB6BDC124B6C1A9 /* Pods_estpoest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_estpoest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		887C9AE1E65E56405D8715FC /* Pods_gustopub.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_gustopub.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A5AA41856FBDFAE182758F0 /* Pods-djan.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-djan.debug.xcconfig"; path = "Target Support Files/Pods-djan/Pods-djan.debug.xcconfig"; sourceTree = "<group>"; };
+		96E77BFD1AF32B31CAC64DEF /* Pods-bereg.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bereg.release.xcconfig"; path = "Target Support Files/Pods-bereg/Pods-bereg.release.xcconfig"; sourceTree = "<group>"; };
 		995FDF2C47AA75DEB0AF3748 /* Pods-vkuskavkaza.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-vkuskavkaza.debug.xcconfig"; path = "Target Support Files/Pods-vkuskavkaza/Pods-vkuskavkaza.debug.xcconfig"; sourceTree = "<group>"; };
 		9F16CA71F7A1C57D286A0E36 /* Pods_djan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_djan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A47F96ECAB8215DA5D28AF75 /* Pods_bereg.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_bereg.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4F374E300689A868C53F1F1 /* Pods-emoji.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-emoji.release.xcconfig"; path = "Target Support Files/Pods-emoji/Pods-emoji.release.xcconfig"; sourceTree = "<group>"; };
 		AC10280F2F819BEF00988500 /* mimino.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mimino.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC1028102F819BF000988500 /* bereg copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "bereg copy-Info.plist"; path = "/Users/mark.shavlovsky/Downloads/PapaKarlo/PapaKarlo/iosApp/bereg copy-Info.plist"; sourceTree = "<absolute>"; };
@@ -358,15 +364,16 @@
 		AD685DC99B68FD89495E8E8B /* Pods-yuliar.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-yuliar.release.xcconfig"; path = "Target Support Files/Pods-yuliar/Pods-yuliar.release.xcconfig"; sourceTree = "<group>"; };
 		AEDAC5FBA5CFEA3772421BD5 /* Pods-taverna.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-taverna.release.xcconfig"; path = "Target Support Files/Pods-taverna/Pods-taverna.release.xcconfig"; sourceTree = "<group>"; };
 		BBEEAE62D2C2DB51503FD7E4 /* Pods-usadba.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-usadba.debug.xcconfig"; path = "Target Support Files/Pods-usadba/Pods-usadba.debug.xcconfig"; sourceTree = "<group>"; };
+		C8B86879BA05F55F6F45177D /* Pods_mimino.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_mimino.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC3DEBDBCD6763F6A38742CD /* Pods_voljane.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_voljane.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD93CCF3300C802B84A927C6 /* Pods-gustopub.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-gustopub.debug.xcconfig"; path = "Target Support Files/Pods-gustopub/Pods-gustopub.debug.xcconfig"; sourceTree = "<group>"; };
 		E3A4259DB6C3AB4D444D246E /* Pods-tandirhouse.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tandirhouse.debug.xcconfig"; path = "Target Support Files/Pods-tandirhouse/Pods-tandirhouse.debug.xcconfig"; sourceTree = "<group>"; };
 		E901DAB913ABB91CFEDC615E /* Pods-legenda.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-legenda.debug.xcconfig"; path = "Target Support Files/Pods-legenda/Pods-legenda.debug.xcconfig"; sourceTree = "<group>"; };
 		ED787CFFDA700D6B3F7441FD /* Pods_papakarlo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_papakarlo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EFED030EFA2F2B938EA736EB /* Pods-mimino.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mimino.release.xcconfig"; path = "Target Support Files/Pods-mimino/Pods-mimino.release.xcconfig"; sourceTree = "<group>"; };
 		F34C54463C7B604E3EF12A46 /* Pods-vkuskavkaza.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-vkuskavkaza.release.xcconfig"; path = "Target Support Files/Pods-vkuskavkaza/Pods-vkuskavkaza.release.xcconfig"; sourceTree = "<group>"; };
 		F9C10411EF2D7D08F04B8829 /* Pods_yuliar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_yuliar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCA789989AB4A3F50EFB7144 /* Pods-voljane.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-voljane.release.xcconfig"; path = "Target Support Files/Pods-voljane/Pods-voljane.release.xcconfig"; sourceTree = "<group>"; };
-		FFA26521372BE9B9203F7E9E /* Pods_taverna.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_taverna.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -374,7 +381,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EFA9E2E0F12AB7A3BA2D93B1 /* (null) in Frameworks */,
+				EFA9E2E0F12AB7A3BA2D93B1 /* BuildFile in Frameworks */,
 				631CBC599AEFC9C22878D973 /* Pods_tandirhouse.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -399,7 +406,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				27B27E3F857CE2AF4CAF7755 /* (null) in Frameworks */,
+				27B27E3F857CE2AF4CAF7755 /* BuildFile in Frameworks */,
 				CB4F7FFBACC3358427B7F28F /* Pods_emoji.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -417,7 +424,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4A0B25C2EBE3215D0FC6C121 /* (null) in Frameworks */,
+				4A0B25C2EBE3215D0FC6C121 /* BuildFile in Frameworks */,
 				D2B2C9D4143E4D68813E7BCA /* Pods_djan.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -434,8 +441,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C927C79DE52353C2CEDE0C36 /* (null) in Frameworks */,
+				C927C79DE52353C2CEDE0C36 /* BuildFile in Frameworks */,
 				D899D3AE18F8B4D2F508352A /* Pods_taverna.framework in Frameworks */,
+				8DE838C8FE1F1FC6E00CF256 /* Pods_taverna.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -459,8 +467,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AC1028082F819BEF00988500 /* (null) in Frameworks */,
-				AC1028092F819BEF00988500 /* Pods_taverna.framework in Frameworks */,
+				2B0B2C47CAEFDCE95F646544 /* Pods_mimino.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -468,8 +475,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AC4710512F605E4600246FD5 /* (null) in Frameworks */,
-				AC4710522F605E4600246FD5 /* Pods_taverna.framework in Frameworks */,
+				FFAAA88EF288FBEACB134B44 /* Pods_bereg.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -485,7 +491,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4E7FC62A990EFBCC2E806359 /* (null) in Frameworks */,
+				4E7FC62A990EFBCC2E806359 /* BuildFile in Frameworks */,
 				266301895B5C00569AB849E2 /* Pods_papakarlo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -657,6 +663,10 @@
 				AEDAC5FBA5CFEA3772421BD5 /* Pods-taverna.release.xcconfig */,
 				5C0B3BC48E734D024E3808F8 /* Pods-voljane.debug.xcconfig */,
 				FCA789989AB4A3F50EFB7144 /* Pods-voljane.release.xcconfig */,
+				41A745169ED874D8E49013F2 /* Pods-bereg.debug.xcconfig */,
+				96E77BFD1AF32B31CAC64DEF /* Pods-bereg.release.xcconfig */,
+				0A371985A27BFCEA9F263DB6 /* Pods-mimino.debug.xcconfig */,
+				EFED030EFA2F2B938EA736EB /* Pods-mimino.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -772,7 +782,9 @@
 				82D390E07A4CF79E374BF150 /* Pods_vkuskavkaza.framework */,
 				F9C10411EF2D7D08F04B8829 /* Pods_yuliar.framework */,
 				CC3DEBDBCD6763F6A38742CD /* Pods_voljane.framework */,
-				FFA26521372BE9B9203F7E9E /* Pods_taverna.framework */,
+				A47F96ECAB8215DA5D28AF75 /* Pods_bereg.framework */,
+				C8B86879BA05F55F6F45177D /* Pods_mimino.framework */,
+				5442E398E250FFBC63FAB925 /* Pods_taverna.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1574,13 +1586,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-voljane/Pods-voljane-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-voljane/Pods-voljane-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1595,13 +1603,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-papakarlo/Pods-papakarlo-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-papakarlo/Pods-papakarlo-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1704,13 +1708,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-gustopub/Pods-gustopub-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-gustopub/Pods-gustopub-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1725,13 +1725,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-legenda/Pods-legenda-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-legenda/Pods-legenda-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1746,13 +1742,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-tandirhouse/Pods-tandirhouse-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-tandirhouse/Pods-tandirhouse-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1767,13 +1759,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-emoji/Pods-emoji-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-emoji/Pods-emoji-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1788,13 +1776,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-yuliar/Pods-yuliar-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-yuliar/Pods-yuliar-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1809,13 +1793,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-djan/Pods-djan-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-djan/Pods-djan-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1830,13 +1810,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-taverna/Pods-taverna-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-taverna/Pods-taverna-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1873,13 +1849,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-vkuskavkaza/Pods-vkuskavkaza-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-vkuskavkaza/Pods-vkuskavkaza-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1901,7 +1873,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-taverna-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-mimino-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1933,19 +1905,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-taverna/Pods-taverna-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-mimino/Pods-mimino-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-taverna/Pods-taverna-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-mimino/Pods-mimino-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-taverna/Pods-taverna-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-mimino/Pods-mimino-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		AC47103D2F605E4600246FD5 /* [CP] Check Pods Manifest.lock */ = {
@@ -1963,7 +1931,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-taverna-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-bereg-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1995,19 +1963,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-taverna/Pods-taverna-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-bereg/Pods-bereg-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-taverna/Pods-taverna-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-bereg/Pods-bereg-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-taverna/Pods-taverna-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-bereg/Pods-bereg-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		AC6E61542EA18CBD004F9248 /* [CP] Check Pods Manifest.lock */ = {
@@ -2081,13 +2045,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-estpoest/Pods-estpoest-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-estpoest/Pods-estpoest-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2146,13 +2106,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-usadba/Pods-usadba-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-usadba/Pods-usadba-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -4372,7 +4328,7 @@
 		};
 		AC10280D2F819BEF00988500 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 443C76E5741E04A829A8347D /* Pods-taverna.debug.xcconfig */;
+			baseConfigurationReference = 0A371985A27BFCEA9F263DB6 /* Pods-mimino.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = papakarlo.entitlements;
@@ -4453,7 +4409,7 @@
 		};
 		AC10280E2F819BEF00988500 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = AEDAC5FBA5CFEA3772421BD5 /* Pods-taverna.release.xcconfig */;
+			baseConfigurationReference = EFED030EFA2F2B938EA736EB /* Pods-mimino.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = papakarlo.entitlements;
@@ -4534,7 +4490,7 @@
 		};
 		AC4710562F605E4600246FD5 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 443C76E5741E04A829A8347D /* Pods-taverna.debug.xcconfig */;
+			baseConfigurationReference = 41A745169ED874D8E49013F2 /* Pods-bereg.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = papakarlo.entitlements;
@@ -4615,7 +4571,7 @@
 		};
 		AC4710572F605E4600246FD5 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = AEDAC5FBA5CFEA3772421BD5 /* Pods-taverna.release.xcconfig */;
+			baseConfigurationReference = 96E77BFD1AF32B31CAC64DEF /* Pods-bereg.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = papakarlo.entitlements;
