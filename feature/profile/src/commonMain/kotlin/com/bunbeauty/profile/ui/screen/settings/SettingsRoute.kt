@@ -17,7 +17,7 @@ import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.ui.LocalBottomBarPadding
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.designsystem.ui.element.button.MainButton
-import com.bunbeauty.designsystem.ui.element.button.SecondaryButton
+import com.bunbeauty.designsystem.ui.element.button.TextButton
 import com.bunbeauty.designsystem.ui.element.card.NavigationCardWithDivider
 import com.bunbeauty.designsystem.ui.element.card.TextCardWithDivider
 import com.bunbeauty.designsystem.ui.screen.ErrorScreen
@@ -232,8 +232,8 @@ fun SettingsScreenSuccess(
             value = settingsState.selectedCityName,
         )
 
-        SecondaryButton(
-            modifier = Modifier.padding(top = 16.dp),
+        TextButton(
+            modifier = Modifier.padding(top = 16.dp).padding(horizontal = 16.dp),
             textStringId = Res.string.action_settings_delete,
             onClick = {
                 onAction(SettingsState.Action.DisableUser)

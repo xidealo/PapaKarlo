@@ -2,6 +2,7 @@ package com.bunbeauty.menu.ui.mapper
 
 import com.bunbeauty.core.Constants.RUBLE_CURRENCY
 import com.bunbeauty.core.model.MenuItem
+import com.bunbeauty.core.model.ProductUi
 import com.bunbeauty.designsystem.ui.element.TopCartUi
 import com.bunbeauty.menu.presentation.model.MenuDataState
 import com.bunbeauty.menu.ui.state.MenuItemUi
@@ -29,15 +30,20 @@ fun MenuDataState.toMenuViewState(): MenuViewState =
         eventList = eventList.toImmutableList(),
     )
 
-fun MenuItem.Product.toMenuProductItemUi(): MenuItemUi.Product =
-    MenuItemUi.Product(
-        key = "MenuProductItem $categoryUuid $uuid",
-        uuid = uuid,
-        photoLink = photoLink,
-        name = name,
-        oldPrice = oldPrice,
-        newPrice = newPrice,
+fun MenuItem.Product.toMenuProductItemUi(): MenuItemUi.Product {
+    val productKey = "MenuProductItem_${categoryUuid}_${uuid}"
+    return MenuItemUi.Product(
+        key = productKey,
+        product = ProductUi(
+            key = productKey,
+            uuid = uuid,
+            photoLink = photoLink,
+            name = name,
+            oldPrice = oldPrice,
+            newPrice = newPrice,
+        )
     )
+}
 
 private fun MenuItem.toMenuItemUi(): MenuItemUi =
     when (this) {

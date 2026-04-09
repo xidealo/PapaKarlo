@@ -2,12 +2,10 @@ package com.bunbeauty.designsystem.ui.topbar
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Badge
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -17,36 +15,29 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
-import com.bunbeauty.designsystem.theme.bold
 import com.bunbeauty.designsystem.theme.medium
 import com.bunbeauty.designsystem.ui.LocalStatusBarColor
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryAction
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryCartAction
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryHorizontalDivider
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryToolbarActions
+import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryCardDefaults
 import com.bunbeauty.designsystem.ui.icon16
+import com.bunbeauty.designsystem.ui.icon20
 import com.bunbeauty.designsystem.ui.icon24
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
-import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.resources.stringResource
 import papakarlo.designsystem.generated.resources.Res
 import papakarlo.designsystem.generated.resources.ic_arrow_back
 import papakarlo.designsystem.generated.resources.ic_cart_24
-import papakarlo.designsystem.generated.resources.preview_string
 
 @Composable
 fun FoodDeliveryTopAppBar(
@@ -150,7 +141,7 @@ private fun Action(action: FoodDeliveryAction) {
         onClick = action.onClick,
     ) {
         Icon(
-            modifier = Modifier.icon24(),
+            modifier = Modifier.icon20(),
             painter = painterResource(resource = action.iconId),
             tint = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
             contentDescription = null,
@@ -160,7 +151,7 @@ private fun Action(action: FoodDeliveryAction) {
 
 @Composable
 private fun CardAction(action: FoodDeliveryCartAction) {
-    _root_ide_package_.com.bunbeauty.designsystem.ui.element.card.FoodDeliveryCard(
+    FoodDeliveryCard(
         elevated = false,
         colors = FoodDeliveryCardDefaults.transparentCardColors,
         onClick = action.onClick,
@@ -179,7 +170,7 @@ private fun CardAction(action: FoodDeliveryCartAction) {
                     modifier =
                         Modifier
                             .padding(4.dp)
-                            .icon24(),
+                            .icon20(),
                     painter = painterResource(
                         resource = Res.drawable.ic_cart_24
                     ),
@@ -198,21 +189,5 @@ private fun CardAction(action: FoodDeliveryCartAction) {
                 }
             }
         }
-    }
-}
-
-@Composable
-private fun LogoImage(
-    drawableId: DrawableResource?,
-    modifier: Modifier = Modifier,
-) {
-    drawableId?.let {
-        Image(
-            modifier =
-                modifier
-                    .height(40.dp),
-            painter = painterResource(drawableId),
-            contentDescription = stringResource(Res.string.preview_string),
-        )
     }
 }
