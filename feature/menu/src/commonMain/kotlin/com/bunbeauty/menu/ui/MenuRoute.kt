@@ -90,6 +90,8 @@ import papakarlo.designsystem.generated.resources.msg_menu_product_added
 import papakarlo.designsystem.generated.resources.title_menu
 import papakarlo.designsystem.generated.resources.title_menu_discount
 
+private const val MENU_CATEGORY_ROW_INDEX = 1
+
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun MenuRoute(
@@ -332,17 +334,14 @@ private fun CategoryRow(
                     }
                     coroutineScope.launch {
                         onStartAutoScroll()
-                        val index = getMenuListPosition(categoryItemModel)
-                        menuLazyGridState.animateScrollToItem(
-                            index = index,
-                            scrollOffset =
-                                if (index == 0) {
-                                    0
-                                } else {
-                                    600
-                                },
-                        )
-                        onStopAutoScroll()
+                        try {
+                            val index = getMenuListPosition(categoryItemModel)
+                            menuLazyGridState.alignCategoryHeaderUnderCategoryRow(
+                                headerGridIndex = index,
+                            )
+                        } finally {
+                            onStopAutoScroll()
+                        }
                     }
                 },
             )
@@ -546,6 +545,29 @@ private fun MenuColumn(
             }
         }
     }
+}
+
+private suspend fun LazyGridState.alignCategoryHeaderUnderCategoryRow(
+    headerGridIndex: Int,
+) {
+    if (headerGridIndex < 0) return
+
+    scrollToItem(
+        index = headerGridIndex,
+        scrollOffset = 0,
+    )
+    val categoryRowLayoutInfo =
+        layoutInfo.visibleItemsInfo.firstOrNull { item ->
+            item.index == MENU_CATEGORY_ROW_INDEX
+        }
+    val targetScrollOffset =
+        categoryRowLayoutInfo?.let { item ->
+            -(item.offset.y + item.size.height)
+        } ?: 0
+    animateScrollToItem(
+        index = headerGridIndex,
+        scrollOffset = targetScrollOffset,
+    )
 }
 
 @OptIn(ExperimentalSharedTransitionApi::class)
