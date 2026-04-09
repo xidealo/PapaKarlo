@@ -63,3 +63,7 @@ end
 target 'bereg' do
   default_pods
 end
+
+target 'mimino' do
+  default_pods
+end
