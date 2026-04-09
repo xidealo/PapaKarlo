@@ -552,7 +552,7 @@ private suspend fun LazyGridState.alignCategoryHeaderUnderCategoryRow(
 ) {
     if (headerGridIndex < 0) return
 
-    scrollToItem(
+    animateScrollToItem(
         index = headerGridIndex,
         scrollOffset = 0,
     )
@@ -564,7 +564,7 @@ private suspend fun LazyGridState.alignCategoryHeaderUnderCategoryRow(
         categoryRowLayoutInfo?.let { item ->
             -(item.offset.y + item.size.height)
         } ?: 0
-    animateScrollToItem(
+    scrollToItem(
         index = headerGridIndex,
         scrollOffset = targetScrollOffset,
     )
