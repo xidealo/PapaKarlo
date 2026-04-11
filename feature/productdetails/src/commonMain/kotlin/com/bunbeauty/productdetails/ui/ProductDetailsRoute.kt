@@ -6,6 +6,7 @@ import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -15,6 +16,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
@@ -37,6 +39,7 @@ import com.bunbeauty.designsystem.ui.SharedTransitionScopeComposition
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryAsyncImage
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.designsystem.ui.element.TopCartUi
+import com.bunbeauty.designsystem.ui.element.addition.AdditionCardItem
 import com.bunbeauty.designsystem.ui.element.addition.AdditionRowItem
 import com.bunbeauty.designsystem.ui.element.button.FoodDeliveryExtendedFab
 import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryItem
@@ -287,12 +290,46 @@ private fun ProductDetailsSuccessScreen(
                             isSelected = menuProductAdditionItem.product.isSelected,
                             isMultiple = menuProductAdditionItem.isMultiple,
                             onCardClick = { uuid, groupId ->
-                                ProductDetailsState.Action.AdditionClick(
-                                    uuid = uuid,
-                                    groupUuid = groupId,
+                                onAction(
+                                    ProductDetailsState.Action.AdditionClick(
+                                        uuid = uuid,
+                                        groupUuid = groupId,
+                                    ),
                                 )
                             },
                         )
+                    }
+                }
+
+                is AdditionItem.AdditionCardRowItem -> {
+                    LazyRow(
+                        modifier = Modifier.fillMaxWidth()
+                            .padding(top = 8.dp),
+                        contentPadding = PaddingValues(horizontal = 16.dp),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    ) {
+                        items(
+                            items = menuProductAdditionItem.products,
+                            key = { product -> product.uuid },
+                        ) { product ->
+                            AdditionCardItem(
+                                uuid = product.uuid,
+                                groupId = product.groupId,
+                                photoLink = product.photoLink,
+                                name = product.name,
+                                price = product.price,
+                                isSelected = product.isSelected,
+                                isMultiple = menuProductAdditionItem.isMultiple,
+                                onCardClick = { uuid, groupId ->
+                                    onAction(
+                                        ProductDetailsState.Action.AdditionClick(
+                                            uuid = uuid,
+                                            groupUuid = groupId,
+                                        ),
+                                    )
+                                },
+                            )
+                        }
                     }
                 }
             }
@@ -479,31 +516,46 @@ private fun ProductDetailsSuccessScreenPreview() {
                                                 uuid = "uuid4",
                                                 name = "Добавить по вкусу",
                                             ),
-                                            AdditionItem.AdditionListItem(
-                                                key = "key5",
-                                                product =
-                                                    MenuProductAdditionItem(
-                                                        uuid = "uuid5",
-                                                        isSelected = true,
-                                                        name = "Монкейэс",
-                                                        price = "13",
-                                                        photoLink = "",
-                                                        isLast = false,
-                                                        groupId = "",
-                                                    ),
-                                                isMultiple = true,
-                                            ),
-                                            AdditionItem.AdditionListItem(
-                                                key = "key6",
-                                                product =
-                                                    MenuProductAdditionItem(
-                                                        uuid = "uuid6",
-                                                        isSelected = false,
-                                                        name = "Лида в лаваше",
-                                                        price = "2",
-                                                        photoLink = "",
-                                                        isLast = true,
-                                                        groupId = "",
+                                            AdditionItem.AdditionCardRowItem(
+                                                key = "key-card-row",
+                                                products =
+                                                    persistentListOf(
+                                                        MenuProductAdditionItem(
+                                                            uuid = "uuid5",
+                                                            isSelected = true,
+                                                            name = "Монкейэс",
+                                                            price = "13",
+                                                            photoLink = "",
+                                                            isLast = false,
+                                                            groupId = "uuid4",
+                                                        ),
+                                                        MenuProductAdditionItem(
+                                                            uuid = "uuid6",
+                                                            isSelected = false,
+                                                            name = "Лида в лаваше",
+                                                            price = "2",
+                                                            photoLink = "",
+                                                            isLast = false,
+                                                            groupId = "uuid4",
+                                                        ),
+                                                        MenuProductAdditionItem(
+                                                            uuid = "uuid7",
+                                                            isSelected = false,
+                                                            name = "Огурец",
+                                                            price = "5",
+                                                            photoLink = "",
+                                                            isLast = false,
+                                                            groupId = "uuid4",
+                                                        ),
+                                                        MenuProductAdditionItem(
+                                                            uuid = "uuid8",
+                                                            isSelected = false,
+                                                            name = "Соус барбекю",
+                                                            price = "10",
+                                                            photoLink = "",
+                                                            isLast = true,
+                                                            groupId = "uuid4",
+                                                        ),
                                                     ),
                                                 isMultiple = true,
                                             ),

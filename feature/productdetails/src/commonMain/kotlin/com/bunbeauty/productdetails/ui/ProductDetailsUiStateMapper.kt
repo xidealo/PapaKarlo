@@ -5,6 +5,7 @@ import com.bunbeauty.designsystem.ui.element.TopCartUi
 import com.bunbeauty.productdetails.presentation.AdditionItem
 import com.bunbeauty.productdetails.presentation.MenuProductAdditionItem
 import com.bunbeauty.productdetails.presentation.ProductDetailsState
+import com.bunbeauty.productdetails.presentation.ProductDetailsViewModel
 import kotlinx.collections.immutable.toPersistentList
 
 fun ProductDetailsState.DataState.map(): ProductDetailsViewState {
@@ -18,24 +19,46 @@ fun ProductDetailsState.DataState.map(): ProductDetailsViewState {
                         name = additionGroup.name,
                     ),
                 )
-                addAll(
-                    additionGroup.additionList.mapIndexed { index, addition ->
-                        AdditionItem.AdditionListItem(
-                            key = "AdditionListItem + ${addition.uuid}",
-                            product =
-                                MenuProductAdditionItem(
-                                    uuid = addition.uuid,
-                                    isSelected = addition.isSelected,
-                                    name = addition.name,
-                                    price = addition.price?.let { price -> "+$price ${Constants.RUBLE_CURRENCY}" },
-                                    isLast = additionGroup.additionList.lastIndex == index,
-                                    photoLink = addition.photoLink,
-                                    groupId = additionGroup.uuid,
-                                ),
-                            isMultiple = !additionGroup.singleChoice,
-                        )
-                    },
-                )
+                val isMultiple = !additionGroup.singleChoice
+                if (additionGroup.additionList.size > ProductDetailsViewModel.MAX_ADDITION_COUNT_FOR_ROW_LAYOUT) {
+                    add(
+                        AdditionItem.AdditionCardRowItem(
+                            key = "AdditionCardRowItem + ${additionGroup.uuid}",
+                            products =
+                                additionGroup.additionList.map { addition ->
+                                    MenuProductAdditionItem(
+                                        uuid = addition.uuid,
+                                        isSelected = addition.isSelected,
+                                        name = addition.name,
+                                        price = addition.price?.let { price -> "+$price ${Constants.RUBLE_CURRENCY}" },
+                                        isLast = false,
+                                        photoLink = addition.photoLink,
+                                        groupId = additionGroup.uuid,
+                                    )
+                                }.toPersistentList(),
+                            isMultiple = isMultiple,
+                        ),
+                    )
+                } else {
+                    addAll(
+                        additionGroup.additionList.mapIndexed { index, addition ->
+                            AdditionItem.AdditionListItem(
+                                key = "AdditionListItem + ${addition.uuid}",
+                                product =
+                                    MenuProductAdditionItem(
+                                        uuid = addition.uuid,
+                                        isSelected = addition.isSelected,
+                                        name = addition.name,
+                                        price = addition.price?.let { price -> "+$price ${Constants.RUBLE_CURRENCY}" },
+                                        isLast = additionGroup.additionList.lastIndex == index,
+                                        photoLink = addition.photoLink,
+                                        groupId = additionGroup.uuid,
+                                    ),
+                                isMultiple = isMultiple,
+                            )
+                        },
+                    )
+                }
             }
         }
 
