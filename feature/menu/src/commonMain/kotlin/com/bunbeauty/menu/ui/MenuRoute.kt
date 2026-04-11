@@ -547,9 +547,7 @@ private fun MenuColumn(
     }
 }
 
-private suspend fun LazyGridState.alignCategoryHeaderUnderCategoryRow(
-    headerGridIndex: Int,
-) {
+private suspend fun LazyGridState.alignCategoryHeaderUnderCategoryRow(headerGridIndex: Int) {
     if (headerGridIndex < 0) return
 
     animateScrollToItem(
@@ -589,17 +587,18 @@ private fun MenuScreenSuccessPreview() {
         )
 
     fun getMenuProductItem(key: String): MenuItemUi.Product {
-        val product = ProductUi(
-            uuid = key,
-            key = key,
-            photoLink = "",
-            name = "Бэргер",
-            newPrice = "99",
-            oldPrice = "100",
-        )
+        val product =
+            ProductUi(
+                uuid = key,
+                key = key,
+                photoLink = "",
+                name = "Бэргер",
+                newPrice = "99",
+                oldPrice = "100",
+            )
         return MenuItemUi.Product(
             key = key,
-            product = product
+            product = product,
         )
     }
     SharedTransitionLayout {

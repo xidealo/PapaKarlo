@@ -31,17 +31,18 @@ fun MenuDataState.toMenuViewState(): MenuViewState =
     )
 
 fun MenuItem.Product.toMenuProductItemUi(): MenuItemUi.Product {
-    val productKey = "MenuProductItem_${categoryUuid}_${uuid}"
+    val productKey = "MenuProductItem_${categoryUuid}_$uuid"
     return MenuItemUi.Product(
         key = productKey,
-        product = ProductUi(
-            key = productKey,
-            uuid = uuid,
-            photoLink = photoLink,
-            name = name,
-            oldPrice = oldPrice,
-            newPrice = newPrice,
-        )
+        product =
+            ProductUi(
+                key = productKey,
+                uuid = uuid,
+                photoLink = photoLink,
+                name = name,
+                oldPrice = oldPrice,
+                newPrice = newPrice,
+            ),
     )
 }
 

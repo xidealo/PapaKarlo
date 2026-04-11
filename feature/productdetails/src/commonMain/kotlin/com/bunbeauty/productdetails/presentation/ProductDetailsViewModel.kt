@@ -47,6 +47,11 @@ class ProductDetailsViewModel(
             screenState = ProductDetailsState.DataState.ScreenState.INIT,
         ),
     ) {
+    companion object {
+        /** Groups with at most this many additions use row layout; larger groups use horizontal card layout. */
+        const val MAX_ADDITION_COUNT_FOR_ROW_LAYOUT = 3
+    }
+
     private var observeConsumerCartJob: Job? = null
 
     override fun reduce(
