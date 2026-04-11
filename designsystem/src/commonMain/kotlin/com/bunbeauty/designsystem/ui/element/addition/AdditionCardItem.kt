@@ -1,5 +1,7 @@
 package com.bunbeauty.designsystem.ui.element.addition
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -46,7 +48,16 @@ fun AdditionCardItem(
             width = 100.dp
         ),
         shape = RoundedCornerShape(size = 24.dp),
-        colors = FoodDeliveryCardDefaults.surfaceVariateCardColors
+        colors = FoodDeliveryCardDefaults.surfaceVariateCardColors,
+        border =
+            if (isSelected) {
+                BorderStroke(
+                    width = 2.dp,
+                    color = FoodDeliveryTheme.colors.mainColors.primary,
+                )
+            } else {
+                null
+            },
     ) {
         Column(
             modifier =
@@ -66,23 +77,30 @@ fun AdditionCardItem(
                 error = null,
             )
 
-            Text(
+            Box(
                 modifier =
                     Modifier
+                        .weight(1f)
                         .fillMaxWidth()
-                        .padding(top = 2.dp)
-                        .weight(1f),
-                textAlign = TextAlign.Center,
-                text = name,
-                style = FoodDeliveryTheme.typography.bodySmall,
-                color = FoodDeliveryTheme.colors.mainColors.onSurface,
-            )
+                        .padding(top = 2.dp),
+                contentAlignment = Alignment.Center,
+            ) {
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.Center,
+                    text = name,
+                    style = FoodDeliveryTheme.typography.bodySmall,
+                    color = FoodDeliveryTheme.colors.mainColors.onSurface,
+                )
+            }
 
             price?.let { price ->
                 Text(
                     modifier =
                         Modifier
+                            .fillMaxWidth()
                             .padding(top = 2.dp),
+                    textAlign = TextAlign.Center,
                     text = price,
                     style = FoodDeliveryTheme.typography.bodyLarge,
                     color = FoodDeliveryTheme.colors.mainColors.onSurface,

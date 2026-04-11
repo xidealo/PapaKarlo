@@ -1,6 +1,5 @@
 package com.bunbeauty.order.ui.ui
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -70,31 +69,31 @@ fun CartProductItem(
                     color = FoodDeliveryTheme.colors.mainColors.onSurface,
                     maxLines = 2,
                 )
-                    cartProductItem.additions?.let { additions ->
-                        Text(
-                            modifier =
-                                Modifier
-                                    .padding(
-                                        top = 4.dp,
-                                        end = FoodDeliveryTheme.dimensions.smallSpace,
-                                    ),
-                            text = additions,
-                            style = FoodDeliveryTheme.typography.bodySmall,
-                            color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
-                        )
-                    }
+                cartProductItem.additions?.let { additions ->
+                    Text(
+                        modifier =
+                            Modifier
+                                .padding(
+                                    top = 4.dp,
+                                    end = FoodDeliveryTheme.dimensions.smallSpace,
+                                ),
+                        text = additions,
+                        style = FoodDeliveryTheme.typography.bodySmall,
+                        color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
+                    )
+                }
                 Row(
                     modifier =
                         Modifier
                             .padding(top = 4.dp),
-                    verticalAlignment = CenterVertically
+                    verticalAlignment = CenterVertically,
                 ) {
                     Column(
                         modifier =
                             Modifier
                                 .weight(1f),
                     ) {
-                        Row{
+                        Row {
                             cartProductItem.oldCost?.let { oldCost ->
                                 Text(
                                     modifier =

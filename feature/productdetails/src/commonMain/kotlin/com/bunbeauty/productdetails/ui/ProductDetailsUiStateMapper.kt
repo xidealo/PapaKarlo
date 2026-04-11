@@ -25,17 +25,18 @@ fun ProductDetailsState.DataState.map(): ProductDetailsViewState {
                         AdditionItem.AdditionCardRowItem(
                             key = "AdditionCardRowItem + ${additionGroup.uuid}",
                             products =
-                                additionGroup.additionList.map { addition ->
-                                    MenuProductAdditionItem(
-                                        uuid = addition.uuid,
-                                        isSelected = addition.isSelected,
-                                        name = addition.name,
-                                        price = addition.price?.let { price -> "+$price ${Constants.RUBLE_CURRENCY}" },
-                                        isLast = false,
-                                        photoLink = addition.photoLink,
-                                        groupId = additionGroup.uuid,
-                                    )
-                                }.toPersistentList(),
+                                additionGroup.additionList
+                                    .map { addition ->
+                                        MenuProductAdditionItem(
+                                            uuid = addition.uuid,
+                                            isSelected = addition.isSelected,
+                                            name = addition.name,
+                                            price = addition.price?.let { price -> "+$price ${Constants.RUBLE_CURRENCY}" },
+                                            isLast = false,
+                                            photoLink = addition.photoLink,
+                                            groupId = additionGroup.uuid,
+                                        )
+                                    }.toPersistentList(),
                             isMultiple = isMultiple,
                         ),
                     )

@@ -71,7 +71,7 @@ fun NavGraphBuilder.consumerCartScreenRoute(
             goToLoginFragment = goToLoginFragment,
             goToProductFragment = goToProductFragment,
             showErrorMessage = showErrorMessage,
-            animatedContentScope = this@composable
+            animatedContentScope = this@composable,
         )
     }
 }

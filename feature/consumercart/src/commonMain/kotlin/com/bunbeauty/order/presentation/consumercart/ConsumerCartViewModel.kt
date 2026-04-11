@@ -44,19 +44,19 @@ class ConsumerCartViewModel(
     private val analyticService: AnalyticService,
     private val isOrderAvailableUseCase: IsOrderAvailableUseCase,
 ) : SharedStateViewModel<ConsumerCart.DataState, ConsumerCart.Action, ConsumerCart.Event>(
-    initDataState =
-        ConsumerCart.DataState(
-            state = ConsumerCart.DataState.State.LOADING,
-            motivation = null,
-            cartProductItemList = emptyList(),
-            recommendationList = emptyList(),
-            discount = null,
-            oldTotalCost = null,
-            newTotalCost = "",
-            orderAvailable = false,
-            isClearCartConfirmationVisible = false
-        ),
-) {
+        initDataState =
+            ConsumerCart.DataState(
+                state = ConsumerCart.DataState.State.LOADING,
+                motivation = null,
+                cartProductItemList = emptyList(),
+                recommendationList = emptyList(),
+                discount = null,
+                oldTotalCost = null,
+                newTotalCost = "",
+                orderAvailable = false,
+                isClearCartConfirmationVisible = false,
+            ),
+    ) {
     private var observeConsumerCartJob: Job? = null
 
     override fun reduce(
@@ -119,7 +119,7 @@ class ConsumerCartViewModel(
     private fun onClearConsumerCartClick() {
         setState {
             copy(
-                isClearCartConfirmationVisible = true
+                isClearCartConfirmationVisible = true,
             )
         }
     }
@@ -127,7 +127,7 @@ class ConsumerCartViewModel(
     private fun onCancelBottomSheet() {
         setState {
             copy(
-                isClearCartConfirmationVisible = false
+                isClearCartConfirmationVisible = false,
             )
         }
     }
@@ -139,14 +139,13 @@ class ConsumerCartViewModel(
 
                 setState {
                     copy(
-                        isClearCartConfirmationVisible = false
+                        isClearCartConfirmationVisible = false,
                     )
                 }
             },
             onError = {
                 // Do nothing
-            }
-
+            },
         )
     }
 

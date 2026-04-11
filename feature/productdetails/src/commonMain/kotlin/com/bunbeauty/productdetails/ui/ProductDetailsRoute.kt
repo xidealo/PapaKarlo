@@ -303,8 +303,10 @@ private fun ProductDetailsSuccessScreen(
 
                 is AdditionItem.AdditionCardRowItem -> {
                     LazyRow(
-                        modifier = Modifier.fillMaxWidth()
-                            .padding(top = 8.dp),
+                        modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .padding(top = 8.dp),
                         contentPadding = PaddingValues(horizontal = 16.dp),
                         horizontalArrangement = Arrangement.spacedBy(8.dp),
                     ) {
@@ -475,7 +477,7 @@ private fun ProductDetailsSuccessScreenPreview() {
                                     newPrice = "280 ₽",
                                     description =
                                         "Сочная котлетка, сыр Чедр, маринованный огурчик, помидор, " +
-                                                "красный лук, салат, фирменный соус, булочка с кунжутом",
+                                            "красный лук, салат, фирменный соус, булочка с кунжутом",
                                     additionList =
                                         persistentListOf(
                                             AdditionItem.AdditionHeaderItem(
