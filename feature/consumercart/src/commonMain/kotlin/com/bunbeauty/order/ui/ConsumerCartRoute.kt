@@ -133,7 +133,7 @@ fun ConsumerCartRoute(
     ConsumerCartScreen(
         viewState = viewState.toConsumerCartViewState(),
         onAction = onAction,
-        animatedContentScope = animatedContentScope
+        animatedContentScope = animatedContentScope,
     )
 }
 
@@ -148,23 +148,24 @@ fun ConsumerCartScreen(
         backActionClick = {
             onAction(ConsumerCart.Action.BackClick)
         },
-        topActions = when(viewState){
-            ConsumerCartViewState.Error -> persistentListOf()
-            ConsumerCartViewState.Loading -> persistentListOf()
-            is ConsumerCartViewState.Success -> if (viewState.cartProductList.isNotEmpty()){
-                persistentListOf(
-                    FoodDeliveryAction(
-                        iconId = Res.drawable.ic_basket,
-                        onClick = {
-                            onAction(ConsumerCart.Action.OnClearConsumerCartClick)
-                        }
-                    )
-                )
-            } else {
-                persistentListOf()
-            }
-        }
-                   ,
+        topActions =
+            when (viewState) {
+                ConsumerCartViewState.Error -> persistentListOf()
+                ConsumerCartViewState.Loading -> persistentListOf()
+                is ConsumerCartViewState.Success ->
+                    if (viewState.cartProductList.isNotEmpty()) {
+                        persistentListOf(
+                            FoodDeliveryAction(
+                                iconId = Res.drawable.ic_basket,
+                                onClick = {
+                                    onAction(ConsumerCart.Action.OnClearConsumerCartClick)
+                                },
+                            ),
+                        )
+                    } else {
+                        persistentListOf()
+                    }
+            },
         backgroundColor = FoodDeliveryTheme.colors.mainColors.surface,
     ) {
         when (viewState) {
@@ -174,7 +175,7 @@ fun ConsumerCartScreen(
                 ConsumerCartSuccessScreen(
                     viewState = viewState,
                     onAction = onAction,
-                    animatedContentScope = animatedContentScope
+                    animatedContentScope = animatedContentScope,
                 )
             }
 
@@ -244,7 +245,7 @@ fun ConsumerCartEffect(
 private fun ConsumerCartSuccessScreen(
     viewState: ConsumerCartViewState.Success,
     onAction: (ConsumerCart.Action) -> Unit,
-    animatedContentScope: AnimatedVisibilityScope
+    animatedContentScope: AnimatedVisibilityScope,
 ) {
     ClearConsumerCartBottomSheet(
         state = viewState,
@@ -322,7 +323,7 @@ private fun ConsumerCartSuccessScreen(
             recommendationItems(
                 recommendationList = viewState.recommendationList,
                 onAction = onAction,
-                animatedContentScope = animatedContentScope
+                animatedContentScope = animatedContentScope,
             )
         }
 
@@ -495,23 +496,23 @@ private fun ClearConsumerCartBottomSheet(
         },
         title = stringResource(Res.string.title_consumer_delete_orders),
         isShown = state.acceptDeleteOrder.isShown,
-    ){
-                MainButton(
-                    elevated = false,
-                    text = stringResource(Res.string.action_consumer_delete),
-                    onClick = {
-                        onAction(ConsumerCart.Action.ConfirmClearCart)
-                    },
-                )
-                SecondaryButton(
-                    modifier = Modifier.padding(top = 4.dp),
-                    textStringId = Res.string.common_cancel,
-                    elevated = false,
-                    onClick = {
-                        onAction(ConsumerCart.Action.CancelBottomSheet)
-                    },
-                )
-        }
+    ) {
+        MainButton(
+            elevated = false,
+            text = stringResource(Res.string.action_consumer_delete),
+            onClick = {
+                onAction(ConsumerCart.Action.ConfirmClearCart)
+            },
+        )
+        SecondaryButton(
+            modifier = Modifier.padding(top = 4.dp),
+            textStringId = Res.string.common_cancel,
+            elevated = false,
+            onClick = {
+                onAction(ConsumerCart.Action.CancelBottomSheet)
+            },
+        )
+    }
 }
 
 @Preview(showBackground = true)
@@ -565,18 +566,20 @@ private fun ConsumerCartSuccessScreenPreview() {
                                         getRecommendation("6"),
                                         getRecommendation("7"),
                                     ),
-                                acceptDeleteOrder = ConsumerCartViewState.BottomSheetState(
-                                    isShown = false
-                                ),
+                                acceptDeleteOrder =
+                                    ConsumerCartViewState.BottomSheetState(
+                                        isShown = false,
+                                    ),
                             ),
                         onAction = {},
-                        animatedContentScope = this
+                        animatedContentScope = this,
                     )
                 }
             }
         }
     }
 }
+
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Preview(showBackground = true)
 @Composable
@@ -597,13 +600,13 @@ private fun ConsumerCartEmptyScreenPreview() {
                                         getRecommendation("1"),
                                         getRecommendation("2"),
                                     ),
-                                acceptDeleteOrder = ConsumerCartViewState.BottomSheetState(
-                                    isShown = false
-                                ),
+                                acceptDeleteOrder =
+                                    ConsumerCartViewState.BottomSheetState(
+                                        isShown = false,
+                                    ),
                             ),
-
                         onAction = {},
-                        animatedContentScope = this
+                        animatedContentScope = this,
                     )
                 }
             }
@@ -623,7 +626,7 @@ private fun ConsumerCartLoadingScreenPreview() {
                 ConsumerCartScreen(
                     viewState = ConsumerCartViewState.Loading,
                     onAction = {},
-                    animatedContentScope = this
+                    animatedContentScope = this,
                 )
             }
         }
@@ -641,7 +644,7 @@ private fun ConsumerCartErrorScreenPreview() {
                 ConsumerCartScreen(
                     viewState = ConsumerCartViewState.Error,
                     onAction = {},
-                    animatedContentScope = this
+                    animatedContentScope = this,
                 )
             }
         }
@@ -657,4 +660,3 @@ private fun getRecommendation(uuid: String) =
         newPrice = "99 ₽",
         oldPrice = "100 ₽",
     )
-

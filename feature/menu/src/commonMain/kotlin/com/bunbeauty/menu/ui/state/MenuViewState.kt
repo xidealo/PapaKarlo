@@ -31,7 +31,7 @@ sealed interface MenuItemUi {
     @Immutable
     data class Product(
         override val key: String,
-        val product: ProductUi
+        val product: ProductUi,
     ) : MenuItemUi
 
     @Immutable
