@@ -54,6 +54,7 @@ class ConsumerCartViewModel(
                 oldTotalCost = null,
                 newTotalCost = "",
                 orderAvailable = false,
+                isClearCartConfirmationVisible = false,
             ),
     ) {
     private var observeConsumerCartJob: Job? = null
@@ -69,6 +70,7 @@ class ConsumerCartViewModel(
                 )
 
             ConsumerCart.Action.BackClick -> navigateBack()
+            ConsumerCart.Action.OnClearConsumerCartClick -> onClearConsumerCartClick()
             ConsumerCart.Action.Init -> {
                 observeConsumerCart()
                 checkOrderAvailable()
@@ -102,6 +104,9 @@ class ConsumerCartViewModel(
                 onRecommendationClicked(
                     recommendationUuid = action.menuProductUuid,
                 )
+
+            ConsumerCart.Action.CancelBottomSheet -> onCancelBottomSheet()
+            ConsumerCart.Action.ConfirmClearCart -> onDeleteSelectedOrders()
         }
     }
 
@@ -109,6 +114,39 @@ class ConsumerCartViewModel(
         addEvent {
             ConsumerCart.Event.NavigateBack
         }
+    }
+
+    private fun onClearConsumerCartClick() {
+        setState {
+            copy(
+                isClearCartConfirmationVisible = true,
+            )
+        }
+    }
+
+    private fun onCancelBottomSheet() {
+        setState {
+            copy(
+                isClearCartConfirmationVisible = false,
+            )
+        }
+    }
+
+    private fun onDeleteSelectedOrders() {
+        sharedScope.launchSafe(
+            block = {
+                cartProductInteractor.removeAllProductsFromCart()
+
+                setState {
+                    copy(
+                        isClearCartConfirmationVisible = false,
+                    )
+                }
+            },
+            onError = {
+                // Do nothing
+            },
+        )
     }
 
     private fun observeConsumerCart() {

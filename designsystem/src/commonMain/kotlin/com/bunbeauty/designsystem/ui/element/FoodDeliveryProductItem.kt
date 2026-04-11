@@ -1,0 +1,169 @@
+package com.bunbeauty.designsystem.ui.element
+
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.unit.dp
+import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
+import com.bunbeauty.designsystem.theme.bold
+import com.bunbeauty.designsystem.ui.SharedTransitionPreview
+import com.bunbeauty.designsystem.ui.SharedTransitionScopeComposition
+import com.bunbeauty.designsystem.ui.element.button.SmallButton
+import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryCard
+import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
+import papakarlo.designsystem.generated.resources.Res
+import papakarlo.designsystem.generated.resources.action_product_want
+import papakarlo.designsystem.generated.resources.description_product
+
+@OptIn(ExperimentalSharedTransitionApi::class)
+@Composable
+fun FoodDeliveryProductItem(
+    animatedContentScope: AnimatedVisibilityScope,
+    modifier: Modifier = Modifier,
+    uuid: String,
+    photoLink: String,
+    name: String,
+    oldPrice: String?,
+    newPrice: String,
+    onAddProductClick: (String) -> Unit,
+    onProductClick: (String) -> Unit,
+) {
+    with(SharedTransitionScopeComposition.current) {
+        FoodDeliveryCard(
+            modifier = modifier,
+            onClick = {
+                onProductClick(uuid)
+            },
+            shape = RoundedCornerShape(size = 24.dp),
+        ) {
+            Column(
+                modifier = Modifier.background(FoodDeliveryTheme.colors.mainColors.surfaceVariant),
+            ) {
+                FoodDeliveryAsyncImage(
+                    modifier =
+                        Modifier
+                            .sharedElement(
+                                sharedContentState =
+                                    rememberSharedContentState(key = "image-${uuid}"),
+                                animatedVisibilityScope = animatedContentScope,
+                            ).fillMaxWidth()
+                            .clip(shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp))
+                            .heightIn(min = 120.dp),
+                    photoLink = photoLink,
+                    contentDescription = stringResource(Res.string.description_product),
+                    contentScale = ContentScale.FillWidth,
+                )
+                Column(
+                    modifier =
+                        Modifier
+                            .padding(FoodDeliveryTheme.dimensions.smallSpace),
+                ) {
+                    Row(
+                        modifier =
+                            Modifier.padding(
+                                top = FoodDeliveryTheme.dimensions.verySmallSpace,
+                            ),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        oldPrice?.let { oldPrice ->
+                            Text(
+                                modifier =
+                                    Modifier
+                                        .padding(end = FoodDeliveryTheme.dimensions.verySmallSpace)
+                                        .sharedElement(
+                                            sharedContentState =
+                                                rememberSharedContentState(
+                                                    key = "oldPrice-${uuid}",
+                                                ),
+                                            animatedVisibilityScope = animatedContentScope,
+                                        ),
+                                text = oldPrice,
+                                style = FoodDeliveryTheme.typography.bodySmall,
+                                textDecoration = TextDecoration.LineThrough,
+                                color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
+                            )
+                        }
+                        Text(
+                            modifier =
+                                Modifier
+                                    .sharedElement(
+                                        sharedContentState =
+                                            rememberSharedContentState(
+                                                key = "price-${uuid}",
+                                            ),
+                                        animatedVisibilityScope = animatedContentScope,
+                                    ),
+                            text = newPrice,
+                            style = FoodDeliveryTheme.typography.bodyLarge.bold,
+                            color = FoodDeliveryTheme.colors.mainColors.onSurface,
+                        )
+                    }
+
+                    OverflowingText(
+                        modifier =
+                            Modifier
+                                .padding(top = 4.dp)
+                                .sharedElement(
+                                    sharedContentState =
+                                        rememberSharedContentState(
+                                            key = "text-${uuid}",
+                                        ),
+                                    animatedVisibilityScope = animatedContentScope,
+                                ),
+                        text = name,
+                        style = FoodDeliveryTheme.typography.bodyMedium,
+                        color = FoodDeliveryTheme.colors.mainColors.onSurface,
+                    )
+
+                    SmallButton(
+                        modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .padding(top = 12.dp),
+                        textStringId = Res.string.action_product_want,
+                        elevated = false,
+                        onClick = {
+                            onAddProductClick(uuid)
+                        },
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Preview(widthDp = 200)
+@Composable
+private fun MenuProductItemPreview() {
+    FoodDeliveryTheme {
+        SharedTransitionPreview {
+            AnimatedVisibility(visible = true) {
+                FoodDeliveryProductItem(
+                    onAddProductClick = {},
+                    onProductClick = {},
+                    animatedContentScope = this,
+                    uuid = "",
+                    photoLink = "",
+                    name = "Бергер",
+                    newPrice = "99 ₽",
+                    oldPrice = "100 ₽",
+                )
+            }
+        }
+    }
+}

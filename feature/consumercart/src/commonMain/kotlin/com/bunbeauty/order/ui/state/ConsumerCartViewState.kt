@@ -2,6 +2,7 @@ package com.bunbeauty.order.ui.state
 
 import androidx.compose.runtime.Immutable
 import com.bunbeauty.core.base.BaseViewState
+import com.bunbeauty.core.model.ProductUi
 import com.bunbeauty.core.motivation.MotivationUi
 import kotlinx.collections.immutable.ImmutableList
 
@@ -17,16 +18,8 @@ sealed class ConsumerCartViewState(
         val cartProductList: ImmutableList<CartProductItemUi>,
         val recommendationList: ImmutableList<ProductUi>,
         val bottomPanelInfo: BottomPanelInfoUi?,
-    ) : ConsumerCartViewState(state = State.SUCCESS) {
-        data class ProductUi(
-            val key: String,
-            val uuid: String,
-            val photoLink: String,
-            val name: String,
-            val oldPrice: String?,
-            val newPrice: String,
-        )
-    }
+        val acceptDeleteOrder: BottomSheetState,
+    ) : ConsumerCartViewState(state = State.SUCCESS)
 
     @Immutable
     data object Error : ConsumerCartViewState(state = State.ERROR)
@@ -58,4 +51,8 @@ sealed class ConsumerCartViewState(
         ERROR,
         SUCCESS,
     }
+
+    data class BottomSheetState(
+        val isShown: Boolean,
+    )
 }

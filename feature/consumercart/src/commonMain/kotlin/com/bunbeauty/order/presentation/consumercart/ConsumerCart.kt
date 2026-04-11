@@ -17,6 +17,7 @@ interface ConsumerCart {
         val oldTotalCost: String?,
         val newTotalCost: String,
         val orderAvailable: Boolean,
+        val isClearCartConfirmationVisible: Boolean,
     ) : BaseDataState {
         enum class State {
             LOADING,
@@ -29,6 +30,14 @@ interface ConsumerCart {
         data object Init : Action
 
         data object BackClick : Action
+
+        data object OnClearConsumerCartClick : Action
+
+        data object CancelBottomSheet :
+            Action
+
+        data object ConfirmClearCart :
+            Action
 
         data class AddProductToCartClick(
             val cartProductUuid: String,

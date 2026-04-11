@@ -8,6 +8,8 @@ import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.remember
 import com.bunbeauty.designsystem.FoodDeliveryCompany
 import com.bunbeauty.designsystem.theme.color.AppColors
+import com.bunbeauty.designsystem.theme.color.BeregColors
+import com.bunbeauty.designsystem.theme.color.BeregDarkColors
 import com.bunbeauty.designsystem.theme.color.DjanDarkColors
 import com.bunbeauty.designsystem.theme.color.DjanLightColors
 import com.bunbeauty.designsystem.theme.color.EmojiDarkColors
@@ -20,6 +22,8 @@ import com.bunbeauty.designsystem.theme.color.LegendaDarkColors
 import com.bunbeauty.designsystem.theme.color.LegendaLightColors
 import com.bunbeauty.designsystem.theme.color.LimonadColors
 import com.bunbeauty.designsystem.theme.color.LimonadDarkColors
+import com.bunbeauty.designsystem.theme.color.MiminoDarkColors
+import com.bunbeauty.designsystem.theme.color.MiminoLightColors
 import com.bunbeauty.designsystem.theme.color.LocalAppColors
 import com.bunbeauty.designsystem.theme.color.PapaKarloDarkColors
 import com.bunbeauty.designsystem.theme.color.PapaKarloLightColors
@@ -37,7 +41,10 @@ import com.bunbeauty.designsystem.theme.color.YuliarDarkColors
 import com.bunbeauty.designsystem.theme.color.YuliarLightColors
 import org.jetbrains.compose.resources.DrawableResource
 import papakarlo.designsystem.generated.resources.Res
+import papakarlo.designsystem.generated.resources.logo_medium_bereg
 import papakarlo.designsystem.generated.resources.logo_medium_djan
+import papakarlo.designsystem.generated.resources.logo_medium_mimino_dark
+import papakarlo.designsystem.generated.resources.logo_medium_mimino_light
 import papakarlo.designsystem.generated.resources.logo_medium_emoji
 import papakarlo.designsystem.generated.resources.logo_medium_estpoest
 import papakarlo.designsystem.generated.resources.logo_medium_gustopub
@@ -49,9 +56,12 @@ import papakarlo.designsystem.generated.resources.logo_medium_usadba
 import papakarlo.designsystem.generated.resources.logo_medium_vkus_kavkaza
 import papakarlo.designsystem.generated.resources.logo_medium_voljane
 import papakarlo.designsystem.generated.resources.logo_medium_yuliar
+import papakarlo.designsystem.generated.resources.logo_small_mimino_dark
+import papakarlo.designsystem.generated.resources.logo_small_mimino_light
 
 private var BASE_THEME_FLAVOR: String = "papakarlo"
 var logoMedium: DrawableResource? = null
+var logoSmall: DrawableResource? = null
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -82,6 +92,7 @@ private fun getAppColors(
     flavor: String,
     isDarkTheme: Boolean,
 ): AppColors {
+    logoSmall = null
     val company = FoodDeliveryCompany.getByFlavor(flavor)
     return when (company) {
         FoodDeliveryCompany.PAPA_KARLO -> {
@@ -197,6 +208,35 @@ private fun getAppColors(
                 VoljaneDarkColors
             } else {
                 VoljaneColors
+            }
+        }
+
+        FoodDeliveryCompany.BEREG -> {
+            logoMedium = Res.drawable.logo_medium_bereg
+            if (isDarkTheme) {
+                BeregDarkColors
+            } else {
+                BeregColors
+            }
+        }
+
+        FoodDeliveryCompany.MIMINO -> {
+            logoMedium =
+                if (isDarkTheme) {
+                    Res.drawable.logo_medium_mimino_dark
+                } else {
+                    Res.drawable.logo_medium_mimino_light
+                }
+            logoSmall =
+                if (isDarkTheme) {
+                    Res.drawable.logo_small_mimino_dark
+                } else {
+                    Res.drawable.logo_small_mimino_light
+                }
+            if (isDarkTheme) {
+                MiminoDarkColors
+            } else {
+                MiminoLightColors
             }
         }
     }

@@ -64,6 +64,7 @@ import com.bunbeauty.designsystem.ui.element.surface.FoodDeliverySurface
 import com.bunbeauty.designsystem.ui.element.switcher.FoodDeliverySwitcher
 import com.bunbeauty.designsystem.ui.element.textfield.FoodDeliveryTextField
 import com.bunbeauty.designsystem.ui.element.textfield.FoodDeliveryTextFieldDefaults
+import com.bunbeauty.designsystem.ui.getIsImeVisible
 import kotlinx.collections.immutable.persistentListOf
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.getString
@@ -796,7 +797,16 @@ private fun BottomAmountBar(
             }
 
             LoadingButton(
-                modifier = Modifier.padding(bottom = LocalBottomBarPadding.current),
+                modifier =
+                    Modifier
+                        .padding(
+                            bottom =
+                                if (getIsImeVisible()) {
+                                    0.dp
+                                } else {
+                                    LocalBottomBarPadding.current
+                                },
+                        ),
                 textStringId = Res.string.action_create_order_create_order,
                 isLoading = viewState.isLoadingCreateOrder,
                 isEnabled = viewState.isOrderCreationEnabled,
