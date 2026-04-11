@@ -1,5 +1,5 @@
 name: "Pull request workflow"
-
+#Add last 3 cafe for lints
 on:
   pull_request:
     branches:
@@ -48,7 +48,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        flavor: [ "papakarlo", "yuliar", "djan", "gustopub", "tandirhouse", "vkuskavkaza", "legenda", "usadba", "emoji", "estpoest", "taverna" ]
+        flavor: [
+                  "emoji",
+                  "estpoest",
+                  "mimino" ]
     steps:
       - uses: actions/checkout@v4
       - name: "Set up JDK 21"
@@ -77,7 +80,11 @@ jobs:
       fail-fast: false
       matrix:
         linter: [ "lint", "ktLint" ]
-        flavor: [ "papakarlo", "yuliar", "djan", "gustopub", "tandirhouse", "vkuskavkaza", "legenda", "usadba", "emoji", "estpoest" ]
+        flavor: [
+                  "usadba",
+                  "emoji",
+                  "mimino"
+        ]
     steps:
       - uses: actions/checkout@v4
       - name: "Set up JDK 21"

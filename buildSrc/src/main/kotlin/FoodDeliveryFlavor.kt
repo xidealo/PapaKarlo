@@ -57,6 +57,10 @@ enum class FoodDeliveryFlavor(
     BEREG(
         key = "bereg",
         applicationId = "com.bunbeauty.bereg"
+    ),
+    MIMINO(
+        key = "mimino",
+        applicationId = "com.bunbeauty.mimino"
     );
 
     val assembleReleaseBundle: String
