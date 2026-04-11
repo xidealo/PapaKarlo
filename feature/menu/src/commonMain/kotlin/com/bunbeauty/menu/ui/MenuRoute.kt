@@ -550,7 +550,7 @@ private fun MenuColumn(
 private suspend fun LazyGridState.alignCategoryHeaderUnderCategoryRow(headerGridIndex: Int) {
     if (headerGridIndex < 0) return
 
-    animateScrollToItem(
+    scrollToItem(
         index = headerGridIndex,
         scrollOffset = 0,
     )
@@ -562,7 +562,7 @@ private suspend fun LazyGridState.alignCategoryHeaderUnderCategoryRow(headerGrid
         categoryRowLayoutInfo?.let { item ->
             -(item.offset.y + item.size.height)
         } ?: 0
-    scrollToItem(
+    animateScrollToItem(
         index = headerGridIndex,
         scrollOffset = targetScrollOffset,
     )
