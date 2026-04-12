@@ -57,19 +57,6 @@ val SharedTransitionScopeComposition = staticCompositionLocalOf<SharedTransition
     error("No SharedTransitionScopeComposition")
 }
 
-fun Modifier.ignoreHorizontalParentPadding(horizontal: Dp): Modifier =
-    this.layout { measurable, constraints ->
-        val overridenWidth = constraints.maxWidth + 2 * horizontal.roundToPx()
-        val placeable = measurable.measure(constraints.copy(maxWidth = overridenWidth))
-        layout(placeable.width, placeable.height) {
-            placeable.place(0, 0)
-        }
-    }
-
-@Composable
-fun getIsImeVisible() = WindowInsets.ime.getBottom(LocalDensity.current) > 0
-
-
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun SharedTransitionPreview(content: @Composable AnimatedVisibilityScope.() -> Unit) {

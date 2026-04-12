@@ -73,7 +73,8 @@ jobs:
           "emoji",
           "estpoest",
           "taverna",
-          "voljane"
+          "voljane",
+          "mimino"
         ]
     steps:
       - uses: actions/checkout@v4
