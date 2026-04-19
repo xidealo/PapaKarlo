@@ -3,7 +3,7 @@ default_platform(:ios)
 platform :ios do
   before_all do
     # Выбираем версию Xcode для сборки
-    xcodes(version: "26.2", select_for_current_build_only: true)
+    xcodes(version: "26.4", select_for_current_build_only: true)
 
     # App Store Connect API Key
     app_store_connect_api_key(
@@ -27,7 +27,8 @@ platform :ios do
      taverna:      { id: "com.bunbeauty.taverna", scheme: "taverna" },
      voljane:      { id: "com.bunbeauty.voljane", scheme: "voljane" },
      legenda:      { id: "com.bunbeauty.legenda", scheme: "legenda" },
-     bereg:      { id: "com.bunbeauty.bereg", scheme: "bereg" }
+     bereg:      { id: "com.bunbeauty.bereg", scheme: "bereg" },
+     bereg:      { id: "com.bunbeauty.mimino", scheme: "mimino" },
   }
 
   # Универсальная функция сборки и заливки
@@ -71,11 +72,7 @@ platform :ios do
   desc "Deploy all apps to TestFlight"
   lane :deployAll do
     apps.keys.each do |app|
-      begin
-        send(app)
-      rescue => e
-        UI.error("Failed to deploy #{app}: #{e.message}")
-      end
+      send(app)
     end
   end
 end

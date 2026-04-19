@@ -60,12 +60,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         -> UNNotificationPresentationOptions {
         let userInfo = notification.request.content.userInfo
 
-        // With swizzling disabled you must let Messaging know about the message, for Analytics
-        // Messaging.messaging().appDidReceiveMessage(userInfo)
-
-        // ...
-
-        // Print full message.
         print(userInfo)
 
         // Change this to your preferred presentation option
