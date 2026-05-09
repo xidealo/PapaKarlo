@@ -1,22 +1,22 @@
 package com.bunbeauty.designsystem.ui.element.button
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.theme.medium
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import papakarlo.designsystem.generated.resources.Res
-import papakarlo.designsystem.generated.resources.preview_string
 
 @Composable
 fun SecondaryButton(
     modifier: Modifier = Modifier,
-    textStringId: StringResource,
+    text: String,
     elevated: Boolean = true,
     enabled: Boolean = true,
     onClick: () -> Unit,
@@ -28,12 +28,33 @@ fun SecondaryButton(
         shape = FoodDeliveryButtonDefaults.buttonShape,
         elevation = FoodDeliveryButtonDefaults.getButtonElevation(elevated),
         enabled = enabled,
+        border = BorderStroke(
+            width = 2.dp,
+            color = FoodDeliveryTheme.colors.mainColors.onSecondary,
+        ),
     ) {
         Text(
-            text = stringResource(resource = textStringId),
+            text = text,
             style = FoodDeliveryTheme.typography.labelLarge.medium,
         )
     }
+}
+
+@Composable
+fun SecondaryButton(
+    modifier: Modifier = Modifier,
+    textStringId: StringResource,
+    elevated: Boolean = true,
+    enabled: Boolean = true,
+    onClick: () -> Unit,
+) {
+    SecondaryButton(
+        modifier = modifier,
+        text = stringResource(textStringId),
+        elevated = elevated,
+        enabled = enabled,
+        onClick = onClick,
+    )
 }
 
 @Preview
@@ -41,7 +62,7 @@ fun SecondaryButton(
 private fun SecondaryButtonPreview() {
     FoodDeliveryTheme {
         SecondaryButton(
-            textStringId = Res.string.preview_string,
+            text = "Preview button",
             onClick = {},
         )
     }

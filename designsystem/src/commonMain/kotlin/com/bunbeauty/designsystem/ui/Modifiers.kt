@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 fun Modifier.icon24() = this.size(24.dp)
 
 fun Modifier.icon16() = this.size(16.dp)
+fun Modifier.icon20() = this.size(20.dp)
 
 fun <T> Modifier.applyIfNotNull(
     value: T?,
@@ -40,10 +41,6 @@ val LocalStatusBarColor =
 
 val LocalBottomBarPadding = compositionLocalOf { 0.dp }
 
-val SharedTransitionScopeComposition = staticCompositionLocalOf<SharedTransitionScope> {
-    error("No SharedTransitionScopeComposition")
-}
-
 fun Modifier.ignoreHorizontalParentPadding(horizontal: Dp): Modifier =
     this.layout { measurable, constraints ->
         val overridenWidth = constraints.maxWidth + 2 * horizontal.roundToPx()
@@ -56,6 +53,9 @@ fun Modifier.ignoreHorizontalParentPadding(horizontal: Dp): Modifier =
 @Composable
 fun getIsImeVisible() = WindowInsets.ime.getBottom(LocalDensity.current) > 0
 
+val SharedTransitionScopeComposition = staticCompositionLocalOf<SharedTransitionScope> {
+    error("No SharedTransitionScopeComposition")
+}
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable

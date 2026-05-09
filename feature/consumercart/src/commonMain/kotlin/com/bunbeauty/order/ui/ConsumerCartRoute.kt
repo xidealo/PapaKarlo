@@ -1,5 +1,11 @@
 package com.bunbeauty.order.ui
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.AnimatedContentScope
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Arrangement
@@ -10,7 +16,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
@@ -18,18 +23,17 @@ import androidx.compose.foundation.lazy.grid.LazyGridScope
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.itemsIndexed
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.bunbeauty.core.model.ProductDetailsOpenedFrom
+import com.bunbeauty.core.model.ProductUi
 import com.bunbeauty.core.model.SuccessLoginDirection
 import com.bunbeauty.core.motivation.Motivation
 import com.bunbeauty.core.motivation.MotivationUi
@@ -37,18 +41,19 @@ import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.theme.bold
 import com.bunbeauty.designsystem.theme.medium
 import com.bunbeauty.designsystem.ui.LocalBottomBarPadding
-import com.bunbeauty.designsystem.ui.element.FoodDeliveryAsyncImage
+import com.bunbeauty.designsystem.ui.SharedTransitionPreview
+import com.bunbeauty.designsystem.ui.element.FoodDeliveryAction
+import com.bunbeauty.designsystem.ui.element.FoodDeliveryProductItem
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryScaffold
-import com.bunbeauty.designsystem.ui.element.OverflowingText
 import com.bunbeauty.designsystem.ui.element.button.MainButton
-import com.bunbeauty.designsystem.ui.element.button.SmallButton
+import com.bunbeauty.designsystem.ui.element.button.SecondaryButton
 import com.bunbeauty.designsystem.ui.element.card.DiscountCard
-import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryItem
 import com.bunbeauty.designsystem.ui.element.surface.FoodDeliverySurface
 import com.bunbeauty.designsystem.ui.screen.EmptyScreen
 import com.bunbeauty.designsystem.ui.screen.ErrorScreen
 import com.bunbeauty.designsystem.ui.screen.LoadingScreen
+import com.bunbeauty.designsystem.ui.screen.bottomsheet.FoodDeliveryModalBottomSheet
 import com.bunbeauty.order.presentation.consumercart.ConsumerCart
 import com.bunbeauty.order.presentation.consumercart.ConsumerCartViewModel
 import com.bunbeauty.order.ui.mapper.toConsumerCartViewState
@@ -63,12 +68,13 @@ import org.koin.compose.viewmodel.koinViewModel
 import papakarlo.designsystem.generated.resources.Res
 import papakarlo.designsystem.generated.resources.action_consumer_cart_creeate_order
 import papakarlo.designsystem.generated.resources.action_consumer_cart_menu
-import papakarlo.designsystem.generated.resources.action_product_want
+import papakarlo.designsystem.generated.resources.action_consumer_delete
+import papakarlo.designsystem.generated.resources.common_cancel
 import papakarlo.designsystem.generated.resources.description_consumer_cart_empty
-import papakarlo.designsystem.generated.resources.description_product
 import papakarlo.designsystem.generated.resources.error_consumer_cart_add_product
 import papakarlo.designsystem.generated.resources.error_consumer_cart_loading
 import papakarlo.designsystem.generated.resources.error_consumer_cart_remove_product
+import papakarlo.designsystem.generated.resources.ic_basket
 import papakarlo.designsystem.generated.resources.ic_cart_24
 import papakarlo.designsystem.generated.resources.msg_consumer_cart_empty
 import papakarlo.designsystem.generated.resources.msg_consumer_cart_recommendations
@@ -76,6 +82,7 @@ import papakarlo.designsystem.generated.resources.title_cart
 import papakarlo.designsystem.generated.resources.title_consumer_cart_discount
 import papakarlo.designsystem.generated.resources.title_consumer_cart_empty
 import papakarlo.designsystem.generated.resources.title_consumer_cart_total
+import papakarlo.designsystem.generated.resources.title_consumer_delete_orders
 
 @Composable
 fun ConsumerCartRoute(
@@ -92,6 +99,7 @@ fun ConsumerCartRoute(
         cartProductUuid: String?,
     ) -> Unit,
     showErrorMessage: (String) -> Unit,
+    animatedContentScope: AnimatedContentScope,
 ) {
     LaunchedEffect(Unit) {
         viewModel.onAction(ConsumerCart.Action.Init)
@@ -122,19 +130,42 @@ fun ConsumerCartRoute(
         goToProductFragment = goToProductFragment,
         showErrorMessage = showErrorMessage,
     )
-    ConsumerCartScreen(viewState = viewState.toConsumerCartViewState(), onAction = onAction)
+    ConsumerCartScreen(
+        viewState = viewState.toConsumerCartViewState(),
+        onAction = onAction,
+        animatedContentScope = animatedContentScope,
+    )
 }
 
 @Composable
 fun ConsumerCartScreen(
     viewState: ConsumerCartViewState,
     onAction: (ConsumerCart.Action) -> Unit,
+    animatedContentScope: AnimatedVisibilityScope,
 ) {
     FoodDeliveryScaffold(
         title = stringResource(resource = Res.string.title_cart),
         backActionClick = {
             onAction(ConsumerCart.Action.BackClick)
         },
+        topActions =
+            when (viewState) {
+                ConsumerCartViewState.Error -> persistentListOf()
+                ConsumerCartViewState.Loading -> persistentListOf()
+                is ConsumerCartViewState.Success ->
+                    if (viewState.cartProductList.isNotEmpty()) {
+                        persistentListOf(
+                            FoodDeliveryAction(
+                                iconId = Res.drawable.ic_basket,
+                                onClick = {
+                                    onAction(ConsumerCart.Action.OnClearConsumerCartClick)
+                                },
+                            ),
+                        )
+                    } else {
+                        persistentListOf()
+                    }
+            },
         backgroundColor = FoodDeliveryTheme.colors.mainColors.surface,
     ) {
         when (viewState) {
@@ -144,6 +175,7 @@ fun ConsumerCartScreen(
                 ConsumerCartSuccessScreen(
                     viewState = viewState,
                     onAction = onAction,
+                    animatedContentScope = animatedContentScope,
                 )
             }
 
@@ -213,7 +245,12 @@ fun ConsumerCartEffect(
 private fun ConsumerCartSuccessScreen(
     viewState: ConsumerCartViewState.Success,
     onAction: (ConsumerCart.Action) -> Unit,
+    animatedContentScope: AnimatedVisibilityScope,
 ) {
+    ClearConsumerCartBottomSheet(
+        state = viewState,
+        onAction = onAction,
+    )
     Column(
         modifier =
             Modifier
@@ -286,6 +323,7 @@ private fun ConsumerCartSuccessScreen(
             recommendationItems(
                 recommendationList = viewState.recommendationList,
                 onAction = onAction,
+                animatedContentScope = animatedContentScope,
             )
         }
 
@@ -377,8 +415,9 @@ private fun BottomPanel(
 }
 
 private fun LazyGridScope.recommendationItems(
-    recommendationList: ImmutableList<ConsumerCartViewState.Success.ProductUi>,
+    recommendationList: ImmutableList<ProductUi>,
     onAction: (ConsumerCart.Action) -> Unit,
+    animatedContentScope: AnimatedVisibilityScope,
 ) {
     if (recommendationList.isNotEmpty()) {
         item(
@@ -404,7 +443,7 @@ private fun LazyGridScope.recommendationItems(
         key = { _, recommendation -> recommendation.key },
         span = { _, _ -> GridItemSpan(1) },
     ) { index, recommendation ->
-        MenuProductItem(
+        FoodDeliveryProductItem(
             modifier =
                 Modifier
                     .padding(
@@ -422,7 +461,6 @@ private fun LazyGridScope.recommendationItems(
                                 0.dp
                             },
                     ),
-            menuProductItem = recommendation,
             onAddProductClick = { menuProductUuid ->
                 onAction(
                     ConsumerCart.Action.AddRecommendationProductToCartClick(
@@ -437,76 +475,43 @@ private fun LazyGridScope.recommendationItems(
                     ),
                 )
             },
+            animatedContentScope = animatedContentScope,
+            uuid = recommendation.uuid,
+            photoLink = recommendation.photoLink,
+            name = recommendation.name,
+            oldPrice = recommendation.oldPrice,
+            newPrice = recommendation.newPrice,
         )
     }
 }
 
 @Composable
-fun MenuProductItem(
-    modifier: Modifier = Modifier,
-    menuProductItem: ConsumerCartViewState.Success.ProductUi,
-    onAddProductClick: (String) -> Unit,
-    onProductClick: (String) -> Unit,
+private fun ClearConsumerCartBottomSheet(
+    state: ConsumerCartViewState.Success,
+    onAction: (ConsumerCart.Action) -> Unit,
 ) {
-    FoodDeliveryCard(
-        modifier = modifier,
-        onClick = {
-            onProductClick(menuProductItem.uuid)
+    FoodDeliveryModalBottomSheet(
+        onDismissRequest = {
+            onAction(ConsumerCart.Action.CancelBottomSheet)
         },
-        shape = RoundedCornerShape(size = 24.dp),
+        title = stringResource(Res.string.title_consumer_delete_orders),
+        isShown = state.acceptDeleteOrder.isShown,
     ) {
-        Column {
-            FoodDeliveryAsyncImage(
-                modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .heightIn(min = 120.dp),
-                photoLink = menuProductItem.photoLink,
-                contentDescription = stringResource(resource = Res.string.description_product),
-                contentScale = ContentScale.FillWidth,
-            )
-            Column(
-                modifier =
-                    Modifier.padding(
-                        all = FoodDeliveryTheme.dimensions.smallSpace,
-                    ),
-            ) {
-                OverflowingText(
-                    text = menuProductItem.name,
-                    style = FoodDeliveryTheme.typography.titleSmall.bold,
-                    color = FoodDeliveryTheme.colors.mainColors.onSurface,
-                )
-                Row(modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.verySmallSpace)) {
-                    menuProductItem.oldPrice?.let { oldPrice ->
-                        Text(
-                            modifier =
-                                Modifier
-                                    .padding(end = FoodDeliveryTheme.dimensions.verySmallSpace),
-                            text = oldPrice,
-                            style = FoodDeliveryTheme.typography.bodySmall,
-                            textDecoration = TextDecoration.LineThrough,
-                            color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
-                        )
-                    }
-                    Text(
-                        text = menuProductItem.newPrice,
-                        style = FoodDeliveryTheme.typography.bodySmall.bold,
-                        color = FoodDeliveryTheme.colors.mainColors.onSurface,
-                    )
-                }
-                SmallButton(
-                    modifier =
-                        Modifier
-                            .fillMaxWidth()
-                            .padding(top = FoodDeliveryTheme.dimensions.smallSpace),
-                    textStringId = Res.string.action_product_want,
-                    elevated = false,
-                    onClick = {
-                        onAddProductClick(menuProductItem.uuid)
-                    },
-                )
-            }
-        }
+        MainButton(
+            elevated = false,
+            text = stringResource(Res.string.action_consumer_delete),
+            onClick = {
+                onAction(ConsumerCart.Action.ConfirmClearCart)
+            },
+        )
+        SecondaryButton(
+            modifier = Modifier.padding(top = 4.dp),
+            textStringId = Res.string.common_cancel,
+            elevated = false,
+            onClick = {
+                onAction(ConsumerCart.Action.CancelBottomSheet)
+            },
+        )
     }
 }
 
@@ -527,69 +532,104 @@ private fun ConsumerCartSuccessScreenPreview() {
         )
 
     FoodDeliveryTheme {
-        ConsumerCartScreen(
-            viewState =
-                ConsumerCartViewState.Success(
-                    cartProductList =
-                        persistentListOf(
-                            getCartProductItemModel("1"),
-                            getCartProductItemModel("2"),
-                            getCartProductItemModel("3"),
-                            getCartProductItemModel("4"),
-                            getCartProductItemModel("5"),
-                        ),
-                    bottomPanelInfo =
-                        ConsumerCartViewState.BottomPanelInfoUi(
-                            motivation =
-                                MotivationUi.ForLowerDelivery(
-                                    increaseAmountBy = "550 ₽",
-                                    progress = 0.5f,
-                                    isFree = true,
-                                ),
-                            discount = "10%",
-                            oldTotalCost = "1650 ₽",
-                            newTotalCost = "1500 ₽",
-                            orderAvailable = true,
-                        ),
-                    recommendationList =
-                        persistentListOf(
-                            getRecommendation("6"),
-                            getRecommendation("7"),
-                        ),
-                ),
-            onAction = {},
-        )
+        SharedTransitionLayout {
+            SharedTransitionPreview {
+                AnimatedVisibility(
+                    visible = true,
+                ) {
+                    ConsumerCartScreen(
+                        viewState =
+                            ConsumerCartViewState.Success(
+                                cartProductList =
+                                    persistentListOf(
+                                        getCartProductItemModel("1"),
+                                        getCartProductItemModel("2"),
+                                        getCartProductItemModel("3"),
+                                        getCartProductItemModel("4"),
+                                        getCartProductItemModel("5"),
+                                    ),
+                                bottomPanelInfo =
+                                    ConsumerCartViewState.BottomPanelInfoUi(
+                                        motivation =
+                                            MotivationUi.ForLowerDelivery(
+                                                increaseAmountBy = "550 ₽",
+                                                progress = 0.5f,
+                                                isFree = true,
+                                            ),
+                                        discount = "10%",
+                                        oldTotalCost = "1650 ₽",
+                                        newTotalCost = "1500 ₽",
+                                        orderAvailable = true,
+                                    ),
+                                recommendationList =
+                                    persistentListOf(
+                                        getRecommendation("6"),
+                                        getRecommendation("7"),
+                                    ),
+                                acceptDeleteOrder =
+                                    ConsumerCartViewState.BottomSheetState(
+                                        isShown = false,
+                                    ),
+                            ),
+                        onAction = {},
+                        animatedContentScope = this,
+                    )
+                }
+            }
+        }
     }
 }
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Preview(showBackground = true)
 @Composable
 private fun ConsumerCartEmptyScreenPreview() {
     FoodDeliveryTheme {
-        ConsumerCartScreen(
-            viewState =
-                ConsumerCartViewState.Success(
-                    cartProductList = persistentListOf(),
-                    bottomPanelInfo = null,
-                    recommendationList =
-                        persistentListOf(
-                            getRecommendation("1"),
-                            getRecommendation("2"),
-                        ),
-                ),
-            onAction = {},
-        )
+        SharedTransitionLayout {
+            SharedTransitionPreview {
+                AnimatedVisibility(
+                    visible = true,
+                ) {
+                    ConsumerCartScreen(
+                        viewState =
+                            ConsumerCartViewState.Success(
+                                cartProductList = persistentListOf(),
+                                bottomPanelInfo = null,
+                                recommendationList =
+                                    persistentListOf(
+                                        getRecommendation("1"),
+                                        getRecommendation("2"),
+                                    ),
+                                acceptDeleteOrder =
+                                    ConsumerCartViewState.BottomSheetState(
+                                        isShown = false,
+                                    ),
+                            ),
+                        onAction = {},
+                        animatedContentScope = this,
+                    )
+                }
+            }
+        }
     }
 }
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Preview(showBackground = true)
 @Composable
 private fun ConsumerCartLoadingScreenPreview() {
     FoodDeliveryTheme {
-        ConsumerCartScreen(
-            viewState = ConsumerCartViewState.Loading,
-            onAction = {},
-        )
+        SharedTransitionLayout {
+            AnimatedContent(
+                targetState = true,
+            ) {
+                ConsumerCartScreen(
+                    viewState = ConsumerCartViewState.Loading,
+                    onAction = {},
+                    animatedContentScope = this,
+                )
+            }
+        }
     }
 }
 
@@ -597,15 +637,22 @@ private fun ConsumerCartLoadingScreenPreview() {
 @Composable
 private fun ConsumerCartErrorScreenPreview() {
     FoodDeliveryTheme {
-        ConsumerCartScreen(
-            viewState = ConsumerCartViewState.Error,
-            onAction = {},
-        )
+        SharedTransitionLayout {
+            AnimatedContent(
+                targetState = true,
+            ) {
+                ConsumerCartScreen(
+                    viewState = ConsumerCartViewState.Error,
+                    onAction = {},
+                    animatedContentScope = this,
+                )
+            }
+        }
     }
 }
 
 private fun getRecommendation(uuid: String) =
-    ConsumerCartViewState.Success.ProductUi(
+    ProductUi(
         uuid = uuid,
         key = uuid,
         photoLink = "",

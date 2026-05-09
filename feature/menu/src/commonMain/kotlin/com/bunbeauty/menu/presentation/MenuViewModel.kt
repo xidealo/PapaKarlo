@@ -26,6 +26,7 @@ import kotlinx.coroutines.launch
 import kotlin.time.measureTime
 
 private const val MAIN_MENU_VIEW_MODEL_TAG = "MenuViewModel"
+private const val MENU_FIRST_CONTENT_GRID_INDEX = 2
 
 class MenuViewModel(
     private val menuProductInteractor: IMenuProductInteractor,
@@ -147,6 +148,7 @@ class MenuViewModel(
         }
 
         currentMenuPosition = menuPosition
+        val menuListPosition = (menuPosition - MENU_FIRST_CONTENT_GRID_INDEX).coerceAtLeast(0)
 
         viewModelScope.launchSafe(
             block = {
@@ -154,7 +156,7 @@ class MenuViewModel(
                 menuItemModelList
                     .filterIsInstance<MenuItem.CategoryHeader>()
                     .findLast { menuItemModel ->
-                        menuItemModelList.indexOf(menuItemModel) <= menuPosition
+                        menuItemModelList.indexOf(menuItemModel) <= menuListPosition
                     }?.let { menuItemModel ->
                         setCategory(menuItemModel.uuid)
                     }
@@ -227,15 +229,11 @@ class MenuViewModel(
     }
 
     fun getMenuListPosition(categoryItem: CategoryItem): Int {
-        val index =
+        val indexInMenuList =
             menuState.value.menuItemList.indexOfFirst { menuItemModel ->
                 (menuItemModel as? MenuItem.CategoryHeader)?.uuid == categoryItem.uuid
             }
-        return if (index == 1 && mutableMenuState.value.hasDiscountItem) {
-            0
-        } else {
-            index
-        }
+        return if (indexInMenuList < 0) 0 else indexInMenuList + MENU_FIRST_CONTENT_GRID_INDEX
     }
 
     private fun setCategory(categoryUuid: String) {

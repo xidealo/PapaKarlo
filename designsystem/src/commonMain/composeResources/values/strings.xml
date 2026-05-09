@@ -68,6 +68,7 @@
     <string name="title_cart">Корзина</string>
     <string name="action_consumer_cart_creeate_order">Оформить заказ</string>
     <string name="action_consumer_cart_menu">Меню</string>
+    <string name="action_consumer_delete">Да</string>
     <string name="title_consumer_cart_empty">Корзина пуста</string>
     <string name="msg_consumer_cart_empty">Добавьте товар из «Меню»</string>
     <string name="msg_consumer_cart_recommendations">Рекомендуем</string>
@@ -76,6 +77,7 @@
     <string name="msg_consumer_cart_for_free_delivery">Добавте еще на %1$s для бесплатной доставки</string>
     <string name="msg_consumer_cart_lower_delivery">Уменьшенная стоимость доставки</string>
     <string name="msg_consumer_cart_free_delivery">Бесплатная доставка</string>
+    <string name="title_consumer_delete_orders">Очистить корзину?</string>
     <string name="title_consumer_cart_total">Cумма заказа</string>
     <string name="title_consumer_cart_discount">Скидка</string>
     <string name="description_consumer_cart_increase">Увеличить</string>

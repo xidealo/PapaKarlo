@@ -60,6 +60,15 @@ object FoodDeliveryButtonDefaults {
                 disabledContentColor = FoodDeliveryTheme.colors.mainColors.onDisabled,
             )
 
+    val textButtonColors: ButtonColors
+        @Composable get() =
+            ButtonDefaults.buttonColors(
+                containerColor = FoodDeliveryTheme.colors.mainColors.secondary,
+                contentColor = FoodDeliveryTheme.colors.mainColors.error,
+                disabledContainerColor = FoodDeliveryTheme.colors.mainColors.disabled,
+                disabledContentColor = FoodDeliveryTheme.colors.mainColors.onDisabled,
+            )
+
     val mainOutlineButtonColors: ButtonColors
         @Composable get() =
             ButtonDefaults.outlinedButtonColors(
