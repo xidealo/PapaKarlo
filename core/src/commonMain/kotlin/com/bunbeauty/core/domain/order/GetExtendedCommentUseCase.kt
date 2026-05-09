@@ -17,6 +17,8 @@ data class ExtendedComment(
 
     data class AdditionalUtensils(
         val isAdditionalUtensils: Boolean,
+        val withoutUtensilsChecked: Boolean,
+        val withoutUtensils: String,
         val count: String,
         val name: String,
     )
@@ -45,7 +47,11 @@ class GetExtendedCommentUseCase {
             if (extendedComment.additionalUtensils.isAdditionalUtensils) {
                 append(" ")
                 append("(")
-                append("${extendedComment.additionalUtensils.name} ${extendedComment.additionalUtensils.count}")
+                if (extendedComment.additionalUtensils.withoutUtensilsChecked) {
+                    append(extendedComment.additionalUtensils.withoutUtensils)
+                } else {
+                    append("${extendedComment.additionalUtensils.name} ${extendedComment.additionalUtensils.count}")
+                }
                 append(")")
             }
         }.trim()

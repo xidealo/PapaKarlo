@@ -33,6 +33,8 @@ data class CreateOrderViewState(
     val isLoadingSwitcher: Boolean,
     val additionalUtensils: Boolean,
     val additionalUtensilsName: String,
+    val withoutUtensils: String,
+    val withoutUtensilsChecked: Boolean,
     val additionalUtensilsCount: String,
     val isAdditionalUtensilsErrorShown: Boolean,
 ) : BaseViewState {

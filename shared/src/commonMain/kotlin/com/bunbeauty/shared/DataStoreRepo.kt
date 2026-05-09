@@ -41,6 +41,14 @@ interface DataStoreRepo {
 
     suspend fun saveSelectedPaymentMethodUuid(selectedPaymentMethodUuid: String)
 
+    val withoutUtensils: Flow<Boolean?>
+
+    suspend fun getWithoutUtensils(): Boolean?
+
+    suspend fun saveWithoutUtensils(withoutUtensils: Boolean)
+
+    suspend fun clearWithoutUtensils()
+
     val selectedCityUuid: Flow<String?>
 
     suspend fun saveSelectedCityUuid(cityUuid: String)
