@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -48,6 +49,7 @@ class MainActivity :
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        Log.d("MainActivity", "Привет")
         enableEdgeToEdge(
             navigationBarStyle =
                 if (isDarkTheme()) {
