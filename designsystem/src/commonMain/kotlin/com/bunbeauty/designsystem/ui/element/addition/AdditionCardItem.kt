@@ -45,7 +45,7 @@ fun AdditionCardItem(
         elevated = false,
         modifier = modifier.size(
             height = 166.dp,
-            width = 100.dp
+            width = 108.dp
         ),
         shape = RoundedCornerShape(size = 24.dp),
         colors = FoodDeliveryCardDefaults.surfaceVariateCardColors,
