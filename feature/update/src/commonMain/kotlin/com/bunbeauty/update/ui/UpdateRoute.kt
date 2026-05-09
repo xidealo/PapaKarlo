@@ -30,7 +30,7 @@ import com.bunbeauty.designsystem.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.designsystem.ui.element.button.MainButton
 import com.bunbeauty.designsystem.ui.screen.ErrorScreen
 import com.bunbeauty.designsystem.ui.screen.LoadingScreen
-import com.bunbeauty.shared.OpenExternalSource
+import com.bunbeauty.core.OpenExternalSource
 import com.bunbeauty.update.presentation.UpdateState
 import com.bunbeauty.update.presentation.UpdateViewModel
 import org.jetbrains.compose.resources.painterResource

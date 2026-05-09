@@ -26,6 +26,8 @@ class GetExtendedCommentUseCaseTest {
                 additionalUtensils =
                     ExtendedComment.AdditionalUtensils(
                         isAdditionalUtensils = false,
+                        withoutUtensilsChecked = false,
+                        withoutUtensils = "",
                         count = "",
                         name = "",
                     ),
@@ -55,6 +57,8 @@ class GetExtendedCommentUseCaseTest {
                 additionalUtensils =
                     ExtendedComment.AdditionalUtensils(
                         isAdditionalUtensils = false,
+                        withoutUtensilsChecked = false,
+                        withoutUtensils = "",
                         count = "",
                         name = "",
                     ),
@@ -84,6 +88,8 @@ class GetExtendedCommentUseCaseTest {
                 additionalUtensils =
                     ExtendedComment.AdditionalUtensils(
                         isAdditionalUtensils = false,
+                        withoutUtensilsChecked = false,
+                        withoutUtensils = "",
                         count = "",
                         name = "",
                     ),
@@ -113,6 +119,8 @@ class GetExtendedCommentUseCaseTest {
                 additionalUtensils =
                     ExtendedComment.AdditionalUtensils(
                         isAdditionalUtensils = true,
+                        withoutUtensilsChecked = false,
+                        withoutUtensils = "",
                         count = "2",
                         name = "Вилки",
                     ),
@@ -142,6 +150,8 @@ class GetExtendedCommentUseCaseTest {
                 additionalUtensils =
                     ExtendedComment.AdditionalUtensils(
                         isAdditionalUtensils = true,
+                        withoutUtensilsChecked = false,
+                        withoutUtensils = "",
                         count = "3",
                         name = "Ложки",
                     ),
@@ -171,6 +181,8 @@ class GetExtendedCommentUseCaseTest {
                 additionalUtensils =
                     ExtendedComment.AdditionalUtensils(
                         isAdditionalUtensils = true,
+                        withoutUtensilsChecked = false,
+                        withoutUtensils = "",
                         count = "1",
                         name = "Нож",
                     ),
@@ -200,6 +212,8 @@ class GetExtendedCommentUseCaseTest {
                 additionalUtensils =
                     ExtendedComment.AdditionalUtensils(
                         isAdditionalUtensils = false,
+                        withoutUtensilsChecked = false,
+                        withoutUtensils = "",
                         count = "",
                         name = "",
                     ),
@@ -210,5 +224,36 @@ class GetExtendedCommentUseCaseTest {
 
         // Assert
         assertEquals("Test comment", result)
+    }
+
+    @Test
+    fun `invoke should include without utensils when checked`() {
+        // Arrange
+        val extendedComment =
+            ExtendedComment(
+                comment = "Test comment",
+                change =
+                    ExtendedComment.Change(
+                        paymentByCash = false,
+                        withoutChangeChecked = false,
+                        withoutChange = "",
+                        changeFrom = "",
+                        change = "",
+                    ),
+                additionalUtensils =
+                    ExtendedComment.AdditionalUtensils(
+                        isAdditionalUtensils = true,
+                        withoutUtensilsChecked = true,
+                        withoutUtensils = "Без приборов",
+                        count = "",
+                        name = "Количество приборов:",
+                    ),
+            )
+
+        // Act
+        val result = useCase(extendedComment)
+
+        // Assert
+        assertEquals("Test comment (Без приборов)", result)
     }
 }

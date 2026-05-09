@@ -43,6 +43,14 @@ expect class DataStoreRepository :
 
     override suspend fun saveSelectedPaymentMethodUuid(selectedPaymentMethodUuid: String)
 
+    override val withoutUtensils: Flow<Boolean?>
+
+    override suspend fun getWithoutUtensils(): Boolean?
+
+    override suspend fun saveWithoutUtensils(withoutUtensils: Boolean)
+
+    override suspend fun clearWithoutUtensils()
+
     override val selectedCityUuid: Flow<String?>
 
     override suspend fun getSelectedCityUuid(): String?

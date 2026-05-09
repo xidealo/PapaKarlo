@@ -8,6 +8,7 @@ import com.bunbeauty.core.domain.repo.CartProductAdditionRepo
 import com.bunbeauty.core.domain.repo.CartProductRepo
 import com.bunbeauty.core.domain.repo.CityRepo
 import com.bunbeauty.core.domain.repo.CompanyRepo
+import com.bunbeauty.core.domain.repo.CreateOrderSettingsRepo
 import com.bunbeauty.core.domain.repo.DiscountRepo
 import com.bunbeauty.core.domain.repo.LinkRepo
 import com.bunbeauty.core.domain.repo.MenuProductRepo
@@ -30,6 +31,7 @@ import com.bunbeauty.shared.data.repository.CartProductAdditionRepository
 import com.bunbeauty.shared.data.repository.CartProductRepository
 import com.bunbeauty.shared.data.repository.CityRepository
 import com.bunbeauty.shared.data.repository.CompanyRepository
+import com.bunbeauty.shared.data.repository.CreateOrderSettingsRepository
 import com.bunbeauty.shared.data.repository.DiscountRepository
 import com.bunbeauty.shared.data.repository.LinkRepository
 import com.bunbeauty.shared.data.repository.MenuProductRepository
@@ -75,6 +77,11 @@ fun repositoryModule() =
                 orderAdditionDao = get(),
                 orderProductDao = get(),
                 lightOrderDao = get(),
+                dataStoreRepo = get(),
+            )
+        }
+        single<CreateOrderSettingsRepo> {
+            CreateOrderSettingsRepository(
                 dataStoreRepo = get(),
             )
         }

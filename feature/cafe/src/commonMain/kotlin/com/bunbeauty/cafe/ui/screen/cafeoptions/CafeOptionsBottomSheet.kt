@@ -15,7 +15,7 @@ import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.ui.element.CircularProgressBar
 import com.bunbeauty.designsystem.ui.element.card.NavigationIconCard
 import com.bunbeauty.designsystem.ui.screen.bottomsheet.FoodDeliveryModalBottomSheet
-import com.bunbeauty.shared.OpenExternalSource
+import com.bunbeauty.core.OpenExternalSource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.koinInject
 import papakarlo.designsystem.generated.resources.Res
