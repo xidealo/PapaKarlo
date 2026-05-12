@@ -75,7 +75,6 @@ fun MainScreen(
             LocalBottomBarPadding provides localBottomBarPadding,
             SharedTransitionScopeComposition provides this,
         ) {
-
             Scaffold(
                 modifier =
                     Modifier
