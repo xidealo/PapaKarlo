@@ -90,6 +90,12 @@ fun NavGraphBuilder.foodDeliveryNavGraphBuilder(
         goToConsumerCart = {
             navController.navigateConsumerCartScreen(emptyNavOptions)
         },
+        goToOrderDetailsFragment = { orderUuid ->
+            navController.navigateToOrderDetailsScreen(
+                navOptions = emptyNavOptions,
+                orderUuid = orderUuid,
+            )
+        },
         showErrorMessage = showErrorMessage,
         showInfoMessage = showInfoMessage,
     )
@@ -229,12 +235,6 @@ fun NavGraphBuilder.foodDeliveryNavGraphBuilder(
         },
         goToLogin = { successLoginDirection ->
             navController.navigateToLoginScreen(emptyNavOptions, successLoginDirection)
-        },
-        goToOrderDetailsFragment = { orderUuid ->
-            navController.navigateToOrderDetailsScreen(
-                navOptions = emptyNavOptions,
-                orderUuid = orderUuid,
-            )
         },
         goToOrdersFragment = {
             navController.navigateToOrderListScreen(emptyNavOptions)

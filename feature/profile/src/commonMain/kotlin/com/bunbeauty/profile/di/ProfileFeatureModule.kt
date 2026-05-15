@@ -11,10 +11,7 @@ fun profileFeatureModule() =
         viewModel {
             ProfileViewModel(
                 userInteractor = get(),
-                getLastOrderUseCase = get(),
                 getLinkListUseCase = get(),
-                observeLastOrderUseCase = get(),
-                stopObserveOrdersUseCase = get(),
                 buildVersion = get(buildVersionQualifier),
             )
         }

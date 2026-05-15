@@ -8,7 +8,6 @@ import kotlinx.collections.immutable.ImmutableList
 
 @Immutable
 data class ProfileViewState(
-    val lastOrder: LightOrder? = null,
     val state: State,
     val aboutBottomSheetUI: AboutBottomSheetUI,
     val feedBackBottomSheetUI: FeedBackBottomSheetUI,

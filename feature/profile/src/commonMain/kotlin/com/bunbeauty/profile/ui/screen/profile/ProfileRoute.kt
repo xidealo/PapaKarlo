@@ -3,18 +3,14 @@ package com.bunbeauty.profile.ui.screen.profile
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.requiredWidthIn
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -29,9 +25,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.LifecycleStartEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.bunbeauty.core.extension.getDateTimeString
-import com.bunbeauty.core.extension.getOrderColor
-import com.bunbeauty.core.extension.getOrderStatusName
 import com.bunbeauty.core.model.SuccessLoginDirection
 import com.bunbeauty.core.model.date_time.Date
 import com.bunbeauty.core.model.date_time.DateTime
@@ -41,11 +34,8 @@ import com.bunbeauty.core.model.order.OrderStatus
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.theme.bold
 import com.bunbeauty.designsystem.ui.LocalBottomBarPadding
-import com.bunbeauty.designsystem.ui.element.FoodDeliveryHorizontalDivider
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryScaffold
-import com.bunbeauty.designsystem.ui.element.OrderStatusChip
 import com.bunbeauty.designsystem.ui.element.button.MainButton
-import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.designsystem.ui.element.card.NavigationIconCardWithDivider
 import com.bunbeauty.designsystem.ui.screen.ErrorScreen
 import com.bunbeauty.designsystem.ui.screen.LoadingScreen
@@ -88,7 +78,6 @@ import papakarlo.designsystem.generated.resources.title_profile_no_profile
 @Composable
 fun ProfileState.DataState.mapState(): ProfileViewState =
     ProfileViewState(
-        lastOrder = lastOrder,
         state =
             when (state) {
                 ProfileState.DataState.State.AUTHORIZED -> ProfileViewState.State.Authorized
@@ -118,21 +107,10 @@ fun ProfileRoute(
     back: () -> Unit,
     goToUserAddress: (Boolean) -> Unit,
     goToLogin: (SuccessLoginDirection) -> Unit,
-    goToOrderDetailsFragment: (String) -> Unit,
     goToOrdersFragment: () -> Unit,
     goToSettingsFragment: () -> Unit,
     goToCafeListFragment: () -> Unit,
 ) {
-    LaunchedEffect(Unit) {
-        viewModel.onAction(ProfileState.Action.Init)
-    }
-
-    LifecycleStartEffect(Unit) {
-        viewModel.onAction(ProfileState.Action.StartObserveOrder)
-        onStopOrDispose {
-            viewModel.onAction(ProfileState.Action.StopObserveOrder)
-        }
-    }
 
     val viewState by viewModel.dataState.collectAsStateWithLifecycle()
 
@@ -156,7 +134,6 @@ fun ProfileRoute(
         back = back,
         goToUserAddress = goToUserAddress,
         goToLogin = goToLogin,
-        goToOrderDetailsFragment = goToOrderDetailsFragment,
         goToOrdersFragment = goToOrdersFragment,
         goToSettingsFragment = goToSettingsFragment,
         goToCafeListFragment = goToCafeListFragment,
@@ -228,7 +205,6 @@ fun ProfileEffect(
     back: () -> Unit,
     goToUserAddress: (Boolean) -> Unit,
     goToLogin: (SuccessLoginDirection) -> Unit,
-    goToOrderDetailsFragment: (String) -> Unit,
     goToOrdersFragment: () -> Unit,
     goToSettingsFragment: () -> Unit,
     goToCafeListFragment: () -> Unit,
@@ -243,10 +219,6 @@ fun ProfileEffect(
 
                 ProfileState.Event.OpenLogin -> {
                     goToLogin(SuccessLoginDirection.BACK_TO_PROFILE)
-                }
-
-                is ProfileState.Event.OpenOrderDetails -> {
-                    goToOrderDetailsFragment(effect.orderUuid)
                 }
 
                 ProfileState.Event.OpenOrderList -> {
@@ -291,26 +263,6 @@ private fun AuthorizedProfileScreen(
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState()),
     ) {
-        state.lastOrder?.let { lastOrder ->
-            OrderProfile(
-                onClick = {
-                    onAction(
-                        ProfileState.Action.OnLastOrderClicked(
-                            uuid = state.lastOrder.uuid,
-                            code = state.lastOrder.code,
-                        ),
-                    )
-                },
-                modifier = Modifier.padding(bottom = 16.dp),
-                lastOrder = lastOrder,
-            )
-
-            FoodDeliveryHorizontalDivider(
-                modifier =
-                    Modifier
-                        .padding(horizontal = 16.dp),
-            )
-        }
         NavigationIconCardWithDivider(
             modifier = Modifier.fillMaxWidth(),
             iconId = Res.drawable.ic_settings,
@@ -450,59 +402,9 @@ private fun ProfileInfoCards(
     }
 }
 
-@Composable
-private fun OrderProfile(
-    modifier: Modifier = Modifier,
-    lastOrder: LightOrder,
-    onClick: () -> Unit,
-) {
-    FoodDeliveryCard(
-        modifier = modifier,
-        onClick = onClick,
-        elevated = false,
-        shape = RoundedCornerShape(0.dp),
-    ) {
-        Row(
-            modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-                    .padding(vertical = 16.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Text(
-                text = lastOrder.code,
-                modifier =
-                    Modifier
-                        .requiredWidthIn(min = FoodDeliveryTheme.dimensions.codeWidth)
-                        .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
-                style = FoodDeliveryTheme.typography.titleMedium.bold,
-                color = FoodDeliveryTheme.colors.mainColors.onSurface,
-            )
-
-            OrderStatusChip(
-                statusName = lastOrder.status.getOrderStatusName(),
-                background = lastOrder.status.getOrderColor(),
-            )
-
-            Text(
-                modifier =
-                    Modifier
-                        .weight(1f)
-                        .wrapContentWidth(Alignment.End),
-                text = lastOrder.dateTime.getDateTimeString(),
-                style = FoodDeliveryTheme.typography.bodySmall,
-                color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
-                textAlign = TextAlign.End,
-            )
-        }
-    }
-}
-
 val profileViewStateMock =
     ProfileViewState(
         state = ProfileViewState.State.Loading,
-        lastOrder = null,
         aboutBottomSheetUI =
             ProfileViewState.AboutBottomSheetUI(
                 isShown = false,
@@ -523,22 +425,6 @@ private fun AuthorizedProfileScreenWithLastOrderPreview() {
             viewState =
                 profileViewStateMock.copy(
                     state = ProfileViewState.State.Authorized,
-                    lastOrder =
-                        LightOrder(
-                            uuid = "uuid",
-                            status = OrderStatus.DONE,
-                            code = "code",
-                            dateTime =
-                                DateTime(
-                                    date =
-                                        Date(
-                                            dayOfMonth = 5474,
-                                            monthNumber = 7337,
-                                            year = 1992,
-                                        ),
-                                    time = Time(hours = 3796, minutes = 8009),
-                                ),
-                        ),
                 ),
             onAction = {},
         )
@@ -553,7 +439,6 @@ private fun AuthorizedProfileScreenWithoutLastOrderPreview() {
             viewState =
                 profileViewStateMock.copy(
                     state = ProfileViewState.State.Authorized,
-                    lastOrder = null,
                 ),
             onAction = {},
         )
@@ -568,7 +453,6 @@ private fun UnauthorizedProfileScreenPreview() {
             viewState =
                 profileViewStateMock.copy(
                     state = ProfileViewState.State.Unauthorized,
-                    lastOrder = null,
                 ),
             onAction = {},
         )
@@ -583,7 +467,6 @@ private fun LoadingProfileScreenPreview() {
             viewState =
                 profileViewStateMock.copy(
                     state = ProfileViewState.State.Loading,
-                    lastOrder = null,
                 ),
             onAction = {},
         )
@@ -598,7 +481,6 @@ private fun ErrorProfileScreenPreview() {
             viewState =
                 profileViewStateMock.copy(
                     state = ProfileViewState.State.Error,
-                    lastOrder = null,
                 ),
             onAction = {},
         )

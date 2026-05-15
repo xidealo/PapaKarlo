@@ -17,8 +17,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredWidthIn
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
@@ -43,13 +45,23 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.LifecycleStartEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.bunbeauty.core.Constants.FAB_SNACKBAR_BOTTOM_PADDING
+import com.bunbeauty.core.extension.getDateTimeString
+import com.bunbeauty.core.extension.getOrderColor
+import com.bunbeauty.core.extension.getOrderStatusName
 import com.bunbeauty.core.model.CategoryItem
 import com.bunbeauty.core.model.ProductDetailsOpenedFrom
 import com.bunbeauty.core.model.ProductUi
+import com.bunbeauty.core.model.date_time.Date
+import com.bunbeauty.core.model.date_time.DateTime
+import com.bunbeauty.core.model.date_time.Time
+import com.bunbeauty.core.model.order.LightOrder
+import com.bunbeauty.core.model.order.OrderStatus
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.theme.bold
 import com.bunbeauty.designsystem.theme.logoMedium
@@ -57,11 +69,14 @@ import com.bunbeauty.designsystem.theme.medium
 import com.bunbeauty.designsystem.ui.LocalBottomBarPadding
 import com.bunbeauty.designsystem.ui.LocalStatusBarColor
 import com.bunbeauty.designsystem.ui.SharedTransitionPreview
+import com.bunbeauty.designsystem.ui.element.FoodDeliveryHorizontalDivider
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryProductItem
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryScaffold
+import com.bunbeauty.designsystem.ui.element.OrderStatusChip
 import com.bunbeauty.designsystem.ui.element.TopCartUi
 import com.bunbeauty.designsystem.ui.element.button.FoodDeliveryExtendedFab
 import com.bunbeauty.designsystem.ui.element.card.BannerCard
+import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.designsystem.ui.icon24
 import com.bunbeauty.designsystem.ui.ignoreHorizontalParentPadding
 import com.bunbeauty.designsystem.ui.screen.ErrorScreen
@@ -104,10 +119,18 @@ fun MenuRoute(
     ) -> Unit,
     goToProfile: () -> Unit,
     goToConsumerCart: () -> Unit,
+    goToOrderDetailsFragment: (String) -> Unit,
     showErrorMessage: (String) -> Unit,
     showInfoMessage: (String, Int) -> Unit,
 ) {
     val viewState by viewModel.menuState.collectAsStateWithLifecycle()
+
+    LifecycleStartEffect(Unit) {
+        viewModel.observeLastOrder()
+        onStopOrDispose {
+            viewModel.stopLastOrderObservation()
+        }
+    }
 
     val consumeEffects =
         remember {
@@ -119,6 +142,7 @@ fun MenuRoute(
     MenuEffect(
         effects = viewState.eventList,
         goToProductDetailsFragment = goToProductDetailsFragment,
+        goToOrderDetailsFragment = goToOrderDetailsFragment,
         consumeEffects = consumeEffects,
         showErrorMessage = showErrorMessage,
         showInfoMessage = showInfoMessage,
@@ -137,6 +161,7 @@ fun MenuRoute(
         onAddProductClicked = viewModel::onAddProductClicked,
         onMenuItemClicked = viewModel::onMenuItemClicked,
         animatedContentScope = animatedContentScope,
+        onLastOrderClick = viewModel::onLastOrderClicked,
     )
 }
 
@@ -148,6 +173,7 @@ private fun MenuEffect(
         name: String,
         productDetailsOpenedFrom: ProductDetailsOpenedFrom,
     ) -> Unit,
+    goToOrderDetailsFragment: (String) -> Unit,
     consumeEffects: () -> Unit,
     showErrorMessage: (String) -> Unit,
     showInfoMessage: (String, Int) -> Unit,
@@ -175,6 +201,10 @@ private fun MenuEffect(
                         FAB_SNACKBAR_BOTTOM_PADDING,
                     )
                 }
+
+                is MenuDataState.Event.OpenOrderDetails -> {
+                    goToOrderDetailsFragment(effect.uuid)
+                }
             }
         }
         consumeEffects()
@@ -196,6 +226,7 @@ private fun MenuScreen(
     onStopAutoScroll: () -> Unit,
     onAddProductClicked: (menuProductUuid: String) -> Unit,
     onMenuItemClicked: (menuProductUuid: String) -> Unit,
+    onLastOrderClick: (uuid: String) -> Unit,
 ) {
     val menuLazyGridState = rememberLazyGridState()
 
@@ -230,6 +261,7 @@ private fun MenuScreen(
                     getMenuListPosition = getMenuListPosition,
                     onStopAutoScroll = onStopAutoScroll,
                     goToProfile = goToProfile,
+                    onLastOrderClick = onLastOrderClick
                 )
             }
 
@@ -261,6 +293,7 @@ private fun MenuSuccessScreen(
     getMenuListPosition: (categoryItem: CategoryItem) -> Int,
     onStopAutoScroll: () -> Unit,
     goToProfile: () -> Unit,
+    onLastOrderClick: (uuid: String) -> Unit,
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
         val menuPosition by remember {
@@ -282,6 +315,7 @@ private fun MenuSuccessScreen(
             getMenuListPosition = getMenuListPosition,
             onStopAutoScroll = onStopAutoScroll,
             goToProfile = goToProfile,
+            onLastOrderClick = onLastOrderClick
         )
     }
 }
@@ -311,9 +345,9 @@ private fun CategoryRow(
             PaddingValues(
                 top =
                     12.dp +
-                        with(LocalDensity.current) {
-                            WindowInsets.statusBars.getTop(this).toDp()
-                        },
+                            with(LocalDensity.current) {
+                                WindowInsets.statusBars.getTop(this).toDp()
+                            },
                 bottom = 16.dp,
                 start = 16.dp,
                 end = 16.dp,
@@ -373,6 +407,7 @@ private fun MenuColumn(
     onStopAutoScroll: () -> Unit,
     onAddProductClicked: (menuProductUuid: String) -> Unit,
     onMenuItemClicked: (menuProductUuid: String) -> Unit,
+    onLastOrderClick: (uuid: String) -> Unit,
     goToProfile: () -> Unit,
 ) {
     LazyVerticalGrid(
@@ -476,6 +511,28 @@ private fun MenuColumn(
             )
         }
 
+
+        item(
+            key = "LastOrder",
+            span = {
+                GridItemSpan(maxLineSpan)
+            },
+        ) {
+            menu.lastOrder?.let { lastOrder ->
+                LastOrderMenuItem(
+                    onClick = {
+                        onLastOrderClick(
+                            lastOrder.uuid,
+                        )
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .ignoreHorizontalParentPadding(horizontal = 16.dp),
+                    lastOrder = lastOrder,
+                )
+            }
+        }
+
         itemsIndexed(
             items = menu.menuItemList,
             key = { _, menuItemModel -> menuItemModel.key },
@@ -483,7 +540,7 @@ private fun MenuColumn(
                 when (menuItemModel) {
                     is MenuItemUi.Discount,
                     is MenuItemUi.CategoryHeader,
-                    -> GridItemSpan(maxLineSpan)
+                        -> GridItemSpan(maxLineSpan)
 
                     else -> GridItemSpan(1)
                 }
@@ -531,7 +588,7 @@ private fun MenuColumn(
                         modifier =
                             Modifier
                                 .padding(
-                                    top = 8.dp,
+                                    top = 12.dp,
                                 ),
                         onAddProductClick = onAddProductClicked,
                         onProductClick = onMenuItemClicked,
@@ -567,6 +624,65 @@ private suspend fun LazyGridState.alignCategoryHeaderUnderCategoryRow(headerGrid
         scrollOffset = targetScrollOffset,
     )
 }
+
+@Composable
+private fun LastOrderMenuItem(
+    modifier: Modifier = Modifier,
+    lastOrder: LightOrder,
+    onClick: () -> Unit,
+) {
+    FoodDeliveryCard(
+        modifier = modifier,
+        onClick = onClick,
+        elevated = false,
+        shape = RoundedCornerShape(0.dp),
+    ) {
+        Column(
+            modifier = Modifier
+                .padding(
+                    horizontal = 16.dp,
+                ).padding(
+                    top = 8.dp
+                )
+        ) {
+            Text(
+                text = "Ваш заказ",
+                modifier =
+                    Modifier
+                        .requiredWidthIn(min = FoodDeliveryTheme.dimensions.codeWidth)
+                        .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
+                style = FoodDeliveryTheme.typography.titleMedium.bold,
+                color = FoodDeliveryTheme.colors.mainColors.onSurface,
+            )
+
+            Row(
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(top = 12.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text(
+                    text = lastOrder.code,
+                    modifier =
+                        Modifier
+                            .padding(end = FoodDeliveryTheme.dimensions.smallSpace)
+                            .weight(1f),
+                    style = FoodDeliveryTheme.typography.titleLarge.bold,
+                    color = FoodDeliveryTheme.colors.mainColors.onSurface,
+                )
+
+                OrderStatusChip(
+                    statusName = lastOrder.status.getOrderStatusName(),
+                    background = lastOrder.status.getOrderColor(),
+                )
+            }
+
+            FoodDeliveryHorizontalDivider(modifier = Modifier.padding(top = 24.dp))
+        }
+    }
+}
+
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Preview(showBackground = true)
@@ -611,6 +727,9 @@ private fun MenuScreenSuccessPreview() {
                                 getCategoryItem("1"),
                                 getCategoryItem("2"),
                                 getCategoryItem("3"),
+                                getCategoryItem("4"),
+                                getCategoryItem("5"),
+                                getCategoryItem("6"),
                             ),
                         menuItemList =
                             persistentListOf(
@@ -628,6 +747,22 @@ private fun MenuScreenSuccessPreview() {
                                 count = "2",
                             ),
                         eventList = persistentListOf(),
+                        lastOrder =
+                            LightOrder(
+                                uuid = "uuid",
+                                status = OrderStatus.DONE,
+                                code = "code",
+                                dateTime =
+                                    DateTime(
+                                        date =
+                                            Date(
+                                                dayOfMonth = 5474,
+                                                monthNumber = 7337,
+                                                year = 1992,
+                                            ),
+                                        time = Time(hours = 3796, minutes = 8009),
+                                    ),
+                            ),
                     ),
                 onMenuPositionChanged = {},
                 errorAction = {},
@@ -640,6 +775,7 @@ private fun MenuScreenSuccessPreview() {
                 onAddProductClicked = {},
                 onMenuItemClicked = {},
                 animatedContentScope = this,
+                onLastOrderClick = { _ -> }
             )
         }
     }
@@ -664,6 +800,7 @@ private fun MenuScreenLoadingPreview() {
                         state = MenuDataState.State.Loading,
                         userScrollEnabled = true,
                         eventList = persistentListOf(),
+                        lastOrder = null
                     ),
                 onMenuPositionChanged = {},
                 errorAction = {},
@@ -676,6 +813,7 @@ private fun MenuScreenLoadingPreview() {
                 onAddProductClicked = {},
                 onMenuItemClicked = {},
                 animatedContentScope = this,
+                onLastOrderClick = { _ -> }
             )
         }
     }
@@ -700,6 +838,7 @@ private fun MenuScreenErrorPreview() {
                         state = MenuDataState.State.Error(Throwable()),
                         userScrollEnabled = true,
                         eventList = persistentListOf(),
+                        lastOrder = null
                     ),
                 onMenuPositionChanged = {},
                 errorAction = {},
@@ -712,6 +851,7 @@ private fun MenuScreenErrorPreview() {
                 onAddProductClicked = {},
                 onMenuItemClicked = {},
                 animatedContentScope = this,
+                onLastOrderClick = { _ -> }
             )
         }
     }
