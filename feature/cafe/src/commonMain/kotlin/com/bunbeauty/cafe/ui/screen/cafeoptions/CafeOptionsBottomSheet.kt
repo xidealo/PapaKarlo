@@ -11,11 +11,11 @@ import com.bunbeauty.cafe.ui.screen.cafelist.CafeListViewState
 import com.bunbeauty.core.Constants.COORDINATES_DIVIDER
 import com.bunbeauty.core.Constants.MAPS_LINK
 import com.bunbeauty.core.Constants.PHONE_LINK
+import com.bunbeauty.core.OpenExternalSource
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.ui.element.CircularProgressBar
 import com.bunbeauty.designsystem.ui.element.card.NavigationIconCard
 import com.bunbeauty.designsystem.ui.screen.bottomsheet.FoodDeliveryModalBottomSheet
-import com.bunbeauty.core.OpenExternalSource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.koinInject
 import papakarlo.designsystem.generated.resources.Res
