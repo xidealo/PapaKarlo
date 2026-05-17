@@ -49,6 +49,7 @@ fun FoodDeliveryProductItem(
             onClick = {
                 onProductClick(uuid)
             },
+            elevated = false,
             shape = RoundedCornerShape(size = 24.dp),
         ) {
             Column(

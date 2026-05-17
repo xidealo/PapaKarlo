@@ -29,6 +29,7 @@ fun NavGraphBuilder.menuScreenRoute(
     ) -> Unit,
     goToProfile: () -> Unit,
     goToConsumerCart: () -> Unit,
+    goToOrderDetailsFragment: (String) -> Unit,
     showErrorMessage: (String) -> Unit,
     showInfoMessage: (String, Int) -> Unit,
 ) {
@@ -66,6 +67,7 @@ fun NavGraphBuilder.menuScreenRoute(
             goToProductDetailsFragment = goToProductDetailsFragment,
             goToProfile = goToProfile,
             goToConsumerCart = goToConsumerCart,
+            goToOrderDetailsFragment = goToOrderDetailsFragment,
             showErrorMessage = showErrorMessage,
             animatedContentScope = this@composable,
             showInfoMessage = showInfoMessage,

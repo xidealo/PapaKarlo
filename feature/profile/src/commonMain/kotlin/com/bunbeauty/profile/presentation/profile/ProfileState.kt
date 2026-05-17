@@ -8,7 +8,6 @@ import com.bunbeauty.core.model.order.LightOrder
 
 interface ProfileState {
     data class DataState(
-        val lastOrder: LightOrder? = null,
         val state: State,
         val linkList: List<Link>,
         val isShowAboutAppBottomSheet: Boolean,
@@ -24,8 +23,6 @@ interface ProfileState {
     }
 
     sealed interface Action : BaseAction {
-        data object Init : Action
-
         data object BackClicked : Action
 
         data object OnRefreshClicked : Action
@@ -36,11 +33,6 @@ interface ProfileState {
 
         data object OnSettingsClick : Action
 
-        data class OnLastOrderClicked(
-            val uuid: String,
-            val code: String,
-        ) : Action
-
         data object OnLoginClicked : Action
 
         data object OnCafeListClicked : Action
@@ -49,20 +41,12 @@ interface ProfileState {
 
         data object OnAboutAppClicked : Action
 
-        data object StartObserveOrder : Action
-
-        data object StopObserveOrder : Action
-
         data object CloseAboutAppBottomSheet : Action
 
         data object CloseFeedbackBottomSheet : Action
     }
 
     sealed interface Event : BaseEvent {
-        class OpenOrderDetails(
-            val orderUuid: String,
-        ) : Event
-
         data object OpenSettings : Event
 
         data object OpenAddressList : Event

@@ -93,8 +93,7 @@ actual class DataStoreRepository :
             emit(getWithoutUtensils())
         }
 
-    actual override suspend fun getWithoutUtensils(): Boolean? =
-        NSUserDefaults.standardUserDefaults.boolForKey(WITHOUT_UTENSILS_KEY)
+    actual override suspend fun getWithoutUtensils(): Boolean? = NSUserDefaults.standardUserDefaults.boolForKey(WITHOUT_UTENSILS_KEY)
 
     actual override suspend fun saveWithoutUtensils(withoutUtensils: Boolean) {
         NSUserDefaults.standardUserDefaults.setBool(

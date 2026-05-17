@@ -4,11 +4,11 @@ import android.content.Context
 import android.content.pm.PackageInfo
 import android.os.Build
 import com.bunbeauty.auth.domain.UpdateNotificationUseCase
+import com.bunbeauty.core.OpenExternalSource
 import com.bunbeauty.core.buildVersionQualifier
 import com.bunbeauty.core.domain.link.GetLinkListUseCase
 import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.NetworkUtil
-import com.bunbeauty.core.OpenExternalSource
 import com.bunbeauty.shared.data.DataStoreRepository
 import com.bunbeauty.shared.data.DatabaseDriverFactory
 import com.bunbeauty.shared.data.UuidGenerator

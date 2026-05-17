@@ -114,7 +114,7 @@ fun CreateOrder.DataState.mapState(): CreateOrderViewState = toViewState()
 fun CreateOrderRoute(
     viewModel: CreateOrderViewModel = koinViewModel(),
     back: () -> Unit,
-    goToProfile: () -> Unit,
+    goToMenu: () -> Unit,
     goToCreateAddress: () -> Unit,
     showInfoMessage: (String, Int) -> Unit,
     showErrorMessage: (String) -> Unit,
@@ -142,7 +142,7 @@ fun CreateOrderRoute(
     CreateOrderEffect(
         effects = effects,
         back = back,
-        goToProfile = goToProfile,
+        goToMenu = goToMenu,
         goToCreateAddress = goToCreateAddress,
         consumeEffects = consumeEffects,
         showInfoMessage = showInfoMessage,
@@ -238,7 +238,7 @@ private fun CreateOrderScreen(
 fun CreateOrderEffect(
     effects: List<CreateOrder.Event>,
     back: () -> Unit,
-    goToProfile: () -> Unit,
+    goToMenu: () -> Unit,
     goToCreateAddress: () -> Unit,
     consumeEffects: () -> Unit,
     showInfoMessage: (String, Int) -> Unit,
@@ -265,7 +265,7 @@ fun CreateOrderEffect(
                         ),
                         0,
                     )
-                    goToProfile()
+                    goToMenu()
                 }
 
                 CreateOrder.Event.ShowUserAddressError -> {

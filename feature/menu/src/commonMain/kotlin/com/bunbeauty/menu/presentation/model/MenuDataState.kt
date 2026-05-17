@@ -3,6 +3,7 @@ package com.bunbeauty.menu.presentation.model
 import com.bunbeauty.core.model.CategoryItem
 import com.bunbeauty.core.model.MenuItem
 import com.bunbeauty.core.model.cart.CartCostAndCount
+import com.bunbeauty.core.model.order.LightOrder
 
 data class MenuDataState(
     val categoryItemList: List<CategoryItem>,
@@ -11,6 +12,7 @@ data class MenuDataState(
     val state: State,
     val userScrollEnabled: Boolean,
     val eventList: List<Event>,
+    val lastOrder: LightOrder?,
 ) {
     sealed class State {
         data object Success : State()
@@ -32,6 +34,10 @@ data class MenuDataState(
 
         data class ShowAddedProduct(
             val name: String,
+        ) : Event
+
+        data class OpenOrderDetails(
+            val uuid: String,
         ) : Event
     }
 
