@@ -21,7 +21,9 @@ import com.bunbeauty.core.model.MenuItem
 import com.bunbeauty.core.model.mapper.toMenuItemList
 import com.bunbeauty.core.model.menu.MenuSection
 import com.bunbeauty.menu.presentation.model.MenuDataState
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -51,7 +53,7 @@ class MenuViewModel(
                 state = MenuDataState.State.Loading,
                 userScrollEnabled = true,
                 eventList = emptyList(),
-                lastOrder = null
+                lastOrder = null,
             ),
         )
     val menuState = mutableMenuState.asStateFlow()
@@ -71,7 +73,6 @@ class MenuViewModel(
                 it.copy(lastOrder = lastOrder)
             }
         }
-
     }
 
     fun onStartAutoScroll() {
@@ -312,7 +313,10 @@ class MenuViewModel(
         }
     }
 
-    fun observeLastOrder() {
+    fun startLastOrderObservation() {
+        if (observeLastOrderJob?.isActive == true) {
+            return
+        }
         observeLastOrderJob =
             viewModelScope.launchSafe(
                 block = {
@@ -325,15 +329,16 @@ class MenuViewModel(
                     }
                 },
                 onError = { error ->
-                    Logger.logE("Profile", error.stackTraceToString())
+                    Logger.logE(MAIN_MENU_VIEW_MODEL_TAG, error.stackTraceToString())
                 },
+                dispatcher = Dispatchers.Default,
             )
     }
 
     fun stopLastOrderObservation() {
         observeLastOrderJob?.cancel()
         orderObservationUuid?.let { uuid ->
-            viewModelScope.launch {
+            viewModelScope.launch(Dispatchers.Default) {
                 stopObserveOrdersUseCase(uuid)
             }
         }

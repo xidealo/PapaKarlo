@@ -7,6 +7,8 @@ class GetLastOrderUseCase(
     private val orderRepo: OrderRepo,
 ) {
     suspend operator fun invoke(): LightOrder? {
-        return orderRepo.getLastOrderByUserUuidLocalFirst()
+        return orderRepo
+            .getLastOrderByUserUuidLocalFirst()
+            ?.takeIfInProgress()
     }
 }

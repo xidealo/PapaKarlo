@@ -169,14 +169,10 @@ fun NavGraphBuilder.foodDeliveryNavGraphBuilder(
     )
     createOrderScreenRoute(
         back = navController::navigateUp,
-        goToProfile = {
-            navController.navigateToProfileScreen(
-                navOptions =
-                    navOptions {
-                        popUpTo(MenuScreenDestination) {
-                            inclusive = false
-                        }
-                    },
+        goToMenu = {
+            navController.popBackStack(
+                route = MenuScreenDestination,
+                inclusive = false,
             )
         },
         goToCreateAddress = {

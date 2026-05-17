@@ -14,7 +14,9 @@ class ObserveLastOrderUseCase(
 ) {
     suspend operator fun invoke(): Pair<String?, Flow<LightOrder?>> {
         val lastOrder =
-            orderRepo.getLastOrderByUserUuidNetworkFirst()
+            orderRepo
+                .getLastOrderByUserUuidNetworkFirst()
+                ?.takeIfInProgress()
 
         return if (lastOrder == null) {
             null to flow { emit(null) }
@@ -26,7 +28,10 @@ class ObserveLastOrderUseCase(
                     orderUpdatesFlow
                         .filter { order ->
                             order.uuid == lastOrder.uuid
-                        }.map(lightOrderMapper::toLightOrder),
+                        }.map(lightOrderMapper::toLightOrder)
+                        .map { lightOrder ->
+                            lightOrder.takeIfInProgress()
+                        },
                 )
         }
     }

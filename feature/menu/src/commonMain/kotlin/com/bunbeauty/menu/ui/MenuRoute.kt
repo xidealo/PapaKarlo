@@ -1,10 +1,16 @@
 package com.bunbeauty.menu.ui
 
 import androidx.compose.animation.AnimatedContentScope
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
@@ -20,7 +26,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredWidthIn
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
@@ -45,13 +50,11 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.LifecycleStartEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.bunbeauty.core.Constants.FAB_SNACKBAR_BOTTOM_PADDING
-import com.bunbeauty.core.extension.getDateTimeString
 import com.bunbeauty.core.extension.getOrderColor
 import com.bunbeauty.core.extension.getOrderStatusName
 import com.bunbeauty.core.model.CategoryItem
@@ -126,7 +129,9 @@ fun MenuRoute(
     val viewState by viewModel.menuState.collectAsStateWithLifecycle()
 
     LifecycleStartEffect(Unit) {
-        viewModel.observeLastOrder()
+        if (viewState.state is MenuDataState.State.Success) {
+            viewModel.startLastOrderObservation()
+        }
         onStopOrDispose {
             viewModel.stopLastOrderObservation()
         }
@@ -261,7 +266,7 @@ private fun MenuScreen(
                     getMenuListPosition = getMenuListPosition,
                     onStopAutoScroll = onStopAutoScroll,
                     goToProfile = goToProfile,
-                    onLastOrderClick = onLastOrderClick
+                    onLastOrderClick = onLastOrderClick,
                 )
             }
 
@@ -315,7 +320,7 @@ private fun MenuSuccessScreen(
             getMenuListPosition = getMenuListPosition,
             onStopAutoScroll = onStopAutoScroll,
             goToProfile = goToProfile,
-            onLastOrderClick = onLastOrderClick
+            onLastOrderClick = onLastOrderClick,
         )
     }
 }
@@ -345,9 +350,9 @@ private fun CategoryRow(
             PaddingValues(
                 top =
                     12.dp +
-                            with(LocalDensity.current) {
-                                WindowInsets.statusBars.getTop(this).toDp()
-                            },
+                        with(LocalDensity.current) {
+                            WindowInsets.statusBars.getTop(this).toDp()
+                        },
                 bottom = 16.dp,
                 start = 16.dp,
                 end = 16.dp,
@@ -511,25 +516,35 @@ private fun MenuColumn(
             )
         }
 
-
         item(
             key = "LastOrder",
             span = {
                 GridItemSpan(maxLineSpan)
             },
         ) {
-            menu.lastOrder?.let { lastOrder ->
-                LastOrderMenuItem(
-                    onClick = {
-                        onLastOrderClick(
-                            lastOrder.uuid,
-                        )
-                    },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .ignoreHorizontalParentPadding(horizontal = 16.dp),
-                    lastOrder = lastOrder,
-                )
+            AnimatedVisibility(
+                visible = menu.lastOrder != null,
+                enter =
+                    fadeIn(animationSpec = tween(durationMillis = 300)) +
+                        expandVertically(animationSpec = tween(durationMillis = 300)),
+                exit =
+                    fadeOut(animationSpec = tween(durationMillis = 300)) +
+                        shrinkVertically(animationSpec = tween(durationMillis = 300)),
+            ) {
+                menu.lastOrder?.let { lastOrder ->
+                    LastOrderMenuItem(
+                        onClick = {
+                            onLastOrderClick(
+                                lastOrder.uuid,
+                            )
+                        },
+                        modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .ignoreHorizontalParentPadding(horizontal = 16.dp),
+                        lastOrder = lastOrder,
+                    )
+                }
             }
         }
 
@@ -540,7 +555,7 @@ private fun MenuColumn(
                 when (menuItemModel) {
                     is MenuItemUi.Discount,
                     is MenuItemUi.CategoryHeader,
-                        -> GridItemSpan(maxLineSpan)
+                    -> GridItemSpan(maxLineSpan)
 
                     else -> GridItemSpan(1)
                 }
@@ -638,12 +653,13 @@ private fun LastOrderMenuItem(
         shape = RoundedCornerShape(0.dp),
     ) {
         Column(
-            modifier = Modifier
-                .padding(
-                    horizontal = 16.dp,
-                ).padding(
-                    top = 8.dp
-                )
+            modifier =
+                Modifier
+                    .padding(
+                        horizontal = 16.dp,
+                    ).padding(
+                        top = 8.dp,
+                    ),
         ) {
             Text(
                 text = "Ваш заказ",
@@ -682,7 +698,6 @@ private fun LastOrderMenuItem(
         }
     }
 }
-
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Preview(showBackground = true)
@@ -775,7 +790,7 @@ private fun MenuScreenSuccessPreview() {
                 onAddProductClicked = {},
                 onMenuItemClicked = {},
                 animatedContentScope = this,
-                onLastOrderClick = { _ -> }
+                onLastOrderClick = { _ -> },
             )
         }
     }
@@ -800,7 +815,7 @@ private fun MenuScreenLoadingPreview() {
                         state = MenuDataState.State.Loading,
                         userScrollEnabled = true,
                         eventList = persistentListOf(),
-                        lastOrder = null
+                        lastOrder = null,
                     ),
                 onMenuPositionChanged = {},
                 errorAction = {},
@@ -813,7 +828,7 @@ private fun MenuScreenLoadingPreview() {
                 onAddProductClicked = {},
                 onMenuItemClicked = {},
                 animatedContentScope = this,
-                onLastOrderClick = { _ -> }
+                onLastOrderClick = { _ -> },
             )
         }
     }
@@ -838,7 +853,7 @@ private fun MenuScreenErrorPreview() {
                         state = MenuDataState.State.Error(Throwable()),
                         userScrollEnabled = true,
                         eventList = persistentListOf(),
-                        lastOrder = null
+                        lastOrder = null,
                     ),
                 onMenuPositionChanged = {},
                 errorAction = {},
@@ -851,7 +866,7 @@ private fun MenuScreenErrorPreview() {
                 onAddProductClicked = {},
                 onMenuItemClicked = {},
                 animatedContentScope = this,
-                onLastOrderClick = { _ -> }
+                onLastOrderClick = { _ -> },
             )
         }
     }
