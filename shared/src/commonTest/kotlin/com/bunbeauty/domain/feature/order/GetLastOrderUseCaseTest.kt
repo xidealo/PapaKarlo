@@ -1,6 +1,7 @@
 package com.bunbeauty.domain.feature.order
 
 import com.bunbeauty.core.domain.order.GetLastOrderUseCase
+import com.bunbeauty.core.domain.order.TakeInProgressLightOrderUseCaseImpl
 import com.bunbeauty.core.domain.repo.OrderRepo
 import com.bunbeauty.core.model.date_time.Date
 import com.bunbeauty.core.model.date_time.DateTime
@@ -21,6 +22,7 @@ class GetLastOrderUseCaseTest {
     private val getLastOrderUseCase: GetLastOrderUseCase =
         GetLastOrderUseCase(
             orderRepo = orderRepo,
+            takeInProgressLightOrderUseCase = TakeInProgressLightOrderUseCaseImpl(),
         )
 
     @Test
@@ -47,12 +49,27 @@ class GetLastOrderUseCaseTest {
         }
 
     @Test
-    fun `returns null when last order is done`() =
+    fun `returns light order when last order is done`() =
+        runTest {
+            val lightOrder =
+                LightOrder(
+                    uuid = "123",
+                    status = OrderStatus.DONE,
+                    code = "01",
+                    dateTime = DateTime(Date(1, 2, 3), Time(20, 20)),
+                )
+            everySuspend { orderRepo.getLastOrderByUserUuidLocalFirst() } returns lightOrder
+
+            assertEquals(lightOrder, getLastOrderUseCase())
+        }
+
+    @Test
+    fun `returns null when last order is delivered`() =
         runTest {
             everySuspend { orderRepo.getLastOrderByUserUuidLocalFirst() } returns
                 LightOrder(
                     uuid = "123",
-                    status = OrderStatus.DONE,
+                    status = OrderStatus.DELIVERED,
                     code = "01",
                     dateTime = DateTime(Date(1, 2, 3), Time(20, 20)),
                 )

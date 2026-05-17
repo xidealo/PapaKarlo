@@ -9,6 +9,8 @@ import com.bunbeauty.core.domain.order.ObserveOrderListUseCase
 import com.bunbeauty.core.domain.order.ObserveOrderUseCase
 import com.bunbeauty.core.domain.order.SaveWithoutUtensilsUseCase
 import com.bunbeauty.core.domain.order.StopObserveOrdersUseCase
+import com.bunbeauty.core.domain.order.TakeInProgressLightOrderUseCase
+import com.bunbeauty.core.domain.order.TakeInProgressLightOrderUseCaseImpl
 import com.bunbeauty.core.domain.orderavailable.IsOrderAvailableUseCase
 import org.koin.dsl.module
 
@@ -21,10 +23,14 @@ internal fun orderUseCaseModule() =
                 orderRepo = get(),
             )
         }
+        factory<TakeInProgressLightOrderUseCase> {
+            TakeInProgressLightOrderUseCaseImpl()
+        }
         factory {
             ObserveLastOrderUseCase(
                 orderRepo = get(),
                 lightOrderMapper = get(),
+                takeInProgressLightOrderUseCase = get(),
             )
         }
         factory {
@@ -45,6 +51,7 @@ internal fun orderUseCaseModule() =
         factory {
             GetLastOrderUseCase(
                 orderRepo = get(),
+                takeInProgressLightOrderUseCase = get(),
             )
         }
         factory {

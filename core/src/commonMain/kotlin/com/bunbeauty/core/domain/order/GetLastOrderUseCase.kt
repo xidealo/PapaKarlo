@@ -5,10 +5,11 @@ import com.bunbeauty.core.domain.repo.OrderRepo
 
 class GetLastOrderUseCase(
     private val orderRepo: OrderRepo,
+    private val takeInProgressLightOrderUseCase: TakeInProgressLightOrderUseCase,
 ) {
     suspend operator fun invoke(): LightOrder? {
-        return orderRepo
-            .getLastOrderByUserUuidLocalFirst()
-            ?.takeIfInProgress()
+        return takeInProgressLightOrderUseCase(
+            orderRepo.getLastOrderByUserUuidLocalFirst(),
+        )
     }
 }
