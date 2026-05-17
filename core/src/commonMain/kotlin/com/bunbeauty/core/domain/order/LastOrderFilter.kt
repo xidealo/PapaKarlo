@@ -10,7 +10,7 @@ internal fun LightOrder.takeIfInProgress(): LightOrder? =
 
 internal fun OrderStatus.isInProgress(): Boolean =
     when (this) {
-        OrderStatus.DONE,
+        OrderStatus.DELIVERED,
         OrderStatus.CANCELED,
         -> false
 

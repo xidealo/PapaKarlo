@@ -129,9 +129,7 @@ fun MenuRoute(
     val viewState by viewModel.menuState.collectAsStateWithLifecycle()
 
     LifecycleStartEffect(Unit) {
-        if (viewState.state is MenuDataState.State.Success) {
-            viewModel.startLastOrderObservation()
-        }
+        viewModel.startLastOrderObservation()
         onStopOrDispose {
             viewModel.stopLastOrderObservation()
         }
