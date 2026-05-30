@@ -1,13 +1,12 @@
 package com.bunbeauty.menu.presentation
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.bunbeauty.analytic.AnalyticService
 import com.bunbeauty.analytic.event.menu.AddMenuProductClickEvent
 import com.bunbeauty.analytic.event.menu.LoadedMenuEvent
 import com.bunbeauty.analytic.parameter.MenuProductUuidEventParameter
 import com.bunbeauty.analytic.parameter.TimeParameter
 import com.bunbeauty.core.Logger
+import com.bunbeauty.core.base.SharedStateViewModel
 import com.bunbeauty.core.domain.ObserveCartUseCase
 import com.bunbeauty.core.domain.discount.GetDiscountUseCase
 import com.bunbeauty.core.domain.menu_product.AddMenuProductUseCase
@@ -20,20 +19,16 @@ import com.bunbeauty.core.model.CategoryItem
 import com.bunbeauty.core.model.MenuItem
 import com.bunbeauty.core.model.mapper.toMenuItemList
 import com.bunbeauty.core.model.menu.MenuSection
-import com.bunbeauty.menu.presentation.model.MenuDataState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlin.time.measureTime
 
 private const val MAIN_MENU_VIEW_MODEL_TAG = "MenuViewModel"
 
 // Grid: 0=TopBar, 1=CategoryRow, 2=LastOrder, 3+=menuItemList
-private const val MENU_FIRST_CONTENT_GRID_INDEX = 3
+internal const val MENU_FIRST_CONTENT_GRID_INDEX = 3
 
 class MenuViewModel(
     private val menuProductInteractor: IMenuProductInteractor,
@@ -44,21 +39,17 @@ class MenuViewModel(
     private val observeLastOrderUseCase: ObserveLastOrderUseCase,
     private val stopObserveOrdersUseCase: StopObserveOrdersUseCase,
     private val getLastOrderUseCase: GetLastOrderUseCase,
-) : ViewModel() {
-    private val mutableMenuState =
-        MutableStateFlow(
-            MenuDataState(
+) : SharedStateViewModel<MenuState.DataState, MenuState.Action, MenuState.Event>(
+        initDataState =
+            MenuState.DataState(
                 categoryItemList = emptyList(),
                 cartCostAndCount = null,
                 menuItemList = emptyList(),
-                state = MenuDataState.State.Loading,
+                state = MenuState.DataState.State.LOADING,
                 userScrollEnabled = true,
-                eventList = emptyList(),
                 lastOrder = null,
             ),
-        )
-    val menuState = mutableMenuState.asStateFlow()
-
+    ) {
     private var selectedCategoryUuid: String? = null
     private var currentMenuPosition = 0
 
@@ -68,32 +59,52 @@ class MenuViewModel(
     init {
         getMenu()
         observeCart()
-        viewModelScope.launch {
+        sharedScope.launch {
             val lastOrder = getLastOrderUseCase()
-            mutableMenuState.update {
-                it.copy(lastOrder = lastOrder)
+            setState {
+                copy(lastOrder = lastOrder)
             }
         }
     }
 
-    fun onStartAutoScroll() {
-        mutableMenuState.update {
-            it.copy(userScrollEnabled = false)
+    override fun reduce(
+        action: MenuState.Action,
+        dataState: MenuState.DataState,
+    ) {
+        when (action) {
+            MenuState.Action.OnRefreshClicked -> getMenu()
+            is MenuState.Action.OnCategoryClicked -> setCategory(action.categoryItem.uuid)
+            is MenuState.Action.OnMenuPositionChanged -> onMenuPositionChanged(action.menuPosition)
+            MenuState.Action.OnStartAutoScroll -> onStartAutoScroll()
+            MenuState.Action.OnStopAutoScroll -> onStopAutoScroll()
+            is MenuState.Action.OnAddProductClicked -> onAddProductClicked(action.menuProductUuid)
+            is MenuState.Action.OnMenuItemClicked -> onMenuItemClicked(action.menuProductUuid)
+            is MenuState.Action.OnLastOrderClicked -> onLastOrderClicked(action.uuid)
+            MenuState.Action.OnProfileClicked -> onProfileClicked()
+            MenuState.Action.OnCartClicked -> onCartClicked()
+            MenuState.Action.StartLastOrderObservation -> startLastOrderObservation()
+            MenuState.Action.StopLastOrderObservation -> stopLastOrderObservation()
         }
     }
 
-    fun onStopAutoScroll() {
-        mutableMenuState.update {
-            it.copy(userScrollEnabled = true)
+    private fun onStartAutoScroll() {
+        setState {
+            copy(userScrollEnabled = false)
+        }
+    }
+
+    private fun onStopAutoScroll() {
+        setState {
+            copy(userScrollEnabled = true)
         }
     }
 
     private fun observeCart() {
-        viewModelScope.launchSafe(
+        sharedScope.launchSafe(
             block = {
                 observeCartUseCase().collectLatest { cartTotalAndCount ->
-                    mutableMenuState.update { state ->
-                        state.copy(cartCostAndCount = cartTotalAndCount)
+                    setState {
+                        copy(cartCostAndCount = cartTotalAndCount)
                     }
                 }
             },
@@ -103,16 +114,14 @@ class MenuViewModel(
         )
     }
 
-    fun getMenu() {
+    private fun getMenu() {
         Logger.logD(MAIN_MENU_VIEW_MODEL_TAG, "getMenu")
 
-        mutableMenuState.update { oldState ->
-            oldState.copy(
-                state = MenuDataState.State.Loading,
-            )
+        setState {
+            copy(state = MenuState.DataState.State.LOADING)
         }
 
-        viewModelScope.launchSafe(
+        sharedScope.launchSafe(
             block = {
                 val time =
                     measureTime {
@@ -131,14 +140,14 @@ class MenuViewModel(
                                 menuSectionList.flatMap { menuSection ->
                                     menuSection.toMenuItemList()
                                 }
-                        mutableMenuState.update { oldState ->
-                            oldState.copy(
+                        setState {
+                            copy(
                                 categoryItemList =
                                     menuSectionList.map { menuSection ->
                                         toCategoryItemModel(menuSection)
                                     },
                                 menuItemList = menuItemList,
-                                state = MenuDataState.State.Success,
+                                state = MenuState.DataState.State.SUCCESS,
                             )
                         }
                     }
@@ -158,21 +167,17 @@ class MenuViewModel(
         )
     }
 
-    fun onCategoryClicked(categoryItem: CategoryItem) {
-        setCategory(categoryItem.uuid)
-    }
-
-    fun onMenuPositionChanged(menuPosition: Int) {
-        if (!mutableMenuState.value.userScrollEnabled || menuPosition == currentMenuPosition) {
+    private fun onMenuPositionChanged(menuPosition: Int) {
+        if (!mutableDataState.value.userScrollEnabled || menuPosition == currentMenuPosition) {
             return
         }
 
         currentMenuPosition = menuPosition
         val menuListPosition = (menuPosition - MENU_FIRST_CONTENT_GRID_INDEX).coerceAtLeast(0)
 
-        viewModelScope.launchSafe(
+        sharedScope.launchSafe(
             block = {
-                val menuItemModelList = mutableMenuState.value.menuItemList
+                val menuItemModelList = mutableDataState.value.menuItemList
                 menuItemModelList
                     .filterIsInstance<MenuItem.CategoryHeader>()
                     .findLast { menuItemModel ->
@@ -188,40 +193,49 @@ class MenuViewModel(
     }
 
     private fun handleError(throwable: Throwable) {
-        mutableMenuState.update { oldState ->
-            oldState.copy(
-                state = MenuDataState.State.Error(throwable),
+        Logger.logE(MAIN_MENU_VIEW_MODEL_TAG, throwable.stackTraceToString())
+        setState {
+            copy(state = MenuState.DataState.State.ERROR)
+        }
+    }
+
+    private fun onMenuItemClicked(menuProductUuid: String) {
+        val menuProduct = findMenuProduct(uuid = menuProductUuid) ?: return
+
+        addEvent {
+            MenuState.Event.GoToSelectedItem(
+                uuid = menuProduct.uuid,
+                name = menuProduct.name,
             )
         }
     }
 
-    fun onMenuItemClicked(menuProductUuid: String) {
-        val menuProduct = findMenuProduct(uuid = menuProductUuid) ?: return
-
-        mutableMenuState.update { oldState ->
-            oldState +
-                MenuDataState.Event.GoToSelectedItem(
-                    uuid = menuProduct.uuid,
-                    name = menuProduct.name,
-                )
+    private fun onLastOrderClicked(uuid: String) {
+        addEvent {
+            MenuState.Event.OpenOrderDetails(uuid)
         }
     }
 
-    fun onLastOrderClicked(uuid: String) {
-        mutableMenuState.update { oldState ->
-            oldState +
-                MenuDataState.Event.OpenOrderDetails(uuid)
+    private fun onProfileClicked() {
+        addEvent {
+            MenuState.Event.OpenProfile
+        }
+    }
+
+    private fun onCartClicked() {
+        addEvent {
+            MenuState.Event.OpenConsumerCart
         }
     }
 
     private fun findMenuProduct(uuid: String): MenuItem.Product? =
-        mutableMenuState.value.menuItemList
+        mutableDataState.value.menuItemList
             .filterIsInstance<MenuItem.Product>()
             .find { menuItem ->
-                (menuItem.uuid == uuid)
+                menuItem.uuid == uuid
             }
 
-    fun onAddProductClicked(menuProductUuid: String) {
+    private fun onAddProductClicked(menuProductUuid: String) {
         val menuProduct = findMenuProduct(uuid = menuProductUuid) ?: return
 
         analyticService.sendEvent(
@@ -230,48 +244,39 @@ class MenuViewModel(
                     menuProductUuidEventParameter = MenuProductUuidEventParameter(value = menuProduct.uuid),
                 ),
         )
-        viewModelScope.launchSafe(
+        sharedScope.launchSafe(
             block = {
                 if (menuProduct.hasAdditions) {
-                    mutableMenuState.update { oldState ->
-                        oldState +
-                            MenuDataState.Event.GoToSelectedItem(
-                                uuid = menuProduct.uuid,
-                                name = menuProduct.name,
-                            )
+                    addEvent {
+                        MenuState.Event.GoToSelectedItem(
+                            uuid = menuProduct.uuid,
+                            name = menuProduct.name,
+                        )
                     }
                 } else {
                     addMenuProductUseCase(menuProductUuid = menuProduct.uuid)
-                    mutableMenuState.update { oldState ->
-                        oldState + MenuDataState.Event.ShowAddedProduct(name = menuProduct.name)
+                    addEvent {
+                        MenuState.Event.ShowAddedProduct(name = menuProduct.name)
                     }
                 }
             },
             onError = {
-                mutableMenuState.update { oldState ->
-                    oldState + MenuDataState.Event.ShowAddProductError
+                addEvent {
+                    MenuState.Event.ShowAddProductError
                 }
             },
         )
     }
 
-    fun getMenuListPosition(categoryItem: CategoryItem): Int {
-        val indexInMenuList =
-            menuState.value.menuItemList.indexOfFirst { menuItemModel ->
-                (menuItemModel as? MenuItem.CategoryHeader)?.uuid == categoryItem.uuid
-            }
-        return if (indexInMenuList < 0) 0 else indexInMenuList + MENU_FIRST_CONTENT_GRID_INDEX
-    }
-
     private fun setCategory(categoryUuid: String) {
-        viewModelScope.launch {
+        sharedScope.launch {
             if (selectedCategoryUuid == categoryUuid) {
                 return@launch
             }
             selectedCategoryUuid = categoryUuid
 
             val categoryItemModelList =
-                mutableMenuState.value.categoryItemList.map { categoryItemModel ->
+                mutableDataState.value.categoryItemList.map { categoryItemModel ->
                     when {
                         categoryItemModel.isSelected -> {
                             categoryItemModel.copy(isSelected = false)
@@ -286,10 +291,10 @@ class MenuViewModel(
                         }
                     }
                 }
-            mutableMenuState.update { oldState ->
-                oldState.copy(
+            setState {
+                copy(
                     categoryItemList = categoryItemModelList,
-                    menuItemList = oldState.menuItemList,
+                    menuItemList = menuItemList,
                 )
             }
         }
@@ -308,24 +313,18 @@ class MenuViewModel(
             selectedCategoryUuid == categoryUuid
         } ?: false
 
-    fun consumeEventList(eventList: List<MenuDataState.Event>) {
-        mutableMenuState.update { state ->
-            state.copy(eventList = state.eventList - eventList.toSet())
-        }
-    }
-
-    fun startLastOrderObservation() {
+    private fun startLastOrderObservation() {
         if (observeLastOrderJob?.isActive == true) {
             return
         }
         observeLastOrderJob =
-            viewModelScope.launchSafe(
+            sharedScope.launchSafe(
                 block = {
                     val (uuid, lastOrderFlow) = observeLastOrderUseCase()
                     orderObservationUuid = uuid
                     lastOrderFlow.collectLatest { lightOrder ->
-                        mutableMenuState.update { state ->
-                            state.copy(lastOrder = lightOrder)
+                        setState {
+                            copy(lastOrder = lightOrder)
                         }
                     }
                 },
@@ -336,10 +335,10 @@ class MenuViewModel(
             )
     }
 
-    fun stopLastOrderObservation() {
+    private fun stopLastOrderObservation() {
         observeLastOrderJob?.cancel()
         orderObservationUuid?.let { uuid ->
-            viewModelScope.launch(Dispatchers.Default) {
+            sharedScope.launch(Dispatchers.Default) {
                 stopObserveOrdersUseCase(uuid)
             }
         }
