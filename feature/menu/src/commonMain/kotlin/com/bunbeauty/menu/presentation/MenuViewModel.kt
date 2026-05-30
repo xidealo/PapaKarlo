@@ -31,7 +31,9 @@ import kotlinx.coroutines.launch
 import kotlin.time.measureTime
 
 private const val MAIN_MENU_VIEW_MODEL_TAG = "MenuViewModel"
-private const val MENU_FIRST_CONTENT_GRID_INDEX = 2
+
+// Grid: 0=TopBar, 1=CategoryRow, 2=LastOrder, 3+=menuItemList
+private const val MENU_FIRST_CONTENT_GRID_INDEX = 3
 
 class MenuViewModel(
     private val menuProductInteractor: IMenuProductInteractor,
@@ -126,9 +128,9 @@ class MenuViewModel(
                             }
                         val menuItemList =
                             listOfNotNull(discountItem) +
-                                    menuSectionList.flatMap { menuSection ->
-                                        menuSection.toMenuItemList()
-                                    }
+                                menuSectionList.flatMap { menuSection ->
+                                    menuSection.toMenuItemList()
+                                }
                         mutableMenuState.update { oldState ->
                             oldState.copy(
                                 categoryItemList =
@@ -198,17 +200,17 @@ class MenuViewModel(
 
         mutableMenuState.update { oldState ->
             oldState +
-                    MenuDataState.Event.GoToSelectedItem(
-                        uuid = menuProduct.uuid,
-                        name = menuProduct.name,
-                    )
+                MenuDataState.Event.GoToSelectedItem(
+                    uuid = menuProduct.uuid,
+                    name = menuProduct.name,
+                )
         }
     }
 
     fun onLastOrderClicked(uuid: String) {
         mutableMenuState.update { oldState ->
             oldState +
-                    MenuDataState.Event.OpenOrderDetails(uuid)
+                MenuDataState.Event.OpenOrderDetails(uuid)
         }
     }
 
@@ -233,10 +235,10 @@ class MenuViewModel(
                 if (menuProduct.hasAdditions) {
                     mutableMenuState.update { oldState ->
                         oldState +
-                                MenuDataState.Event.GoToSelectedItem(
-                                    uuid = menuProduct.uuid,
-                                    name = menuProduct.name,
-                                )
+                            MenuDataState.Event.GoToSelectedItem(
+                                uuid = menuProduct.uuid,
+                                name = menuProduct.name,
+                            )
                     }
                 } else {
                     addMenuProductUseCase(menuProductUuid = menuProduct.uuid)
