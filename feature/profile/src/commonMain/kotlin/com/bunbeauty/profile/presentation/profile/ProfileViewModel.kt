@@ -1,34 +1,25 @@
 package com.bunbeauty.profile.presentation.profile
 
 import com.bunbeauty.core.Constants.VERSION_DIVIDER
-import com.bunbeauty.core.Logger
 import com.bunbeauty.core.base.SharedStateViewModel
 import com.bunbeauty.core.domain.link.GetLinkListUseCase
-import com.bunbeauty.core.domain.order.GetLastOrderUseCase
-import com.bunbeauty.core.domain.order.ObserveLastOrderUseCase
-import com.bunbeauty.core.domain.order.StopObserveOrdersUseCase
 import com.bunbeauty.core.domain.user.IUserInteractor
 import com.bunbeauty.core.extension.launchSafe
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 class ProfileViewModel(
     private val userInteractor: IUserInteractor,
     private val getLinkListUseCase: GetLinkListUseCase,
     buildVersion: Long,
 ) : SharedStateViewModel<ProfileState.DataState, ProfileState.Action, ProfileState.Event>(
-    initDataState =
-        ProfileState.DataState(
-            state = ProfileState.DataState.State.LOADING,
-            linkList = listOf(),
-            isShowAboutAppBottomSheet = false,
-            isShowFeedbackBottomSheet = false,
-            appVersion = buildVersion.toString().toCharArray().joinToString(VERSION_DIVIDER),
-        ),
-) {
-
-
+        initDataState =
+            ProfileState.DataState(
+                state = ProfileState.DataState.State.LOADING,
+                linkList = listOf(),
+                isShowAboutAppBottomSheet = false,
+                isShowFeedbackBottomSheet = false,
+                appVersion = buildVersion.toString().toCharArray().joinToString(VERSION_DIVIDER),
+            ),
+    ) {
     init {
         loadData()
     }

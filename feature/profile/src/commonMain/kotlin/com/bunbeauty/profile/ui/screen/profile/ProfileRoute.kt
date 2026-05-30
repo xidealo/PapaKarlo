@@ -23,14 +23,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.LifecycleStartEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.bunbeauty.core.model.SuccessLoginDirection
-import com.bunbeauty.core.model.date_time.Date
-import com.bunbeauty.core.model.date_time.DateTime
-import com.bunbeauty.core.model.date_time.Time
-import com.bunbeauty.core.model.order.LightOrder
-import com.bunbeauty.core.model.order.OrderStatus
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.theme.bold
 import com.bunbeauty.designsystem.ui.LocalBottomBarPadding
@@ -111,7 +105,6 @@ fun ProfileRoute(
     goToSettingsFragment: () -> Unit,
     goToCafeListFragment: () -> Unit,
 ) {
-
     val viewState by viewModel.dataState.collectAsStateWithLifecycle()
 
     val onAction =

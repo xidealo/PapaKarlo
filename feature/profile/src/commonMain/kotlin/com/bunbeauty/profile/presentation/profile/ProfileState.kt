@@ -4,7 +4,6 @@ import com.bunbeauty.core.base.BaseAction
 import com.bunbeauty.core.base.BaseDataState
 import com.bunbeauty.core.base.BaseEvent
 import com.bunbeauty.core.model.link.Link
-import com.bunbeauty.core.model.order.LightOrder
 
 interface ProfileState {
     data class DataState(
