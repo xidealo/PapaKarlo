@@ -15,5 +15,9 @@ app_identifier([
   "com.bunbeauty.emoji",
   "com.bunbeauty.estpoest",
   "com.bunbeauty.voljane",
-  "com.bunbeauty.taverna"
+  "com.bunbeauty.taverna",
+  "com.bunbeauty.legenda"
+  # Добавить после генерации сертификатов match:
+  # "com.bunbeauty.bereg",
+  # "com.bunbeauty.mimino"
 ])
