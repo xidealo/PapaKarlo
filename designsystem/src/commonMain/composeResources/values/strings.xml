@@ -101,6 +101,7 @@
     <string name="additional_utensils_count">Количество приборов*</string>
     <string name="msg_additional_utensils_count">Количество приборов: </string>
     <string name="msg_without_change">Без сдачи</string>
+    <string name="msg_without_utensils">Без приборов</string>
     <string name="hint_change">С какой суммы подготовить сдачу?*</string>
     <string name="msg_change_from">Сдача с</string>
     <string name="action_create_order_create_order">Оформить заказ</string>

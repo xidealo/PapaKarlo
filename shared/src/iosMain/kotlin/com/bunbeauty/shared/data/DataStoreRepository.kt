@@ -88,6 +88,24 @@ actual class DataStoreRepository :
         )
     }
 
+    actual override val withoutUtensils: Flow<Boolean?> =
+        flow {
+            emit(getWithoutUtensils())
+        }
+
+    actual override suspend fun getWithoutUtensils(): Boolean? = NSUserDefaults.standardUserDefaults.boolForKey(WITHOUT_UTENSILS_KEY)
+
+    actual override suspend fun saveWithoutUtensils(withoutUtensils: Boolean) {
+        NSUserDefaults.standardUserDefaults.setBool(
+            withoutUtensils,
+            WITHOUT_UTENSILS_KEY,
+        )
+    }
+
+    actual override suspend fun clearWithoutUtensils() {
+        NSUserDefaults.standardUserDefaults.removeObjectForKey(WITHOUT_UTENSILS_KEY)
+    }
+
     actual override val discount: Flow<Discount?> =
         flow {
             emit(
@@ -207,6 +225,7 @@ actual class DataStoreRepository :
     actual override suspend fun clearUserData() {
         NSUserDefaults.standardUserDefaults.removeObjectForKey(TOKEN_KEY)
         NSUserDefaults.standardUserDefaults.removeObjectForKey(USER_UUID_KEY)
+        clearWithoutUtensils()
         removeUserSettings()
     }
 
@@ -227,6 +246,7 @@ actual class DataStoreRepository :
         private const val SETTINGS_PHONE_NUMBER_KEY = "SETTINGS_PHONE_NUMBER_KEY"
         private const val SETTINGS_EMAIL_KEY = "SETTINGS_EMAIL_KEY"
         private const val SELECTED_PAYMENT_METHOD_UUID_KEY = "SELECTED_PAYMENT_METHOD_UUID_KEY"
+        private const val WITHOUT_UTENSILS_KEY = "WITHOUT_UTENSILS_KEY"
         private const val FIRST_DISCOUNT_KEY = "FIRST_DISCOUNT_KEY"
         private const val RECOMMENDATION_MAX_VISIBLE_KEY = "RECOMMENDATION_MAX_VISIBLE_KEY"
         private const val USER_CAFE_UUID_KEY = "USER_CAFE_UUID_KEY"

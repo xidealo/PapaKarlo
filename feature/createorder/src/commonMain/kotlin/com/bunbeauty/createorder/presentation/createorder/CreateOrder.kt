@@ -46,6 +46,7 @@ interface CreateOrder {
         val change: Int? = null,
         val isChangeErrorShown: Boolean = false,
         val isAdditionalUtensilsErrorShown: Boolean = false,
+        val withoutUtensilsChecked: Boolean = false,
         val comment: String = "",
         val cartTotal: CartTotal,
         val isLoading: Boolean,
@@ -156,10 +157,13 @@ interface CreateOrder {
             val additionalUtensilsCount: String,
         ) : Action
 
+        data object ChangeWithoutUtensilsChecked : Action
+
         data class CreateClick(
             val withoutChange: String,
             val changeFrom: String,
             val additionalUtensils: String,
+            val withoutUtensils: String,
         ) : Action
     }
 

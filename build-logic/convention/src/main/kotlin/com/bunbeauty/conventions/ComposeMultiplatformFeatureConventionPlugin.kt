@@ -26,7 +26,7 @@ class ComposeMultiplatformFeatureConventionPlugin : Plugin<Project> {
             extensions.configure<KotlinMultiplatformExtension> {
                 applyDefaultHierarchyTemplate()
                 androidTarget()
-                iosX64()
+
                 iosArm64()
                 iosSimulatorArm64()
             }

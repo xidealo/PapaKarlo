@@ -3,11 +3,11 @@ package com.bunbeauty.menu.ui.state
 import androidx.compose.runtime.Immutable
 import com.bunbeauty.core.model.CategoryItem
 import com.bunbeauty.core.model.ProductUi
+import com.bunbeauty.core.model.order.LightOrder
 import com.bunbeauty.designsystem.ui.element.TopCartUi
 import com.bunbeauty.menu.presentation.model.MenuDataState
 import kotlinx.collections.immutable.ImmutableList
 
-// TODO refactor
 @Immutable
 data class MenuViewState(
     val categoryItemList: ImmutableList<CategoryItem>,
@@ -16,6 +16,7 @@ data class MenuViewState(
     val state: MenuDataState.State,
     val userScrollEnabled: Boolean,
     val eventList: ImmutableList<MenuDataState.Event>,
+    val lastOrder: LightOrder?,
 )
 
 @Immutable

@@ -100,6 +100,7 @@ import papakarlo.designsystem.generated.resources.msg_delivery
 import papakarlo.designsystem.generated.resources.msg_order_code
 import papakarlo.designsystem.generated.resources.msg_order_details_discount
 import papakarlo.designsystem.generated.resources.msg_without_change
+import papakarlo.designsystem.generated.resources.msg_without_utensils
 import papakarlo.designsystem.generated.resources.payment_method
 import papakarlo.designsystem.generated.resources.pickup_address
 import papakarlo.designsystem.generated.resources.title_create_order
@@ -113,7 +114,7 @@ fun CreateOrder.DataState.mapState(): CreateOrderViewState = toViewState()
 fun CreateOrderRoute(
     viewModel: CreateOrderViewModel = koinViewModel(),
     back: () -> Unit,
-    goToProfile: () -> Unit,
+    goToMenu: () -> Unit,
     goToCreateAddress: () -> Unit,
     showInfoMessage: (String, Int) -> Unit,
     showErrorMessage: (String) -> Unit,
@@ -141,7 +142,7 @@ fun CreateOrderRoute(
     CreateOrderEffect(
         effects = effects,
         back = back,
-        goToProfile = goToProfile,
+        goToMenu = goToMenu,
         goToCreateAddress = goToCreateAddress,
         consumeEffects = consumeEffects,
         showInfoMessage = showInfoMessage,
@@ -237,7 +238,7 @@ private fun CreateOrderScreen(
 fun CreateOrderEffect(
     effects: List<CreateOrder.Event>,
     back: () -> Unit,
-    goToProfile: () -> Unit,
+    goToMenu: () -> Unit,
     goToCreateAddress: () -> Unit,
     consumeEffects: () -> Unit,
     showInfoMessage: (String, Int) -> Unit,
@@ -264,7 +265,7 @@ fun CreateOrderEffect(
                         ),
                         0,
                     )
-                    goToProfile()
+                    goToMenu()
                 }
 
                 CreateOrder.Event.ShowUserAddressError -> {
@@ -511,6 +512,10 @@ private fun CommonContent(
             viewState = viewState,
             onAction = onAction,
         )
+        WithoutUtensilsBlock(
+            viewState = viewState,
+            onAction = onAction,
+        )
         AdditionalUtensilsTextField(
             viewState = viewState,
             focusManager = focusManager,
@@ -692,6 +697,50 @@ private fun ChangeBlock(
 }
 
 @Composable
+private fun WithoutUtensilsBlock(
+    viewState: CreateOrderViewState,
+    onAction: (CreateOrder.Action) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    if (!viewState.additionalUtensils) return
+
+    FoodDeliveryCard(
+        modifier = modifier,
+        elevated = false,
+        shape = FoodDeliveryCardDefaults.zeroCardShape,
+        onClick = {
+            onAction(CreateOrder.Action.ChangeWithoutUtensilsChecked)
+        },
+    ) {
+        Row(
+            modifier =
+                Modifier.padding(
+                    vertical = 8.dp,
+                    horizontal = 16.dp,
+                ),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            FoodDeliveryCheckbox(
+                modifier = Modifier.size(24.dp),
+                checked = viewState.withoutUtensilsChecked,
+                onCheckedChange = {
+                    onAction(CreateOrder.Action.ChangeWithoutUtensilsChecked)
+                },
+            )
+            Text(
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(start = 4.dp),
+                text = stringResource(Res.string.msg_without_utensils),
+                style = FoodDeliveryTheme.typography.bodyMedium,
+                color = FoodDeliveryTheme.colors.mainColors.onSurface,
+            )
+        }
+    }
+}
+
+@Composable
 private fun AdditionalUtensilsTextField(
     viewState: CreateOrderViewState,
     focusManager: FocusManager,
@@ -700,35 +749,47 @@ private fun AdditionalUtensilsTextField(
 ) {
     if (!viewState.additionalUtensils) return
 
-    FoodDeliveryTextField(
-        modifier =
-            modifier
-                .fillMaxWidth()
-                .padding(bottom = 8.dp)
-                .padding(horizontal = 16.dp),
-        value = viewState.additionalUtensilsCount,
-        labelStringId = Res.string.additional_utensils_count,
-        keyboardOptions =
-            FoodDeliveryTextFieldDefaults.keyboardOptionsDefault(
-                keyboardType = KeyboardType.Number,
-                imeAction = ImeAction.Done,
+    AnimatedVisibility(
+        visible = !viewState.withoutUtensilsChecked,
+        enter =
+            expandVertically(
+                animationSpec = tween(500),
             ),
-        onValueChange = { value ->
-            onAction(CreateOrder.Action.ChangeAdditionalUtensils(additionalUtensilsCount = value))
-        },
-        keyboardActions =
-            FoodDeliveryTextFieldDefaults.keyboardActionsDefault(
-                onDone = {
-                    focusManager.clearFocus()
-                },
+        exit =
+            shrinkVertically(
+                animationSpec = tween(500),
             ),
-        errorMessageStringId =
-            Res.string.error_additional_utensils.takeIf {
-                viewState.isAdditionalUtensilsErrorShown
+    ) {
+        FoodDeliveryTextField(
+            modifier =
+                modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 8.dp)
+                    .padding(horizontal = 16.dp),
+            value = viewState.additionalUtensilsCount,
+            labelStringId = Res.string.additional_utensils_count,
+            keyboardOptions =
+                FoodDeliveryTextFieldDefaults.keyboardOptionsDefault(
+                    keyboardType = KeyboardType.Number,
+                    imeAction = ImeAction.Done,
+                ),
+            onValueChange = { value ->
+                onAction(CreateOrder.Action.ChangeAdditionalUtensils(additionalUtensilsCount = value))
             },
-        maxSymbols = 10,
-        maxLines = 1,
-    )
+            keyboardActions =
+                FoodDeliveryTextFieldDefaults.keyboardActionsDefault(
+                    onDone = {
+                        focusManager.clearFocus()
+                    },
+                ),
+            errorMessageStringId =
+                Res.string.error_additional_utensils.takeIf {
+                    viewState.isAdditionalUtensilsErrorShown
+                },
+            maxSymbols = 10,
+            maxLines = 1,
+        )
+    }
 }
 
 @Composable
@@ -816,6 +877,7 @@ private fun BottomAmountBar(
                             withoutChange = viewState.withoutChange,
                             changeFrom = viewState.changeFrom,
                             additionalUtensils = viewState.additionalUtensilsName,
+                            withoutUtensils = viewState.withoutUtensils,
                         ),
                     )
                 },
@@ -1001,6 +1063,8 @@ private val createOrderViewStatePreviewMock =
         additionalUtensils = false,
         additionalUtensilsCount = "",
         additionalUtensilsName = "Количество приборов",
+        withoutUtensils = "",
+        withoutUtensilsChecked = false,
         isAdditionalUtensilsErrorShown = false,
         hasTimePickerError = false,
         showTimePickerHint = false,

@@ -11,10 +11,13 @@ import kotlinx.coroutines.flow.merge
 class ObserveLastOrderUseCase(
     private val orderRepo: OrderRepo,
     private val lightOrderMapper: LightOrderMapper,
+    private val takeInProgressLightOrderUseCase: TakeInProgressLightOrderUseCase,
 ) {
     suspend operator fun invoke(): Pair<String?, Flow<LightOrder?>> {
         val lastOrder =
-            orderRepo.getLastOrderByUserUuidNetworkFirst()
+            takeInProgressLightOrderUseCase(
+                orderRepo.getLastOrderByUserUuidNetworkFirst(),
+            )
 
         return if (lastOrder == null) {
             null to flow { emit(null) }
@@ -26,7 +29,10 @@ class ObserveLastOrderUseCase(
                     orderUpdatesFlow
                         .filter { order ->
                             order.uuid == lastOrder.uuid
-                        }.map(lightOrderMapper::toLightOrder),
+                        }.map(lightOrderMapper::toLightOrder)
+                        .map { lightOrder ->
+                            takeInProgressLightOrderUseCase(lightOrder)
+                        },
                 )
         }
     }

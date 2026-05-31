@@ -28,6 +28,7 @@ fun MenuDataState.toMenuViewState(): MenuViewState =
         state = state,
         userScrollEnabled = userScrollEnabled,
         eventList = eventList.toImmutableList(),
+        lastOrder = lastOrder,
     )
 
 fun MenuItem.Product.toMenuProductItemUi(): MenuItemUi.Product {

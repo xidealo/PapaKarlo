@@ -24,6 +24,7 @@ import papakarlo.designsystem.generated.resources.delivery_time
 import papakarlo.designsystem.generated.resources.msg_additional_utensils_count
 import papakarlo.designsystem.generated.resources.msg_change_from
 import papakarlo.designsystem.generated.resources.msg_without_change
+import papakarlo.designsystem.generated.resources.msg_without_utensils
 import papakarlo.designsystem.generated.resources.pickup_time
 
 @Composable
@@ -85,6 +86,8 @@ fun CreateOrder.DataState.toViewState(): CreateOrderViewState {
         additionalUtensils = additionalUtensils,
         additionalUtensilsCount = additionalUtensilsCount,
         additionalUtensilsName = stringResource(Res.string.msg_additional_utensils_count),
+        withoutUtensils = stringResource(Res.string.msg_without_utensils),
+        withoutUtensilsChecked = withoutUtensilsChecked,
     )
 }
 

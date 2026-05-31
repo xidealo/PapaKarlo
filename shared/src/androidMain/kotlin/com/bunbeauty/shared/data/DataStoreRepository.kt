@@ -3,6 +3,7 @@ package com.bunbeauty.shared.data
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
@@ -46,6 +47,10 @@ actual class DataStoreRepository :
 
     private val Context.selectedPaymentMethodDataStore: DataStore<Preferences> by preferencesDataStore(
         name = SELECTED_PAYMENT_METHOD_DATA_STORE,
+    )
+
+    private val Context.withoutUtensilsDataStore: DataStore<Preferences> by preferencesDataStore(
+        name = WITHOUT_UTENSILS_DATA_STORE,
     )
 
     private val Context.discountDataStore: DataStore<Preferences> by preferencesDataStore(
@@ -129,6 +134,25 @@ actual class DataStoreRepository :
         context.selectedPaymentMethodDataStore.edit { selectedPaymentMethodDataStore ->
             selectedPaymentMethodDataStore[SELECTED_PAYMENT_METHOD_UUID_KEY] =
                 selectedPaymentMethodUuid
+        }
+    }
+
+    actual override val withoutUtensils: Flow<Boolean?> =
+        context.withoutUtensilsDataStore.data.map { withoutUtensilsDataStore ->
+            withoutUtensilsDataStore[WITHOUT_UTENSILS_KEY]
+        }
+
+    actual override suspend fun getWithoutUtensils(): Boolean? = withoutUtensils.firstOrNull()
+
+    actual override suspend fun saveWithoutUtensils(withoutUtensils: Boolean) {
+        context.withoutUtensilsDataStore.edit { withoutUtensilsDataStore ->
+            withoutUtensilsDataStore[WITHOUT_UTENSILS_KEY] = withoutUtensils
+        }
+    }
+
+    actual override suspend fun clearWithoutUtensils() {
+        context.withoutUtensilsDataStore.edit { withoutUtensilsDataStore ->
+            withoutUtensilsDataStore.clear()
         }
     }
 
@@ -243,6 +267,7 @@ actual class DataStoreRepository :
         context.userCafeUuid.edit { userCafeUuid ->
             userCafeUuid.clear()
         }
+        clearWithoutUtensils()
     }
 
     companion object {
@@ -276,6 +301,10 @@ actual class DataStoreRepository :
         private const val SELECTED_PAYMENT_METHOD_UUID = "payment method uuid"
         private val SELECTED_PAYMENT_METHOD_UUID_KEY =
             stringPreferencesKey(SELECTED_PAYMENT_METHOD_UUID)
+
+        private const val WITHOUT_UTENSILS_DATA_STORE = "without utensils data store"
+        private const val WITHOUT_UTENSILS = "without utensils"
+        private val WITHOUT_UTENSILS_KEY = booleanPreferencesKey(WITHOUT_UTENSILS)
 
         private const val DISCOUNT_DATA_STORE = "discount data store"
         private const val FIRST_ORDER_DISCOUNT = "first order discount"

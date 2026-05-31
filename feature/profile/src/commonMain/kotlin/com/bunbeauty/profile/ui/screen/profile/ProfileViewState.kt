@@ -2,13 +2,11 @@ package com.bunbeauty.profile.ui.screen.profile
 
 import androidx.compose.runtime.Immutable
 import com.bunbeauty.core.base.BaseViewState
-import com.bunbeauty.core.model.order.LightOrder
 import com.bunbeauty.profile.ui.screen.feedback.model.LinkUI
 import kotlinx.collections.immutable.ImmutableList
 
 @Immutable
 data class ProfileViewState(
-    val lastOrder: LightOrder? = null,
     val state: State,
     val aboutBottomSheetUI: AboutBottomSheetUI,
     val feedBackBottomSheetUI: FeedBackBottomSheetUI,

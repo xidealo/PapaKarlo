@@ -18,7 +18,7 @@ fun NavController.navigateToCreateOrderScreen(navOptions: NavOptions) = navigate
 
 fun NavGraphBuilder.createOrderScreenRoute(
     back: () -> Unit,
-    goToProfile: () -> Unit,
+    goToMenu: () -> Unit,
     goToCreateAddress: () -> Unit,
     showInfoMessage: (String, Int) -> Unit,
     showErrorMessage: (String) -> Unit,
@@ -50,7 +50,7 @@ fun NavGraphBuilder.createOrderScreenRoute(
     ) {
         CreateOrderRoute(
             back = back,
-            goToProfile = goToProfile,
+            goToMenu = goToMenu,
             goToCreateAddress = goToCreateAddress,
             showInfoMessage = showInfoMessage,
             showErrorMessage = showErrorMessage,

@@ -90,6 +90,12 @@ fun NavGraphBuilder.foodDeliveryNavGraphBuilder(
         goToConsumerCart = {
             navController.navigateConsumerCartScreen(emptyNavOptions)
         },
+        goToOrderDetailsFragment = { orderUuid ->
+            navController.navigateToOrderDetailsScreen(
+                navOptions = emptyNavOptions,
+                orderUuid = orderUuid,
+            )
+        },
         showErrorMessage = showErrorMessage,
         showInfoMessage = showInfoMessage,
     )
@@ -163,14 +169,10 @@ fun NavGraphBuilder.foodDeliveryNavGraphBuilder(
     )
     createOrderScreenRoute(
         back = navController::navigateUp,
-        goToProfile = {
-            navController.navigateToProfileScreen(
-                navOptions =
-                    navOptions {
-                        popUpTo(MenuScreenDestination) {
-                            inclusive = false
-                        }
-                    },
+        goToMenu = {
+            navController.popBackStack(
+                route = MenuScreenDestination,
+                inclusive = false,
             )
         },
         goToCreateAddress = {
@@ -229,12 +231,6 @@ fun NavGraphBuilder.foodDeliveryNavGraphBuilder(
         },
         goToLogin = { successLoginDirection ->
             navController.navigateToLoginScreen(emptyNavOptions, successLoginDirection)
-        },
-        goToOrderDetailsFragment = { orderUuid ->
-            navController.navigateToOrderDetailsScreen(
-                navOptions = emptyNavOptions,
-                orderUuid = orderUuid,
-            )
         },
         goToOrdersFragment = {
             navController.navigateToOrderListScreen(emptyNavOptions)

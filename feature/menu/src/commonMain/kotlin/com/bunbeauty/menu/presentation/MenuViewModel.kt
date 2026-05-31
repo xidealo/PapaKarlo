@@ -12,12 +12,17 @@ import com.bunbeauty.core.domain.ObserveCartUseCase
 import com.bunbeauty.core.domain.discount.GetDiscountUseCase
 import com.bunbeauty.core.domain.menu_product.AddMenuProductUseCase
 import com.bunbeauty.core.domain.menu_product.IMenuProductInteractor
+import com.bunbeauty.core.domain.order.GetLastOrderUseCase
+import com.bunbeauty.core.domain.order.ObserveLastOrderUseCase
+import com.bunbeauty.core.domain.order.StopObserveOrdersUseCase
 import com.bunbeauty.core.extension.launchSafe
 import com.bunbeauty.core.model.CategoryItem
 import com.bunbeauty.core.model.MenuItem
 import com.bunbeauty.core.model.mapper.toMenuItemList
 import com.bunbeauty.core.model.menu.MenuSection
 import com.bunbeauty.menu.presentation.model.MenuDataState
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -26,7 +31,9 @@ import kotlinx.coroutines.launch
 import kotlin.time.measureTime
 
 private const val MAIN_MENU_VIEW_MODEL_TAG = "MenuViewModel"
-private const val MENU_FIRST_CONTENT_GRID_INDEX = 2
+
+// Grid: 0=TopBar, 1=CategoryRow, 2=LastOrder, 3+=menuItemList
+private const val MENU_FIRST_CONTENT_GRID_INDEX = 3
 
 class MenuViewModel(
     private val menuProductInteractor: IMenuProductInteractor,
@@ -34,6 +41,9 @@ class MenuViewModel(
     private val addMenuProductUseCase: AddMenuProductUseCase,
     private val getDiscountUseCase: GetDiscountUseCase,
     private val analyticService: AnalyticService,
+    private val observeLastOrderUseCase: ObserveLastOrderUseCase,
+    private val stopObserveOrdersUseCase: StopObserveOrdersUseCase,
+    private val getLastOrderUseCase: GetLastOrderUseCase,
 ) : ViewModel() {
     private val mutableMenuState =
         MutableStateFlow(
@@ -44,6 +54,7 @@ class MenuViewModel(
                 state = MenuDataState.State.Loading,
                 userScrollEnabled = true,
                 eventList = emptyList(),
+                lastOrder = null,
             ),
         )
     val menuState = mutableMenuState.asStateFlow()
@@ -51,9 +62,18 @@ class MenuViewModel(
     private var selectedCategoryUuid: String? = null
     private var currentMenuPosition = 0
 
+    private var observeLastOrderJob: Job? = null
+    private var orderObservationUuid: String? = null
+
     init {
         getMenu()
         observeCart()
+        viewModelScope.launch {
+            val lastOrder = getLastOrderUseCase()
+            mutableMenuState.update {
+                it.copy(lastOrder = lastOrder)
+            }
+        }
     }
 
     fun onStartAutoScroll() {
@@ -187,6 +207,13 @@ class MenuViewModel(
         }
     }
 
+    fun onLastOrderClicked(uuid: String) {
+        mutableMenuState.update { oldState ->
+            oldState +
+                MenuDataState.Event.OpenOrderDetails(uuid)
+        }
+    }
+
     private fun findMenuProduct(uuid: String): MenuItem.Product? =
         mutableMenuState.value.menuItemList
             .filterIsInstance<MenuItem.Product>()
@@ -285,5 +312,37 @@ class MenuViewModel(
         mutableMenuState.update { state ->
             state.copy(eventList = state.eventList - eventList.toSet())
         }
+    }
+
+    fun startLastOrderObservation() {
+        if (observeLastOrderJob?.isActive == true) {
+            return
+        }
+        observeLastOrderJob =
+            viewModelScope.launchSafe(
+                block = {
+                    val (uuid, lastOrderFlow) = observeLastOrderUseCase()
+                    orderObservationUuid = uuid
+                    lastOrderFlow.collectLatest { lightOrder ->
+                        mutableMenuState.update { state ->
+                            state.copy(lastOrder = lightOrder)
+                        }
+                    }
+                },
+                onError = { error ->
+                    Logger.logE(MAIN_MENU_VIEW_MODEL_TAG, error.stackTraceToString())
+                },
+                dispatcher = Dispatchers.Default,
+            )
+    }
+
+    fun stopLastOrderObservation() {
+        observeLastOrderJob?.cancel()
+        orderObservationUuid?.let { uuid ->
+            viewModelScope.launch(Dispatchers.Default) {
+                stopObserveOrdersUseCase(uuid)
+            }
+        }
+        orderObservationUuid = null
     }
 }
