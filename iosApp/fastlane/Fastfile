@@ -2,8 +2,7 @@ default_platform(:ios)
 
 platform :ios do
   before_all do
-    # Выбираем версию Xcode для сборки
-    xcodes(version: "26.4", select_for_current_build_only: true)
+    # Версию Xcode выбирает шаг workflow (maxim-lobanov/setup-xcode)
 
     # App Store Connect API Key
     app_store_connect_api_key(
