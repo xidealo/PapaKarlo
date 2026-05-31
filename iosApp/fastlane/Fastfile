@@ -36,7 +36,10 @@ platform :ios do
   # Настраиваем подпись только у таргета приложения (по bundle id), не трогая Pods.
   # В проекте у таргетов прошита dev/automatic-подпись, а нам нужен AppStore-профиль match.
   def apply_appstore_signing(app_identifier)
-    project = Xcodeproj::Project.open("iosApp.xcodeproj")
+    # cwd при выполнении lane может быть как iosApp, так и iosApp/fastlane
+    project_path = ["iosApp.xcodeproj", "../iosApp.xcodeproj"].find { |path| File.directory?(path) }
+    UI.user_error!("Не найден iosApp.xcodeproj (cwd: #{Dir.pwd})") unless project_path
+    project = Xcodeproj::Project.open(project_path)
     matched = false
     project.native_targets.each do |target|
       target.build_configurations.each do |config|
