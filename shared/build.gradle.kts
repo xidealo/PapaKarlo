@@ -14,12 +14,7 @@ kotlin {
         homepage = "Link to the Shared Module homepage"
         version = "1.0"
         ios.deploymentTarget = deploymentTarget
-        // На CI pod install выполняется отдельным шагом workflow. Не задаём podfile,
-        // иначе Kotlin CocoaPods плагин повторно запускает pod install во время
-        // syncFramework при архивации (xcodebuild), и сборка падает с ARCHIVE FAILED.
-        if (System.getenv("CI").isNullOrBlank()) {
-            podfile = project.file("../iosApp/Podfile")
-        }
+        podfile = project.file("../iosApp/Podfile")
 
         pod("FirebaseMessaging")
         framework {

@@ -85,6 +85,7 @@ platform :ios do
       scheme: scheme,
       clean: true,
       export_method: "app-store",
+      disable_xcpretty: true,
       export_options: {
         provisioningProfiles: {
           app_identifier => "match AppStore #{app_identifier}"
