@@ -48,11 +48,18 @@ platform :ios do
       readonly: (ENV["MATCH_READONLY"] == "true")
     )
 
+    # Переопределяем подпись на этапе архивации: в проекте у таргетов прошита
+    # ручная/автоматическая dev-подпись, а нам нужен AppStore-профиль из match.
+    # Командные build settings перекрывают значения проекта, включая [sdk=iphoneos*].
     build_app(
       workspace: "iosApp.xcworkspace",
       scheme: scheme,
       clean: true,
       export_method: "app-store",
+      xcargs: "CODE_SIGN_STYLE=Manual " \
+              "DEVELOPMENT_TEAM=77HLJ933B9 " \
+              "CODE_SIGN_IDENTITY='Apple Distribution' " \
+              "PROVISIONING_PROFILE_SPECIFIER='match AppStore #{app_identifier}'",
       export_options: {
         provisioningProfiles: {
           app_identifier => "match AppStore #{app_identifier}"
