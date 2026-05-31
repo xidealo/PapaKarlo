@@ -80,18 +80,23 @@ platform :ios do
     # Точечно выставляем AppStore-подпись только таргету приложения (Pods не трогаем)
     apply_appstore_signing(app_identifier)
 
-    build_app(
-      workspace: "iosApp.xcworkspace",
-      scheme: scheme,
-      clean: true,
-      export_method: "app-store",
-      disable_xcpretty: true,
-      export_options: {
-        provisioningProfiles: {
-          app_identifier => "match AppStore #{app_identifier}"
+    # Скрипт-фаза "[CP-User] Build shared" внутри архивации запускает gradle :shared:syncFramework,
+    # а тот при cinterop делает pod install. fastlane запущен через `bundle exec`, и bundler
+    # блокирует системный `pod` (cocoapods нет в Gemfile). Запускаем сборку с чистым от bundler
+    # окружением, чтобы вложенный pod install использовал системный pod.
+    Bundler.with_unbundled_env do
+      build_app(
+        workspace: "iosApp.xcworkspace",
+        scheme: scheme,
+        clean: true,
+        export_method: "app-store",
+        export_options: {
+          provisioningProfiles: {
+            app_identifier => "match AppStore #{app_identifier}"
+          }
         }
-      }
-    )
+      )
+    end
 
     # Дожидаемся обработки билда, чтобы потом отправить его на ревью
     upload_to_testflight(
