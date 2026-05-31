@@ -1,3 +1,5 @@
+require "xcodeproj"
+
 default_platform(:ios)
 
 platform :ios do
@@ -31,6 +33,30 @@ platform :ios do
      # mimino:     { id: "com.bunbeauty.mimino", scheme: "mimino" },
   }
 
+  # Настраиваем подпись только у таргета приложения (по bundle id), не трогая Pods.
+  # В проекте у таргетов прошита dev/automatic-подпись, а нам нужен AppStore-профиль match.
+  def apply_appstore_signing(app_identifier)
+    project = Xcodeproj::Project.open("iosApp.xcodeproj")
+    matched = false
+    project.native_targets.each do |target|
+      target.build_configurations.each do |config|
+        next unless config.build_settings["PRODUCT_BUNDLE_IDENTIFIER"] == app_identifier
+        matched = true
+        settings = config.build_settings
+        settings["CODE_SIGN_STYLE"] = "Manual"
+        settings["DEVELOPMENT_TEAM"] = "77HLJ933B9"
+        settings["CODE_SIGN_IDENTITY"] = "Apple Distribution"
+        settings["PROVISIONING_PROFILE_SPECIFIER"] = "match AppStore #{app_identifier}"
+        # Убираем sdk-условные ключи, иначе они перекроют значения для устройства
+        settings.delete("DEVELOPMENT_TEAM[sdk=iphoneos*]")
+        settings.delete("CODE_SIGN_IDENTITY[sdk=iphoneos*]")
+        settings.delete("PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]")
+      end
+    end
+    UI.user_error!("Не найден таргет с bundle id #{app_identifier}") unless matched
+    project.save
+  end
+
   # Универсальная функция сборки и заливки
   def build_and_upload(app_identifier, scheme)
     # Уникальный build number для TestFlight на CI
@@ -48,18 +74,14 @@ platform :ios do
       readonly: (ENV["MATCH_READONLY"] == "true")
     )
 
-    # Переопределяем подпись на этапе архивации: в проекте у таргетов прошита
-    # ручная/автоматическая dev-подпись, а нам нужен AppStore-профиль из match.
-    # Командные build settings перекрывают значения проекта, включая [sdk=iphoneos*].
+    # Точечно выставляем AppStore-подпись только таргету приложения (Pods не трогаем)
+    apply_appstore_signing(app_identifier)
+
     build_app(
       workspace: "iosApp.xcworkspace",
       scheme: scheme,
       clean: true,
       export_method: "app-store",
-      xcargs: "CODE_SIGN_STYLE=Manual " \
-              "DEVELOPMENT_TEAM=77HLJ933B9 " \
-              "CODE_SIGN_IDENTITY='Apple Distribution' " \
-              "PROVISIONING_PROFILE_SPECIFIER='match AppStore #{app_identifier}'",
       export_options: {
         provisioningProfiles: {
           app_identifier => "match AppStore #{app_identifier}"
