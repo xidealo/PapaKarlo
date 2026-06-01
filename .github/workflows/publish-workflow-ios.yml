@@ -70,6 +70,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: "Decode Firebase GoogleService-Info.plist files"
+        env:
+          IOS_FIREBASE_PLISTS_TAR_BASE64: ${{ secrets.IOS_FIREBASE_PLISTS_TAR_BASE64 }}
+        run: |
+          echo "$IOS_FIREBASE_PLISTS_TAR_BASE64" | base64 --decode > firebase-plists.tar.gz
+          tar -xzf firebase-plists.tar.gz
+          rm firebase-plists.tar.gz
+
       - name: Select Xcode
         uses: maxim-lobanov/setup-xcode@v1
         with:
