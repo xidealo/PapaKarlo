@@ -60,6 +60,7 @@
     <string name="msg_menu_discount">Успей сделать первый заказ со скидкой %1$s%</string>
     <string name="msg_menu_product_added">Добавлено</string>
     <string name="msg_menu_product_edited">Изменено</string>
+    <string name="title_menu_last_order">Ваш заказ</string>
 
     <!-- PRODUCT DETAILS -->
     <string name="action_product_details_want">Добавить за %1$s</string>
