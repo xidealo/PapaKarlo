@@ -60,4 +60,31 @@ class CheckOneCityUseCaseTest {
             // Then
             assertFalse(result)
         }
+
+    @Test
+    fun `invoke with city list returns true when list has exactly one city`() {
+        val result =
+            useCase.invoke(
+                cityList =
+                    listOf(
+                        getCity(),
+                    ),
+            )
+
+        assertTrue(result)
+    }
+
+    @Test
+    fun `invoke with city list returns false when list has more than one city`() {
+        val result =
+            useCase.invoke(
+                cityList =
+                    listOf(
+                        getCity(name = "City1"),
+                        getCity(name = "City2"),
+                    ),
+            )
+
+        assertFalse(result)
+    }
 }

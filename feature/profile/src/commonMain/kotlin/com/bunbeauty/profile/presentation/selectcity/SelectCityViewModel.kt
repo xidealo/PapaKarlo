@@ -2,11 +2,13 @@ package com.bunbeauty.profile.presentation.selectcity
 
 import com.bunbeauty.core.base.SharedStateViewModel
 import com.bunbeauty.core.domain.city.ICityInteractor
+import com.bunbeauty.core.domain.splash.CheckOneCityUseCase
 import com.bunbeauty.core.extension.launchSafe
 import com.bunbeauty.core.model.city.City
 
 class SelectCityViewModel(
     private val cityInteractor: ICityInteractor,
+    private val checkOneCityUseCase: CheckOneCityUseCase,
 ) : SharedStateViewModel<SelectCityDataState.DataState, SelectCityDataState.Action, SelectCityDataState.Event>(
         initDataState =
             SelectCityDataState.DataState(
@@ -20,6 +22,7 @@ class SelectCityViewModel(
     ) {
         when (action) {
             is SelectCityDataState.Action.OnCitySelected -> onCitySelected(city = action.city)
+            SelectCityDataState.Action.OnContinueClicked -> onContinueClicked(dataState = dataState)
             SelectCityDataState.Action.OnRefreshClicked -> getCityList()
             SelectCityDataState.Action.GetCityList -> getCityList()
         }
@@ -29,10 +32,18 @@ class SelectCityViewModel(
         setState { copy(state = SelectCityDataState.DataState.State.LOADING) }
         sharedScope.launchSafe(
             block = {
+                val cities = cityInteractor.getCityList() ?: emptyList()
+                val contentMode =
+                    if (checkOneCityUseCase(cities)) {
+                        SelectCityDataState.DataState.ContentMode.SingleCity
+                    } else {
+                        SelectCityDataState.DataState.ContentMode.CityList
+                    }
                 setState {
                     copy(
                         state = SelectCityDataState.DataState.State.SUCCESS,
-                        cityList = cityInteractor.getCityList() ?: emptyList(),
+                        cityList = cities,
+                        contentMode = contentMode,
                     )
                 }
             },
@@ -42,6 +53,11 @@ class SelectCityViewModel(
                 }
             },
         )
+    }
+
+    private fun onContinueClicked(dataState: SelectCityDataState.DataState) {
+        val city = dataState.cityList.firstOrNull() ?: return
+        onCitySelected(city = city)
     }
 
     private fun onCitySelected(city: City) {
