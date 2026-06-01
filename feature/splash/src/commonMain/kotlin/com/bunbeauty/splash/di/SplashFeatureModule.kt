@@ -10,8 +10,6 @@ fun splashFeatureModule() =
             SplashViewModel(
                 checkUpdateUseCase = get(),
                 cityInteractor = get(),
-                getIsOneCityUseCase = get(),
-                saveOneCityUseCase = get(),
             )
         }
     }

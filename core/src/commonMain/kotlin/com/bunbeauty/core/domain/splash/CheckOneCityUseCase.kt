@@ -1,11 +1,14 @@
 package com.bunbeauty.core.domain.splash
 
 import com.bunbeauty.core.domain.repo.CityRepo
+import com.bunbeauty.core.model.city.City
 
 private const val ONE_CITY_COUNT = 1
 
 class CheckOneCityUseCase(
     private val cityRepo: CityRepo,
 ) {
-    suspend operator fun invoke(): Boolean = cityRepo.getCityList().size == ONE_CITY_COUNT
+    suspend operator fun invoke(): Boolean = invoke(cityList = cityRepo.getCityList())
+
+    operator fun invoke(cityList: List<City>): Boolean = cityList.size == ONE_CITY_COUNT
 }
