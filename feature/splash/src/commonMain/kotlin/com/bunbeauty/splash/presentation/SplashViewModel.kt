@@ -32,7 +32,9 @@ class SplashViewModel(
                 }
             },
             onError = {
-                // add error state
+                addEvent {
+                    Splash.Effect.NavigateToUpdateEffect
+                }
             },
         )
     }

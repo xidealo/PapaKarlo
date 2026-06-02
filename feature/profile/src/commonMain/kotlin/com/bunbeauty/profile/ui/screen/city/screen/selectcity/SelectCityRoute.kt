@@ -139,11 +139,18 @@ private fun SelectCitySuccessScreen(
         }
 
         SelectCityDataState.DataState.ContentMode.SingleCity -> {
-            val city = viewState.cityList.firstOrNull() ?: return
-            SelectCitySingleCityScreen(
-                city = city,
-                onAction = onAction,
-            )
+            val city = viewState.cityList.firstOrNull()
+            if (city == null) {
+                ErrorScreen(
+                    mainTextId = Res.string.error_select_city_loading,
+                    onClick = { onAction(SelectCityDataState.Action.OnRefreshClicked) },
+                )
+            } else {
+                SelectCitySingleCityScreen(
+                    city = city,
+                    onAction = onAction,
+                )
+            }
         }
     }
 }

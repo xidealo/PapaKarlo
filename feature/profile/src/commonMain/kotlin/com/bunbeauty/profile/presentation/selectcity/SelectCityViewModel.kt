@@ -32,7 +32,13 @@ class SelectCityViewModel(
         setState { copy(state = SelectCityDataState.DataState.State.LOADING) }
         sharedScope.launchSafe(
             block = {
-                val cities = cityInteractor.getCityList() ?: emptyList()
+                val cities = cityInteractor.getCityList().orEmpty()
+                if (cities.isEmpty()) {
+                    setState {
+                        copy(state = SelectCityDataState.DataState.State.ERROR)
+                    }
+                    return@launchSafe
+                }
                 val contentMode =
                     if (checkOneCityUseCase(cities)) {
                         SelectCityDataState.DataState.ContentMode.SingleCity
