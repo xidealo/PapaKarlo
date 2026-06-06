@@ -31,6 +31,7 @@ fun viewModelModule() =
         viewModel {
             SelectCityViewModel(
                 cityInteractor = get(),
+                checkOneCityUseCase = get(),
             )
         }
     }

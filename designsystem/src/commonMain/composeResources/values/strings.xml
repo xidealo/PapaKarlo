@@ -42,6 +42,9 @@
     <!-- SELECT CITY -->
     <string name="title_select_city">Выбор города</string>
     <string name="error_select_city_loading">Не удалось загрузить список городов</string>
+    <string name="msg_select_city_single_city_available">Заказы доступны в одном городе:</string>
+    <string name="action_select_city_continue">Продолжить</string>
+    <string name="description_select_city_location">Город доставки</string>
 
     <!-- UPDATE -->
     <string name="title_update_new_app_version">Новая версия</string>
