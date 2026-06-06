@@ -5,6 +5,9 @@ default_platform(:ios)
 platform :ios do
   before_all do
     # Версию Xcode выбирает шаг workflow (maxim-lobanov/setup-xcode)
+    # На CI создаёт временный keychain с partition list для codesign — без этого
+    # xcodebuild может зависнуть на "Signing *.app" при доступе к сертификату match.
+    setup_ci if ENV["CI"]
 
     # App Store Connect API Key
     app_store_connect_api_key(
@@ -90,6 +93,7 @@ platform :ios do
         scheme: scheme,
         clean: true,
         export_method: "app-store",
+        disable_xcpretty: ENV["CI"] == "true",
         export_options: {
           provisioningProfiles: {
             app_identifier => "match AppStore #{app_identifier}"
