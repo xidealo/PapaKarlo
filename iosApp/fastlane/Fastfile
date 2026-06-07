@@ -1,3 +1,5 @@
+require "fileutils"
+require "tmpdir"
 require "xcodeproj"
 
 default_platform(:ios)
@@ -63,6 +65,42 @@ platform :ios do
     project.save
   end
 
+  def release_notes_text
+    return ENV["APP_STORE_RELEASE_NOTES_RU"] unless ENV["APP_STORE_RELEASE_NOTES_RU"].to_s.empty?
+
+    notes_path = File.expand_path("metadata/ru/release_notes.txt", __dir__)
+    return File.read(notes_path).strip if File.exist?(notes_path)
+
+    "Исправлены ошибки и улучшена стабильность."
+  end
+
+  # submit_for_review требует whatsNew в App Store Connect. Загружаем только release notes,
+  # не трогая name/description/support_url и прочие поля листинга (важно для 12 разных приложений).
+  def submit_for_app_store_review(app_identifier, build_number)
+    Dir.mktmpdir("deliver-metadata") do |metadata_path|
+      ru_path = File.join(metadata_path, "ru")
+      FileUtils.mkdir_p(ru_path)
+      File.write(File.join(ru_path, "release_notes.txt"), release_notes_text)
+
+      deliver(
+        app_identifier: app_identifier,
+        build_number: build_number,
+        metadata_path: metadata_path,
+        skip_binary_upload: true,
+        submit_for_review: true,
+        automatic_release: false,
+        force: true,
+        skip_screenshots: true,
+        skip_metadata: false,
+        precheck_include_in_app_purchases: false,
+        submission_information: {
+          export_compliance_uses_encryption: false,
+          export_compliance_encryption_updated: false
+        }
+      )
+    end
+  end
+
   # Универсальная функция сборки и заливки
   def build_and_upload(app_identifier, scheme)
     # Уникальный build number для TestFlight на CI
@@ -108,22 +146,8 @@ platform :ios do
       skip_waiting_for_build_processing: false
     )
 
-    # Привязываем уже обработанный билд к новой версии App Store и отправляем на проверку
-    deliver(
-      app_identifier: app_identifier,
-      build_number: ENV["GITHUB_RUN_NUMBER"],
-      skip_binary_upload: true,
-      submit_for_review: true,
-      automatic_release: false,
-      force: true,
-      skip_screenshots: true,
-      skip_metadata: true,
-      precheck_include_in_app_purchases: false,
-      submission_information: {
-        export_compliance_uses_encryption: false,
-        export_compliance_encryption_updated: false
-      }
-    )
+    # Привязываем уже обработанный билд к версии App Store и отправляем на ревью
+    submit_for_app_store_review(app_identifier, ENV["GITHUB_RUN_NUMBER"])
   end
 
   # Динамическая генерация lane для каждого приложения
