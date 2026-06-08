@@ -1,4 +1,4 @@
-name: Publish workflow ios
+name: Publish workflow ios (upload)
 
 on:
   push:
@@ -65,7 +65,7 @@ jobs:
   build:
     runs-on: macos-latest
     needs: setup
-    timeout-minutes: 120
+    timeout-minutes: 360
 
     steps:
       - name: Checkout repository
@@ -133,7 +133,7 @@ jobs:
           echo "${{ secrets.APP_STORE_P8_BASE64 }}" | base64 --decode > fastlane/keys/AuthKey.p8
           chmod 600 fastlane/keys/AuthKey.p8
 
-      - name: Build, upload and submit all apps for App Store review
+      - name: Build and upload all apps to TestFlight
         working-directory: iosApp
         env:
           MATCH_GIT_BASIC_AUTHORIZATION : ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION  }}
@@ -142,4 +142,10 @@ jobs:
           APP_STORE_P8_PATH: fastlane/keys/AuthKey.p8
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
           MATCH_READONLY: "true"
-        run: bundle exec fastlane ios deployAll
+        run: bundle exec fastlane ios deployAllUpload
+
+      - name: Upload build number hint for submit workflow
+        run: |
+          echo "## iOS upload завершён" >> "$GITHUB_STEP_SUMMARY"
+          echo "Build number для submit-workflow: **${{ github.run_number }}**" >> "$GITHUB_STEP_SUMMARY"
+          echo "Запустите workflow «Publish workflow ios (submit)» с input build_number=${{ github.run_number }}" >> "$GITHUB_STEP_SUMMARY"
