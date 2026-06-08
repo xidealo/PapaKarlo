@@ -153,12 +153,12 @@ platform :ios do
 
   apps.each do |lane_name, config|
     desc "Build and upload #{lane_name} to TestFlight (без submit)"
-    lane "upload_#{lane_name}" do
+    lane :"upload_#{lane_name}" do
       upload_to_testflight_only(config[:id], config[:scheme])
     end
 
     desc "Submit #{lane_name} for App Store review (билд должен быть обработан в ASC)"
-    lane "submit_#{lane_name}" do
+    lane :"submit_#{lane_name}" do
       submit_for_app_store_review(config[:id], app_store_build_number)
     end
 
@@ -171,7 +171,7 @@ platform :ios do
   desc "Build and upload all apps to TestFlight (без ожидания Apple и без submit)"
   lane :deployAllUpload do
     apps.keys.each do |app|
-      send("upload_#{app}")
+      send(:"upload_#{app}")
     end
   end
 
