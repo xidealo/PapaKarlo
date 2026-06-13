@@ -74,7 +74,7 @@ interface NetworkConnector {
         uuid: String,
     ): ApiResult<OrderServer>
 
-    suspend fun getLastOrder(token: String): ApiResult<OrderServer>
+    suspend fun getLastOrder(token: String): ApiResult<LightOrderServer>
 
     suspend fun getSettings(token: String): ApiResult<SettingsServer>
 

@@ -101,22 +101,21 @@ class OrderRepository(
 
     override suspend fun getLastOrderByUserUuidNetworkFirst(): LightOrder? {
         val token = dataStoreRepo.getToken() ?: return null
-        val userUuid = dataStoreRepo.getUserUuid() ?: return null
 
         return networkConnector
             .getLastOrder(
                 token = token,
             ).getNullableResult(
                 onError = {
-                    orderDao
-                        .getOrderListByUserUuid(
-                            userUuid = userUuid,
-                            count = 1,
-                        ).firstOrNull()
+                    lightOrderDao
+                        .getLightOrderList(count = 1)
+                        .firstOrNull()
                         ?.let(orderMapper::toLightOrder)
                 },
                 onSuccess = { lastOrderServer ->
-                    saveOrderLocally(lastOrderServer)
+                    lightOrderDao.insertLightOrder(
+                        orderMapper.toLightOrderEntity(lastOrderServer),
+                    )
 
                     val lightOrder = orderMapper.toLightOrder(lastOrderServer)
                     cacheLastOrder = lightOrder
