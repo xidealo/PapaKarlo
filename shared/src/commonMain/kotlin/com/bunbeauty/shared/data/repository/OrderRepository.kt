@@ -126,9 +126,6 @@ class OrderRepository(
     }
 
     override suspend fun getLastOrderByUserUuidLocalFirst(): LightOrder? {
-        val userUuid = dataStoreRepo.getUserUuid() ?: return null
-        val token = dataStoreRepo.getToken() ?: return null
-
         return if (cacheLastOrder == null) {
             getLastOrderByUserUuidNetworkFirst()
         } else {
@@ -137,7 +134,6 @@ class OrderRepository(
     }
 
     override suspend fun getOrderByUuid(orderUuid: String): Order? {
-        val userUuid = dataStoreRepo.getUserUuid() ?: return null
         val token = dataStoreRepo.getToken() ?: return null
         return networkConnector.getOrderByUuid(token = token, uuid = orderUuid).getNullableResult(
             onError = {
