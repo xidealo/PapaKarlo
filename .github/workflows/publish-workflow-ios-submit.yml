@@ -4,8 +4,8 @@ on:
   workflow_dispatch:
     inputs:
       build_number:
-        description: "Номер build из upload-прогона (GITHUB_RUN_NUMBER того workflow, см. summary upload job)"
-        required: true
+        description: "Опционально: фиксированный build number для всех приложений (по умолчанию — последний билд каждого приложения из ASC)"
+        required: false
         type: string
 
 concurrency:
@@ -42,4 +42,11 @@ jobs:
           APP_STORE_KEY_ID: ${{ secrets.APP_STORE_KEY_ID }}
           APP_STORE_ISSUER_ID: ${{ secrets.APP_STORE_ISSUER_ID }}
           APP_STORE_P8_PATH: fastlane/keys/AuthKey.p8
-        run: bundle exec fastlane ios deployAllSubmit
+        run: |
+          if [ -n "${APP_STORE_BUILD_NUMBER}" ]; then
+            echo "Submit с фиксированным build number: ${APP_STORE_BUILD_NUMBER}"
+          else
+            echo "Submit: последний обработанный билд каждого приложения из ASC"
+            unset APP_STORE_BUILD_NUMBER
+          fi
+          bundle exec fastlane ios deployAllSubmit

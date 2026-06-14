@@ -1,4 +1,5 @@
 require "fileutils"
+require "json"
 require "tmpdir"
 require "xcodeproj"
 
@@ -103,20 +104,55 @@ platform :ios do
     end
   end
 
-  def app_store_build_number
-    number = ENV["APP_STORE_BUILD_NUMBER"] || ENV["GITHUB_RUN_NUMBER"]
-    UI.user_error!("Задайте APP_STORE_BUILD_NUMBER — номер build из upload-прогона") if number.to_s.empty?
-    number
+  def version_xcconfig_path
+    ["iosApp/Version.xcconfig", "../iosApp/Version.xcconfig"].find { |path| File.exist?(path) }
+  end
+
+  # CFBundleVersion берётся из ${APP_BUILD} в Version.xcconfig, не из agvtool/CURRENT_PROJECT_VERSION.
+  def set_app_build_number(build_number)
+    path = version_xcconfig_path
+    UI.user_error!("Не найден Version.xcconfig (cwd: #{Dir.pwd})") unless path
+
+    content = File.read(path)
+    unless content.sub!(/^APP_BUILD\s*=\s*\d+\s*$/, "APP_BUILD = #{build_number}")
+      UI.user_error!("Не найдена строка APP_BUILD в #{path}")
+    end
+
+    File.write(path, content)
+    UI.message("APP_BUILD = #{build_number} (#{path})")
+  end
+
+  def current_xcconfig_build_number
+    path = version_xcconfig_path
+    return 0 unless path
+
+    File.read(path)[/^APP_BUILD\s*=\s*(\d+)\s*$/, 1].to_i
+  end
+
+  # Следующий build number: max(последний в ASC, APP_BUILD в xcconfig) + 1
+  def next_app_store_build_number(app_identifier)
+    latest = latest_testflight_build_number(app_identifier: app_identifier).to_i
+    next_number = latest + 1
+    xcconfig_build = current_xcconfig_build_number
+    next_number = [next_number, xcconfig_build + 1].max if xcconfig_build.positive?
+    next_number
+  end
+
+  # Для submit: последний обработанный билд в ASC (или явный APP_STORE_BUILD_NUMBER)
+  def resolve_submit_build_number(app_identifier)
+    return ENV["APP_STORE_BUILD_NUMBER"] unless ENV["APP_STORE_BUILD_NUMBER"].to_s.empty?
+
+    latest = latest_testflight_build_number(app_identifier: app_identifier).to_i
+    UI.user_error!("Нет обработанных билдов в TestFlight для #{app_identifier}") if latest.zero?
+
+    latest.to_s
   end
 
   # Сборка IPA и заливка в TestFlight без ожидания обработки Apple
   def upload_to_testflight_only(app_identifier, scheme)
-    if ENV["GITHUB_RUN_NUMBER"]
-      increment_build_number(
-        xcodeproj: "iosApp.xcodeproj",
-        build_number: ENV["GITHUB_RUN_NUMBER"]
-      )
-    end
+    build_number = next_app_store_build_number(app_identifier)
+    set_app_build_number(build_number)
+    UI.success("Upload #{app_identifier}: build #{build_number}")
 
     match(
       type: "appstore",
@@ -145,12 +181,14 @@ platform :ios do
       app_identifier: app_identifier,
       skip_waiting_for_build_processing: true
     )
+
+    build_number
   end
 
   # Полный цикл для одного приложения (локально или если нужно всё сразу)
   def build_and_upload(app_identifier, scheme)
-    upload_to_testflight_only(app_identifier, scheme)
-    submit_for_app_store_review(app_identifier, app_store_build_number)
+    build_number = upload_to_testflight_only(app_identifier, scheme)
+    submit_for_app_store_review(app_identifier, build_number)
   end
 
   apps.each do |lane_name, config|
@@ -161,7 +199,9 @@ platform :ios do
 
     desc "Submit #{lane_name} for App Store review (билд должен быть обработан в ASC)"
     lane :"submit_#{lane_name}" do
-      submit_for_app_store_review(config[:id], app_store_build_number)
+      build_number = resolve_submit_build_number(config[:id])
+      UI.message("Submit #{lane_name}: build #{build_number}")
+      submit_for_app_store_review(config[:id], build_number)
     end
 
     desc "Build, upload and submit #{lane_name} for App Store review"
@@ -173,26 +213,33 @@ platform :ios do
   desc "Build and upload all apps to TestFlight (без ожидания Apple и без submit)"
   lane :deployAllUpload do
     failures = []
+    uploaded_builds = {}
 
-    apps.keys.each do |app|
+    apps.each do |lane_name, config|
       begin
-        send(:"upload_#{app}")
+        build_number = upload_to_testflight_only(config[:id], config[:scheme])
+        uploaded_builds[lane_name] = build_number
       rescue StandardError => e
-        failures << "#{app}: #{e.message}"
-        UI.error("Upload не удался для #{app}: #{e.message}")
+        failures << "#{lane_name}: #{e.message}"
+        UI.error("Upload не удался для #{lane_name}: #{e.message}")
       end
     end
+
+    mapping_path = File.expand_path("upload_build_numbers.json", __dir__)
+    File.write(mapping_path, JSON.pretty_generate(uploaded_builds))
+    UI.success("Build numbers: #{uploaded_builds.map { |name, number| "#{name}=#{number}" }.join(', ')}")
 
     UI.user_error!("Не удалось загрузить:\n#{failures.join("\n")}") if failures.any?
   end
 
-  desc "Submit all apps for App Store review (нужен APP_STORE_BUILD_NUMBER из upload-прогона)"
+  desc "Submit all apps for App Store review (по умолчанию — последний билд каждого приложения из ASC)"
   lane :deployAllSubmit do
-    build_number = app_store_build_number
     failures = []
 
     apps.each do |lane_name, config|
       begin
+        build_number = resolve_submit_build_number(config[:id])
+        UI.message("Submit #{lane_name}: build #{build_number}")
         submit_for_app_store_review(config[:id], build_number)
       rescue StandardError => e
         failures << "#{lane_name}: #{e.message}"

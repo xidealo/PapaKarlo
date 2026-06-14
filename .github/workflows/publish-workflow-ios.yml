@@ -144,8 +144,17 @@ jobs:
           MATCH_READONLY: "true"
         run: bundle exec fastlane ios deployAllUpload
 
-      - name: Upload build number hint for submit workflow
+      - name: Upload build summary
+        working-directory: iosApp
         run: |
           echo "## iOS upload завершён" >> "$GITHUB_STEP_SUMMARY"
-          echo "Build number для submit-workflow: **${{ github.run_number }}**" >> "$GITHUB_STEP_SUMMARY"
-          echo "Запустите workflow «Publish workflow ios (submit)» с input build_number=${{ github.run_number }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "Номера билдов берутся из App Store Connect (latest + 1), не из GITHUB_RUN_NUMBER." >> "$GITHUB_STEP_SUMMARY"
+          if [ -f fastlane/upload_build_numbers.json ]; then
+            echo "" >> "$GITHUB_STEP_SUMMARY"
+            echo "### Build numbers по приложениям" >> "$GITHUB_STEP_SUMMARY"
+            echo '```json' >> "$GITHUB_STEP_SUMMARY"
+            cat fastlane/upload_build_numbers.json >> "$GITHUB_STEP_SUMMARY"
+            echo '```' >> "$GITHUB_STEP_SUMMARY"
+          fi
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "После обработки билдов в ASC запустите workflow **Publish workflow ios (submit)** — build number подтянется автоматически для каждого приложения." >> "$GITHUB_STEP_SUMMARY"
