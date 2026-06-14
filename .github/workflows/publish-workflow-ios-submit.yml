@@ -1,12 +1,10 @@
 name: Publish workflow ios (submit)
 
 on:
-  workflow_dispatch:
-    inputs:
-      build_number:
-        description: "Опционально: фиксированный build number для всех приложений (по умолчанию — последний билд каждого приложения из ASC)"
-        required: false
-        type: string
+  workflow_run:
+    workflows: ["Publish workflow ios (upload)"]
+    types: [completed]
+    branches: [master]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -14,12 +12,15 @@ concurrency:
 
 jobs:
   submit:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
@@ -38,15 +39,9 @@ jobs:
       - name: Submit all apps for App Store review
         working-directory: iosApp
         env:
-          APP_STORE_BUILD_NUMBER: ${{ github.event.inputs.build_number }}
           APP_STORE_KEY_ID: ${{ secrets.APP_STORE_KEY_ID }}
           APP_STORE_ISSUER_ID: ${{ secrets.APP_STORE_ISSUER_ID }}
           APP_STORE_P8_PATH: fastlane/keys/AuthKey.p8
         run: |
-          if [ -n "${APP_STORE_BUILD_NUMBER}" ]; then
-            echo "Submit с фиксированным build number: ${APP_STORE_BUILD_NUMBER}"
-          else
-            echo "Submit: последний обработанный билд каждого приложения из ASC"
-            unset APP_STORE_BUILD_NUMBER
-          fi
+          echo "Submit: последний обработанный билд каждого приложения из ASC"
           bundle exec fastlane ios deployAllSubmit
