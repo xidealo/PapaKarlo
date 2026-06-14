@@ -1,15 +1,17 @@
 package com.bunbeauty.menu.ui.mapper
 
 import com.bunbeauty.core.Constants.RUBLE_CURRENCY
+import com.bunbeauty.core.model.CategoryItem
 import com.bunbeauty.core.model.MenuItem
 import com.bunbeauty.core.model.ProductUi
 import com.bunbeauty.designsystem.ui.element.TopCartUi
-import com.bunbeauty.menu.presentation.model.MenuDataState
+import com.bunbeauty.menu.presentation.MENU_FIRST_CONTENT_GRID_INDEX
+import com.bunbeauty.menu.presentation.MenuState
 import com.bunbeauty.menu.ui.state.MenuItemUi
 import com.bunbeauty.menu.ui.state.MenuViewState
 import kotlinx.collections.immutable.toImmutableList
 
-fun MenuDataState.toMenuViewState(): MenuViewState =
+fun MenuState.DataState.mapState(): MenuViewState =
     MenuViewState(
         topCartUi =
             TopCartUi(
@@ -25,11 +27,26 @@ fun MenuDataState.toMenuViewState(): MenuViewState =
                 .map { menuItem ->
                     menuItem.toMenuItemUi()
                 }.toImmutableList(),
-        state = state,
+        state =
+            when (state) {
+                MenuState.DataState.State.LOADING -> MenuViewState.State.Loading
+                MenuState.DataState.State.SUCCESS -> MenuViewState.State.Success
+                MenuState.DataState.State.ERROR -> MenuViewState.State.Error
+            },
         userScrollEnabled = userScrollEnabled,
-        eventList = eventList.toImmutableList(),
         lastOrder = lastOrder,
     )
+
+fun getMenuListPosition(
+    categoryItem: CategoryItem,
+    menuItemList: List<MenuItemUi>,
+): Int {
+    val indexInMenuList =
+        menuItemList.indexOfFirst { menuItem ->
+            (menuItem as? MenuItemUi.CategoryHeader)?.uuid == categoryItem.uuid
+        }
+    return if (indexInMenuList < 0) 0 else indexInMenuList + MENU_FIRST_CONTENT_GRID_INDEX
+}
 
 fun MenuItem.Product.toMenuProductItemUi(): MenuItemUi.Product {
     val productKey = "MenuProductItem_${categoryUuid}_$uuid"
@@ -52,6 +69,7 @@ private fun MenuItem.toMenuItemUi(): MenuItemUi =
         is MenuItem.CategoryHeader -> {
             MenuItemUi.CategoryHeader(
                 key = "CategoryHeader $uuid",
+                uuid = uuid,
                 name = name,
             )
         }
