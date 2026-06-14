@@ -32,7 +32,9 @@ platform :ios do
      estpoest:     { id: "com.bunbeauty.estpoest", scheme: "estpoest" },
      taverna:      { id: "com.bunbeauty.taverna", scheme: "taverna" },
      voljane:      { id: "com.bunbeauty.voljane", scheme: "voljane" },
-     legenda:      { id: "com.bunbeauty.legenda", scheme: "legenda" },
+     # legenda: нет AppStore-профиля в match-репозитории — раскомментировать после:
+     # bundle exec fastlane match appstore -a com.bunbeauty.legenda
+     # legenda:      { id: "com.bunbeauty.legenda", scheme: "legenda" },
      # bereg и mimino пока без shared .xcscheme — включить после добавления схем и сертификатов match
      # bereg:      { id: "com.bunbeauty.bereg", scheme: "bereg" },
      # mimino:     { id: "com.bunbeauty.mimino", scheme: "mimino" },
@@ -170,9 +172,18 @@ platform :ios do
 
   desc "Build and upload all apps to TestFlight (без ожидания Apple и без submit)"
   lane :deployAllUpload do
+    failures = []
+
     apps.keys.each do |app|
-      send(:"upload_#{app}")
+      begin
+        send(:"upload_#{app}")
+      rescue StandardError => e
+        failures << "#{app}: #{e.message}"
+        UI.error("Upload не удался для #{app}: #{e.message}")
+      end
     end
+
+    UI.user_error!("Не удалось загрузить:\n#{failures.join("\n")}") if failures.any?
   end
 
   desc "Submit all apps for App Store review (нужен APP_STORE_BUILD_NUMBER из upload-прогона)"
