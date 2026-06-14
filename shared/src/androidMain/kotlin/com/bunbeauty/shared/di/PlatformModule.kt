@@ -44,6 +44,7 @@ actual fun platformModule() =
                 userRepository = get(),
             )
         }
+
         single {
             OpenExternalSource(
                 context = get(),

@@ -1,0 +1,47 @@
+name: Publish workflow ios (submit)
+
+on:
+  workflow_run:
+    workflows: ["Publish workflow ios (upload)"]
+    types: [completed]
+    branches: [master]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  submit:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.2"
+          bundler-cache: true
+          working-directory: iosApp
+
+      - name: Decode App Store Connect API key
+        working-directory: iosApp
+        run: |
+          mkdir -p fastlane/keys
+          echo "${{ secrets.APP_STORE_P8_BASE64 }}" | base64 --decode > fastlane/keys/AuthKey.p8
+          chmod 600 fastlane/keys/AuthKey.p8
+
+      - name: Submit all apps for App Store review
+        working-directory: iosApp
+        env:
+          APP_STORE_KEY_ID: ${{ secrets.APP_STORE_KEY_ID }}
+          APP_STORE_ISSUER_ID: ${{ secrets.APP_STORE_ISSUER_ID }}
+          APP_STORE_P8_PATH: fastlane/keys/AuthKey.p8
+        run: |
+          echo "Submit: последний обработанный билд каждого приложения из ASC"
+          bundle exec fastlane ios deployAllSubmit
