@@ -54,7 +54,6 @@ fastlane/screenshots
 fastlane/test_output
 fastlane/readme.md
 **/fastlane/README.md
-iosApp/fastlane/upload_build_numbers.json
 
 # Version control
 vcs.xml
@@ -100,3 +99,6 @@ app/google-play-api-key.json
 
 # Local temp
 _tar_test/
+
+# iOS CI artifacts
+iosApp/fastlane/upload_build_numbers.json
