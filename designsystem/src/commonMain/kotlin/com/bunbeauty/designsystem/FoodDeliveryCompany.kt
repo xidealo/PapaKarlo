@@ -63,10 +63,6 @@ enum class FoodDeliveryCompany(
     MIMINO(
         flavor = "mimino",
         companyUuid = "7b7e5088-d7e6-4ea3-9cab-db8c7e356393"
-    ),
-    EMOJI_CENTER(
-        flavor = "emojicenter",
-        companyUuid = "a289fc5a-c325-434f-b653-92d2ec77fb24"
     );
 
     companion object {

@@ -12,8 +12,6 @@ import com.bunbeauty.designsystem.theme.color.BeregColors
 import com.bunbeauty.designsystem.theme.color.BeregDarkColors
 import com.bunbeauty.designsystem.theme.color.DjanDarkColors
 import com.bunbeauty.designsystem.theme.color.DjanLightColors
-import com.bunbeauty.designsystem.theme.color.EmojiCenterDarkColors
-import com.bunbeauty.designsystem.theme.color.EmojiCenterLightColors
 import com.bunbeauty.designsystem.theme.color.EmojiDarkColors
 import com.bunbeauty.designsystem.theme.color.EmojiLightColors
 import com.bunbeauty.designsystem.theme.color.EstPoestDarkColors
@@ -47,8 +45,6 @@ import papakarlo.designsystem.generated.resources.logo_medium_bereg
 import papakarlo.designsystem.generated.resources.logo_medium_djan
 import papakarlo.designsystem.generated.resources.logo_medium_mimino_dark
 import papakarlo.designsystem.generated.resources.logo_medium_mimino_light
-import papakarlo.designsystem.generated.resources.logo_medium_emojicenter_dark
-import papakarlo.designsystem.generated.resources.logo_medium_emojicenter_light
 import papakarlo.designsystem.generated.resources.logo_medium_emoji
 import papakarlo.designsystem.generated.resources.logo_medium_estpoest
 import papakarlo.designsystem.generated.resources.logo_medium_gustopub
@@ -60,8 +56,6 @@ import papakarlo.designsystem.generated.resources.logo_medium_usadba
 import papakarlo.designsystem.generated.resources.logo_medium_vkus_kavkaza
 import papakarlo.designsystem.generated.resources.logo_medium_voljane
 import papakarlo.designsystem.generated.resources.logo_medium_yuliar
-import papakarlo.designsystem.generated.resources.logo_small_emojicenter_dark
-import papakarlo.designsystem.generated.resources.logo_small_emojicenter_light
 import papakarlo.designsystem.generated.resources.logo_small_mimino_dark
 import papakarlo.designsystem.generated.resources.logo_small_mimino_light
 
@@ -243,26 +237,6 @@ private fun getAppColors(
                 MiminoDarkColors
             } else {
                 MiminoLightColors
-            }
-        }
-
-        FoodDeliveryCompany.EMOJI_CENTER -> {
-            logoMedium =
-                if (isDarkTheme) {
-                    Res.drawable.logo_medium_emojicenter_dark
-                } else {
-                    Res.drawable.logo_medium_emojicenter_light
-                }
-            logoSmall =
-                if (isDarkTheme) {
-                    Res.drawable.logo_small_emojicenter_dark
-                } else {
-                    Res.drawable.logo_small_emojicenter_light
-                }
-            if (isDarkTheme) {
-                EmojiCenterDarkColors
-            } else {
-                EmojiCenterLightColors
             }
         }
     }

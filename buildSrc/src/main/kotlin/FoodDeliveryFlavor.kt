@@ -61,10 +61,6 @@ enum class FoodDeliveryFlavor(
     MIMINO(
         key = "mimino",
         applicationId = "com.bunbeauty.mimino"
-    ),
-    EMOJI_CENTER(
-        key = "emojicenter",
-        applicationId = "com.bunbeauty.emojicenter"
     );
 
     val assembleReleaseBundle: String
