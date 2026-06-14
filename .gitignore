@@ -53,8 +53,8 @@ fastlane/Preview.html
 fastlane/screenshots
 fastlane/test_output
 fastlane/readme.md
-iosApp/fastlane/upload_build_numbers.json
 **/fastlane/README.md
+iosApp/fastlane/upload_build_numbers.json
 
 # Version control
 vcs.xml
