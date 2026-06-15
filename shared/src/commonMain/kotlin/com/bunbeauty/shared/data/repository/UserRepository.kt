@@ -46,6 +46,8 @@ class UserRepository(
     override val tag: String = "USER_TAG"
     var cachedUserUuid: String? = null
 
+    override val token: Flow<String?> = dataStoreRepo.token
+
     override fun observeUserByUuid(userUuid: String): Flow<User?> = userDao.observeUserByUuid(uuid = userUuid).mapFlow(userMapper::toUser)
 
     override suspend fun getProfile(): Profile.Authorized? {
