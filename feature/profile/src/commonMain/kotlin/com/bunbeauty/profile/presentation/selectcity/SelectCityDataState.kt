@@ -9,11 +9,17 @@ interface SelectCityDataState {
     data class DataState(
         val state: State,
         val cityList: List<City> = emptyList(),
+        val contentMode: ContentMode = ContentMode.CityList,
     ) : BaseDataState {
         enum class State {
             LOADING,
             SUCCESS,
             ERROR,
+        }
+
+        enum class ContentMode {
+            CityList,
+            SingleCity,
         }
     }
 
@@ -23,6 +29,8 @@ interface SelectCityDataState {
         data class OnCitySelected(
             val city: City,
         ) : Action
+
+        data object OnContinueClicked : Action
 
         data object GetCityList : Action
     }

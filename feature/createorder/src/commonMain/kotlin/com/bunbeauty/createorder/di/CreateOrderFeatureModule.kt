@@ -28,6 +28,8 @@ fun createOrderFeatureModule() =
                 getWorkloadCafeUseCase = get(),
                 getSelectedPaymentMethodUseCase = get(),
                 getExtendedCommentUseCase = get(),
+                getWithoutUtensilsUseCase = get(),
+                saveWithoutUtensilsUseCase = get(),
                 getAdditionalUtensilsUseCase = get(),
                 getDeferredTimeHintUseCase = get(),
             )

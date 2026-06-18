@@ -25,6 +25,7 @@ actual class UpdateNotificationUseCase(
                     continuation.resumeWith(Result.failure(Exception(error.toString())))
                 } else {
                     token?.let {
+                        println("MY TOOKEN FCM: $token")
                         continuation.resumeWith(Result.success(it))
                     } ?: run {
                         continuation.resumeWith(Result.failure(Exception("Token is null")))

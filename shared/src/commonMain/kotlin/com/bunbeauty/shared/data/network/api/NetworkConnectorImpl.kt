@@ -181,9 +181,9 @@ internal class NetworkConnectorImpl(
             token = token,
         )
 
-    override suspend fun getLastOrder(token: String): ApiResult<OrderServer> =
+    override suspend fun getLastOrder(token: String): ApiResult<LightOrderServer> =
         getData(
-            path = "client/last_order",
+            path = "v2/client/last_order",
             token = token,
         )
 

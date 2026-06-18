@@ -25,6 +25,8 @@ import com.bunbeauty.core.domain.motivation.GetMotivationUseCase
 import com.bunbeauty.core.domain.order.CreateOrderUseCase
 import com.bunbeauty.core.domain.order.ExtendedComment
 import com.bunbeauty.core.domain.order.GetExtendedCommentUseCase
+import com.bunbeauty.core.domain.order.GetWithoutUtensilsUseCase
+import com.bunbeauty.core.domain.order.SaveWithoutUtensilsUseCase
 import com.bunbeauty.core.domain.payment.GetSelectablePaymentMethodListUseCase
 import com.bunbeauty.core.domain.payment.GetSelectedPaymentMethodUseCase
 import com.bunbeauty.core.domain.payment.SavePaymentMethodUseCase
@@ -59,6 +61,8 @@ class CreateOrderViewModel(
     private val getWorkloadCafeUseCase: GetWorkloadCafeUseCase,
     private val getSelectedPaymentMethodUseCase: GetSelectedPaymentMethodUseCase,
     private val getExtendedCommentUseCase: GetExtendedCommentUseCase,
+    private val getWithoutUtensilsUseCase: GetWithoutUtensilsUseCase,
+    private val saveWithoutUtensilsUseCase: SaveWithoutUtensilsUseCase,
     private val getAdditionalUtensilsUseCase: GetAdditionalUtensilsUseCase,
     private val getDeferredTimeHintUseCase: GetDeferredTimeHintUseCase,
 ) : SharedStateViewModel<CreateOrder.DataState, CreateOrder.Action, CreateOrder.Event>(
@@ -186,6 +190,7 @@ class CreateOrderViewModel(
                     withoutChange = action.withoutChange,
                     changeFrom = action.changeFrom,
                     additionalUtensils = action.additionalUtensils,
+                    withoutUtensils = action.withoutUtensils,
                 )
             }
 
@@ -198,6 +203,10 @@ class CreateOrderViewModel(
                 changeAdditionalUtensilsCount(
                     additionalUtensilsCount = action.additionalUtensilsCount,
                 )
+
+            CreateOrder.Action.ChangeWithoutUtensilsChecked -> {
+                changeWithoutUtensilsChecked()
+            }
         }
     }
 
@@ -208,6 +217,8 @@ class CreateOrderViewModel(
             updateCafeList()
 
             updatePaymentMethods()
+
+            updateWithoutUtensils()
 
             updateCartTotal()
 
@@ -428,6 +439,7 @@ class CreateOrderViewModel(
         withoutChange: String,
         changeFrom: String,
         additionalUtensils: String,
+        withoutUtensils: String,
     ) {
         val state = mutableDataState.value
 
@@ -474,6 +486,7 @@ class CreateOrderViewModel(
 
         val isAdditionalUtensilsIncorrect =
             state.additionalUtensils &&
+                !state.withoutUtensilsChecked &&
                 state.additionalUtensilsCount.isEmpty()
 
         setState {
@@ -516,6 +529,8 @@ class CreateOrderViewModel(
                                     additionalUtensils =
                                         ExtendedComment.AdditionalUtensils(
                                             isAdditionalUtensils = state.additionalUtensils,
+                                            withoutUtensilsChecked = state.withoutUtensilsChecked,
+                                            withoutUtensils = withoutUtensils,
                                             count = state.additionalUtensilsCount,
                                             name = additionalUtensils,
                                         ),
@@ -685,6 +700,32 @@ class CreateOrderViewModel(
                 additionalUtensilsCount = additionalUtensilsCount,
             )
         }
+    }
+
+    private suspend fun updateWithoutUtensils() {
+        setState {
+            copy(withoutUtensilsChecked = getWithoutUtensilsUseCase())
+        }
+    }
+
+    private fun changeWithoutUtensilsChecked() {
+        val withoutUtensilsChecked = !mutableDataState.value.withoutUtensilsChecked
+        setState {
+            copy(
+                withoutUtensilsChecked = withoutUtensilsChecked,
+                isAdditionalUtensilsErrorShown = false,
+            )
+        }
+        sharedScope.launchSafe(
+            block = {
+                saveWithoutUtensilsUseCase(withoutUtensils = withoutUtensilsChecked)
+            },
+            onError = {
+                addEvent {
+                    CreateOrder.Event.ShowSomethingWentWrongErrorEvent
+                }
+            },
+        )
     }
 
     private inline fun withLoading(crossinline block: suspend () -> Unit) {

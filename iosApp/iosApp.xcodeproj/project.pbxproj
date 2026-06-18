@@ -209,7 +209,6 @@
 		AC1028032F819BEF00988500 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 02A99D5729CBA0BE004D2F7B /* Localizable.strings */; };
 		AC1028042F819BEF00988500 /* CommonColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 023B6B052CDAB33C0051D6E1 /* CommonColors.xcassets */; };
 		AC1028052F819BEF00988500 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557BA273AAA24004C7B11 /* Assets.xcassets */; };
-		AC1028082F819BEF00988500 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 		AC1028182F819C5C00988500 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC1028112F819C3D00988500 /* GoogleService-Info.plist */; };
 		AC1028192F819C6200988500 /* mimino.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC1028122F819C3D00988500 /* mimino.plist */; };
 		AC10281A2F819C6200988500 /* miminoAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AC1028132F819C3D00988500 /* miminoAssets.xcassets */; };
@@ -226,7 +225,6 @@
 		AC47104B2F605E4600246FD5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 02A99D5729CBA0BE004D2F7B /* Localizable.strings */; };
 		AC47104C2F605E4600246FD5 /* CommonColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 023B6B052CDAB33C0051D6E1 /* CommonColors.xcassets */; };
 		AC47104D2F605E4600246FD5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557BA273AAA24004C7B11 /* Assets.xcassets */; };
-		AC4710512F605E4600246FD5 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 		AC4710622F605E6800246FD5 /* beregAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AC47105C2F605E6800246FD5 /* beregAssets.xcassets */; };
 		AC4710632F605E6800246FD5 /* bereg.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC47105B2F605E6800246FD5 /* bereg.plist */; };
 		AC4710652F60615600246FD5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC4710642F60615600246FD5 /* GoogleService-Info.plist */; };
@@ -249,7 +247,7 @@
 		C927C79DE52353C2CEDE0C36 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 		CB4F7FFBACC3358427B7F28F /* Pods_emoji.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C67BA2EA9F070E4A515A937 /* Pods_emoji.framework */; };
 		D2B2C9D4143E4D68813E7BCA /* Pods_djan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F16CA71F7A1C57D286A0E36 /* Pods_djan.framework */; };
-		D899D3AE18F8B4D2F508352A /* Pods_taverna.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFA26521372BE9B9203F7E9E /* Pods_taverna.framework */; };
+		D899D3AE18F8B4D2F508352A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 		EFA9E2E0F12AB7A3BA2D93B1 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 		F6F3956E5844208EDFA03DA0 /* Pods_yuliar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9C10411EF2D7D08F04B8829 /* Pods_yuliar.framework */; };
 		F8D6960333B5A2C9B870AA16 /* Pods_voljane.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC3DEBDBCD6763F6A38742CD /* Pods_voljane.framework */; };
@@ -348,12 +346,10 @@
 		A47F96ECAB8215DA5D28AF75 /* Pods_bereg.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_bereg.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4F374E300689A868C53F1F1 /* Pods-emoji.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-emoji.release.xcconfig"; path = "Target Support Files/Pods-emoji/Pods-emoji.release.xcconfig"; sourceTree = "<group>"; };
 		AC10280F2F819BEF00988500 /* mimino.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mimino.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		AC1028102F819BF000988500 /* bereg copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "bereg copy-Info.plist"; path = "/Users/mark.shavlovsky/Downloads/PapaKarlo/PapaKarlo/iosApp/bereg copy-Info.plist"; sourceTree = "<absolute>"; };
 		AC1028112F819C3D00988500 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		AC1028122F819C3D00988500 /* mimino.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = mimino.plist; sourceTree = "<group>"; };
 		AC1028132F819C3D00988500 /* miminoAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = miminoAssets.xcassets; sourceTree = "<group>"; };
 		AC4710582F605E4600246FD5 /* bereg.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = bereg.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		AC4710592F605E4600246FD5 /* taverna copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "taverna copy-Info.plist"; path = "/Users/mark.shavlovsky/Downloads/PapaKarlo/PapaKarlo/iosApp/taverna copy-Info.plist"; sourceTree = "<absolute>"; };
 		AC47105B2F605E6800246FD5 /* bereg.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = bereg.plist; sourceTree = "<group>"; };
 		AC47105C2F605E6800246FD5 /* beregAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = beregAssets.xcassets; sourceTree = "<group>"; };
 		AC4710642F60615600246FD5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -442,7 +438,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C927C79DE52353C2CEDE0C36 /* BuildFile in Frameworks */,
-				D899D3AE18F8B4D2F508352A /* Pods_taverna.framework in Frameworks */,
+				D899D3AE18F8B4D2F508352A /* BuildFile in Frameworks */,
 				8DE838C8FE1F1FC6E00CF256 /* Pods_taverna.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -681,8 +677,6 @@
 				50DE2F3B6643F72B29F5DDAC /* Pods */,
 				0275EBC92A9B380D00F8ECE2 /* Recovered References */,
 				CA8259FE21CB4A15BB1EAB85 /* Frameworks */,
-				AC4710592F605E4600246FD5 /* taverna copy-Info.plist */,
-				AC1028102F819BF000988500 /* bereg copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};

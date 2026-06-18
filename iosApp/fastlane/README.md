@@ -15,14 +15,6 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 ## iOS
 
-### ios papakarlo
-
-```sh
-[bundle exec] fastlane ios papakarlo
-```
-
-Push a new papakarlo release build to the App Store
-
 ### ios gustopub
 
 ```sh
@@ -110,6 +102,14 @@ Push a new voljane release build to the App Store
 ```
 
 Push a new legenda release build to the App Store
+
+### ios bereg
+
+```sh
+[bundle exec] fastlane ios bereg
+```
+
+Push a new bereg release build to the App Store
 
 ### ios deployAll
 

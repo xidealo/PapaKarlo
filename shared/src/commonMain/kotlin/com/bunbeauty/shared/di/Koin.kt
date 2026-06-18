@@ -60,9 +60,11 @@ import com.bunbeauty.core.domain.motivation.GetMotivationUseCase
 import com.bunbeauty.core.domain.order.CreateOrderUseCase
 import com.bunbeauty.core.domain.order.GetExtendedCommentUseCase
 import com.bunbeauty.core.domain.order.GetLastOrderUseCase
+import com.bunbeauty.core.domain.order.GetWithoutUtensilsUseCase
 import com.bunbeauty.core.domain.order.ObserveLastOrderUseCase
 import com.bunbeauty.core.domain.order.ObserveOrderListUseCase
 import com.bunbeauty.core.domain.order.ObserveOrderUseCase
+import com.bunbeauty.core.domain.order.SaveWithoutUtensilsUseCase
 import com.bunbeauty.core.domain.order.StopObserveOrdersUseCase
 import com.bunbeauty.core.domain.orderavailable.IsOrderAvailableUseCase
 import com.bunbeauty.core.domain.payment.GetPaymentMethodListUseCase
@@ -324,6 +326,10 @@ class IosComponent : KoinComponent {
     fun provideGetAdditionalUtensilsUseCase(): GetAdditionalUtensilsUseCase = get()
 
     fun provideGetDeferredTimeHintUseCase(): GetDeferredTimeHintUseCase = get()
+
+    fun provideGetWithoutUtensilsUseCase(): GetWithoutUtensilsUseCase = get()
+
+    fun provideSaveWithoutUtensilsUseCase(): SaveWithoutUtensilsUseCase = get()
 
     // Mapper
     fun provideUserAddressMapper(): UserAddressMapper = get()

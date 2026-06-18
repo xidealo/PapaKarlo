@@ -11,7 +11,8 @@ class CityInteractor(
 ) : ICityInteractor {
     override suspend fun getCityList(): List<City>? = cityRepo.getCityList().ifEmpty { null }
 
-    override suspend fun checkIsCitySelected(): Boolean = cityRepo.getSelectedCityUuid() != null
+    override suspend fun checkIsCitySelected(): Boolean =
+        !cityRepo.getSelectedCityUuid().isNullOrBlank()
 
     override suspend fun saveSelectedCity(city: City) {
         cityRepo.saveSelectedCityUuid(cityUuid = city.uuid)

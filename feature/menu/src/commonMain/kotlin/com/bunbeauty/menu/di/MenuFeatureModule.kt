@@ -13,6 +13,9 @@ fun menuFeatureModule() =
                 addMenuProductUseCase = get(),
                 getDiscountUseCase = get(),
                 analyticService = get(),
+                observeLastOrderUseCase = get(),
+                stopObserveOrdersUseCase = get(),
+                getLastOrderUseCase = get(),
             )
         }
     }
