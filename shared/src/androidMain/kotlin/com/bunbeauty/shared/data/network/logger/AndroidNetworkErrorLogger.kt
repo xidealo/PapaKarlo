@@ -2,6 +2,7 @@ package com.bunbeauty.shared.data.network.logger
 
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 
+
 class AndroidNetworkErrorLogger : NetworkErrorLogger {
     override fun logWarning(code: Int, message: String, throwable: Throwable) {
         val crashlytics = FirebaseCrashlytics.getInstance()
