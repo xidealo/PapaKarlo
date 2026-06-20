@@ -88,6 +88,7 @@ kotlin {
                 implementation(compose.uiTooling)
                 implementation(project.dependencies.platform(libs.firebase.bom))
                 implementation(libs.firebase.messaging)
+                implementation(libs.firebase.crashlytics)
                 implementation(libs.sqlDelight.android)
             }
         }
