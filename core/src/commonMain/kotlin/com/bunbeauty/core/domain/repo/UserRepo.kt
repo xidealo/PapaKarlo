@@ -5,6 +5,8 @@ import com.bunbeauty.core.model.profile.User
 import kotlinx.coroutines.flow.Flow
 
 interface UserRepo {
+    val token: Flow<String?>
+
     fun observeUserByUuid(userUuid: String): Flow<User?>
 
     suspend fun getProfile(): Profile.Authorized?

@@ -8,6 +8,7 @@ import com.bunbeauty.analytic.parameter.TimeParameter
 import com.bunbeauty.core.Logger
 import com.bunbeauty.core.base.SharedStateViewModel
 import com.bunbeauty.core.domain.ObserveCartUseCase
+import com.bunbeauty.core.domain.auth.ObserveTokenUseCase
 import com.bunbeauty.core.domain.discount.GetDiscountUseCase
 import com.bunbeauty.core.domain.menu_product.AddMenuProductUseCase
 import com.bunbeauty.core.domain.menu_product.IMenuProductInteractor
@@ -22,6 +23,8 @@ import com.bunbeauty.core.model.menu.MenuSection
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.launch
 import kotlin.time.measureTime
 
@@ -39,6 +42,7 @@ class MenuViewModel(
     private val observeLastOrderUseCase: ObserveLastOrderUseCase,
     private val stopObserveOrdersUseCase: StopObserveOrdersUseCase,
     private val getLastOrderUseCase: GetLastOrderUseCase,
+    private val observeTokenUseCase: ObserveTokenUseCase,
 ) : SharedStateViewModel<MenuState.DataState, MenuState.Action, MenuState.Event>(
         initDataState =
             MenuState.DataState(
@@ -59,6 +63,7 @@ class MenuViewModel(
     init {
         getMenu()
         observeCart()
+        observeToken()
         sharedScope.launch {
             val lastOrder = getLastOrderUseCase()
             setState {
@@ -110,6 +115,45 @@ class MenuViewModel(
             },
             onError = { throwable ->
                 handleError(throwable)
+            },
+        )
+    }
+
+    private fun observeToken() {
+        sharedScope.launchSafe(
+            block = {
+                observeTokenUseCase()
+                    .drop(1)
+                    .distinctUntilChanged()
+                    .collectLatest {
+                        refreshDiscount()
+                    }
+            },
+            onError = { throwable ->
+                Logger.logE(MAIN_MENU_VIEW_MODEL_TAG, throwable.stackTraceToString())
+            },
+        )
+    }
+
+    private fun refreshDiscount() {
+        sharedScope.launchSafe(
+            block = {
+                val discountItem =
+                    getDiscountUseCase()?.firstOrderDiscount?.toString()?.let { discount ->
+                        MenuItem.Discount(discount = discount)
+                    }
+                setState {
+                    copy(
+                        menuItemList =
+                            listOfNotNull(discountItem) +
+                                menuItemList.filterNot { menuItem ->
+                                    menuItem is MenuItem.Discount
+                                },
+                    )
+                }
+            },
+            onError = { throwable ->
+                Logger.logE(MAIN_MENU_VIEW_MODEL_TAG, throwable.stackTraceToString())
             },
         )
     }
