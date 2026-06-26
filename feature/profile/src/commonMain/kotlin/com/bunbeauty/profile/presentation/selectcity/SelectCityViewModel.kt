@@ -1,5 +1,7 @@
 package com.bunbeauty.profile.presentation.selectcity
 
+import com.bunbeauty.analytic.AnalyticService
+import com.bunbeauty.analytic.event.city.CitySelectEvent
 import com.bunbeauty.core.base.SharedStateViewModel
 import com.bunbeauty.core.domain.city.ICityInteractor
 import com.bunbeauty.core.domain.splash.CheckOneCityUseCase
@@ -9,6 +11,7 @@ import com.bunbeauty.core.model.city.City
 class SelectCityViewModel(
     private val cityInteractor: ICityInteractor,
     private val checkOneCityUseCase: CheckOneCityUseCase,
+    private val analyticService: AnalyticService,
 ) : SharedStateViewModel<SelectCityDataState.DataState, SelectCityDataState.Action, SelectCityDataState.Event>(
         initDataState =
             SelectCityDataState.DataState(
@@ -70,6 +73,9 @@ class SelectCityViewModel(
         sharedScope.launchSafe(
             block = {
                 cityInteractor.saveSelectedCity(city)
+                analyticService.sendEvent(
+                    event = CitySelectEvent(cityUuid = city.uuid),
+                )
                 addEvent {
                     SelectCityDataState.Event.NavigateToMenu
                 }
