@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalForeignApi::class)
+
 package com.bunbeauty.analytic
 
 import cocoapods.FirebaseAnalytics.FIRAnalytics
@@ -7,7 +9,9 @@ import com.bunbeauty.analytic.event.toMap
 import com.bunbeauty.core.Logger
 import com.bunbeauty.core.Logger.ANALYTIC_TAG
 import com.bunbeauty.core.targetName
+import kotlinx.cinterop.ExperimentalForeignApi
 import platform.Foundation.NSMutableDictionary
+import platform.Foundation.NSString
 
 actual class AnalyticService {
     actual fun sendEvent(event: FoodDeliveryEvent) {
@@ -25,7 +29,7 @@ private fun List<EventParameter>.toFirebaseParameters(): Map<Any?, *>? {
 
     val dictionary = NSMutableDictionary(capacity = size.toULong())
     forEach { parameter ->
-        dictionary.setObject(parameter.value, forKey = parameter.key)
+        dictionary.setObject(parameter.value as NSString, forKey = parameter.key as NSString)
     }
     return dictionary as Map<Any?, *>
 }
