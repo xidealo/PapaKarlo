@@ -12,8 +12,7 @@ import com.bunbeauty.shared.data.mapper.cafe.toCafeEntity
 import com.bunbeauty.shared.data.network.api.NetworkConnector
 import com.bunbeauty.shared.data.storage.CafeStorage
 import com.bunbeauty.shared.db.SelectedCafeUuidEntity
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
+import com.bunbeauty.shared.ioDispatcher
 import kotlinx.coroutines.withContext
 
 class CafeRepository(
@@ -37,7 +36,7 @@ class CafeRepository(
                         ?.results
                         .also { cafeServerList ->
                             if (cafeServerList != null) {
-                                withContext(Dispatchers.IO) {
+                                withContext(ioDispatcher) {
                                     cafeDao.insertCafeList(
                                         cafeServerList.map { cafeServer ->
                                             cafeServer.toCafeEntity()

@@ -12,6 +12,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -65,19 +66,29 @@ internal fun MenuColumn(
     animatedContentScope: AnimatedVisibilityScope,
     onAction: (MenuState.Action) -> Unit,
 ) {
-    LazyVerticalGrid(
-        modifier = Modifier.fillMaxSize(),
-        contentPadding =
-            PaddingValues(
-                bottom = 96.dp + LocalBottomBarPadding.current,
-                start = 16.dp,
-                end = 16.dp,
-            ),
-        columns = GridCells.Fixed(2),
-        horizontalArrangement = spacedBy(8.dp),
-        state = menuLazyListState,
-        userScrollEnabled = menu.userScrollEnabled,
-    ) {
+    BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
+        // Keep exactly 2 columns on phones (< 600.dp) so the mobile layout is
+        // unchanged, and add more columns as the viewport gets wider (tablets/web).
+        val columnCount =
+            when {
+                maxWidth < 600.dp -> 2
+                maxWidth < 840.dp -> 3
+                maxWidth < 1080.dp -> 4
+                else -> 5
+            }
+        LazyVerticalGrid(
+            modifier = Modifier.fillMaxSize(),
+            contentPadding =
+                PaddingValues(
+                    bottom = 96.dp + LocalBottomBarPadding.current,
+                    start = 16.dp,
+                    end = 16.dp,
+                ),
+            columns = GridCells.Fixed(columnCount),
+            horizontalArrangement = spacedBy(8.dp),
+            state = menuLazyListState,
+            userScrollEnabled = menu.userScrollEnabled,
+        ) {
         item(
             key = "TopBar",
             span = {
@@ -266,5 +277,6 @@ internal fun MenuColumn(
                 }
             }
         }
+    }
     }
 }

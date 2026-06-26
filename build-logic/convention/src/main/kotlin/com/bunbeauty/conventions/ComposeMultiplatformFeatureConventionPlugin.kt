@@ -29,6 +29,10 @@ class ComposeMultiplatformFeatureConventionPlugin : Plugin<Project> {
 
                 iosArm64()
                 iosSimulatorArm64()
+
+                js {
+                    browser()
+                }
             }
             extensions.configure<LibraryExtension> {
                 configureKotlinAndroid(this)

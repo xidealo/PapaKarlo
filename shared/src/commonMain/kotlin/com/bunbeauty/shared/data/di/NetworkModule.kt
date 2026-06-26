@@ -9,6 +9,7 @@ import com.bunbeauty.core.domain.exeptions.NoAttemptsException
 import com.bunbeauty.core.domain.exeptions.NotAllowedTimeForOrderException
 import com.bunbeauty.core.domain.exeptions.OrderNotAvailableException
 import com.bunbeauty.core.domain.exeptions.TooManyRequestsException
+import com.bunbeauty.shared.data.network.NetworkConfig
 import com.bunbeauty.shared.httpClientEngine
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.DefaultRequest
@@ -73,11 +74,19 @@ fun networkModule() =
                 }
 
                 install(DefaultRequest) {
-                    host = "fooddelivery-xidealo.amvera.io"
+                    host = NetworkConfig.host
                     header(HttpHeaders.ContentType, ContentType.Application.Json)
 
                     url {
-                        protocol = URLProtocol.HTTPS
+                        protocol =
+                            if (NetworkConfig.protocol == "http") {
+                                URLProtocol.HTTP
+                            } else {
+                                URLProtocol.HTTPS
+                            }
+                        NetworkConfig.port?.let { configuredPort ->
+                            port = configuredPort
+                        }
                     }
                 }
                 HttpResponseValidator {

@@ -21,9 +21,8 @@ import com.bunbeauty.shared.data.network.model.order.get.LightOrderServer
 import com.bunbeauty.shared.data.network.model.order.get.OrderProductServer
 import com.bunbeauty.shared.data.network.model.order.get.OrderServer
 import com.bunbeauty.shared.data.network.model.order.get.OrderUpdateServer
+import com.bunbeauty.shared.ioDispatcher
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterNotNull
@@ -48,7 +47,7 @@ class OrderRepository(
     CoroutineScope {
     private var cacheLastOrder: LightOrder? = null
 
-    override val coroutineContext: CoroutineContext = SupervisorJob() + Dispatchers.IO
+    override val coroutineContext: CoroutineContext = SupervisorJob() + ioDispatcher
 
     override suspend fun observeOrderUpdates(): Pair<String?, Flow<Order>> {
         val token = dataStoreRepo.getToken() ?: return null to flow { }
