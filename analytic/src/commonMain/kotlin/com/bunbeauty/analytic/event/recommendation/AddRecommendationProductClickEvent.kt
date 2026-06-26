@@ -5,7 +5,7 @@ import com.bunbeauty.analytic.parameter.MenuProductUuidEventParameter
 
 class AddRecommendationProductClickEvent(menuProductUuidEventParameter: MenuProductUuidEventParameter) :
     FoodDeliveryEvent(
-        category = "recommendation",
-        action = "AddRecommendationProductClickEvent",
+        category = "reco",
+        action = "add",
         params = listOf(menuProductUuidEventParameter)
     )

@@ -13,6 +13,7 @@ fun authFeatureModule() =
                 formatPhoneNumber = get(),
                 getPhoneNumberCursorPosition = get(),
                 checkPhoneNumber = get(),
+                analyticService = get(),
             )
         }
         viewModel {

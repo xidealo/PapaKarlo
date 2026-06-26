@@ -6,6 +6,6 @@ import com.bunbeauty.analytic.parameter.MenuProductUuidEventParameter
 class IncreaseCartProductClickEvent(menuProductUuidEventParameter: MenuProductUuidEventParameter) :
     FoodDeliveryEvent(
         category = "cart",
-        action = "IncreaseCartProductClickEvent",
+        action = "inc",
         params = listOf(menuProductUuidEventParameter)
     )

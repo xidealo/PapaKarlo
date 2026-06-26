@@ -1,13 +1,7 @@
 package com.bunbeauty.analytic.event
 
-class LogoutSettingsClickEvent(phone: String) :
+class LogoutSettingsClickEvent :
     FoodDeliveryEvent(
         category = "settings",
-        action = "LogoutSettingsClickEvent",
-        params = listOf(
-            EventParameter(
-                key = "phone",
-                value = phone
-            )
-        )
+        action = "logout",
     )

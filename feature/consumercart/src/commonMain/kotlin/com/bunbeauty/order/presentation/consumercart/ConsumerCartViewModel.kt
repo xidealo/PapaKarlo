@@ -1,6 +1,7 @@
 package com.bunbeauty.order.presentation.consumercart
 
 import com.bunbeauty.analytic.AnalyticService
+import com.bunbeauty.analytic.event.cart.CartProceedClickEvent
 import com.bunbeauty.analytic.event.cart.DecreaseCartProductClickEvent
 import com.bunbeauty.analytic.event.cart.IncreaseCartProductClickEvent
 import com.bunbeauty.analytic.event.cart.RemoveCartProductClickEvent
@@ -230,8 +231,12 @@ class ConsumerCartViewModel(
     private fun onCreateOrderClicked() {
         sharedScope.launchSafe(
             block = {
+                val isAuthorized = userInteractor.isUserAuthorize()
+                analyticService.sendEvent(
+                    event = CartProceedClickEvent(isAuthorized = isAuthorized),
+                )
                 addEvent {
-                    if (userInteractor.isUserAuthorize()) {
+                    if (isAuthorized) {
                         ConsumerCart.Event.NavigateToCreateOrder
                     } else {
                         ConsumerCart.Event.NavigateToLogin
