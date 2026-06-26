@@ -4,7 +4,7 @@ import com.bunbeauty.core.domain.repo.LinkRepo
 import com.bunbeauty.core.model.link.Link
 import com.bunbeauty.core.model.link.LinkType
 
-actual class GetLinkUseCase(
+actual class GetLinkUseCase actual constructor(
     private val linkRepo: LinkRepo,
 ) {
     actual suspend operator fun invoke(): Link? = linkRepo.getLinkList().find { link ->

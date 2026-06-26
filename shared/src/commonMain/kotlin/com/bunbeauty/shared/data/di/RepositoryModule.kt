@@ -59,6 +59,7 @@ fun repositoryModule() =
                 client = get(),
                 socketService = get(),
                 companyUuidProvider = get(),
+                errorLogger = get(),
             )
         }
         single<CartProductRepo> {

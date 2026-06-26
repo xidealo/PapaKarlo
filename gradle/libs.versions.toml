@@ -27,6 +27,7 @@ collectionsImmutable = "0.4.0"
 ktLint = "14.2.0"
 tripletPlay = "3.13.0"
 compose = "1.11.0"
+firebaseCrashlyticsKtx = "20.0.6"
 
 [libraries]
 appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appCompact" }
@@ -96,6 +97,7 @@ kotlin-serialization = { module = "org.jetbrains.kotlin:kotlin-serialization", v
 firebase-crashlytics-gradle = { module = "com.google.firebase:firebase-crashlytics-gradle", version.ref = "crashlytics" }
 sqlDelight-gradle-plugin = { module = "com.squareup.sqldelight:gradle-plugin", version.ref = "sqlDelight" }
 play-publisher = { module = "com.github.triplet.gradle:play-publisher", version.ref = "publisher" }
+firebase-crashlytics-ktx = { group = "com.google.firebase", name = "firebase-crashlytics-ktx", version.ref = "firebaseCrashlyticsKtx" }
 
 [plugins]
 

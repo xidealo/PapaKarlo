@@ -6,6 +6,6 @@ import com.bunbeauty.analytic.parameter.TimeParameter
 class LoadedMenuEvent(timeParameter: TimeParameter) :
     FoodDeliveryEvent(
         category = "menu",
-        action = "LoadedMenuEvent",
+        action = "load",
         params = listOf(timeParameter)
     )

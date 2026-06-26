@@ -1,5 +1,10 @@
 package com.bunbeauty.createorder.presentation.createorder
 
+import com.bunbeauty.analytic.AnalyticService
+import com.bunbeauty.analytic.event.order.OrderCreateClickEvent
+import com.bunbeauty.analytic.event.order.OrderCreateFailEvent
+import com.bunbeauty.analytic.event.order.OrderCreateSuccessEvent
+import com.bunbeauty.analytic.event.order.OrderDeliveryToggleEvent
 import com.bunbeauty.core.Constants.PERCENT
 import com.bunbeauty.core.Constants.RUBLE_CURRENCY
 import com.bunbeauty.core.Logger
@@ -65,6 +70,7 @@ class CreateOrderViewModel(
     private val saveWithoutUtensilsUseCase: SaveWithoutUtensilsUseCase,
     private val getAdditionalUtensilsUseCase: GetAdditionalUtensilsUseCase,
     private val getDeferredTimeHintUseCase: GetDeferredTimeHintUseCase,
+    private val analyticService: AnalyticService,
 ) : SharedStateViewModel<CreateOrder.DataState, CreateOrder.Action, CreateOrder.Event>(
         initDataState =
             CreateOrder.DataState(
@@ -228,6 +234,9 @@ class CreateOrderViewModel(
 
     private fun changeMethod(position: Int) {
         val isDelivery = position == DELIVERY_POSITION
+        analyticService.sendEvent(
+            event = OrderDeliveryToggleEvent(isDelivery = isDelivery),
+        )
         setState {
             copy(
                 isDelivery = isDelivery,
@@ -507,8 +516,21 @@ class CreateOrderViewModel(
             return
         }
 
-        withLoading {
+        withLoading(
+            onOrderCreateError = { throwable -> sendOrderCreateFailEvent(throwable) },
+        ) {
             if (userInteractor.isUserAuthorize()) {
+                analyticService.sendEvent(
+                    event =
+                        OrderCreateClickEvent(
+                            isDelivery = state.isDelivery,
+                            paymentMethod =
+                                state.selectedPaymentMethod
+                                    ?.name
+                                    ?.name
+                                    .orEmpty(),
+                        ),
+                )
                 val orderCode =
                     createOrder(
                         isDelivery = state.isDelivery,
@@ -547,21 +569,38 @@ class CreateOrderViewModel(
                         paymentMethod = state.selectedPaymentMethod.name.name,
                     )
                 if (orderCode == null) {
+                    sendOrderCreateFailEvent(error = "null_order")
                     addEvent {
                         CreateOrder.Event.ShowSomethingWentWrongErrorEvent
                     }
                 } else {
+                    analyticService.sendEvent(event = OrderCreateSuccessEvent())
                     cartProductInteractor.removeAllProductsFromCart()
                     addEvent {
                         CreateOrder.Event.OrderCreatedEvent(code = orderCode.code)
                     }
                 }
             } else {
+                sendOrderCreateFailEvent(error = "unauthorized")
                 addEvent {
                     CreateOrder.Event.ShowUserUnauthorizedErrorEvent
                 }
             }
         }
+    }
+
+    private fun sendOrderCreateFailEvent(error: String) {
+        analyticService.sendEvent(event = OrderCreateFailEvent(error = error))
+    }
+
+    private fun sendOrderCreateFailEvent(throwable: Throwable) {
+        val error =
+            when (throwable) {
+                is OrderNotAvailableException -> "not_available"
+                is NotAllowedTimeForOrderException -> "time_error"
+                else -> "unknown"
+            }
+        sendOrderCreateFailEvent(error = error)
     }
 
     private suspend fun updateUserAddresses() {
@@ -728,7 +767,10 @@ class CreateOrderViewModel(
         )
     }
 
-    private inline fun withLoading(crossinline block: suspend () -> Unit) {
+    private inline fun withLoading(
+        noinline onOrderCreateError: ((Throwable) -> Unit)? = null,
+        crossinline block: suspend () -> Unit,
+    ) {
         sharedScope.launchSafe(
             {
                 setState {
@@ -741,6 +783,7 @@ class CreateOrderViewModel(
                 }
             },
             onError = { throwable ->
+                onOrderCreateError?.invoke(throwable)
                 when (throwable) {
                     is OrderNotAvailableException -> {
                         setState {
