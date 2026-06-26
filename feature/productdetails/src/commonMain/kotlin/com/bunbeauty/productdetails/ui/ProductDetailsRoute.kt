@@ -257,85 +257,52 @@ private fun ProductDetailsSuccessScreen(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.TopCenter,
     ) {
-    LazyColumn(
-        modifier =
-            Modifier
-                .widthIn(max = ProductDetailsMaxWidth)
-                .fillMaxWidth(),
-        contentPadding = PaddingValues(bottom = LocalBottomBarPadding.current),
-    ) {
-        item {
-            ProductCard(
-                modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp)
-                        .padding(top = 16.dp),
-                menuProductUi = menuProductUi,
-                animatedContentScope = animatedContentScope,
-            )
-        }
-        items(
-            menuProductUi.additionList,
-            key = { menuProductAdditionItem ->
-                menuProductAdditionItem.key
-            },
-        ) { menuProductAdditionItem ->
-            when (menuProductAdditionItem) {
-                is AdditionItem.AdditionHeaderItem -> {
-                    Text(
-                        modifier =
-                            Modifier
-                                .padding(horizontal = 16.dp)
-                                .padding(top = 24.dp),
-                        text = menuProductAdditionItem.name,
-                        style = FoodDeliveryTheme.typography.titleMedium.bold,
-                        color = FoodDeliveryTheme.colors.mainColors.onSurface,
-                    )
-                }
-
-                is AdditionItem.AdditionListItem -> {
-                    FoodDeliveryItem(needDivider = !menuProductAdditionItem.product.isLast) {
-                        AdditionRowItem(
-                            uuid = menuProductAdditionItem.product.uuid,
-                            groupId = menuProductAdditionItem.product.groupId,
-                            photoLink = menuProductAdditionItem.product.photoLink,
-                            name = menuProductAdditionItem.product.name,
-                            price = menuProductAdditionItem.product.price,
-                            isSelected = menuProductAdditionItem.product.isSelected,
-                            isMultiple = menuProductAdditionItem.isMultiple,
-                            onCardClick = { uuid, groupId ->
-                                onAction(
-                                    ProductDetailsState.Action.AdditionClick(
-                                        uuid = uuid,
-                                        groupUuid = groupId,
-                                    ),
-                                )
-                            },
+        LazyColumn(
+            modifier =
+                Modifier
+                    .widthIn(max = ProductDetailsMaxWidth)
+                    .fillMaxWidth(),
+            contentPadding = PaddingValues(bottom = LocalBottomBarPadding.current),
+        ) {
+            item {
+                ProductCard(
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp)
+                            .padding(top = 16.dp),
+                    menuProductUi = menuProductUi,
+                    animatedContentScope = animatedContentScope,
+                )
+            }
+            items(
+                menuProductUi.additionList,
+                key = { menuProductAdditionItem ->
+                    menuProductAdditionItem.key
+                },
+            ) { menuProductAdditionItem ->
+                when (menuProductAdditionItem) {
+                    is AdditionItem.AdditionHeaderItem -> {
+                        Text(
+                            modifier =
+                                Modifier
+                                    .padding(horizontal = 16.dp)
+                                    .padding(top = 24.dp),
+                            text = menuProductAdditionItem.name,
+                            style = FoodDeliveryTheme.typography.titleMedium.bold,
+                            color = FoodDeliveryTheme.colors.mainColors.onSurface,
                         )
                     }
-                }
 
-                is AdditionItem.AdditionCardRowItem -> {
-                    LazyRow(
-                        modifier =
-                            Modifier
-                                .fillMaxWidth()
-                                .padding(top = 8.dp),
-                        contentPadding = PaddingValues(horizontal = 16.dp),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    ) {
-                        items(
-                            items = menuProductAdditionItem.products,
-                            key = { product -> product.uuid },
-                        ) { product ->
-                            AdditionCardItem(
-                                uuid = product.uuid,
-                                groupId = product.groupId,
-                                photoLink = product.photoLink,
-                                name = product.name,
-                                price = product.price,
-                                isSelected = product.isSelected,
+                    is AdditionItem.AdditionListItem -> {
+                        FoodDeliveryItem(needDivider = !menuProductAdditionItem.product.isLast) {
+                            AdditionRowItem(
+                                uuid = menuProductAdditionItem.product.uuid,
+                                groupId = menuProductAdditionItem.product.groupId,
+                                photoLink = menuProductAdditionItem.product.photoLink,
+                                name = menuProductAdditionItem.product.name,
+                                price = menuProductAdditionItem.product.price,
+                                isSelected = menuProductAdditionItem.product.isSelected,
                                 isMultiple = menuProductAdditionItem.isMultiple,
                                 onCardClick = { uuid, groupId ->
                                     onAction(
@@ -348,13 +315,46 @@ private fun ProductDetailsSuccessScreen(
                             )
                         }
                     }
+
+                    is AdditionItem.AdditionCardRowItem -> {
+                        LazyRow(
+                            modifier =
+                                Modifier
+                                    .fillMaxWidth()
+                                    .padding(top = 8.dp),
+                            contentPadding = PaddingValues(horizontal = 16.dp),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        ) {
+                            items(
+                                items = menuProductAdditionItem.products,
+                                key = { product -> product.uuid },
+                            ) { product ->
+                                AdditionCardItem(
+                                    uuid = product.uuid,
+                                    groupId = product.groupId,
+                                    photoLink = product.photoLink,
+                                    name = product.name,
+                                    price = product.price,
+                                    isSelected = product.isSelected,
+                                    isMultiple = menuProductAdditionItem.isMultiple,
+                                    onCardClick = { uuid, groupId ->
+                                        onAction(
+                                            ProductDetailsState.Action.AdditionClick(
+                                                uuid = uuid,
+                                                groupUuid = groupId,
+                                            ),
+                                        )
+                                    },
+                                )
+                            }
+                        }
+                    }
                 }
             }
+            item {
+                Spacer(modifier = Modifier.height(FoodDeliveryTheme.dimensions.scrollScreenBottomSpace))
+            }
         }
-        item {
-            Spacer(modifier = Modifier.height(FoodDeliveryTheme.dimensions.scrollScreenBottomSpace))
-        }
-    }
     }
 }
 

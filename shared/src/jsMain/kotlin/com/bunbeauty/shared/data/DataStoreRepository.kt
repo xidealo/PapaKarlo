@@ -113,8 +113,7 @@ actual class DataStoreRepository :
         clearWithoutUtensils()
     }
 
-    actual override fun observeUserAndCityUuid(): Flow<UserCityUuid> =
-        flow { emit(getUserAndCityUuid()) }
+    actual override fun observeUserAndCityUuid(): Flow<UserCityUuid> = flow { emit(getUserAndCityUuid()) }
 
     actual override suspend fun getUserAndCityUuid(): UserCityUuid =
         UserCityUuid(
@@ -125,8 +124,7 @@ actual class DataStoreRepository :
     actual override val recommendationMaxVisible: Flow<Int?> =
         flow { emit(getRecommendationMaxVisible()) }
 
-    actual override suspend fun getRecommendationMaxVisible(): Int? =
-        lsGet(RECOMMENDATION_MAX_VISIBLE_KEY)?.toIntOrNull()
+    actual override suspend fun getRecommendationMaxVisible(): Int? = lsGet(RECOMMENDATION_MAX_VISIBLE_KEY)?.toIntOrNull()
 
     actual override suspend fun saveRecommendationMaxVisible(recommendationMaxVisible: Int) {
         lsSet(RECOMMENDATION_MAX_VISIBLE_KEY, recommendationMaxVisible.toString())
@@ -145,7 +143,10 @@ actual class DataStoreRepository :
         return value
     }
 
-    private fun lsSet(key: String, value: String) {
+    private fun lsSet(
+        key: String,
+        value: String,
+    ) {
         js("window.localStorage.setItem(key, value)")
     }
 

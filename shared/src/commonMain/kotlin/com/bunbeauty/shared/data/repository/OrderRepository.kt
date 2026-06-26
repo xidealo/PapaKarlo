@@ -124,13 +124,12 @@ class OrderRepository(
             )
     }
 
-    override suspend fun getLastOrderByUserUuidLocalFirst(): LightOrder? {
-        return if (cacheLastOrder == null) {
+    override suspend fun getLastOrderByUserUuidLocalFirst(): LightOrder? =
+        if (cacheLastOrder == null) {
             getLastOrderByUserUuidNetworkFirst()
         } else {
             cacheLastOrder
         }
-    }
 
     override suspend fun getOrderByUuid(orderUuid: String): Order? {
         val token = dataStoreRepo.getToken() ?: return null
