@@ -6,6 +6,10 @@ on:
     types: [completed]
     branches: [master]
 
+permissions:
+  actions: read
+  contents: read
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: false
@@ -52,6 +56,7 @@ jobs:
           chmod 600 fastlane/keys/AuthKey.p8
 
       - name: Download build numbers from upload workflow
+        continue-on-error: true
         uses: actions/download-artifact@v4
         with:
           name: ios-upload-build-numbers
