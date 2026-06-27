@@ -141,6 +141,14 @@ jobs:
           MATCH_READONLY: "true"
         run: bundle exec fastlane ios deployAllUpload
 
+      - name: Upload build numbers artifact
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-upload-build-numbers
+          path: iosApp/fastlane/upload_build_numbers.json
+          retention-days: 7
+
       - name: Upload build summary
         working-directory: iosApp
         run: |
