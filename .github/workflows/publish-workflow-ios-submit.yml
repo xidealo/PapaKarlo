@@ -14,7 +14,22 @@ jobs:
   submit:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        app:
+          - papakarlo
+          - gustopub
+          - yuliar
+          - tandirhouse
+          - vkuskavkaza
+          - djan
+          - usaba
+          - emoji
+          - estpoest
+          - taverna
+          - voljane
 
     steps:
       - name: Checkout repository
@@ -36,12 +51,20 @@ jobs:
           echo "${{ secrets.APP_STORE_P8_BASE64 }}" | base64 --decode > fastlane/keys/AuthKey.p8
           chmod 600 fastlane/keys/AuthKey.p8
 
-      - name: Submit all apps for App Store review
+      - name: Download build numbers from upload workflow
+        uses: actions/download-artifact@v4
+        with:
+          name: ios-upload-build-numbers
+          path: iosApp/fastlane
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: ${{ github.event.workflow_run.id }}
+
+      - name: Submit app for App Store review
         working-directory: iosApp
         env:
           APP_STORE_KEY_ID: ${{ secrets.APP_STORE_KEY_ID }}
           APP_STORE_ISSUER_ID: ${{ secrets.APP_STORE_ISSUER_ID }}
           APP_STORE_P8_PATH: fastlane/keys/AuthKey.p8
         run: |
-          echo "Submit: последний обработанный билд каждого приложения из ASC"
-          bundle exec fastlane ios deployAllSubmit
+          echo "Submit ${{ matrix.app }}: билд из upload_build_numbers.json или последний в ASC"
+          bundle exec fastlane ios submit_${{ matrix.app }}
