@@ -26,7 +26,7 @@ kotlin {
 
         podfile = project.file("../iosApp/Podfile")
 
-        //pod("FirebaseAnalytics")
+        pod("FirebaseAnalytics")
         framework {
             baseName = "analytic"
             isStatic = true
@@ -38,6 +38,11 @@ kotlin {
             dependencies {
                 implementation(project(":core"))
                 implementation(libs.koin.core)
+            }
+        }
+        val commonTest by getting {
+            dependencies {
+                implementation(kotlin("test"))
             }
         }
         val androidMain by getting {

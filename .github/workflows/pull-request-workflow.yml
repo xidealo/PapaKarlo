@@ -49,7 +49,7 @@ jobs:
       fail-fast: false
       matrix:
         flavor: [
-                  "emoji",
+                  "gustopub",
                   "estpoest",
                   "mimino" ]
     steps:
@@ -82,7 +82,7 @@ jobs:
         linter: [ "lint", "ktLint" ]
         flavor: [
                   "usadba",
-                  "emoji",
+                  "gustopub",
                   "mimino"
         ]
     steps:

@@ -39,10 +39,7 @@ class SettingsViewModel(
             SettingsState.Action.LoadData -> loadData()
             SettingsState.Action.OnCityClicked -> onCityClicked()
 
-            SettingsState.Action.OnLogoutClicked ->
-                onLogoutClicked(
-                    phoneNumber = dataState.settings?.phoneNumber.toString(),
-                )
+            SettingsState.Action.OnLogoutClicked -> onLogoutClicked()
 
             SettingsState.Action.OnLogoutConfirmClicked -> logout()
 
@@ -66,13 +63,8 @@ class SettingsViewModel(
         }
     }
 
-    private fun onLogoutClicked(phoneNumber: String) {
-        analyticService.sendEvent(
-            event =
-                LogoutSettingsClickEvent(
-                    phone = phoneNumber,
-                ),
-        )
+    private fun onLogoutClicked() {
+        analyticService.sendEvent(event = LogoutSettingsClickEvent())
 
         setState {
             copy(

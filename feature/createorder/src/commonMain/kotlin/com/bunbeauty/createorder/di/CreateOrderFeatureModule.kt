@@ -32,6 +32,7 @@ fun createOrderFeatureModule() =
                 saveWithoutUtensilsUseCase = get(),
                 getAdditionalUtensilsUseCase = get(),
                 getDeferredTimeHintUseCase = get(),
+                analyticService = get(),
             )
         }
     }

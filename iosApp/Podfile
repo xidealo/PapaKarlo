@@ -67,3 +67,7 @@ end
 target 'mimino' do
   default_pods
 end
+
+target 'emojicenter' do
+  default_pods
+end
