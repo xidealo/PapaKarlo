@@ -11,6 +11,10 @@ const BACKEND = 'https://fooddelivery-xidealo.amvera.io';
 // web app rewrites every photoLink to /firebase-img/... (see Main.kt) and we
 // forward that here to Firebase Storage.
 const FIREBASE_STORAGE = 'https://firebasestorage.googleapis.com';
+// Some product photos live on Yandex Object Storage, which also doesn't send
+// CORS headers. Same treatment: the web app rewrites those photoLinks to
+// /yandex-img/... (see Main.kt) and we forward them here to Yandex Storage.
+const YANDEX_STORAGE = 'https://fooddelivery-s3-test.storage.yandexcloud.net';
 
 config.devServer = config.devServer || {};
 config.devServer.proxy = [
@@ -31,10 +35,23 @@ config.devServer.proxy = [
         },
     },
     {
+        context: ['/yandex-img'],
+        target: YANDEX_STORAGE,
+        changeOrigin: true,
+        secure: true,
+        pathRewrite: { '^/yandex-img': '' },
+        onProxyRes: (proxyRes) => {
+            proxyRes.headers['cache-control'] = 'public, max-age=31536000, immutable';
+            delete proxyRes.headers['expires'];
+            delete proxyRes.headers['pragma'];
+        },
+    },
+    {
         context: (pathname) => {
             if (pathname === '/') return false;
-            // image proxy is handled by the entry above
+            // image proxy is handled by the entries above
             if (pathname.startsWith('/firebase-img')) return false;
+            if (pathname.startsWith('/yandex-img')) return false;
             // webpack-dev-server internals / HMR
             if (pathname.startsWith('/ws')) return false;
             if (pathname.startsWith('/webpack')) return false;

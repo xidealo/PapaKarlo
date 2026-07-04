@@ -24,6 +24,34 @@ import kotlinx.coroutines.await
 import kotlinx.coroutines.launch
 import org.koin.dsl.module
 
+// The brand this web build serves. Single source of truth for the flavor used by
+// both the theme and the browser tab title.
+private const val WEB_FLAVOR = "gustopub"
+
+// Browser tab title per brand (index.html <title> is static, so we set it at
+// runtime). Keep in sync with the Android app_name of each flavor.
+private fun webTitle(flavor: String): String =
+    when (flavor) {
+        "papakarlo" -> "Папа Карло — доставка еды"
+        "gustopub" -> "Густо Паб — доставка еды"
+        else -> "Доставка еды"
+    }
+
+// Sets the browser tab icon (favicon) to the brand logo bundled in
+// composeResources. index.html has no <link rel="icon">, so we create/update it
+// at runtime. Modern browsers accept .webp favicons.
+private fun applyFavicon(flavor: String) {
+    val href = "composeResources/papakarlo.designsystem.generated.resources/drawable/logo_small_$flavor.webp"
+    val link =
+        document.querySelector("link[rel='icon']")
+            ?: document.createElement("link").also { element ->
+                element.setAttribute("rel", "icon")
+                document.head?.appendChild(element)
+            }
+    link.setAttribute("type", "image/webp")
+    link.setAttribute("href", href)
+}
+
 @OptIn(ExperimentalComposeUiApi::class)
 fun main() {
     // The backend (amvera) does not send CORS headers, so on the web we route
@@ -32,6 +60,11 @@ fun main() {
     NetworkConfig.protocol = window.location.protocol.trimEnd(':')
     NetworkConfig.host = window.location.hostname
     NetworkConfig.port = window.location.port.toIntOrNull()
+
+    // The index.html <title>/favicon are static, but the shown brand is chosen at
+    // runtime, so we set the browser tab title and icon from the current flavor.
+    document.title = webTitle(WEB_FLAVOR)
+    applyFavicon(WEB_FLAVOR)
 
     CoroutineScope(Dispatchers.Main).launch {
         val driver = initSqlDriver(FoodDeliveryDatabase.Schema).await()
@@ -59,6 +92,7 @@ fun main() {
                     // dev-server proxy because Firebase doesn't send CORS headers.
                     .components {
                         add(FirebaseImageProxyMapper())
+                        add(YandexImageProxyMapper())
                         add(KtorNetworkFetcherFactory())
                     }
                     // There is no disk cache on the web, so we keep a generous
@@ -75,7 +109,7 @@ fun main() {
                     .build()
             }
 
-            FoodDeliveryTheme(flavor = "papakarlo") {
+            FoodDeliveryTheme(flavor = WEB_FLAVOR) {
                 MainScreen()
             }
         }
@@ -91,6 +125,21 @@ private class FirebaseImageProxyMapper : Mapper<String, String> {
     override fun map(data: String, options: Options): String? =
         if (data.startsWith(FIREBASE_STORAGE_URL)) {
             window.location.origin + "/firebase-img" + data.removePrefix(FIREBASE_STORAGE_URL)
+        } else {
+            null
+        }
+}
+
+private const val YANDEX_STORAGE_URL = "https://fooddelivery-s3-test.storage.yandexcloud.net"
+
+// Some product photos live on Yandex Object Storage, which (like Firebase) does
+// not send CORS headers, so direct browser fetches are blocked. We rewrite those
+// URLs to the same-origin /yandex-img proxy path, forwarded to Yandex Storage by
+// the dev-server proxy (locally) and netlify.toml (in production).
+private class YandexImageProxyMapper : Mapper<String, String> {
+    override fun map(data: String, options: Options): String? =
+        if (data.startsWith(YANDEX_STORAGE_URL)) {
+            window.location.origin + "/yandex-img" + data.removePrefix(YANDEX_STORAGE_URL)
         } else {
             null
         }

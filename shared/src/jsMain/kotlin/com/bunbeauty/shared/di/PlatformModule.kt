@@ -25,7 +25,7 @@ actual fun platformModule() =
                 userRepository = get(),
             )
         }
-        single(flavorQualifier) { "papakarlo" }
+        single(flavorQualifier) { "gustopub" }
         single { NetworkUtil() }
         factory { OpenExternalSource() }
         single(isDebugQualifier) { false }
