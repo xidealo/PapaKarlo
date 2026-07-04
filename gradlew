@@ -1,5 +1,10 @@
 #!/usr/bin/env sh
 
+# Use full Xcode (xcode-select may point to Command Line Tools only).
+if [ -d "/Applications/Xcode.app/Contents/Developer" ]; then
+  export DEVELOPER_DIR="/Applications/Xcode.app/Contents/Developer"
+fi
+
 ##############################################################################
 ##
 ##  Gradle start up script for UN*X
@@ -26,6 +31,17 @@ cd "$SAVED" >/dev/null
 
 APP_NAME="Gradle"
 APP_BASE_NAME=`basename "$0"`
+
+# build-logic requires JVM 21+. Prefer JDK from local.properties or Android Studio.
+if [ -f "$APP_HOME/local.properties" ]; then
+    JAVA_HOME_FROM_LOCAL=$(grep '^org.gradle.java.home=' "$APP_HOME/local.properties" | cut -d= -f2-)
+    if [ -n "$JAVA_HOME_FROM_LOCAL" ] && [ -x "$JAVA_HOME_FROM_LOCAL/bin/java" ]; then
+        export JAVA_HOME="$JAVA_HOME_FROM_LOCAL"
+    fi
+fi
+if [ -z "$JAVA_HOME" ] && [ -x "/Applications/Android Studio.app/Contents/jbr/Contents/Home/bin/java" ]; then
+    export JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home"
+fi
 
 # Add default JVM options here. You can also use JAVA_OPTS and GRADLE_OPTS to pass JVM options to this script.
 DEFAULT_JVM_OPTS=""

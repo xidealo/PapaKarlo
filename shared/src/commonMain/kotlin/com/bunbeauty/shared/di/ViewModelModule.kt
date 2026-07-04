@@ -32,6 +32,7 @@ fun viewModelModule() =
             SelectCityViewModel(
                 cityInteractor = get(),
                 checkOneCityUseCase = get(),
+                analyticService = get(),
             )
         }
     }

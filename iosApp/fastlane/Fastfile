@@ -80,6 +80,9 @@ platform :ios do
   # submit_for_review требует whatsNew в App Store Connect. Загружаем только release notes,
   # не трогая name/description/support_url и прочие поля листинга (важно для 12 разных приложений).
   def submit_for_app_store_review(app_identifier, build_number)
+    app_version = current_xcconfig_app_version
+    ensure_editable_app_store_version(app_identifier, app_version)
+
     Dir.mktmpdir("deliver-metadata") do |metadata_path|
       ru_path = File.join(metadata_path, "ru")
       FileUtils.mkdir_p(ru_path)
@@ -87,6 +90,7 @@ platform :ios do
 
       deliver(
         app_identifier: app_identifier,
+        app_version: app_version,
         build_number: build_number,
         metadata_path: metadata_path,
         skip_binary_upload: true,
@@ -96,12 +100,40 @@ platform :ios do
         skip_screenshots: true,
         skip_metadata: false,
         precheck_include_in_app_purchases: false,
+        version_check_wait_retry_limit: 1,
         submission_information: {
           export_compliance_uses_encryption: false,
           export_compliance_encryption_updated: false
         }
       )
     end
+  end
+
+  def ensure_editable_app_store_version(app_identifier, version_string)
+    platform = Spaceship::ConnectAPI::Platform::IOS
+    app = Spaceship::ConnectAPI::App.find(app_identifier)
+    UI.user_error!("Не найдено приложение #{app_identifier} в App Store Connect") unless app
+
+    edit_version = app.get_edit_app_store_version(platform: platform)
+    if edit_version
+      if edit_version.version_string != version_string
+        UI.user_error!(
+          "В ASC для #{app_identifier} уже открыта версия #{edit_version.version_string}, " \
+          "ожидалась #{version_string}. Закройте или опубликуйте её вручную."
+        )
+      end
+      UI.message("Editable App Store version #{version_string} уже есть для #{app_identifier}")
+      return
+    end
+
+    UI.message("Создаём App Store version #{version_string} для #{app_identifier}")
+    Spaceship::ConnectAPI.post_app_store_version(
+      app_id: app.id,
+      attributes: {
+        versionString: version_string,
+        platform: platform
+      }
+    )
   end
 
   def version_xcconfig_path
@@ -129,6 +161,16 @@ platform :ios do
     File.read(path)[/^APP_BUILD\s*=\s*(\d+)\s*$/, 1].to_i
   end
 
+  def current_xcconfig_app_version
+    path = version_xcconfig_path
+    UI.user_error!("Не найден Version.xcconfig (cwd: #{Dir.pwd})") unless path
+
+    version = File.read(path)[/^APP_VERSION\s*=\s*(.+)\s*$/, 1]&.strip
+    UI.user_error!("Не найдена строка APP_VERSION в #{path}") if version.to_s.empty?
+
+    version
+  end
+
   # Следующий build number: max(последний в ASC, APP_BUILD в xcconfig) + 1
   def next_app_store_build_number(app_identifier)
     latest = latest_testflight_build_number(app_identifier: app_identifier).to_i
@@ -138,9 +180,18 @@ platform :ios do
     next_number
   end
 
-  # Для submit: последний обработанный билд в ASC (или явный APP_STORE_BUILD_NUMBER)
-  def resolve_submit_build_number(app_identifier)
+  # Для submit: билд из upload_build_numbers.json, последний в ASC или APP_STORE_BUILD_NUMBER
+  def resolve_submit_build_number(app_identifier, lane_name: nil)
     return ENV["APP_STORE_BUILD_NUMBER"] unless ENV["APP_STORE_BUILD_NUMBER"].to_s.empty?
+
+    if lane_name
+      mapping_path = File.expand_path("upload_build_numbers.json", __dir__)
+      if File.exist?(mapping_path)
+        uploaded_builds = JSON.parse(File.read(mapping_path))
+        build_number = uploaded_builds[lane_name.to_s]
+        return build_number.to_s if build_number
+      end
+    end
 
     latest = latest_testflight_build_number(app_identifier: app_identifier).to_i
     UI.user_error!("Нет обработанных билдов в TestFlight для #{app_identifier}") if latest.zero?
@@ -199,7 +250,7 @@ platform :ios do
 
     desc "Submit #{lane_name} for App Store review (билд должен быть обработан в ASC)"
     lane :"submit_#{lane_name}" do
-      build_number = resolve_submit_build_number(config[:id])
+      build_number = resolve_submit_build_number(config[:id], lane_name: lane_name)
       UI.message("Submit #{lane_name}: build #{build_number}")
       submit_for_app_store_review(config[:id], build_number)
     end
@@ -238,7 +289,7 @@ platform :ios do
 
     apps.each do |lane_name, config|
       begin
-        build_number = resolve_submit_build_number(config[:id])
+        build_number = resolve_submit_build_number(config[:id], lane_name: lane_name)
         UI.message("Submit #{lane_name}: build #{build_number}")
         submit_for_app_store_review(config[:id], build_number)
       rescue StandardError => e

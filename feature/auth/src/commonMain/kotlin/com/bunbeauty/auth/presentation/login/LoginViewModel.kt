@@ -1,5 +1,7 @@
 package com.bunbeauty.auth.presentation.login
 
+import com.bunbeauty.analytic.AnalyticService
+import com.bunbeauty.analytic.event.auth.LoginRequestEvent
 import com.bunbeauty.core.base.SharedStateViewModel
 import com.bunbeauty.core.domain.auth.CheckPhoneNumberUseCase
 import com.bunbeauty.core.domain.auth.FormatPhoneNumberUseCase
@@ -14,6 +16,7 @@ class LoginViewModel(
     private val formatPhoneNumber: FormatPhoneNumberUseCase,
     private val getPhoneNumberCursorPosition: GetPhoneNumberCursorPositionUseCase,
     private val checkPhoneNumber: CheckPhoneNumberUseCase,
+    private val analyticService: AnalyticService,
 ) : SharedStateViewModel<Login.ViewDataState, Login.Action, Login.Event>(Login.ViewDataState()) {
     override fun reduce(
         action: Login.Action,
@@ -77,6 +80,7 @@ class LoginViewModel(
         sharedScope.launchSafe(
             block = {
                 requestCode(phoneNumber)
+                analyticService.sendEvent(event = LoginRequestEvent())
                 addEvent {
                     Login.Event.NavigateToConfirm(phoneNumber)
                 }

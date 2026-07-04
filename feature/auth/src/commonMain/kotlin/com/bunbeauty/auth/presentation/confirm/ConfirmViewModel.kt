@@ -1,7 +1,8 @@
 package com.bunbeauty.auth.presentation.confirm
 
 import com.bunbeauty.analytic.AnalyticService
-import com.bunbeauty.analytic.event.ConfirmErrorShowEvent
+import com.bunbeauty.analytic.event.auth.AuthConfirmErrorEvent
+import com.bunbeauty.analytic.event.auth.LoginSuccessEvent
 import com.bunbeauty.auth.domain.UpdateNotificationUseCase
 import com.bunbeauty.core.base.SharedStateViewModel
 import com.bunbeauty.core.domain.auth.CheckCodeUseCase
@@ -98,9 +99,19 @@ class ConfirmViewModel(
     }
 
     private fun finishConfirmation() {
-        direction?.let { direction ->
+        direction?.let { loginDirection ->
+            analyticService.sendEvent(
+                event =
+                    LoginSuccessEvent(
+                        direction =
+                            when (loginDirection) {
+                                SuccessLoginDirection.BACK_TO_PROFILE -> "profile"
+                                SuccessLoginDirection.TO_CREATE_ORDER -> "checkout"
+                            },
+                    ),
+            )
             addEvent {
-                when (direction) {
+                when (loginDirection) {
                     SuccessLoginDirection.BACK_TO_PROFILE -> Confirm.Event.NavigateBackToProfile
                     SuccessLoginDirection.TO_CREATE_ORDER -> Confirm.Event.NavigateToCreateOrder
                 }
@@ -121,7 +132,7 @@ class ConfirmViewModel(
     private fun handleException(throwable: Throwable) {
         analyticService.sendEvent(
             event =
-                ConfirmErrorShowEvent(
+                AuthConfirmErrorEvent(
                     error =
                         when (throwable) {
                             is TooManyRequestsException -> "TooManyRequests"

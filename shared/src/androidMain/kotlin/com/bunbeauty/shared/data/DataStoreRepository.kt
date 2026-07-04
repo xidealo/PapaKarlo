@@ -8,7 +8,6 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
-import com.bunbeauty.core.model.Delivery
 import com.bunbeauty.core.model.Discount
 import com.bunbeauty.core.model.Settings
 import com.bunbeauty.core.model.UserCityUuid
@@ -27,10 +26,6 @@ actual class DataStoreRepository :
 
     private val Context.tokenDataStore: DataStore<Preferences> by preferencesDataStore(
         name = TOKEN_DATA_STORE,
-    )
-
-    private val Context.deliveryDataStore: DataStore<Preferences> by preferencesDataStore(
-        name = DELIVERY_DATA_STORE,
     )
 
     private val Context.settingsDataStore: DataStore<Preferences> by preferencesDataStore(
@@ -81,24 +76,6 @@ actual class DataStoreRepository :
     actual override suspend fun clearToken() {
         context.tokenDataStore.edit { tokenDataStore ->
             tokenDataStore.clear()
-        }
-    }
-
-    actual override val delivery: Flow<Delivery?> =
-        context.deliveryDataStore.data.map { deliveryDataStore ->
-            deliveryDataStore[DELIVERY_COST_KEY]?.let { cost ->
-                deliveryDataStore[FOR_FREE_DELIVERY_KEY]?.let { forFree ->
-                    Delivery(cost = cost, forFree = forFree)
-                }
-            }
-        }
-
-    actual override suspend fun getDelivery() = delivery.firstOrNull()
-
-    actual override suspend fun saveDelivery(delivery: Delivery) {
-        context.deliveryDataStore.edit { deliveryDataStore ->
-            deliveryDataStore[DELIVERY_COST_KEY] = delivery.cost
-            deliveryDataStore[FOR_FREE_DELIVERY_KEY] = delivery.forFree
         }
     }
 
@@ -274,12 +251,6 @@ actual class DataStoreRepository :
         private const val TOKEN_DATA_STORE = "token data store"
         private const val TOKEN = "token"
         private val TOKEN_KEY = stringPreferencesKey(TOKEN)
-
-        private const val DELIVERY_DATA_STORE = "delivery data store"
-        private const val DELIVERY_COST = "delivery cost"
-        private const val FOR_FREE_DELIVERY = "for free delivery"
-        private val DELIVERY_COST_KEY = intPreferencesKey(DELIVERY_COST)
-        private val FOR_FREE_DELIVERY_KEY = intPreferencesKey(FOR_FREE_DELIVERY)
 
         private const val SETTINGS_DATA_STORE = "settings data store"
         private const val SETTINGS_USER_UUID = "settings user uuid"

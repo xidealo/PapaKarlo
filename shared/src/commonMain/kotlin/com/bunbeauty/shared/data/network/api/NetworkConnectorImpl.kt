@@ -9,11 +9,11 @@ import com.bunbeauty.core.Constants.QUERY_PARAMETER
 import com.bunbeauty.core.Constants.UUID_PARAMETER
 import com.bunbeauty.core.domain.exeptions.FoodDeliveryNetworkException
 import com.bunbeauty.shared.data.CompanyUuidProvider
+import com.bunbeauty.shared.data.network.logger.NetworkErrorLogger
 import com.bunbeauty.shared.data.network.model.AddressServer
 import com.bunbeauty.shared.data.network.model.CafeServer
 import com.bunbeauty.shared.data.network.model.CategoryServer
 import com.bunbeauty.shared.data.network.model.CityServer
-import com.bunbeauty.shared.data.network.model.DeliveryServer
 import com.bunbeauty.shared.data.network.model.DiscountServer
 import com.bunbeauty.shared.data.network.model.ForceUpdateVersionServer
 import com.bunbeauty.shared.data.network.model.LinkServer
@@ -63,6 +63,7 @@ internal class NetworkConnectorImpl(
     private val client: HttpClient,
     private val socketService: SocketService,
     private val companyUuidProvider: CompanyUuidProvider,
+    private val errorLogger: NetworkErrorLogger,
 ) : KoinComponent,
     NetworkConnector {
     // GET
@@ -102,12 +103,6 @@ internal class NetworkConnectorImpl(
         getData(
             path = "street",
             parameters = hashMapOf(CITY_UUID_PARAMETER to cityUuid),
-        )
-
-    override suspend fun getDelivery(): ApiResult<DeliveryServer> =
-        getData(
-            path = "delivery",
-            parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuidProvider.companyUuid),
         )
 
     override suspend fun getDiscount(): ApiResult<DiscountServer> =
@@ -375,9 +370,14 @@ internal class NetworkConnectorImpl(
         } catch (exception: FoodDeliveryNetworkException) {
             throw exception
         } catch (exception: ClientRequestException) {
-            ApiResult.Error(ApiError(exception.response.status.value, exception.message))
+            val code = exception.response.status.value
+            val message = exception.message
+            errorLogger.logWarning(code = code, message = message, throwable = exception)
+            ApiResult.Error(ApiError(code, message))
         } catch (exception: Throwable) {
-            ApiResult.Error(ApiError(0, exception.message.toString()))
+            val message = exception.message.toString()
+            errorLogger.logWarning(code = 0, message = message, throwable = exception)
+            ApiResult.Error(ApiError(0, message))
         }
 
     private fun HttpRequestBuilder.buildRequest(
