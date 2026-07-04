@@ -35,6 +35,7 @@ import com.bunbeauty.designsystem.ui.icon24
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import papakarlo.designsystem.generated.resources.Res
 import papakarlo.designsystem.generated.resources.ic_arrow_back
 import papakarlo.designsystem.generated.resources.ic_cart_24
@@ -143,8 +144,11 @@ private fun Action(action: FoodDeliveryAction) {
         Icon(
             modifier = Modifier.icon20(),
             painter = painterResource(resource = action.iconId),
-            tint = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
-            contentDescription = null,
+            tint = action.tint ?: FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
+            contentDescription =
+                action.contentDescriptionId?.let { contentDescriptionId ->
+                    stringResource(resource = contentDescriptionId)
+                },
         )
     }
 }

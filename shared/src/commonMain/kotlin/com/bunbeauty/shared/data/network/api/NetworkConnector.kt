@@ -6,6 +6,8 @@ import com.bunbeauty.shared.data.network.model.CafeServer
 import com.bunbeauty.shared.data.network.model.CategoryServer
 import com.bunbeauty.shared.data.network.model.CityServer
 import com.bunbeauty.shared.data.network.model.DiscountServer
+import com.bunbeauty.shared.data.network.model.FavoriteServer
+import com.bunbeauty.shared.data.network.model.PostFavoriteServer
 import com.bunbeauty.shared.data.network.model.ForceUpdateVersionServer
 import com.bunbeauty.shared.data.network.model.LinkServer
 import com.bunbeauty.shared.data.network.model.ListServer
@@ -80,6 +82,18 @@ interface NetworkConnector {
     suspend fun getLinkList(): ApiResult<ListServer<LinkServer>>
 
     suspend fun getRecommendationData(): ApiResult<RecommendationDataServer>
+
+    suspend fun getFavoriteList(token: String): ApiResult<ListServer<FavoriteServer>>
+
+    suspend fun postFavorite(
+        token: String,
+        body: PostFavoriteServer,
+    ): ApiResult<FavoriteServer>
+
+    suspend fun deleteFavorite(
+        token: String,
+        menuProductUuid: String,
+    ): ApiResult<Unit>
 
     suspend fun postUserAddress(
         token: String,

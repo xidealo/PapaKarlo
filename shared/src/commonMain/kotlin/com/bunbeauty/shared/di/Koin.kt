@@ -43,6 +43,7 @@ import com.bunbeauty.core.domain.cart.ICartProductInteractor
 import com.bunbeauty.core.domain.cart.IncreaseCartProductCountUseCase
 import com.bunbeauty.core.domain.cart.RemoveCartProductUseCase
 import com.bunbeauty.core.domain.cart.di.cartModule
+import com.bunbeauty.core.domain.favorite.di.favoriteModule
 import com.bunbeauty.core.domain.city.GetCityListUseCase
 import com.bunbeauty.core.domain.city.GetSelectedCityTimeZoneUseCase
 import com.bunbeauty.core.domain.city.ICityInteractor
@@ -124,6 +125,7 @@ fun initKoin(appDeclaration: KoinAppDeclaration = {}) =
             userAddressUseCaseModule(),
             orderUseCaseModule(),
             cartModule(),
+            favoriteModule(),
             cafeModule(),
             paymentUseCaseModule(),
             authUseCaseModule(),
@@ -167,6 +169,7 @@ fun initKoin() =
             userAddressUseCaseModule(),
             orderUseCaseModule(),
             cartModule(),
+            favoriteModule(),
             cafeModule(),
             paymentUseCaseModule(),
             authUseCaseModule(),

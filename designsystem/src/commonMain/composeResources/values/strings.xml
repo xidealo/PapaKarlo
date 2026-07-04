@@ -13,6 +13,7 @@
     <string name="description_ic_next">Переход</string>
     <string name="description_ic_checked">Выбрано</string>
     <string name="description_product">Фото блюда</string>
+    <string name="description_favorite">Избранное</string>
     <string name="description_product_addition">Фото добавки</string>
     <string name="description_ic_discount">Скидка</string>
     <string name="description_ic_warning">Предупреждение</string>
