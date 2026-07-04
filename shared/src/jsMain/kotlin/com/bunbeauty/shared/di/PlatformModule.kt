@@ -10,6 +10,7 @@ import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.NetworkUtil
 import com.bunbeauty.shared.data.DataStoreRepository
 import com.bunbeauty.shared.data.UuidGenerator
+import com.bunbeauty.shared.resolveWebFlavor
 import org.koin.dsl.module
 
 actual fun platformModule() =
@@ -25,7 +26,7 @@ actual fun platformModule() =
                 userRepository = get(),
             )
         }
-        single(flavorQualifier) { "gustopub" }
+        single(flavorQualifier) { resolveWebFlavor() }
         single { NetworkUtil() }
         factory { OpenExternalSource() }
         single(isDebugQualifier) { false }
