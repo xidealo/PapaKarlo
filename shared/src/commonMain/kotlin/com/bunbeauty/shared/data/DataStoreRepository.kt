@@ -1,6 +1,5 @@
 package com.bunbeauty.shared.data
 
-import com.bunbeauty.core.model.Delivery
 import com.bunbeauty.core.model.Discount
 import com.bunbeauty.core.model.Settings
 import com.bunbeauty.core.model.UserCityUuid
@@ -26,12 +25,6 @@ expect class DataStoreRepository :
     override suspend fun saveUserUuid(userId: String)
 
     override suspend fun clearUserUuid()
-
-    override val delivery: Flow<Delivery?>
-
-    override suspend fun getDelivery(): Delivery?
-
-    override suspend fun saveDelivery(delivery: Delivery)
 
     override val settings: Flow<Settings?>
 
