@@ -66,12 +66,12 @@ kotlin {
                 implementation(libs.bundles.navigation)
                 implementation(libs.bundles.di)
                 implementation(libs.bundles.coil)
-                api(libs.koin.test)
             }
         }
         val commonTest by getting {
             dependencies {
                 implementation(libs.kotlinx.coroutines.test)
+                implementation(libs.koin.test)
 
                 implementation(kotlin("test"))
                 implementation(kotlin("test-common"))
@@ -110,6 +110,14 @@ kotlin {
             dependsOn(commonMain)
             iosArm64Main.dependsOn(this)
             iosSimulatorArm64Main.dependsOn(this)
+        }
+        val jsMain by getting {
+            dependencies {
+                implementation(libs.ktor.client.js)
+                implementation(libs.sqlDelight.sqljs)
+                implementation(npm("sql.js", "1.6.2"))
+                implementation(devNpm("copy-webpack-plugin", "9.1.0"))
+            }
         }
         val iosArm64Test by getting
         val iosSimulatorArm64Test by getting

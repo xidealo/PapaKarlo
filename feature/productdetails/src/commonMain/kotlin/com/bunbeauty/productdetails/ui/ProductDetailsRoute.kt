@@ -7,14 +7,17 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -24,6 +27,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
@@ -62,6 +66,11 @@ import papakarlo.designsystem.generated.resources.error_consumer_cart_add_produc
 import papakarlo.designsystem.generated.resources.ic_plus_16
 import papakarlo.designsystem.generated.resources.msg_menu_product_added
 import papakarlo.designsystem.generated.resources.msg_menu_product_edited
+
+// Caps the content width on wide (web/tablet) screens so the product photo and
+// text don't stretch edge to edge. On phones the screen is narrower than this, so
+// the layout stays exactly the same as before.
+private val ProductDetailsMaxWidth = 640.dp
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
@@ -188,6 +197,7 @@ private fun ProductDetailsScreen(
                 FoodDeliveryExtendedFab(
                     modifier =
                         Modifier
+                            .widthIn(max = ProductDetailsMaxWidth)
                             .fillMaxWidth()
                             .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
                     text =
@@ -243,84 +253,56 @@ private fun ProductDetailsSuccessScreen(
     animatedContentScope: AnimatedVisibilityScope,
     onAction: (ProductDetailsState.Action) -> Unit,
 ) {
-    LazyColumn(
-        modifier =
-            Modifier
-                .fillMaxWidth(),
-        contentPadding = PaddingValues(bottom = LocalBottomBarPadding.current),
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.TopCenter,
     ) {
-        item {
-            ProductCard(
-                modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp)
-                        .padding(top = 16.dp),
-                menuProductUi = menuProductUi,
-                animatedContentScope = animatedContentScope,
-            )
-        }
-        items(
-            menuProductUi.additionList,
-            key = { menuProductAdditionItem ->
-                menuProductAdditionItem.key
-            },
-        ) { menuProductAdditionItem ->
-            when (menuProductAdditionItem) {
-                is AdditionItem.AdditionHeaderItem -> {
-                    Text(
-                        modifier =
-                            Modifier
-                                .padding(horizontal = 16.dp)
-                                .padding(top = 24.dp),
-                        text = menuProductAdditionItem.name,
-                        style = FoodDeliveryTheme.typography.titleMedium.bold,
-                        color = FoodDeliveryTheme.colors.mainColors.onSurface,
-                    )
-                }
-
-                is AdditionItem.AdditionListItem -> {
-                    FoodDeliveryItem(needDivider = !menuProductAdditionItem.product.isLast) {
-                        AdditionRowItem(
-                            uuid = menuProductAdditionItem.product.uuid,
-                            groupId = menuProductAdditionItem.product.groupId,
-                            photoLink = menuProductAdditionItem.product.photoLink,
-                            name = menuProductAdditionItem.product.name,
-                            price = menuProductAdditionItem.product.price,
-                            isSelected = menuProductAdditionItem.product.isSelected,
-                            isMultiple = menuProductAdditionItem.isMultiple,
-                            onCardClick = { uuid, groupId ->
-                                onAction(
-                                    ProductDetailsState.Action.AdditionClick(
-                                        uuid = uuid,
-                                        groupUuid = groupId,
-                                    ),
-                                )
-                            },
+        LazyColumn(
+            modifier =
+                Modifier
+                    .widthIn(max = ProductDetailsMaxWidth)
+                    .fillMaxWidth(),
+            contentPadding = PaddingValues(bottom = LocalBottomBarPadding.current),
+        ) {
+            item {
+                ProductCard(
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp)
+                            .padding(top = 16.dp),
+                    menuProductUi = menuProductUi,
+                    animatedContentScope = animatedContentScope,
+                )
+            }
+            items(
+                menuProductUi.additionList,
+                key = { menuProductAdditionItem ->
+                    menuProductAdditionItem.key
+                },
+            ) { menuProductAdditionItem ->
+                when (menuProductAdditionItem) {
+                    is AdditionItem.AdditionHeaderItem -> {
+                        Text(
+                            modifier =
+                                Modifier
+                                    .padding(horizontal = 16.dp)
+                                    .padding(top = 24.dp),
+                            text = menuProductAdditionItem.name,
+                            style = FoodDeliveryTheme.typography.titleMedium.bold,
+                            color = FoodDeliveryTheme.colors.mainColors.onSurface,
                         )
                     }
-                }
 
-                is AdditionItem.AdditionCardRowItem -> {
-                    LazyRow(
-                        modifier =
-                            Modifier
-                                .fillMaxWidth()
-                                .padding(top = 8.dp),
-                        contentPadding = PaddingValues(horizontal = 16.dp),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    ) {
-                        items(
-                            items = menuProductAdditionItem.products,
-                            key = { product -> product.uuid },
-                        ) { product ->
-                            AdditionCardItem(
-                                uuid = product.uuid,
-                                groupId = product.groupId,
-                                photoLink = product.photoLink,
-                                name = product.name,
-                                price = product.price,
-                                isSelected = product.isSelected,
+                    is AdditionItem.AdditionListItem -> {
+                        FoodDeliveryItem(needDivider = !menuProductAdditionItem.product.isLast) {
+                            AdditionRowItem(
+                                uuid = menuProductAdditionItem.product.uuid,
+                                groupId = menuProductAdditionItem.product.groupId,
+                                photoLink = menuProductAdditionItem.product.photoLink,
+                                name = menuProductAdditionItem.product.name,
+                                price = menuProductAdditionItem.product.price,
+                                isSelected = menuProductAdditionItem.product.isSelected,
                                 isMultiple = menuProductAdditionItem.isMultiple,
                                 onCardClick = { uuid, groupId ->
                                     onAction(
@@ -333,11 +315,45 @@ private fun ProductDetailsSuccessScreen(
                             )
                         }
                     }
+
+                    is AdditionItem.AdditionCardRowItem -> {
+                        LazyRow(
+                            modifier =
+                                Modifier
+                                    .fillMaxWidth()
+                                    .padding(top = 8.dp),
+                            contentPadding = PaddingValues(horizontal = 16.dp),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        ) {
+                            items(
+                                items = menuProductAdditionItem.products,
+                                key = { product -> product.uuid },
+                            ) { product ->
+                                AdditionCardItem(
+                                    uuid = product.uuid,
+                                    groupId = product.groupId,
+                                    photoLink = product.photoLink,
+                                    name = product.name,
+                                    price = product.price,
+                                    isSelected = product.isSelected,
+                                    isMultiple = menuProductAdditionItem.isMultiple,
+                                    onCardClick = { uuid, groupId ->
+                                        onAction(
+                                            ProductDetailsState.Action.AdditionClick(
+                                                uuid = uuid,
+                                                groupUuid = groupId,
+                                            ),
+                                        )
+                                    },
+                                )
+                            }
+                        }
+                    }
                 }
             }
-        }
-        item {
-            Spacer(modifier = Modifier.height(FoodDeliveryTheme.dimensions.scrollScreenBottomSpace))
+            item {
+                Spacer(modifier = Modifier.height(FoodDeliveryTheme.dimensions.scrollScreenBottomSpace))
+            }
         }
     }
 }

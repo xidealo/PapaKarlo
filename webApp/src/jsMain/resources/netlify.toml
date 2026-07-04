@@ -1,0 +1,24 @@
+# Proxy config for Netlify. Replaces the local webpack-dev-server proxy so the
+# production site works without CORS: images go through /firebase-img and every
+# non-static request is forwarded to the backend.
+
+# Firebase Storage images (rewritten to /firebase-img/* by FirebaseImageProxyMapper).
+[[redirects]]
+  from = "/firebase-img/*"
+  to = "https://firebasestorage.googleapis.com/:splat"
+  status = 200
+  force = true
+
+# Yandex Object Storage images (rewritten to /yandex-img/* by YandexImageProxyMapper).
+[[redirects]]
+  from = "/yandex-img/*"
+  to = "https://fooddelivery-s3-test.storage.yandexcloud.net/:splat"
+  status = 200
+  force = true
+
+# Any path that is not a real static file (js/wasm/html) is an API call -> backend.
+[[redirects]]
+  from = "/*"
+  to = "https://fooddelivery-xidealo.amvera.io/:splat"
+  status = 200
+  force = false

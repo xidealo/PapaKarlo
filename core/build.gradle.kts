@@ -18,6 +18,10 @@ kotlin {
     iosArm64()
     iosSimulatorArm64()
 
+    js(IR) {
+        browser()
+    }
+
     cocoapods {
         summary = "Core module with common features"
         homepage = "Link to the Shared Module homepage"
