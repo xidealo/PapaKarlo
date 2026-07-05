@@ -99,3 +99,7 @@ app/google-play-api-key.json
 
 # Local temp
 _tar_test/
+
+# Amvera web deploy (its own git repo, pushed to Amvera separately)
+/amvera/
+csg-zF7-VZd-dPR

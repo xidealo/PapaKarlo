@@ -105,10 +105,14 @@ fun main() {
                     // On JS Coil does not auto-register a network fetcher (no
                     // ServiceLoader), so we add the Ktor one explicitly. Without it
                     // every http(s) image fails and only the placeholder is shown.
-                    // The mapper reroutes Firebase Storage photos through the
-                    // dev-server proxy because Firebase doesn't send CORS headers.
+                    // Firebase photos: on localhost we proxy via webpack (Firebase has
+                    // no CORS). On Amvera and other production hosts the server cannot
+                    // reach Google, so the browser loads Firebase URLs directly — the
+                    // bucket must allow CORS (see webApp/firebase-storage-cors.json).
                     .components {
-                        add(FirebaseImageProxyMapper())
+                        if (shouldUseFirebaseImageProxy()) {
+                            add(FirebaseImageProxyMapper())
+                        }
                         add(YandexImageProxyMapper())
                         add(KtorNetworkFetcherFactory())
                     }
@@ -131,6 +135,14 @@ fun main() {
             }
         }
     }
+}
+
+// Same-origin /firebase-img proxy only works where the host can reach Firebase
+// (local webpack dev-server). Amvera and custom production domains load Firebase
+// URLs directly in the browser instead.
+private fun shouldUseFirebaseImageProxy(): Boolean {
+    val host = window.location.hostname.lowercase()
+    return host == "localhost" || host == "127.0.0.1"
 }
 
 private const val FIREBASE_STORAGE_URL = "https://firebasestorage.googleapis.com"
