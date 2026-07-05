@@ -1,6 +1,5 @@
 package com.bunbeauty.shared.data
 
-import com.bunbeauty.core.model.Delivery
 import com.bunbeauty.core.model.Discount
 import com.bunbeauty.core.model.Settings
 import com.bunbeauty.core.model.UserCityUuid
@@ -34,19 +33,6 @@ actual class DataStoreRepository :
 
     actual override suspend fun clearUserUuid() {
         lsRemove(USER_UUID_KEY)
-    }
-
-    actual override val delivery: Flow<Delivery?> = flow { emit(getDelivery()) }
-
-    actual override suspend fun getDelivery(): Delivery? =
-        Delivery(
-            cost = lsGet(DELIVERY_COST_KEY)?.toIntOrNull() ?: 0,
-            forFree = lsGet(DELIVERY_FOR_FREE_KEY)?.toIntOrNull() ?: 0,
-        )
-
-    actual override suspend fun saveDelivery(delivery: Delivery) {
-        lsSet(DELIVERY_COST_KEY, delivery.cost.toString())
-        lsSet(DELIVERY_FOR_FREE_KEY, delivery.forFree.toString())
     }
 
     actual override val settings: Flow<Settings?> = flow { emit(getSettings()) }
@@ -158,8 +144,6 @@ actual class DataStoreRepository :
         private const val TOKEN_KEY = "TOKEN_KEY"
         private const val SELECTED_CITY_UUID_KEY = "SELECTED_CITY_UUID_KEY"
         private const val USER_UUID_KEY = "USER_UUID_KEY"
-        private const val DELIVERY_COST_KEY = "DELIVERY_COST_KEY"
-        private const val DELIVERY_FOR_FREE_KEY = "DELIVERY_FOR_FREE_KEY"
         private const val SETTINGS_USER_UUID_KEY = "SETTINGS_USER_UUID_KEY"
         private const val SETTINGS_PHONE_NUMBER_KEY = "SETTINGS_PHONE_NUMBER_KEY"
         private const val SETTINGS_EMAIL_KEY = "SETTINGS_EMAIL_KEY"
