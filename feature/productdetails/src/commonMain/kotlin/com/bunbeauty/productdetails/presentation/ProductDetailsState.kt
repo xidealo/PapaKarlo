@@ -12,6 +12,8 @@ interface ProductDetailsState {
         val cartCostAndCount: CartCostAndCount?,
         val menuProduct: MenuProduct,
         val screenState: ScreenState,
+        val isAuthorized: Boolean = false,
+        val isFavorite: Boolean = false,
     ) : BaseDataState {
         data class MenuProduct(
             val uuid: String,
@@ -54,6 +56,8 @@ interface ProductDetailsState {
             val productDetailsOpenedFrom: ProductDetailsOpenedFrom,
             val cartProductUuid: String?,
         ) : Action
+
+        data object FavoriteClick : Action
     }
 
     sealed interface Event : BaseEvent {
@@ -64,5 +68,7 @@ interface ProductDetailsState {
         data object EditedProduct : Event
 
         data object ShowAddProductError : Event
+
+        data object ShowFavoriteError : Event
     }
 }

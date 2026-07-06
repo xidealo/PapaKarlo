@@ -10,6 +10,7 @@ import com.bunbeauty.core.domain.repo.CityRepo
 import com.bunbeauty.core.domain.repo.CompanyRepo
 import com.bunbeauty.core.domain.repo.CreateOrderSettingsRepo
 import com.bunbeauty.core.domain.repo.DiscountRepo
+import com.bunbeauty.core.domain.repo.FavoriteRepo
 import com.bunbeauty.core.domain.repo.LinkRepo
 import com.bunbeauty.core.domain.repo.MenuProductRepo
 import com.bunbeauty.core.domain.repo.OrderRepo
@@ -33,6 +34,7 @@ import com.bunbeauty.shared.data.repository.CityRepository
 import com.bunbeauty.shared.data.repository.CompanyRepository
 import com.bunbeauty.shared.data.repository.CreateOrderSettingsRepository
 import com.bunbeauty.shared.data.repository.DiscountRepository
+import com.bunbeauty.shared.data.repository.FavoriteRepository
 import com.bunbeauty.shared.data.repository.LinkRepository
 import com.bunbeauty.shared.data.repository.MenuProductRepository
 import com.bunbeauty.shared.data.repository.OrderRepository
@@ -168,6 +170,12 @@ fun repositoryModule() =
             DiscountRepository(
                 networkConnector = get(),
                 dataStoreRepo = get(),
+            )
+        }
+        single<FavoriteRepo> {
+            FavoriteRepository(
+                networkConnector = get(),
+                userRepo = get(),
             )
         }
         single<AuthRepo> {

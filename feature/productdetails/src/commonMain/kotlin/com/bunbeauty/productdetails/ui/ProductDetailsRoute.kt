@@ -41,6 +41,7 @@ import com.bunbeauty.designsystem.theme.bold
 import com.bunbeauty.designsystem.ui.LocalBottomBarPadding
 import com.bunbeauty.designsystem.ui.SharedTransitionScopeComposition
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryAsyncImage
+import com.bunbeauty.designsystem.ui.element.FoodDeliveryAction
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.designsystem.ui.element.TopCartUi
 import com.bunbeauty.designsystem.ui.element.addition.AdditionCardItem
@@ -63,6 +64,10 @@ import papakarlo.designsystem.generated.resources.action_product_details_want
 import papakarlo.designsystem.generated.resources.common_error
 import papakarlo.designsystem.generated.resources.description_product
 import papakarlo.designsystem.generated.resources.error_consumer_cart_add_product
+import papakarlo.designsystem.generated.resources.description_favorite
+import papakarlo.designsystem.generated.resources.error_something_went_wrong
+import papakarlo.designsystem.generated.resources.ic_favorite_24
+import papakarlo.designsystem.generated.resources.ic_favorite_filled_24
 import papakarlo.designsystem.generated.resources.ic_plus_16
 import papakarlo.designsystem.generated.resources.msg_menu_product_added
 import papakarlo.designsystem.generated.resources.msg_menu_product_edited
@@ -168,6 +173,12 @@ fun ProductDetailsEffect(
                     )
                     back()
                 }
+
+                ProductDetailsState.Event.ShowFavoriteError -> {
+                    showErrorMessage(
+                        getString(resource = Res.string.error_something_went_wrong),
+                    )
+                }
             }
         }
         consumeEffects()
@@ -192,6 +203,32 @@ private fun ProductDetailsScreen(
         backActionClick = {
             onAction(ProductDetailsState.Action.BackClick)
         },
+        topActions =
+            if (productDetailsViewState is ProductDetailsViewState.Success && productDetailsViewState.isAuthorized) {
+                val isFavorite = productDetailsViewState.isFavorite
+                persistentListOf(
+                    FoodDeliveryAction(
+                        iconId =
+                            if (isFavorite) {
+                                Res.drawable.ic_favorite_filled_24
+                            } else {
+                                Res.drawable.ic_favorite_24
+                            },
+                        tint =
+                            if (isFavorite) {
+                                FoodDeliveryTheme.colors.mainColors.primary
+                            } else {
+                                null
+                            },
+                        contentDescriptionId = Res.string.description_favorite,
+                        onClick = {
+                            onAction(ProductDetailsState.Action.FavoriteClick)
+                        },
+                    ),
+                )
+            } else {
+                persistentListOf()
+            },
         actionButton = {
             if (productDetailsViewState is ProductDetailsViewState.Success) {
                 FoodDeliveryExtendedFab(
@@ -484,6 +521,8 @@ private fun ProductDetailsSuccessScreenPreview() {
                                     cost = "100",
                                     count = "2",
                                 ),
+                            isAuthorized = true,
+                            isFavorite = true,
                             menuProductUi =
                                 ProductDetailsViewState.Success.MenuProductUi(
                                     photoLink = "",

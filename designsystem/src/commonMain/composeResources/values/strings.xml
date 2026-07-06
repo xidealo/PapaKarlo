@@ -13,6 +13,7 @@
     <string name="description_ic_next">Переход</string>
     <string name="description_ic_checked">Выбрано</string>
     <string name="description_product">Фото блюда</string>
+    <string name="description_favorite">Избранное</string>
     <string name="description_product_addition">Фото добавки</string>
     <string name="description_ic_discount">Скидка</string>
     <string name="description_ic_warning">Предупреждение</string>
@@ -58,6 +59,7 @@
 
     <!-- MENU -->
     <string name="title_menu">Меню</string>
+    <string name="title_favorites">Избранные ❤️</string>
     <string name="error_menu_loading">Не удалось загрузить меню</string>
     <string name="title_menu_discount">Скидка %1$s%</string>
     <string name="msg_menu_discount">Успей сделать первый заказ со скидкой %1$s%</string>

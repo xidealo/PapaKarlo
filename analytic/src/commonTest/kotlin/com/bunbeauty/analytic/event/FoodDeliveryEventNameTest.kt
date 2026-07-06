@@ -9,6 +9,8 @@ import com.bunbeauty.analytic.event.cart.DecreaseCartProductClickEvent
 import com.bunbeauty.analytic.event.cart.IncreaseCartProductClickEvent
 import com.bunbeauty.analytic.event.cart.RemoveCartProductClickEvent
 import com.bunbeauty.analytic.event.city.CitySelectEvent
+import com.bunbeauty.analytic.event.favorite.AddFavoriteClickEvent
+import com.bunbeauty.analytic.event.favorite.RemoveFavoriteClickEvent
 import com.bunbeauty.analytic.event.menu.AddMenuProductClickEvent
 import com.bunbeauty.analytic.event.menu.AddMenuProductDetailsClickEvent
 import com.bunbeauty.analytic.event.menu.LoadedMenuEvent
@@ -51,6 +53,12 @@ class FoodDeliveryEventNameTest {
                     menuProductUuidEventParameter = MenuProductUuidEventParameter(value = "uuid"),
                 ),
                 AddRecommendationProductDetailsClickEvent(
+                    menuProductUuidEventParameter = MenuProductUuidEventParameter(value = "uuid"),
+                ),
+                AddFavoriteClickEvent(
+                    menuProductUuidEventParameter = MenuProductUuidEventParameter(value = "uuid"),
+                ),
+                RemoveFavoriteClickEvent(
                     menuProductUuidEventParameter = MenuProductUuidEventParameter(value = "uuid"),
                 ),
                 AuthConfirmErrorEvent(error = "InvalidCode"),

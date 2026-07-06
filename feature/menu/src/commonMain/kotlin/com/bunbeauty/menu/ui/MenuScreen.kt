@@ -163,6 +163,8 @@ private fun MenuScreenSuccessPreview() {
                                 getCategoryItem("5"),
                                 getCategoryItem("6"),
                             ),
+                        favoriteProductList = persistentListOf(),
+                        hasFavoritesSection = false,
                         menuItemList =
                             persistentListOf(
                                 getMenuCategoryHeaderItem("4"),
@@ -212,6 +214,8 @@ private fun MenuScreenLoadingPreview() {
                 viewState =
                     MenuViewState(
                         categoryItemList = persistentListOf(),
+                        favoriteProductList = persistentListOf(),
+                        hasFavoritesSection = false,
                         topCartUi =
                             TopCartUi(
                                 cost = "100",
@@ -239,6 +243,8 @@ private fun MenuScreenErrorPreview() {
                 viewState =
                     MenuViewState(
                         categoryItemList = persistentListOf(),
+                        favoriteProductList = persistentListOf(),
+                        hasFavoritesSection = false,
                         topCartUi =
                             TopCartUi(
                                 cost = "100",

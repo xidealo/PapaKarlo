@@ -21,6 +21,7 @@ internal fun interactorModule() =
                 cafeRepo = get(),
                 userAddressRepo = get(),
                 createOrderSettingsRepo = get(),
+                favoriteRepo = get(),
             )
         }
         single<ICityInteractor> {

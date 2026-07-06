@@ -17,6 +17,7 @@ fun menuFeatureModule() =
                 stopObserveOrdersUseCase = get(),
                 getLastOrderUseCase = get(),
                 observeTokenUseCase = get(),
+                getFavoriteMenuProductsUseCase = get(),
             )
         }
     }
