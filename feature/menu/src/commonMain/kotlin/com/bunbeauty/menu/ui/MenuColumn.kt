@@ -170,6 +170,7 @@ internal fun MenuColumn(
                             .ignoreHorizontalParentPadding(horizontal = 16.dp),
                     categoryItemList = menu.categoryItemList,
                     menuItemList = menu.menuItemList,
+                    hasFavoritesSection = menu.hasFavoritesSection,
                     menuLazyGridState = menuLazyListState,
                     onAction = onAction,
                 )
@@ -202,6 +203,23 @@ internal fun MenuColumn(
                             lastOrder = lastOrder,
                         )
                     }
+                }
+            }
+
+            if (menu.hasFavoritesSection) {
+                item(
+                    key = "Favorites",
+                    span = {
+                        GridItemSpan(maxLineSpan)
+                    },
+                ) {
+                    MenuFavoritesRow(
+                        modifier = Modifier.fillMaxWidth()
+                            .ignoreHorizontalParentPadding(horizontal = 16.dp),
+                        products = menu.favoriteProductList,
+                        animatedContentScope = animatedContentScope,
+                        onAction = onAction,
+                    )
                 }
             }
 

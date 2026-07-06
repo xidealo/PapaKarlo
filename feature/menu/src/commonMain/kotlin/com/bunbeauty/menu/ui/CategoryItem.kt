@@ -10,12 +10,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.bunbeauty.core.Constants.FAVORITES_CATEGORY_UUID
 import com.bunbeauty.core.model.CategoryItem
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.theme.medium
 import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryCardDefaults
+import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import papakarlo.designsystem.generated.resources.Res
+import papakarlo.designsystem.generated.resources.title_favorites
 
 @Composable
 fun CategoryItem(
@@ -40,6 +44,13 @@ fun CategoryItem(
             )
         }
 
+    val displayName =
+        if (categoryItem.uuid == FAVORITES_CATEGORY_UUID) {
+            stringResource(resource = Res.string.title_favorites)
+        } else {
+            categoryItem.name
+        }
+
     FoodDeliveryCard(
         modifier = modifier,
         elevated = false,
@@ -59,7 +70,7 @@ fun CategoryItem(
                         horizontal = 12.dp,
                         vertical = 6.dp,
                     ),
-            text = categoryItem.name,
+            text = displayName,
             style = FoodDeliveryTheme.typography.labelLarge.medium,
             textAlign = TextAlign.Center,
         )

@@ -1,5 +1,6 @@
 package com.bunbeauty.core.domain.favorite.di
 
+import com.bunbeauty.core.domain.favorite.GetFavoriteMenuProductsUseCase
 import com.bunbeauty.core.domain.favorite.IsProductFavoriteUseCase
 import com.bunbeauty.core.domain.favorite.LoadFavoritesUseCase
 import com.bunbeauty.core.domain.favorite.ToggleFavoriteUseCase
@@ -22,6 +23,13 @@ fun favoriteModule() =
         factory {
             ToggleFavoriteUseCase(
                 favoriteRepo = get(),
+                userRepo = get(),
+            )
+        }
+        factory {
+            GetFavoriteMenuProductsUseCase(
+                favoriteRepo = get(),
+                getMenuProductListUseCase = get(),
                 userRepo = get(),
             )
         }

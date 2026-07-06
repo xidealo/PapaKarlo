@@ -6,10 +6,12 @@ import com.bunbeauty.analytic.event.menu.LoadedMenuEvent
 import com.bunbeauty.analytic.parameter.MenuProductUuidEventParameter
 import com.bunbeauty.analytic.parameter.TimeParameter
 import com.bunbeauty.core.Logger
+import com.bunbeauty.core.Constants.FAVORITES_CATEGORY_UUID
 import com.bunbeauty.core.base.SharedStateViewModel
 import com.bunbeauty.core.domain.ObserveCartUseCase
 import com.bunbeauty.core.domain.auth.ObserveTokenUseCase
 import com.bunbeauty.core.domain.discount.GetDiscountUseCase
+import com.bunbeauty.core.domain.favorite.GetFavoriteMenuProductsUseCase
 import com.bunbeauty.core.domain.menu_product.AddMenuProductUseCase
 import com.bunbeauty.core.domain.menu_product.IMenuProductInteractor
 import com.bunbeauty.core.domain.order.GetLastOrderUseCase
@@ -19,6 +21,7 @@ import com.bunbeauty.core.extension.launchSafe
 import com.bunbeauty.core.model.CategoryItem
 import com.bunbeauty.core.model.MenuItem
 import com.bunbeauty.core.model.mapper.toMenuItemList
+import com.bunbeauty.core.model.mapper.toMenuProductItem
 import com.bunbeauty.core.model.menu.MenuSection
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -30,9 +33,6 @@ import kotlin.time.measureTime
 
 private const val MAIN_MENU_VIEW_MODEL_TAG = "MenuViewModel"
 
-// Grid: 0=TopBar, 1=CategoryRow, 2=LastOrder, 3+=menuItemList
-internal const val MENU_FIRST_CONTENT_GRID_INDEX = 3
-
 class MenuViewModel(
     private val menuProductInteractor: IMenuProductInteractor,
     private val observeCartUseCase: ObserveCartUseCase,
@@ -43,12 +43,14 @@ class MenuViewModel(
     private val stopObserveOrdersUseCase: StopObserveOrdersUseCase,
     private val getLastOrderUseCase: GetLastOrderUseCase,
     private val observeTokenUseCase: ObserveTokenUseCase,
+    private val getFavoriteMenuProductsUseCase: GetFavoriteMenuProductsUseCase,
 ) : SharedStateViewModel<MenuState.DataState, MenuState.Action, MenuState.Event>(
         initDataState =
             MenuState.DataState(
                 categoryItemList = emptyList(),
                 cartCostAndCount = null,
                 menuItemList = emptyList(),
+                favoriteProductList = emptyList(),
                 state = MenuState.DataState.State.LOADING,
                 userScrollEnabled = true,
                 lastOrder = null,
@@ -89,6 +91,7 @@ class MenuViewModel(
             MenuState.Action.OnCartClicked -> onCartClicked()
             MenuState.Action.StartLastOrderObservation -> startLastOrderObservation()
             MenuState.Action.StopLastOrderObservation -> stopLastOrderObservation()
+            MenuState.Action.RefreshFavorites -> refreshFavoriteProducts()
         }
     }
 
@@ -127,6 +130,7 @@ class MenuViewModel(
                     .distinctUntilChanged()
                     .collectLatest {
                         refreshDiscount()
+                        refreshFavoriteProducts()
                     }
             },
             onError = { throwable ->
@@ -170,9 +174,15 @@ class MenuViewModel(
                 val time =
                     measureTime {
                         val menuSectionList = menuProductInteractor.getMenuSectionList()
+                        val favoriteProductList = loadFavoriteProductList()
 
                         if (selectedCategoryUuid == null) {
-                            selectedCategoryUuid = menuSectionList.firstOrNull()?.category?.uuid
+                            selectedCategoryUuid =
+                                if (favoriteProductList.isNotEmpty()) {
+                                    FAVORITES_CATEGORY_UUID
+                                } else {
+                                    menuSectionList.firstOrNull()?.category?.uuid
+                                }
                         }
 
                         val discountItem =
@@ -186,10 +196,11 @@ class MenuViewModel(
                                 }
                         setState {
                             copy(
-                                categoryItemList =
-                                    menuSectionList.map { menuSection ->
-                                        toCategoryItemModel(menuSection)
-                                    },
+                                categoryItemList = buildCategoryItemList(
+                                    menuSectionList = menuSectionList,
+                                    favoriteProductList = favoriteProductList,
+                                ),
+                                favoriteProductList = favoriteProductList,
                                 menuItemList = menuItemList,
                                 state = MenuState.DataState.State.SUCCESS,
                             )
@@ -217,7 +228,16 @@ class MenuViewModel(
         }
 
         currentMenuPosition = menuPosition
-        val menuListPosition = (menuPosition - MENU_FIRST_CONTENT_GRID_INDEX).coerceAtLeast(0)
+        val hasFavoritesSection = mutableDataState.value.favoriteProductList.isNotEmpty()
+
+        if (hasFavoritesSection && menuPosition == MENU_GRID_INDEX_FAVORITES) {
+            setCategory(FAVORITES_CATEGORY_UUID)
+            return
+        }
+
+        val menuListPosition =
+            (menuPosition - menuContentStartGridIndex(hasFavoritesSection = hasFavoritesSection))
+                .coerceAtLeast(0)
 
         sharedScope.launchSafe(
             block = {
@@ -273,10 +293,12 @@ class MenuViewModel(
     }
 
     private fun findMenuProduct(uuid: String): MenuItem.Product? =
-        mutableDataState.value.menuItemList
+        mutableDataState.value.favoriteProductList.find { menuProduct ->
+            menuProduct.uuid == uuid
+        } ?: mutableDataState.value.menuItemList
             .filterIsInstance<MenuItem.Product>()
-            .find { menuItem ->
-                menuItem.uuid == uuid
+            .find { menuProduct ->
+                menuProduct.uuid == uuid
             }
 
     private fun onAddProductClicked(menuProductUuid: String) {
@@ -351,6 +373,62 @@ class MenuViewModel(
             name = menuSection.category.name,
             isSelected = isCategorySelected(menuSection.category.uuid),
         )
+
+    private fun toFavoritesCategoryItem(): CategoryItem =
+        CategoryItem(
+            key = "CategoryItemModel $FAVORITES_CATEGORY_UUID",
+            uuid = FAVORITES_CATEGORY_UUID,
+            name = "",
+            isSelected = isCategorySelected(FAVORITES_CATEGORY_UUID),
+        )
+
+    private fun buildCategoryItemList(
+        menuSectionList: List<MenuSection>,
+        favoriteProductList: List<MenuItem.Product>,
+    ): List<CategoryItem> {
+        val menuCategoryList =
+            menuSectionList.map { menuSection ->
+                toCategoryItemModel(menuSection)
+            }
+
+        return if (favoriteProductList.isNotEmpty()) {
+            listOf(toFavoritesCategoryItem()) + menuCategoryList
+        } else {
+            menuCategoryList
+        }
+    }
+
+    private suspend fun loadFavoriteProductList(): List<MenuItem.Product> =
+        getFavoriteMenuProductsUseCase().map { menuProduct ->
+            menuProduct.toMenuProductItem()
+        }
+
+    private fun refreshFavoriteProducts() {
+        sharedScope.launchSafe(
+            block = {
+                val favoriteProductList = loadFavoriteProductList()
+                val menuSectionList = menuProductInteractor.getMenuSectionList()
+
+                if (selectedCategoryUuid == FAVORITES_CATEGORY_UUID && favoriteProductList.isEmpty()) {
+                    selectedCategoryUuid = menuSectionList.firstOrNull()?.category?.uuid
+                }
+
+                setState {
+                    copy(
+                        favoriteProductList = favoriteProductList,
+                        categoryItemList =
+                            buildCategoryItemList(
+                                menuSectionList = menuSectionList,
+                                favoriteProductList = favoriteProductList,
+                            ),
+                    )
+                }
+            },
+            onError = { throwable ->
+                Logger.logE(MAIN_MENU_VIEW_MODEL_TAG, throwable.stackTraceToString())
+            },
+        )
+    }
 
     private fun isCategorySelected(categoryUuid: String): Boolean =
         selectedCategoryUuid?.let {

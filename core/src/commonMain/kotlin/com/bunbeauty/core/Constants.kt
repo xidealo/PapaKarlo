@@ -27,6 +27,10 @@ object Constants {
 
     const val CART_PRODUCT_LIMIT = 99
 
+    // MENU
+
+    const val FAVORITES_CATEGORY_UUID = "favorites"
+
     // TIME
 
     const val MIN_DEFERRED_HOURS_ADDITION = 1

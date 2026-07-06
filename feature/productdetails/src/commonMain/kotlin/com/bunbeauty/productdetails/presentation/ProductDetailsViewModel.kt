@@ -2,6 +2,8 @@ package com.bunbeauty.productdetails.presentation
 
 import com.bunbeauty.analytic.AnalyticService
 import com.bunbeauty.analytic.event.cart.AddCartProductDetailsClickEvent
+import com.bunbeauty.analytic.event.favorite.AddFavoriteClickEvent
+import com.bunbeauty.analytic.event.favorite.RemoveFavoriteClickEvent
 import com.bunbeauty.analytic.event.menu.AddMenuProductDetailsClickEvent
 import com.bunbeauty.analytic.event.recommendation.AddRecommendationProductDetailsClickEvent
 import com.bunbeauty.analytic.parameter.MenuProductUuidEventParameter
@@ -109,6 +111,10 @@ class ProductDetailsViewModel(
         sharedScope.launchSafe(
             block = {
                 val isFavorite = toggleFavoriteUseCase(menuProductUuid = menuProductUuid)
+                sendFavoriteToggleAnalytic(
+                    menuProductUuid = menuProductUuid,
+                    isFavorite = isFavorite,
+                )
                 setState {
                     copy(isFavorite = isFavorite)
                 }
@@ -121,6 +127,26 @@ class ProductDetailsViewModel(
                     ProductDetailsState.Event.ShowFavoriteError
                 }
             },
+        )
+    }
+
+    private fun sendFavoriteToggleAnalytic(
+        menuProductUuid: String,
+        isFavorite: Boolean,
+    ) {
+        val menuProductUuidEventParameter =
+            MenuProductUuidEventParameter(value = menuProductUuid)
+        analyticService.sendEvent(
+            event =
+                if (isFavorite) {
+                    AddFavoriteClickEvent(
+                        menuProductUuidEventParameter = menuProductUuidEventParameter,
+                    )
+                } else {
+                    RemoveFavoriteClickEvent(
+                        menuProductUuidEventParameter = menuProductUuidEventParameter,
+                    )
+                },
         )
     }
 

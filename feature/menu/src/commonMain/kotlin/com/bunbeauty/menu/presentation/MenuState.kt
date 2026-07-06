@@ -13,6 +13,7 @@ interface MenuState {
         val categoryItemList: List<CategoryItem>,
         val cartCostAndCount: CartCostAndCount?,
         val menuItemList: List<MenuItem>,
+        val favoriteProductList: List<MenuItem.Product> = emptyList(),
         val state: State,
         val userScrollEnabled: Boolean,
         val lastOrder: LightOrder?,
@@ -58,6 +59,8 @@ interface MenuState {
         data object StartLastOrderObservation : Action
 
         data object StopLastOrderObservation : Action
+
+        data object RefreshFavorites : Action
     }
 
     sealed interface Event : BaseEvent {

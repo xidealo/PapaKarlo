@@ -13,6 +13,8 @@ data class MenuViewState(
     val categoryItemList: ImmutableList<CategoryItem>,
     val topCartUi: TopCartUi,
     val menuItemList: ImmutableList<MenuItemUi>,
+    val favoriteProductList: ImmutableList<ProductUi>,
+    val hasFavoritesSection: Boolean,
     val state: State,
     val userScrollEnabled: Boolean,
     val lastOrder: LightOrder?,
