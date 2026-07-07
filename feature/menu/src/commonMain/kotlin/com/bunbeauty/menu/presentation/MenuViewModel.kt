@@ -98,19 +98,13 @@ class MenuViewModel(
 
     private fun scrollToTop() {
         currentMenuPosition = 0
-        val favoriteProductList = mutableDataState.value.favoriteProductList
-        val defaultCategoryUuid =
-            if (favoriteProductList.isNotEmpty()) {
-                FAVORITES_CATEGORY_UUID
-            } else {
-                mutableDataState.value
-                    .categoryItemList
-                    .firstOrNull()
-                    ?.uuid
+        mutableDataState.value
+            .categoryItemList
+            .firstOrNull()
+            ?.uuid
+            ?.let { categoryUuid ->
+                setCategory(categoryUuid)
             }
-        defaultCategoryUuid?.let { categoryUuid ->
-            setCategory(categoryUuid)
-        }
         setState {
             copy(scrollToTopRequest = scrollToTopRequest + 1)
         }
@@ -198,12 +192,7 @@ class MenuViewModel(
                         val favoriteProductList = loadFavoriteProductList()
 
                         if (selectedCategoryUuid == null) {
-                            selectedCategoryUuid =
-                                if (favoriteProductList.isNotEmpty()) {
-                                    FAVORITES_CATEGORY_UUID
-                                } else {
-                                    menuSectionList.firstOrNull()?.category?.uuid
-                                }
+                            selectedCategoryUuid = menuSectionList.firstOrNull()?.category?.uuid
                         }
 
                         val discountItem =
@@ -219,7 +208,6 @@ class MenuViewModel(
                             copy(
                                 categoryItemList = buildCategoryItemList(
                                     menuSectionList = menuSectionList,
-                                    favoriteProductList = favoriteProductList,
                                 ),
                                 favoriteProductList = favoriteProductList,
                                 menuItemList = menuItemList,
@@ -251,8 +239,7 @@ class MenuViewModel(
         currentMenuPosition = menuPosition
         val hasFavoritesSection = mutableDataState.value.favoriteProductList.isNotEmpty()
 
-        if (hasFavoritesSection && menuPosition == MENU_GRID_INDEX_FAVORITES) {
-            setCategory(FAVORITES_CATEGORY_UUID)
+        if (menuPosition < menuContentStartGridIndex(hasFavoritesSection = hasFavoritesSection)) {
             return
         }
 
@@ -395,29 +382,12 @@ class MenuViewModel(
             isSelected = isCategorySelected(menuSection.category.uuid),
         )
 
-    private fun toFavoritesCategoryItem(): CategoryItem =
-        CategoryItem(
-            key = "CategoryItemModel $FAVORITES_CATEGORY_UUID",
-            uuid = FAVORITES_CATEGORY_UUID,
-            name = "",
-            isSelected = isCategorySelected(FAVORITES_CATEGORY_UUID),
-        )
-
     private fun buildCategoryItemList(
         menuSectionList: List<MenuSection>,
-        favoriteProductList: List<MenuItem.Product>,
-    ): List<CategoryItem> {
-        val menuCategoryList =
-            menuSectionList.map { menuSection ->
-                toCategoryItemModel(menuSection)
-            }
-
-        return if (favoriteProductList.isNotEmpty()) {
-            listOf(toFavoritesCategoryItem()) + menuCategoryList
-        } else {
-            menuCategoryList
+    ): List<CategoryItem> =
+        menuSectionList.map { menuSection ->
+            toCategoryItemModel(menuSection)
         }
-    }
 
     private suspend fun loadFavoriteProductList(): List<MenuItem.Product> =
         getFavoriteMenuProductsUseCase().map { menuProduct ->
@@ -430,7 +400,7 @@ class MenuViewModel(
                 val favoriteProductList = loadFavoriteProductList()
                 val menuSectionList = menuProductInteractor.getMenuSectionList()
 
-                if (selectedCategoryUuid == FAVORITES_CATEGORY_UUID && favoriteProductList.isEmpty()) {
+                if (selectedCategoryUuid == FAVORITES_CATEGORY_UUID) {
                     selectedCategoryUuid = menuSectionList.firstOrNull()?.category?.uuid
                 }
 
@@ -440,7 +410,6 @@ class MenuViewModel(
                         categoryItemList =
                             buildCategoryItemList(
                                 menuSectionList = menuSectionList,
-                                favoriteProductList = favoriteProductList,
                             ),
                     )
                 }
