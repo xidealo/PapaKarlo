@@ -5,7 +5,6 @@ import com.bunbeauty.core.model.CategoryItem
 import com.bunbeauty.core.model.MenuItem
 import com.bunbeauty.core.model.ProductUi
 import com.bunbeauty.designsystem.ui.element.TopCartUi
-import com.bunbeauty.menu.presentation.MENU_GRID_INDEX_FAVORITES
 import com.bunbeauty.menu.presentation.MenuState
 import com.bunbeauty.menu.presentation.menuContentStartGridIndex
 import com.bunbeauty.menu.ui.state.MenuItemUi
@@ -46,6 +45,7 @@ fun MenuState.DataState.mapState(): MenuViewState {
             },
         userScrollEnabled = userScrollEnabled,
         lastOrder = lastOrder,
+        scrollToTopRequest = scrollToTopRequest,
     )
 }
 
@@ -54,10 +54,6 @@ fun getMenuListPosition(
     menuItemList: List<MenuItemUi>,
     hasFavoritesSection: Boolean,
 ): Int {
-    if (categoryItem.uuid == com.bunbeauty.core.Constants.FAVORITES_CATEGORY_UUID) {
-        return MENU_GRID_INDEX_FAVORITES
-    }
-
     val indexInMenuList =
         menuItemList.indexOfFirst { menuItem ->
             (menuItem as? MenuItemUi.CategoryHeader)?.uuid == categoryItem.uuid

@@ -33,6 +33,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.bunbeauty.core.Constants.FAB_SNACKBAR_BOTTOM_PADDING
 import com.bunbeauty.core.Constants.RUBLE_CURRENCY
 import com.bunbeauty.core.motivation.Motivation
 import com.bunbeauty.createorder.presentation.createorder.CreateOrder
@@ -263,7 +264,7 @@ fun CreateOrderEffect(
                             Res.string.msg_order_code,
                             effect.code,
                         ),
-                        0,
+                        FAB_SNACKBAR_BOTTOM_PADDING,
                     )
                     goToMenu()
                 }

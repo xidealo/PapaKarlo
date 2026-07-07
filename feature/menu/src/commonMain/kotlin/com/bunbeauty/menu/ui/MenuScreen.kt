@@ -106,6 +106,16 @@ private fun MenuSuccessScreen(
                 onAction(MenuState.Action.OnMenuPositionChanged(position))
             }
         }
+        LaunchedEffect(menu.scrollToTopRequest) {
+            if (menu.scrollToTopRequest > 0) {
+                onAction(MenuState.Action.OnStartAutoScroll)
+                try {
+                    menuLazyGridState.scrollToItem(index = 0, scrollOffset = 0)
+                } finally {
+                    onAction(MenuState.Action.OnStopAutoScroll)
+                }
+            }
+        }
         MenuColumn(
             menu = menu,
             menuLazyListState = menuLazyGridState,

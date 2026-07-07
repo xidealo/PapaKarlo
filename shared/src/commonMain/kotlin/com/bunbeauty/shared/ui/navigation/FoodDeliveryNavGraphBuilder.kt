@@ -17,6 +17,7 @@ import com.bunbeauty.shared.ui.navigation.createorder.createOrderScreenRoute
 import com.bunbeauty.shared.ui.navigation.createorder.navigateToCreateOrderScreen
 import com.bunbeauty.shared.ui.navigation.login.loginScreenRoute
 import com.bunbeauty.shared.ui.navigation.login.navigateToLoginScreen
+import com.bunbeauty.shared.ui.navigation.menu.MENU_SCROLL_TO_TOP_KEY
 import com.bunbeauty.shared.ui.navigation.menu.MenuScreenDestination
 import com.bunbeauty.shared.ui.navigation.menu.menuScreenRoute
 import com.bunbeauty.shared.ui.navigation.menu.navigateToMenuScreen
@@ -170,6 +171,9 @@ fun NavGraphBuilder.foodDeliveryNavGraphBuilder(
     createOrderScreenRoute(
         back = navController::navigateUp,
         goToMenu = {
+            navController
+                .getBackStackEntry<MenuScreenDestination>()
+                .savedStateHandle[MENU_SCROLL_TO_TOP_KEY] = true
             navController.popBackStack(
                 route = MenuScreenDestination,
                 inclusive = false,

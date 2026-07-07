@@ -18,6 +18,8 @@ import kotlinx.serialization.Serializable
 @Serializable
 data object MenuScreenDestination
 
+const val MENU_SCROLL_TO_TOP_KEY = "menu_scroll_to_top"
+
 fun NavController.navigateToMenuScreen(navOptions: NavOptions) = navigate(route = MenuScreenDestination, navOptions)
 
 @OptIn(ExperimentalSharedTransitionApi::class)
@@ -62,7 +64,7 @@ fun NavGraphBuilder.menuScreenRoute(
                 animationSpec = navAnimationSpecDurationForPopFade,
             )
         },
-    ) {
+    ) { backStackEntry ->
         MenuRoute(
             goToProductDetailsFragment = goToProductDetailsFragment,
             goToProfile = goToProfile,
@@ -71,6 +73,8 @@ fun NavGraphBuilder.menuScreenRoute(
             showErrorMessage = showErrorMessage,
             animatedContentScope = this@composable,
             showInfoMessage = showInfoMessage,
+            savedStateHandle = backStackEntry.savedStateHandle,
+            scrollToTopKey = MENU_SCROLL_TO_TOP_KEY,
         )
     }
 }
