@@ -190,3 +190,473 @@ fun ConsumerCartScreen(
         }
     }
 }
+
+@Composable
+fun ConsumerCartEffect(
+    effects: List<ConsumerCart.Event>,
+    consumerEffects: () -> Unit,
+    back: () -> Unit,
+    goToMenuFragment: () -> Unit,
+    goToCreateOrderFragment: () -> Unit,
+    goToLoginFragment: (SuccessLoginDirection) -> Unit,
+    goToProductFragment: (
+        uuid: String,
+        name: String,
+        productDetailsOpenedFrom: ProductDetailsOpenedFrom,
+        additionUuidList: List<String>,
+        cartProductUuid: String?,
+    ) -> Unit,
+    showErrorMessage: (String) -> Unit,
+) {
+    LaunchedEffect(effects) {
+        effects.forEach { effect ->
+            when (effect) {
+                ConsumerCart.Event.NavigateToMenu -> goToMenuFragment()
+
+                ConsumerCart.Event.NavigateToCreateOrder -> goToCreateOrderFragment()
+
+                is ConsumerCart.Event.NavigateToLogin -> goToLoginFragment(SuccessLoginDirection.TO_CREATE_ORDER)
+
+                is ConsumerCart.Event.NavigateToProduct -> {
+                    goToProductFragment(
+                        effect.uuid,
+                        effect.name,
+                        effect.productDetailsOpenedFrom,
+                        effect.additionUuidList,
+                        effect.cartProductUuid,
+                    )
+                }
+
+                ConsumerCart.Event.NavigateBack -> back()
+                ConsumerCart.Event.ShowAddProductError -> {
+                    showErrorMessage(getString(Res.string.error_consumer_cart_add_product))
+                }
+
+                ConsumerCart.Event.ShowRemoveProductError -> {
+                    showErrorMessage(getString(Res.string.error_consumer_cart_remove_product))
+                }
+            }
+        }
+        consumerEffects()
+    }
+}
+
+@Composable
+private fun ConsumerCartSuccessScreen(
+    viewState: ConsumerCartViewState.Success,
+    onAction: (ConsumerCart.Action) -> Unit,
+    animatedContentScope: AnimatedVisibilityScope,
+) {
+    ClearConsumerCartBottomSheet(
+        state = viewState,
+        onAction = onAction,
+    )
+    Column(
+        modifier =
+            Modifier
+                .fillMaxSize(),
+    ) {
+        LazyVerticalGrid(
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .weight(1f),
+            contentPadding = PaddingValues(vertical = 16.dp),
+            columns = GridCells.Fixed(2),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            items(
+                items = viewState.cartProductList,
+                key = { cartProductItem -> cartProductItem.key },
+                span = { _ -> GridItemSpan(maxLineSpan) },
+            ) { cartProductItem ->
+                FoodDeliveryItem(
+                    modifier =
+                        Modifier
+                            .animateItem()
+                            .animateContentSize(
+                                animationSpec = tween(500),
+                            ),
+                    needDivider = !cartProductItem.isLast,
+                ) {
+                    CartProductItem(
+                        cartProductItem = cartProductItem,
+                        onCountIncreased = {
+                            onAction(
+                                ConsumerCart.Action.AddProductToCartClick(
+                                    cartProductUuid = cartProductItem.uuid,
+                                ),
+                            )
+                        },
+                        onCountDecreased = {
+                            onAction(
+                                ConsumerCart.Action.RemoveProductFromCartClick(
+                                    cartProductUuid = cartProductItem.uuid,
+                                ),
+                            )
+                        },
+                        onClick = {
+                            onAction(
+                                ConsumerCart.Action.OnCartProductClick(
+                                    cartProductUuid = cartProductItem.uuid,
+                                ),
+                            )
+                        },
+                    )
+                }
+            }
+
+            if (viewState.cartProductList.isEmpty()) {
+                item(
+                    span = { GridItemSpan(maxLineSpan) },
+                    key = "Empty screen",
+                ) {
+                    EmptyScreen(
+                        imageId = Res.drawable.ic_cart_24,
+                        imageDescriptionId = Res.string.description_consumer_cart_empty,
+                        mainTextId = Res.string.title_consumer_cart_empty,
+                        extraTextId = Res.string.msg_consumer_cart_empty,
+                    )
+                }
+            }
+
+            recommendationItems(
+                recommendationList = viewState.recommendationList,
+                onAction = onAction,
+                animatedContentScope = animatedContentScope,
+            )
+        }
+
+        BottomPanel(
+            bottomPanelInfo = viewState.bottomPanelInfo,
+            onAction = onAction,
+        )
+    }
+}
+
+@Composable
+private fun BottomPanel(
+    bottomPanelInfo: ConsumerCartViewState.BottomPanelInfoUi?,
+    onAction: (ConsumerCart.Action) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    FoodDeliverySurface(
+        modifier = modifier,
+        elevated = false,
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = spacedBy(8.dp),
+        ) {
+            if (bottomPanelInfo == null) {
+                MainButton(
+                    modifier =
+                        Modifier.padding(
+                            bottom = LocalBottomBarPadding.current,
+                        ),
+                    textStringId = Res.string.action_consumer_cart_menu,
+                    onClick = {
+                        onAction(ConsumerCart.Action.OnMenuClick)
+                    },
+                )
+            } else {
+                Motivation(bottomPanelInfo.motivation)
+                bottomPanelInfo.discount?.let { discount ->
+                    Row {
+                        Text(
+                            text = stringResource(Res.string.title_consumer_cart_discount),
+                            style = FoodDeliveryTheme.typography.bodyMedium,
+                            color = FoodDeliveryTheme.colors.mainColors.onSurface,
+                        )
+                        Spacer(modifier = Modifier.weight(1f))
+
+                        DiscountCard(discount = discount)
+                    }
+                }
+                Row {
+                    Text(
+                        text = stringResource(Res.string.title_consumer_cart_total),
+                        style = FoodDeliveryTheme.typography.bodyMedium.bold,
+                        color = FoodDeliveryTheme.colors.mainColors.onSurface,
+                    )
+                    Spacer(modifier = Modifier.weight(1f))
+                    bottomPanelInfo.oldTotalCost?.let { oldTotalCost ->
+                        Text(
+                            modifier =
+                                Modifier
+                                    .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
+                            text = oldTotalCost,
+                            style = FoodDeliveryTheme.typography.bodyMedium.bold,
+                            color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
+                            textDecoration = TextDecoration.LineThrough,
+                        )
+                    }
+                    Text(
+                        text = bottomPanelInfo.newTotalCost,
+                        style = FoodDeliveryTheme.typography.bodyMedium.bold,
+                        color = FoodDeliveryTheme.colors.mainColors.onSurface,
+                    )
+                }
+                MainButton(
+                    modifier =
+                        Modifier.padding(
+                            top = 8.dp,
+                            bottom = LocalBottomBarPadding.current,
+                        ),
+                    textStringId = Res.string.action_consumer_cart_creeate_order,
+                    onClick = {
+                        onAction(ConsumerCart.Action.OnCreateOrderClick)
+                    },
+                    enabled = bottomPanelInfo.orderAvailable,
+                )
+            }
+        }
+    }
+}
+
+private fun LazyGridScope.recommendationItems(
+    recommendationList: ImmutableList<ProductUi>,
+    onAction: (ConsumerCart.Action) -> Unit,
+    animatedContentScope: AnimatedVisibilityScope,
+) {
+    if (recommendationList.isNotEmpty()) {
+        item(
+            span = { GridItemSpan(maxLineSpan) },
+            key = "Recommendations",
+        ) {
+            Text(
+                modifier =
+                    Modifier
+                        .padding(top = 8.dp)
+                        .padding(horizontal = 16.dp),
+                text =
+                    stringResource(
+                        Res.string.msg_consumer_cart_recommendations,
+                    ),
+                style = FoodDeliveryTheme.typography.titleMedium.medium,
+                color = FoodDeliveryTheme.colors.mainColors.onSurface,
+            )
+        }
+    }
+    itemsIndexed(
+        items = recommendationList,
+        key = { _, recommendation -> recommendation.key },
+        span = { _, _ -> GridItemSpan(1) },
+    ) { index, recommendation ->
+        FoodDeliveryProductItem(
+            modifier =
+                Modifier
+                    .padding(
+                        top = 8.dp,
+                        start =
+                            if (index % 2 == 0) {
+                                16.dp
+                            } else {
+                                0.dp
+                            },
+                        end =
+                            if (index % 2 == 1) {
+                                16.dp
+                            } else {
+                                0.dp
+                            },
+                    ),
+            onAddProductClick = { menuProductUuid ->
+                onAction(
+                    ConsumerCart.Action.AddRecommendationProductToCartClick(
+                        menuProductUuid = menuProductUuid,
+                    ),
+                )
+            },
+            onProductClick = { menuProductUuid ->
+                onAction(
+                    ConsumerCart.Action.RecommendationClick(
+                        menuProductUuid = menuProductUuid,
+                    ),
+                )
+            },
+            animatedContentScope = animatedContentScope,
+            uuid = recommendation.uuid,
+            photoLink = recommendation.photoLink,
+            name = recommendation.name,
+            oldPrice = recommendation.oldPrice,
+            newPrice = recommendation.newPrice,
+        )
+    }
+}
+
+@Composable
+private fun ClearConsumerCartBottomSheet(
+    state: ConsumerCartViewState.Success,
+    onAction: (ConsumerCart.Action) -> Unit,
+) {
+    FoodDeliveryModalBottomSheet(
+        onDismissRequest = {
+            onAction(ConsumerCart.Action.CancelBottomSheet)
+        },
+        title = stringResource(Res.string.title_consumer_delete_orders),
+        isShown = state.acceptDeleteOrder.isShown,
+    ) {
+        MainButton(
+            elevated = false,
+            text = stringResource(Res.string.action_consumer_delete),
+            onClick = {
+                onAction(ConsumerCart.Action.ConfirmClearCart)
+            },
+        )
+        SecondaryButton(
+            modifier = Modifier.padding(top = 4.dp),
+            textStringId = Res.string.common_cancel,
+            elevated = false,
+            onClick = {
+                onAction(ConsumerCart.Action.CancelBottomSheet)
+            },
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun ConsumerCartSuccessScreenPreview() {
+    fun getCartProductItemModel(uuid: String) =
+        ConsumerCartViewState.CartProductItemUi(
+            key = uuid,
+            uuid = uuid,
+            name = "Бергер",
+            newCost = "300 ₽",
+            oldCost = "330 ₽",
+            photoLink = "",
+            count = 3,
+            additions = null,
+            isLast = false,
+        )
+
+    FoodDeliveryTheme {
+        SharedTransitionLayout {
+            SharedTransitionPreview {
+                AnimatedVisibility(
+                    visible = true,
+                ) {
+                    ConsumerCartScreen(
+                        viewState =
+                            ConsumerCartViewState.Success(
+                                cartProductList =
+                                    persistentListOf(
+                                        getCartProductItemModel("1"),
+                                        getCartProductItemModel("2"),
+                                        getCartProductItemModel("3"),
+                                        getCartProductItemModel("4"),
+                                        getCartProductItemModel("5"),
+                                    ),
+                                bottomPanelInfo =
+                                    ConsumerCartViewState.BottomPanelInfoUi(
+                                        motivation =
+                                            MotivationUi.ForLowerDelivery(
+                                                increaseAmountBy = "550 ₽",
+                                                progress = 0.5f,
+                                                isFree = true,
+                                            ),
+                                        discount = "10%",
+                                        oldTotalCost = "1650 ₽",
+                                        newTotalCost = "1500 ₽",
+                                        orderAvailable = true,
+                                    ),
+                                recommendationList =
+                                    persistentListOf(
+                                        getRecommendation("6"),
+                                        getRecommendation("7"),
+                                    ),
+                                acceptDeleteOrder =
+                                    ConsumerCartViewState.BottomSheetState(
+                                        isShown = false,
+                                    ),
+                            ),
+                        onAction = {},
+                        animatedContentScope = this,
+                    )
+                }
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalSharedTransitionApi::class)
+@Preview(showBackground = true)
+@Composable
+private fun ConsumerCartEmptyScreenPreview() {
+    FoodDeliveryTheme {
+        SharedTransitionLayout {
+            SharedTransitionPreview {
+                AnimatedVisibility(
+                    visible = true,
+                ) {
+                    ConsumerCartScreen(
+                        viewState =
+                            ConsumerCartViewState.Success(
+                                cartProductList = persistentListOf(),
+                                bottomPanelInfo = null,
+                                recommendationList =
+                                    persistentListOf(
+                                        getRecommendation("1"),
+                                        getRecommendation("2"),
+                                    ),
+                                acceptDeleteOrder =
+                                    ConsumerCartViewState.BottomSheetState(
+                                        isShown = false,
+                                    ),
+                            ),
+                        onAction = {},
+                        animatedContentScope = this,
+                    )
+                }
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalSharedTransitionApi::class)
+@Preview(showBackground = true)
+@Composable
+private fun ConsumerCartLoadingScreenPreview() {
+    FoodDeliveryTheme {
+        SharedTransitionLayout {
+            AnimatedContent(
+                targetState = true,
+            ) {
+                ConsumerCartScreen(
+                    viewState = ConsumerCartViewState.Loading,
+                    onAction = {},
+                    animatedContentScope = this,
+                )
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun ConsumerCartErrorScreenPreview() {
+    FoodDeliveryTheme {
+        SharedTransitionLayout {
+            AnimatedContent(
+                targetState = true,
+            ) {
+                ConsumerCartScreen(
+                    viewState = ConsumerCartViewState.Error,
+                    onAction = {},
+                    animatedContentScope = this,
+                )
+            }
+        }
+    }
+}
+
+private fun getRecommendation(uuid: String) =
+    ProductUi(
+        uuid = uuid,
+        key = uuid,
+        photoLink = "",
+        name = "Бергер",
+        newPrice = "99 ₽",
+        oldPrice = "100 ₽",
+    )
