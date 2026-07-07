@@ -251,7 +251,7 @@ class MenuViewModel(
         currentMenuPosition = menuPosition
         val hasFavoritesSection = mutableDataState.value.favoriteProductList.isNotEmpty()
 
-        if (hasFavoritesSection && menuPosition < menuContentStartGridIndex(hasFavoritesSection = hasFavoritesSection)) {
+        if (hasFavoritesSection && menuPosition == MENU_GRID_INDEX_FAVORITES) {
             setCategory(FAVORITES_CATEGORY_UUID)
             return
         }
