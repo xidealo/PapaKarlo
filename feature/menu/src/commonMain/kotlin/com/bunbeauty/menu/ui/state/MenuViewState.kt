@@ -18,6 +18,7 @@ data class MenuViewState(
     val state: State,
     val userScrollEnabled: Boolean,
     val lastOrder: LightOrder?,
+    val scrollToTopRequest: Int = 0,
 ) : BaseViewState {
     @Immutable
     sealed interface State {

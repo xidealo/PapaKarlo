@@ -46,6 +46,7 @@ fun MenuState.DataState.mapState(): MenuViewState {
             },
         userScrollEnabled = userScrollEnabled,
         lastOrder = lastOrder,
+        scrollToTopRequest = scrollToTopRequest,
     )
 }
 
