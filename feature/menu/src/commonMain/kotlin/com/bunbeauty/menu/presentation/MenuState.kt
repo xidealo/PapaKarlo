@@ -17,6 +17,7 @@ interface MenuState {
         val state: State,
         val userScrollEnabled: Boolean,
         val lastOrder: LightOrder?,
+        val scrollToTopRequest: Int = 0,
     ) : BaseDataState {
         enum class State {
             LOADING,
@@ -61,6 +62,8 @@ interface MenuState {
         data object StopLastOrderObservation : Action
 
         data object RefreshFavorites : Action
+
+        data object ScrollToTop : Action
     }
 
     sealed interface Event : BaseEvent {
