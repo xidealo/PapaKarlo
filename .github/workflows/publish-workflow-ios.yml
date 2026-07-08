@@ -76,6 +76,50 @@ jobs:
           tar -xzf firebase-plists.tar.gz
           rm firebase-plists.tar.gz
 
+      - name: "Verify GoogleService-Info.plist for publish apps"
+        run: |
+          set -euo pipefail
+          # scheme_key|res_folder|expected_BUNDLE_ID (same set as Fastfile `apps` / submit matrix)
+          APPS=(
+            "papakarlo|papakarloRes|com.bunbeuaty.papakarlo"
+            "gustopub|gustoPubRes|com.bunbeauty.gustopub"
+            "yuliar|yuliarRes|com.bunbeauty.yuliar"
+            "tandirhouse|tandirHouseRes|com.bunbeauty.tandirhouse"
+            "vkuskavkaza|vkusKavkazaRes|com.bunbeauty.vkuskavkaza"
+            "djan|djanRes|com.bunbeauty.djan"
+            "usaba|usadbaRes|com.bunbeauty.usadba"
+            "emoji|emojiRes|com.bunbeauty.emoji"
+            "estpoest|estpoestRes|com.bunbeauty.estpoest"
+            "taverna|tavernaRes|com.bunbeauty.taverna"
+            "voljane|voljaneRes|com.bunbeauty.voljane"
+          )
+          missing=0
+          for entry in "${APPS[@]}"; do
+            IFS='|' read -r name res expected_bundle <<< "$entry"
+            plist="iosApp/iosApp/${res}/GoogleService-Info.plist"
+            if [ ! -f "$plist" ]; then
+              echo "::error::Missing $plist (app=$name)"
+              missing=1
+              continue
+            fi
+            actual_bundle=$(/usr/libexec/PlistBuddy -c 'Print :BUNDLE_ID' "$plist" 2>/dev/null || true)
+            if [ -z "$actual_bundle" ]; then
+              echo "::error::No BUNDLE_ID in $plist (app=$name)"
+              missing=1
+              continue
+            fi
+            if [ "$actual_bundle" != "$expected_bundle" ]; then
+              echo "::error::BUNDLE_ID mismatch for $name: expected=$expected_bundle actual=$actual_bundle ($plist)"
+              missing=1
+              continue
+            fi
+            echo "OK $name: $plist ($actual_bundle)"
+          done
+          if [ "$missing" -ne 0 ]; then
+            echo "::error::One or more GoogleService-Info.plist checks failed. Update secret IOS_FIREBASE_PLISTS_TAR_BASE64."
+            exit 1
+          fi
+
       - name: Select Xcode
         uses: maxim-lobanov/setup-xcode@v1
         with:
