@@ -6,9 +6,9 @@ object Namespace {
 object CommonApplication {
     private const val versionMajor = 3
     private const val versionMinor = 0
-    private const val versionPatch = 7
+    private const val versionPatch = 8
 
-    const val versionCode = 307
+    const val versionCode = 308
     const val versionName = "$versionMajor.$versionMinor.$versionPatch"
 
     const val deploymentTarget = "15.5"

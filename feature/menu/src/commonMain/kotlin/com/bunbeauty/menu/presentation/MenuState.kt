@@ -13,9 +13,11 @@ interface MenuState {
         val categoryItemList: List<CategoryItem>,
         val cartCostAndCount: CartCostAndCount?,
         val menuItemList: List<MenuItem>,
+        val favoriteProductList: List<MenuItem.Product> = emptyList(),
         val state: State,
         val userScrollEnabled: Boolean,
         val lastOrder: LightOrder?,
+        val scrollToTopRequest: Int = 0,
     ) : BaseDataState {
         enum class State {
             LOADING,
@@ -58,6 +60,10 @@ interface MenuState {
         data object StartLastOrderObservation : Action
 
         data object StopLastOrderObservation : Action
+
+        data object RefreshFavorites : Action
+
+        data object ScrollToTop : Action
     }
 
     sealed interface Event : BaseEvent {

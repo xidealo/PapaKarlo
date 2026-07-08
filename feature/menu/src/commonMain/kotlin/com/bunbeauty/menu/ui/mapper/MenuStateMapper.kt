@@ -5,14 +5,22 @@ import com.bunbeauty.core.model.CategoryItem
 import com.bunbeauty.core.model.MenuItem
 import com.bunbeauty.core.model.ProductUi
 import com.bunbeauty.designsystem.ui.element.TopCartUi
-import com.bunbeauty.menu.presentation.MENU_FIRST_CONTENT_GRID_INDEX
 import com.bunbeauty.menu.presentation.MenuState
+import com.bunbeauty.menu.presentation.menuContentStartGridIndex
 import com.bunbeauty.menu.ui.state.MenuItemUi
 import com.bunbeauty.menu.ui.state.MenuViewState
 import kotlinx.collections.immutable.toImmutableList
 
-fun MenuState.DataState.mapState(): MenuViewState =
-    MenuViewState(
+fun MenuState.DataState.mapState(): MenuViewState {
+    val favoriteProducts =
+        favoriteProductList
+            .map { menuProduct ->
+                menuProduct.toMenuProductItemUi()
+            }.map { menuItemUi ->
+                menuItemUi.product
+            }.toImmutableList()
+
+    return MenuViewState(
         topCartUi =
             TopCartUi(
                 cost =
@@ -27,6 +35,8 @@ fun MenuState.DataState.mapState(): MenuViewState =
                 .map { menuItem ->
                     menuItem.toMenuItemUi()
                 }.toImmutableList(),
+        favoriteProductList = favoriteProducts,
+        hasFavoritesSection = favoriteProducts.isNotEmpty(),
         state =
             when (state) {
                 MenuState.DataState.State.LOADING -> MenuViewState.State.Loading
@@ -35,17 +45,25 @@ fun MenuState.DataState.mapState(): MenuViewState =
             },
         userScrollEnabled = userScrollEnabled,
         lastOrder = lastOrder,
+        scrollToTopRequest = scrollToTopRequest,
     )
+}
 
 fun getMenuListPosition(
     categoryItem: CategoryItem,
     menuItemList: List<MenuItemUi>,
+    hasFavoritesSection: Boolean,
 ): Int {
     val indexInMenuList =
         menuItemList.indexOfFirst { menuItem ->
             (menuItem as? MenuItemUi.CategoryHeader)?.uuid == categoryItem.uuid
         }
-    return if (indexInMenuList < 0) 0 else indexInMenuList + MENU_FIRST_CONTENT_GRID_INDEX
+    val startIndex = menuContentStartGridIndex(hasFavoritesSection = hasFavoritesSection)
+    return if (indexInMenuList < 0) {
+        startIndex
+    } else {
+        indexInMenuList + startIndex
+    }
 }
 
 fun MenuItem.Product.toMenuProductItemUi(): MenuItemUi.Product {

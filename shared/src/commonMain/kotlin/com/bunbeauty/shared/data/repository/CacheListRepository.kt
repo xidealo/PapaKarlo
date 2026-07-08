@@ -2,14 +2,13 @@ package com.bunbeauty.shared.data.repository
 
 import com.bunbeauty.core.ApiResult
 import com.bunbeauty.shared.data.network.model.ListServer
+import com.bunbeauty.shared.ioDispatcher
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 
 abstract class CacheListRepository<D> : BaseRepository() {
-    val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+    val scope = CoroutineScope(SupervisorJob() + ioDispatcher)
 
     protected var cache: List<D>? = null
 

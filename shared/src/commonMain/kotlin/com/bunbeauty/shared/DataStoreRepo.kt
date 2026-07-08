@@ -1,6 +1,5 @@
 package com.bunbeauty.shared
 
-import com.bunbeauty.core.model.Delivery
 import com.bunbeauty.core.model.Discount
 import com.bunbeauty.core.model.Settings
 import com.bunbeauty.core.model.UserCityUuid
@@ -24,12 +23,6 @@ interface DataStoreRepo {
 
     @Deprecated("use clearUserData")
     suspend fun clearUserUuid()
-
-    val delivery: Flow<Delivery?>
-
-    suspend fun getDelivery(): Delivery?
-
-    suspend fun saveDelivery(delivery: Delivery)
 
     val settings: Flow<Settings?>
 

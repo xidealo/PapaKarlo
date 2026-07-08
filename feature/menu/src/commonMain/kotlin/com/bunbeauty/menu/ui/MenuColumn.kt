@@ -12,6 +12,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -65,204 +66,233 @@ internal fun MenuColumn(
     animatedContentScope: AnimatedVisibilityScope,
     onAction: (MenuState.Action) -> Unit,
 ) {
-    LazyVerticalGrid(
-        modifier = Modifier.fillMaxSize(),
-        contentPadding =
-            PaddingValues(
-                bottom = 96.dp + LocalBottomBarPadding.current,
-                start = 16.dp,
-                end = 16.dp,
-            ),
-        columns = GridCells.Fixed(2),
-        horizontalArrangement = spacedBy(8.dp),
-        state = menuLazyListState,
-        userScrollEnabled = menu.userScrollEnabled,
-    ) {
-        item(
-            key = "TopBar",
-            span = {
-                GridItemSpan(maxLineSpan)
-            },
+    BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
+        // Keep exactly 2 columns on phones (< 600.dp) so the mobile layout is
+        // unchanged, and add more columns as the viewport gets wider (tablets/web).
+        val columnCount =
+            when {
+                maxWidth < 600.dp -> 2
+                maxWidth < 840.dp -> 3
+                maxWidth < 1080.dp -> 4
+                else -> 5
+            }
+        LazyVerticalGrid(
+            modifier = Modifier.fillMaxSize(),
+            contentPadding =
+                PaddingValues(
+                    bottom = 96.dp + LocalBottomBarPadding.current,
+                    start = 16.dp,
+                    end = 16.dp,
+                ),
+            columns = GridCells.Fixed(columnCount),
+            horizontalArrangement = spacedBy(8.dp),
+            state = menuLazyListState,
+            userScrollEnabled = menu.userScrollEnabled,
         ) {
-            Box(
-                modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .ignoreHorizontalParentPadding(horizontal = 16.dp)
-                        .background(LocalStatusBarColor.current.value),
+            item(
+                key = "TopBar",
+                span = {
+                    GridItemSpan(maxLineSpan)
+                },
             ) {
                 Box(
                     modifier =
                         Modifier
                             .fillMaxWidth()
-                            .background(
-                                color = FoodDeliveryTheme.colors.mainColors.primary,
-                                shape =
-                                    RoundedCornerShape(
-                                        bottomEnd = 32.dp,
-                                        bottomStart = 32.dp,
-                                    ),
-                            ).statusBarsPadding(),
+                            .ignoreHorizontalParentPadding(horizontal = 16.dp)
+                            .background(LocalStatusBarColor.current.value),
                 ) {
-                    Row(
+                    Box(
                         modifier =
                             Modifier
                                 .fillMaxWidth()
-                                .padding(
-                                    start = 16.dp,
-                                    end = 8.dp,
-                                    top = 8.dp,
-                                ),
-                        verticalAlignment = Alignment.CenterVertically,
+                                .background(
+                                    color = FoodDeliveryTheme.colors.mainColors.primary,
+                                    shape =
+                                        RoundedCornerShape(
+                                            bottomEnd = 32.dp,
+                                            bottomStart = 32.dp,
+                                        ),
+                                ).statusBarsPadding(),
                     ) {
-                        Text(
-                            modifier = Modifier.weight(1f),
-                            text = stringResource(Res.string.title_menu),
-                            maxLines = 1,
-                            style = FoodDeliveryTheme.typography.titleLarge.medium,
-                            overflow = TextOverflow.Ellipsis,
-                            color = FoodDeliveryTheme.colors.mainColors.onPrimary,
-                        )
-
-                        IconButton(
-                            onClick = { onAction(MenuState.Action.OnProfileClicked) },
+                        Row(
+                            modifier =
+                                Modifier
+                                    .fillMaxWidth()
+                                    .padding(
+                                        start = 16.dp,
+                                        end = 8.dp,
+                                        top = 8.dp,
+                                    ),
+                            verticalAlignment = Alignment.CenterVertically,
                         ) {
-                            Icon(
-                                modifier = Modifier.icon24(),
-                                painter = painterResource(resource = Res.drawable.ic_profile),
-                                tint = FoodDeliveryTheme.colors.mainColors.onPrimary,
-                                contentDescription = null,
+                            Text(
+                                modifier = Modifier.weight(1f),
+                                text = stringResource(Res.string.title_menu),
+                                maxLines = 1,
+                                style = FoodDeliveryTheme.typography.titleLarge.medium,
+                                overflow = TextOverflow.Ellipsis,
+                                color = FoodDeliveryTheme.colors.mainColors.onPrimary,
+                            )
+
+                            IconButton(
+                                onClick = { onAction(MenuState.Action.OnProfileClicked) },
+                            ) {
+                                Icon(
+                                    modifier = Modifier.icon24(),
+                                    painter = painterResource(resource = Res.drawable.ic_profile),
+                                    tint = FoodDeliveryTheme.colors.mainColors.onPrimary,
+                                    contentDescription = null,
+                                )
+                            }
+                        }
+
+                        logoMedium?.let { logo ->
+                            Image(
+                                modifier =
+                                    Modifier
+                                        .height(height = 96.dp)
+                                        .padding(vertical = 16.dp)
+                                        .align(Alignment.Center),
+                                painter = painterResource(resource = logo),
+                                contentDescription = stringResource(resource = Res.string.description_login_logo),
                             )
                         }
                     }
+                }
+            }
 
-                    logoMedium?.let { logo ->
-                        Image(
+            stickyHeader {
+                MenuCategoryRow(
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .ignoreHorizontalParentPadding(horizontal = 16.dp),
+                    categoryItemList = menu.categoryItemList,
+                    menuItemList = menu.menuItemList,
+                    hasFavoritesSection = menu.hasFavoritesSection,
+                    menuLazyGridState = menuLazyListState,
+                    onAction = onAction,
+                )
+            }
+
+            item(
+                key = "LastOrder",
+                span = {
+                    GridItemSpan(maxLineSpan)
+                },
+            ) {
+                AnimatedVisibility(
+                    visible = menu.lastOrder != null,
+                    enter =
+                        fadeIn(animationSpec = tween(durationMillis = 300)) +
+                            expandVertically(animationSpec = tween(durationMillis = 300)),
+                    exit =
+                        fadeOut(animationSpec = tween(durationMillis = 300)) +
+                            shrinkVertically(animationSpec = tween(durationMillis = 300)),
+                ) {
+                    menu.lastOrder?.let { lastOrder ->
+                        LastOrderMenuItem(
+                            onClick = {
+                                onAction(MenuState.Action.OnLastOrderClicked(lastOrder.uuid))
+                            },
                             modifier =
                                 Modifier
-                                    .height(height = 96.dp)
-                                    .padding(vertical = 16.dp)
-                                    .align(Alignment.Center),
-                            painter = painterResource(resource = logo),
-                            contentDescription = stringResource(resource = Res.string.description_login_logo),
+                                    .fillMaxWidth()
+                                    .ignoreHorizontalParentPadding(horizontal = 16.dp),
+                            lastOrder = lastOrder,
                         )
                     }
                 }
             }
-        }
 
-        stickyHeader {
-            MenuCategoryRow(
-                modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .ignoreHorizontalParentPadding(horizontal = 16.dp),
-                categoryItemList = menu.categoryItemList,
-                menuItemList = menu.menuItemList,
-                menuLazyGridState = menuLazyListState,
-                onAction = onAction,
-            )
-        }
-
-        item(
-            key = "LastOrder",
-            span = {
-                GridItemSpan(maxLineSpan)
-            },
-        ) {
-            AnimatedVisibility(
-                visible = menu.lastOrder != null,
-                enter =
-                    fadeIn(animationSpec = tween(durationMillis = 300)) +
-                        expandVertically(animationSpec = tween(durationMillis = 300)),
-                exit =
-                    fadeOut(animationSpec = tween(durationMillis = 300)) +
-                        shrinkVertically(animationSpec = tween(durationMillis = 300)),
-            ) {
-                menu.lastOrder?.let { lastOrder ->
-                    LastOrderMenuItem(
-                        onClick = {
-                            onAction(MenuState.Action.OnLastOrderClicked(lastOrder.uuid))
-                        },
-                        modifier =
-                            Modifier
-                                .fillMaxWidth()
-                                .ignoreHorizontalParentPadding(horizontal = 16.dp),
-                        lastOrder = lastOrder,
+            if (menu.hasFavoritesSection) {
+                item(
+                    key = "Favorites",
+                    span = {
+                        GridItemSpan(maxLineSpan)
+                    },
+                ) {
+                    MenuFavoritesRow(
+                        modifier = Modifier.fillMaxWidth()
+                            .ignoreHorizontalParentPadding(horizontal = 16.dp),
+                        products = menu.favoriteProductList,
+                        animatedContentScope = animatedContentScope,
+                        onAction = onAction,
                     )
                 }
             }
-        }
 
-        itemsIndexed(
-            items = menu.menuItemList,
-            key = { _, menuItemModel -> menuItemModel.key },
-            span = { _, menuItemModel ->
-                when (menuItemModel) {
-                    is MenuItemUi.Discount,
-                    is MenuItemUi.CategoryHeader,
-                    -> GridItemSpan(maxLineSpan)
+            itemsIndexed(
+                items = menu.menuItemList,
+                key = { _, menuItemModel -> menuItemModel.key },
+                span = { _, menuItemModel ->
+                    when (menuItemModel) {
+                        is MenuItemUi.Discount,
+                        is MenuItemUi.CategoryHeader,
+                        -> GridItemSpan(maxLineSpan)
 
-                    else -> GridItemSpan(1)
-                }
-            },
-        ) { _, menuItem ->
-            when (menuItem) {
-                is MenuItemUi.Discount -> {
-                    BannerCard(
-                        title =
-                            stringResource(
-                                resource = Res.string.title_menu_discount,
-                                menuItem.discount,
-                            ),
-                        text =
-                            stringResource(
-                                resource = Res.string.msg_menu_discount,
-                                menuItem.discount,
-                            ),
-                        icon = Res.drawable.ic_discount,
-                        iconDescription =
-                            stringResource(
-                                Res.string.description_ic_discount,
-                            ),
-                        modifier =
-                            Modifier
-                                .padding(top = 8.dp),
-                    )
-                }
-
-                is MenuItemUi.CategoryHeader -> {
-                    Text(
-                        modifier =
-                            Modifier.padding(
-                                top = 16.dp,
-                            ),
-                        text = menuItem.name,
-                        style = FoodDeliveryTheme.typography.titleMedium.bold,
-                        color = FoodDeliveryTheme.colors.mainColors.onSurface,
-                    )
-                }
-
-                is MenuItemUi.Product -> {
-                    FoodDeliveryProductItem(
-                        animatedContentScope = animatedContentScope,
-                        modifier =
-                            Modifier
-                                .padding(
-                                    top = 12.dp,
+                        else -> GridItemSpan(1)
+                    }
+                },
+            ) { _, menuItem ->
+                when (menuItem) {
+                    is MenuItemUi.Discount -> {
+                        BannerCard(
+                            title =
+                                stringResource(
+                                    resource = Res.string.title_menu_discount,
+                                    menuItem.discount,
                                 ),
-                        onAddProductClick = { uuid ->
-                            onAction(MenuState.Action.OnAddProductClicked(uuid))
-                        },
-                        onProductClick = { uuid ->
-                            onAction(MenuState.Action.OnMenuItemClicked(uuid))
-                        },
-                        uuid = menuItem.product.uuid,
-                        photoLink = menuItem.product.photoLink,
-                        name = menuItem.product.name,
-                        oldPrice = menuItem.product.oldPrice,
-                        newPrice = menuItem.product.newPrice,
-                    )
+                            text =
+                                stringResource(
+                                    resource = Res.string.msg_menu_discount,
+                                    menuItem.discount,
+                                ),
+                            icon = Res.drawable.ic_discount,
+                            iconDescription =
+                                stringResource(
+                                    Res.string.description_ic_discount,
+                                ),
+                            modifier =
+                                Modifier
+                                    .padding(top = 8.dp),
+                        )
+                    }
+
+                    is MenuItemUi.CategoryHeader -> {
+                        Text(
+                            modifier =
+                                Modifier.padding(
+                                    top = 16.dp,
+                                ),
+                            text = menuItem.name,
+                            style = FoodDeliveryTheme.typography.titleMedium.bold,
+                            color = FoodDeliveryTheme.colors.mainColors.onSurface,
+                        )
+                    }
+
+                    is MenuItemUi.Product -> {
+                        FoodDeliveryProductItem(
+                            animatedContentScope = animatedContentScope,
+                            modifier =
+                                Modifier
+                                    .padding(
+                                        top = 12.dp,
+                                    ),
+                            onAddProductClick = { uuid ->
+                                onAction(MenuState.Action.OnAddProductClicked(uuid))
+                            },
+                            onProductClick = { uuid ->
+                                onAction(MenuState.Action.OnMenuItemClicked(uuid))
+                            },
+                            uuid = menuItem.product.uuid,
+                            photoLink = menuItem.product.photoLink,
+                            name = menuItem.product.name,
+                            oldPrice = menuItem.product.oldPrice,
+                            newPrice = menuItem.product.newPrice,
+                        )
+                    }
                 }
             }
         }

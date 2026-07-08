@@ -14,8 +14,9 @@ import com.bunbeauty.shared.data.network.model.AddressServer
 import com.bunbeauty.shared.data.network.model.CafeServer
 import com.bunbeauty.shared.data.network.model.CategoryServer
 import com.bunbeauty.shared.data.network.model.CityServer
-import com.bunbeauty.shared.data.network.model.DeliveryServer
 import com.bunbeauty.shared.data.network.model.DiscountServer
+import com.bunbeauty.shared.data.network.model.FavoriteServer
+import com.bunbeauty.shared.data.network.model.PostFavoriteServer
 import com.bunbeauty.shared.data.network.model.ForceUpdateVersionServer
 import com.bunbeauty.shared.data.network.model.LinkServer
 import com.bunbeauty.shared.data.network.model.ListServer
@@ -45,6 +46,7 @@ import io.ktor.client.call.body
 import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.plugins.timeout
 import io.ktor.client.request.HttpRequestBuilder
+import io.ktor.client.request.delete
 import io.ktor.client.request.get
 import io.ktor.client.request.header
 import io.ktor.client.request.parameter
@@ -104,12 +106,6 @@ internal class NetworkConnectorImpl(
         getData(
             path = "street",
             parameters = hashMapOf(CITY_UUID_PARAMETER to cityUuid),
-        )
-
-    override suspend fun getDelivery(): ApiResult<DeliveryServer> =
-        getData(
-            path = "delivery",
-            parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuidProvider.companyUuid),
         )
 
     override suspend fun getDiscount(): ApiResult<DiscountServer> =
@@ -213,6 +209,13 @@ internal class NetworkConnectorImpl(
             parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuidProvider.companyUuid),
         )
 
+    override suspend fun getFavoriteList(token: String): ApiResult<ListServer<FavoriteServer>> =
+        getData(
+            path = "v2/client/favorite",
+            parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuidProvider.companyUuid),
+            token = token,
+        )
+
     // POST
     override suspend fun postUserAddress(
         token: String,
@@ -241,6 +244,17 @@ internal class NetworkConnectorImpl(
         postData(
             path = "v5/order",
             body = order,
+            token = token,
+        )
+
+    override suspend fun postFavorite(
+        token: String,
+        body: PostFavoriteServer,
+    ): ApiResult<FavoriteServer> =
+        postData(
+            path = "v2/client/favorite",
+            parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuidProvider.companyUuid),
+            body = body,
             token = token,
         )
 
@@ -279,6 +293,18 @@ internal class NetworkConnectorImpl(
             path = "client/code_check",
             body = code,
             parameters = mapOf(UUID_PARAMETER to uuid),
+        )
+
+    // DELETE
+
+    override suspend fun deleteFavorite(
+        token: String,
+        menuProductUuid: String,
+    ): ApiResult<Unit> =
+        deleteData(
+            path = "v2/client/favorite/$menuProductUuid",
+            parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuidProvider.companyUuid),
+            token = token,
         )
 
     // WEB_SOCKET
@@ -368,6 +394,35 @@ internal class NetworkConnectorImpl(
                     timeout = timeout,
                 )
             }
+        }
+
+    private suspend fun deleteData(
+        path: String,
+        parameters: Map<String, Any> = mapOf(),
+        token: String? = null,
+        timeout: Long = COMMON_TIMEOUT,
+    ): ApiResult<Unit> =
+        try {
+            client.delete {
+                buildRequest(
+                    path = path,
+                    parameters = parameters,
+                    token = token,
+                    timeout = timeout,
+                )
+            }
+            ApiResult.Success(Unit)
+        } catch (exception: FoodDeliveryNetworkException) {
+            throw exception
+        } catch (exception: ClientRequestException) {
+            val code = exception.response.status.value
+            val message = exception.message
+            errorLogger.logWarning(code = code, message = message, throwable = exception)
+            ApiResult.Error(ApiError(code, message))
+        } catch (exception: Throwable) {
+            val message = exception.message.toString()
+            errorLogger.logWarning(code = 0, message = message, throwable = exception)
+            ApiResult.Error(ApiError(0, message))
         }
 
     private suspend inline fun <reified R> safeCall(networkCall: () -> HttpResponse): ApiResult<R> =

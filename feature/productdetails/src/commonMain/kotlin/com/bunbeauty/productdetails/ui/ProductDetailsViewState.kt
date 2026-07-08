@@ -12,6 +12,8 @@ sealed interface ProductDetailsViewState : BaseViewState {
     data class Success(
         val topCartUi: TopCartUi,
         val menuProductUi: MenuProductUi,
+        val isAuthorized: Boolean,
+        val isFavorite: Boolean,
     ) : ProductDetailsViewState {
         @Immutable
         data class MenuProductUi(

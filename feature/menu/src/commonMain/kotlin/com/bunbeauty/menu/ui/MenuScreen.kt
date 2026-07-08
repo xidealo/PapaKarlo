@@ -106,6 +106,16 @@ private fun MenuSuccessScreen(
                 onAction(MenuState.Action.OnMenuPositionChanged(position))
             }
         }
+        LaunchedEffect(menu.scrollToTopRequest) {
+            if (menu.scrollToTopRequest > 0) {
+                onAction(MenuState.Action.OnStartAutoScroll)
+                try {
+                    menuLazyGridState.scrollToItem(index = 0, scrollOffset = 0)
+                } finally {
+                    onAction(MenuState.Action.OnStopAutoScroll)
+                }
+            }
+        }
         MenuColumn(
             menu = menu,
             menuLazyListState = menuLazyGridState,
@@ -163,6 +173,8 @@ private fun MenuScreenSuccessPreview() {
                                 getCategoryItem("5"),
                                 getCategoryItem("6"),
                             ),
+                        favoriteProductList = persistentListOf(),
+                        hasFavoritesSection = false,
                         menuItemList =
                             persistentListOf(
                                 getMenuCategoryHeaderItem("4"),
@@ -212,6 +224,8 @@ private fun MenuScreenLoadingPreview() {
                 viewState =
                     MenuViewState(
                         categoryItemList = persistentListOf(),
+                        favoriteProductList = persistentListOf(),
+                        hasFavoritesSection = false,
                         topCartUi =
                             TopCartUi(
                                 cost = "100",
@@ -239,6 +253,8 @@ private fun MenuScreenErrorPreview() {
                 viewState =
                     MenuViewState(
                         categoryItemList = persistentListOf(),
+                        favoriteProductList = persistentListOf(),
+                        hasFavoritesSection = false,
                         topCartUi =
                             TopCartUi(
                                 cost = "100",

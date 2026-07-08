@@ -15,10 +15,9 @@ import com.bunbeauty.shared.data.network.model.UpdateNotificationTokenRequest
 import com.bunbeauty.shared.data.network.model.profile.get.ProfileServer
 import com.bunbeauty.shared.data.network.model.profile.patch.PatchUserServer
 import com.bunbeauty.shared.domain.mapFlow
+import com.bunbeauty.shared.ioDispatcher
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
@@ -41,7 +40,7 @@ class UserRepository(
         }
 
     override val coroutineContext: CoroutineContext
-        get() = SupervisorJob() + Dispatchers.IO + coroutineExceptionHandler
+        get() = SupervisorJob() + ioDispatcher + coroutineExceptionHandler
 
     override val tag: String = "USER_TAG"
     var cachedUserUuid: String? = null

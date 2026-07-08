@@ -76,6 +76,8 @@ fun ProductDetailsState.DataState.map(): ProductDetailsViewState {
                                 }.orEmpty(),
                         count = cartCostAndCount?.count.orEmpty(),
                     ),
+                isAuthorized = isAuthorized,
+                isFavorite = isFavorite,
                 menuProductUi =
                     menuProduct.let { menuProduct ->
                         ProductDetailsViewState.Success.MenuProductUi(

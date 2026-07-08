@@ -11,6 +11,7 @@ pluginManagement {
 include(
     ":app",
     ":shared",
+    ":webApp",
 )
 rootProject.name = "PapaKarlo"
 include(":analytic")

@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.compose.LifecycleStartEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.bunbeauty.core.Constants.FAB_SNACKBAR_BOTTOM_PADDING
@@ -22,6 +23,8 @@ import papakarlo.designsystem.generated.resources.msg_menu_product_added
 fun MenuRoute(
     animatedContentScope: AnimatedContentScope,
     viewModel: MenuViewModel = koinViewModel(),
+    savedStateHandle: SavedStateHandle,
+    scrollToTopKey: String,
     goToProductDetailsFragment: (
         uuid: String,
         name: String,
@@ -52,8 +55,18 @@ fun MenuRoute(
 
     LifecycleStartEffect(Unit) {
         onAction(MenuState.Action.StartLastOrderObservation)
+        onAction(MenuState.Action.RefreshFavorites)
         onStopOrDispose {
             onAction(MenuState.Action.StopLastOrderObservation)
+        }
+    }
+
+    LaunchedEffect(savedStateHandle, scrollToTopKey) {
+        savedStateHandle.getStateFlow(scrollToTopKey, false).collect { shouldScrollToTop ->
+            if (shouldScrollToTop) {
+                savedStateHandle[scrollToTopKey] = false
+                onAction(MenuState.Action.ScrollToTop)
+            }
         }
     }
 

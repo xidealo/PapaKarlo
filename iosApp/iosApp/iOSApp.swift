@@ -5,6 +5,8 @@
 //  Created by Марк Шавловский on 03.02.2022.
 //
 
+import FirebaseAnalytics
+import FirebaseCore
 import shared
 import SwiftUI
 
@@ -15,6 +17,17 @@ struct PapaKarloSwiftApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
     init() {
+        // Must configure Firebase before any Analytics/Messaging/Koin Firebase calls.
+        // Analytics was previously started eagerly from Koin (createdAtStart) and crashed
+        // Release builds with com.firebase.installations.
+        if FirebaseApp.app() == nil {
+            FirebaseApp.configure()
+        }
+        #if DEBUG
+        Analytics.setAnalyticsCollectionEnabled(false)
+        #else
+        Analytics.setAnalyticsCollectionEnabled(true)
+        #endif
         KoinKt.doInitKoin()
     }
     

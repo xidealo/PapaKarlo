@@ -74,7 +74,7 @@ import papakarlo.designsystem.generated.resources.description_consumer_cart_empt
 import papakarlo.designsystem.generated.resources.error_consumer_cart_add_product
 import papakarlo.designsystem.generated.resources.error_consumer_cart_loading
 import papakarlo.designsystem.generated.resources.error_consumer_cart_remove_product
-import papakarlo.designsystem.generated.resources.ic_basket
+import papakarlo.designsystem.generated.resources.ic_basket_24
 import papakarlo.designsystem.generated.resources.ic_cart_24
 import papakarlo.designsystem.generated.resources.msg_consumer_cart_empty
 import papakarlo.designsystem.generated.resources.msg_consumer_cart_recommendations
@@ -156,7 +156,7 @@ fun ConsumerCartScreen(
                     if (viewState.cartProductList.isNotEmpty()) {
                         persistentListOf(
                             FoodDeliveryAction(
-                                iconId = Res.drawable.ic_basket,
+                                iconId = Res.drawable.ic_basket_24,
                                 onClick = {
                                     onAction(ConsumerCart.Action.OnClearConsumerCartClick)
                                 },
@@ -522,7 +522,7 @@ private fun ConsumerCartSuccessScreenPreview() {
         ConsumerCartViewState.CartProductItemUi(
             key = uuid,
             uuid = uuid,
-            name = "Бэргер",
+            name = "Бергер",
             newCost = "300 ₽",
             oldCost = "330 ₽",
             photoLink = "",
@@ -656,7 +656,7 @@ private fun getRecommendation(uuid: String) =
         uuid = uuid,
         key = uuid,
         photoLink = "",
-        name = "Бэргер",
+        name = "Бергер",
         newPrice = "99 ₽",
         oldPrice = "100 ₽",
     )

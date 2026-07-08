@@ -2,6 +2,7 @@ package com.bunbeauty.core.domain.user
 
 import com.bunbeauty.core.domain.repo.CafeRepo
 import com.bunbeauty.core.domain.repo.CreateOrderSettingsRepo
+import com.bunbeauty.core.domain.repo.FavoriteRepo
 import com.bunbeauty.core.domain.repo.OrderRepo
 import com.bunbeauty.core.domain.repo.UserAddressRepo
 import com.bunbeauty.core.domain.repo.UserRepo
@@ -13,12 +14,14 @@ class UserInteractor(
     private val cafeRepo: CafeRepo,
     private val userAddressRepo: UserAddressRepo,
     private val createOrderSettingsRepo: CreateOrderSettingsRepo,
+    private val favoriteRepo: FavoriteRepo,
 ) : IUserInteractor {
     override suspend fun clearUserCache() {
         userRepo.clearUserCache()
         orderRepo.clearCache()
         cafeRepo.clearCache()
         userAddressRepo.clearCache()
+        favoriteRepo.clearCache()
         createOrderSettingsRepo.clearWithoutUtensils()
     }
 

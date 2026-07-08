@@ -15,6 +15,10 @@ fun productDetailsFeatureModule() =
                 editCartProductUseCase = get(),
                 getAdditionGroupsWithSelectedAdditionUseCase = get(),
                 getSelectedAdditionsPriceUseCase = get(),
+                observeTokenUseCase = get(),
+                loadFavoritesUseCase = get(),
+                isProductFavoriteUseCase = get(),
+                toggleFavoriteUseCase = get(),
             )
         }
     }

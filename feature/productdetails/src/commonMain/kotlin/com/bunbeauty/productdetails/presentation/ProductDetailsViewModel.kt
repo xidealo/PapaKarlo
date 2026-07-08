@@ -2,6 +2,8 @@ package com.bunbeauty.productdetails.presentation
 
 import com.bunbeauty.analytic.AnalyticService
 import com.bunbeauty.analytic.event.cart.AddCartProductDetailsClickEvent
+import com.bunbeauty.analytic.event.favorite.AddFavoriteClickEvent
+import com.bunbeauty.analytic.event.favorite.RemoveFavoriteClickEvent
 import com.bunbeauty.analytic.event.menu.AddMenuProductDetailsClickEvent
 import com.bunbeauty.analytic.event.recommendation.AddRecommendationProductDetailsClickEvent
 import com.bunbeauty.analytic.parameter.MenuProductUuidEventParameter
@@ -10,8 +12,12 @@ import com.bunbeauty.core.base.SharedStateViewModel
 import com.bunbeauty.core.domain.ObserveCartUseCase
 import com.bunbeauty.core.domain.addition.GetAdditionGroupsWithSelectedAdditionUseCase
 import com.bunbeauty.core.domain.addition.GetPriceOfSelectedAdditionsUseCase
+import com.bunbeauty.core.domain.auth.ObserveTokenUseCase
 import com.bunbeauty.core.domain.cart.AddCartProductUseCase
 import com.bunbeauty.core.domain.cart.EditCartProductUseCase
+import com.bunbeauty.core.domain.favorite.IsProductFavoriteUseCase
+import com.bunbeauty.core.domain.favorite.LoadFavoritesUseCase
+import com.bunbeauty.core.domain.favorite.ToggleFavoriteUseCase
 import com.bunbeauty.core.domain.menu_product.GetMenuProductUseCase
 import com.bunbeauty.core.extension.launchSafe
 import com.bunbeauty.core.model.ProductDetailsOpenedFrom
@@ -28,6 +34,10 @@ class ProductDetailsViewModel(
     private val editCartProductUseCase: EditCartProductUseCase,
     private val getAdditionGroupsWithSelectedAdditionUseCase: GetAdditionGroupsWithSelectedAdditionUseCase,
     private val getSelectedAdditionsPriceUseCase: GetPriceOfSelectedAdditionsUseCase,
+    private val observeTokenUseCase: ObserveTokenUseCase,
+    private val loadFavoritesUseCase: LoadFavoritesUseCase,
+    private val isProductFavoriteUseCase: IsProductFavoriteUseCase,
+    private val toggleFavoriteUseCase: ToggleFavoriteUseCase,
 ) : SharedStateViewModel<ProductDetailsState.DataState, ProductDetailsState.Action, ProductDetailsState.Event>(
         ProductDetailsState.DataState(
             cartCostAndCount = null,
@@ -53,6 +63,8 @@ class ProductDetailsViewModel(
     }
 
     private var observeConsumerCartJob: Job? = null
+    private var observeTokenJob: Job? = null
+    private var currentMenuProductUuid: String = ""
 
     override fun reduce(
         action: ProductDetailsState.Action,
@@ -77,13 +89,106 @@ class ProductDetailsViewModel(
                 )
 
             is ProductDetailsState.Action.Init -> {
+                currentMenuProductUuid = action.menuProductUuid
                 observeCart()
+                observeToken()
                 getMenuProduct(
                     menuProductUuid = action.menuProductUuid,
                     selectedAdditionUuidList = action.selectedAdditionUuidList,
                 )
             }
+
+            ProductDetailsState.Action.FavoriteClick -> onFavoriteClick()
         }
+    }
+
+    private fun onFavoriteClick() {
+        val menuProductUuid = dataState.value.menuProduct.uuid
+        val previousFavorite = dataState.value.isFavorite
+        setState {
+            copy(isFavorite = !isFavorite)
+        }
+        sharedScope.launchSafe(
+            block = {
+                val isFavorite = toggleFavoriteUseCase(menuProductUuid = menuProductUuid)
+                sendFavoriteToggleAnalytic(
+                    menuProductUuid = menuProductUuid,
+                    isFavorite = isFavorite,
+                )
+                setState {
+                    copy(isFavorite = isFavorite)
+                }
+            },
+            onError = {
+                setState {
+                    copy(isFavorite = previousFavorite)
+                }
+                addEvent {
+                    ProductDetailsState.Event.ShowFavoriteError
+                }
+            },
+        )
+    }
+
+    private fun sendFavoriteToggleAnalytic(
+        menuProductUuid: String,
+        isFavorite: Boolean,
+    ) {
+        val menuProductUuidEventParameter =
+            MenuProductUuidEventParameter(value = menuProductUuid)
+        analyticService.sendEvent(
+            event =
+                if (isFavorite) {
+                    AddFavoriteClickEvent(
+                        menuProductUuidEventParameter = menuProductUuidEventParameter,
+                    )
+                } else {
+                    RemoveFavoriteClickEvent(
+                        menuProductUuidEventParameter = menuProductUuidEventParameter,
+                    )
+                },
+        )
+    }
+
+    private fun observeToken() {
+        observeTokenJob?.cancel()
+
+        observeTokenJob =
+            sharedScope.launchSafe(
+                block = {
+                    observeTokenUseCase().collectLatest { token ->
+                        val isAuthorized = token != null
+                        setState {
+                            copy(isAuthorized = isAuthorized)
+                        }
+                        if (isAuthorized) {
+                            loadFavoriteState(menuProductUuid = currentMenuProductUuid)
+                        } else {
+                            setState {
+                                copy(isFavorite = false)
+                            }
+                        }
+                    }
+                },
+                onError = { },
+            )
+    }
+
+    private fun loadFavoriteState(menuProductUuid: String) {
+        if (menuProductUuid.isEmpty()) {
+            return
+        }
+
+        sharedScope.launchSafe(
+            block = {
+                loadFavoritesUseCase()
+                val isFavorite = isProductFavoriteUseCase(menuProductUuid = menuProductUuid)
+                setState {
+                    copy(isFavorite = isFavorite)
+                }
+            },
+            onError = { },
+        )
     }
 
     private fun selectAddition(

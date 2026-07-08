@@ -40,6 +40,8 @@ fun CategoryItem(
             )
         }
 
+    val displayName = categoryItem.name
+
     FoodDeliveryCard(
         modifier = modifier,
         elevated = false,
@@ -59,7 +61,7 @@ fun CategoryItem(
                         horizontal = 12.dp,
                         vertical = 6.dp,
                     ),
-            text = categoryItem.name,
+            text = displayName,
             style = FoodDeliveryTheme.typography.labelLarge.medium,
             textAlign = TextAlign.Center,
         )
