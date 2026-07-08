@@ -77,35 +77,75 @@ platform :ios do
     "Исправлены ошибки и улучшена стабильность."
   end
 
+  def asc_blocks_new_app_store_version?(error)
+    message = error.message.to_s
+    return true if message.include?("You cannot create a new version of the App in the current state")
+    return true if message.include?("The version number has been previously used")
+    false
+  end
+
+  def log_idempotent_submit_skip(app_identifier, app_version, build_number, reason)
+    UI.important(
+      "[idempotent skip] #{reason} app=#{app_identifier} version=#{app_version} build=#{build_number}. " \
+      "Завершаем lane без ошибки."
+    )
+  end
+
   # submit_for_review требует whatsNew в App Store Connect. Загружаем только release notes,
   # не трогая name/description/support_url и прочие поля листинга (важно для 12 разных приложений).
   def submit_for_app_store_review(app_identifier, build_number)
     app_version = current_xcconfig_app_version
-    ensure_editable_app_store_version(app_identifier, app_version)
+    begin
+      ensure_editable_app_store_version(app_identifier, app_version)
+    rescue Spaceship::UnexpectedResponse => e
+      if asc_blocks_new_app_store_version?(e)
+        log_idempotent_submit_skip(
+          app_identifier,
+          app_version,
+          build_number,
+          "ASC не позволяет создать/переоткрыть версию в текущем состоянии приложения"
+        )
+        return
+      end
+      raise
+    end
 
     Dir.mktmpdir("deliver-metadata") do |metadata_path|
       ru_path = File.join(metadata_path, "ru")
       FileUtils.mkdir_p(ru_path)
       File.write(File.join(ru_path, "release_notes.txt"), release_notes_text)
 
-      deliver(
-        app_identifier: app_identifier,
-        app_version: app_version,
-        build_number: build_number,
-        metadata_path: metadata_path,
-        skip_binary_upload: true,
-        submit_for_review: true,
-        automatic_release: false,
-        force: true,
-        skip_screenshots: true,
-        skip_metadata: false,
-        precheck_include_in_app_purchases: false,
-        version_check_wait_retry_limit: 1,
-        submission_information: {
-          export_compliance_uses_encryption: false,
-          export_compliance_encryption_updated: false
-        }
-      )
+      begin
+        deliver(
+          app_identifier: app_identifier,
+          app_version: app_version,
+          build_number: build_number,
+          metadata_path: metadata_path,
+          skip_binary_upload: true,
+          submit_for_review: true,
+          automatic_release: false,
+          force: true,
+          skip_screenshots: true,
+          skip_metadata: false,
+          precheck_include_in_app_purchases: false,
+          version_check_wait_retry_limit: 1,
+          submission_information: {
+            export_compliance_uses_encryption: false,
+            export_compliance_encryption_updated: false
+          }
+        )
+      rescue Spaceship::UnexpectedResponse => e
+        if asc_blocks_new_app_store_version?(e)
+          log_idempotent_submit_skip(
+            app_identifier,
+            app_version,
+            build_number,
+            "ASC блокирует submit (версия уже зафиксирована/использована)"
+          )
+        else
+          raise
+        end
+      end
     end
   end
 
