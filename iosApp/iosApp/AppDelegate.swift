@@ -31,7 +31,11 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         }
 
         application.registerForRemoteNotifications()
-        FirebaseApp.configure()
+        // Firebase is configured in PapaKarloSwiftApp.init before Koin.
+        // Guard keeps Messaging/push setup safe if launch order changes.
+        if FirebaseApp.app() == nil {
+            FirebaseApp.configure()
+        }
 
         Messaging.messaging().delegate = self
 
