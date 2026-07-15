@@ -1,1 +1,264 @@
-PLACEHOLDER_LOAD_FROM_DISK
+name: Publish workflow ios (upload)
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+    inputs:
+      app:
+        description: "App to upload to TestFlight (canary). Use all for every publish app."
+        required: true
+        default: voljane
+        type: choice
+        options:
+          - voljane
+          - gustopub
+          - papakarlo
+          - yuliar
+          - tandirhouse
+          - vkuskavkaza
+          - djan
+          - usaba
+          - emoji
+          - estpoest
+          - taverna
+          - all
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ github.event_name == 'workflow_dispatch' && inputs.app || 'all' }}
+  cancel-in-progress: true
+
+jobs:
+  setup:
+    name: "Upload secrets"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: "Decode google-services.json"
+        env:
+          GOOGLE_SERVICE_JSON: ${{ secrets.GOOGLE_SERVICE_JSON }}
+        run: echo "${GOOGLE_SERVICE_JSON}" > app/google-services.json
+      - name: "Upload google-services.json"
+        uses: actions/upload-artifact@v4
+        with:
+          name: google-services
+          path: app/google-services.json
+      - name: "Decode local.properties"
+        env:
+          RELEASE_STORE_FILE: ${{ secrets.RELEASE_STORE_FILE }}
+          RELEASE_STORE_PASSWORD: ${{ secrets.RELEASE_STORE_PASSWORD }}
+          RELEASE_KEY_ALIAS: ${{ secrets.RELEASE_KEY_ALIAS }}
+          RELEASE_KEY_PASSWORD: ${{ secrets.RELEASE_KEY_PASSWORD }}
+        run: |
+          echo -e "RELEASE_STORE_FILE=$RELEASE_STORE_FILE" > local.properties
+          echo -e "RELEASE_STORE_PASSWORD=$RELEASE_STORE_PASSWORD" >> local.properties
+          echo -e "RELEASE_KEY_ALIAS=$RELEASE_KEY_ALIAS" >> local.properties
+          echo -e "RELEASE_KEY_PASSWORD=$RELEASE_KEY_PASSWORD" >> local.properties
+      - name: "Upload local.properties"
+        uses: actions/upload-artifact@v4
+        with:
+          name: local-properties
+          path: local.properties
+      - name: "Decode keystore"
+        env:
+          KEY_STORE: ${{ secrets.KEY_STORE }}
+        run: echo "${KEY_STORE}" | base64 --decode > app/keystore
+      - name: "Upload keystore"
+        uses: actions/upload-artifact@v4
+        with:
+          name: keystore
+          path: app/keystore
+      - name: "Decode google-play-api-key.json"
+        env:
+          GOOGLE_PLAY_API_KEY: ${{ secrets.GOOGLE_PLAY_API_KEY }}
+        run: echo "${GOOGLE_PLAY_API_KEY}" | base64 --decode > app/google-play-api-key.json
+      - name: "Upload google-play-api-key.json"
+        uses: actions/upload-artifact@v4
+        with:
+          name: google-play-api-key
+          path: app/google-play-api-key.json
+
+  build:
+    runs-on: macos-latest
+    needs: setup
+    timeout-minutes: 360
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: "Decode Firebase GoogleService-Info.plist files"
+        env:
+          IOS_FIREBASE_PLISTS_TAR_BASE64: ${{ secrets.IOS_FIREBASE_PLISTS_TAR_BASE64 }}
+        run: |
+          echo "$IOS_FIREBASE_PLISTS_TAR_BASE64" | base64 --decode > firebase-plists.tar.gz
+          tar -xzf firebase-plists.tar.gz
+          rm firebase-plists.tar.gz
+
+      - name: "Verify GoogleService-Info.plist for publish apps"
+        env:
+          SELECTED_APP: ${{ github.event_name == 'workflow_dispatch' && inputs.app || 'all' }}
+        run: |
+          set -euo pipefail
+          # scheme_key|res_folder|expected_BUNDLE_ID (same set as Fastfile `apps` / submit matrix)
+          ALL_APPS=(
+            "papakarlo|papakarloRes|com.bunbeuaty.papakarlo"
+            "gustopub|gustoPubRes|com.bunbeauty.gustopub"
+            "yuliar|yuliarRes|com.bunbeauty.yuliar"
+            "tandirhouse|tandirHouseRes|com.bunbeauty.tandirhouse"
+            "vkuskavkaza|vkusKavkazaRes|com.bunbeauty.vkuskavkaza"
+            "djan|djanRes|com.bunbeauty.djan"
+            "usaba|usadbaRes|com.bunbeauty.usadba"
+            "emoji|emojiRes|com.bunbeauty.emoji"
+            "estpoest|estpoestRes|com.bunbeauty.estpoest"
+            "taverna|tavernaRes|com.bunbeauty.taverna"
+            "voljane|voljaneRes|com.bunbeauty.voljane"
+          )
+          APPS=()
+          if [ "$SELECTED_APP" = "all" ]; then
+            APPS=("${ALL_APPS[@]}")
+          else
+            for entry in "${ALL_APPS[@]}"; do
+              IFS='|' read -r name _ _ <<< "$entry"
+              if [ "$name" = "$SELECTED_APP" ]; then
+                APPS+=("$entry")
+              fi
+            done
+            if [ "${#APPS[@]}" -eq 0 ]; then
+              echo "::error::Unknown app selection: $SELECTED_APP"
+              exit 1
+            fi
+          fi
+          missing=0
+          for entry in "${APPS[@]}"; do
+            IFS='|' read -r name res expected_bundle <<< "$entry"
+            plist="iosApp/iosApp/${res}/GoogleService-Info.plist"
+            if [ ! -f "$plist" ]; then
+              echo "::error::Missing $plist (app=$name)"
+              missing=1
+              continue
+            fi
+            actual_bundle=$(/usr/libexec/PlistBuddy -c 'Print :BUNDLE_ID' "$plist" 2>/dev/null || true)
+            if [ -z "$actual_bundle" ]; then
+              echo "::error::No BUNDLE_ID in $plist (app=$name)"
+              missing=1
+              continue
+            fi
+            if [ "$actual_bundle" != "$expected_bundle" ]; then
+              echo "::error::BUNDLE_ID mismatch for $name: expected=$expected_bundle actual=$actual_bundle ($plist)"
+              missing=1
+              continue
+            fi
+            echo "OK $name: $plist ($actual_bundle)"
+          done
+          if [ "$missing" -ne 0 ]; then
+            echo "::error::One or more GoogleService-Info.plist checks failed. Update secret IOS_FIREBASE_PLISTS_TAR_BASE64."
+            exit 1
+          fi
+
+      - name: Select Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2'
+          bundler-cache: true
+          working-directory: iosApp
+
+      - name: "Download google-services.json"
+        uses: actions/download-artifact@v4
+        with:
+          name: google-services
+          path: ./app
+
+      - name: "Download local.properties"
+        uses: actions/download-artifact@v4
+        with:
+          name: local-properties
+          path: .
+
+      - name: "Download keystore"
+        uses: actions/download-artifact@v4
+        with:
+          name: keystore
+          path: ./app
+
+      - name: "Download google-play-api-key.json"
+        uses: actions/download-artifact@v4
+        with:
+          name: google-play-api-key
+          path: ./app
+
+      - name: Install CocoaPods
+        run: sudo gem install cocoapods
+
+      - name: Generate KMP dummy framework
+        working-directory: .
+        run: ./gradlew :shared:generateDummyFramework
+
+      - name: Install Pods
+        working-directory: iosApp
+        run: pod install --repo-update
+
+      - name: Decode App Store Connect API key
+        working-directory: iosApp
+        run: |
+          mkdir -p fastlane/keys
+          echo "${{ secrets.APP_STORE_P8_BASE64 }}" | base64 --decode > fastlane/keys/AuthKey.p8
+          chmod 600 fastlane/keys/AuthKey.p8
+
+      - name: Build and upload to TestFlight
+        working-directory: iosApp
+        env:
+          MATCH_GIT_BASIC_AUTHORIZATION : ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION  }}
+          APP_STORE_KEY_ID: ${{ secrets.APP_STORE_KEY_ID }}
+          APP_STORE_ISSUER_ID: ${{ secrets.APP_STORE_ISSUER_ID }}
+          APP_STORE_P8_PATH: fastlane/keys/AuthKey.p8
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+          MATCH_READONLY: "true"
+          SELECTED_APP: ${{ github.event_name == 'workflow_dispatch' && inputs.app || 'all' }}
+        run: |
+          set -euo pipefail
+          if [ "$SELECTED_APP" = "all" ]; then
+            echo "Uploading all apps (deployAllUpload)"
+            bundle exec fastlane ios deployAllUpload
+          else
+            echo "Canary upload: $SELECTED_APP"
+            bundle exec fastlane ios "upload_${SELECTED_APP}"
+          fi
+
+      - name: Upload build numbers artifact
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-upload-build-numbers
+          path: iosApp/fastlane/upload_build_numbers.json
+          retention-days: 7
+          if-no-files-found: ignore
+
+      - name: Upload build summary
+        working-directory: iosApp
+        env:
+          SELECTED_APP: ${{ github.event_name == 'workflow_dispatch' && inputs.app || 'all' }}
+        run: |
+          echo "## iOS upload завершён" >> "$GITHUB_STEP_SUMMARY"
+          echo "Selection: \`$SELECTED_APP\` (event: \`${{ github.event_name }}\`)" >> "$GITHUB_STEP_SUMMARY"
+          echo "Номера билдов берутся из App Store Connect (latest + 1), не из GITHUB_RUN_NUMBER." >> "$GITHUB_STEP_SUMMARY"
+          if [ -f fastlane/upload_build_numbers.json ]; then
+            echo "" >> "$GITHUB_STEP_SUMMARY"
+            echo "### Build numbers по приложениям" >> "$GITHUB_STEP_SUMMARY"
+            echo '```json' >> "$GITHUB_STEP_SUMMARY"
+            cat fastlane/upload_build_numbers.json >> "$GITHUB_STEP_SUMMARY"
+            echo '```' >> "$GITHUB_STEP_SUMMARY"
+          fi
+          if [ "${{ github.event_name }}" = "push" ] || [ "$SELECTED_APP" = "all" ]; then
+            echo "" >> "$GITHUB_STEP_SUMMARY"
+            echo "После обработки билдов в ASC автоматически запустится **Publish workflow ios (submit)** (только после push на master)." >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "" >> "$GITHUB_STEP_SUMMARY"
+            echo "Canary upload — **submit workflow не запустится** (только TestFlight)." >> "$GITHUB_STEP_SUMMARY"
+          fi
