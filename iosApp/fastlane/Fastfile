@@ -1,1 +1,359 @@
-PLACEHOLDER_LOAD_FROM_DISK
+require "fileutils"
+require "json"
+require "tmpdir"
+require "xcodeproj"
+
+default_platform(:ios)
+
+platform :ios do
+  before_all do
+    # Версию Xcode выбирает шаг workflow (maxim-lobanov/setup-xcode)
+    # На CI создаёт временный keychain с partition list для codesign — без этого
+    # xcodebuild может зависнуть на "Signing *.app" при доступе к сертификату match.
+    setup_ci if ENV["CI"]
+
+    # App Store Connect API Key
+    app_store_connect_api_key(
+      key_id: ENV['APP_STORE_KEY_ID'],
+      issuer_id: ENV['APP_STORE_ISSUER_ID'],
+      key_filepath: ENV['APP_STORE_P8_PATH']
+    )
+  end
+
+  # Список приложений с идентификатором и схемой
+  apps = {
+     papakarlo:    { id: "com.bunbeuaty.papakarlo", scheme: "papakarlo" },
+     gustopub:     { id: "com.bunbeauty.gustopub", scheme: "gustoPub" },
+     yuliar:       { id: "com.bunbeauty.yuliar", scheme: "yuliar" },
+     tandirhouse:  { id: "com.bunbeauty.tandirhouse", scheme: "tandirhouse" },
+     vkuskavkaza:  { id: "com.bunbeauty.vkuskavkaza", scheme: "vkuskavkaza" },
+     djan:         { id: "com.bunbeauty.djan", scheme: "djan" },
+     usaba:        { id: "com.bunbeauty.usadba", scheme: "usadba" },
+     emoji:        { id: "com.bunbeauty.emoji", scheme: "emoji" },
+     estpoest:     { id: "com.bunbeauty.estpoest", scheme: "estpoest" },
+     taverna:      { id: "com.bunbeauty.taverna", scheme: "taverna" },
+     voljane:      { id: "com.bunbeauty.voljane", scheme: "voljane" },
+     # legenda: нет AppStore-профиля в match-репозитории — раскомментировать после:
+     # bundle exec fastlane match appstore -a com.bunbeauty.legenda
+     # legenda:      { id: "com.bunbeauty.legenda", scheme: "legenda" },
+     # bereg и mimino пока без shared .xcscheme — включить после добавления схем и сертификатов match
+     # bereg:      { id: "com.bunbeauty.bereg", scheme: "bereg" },
+     # mimino:     { id: "com.bunbeauty.mimino", scheme: "mimino" },
+  }
+
+  # Настраиваем подпись только у таргета приложения (по bundle id), не трогая Pods.
+  # В проекте у таргетов прошита dev/automatic-подпись, а нам нужен AppStore-профиль match.
+  def apply_appstore_signing(app_identifier)
+    # cwd при выполнении lane может быть как iosApp, так и iosApp/fastlane
+    project_path = ["iosApp.xcodeproj", "../iosApp.xcodeproj"].find { |path| File.directory?(path) }
+    UI.user_error!("Не найден iosApp.xcodeproj (cwd: #{Dir.pwd})") unless project_path
+    project = Xcodeproj::Project.open(project_path)
+    matched = false
+    project.native_targets.each do |target|
+      target.build_configurations.each do |config|
+        next unless config.build_settings["PRODUCT_BUNDLE_IDENTIFIER"] == app_identifier
+        matched = true
+        settings = config.build_settings
+        settings["CODE_SIGN_STYLE"] = "Manual"
+        settings["DEVELOPMENT_TEAM"] = "77HLJ933B9"
+        settings["CODE_SIGN_IDENTITY"] = "Apple Distribution"
+        settings["PROVISIONING_PROFILE_SPECIFIER"] = "match AppStore #{app_identifier}"
+        # Убираем sdk-условные ключи, иначе они перекроют значения для устройства
+        settings.delete("DEVELOPMENT_TEAM[sdk=iphoneos*]")
+        settings.delete("CODE_SIGN_IDENTITY[sdk=iphoneos*]")
+        settings.delete("PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]")
+      end
+    end
+    UI.user_error!("Не найден таргет с bundle id #{app_identifier}") unless matched
+    project.save
+  end
+
+  def release_notes_text
+    return ENV["APP_STORE_RELEASE_NOTES_RU"] unless ENV["APP_STORE_RELEASE_NOTES_RU"].to_s.empty?
+
+    notes_path = File.expand_path("metadata/ru/release_notes.txt", __dir__)
+    return File.read(notes_path).strip if File.exist?(notes_path)
+
+    "Исправлены ошибки и улучшена стабильность."
+  end
+
+  def asc_blocks_new_app_store_version?(error)
+    message = error.message.to_s
+    return true if message.include?("You cannot create a new version of the App in the current state")
+    return true if message.include?("The version number has been previously used")
+    false
+  end
+
+  def log_idempotent_submit_skip(app_identifier, app_version, build_number, reason)
+    UI.important(
+      "[idempotent skip] #{reason} app=#{app_identifier} version=#{app_version} build=#{build_number}. " \
+      "Завершаем lane без ошибки."
+    )
+  end
+
+  # submit_for_review требует whatsNew в App Store Connect. Загружаем только release notes,
+  # не трогая name/description/support_url и прочие поля листинга (важно для 12 разных приложений).
+  def submit_for_app_store_review(app_identifier, build_number)
+    app_version = current_xcconfig_app_version
+    begin
+      ensure_editable_app_store_version(app_identifier, app_version)
+    rescue Spaceship::UnexpectedResponse => e
+      if asc_blocks_new_app_store_version?(e)
+        log_idempotent_submit_skip(
+          app_identifier,
+          app_version,
+          build_number,
+          "ASC не позволяет создать/переоткрыть версию в текущем состоянии приложения"
+        )
+        return
+      end
+      raise
+    end
+
+    Dir.mktmpdir("deliver-metadata") do |metadata_path|
+      ru_path = File.join(metadata_path, "ru")
+      FileUtils.mkdir_p(ru_path)
+      File.write(File.join(ru_path, "release_notes.txt"), release_notes_text)
+
+      begin
+        deliver(
+          app_identifier: app_identifier,
+          app_version: app_version,
+          build_number: build_number,
+          metadata_path: metadata_path,
+          skip_binary_upload: true,
+          submit_for_review: true,
+          automatic_release: false,
+          force: true,
+          skip_screenshots: true,
+          skip_metadata: false,
+          precheck_include_in_app_purchases: false,
+          version_check_wait_retry_limit: 1,
+          submission_information: {
+            export_compliance_uses_encryption: false,
+            export_compliance_encryption_updated: false
+          }
+        )
+      rescue Spaceship::UnexpectedResponse => e
+        if asc_blocks_new_app_store_version?(e)
+          log_idempotent_submit_skip(
+            app_identifier,
+            app_version,
+            build_number,
+            "ASC блокирует submit (версия уже зафиксирована/использована)"
+          )
+        else
+          raise
+        end
+      end
+    end
+  end
+
+  def ensure_editable_app_store_version(app_identifier, version_string)
+    platform = Spaceship::ConnectAPI::Platform::IOS
+    app = Spaceship::ConnectAPI::App.find(app_identifier)
+    UI.user_error!("Не найдено приложение #{app_identifier} в App Store Connect") unless app
+
+    edit_version = app.get_edit_app_store_version(platform: platform)
+    if edit_version
+      if edit_version.version_string != version_string
+        UI.user_error!(
+          "В ASC для #{app_identifier} уже открыта версия #{edit_version.version_string}, " \
+          "ожидалась #{version_string}. Закройте или опубликуйте её вручную."
+        )
+      end
+      UI.message("Editable App Store version #{version_string} уже есть для #{app_identifier}")
+      return
+    end
+
+    UI.message("Создаём App Store version #{version_string} для #{app_identifier}")
+    Spaceship::ConnectAPI.post_app_store_version(
+      app_id: app.id,
+      attributes: {
+        versionString: version_string,
+        platform: platform
+      }
+    )
+  end
+
+  def version_xcconfig_path
+    ["iosApp/Version.xcconfig", "../iosApp/Version.xcconfig"].find { |path| File.exist?(path) }
+  end
+
+  # CFBundleVersion берётся из ${APP_BUILD} в Version.xcconfig, не из agvtool/CURRENT_PROJECT_VERSION.
+  def set_app_build_number(build_number)
+    path = version_xcconfig_path
+    UI.user_error!("Не найден Version.xcconfig (cwd: #{Dir.pwd})") unless path
+
+    content = File.read(path)
+    unless content.sub!(/^APP_BUILD\s*=\s*\d+\s*$/, "APP_BUILD = #{build_number}")
+      UI.user_error!("Не найдена строка APP_BUILD в #{path}")
+    end
+
+    File.write(path, content)
+    UI.message("APP_BUILD = #{build_number} (#{path})")
+  end
+
+  def current_xcconfig_build_number
+    path = version_xcconfig_path
+    return 0 unless path
+
+    File.read(path)[/^APP_BUILD\s*=\s*(\d+)\s*$/, 1].to_i
+  end
+
+  def current_xcconfig_app_version
+    path = version_xcconfig_path
+    UI.user_error!("Не найден Version.xcconfig (cwd: #{Dir.pwd})") unless path
+
+    version = File.read(path)[/^APP_VERSION\s*=\s*(.+)\s*$/, 1]&.strip
+    UI.user_error!("Не найдена строка APP_VERSION в #{path}") if version.to_s.empty?
+
+    version
+  end
+
+  # Следующий build number: max(последний в ASC, APP_BUILD в xcconfig) + 1
+  def next_app_store_build_number(app_identifier)
+    latest = latest_testflight_build_number(app_identifier: app_identifier).to_i
+    next_number = latest + 1
+    xcconfig_build = current_xcconfig_build_number
+    next_number = [next_number, xcconfig_build + 1].max if xcconfig_build.positive?
+    next_number
+  end
+
+  # Для submit: билд из upload_build_numbers.json, последний в ASC или APP_STORE_BUILD_NUMBER
+  def resolve_submit_build_number(app_identifier, lane_name: nil)
+    return ENV["APP_STORE_BUILD_NUMBER"] unless ENV["APP_STORE_BUILD_NUMBER"].to_s.empty?
+
+    if lane_name
+      mapping_path = File.expand_path("upload_build_numbers.json", __dir__)
+      if File.exist?(mapping_path)
+        uploaded_builds = JSON.parse(File.read(mapping_path))
+        build_number = uploaded_builds[lane_name.to_s]
+        return build_number.to_s if build_number
+      end
+    end
+
+    latest = latest_testflight_build_number(app_identifier: app_identifier).to_i
+    UI.user_error!("Нет обработанных билдов в TestFlight для #{app_identifier}") if latest.zero?
+
+    latest.to_s
+  end
+
+  # Сборка IPA и заливка в TestFlight без ожидания обработки Apple
+  def upload_to_testflight_only(app_identifier, scheme)
+    build_number = next_app_store_build_number(app_identifier)
+    set_app_build_number(build_number)
+    UI.success("Upload #{app_identifier}: build #{build_number}")
+
+    match(
+      type: "appstore",
+      app_identifier: app_identifier,
+      readonly: (ENV["MATCH_READONLY"] == "true")
+    )
+
+    apply_appstore_signing(app_identifier)
+
+    Bundler.with_unbundled_env do
+      build_app(
+        workspace: "iosApp.xcworkspace",
+        scheme: scheme,
+        clean: true,
+        export_method: "app-store",
+        disable_xcpretty: ENV["CI"] == "true",
+        export_options: {
+          provisioningProfiles: {
+            app_identifier => "match AppStore #{app_identifier}"
+          }
+        }
+      )
+    end
+
+    upload_to_testflight(
+      app_identifier: app_identifier,
+      skip_waiting_for_build_processing: true
+    )
+
+    build_number
+  end
+
+  # Полный цикл для одного приложения (локально или если нужно всё сразу)
+  def build_and_upload(app_identifier, scheme)
+    build_number = upload_to_testflight_only(app_identifier, scheme)
+    submit_for_app_store_review(app_identifier, build_number)
+  end
+
+  def write_upload_build_number(lane_name, build_number)
+    mapping_path = File.expand_path("upload_build_numbers.json", __dir__)
+    uploaded_builds = File.exist?(mapping_path) ? JSON.parse(File.read(mapping_path)) : {}
+    uploaded_builds[lane_name.to_s] = build_number
+    File.write(mapping_path, JSON.pretty_generate(uploaded_builds))
+    UI.success("Записан build #{lane_name}=#{build_number} → #{mapping_path}")
+  end
+
+  apps.each do |lane_name, config|
+    desc "Build and upload #{lane_name} to TestFlight (без submit)"
+    lane :"upload_#{lane_name}" do
+      build_number = upload_to_testflight_only(config[:id], config[:scheme])
+      write_upload_build_number(lane_name, build_number)
+    end
+
+    desc "Submit #{lane_name} for App Store review (билд должен быть обработан в ASC)"
+    lane :"submit_#{lane_name}" do
+      build_number = resolve_submit_build_number(config[:id], lane_name: lane_name)
+      UI.message("Submit #{lane_name}: build #{build_number}")
+      submit_for_app_store_review(config[:id], build_number)
+    end
+
+    desc "Build, upload and submit #{lane_name} for App Store review"
+    lane lane_name do
+      build_and_upload(config[:id], config[:scheme])
+    end
+  end
+
+  desc "Build and upload all apps to TestFlight (без ожидания Apple и без submit)"
+  lane :deployAllUpload do
+    failures = []
+    uploaded_builds = {}
+
+    apps.each do |lane_name, config|
+      begin
+        build_number = upload_to_testflight_only(config[:id], config[:scheme])
+        uploaded_builds[lane_name] = build_number
+      rescue StandardError => e
+        failures << "#{lane_name}: #{e.message}"
+        UI.error("Upload не удался для #{lane_name}: #{e.message}")
+      end
+    end
+
+    mapping_path = File.expand_path("upload_build_numbers.json", __dir__)
+    File.write(mapping_path, JSON.pretty_generate(uploaded_builds))
+    UI.success("Build numbers: #{uploaded_builds.map { |name, number| "#{name}=#{number}" }.join(', ')}")
+
+    UI.user_error!("Не удалось загрузить:\n#{failures.join("\n")}") if failures.any?
+  end
+
+  desc "Submit all apps for App Store review (по умолчанию — последний билд каждого приложения из ASC)"
+  lane :deployAllSubmit do
+    failures = []
+
+    apps.each do |lane_name, config|
+      begin
+        build_number = resolve_submit_build_number(config[:id], lane_name: lane_name)
+        UI.message("Submit #{lane_name}: build #{build_number}")
+        submit_for_app_store_review(config[:id], build_number)
+      rescue StandardError => e
+        failures << "#{lane_name}: #{e.message}"
+        UI.error("Submit не удался для #{lane_name}: #{e.message}")
+      end
+    end
+
+    UI.user_error!("Не удалось отправить на ревью:\n#{failures.join("\n")}") if failures.any?
+  end
+
+  desc "Build, upload and submit all apps for App Store review (полный цикл в одном прогоне)"
+  lane :deployAll do
+    apps.keys.each do |app|
+      send(app)
+    end
+  end
+end
