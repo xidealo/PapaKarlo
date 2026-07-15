@@ -99,3 +99,7 @@ app/google-play-api-key.json
 
 # Local temp
 _tar_test/
+
+# Nested Amvera deploy git — package itself tracked in feature/web-kmp
+/amvera/.git/
+csg-zF7-VZd-dPR
