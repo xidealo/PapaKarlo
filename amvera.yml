@@ -14,3 +14,4 @@ run:
   jarName: app.jar
   persistenceMount: /data
   containerPort: 80
+
