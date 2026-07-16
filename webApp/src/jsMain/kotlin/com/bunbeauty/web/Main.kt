@@ -14,6 +14,7 @@ import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.shared.data.network.NetworkConfig
 import com.bunbeauty.shared.db.FoodDeliveryDatabase
 import com.bunbeauty.shared.di.initKoin
+import com.bunbeauty.shared.resolveWebFlavor
 import com.bunbeauty.shared.ui.screen.main.MainScreen
 import com.squareup.sqldelight.drivers.sqljs.initSqlDriver
 import kotlinx.browser.document
@@ -24,18 +25,30 @@ import kotlinx.coroutines.await
 import kotlinx.coroutines.launch
 import org.koin.dsl.module
 
-// The brand this web build serves. Single source of truth for the flavor used by
-// both the theme and the browser tab title.
-private const val WEB_FLAVOR = "gustopub"
-
 // Browser tab title per brand (index.html <title> is static, so we set it at
-// runtime). Keep in sync with the Android app_name of each flavor.
-private fun webTitle(flavor: String): String =
-    when (flavor) {
-        "papakarlo" -> "Папа Карло — доставка еды"
-        "gustopub" -> "Густо Паб — доставка еды"
-        else -> "Доставка еды"
-    }
+// runtime). Names match the Android app_name of each flavor.
+private fun webTitle(flavor: String): String {
+    val name =
+        when (flavor) {
+            "papakarlo" -> "Папа Карло"
+            "yuliar" -> "ЮлиАр"
+            "djan" -> "Шашлык Джан"
+            "gustopub" -> "Густо Паб"
+            "tandirhouse" -> "Тандыр Хаус"
+            "vkuskavkaza" -> "Вкус Кавказа"
+            "estpoest" -> "#Есть Поесть"
+            "legenda" -> "Легенда"
+            "usadba" -> "Усадьба"
+            "emoji" -> "Эмодзи"
+            "limonad" -> "Лимонад"
+            "taverna" -> "Таверна"
+            "voljane" -> "Волжане"
+            "bereg" -> "Берег"
+            "mimino" -> "Мимино"
+            else -> null
+        }
+    return if (name != null) "$name — доставка еды" else "Доставка еды"
+}
 
 // Sets the browser tab icon (favicon) to the brand logo bundled in
 // composeResources. index.html has no <link rel="icon">, so we create/update it
@@ -61,10 +74,14 @@ fun main() {
     NetworkConfig.host = window.location.hostname
     NetworkConfig.port = window.location.port.toIntOrNull()
 
+    // One build/host serves many cafes: the brand is picked from the domain.
+    // Must match the flavor Koin resolves in PlatformModule (also resolveWebFlavor).
+    val flavor = resolveWebFlavor()
+
     // The index.html <title>/favicon are static, but the shown brand is chosen at
     // runtime, so we set the browser tab title and icon from the current flavor.
-    document.title = webTitle(WEB_FLAVOR)
-    applyFavicon(WEB_FLAVOR)
+    document.title = webTitle(flavor)
+    applyFavicon(flavor)
 
     CoroutineScope(Dispatchers.Main).launch {
         val driver = initSqlDriver(FoodDeliveryDatabase.Schema).await()
@@ -88,10 +105,14 @@ fun main() {
                     // On JS Coil does not auto-register a network fetcher (no
                     // ServiceLoader), so we add the Ktor one explicitly. Without it
                     // every http(s) image fails and only the placeholder is shown.
-                    // The mapper reroutes Firebase Storage photos through the
-                    // dev-server proxy because Firebase doesn't send CORS headers.
+                    // Firebase photos: on localhost we proxy via webpack (Firebase has
+                    // no CORS). On Amvera and other production hosts the server cannot
+                    // reach Google, so the browser loads Firebase URLs directly — the
+                    // bucket must allow CORS (see webApp/firebase-storage-cors.json).
                     .components {
-                        add(FirebaseImageProxyMapper())
+                        if (shouldUseFirebaseImageProxy()) {
+                            add(FirebaseImageProxyMapper())
+                        }
                         add(YandexImageProxyMapper())
                         add(KtorNetworkFetcherFactory())
                     }
@@ -109,11 +130,19 @@ fun main() {
                     .build()
             }
 
-            FoodDeliveryTheme(flavor = WEB_FLAVOR) {
+            FoodDeliveryTheme(flavor = flavor) {
                 MainScreen()
             }
         }
     }
+}
+
+// Same-origin /firebase-img proxy only works where the host can reach Firebase
+// (local webpack dev-server). Amvera and custom production domains load Firebase
+// URLs directly in the browser instead.
+private fun shouldUseFirebaseImageProxy(): Boolean {
+    val host = window.location.hostname.lowercase()
+    return host == "localhost" || host == "127.0.0.1"
 }
 
 private const val FIREBASE_STORAGE_URL = "https://firebasestorage.googleapis.com"
