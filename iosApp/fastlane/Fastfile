@@ -21,6 +21,25 @@ platform :ios do
     )
   end
 
+  desc "Generate/download App Store match profile for one bundle id (CI)"
+  lane :match_appstore_ci do |options|
+    app_identifier = options[:app_identifier]
+    UI.user_error!("Передайте app_identifier:, например app_identifier:'com.bunbeauty.emojicenter'") if app_identifier.to_s.empty?
+
+    api_key = app_store_connect_api_key(
+      key_id: ENV["APP_STORE_KEY_ID"],
+      issuer_id: ENV["APP_STORE_ISSUER_ID"],
+      key_filepath: ENV["APP_STORE_P8_PATH"]
+    )
+
+    match(
+      type: "appstore",
+      app_identifier: app_identifier,
+      api_key: api_key,
+      readonly: (ENV["MATCH_READONLY"] == "true")
+    )
+  end
+
   # Список приложений с идентификатором и схемой
   apps = {
      papakarlo:    { id: "com.bunbeuaty.papakarlo", scheme: "papakarlo" },

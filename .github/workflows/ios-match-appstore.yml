@@ -46,4 +46,4 @@ jobs:
           MATCH_READONLY: "false"
         run: |
           set -euo pipefail
-          bundle exec fastlane match appstore -a "${{ inputs.app_identifier }}"
+          bundle exec fastlane ios match_appstore_ci app_identifier:"${{ inputs.app_identifier }}"
