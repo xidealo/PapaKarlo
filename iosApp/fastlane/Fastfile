@@ -36,7 +36,9 @@ platform :ios do
       type: "appstore",
       app_identifier: app_identifier,
       api_key: api_key,
-      readonly: (ENV["MATCH_READONLY"] == "true")
+      # Must create/download new profiles for first-time apps; never leave CI default readonly.
+      readonly: false,
+      force_for_new_devices: true
     )
   end
 
