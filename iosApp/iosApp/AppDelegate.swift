@@ -16,6 +16,9 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     let gcmMessageIDKey = "gcm.Message_ID"
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        // On device, didFinishLaunching can race App.init. Always bootstrap before Messaging.
+        AppBootstrap.startIfNeeded()
+
         if #available(iOS 10.0, *) {
             // For iOS 10 display notification (sent via APNS)
             UNUserNotificationCenter.current().delegate = self
@@ -31,12 +34,9 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         }
 
         application.registerForRemoteNotifications()
-        // Firebase is configured in PapaKarloSwiftApp.init before Koin.
-        // Guard keeps Messaging/push setup safe if launch order changes.
-        if FirebaseApp.app() == nil {
-            FirebaseApp.configure()
-        }
 
+        // Setting the delegate can synchronously deliver a cached FCM token.
+        // That path uses iosComponent / Koin — only safe after AppBootstrap.
         Messaging.messaging().delegate = self
 
         return true
@@ -87,7 +87,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         print("Registered for Apple Remote Notifications")
         Messaging.messaging().setAPNSToken(deviceToken, type: .unknown)
     }
-
 }
 
 extension AppDelegate: MessagingDelegate {

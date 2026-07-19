@@ -1,5 +1,6 @@
 require "fileutils"
 require "json"
+require "shellwords"
 require "tmpdir"
 require "xcodeproj"
 
@@ -77,35 +78,75 @@ platform :ios do
     "Исправлены ошибки и улучшена стабильность."
   end
 
+  def asc_blocks_new_app_store_version?(error)
+    message = error.message.to_s
+    return true if message.include?("You cannot create a new version of the App in the current state")
+    return true if message.include?("The version number has been previously used")
+    false
+  end
+
+  def log_idempotent_submit_skip(app_identifier, app_version, build_number, reason)
+    UI.important(
+      "[idempotent skip] #{reason} app=#{app_identifier} version=#{app_version} build=#{build_number}. " \
+      "Завершаем lane без ошибки."
+    )
+  end
+
   # submit_for_review требует whatsNew в App Store Connect. Загружаем только release notes,
   # не трогая name/description/support_url и прочие поля листинга (важно для 12 разных приложений).
   def submit_for_app_store_review(app_identifier, build_number)
     app_version = current_xcconfig_app_version
-    ensure_editable_app_store_version(app_identifier, app_version)
+    begin
+      ensure_editable_app_store_version(app_identifier, app_version)
+    rescue Spaceship::UnexpectedResponse => e
+      if asc_blocks_new_app_store_version?(e)
+        log_idempotent_submit_skip(
+          app_identifier,
+          app_version,
+          build_number,
+          "ASC не позволяет создать/переоткрыть версию в текущем состоянии приложения"
+        )
+        return
+      end
+      raise
+    end
 
     Dir.mktmpdir("deliver-metadata") do |metadata_path|
       ru_path = File.join(metadata_path, "ru")
       FileUtils.mkdir_p(ru_path)
       File.write(File.join(ru_path, "release_notes.txt"), release_notes_text)
 
-      deliver(
-        app_identifier: app_identifier,
-        app_version: app_version,
-        build_number: build_number,
-        metadata_path: metadata_path,
-        skip_binary_upload: true,
-        submit_for_review: true,
-        automatic_release: false,
-        force: true,
-        skip_screenshots: true,
-        skip_metadata: false,
-        precheck_include_in_app_purchases: false,
-        version_check_wait_retry_limit: 1,
-        submission_information: {
-          export_compliance_uses_encryption: false,
-          export_compliance_encryption_updated: false
-        }
-      )
+      begin
+        deliver(
+          app_identifier: app_identifier,
+          app_version: app_version,
+          build_number: build_number,
+          metadata_path: metadata_path,
+          skip_binary_upload: true,
+          submit_for_review: true,
+          automatic_release: false,
+          force: true,
+          skip_screenshots: true,
+          skip_metadata: false,
+          precheck_include_in_app_purchases: false,
+          version_check_wait_retry_limit: 1,
+          submission_information: {
+            export_compliance_uses_encryption: false,
+            export_compliance_encryption_updated: false
+          }
+        )
+      rescue Spaceship::UnexpectedResponse => e
+        if asc_blocks_new_app_store_version?(e)
+          log_idempotent_submit_skip(
+            app_identifier,
+            app_version,
+            build_number,
+            "ASC блокирует submit (версия уже зафиксирована/использована)"
+          )
+        else
+          raise
+        end
+      end
     end
   end
 
@@ -199,6 +240,30 @@ platform :ios do
     latest.to_s
   end
 
+  # Fail the lane if Compose Multiplatform resources were not copied into the IPA.
+  # Without them the app aborts on first draw with MissingResourceException (Kotlin SIGABRT).
+  def assert_ipa_contains_compose_resources(ipa_path)
+    UI.user_error!("IPA не найден для проверки compose-resources: #{ipa_path}") unless ipa_path && File.exist?(ipa_path)
+
+    Dir.mktmpdir("compose-resources-check") do |tmp|
+      payload = File.join(tmp, "Payload")
+      sh("unzip -q #{Shellwords.escape(ipa_path)} -d #{Shellwords.escape(tmp)}")
+      app_dir = Dir.glob(File.join(payload, "*.app")).first
+      UI.user_error!("В IPA нет Payload/*.app") unless app_dir
+
+      compose_resources = File.join(app_dir, "compose-resources")
+      sample = Dir.glob(File.join(compose_resources, "**", "*")).find { |path| File.file?(path) }
+      if sample.nil?
+        UI.user_error!(
+          "В #{File.basename(app_dir)} нет compose-resources. " \
+          "Проверьте shared.podspec (spec.resources) и что каталог " \
+          "shared/build/compose/cocoapods/compose-resources существовал до pod install."
+        )
+      end
+      UI.success("compose-resources OK (пример: #{sample.sub("#{app_dir}/", '')})")
+    end
+  end
+
   # Сборка IPA и заливка в TestFlight без ожидания обработки Apple
   def upload_to_testflight_only(app_identifier, scheme)
     build_number = next_app_store_build_number(app_identifier)
@@ -228,6 +293,9 @@ platform :ios do
       )
     end
 
+    ipa_path = lane_context[SharedValues::IPA_OUTPUT_PATH]
+    assert_ipa_contains_compose_resources(ipa_path)
+
     upload_to_testflight(
       app_identifier: app_identifier,
       skip_waiting_for_build_processing: true
@@ -242,10 +310,19 @@ platform :ios do
     submit_for_app_store_review(app_identifier, build_number)
   end
 
+  def write_upload_build_number(lane_name, build_number)
+    mapping_path = File.expand_path("upload_build_numbers.json", __dir__)
+    uploaded_builds = File.exist?(mapping_path) ? JSON.parse(File.read(mapping_path)) : {}
+    uploaded_builds[lane_name.to_s] = build_number
+    File.write(mapping_path, JSON.pretty_generate(uploaded_builds))
+    UI.success("Записан build #{lane_name}=#{build_number} → #{mapping_path}")
+  end
+
   apps.each do |lane_name, config|
     desc "Build and upload #{lane_name} to TestFlight (без submit)"
     lane :"upload_#{lane_name}" do
-      upload_to_testflight_only(config[:id], config[:scheme])
+      build_number = upload_to_testflight_only(config[:id], config[:scheme])
+      write_upload_build_number(lane_name, build_number)
     end
 
     desc "Submit #{lane_name} for App Store review (билд должен быть обработан в ASC)"

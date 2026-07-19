@@ -1,16 +1,14 @@
 meta:
-  environment: jvm
+  environment: docker
   toolchain:
-    name: gradle
-    version: "21"
+    name: docker
 build:
-  image: null
-  args: clean build
-  artifacts:
-    app/build/libs/*.jar: /
+  dockerfile: amvera/Dockerfile
+  skip: false
 run:
   image: null
+  command: null
   args: null
-  jarName: app.jar
   persistenceMount: /data
-  containerPort: 80
+  containerPort: "80"
+
