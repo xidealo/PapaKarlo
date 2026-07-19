@@ -31,6 +31,7 @@ platform :ios do
      djan:         { id: "com.bunbeauty.djan", scheme: "djan" },
      usaba:        { id: "com.bunbeauty.usadba", scheme: "usadba" },
      emoji:        { id: "com.bunbeauty.emoji", scheme: "emoji" },
+     emojicenter:  { id: "com.bunbeauty.emojicenter", scheme: "emojicenter" },
      estpoest:     { id: "com.bunbeauty.estpoest", scheme: "estpoest" },
      taverna:      { id: "com.bunbeauty.taverna", scheme: "taverna" },
      voljane:      { id: "com.bunbeauty.voljane", scheme: "voljane" },

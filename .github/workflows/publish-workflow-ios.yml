@@ -21,6 +21,7 @@ on:
           - djan
           - usaba
           - emoji
+          - emojicenter
           - estpoest
           - taverna
           - all
@@ -111,6 +112,7 @@ jobs:
             "djan|djanRes|com.bunbeauty.djan"
             "usaba|usadbaRes|com.bunbeauty.usadba"
             "emoji|emojiRes|com.bunbeauty.emoji"
+            "emojicenter|emojicenterRes|com.bunbeauty.emojicenter"
             "estpoest|estpoestRes|com.bunbeauty.estpoest"
             "taverna|tavernaRes|com.bunbeauty.taverna"
             "voljane|voljaneRes|com.bunbeauty.voljane"
