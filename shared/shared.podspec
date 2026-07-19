@@ -43,5 +43,8 @@ Pod::Spec.new do |spec|
             SCRIPT
         }
     ]
-    spec.resources = ['build\compose\cocoapods\compose-resources']
+    # Forward slashes only — CocoaPods on macOS does File.exist? on this path;
+    # Windows-style backslashes make the directory "missing" and resources never
+    # get registered for [CP] Copy Pods Resources → MissingResourceException on launch.
+    spec.resources = ['build/compose/cocoapods/compose-resources']
 end
