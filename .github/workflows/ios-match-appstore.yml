@@ -28,6 +28,12 @@ jobs:
           bundler-cache: true
           working-directory: iosApp
 
+      # Gemfile.lock pins 2.222.0 which still sends profiles.templateName (Apple rejects).
+      # >= 2.228.0 fixes that; bump here so match can create new profiles.
+      - name: Upgrade fastlane for match
+        working-directory: iosApp
+        run: bundle update fastlane
+
       - name: Decode App Store Connect API key
         working-directory: iosApp
         run: |
