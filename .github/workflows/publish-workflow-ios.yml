@@ -196,6 +196,13 @@ jobs:
       - name: Install CocoaPods
         run: sudo gem install cocoapods
 
+      # Compose resources must exist (even empty) before `pod install`, otherwise
+      # CocoaPods skips registering them and the IPA ships without compose-resources →
+      # MissingResourceException on first Compose frame (splash logo / strings).
+      - name: Prepare Compose CocoaPods resources dir
+        working-directory: .
+        run: mkdir -p shared/build/compose/cocoapods/compose-resources
+
       - name: Generate KMP dummy framework
         working-directory: .
         run: ./gradlew :shared:generateDummyFramework
