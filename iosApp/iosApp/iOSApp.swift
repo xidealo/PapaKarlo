@@ -12,14 +12,16 @@ import SwiftUI
 
 let iosComponent = IosComponent()
 
-@main
-struct PapaKarloSwiftApp: App {
-    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-    
-    init() {
-        // Must configure Firebase before any Analytics/Messaging/Koin Firebase calls.
-        // Analytics was previously started eagerly from Koin (createdAtStart) and crashed
-        // Release builds with com.firebase.installations.
+/// Single entry for Firebase + Koin. Safe to call from App.init and/or AppDelegate
+/// regardless of which runs first on device vs simulator.
+enum AppBootstrap {
+    private static var didStart = false
+
+    static func startIfNeeded() {
+        guard !didStart else { return }
+        didStart = true
+
+        // Must configure Firebase before Analytics / Messaging / Koin Firebase calls.
         if FirebaseApp.app() == nil {
             FirebaseApp.configure()
         }
@@ -30,16 +32,24 @@ struct PapaKarloSwiftApp: App {
         #endif
         KoinKt.doInitKoin()
     }
-    
+}
+
+@main
+struct PapaKarloSwiftApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+
+    init() {
+        AppBootstrap.startIfNeeded()
+    }
+
     var body: some Scene {
         WindowGroup {
-            VStack{
+            VStack {
                 ComposeView()
                     .ignoresSafeArea()
             }
         }
     }
-    
 }
 
 struct ComposeView: UIViewControllerRepresentable {
@@ -47,13 +57,13 @@ struct ComposeView: UIViewControllerRepresentable {
         let vc = AppIosKt.MainViewController(
             flavor: Bundle.main.object(forInfoDictionaryKey: "CFBundleName") as? String ?? ""
         )
-        
+
         vc.view.insetsLayoutMarginsFromSafeArea = false
         vc.additionalSafeAreaInsets = .zero
-        
+
         return vc
     }
-    
+
     func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
 }
 

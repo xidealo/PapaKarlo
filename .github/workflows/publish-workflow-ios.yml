@@ -4,9 +4,30 @@ on:
   push:
     branches:
       - master
+  workflow_dispatch:
+    inputs:
+      app:
+        description: "App to upload to TestFlight (canary). Use all for every publish app."
+        required: true
+        default: voljane
+        type: choice
+        options:
+          - voljane
+          - gustopub
+          - papakarlo
+          - yuliar
+          - tandirhouse
+          - vkuskavkaza
+          - djan
+          - usaba
+          - emoji
+          - emojicenter
+          - estpoest
+          - taverna
+          - all
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ github.event_name == 'workflow_dispatch' && inputs.app || 'all' }}
   cancel-in-progress: true
 
 jobs:
@@ -77,10 +98,12 @@ jobs:
           rm firebase-plists.tar.gz
 
       - name: "Verify GoogleService-Info.plist for publish apps"
+        env:
+          SELECTED_APP: ${{ github.event_name == 'workflow_dispatch' && inputs.app || 'all' }}
         run: |
           set -euo pipefail
           # scheme_key|res_folder|expected_BUNDLE_ID (same set as Fastfile `apps` / submit matrix)
-          APPS=(
+          ALL_APPS=(
             "papakarlo|papakarloRes|com.bunbeuaty.papakarlo"
             "gustopub|gustoPubRes|com.bunbeauty.gustopub"
             "yuliar|yuliarRes|com.bunbeauty.yuliar"
@@ -89,10 +112,26 @@ jobs:
             "djan|djanRes|com.bunbeauty.djan"
             "usaba|usadbaRes|com.bunbeauty.usadba"
             "emoji|emojiRes|com.bunbeauty.emoji"
+            "emojicenter|emojicenterRes|com.bunbeauty.emojicenter"
             "estpoest|estpoestRes|com.bunbeauty.estpoest"
             "taverna|tavernaRes|com.bunbeauty.taverna"
             "voljane|voljaneRes|com.bunbeauty.voljane"
           )
+          APPS=()
+          if [ "$SELECTED_APP" = "all" ]; then
+            APPS=("${ALL_APPS[@]}")
+          else
+            for entry in "${ALL_APPS[@]}"; do
+              IFS='|' read -r name _ _ <<< "$entry"
+              if [ "$name" = "$SELECTED_APP" ]; then
+                APPS+=("$entry")
+              fi
+            done
+            if [ "${#APPS[@]}" -eq 0 ]; then
+              echo "::error::Unknown app selection: $SELECTED_APP"
+              exit 1
+            fi
+          fi
           missing=0
           for entry in "${APPS[@]}"; do
             IFS='|' read -r name res expected_bundle <<< "$entry"
@@ -159,6 +198,13 @@ jobs:
       - name: Install CocoaPods
         run: sudo gem install cocoapods
 
+      # Compose resources must exist (even empty) before `pod install`, otherwise
+      # CocoaPods skips registering them and the IPA ships without compose-resources →
+      # MissingResourceException on first Compose frame (splash logo / strings).
+      - name: Prepare Compose CocoaPods resources dir
+        working-directory: .
+        run: mkdir -p shared/build/compose/cocoapods/compose-resources
+
       - name: Generate KMP dummy framework
         working-directory: .
         run: ./gradlew :shared:generateDummyFramework
@@ -174,7 +220,7 @@ jobs:
           echo "${{ secrets.APP_STORE_P8_BASE64 }}" | base64 --decode > fastlane/keys/AuthKey.p8
           chmod 600 fastlane/keys/AuthKey.p8
 
-      - name: Build and upload all apps to TestFlight
+      - name: Build and upload to TestFlight
         working-directory: iosApp
         env:
           MATCH_GIT_BASIC_AUTHORIZATION : ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION  }}
@@ -183,7 +229,16 @@ jobs:
           APP_STORE_P8_PATH: fastlane/keys/AuthKey.p8
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
           MATCH_READONLY: "true"
-        run: bundle exec fastlane ios deployAllUpload
+          SELECTED_APP: ${{ github.event_name == 'workflow_dispatch' && inputs.app || 'all' }}
+        run: |
+          set -euo pipefail
+          if [ "$SELECTED_APP" = "all" ]; then
+            echo "Uploading all apps (deployAllUpload)"
+            bundle exec fastlane ios deployAllUpload
+          else
+            echo "Canary upload: $SELECTED_APP"
+            bundle exec fastlane ios "upload_${SELECTED_APP}"
+          fi
 
       - name: Upload build numbers artifact
         if: success()
@@ -192,11 +247,15 @@ jobs:
           name: ios-upload-build-numbers
           path: iosApp/fastlane/upload_build_numbers.json
           retention-days: 7
+          if-no-files-found: ignore
 
       - name: Upload build summary
         working-directory: iosApp
+        env:
+          SELECTED_APP: ${{ github.event_name == 'workflow_dispatch' && inputs.app || 'all' }}
         run: |
           echo "## iOS upload завершён" >> "$GITHUB_STEP_SUMMARY"
+          echo "Selection: \`$SELECTED_APP\` (event: \`${{ github.event_name }}\`)" >> "$GITHUB_STEP_SUMMARY"
           echo "Номера билдов берутся из App Store Connect (latest + 1), не из GITHUB_RUN_NUMBER." >> "$GITHUB_STEP_SUMMARY"
           if [ -f fastlane/upload_build_numbers.json ]; then
             echo "" >> "$GITHUB_STEP_SUMMARY"
@@ -205,5 +264,10 @@ jobs:
             cat fastlane/upload_build_numbers.json >> "$GITHUB_STEP_SUMMARY"
             echo '```' >> "$GITHUB_STEP_SUMMARY"
           fi
-          echo "" >> "$GITHUB_STEP_SUMMARY"
-          echo "После обработки билдов в ASC автоматически запустится **Publish workflow ios (submit)**." >> "$GITHUB_STEP_SUMMARY"
+          if [ "${{ github.event_name }}" = "push" ] || [ "$SELECTED_APP" = "all" ]; then
+            echo "" >> "$GITHUB_STEP_SUMMARY"
+            echo "После обработки билдов в ASC автоматически запустится **Publish workflow ios (submit)** (только после push на master)." >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "" >> "$GITHUB_STEP_SUMMARY"
+            echo "Canary upload — **submit workflow не запустится** (только TestFlight)." >> "$GITHUB_STEP_SUMMARY"
+          fi
