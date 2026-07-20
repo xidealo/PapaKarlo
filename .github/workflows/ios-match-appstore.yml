@@ -1,0 +1,57 @@
+name: iOS match App Store profile
+
+on:
+  workflow_dispatch:
+    inputs:
+      app_identifier:
+        description: "Bundle ID for match appstore"
+        required: true
+        default: com.bunbeauty.emojicenter
+        type: string
+
+concurrency:
+  group: ios-match-${{ inputs.app_identifier }}
+  cancel-in-progress: false
+
+jobs:
+  match:
+    runs-on: macos-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.2"
+          working-directory: iosApp
+
+      # Avoid frozen Gemfile.lock from setup-ruby cache; need fastlane >= 2.228
+      # (Apple removed profiles.templateName — 2.222.0 cannot create profiles).
+      - name: Install fastlane for match
+        working-directory: iosApp
+        run: |
+          set -euo pipefail
+          bundle config set frozen false
+          bundle update fastlane
+
+      - name: Decode App Store Connect API key
+        working-directory: iosApp
+        run: |
+          mkdir -p fastlane/keys
+          echo "${{ secrets.APP_STORE_P8_BASE64 }}" | base64 --decode > fastlane/keys/AuthKey.p8
+          chmod 600 fastlane/keys/AuthKey.p8
+
+      - name: Run match appstore
+        working-directory: iosApp
+        env:
+          MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION }}
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+          APP_STORE_KEY_ID: ${{ secrets.APP_STORE_KEY_ID }}
+          APP_STORE_ISSUER_ID: ${{ secrets.APP_STORE_ISSUER_ID }}
+          APP_STORE_P8_PATH: fastlane/keys/AuthKey.p8
+          MATCH_READONLY: "false"
+        run: |
+          set -euo pipefail
+          bundle exec fastlane ios match_appstore_ci app_identifier:"${{ inputs.app_identifier }}"
