@@ -5,22 +5,28 @@ import com.bunbeauty.core.model.Settings
 import com.bunbeauty.core.model.UserCityUuid
 import com.bunbeauty.shared.DataStoreRepo
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.flow
 import org.koin.core.component.KoinComponent
 
 actual class DataStoreRepository :
     DataStoreRepo,
     KoinComponent {
-    actual override val token: Flow<String?> = flow { emit(getToken()) }
+    private val tokenState = MutableStateFlow(lsGet(TOKEN_KEY))
 
-    actual override suspend fun getToken(): String? = lsGet(TOKEN_KEY)
+    actual override val token: Flow<String?> = tokenState.asStateFlow()
+
+    actual override suspend fun getToken(): String? = tokenState.value
 
     actual override suspend fun saveToken(token: String) {
         lsSet(TOKEN_KEY, token)
+        tokenState.value = token
     }
 
     actual override suspend fun clearToken() {
         lsRemove(TOKEN_KEY)
+        tokenState.value = null
     }
 
     actual override val userUuid: Flow<String?> = flow { emit(getUserUuid()) }
@@ -92,6 +98,7 @@ actual class DataStoreRepository :
 
     actual override suspend fun clearUserData() {
         lsRemove(TOKEN_KEY)
+        tokenState.value = null
         lsRemove(USER_UUID_KEY)
         lsRemove(SETTINGS_USER_UUID_KEY)
         lsRemove(SETTINGS_PHONE_NUMBER_KEY)
