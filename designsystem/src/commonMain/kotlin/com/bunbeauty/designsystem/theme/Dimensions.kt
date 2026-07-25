@@ -31,5 +31,6 @@ data class AppDimensions(
     val blurHeight: Dp = 16.dp,
     val smallProgressBarSize: Dp = 24.dp,
     val smsEditTextWidth: Dp = 320.dp,
+    val smsDigitHeight: Dp = 56.dp,
     val scrollScreenBottomSpace: Dp = buttonHeight + 32.dp,
 )
