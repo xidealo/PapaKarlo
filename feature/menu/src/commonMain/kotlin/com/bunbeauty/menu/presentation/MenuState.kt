@@ -13,7 +13,6 @@ interface MenuState {
         val categoryItemList: List<CategoryItem>,
         val cartCostAndCount: CartCostAndCount?,
         val menuItemList: List<MenuItem>,
-        val favoriteProductList: List<MenuItem.Product> = emptyList(),
         val state: State,
         val userScrollEnabled: Boolean,
         val lastOrder: LightOrder?,
