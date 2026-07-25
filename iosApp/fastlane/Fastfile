@@ -40,6 +40,25 @@ platform :ios do
       readonly: false,
       force_for_new_devices: true
     )
+
+    # match не падает при 403 на push в certs-репозиторий — проверяем, что профиль
+    # реально доступен из git (иначе publish с MATCH_READONLY=true снова упадёт).
+    UI.message("Проверяю, что профиль попал в match git storage (readonly)...")
+    begin
+      match(
+        type: "appstore",
+        app_identifier: app_identifier,
+        api_key: api_key,
+        readonly: true
+      )
+    rescue StandardError => e
+      UI.user_error!(
+        "Профиль для #{app_identifier} создан в Apple, но не сохранён в match-репозиторий " \
+        "(часто 403 Write access на faslane_certs). " \
+        "Выдайте MATCH_GIT_BASIC_AUTHORIZATION права Contents: Read and write на " \
+        "xidealo/faslane_certs и перезапустите этот workflow. Причина: #{e.message}"
+      )
+    end
   end
 
   # Список приложений с идентификатором и схемой
@@ -286,17 +305,42 @@ platform :ios do
     end
   end
 
+  # match readonly сначала; если профиля нет в git — создаём/скачиваем из Apple.
+  # Нужно, когда профиль есть в Developer Portal, но push в faslane_certs не прошёл (403).
+  def sync_appstore_match_profile(app_identifier)
+    readonly = (ENV["MATCH_READONLY"] == "true")
+    begin
+      match(
+        type: "appstore",
+        app_identifier: app_identifier,
+        readonly: readonly
+      )
+    rescue StandardError => e
+      missing_profile = e.message.to_s.include?("No matching provisioning profiles")
+      if readonly && missing_profile
+        UI.important(
+          "Профиль #{app_identifier} отсутствует в match git — fallback без readonly " \
+          "(скачивание/создание в Apple). Проверьте write-доступ MATCH_GIT_BASIC_AUTHORIZATION " \
+          "к xidealo/faslane_certs."
+        )
+        match(
+          type: "appstore",
+          app_identifier: app_identifier,
+          readonly: false
+        )
+      else
+        raise
+      end
+    end
+  end
+
   # Сборка IPA и заливка в TestFlight без ожидания обработки Apple
   def upload_to_testflight_only(app_identifier, scheme)
     build_number = next_app_store_build_number(app_identifier)
     set_app_build_number(build_number)
     UI.success("Upload #{app_identifier}: build #{build_number}")
 
-    match(
-      type: "appstore",
-      app_identifier: app_identifier,
-      readonly: (ENV["MATCH_READONLY"] == "true")
-    )
+    sync_appstore_match_profile(app_identifier)
 
     apply_appstore_signing(app_identifier)
 
