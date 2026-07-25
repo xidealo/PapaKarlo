@@ -10,7 +10,7 @@ fun profileFeatureModule() =
     module {
         viewModel {
             ProfileViewModel(
-                userInteractor = get(),
+                observeTokenUseCase = get(),
                 getLinkListUseCase = get(),
                 buildVersion = get(buildVersionQualifier),
             )
