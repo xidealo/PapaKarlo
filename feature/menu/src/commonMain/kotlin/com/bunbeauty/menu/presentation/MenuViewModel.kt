@@ -6,7 +6,6 @@ import com.bunbeauty.analytic.event.menu.LoadedMenuEvent
 import com.bunbeauty.analytic.parameter.MenuProductUuidEventParameter
 import com.bunbeauty.analytic.parameter.TimeParameter
 import com.bunbeauty.core.Logger
-import com.bunbeauty.core.Constants.FAVORITES_CATEGORY_UUID
 import com.bunbeauty.core.base.SharedStateViewModel
 import com.bunbeauty.core.domain.ObserveCartUseCase
 import com.bunbeauty.core.domain.auth.ObserveTokenUseCase
@@ -50,7 +49,6 @@ class MenuViewModel(
                 categoryItemList = emptyList(),
                 cartCostAndCount = null,
                 menuItemList = emptyList(),
-                favoriteProductList = emptyList(),
                 state = MenuState.DataState.State.LOADING,
                 userScrollEnabled = true,
                 lastOrder = null,
@@ -144,8 +142,7 @@ class MenuViewModel(
                     .drop(1)
                     .distinctUntilChanged()
                     .collectLatest {
-                        refreshDiscount()
-                        refreshFavoriteProducts()
+                        refreshDiscountAndFavorites()
                     }
             },
             onError = { throwable ->
@@ -154,27 +151,30 @@ class MenuViewModel(
         )
     }
 
-    private fun refreshDiscount() {
-        sharedScope.launchSafe(
-            block = {
-                val discountItem =
-                    getDiscountUseCase()?.firstOrderDiscount?.toString()?.let { discount ->
-                        MenuItem.Discount(discount = discount)
-                    }
-                setState {
-                    copy(
-                        menuItemList =
-                            listOfNotNull(discountItem) +
-                                menuItemList.filterNot { menuItem ->
-                                    menuItem is MenuItem.Discount
-                                },
-                    )
-                }
-            },
-            onError = { throwable ->
-                Logger.logE(MAIN_MENU_VIEW_MODEL_TAG, throwable.stackTraceToString())
-            },
-        )
+    private suspend fun refreshDiscountAndFavorites() {
+        val discountItem =
+            getDiscountUseCase()?.firstOrderDiscount?.toString()?.let { discount ->
+                MenuItem.Discount(discount = discount)
+            }
+        val favoritesItem = toFavoritesMenuItem(loadFavoriteProductList())
+        val menuSectionList = menuProductInteractor.getMenuSectionList()
+
+        setState {
+            copy(
+                menuItemList =
+                    buildMenuItemListPrefix(
+                        discountItem = discountItem,
+                        favoritesItem = favoritesItem,
+                    ) +
+                        menuItemList.filterNot { menuItem ->
+                            menuItem is MenuItem.Discount || menuItem is MenuItem.Favorites
+                        },
+                categoryItemList =
+                    buildCategoryItemList(
+                        menuSectionList = menuSectionList,
+                    ),
+            )
+        }
     }
 
     private fun getMenu() {
@@ -189,7 +189,7 @@ class MenuViewModel(
                 val time =
                     measureTime {
                         val menuSectionList = menuProductInteractor.getMenuSectionList()
-                        val favoriteProductList = loadFavoriteProductList()
+                        val favoritesItem = toFavoritesMenuItem(loadFavoriteProductList())
 
                         if (selectedCategoryUuid == null) {
                             selectedCategoryUuid = menuSectionList.firstOrNull()?.category?.uuid
@@ -200,16 +200,19 @@ class MenuViewModel(
                                 MenuItem.Discount(discount = discount)
                             }
                         val menuItemList =
-                            listOfNotNull(discountItem) +
+                            buildMenuItemListPrefix(
+                                discountItem = discountItem,
+                                favoritesItem = favoritesItem,
+                            ) +
                                 menuSectionList.flatMap { menuSection ->
                                     menuSection.toMenuItemList()
                                 }
                         setState {
                             copy(
-                                categoryItemList = buildCategoryItemList(
-                                    menuSectionList = menuSectionList,
-                                ),
-                                favoriteProductList = favoriteProductList,
+                                categoryItemList =
+                                    buildCategoryItemList(
+                                        menuSectionList = menuSectionList,
+                                    ),
                                 menuItemList = menuItemList,
                                 state = MenuState.DataState.State.SUCCESS,
                             )
@@ -237,14 +240,13 @@ class MenuViewModel(
         }
 
         currentMenuPosition = menuPosition
-        val hasFavoritesSection = mutableDataState.value.favoriteProductList.isNotEmpty()
 
-        if (menuPosition < menuContentStartGridIndex(hasFavoritesSection = hasFavoritesSection)) {
+        if (menuPosition < menuContentStartGridIndex()) {
             return
         }
 
         val menuListPosition =
-            (menuPosition - menuContentStartGridIndex(hasFavoritesSection = hasFavoritesSection))
+            (menuPosition - menuContentStartGridIndex())
                 .coerceAtLeast(0)
 
         sharedScope.launchSafe(
@@ -300,14 +302,24 @@ class MenuViewModel(
         }
     }
 
-    private fun findMenuProduct(uuid: String): MenuItem.Product? =
-        mutableDataState.value.favoriteProductList.find { menuProduct ->
-            menuProduct.uuid == uuid
-        } ?: mutableDataState.value.menuItemList
+    private fun findMenuProduct(uuid: String): MenuItem.Product? {
+        val menuItemList = mutableDataState.value.menuItemList
+        val favoriteProduct =
+            menuItemList
+                .filterIsInstance<MenuItem.Favorites>()
+                .flatMap { favorites -> favorites.products }
+                .find { menuProduct ->
+                    menuProduct.uuid == uuid
+                }
+        if (favoriteProduct != null) {
+            return favoriteProduct
+        }
+        return menuItemList
             .filterIsInstance<MenuItem.Product>()
             .find { menuProduct ->
                 menuProduct.uuid == uuid
             }
+    }
 
     private fun onAddProductClicked(menuProductUuid: String) {
         val menuProduct = findMenuProduct(uuid = menuProductUuid) ?: return
@@ -382,9 +394,7 @@ class MenuViewModel(
             isSelected = isCategorySelected(menuSection.category.uuid),
         )
 
-    private fun buildCategoryItemList(
-        menuSectionList: List<MenuSection>,
-    ): List<CategoryItem> =
+    private fun buildCategoryItemList(menuSectionList: List<MenuSection>): List<CategoryItem> =
         menuSectionList.map { menuSection ->
             toCategoryItemModel(menuSection)
         }
@@ -394,19 +404,36 @@ class MenuViewModel(
             menuProduct.toMenuProductItem()
         }
 
+    private fun toFavoritesMenuItem(products: List<MenuItem.Product>): MenuItem.Favorites? =
+        if (products.isNotEmpty()) {
+            MenuItem.Favorites(products = products)
+        } else {
+            null
+        }
+
+    private fun buildMenuItemListPrefix(
+        discountItem: MenuItem.Discount?,
+        favoritesItem: MenuItem.Favorites?,
+    ): List<MenuItem> = listOfNotNull(discountItem, favoritesItem)
+
     private fun refreshFavoriteProducts() {
         sharedScope.launchSafe(
             block = {
-                val favoriteProductList = loadFavoriteProductList()
+                val favoritesItem = toFavoritesMenuItem(loadFavoriteProductList())
                 val menuSectionList = menuProductInteractor.getMenuSectionList()
 
-                if (selectedCategoryUuid == FAVORITES_CATEGORY_UUID) {
-                    selectedCategoryUuid = menuSectionList.firstOrNull()?.category?.uuid
-                }
-
                 setState {
+                    val discountItem =
+                        menuItemList.filterIsInstance<MenuItem.Discount>().firstOrNull()
                     copy(
-                        favoriteProductList = favoriteProductList,
+                        menuItemList =
+                            buildMenuItemListPrefix(
+                                discountItem = discountItem,
+                                favoritesItem = favoritesItem,
+                            ) +
+                                menuItemList.filterNot { menuItem ->
+                                    menuItem is MenuItem.Discount || menuItem is MenuItem.Favorites
+                                },
                         categoryItemList =
                             buildCategoryItemList(
                                 menuSectionList = menuSectionList,
