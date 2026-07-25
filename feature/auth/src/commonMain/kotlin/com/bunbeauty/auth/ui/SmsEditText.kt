@@ -24,12 +24,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
@@ -42,45 +45,32 @@ fun SmsEditText(
     smsCodeLength: Int = 6,
     onFilled: (smsCode: String) -> Unit,
 ) {
-    var code by remember { mutableStateOf("") }
+    var textFieldValue by remember { mutableStateOf(TextFieldValue("")) }
     var isFilled by remember { mutableStateOf(false) }
+    var isFocused by remember { mutableStateOf(false) }
     val focusRequester = remember { FocusRequester() }
+
+    val code = textFieldValue.text
+    val activeIndex = textFieldValue.selection.start.coerceIn(0, smsCodeLength - 1)
 
     CompositionLocalProvider(
         LocalTextSelectionColors provides FoodDeliveryTextFieldDefaults.smsCodeTextSelectionColors,
     ) {
-        Box(
-            modifier =
-                modifier.clickable(
-                    interactionSource = remember { MutableInteractionSource() },
-                    indication = null,
-                    onClick = { focusRequester.requestFocus() },
-                ),
-        ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = spacedBy(8.dp),
-            ) {
-                val activeIndex = code.length.coerceAtMost(smsCodeLength - 1)
-                repeat(smsCodeLength) { index ->
-                    val digit = code.getOrNull(index)?.toString().orEmpty()
-                    SmsDigitBox(
-                        modifier = Modifier.weight(1f),
-                        digit = digit,
-                        isActive = index == activeIndex,
-                    )
-                }
-            }
-
+        Box(modifier = modifier) {
             BasicTextField(
-                value = code,
+                value = textFieldValue,
                 onValueChange = { newValue ->
                     val filtered =
-                        newValue
+                        newValue.text
                             .filter { char -> char in '0'..'9' }
                             .take(smsCodeLength)
+                    val selection =
+                        TextRange(
+                            start = newValue.selection.start.coerceIn(0, filtered.length),
+                            end = newValue.selection.end.coerceIn(0, filtered.length),
+                        )
                     val becameFilled = filtered.length == smsCodeLength && !isFilled
-                    code = filtered
+                    textFieldValue = TextFieldValue(text = filtered, selection = selection)
                     isFilled = filtered.length == smsCodeLength
                     if (becameFilled) {
                         onFilled(filtered)
@@ -89,7 +79,10 @@ fun SmsEditText(
                 modifier =
                     Modifier
                         .matchParentSize()
-                        .focusRequester(focusRequester),
+                        .focusRequester(focusRequester)
+                        .onFocusChanged { focusState ->
+                            isFocused = focusState.isFocused
+                        },
                 textStyle =
                     TextStyle(
                         color = Color.Transparent,
@@ -103,6 +96,28 @@ fun SmsEditText(
                         imeAction = ImeAction.None,
                     ),
             )
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = spacedBy(8.dp),
+            ) {
+                repeat(smsCodeLength) { index ->
+                    val digit = code.getOrNull(index)?.toString().orEmpty()
+                    SmsDigitBox(
+                        modifier = Modifier.weight(1f),
+                        digit = digit,
+                        isActive = isFocused && index == activeIndex,
+                        onClick = {
+                            focusRequester.requestFocus()
+                            val cursor = index.coerceAtMost(code.length)
+                            textFieldValue =
+                                textFieldValue.copy(
+                                    selection = TextRange(cursor),
+                                )
+                        },
+                    )
+                }
+            }
         }
     }
 
@@ -115,6 +130,7 @@ fun SmsEditText(
 private fun SmsDigitBox(
     digit: String,
     isActive: Boolean,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     // Visual analogue of FoodDeliveryTextFieldDefaults.smsCodeTextFieldColors
@@ -136,6 +152,11 @@ private fun SmsDigitBox(
             modifier
                 .height(FoodDeliveryTheme.dimensions.smsDigitHeight)
                 .background(FoodDeliveryTheme.colors.mainColors.surface)
+                .clickable(
+                    interactionSource = remember { MutableInteractionSource() },
+                    indication = null,
+                    onClick = onClick,
+                )
                 .drawBehind {
                     val strokeWidth = indicatorThickness.toPx()
                     val y = size.height - strokeWidth / 2
