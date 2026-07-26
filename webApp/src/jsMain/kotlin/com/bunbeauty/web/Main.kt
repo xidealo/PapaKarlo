@@ -25,8 +25,10 @@ import kotlinx.coroutines.await
 import kotlinx.coroutines.launch
 import org.koin.dsl.module
 
-// Browser tab title per brand (index.html <title> is static, so we set it at
-// runtime). Names match the Android app_name of each flavor.
+// Browser tab title per brand. nginx already substitutes the brand into
+// index.html by domain (see amvera/nginx.conf), but we still set it here so the
+// ?flavor= override and local dev show the right name. Names must stay in sync
+// with the nginx map and match the Android app_name of each flavor.
 private fun webTitle(flavor: String): String {
     val name =
         when (flavor) {
@@ -78,8 +80,8 @@ fun main() {
     // Must match the flavor Koin resolves in PlatformModule (also resolveWebFlavor).
     val flavor = resolveWebFlavor()
 
-    // The index.html <title>/favicon are static, but the shown brand is chosen at
-    // runtime, so we set the browser tab title and icon from the current flavor.
+    // index.html has no favicon and its title may come from the domain rather
+    // than the resolved flavor, so both are set from the current flavor here.
     document.title = webTitle(flavor)
     applyFavicon(flavor)
 
