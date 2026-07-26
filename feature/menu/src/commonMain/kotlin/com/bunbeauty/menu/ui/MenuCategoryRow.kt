@@ -29,7 +29,6 @@ private const val MENU_CATEGORY_ROW_INDEX = 1
 internal fun MenuCategoryRow(
     categoryItemList: ImmutableList<CategoryItem>,
     menuItemList: ImmutableList<MenuItemUi>,
-    hasFavoritesSection: Boolean,
     menuLazyGridState: LazyGridState,
     modifier: Modifier = Modifier,
     onAction: (MenuState.Action) -> Unit,
@@ -77,7 +76,6 @@ internal fun MenuCategoryRow(
                                 getMenuListPosition(
                                     categoryItem = categoryItemModel,
                                     menuItemList = menuItemList,
-                                    hasFavoritesSection = hasFavoritesSection,
                                 )
                             menuLazyGridState.alignCategoryHeaderUnderCategoryRow(
                                 headerGridIndex = index,

@@ -4,8 +4,8 @@ import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
@@ -42,7 +42,7 @@ internal fun MenuFavoritesRow(
                 Modifier.padding(
                     top = 16.dp,
                     start = 16.dp,
-                    end = 16.dp
+                    end = 16.dp,
                 ),
             text = stringResource(resource = Res.string.title_favorites),
             style = FoodDeliveryTheme.typography.titleMedium.bold,
