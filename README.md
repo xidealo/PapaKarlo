@@ -1,51 +1,52 @@
-# Food Delivery Platform for Cafés & Restaurants
+# White-Label Food Delivery Platform for Cafés & Restaurants
 
-## About the Project
+## Build Your Own Food Delivery Business
 
-**PapaKarlo** is a modern food ordering and delivery platform designed for cafés and restaurants that want to launch their own branded online ordering service.
+**PapaKarlo** is a white-label food ordering and delivery platform that enables cafés and restaurants to launch their own branded online ordering service.
 
-The platform is already **trusted by 15 cafés**, helping businesses accept direct orders, reduce marketplace commissions, and maintain full control over their customers and operations.
+Instead of paying high marketplace commissions, you receive orders directly from your customers while maintaining full control over your menu, pricing, customer relationships, and delivery process.
+
+The platform is already **used by 15 cafés** and is designed for businesses that want to grow direct sales through their own mobile applications.
 
 ## Why Choose PapaKarlo?
 
-* ✅ Only **3% commission per completed order**
-* ✅ **No monthly subscription fees**
-* ✅ Fast onboarding and deployment
-* ✅ Fully branded mobile applications
-* ✅ Your customers belong to your business
-* ✅ Lower commission than most food delivery marketplaces
-* ✅ Easy menu, order, and promotion management
+* **Only 3% commission per completed order**
+* **No monthly subscription fees**
+* Your own branded Android and iOS applications
+* Your customers remain your customers
+* Full control over your menu, prices, promotions, and business data
+* Fast onboarding
+* Lower operating costs compared with many third-party delivery marketplaces
 
-## Features
+## Customer Experience
 
-### Customer App
+Customers can:
 
-* Online food ordering
-* Beautiful product catalog with categories
-* Menu search
-* Promo codes and discounts
-* Loyalty program
-* Push notifications
-* Customer reviews
-* Order history
-* Real-time order status tracking
-* Native Android and iOS applications
+* Browse your menu by category
+* Search for products
+* Place online orders
+* Apply promo codes and discounts
+* Earn loyalty rewards
+* Receive push notifications
+* Leave reviews
+* View their order history
+* Track order status in real time
 
-### Restaurant Management
+## Restaurant Management
 
-* Menu management
-* Category and product management
+Everything is managed from a single administration panel:
+
+* Menu and category management
+* Product management
 * Real-time order management
-* Admin dashboard
-* Sales analytics and reporting
 * Promo code management
 * Loyalty program management
-* Customer push notifications
-* Full control over pricing and products
+* Push notification campaigns
+* Sales analytics and reporting
 
 ## Delivery
 
-PapaKarlo is designed for cafés and restaurants that use **their own delivery couriers**, allowing businesses to maintain complete control over delivery quality and customer experience.
+PapaKarlo is built for restaurants that use **their own couriers**. This gives you complete control over delivery quality, customer communication, and operating costs.
 
 ## Technology Stack
 
@@ -65,15 +66,15 @@ PapaKarlo is designed for cafés and restaurants that use **their own delivery c
 
 * Kotlin
 * Ktor
-* Exposed ORM
 * PostgreSQL
+* Exposed ORM
 * HikariCP
 * kotlinx.serialization
 
 ### Architecture
 
 * Clean Architecture
-* MVI (Model–View–Intent)
+* MVI
 * Feature-based modular architecture
 * Shared UI with Kotlin Multiplatform
 
@@ -89,14 +90,27 @@ https://apps.apple.com/app/id6443966083
 
 ## Source Code
 
-GitHub Repository:
+GitHub Repository
 
 https://github.com/xidealo/PapaKarlo
 
-## Interested in Your Own Food Delivery App?
+## Who Is This For?
 
-If you own a café or restaurant and want to receive direct online orders without paying high marketplace commissions, I'd be happy to give you a live demo of PapaKarlo.
+PapaKarlo is ideal for:
 
-Launch your own branded food delivery platform, keep your customers, and pay only **3% per completed order**.
+* Cafés
+* Restaurants
+* Pizzerias
+* Sushi bars
+* Burger restaurants
+* Coffee shops
+* Fast-food chains
+* Any food business that wants to accept direct online orders without relying entirely on delivery marketplaces.
 
-**Already trusted by 15 cafés.**
+## Interested?
+
+If you're looking for a modern food delivery solution for your business, I'd be happy to give you a live demo and discuss how PapaKarlo can fit your workflow.
+
+**Already used by 15 cafés.**
+
+Let's build your own food delivery platform.
