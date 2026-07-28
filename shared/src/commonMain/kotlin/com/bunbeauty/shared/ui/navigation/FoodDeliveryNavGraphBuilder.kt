@@ -49,8 +49,10 @@ fun NavGraphBuilder.foodDeliveryNavGraphBuilder(
     showInfoMessage: (String, Int) -> Unit,
     showErrorMessage: (String) -> Unit,
 ) {
+    val back = navController.backAction()
+
     cafeListScreenRoute(
-        back = navController::navigateUp,
+        back = back,
     )
 
     splashScreenRoute(
@@ -101,23 +103,23 @@ fun NavGraphBuilder.foodDeliveryNavGraphBuilder(
         showInfoMessage = showInfoMessage,
     )
     productDetailsScreenRoute(
-        back = navController::navigateUp,
+        back = back,
         showErrorMessage = showErrorMessage,
         showInfoMessage = showInfoMessage,
     )
-    orderDetailsScreenRoute(back = navController::navigateUp)
+    orderDetailsScreenRoute(back = back)
     settingsScreenRoute(
-        back = navController::navigateUp,
+        back = back,
         showErrorMessage = showErrorMessage,
         showInfoMessage = showInfoMessage,
     )
     createAddressScreenRoute(
-        back = navController::navigateUp,
+        back = back,
         showErrorMessage = showErrorMessage,
         showInfoMessage = showInfoMessage,
     )
     orderListScreenRoute(
-        back = navController::navigateUp,
+        back = back,
         goToOrderDetails = { orderUuid ->
             navController.navigateToOrderDetailsScreen(
                 navOptions = emptyNavOptions,
@@ -127,8 +129,8 @@ fun NavGraphBuilder.foodDeliveryNavGraphBuilder(
     )
 
     consumerCartScreenRoute(
-        back = navController::navigateUp,
-        goToMenuFragment = navController::navigateUp,
+        back = back,
+        goToMenuFragment = back,
         goToCreateOrderFragment = {
             navController.navigateToCreateOrderScreen(emptyNavOptions)
         },
@@ -169,7 +171,7 @@ fun NavGraphBuilder.foodDeliveryNavGraphBuilder(
         },
     )
     createOrderScreenRoute(
-        back = navController::navigateUp,
+        back = back,
         goToMenu = {
             navController
                 .getBackStackEntry<MenuScreenDestination>()
@@ -186,13 +188,13 @@ fun NavGraphBuilder.foodDeliveryNavGraphBuilder(
         showInfoMessage = showInfoMessage,
     )
     userAddressListScreenRoute(
-        back = navController::navigateUp,
+        back = back,
         goToCreateAddress = {
             navController.navigateToCreateAddressScreenDestination(emptyNavOptions)
         },
     )
     loginScreenRoute(
-        back = navController::navigateUp,
+        back = back,
         goToConfirm = { phoneNumber, successLoginDirection ->
             navController.navigateToConfirmScreen(
                 phoneNumber = phoneNumber,
@@ -203,7 +205,7 @@ fun NavGraphBuilder.foodDeliveryNavGraphBuilder(
         showErrorMessage = showErrorMessage,
     )
     confirmScreenRoute(
-        back = navController::navigateUp,
+        back = back,
         goBackToProfileFragment = {
             navController.navigateToProfileScreen(
                 navOptions =
@@ -229,7 +231,7 @@ fun NavGraphBuilder.foodDeliveryNavGraphBuilder(
     )
 
     profileScreenRoute(
-        back = navController::navigateUp,
+        back = back,
         goToUserAddress = {
             navController.navigateToUserAddressListScreen(emptyNavOptions)
         },
