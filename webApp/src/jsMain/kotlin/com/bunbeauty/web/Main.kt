@@ -25,33 +25,6 @@ import kotlinx.coroutines.await
 import kotlinx.coroutines.launch
 import org.koin.dsl.module
 
-// Browser tab title per brand. nginx already substitutes the brand into
-// index.html by domain (see amvera/nginx.conf), but we still set it here so the
-// ?flavor= override and local dev show the right name. Names must stay in sync
-// with the nginx map and match the Android app_name of each flavor.
-private fun webTitle(flavor: String): String {
-    val name =
-        when (flavor) {
-            "papakarlo" -> "Папа Карло"
-            "yuliar" -> "ЮлиАр"
-            "djan" -> "Шашлык Джан"
-            "gustopub" -> "Густо Паб"
-            "tandirhouse" -> "Тандыр Хаус"
-            "vkuskavkaza" -> "Вкус Кавказа"
-            "estpoest" -> "#Есть Поесть"
-            "legenda" -> "Легенда"
-            "usadba" -> "Усадьба"
-            "emoji" -> "Эмодзи"
-            "limonad" -> "Лимонад"
-            "taverna" -> "Таверна"
-            "voljane" -> "Волжане"
-            "bereg" -> "Берег"
-            "mimino" -> "Мимино"
-            else -> null
-        }
-    return if (name != null) "$name — доставка еды" else "Доставка еды"
-}
-
 // Sets the browser tab icon (favicon) to the brand logo bundled in
 // composeResources. index.html has no <link rel="icon">, so we create/update it
 // at runtime. Modern browsers accept .webp favicons.
@@ -80,9 +53,9 @@ fun main() {
     // Must match the flavor Koin resolves in PlatformModule (also resolveWebFlavor).
     val flavor = resolveWebFlavor()
 
-    // index.html has no favicon and its title may come from the domain rather
-    // than the resolved flavor, so both are set from the current flavor here.
-    document.title = webTitle(flavor)
+    // index.html has no favicon, and a host may still serve an older copy of it
+    // with a stale title, so both are set here at runtime.
+    document.title = "Доставка еды"
     applyFavicon(flavor)
 
     CoroutineScope(Dispatchers.Main).launch {
