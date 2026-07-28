@@ -383,15 +383,15 @@ private fun ProfileInfoCards(
                 )
             },
         )
-        NavigationIconCardWithDivider(
-            modifier =
-                Modifier
-                    .fillMaxWidth(),
-            iconId = Res.drawable.ic_info,
-            iconDescriptionStringId = Res.string.description_ic_about,
-            labelStringId = Res.string.title_about_app,
-            onClick = { onAction(ProfileState.Action.OnAboutAppClicked) },
-        )
+//        NavigationIconCardWithDivider(
+//            modifier =
+//                Modifier
+//                    .fillMaxWidth(),
+//            iconId = Res.drawable.ic_info,
+//            iconDescriptionStringId = Res.string.description_ic_about,
+//            labelStringId = Res.string.title_about_app,
+//            onClick = { onAction(ProfileState.Action.OnAboutAppClicked) },
+//        )
     }
 }
 
