@@ -1,48 +1,102 @@
-# 🍕 Food Delivery App
+# Food Delivery Platform for Cafés & Restaurants
 
-The app allows customers to order food online from a restaurant and have it delivered to their doorstep. It features an easy-to-use interface that allows users to browse menu, select their desired dishes, and place orders for delivery or pickup.
+## About the Project
 
-## Release
+**PapaKarlo** is a modern food ordering and delivery platform designed for cafés and restaurants that want to launch their own branded online ordering service.
 
-Get it on [Google Play](https://play.google.com/store/apps/details?id=com.bunbeuaty.papakarlo) <br/>
-Download on the [App Store](https://apps.apple.com/ru/app/%D0%BF%D0%B0%D0%BF%D0%B0-%D0%BA%D0%B0%D1%80%D0%BB%D0%BE/id6443966083)
+The platform is already **trusted by 15 cafés**, helping businesses accept direct orders, reduce marketplace commissions, and maintain full control over their customers and operations.
 
-## Stack
+## Why Choose PapaKarlo?
 
-- [Kotlin](https://kotlinlang.org/): Programming language (Android + Shared)
-- [Swift](https://developer.apple.com/swift/): Programming language (iOS)
-- [Kotlin Multiplatform](https://kotlinlang.org/lp/mobile/): Code sharing between Android and iOS platforms
-- [Koin](https://insert-koin.io/): Dependency injection
-- Kotlinx
-  - [Coroutines](https://github.com/Kotlin/kotlinx.coroutines): Multithreading
-  - [Serialization](https://github.com/Kotlin/kotlinx.serialization): JSON serialization/deserailization
-  - [Datetime](https://github.com/Kotlin/kotlinx-datetime): Handling of date and time
-- [Ktor](https://ktor.io/): HTTP/WebSocket client
-- [SQLDelight](https://cashapp.github.io/sqldelight/2.0.0-alpha05/): Generating typesafe Kotlin APIs from SQL statements
-- [Firebase](https://firebase.google.com/): Authorization
-- [Coil](https://coil-kt.github.io/coil/): Image loading (Android)
-- [Jetpack compose](https://developer.android.com/jetpack/compose): UI (Android)
-- [SwiftUI](https://developer.apple.com/xcode/swiftui/): UI (iOS)
+* ✅ Only **3% commission per completed order**
+* ✅ **No monthly subscription fees**
+* ✅ Fast onboarding and deployment
+* ✅ Fully branded mobile applications
+* ✅ Your customers belong to your business
+* ✅ Lower commission than most food delivery marketplaces
+* ✅ Easy menu, order, and promotion management
 
-![Frame 10](https://github.com/user-attachments/assets/e38eda17-7996-45b9-937b-576ae92cd7f9)
+## Features
 
-## Tech info
+### Customer App
 
-### Git flow
-1. Create new branch feature/"name" from **develop** <br/>
-2. Create MR to develop
-3. Check pipelines and send to code review <br/>
-4. Merge into **develop** <br/>
+* Online food ordering
+* Beautiful product catalog with categories
+* Menu search
+* Promo codes and discounts
+* Loyalty program
+* Push notifications
+* Customer reviews
+* Order history
+* Real-time order status tracking
+* Native Android and iOS applications
 
-### Release
+### Restaurant Management
 
-1. Increase version by rules: <br/>
-    fix n.m.**update** <br/>
-    new release n.**update**.0 <br/>
-    when minor version 9 next update major version **update**.0.0 <br/>
-2. Create MR to **master** and write title release/**version**, check pipelines <br/>
-3. Merge into **master**
-4. Check actions (CI\CD Publish workflow).
-5. **Android** CD will send it to Google Play <br/>
-6. **Ios** TODO 
+* Menu management
+* Category and product management
+* Real-time order management
+* Admin dashboard
+* Sales analytics and reporting
+* Promo code management
+* Loyalty program management
+* Customer push notifications
+* Full control over pricing and products
 
+## Delivery
+
+PapaKarlo is designed for cafés and restaurants that use **their own delivery couriers**, allowing businesses to maintain complete control over delivery quality and customer experience.
+
+## Technology Stack
+
+### Mobile
+
+* Kotlin
+* Kotlin Multiplatform (KMP)
+* Jetpack Compose
+* Compose Multiplatform
+* Kotlin Coroutines
+* StateFlow
+* Koin
+* Coil
+* Firebase
+
+### Backend
+
+* Kotlin
+* Ktor
+* Exposed ORM
+* PostgreSQL
+* HikariCP
+* kotlinx.serialization
+
+### Architecture
+
+* Clean Architecture
+* MVI (Model–View–Intent)
+* Feature-based modular architecture
+* Shared UI with Kotlin Multiplatform
+
+## Live Applications
+
+### Android
+
+https://play.google.com/store/apps/details?id=com.bunbeuaty.papakarlo
+
+### iOS
+
+https://apps.apple.com/app/id6443966083
+
+## Source Code
+
+GitHub Repository:
+
+https://github.com/xidealo/PapaKarlo
+
+## Interested in Your Own Food Delivery App?
+
+If you own a café or restaurant and want to receive direct online orders without paying high marketplace commissions, I'd be happy to give you a live demo of PapaKarlo.
+
+Launch your own branded food delivery platform, keep your customers, and pay only **3% per completed order**.
+
+**Already trusted by 15 cafés.**
