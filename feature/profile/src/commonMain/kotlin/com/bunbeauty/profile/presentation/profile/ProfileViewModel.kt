@@ -2,12 +2,14 @@ package com.bunbeauty.profile.presentation.profile
 
 import com.bunbeauty.core.Constants.VERSION_DIVIDER
 import com.bunbeauty.core.base.SharedStateViewModel
+import com.bunbeauty.core.domain.auth.ObserveTokenUseCase
 import com.bunbeauty.core.domain.link.GetLinkListUseCase
-import com.bunbeauty.core.domain.user.IUserInteractor
 import com.bunbeauty.core.extension.launchSafe
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.collectLatest
 
 class ProfileViewModel(
-    private val userInteractor: IUserInteractor,
+    private val observeTokenUseCase: ObserveTokenUseCase,
     private val getLinkListUseCase: GetLinkListUseCase,
     buildVersion: Long,
 ) : SharedStateViewModel<ProfileState.DataState, ProfileState.Action, ProfileState.Event>(
@@ -20,8 +22,11 @@ class ProfileViewModel(
                 appVersion = buildVersion.toString().toCharArray().joinToString(VERSION_DIVIDER),
             ),
     ) {
+    private var observeTokenJob: Job? = null
+
     init {
-        loadData()
+        observeToken()
+        loadLinks()
     }
 
     override fun reduce(
@@ -30,7 +35,10 @@ class ProfileViewModel(
     ) {
         when (action) {
             ProfileState.Action.BackClicked -> onBackClicked()
-            ProfileState.Action.OnRefreshClicked -> loadData()
+            ProfileState.Action.OnRefreshClicked -> {
+                observeToken()
+                loadLinks()
+            }
 
             ProfileState.Action.OnOrderHistoryClicked -> onOrderHistoryClicked()
             ProfileState.Action.OnSettingsClick -> onSettingsClicked()
@@ -44,20 +52,12 @@ class ProfileViewModel(
         }
     }
 
-    private fun loadData() {
+    private fun loadLinks() {
         sharedScope.launchSafe(
             block = {
                 val linkList = getLinkListUseCase()
                 setState {
-                    copy(
-                        state =
-                            if (userInteractor.isUserAuthorize()) {
-                                ProfileState.DataState.State.AUTHORIZED
-                            } else {
-                                ProfileState.DataState.State.UNAUTHORIZED
-                            },
-                        linkList = linkList,
-                    )
+                    copy(linkList = linkList)
                 }
             },
             onError = {
@@ -68,6 +68,34 @@ class ProfileViewModel(
                 }
             },
         )
+    }
+
+    private fun observeToken() {
+        observeTokenJob?.cancel()
+        observeTokenJob =
+            sharedScope.launchSafe(
+                block = {
+                    observeTokenUseCase().collectLatest { token ->
+                        setState {
+                            copy(
+                                state =
+                                    if (token != null) {
+                                        ProfileState.DataState.State.AUTHORIZED
+                                    } else {
+                                        ProfileState.DataState.State.UNAUTHORIZED
+                                    },
+                            )
+                        }
+                    }
+                },
+                onError = {
+                    setState {
+                        copy(
+                            state = ProfileState.DataState.State.ERROR,
+                        )
+                    }
+                },
+            )
     }
 
     private fun onBackClicked() {

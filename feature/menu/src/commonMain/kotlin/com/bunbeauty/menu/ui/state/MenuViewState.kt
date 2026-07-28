@@ -13,8 +13,6 @@ data class MenuViewState(
     val categoryItemList: ImmutableList<CategoryItem>,
     val topCartUi: TopCartUi,
     val menuItemList: ImmutableList<MenuItemUi>,
-    val favoriteProductList: ImmutableList<ProductUi>,
-    val hasFavoritesSection: Boolean,
     val state: State,
     val userScrollEnabled: Boolean,
     val lastOrder: LightOrder?,
@@ -51,5 +49,11 @@ sealed interface MenuItemUi {
     data class Discount(
         override val key: String,
         val discount: String,
+    ) : MenuItemUi
+
+    @Immutable
+    data class Favorites(
+        override val key: String,
+        val products: ImmutableList<ProductUi>,
     ) : MenuItemUi
 }

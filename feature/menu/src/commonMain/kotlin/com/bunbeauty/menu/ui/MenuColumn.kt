@@ -170,7 +170,6 @@ internal fun MenuColumn(
                             .ignoreHorizontalParentPadding(horizontal = 16.dp),
                     categoryItemList = menu.categoryItemList,
                     menuItemList = menu.menuItemList,
-                    hasFavoritesSection = menu.hasFavoritesSection,
                     menuLazyGridState = menuLazyListState,
                     onAction = onAction,
                 )
@@ -206,29 +205,13 @@ internal fun MenuColumn(
                 }
             }
 
-            if (menu.hasFavoritesSection) {
-                item(
-                    key = "Favorites",
-                    span = {
-                        GridItemSpan(maxLineSpan)
-                    },
-                ) {
-                    MenuFavoritesRow(
-                        modifier = Modifier.fillMaxWidth()
-                            .ignoreHorizontalParentPadding(horizontal = 16.dp),
-                        products = menu.favoriteProductList,
-                        animatedContentScope = animatedContentScope,
-                        onAction = onAction,
-                    )
-                }
-            }
-
             itemsIndexed(
                 items = menu.menuItemList,
                 key = { _, menuItemModel -> menuItemModel.key },
                 span = { _, menuItemModel ->
                     when (menuItemModel) {
                         is MenuItemUi.Discount,
+                        is MenuItemUi.Favorites,
                         is MenuItemUi.CategoryHeader,
                         -> GridItemSpan(maxLineSpan)
 
@@ -257,6 +240,18 @@ internal fun MenuColumn(
                             modifier =
                                 Modifier
                                     .padding(top = 8.dp),
+                        )
+                    }
+
+                    is MenuItemUi.Favorites -> {
+                        MenuFavoritesRow(
+                            modifier =
+                                Modifier
+                                    .fillMaxWidth()
+                                    .ignoreHorizontalParentPadding(horizontal = 16.dp),
+                            products = menuItem.products,
+                            animatedContentScope = animatedContentScope,
+                            onAction = onAction,
                         )
                     }
 

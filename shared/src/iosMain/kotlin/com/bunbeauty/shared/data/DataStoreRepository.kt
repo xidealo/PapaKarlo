@@ -5,6 +5,8 @@ import com.bunbeauty.core.model.Settings
 import com.bunbeauty.core.model.UserCityUuid
 import com.bunbeauty.shared.DataStoreRepo
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
 import org.koin.core.component.KoinComponent
@@ -13,19 +15,23 @@ import platform.Foundation.NSUserDefaults
 actual class DataStoreRepository :
     DataStoreRepo,
     KoinComponent {
-    actual override val token: Flow<String?> =
-        flow {
-            emit(getToken())
-        }
+    private val tokenState =
+        MutableStateFlow(
+            NSUserDefaults.standardUserDefaults.stringForKey(TOKEN_KEY),
+        )
 
-    actual override suspend fun getToken(): String? = NSUserDefaults.standardUserDefaults.stringForKey(TOKEN_KEY)
+    actual override val token: Flow<String?> = tokenState.asStateFlow()
+
+    actual override suspend fun getToken(): String? = tokenState.value
 
     actual override suspend fun saveToken(token: String) {
         NSUserDefaults.standardUserDefaults.setObject(token, TOKEN_KEY)
+        tokenState.value = token
     }
 
     actual override suspend fun clearToken() {
         NSUserDefaults.standardUserDefaults.removeObjectForKey(TOKEN_KEY)
+        tokenState.value = null
     }
 
     actual override val userUuid: Flow<String?> =
@@ -202,6 +208,7 @@ actual class DataStoreRepository :
 
     actual override suspend fun clearUserData() {
         NSUserDefaults.standardUserDefaults.removeObjectForKey(TOKEN_KEY)
+        tokenState.value = null
         NSUserDefaults.standardUserDefaults.removeObjectForKey(USER_UUID_KEY)
         clearWithoutUtensils()
         removeUserSettings()

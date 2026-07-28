@@ -11,16 +11,8 @@ import com.bunbeauty.menu.ui.state.MenuItemUi
 import com.bunbeauty.menu.ui.state.MenuViewState
 import kotlinx.collections.immutable.toImmutableList
 
-fun MenuState.DataState.mapState(): MenuViewState {
-    val favoriteProducts =
-        favoriteProductList
-            .map { menuProduct ->
-                menuProduct.toMenuProductItemUi()
-            }.map { menuItemUi ->
-                menuItemUi.product
-            }.toImmutableList()
-
-    return MenuViewState(
+fun MenuState.DataState.mapState(): MenuViewState =
+    MenuViewState(
         topCartUi =
             TopCartUi(
                 cost =
@@ -35,8 +27,6 @@ fun MenuState.DataState.mapState(): MenuViewState {
                 .map { menuItem ->
                     menuItem.toMenuItemUi()
                 }.toImmutableList(),
-        favoriteProductList = favoriteProducts,
-        hasFavoritesSection = favoriteProducts.isNotEmpty(),
         state =
             when (state) {
                 MenuState.DataState.State.LOADING -> MenuViewState.State.Loading
@@ -47,18 +37,16 @@ fun MenuState.DataState.mapState(): MenuViewState {
         lastOrder = lastOrder,
         scrollToTopRequest = scrollToTopRequest,
     )
-}
 
 fun getMenuListPosition(
     categoryItem: CategoryItem,
     menuItemList: List<MenuItemUi>,
-    hasFavoritesSection: Boolean,
 ): Int {
     val indexInMenuList =
         menuItemList.indexOfFirst { menuItem ->
             (menuItem as? MenuItemUi.CategoryHeader)?.uuid == categoryItem.uuid
         }
-    val startIndex = menuContentStartGridIndex(hasFavoritesSection = hasFavoritesSection)
+    val startIndex = menuContentStartGridIndex()
     return if (indexInMenuList < 0) {
         startIndex
     } else {
@@ -100,6 +88,17 @@ private fun MenuItem.toMenuItemUi(): MenuItemUi =
             MenuItemUi.Discount(
                 key = "Discount",
                 discount = discount,
+            )
+        }
+
+        is MenuItem.Favorites -> {
+            MenuItemUi.Favorites(
+                key = "Favorites",
+                products =
+                    products
+                        .map { product ->
+                            product.toMenuProductItemUi().product
+                        }.toImmutableList(),
             )
         }
     }

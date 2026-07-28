@@ -4,6 +4,7 @@ import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.bunbeauty.shared.ui.navigation.splash.SplashScreenDestination
@@ -28,5 +29,9 @@ fun FoodDeliveryNavHost(
             showErrorMessage = showErrorMessage,
             showInfoMessage = showInfoMessage,
         )
+    }
+
+    LaunchedEffect(navController) {
+        navController.bindSystemBackNavigation()
     }
 }
