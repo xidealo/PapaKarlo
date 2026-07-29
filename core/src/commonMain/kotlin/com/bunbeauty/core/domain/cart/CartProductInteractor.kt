@@ -30,8 +30,10 @@ class CartProductInteractor(
         if (cartProductList.isEmpty()) {
             ConsumerCartDomain.Empty
         } else {
-            getCartTotalFlowUseCase(isDelivery = false)
-                .firstOrNull()
+            getCartTotalFlowUseCase(
+                isDelivery = false,
+                cartProductList = cartProductList,
+            ).firstOrNull()
                 ?.let { cartTotal ->
                     ConsumerCartDomain.WithProducts(
                         cartProductList = cartProductList.map(::toLightCartProduct),

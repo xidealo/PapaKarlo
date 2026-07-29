@@ -40,3 +40,8 @@ getMenuProductWithCategoryListByUuid:
 SELECT *
 FROM menuProductWithCategoryEntity
 WHERE uuid = :uuid;
+
+getMenuProductWithCategoryListByUuidList:
+SELECT *
+FROM menuProductWithCategoryEntity
+WHERE uuid IN ?;

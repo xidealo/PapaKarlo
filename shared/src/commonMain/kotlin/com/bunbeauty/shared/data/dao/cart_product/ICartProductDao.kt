@@ -15,6 +15,8 @@ interface ICartProductDao {
 
     suspend fun getCartProductByMenuProductUuid(menuProductUuid: String): List<CartProductWithMenuProductEntity>
 
+    suspend fun getCartProductCount(): Int
+
     suspend fun updateCartProductCountByUuid(
         uuid: String,
         count: Int,

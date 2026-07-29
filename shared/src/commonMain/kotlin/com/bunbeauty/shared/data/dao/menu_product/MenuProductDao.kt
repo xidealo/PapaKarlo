@@ -40,6 +40,9 @@ class MenuProductDao(
     override suspend fun getMenuProductWithCategoryListByUuid(uuid: String): List<MenuProductWithCategoryEntity> =
         menuProductEntityQueries.getMenuProductWithCategoryListByUuid(uuid).executeAsList()
 
+    override suspend fun getMenuProductWithCategoryListByUuidList(uuidList: List<String>): List<MenuProductWithCategoryEntity> =
+        menuProductEntityQueries.getMenuProductWithCategoryListByUuidList(uuidList).executeAsList()
+
     override fun observeMenuProductList(): Flow<List<MenuProductWithCategoryEntity>> =
         menuProductEntityQueries.getMenuProductList().asFlow().mapToList()
 

@@ -23,6 +23,7 @@ import com.bunbeauty.core.extension.launchSafe
 import com.bunbeauty.core.model.ProductDetailsOpenedFrom
 import com.bunbeauty.core.model.addition.AdditionGroup
 import com.bunbeauty.core.model.product.MenuProduct
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 
@@ -295,6 +296,7 @@ class ProductDetailsViewModel(
             onError = {
                 addEvent { ProductDetailsState.Event.ShowAddProductError }
             },
+            dispatcher = Dispatchers.Default,
         )
     }
 

@@ -11,6 +11,8 @@ interface IMenuProductDao {
 
     suspend fun getMenuProductWithCategoryListByUuid(uuid: String): List<MenuProductWithCategoryEntity>
 
+    suspend fun getMenuProductWithCategoryListByUuidList(uuidList: List<String>): List<MenuProductWithCategoryEntity>
+
     fun observeMenuProductList(): Flow<List<MenuProductWithCategoryEntity>>
 
     fun observeMenuProductByUuid(uuid: String): Flow<MenuProductEntity?>

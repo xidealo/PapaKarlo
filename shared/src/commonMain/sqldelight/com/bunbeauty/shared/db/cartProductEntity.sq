@@ -39,6 +39,12 @@ SELECT *
 FROM cartProductWithMenuProductEntity
 WHERE cartProductWithMenuProductEntity.menuProductUuid = :menuProductUuid;
 
+getCartProductCount:
+SELECT COALESCE(SUM(cartProductEntity.count), 0)
+FROM cartProductEntity
+JOIN menuProductEntity ON menuProductEntity.uuid = cartProductEntity.menuProductUuid
+WHERE menuProductEntity.visible = 1;
+
 updateCartProductCountByUuid:
 UPDATE cartProductEntity
 SET count = :count

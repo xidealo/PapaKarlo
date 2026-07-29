@@ -67,6 +67,7 @@ fun repositoryModule() =
         single<CartProductRepo> {
             CartProductRepository(
                 uuidGenerator = get(),
+                foodDeliveryDatabase = get(),
                 cartProductDao = get(),
                 menuProductDao = get(),
                 cartProductMapper = get(),

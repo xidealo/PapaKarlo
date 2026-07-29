@@ -5,16 +5,15 @@ import com.bunbeauty.core.domain.GetCartProductCountUseCase
 import com.bunbeauty.core.domain.addition.AreAdditionsEqualUseCase
 import com.bunbeauty.core.domain.addition.GetAdditionPriorityUseCase
 import com.bunbeauty.core.domain.exeptions.CartProductLimitReachedException
-import com.bunbeauty.core.model.cart.CartProduct
 import com.bunbeauty.core.domain.repo.AdditionGroupRepo
 import com.bunbeauty.core.domain.repo.AdditionRepo
-import com.bunbeauty.core.domain.repo.CartProductAdditionRepo
 import com.bunbeauty.core.domain.repo.CartProductRepo
+import com.bunbeauty.core.model.addition.Addition
+import com.bunbeauty.core.model.cart.CartProduct
 
 class AddCartProductUseCase(
     private val getCartProductCountUseCase: GetCartProductCountUseCase,
     private val cartProductRepo: CartProductRepo,
-    private val cartProductAdditionRepository: CartProductAdditionRepo,
     private val additionRepository: AdditionRepo,
     private val areAdditionsEqualUseCase: AreAdditionsEqualUseCase,
     private val additionGroupRepository: AdditionGroupRepo,
@@ -38,27 +37,10 @@ class AddCartProductUseCase(
             )
 
         if (cartProductWithSameAdditions == null) {
-            val cartProductUuid =
-                cartProductRepo.saveAsCartProduct(menuProductUuid = menuProductUuid)
-            additionUuidList.forEach { additionUuid ->
-                additionRepository.getAddition(uuid = additionUuid)?.let { addition ->
-                    val additionGroup =
-                        additionGroupRepository.getAdditionGroup(uuid = addition.additionGroupUuid)
-                    cartProductAdditionRepository.saveAsCartProductAddition(
-                        cartProductUuid = cartProductUuid,
-                        addition =
-                            addition.copy(
-                                priority =
-                                    additionGroup?.let {
-                                        getAdditionPriorityUseCase(
-                                            additionGroup = additionGroup,
-                                            addition = addition,
-                                        )
-                                    } ?: addition.priority,
-                            ),
-                    )
-                }
-            }
+            cartProductRepo.saveCartProductWithAdditions(
+                menuProductUuid = menuProductUuid,
+                additions = buildAdditions(additionUuidList = additionUuidList),
+            )
         } else {
             cartProductRepo.updateCartProductCount(
                 cartProductUuid = cartProductWithSameAdditions.uuid,
@@ -66,6 +48,23 @@ class AddCartProductUseCase(
             )
         }
     }
+
+    private suspend fun buildAdditions(additionUuidList: List<String>): List<Addition> =
+        additionUuidList.mapNotNull { additionUuid ->
+            additionRepository.getAddition(uuid = additionUuid)?.let { addition ->
+                val additionGroup =
+                    additionGroupRepository.getAdditionGroup(uuid = addition.additionGroupUuid)
+                addition.copy(
+                    priority =
+                        additionGroup?.let {
+                            getAdditionPriorityUseCase(
+                                additionGroup = additionGroup,
+                                addition = addition,
+                            )
+                        } ?: addition.priority,
+                )
+            }
+        }
 
     private fun getCartProductWithSameAdditions(
         cartProductList: List<CartProduct>,
