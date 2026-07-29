@@ -34,6 +34,9 @@ class CartProductDao(
             .getCartProductByMenuProductUuid(menuProductUuid)
             .executeAsList()
 
+    override suspend fun getCartProductCount(): Int =
+        cartProductEntityQueries.getCartProductCount().executeAsOne().toInt()
+
     override suspend fun updateCartProductCountByUuid(
         uuid: String,
         count: Int,

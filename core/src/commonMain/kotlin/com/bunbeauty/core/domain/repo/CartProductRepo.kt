@@ -1,5 +1,6 @@
 package com.bunbeauty.core.domain.repo
 
+import com.bunbeauty.core.model.addition.Addition
 import com.bunbeauty.core.model.cart.CartProduct
 import kotlinx.coroutines.flow.Flow
 
@@ -8,11 +9,18 @@ interface CartProductRepo {
 
     suspend fun getCartProductList(): List<CartProduct>
 
+    suspend fun getCartProductCount(): Int
+
     suspend fun getCartProduct(cartProductUuid: String): CartProduct?
 
     suspend fun getCartProductListByMenuProductUuid(menuProductUuid: String): List<CartProduct>
 
     suspend fun saveAsCartProduct(menuProductUuid: String): String
+
+    suspend fun saveCartProductWithAdditions(
+        menuProductUuid: String,
+        additions: List<Addition>,
+    ): String
 
     suspend fun updateCartProductCount(
         cartProductUuid: String,

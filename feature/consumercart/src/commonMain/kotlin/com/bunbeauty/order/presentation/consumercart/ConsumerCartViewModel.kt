@@ -17,7 +17,6 @@ import com.bunbeauty.core.domain.cart.IncreaseCartProductCountUseCase
 import com.bunbeauty.core.domain.cart.RemoveCartProductUseCase
 import com.bunbeauty.core.domain.menu_product.AddMenuProductUseCase
 import com.bunbeauty.core.domain.motivation.GetMotivationUseCase
-import com.bunbeauty.core.domain.motivation.Motivation
 import com.bunbeauty.core.domain.orderavailable.IsOrderAvailableUseCase
 import com.bunbeauty.core.domain.user.IUserInteractor
 import com.bunbeauty.core.extension.launchSafe
@@ -25,12 +24,11 @@ import com.bunbeauty.core.model.MenuItem
 import com.bunbeauty.core.model.ProductDetailsOpenedFrom
 import com.bunbeauty.core.model.cart.ConsumerCartDomain
 import com.bunbeauty.core.model.mapper.toMenuProductItem
-import com.bunbeauty.core.model.product.MenuProduct
 import com.bunbeauty.core.motivation.toMotivationData
 import com.bunbeauty.order.presentation.consumercart.mapper.toCartProductItem
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.collectLatest
 
 private const val CONSUMER_CART_VIEW_MODEL_TAG = "ConsumerCartViewModel"
 
@@ -153,38 +151,46 @@ class ConsumerCartViewModel(
     private fun observeConsumerCart() {
         observeConsumerCartJob?.cancel()
         observeConsumerCartJob =
-            cartProductInteractor
-                .observeConsumerCart()
-                .onEach { consumerCart ->
-                    val motivation =
-                        if (consumerCart is ConsumerCartDomain.WithProducts) {
-                            getMotivationUseCase(
-                                newTotalCost = consumerCart.newTotalCost,
-                                isDelivery = true,
-                            )
-                        } else {
-                            null
+            sharedScope.launchSafe(
+                block = {
+                    cartProductInteractor.observeConsumerCart().collectLatest { consumerCart ->
+                        setState {
+                            copyWithCart(consumerCart = consumerCart)
                         }
-                    val menuProductList = getRecommendationsUseCase()
-                    setState {
-                        copyWith(
-                            consumerCart = consumerCart,
-                            motivation = motivation,
-                            recommendationList = menuProductList,
-                        )
+
+                        val motivation =
+                            if (consumerCart is ConsumerCartDomain.WithProducts) {
+                                getMotivationUseCase(
+                                    newTotalCost = consumerCart.newTotalCost,
+                                    isDelivery = true,
+                                )
+                            } else {
+                                null
+                            }
+                        val menuProductList = getRecommendationsUseCase()
+                        setState {
+                            copy(
+                                motivation = motivation?.toMotivationData(),
+                                recommendationList =
+                                    menuProductList.map { menuProduct ->
+                                        menuProduct.toMenuProductItem()
+                                    },
+                            )
+                        }
                     }
-                }.launchIn(sharedScope)
+                },
+                onError = {
+                    setState {
+                        copy(state = ConsumerCart.DataState.State.ERROR)
+                    }
+                },
+            )
     }
 
-    private fun ConsumerCart.DataState.copyWith(
-        consumerCart: ConsumerCartDomain?,
-        motivation: Motivation?,
-        recommendationList: List<MenuProduct>,
-    ): ConsumerCart.DataState =
+    private fun ConsumerCart.DataState.copyWithCart(consumerCart: ConsumerCartDomain?): ConsumerCart.DataState =
         if (consumerCart is ConsumerCartDomain.WithProducts) {
             copy(
                 state = ConsumerCart.DataState.State.SUCCESS,
-                motivation = motivation?.toMotivationData(),
                 cartProductItemList =
                     consumerCart.cartProductList.map { lightCartProduct ->
                         lightCartProduct.toCartProductItem()
@@ -198,10 +204,6 @@ class ConsumerCartViewModel(
                         "$oldTotalCost $RUBLE_CURRENCY"
                     },
                 newTotalCost = "${consumerCart.newTotalCost} $RUBLE_CURRENCY",
-                recommendationList =
-                    recommendationList.map { menuProduct ->
-                        menuProduct.toMenuProductItem()
-                    },
             )
         } else {
             copy(
@@ -215,10 +217,6 @@ class ConsumerCartViewModel(
                 oldTotalCost = null,
                 newTotalCost = "",
                 discount = null,
-                recommendationList =
-                    recommendationList.map { menuProduct ->
-                        menuProduct.toMenuProductItem()
-                    },
             )
         }
 
@@ -311,6 +309,7 @@ class ConsumerCartViewModel(
                     ConsumerCart.Event.ShowAddProductError
                 }
             },
+            dispatcher = Dispatchers.Default,
         )
     }
 
@@ -335,6 +334,7 @@ class ConsumerCartViewModel(
                     ConsumerCart.Event.ShowAddProductError
                 }
             },
+            dispatcher = Dispatchers.Default,
         )
     }
 
@@ -351,6 +351,7 @@ class ConsumerCartViewModel(
                     ConsumerCart.Event.ShowRemoveProductError
                 }
             },
+            dispatcher = Dispatchers.Default,
         )
     }
 

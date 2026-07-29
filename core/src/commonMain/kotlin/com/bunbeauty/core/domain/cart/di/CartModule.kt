@@ -25,7 +25,6 @@ fun cartModule() =
             AddCartProductUseCase(
                 getCartProductCountUseCase = get(),
                 cartProductRepo = get(),
-                cartProductAdditionRepository = get(),
                 additionRepository = get(),
                 areAdditionsEqualUseCase = get(),
                 additionGroupRepository = get(),

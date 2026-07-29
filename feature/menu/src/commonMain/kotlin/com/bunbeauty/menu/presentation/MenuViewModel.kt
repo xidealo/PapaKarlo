@@ -351,6 +351,7 @@ class MenuViewModel(
                     MenuState.Event.ShowAddProductError
                 }
             },
+            dispatcher = Dispatchers.Default,
         )
     }
 

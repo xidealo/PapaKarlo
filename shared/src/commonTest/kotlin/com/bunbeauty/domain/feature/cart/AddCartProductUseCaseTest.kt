@@ -7,13 +7,11 @@ import com.bunbeauty.core.domain.cart.AddCartProductUseCase
 import com.bunbeauty.core.domain.exeptions.CartProductLimitReachedException
 import com.bunbeauty.core.domain.repo.AdditionGroupRepo
 import com.bunbeauty.core.domain.repo.AdditionRepo
-import com.bunbeauty.core.domain.repo.CartProductAdditionRepo
 import com.bunbeauty.core.domain.repo.CartProductRepo
 import com.bunbeauty.getAddition
 import com.bunbeauty.getAdditionGroup
 import com.bunbeauty.getCartProduct
 import com.bunbeauty.getMenuProduct
-import dev.mokkery.MockMode
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.matcher.any
@@ -27,7 +25,6 @@ import kotlin.test.assertFailsWith
 class AddCartProductUseCaseTest {
     private val getCartProductCountUseCase: GetCartProductCountUseCase = mock()
     private val cartProductRepo: CartProductRepo = mock()
-    private val cartProductAdditionRepository: CartProductAdditionRepo = mock(MockMode.autofill)
     private val additionRepository: AdditionRepo = mock()
     private val areAdditionsEqualUseCase: AreAdditionsEqualUseCase = mock()
     private val additionGroupRepository: AdditionGroupRepo = mock()
@@ -37,7 +34,6 @@ class AddCartProductUseCaseTest {
         AddCartProductUseCase(
             getCartProductCountUseCase = getCartProductCountUseCase,
             cartProductRepo = cartProductRepo,
-            cartProductAdditionRepository = cartProductAdditionRepository,
             additionRepository = additionRepository,
             areAdditionsEqualUseCase = areAdditionsEqualUseCase,
             additionGroupRepository = additionGroupRepository,
@@ -63,7 +59,7 @@ class AddCartProductUseCaseTest {
                 cartProductRepo.getCartProductListByMenuProductUuid(any())
             }
             verifySuspend(mode = VerifyMode.atLeast(0)) {
-                cartProductRepo.saveAsCartProduct(any())
+                cartProductRepo.saveCartProductWithAdditions(any(), any())
             }
             verifySuspend(mode = VerifyMode.atLeast(0)) {
                 cartProductRepo.updateCartProductCount(any(), any())
@@ -80,7 +76,12 @@ class AddCartProductUseCaseTest {
             everySuspend {
                 cartProductRepo.getCartProductListByMenuProductUuid(menuProductUuid = menuProductUuid)
             } returns emptyList()
-            everySuspend { cartProductRepo.saveAsCartProduct(menuProductUuid = menuProductUuid) } returns cartProductUuid
+            everySuspend {
+                cartProductRepo.saveCartProductWithAdditions(
+                    menuProductUuid = menuProductUuid,
+                    additions = emptyList(),
+                )
+            } returns cartProductUuid
 
             // When
             addCartProduct(
@@ -90,8 +91,9 @@ class AddCartProductUseCaseTest {
 
             // Then
             verifySuspend(mode = VerifyMode.atLeast(1)) {
-                cartProductRepo.saveAsCartProduct(
+                cartProductRepo.saveCartProductWithAdditions(
                     menuProductUuid = menuProductUuid,
+                    additions = emptyList(),
                 )
             }
         }
@@ -139,41 +141,31 @@ class AddCartProductUseCaseTest {
                     addition = addition2,
                 )
             } returns 2
-            everySuspend { cartProductRepo.saveAsCartProduct(menuProductUuid = menuProductUuid) } returns cartProductUuid
             everySuspend { additionRepository.getAddition(uuid = additionUuid1) } returns addition1
             everySuspend { additionRepository.getAddition(uuid = additionUuid2) } returns addition2
             everySuspend {
-                cartProductAdditionRepository.saveAsCartProductAddition(
-                    cartProductUuid = cartProductUuid,
-                    addition = addition1.copy(priority = 1),
+                cartProductRepo.saveCartProductWithAdditions(
+                    menuProductUuid = menuProductUuid,
+                    additions =
+                        listOf(
+                            addition1.copy(priority = 1),
+                            addition2.copy(priority = 2),
+                        ),
                 )
-            } returns Unit
-            everySuspend {
-                cartProductAdditionRepository.saveAsCartProductAddition(
-                    cartProductUuid = cartProductUuid,
-                    addition = addition2.copy(priority = 2),
-                )
-            } returns Unit
+            } returns cartProductUuid
 
             // When
             addCartProduct(menuProductUuid = menuProductUuid, additionUuidList = additionUuidList)
 
             // Then
             verifySuspend(mode = VerifyMode.atLeast(1)) {
-                cartProductRepo.saveAsCartProduct(
+                cartProductRepo.saveCartProductWithAdditions(
                     menuProductUuid = menuProductUuid,
-                )
-            }
-            verifySuspend(mode = VerifyMode.atLeast(1)) {
-                cartProductAdditionRepository.saveAsCartProductAddition(
-                    cartProductUuid = cartProductUuid,
-                    addition = addition1.copy(priority = 1),
-                )
-            }
-            verifySuspend(mode = VerifyMode.atLeast(1)) {
-                cartProductAdditionRepository.saveAsCartProductAddition(
-                    cartProductUuid = cartProductUuid,
-                    addition = addition2.copy(priority = 2),
+                    additions =
+                        listOf(
+                            addition1.copy(priority = 1),
+                            addition2.copy(priority = 2),
+                        ),
                 )
             }
         }
