@@ -37,6 +37,7 @@ import com.bunbeauty.core.model.ProductUi
 import com.bunbeauty.core.model.SuccessLoginDirection
 import com.bunbeauty.core.motivation.Motivation
 import com.bunbeauty.core.motivation.MotivationUi
+import com.bunbeauty.designsystem.platform
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.theme.bold
 import com.bunbeauty.designsystem.theme.medium
@@ -270,13 +271,20 @@ private fun ConsumerCartSuccessScreen(
                 key = { cartProductItem -> cartProductItem.key },
                 span = { _ -> GridItemSpan(maxLineSpan) },
             ) { cartProductItem ->
-                FoodDeliveryItem(
-                    modifier =
+                // LazyItem / content-size animations stall layout on Compose for Web
+                // when the cart has products; empty cart path skips this branch entirely.
+                val itemModifier =
+                    if (platform() == "Web") {
+                        Modifier
+                    } else {
                         Modifier
                             .animateItem()
                             .animateContentSize(
                                 animationSpec = tween(500),
-                            ),
+                            )
+                    }
+                FoodDeliveryItem(
+                    modifier = itemModifier,
                     needDivider = !cartProductItem.isLast,
                 ) {
                     CartProductItem(

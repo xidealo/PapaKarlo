@@ -55,6 +55,12 @@ class MainViewModel(
         }
     }
 
+    fun clearSnackbarPadding() {
+        mutableMainState.update { state ->
+            state.copy(paddingBottomSnackbar = 0)
+        }
+    }
+
     private fun showMessage(
         text: String,
         type: FoodDeliveryMessageType,
