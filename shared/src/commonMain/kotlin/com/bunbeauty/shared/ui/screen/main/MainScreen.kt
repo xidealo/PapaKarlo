@@ -58,6 +58,7 @@ fun MainScreen(
         eventList = mainState.eventList,
         snackbarHostState = snackbarHostState,
         consumeEventList = viewModel::consumeEventList,
+        clearSnackbarPadding = viewModel::clearSnackbarPadding,
     )
 
     val color = FoodDeliveryTheme.colors.mainColors.surface
@@ -207,11 +208,14 @@ private fun HandleEventList(
     eventList: List<MainState.Event>,
     snackbarHostState: SnackbarHostState,
     consumeEventList: (List<MainState.Event>) -> Unit,
+    clearSnackbarPadding: () -> Unit,
 ) {
     LaunchedEffect(eventList) {
         eventList.forEach { event ->
             when (event) {
                 is MainState.Event.ShowMessageEvent -> {
+                    // showSnackbar suspends until dismiss; on Compose JS cancel() alone
+                    // can leave the snackbar stuck in the host, so dismiss explicitly.
                     val snackbarJob =
                         launch {
                             snackbarHostState.showSnackbar(
@@ -222,7 +226,9 @@ private fun HandleEventList(
                             )
                         }
                     delay(2_000)
-                    snackbarJob.cancel()
+                    snackbarHostState.currentSnackbarData?.dismiss()
+                    snackbarJob.join()
+                    clearSnackbarPadding()
                 }
             }
         }
