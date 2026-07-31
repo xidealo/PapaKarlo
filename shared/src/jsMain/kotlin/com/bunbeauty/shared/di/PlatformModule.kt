@@ -33,7 +33,7 @@ actual fun platformModule() =
         single<NetworkErrorLogger> { JsNetworkErrorLogger() }
         factory { OpenExternalSource() }
         single(isDebugQualifier) { false }
-        single(buildVersionQualifier) { 312L }
+        single(buildVersionQualifier) { 302L }
         factory {
             GetLinkListUseCase(
                 linkRepo = get(),

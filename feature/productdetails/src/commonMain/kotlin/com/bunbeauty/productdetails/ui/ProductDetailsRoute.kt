@@ -40,6 +40,7 @@ import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.theme.bold
 import com.bunbeauty.designsystem.ui.LocalBottomBarPadding
 import com.bunbeauty.designsystem.ui.SharedTransitionScopeComposition
+import com.bunbeauty.designsystem.ui.sharedElementIfNeeded
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryAsyncImage
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryAction
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryScaffold
@@ -408,14 +409,14 @@ private fun ProductCard(
         ) {
             FoodDeliveryAsyncImage(
                 modifier =
-                    Modifier
-                        .sharedElement(
-                            sharedContentState =
-                                rememberSharedContentState(
-                                    key = "image-${menuProductUi.uuid}",
-                                ),
-                            animatedVisibilityScope = animatedContentScope,
-                        ).fillMaxWidth()
+                    sharedElementIfNeeded(
+                        modifier = Modifier,
+                        sharedContentState =
+                            rememberSharedContentState(
+                                key = "image-${menuProductUi.uuid}",
+                            ),
+                        animatedVisibilityScope = animatedContentScope,
+                    ).fillMaxWidth()
                         .clip(shape = RoundedCornerShape(size = 16.dp))
                         .heightIn(min = 228.dp),
                 photoLink = menuProductUi.photoLink,
@@ -430,17 +431,18 @@ private fun ProductCard(
                 Row {
                     Text(
                         modifier =
-                            Modifier
-                                .weight(1f)
-                                .alignByBaseline()
-                                .padding(end = FoodDeliveryTheme.dimensions.smallSpace)
-                                .sharedElement(
-                                    sharedContentState =
-                                        rememberSharedContentState(
-                                            key = "text-${menuProductUi.uuid}",
-                                        ),
-                                    animatedVisibilityScope = animatedContentScope,
-                                ),
+                            sharedElementIfNeeded(
+                                modifier =
+                                    Modifier
+                                        .weight(1f)
+                                        .alignByBaseline()
+                                        .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
+                                sharedContentState =
+                                    rememberSharedContentState(
+                                        key = "text-${menuProductUi.uuid}",
+                                    ),
+                                animatedVisibilityScope = animatedContentScope,
+                            ),
                         text = menuProductUi.name,
                         style = FoodDeliveryTheme.typography.titleMedium.bold,
                         color = FoodDeliveryTheme.colors.mainColors.onSurface,
@@ -460,15 +462,17 @@ private fun ProductCard(
                     menuProductUi.oldPrice?.let {
                         Text(
                             modifier =
-                                Modifier
-                                    .padding(end = FoodDeliveryTheme.dimensions.smallSpace)
-                                    .sharedElement(
-                                        sharedContentState =
-                                            rememberSharedContentState(
-                                                key = "oldPrice-${menuProductUi.uuid}",
-                                            ),
-                                        animatedVisibilityScope = animatedContentScope,
-                                    ),
+                                sharedElementIfNeeded(
+                                    modifier =
+                                        Modifier.padding(
+                                            end = FoodDeliveryTheme.dimensions.smallSpace,
+                                        ),
+                                    sharedContentState =
+                                        rememberSharedContentState(
+                                            key = "oldPrice-${menuProductUi.uuid}",
+                                        ),
+                                    animatedVisibilityScope = animatedContentScope,
+                                ),
                             text = menuProductUi.oldPrice,
                             style = FoodDeliveryTheme.typography.bodyLarge,
                             color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
@@ -477,7 +481,8 @@ private fun ProductCard(
                     }
                     Text(
                         modifier =
-                            Modifier.sharedElement(
+                            sharedElementIfNeeded(
+                                modifier = Modifier,
                                 sharedContentState =
                                     rememberSharedContentState(
                                         key = "price-${menuProductUi.uuid}",

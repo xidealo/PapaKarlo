@@ -19,6 +19,7 @@ import androidx.compose.ui.layout.layout
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.bunbeauty.designsystem.platform
 
 fun Modifier.icon24() = this.size(24.dp)
 
@@ -56,6 +57,23 @@ fun getIsImeVisible() = WindowInsets.ime.getBottom(LocalDensity.current) > 0
 val SharedTransitionScopeComposition = staticCompositionLocalOf<SharedTransitionScope> {
     error("No SharedTransitionScopeComposition")
 }
+
+// Shared element transitions stall / leave the previous screen composited on
+// Compose for Web; keep them only on Android and iOS.
+@OptIn(ExperimentalSharedTransitionApi::class)
+fun SharedTransitionScope.sharedElementIfNeeded(
+    modifier: Modifier,
+    sharedContentState: SharedTransitionScope.SharedContentState,
+    animatedVisibilityScope: AnimatedVisibilityScope,
+): Modifier =
+    if (platform() == "Web") {
+        modifier
+    } else {
+        modifier.sharedElement(
+            sharedContentState = sharedContentState,
+            animatedVisibilityScope = animatedVisibilityScope,
+        )
+    }
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
