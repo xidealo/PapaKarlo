@@ -27,14 +27,11 @@ data object PrivacyPolicyScreenDestination
 @Serializable
 data object TermsOfServiceScreenDestination
 
-fun NavController.navigateToUserAgreementScreen(navOptions: NavOptions) =
-    navigate(route = UserAgreementScreenDestination, navOptions)
+fun NavController.navigateToUserAgreementScreen(navOptions: NavOptions) = navigate(route = UserAgreementScreenDestination, navOptions)
 
-fun NavController.navigateToPrivacyPolicyScreen(navOptions: NavOptions) =
-    navigate(route = PrivacyPolicyScreenDestination, navOptions)
+fun NavController.navigateToPrivacyPolicyScreen(navOptions: NavOptions) = navigate(route = PrivacyPolicyScreenDestination, navOptions)
 
-fun NavController.navigateToTermsOfServiceScreen(navOptions: NavOptions) =
-    navigate(route = TermsOfServiceScreenDestination, navOptions)
+fun NavController.navigateToTermsOfServiceScreen(navOptions: NavOptions) = navigate(route = TermsOfServiceScreenDestination, navOptions)
 
 fun NavGraphBuilder.userAgreementScreenRoute(back: () -> Unit) {
     legalComposable<UserAgreementScreenDestination> {
