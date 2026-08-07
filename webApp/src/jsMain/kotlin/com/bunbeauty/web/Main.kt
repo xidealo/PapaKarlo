@@ -24,6 +24,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.await
 import kotlinx.coroutines.launch
 import org.koin.dsl.module
+import org.w3c.dom.HTMLElement
+
+private const val COMPOSE_ROOT_ID = "compose-root"
 
 // Sets the browser tab icon (favicon) to the brand logo bundled in
 // composeResources. index.html has no <link rel="icon">, so we create/update it
@@ -70,7 +73,10 @@ fun main() {
             )
         }
 
-        ComposeViewport(document.body!!) {
+        // Compose fills #compose-root instead of the whole body so the site
+        // footer below it stays visible (see index.html).
+        val composeRoot = document.getElementById(COMPOSE_ROOT_ID) as HTMLElement
+        ComposeViewport(composeRoot) {
             // On the web there is no real filesystem, so we use a memory-only
             // ImageLoader. Coil's default loader would try to set up a disk cache
             // via okio (os.tmpdir()), which is not available in the browser.
