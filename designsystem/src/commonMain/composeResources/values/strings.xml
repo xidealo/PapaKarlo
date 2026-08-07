@@ -283,4 +283,11 @@
     <string name="month_december">декабря</string>
     <string name="month_unknown">\???</string>
 
+    <!-- LEGAL -->
+    <string name="title_user_agreement">Пользовательское соглашение</string>
+    <string name="title_privacy_policy">Политика конфиденциальности</string>
+    <string name="title_terms_of_service">Условия предоставления услуг</string>
+    <string name="msg_legal_document_placeholder">Текст документа будет опубликован позже.</string>
+    <string name="msg_footer_copyright">© 2026</string>
+
 </resources>

@@ -5,17 +5,17 @@ import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.rememberNavController
 import com.bunbeauty.shared.ui.navigation.splash.SplashScreenDestination
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun FoodDeliveryNavHost(
+    navController: NavHostController,
     showInfoMessage: (String, Int) -> Unit,
     showErrorMessage: (String) -> Unit,
 ) {
-    val navController = rememberNavController()
     NavHost(
         navController = navController,
         startDestination = SplashScreenDestination,
