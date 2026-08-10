@@ -16,6 +16,7 @@ import com.bunbeauty.core.domain.menu_product.IMenuProductInteractor
 import com.bunbeauty.core.domain.order.GetLastOrderUseCase
 import com.bunbeauty.core.domain.order.ObserveLastOrderUseCase
 import com.bunbeauty.core.domain.order.StopObserveOrdersUseCase
+import com.bunbeauty.core.domain.settings.RefreshSettingsUseCase
 import com.bunbeauty.core.extension.launchSafe
 import com.bunbeauty.core.model.CategoryItem
 import com.bunbeauty.core.model.MenuItem
@@ -37,6 +38,7 @@ class MenuViewModel(
     private val observeCartUseCase: ObserveCartUseCase,
     private val addMenuProductUseCase: AddMenuProductUseCase,
     private val getDiscountUseCase: GetDiscountUseCase,
+    private val refreshSettingsUseCase: RefreshSettingsUseCase,
     private val analyticService: AnalyticService,
     private val observeLastOrderUseCase: ObserveLastOrderUseCase,
     private val stopObserveOrdersUseCase: StopObserveOrdersUseCase,
@@ -152,6 +154,7 @@ class MenuViewModel(
     }
 
     private suspend fun refreshDiscountAndFavorites() {
+        refreshSettingsUseCase()
         val discountItem =
             getDiscountUseCase()?.firstOrderDiscount?.toString()?.let { discount ->
                 MenuItem.Discount(discount = discount)
@@ -196,8 +199,11 @@ class MenuViewModel(
                         }
 
                         val discountItem =
-                            getDiscountUseCase()?.firstOrderDiscount?.toString()?.let { discount ->
-                                MenuItem.Discount(discount = discount)
+                            run {
+                                refreshSettingsUseCase()
+                                getDiscountUseCase()?.firstOrderDiscount?.toString()?.let { discount ->
+                                    MenuItem.Discount(discount = discount)
+                                }
                             }
                         val menuItemList =
                             buildMenuItemListPrefix(

@@ -48,12 +48,19 @@ actual class DataStoreRepository :
             userUuid = lsGet(SETTINGS_USER_UUID_KEY).orEmpty(),
             phoneNumber = lsGet(SETTINGS_PHONE_NUMBER_KEY).orEmpty(),
             email = lsGet(SETTINGS_EMAIL_KEY),
+            personalDiscountPercent = lsGet(SETTINGS_PERSONAL_DISCOUNT_PERCENT_KEY)?.toIntOrNull(),
         )
 
     actual override suspend fun saveSettings(settings: Settings) {
         lsSet(SETTINGS_USER_UUID_KEY, settings.userUuid)
         lsSet(SETTINGS_PHONE_NUMBER_KEY, settings.phoneNumber)
         lsSet(SETTINGS_EMAIL_KEY, settings.email.orEmpty())
+        val personalDiscountPercent = settings.personalDiscountPercent
+        if (personalDiscountPercent != null) {
+            lsSet(SETTINGS_PERSONAL_DISCOUNT_PERCENT_KEY, personalDiscountPercent.toString())
+        } else {
+            lsRemove(SETTINGS_PERSONAL_DISCOUNT_PERCENT_KEY)
+        }
     }
 
     actual override val selectedPaymentMethodUuid: Flow<String?> =
@@ -103,6 +110,7 @@ actual class DataStoreRepository :
         lsRemove(SETTINGS_USER_UUID_KEY)
         lsRemove(SETTINGS_PHONE_NUMBER_KEY)
         lsRemove(SETTINGS_EMAIL_KEY)
+        lsRemove(SETTINGS_PERSONAL_DISCOUNT_PERCENT_KEY)
         clearWithoutUtensils()
     }
 
@@ -154,6 +162,8 @@ actual class DataStoreRepository :
         private const val SETTINGS_USER_UUID_KEY = "SETTINGS_USER_UUID_KEY"
         private const val SETTINGS_PHONE_NUMBER_KEY = "SETTINGS_PHONE_NUMBER_KEY"
         private const val SETTINGS_EMAIL_KEY = "SETTINGS_EMAIL_KEY"
+        private const val SETTINGS_PERSONAL_DISCOUNT_PERCENT_KEY =
+            "SETTINGS_PERSONAL_DISCOUNT_PERCENT_KEY"
         private const val SELECTED_PAYMENT_METHOD_UUID_KEY = "SELECTED_PAYMENT_METHOD_UUID_KEY"
         private const val WITHOUT_UTENSILS_KEY = "WITHOUT_UTENSILS_KEY"
         private const val FIRST_DISCOUNT_KEY = "FIRST_DISCOUNT_KEY"

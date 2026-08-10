@@ -2,6 +2,7 @@ package com.bunbeauty.core.domain.discount
 
 import com.bunbeauty.core.domain.repo.DiscountRepo
 import com.bunbeauty.core.domain.repo.OrderRepo
+import com.bunbeauty.core.domain.repo.SettingsRepo
 import com.bunbeauty.core.model.Discount
 
 interface GetDiscountUseCase {
@@ -11,11 +12,15 @@ interface GetDiscountUseCase {
 class GetDiscountUseCaseImpl(
     private val discountRepository: DiscountRepo,
     private val orderRepository: OrderRepo,
+    private val settingsRepo: SettingsRepo,
 ) : GetDiscountUseCase {
     override suspend operator fun invoke(): Discount? {
+        val personalDiscountPercent = settingsRepo.getSettings()?.personalDiscountPercent
+        if (personalDiscountPercent != null) {
+            return Discount(firstOrderDiscount = personalDiscountPercent)
+        }
+
         val lastOrder = orderRepository.getLastOrderByUserUuidLocalFirst()
-
-
         return if (lastOrder == null) {
             discountRepository.getDiscount()
         } else {

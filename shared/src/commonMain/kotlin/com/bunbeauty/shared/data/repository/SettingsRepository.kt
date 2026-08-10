@@ -26,6 +26,28 @@ class SettingsRepository(
         return dataStoreRepo.settings
     }
 
+    override suspend fun getSettings(): Settings? {
+        val localSettings = dataStoreRepo.getSettings()
+        if (localSettings != null && localSettings.userUuid.isNotEmpty()) {
+            return localSettings
+        }
+        return refreshSettings()
+    }
+
+    override suspend fun refreshSettings(): Settings? {
+        val token = dataStoreRepo.getToken() ?: return dataStoreRepo.getSettings()
+        return networkConnector.getSettings(token).getNullableResult(
+            onError = {
+                dataStoreRepo.getSettings()
+            },
+            onSuccess = { settingsServer ->
+                val settings = settingsMapper.toSettings(settingsServer)
+                dataStoreRepo.saveSettings(settings)
+                settings
+            },
+        )
+    }
+
     override suspend fun updateEmail(email: String): Settings? {
         val token = dataStoreRepo.getToken() ?: return null
         return networkConnector
