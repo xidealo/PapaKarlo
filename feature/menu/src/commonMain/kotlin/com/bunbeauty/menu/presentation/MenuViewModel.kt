@@ -101,7 +101,7 @@ class MenuViewModel(
             MenuState.Action.OnCartClicked -> onCartClicked()
             MenuState.Action.StartLastOrderObservation -> startLastOrderObservation()
             MenuState.Action.StopLastOrderObservation -> stopLastOrderObservation()
-            MenuState.Action.RefreshFavorites -> refreshFavoriteProducts()
+            MenuState.Action.RefreshDiscountAndFavorites -> refreshDiscountAndFavoritesOnStart()
             MenuState.Action.ScrollToTop -> scrollToTop()
         }
     }
@@ -427,30 +427,10 @@ class MenuViewModel(
         favoritesItem: MenuItem.Favorites?,
     ): List<MenuItem> = listOfNotNull(discountItem, favoritesItem)
 
-    private fun refreshFavoriteProducts() {
+    private fun refreshDiscountAndFavoritesOnStart() {
         sharedScope.launchSafe(
             block = {
-                val favoritesItem = toFavoritesMenuItem(loadFavoriteProductList())
-                val menuSectionList = menuProductInteractor.getMenuSectionList()
-
-                setState {
-                    val discountItem =
-                        menuItemList.filterIsInstance<MenuItem.Discount>().firstOrNull()
-                    copy(
-                        menuItemList =
-                            buildMenuItemListPrefix(
-                                discountItem = discountItem,
-                                favoritesItem = favoritesItem,
-                            ) +
-                                menuItemList.filterNot { menuItem ->
-                                    menuItem is MenuItem.Discount || menuItem is MenuItem.Favorites
-                                },
-                        categoryItemList =
-                            buildCategoryItemList(
-                                menuSectionList = menuSectionList,
-                            ),
-                    )
-                }
+                refreshDiscountAndFavorites()
             },
             onError = { throwable ->
                 Logger.logE(MAIN_MENU_VIEW_MODEL_TAG, throwable.stackTraceToString())
