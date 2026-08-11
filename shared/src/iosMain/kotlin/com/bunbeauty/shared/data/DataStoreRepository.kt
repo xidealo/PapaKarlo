@@ -154,6 +154,14 @@ actual class DataStoreRepository :
                             .stringForKey(
                                 SETTINGS_EMAIL_KEY,
                             ).toString(),
+                    personalDiscountPercent =
+                        NSUserDefaults.standardUserDefaults
+                            .objectForKey(SETTINGS_PERSONAL_DISCOUNT_PERCENT_KEY)
+                            ?.let {
+                                NSUserDefaults.standardUserDefaults
+                                    .integerForKey(SETTINGS_PERSONAL_DISCOUNT_PERCENT_KEY)
+                                    .toInt()
+                            },
                 ),
             )
         }
@@ -167,6 +175,17 @@ actual class DataStoreRepository :
             SETTINGS_PHONE_NUMBER_KEY,
         )
         NSUserDefaults.standardUserDefaults.setObject(settings.email, SETTINGS_EMAIL_KEY)
+        val personalDiscountPercent = settings.personalDiscountPercent
+        if (personalDiscountPercent != null) {
+            NSUserDefaults.standardUserDefaults.setObject(
+                personalDiscountPercent,
+                SETTINGS_PERSONAL_DISCOUNT_PERCENT_KEY,
+            )
+        } else {
+            NSUserDefaults.standardUserDefaults.removeObjectForKey(
+                SETTINGS_PERSONAL_DISCOUNT_PERCENT_KEY,
+            )
+        }
     }
 
     actual override val recommendationMaxVisible: Flow<Int?> =
@@ -218,6 +237,7 @@ actual class DataStoreRepository :
         NSUserDefaults.standardUserDefaults.removeObjectForKey(SETTINGS_USER_UUID_KEY)
         NSUserDefaults.standardUserDefaults.removeObjectForKey(SETTINGS_PHONE_NUMBER_KEY)
         NSUserDefaults.standardUserDefaults.removeObjectForKey(SETTINGS_EMAIL_KEY)
+        NSUserDefaults.standardUserDefaults.removeObjectForKey(SETTINGS_PERSONAL_DISCOUNT_PERCENT_KEY)
     }
 
     companion object {
@@ -228,6 +248,8 @@ actual class DataStoreRepository :
         private const val SETTINGS_USER_UUID_KEY = "SETTINGS_USER_UUID_KEY"
         private const val SETTINGS_PHONE_NUMBER_KEY = "SETTINGS_PHONE_NUMBER_KEY"
         private const val SETTINGS_EMAIL_KEY = "SETTINGS_EMAIL_KEY"
+        private const val SETTINGS_PERSONAL_DISCOUNT_PERCENT_KEY =
+            "SETTINGS_PERSONAL_DISCOUNT_PERCENT_KEY"
         private const val SELECTED_PAYMENT_METHOD_UUID_KEY = "SELECTED_PAYMENT_METHOD_UUID_KEY"
         private const val WITHOUT_UTENSILS_KEY = "WITHOUT_UTENSILS_KEY"
         private const val FIRST_DISCOUNT_KEY = "FIRST_DISCOUNT_KEY"

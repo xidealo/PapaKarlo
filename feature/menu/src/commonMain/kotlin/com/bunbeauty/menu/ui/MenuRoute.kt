@@ -55,7 +55,7 @@ fun MenuRoute(
 
     LifecycleStartEffect(Unit) {
         onAction(MenuState.Action.StartLastOrderObservation)
-        onAction(MenuState.Action.RefreshFavorites)
+        onAction(MenuState.Action.RefreshDiscountAndFavorites)
         onStopOrDispose {
             onAction(MenuState.Action.StopLastOrderObservation)
         }

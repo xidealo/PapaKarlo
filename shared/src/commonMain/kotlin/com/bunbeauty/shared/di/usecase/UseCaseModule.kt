@@ -20,6 +20,7 @@ import com.bunbeauty.core.domain.menu_product.GetMenuProductListUseCase
 import com.bunbeauty.core.domain.menu_product.GetMenuProductListUseCaseImpl
 import com.bunbeauty.core.domain.menu_product.GetMenuProductUseCase
 import com.bunbeauty.core.domain.settings.ObserveSettingsUseCase
+import com.bunbeauty.core.domain.settings.RefreshSettingsUseCase
 import com.bunbeauty.core.domain.settings.UpdateEmailUseCase
 import com.bunbeauty.core.domain.splash.CheckOneCityUseCase
 import com.bunbeauty.core.domain.splash.CheckUpdateUseCase
@@ -64,6 +65,11 @@ internal fun useCaseModules() =
             )
         }
         factory {
+            RefreshSettingsUseCase(
+                settingsRepo = get(),
+            )
+        }
+        factory {
             UpdateEmailUseCase(
                 settingsRepository = get(),
             )
@@ -104,6 +110,7 @@ internal fun useCaseModules() =
             GetDiscountUseCaseImpl(
                 discountRepository = get(),
                 orderRepository = get(),
+                settingsRepo = get(),
             )
         }
         factory {

@@ -21,6 +21,7 @@ internal fun orderUseCaseModule() =
                 cartProductRepo = get(),
                 dateTimeUtil = get(),
                 orderRepo = get(),
+                settingsRepo = get(),
             )
         }
         factory<TakeInProgressLightOrderUseCase> {

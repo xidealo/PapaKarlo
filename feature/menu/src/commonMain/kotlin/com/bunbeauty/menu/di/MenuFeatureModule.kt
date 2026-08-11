@@ -12,6 +12,7 @@ fun menuFeatureModule() =
                 observeCartUseCase = get(),
                 addMenuProductUseCase = get(),
                 getDiscountUseCase = get(),
+                refreshSettingsUseCase = get(),
                 analyticService = get(),
                 observeLastOrderUseCase = get(),
                 stopObserveOrdersUseCase = get(),

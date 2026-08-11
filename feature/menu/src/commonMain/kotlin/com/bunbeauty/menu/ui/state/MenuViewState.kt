@@ -3,6 +3,7 @@ package com.bunbeauty.menu.ui.state
 import androidx.compose.runtime.Immutable
 import com.bunbeauty.core.base.BaseViewState
 import com.bunbeauty.core.model.CategoryItem
+import com.bunbeauty.core.model.DiscountSource
 import com.bunbeauty.core.model.ProductUi
 import com.bunbeauty.core.model.order.LightOrder
 import com.bunbeauty.designsystem.ui.element.TopCartUi
@@ -49,6 +50,7 @@ sealed interface MenuItemUi {
     data class Discount(
         override val key: String,
         val discount: String,
+        val source: DiscountSource,
     ) : MenuItemUi
 
     @Immutable

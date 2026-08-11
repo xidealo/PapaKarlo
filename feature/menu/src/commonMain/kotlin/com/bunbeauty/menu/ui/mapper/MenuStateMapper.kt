@@ -88,6 +88,7 @@ private fun MenuItem.toMenuItemUi(): MenuItemUi =
             MenuItemUi.Discount(
                 key = "Discount",
                 discount = discount,
+                source = source,
             )
         }
 

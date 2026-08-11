@@ -87,6 +87,8 @@ actual class DataStoreRepository :
                         userUuid = userUuid,
                         phoneNumber = phoneNumber,
                         email = settingsDataStore[SETTINGS_EMAIL_KEY],
+                        personalDiscountPercent =
+                            settingsDataStore[SETTINGS_PERSONAL_DISCOUNT_PERCENT_KEY],
                     )
                 }
             }
@@ -99,6 +101,12 @@ actual class DataStoreRepository :
             settingsDataStore[SETTINGS_USER_UUID_KEY] = settings.userUuid
             settingsDataStore[SETTINGS_PHONE_NUMBER_KEY] = settings.phoneNumber
             settingsDataStore[SETTINGS_EMAIL_KEY] = settings.email.orEmpty()
+            val personalDiscountPercent = settings.personalDiscountPercent
+            if (personalDiscountPercent != null) {
+                settingsDataStore[SETTINGS_PERSONAL_DISCOUNT_PERCENT_KEY] = personalDiscountPercent
+            } else {
+                settingsDataStore.remove(SETTINGS_PERSONAL_DISCOUNT_PERCENT_KEY)
+            }
         }
     }
 
@@ -256,9 +264,12 @@ actual class DataStoreRepository :
         private const val SETTINGS_USER_UUID = "settings user uuid"
         private const val SETTINGS_PHONE_NUMBER = "settings phone number"
         private const val SETTINGS_EMAIL = "settings email"
+        private const val SETTINGS_PERSONAL_DISCOUNT_PERCENT = "settings personal discount percent"
         private val SETTINGS_USER_UUID_KEY = stringPreferencesKey(SETTINGS_USER_UUID)
         private val SETTINGS_PHONE_NUMBER_KEY = stringPreferencesKey(SETTINGS_PHONE_NUMBER)
         private val SETTINGS_EMAIL_KEY = stringPreferencesKey(SETTINGS_EMAIL)
+        private val SETTINGS_PERSONAL_DISCOUNT_PERCENT_KEY =
+            intPreferencesKey(SETTINGS_PERSONAL_DISCOUNT_PERCENT)
 
         private const val USER_UUID_DATA_STORE = "user id data store"
         private const val USER_UUID = "user uuid"

@@ -4,4 +4,5 @@ class Settings(
     val userUuid: String,
     val phoneNumber: String,
     val email: String?,
+    val personalDiscountPercent: Int? = null,
 )

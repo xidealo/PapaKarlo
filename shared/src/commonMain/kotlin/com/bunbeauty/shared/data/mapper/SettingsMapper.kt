@@ -9,5 +9,6 @@ class SettingsMapper {
             userUuid = settingsServer.userUuid,
             phoneNumber = settingsServer.phoneNumber,
             email = settingsServer.email,
+            personalDiscountPercent = settingsServer.personalDiscountPercent,
         )
 }
