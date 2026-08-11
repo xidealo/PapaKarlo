@@ -6,6 +6,7 @@ import com.bunbeauty.core.domain.repo.DiscountRepo
 import com.bunbeauty.core.domain.repo.OrderRepo
 import com.bunbeauty.core.domain.repo.SettingsRepo
 import com.bunbeauty.core.model.Discount
+import com.bunbeauty.core.model.DiscountSource
 import com.bunbeauty.core.model.Settings
 import com.bunbeauty.core.model.date_time.Date
 import com.bunbeauty.core.model.date_time.DateTime
@@ -43,6 +44,10 @@ class GetDiscountUseCaseTest {
                 expected = 10,
                 actual = discount?.firstOrderDiscount,
             )
+            assertEquals(
+                expected = DiscountSource.FIRST_ORDER,
+                actual = discount?.source,
+            )
         }
 
     @Test
@@ -57,6 +62,10 @@ class GetDiscountUseCaseTest {
             assertEquals(
                 expected = 10,
                 actual = discount?.firstOrderDiscount,
+            )
+            assertEquals(
+                expected = DiscountSource.FIRST_ORDER,
+                actual = discount?.source,
             )
         }
 
@@ -74,6 +83,10 @@ class GetDiscountUseCaseTest {
             assertEquals(
                 expected = 10,
                 actual = discount?.firstOrderDiscount,
+            )
+            assertEquals(
+                expected = DiscountSource.FIRST_ORDER,
+                actual = discount?.source,
             )
         }
 
@@ -109,6 +122,10 @@ class GetDiscountUseCaseTest {
                 expected = 15,
                 actual = discount?.firstOrderDiscount,
             )
+            assertEquals(
+                expected = DiscountSource.PERSONAL,
+                actual = discount?.source,
+            )
         }
 
     @Test
@@ -126,6 +143,10 @@ class GetDiscountUseCaseTest {
                 expected = 15,
                 actual = discount?.firstOrderDiscount,
             )
+            assertEquals(
+                expected = DiscountSource.PERSONAL,
+                actual = discount?.source,
+            )
         }
 
     @Test
@@ -142,6 +163,10 @@ class GetDiscountUseCaseTest {
             assertEquals(
                 expected = 10,
                 actual = discount?.firstOrderDiscount,
+            )
+            assertEquals(
+                expected = DiscountSource.FIRST_ORDER,
+                actual = discount?.source,
             )
         }
 

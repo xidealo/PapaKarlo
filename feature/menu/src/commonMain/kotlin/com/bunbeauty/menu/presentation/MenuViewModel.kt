@@ -19,6 +19,7 @@ import com.bunbeauty.core.domain.order.StopObserveOrdersUseCase
 import com.bunbeauty.core.domain.settings.RefreshSettingsUseCase
 import com.bunbeauty.core.extension.launchSafe
 import com.bunbeauty.core.model.CategoryItem
+import com.bunbeauty.core.model.Discount
 import com.bunbeauty.core.model.MenuItem
 import com.bunbeauty.core.model.mapper.toMenuItemList
 import com.bunbeauty.core.model.mapper.toMenuProductItem
@@ -32,6 +33,15 @@ import kotlinx.coroutines.launch
 import kotlin.time.measureTime
 
 private const val MAIN_MENU_VIEW_MODEL_TAG = "MenuViewModel"
+
+private fun Discount?.toMenuDiscountItem(): MenuItem.Discount? {
+    val discount = this ?: return null
+    val percent = discount.firstOrderDiscount ?: return null
+    return MenuItem.Discount(
+        discount = percent.toString(),
+        source = discount.source,
+    )
+}
 
 class MenuViewModel(
     private val menuProductInteractor: IMenuProductInteractor,
@@ -155,10 +165,7 @@ class MenuViewModel(
 
     private suspend fun refreshDiscountAndFavorites() {
         refreshSettingsUseCase()
-        val discountItem =
-            getDiscountUseCase()?.firstOrderDiscount?.toString()?.let { discount ->
-                MenuItem.Discount(discount = discount)
-            }
+        val discountItem = getDiscountUseCase().toMenuDiscountItem()
         val favoritesItem = toFavoritesMenuItem(loadFavoriteProductList())
         val menuSectionList = menuProductInteractor.getMenuSectionList()
 
@@ -201,9 +208,7 @@ class MenuViewModel(
                         val discountItem =
                             run {
                                 refreshSettingsUseCase()
-                                getDiscountUseCase()?.firstOrderDiscount?.toString()?.let { discount ->
-                                    MenuItem.Discount(discount = discount)
-                                }
+                                getDiscountUseCase().toMenuDiscountItem()
                             }
                         val menuItemList =
                             buildMenuItemListPrefix(
