@@ -24,8 +24,4 @@ sealed class MenuItem {
     data class Favorites(
         val products: List<Product>,
     ) : MenuItem()
-
-    data class Favorites(
-        val products: List<Product>,
-    ) : MenuItem()
 }

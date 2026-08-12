@@ -58,10 +58,4 @@ sealed interface MenuItemUi {
         override val key: String,
         val products: ImmutableList<ProductUi>,
     ) : MenuItemUi
-
-    @Immutable
-    data class Favorites(
-        override val key: String,
-        val products: ImmutableList<ProductUi>,
-    ) : MenuItemUi
 }

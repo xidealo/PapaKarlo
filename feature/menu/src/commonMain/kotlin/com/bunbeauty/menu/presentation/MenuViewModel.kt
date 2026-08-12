@@ -427,18 +427,6 @@ class MenuViewModel(
         favoritesItem: MenuItem.Favorites?,
     ): List<MenuItem> = listOfNotNull(discountItem, favoritesItem)
 
-    private fun toFavoritesMenuItem(products: List<MenuItem.Product>): MenuItem.Favorites? =
-        if (products.isNotEmpty()) {
-            MenuItem.Favorites(products = products)
-        } else {
-            null
-        }
-
-    private fun buildMenuItemListPrefix(
-        discountItem: MenuItem.Discount?,
-        favoritesItem: MenuItem.Favorites?,
-    ): List<MenuItem> = listOfNotNull(discountItem, favoritesItem)
-
     private fun refreshDiscountAndFavoritesOnStart() {
         sharedScope.launchSafe(
             block = {
