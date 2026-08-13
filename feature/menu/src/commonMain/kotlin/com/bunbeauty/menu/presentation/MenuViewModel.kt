@@ -16,8 +16,10 @@ import com.bunbeauty.core.domain.menu_product.IMenuProductInteractor
 import com.bunbeauty.core.domain.order.GetLastOrderUseCase
 import com.bunbeauty.core.domain.order.ObserveLastOrderUseCase
 import com.bunbeauty.core.domain.order.StopObserveOrdersUseCase
+import com.bunbeauty.core.domain.settings.RefreshSettingsUseCase
 import com.bunbeauty.core.extension.launchSafe
 import com.bunbeauty.core.model.CategoryItem
+import com.bunbeauty.core.model.Discount
 import com.bunbeauty.core.model.MenuItem
 import com.bunbeauty.core.model.mapper.toMenuItemList
 import com.bunbeauty.core.model.mapper.toMenuProductItem
@@ -32,11 +34,21 @@ import kotlin.time.measureTime
 
 private const val MAIN_MENU_VIEW_MODEL_TAG = "MenuViewModel"
 
+private fun Discount?.toMenuDiscountItem(): MenuItem.Discount? {
+    val discount = this ?: return null
+    val percent = discount.firstOrderDiscount ?: return null
+    return MenuItem.Discount(
+        discount = percent.toString(),
+        source = discount.source,
+    )
+}
+
 class MenuViewModel(
     private val menuProductInteractor: IMenuProductInteractor,
     private val observeCartUseCase: ObserveCartUseCase,
     private val addMenuProductUseCase: AddMenuProductUseCase,
     private val getDiscountUseCase: GetDiscountUseCase,
+    private val refreshSettingsUseCase: RefreshSettingsUseCase,
     private val analyticService: AnalyticService,
     private val observeLastOrderUseCase: ObserveLastOrderUseCase,
     private val stopObserveOrdersUseCase: StopObserveOrdersUseCase,
@@ -89,7 +101,7 @@ class MenuViewModel(
             MenuState.Action.OnCartClicked -> onCartClicked()
             MenuState.Action.StartLastOrderObservation -> startLastOrderObservation()
             MenuState.Action.StopLastOrderObservation -> stopLastOrderObservation()
-            MenuState.Action.RefreshFavorites -> refreshFavoriteProducts()
+            MenuState.Action.RefreshDiscountAndFavorites -> refreshDiscountAndFavoritesOnStart()
             MenuState.Action.ScrollToTop -> scrollToTop()
         }
     }
@@ -152,10 +164,8 @@ class MenuViewModel(
     }
 
     private suspend fun refreshDiscountAndFavorites() {
-        val discountItem =
-            getDiscountUseCase()?.firstOrderDiscount?.toString()?.let { discount ->
-                MenuItem.Discount(discount = discount)
-            }
+        refreshSettingsUseCase()
+        val discountItem = getDiscountUseCase().toMenuDiscountItem()
         val favoritesItem = toFavoritesMenuItem(loadFavoriteProductList())
         val menuSectionList = menuProductInteractor.getMenuSectionList()
 
@@ -196,8 +206,9 @@ class MenuViewModel(
                         }
 
                         val discountItem =
-                            getDiscountUseCase()?.firstOrderDiscount?.toString()?.let { discount ->
-                                MenuItem.Discount(discount = discount)
+                            run {
+                                refreshSettingsUseCase()
+                                getDiscountUseCase().toMenuDiscountItem()
                             }
                         val menuItemList =
                             buildMenuItemListPrefix(
@@ -416,30 +427,10 @@ class MenuViewModel(
         favoritesItem: MenuItem.Favorites?,
     ): List<MenuItem> = listOfNotNull(discountItem, favoritesItem)
 
-    private fun refreshFavoriteProducts() {
+    private fun refreshDiscountAndFavoritesOnStart() {
         sharedScope.launchSafe(
             block = {
-                val favoritesItem = toFavoritesMenuItem(loadFavoriteProductList())
-                val menuSectionList = menuProductInteractor.getMenuSectionList()
-
-                setState {
-                    val discountItem =
-                        menuItemList.filterIsInstance<MenuItem.Discount>().firstOrNull()
-                    copy(
-                        menuItemList =
-                            buildMenuItemListPrefix(
-                                discountItem = discountItem,
-                                favoritesItem = favoritesItem,
-                            ) +
-                                menuItemList.filterNot { menuItem ->
-                                    menuItem is MenuItem.Discount || menuItem is MenuItem.Favorites
-                                },
-                        categoryItemList =
-                            buildCategoryItemList(
-                                menuSectionList = menuSectionList,
-                            ),
-                    )
-                }
+                refreshDiscountAndFavorites()
             },
             onError = { throwable ->
                 Logger.logE(MAIN_MENU_VIEW_MODEL_TAG, throwable.stackTraceToString())

@@ -34,6 +34,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.bunbeauty.core.model.DiscountSource
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.theme.bold
 import com.bunbeauty.designsystem.theme.logoMedium
@@ -55,6 +56,7 @@ import papakarlo.designsystem.generated.resources.description_login_logo
 import papakarlo.designsystem.generated.resources.ic_discount
 import papakarlo.designsystem.generated.resources.ic_profile
 import papakarlo.designsystem.generated.resources.msg_menu_discount
+import papakarlo.designsystem.generated.resources.msg_menu_personal_discount
 import papakarlo.designsystem.generated.resources.title_menu
 import papakarlo.designsystem.generated.resources.title_menu_discount
 
@@ -221,17 +223,25 @@ internal fun MenuColumn(
             ) { _, menuItem ->
                 when (menuItem) {
                     is MenuItemUi.Discount -> {
+                        val discountMessage =
+                            if (menuItem.source == DiscountSource.PERSONAL) {
+                                stringResource(
+                                    resource = Res.string.msg_menu_personal_discount,
+                                    menuItem.discount,
+                                )
+                            } else {
+                                stringResource(
+                                    resource = Res.string.msg_menu_discount,
+                                    menuItem.discount,
+                                )
+                            }
                         BannerCard(
                             title =
                                 stringResource(
                                     resource = Res.string.title_menu_discount,
                                     menuItem.discount,
                                 ),
-                            text =
-                                stringResource(
-                                    resource = Res.string.msg_menu_discount,
-                                    menuItem.discount,
-                                ),
+                            text = discountMessage,
                             icon = Res.drawable.ic_discount,
                             iconDescription =
                                 stringResource(

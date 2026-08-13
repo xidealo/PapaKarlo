@@ -1,5 +1,9 @@
 package com.bunbeauty.core.domain.order
 
+import com.bunbeauty.core.domain.repo.CartProductRepo
+import com.bunbeauty.core.domain.repo.OrderRepo
+import com.bunbeauty.core.domain.repo.SettingsRepo
+import com.bunbeauty.core.domain.util.DateTimeUtil
 import com.bunbeauty.core.model.address.UserAddress
 import com.bunbeauty.core.model.cafe.Cafe
 import com.bunbeauty.core.model.cart.CartProduct
@@ -8,15 +12,13 @@ import com.bunbeauty.core.model.order.CreatedOrder
 import com.bunbeauty.core.model.order.CreatedOrderAddress
 import com.bunbeauty.core.model.order.OrderCode
 import com.bunbeauty.core.model.product.CreatedOrderProduct
-import com.bunbeauty.core.domain.repo.CartProductRepo
-import com.bunbeauty.core.domain.repo.OrderRepo
-import com.bunbeauty.core.domain.util.DateTimeUtil
 import kotlin.time.ExperimentalTime
 
 class CreateOrderUseCase(
     private val cartProductRepo: CartProductRepo,
     private val dateTimeUtil: DateTimeUtil,
     private val orderRepo: OrderRepo,
+    private val settingsRepo: SettingsRepo,
 ) {
     @OptIn(ExperimentalTime::class)
     suspend operator fun invoke(
@@ -72,7 +74,11 @@ class CreateOrderUseCase(
                 paymentMethod = paymentMethod,
             )
 
-        return orderRepo.createOrder(createdOrder = createdOrder)
+        val orderCode = orderRepo.createOrder(createdOrder = createdOrder)
+        if (orderCode != null) {
+            settingsRepo.refreshSettings()
+        }
+        return orderCode
     }
 
     private fun getSortedAdditionUuidList(cartProduct: CartProduct) =

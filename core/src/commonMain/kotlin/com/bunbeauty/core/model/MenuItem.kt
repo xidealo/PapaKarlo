@@ -18,6 +18,7 @@ sealed class MenuItem {
 
     data class Discount(
         val discount: String,
+        val source: DiscountSource,
     ) : MenuItem()
 
     data class Favorites(

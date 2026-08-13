@@ -60,7 +60,7 @@ interface MenuState {
 
         data object StopLastOrderObservation : Action
 
-        data object RefreshFavorites : Action
+        data object RefreshDiscountAndFavorites : Action
 
         data object ScrollToTop : Action
     }

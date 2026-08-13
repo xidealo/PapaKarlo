@@ -15,6 +15,9 @@ import com.bunbeauty.shared.ui.navigation.createaddress.createAddressScreenRoute
 import com.bunbeauty.shared.ui.navigation.createaddress.navigateToCreateAddressScreenDestination
 import com.bunbeauty.shared.ui.navigation.createorder.createOrderScreenRoute
 import com.bunbeauty.shared.ui.navigation.createorder.navigateToCreateOrderScreen
+import com.bunbeauty.shared.ui.navigation.legal.privacyPolicyScreenRoute
+import com.bunbeauty.shared.ui.navigation.legal.termsOfServiceScreenRoute
+import com.bunbeauty.shared.ui.navigation.legal.userAgreementScreenRoute
 import com.bunbeauty.shared.ui.navigation.login.loginScreenRoute
 import com.bunbeauty.shared.ui.navigation.login.navigateToLoginScreen
 import com.bunbeauty.shared.ui.navigation.menu.MENU_SCROLL_TO_TOP_KEY
@@ -113,6 +116,9 @@ fun NavGraphBuilder.foodDeliveryNavGraphBuilder(
         showErrorMessage = showErrorMessage,
         showInfoMessage = showInfoMessage,
     )
+    userAgreementScreenRoute(back = back)
+    privacyPolicyScreenRoute(back = back)
+    termsOfServiceScreenRoute(back = back)
     createAddressScreenRoute(
         back = back,
         showErrorMessage = showErrorMessage,

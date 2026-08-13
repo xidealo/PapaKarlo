@@ -31,12 +31,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.rememberNavController
+import com.bunbeauty.designsystem.isWeb
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.ui.LocalBottomBarPadding
 import com.bunbeauty.designsystem.ui.LocalStatusBarColor
 import com.bunbeauty.designsystem.ui.SharedTransitionScopeComposition
 import com.bunbeauty.shared.presentation.MainViewModel
 import com.bunbeauty.shared.ui.navigation.FoodDeliveryNavHost
+import com.bunbeauty.shared.ui.navigation.emptyNavOptions
+import com.bunbeauty.shared.ui.navigation.legal.navigateToPrivacyPolicyScreen
+import com.bunbeauty.shared.ui.navigation.legal.navigateToTermsOfServiceScreen
+import com.bunbeauty.shared.ui.navigation.legal.navigateToUserAgreementScreen
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
@@ -53,6 +59,7 @@ fun MainScreen(
 ) {
     val mainState by viewModel.mainState.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
+    val navController = rememberNavController()
 
     HandleEventList(
         eventList = mainState.eventList,
@@ -98,9 +105,10 @@ fun MainScreen(
                     Box(
                         modifier =
                             Modifier
-                                .fillMaxSize(),
+                                .weight(1f),
                     ) {
                         FoodDeliveryNavHost(
+                            navController = navController,
                             showInfoMessage = { message, padding ->
                                 viewModel.showInfoMessage(
                                     text = message,
@@ -111,6 +119,20 @@ fun MainScreen(
                                 viewModel.showErrorMessage(
                                     message,
                                 )
+                            },
+                        )
+                    }
+
+                    if (isWeb) {
+                        SiteFooter(
+                            onUserAgreementClick = {
+                                navController.navigateToUserAgreementScreen(emptyNavOptions)
+                            },
+                            onPrivacyPolicyClick = {
+                                navController.navigateToPrivacyPolicyScreen(emptyNavOptions)
+                            },
+                            onTermsOfServiceClick = {
+                                navController.navigateToTermsOfServiceScreen(emptyNavOptions)
                             },
                         )
                     }

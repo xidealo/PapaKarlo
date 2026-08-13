@@ -63,6 +63,7 @@
     <string name="error_menu_loading">Не удалось загрузить меню</string>
     <string name="title_menu_discount">Скидка %1$s%</string>
     <string name="msg_menu_discount">Успей сделать первый заказ со скидкой %1$s%</string>
+    <string name="msg_menu_personal_discount">Ваша скидка на следующий заказ %1$s%</string>
     <string name="msg_menu_product_added">Добавлено</string>
     <string name="msg_menu_product_edited">Изменено</string>
     <string name="title_menu_last_order">Ваш заказ</string>
@@ -282,5 +283,12 @@
     <string name="month_november">ноября</string>
     <string name="month_december">декабря</string>
     <string name="month_unknown">\???</string>
+
+    <!-- LEGAL -->
+    <string name="title_user_agreement">Пользовательское соглашение</string>
+    <string name="title_privacy_policy">Политика конфиденциальности</string>
+    <string name="title_terms_of_service">Условия предоставления услуг</string>
+    <string name="msg_legal_document_placeholder">Текст документа будет опубликован позже.</string>
+    <string name="msg_footer_copyright">© 2026</string>
 
 </resources>

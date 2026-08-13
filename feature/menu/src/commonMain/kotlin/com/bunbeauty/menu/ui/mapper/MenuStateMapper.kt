@@ -88,6 +88,18 @@ private fun MenuItem.toMenuItemUi(): MenuItemUi =
             MenuItemUi.Discount(
                 key = "Discount",
                 discount = discount,
+                source = source,
+            )
+        }
+
+        is MenuItem.Favorites -> {
+            MenuItemUi.Favorites(
+                key = "Favorites",
+                products =
+                    products
+                        .map { product ->
+                            product.toMenuProductItemUi().product
+                        }.toImmutableList(),
             )
         }
 
