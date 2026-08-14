@@ -297,8 +297,10 @@ platform :ios do
       if sample.nil?
         UI.user_error!(
           "В #{File.basename(app_dir)} нет compose-resources. " \
-          "Проверьте shared.podspec (spec.resources) и что каталог " \
-          "shared/build/compose/cocoapods/compose-resources существовал до pod install."
+          "CocoaPods пропускает пустой spec.resources на pod install; копирование " \
+          "делает iosApp/Podfile post_install после [CP-User] Build shared. " \
+          "Проверьте, что shared/build/compose/cocoapods/compose-resources заполнен " \
+          "во время xcodebuild и что post_install дописал *-resources.sh."
         )
       end
       UI.success("compose-resources OK (пример: #{sample.sub("#{app_dir}/", '')})")
