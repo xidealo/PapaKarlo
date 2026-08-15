@@ -31,7 +31,7 @@ import kotlinx.coroutines.launch
 fun rememberFoodDeliverySnackbarState(defaultText: String = ""): FoodDeliverySnackbarState {
     val coroutineScope = rememberCoroutineScope()
     return remember {
-        _root_ide_package_.com.bunbeauty.designsystem.ui.element.FoodDeliverySnackbarState(
+        FoodDeliverySnackbarState(
             coroutineScope = coroutineScope,
             defaultText = defaultText,
         )

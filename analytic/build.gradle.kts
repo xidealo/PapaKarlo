@@ -1,15 +1,27 @@
 import CommonApplication.deploymentTarget
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.multiplatform)
     alias(libs.plugins.cocoa)
-    alias(libs.plugins.android.library)
+    alias(libs.plugins.android.kmp.library)
 }
 
 @OptIn(org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi::class)
 kotlin {
     applyDefaultHierarchyTemplate()
-    androidTarget()
+    android {
+        namespace = "com.bunbeauty.analytic"
+        compileSdk = AndroidSdk.compile
+        minSdk = AndroidSdk.min
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_21)
+        }
+        androidResources {
+            enable = true
+        }
+        withHostTest {}
+    }
 
     iosArm64()
     iosSimulatorArm64()
@@ -51,17 +63,5 @@ kotlin {
                 implementation(libs.firebase.analytics)
             }
         }
-    }
-}
-
-android {
-    namespace = "com.bunbeauty.analytic"
-    compileSdk = AndroidSdk.compile
-    defaultConfig {
-        minSdk = AndroidSdk.min
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_21
-        targetCompatibility = JavaVersion.VERSION_21
     }
 }

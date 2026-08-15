@@ -1,16 +1,29 @@
 import CommonApplication.deploymentTarget
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.multiplatform)
     alias(libs.plugins.cocoa)
-    alias(libs.plugins.android.library)
+    alias(libs.plugins.android.kmp.library)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.compose)
 }
 
 kotlin {
     applyDefaultHierarchyTemplate()
-    androidTarget()
+    android {
+        namespace = "com.bunbeauty.designsystem"
+        compileSdk = AndroidSdk.compile
+        minSdk = AndroidSdk.min
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_21)
+        }
+        androidResources {
+            enable = true
+        }
+        withHostTest {}
+        withDeviceTest {}
+    }
 
     iosArm64()
     iosSimulatorArm64()
@@ -33,8 +46,6 @@ kotlin {
         }
     }
 
-
-
     sourceSets {
         val commonMain by getting {
             dependencies {
@@ -49,7 +60,6 @@ kotlin {
                 implementation(libs.kotlinx.datetime)
                 implementation(libs.bundles.coil)
                 implementation(libs.kotlinx.collections.immutable)
-
             }
         }
         val androidMain by getting {
@@ -58,22 +68,9 @@ kotlin {
             }
         }
     }
-
 }
 
-android {
-    namespace = "com.bunbeauty.designsystem"
-    compileSdk = AndroidSdk.compile
-    defaultConfig {
-        minSdk = AndroidSdk.min
-    }
-    compose.resources {
-        publicResClass = true
-        generateResClass = auto
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_21
-        targetCompatibility = JavaVersion.VERSION_21
-    }
-
+compose.resources {
+    publicResClass = true
+    generateResClass = auto
 }

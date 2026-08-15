@@ -1,14 +1,14 @@
 [versions]
-gradle = "8.13.2"
-kotlin = "2.3.21"
-googleServices = "4.4.4"
+agp = "9.2.1"
+kotlin = "2.4.10"
+googleServices = "4.5.0"
 crashlytics = "3.0.7"
 kotlinCoroutines = "1.11.0"
-ktor = "3.4.3"
+ktor = "3.5.2"
 kotlinxSerialization = "1.11.0"
-koin = "4.2.1"
+koin = "4.2.2"
 sqlDelight = "1.5.5"
-publisher = "3.13.0"
+publisher = "4.1.1"
 appCompact = "1.7.1"
 coreKtx = "1.18.0"
 coil = "3.4.0"
@@ -25,7 +25,7 @@ firebase = "34.13.0"
 kaspresso = "1.6.0"
 collectionsImmutable = "0.4.0"
 ktLint = "14.2.0"
-tripletPlay = "3.13.0"
+tripletPlay = "4.1.1"
 compose = "1.11.0"
 firebaseCrashlyticsKtx = "20.0.6"
 
@@ -93,7 +93,7 @@ activity-compose = { module = "androidx.activity:activity-compose", version.ref 
 lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycle" }
 
 #classpath
-gradle = { module = "com.android.tools.build:gradle", version.ref = "gradle" }
+gradle = { module = "com.android.tools.build:gradle", version.ref = "agp" }
 kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 google-services = { module = "com.google.gms:google-services", version.ref = "googleServices" }
 kotlin-serialization = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlin" }
@@ -104,8 +104,7 @@ firebase-crashlytics-ktx = { group = "com.google.firebase", name = "firebase-cra
 
 [plugins]
 
-application = { id = "com.android.application", version.ref = "gradle" }
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+application = { id = "com.android.application", version.ref = "agp" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
 google-service = { id = "com.google.gms.google-services", version.ref = "googleServices" }
 triplet-play = { id = "com.github.triplet.play", version.ref = "tripletPlay" }
@@ -119,7 +118,8 @@ cocoa = { id = "org.jetbrains.kotlin.native.cocoapods", version.ref = "kotlin" }
 sqldelight = { id = "com.squareup.sqldelight", version.ref = "sqlDelight" }
 mokkery = { id = "dev.mokkery", version.ref = "mokkery" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-android-library = { id = "com.android.library", version.ref = "gradle" }
+android-library = { id = "com.android.library", version.ref = "agp" }
+android-kmp-library = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
 
 # Plugins defined by this project
 client-compose-multiplatform-feature = { id = "com.bunbeauty.compose.multiplatform.feature", version = "1.0" }

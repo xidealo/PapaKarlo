@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
+import com.bunbeauty.designsystem.ui.element.OverflowingText
 import com.bunbeauty.designsystem.ui.icon24
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
@@ -47,7 +48,7 @@ fun StartIconCard(
                 tint = iconTint,
                 contentDescription = label,
             )
-            _root_ide_package_.com.bunbeauty.designsystem.ui.element.OverflowingText(
+            OverflowingText(
                 modifier = Modifier.padding(start = 16.dp),
                 text = label,
                 style = FoodDeliveryTheme.typography.bodyLarge,

@@ -64,7 +64,7 @@ private fun FoodDeliveryBottomSheet(
         modifier =
             Modifier
                 .fillMaxWidth()
-                .clip(_root_ide_package_.com.bunbeauty.designsystem.ui.screen.bottomsheet.FoodDeliveryBottomSheetDefaults.bottomSheetShape)
+                .clip(FoodDeliveryBottomSheetDefaults.bottomSheetShape)
                 .background(FoodDeliveryTheme.colors.mainColors.surface)
                 .padding(horizontal = FoodDeliveryTheme.dimensions.screenContentSpace)
                 .padding(bottom = FoodDeliveryTheme.dimensions.screenContentSpace, top = 8.dp),

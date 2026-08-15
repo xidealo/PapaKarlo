@@ -1,6 +1,6 @@
-import com.android.build.gradle.internal.api.BaseVariantOutputImpl
 import com.github.triplet.gradle.androidpublisher.ReleaseStatus
 import com.github.triplet.gradle.play.PlayPublisherExtension
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.io.FileInputStream
 import java.util.Properties
 
@@ -8,7 +8,6 @@ plugins {
     alias(libs.plugins.application)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.compose)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.google.service)
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.crashlytics)
@@ -19,6 +18,7 @@ plugins {
 
 android {
     namespace = Namespace.app
+    compileSdk = AndroidSdk.compile
 
     signingConfigs {
         create("release") {
@@ -34,18 +34,10 @@ android {
 
     defaultConfig {
         minSdk = AndroidSdk.min
-        compileSdk = AndroidSdk.compile
         targetSdk = AndroidSdk.target
     }
 
     buildTypes {
-        applicationVariants.all {
-            val variant = this
-            variant.outputs.forEach { output ->
-                (output as BaseVariantOutputImpl).outputFileName =
-                    "FoodDelivery_${variant.baseName}.apk"
-            }
-        }
         getByName("debug") {
             signingConfig = signingConfigs.getByName("debug")
             isDebuggable = true
@@ -102,6 +94,20 @@ android {
                 commonPlayConfig(this)
             }
         }
+    }
+}
+
+androidComponents {
+    onVariants { variant ->
+        variant.outputs.forEach { output ->
+            output.outputFileName.set("FoodDelivery_${variant.name}.apk")
+        }
+    }
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_21)
     }
 }
 

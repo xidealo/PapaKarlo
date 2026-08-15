@@ -17,6 +17,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
+import com.bunbeauty.designsystem.ui.element.CircularProgressBar
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -56,7 +57,7 @@ fun FoodDeliveryBaseTextField(
         },
         trailingIcon = {
             if (trailingIcon == null) {
-                _root_ide_package_.com.bunbeauty.designsystem.ui.element.textfield.TrailingIcon(
+                TrailingIcon(
                     isLoading = isLoading,
                     textValue = value,
                     onClick = {
@@ -72,7 +73,7 @@ fun FoodDeliveryBaseTextField(
         keyboardActions = keyboardActions,
         singleLine = maxLines == 1,
         maxLines = maxLines,
-        colors = _root_ide_package_.com.bunbeauty.designsystem.ui.element.textfield.FoodDeliveryTextFieldDefaults.textFieldColors,
+        colors = FoodDeliveryTextFieldDefaults.textFieldColors,
     )
 }
 
@@ -91,7 +92,7 @@ fun FoodDeliveryBaseTextField(
     trailingIcon: (@Composable () -> Unit)? = null,
 ) {
     CompositionLocalProvider(
-        LocalTextSelectionColors provides _root_ide_package_.com.bunbeauty.designsystem.ui.element.textfield.FoodDeliveryTextFieldDefaults.textSelectionColors,
+        LocalTextSelectionColors provides FoodDeliveryTextFieldDefaults.textSelectionColors,
     ) {
         OutlinedTextField(
             modifier = modifier.fillMaxWidth(),
@@ -113,7 +114,7 @@ fun FoodDeliveryBaseTextField(
             },
             trailingIcon = {
                 if (trailingIcon == null) {
-                    _root_ide_package_.com.bunbeauty.designsystem.ui.element.textfield.TrailingIcon(
+                    TrailingIcon(
                         isLoading = isLoading,
                         textValue = value.text,
                         onClick = {
@@ -129,7 +130,7 @@ fun FoodDeliveryBaseTextField(
             keyboardActions = keyboardActions,
             singleLine = maxLines == 1,
             maxLines = maxLines,
-            colors = _root_ide_package_.com.bunbeauty.designsystem.ui.element.textfield.FoodDeliveryTextFieldDefaults.textFieldColors,
+            colors = FoodDeliveryTextFieldDefaults.textFieldColors,
         )
     }
 }
@@ -143,7 +144,7 @@ private fun TrailingIcon(
 ) {
     when {
         isLoading -> {
-            _root_ide_package_.com.bunbeauty.designsystem.ui.element.CircularProgressBar(
+            CircularProgressBar(
                 modifier = modifier.size(
                     16.dp
                 )

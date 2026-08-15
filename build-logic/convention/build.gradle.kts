@@ -1,3 +1,4 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -5,6 +6,17 @@ plugins {
 }
 
 group = "com.bunbeauty.buildlogic"
+
+configurations.configureEach {
+    resolutionStrategy.eachDependency {
+        if (requested.group == "org.jetbrains.kotlinx" &&
+            requested.name.startsWith("kotlinx-coroutines")
+        ) {
+            useVersion("1.8.1")
+            because("Align kotlinx-coroutines with AGP SDK loader on the plugin classpath")
+        }
+    }
+}
 
 // Configure the build-logic plugins to target JDK 21
 // This matches the JDK used to build the project, and is not related to what is running on device.
@@ -14,16 +26,14 @@ java {
 }
 
 tasks.withType<KotlinCompile>().configureEach {
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_21.toString()
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_21)
     }
 }
 
 dependencies {
-    implementation(gradleKotlinDsl())
     compileOnly(libs.gradle)
     compileOnly(libs.kotlin.gradle.plugin)
-    implementation(kotlin("test"))
 }
 
 tasks {
