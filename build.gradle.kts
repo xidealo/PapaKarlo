@@ -5,25 +5,6 @@ buildscript {
         mavenCentral()
         gradlePluginPortal()
     }
-    // Must stay on 1.8.x: AGP RepoManager is compiled against that bytecode.
-    // Mixing 1.10+/1.11 on the plugin classpath breaks IDE sync (AbstractTimeSource).
-    val pluginClasspathCoroutines = "1.8.1"
-    dependencies {
-        classpath("org.jetbrains.kotlinx:kotlinx-coroutines-core:$pluginClasspathCoroutines")
-        classpath("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:$pluginClasspathCoroutines")
-    }
-    configurations.classpath {
-        resolutionStrategy {
-            eachDependency {
-                if (requested.group == "org.jetbrains.kotlinx" &&
-                    requested.name.startsWith("kotlinx-coroutines")
-                ) {
-                    useVersion(pluginClasspathCoroutines)
-                    because("Single kotlinx-coroutines version on the plugin classpath for AGP SDK loader")
-                }
-            }
-        }
-    }
 }
 
 plugins {
