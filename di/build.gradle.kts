@@ -10,7 +10,12 @@ kotlin {
 
     android {
         namespace = "com.bunbeauty.di"
-        compileSdk = AndroidSdk.compile
+        compileSdk {
+            version =
+                release(AndroidSdk.compile) {
+                    minorApiLevel = AndroidSdk.compileMinor
+                }
+        }
         minSdk = AndroidSdk.min
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_21)

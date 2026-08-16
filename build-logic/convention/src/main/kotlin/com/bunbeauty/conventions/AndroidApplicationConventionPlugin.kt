@@ -2,6 +2,7 @@ package com.bunbeauty.conventions
 
 import com.android.build.api.dsl.ApplicationExtension
 import com.bunbeauty.AndroidSdk
+import com.bunbeauty.setFoodDeliveryCompileSdk
 import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -17,7 +18,9 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
             }
 
             extensions.configure<ApplicationExtension> {
-                compileSdk = AndroidSdk.COMPILE
+                compileSdk {
+                    setFoodDeliveryCompileSdk()
+                }
                 defaultConfig.targetSdk = AndroidSdk.TARGET
 
                 defaultConfig {

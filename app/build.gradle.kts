@@ -18,7 +18,12 @@ plugins {
 
 android {
     namespace = Namespace.app
-    compileSdk = AndroidSdk.compile
+    compileSdk {
+        version =
+            release(AndroidSdk.compile) {
+                minorApiLevel = AndroidSdk.compileMinor
+            }
+    }
 
     signingConfigs {
         create("release") {

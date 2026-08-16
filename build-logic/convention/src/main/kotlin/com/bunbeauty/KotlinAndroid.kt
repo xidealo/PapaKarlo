@@ -8,11 +8,14 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 internal fun KotlinMultiplatformAndroidLibraryExtension.configureKotlinAndroidLibrary() {
-    compileSdk = AndroidSdk.COMPILE
+    compileSdk {
+        setFoodDeliveryCompileSdk()
+    }
     minSdk = AndroidSdk.MIN
     androidResources {
         enable = true
     }
+    withHostTest {}
 }
 
 internal fun Project.configureKotlinCompiler() {
