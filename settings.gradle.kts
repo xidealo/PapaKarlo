@@ -8,16 +8,6 @@ pluginManagement {
     }
 }
 
-gradle.beforeProject {
-    buildscript {
-        repositories {
-            google()
-            mavenCentral()
-            gradlePluginPortal()
-        }
-    }
-}
-
 include(
     ":app",
     ":shared",

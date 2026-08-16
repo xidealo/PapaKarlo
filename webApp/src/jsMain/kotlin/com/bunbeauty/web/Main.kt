@@ -10,20 +10,21 @@ import coil3.network.ktor3.KtorNetworkFetcherFactory
 import coil3.request.CachePolicy
 import coil3.request.Options
 import coil3.request.crossfade
+import app.cash.sqldelight.driver.worker.WebWorkerDriver
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
+import com.bunbeauty.shared.data.createFoodDeliveryDatabase
 import com.bunbeauty.shared.data.network.NetworkConfig
 import com.bunbeauty.shared.db.FoodDeliveryDatabase
 import com.bunbeauty.shared.di.initKoin
 import com.bunbeauty.shared.resolveWebFlavor
 import com.bunbeauty.shared.ui.screen.main.MainScreen
-import com.squareup.sqldelight.drivers.sqljs.initSqlDriver
 import kotlinx.browser.document
 import kotlinx.browser.window
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.await
 import kotlinx.coroutines.launch
 import org.koin.dsl.module
+import org.w3c.dom.Worker
 
 // Sets the browser tab icon (favicon) to the brand logo bundled in
 // composeResources. index.html has no <link rel="icon">, so we create/update it
@@ -59,8 +60,13 @@ fun main() {
     applyFavicon(flavor)
 
     CoroutineScope(Dispatchers.Main).launch {
-        val driver = initSqlDriver(FoodDeliveryDatabase.Schema).await()
-        val database = FoodDeliveryDatabase(driver)
+        val driver = WebWorkerDriver(
+            Worker(
+                js("""new URL("@cashapp/sqldelight-sqljs-worker/sqljs.worker.js", import.meta.url)"""),
+            ),
+        )
+        FoodDeliveryDatabase.Schema.create(driver).await()
+        val database = createFoodDeliveryDatabase(driver)
 
         initKoin {
             modules(

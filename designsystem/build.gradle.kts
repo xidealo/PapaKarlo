@@ -21,7 +21,6 @@ kotlin {
         androidResources {
             enable = true
         }
-        withHostTest {}
         withDeviceTest {}
     }
 

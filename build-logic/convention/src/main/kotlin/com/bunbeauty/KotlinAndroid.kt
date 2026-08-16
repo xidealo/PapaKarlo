@@ -13,7 +13,6 @@ internal fun KotlinMultiplatformAndroidLibraryExtension.configureKotlinAndroidLi
     androidResources {
         enable = true
     }
-    withHostTest {}
 }
 
 internal fun Project.configureKotlinCompiler() {

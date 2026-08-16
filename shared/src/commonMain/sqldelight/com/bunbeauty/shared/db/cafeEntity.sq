@@ -1,3 +1,6 @@
+import kotlin.Boolean;
+import kotlin.Int;
+
 CREATE TABLE cafeEntity (
     uuid TEXT NOT NULL PRIMARY KEY,
     fromTime INTEGER AS Int NOT NULL,

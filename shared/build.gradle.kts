@@ -55,6 +55,8 @@ kotlin {
 
                 implementation(libs.sqlDelight.runtime)
                 implementation(libs.sqlDelight.coroutines.extensions)
+                implementation(libs.sqlDelight.primitive.adapters)
+                implementation(libs.sqlDelight.async.extensions)
 
                 implementation(libs.kotlinx.collections.immutable)
 
@@ -96,13 +98,6 @@ kotlin {
                 implementation(libs.sqlDelight.android)
             }
         }
-        val androidHostTest by getting {
-            dependencies {
-                implementation(kotlin("test"))
-                implementation(kotlin("test-common"))
-                implementation(kotlin("test-annotations-common"))
-            }
-        }
 
         val iosMain by getting {
             dependencies {
@@ -114,7 +109,8 @@ kotlin {
             dependencies {
                 implementation(libs.ktor.client.js)
                 implementation(libs.sqlDelight.sqljs)
-                implementation(npm("sql.js", "1.6.2"))
+                implementation(npm("@cashapp/sqldelight-sqljs-worker", libs.versions.sqlDelight.get()))
+                implementation(npm("sql.js", "1.8.0"))
                 implementation(devNpm("copy-webpack-plugin", "9.1.0"))
             }
         }
@@ -122,7 +118,10 @@ kotlin {
 }
 
 sqldelight {
-    database("FoodDeliveryDatabase") {
-        packageName = "com.bunbeauty.shared.db"
+    databases {
+        create("FoodDeliveryDatabase") {
+            packageName.set("com.bunbeauty.shared.db")
+            generateAsync.set(true)
+        }
     }
 }
