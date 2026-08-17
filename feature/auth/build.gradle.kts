@@ -6,6 +6,9 @@ plugins {
 }
 
 kotlin {
+    android {
+        namespace = "com.bunbeauty.feature.auth"
+    }
     cocoapods {
         summary = "Main shared module with presentation layer"
         homepage = "Link to the Shared Module homepage"
@@ -46,12 +49,9 @@ kotlin {
             dependencies {
                 implementation(libs.activity.compose)
                 implementation(compose.uiTooling)
+                implementation(project.dependencies.platform(libs.firebase.bom))
                 implementation(libs.firebase.messaging)
             }
         }
     }
-}
-
-android {
-    namespace = "com.bunbeauty.feature.auth"
 }

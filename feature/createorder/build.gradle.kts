@@ -3,6 +3,9 @@ plugins {
 }
 
 kotlin {
+    android {
+        namespace = "com.bunbeauty.feature.createorder"
+    }
     sourceSets {
         val commonMain by getting {
             dependencies {
@@ -31,12 +34,9 @@ kotlin {
             dependencies {
                 implementation(libs.activity.compose)
                 implementation(compose.uiTooling)
+                implementation(project.dependencies.platform(libs.firebase.bom))
                 implementation(libs.firebase.messaging)
             }
         }
     }
-}
-
-android {
-    namespace = "com.bunbeauty.feature.createorder"
 }

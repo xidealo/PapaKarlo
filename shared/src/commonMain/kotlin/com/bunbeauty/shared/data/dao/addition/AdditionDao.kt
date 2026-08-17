@@ -1,5 +1,7 @@
 package com.bunbeauty.shared.data.dao.addition
 
+import app.cash.sqldelight.async.coroutines.awaitAsList
+import app.cash.sqldelight.async.coroutines.awaitAsOneOrNull
 import com.bunbeauty.shared.db.AdditionEntity
 import com.bunbeauty.shared.db.FoodDeliveryDatabase
 
@@ -18,9 +20,8 @@ class AdditionDao(
         additionEntityQueries.insert(additionEntity)
     }
 
-    override suspend fun getAdditionEntity(uuid: String): AdditionEntity? =
-        additionEntityQueries.getAdditionByUuid(uuid).executeAsOneOrNull()
+    override suspend fun getAdditionEntity(uuid: String): AdditionEntity? = additionEntityQueries.getAdditionByUuid(uuid).awaitAsOneOrNull()
 
     override suspend fun getAdditionEntityListByAdditionGroup(uuid: String): List<AdditionEntity> =
-        additionEntityQueries.getAdditionByAdditionGroupUuid(uuid).executeAsList()
+        additionEntityQueries.getAdditionByAdditionGroupUuid(uuid).awaitAsList()
 }

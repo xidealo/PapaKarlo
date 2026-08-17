@@ -117,7 +117,7 @@ private fun FoodDeliveryModalBottomSheetPreview() {
         isShownState = true
     }
     FoodDeliveryTheme {
-        _root_ide_package_.com.bunbeauty.designsystem.ui.screen.bottomsheet.FoodDeliveryModalBottomSheet(
+        FoodDeliveryModalBottomSheet(
             onDismissRequest = {},
             isShown = isShownState,
         ) {

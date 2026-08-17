@@ -1,9 +1,11 @@
 package com.bunbeauty.shared.data.dao.user
 
+import app.cash.sqldelight.async.coroutines.awaitAsOneOrNull
+import app.cash.sqldelight.coroutines.asFlow
+import app.cash.sqldelight.coroutines.mapToOneOrNull
 import com.bunbeauty.shared.db.FoodDeliveryDatabase
 import com.bunbeauty.shared.db.UserEntity
-import com.squareup.sqldelight.runtime.coroutines.asFlow
-import com.squareup.sqldelight.runtime.coroutines.mapToOneOrNull
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 
 class UserDao(
@@ -19,9 +21,13 @@ class UserDao(
         )
     }
 
-    override suspend fun getUserByUuid(uuid: String): UserEntity? = userEntityQueries.getUserByUuid(uuid).executeAsOneOrNull()
+    override suspend fun getUserByUuid(uuid: String): UserEntity? = userEntityQueries.getUserByUuid(uuid).awaitAsOneOrNull()
 
-    override fun observeUserByUuid(uuid: String): Flow<UserEntity?> = userEntityQueries.getUserByUuid(uuid).asFlow().mapToOneOrNull()
+    override fun observeUserByUuid(uuid: String): Flow<UserEntity?> =
+        userEntityQueries
+            .getUserByUuid(uuid)
+            .asFlow()
+            .mapToOneOrNull(Dispatchers.Default)
 
     override suspend fun updateUserEmailByUuid(
         uuid: String,

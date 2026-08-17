@@ -1,5 +1,7 @@
 package com.bunbeauty.shared.data.dao.menu_product_category_reference
 
+import app.cash.sqldelight.async.coroutines.awaitAsList
+import app.cash.sqldelight.async.coroutines.awaitAsOneOrNull
 import com.bunbeauty.shared.db.FoodDeliveryDatabase
 import com.bunbeauty.shared.db.MenuProductCategoryReference
 
@@ -17,7 +19,7 @@ class MenuProductCategoryReferenceDao(
                         .getMenuProductCategoryReference(
                             menuProductUuidReference = menuProductCategoryReference.menuProductUuidReference,
                             categoryUuidReference = menuProductCategoryReference.categoryUuidReference,
-                        ).executeAsOneOrNull()
+                        ).awaitAsOneOrNull()
                 if (localMenuProductCategoryReference == null) {
                     menuProductCategoryReferenceQueries.insertMenuProductCategoryReference(
                         menuProductUuidReference = menuProductCategoryReference.menuProductUuidReference,
@@ -32,7 +34,7 @@ class MenuProductCategoryReferenceDao(
                     val localMenuProductCategoryReferenceList =
                         menuProductCategoryReferenceQueries
                             .getMenuProductCategoryReferenceListByMenuProductUuid(menuProductUuid)
-                            .executeAsList()
+                            .awaitAsList()
                     localMenuProductCategoryReferenceList.forEach { localMenuProductCategoryReference ->
                         if (!menuProductCategoryReferenceList.contains(localMenuProductCategoryReference)) {
                             menuProductCategoryReferenceQueries.deleteMenuProductCategoryReference(

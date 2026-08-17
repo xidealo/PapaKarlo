@@ -3,6 +3,9 @@ plugins {
 }
 
 kotlin {
+    android {
+        namespace = "com.bunbeauty.feature.menu"
+    }
     sourceSets {
         val commonMain by getting {
             dependencies {
@@ -34,8 +37,4 @@ kotlin {
             }
         }
     }
-}
-
-android {
-    namespace = "com.bunbeauty.feature.menu"
 }

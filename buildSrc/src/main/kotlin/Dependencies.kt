@@ -16,6 +16,7 @@ object CommonApplication {
 
 object AndroidSdk {
     const val min = 26
-    const val compile = 36
+    const val compile = 37
+    const val compileMinor = 0
     const val target = compile
 }

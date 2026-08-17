@@ -1,10 +1,12 @@
 package com.bunbeauty.shared.data.dao.cart_product
 
+import app.cash.sqldelight.async.coroutines.awaitAsList
+import app.cash.sqldelight.coroutines.asFlow
+import app.cash.sqldelight.coroutines.mapToList
 import com.bunbeauty.shared.db.CartProductEntity
 import com.bunbeauty.shared.db.CartProductWithMenuProductEntity
 import com.bunbeauty.shared.db.FoodDeliveryDatabase
-import com.squareup.sqldelight.runtime.coroutines.asFlow
-import com.squareup.sqldelight.runtime.coroutines.mapToList
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 
 class CartProductDao(
@@ -21,18 +23,21 @@ class CartProductDao(
     }
 
     override fun observeCartProductList(): Flow<List<CartProductWithMenuProductEntity>> =
-        cartProductEntityQueries.getCartProductList().asFlow().mapToList()
+        cartProductEntityQueries
+            .getCartProductList()
+            .asFlow()
+            .mapToList(Dispatchers.Default)
 
     override suspend fun getCartProductList(): List<CartProductWithMenuProductEntity> =
-        cartProductEntityQueries.getCartProductList().executeAsList()
+        cartProductEntityQueries.getCartProductList().awaitAsList()
 
     override suspend fun getCartProductByUuid(uuid: String): List<CartProductWithMenuProductEntity> =
-        cartProductEntityQueries.getCartProductByUuid(uuid).executeAsList()
+        cartProductEntityQueries.getCartProductByUuid(uuid).awaitAsList()
 
     override suspend fun getCartProductByMenuProductUuid(menuProductUuid: String): List<CartProductWithMenuProductEntity> =
         cartProductEntityQueries
             .getCartProductByMenuProductUuid(menuProductUuid)
-            .executeAsList()
+            .awaitAsList()
 
     override suspend fun updateCartProductCountByUuid(
         uuid: String,

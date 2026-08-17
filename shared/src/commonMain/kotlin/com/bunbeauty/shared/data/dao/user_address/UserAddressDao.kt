@@ -1,11 +1,15 @@
 package com.bunbeauty.shared.data.dao.user_address
 
+import app.cash.sqldelight.async.coroutines.awaitAsList
+import app.cash.sqldelight.async.coroutines.awaitAsOne
+import app.cash.sqldelight.async.coroutines.awaitAsOneOrNull
+import app.cash.sqldelight.coroutines.asFlow
+import app.cash.sqldelight.coroutines.mapToList
+import app.cash.sqldelight.coroutines.mapToOneOrNull
 import com.bunbeauty.shared.db.FoodDeliveryDatabase
 import com.bunbeauty.shared.db.SelectedUserAddressUuidEntity
 import com.bunbeauty.shared.db.UserAddressEntity
-import com.squareup.sqldelight.runtime.coroutines.asFlow
-import com.squareup.sqldelight.runtime.coroutines.mapToList
-import com.squareup.sqldelight.runtime.coroutines.mapToOneOrNull
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 
 class UserAddressDao(
@@ -60,7 +64,7 @@ class UserAddressDao(
             .getUserAddressCountByUserUuidAndCityUuid(
                 userUuid = userUuid,
                 cityUuid = cityUuid,
-            ).executeAsOne()
+            ).awaitAsOne()
 
     override fun observeSelectedUserAddressByUserAndCityUuid(
         userUuid: String,
@@ -71,7 +75,7 @@ class UserAddressDao(
                 userUuid = userUuid,
                 cityUuid = cityUuid,
             ).asFlow()
-            .mapToOneOrNull()
+            .mapToOneOrNull(Dispatchers.Default)
 
     override suspend fun getSelectedUserAddressByUserAndCityUuid(
         userUuid: String,
@@ -81,7 +85,7 @@ class UserAddressDao(
             .getSelectedUserAddressByUserAndCityUuid(
                 userUuid = userUuid,
                 cityUuid = cityUuid,
-            ).executeAsOneOrNull()
+            ).awaitAsOneOrNull()
 
     override suspend fun getUserAddressListByUserAndCityUuid(
         userUuid: String,
@@ -91,7 +95,7 @@ class UserAddressDao(
             .getUserAddressListByUserUuidAndCityUuid(
                 userUuid = userUuid,
                 cityUuid = cityUuid,
-            ).executeAsList()
+            ).awaitAsList()
 
     override suspend fun geFirstUserAddressByUserAndCityUuid(
         userUuid: String,
@@ -101,7 +105,7 @@ class UserAddressDao(
             .getFirstUserAddressByUserAndCityUuid(
                 userUuid = userUuid,
                 cityUuid = cityUuid,
-            ).executeAsOneOrNull()
+            ).awaitAsOneOrNull()
 
     override fun observeFirstUserAddressByUserAndCityUuid(
         userUuid: String,
@@ -112,7 +116,7 @@ class UserAddressDao(
                 userUuid = userUuid,
                 cityUuid = cityUuid,
             ).asFlow()
-            .mapToOneOrNull()
+            .mapToOneOrNull(Dispatchers.Default)
 
     override fun observeUserAddressListByUserAndCityUuid(
         userUuid: String,
@@ -123,7 +127,7 @@ class UserAddressDao(
                 userUuid = userUuid,
                 cityUuid = cityUuid,
             ).asFlow()
-            .mapToList()
+            .mapToList(Dispatchers.Default)
 
     override suspend fun deleteAll() {
         selectedUserAddressUuidEntityQueries.deleteAll()

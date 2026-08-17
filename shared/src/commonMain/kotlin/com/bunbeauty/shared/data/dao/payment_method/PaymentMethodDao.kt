@@ -1,5 +1,6 @@
 package com.bunbeauty.shared.data.dao.payment_method
 
+import app.cash.sqldelight.async.coroutines.awaitAsList
 import com.bunbeauty.shared.db.FoodDeliveryDatabase
 import com.bunbeauty.shared.db.PaymentMethodEntity
 
@@ -21,6 +22,5 @@ class PaymentMethodDao(
         }
     }
 
-    override suspend fun getPaymentMethodList(): List<PaymentMethodEntity> =
-        paymentMethodEntityQueries.getPaymentMethodList().executeAsList()
+    override suspend fun getPaymentMethodList(): List<PaymentMethodEntity> = paymentMethodEntityQueries.getPaymentMethodList().awaitAsList()
 }

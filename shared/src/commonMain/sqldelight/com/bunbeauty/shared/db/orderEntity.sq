@@ -1,3 +1,6 @@
+import kotlin.Boolean;
+import kotlin.Int;
+
 CREATE TABLE IF NOT EXISTS orderEntity (
     uuid TEXT NOT NULL PRIMARY KEY,
     status TEXT NOT NULL,

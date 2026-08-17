@@ -12,9 +12,9 @@ import com.bunbeauty.shared.NetworkUtil
 import com.bunbeauty.shared.data.DataStoreRepository
 import com.bunbeauty.shared.data.DatabaseDriverFactory
 import com.bunbeauty.shared.data.UuidGenerator
+import com.bunbeauty.shared.data.createFoodDeliveryDatabase
 import com.bunbeauty.shared.data.network.logger.AndroidNetworkErrorLogger
 import com.bunbeauty.shared.data.network.logger.NetworkErrorLogger
-import com.bunbeauty.shared.db.FoodDeliveryDatabase
 import org.koin.dsl.module
 
 actual fun platformModule() =
@@ -23,7 +23,7 @@ actual fun platformModule() =
             val driver =
                 DatabaseDriverFactory(context = get())
                     .createDriver()
-            FoodDeliveryDatabase(driver)
+            createFoodDeliveryDatabase(driver)
         }
         single<DataStoreRepo> {
             DataStoreRepository()
