@@ -1,0 +1,87 @@
+@custom-variant dark (&:is(.dark *));
+
+/* Bridge for the shadcn primitives in src/components/ui. */
+@theme inline {
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-card-border: hsl(var(--card-border));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --font-sans: var(--app-font-sans);
+  --font-mono: var(--app-font-sans);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+:root {
+  /* Brand palette. Three colours only: ink, paper, lime.
+     Stored as raw HSL triplets so they compose with alpha: hsl(var(--bb-ink) / .5). */
+  --bb-ink: 236 18% 11%;
+  --bb-ink-soft: 236 17% 15%;
+  --bb-ink-line: 236 13% 24%;
+  --bb-paper: 42 24% 95%;
+  --bb-lime: 72 100% 53%;
+  --bb-lime-bright: 72 100% 62%;
+
+  /* Semantic defaults = dark surface. Overridden per surface in theme.css. */
+  --bb-surface: var(--bb-ink);
+  --bb-fg: var(--bb-paper);
+  --bb-fg-muted: var(--bb-paper) / 0.68;
+  --bb-fg-faint: var(--bb-paper) / 0.48;
+  --bb-rule: var(--bb-paper) / 0.16;
+  --bb-well: var(--bb-paper) / 0.06;
+  --bb-accent: var(--bb-lime);
+
+  /* Layout */
+  --bb-max: 1560px;
+  --bb-gutter: clamp(16px, 3.4vw, 56px);
+
+  /* Spacing scale */
+  --bb-space-2xs: 8px;
+  --bb-space-xs: 12px;
+  --bb-space-sm: 16px;
+  --bb-space-md: 24px;
+  --bb-space-lg: 32px;
+  --bb-space-xl: 48px;
+  --bb-space-2xl: 72px;
+  --bb-space-3xl: 96px;
+  --bb-space-section: clamp(88px, 9vw, 134px);
+  --bb-gap-grid: clamp(32px, 4vw, 70px);
+
+  /* Fonts and the type scale live in typography.css */
+
+  /* shadcn scale, derived from the brand palette */
+  --background: var(--bb-paper);
+  --foreground: var(--bb-ink);
+  --border: var(--bb-ink-line);
+  --input: var(--bb-ink-line);
+  --ring: var(--bb-lime);
+  --card: var(--bb-ink-soft);
+  --card-foreground: var(--bb-paper);
+  --card-border: 236 13% 27%;
+  --primary: var(--bb-lime);
+  --primary-foreground: var(--bb-ink);
+  --secondary: 236 16% 20%;
+  --secondary-foreground: var(--bb-paper);
+  --muted: 236 10% 60%;
+  --muted-foreground: 236 10% 60%;
+  --radius: 1rem;
+}
+
+.dark {
+  --background: var(--bb-ink);
+  --foreground: var(--bb-paper);
+  --card: var(--bb-ink-soft);
+  --card-foreground: var(--bb-paper);
+}
