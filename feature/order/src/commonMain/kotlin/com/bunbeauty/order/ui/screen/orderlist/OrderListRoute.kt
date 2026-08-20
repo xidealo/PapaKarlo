@@ -105,6 +105,7 @@ private fun OrderListScreen(
 ) {
     FoodDeliveryScaffold(
         title = stringResource(resource = Res.string.title_my_orders),
+        backgroundColor = FoodDeliveryTheme.colors.mainColors.surface,
         backActionClick = { onAction(OrderListState.Action.BackClicked) },
     ) {
         when (viewState.state) {
@@ -146,16 +147,13 @@ private fun OrderListScreenSuccess(
     Box(
         modifier =
             Modifier
-                .fillMaxSize()
-                .background(FoodDeliveryTheme.colors.mainColors.background),
+                .fillMaxSize(),
     ) {
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
             contentPadding =
                 PaddingValues(
-                    top = 16.dp,
-                    start = 16.dp,
-                    end = 16.dp,
+                    top = 8.dp,
                     bottom = LocalBottomBarPadding.current + 8.dp,
                 ),
             verticalArrangement = spacedBy(8.dp),
