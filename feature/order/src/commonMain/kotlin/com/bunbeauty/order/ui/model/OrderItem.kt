@@ -10,4 +10,5 @@ data class OrderItem(
     val code: String,
     val dateTime: String,
     val background: Color,
+    val isLast: Boolean,
 )
