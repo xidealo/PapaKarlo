@@ -8,7 +8,7 @@ import com.bunbeauty.core.model.order.LightOrder
 import com.bunbeauty.order.ui.model.OrderItem
 
 @Composable
-fun LightOrder.toItem(): OrderItem =
+fun LightOrder.toItem(isLast: Boolean): OrderItem =
     OrderItem(
         uuid = uuid,
         status = status,
@@ -16,4 +16,5 @@ fun LightOrder.toItem(): OrderItem =
         code = code,
         dateTime = dateTime.getDateTimeString(),
         background = status.getOrderColor(),
+        isLast = isLast,
     )
