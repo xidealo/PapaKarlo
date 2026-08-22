@@ -198,9 +198,9 @@ jobs:
       - name: Install CocoaPods
         run: sudo gem install cocoapods
 
-      # Compose resources must exist (even empty) before `pod install`, otherwise
-      # CocoaPods skips registering them and the IPA ships without compose-resources →
-      # MissingResourceException on first Compose frame (splash logo / strings).
+      # Create the CMP CocoaPods resources dir before `pod install` (podspec path).
+      # An empty dir is still ignored by CocoaPods — the IPA copy is done in
+      # iosApp/Podfile post_install after [CP-User] Build shared fills this folder.
       - name: Prepare Compose CocoaPods resources dir
         working-directory: .
         run: mkdir -p shared/build/compose/cocoapods/compose-resources
