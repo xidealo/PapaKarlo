@@ -12,9 +12,9 @@ import com.bunbeauty.shared.NetworkUtil
 import com.bunbeauty.shared.data.DataStoreRepository
 import com.bunbeauty.shared.data.DatabaseDriverFactory
 import com.bunbeauty.shared.data.UuidGenerator
+import com.bunbeauty.shared.data.createFoodDeliveryDatabase
 import com.bunbeauty.shared.data.network.logger.IosNetworkErrorLogger
 import com.bunbeauty.shared.data.network.logger.NetworkErrorLogger
-import com.bunbeauty.shared.db.FoodDeliveryDatabase
 import org.koin.dsl.module
 import kotlin.experimental.ExperimentalNativeApi
 
@@ -22,7 +22,7 @@ import kotlin.experimental.ExperimentalNativeApi
 actual fun platformModule() =
     module {
         single {
-            FoodDeliveryDatabase(DatabaseDriverFactory().createDriver())
+            createFoodDeliveryDatabase(DatabaseDriverFactory().createDriver())
         }
         single<DataStoreRepo> {
             DataStoreRepository()

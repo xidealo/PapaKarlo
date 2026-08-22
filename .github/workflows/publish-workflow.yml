@@ -10,7 +10,7 @@ jobs:
     name: "Upload secrets"
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: "Decode google-services.json"
         env:
           GOOGLE_SERVICE_JSON: ${{ secrets.GOOGLE_SERVICE_JSON }}
@@ -74,42 +74,38 @@ jobs:
           "estpoest",
           "taverna",
           "voljane",
-          "mimino"
+          "mimino",
+          "emojicenter"
         ]
     steps:
-      - uses: actions/checkout@v4
-      - name: "Set up JDK 21"
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: '21'
+      - uses: actions/checkout@v5
+      - name: "Set up Android build"
+        uses: ./.github/actions/setup-android-build
       - name: "Download google-services.json"
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: google-services
           path: ./app
       - name: "Download local.properties"
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: local-properties
           path: .
       - name: "Download keystore"
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: keystore
           path: ./app
       - name: "Download google-play-api-key.json"
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: google-play-api-key
           path: ./app
-      - name: "Set up Gradle"
-        uses: gradle/gradle-build-action@v3
       - name: "Verify resources"
         run: ls designsystem/src/commonMain/composeResources/values/strings.xml
       - name: "Clean project"
         run: ./gradlew clean
-      - name: "Assemble ${{ matrix.flavor }}"
-        run: ./gradlew assemble${{ matrix.flavor }}Release
+      - name: "Bundle ${{ matrix.flavor }}"
+        run: ./gradlew bundle${{ matrix.flavor }}Release
       - name: "Publish ${{ matrix.flavor }}"
         run: ./gradlew publish${{ matrix.flavor }}ReleaseBundle

@@ -1,3 +1,5 @@
+import kotlin.Int;
+
 CREATE TABLE userAddressEntity (
     uuid TEXT NOT NULL PRIMARY KEY,
     streetName TEXT NOT NULL,

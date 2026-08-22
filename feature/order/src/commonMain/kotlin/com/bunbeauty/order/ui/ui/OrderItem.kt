@@ -9,6 +9,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.bunbeauty.core.extension.getOrderColor
@@ -29,6 +30,8 @@ fun OrderItem(
     FoodDeliveryCard(
         modifier = modifier,
         onClick = onClick,
+        shape = RectangleShape,
+        elevated = false,
     ) {
         Row(
             modifier =
@@ -78,6 +81,7 @@ private fun OrderItemPreview() {
                     code = "Щ-99",
                     dateTime = "9 февраля 22:00",
                     background = OrderStatus.NOT_ACCEPTED.getOrderColor(),
+                    isLast = true,
                 ),
             onClick = {},
         )
@@ -97,6 +101,7 @@ private fun OrderItemLageFontPreview() {
                     code = "Щ-99",
                     dateTime = "9 февраля 22:00",
                     background = OrderStatus.NOT_ACCEPTED.getOrderColor(),
+                    isLast = true,
                 ),
             onClick = {},
         )

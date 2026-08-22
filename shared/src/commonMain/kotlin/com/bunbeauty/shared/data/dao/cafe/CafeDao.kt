@@ -1,11 +1,14 @@
 package com.bunbeauty.shared.data.dao.cafe
 
+import app.cash.sqldelight.async.coroutines.awaitAsList
+import app.cash.sqldelight.async.coroutines.awaitAsOneOrNull
+import app.cash.sqldelight.coroutines.asFlow
+import app.cash.sqldelight.coroutines.mapToList
+import app.cash.sqldelight.coroutines.mapToOneOrNull
 import com.bunbeauty.shared.db.CafeEntity
 import com.bunbeauty.shared.db.FoodDeliveryDatabase
 import com.bunbeauty.shared.db.SelectedCafeUuidEntity
-import com.squareup.sqldelight.runtime.coroutines.asFlow
-import com.squareup.sqldelight.runtime.coroutines.mapToList
-import com.squareup.sqldelight.runtime.coroutines.mapToOneOrNull
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 
 class CafeDao(
@@ -50,15 +53,22 @@ class CafeDao(
     ): CafeEntity? =
         cityEntityQueries
             .getSelectedCafeByUserAndCityUuid(userUuid, cityUuid)
-            .executeAsOneOrNull()
+            .awaitAsOneOrNull()
 
     override suspend fun getFirstCafeByCityUuid(cityUuid: String): CafeEntity? =
-        cityEntityQueries.getFirstCafeByCityUuid(cityUuid).executeAsOneOrNull()
+        cityEntityQueries.getFirstCafeByCityUuid(cityUuid).awaitAsOneOrNull()
 
     override fun observeCafeListByCityUuid(cityUuid: String): Flow<List<CafeEntity>> =
-        cityEntityQueries.getCafeListByCityUuid(cityUuid).asFlow().mapToList()
+        cityEntityQueries
+            .getCafeListByCityUuid(cityUuid)
+            .asFlow()
+            .mapToList(Dispatchers.Default)
 
-    override fun observeCafeByUuid(uuid: String): Flow<CafeEntity?> = cityEntityQueries.getCafeByUuid(uuid).asFlow().mapToOneOrNull()
+    override fun observeCafeByUuid(uuid: String): Flow<CafeEntity?> =
+        cityEntityQueries
+            .getCafeByUuid(uuid)
+            .asFlow()
+            .mapToOneOrNull(Dispatchers.Default)
 
     override fun observeSelectedCafeByUserAndCityUuid(
         userUuid: String,
@@ -67,13 +77,16 @@ class CafeDao(
         cityEntityQueries
             .getSelectedCafeByUserAndCityUuid(userUuid, cityUuid)
             .asFlow()
-            .mapToOneOrNull()
+            .mapToOneOrNull(Dispatchers.Default)
 
     override fun observeFirstCafeByCityUuid(cityUuid: String): Flow<CafeEntity?> =
-        cityEntityQueries.getFirstCafeByCityUuid(cityUuid).asFlow().mapToOneOrNull()
+        cityEntityQueries
+            .getFirstCafeByCityUuid(cityUuid)
+            .asFlow()
+            .mapToOneOrNull(Dispatchers.Default)
 
     override suspend fun getCafeListByCityUuid(cityUuid: String): List<CafeEntity> =
-        cityEntityQueries.getCafeListByCityUuid(cityUuid).executeAsList()
+        cityEntityQueries.getCafeListByCityUuid(cityUuid).awaitAsList()
 
-    override suspend fun getCafeByUuid(uuid: String): CafeEntity? = cityEntityQueries.getCafeByUuid(uuid).executeAsOneOrNull()
+    override suspend fun getCafeByUuid(uuid: String): CafeEntity? = cityEntityQueries.getCafeByUuid(uuid).awaitAsOneOrNull()
 }

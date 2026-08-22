@@ -1,14 +1,26 @@
-import CommonApplication.deploymentTarget
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.multiplatform)
-    alias(libs.plugins.android.library)
+    alias(libs.plugins.android.kmp.library)
 }
 
 kotlin {
     applyDefaultHierarchyTemplate()
 
-    androidTarget()
+    android {
+        namespace = "com.bunbeauty.di"
+        compileSdk {
+            version =
+                release(AndroidSdk.compile) {
+                    minorApiLevel = AndroidSdk.compileMinor
+                }
+        }
+        minSdk = AndroidSdk.min
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_21)
+        }
+    }
 
     iosArm64()
     iosSimulatorArm64()
@@ -23,18 +35,4 @@ kotlin {
             dependencies {}
         }
     }
-}
-
-android {
-    namespace = "com.bunbeauty.di"
-    compileSdk = AndroidSdk.compile
-    defaultConfig {
-        minSdk = AndroidSdk.min
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_21
-        targetCompatibility = JavaVersion.VERSION_21
-    }
-
 }

@@ -69,7 +69,7 @@ enum class FoodDeliveryFlavor(
 
     val assembleReleaseBundle: String
         get() {
-            return "assemble${key.replaceFirstChar { oldChar -> oldChar.uppercase() }}ReleaseBundle"
+            return "bundle${key.replaceFirstChar { oldChar -> oldChar.uppercase() }}Release"
         }
 
     val publishReleaseBundle: String

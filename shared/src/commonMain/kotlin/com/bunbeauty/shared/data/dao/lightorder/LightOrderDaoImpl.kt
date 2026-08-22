@@ -1,5 +1,6 @@
 package com.bunbeauty.shared.data.dao.lightorder
 
+import app.cash.sqldelight.async.coroutines.awaitAsList
 import com.bunbeauty.shared.db.FoodDeliveryDatabase
 import com.bunbeauty.shared.db.LightOrderEntity
 
@@ -13,7 +14,7 @@ class LightOrderDaoImpl(
     }
 
     override suspend fun getLightOrderList(count: Int): List<LightOrderEntity> =
-        lightOrderEntityQueries.getLightOrderList(count.toLong()).executeAsList()
+        lightOrderEntityQueries.getLightOrderList(count.toLong()).awaitAsList()
 
     override suspend fun updateLightOrderStatusByUuid(
         uuid: String,

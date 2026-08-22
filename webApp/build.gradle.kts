@@ -34,7 +34,8 @@ kotlin {
                 implementation(libs.kotlinx.coroutines.core)
 
                 implementation(libs.sqlDelight.sqljs)
-                implementation(npm("sql.js", "1.6.2"))
+                implementation(npm("@cashapp/sqldelight-sqljs-worker", libs.versions.sqlDelight.get()))
+                implementation(npm("sql.js", "1.8.0"))
                 implementation(npm("os-browserify", "0.3.0"))
                 implementation(npm("path-browserify", "1.0.1"))
                 implementation(devNpm("copy-webpack-plugin", "9.1.0"))

@@ -1,15 +1,11 @@
 package com.bunbeauty.conventions
 
-import com.android.build.api.variant.LibraryAndroidComponentsExtension
-import com.android.build.gradle.LibraryExtension
-import com.bunbeauty.AndroidSdk
-import com.bunbeauty.configureKotlinAndroid
-import com.bunbeauty.disableUnnecessaryAndroidTests
+import com.android.build.api.dsl.KotlinMultiplatformAndroidLibraryExtension
+import com.bunbeauty.configureKotlinAndroidLibrary
+import com.bunbeauty.configureKotlinCompiler
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
-import org.gradle.kotlin.dsl.dependencies
-import org.gradle.kotlin.dsl.kotlin
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
 class ComposeMultiplatformFeatureConventionPlugin : Plugin<Project> {
@@ -17,7 +13,7 @@ class ComposeMultiplatformFeatureConventionPlugin : Plugin<Project> {
         with(receiver = target) {
             with(receiver = pluginManager) {
                 apply("org.jetbrains.kotlin.multiplatform")
-                apply("com.android.library")
+                apply("com.android.kotlin.multiplatform.library")
                 apply("org.jlleitschuh.gradle.ktlint")
                 apply("org.jetbrains.compose")
                 apply("org.jetbrains.kotlin.plugin.compose")
@@ -25,7 +21,10 @@ class ComposeMultiplatformFeatureConventionPlugin : Plugin<Project> {
 
             extensions.configure<KotlinMultiplatformExtension> {
                 applyDefaultHierarchyTemplate()
-                androidTarget()
+
+                configureAndroidLibrary {
+                    configureKotlinAndroidLibrary()
+                }
 
                 iosArm64()
                 iosSimulatorArm64()
@@ -34,14 +33,15 @@ class ComposeMultiplatformFeatureConventionPlugin : Plugin<Project> {
                     browser()
                 }
             }
-            extensions.configure<LibraryExtension> {
-                configureKotlinAndroid(this)
-                defaultConfig.targetSdk = AndroidSdk.TARGET
-            }
-            extensions.configure<LibraryAndroidComponentsExtension> {
-                disableUnnecessaryAndroidTests(target)
-            }
-
+            configureKotlinCompiler()
         }
     }
+}
+
+private fun KotlinMultiplatformExtension.configureAndroidLibrary(
+    configure: KotlinMultiplatformAndroidLibraryExtension.() -> Unit,
+) {
+    (this as org.gradle.api.plugins.ExtensionAware)
+        .extensions
+        .configure<KotlinMultiplatformAndroidLibraryExtension>("android", configure)
 }

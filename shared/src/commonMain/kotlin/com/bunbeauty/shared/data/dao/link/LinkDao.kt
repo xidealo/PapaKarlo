@@ -1,5 +1,6 @@
 package com.bunbeauty.shared.data.dao.link
 
+import app.cash.sqldelight.async.coroutines.awaitAsList
 import com.bunbeauty.shared.db.FoodDeliveryDatabase
 import com.bunbeauty.shared.db.LinkEntity
 
@@ -20,5 +21,5 @@ class LinkDao(
         }
     }
 
-    override suspend fun getLinkList(): List<LinkEntity> = linkEntityQueries.getLinkList().executeAsList()
+    override suspend fun getLinkList(): List<LinkEntity> = linkEntityQueries.getLinkList().awaitAsList()
 }

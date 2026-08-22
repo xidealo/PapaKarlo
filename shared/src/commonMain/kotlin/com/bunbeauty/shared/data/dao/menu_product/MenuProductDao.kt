@@ -1,11 +1,14 @@
 package com.bunbeauty.shared.data.dao.menu_product
 
+import app.cash.sqldelight.async.coroutines.awaitAsList
+import app.cash.sqldelight.async.coroutines.awaitAsOneOrNull
+import app.cash.sqldelight.coroutines.asFlow
+import app.cash.sqldelight.coroutines.mapToList
+import app.cash.sqldelight.coroutines.mapToOneOrNull
 import com.bunbeauty.shared.db.FoodDeliveryDatabase
 import com.bunbeauty.shared.db.MenuProductEntity
 import com.bunbeauty.shared.db.MenuProductWithCategoryEntity
-import com.squareup.sqldelight.runtime.coroutines.asFlow
-import com.squareup.sqldelight.runtime.coroutines.mapToList
-import com.squareup.sqldelight.runtime.coroutines.mapToOneOrNull
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 
 class MenuProductDao(
@@ -35,17 +38,23 @@ class MenuProductDao(
     }
 
     override suspend fun getMenuProductWithCategoryList(): List<MenuProductWithCategoryEntity> =
-        menuProductEntityQueries.getMenuProductList().executeAsList()
+        menuProductEntityQueries.getMenuProductList().awaitAsList()
 
     override suspend fun getMenuProductWithCategoryListByUuid(uuid: String): List<MenuProductWithCategoryEntity> =
-        menuProductEntityQueries.getMenuProductWithCategoryListByUuid(uuid).executeAsList()
+        menuProductEntityQueries.getMenuProductWithCategoryListByUuid(uuid).awaitAsList()
 
     override fun observeMenuProductList(): Flow<List<MenuProductWithCategoryEntity>> =
-        menuProductEntityQueries.getMenuProductList().asFlow().mapToList()
+        menuProductEntityQueries
+            .getMenuProductList()
+            .asFlow()
+            .mapToList(Dispatchers.Default)
 
     override fun observeMenuProductByUuid(uuid: String): Flow<MenuProductEntity?> =
-        menuProductEntityQueries.getMenuProductByUuid(uuid).asFlow().mapToOneOrNull()
+        menuProductEntityQueries
+            .getMenuProductByUuid(uuid)
+            .asFlow()
+            .mapToOneOrNull(Dispatchers.Default)
 
     override suspend fun getMenuProductByUuid(uuid: String): MenuProductEntity? =
-        menuProductEntityQueries.getMenuProductByUuid(uuid).executeAsOneOrNull()
+        menuProductEntityQueries.getMenuProductByUuid(uuid).awaitAsOneOrNull()
 }

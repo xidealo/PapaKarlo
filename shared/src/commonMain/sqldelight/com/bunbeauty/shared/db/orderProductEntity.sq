@@ -1,3 +1,5 @@
+import kotlin.Int;
+
 CREATE TABLE orderProductEntity (
     uuid TEXT NOT NULL PRIMARY KEY,
     count INTEGER AS Int NOT NULL,

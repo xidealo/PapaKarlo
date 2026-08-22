@@ -9,6 +9,10 @@ plugins {
 }
 
 kotlin {
+    android {
+        namespace = Namespace.shared
+    }
+
     cocoapods {
         summary = "Main shared module with presentation layer"
         homepage = "Link to the Shared Module homepage"
@@ -51,6 +55,8 @@ kotlin {
 
                 implementation(libs.sqlDelight.runtime)
                 implementation(libs.sqlDelight.coroutines.extensions)
+                implementation(libs.sqlDelight.primitive.adapters)
+                implementation(libs.sqlDelight.async.extensions)
 
                 implementation(libs.kotlinx.collections.immutable)
 
@@ -92,50 +98,30 @@ kotlin {
                 implementation(libs.sqlDelight.android)
             }
         }
-        val androidUnitTest by getting {
-            dependencies {
-                implementation(kotlin("test"))
-                implementation(kotlin("test-common"))
-                implementation(kotlin("test-annotations-common"))
-            }
-        }
 
-        val iosArm64Main by getting
-        val iosSimulatorArm64Main by getting
         val iosMain by getting {
             dependencies {
                 implementation(libs.sqlDelight.native)
                 implementation(libs.ktor.client.darwin)
             }
-            dependsOn(commonMain)
-            iosArm64Main.dependsOn(this)
-            iosSimulatorArm64Main.dependsOn(this)
         }
         val jsMain by getting {
             dependencies {
                 implementation(libs.ktor.client.js)
                 implementation(libs.sqlDelight.sqljs)
-                implementation(npm("sql.js", "1.6.2"))
+                implementation(npm("@cashapp/sqldelight-sqljs-worker", libs.versions.sqlDelight.get()))
+                implementation(npm("sql.js", "1.8.0"))
                 implementation(devNpm("copy-webpack-plugin", "9.1.0"))
             }
-        }
-        val iosArm64Test by getting
-        val iosSimulatorArm64Test by getting
-        val iosTest by getting {
-            dependsOn(commonTest)
-            iosArm64Test.dependsOn(this)
-            iosSimulatorArm64Test.dependsOn(this)
         }
     }
 }
 
-android {
-    namespace = Namespace.shared
-    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
-}
-
 sqldelight {
-    database("FoodDeliveryDatabase") {
-        packageName = "com.bunbeauty.shared.db"
+    databases {
+        create("FoodDeliveryDatabase") {
+            packageName.set("com.bunbeauty.shared.db")
+            generateAsync.set(true)
+        }
     }
 }
