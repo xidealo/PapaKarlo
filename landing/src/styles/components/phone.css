@@ -257,11 +257,79 @@
   margin-bottom: 3px;
 }
 
+.bb-on-lime .bb-floating-tag {
+  background: hsl(var(--bb-ink));
+  color: hsl(var(--bb-paper));
+}
+
+.bb-phone-screen {
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.bb-admin-stage {
+  align-items: center;
+  display: flex;
+  gap: 28px;
+  justify-content: center;
+  min-height: 520px;
+  padding: 28px 0 48px;
+  position: relative;
+}
+
+.bb-admin-screen {
+  display: block;
+  flex: 0 0 auto;
+  height: auto;
+  width: 240px;
+}
+
+.bb-admin-phone-back {
+  transform: rotate(-4deg);
+}
+
+.bb-admin-phone-front {
+  transform: rotate(4deg);
+}
+
+.bb-admin-tag {
+  bottom: 0;
+  left: 50%;
+  right: auto;
+  transform: translateX(-50%) rotate(-4deg);
+}
+
+.bb-hero .bb-admin-stage {
+  gap: 48px;
+  min-height: 0;
+  padding: 8px 0 36px;
+}
+
+.bb-hero .bb-admin-screen {
+  width: 270px;
+}
+
 @media (max-width: 850px) {
   .bb-stage {
     margin: 30px auto 0;
     max-width: 510px;
     min-height: 540px;
+  }
+
+  .bb-admin-stage {
+    gap: 20px;
+    margin: 0 auto;
+    max-width: 520px;
+  }
+
+  .bb-hero .bb-admin-stage {
+    gap: 36px;
+  }
+
+  .bb-hero .bb-admin-screen {
+    width: 220px;
   }
 }
 
@@ -277,6 +345,23 @@
 
   .bb-phone {
     right: 8%;
+  }
+
+  .bb-admin-stage {
+    gap: 12px;
+    padding: 16px 0 40px;
+  }
+
+  .bb-hero .bb-admin-stage {
+    gap: 24px;
+  }
+
+  .bb-admin-screen {
+    width: 168px;
+  }
+
+  .bb-hero .bb-admin-screen {
+    width: 190px;
   }
 
   .bb-orbit {

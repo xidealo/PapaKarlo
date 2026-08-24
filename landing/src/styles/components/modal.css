@@ -114,6 +114,19 @@
   margin-top: 6px;
 }
 
+.bb-form .bb-button:disabled {
+  cursor: wait;
+  opacity: 0.7;
+  transform: none;
+}
+
+.bb-form-error {
+  color: hsl(var(--bb-fg));
+  font-size: var(--bb-fs-small);
+  line-height: 1.5;
+  margin: 0;
+}
+
 .bb-success {
   background: hsl(var(--bb-lime));
   color: hsl(var(--bb-ink));
