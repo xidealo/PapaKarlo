@@ -5,7 +5,7 @@
 
 **Репозиторий:** https://github.com/xidealo/PapaKarlo  
 **Ветка с деплой-пакетом:** `feature/web-kmp` (папка `amvera/`)  
-**Бэкенд (не менять):** `https://fooddelivery-xidealo.amvera.io`  
+**Web-бэкенд:** `https://goatfood.ru`  
 **Тестовый web (потом Stop):** `ivanzheg/papakarlo-web`
 
 ---
@@ -42,7 +42,7 @@
 ```text
 Браузер → ваш-домен (web-приложение Amvera, nginx)
                 ├─ статика (меню, wasm)
-                └─ proxy API/images → fooddelivery-xidealo.amvera.io
+                └─ proxy API/images → goatfood.ru
 
 Мобилки → напрямую fooddelivery-xidealo.amvera.io
 ```
@@ -92,7 +92,7 @@ git push amvera master
 
 Merge `feature/web-kmp` → `master` PapaKarlo для Amvera **не обязателен**.
 
-`nginx.conf` проксирует на `fooddelivery-xidealo.amvera.io` — **не менять**, пока бэкенд там.
+`nginx.conf` проксирует web-запросы на `goatfood.ru`.
 
 ### Проверка на временном `*.amvera.io`
 
@@ -168,7 +168,7 @@ git push amvera-test master
 > Открой `docs/amvera-web-handoff.md` и выполни шаги «Коллега»:  
 > отдельное Docker-приложение web на прод-Amvera (не внутрь backend),  
 > порт 80, пришли Git URL. Потом помоги с remote/push и привязкой своего домена.  
-> Бэкенд host `fooddelivery-xidealo.amvera.io` не менять.  
+> Web-бэкенд host — `goatfood.ru`.  
 > Мульти-кафе — поддомены на то же web-приложение.
 
 ---

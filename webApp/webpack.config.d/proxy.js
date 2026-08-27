@@ -5,7 +5,7 @@
 // Heuristic: static assets always have a file extension (.js, .wasm, .css, ...),
 // while all backend endpoints are extensionless (city, cafe, menu_product, ...).
 // So we proxy every extensionless path to the backend and serve the rest locally.
-const BACKEND = 'https://fooddelivery-xidealo.amvera.io';
+const BACKEND = 'https://goatfood.ru';
 // Product photos live on Firebase Storage, which also doesn't send CORS headers,
 // so browser-side image fetches are blocked too. We proxy them the same way: the
 // web app rewrites every photoLink to /firebase-img/... (see Main.kt) and we
