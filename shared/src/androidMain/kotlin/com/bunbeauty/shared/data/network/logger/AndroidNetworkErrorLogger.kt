@@ -2,9 +2,16 @@ package com.bunbeauty.shared.data.network.logger
 
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 
-
 class AndroidNetworkErrorLogger : NetworkErrorLogger {
-    override fun logWarning(code: Int, message: String, throwable: Throwable) {
+    override fun logWarning(
+        code: Int,
+        message: String,
+        throwable: Throwable,
+    ) {
+        if (!NetworkErrorLogPolicy.shouldLog(code, throwable)) {
+            return
+        }
+
         val crashlytics = FirebaseCrashlytics.getInstance()
         crashlytics.setCustomKey(KEY_SEVERITY, SEVERITY_WARNING)
         crashlytics.setCustomKey(KEY_HTTP_CODE, code)
