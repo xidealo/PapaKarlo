@@ -1,0 +1,28 @@
+name: Run Gradle with retry
+description: Runs a Gradle command with retries for transient Maven Central 429 errors
+
+inputs:
+  command:
+    description: Gradle command to run (without ./gradlew prefix)
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Run Gradle
+      shell: bash
+      run: |
+        set -euo pipefail
+        COMMAND="./gradlew --continue ${{ inputs.command }}"
+        for attempt in 1 2 3; do
+          echo "Gradle attempt ${attempt}/3: ${COMMAND}"
+          if eval "${COMMAND}"; then
+            exit 0
+          fi
+          if [ "${attempt}" -lt 3 ]; then
+            echo "Gradle failed, waiting 45s before retry..."
+            sleep 45
+          fi
+        done
+        echo "::error::Gradle command failed after 3 attempts"
+        exit 1
