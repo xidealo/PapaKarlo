@@ -1,0 +1,22 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@import './styles/tokens.css';
+@import './styles/base.css';
+@import './styles/typography.css';
+@import './styles/theme.css';
+@import './styles/layout.css';
+@import './styles/motion.css';
+
+@import './styles/components/button.css';
+@import './styles/components/header.css';
+@import './styles/components/hero.css';
+@import './styles/components/phone.css';
+@import './styles/components/marquee.css';
+@import './styles/components/product.css';
+@import './styles/components/dashboard.css';
+@import './styles/components/conditions.css';
+@import './styles/components/faq.css';
+@import './styles/components/cta.css';
+@import './styles/components/footer.css';
+@import './styles/components/modal.css';

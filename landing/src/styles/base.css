@@ -1,0 +1,38 @@
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply antialiased;
+    background: hsl(var(--bb-ink));
+    color: hsl(var(--bb-paper));
+    font-family: var(--app-font-sans);
+  }
+
+  button,
+  a,
+  input,
+  textarea {
+    font: inherit;
+  }
+
+  button,
+  a {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  :where(a, button, input, textarea, select, [tabindex]):focus-visible {
+    outline: 2px solid hsl(var(--bb-accent));
+    outline-offset: 4px;
+  }
+
+  ::selection {
+    background: hsl(var(--bb-lime));
+    color: hsl(var(--bb-ink));
+  }
+}
