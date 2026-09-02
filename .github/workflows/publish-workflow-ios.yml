@@ -24,6 +24,7 @@ on:
           - emojicenter
           - estpoest
           - taverna
+          - mimino
           - all
 
 concurrency:
@@ -116,6 +117,7 @@ jobs:
             "estpoest|estpoestRes|com.bunbeauty.estpoest"
             "taverna|tavernaRes|com.bunbeauty.taverna"
             "voljane|voljaneRes|com.bunbeauty.voljane"
+            "mimino|miminoRes|com.bunbeauty.mimino"
           )
           APPS=()
           if [ "$SELECTED_APP" = "all" ]; then
