@@ -9,7 +9,9 @@ import com.bunbeauty.core.Constants.QUERY_PARAMETER
 import com.bunbeauty.core.Constants.UUID_PARAMETER
 import com.bunbeauty.core.domain.exeptions.FoodDeliveryNetworkException
 import com.bunbeauty.shared.data.CompanyUuidProvider
+import com.bunbeauty.shared.data.network.logger.NetworkErrorLogPolicy
 import com.bunbeauty.shared.data.network.logger.NetworkErrorLogger
+import com.bunbeauty.shared.data.network.logger.isCoroutineCancellation
 import com.bunbeauty.shared.data.network.model.AddressServer
 import com.bunbeauty.shared.data.network.model.CafeServer
 import com.bunbeauty.shared.data.network.model.CategoryServer
@@ -181,10 +183,15 @@ internal class NetworkConnectorImpl(
         )
 
     override suspend fun getLastOrder(token: String): ApiResult<LightOrderServer> =
-        getDataNotFoundAsNull(
-            path = "v2/client/last_order",
-            token = token,
-        )
+        safeCall(notFoundAsNull = true) {
+            client.get {
+                buildRequest(
+                    path = "v2/client/last_order",
+                    token = token,
+                    timeout = COMMON_TIMEOUT,
+                )
+            }
+        }
 
     override suspend fun getSettings(token: String): ApiResult<SettingsServer> =
         getData(
@@ -340,44 +347,6 @@ internal class NetworkConnectorImpl(
             }
         }
 
-    private suspend inline fun <reified R> getDataNotFoundAsNull(
-        path: String,
-        parameters: Map<String, Any> = mapOf(),
-        token: String? = null,
-        timeout: Long = COMMON_TIMEOUT,
-    ): ApiResult<R> =
-        try {
-            val response =
-                client.get {
-                    buildRequest(
-                        path = path,
-                        parameters = parameters,
-                        token = token,
-                        timeout = timeout,
-                    )
-                }
-            if (response.status == HttpStatusCode.NotFound) {
-                ApiResult.Success(null)
-            } else {
-                ApiResult.Success(response.body())
-            }
-        } catch (exception: FoodDeliveryNetworkException) {
-            throw exception
-        } catch (exception: ClientRequestException) {
-            if (exception.response.status == HttpStatusCode.NotFound) {
-                ApiResult.Success(null)
-            } else {
-                val code = exception.response.status.value
-                val message = exception.message
-                errorLogger.logWarning(code = code, message = message, throwable = exception)
-                ApiResult.Error(ApiError(code, message))
-            }
-        } catch (exception: Throwable) {
-            val message = exception.message.toString()
-            errorLogger.logWarning(code = 0, message = message, throwable = exception)
-            ApiResult.Error(ApiError(0, message))
-        }
-
     private suspend inline fun <reified R> postData(
         path: String,
         parameters: Map<String, String> = mapOf(),
@@ -441,7 +410,7 @@ internal class NetworkConnectorImpl(
         token: String? = null,
         timeout: Long = COMMON_TIMEOUT,
     ): ApiResult<Unit> =
-        try {
+        safeCall {
             client.delete {
                 buildRequest(
                     path = path,
@@ -450,36 +419,83 @@ internal class NetworkConnectorImpl(
                     timeout = timeout,
                 )
             }
-            ApiResult.Success(Unit)
+        }
+
+    private suspend inline fun <reified R> safeCall(
+        notFoundAsNull: Boolean = false,
+        networkCall: () -> HttpResponse,
+    ): ApiResult<R> =
+        try {
+            val response = networkCall()
+            mapSuccessResponse(response, notFoundAsNull)
         } catch (exception: FoodDeliveryNetworkException) {
             throw exception
         } catch (exception: ClientRequestException) {
-            val code = exception.response.status.value
-            val message = exception.message
-            errorLogger.logWarning(code = code, message = message, throwable = exception)
-            ApiResult.Error(ApiError(code, message))
+            mapClientRequestException(exception, notFoundAsNull)
         } catch (exception: Throwable) {
-            val message = exception.message.toString()
-            errorLogger.logWarning(code = 0, message = message, throwable = exception)
+            if (exception.isCoroutineCancellation()) {
+                throw exception
+            }
+            val message = exception.message.orEmpty()
+            logNetworkWarningIfNeeded(code = 0, message = message, throwable = exception)
             ApiResult.Error(ApiError(0, message))
         }
 
-    private suspend inline fun <reified R> safeCall(networkCall: () -> HttpResponse): ApiResult<R> =
-        try {
-            val call = networkCall()
-            ApiResult.Success(call.body())
-        } catch (exception: FoodDeliveryNetworkException) {
-            throw exception
-        } catch (exception: ClientRequestException) {
-            val code = exception.response.status.value
-            val message = exception.message
-            errorLogger.logWarning(code = code, message = message, throwable = exception)
-            ApiResult.Error(ApiError(code, message))
-        } catch (exception: Throwable) {
-            val message = exception.message.toString()
-            errorLogger.logWarning(code = 0, message = message, throwable = exception)
-            ApiResult.Error(ApiError(0, message))
+    private suspend inline fun <reified R> mapSuccessResponse(
+        response: HttpResponse,
+        notFoundAsNull: Boolean,
+    ): ApiResult<R> {
+        if (response.status == HttpStatusCode.NotFound && notFoundAsNull) {
+            return ApiResult.Success(null)
         }
+        if (response.status.value >= HttpStatusCode.BadRequest.value) {
+            val code = response.status.value
+            val message = response.status.description
+            logNetworkWarningIfNeeded(
+                code = code,
+                message = message,
+                throwable = UnexpectedHttpStatusException(code, message),
+            )
+            return ApiResult.Error(ApiError(code, message))
+        }
+        return ApiResult.Success(decodeBody(response))
+    }
+
+    private inline fun <reified R> mapClientRequestException(
+        exception: ClientRequestException,
+        notFoundAsNull: Boolean,
+    ): ApiResult<R> {
+        val code = exception.response.status.value
+        val message = exception.message ?: exception.response.status.description
+        if (code == HttpStatusCode.NotFound.value && notFoundAsNull) {
+            return ApiResult.Success(null)
+        }
+        logNetworkWarningIfNeeded(code = code, message = message, throwable = exception)
+        return ApiResult.Error(ApiError(code, message))
+    }
+
+    private suspend inline fun <reified R> decodeBody(response: HttpResponse): R {
+        if (R::class == Unit::class) {
+            @Suppress("UNCHECKED_CAST")
+            return Unit as R
+        }
+        return response.body()
+    }
+
+    private fun logNetworkWarningIfNeeded(
+        code: Int,
+        message: String,
+        throwable: Throwable,
+    ) {
+        if (NetworkErrorLogPolicy.shouldLog(code, throwable)) {
+            errorLogger.logWarning(code = code, message = message, throwable = throwable)
+        }
+    }
+
+    private class UnexpectedHttpStatusException(
+        code: Int,
+        message: String,
+    ) : Exception("Unexpected HTTP status $code: $message")
 
     private fun HttpRequestBuilder.buildRequest(
         path: String,
