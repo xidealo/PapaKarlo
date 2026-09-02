@@ -1,0 +1,51 @@
+---
+description: Kotlin — говорящие имена параметров в лямбдах вместо it
+globs: **/*.kt
+alwaysApply: false
+---
+
+# Kotlin: имена в лямбдах
+
+При написании Kotlin избегай неявного `it` — задавай **говорящее имя** параметра.
+
+## Когда заменять `it`
+
+- лямбда длиннее одной короткой строки;
+- в теле больше одного использования параметра;
+- вложенные лямбды (внутренние — обязательно с именем);
+- параметр — не единственный очевидный элемент (не просто `x` в `map { x * 2 }`).
+
+## Когда `it` допустим
+
+- однострочная простая цепочка, смысл параметра очевиден из контекста: `orders.filter { it.isActive }`;
+- пользователь или существующий код в файле явно использует `it` в таком же стиле.
+
+При сомнении — именованный параметр.
+
+## Примеры
+
+```kotlin
+// ❌ BAD
+users.map { it.name }
+orders.filter { it.status == Status.PAID && it.total > 0 }
+items.forEach { repository.save(it) }
+
+// ✅ GOOD
+users.map { user -> user.name }
+orders.filter { order -> order.status == Status.PAID && order.total > 0 }
+items.forEach { item -> repository.save(item) }
+```
+
+```kotlin
+// ❌ BAD — вложенные it
+groups.flatMap { it.items.filter { it.isSelected } }
+
+// ✅ GOOD
+groups.flatMap { group -> group.items.filter { item -> item.isSelected } }
+```
+
+## Именование
+
+- существительное по типу или роли: `user`, `order`, `item`, `request`, `response`;
+- не однобуквенные имена (`x`, `e`, `o`), кроме общепринятых исключений в узкой математике/индексах;
+- в `catch` — `exception` / `error`, не `it` и не `e`, если политика проекта не задаёт иное.
