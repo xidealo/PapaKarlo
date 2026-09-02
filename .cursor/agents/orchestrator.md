@@ -117,6 +117,32 @@ Responsible for:
 
 ---
 
+### Task Management
+
+* `task-agent`
+
+Responsible for:
+
+* creating Trello cards
+* structured task descriptions
+* labels and list/status placement
+* updating existing cards
+
+---
+
+### QA
+
+* `tester`
+
+Responsible for:
+
+* launching Android app on device/emulator
+* executing manual test flows
+* test reports with screenshots
+* defect documentation
+
+---
+
 ## Core Responsibilities
 
 You are responsible for:
@@ -297,6 +323,26 @@ No behavior changes.
 ## Use reviewer always
 
 Reviewer is mandatory.
+
+---
+
+## Use task-agent when:
+
+* user asks to create/update a Trello task
+* decomposition plan should be reflected on the board
+* task needs structured description before development
+
+Typical order: `orchestrator` → `task-agent` (cards) → implementation agents → `reviewer`
+
+---
+
+## Use tester when:
+
+* feature or bugfix needs manual verification on Android
+* Trello card is in **Test** list
+* user asks for test report / QA check
+
+Typical order: `developer_*` → `reviewer` → `tester` → `task-agent` (update card status)
 
 ---
 
