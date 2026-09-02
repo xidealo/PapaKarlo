@@ -55,6 +55,7 @@ import io.ktor.client.request.post
 import io.ktor.client.request.put
 import io.ktor.client.request.setBody
 import io.ktor.client.statement.HttpResponse
+import io.ktor.http.HttpStatusCode
 import io.ktor.http.path
 import kotlinx.coroutines.flow.Flow
 import org.koin.core.component.KoinComponent
@@ -180,7 +181,7 @@ internal class NetworkConnectorImpl(
         )
 
     override suspend fun getLastOrder(token: String): ApiResult<LightOrderServer> =
-        getData(
+        getDataNotFoundAsNull(
             path = "v2/client/last_order",
             token = token,
         )
@@ -337,6 +338,44 @@ internal class NetworkConnectorImpl(
                     timeout = timeout,
                 )
             }
+        }
+
+    private suspend inline fun <reified R> getDataNotFoundAsNull(
+        path: String,
+        parameters: Map<String, Any> = mapOf(),
+        token: String? = null,
+        timeout: Long = COMMON_TIMEOUT,
+    ): ApiResult<R> =
+        try {
+            val response =
+                client.get {
+                    buildRequest(
+                        path = path,
+                        parameters = parameters,
+                        token = token,
+                        timeout = timeout,
+                    )
+                }
+            if (response.status == HttpStatusCode.NotFound) {
+                ApiResult.Success(null)
+            } else {
+                ApiResult.Success(response.body())
+            }
+        } catch (exception: FoodDeliveryNetworkException) {
+            throw exception
+        } catch (exception: ClientRequestException) {
+            if (exception.response.status == HttpStatusCode.NotFound) {
+                ApiResult.Success(null)
+            } else {
+                val code = exception.response.status.value
+                val message = exception.message
+                errorLogger.logWarning(code = code, message = message, throwable = exception)
+                ApiResult.Error(ApiError(code, message))
+            }
+        } catch (exception: Throwable) {
+            val message = exception.message.toString()
+            errorLogger.logWarning(code = 0, message = message, throwable = exception)
+            ApiResult.Error(ApiError(0, message))
         }
 
     private suspend inline fun <reified R> postData(
