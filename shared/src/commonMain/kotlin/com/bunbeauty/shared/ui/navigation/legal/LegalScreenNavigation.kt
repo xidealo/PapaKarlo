@@ -3,15 +3,20 @@ package com.bunbeauty.shared.ui.navigation.legal
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.fadeOut
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
+import com.bunbeauty.core.flavorQualifier
 import com.bunbeauty.shared.ui.navigation.NavAnimationSpec.navAnimationSpecDurationForEnterFade
 import com.bunbeauty.shared.ui.navigation.NavAnimationSpec.navAnimationSpecDurationForSlide
 import com.bunbeauty.shared.ui.screen.legal.LegalDocumentScreen
+import com.bunbeauty.shared.ui.screen.legal.privacyPolicyText
+import com.bunbeauty.shared.ui.screen.legal.userAgreementText
 import kotlinx.serialization.Serializable
 import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.koinInject
 import papakarlo.designsystem.generated.resources.Res
 import papakarlo.designsystem.generated.resources.msg_legal_document_placeholder
 import papakarlo.designsystem.generated.resources.title_privacy_policy
@@ -35,9 +40,12 @@ fun NavController.navigateToTermsOfServiceScreen(navOptions: NavOptions) = navig
 
 fun NavGraphBuilder.userAgreementScreenRoute(back: () -> Unit) {
     legalComposable<UserAgreementScreenDestination> {
+        val flavor = koinInject<String>(qualifier = flavorQualifier)
+        val text = remember(flavor) { userAgreementText(flavor = flavor) }
+
         LegalDocumentScreen(
             title = stringResource(Res.string.title_user_agreement),
-            text = stringResource(Res.string.msg_legal_document_placeholder),
+            text = text,
             back = back,
         )
     }
@@ -45,9 +53,12 @@ fun NavGraphBuilder.userAgreementScreenRoute(back: () -> Unit) {
 
 fun NavGraphBuilder.privacyPolicyScreenRoute(back: () -> Unit) {
     legalComposable<PrivacyPolicyScreenDestination> {
+        val flavor = koinInject<String>(qualifier = flavorQualifier)
+        val text = remember(flavor) { privacyPolicyText(flavor = flavor) }
+
         LegalDocumentScreen(
             title = stringResource(Res.string.title_privacy_policy),
-            text = stringResource(Res.string.msg_legal_document_placeholder),
+            text = text,
             back = back,
         )
     }

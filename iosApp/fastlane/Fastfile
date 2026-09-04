@@ -75,12 +75,12 @@ platform :ios do
      estpoest:     { id: "com.bunbeauty.estpoest", scheme: "estpoest" },
      taverna:      { id: "com.bunbeauty.taverna", scheme: "taverna" },
      voljane:      { id: "com.bunbeauty.voljane", scheme: "voljane" },
+     mimino:       { id: "com.bunbeauty.mimino", scheme: "mimino" },
      # legenda: нет AppStore-профиля в match-репозитории — раскомментировать после:
      # bundle exec fastlane match appstore -a com.bunbeauty.legenda
      # legenda:      { id: "com.bunbeauty.legenda", scheme: "legenda" },
-     # bereg и mimino пока без shared .xcscheme — включить после добавления схем и сертификатов match
+     # bereg пока без shared .xcscheme — включить после добавления схемы и сертификатов match
      # bereg:      { id: "com.bunbeauty.bereg", scheme: "bereg" },
-     # mimino:     { id: "com.bunbeauty.mimino", scheme: "mimino" },
   }
 
   # Настраиваем подпись только у таргета приложения (по bundle id), не трогая Pods.

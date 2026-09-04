@@ -21,6 +21,7 @@ kotlin {
         podfile = project.file("../iosApp/Podfile")
 
         pod("FirebaseMessaging")
+        pod("FirebaseCrashlytics")
         framework {
             baseName = "shared"
             isStatic = true

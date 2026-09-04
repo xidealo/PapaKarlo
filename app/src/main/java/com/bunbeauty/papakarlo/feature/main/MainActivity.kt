@@ -48,6 +48,8 @@ class MainActivity :
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
         enableEdgeToEdge(
             navigationBarStyle =
                 if (isDarkTheme()) {
@@ -61,7 +63,6 @@ class MainActivity :
                     )
                 },
         )
-        super.onCreate(savedInstanceState)
 
         setContent {
             val color = FoodDeliveryTheme.colors.mainColors.surface
