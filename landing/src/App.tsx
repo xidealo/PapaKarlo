@@ -10,19 +10,19 @@ import NotFound from '@/pages/not-found';
 const queryClient = new QueryClient();
 
 const faqs = [
-  ['Что такое BunBeauty?', 'BunBeauty – платформа для приёма заказов. У кафе своё мобильное приложение и при необходимости сайт. Заказы приходят администратору в отдельное приложение.'],
+  ['Что такое GoatFood?', 'GoatFood – платформа для приёма заказов. У кафе своё мобильное приложение и при необходимости сайт. Заказы приходят администратору в отдельное приложение.'],
   ['Как заказывает гость?', 'Через ваше приложение в App Store и Google Play или через сайт. Меню с фото, доставка или самовывоз – как настроите на смене.'],
   ['Как подключиться?', 'Оставьте заявку, и мы созвонимся на 20 минут. После этого соберём первую версию меню и запустим её в течение нескольких рабочих дней.'],
   ['Какая комиссия за заказ?', 'Платформа берёт 3% с заказа. Никаких скрытых платежей, платы за установку или длинных контрактов.'],
 ];
 
 function Logo() {
-  return <span className="bb-logo" aria-label="BunBeauty"><span className="bb-logo-mark">b.</span><span className="bb-logo-word">BunBeauty</span></span>;
+  return <span className="bb-logo" aria-label="GoatFood"><span className="bb-logo-mark">g.</span><span className="bb-logo-word">GoatFood</span></span>;
 }
 
 function PhonePreview() {
   return (
-    <div className="bb-stage" aria-label="Предпросмотр мобильного меню BunBeauty" data-testid="preview-phone">
+    <div className="bb-stage" aria-label="Предпросмотр мобильного меню GoatFood" data-testid="preview-phone">
       <div className="bb-orbit" />
       <div className="bb-phone">
         <div className="bb-phone-top"><span>9:41</span><span className="bb-phone-user" aria-hidden="true" /></div>
@@ -41,7 +41,7 @@ function PhonePreview() {
 
 function AdminPreview() {
   return (
-    <div className="bb-admin-stage" aria-label="Приложение администратора BunBeauty" data-testid="preview-dashboard">
+    <div className="bb-admin-stage" aria-label="Приложение администратора GoatFood" data-testid="preview-dashboard">
       <img className="bb-admin-screen bb-admin-phone-back" src="/admin-orders.png" alt="Список заказов в приложении администратора" />
       <img className="bb-admin-screen bb-admin-phone-front" src="/admin-order.png" alt="Карточка заказа в приложении администратора" />
       <div className="bb-floating-tag bb-admin-tag"><span>приложение</span>админа</div>
@@ -98,7 +98,7 @@ function ContactModal({ onClose }: { onClose: () => void }) {
         {sent ? <div className="bb-success" role="status"><strong>Заявка отправлена</strong><span>Спасибо! Мы напишем вам в течение рабочего дня, чтобы назначить короткий разговор.</span></div> : <>
           <span className="bb-section-label">поговорим о вашем кафе</span>
           <h2 id="contact-title" className="bb-display">Запустим<br /><span className="bb-lime">ваше меню</span></h2>
-          <p id="contact-intro">Расскажите о кафе – покажем, как BunBeauty будет выглядеть именно для вас.</p>
+          <p id="contact-intro">Расскажите о кафе – покажем, как GoatFood будет выглядеть именно для вас.</p>
           <form className="bb-form" onSubmit={submit}>
             <label htmlFor="contact-name">Имя<input ref={nameRef} id="contact-name" className="bb-input" name="name" placeholder="Как к вам обращаться?" required data-testid="input-contact-name" /></label>
             <label htmlFor="contact-contact">Контакт<input id="contact-contact" className="bb-input" name="contact" placeholder="Телефон или Telegram" required data-testid="input-contact-contact" /></label>
@@ -142,8 +142,8 @@ function Home() {
           <div>
             <div className="bb-eyebrow bb-reveal">своё приложение и сайт для кафе</div>
             <h1 className="bb-display bb-reveal bb-delay-1">Кафе,<br />которое <em>заказывают</em><br />с телефона</h1>
-            <p className="bb-lede bb-reveal bb-delay-2">BunBeauty – платформа заказов для кафе. Гость оформляет заказ в вашем приложении или на сайте, администратор ведёт его в отдельном CRM приложении.</p>
-            <div className="bb-hero-actions bb-reveal bb-delay-3"><button className="bb-button bb-button-primary" onClick={openContact} data-testid="button-hero-contact">Запустить BunBeauty <ArrowRight size={16} /></button><a className="bb-button bb-button-ghost" href="#product" data-testid="link-hero-product">Посмотреть как это работает <ArrowDownRight size={17} /></a></div>
+            <p className="bb-lede bb-reveal bb-delay-2">GoatFood – платформа заказов для кафе. Гость оформляет заказ в вашем приложении или на сайте, администратор ведёт его в отдельном CRM приложении.</p>
+            <div className="bb-hero-actions bb-reveal bb-delay-3"><button className="bb-button bb-button-primary" onClick={openContact} data-testid="button-hero-contact">Запустить GoatFood <ArrowRight size={16} /></button><a className="bb-button bb-button-ghost" href="#product" data-testid="link-hero-product">Посмотреть как это работает <ArrowDownRight size={17} /></a></div>
             <p className="bb-small-note">приложение для гостя ·  CRM приложение для администратора</p>
             <p className="bb-store-links">
               <a href="https://apps.apple.com/ru/developer/mark-shavlovskiy/id1651086345" target="_blank" rel="noreferrer" data-testid="link-app-store">App Store</a>
@@ -174,7 +174,7 @@ function Home() {
           <h2 className="bb-display bb-section-heading">Платите только<br />когда <em>зарабатываете</em></h2>
           <div className="bb-condition-grid">
             <div className="bb-commission-card bb-card-lime"><span className="bb-label">КОМИССИЯ С ЗАКАЗА</span><div className="bb-commission"><strong>3</strong><span>%</span></div></div>
-            <div className="bb-condition-copy bb-card-dark"><h3>Честная модель<br />для живого бизнеса</h3><p>Никаких абонентских платежей, платы за запуск и обязательств на год. BunBeauty растёт вместе с вашим кафе.</p><div className="bb-checks"><span><i /><Check size={13} /> Бесплатный запуск</span><span><i /><Check size={13} /> Поддержка 24/7</span></div></div>
+            <div className="bb-condition-copy bb-card-dark"><h3>Честная модель<br />для живого бизнеса</h3><p>Никаких абонентских платежей, платы за запуск и обязательств на год. GoatFood растёт вместе с вашим кафе.</p><div className="bb-checks"><span><i /><Check size={13} /> Бесплатный запуск</span><span><i /><Check size={13} /> Поддержка 24/7</span></div></div>
             <div className="bb-band bb-card-paper"><strong>Первый месяц – за наш счёт</strong><span>Проверим всё на реальных заказах</span></div>
           </div>
         </div>
@@ -190,14 +190,14 @@ function Home() {
       <div className="bb-cta-section bb-on-dark">
         <section className="bb-container bb-cta">
           <span className="bb-section-label">готовы попробовать?</span><h2 className="bb-display">Ваше кафе<br /><span>В его телефоне</span></h2>
-          <div className="bb-cta-row"><button className="bb-button bb-button-primary" onClick={openContact} data-testid="button-cta-contact">Поговорить о запуске <ArrowRight size={16} /></button><p>20 минут, чтобы понять, подходит ли вам BunBeauty</p></div>
+          <div className="bb-cta-row"><button className="bb-button bb-button-primary" onClick={openContact} data-testid="button-cta-contact">Поговорить о запуске <ArrowRight size={16} /></button><p>20 минут, чтобы понять, подходит ли вам GoatFood</p></div>
         </section>
         <footer className="bb-container bb-footer">
           <div className="bb-footer-row">
             <a href="#top" data-testid="link-footer-home"><Logo /></a>
             <a href="mailto:shavl.mark@yandex.ru" data-testid="link-email">shavl.mark@yandex.ru</a>
           </div>
-          <p className="bb-footer-legal">© 2026 BunBeauty · приложения и сайт заказов для кафе</p>
+          <p className="bb-footer-legal">© 2026 GoatFood · приложения и сайт заказов для кафе</p>
           <p className="bb-footer-legal">ИП Шавловский Марк Вячеславович · ОГРНИП 322695200049377 · ИНН 691010434605</p>
         </footer>
       </div>
