@@ -8,7 +8,7 @@
   align-items: center;
   display: grid;
   gap: 4%;
-  grid-template-columns: minmax(0, 1.12fr) minmax(350px, 0.88fr);
+  grid-template-columns: minmax(0, 1fr) minmax(520px, 1.15fr);
 }
 
 .bb-eyebrow {

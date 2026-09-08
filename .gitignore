@@ -107,4 +107,5 @@ landing/*.tsbuildinfo
 
 # Nested Amvera deploy git — package itself tracked in feature/web-kmp
 /amvera/.git/
+/landing-amvera/.git/
 csg-zF7-VZd-dPR
