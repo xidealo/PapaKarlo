@@ -67,7 +67,9 @@ jobs:
           name: local-properties
           path: .
       - name: "Assemble ${{ matrix.flavor }}"
-        run: ./gradlew --continue assemble${{ matrix.flavor }}Debug
+        uses: ./.github/actions/run-gradle
+        with:
+          command: assemble${{ matrix.flavor }}Debug
 
   linter:
     name: "Linter"
@@ -98,10 +100,14 @@ jobs:
           path: .
       - name: "Lint ${{ matrix.flavor }}"
         if: ${{ matrix.linter == 'lint' }}
-        run: ./gradlew --continue lint${{ matrix.flavor }}Debug
+        uses: ./.github/actions/run-gradle
+        with:
+          command: lint${{ matrix.flavor }}Debug
       - name: "KtLint ${{ matrix.flavor }}"
         if: ${{ matrix.linter == 'ktLint' }}
-        run: ./gradlew --continue ktlint${{ matrix.flavor }}DebugSourceSetCheck
+        uses: ./.github/actions/run-gradle
+        with:
+          command: ktlint${{ matrix.flavor }}DebugSourceSetCheck
 
   test:
     name: "Unit tests"
@@ -122,4 +128,6 @@ jobs:
           name: local-properties
           path: .
       - name: "Run unit tests"
-        run: ./gradlew --continue testAndroidHostTest :app:test
+        uses: ./.github/actions/run-gradle
+        with:
+          command: testAndroidHostTest :app:test

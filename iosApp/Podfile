@@ -74,10 +74,55 @@ end
 
 # KMP only has iosSimulatorArm64 — Release fat archives pass ARCHS="arm64 x86_64"
 # into [CP-User] Build shared and fail with: Unknown iOS simulator arch: 'x86_64'
+#
+# Compose Multiplatform writes spec.resources = ['build/compose/cocoapods/compose-resources'].
+# CocoaPods expands that path at `pod install` and skips an empty/missing directory, so
+# [CP] Copy Pods Resources never ships compose-resources (MissingResourceException at launch).
+# Gradle fills the directory later in [CP-User] Build shared. post_install injects a copy
+# into each app's Pods-*-resources.sh so xcodebuild copies the filled folder into the .app.
 post_install do |installer|
   installer.pods_project.targets.each do |target|
     target.build_configurations.each do |config|
       config.build_settings['EXCLUDED_ARCHS[sdk=iphonesimulator*]'] = 'x86_64'
     end
+  end
+
+  compose_copy_marker = 'Copy Compose Multiplatform resources'
+  resources_scripts = Dir.glob(
+    File.join(installer.sandbox.root.to_s, 'Target Support Files', 'Pods-*', 'Pods-*-resources.sh')
+  )
+  patched = 0
+  resources_scripts.each do |script_path|
+    contents = File.read(script_path)
+    next if contents.include?(compose_copy_marker)
+
+    contents << <<~'SH'
+
+      # Copy Compose Multiplatform resources
+      COMPOSE_RES="${PODS_ROOT}/../../shared/build/compose/cocoapods/compose-resources"
+      if [ ! -d "${COMPOSE_RES}" ]; then
+        echo "error: missing Compose resources dir: ${COMPOSE_RES}" >&2
+        exit 1
+      fi
+      if [ -z "$(find "${COMPOSE_RES}" -type f -print -quit)" ]; then
+        echo "error: Compose resources dir is empty: ${COMPOSE_RES}. Check [CP-User] Build shared / syncPodComposeResourcesForIos." >&2
+        exit 1
+      fi
+      copy_compose_mp_resources() {
+        dest="$1/compose-resources"
+        echo "Copy Compose Multiplatform resources -> ${dest}"
+        mkdir -p "${dest}"
+        rsync -a --delete "${COMPOSE_RES}/" "${dest}/"
+      }
+      copy_compose_mp_resources "${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"
+      if [ "${ACTION}" = "install" ] && [ "${SKIP_INSTALL}" = "NO" ]; then
+        copy_compose_mp_resources "${INSTALL_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"
+      fi
+    SH
+    File.write(script_path, contents)
+    patched += 1
+  end
+  if patched.zero? && resources_scripts.none? { |path| File.read(path).include?(compose_copy_marker) }
+    raise 'No Pods-*-resources.sh found to inject Compose resources copy'
   end
 end

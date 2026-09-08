@@ -13,6 +13,11 @@ rm -rf "$SCRIPT_DIR/site"
 mkdir -p "$SCRIPT_DIR/site"
 cp -R "$ROOT_DIR/webApp/build/dist/js/productionExecutable/." "$SCRIPT_DIR/site/"
 
+if [[ ! -f "$SCRIPT_DIR/site/sql-wasm.wasm" ]]; then
+  echo "sql-wasm.wasm missing; SQLDelight worker will crash on prod" >&2
+  exit 1
+fi
+
 # netlify.toml is only for Netlify; on Amvera nginx handles the proxying.
 rm -f "$SCRIPT_DIR/site/netlify.toml"
 

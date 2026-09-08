@@ -19,6 +19,6 @@
 # Any path that is not a real static file (js/wasm/html) is an API call -> backend.
 [[redirects]]
   from = "/*"
-  to = "https://fooddelivery-xidealo.amvera.io/:splat"
+  to = "https://goatfood.ru/:splat"
   status = 200
   force = false

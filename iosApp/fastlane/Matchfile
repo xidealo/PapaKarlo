@@ -17,8 +17,8 @@ app_identifier([
   "com.bunbeauty.estpoest",
   "com.bunbeauty.voljane",
   "com.bunbeauty.taverna",
-  "com.bunbeauty.legenda"
+  "com.bunbeauty.legenda",
+  "com.bunbeauty.mimino"
   # Добавить после генерации сертификатов match:
-  # "com.bunbeauty.bereg",
-  # "com.bunbeauty.mimino"
+  # "com.bunbeauty.bereg"
 ])

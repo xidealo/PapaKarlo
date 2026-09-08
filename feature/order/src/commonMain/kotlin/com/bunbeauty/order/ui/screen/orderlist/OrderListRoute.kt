@@ -1,7 +1,5 @@
 package com.bunbeauty.order.ui.screen.orderlist
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,6 +18,7 @@ import com.bunbeauty.core.model.order.OrderStatus
 import com.bunbeauty.designsystem.theme.FoodDeliveryTheme
 import com.bunbeauty.designsystem.ui.LocalBottomBarPadding
 import com.bunbeauty.designsystem.ui.element.FoodDeliveryScaffold
+import com.bunbeauty.designsystem.ui.element.card.FoodDeliveryItem
 import com.bunbeauty.designsystem.ui.screen.EmptyScreen
 import com.bunbeauty.designsystem.ui.screen.ErrorScreen
 import com.bunbeauty.designsystem.ui.screen.LoadingScreen
@@ -49,8 +48,8 @@ fun OrderListState.DataState.mapState(): OrderListViewState =
                 OrderListState.DataState.State.EMPTY -> OrderListViewState.State.Empty
             },
         orderList =
-            orderList.map { lightOrder ->
-                lightOrder.toItem()
+            orderList.mapIndexed { index, lightOrder ->
+                lightOrder.toItem(isLast = index == orderList.lastIndex)
             },
     )
 
@@ -105,6 +104,7 @@ private fun OrderListScreen(
 ) {
     FoodDeliveryScaffold(
         title = stringResource(resource = Res.string.title_my_orders),
+        backgroundColor = FoodDeliveryTheme.colors.mainColors.surface,
         backActionClick = { onAction(OrderListState.Action.BackClicked) },
     ) {
         when (viewState.state) {
@@ -146,27 +146,25 @@ private fun OrderListScreenSuccess(
     Box(
         modifier =
             Modifier
-                .fillMaxSize()
-                .background(FoodDeliveryTheme.colors.mainColors.background),
+                .fillMaxSize(),
     ) {
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
             contentPadding =
                 PaddingValues(
-                    top = 16.dp,
-                    start = 16.dp,
-                    end = 16.dp,
+                    top = 8.dp,
                     bottom = LocalBottomBarPadding.current + 8.dp,
                 ),
-            verticalArrangement = spacedBy(8.dp),
         ) {
             items(orderItemList) { orderItem ->
-                com.bunbeauty.order.ui.ui.OrderItem(
-                    orderItem = orderItem,
-                    onClick = {
-                        onAction(OrderListState.Action.OnOrderClicked(orderItem.uuid))
-                    },
-                )
+                FoodDeliveryItem(needDivider = !orderItem.isLast) {
+                    com.bunbeauty.order.ui.ui.OrderItem(
+                        orderItem = orderItem,
+                        onClick = {
+                            onAction(OrderListState.Action.OnOrderClicked(orderItem.uuid))
+                        },
+                    )
+                }
             }
         }
     }
@@ -216,6 +214,7 @@ private fun OrderListScreenSuccessPreview() {
                                 dateTime = "18.03.2023 11:53",
                                 statusName = OrderStatus.NOT_ACCEPTED.name,
                                 background = OrderStatus.NOT_ACCEPTED.getOrderColor(),
+                                isLast = false,
                             ),
                             OrderItem(
                                 uuid = "",
@@ -224,6 +223,7 @@ private fun OrderListScreenSuccessPreview() {
                                 dateTime = "18.03.2023 11:53",
                                 statusName = OrderStatus.ACCEPTED.name,
                                 background = OrderStatus.ACCEPTED.getOrderColor(),
+                                isLast = false,
                             ),
                             OrderItem(
                                 uuid = "",
@@ -232,6 +232,7 @@ private fun OrderListScreenSuccessPreview() {
                                 dateTime = "18.03.2023 11:53",
                                 statusName = OrderStatus.PREPARING.name,
                                 background = OrderStatus.PREPARING.getOrderColor(),
+                                isLast = false,
                             ),
                             OrderItem(
                                 uuid = "",
@@ -240,6 +241,7 @@ private fun OrderListScreenSuccessPreview() {
                                 dateTime = "18.03.2023 11:53",
                                 statusName = OrderStatus.DONE.name,
                                 background = OrderStatus.DONE.getOrderColor(),
+                                isLast = false,
                             ),
                             OrderItem(
                                 uuid = "",
@@ -248,6 +250,7 @@ private fun OrderListScreenSuccessPreview() {
                                 dateTime = "18.03.2023 11:53",
                                 statusName = OrderStatus.SENT_OUT.name,
                                 background = OrderStatus.SENT_OUT.getOrderColor(),
+                                isLast = false,
                             ),
                             OrderItem(
                                 uuid = "",
@@ -256,6 +259,7 @@ private fun OrderListScreenSuccessPreview() {
                                 dateTime = "18.03.2023 11:53",
                                 statusName = OrderStatus.DELIVERED.name,
                                 background = OrderStatus.DELIVERED.getOrderColor(),
+                                isLast = false,
                             ),
                             OrderItem(
                                 uuid = "",
@@ -264,6 +268,7 @@ private fun OrderListScreenSuccessPreview() {
                                 dateTime = "18.03.2023 11:53",
                                 statusName = OrderStatus.CANCELED.name,
                                 background = OrderStatus.CANCELED.getOrderColor(),
+                                isLast = true,
                             ),
                         ),
                 ),

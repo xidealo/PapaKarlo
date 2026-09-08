@@ -36,6 +36,7 @@ jobs:
           - estpoest
           - taverna
           - voljane
+          - mimino
 
     steps:
       - name: Checkout repository

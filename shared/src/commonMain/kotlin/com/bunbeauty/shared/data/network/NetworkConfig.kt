@@ -13,6 +13,6 @@ package com.bunbeauty.shared.data.network
  */
 object NetworkConfig {
     var protocol: String = "https"
-    var host: String = "fooddelivery-xidealo.amvera.io"
+    var host: String = "goatfood.ru"
     var port: Int? = null
 }

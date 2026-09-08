@@ -9,8 +9,6 @@ runs:
       with:
         distribution: temurin
         java-version: "21"
-    - name: Set up Android SDK
-      uses: android-actions/setup-android@v3
     - name: Ensure Android API 37.0 platform
       shell: bash
       run: |
@@ -21,8 +19,27 @@ runs:
           exit 1
         fi
         echo "ANDROID_SDK_ROOT=$SDK"
-        yes | sdkmanager --licenses >/dev/null || true
-        sdkmanager --install "platforms;android-37.0"
+
+        # Runner images ship sdkmanager under cmdline-tools, but not on PATH.
+        SDKMANAGER=""
+        if [ -x "$SDK/cmdline-tools/latest/bin/sdkmanager" ]; then
+          SDKMANAGER="$SDK/cmdline-tools/latest/bin/sdkmanager"
+        else
+          for candidate in "$SDK"/cmdline-tools/*/bin/sdkmanager; do
+            if [ -x "$candidate" ]; then
+              SDKMANAGER="$candidate"
+            fi
+          done
+        fi
+        if [ -z "$SDKMANAGER" ]; then
+          echo "::error::sdkmanager not found under $SDK/cmdline-tools"
+          ls -la "$SDK/cmdline-tools" || true
+          exit 1
+        fi
+        echo "Using sdkmanager=$SDKMANAGER"
+
+        yes | "$SDKMANAGER" --licenses >/dev/null || true
+        "$SDKMANAGER" --install "platforms;android-37.0"
         if [ ! -d "$SDK/platforms/android-37.0" ]; then
           echo "::error::Android SDK platform 37.0 is missing after install"
           ls -la "$SDK/platforms" || true
