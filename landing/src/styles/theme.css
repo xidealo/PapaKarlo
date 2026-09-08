@@ -1,0 +1,43 @@
+/* Surface themes.
+   Each class only remaps semantic tokens, so any component placed inside
+   inherits the right foreground, rules and accent without extra overrides.
+   Use bb-on-* on full-width sections and bb-card-* on nested cards. */
+
+.bb-on-dark,
+.bb-card-dark {
+  --bb-surface: var(--bb-ink);
+  --bb-fg: var(--bb-paper);
+  --bb-fg-muted: var(--bb-paper) / 0.72;
+  --bb-fg-faint: var(--bb-paper) / 0.55;
+  --bb-rule: var(--bb-paper) / 0.16;
+  --bb-well: var(--bb-paper) / 0.06;
+  --bb-accent: var(--bb-lime);
+  background: hsl(var(--bb-surface));
+  color: hsl(var(--bb-fg));
+}
+
+.bb-on-lime,
+.bb-card-lime {
+  --bb-surface: var(--bb-lime);
+  --bb-fg: var(--bb-ink);
+  --bb-fg-muted: var(--bb-ink) / 0.78;
+  --bb-fg-faint: var(--bb-ink) / 0.62;
+  --bb-rule: var(--bb-ink) / 0.24;
+  --bb-well: var(--bb-ink) / 0.07;
+  --bb-accent: var(--bb-ink);
+  background: hsl(var(--bb-surface));
+  color: hsl(var(--bb-fg));
+}
+
+.bb-on-paper,
+.bb-card-paper {
+  --bb-surface: var(--bb-paper);
+  --bb-fg: var(--bb-ink);
+  --bb-fg-muted: var(--bb-ink) / 0.78;
+  --bb-fg-faint: var(--bb-ink) / 0.62;
+  --bb-rule: var(--bb-ink) / 0.18;
+  --bb-well: var(--bb-ink) / 0.05;
+  --bb-accent: var(--bb-ink);
+  background: hsl(var(--bb-surface));
+  color: hsl(var(--bb-fg));
+}

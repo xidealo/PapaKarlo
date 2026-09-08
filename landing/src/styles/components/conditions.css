@@ -1,0 +1,122 @@
+.bb-conditions .bb-section-heading {
+  max-width: 720px;
+}
+
+.bb-condition-grid {
+  display: grid;
+  gap: 1px;
+  grid-template-columns: 1.1fr 0.9fr;
+  margin-top: 71px;
+}
+
+.bb-commission-card {
+  min-height: 282px;
+  padding: 35px;
+}
+
+.bb-commission-card .bb-label {
+  color: hsl(var(--bb-fg-muted));
+  font-size: var(--bb-fs-label);
+}
+
+.bb-commission {
+  align-items: end;
+  display: flex;
+  gap: 14px;
+  margin-top: 39px;
+}
+
+.bb-commission strong {
+  font-family: var(--app-font-display);
+  font-size: clamp(78px, 12vw, 148px);
+  letter-spacing: -0.1em;
+  line-height: 0.73;
+}
+
+.bb-commission span {
+  font-size: var(--bb-fs-h4);
+  font-weight: 800;
+  margin-bottom: 5px;
+}
+
+.bb-condition-copy {
+  min-height: 282px;
+  padding: 35px;
+}
+
+.bb-condition-copy h3 {
+  font-family: var(--app-font-display);
+  font-size: 25px;
+  letter-spacing: -0.05em;
+  margin: 0 0 18px;
+}
+
+.bb-condition-copy p {
+  color: hsl(var(--bb-fg-muted));
+  font-size: var(--bb-fs-small);
+  line-height: 1.65;
+  max-width: 355px;
+}
+
+.bb-checks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px 25px;
+  margin-top: 25px;
+}
+
+.bb-checks span {
+  align-items: center;
+  display: inline-flex;
+  font-size: var(--bb-fs-xs);
+  gap: 7px;
+}
+
+.bb-checks i {
+  background: hsl(var(--bb-accent));
+  display: inline-block;
+  height: 6px;
+  width: 6px;
+}
+
+.bb-band {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  padding: 30px 35px;
+}
+
+.bb-band strong {
+  font-family: var(--app-font-display);
+  font-size: 22px;
+  letter-spacing: -0.05em;
+}
+
+.bb-band span {
+  color: hsl(var(--bb-fg-muted));
+  font-size: var(--bb-fs-xs);
+}
+
+@media (max-width: 850px) {
+  .bb-condition-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 620px) {
+  .bb-commission-card,
+  .bb-condition-copy,
+  .bb-band {
+    padding: 25px;
+  }
+
+  .bb-commission strong {
+    font-size: 96px;
+  }
+
+  .bb-band {
+    align-items: start;
+    flex-direction: column;
+    gap: 16px;
+  }
+}
