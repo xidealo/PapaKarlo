@@ -1,0 +1,57 @@
+/* Two families only: display (Space Grotesk) and text (Manrope). */
+
+:root {
+  --app-font-sans: 'Manrope', system-ui, sans-serif;
+  --app-font-display: 'Space Grotesk', 'Manrope', sans-serif;
+
+  --bb-fs-display: clamp(50px, 7.4vw, 104px);
+  --bb-fs-h2: clamp(42px, 6vw, 76px);
+  --bb-fs-h3: 21px;
+  --bb-fs-h4: 18px;
+  --bb-fs-body: 16px;
+  --bb-fs-small: 14.5px;
+  --bb-fs-xs: 12.5px;
+  --bb-fs-label: 11px;
+}
+
+.bb-display {
+  font-family: var(--app-font-display);
+  font-weight: 500;
+  letter-spacing: -0.06em;
+}
+
+.bb-label,
+.bb-section-label {
+  font-family: var(--app-font-sans);
+  font-size: var(--bb-fs-label);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.bb-section-label {
+  color: hsl(var(--bb-accent));
+}
+
+.bb-lime {
+  color: hsl(var(--bb-lime));
+}
+
+.bb-section-heading {
+  font-size: var(--bb-fs-h2);
+  line-height: 0.95;
+  margin: 17px 0 0;
+  max-width: 860px;
+}
+
+.bb-section-heading em {
+  color: hsl(var(--bb-accent));
+  font-style: normal;
+}
+
+@media (max-width: 620px) {
+  .bb-section-heading {
+    font-size: 49px;
+  }
+}

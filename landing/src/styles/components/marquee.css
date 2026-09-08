@@ -1,0 +1,36 @@
+.bb-marquee {
+  border-bottom: 1px solid hsl(var(--bb-rule));
+  border-top: 1px solid hsl(var(--bb-rule));
+  color: hsl(var(--bb-accent));
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.bb-marquee-track {
+  animation: bb-scroll 26s linear infinite;
+  display: inline-flex;
+  gap: 30px;
+  padding: 17px 0;
+}
+
+.bb-marquee-item {
+  align-items: center;
+  display: inline-flex;
+  font-family: var(--app-font-display);
+  font-size: 17px;
+  font-weight: 700;
+  gap: 30px;
+  letter-spacing: -0.04em;
+}
+
+.bb-marquee-item::after {
+  color: currentColor;
+  content: "·";
+  font-size: var(--bb-fs-h4);
+}
+
+@keyframes bb-scroll {
+  to {
+    transform: translateX(-50%);
+  }
+}

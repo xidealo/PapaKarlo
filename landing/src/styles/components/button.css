@@ -1,0 +1,42 @@
+.bb-button {
+  align-items: center;
+  border: 0;
+  cursor: pointer;
+  display: inline-flex;
+  font-size: var(--bb-fs-small);
+  font-weight: 800;
+  gap: 11px;
+  justify-content: center;
+  min-height: 49px;
+  padding: 0 21px;
+  text-decoration: none;
+  transition: transform 0.22s ease, background 0.22s ease, color 0.22s ease;
+}
+
+.bb-button:hover {
+  transform: translateY(-3px);
+}
+
+.bb-button-primary {
+  background: hsl(var(--bb-lime));
+  color: hsl(var(--bb-ink));
+}
+
+.bb-button-primary:hover {
+  background: hsl(var(--bb-lime-bright));
+}
+
+.bb-button-ghost {
+  background: transparent;
+  color: hsl(var(--bb-fg-muted));
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.bb-button-ghost svg {
+  transition: transform 0.2s ease;
+}
+
+.bb-button-ghost:hover svg {
+  transform: translateX(4px);
+}
