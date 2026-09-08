@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Rebuilds the landing bundle and refreshes landing-amvera/site with the fresh output.
-# After running this: cd landing-amvera && git add -A && git commit -m "update" && git push amvera master
+# Rebuilds the landing bundle and refreshes landingamvera/site with the fresh output.
+# After running this: git add landingamvera/ && git commit -m "update" && git push
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -18,5 +18,5 @@ cp -R "$LANDING_DIR/dist/." "$SCRIPT_DIR/site/"
 # Source maps are only for debugging; drop them to keep the deploy small.
 find "$SCRIPT_DIR/site" -name "*.map" -delete
 
-echo "landing-amvera/site/ updated. Next:"
-echo "  cd \"$SCRIPT_DIR\" && git add -A && git commit -m \"update\" && git push amvera master"
+echo "landingamvera/site/ updated. Next:"
+echo "  git add landingamvera/ && git commit -m \"update\" && git push"
