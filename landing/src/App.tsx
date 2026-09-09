@@ -157,6 +157,7 @@ function Home() {
 
       <section className="bb-product bb-section bb-on-lime" id="product">
         <div className="bb-container">
+          <div className="bb-product-intro"><div><span className="bb-section-label">01 / продукт</span><h2 className="bb-display bb-section-heading">Не просто меню<br /><em>Новый ритм кафе</em></h2></div><p>Статусы, стоп-лист и время доставки – гость видит это в момент заказа</p></div>
           <div className="bb-feature-layout">
             <div className="bb-feature-list">
               <article className="bb-feature"><span className="bb-feature-number">01</span><h3>Статусы под контролем</h3><p>Администратор ведёт заказ от нового до готов. Гость не звонит «ну что там»</p></article>
