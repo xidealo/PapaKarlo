@@ -50,7 +50,7 @@ function AdminPreview() {
 }
 
 const LEAD_URL = 'https://api.web3forms.com/submit';
-const LEAD_ERROR = 'Не удалось отправить. Попробуйте ещё раз или напишите на zhegalin98@yandex.ru';
+const LEAD_ERROR = 'Не удалось отправить. Попробуйте ещё раз';
 
 function ContactModal({ onClose }: { onClose: () => void }) {
   const [sent, setSent] = useState(false);
