@@ -49,8 +49,8 @@ function AdminPreview() {
   );
 }
 
-const LEAD_URL = 'https://твой-сервер/api/lead';
-const LEAD_ERROR = 'Не удалось отправить. Попробуйте ещё раз или напишите на shavl.mark@yandex.ru';
+const LEAD_URL = 'https://api.web3forms.com/submit';
+const LEAD_ERROR = 'Не удалось отправить. Попробуйте ещё раз или напишите на zhegalin98@yandex.ru';
 
 function ContactModal({ onClose }: { onClose: () => void }) {
   const [sent, setSent] = useState(false);
@@ -60,7 +60,14 @@ function ContactModal({ onClose }: { onClose: () => void }) {
   const submit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const form = event.currentTarget;
+    const accessKey = import.meta.env.VITE_WEB3FORMS_KEY;
+    if (!accessKey) {
+      setError(LEAD_ERROR);
+      return;
+    }
     const data = {
+      access_key: accessKey,
+      subject: 'Заявка GoatFood',
       name: (form.elements.namedItem('name') as HTMLInputElement).value,
       contact: (form.elements.namedItem('contact') as HTMLInputElement).value,
       email: (form.elements.namedItem('email') as HTMLInputElement).value,
@@ -74,7 +81,8 @@ function ContactModal({ onClose }: { onClose: () => void }) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
       });
-      if (!response.ok) {
+      const result = (await response.json().catch(() => null)) as { success?: boolean } | null;
+      if (!response.ok || !result?.success) {
         setError(LEAD_ERROR);
         return;
       }
