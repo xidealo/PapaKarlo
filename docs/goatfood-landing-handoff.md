@@ -50,6 +50,8 @@ Amvera подхватит push из GitHub и пересоберёт образ.
 Браузер → goatfood.ru (fooddelivery) → API
 ```
 
+API заказов / papakarlo-web — отдельные приложения, этот пакет их не проксирует.
+
 ---
 
 ## Файлы
