@@ -50,16 +50,11 @@ function PhonePreview() {
   return (
     <div className="bb-stage" aria-label="Предпросмотр мобильного меню GoatFood" data-testid="preview-phone">
       <div className="bb-orbit" />
-      <div className="bb-phone">
-        <div className="bb-phone-top"><span>9:41</span><span className="bb-phone-user" aria-hidden="true" /></div>
-        <div className="bb-phone-banner"><strong>Сделано<br />с заботой</strong><small>Скидка 15% на первый заказ</small><span className="bb-cup" /></div>
-        <div className="bb-phone-section"><h3>Меню</h3><span>Популярное</span></div>
-        <div className="bb-menu-row"><span className="bb-food-art" /><span className="bb-menu-meta"><strong>Флэт уайт</strong><small>двойной эспрессо, молоко</small></span><span className="bb-menu-price">250 ₽</span></div>
-        <div className="bb-menu-row"><span className="bb-food-art" /><span className="bb-menu-meta"><strong>Чизкейк баскский</strong><small>сливочный сыр, ваниль</small></span><span className="bb-menu-price">340 ₽</span></div>
-        <div className="bb-menu-row"><span className="bb-food-art" /><span className="bb-menu-meta"><strong>Матча-тоник</strong><small>матча, тоник, лайм</small></span><span className="bb-menu-price">290 ₽</span></div>
-        <div className="bb-phone-section"><h3>Комбо дня</h3><span>ещё 4 позиции</span></div>
-        <div className="bb-menu-row"><span className="bb-food-art" /><span className="bb-menu-meta"><strong>Кофе + круассан</strong><small>идеальное начало</small></span><span className="bb-menu-price">420 ₽</span></div>
-      </div>
+      <img
+        className="bb-guest-screen"
+        src="/guest-menu.png"
+        alt="Меню гостя в мобильном приложении GoatFood"
+      />
       <div className="bb-floating-tag"><span>ваш бренд</span>в кармане</div>
     </div>
   );
